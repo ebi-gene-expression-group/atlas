@@ -41,27 +41,45 @@ module.exports = function(opt) {
     var $ = require('jquery');
     require('../lib/jquery.xdomainrequest.js');
 
-    // Use proxy if set (required by CTTV), and used by AJAX calls (JSON endpoint, anatomogram and tooltips), not used
-    // for URLs and redirections (e.g. footer and gene/experiment links)
+    // Proxy prefix required by CTTV
     var proxyPrefix = opt.hasOwnProperty("proxyPrefix") ? opt.proxyPrefix : "";
     var atlasHost = opt.hasOwnProperty("atlasHost") ? opt.atlasHost : "";
     if (atlasHost.startsWith("http://") || atlasHost.startsWith("https://")) {
         atlasHost = URI(atlasHost).host();
     }
-    var gxaBaseUrl = "/gxa";
     var endpoint = opt.heatmapUrl ? opt.heatmapUrl : opt.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
 
     // Legacy parameter
     if (opt.hasOwnProperty("gxaBaseUrl")) {
-        atlasHost = URI(opt.gxaBaseUrl).host();
+            atlasHost = URI(opt.gxaBaseUrl).host();
     }
 
-    var url = "";
+    // contextRoot -> for AJAX requests, images, etc.
+    var defaultAtlasHost = "www.ebi.ac.uk",
+        defaultAtlasPath = "/gxa";
+
+    var atlasBaseURL = "";
     if (proxyPrefix) {
-        url = proxyPrefix + "/" + atlasHost + gxaBaseUrl + endpoint + "?" + opt.params;
+        if (atlasHost) {
+            atlasBaseURL = proxyPrefix + "/" + atlasHost + defaultAtlasPath;
+        } else {
+            atlasBaseURL = proxyPrefix + "/" + defaultAtlasHost + defaultAtlasPath;
+        }
+    } else if (atlasHost) {
+        atlasBaseURL = "http://" + atlasHost + defaultAtlasPath;
     } else {
-        url = "http://" + atlasHost + gxaBaseUrl + endpoint + "?" + opt.params;
+        atlasBaseURL = "http://" + defaultAtlasHost + defaultAtlasPath;
     }
+
+    // linksContextRoot -> for links that take you to a new URL
+    var linksAtlasBaseURL = "";
+    if (atlasHost) {
+        linksAtlasBaseURL = "http://" + atlasHost + defaultAtlasPath;
+    } else {
+        linksAtlasBaseURL = "http://" + defaultAtlasHost + defaultAtlasPath;
+    }
+
+    var url = atlasBaseURL + endpoint + "?" + opt.params;
 
     var targetElement = (typeof opt.target == 'string') ? document.getElementById(opt.target) : opt.target;
     var $targetElement = $(targetElement);
@@ -77,23 +95,14 @@ module.exports = function(opt) {
         }
     };
 
+
+
     $.ajax(httpRequest).done(function (data) {
 
         var isWidget = opt.hasOwnProperty("isWidget") ? opt.isWidget : true;
 
-        data.config.proxyPrefix = proxyPrefix;
-        data.config.atlasHost = atlasHost;
-        data.config.gxaBaseUrl = gxaBaseUrl;
-        if (data.anatomogram) {
-            data.anatomogram.proxyPrefix = proxyPrefix;
-            data.anatomogram.atlasHost = atlasHost;
-            data.anatomogram.gxaBaseUrl = gxaBaseUrl;
-        }
-        if (data.experiment) {
-            data.experiment.proxyPrefix = proxyPrefix;
-            data.experiment.atlasHost = atlasHost;
-            data.experiment.gxaBaseUrl = gxaBaseUrl;
-        }
+        data.config.atlasBaseURL = atlasBaseURL;
+        data.config.linksAtlasBaseURL = linksAtlasBaseURL;
 
         if (opt.isMultiExperiment) {
             drawHeatmap(data, targetElement, heatmapModule.buildMultiExperiment, isWidget, opt.isMultiExperiment, opt.heatmapKey);

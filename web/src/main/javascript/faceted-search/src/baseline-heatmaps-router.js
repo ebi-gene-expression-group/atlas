@@ -48,7 +48,7 @@ module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeDat
             React.createElement(FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked}),
             facetsElement);
 
-        React.render(React.createElement(Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), host: host}),
+        React.render(React.createElement(Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), atlasHost: host}),
             heatmapsElement
         );
 

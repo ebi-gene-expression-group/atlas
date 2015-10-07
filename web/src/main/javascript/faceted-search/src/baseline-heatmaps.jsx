@@ -15,7 +15,7 @@ var BaselineHeatmapWidget = require('./baseline-heatmap-widget.jsx');
 var Heatmaps = React.createClass({
     propTypes: {
         geneQuery: React.PropTypes.string.isRequired,
-        host: React.PropTypes.string.isRequired,
+        atlasHost: React.PropTypes.string.isRequired,
         /*
          [{"geneQuery":"zinc finger","species":"Homo sapiens","factor":"CELL_LINE"},
           {"geneQuery":"zinc finger","species":"Homo sapiens","factor":"ORGANISM_PART"}]
@@ -29,7 +29,7 @@ var Heatmaps = React.createClass({
 
     render: function () {
         var geneQuery = this.props.geneQuery;
-        var gxaBaseURL = new URI({hostname: this.props.host, path: "/gxa"});
+        var gxaBaseURL = new URI({hostname: this.props.atlasHost, path: "/gxa"});
 
         return (
             <div>

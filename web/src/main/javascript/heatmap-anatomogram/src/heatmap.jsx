@@ -311,20 +311,11 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
 
-    var DownloadProfilesButton = (function (proxyPrefix, atlasHost, gxaBaseUrl, downloadProfilesURL) {
+    var DownloadProfilesButton = (function (atlasBaseURL, downloadProfilesURL) {
         return React.createClass({
             render: function () {
-                var contextRoot = "";
-                if (proxyPrefix) {
-                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
-                } else if (atlasHost) {
-                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
-                } else {
-                    contextRoot = gxaBaseUrl;
-                }
-
-                var downloadURL = contextRoot + downloadProfilesURL;
-                var downloadImgSrcURL = contextRoot + "/resources/images/download_blue_small.png";
+                var downloadURL = atlasBaseURL + downloadProfilesURL;
+                var downloadImgSrcURL = atlasBaseURL + "/resources/images/download_blue_small.png";
 
                 return (
                     <a id="download-profiles-link" ref="downloadProfilesLink"
@@ -346,10 +337,10 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 });
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl, heatmapConfig.downloadProfilesURL);
+    })(heatmapConfig.atlasBaseURL, heatmapConfig.downloadProfilesURL);
 
 
-    var LegendBaseline = (function (proxyPrefix, atlasHost, gxaBaseUrl, formatBaselineExpression) {
+    var LegendBaseline = (function (atlasBaseURL, formatBaselineExpression) {
         return React.createClass({
             render: function () {
                 return (
@@ -363,22 +354,13 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                var contextRoot = "";
-                if (proxyPrefix) {
-                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
-                } else if (atlasHost) {
-                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
-                } else {
-                    contextRoot = gxaBaseUrl;
-                }
-
-                helpTooltipsModule.init('experiment', contextRoot, this.refs.legendHelp.getDOMNode());
+                helpTooltipsModule.init('experiment', atlasBaseURL, this.refs.legendHelp.getDOMNode());
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl, formatBaselineExpression);
+    })(heatmapConfig.atlasBaseURL, formatBaselineExpression);
 
 
-    var LegendDifferential = (function (proxyPrefix, atlasHost, gxaBaseUrl) {
+    var LegendDifferential = (function (atlasBaseURL) {
         return React.createClass({
             render: function () {
                 return (
@@ -393,19 +375,10 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                var contextRoot = "";
-                if (proxyPrefix) {
-                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
-                } else if (atlasHost) {
-                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
-                } else {
-                    contextRoot = gxaBaseUrl;
-                }
-
-                helpTooltipsModule.init('experiment', contextRoot, this.refs.legendHelp.getDOMNode());
+                helpTooltipsModule.init('experiment', atlasBaseURL, this.refs.legendHelp.getDOMNode());
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl);
+    })(heatmapConfig.atlasBaseURL);
 
 
     var LegendRow = React.createClass({
@@ -582,7 +555,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
 
-    var FactorHeader = (function (proxyPrefix, atlasHost, gxaBaseUrl, accessKey, enableEnsemblLauncher, csstransforms) {
+    var FactorHeader = (function (atlasBaseURL, accessKey, enableEnsemblLauncher, csstransforms) {
         return React.createClass({
 
             getInitialState: function () {
@@ -629,17 +602,8 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                var contextRoot = "";
-                if (proxyPrefix) {
-                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
-                } else if (atlasHost) {
-                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
-                } else {
-                    contextRoot = gxaBaseUrl;
-                }
-
                 if(!type.isMultiExperiment) {
-                    factorTooltipModule.init(contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
+                    factorTooltipModule.init(atlasBaseURL, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
                 }
                 if (this.props.anatomogramEventEmitter) {
                     this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
@@ -665,7 +629,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 );
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
+    })(heatmapConfig.atlasBaseURL, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
 
 
     var ContrastHeaders = React.createClass({
@@ -687,7 +651,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
 
-    var ContrastHeader = (function (proxyPrefix, atlasHost, gxaBaseUrl, accessKey, enableEnsemblLauncher, csstransforms) {
+    var ContrastHeader = (function (atlasBaseURL, accessKey, enableEnsemblLauncher, csstransforms) {
         return React.createClass({
 
             getInitialState: function () {
@@ -712,16 +676,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                var contextRoot = "";
-                if (proxyPrefix) {
-                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
-                } else if (atlasHost) {
-                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
-                } else {
-                    contextRoot = gxaBaseUrl;
-                }
-
-                contrastTooltipModule.init(contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
+                contrastTooltipModule.init(atlasBaseURL, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
 
                 if (this.showPlotsButton()) {
                     this.renderToolBarContent(this.refs.plotsToolBarContent.getDOMNode());
@@ -736,28 +691,19 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             renderToolBarContent: function(contentNode) {
-                var contextRoot = "";
-                if (proxyPrefix) {
-                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
-                } else if (atlasHost) {
-                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
-                } else {
-                    contextRoot = gxaBaseUrl;
-                }
-
                 var $contentNode = $(contentNode);
 
-                var maPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + "/" + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
-                var maPlotImgSrcURL = contextRoot + "/resources/images/maplot-button.png";
+                var maPlotURL = atlasBaseURL + "/external-resources/" + this.props.experimentAccession + "/" + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
+                var maPlotImgSrcURL = atlasBaseURL + "/resources/images/maplot-button.png";
 
-                var gseaGoPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + "/" + this.props.contrastId + "/gsea_go.png";
-                var gseaGoPlotImgSrcURL = contextRoot + "/resources/images/gsea-go-button.png";
+                var gseaGoPlotURL = atlasBaseURL + "/external-resources/" + this.props.experimentAccession + "/" + this.props.contrastId + "/gsea_go.png";
+                var gseaGoPlotImgSrcURL = atlasBaseURL + "/resources/images/gsea-go-button.png";
 
-                var gseaInterproPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + "/" + this.props.contrastId + "/gsea_interpro.png";
-                var gseaInterproImgSrcURL = contextRoot + "/resources/images/gsea-interpro-button.png";
+                var gseaInterproPlotURL = atlasBaseURL + "/external-resources/" + this.props.experimentAccession + "/" + this.props.contrastId + "/gsea_interpro.png";
+                var gseaInterproImgSrcURL = atlasBaseURL + "/resources/images/gsea-interpro-button.png";
 
-                var gseaReactomePlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + "/" + this.props.contrastId + "/gsea_reactome.png";
-                var gseaReactomePlotImgSrcURL = contextRoot + "/resources/images/gsea-reactome-button.png";
+                var gseaReactomePlotURL = atlasBaseURL + "/external-resources/" + this.props.experimentAccession + "/" + this.props.contrastId + "/gsea_reactome.png";
+                var gseaReactomePlotImgSrcURL = atlasBaseURL + "/resources/images/gsea-reactome-button.png";
 
                 var content =
                     <div>
@@ -797,16 +743,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 var thStyle = this.showPlotsButton() ? {minWidth: "80px"} : {};
                 var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
-                var contextRoot = "";
-                if (proxyPrefix) {
-                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
-                } else if (atlasHost) {
-                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
-                } else {
-                    contextRoot = gxaBaseUrl;
-                }
-
-                var plotsImgSrcURL = contextRoot + "/resources/images/yellow-chart-icon.png";
+                var plotsImgSrcURL = atlasBaseURL + "/resources/images/yellow-chart-icon.png";
 
                 var plotsButton = (
                     <div style={{textAlign: "right", paddingRight: "3px"}} >
@@ -833,10 +770,10 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 );
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
+    })(heatmapConfig.atlasBaseURL, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
 
 
-    var TopLeftCorner = (function (proxyPrefix, atlasHost, gxaBaseUrl) {
+    var TopLeftCorner = (function (atlasBaseURL) {
         return React.createClass({
 
             displayLevelsBaseline: function() {
@@ -857,19 +794,10 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                var contextRoot = "";
-                if (proxyPrefix) {
-                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
-                } else if (atlasHost) {
-                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
-                } else {
-                    contextRoot = gxaBaseUrl;
-                }
-
-                helpTooltipsModule.init('experiment', contextRoot, this.refs.tooltipSpan.getDOMNode());
+                helpTooltipsModule.init('experiment', atlasBaseURL, this.refs.tooltipSpan.getDOMNode());
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl);
+    })(heatmapConfig.atlasBaseURL);
 
 
     var createDisplayLevelsButton = function (hideText, showText) {
@@ -960,7 +888,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
 
-    var GeneProfileRow = (function (proxyPrefix, atlasHost, gxaBaseUrl, isExactMatch, enableGeneLinks, enableEnsemblLauncher, geneQuery) {
+    var GeneProfileRow = (function (atlasBaseURL, linksAtlasBaseURL, isExactMatch, enableGeneLinks, enableEnsemblLauncher, geneQuery) {
 
         return React.createClass({
 
@@ -991,19 +919,12 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             geneNameLinked: function () {
-                var linksContextRoot = "";
-                if (atlasHost) {
-                    linksContextRoot = "http://" + atlasHost + gxaBaseUrl;
-                } else {
-                    linksContextRoot = gxaBaseUrl;
-                }
-
                 var experimentURL = '/experiments/' + this.props.id + '?geneQuery=' + geneQuery + (this.props.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(this.props.serializedFilterFactors) : "");
                 var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + isExactMatch : '/genes/' + this.props.id;
 
                 var titleTooltip = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "Protein Expression" : "RNA Expression" ) : "";
 
-                var experimentOrGeneURL = linksContextRoot + (type.isMultiExperiment ? experimentURL : geneURL);
+                var experimentOrGeneURL = linksAtlasBaseURL + (type.isMultiExperiment ? experimentURL : geneURL);
 
                 // don't render id for gene sets to prevent tooltips
                 // The vertical align in the <a> element is needed because the kerning in the font used in icon-conceptual is vertically off
@@ -1090,17 +1011,8 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                var contextRoot = "";
-                if (proxyPrefix) {
-                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
-                } else if (atlasHost) {
-                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
-                } else {
-                    contextRoot = gxaBaseUrl;
-                }
-
                 if(!type.isMultiExperiment) {
-                    genePropertiesTooltipModule.init(contextRoot, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
+                    genePropertiesTooltipModule.init(atlasBaseURL, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
                 }
             },
 
@@ -1110,7 +1022,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 }
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
+    })(heatmapConfig.atlasBaseURL, heatmapConfig.linksAtlasBaseURL, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
 
 
     // expects number in the format #E# and displays exponent in superscript
@@ -1141,7 +1053,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     }
 
 
-    var CellBaseline = (function (proxyPrefix, atlasHost, gxaBaseUrl, formatBaselineExpression) {
+    var CellBaseline = (function (atlasBaseURL, formatBaselineExpression) {
 
         return React.createClass({
             render: function () {
@@ -1177,16 +1089,8 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                     return unknownElement.children.length;
                 }
 
-                if (this._isUnknownExpression() && !hasQuestionMark(this.refs.unknownCell.getDOMNode())) {var contextRoot = "";
-                    if (proxyPrefix) {
-                        contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
-                    } else if (atlasHost) {
-                        contextRoot = "http://" + atlasHost + gxaBaseUrl;
-                    } else {
-                        contextRoot = gxaBaseUrl;
-                    }
-
-                    helpTooltipsModule.init('experiment', contextRoot, this.refs.unknownCell.getDOMNode());
+                if (this._isUnknownExpression() && !hasQuestionMark(this.refs.unknownCell.getDOMNode())) {var atlasBaseURL = "";
+                    helpTooltipsModule.init('experiment', atlasBaseURL, this.refs.unknownCell.getDOMNode());
                 }
             },
 
@@ -1222,7 +1126,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             }
         });
 
-    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl, formatBaselineExpression);
+    })(heatmapConfig.atlasBaseURL, formatBaselineExpression);
 
 
     var CellMultiExperiment = (function (formatBaselineExpression) {

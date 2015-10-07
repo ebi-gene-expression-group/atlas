@@ -19,13 +19,12 @@ var ensemblUtils = require('./ensembl-utils.js');
 var EnsemblLauncher = React.createClass({
     propTypes: {
         isBaseline: React.PropTypes.bool.isRequired,
-        atlasHost: React.PropTypes.string.isRequired,
-        contextRoot: React.PropTypes.string.isRequired,
         experimentAccession: React.PropTypes.string.isRequired,
         species: React.PropTypes.string.isRequired,
         ensemblDB: React.PropTypes.string.isRequired,
         columnType: React.PropTypes.string.isRequired,
-        eventEmitter: React.PropTypes.object.isRequired
+        eventEmitter: React.PropTypes.object.isRequired,
+        atlasBaseURL: React.PropTypes.string.isRequired
     },
 
     _noSelectedColumnMessageArticle: function () {
@@ -50,7 +49,7 @@ var EnsemblLauncher = React.createClass({
 
         var ensemblSpecies = ensemblUtils.toEnsemblSpecies(this.props.species);
         var trackFileHeader = this.props.experimentAccession + "." + this.state.selectedColumnId;
-        var atlasTrackBaseURL = "http://" + this.props.atlasHost + this.props.contextRoot + "/experiments/" + this.props.experimentAccession + "/tracks/";
+        var atlasTrackBaseURL = this.props.atlasBaseURL + "/experiments/" + this.props.experimentAccession + "/tracks/";
         var contigViewBottom = "contigviewbottom=url:" + atlasTrackBaseURL + trackFileHeader + (this.props.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
         var tiling = (this.props.isBaseline || this.props.ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseURL + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
         var ensemblTrackURL =  baseURL + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigViewBottom + tiling + ";format=BEDGRAPH";

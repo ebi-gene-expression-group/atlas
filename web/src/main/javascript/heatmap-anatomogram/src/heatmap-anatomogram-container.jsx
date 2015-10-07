@@ -26,7 +26,7 @@ var ExperimentDescription = React.createClass({
 
     render: function () {
 
-        var experimentURL = "http://" + this.props.experiment.atlasHost + this.props.experiment.gxaBaseUrl + this.props.experiment.URL;
+        var experimentURL = this.props.linksAtlasBaseURL + this.props.experiment.URL;
 
         return (
             <div style={{width: "100%"}}>
@@ -54,12 +54,12 @@ var HeatmapAnatomogramContainer = React.createClass({
 
         var heatmapConfig = this.props.heatmapConfig;
 
-        var geneURL = "http://" + heatmapConfig.atlasHost + heatmapConfig.gxaBaseUrl + '/query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch=' + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
+        var geneURL = heatmapConfig.atlasBaseURL + '/query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch=' + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
 
         return (
                 <div className="gxaBlock">
 
-                    { this.props.experiment ? <ExperimentDescription experiment={this.props.experiment} /> : null }
+                    { this.props.experiment ? <ExperimentDescription experiment={this.props.experiment} linksAtlasBaseURL={this.props.heatmapConfig.linksAtlasBaseURL}/> : null }
 
                     <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
@@ -67,7 +67,7 @@ var HeatmapAnatomogramContainer = React.createClass({
                             { this.props.anatomogram ?
                                 <Anatomogram anatomogramData={this.props.anatomogram}
                                              expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
-                                             profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} />
+                                             profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.heatmapConfig.atlasBaseURL}/>
                                 : null}
                         </div>
 
@@ -83,7 +83,7 @@ var HeatmapAnatomogramContainer = React.createClass({
 
                     { this.props.isWidget ?
                             <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
-                                <br/>This expression view is provided by <a href="http://www.ebi.ac.uk/gxa">Expression Atlas</a>.
+                                <br/>This expression view is provided by <a href={this.props.heatmapConfig.atlasBaseURL}>Expression Atlas</a>.
                                 <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p>
                             </div>
                         :

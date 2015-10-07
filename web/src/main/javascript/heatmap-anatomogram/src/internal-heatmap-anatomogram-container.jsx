@@ -54,11 +54,12 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                     { this.props.anatomogram ?
                         <Anatomogram anatomogramData={this.props.anatomogram}
                                      expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
-                                     profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} />
+                                     profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.heatmapConfig.atlasBaseURL} />
                         : null}
                     { this.props.heatmapConfig.enableEnsemblLauncher ?
-                        <EnsemblLauncher isBaseline={this.props.isBaseline} atlasHost={this.props.heatmapConfig.atlasHost} contextRoot={this.props.heatmapConfig.contextRoot} experimentAccession={this.props.heatmapConfig.experimentAccession} species={this.props.heatmapConfig.species} ensemblDB={this.props.heatmapConfig.ensemblDB} columnType={this.props.heatmapConfig.columnType}
-                                         eventEmitter={ensemblEventEmitter} />
+                        <EnsemblLauncher isBaseline={this.props.isBaseline} experimentAccession={this.props.heatmapConfig.experimentAccession} species={this.props.heatmapConfig.species} ensemblDB={this.props.heatmapConfig.ensemblDB} columnType={this.props.heatmapConfig.columnType}
+                                         eventEmitter={ensemblEventEmitter}
+                                         atlasBaseURL={this.props.heatmapConfig.atlasBaseURL} />
                         : null }
                 </div>
 

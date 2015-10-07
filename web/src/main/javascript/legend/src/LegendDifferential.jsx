@@ -18,13 +18,12 @@ require('../css/legend.css');
 var LegendDifferential = React.createClass({
 
     propTypes: {
-        proxyPrefix: React.PropTypes.string.isRequired,
-        contextRoot: React.PropTypes.string.isRequired,
         minDownLevel: React.PropTypes.string.isRequired,
         maxDownLevel: React.PropTypes.string.isRequired,
         minUpLevel: React.PropTypes.string.isRequired,
         maxUpLevel: React.PropTypes.string.isRequired,
-        displayLevels: React.PropTypes.bool.isRequired
+        displayLevels: React.PropTypes.bool.isRequired,
+        atlasBaseURL: React.PropTypes.string.isRequired
     },
 
     render: function () {
@@ -44,7 +43,7 @@ var LegendDifferential = React.createClass({
     },
 
     componentDidMount: function () {
-        HelpTooltipsInit(this.props.proxyPrefix + this.props.contextRoot, "experiment", this.refs.legendHelp.getDOMNode());
+        HelpTooltipsInit(this.props.atlasBaseURL, "experiment", this.refs.legendHelp.getDOMNode());
     }
 });
 

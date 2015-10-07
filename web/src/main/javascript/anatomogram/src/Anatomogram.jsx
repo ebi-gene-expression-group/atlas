@@ -115,39 +115,31 @@ var Anatomogram = React.createClass({
                 ).isRequired
             })
         ).isRequired,
-        eventEmitter: React.PropTypes.instanceOf(EventEmitter)
+        eventEmitter: React.PropTypes.instanceOf(EventEmitter),
+        atlasBaseURL: React.PropTypes.string.isRequired
     },
 
     getInitialState: function() {
-        var contextRoot = "";
-        if (this.props.anatomogramData.proxyPrefix) {
-            contextRoot = this.props.anatomogramData.proxyPrefix + "/" + this.props.anatomogramData.atlasHost + this.props.anatomogramData.gxaBaseUrl;
-        } else if (this.props.anatomogramData.atlasHost) {
-            contextRoot = "http://" + this.props.anatomogramData.atlasHost + this.props.anatomogramData.gxaBaseUrl;
-        } else {
-            contextRoot = this.props.anatomogramData.gxaBaseUrl;
-        }
-
         var availableAnatomograms = [];
         if (this.props.anatomogramData.maleAnatomogramFile) {
             availableAnatomograms.push(
                 {id: "male",
-                 anatomogramFile: contextRoot + "/resources/svg/" + this.props.anatomogramData.maleAnatomogramFile,
-                 toggleSrcTemplate: contextRoot + this.props.anatomogramData.toggleButtonMaleImageTemplate}
+                 anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.maleAnatomogramFile,
+                 toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonMaleImageTemplate}
             );
         }
         if (this.props.anatomogramData.femaleAnatomogramFile) {
             availableAnatomograms.push(
                 {id: "female",
-                 anatomogramFile: contextRoot + "/resources/svg/" + this.props.anatomogramData.femaleAnatomogramFile,
-                 toggleSrcTemplate: contextRoot + this.props.anatomogramData.toggleButtonFemaleImageTemplate}
+                 anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.femaleAnatomogramFile,
+                 toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonFemaleImageTemplate}
             );
         }
         if (this.props.anatomogramData.brainAnatomogramFile) {
             availableAnatomograms.push(
                 {id: "brain",
-                 anatomogramFile: contextRoot + "/resources/svg/" + this.props.anatomogramData.brainAnatomogramFile,
-                 toggleSrcTemplate: contextRoot + this.props.anatomogramData.toggleButtonBrainImageTemplate}
+                 anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.brainAnatomogramFile,
+                 toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonBrainImageTemplate}
             );
         }
 

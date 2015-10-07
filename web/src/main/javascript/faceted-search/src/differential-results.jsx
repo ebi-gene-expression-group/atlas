@@ -99,7 +99,7 @@ var DifferentialResults = React.createClass({
 
                 <div style={{display: "inline-block", verticalAlign: "middle"}}>
                     <Legend.LegendDifferential
-                        proxyPrefix={""} contextRoot={"/gxa"}
+                        atlasBaseURL={"/gxa"}
                         minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
                         displayLevels={this.state.displayLevels}/>
                 </div>
@@ -199,7 +199,7 @@ var DifferentialResultRow = React.createClass({
                 <CellDifferential colour={this.props.colour} infinity={this.props.infinity} foldChange={this.props.foldChange} displayLevels={this.props.displayLevels}/>
                 <td className="col_species"><span className={"icon icon-species " + classColor} data-icon={classIcon} style={{color: 'red'}} title={this.props.species}></span></td>
                 <td><a href="#">{this.props.comparison}</a></td>
-                <td>organism part</td>
+                <td className="gxaColOrganismPart">organism part</td>
                 <td>{this.props.experimentName}</td>
             </tr>
         );

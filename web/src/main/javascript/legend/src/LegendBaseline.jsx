@@ -19,12 +19,11 @@ require('../css/legend.css');
 var LegendBaseline = React.createClass({
 
     propTypes: {
-        proxyPrefix: React.PropTypes.string.isRequired,
-        contextRoot: React.PropTypes.string.isRequired,
         minExpressionLevel: React.PropTypes.string.isRequired,
         maxExpressionLevel: React.PropTypes.string.isRequired,
         helpTooltipLocation: React.PropTypes.string.isRequired,
-        displayLevels: React.PropTypes.bool.isRequired
+        displayLevels: React.PropTypes.bool.isRequired,
+        atlasBaseURL: React.PropTypes.string.isRequired
     },
 
     render: function () {
@@ -39,7 +38,7 @@ var LegendBaseline = React.createClass({
     },
 
     componentDidMount: function () {
-        HelpTooltipsInit(this.props.proxyPrefix + this.props.contextRoot, "experiment", this.refs.legendHelp.getDOMNode());
+        HelpTooltipsInit(this.props.atlasBaseURL, "experiment", this.refs.legendHelp.getDOMNode());
     }
 });
 

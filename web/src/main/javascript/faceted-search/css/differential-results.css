@@ -25,3 +25,7 @@ table.atlasDifferentialFacetedSearchResults tr td.col_species span.icon-species 
 table.atlasDifferentialFacetedSearchResults tr td.col_species span.icon-species.red:before {color:#d9534f;} /*animal*/
 table.atlasDifferentialFacetedSearchResults tr td.col_species span.icon-species.green:before {color:#5cb85c;}/*plants*/
 table.atlasDifferentialFacetedSearchResults tr td.col_species span.icon-species.blue:before {color:#5bc0de;}/*other*/
+
+td.gxaColOrganismPart {
+    text-align: center;
+}

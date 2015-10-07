@@ -11,8 +11,6 @@ require('../css/help-tooltips.css');
 
 //*------------------------------------------------------------------*
 
-var _contextRoot;
-
 function buildHelpAnchor() {
     return $("<a/>", {
         class: "help-icon",
@@ -26,7 +24,7 @@ function getHelpFileName(pageName){
     return "help-tooltips." + pageName + "-page.html";
 }
 
-function initTooltips(contextRoot, pageName, parentElementId) {
+function initTooltips(atlasBaseURL, pageName, parentElementId) {
 
     var anchor = buildHelpAnchor();
 
@@ -43,7 +41,7 @@ function initTooltips(contextRoot, pageName, parentElementId) {
             content: function (callback) {
                 var tooltipHelpHtmlId = $(this).parent().attr("data-help-loc");
 
-                $.get(contextRoot + "/resources/html/" + getHelpFileName(pageName),
+                $.get(atlasBaseURL + "/resources/html/" + getHelpFileName(pageName),
                     function (response, status, xhr) {
                         var tooltipContent;
 
