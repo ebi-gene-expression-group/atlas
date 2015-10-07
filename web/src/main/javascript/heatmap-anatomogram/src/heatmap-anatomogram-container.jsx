@@ -9,7 +9,6 @@ var jQuery = $;
 
 require('../lib/jquery.hc-sticky.js');
 
-var URI = require('urijs');
 var EventEmitter = require('wolfy87-eventemitter');
 
 //*------------------------------------------------------------------*
@@ -27,7 +26,7 @@ var ExperimentDescription = React.createClass({
 
     render: function () {
 
-        var experimentURL = URI("http://" + this.props.experiment.contextRoot + this.props.experiment.URL).normalize();
+        var experimentURL = "http://" + this.props.experiment.atlasHost + this.props.experiment.gxaBaseUrl + this.props.experiment.URL;
 
         return (
             <div style={{width: "100%"}}>
@@ -55,7 +54,7 @@ var HeatmapAnatomogramContainer = React.createClass({
 
         var heatmapConfig = this.props.heatmapConfig;
 
-        var geneURL = URI("http://" + heatmapConfig.contextRoot +  'query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch=' + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species).normalize();
+        var geneURL = "http://" + heatmapConfig.atlasHost + heatmapConfig.gxaBaseUrl + '/query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch=' + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
 
         return (
                 <div className="gxaBlock">
@@ -77,7 +76,7 @@ var HeatmapAnatomogramContainer = React.createClass({
                                      ensemblEventEmitter={ensemblEventEmitter} anatomogramEventEmitter={anatomogramEventEmitter} />
                         </div>
 
-                        {/* TODO move into help tooltips module */}
+                        {/* TODO Remove and use help-tooltips package */}
                         <div id="help-placeholder" style={{display: "none"}}></div>
 
                     </div>

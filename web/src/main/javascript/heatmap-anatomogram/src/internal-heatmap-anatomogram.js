@@ -25,9 +25,17 @@ function drawHeatmap (heatmapData, isMultiExperiment, isDifferential, isProteomi
 
     var isBaseline = (!isMultiExperiment && !isDifferential && !isProteomicsBaseline);
 
-    heatmapConfig.proxyPrefix = "";
+    var proxyPrefix = "";
+    var atlasHost = "";
+    var gxaBaseUrl = "/gxa";
+
+    heatmapConfig.proxyPrefix = proxyPrefix;
+    heatmapConfig.atlasHost = atlasHost;
+    heatmapConfig.gxaBaseUrl = gxaBaseUrl;
     if (anatomogramData) {
-        anatomogramData.proxyPrefix = "";
+        anatomogramData.proxyPrefix = proxyPrefix;
+        anatomogramData.atlasHost = atlasHost;
+        anatomogramData.gxaBaseUrl = gxaBaseUrl;
     }
 
     var heatmapBuilder =

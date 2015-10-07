@@ -311,17 +311,26 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
 
-    var DownloadProfilesButton = (function (proxyPrefix, contextRoot, downloadProfilesURL) {
+    var DownloadProfilesButton = (function (proxyPrefix, atlasHost, gxaBaseUrl, downloadProfilesURL) {
         return React.createClass({
             render: function () {
-                var normalizedURL = URI("http://" + contextRoot + downloadProfilesURL).normalize();
-                var normalizedSrcURL = URI("http://" + proxyPrefix + contextRoot + "/resources/images/download_blue_small.png").normalize();
+                var contextRoot = "";
+                if (proxyPrefix) {
+                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
+                } else if (atlasHost) {
+                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
+                } else {
+                    contextRoot = gxaBaseUrl;
+                }
+
+                var downloadURL = contextRoot + downloadProfilesURL;
+                var downloadImgSrcURL = contextRoot + "/resources/images/download_blue_small.png";
 
                 return (
                     <a id="download-profiles-link" ref="downloadProfilesLink"
                        title="Download all results"
-                       href={normalizedURL} className="gxaButtonImage" target="_blank">
-                       <img id="download-profiles" alt="Download query results" style={{width: "20px"}} src={normalizedSrcURL}/>
+                       href={downloadURL} className="gxaButtonImage" target="_blank">
+                       <img id="download-profiles" alt="Download query results" style={{width: "20px"}} src={downloadImgSrcURL}/>
                     </a>
                 );
             },
@@ -337,10 +346,10 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 });
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, heatmapConfig.downloadProfilesURL);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl, heatmapConfig.downloadProfilesURL);
 
 
-    var LegendBaseline = (function (proxyPrefix, contextRoot, formatBaselineExpression) {
+    var LegendBaseline = (function (proxyPrefix, atlasHost, gxaBaseUrl, formatBaselineExpression) {
         return React.createClass({
             render: function () {
                 return (
@@ -354,13 +363,22 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                helpTooltipsModule.init('experiment', "http://" + proxyPrefix + contextRoot, this.refs.legendHelp.getDOMNode());
+                var contextRoot = "";
+                if (proxyPrefix) {
+                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
+                } else if (atlasHost) {
+                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
+                } else {
+                    contextRoot = gxaBaseUrl;
+                }
+
+                helpTooltipsModule.init('experiment', contextRoot, this.refs.legendHelp.getDOMNode());
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, formatBaselineExpression);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl, formatBaselineExpression);
 
 
-    var LegendDifferential = (function (proxyPrefix, contextRoot) {
+    var LegendDifferential = (function (proxyPrefix, atlasHost, gxaBaseUrl) {
         return React.createClass({
             render: function () {
                 return (
@@ -375,10 +393,19 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                helpTooltipsModule.init('experiment', "http://" + proxyPrefix + contextRoot, this.refs.legendHelp.getDOMNode());
+                var contextRoot = "";
+                if (proxyPrefix) {
+                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
+                } else if (atlasHost) {
+                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
+                } else {
+                    contextRoot = gxaBaseUrl;
+                }
+
+                helpTooltipsModule.init('experiment', contextRoot, this.refs.legendHelp.getDOMNode());
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl);
 
 
     var LegendRow = React.createClass({
@@ -555,7 +582,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
 
-    var FactorHeader = (function (proxyPrefix, contextRoot, accessKey, enableEnsemblLauncher, csstransforms) {
+    var FactorHeader = (function (proxyPrefix, atlasHost, gxaBaseUrl, accessKey, enableEnsemblLauncher, csstransforms) {
         return React.createClass({
 
             getInitialState: function () {
@@ -602,8 +629,17 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
+                var contextRoot = "";
+                if (proxyPrefix) {
+                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
+                } else if (atlasHost) {
+                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
+                } else {
+                    contextRoot = gxaBaseUrl;
+                }
+
                 if(!type.isMultiExperiment) {
-                    factorTooltipModule.init("http://" + proxyPrefix + contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
+                    factorTooltipModule.init(contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
                 }
                 if (this.props.anatomogramEventEmitter) {
                     this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
@@ -629,7 +665,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 );
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
 
 
     var ContrastHeaders = React.createClass({
@@ -651,7 +687,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
 
-    var ContrastHeader = (function (proxyPrefix, contextRoot, accessKey, enableEnsemblLauncher, csstransforms) {
+    var ContrastHeader = (function (proxyPrefix, atlasHost, gxaBaseUrl, accessKey, enableEnsemblLauncher, csstransforms) {
         return React.createClass({
 
             getInitialState: function () {
@@ -676,7 +712,16 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                contrastTooltipModule.init("http://" + proxyPrefix + contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
+                var contextRoot = "";
+                if (proxyPrefix) {
+                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
+                } else if (atlasHost) {
+                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
+                } else {
+                    contextRoot = gxaBaseUrl;
+                }
+
+                contrastTooltipModule.init(contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
 
                 if (this.showPlotsButton()) {
                     this.renderToolBarContent(this.refs.plotsToolBarContent.getDOMNode());
@@ -691,31 +736,35 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             renderToolBarContent: function(contentNode) {
+                var contextRoot = "";
+                if (proxyPrefix) {
+                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
+                } else if (atlasHost) {
+                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
+                } else {
+                    contextRoot = gxaBaseUrl;
+                }
 
                 var $contentNode = $(contentNode);
 
-                var maPlotURL = "http://" + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
-                var normalizedMaPlotURL = URI(maPlotURL).normalize();
-                var normalizedMaPlotSrcURL = URI("http://" + proxyPrefix + contextRoot + "/resources/images/maplot-button.png").normalize();
+                var maPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + "/" + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
+                var maPlotImgSrcURL = contextRoot + "/resources/images/maplot-button.png";
 
-                var gseaGoPlotURL = "http://" + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_go.png";
-                var normalizedGSeaGoPlotURL = URI(gseaGoPlotURL).normalize();
-                var normalizedGseaGoPlotSrcURL = URI("http://" + proxyPrefix + contextRoot + "/resources/images/gsea-go-button.png").normalize();
+                var gseaGoPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + "/" + this.props.contrastId + "/gsea_go.png";
+                var gseaGoPlotImgSrcURL = contextRoot + "/resources/images/gsea-go-button.png";
 
-                var gseaInterproPlotURL = "http://" + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_interpro.png";
-                var normalizedGSeaInterproURL = URI(gseaInterproPlotURL).normalize();
-                var normalizedGseaInterproSrcURL = URI("http://" + proxyPrefix + contextRoot + '/resources/images/gsea-interpro-button.png').normalize();
+                var gseaInterproPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + "/" + this.props.contrastId + "/gsea_interpro.png";
+                var gseaInterproImgSrcURL = contextRoot + "/resources/images/gsea-interpro-button.png";
 
-                var gseaReactomePlotURL = "http://" + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_reactome.png";
-                var normalizedGseaReactomePlotURL = URI(gseaReactomePlotURL).normalize();
-                var normalizedGseaReactomePlotSrcURL = URI("http://" + proxyPrefix + contextRoot + "/resources/images/gsea-reactome-button.png").normalize();
+                var gseaReactomePlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + "/" + this.props.contrastId + "/gsea_reactome.png";
+                var gseaReactomePlotImgSrcURL = contextRoot + "/resources/images/gsea-reactome-button.png";
 
                 var content =
                     <div>
-                        {this.props.showMaPlotButton ? <a href={normalizedMaPlotURL} id="maButtonID" title="Click to view MA plot for the contrast across all genes" onClick={this.clickButton}><img src={normalizedMaPlotSrcURL} /></a> : null }
-                        {this.props.showGseaGoPlot ? <a href={normalizedGSeaGoPlotURL} id="goButtonID" title="Click to view GO terms enrichment analysis plot" onClick={this.clickButton}><img src={normalizedGseaGoPlotSrcURL} /></a> : null }
-                        {this.props.showGseaInterproPlot ? <a href={normalizedGSeaInterproURL} id="interproButtonID" title="Click to view Interpro domains enrichment analysis plot" onClick={this.clickButton}><img src={normalizedGseaInterproSrcURL} /></a> : null }
-                        {this.props.showGseaReactomePlot ? <a href={normalizedGseaReactomePlotURL} id="reactomeButtonID" title="Click to view Reactome pathways enrichment analysis plot" onClick={this.clickButton}><img src={normalizedGseaReactomePlotSrcURL} /></a> : null }
+                        {this.props.showMaPlotButton ? <a href={maPlotURL} id="maButtonID" title="Click to view MA plot for the contrast across all genes" onClick={this.clickButton}><img src={maPlotImgSrcURL} /></a> : null }
+                        {this.props.showGseaGoPlot ? <a href={gseaGoPlotURL} id="goButtonID" title="Click to view GO terms enrichment analysis plot" onClick={this.clickButton}><img src={gseaGoPlotImgSrcURL} /></a> : null }
+                        {this.props.showGseaInterproPlot ? <a href={gseaInterproPlotURL} id="interproButtonID" title="Click to view Interpro domains enrichment analysis plot" onClick={this.clickButton}><img src={gseaInterproImgSrcURL} /></a> : null }
+                        {this.props.showGseaReactomePlot ? <a href={gseaReactomePlotURL} id="reactomeButtonID" title="Click to view Reactome pathways enrichment analysis plot" onClick={this.clickButton}><img src={gseaReactomePlotImgSrcURL} /></a> : null }
                     </div>;
 
                 // the tool bar content will be copied around the DOM by the toolbar plugin
@@ -748,11 +797,20 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 var thStyle = this.showPlotsButton() ? {minWidth: "80px"} : {};
                 var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
-                var normalizedSrcURL = URI("http://" + proxyPrefix + contextRoot + "/resources/images/yellow-chart-icon.png").normalize();
+                var contextRoot = "";
+                if (proxyPrefix) {
+                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
+                } else if (atlasHost) {
+                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
+                } else {
+                    contextRoot = gxaBaseUrl;
+                }
+
+                var plotsImgSrcURL = contextRoot + "/resources/images/yellow-chart-icon.png";
 
                 var plotsButton = (
                     <div style={{textAlign: "right", paddingRight: "3px"}} >
-                        <a href="#" ref="plotsButton" onClick={this.clickButton} className="gxaButtonImage" title="Click to view plots"><img src={normalizedSrcURL}/></a>
+                        <a href="#" ref="plotsButton" onClick={this.clickButton} className="gxaButtonImage" title="Click to view plots"><img src={plotsImgSrcURL}/></a>
                     </div>
                 );
 
@@ -775,10 +833,10 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 );
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
 
 
-    var TopLeftCorner = (function (proxyPrefix, contextRoot) {
+    var TopLeftCorner = (function (proxyPrefix, atlasHost, gxaBaseUrl) {
         return React.createClass({
 
             displayLevelsBaseline: function() {
@@ -799,10 +857,19 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                helpTooltipsModule.init('experiment', "http://" + proxyPrefix + contextRoot, this.refs.tooltipSpan.getDOMNode());
+                var contextRoot = "";
+                if (proxyPrefix) {
+                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
+                } else if (atlasHost) {
+                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
+                } else {
+                    contextRoot = gxaBaseUrl;
+                }
+
+                helpTooltipsModule.init('experiment', contextRoot, this.refs.tooltipSpan.getDOMNode());
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl);
 
 
     var createDisplayLevelsButton = function (hideText, showText) {
@@ -893,7 +960,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
 
-    var GeneProfileRow = (function (proxyPrefix, contextRoot, isExactMatch, enableGeneLinks, enableEnsemblLauncher, geneQuery) {
+    var GeneProfileRow = (function (proxyPrefix, atlasHost, gxaBaseUrl, isExactMatch, enableGeneLinks, enableEnsemblLauncher, geneQuery) {
 
         return React.createClass({
 
@@ -924,20 +991,26 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             geneNameLinked: function () {
+                var linksContextRoot = "";
+                if (atlasHost) {
+                    linksContextRoot = "http://" + atlasHost + gxaBaseUrl;
+                } else {
+                    linksContextRoot = gxaBaseUrl;
+                }
+
                 var experimentURL = '/experiments/' + this.props.id + '?geneQuery=' + geneQuery + (this.props.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(this.props.serializedFilterFactors) : "");
                 var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + isExactMatch : '/genes/' + this.props.id;
 
                 var titleTooltip = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "Protein Expression" : "RNA Expression" ) : "";
 
-                var experimentOrGeneURL = (type.isMultiExperiment ? experimentURL : geneURL);
-                var normalizedURL = URI("http://" + contextRoot + experimentOrGeneURL).normalize();
+                var experimentOrGeneURL = linksContextRoot + (type.isMultiExperiment ? experimentURL : geneURL);
 
                 // don't render id for gene sets to prevent tooltips
                 // The vertical align in the <a> element is needed because the kerning in the font used in icon-conceptual is vertically off
                 return (
                     <span title={titleTooltip} style={{"display": "table-cell"}}>
                         <span className="icon icon-conceptual icon-c2" data-icon={type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}></span>
-                        <a ref="geneName" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={normalizedURL} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
+                        <a ref="geneName" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={experimentOrGeneURL} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
                     </span>
                 );
             },
@@ -1017,8 +1090,17 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
+                var contextRoot = "";
+                if (proxyPrefix) {
+                    contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
+                } else if (atlasHost) {
+                    contextRoot = "http://" + atlasHost + gxaBaseUrl;
+                } else {
+                    contextRoot = gxaBaseUrl;
+                }
+
                 if(!type.isMultiExperiment) {
-                    genePropertiesTooltipModule.init("http://" + proxyPrefix + contextRoot, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
+                    genePropertiesTooltipModule.init(contextRoot, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
                 }
             },
 
@@ -1028,7 +1110,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 }
             }
         });
-    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
 
 
     // expects number in the format #E# and displays exponent in superscript
@@ -1059,7 +1141,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     }
 
 
-    var CellBaseline = (function (proxyPrefix, contextRoot, formatBaselineExpression) {
+    var CellBaseline = (function (proxyPrefix, atlasHost, gxaBaseUrl, formatBaselineExpression) {
 
         return React.createClass({
             render: function () {
@@ -1095,8 +1177,16 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                     return unknownElement.children.length;
                 }
 
-                if (this._isUnknownExpression() && !hasQuestionMark(this.refs.unknownCell.getDOMNode())) {
-                    helpTooltipsModule.init('experiment', "http://" + proxyPrefix + contextRoot, this.refs.unknownCell.getDOMNode());
+                if (this._isUnknownExpression() && !hasQuestionMark(this.refs.unknownCell.getDOMNode())) {var contextRoot = "";
+                    if (proxyPrefix) {
+                        contextRoot = proxyPrefix + "/" + atlasHost + gxaBaseUrl;
+                    } else if (atlasHost) {
+                        contextRoot = "http://" + atlasHost + gxaBaseUrl;
+                    } else {
+                        contextRoot = gxaBaseUrl;
+                    }
+
+                    helpTooltipsModule.init('experiment', contextRoot, this.refs.unknownCell.getDOMNode());
                 }
             },
 
@@ -1132,7 +1222,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             }
         });
 
-    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, formatBaselineExpression);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.atlasHost, heatmapConfig.gxaBaseUrl, formatBaselineExpression);
 
 
     var CellMultiExperiment = (function (formatBaselineExpression) {

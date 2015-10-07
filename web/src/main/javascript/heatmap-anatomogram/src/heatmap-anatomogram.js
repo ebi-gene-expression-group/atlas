@@ -37,20 +37,34 @@ function drawHeatmap (data, targetElement, heatmapBuilder, isWidget, isMultiExpe
 
 module.exports = function(opt) {
 
-    // Use proxy if set (required by CTTV), and used by AJAX calls (JSON endpoint, anatomogram and tooltips), not used
-    // for URLs and redirections (footer and gene/experiment links)
-    var proxyPrefix = opt.proxyPrefix ? opt.proxyPrefix : "";
-
     var heatmapModule = require('./heatmap.jsx');
-
     var $ = require('jquery');
     require('../lib/jquery.xdomainrequest.js');
 
+    // Use proxy if set (required by CTTV), and used by AJAX calls (JSON endpoint, anatomogram and tooltips), not used
+    // for URLs and redirections (e.g. footer and gene/experiment links)
+    var proxyPrefix = opt.hasOwnProperty("proxyPrefix") ? opt.proxyPrefix : "";
+    var atlasHost = opt.hasOwnProperty("atlasHost") ? opt.atlasHost : "";
+    if (atlasHost.startsWith("http://") || atlasHost.startsWith("https://")) {
+        atlasHost = URI(atlasHost).host();
+    }
+    var gxaBaseUrl = "/gxa";
+    var endpoint = opt.heatmapUrl ? opt.heatmapUrl : opt.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
+
+    // Legacy parameter
+    if (opt.hasOwnProperty("gxaBaseUrl")) {
+        atlasHost = URI(opt.gxaBaseUrl).host();
+    }
+
+    var url = "";
+    if (proxyPrefix) {
+        url = proxyPrefix + "/" + atlasHost + gxaBaseUrl + endpoint + "?" + opt.params;
+    } else {
+        url = "http://" + atlasHost + gxaBaseUrl + endpoint + "?" + opt.params;
+    }
+
     var targetElement = (typeof opt.target == 'string') ? document.getElementById(opt.target) : opt.target;
     var $targetElement = $(targetElement);
-
-    var endpoint = opt.heatmapUrl ? opt.heatmapUrl : opt.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
-    var url = URI("http://" + proxyPrefix + opt.gxaBaseUrl + endpoint + '?' + opt.params).normalize();
 
     var httpRequest = {
         url: url,
@@ -65,23 +79,21 @@ module.exports = function(opt) {
 
     $.ajax(httpRequest).done(function (data) {
 
-        function overrideContextRoot(data, proxyPrefix, gxaBaseUrl) {
-            data.config.proxyPrefix = proxyPrefix;
-            data.config.contextRoot = gxaBaseUrl;
-
-            if (data.anatomogram) {
-                data.anatomogram.proxyPrefix = proxyPrefix;
-                data.anatomogram.contextRoot = gxaBaseUrl;
-            }
-            if (data.experiment) {
-                data.experiment.proxyPrefix = proxyPrefix;
-                data.experiment.contextRoot = gxaBaseUrl;
-            }
-        }
-
         var isWidget = opt.hasOwnProperty("isWidget") ? opt.isWidget : true;
 
-        overrideContextRoot(data, proxyPrefix, opt.gxaBaseUrl);
+        data.config.proxyPrefix = proxyPrefix;
+        data.config.atlasHost = atlasHost;
+        data.config.gxaBaseUrl = gxaBaseUrl;
+        if (data.anatomogram) {
+            data.anatomogram.proxyPrefix = proxyPrefix;
+            data.anatomogram.atlasHost = atlasHost;
+            data.anatomogram.gxaBaseUrl = gxaBaseUrl;
+        }
+        if (data.experiment) {
+            data.experiment.proxyPrefix = proxyPrefix;
+            data.experiment.atlasHost = atlasHost;
+            data.experiment.gxaBaseUrl = gxaBaseUrl;
+        }
 
         if (opt.isMultiExperiment) {
             drawHeatmap(data, targetElement, heatmapModule.buildMultiExperiment, isWidget, opt.isMultiExperiment, opt.heatmapKey);

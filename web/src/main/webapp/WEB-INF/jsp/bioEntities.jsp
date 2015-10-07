@@ -368,7 +368,7 @@
 
         var heatmapBuilder = window.exposed;
         heatmapBuilder({
-            gxaBaseUrl: '${pageContext.request.serverName}:${pageContext.request.serverPort}/${pageContext.request.contextPath}/',
+            atlasHost: '${pageContext.request.serverName}:${pageContext.request.serverPort}',
             params: 'geneQuery=${geneQuery.asUrlQueryParameter()}' + widgetParameters,
             isMultiExperiment: true,
             target: "widgetBody",

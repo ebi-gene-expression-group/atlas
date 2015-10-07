@@ -119,7 +119,15 @@ var Anatomogram = React.createClass({
     },
 
     getInitialState: function() {
-        var contextRoot = "http://" + this.props.anatomogramData.proxyPrefix + this.props.anatomogramData.contextRoot;
+        var contextRoot = "";
+        if (this.props.anatomogramData.proxyPrefix) {
+            contextRoot = this.props.anatomogramData.proxyPrefix + "/" + this.props.anatomogramData.atlasHost + this.props.anatomogramData.gxaBaseUrl;
+        } else if (this.props.anatomogramData.atlasHost) {
+            contextRoot = "http://" + this.props.anatomogramData.atlasHost + this.props.anatomogramData.gxaBaseUrl;
+        } else {
+            contextRoot = this.props.anatomogramData.gxaBaseUrl;
+        }
+
         var availableAnatomograms = [];
         if (this.props.anatomogramData.maleAnatomogramFile) {
             availableAnatomograms.push(
