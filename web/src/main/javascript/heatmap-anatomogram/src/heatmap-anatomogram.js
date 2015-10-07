@@ -89,9 +89,7 @@ module.exports = function(opt) {
         dataType: "json",
         method:"GET",
         beforeSend:function () {
-            // TODO: nasty workaround for http://youtrack.jetbrains.com/issue/IDEA-25934 (still not fixed)
-            var resource_host = ("${resources.host}" === "\${resources.host}") ? "wwwdev.ebi.ac.uk" : "${resources.host}";
-            $targetElement.html("<img src='http://" + resource_host + "/gxa/resources/images/loading.gif' />");
+            $targetElement.html("<img src='" + atlasBaseURL + "/resources/images/loading.gif' />");
         }
     };
 

@@ -83,7 +83,6 @@
         <sonar.jacoco.itReportPath>${project.build.directory}/jacoco-it.exec</sonar.jacoco.itReportPath>
         <!-- Tells Sonar where the code coverage report is -->
         <!-- /Code Coverage with SONAR -->
-        <resources.host>wwwdev.ebi.ac.uk</resources.host>
 
     </properties>
 
@@ -634,7 +633,6 @@
             <id>production</id>
             <!-- oracleContext.xml is located on the filesystem and specified in tomcat's context xml -->
             <properties>
-                <resources.host>www.ebi.ac.uk</resources.host>
                 <arrayexpress.ac.url>/arrayexpress</arrayexpress.ac.url>
                 <europepmc.base.url>/europepmc</europepmc.base.url>
                 <data.files.location>/srv/gxa/data</data.files.location>
@@ -662,7 +660,6 @@
             <properties>
                 <solr.host>localhost</solr.host>
                 <solr.test.host>lime</solr.test.host>
-                <resources.host>lime:14092</resources.host>
                 <!-- this directory is populated from /web/src/test/resources/ by the build plan  -->
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
