@@ -330,7 +330,9 @@
 
     window.onload = function (fullSearchDescription) {
 
-        var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : defaultPanelIndex};
+        <%--var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : defaultPanelIndex};--%>
+        // TODO https://www.pivotaltracker.com/story/show/105191986
+        var openPanelIndex=${defaultPanelIndex};
 
         $('head').append('<meta name="description" content="Baseline and differential expression for ${he.encode(fullQueryDescription)}" />');
 
