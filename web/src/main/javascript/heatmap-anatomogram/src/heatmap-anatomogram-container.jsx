@@ -71,7 +71,7 @@ var HeatmapAnatomogramContainer = React.createClass({
 
         var heatmapConfig = this.props.heatmapConfig;
 
-        var geneURL = heatmapConfig.atlasBaseURL + '/query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch=' + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
+        var geneURL = heatmapConfig.linksAtlasBaseURL + '/query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch=' + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
 
         return (
                 <div className="gxaBlock">
