@@ -10,10 +10,6 @@ var EventEmitter = require('wolfy87-eventemitter');
 var Anatomogram = require('./src/Anatomogram.jsx');
 
 function AnatomogramBuilder(domNode, anatomogramData, profileRows, expressedColour, hoverColour, eventEmitter) {
-    // Default parameters
-    var heatmapConfig = {
-        contextRoot: "https://www.ebi.ac.uk/gxa"
-    };
 
     React.render(
         React.createElement(
@@ -22,7 +18,7 @@ function AnatomogramBuilder(domNode, anatomogramData, profileRows, expressedColo
                 anatomogramData: anatomogramData,
                 expressedTissueColour: expressedColour,
                 hoveredTissueColour: hoverColour,
-                heatmapConfig: heatmapConfig,
+                atlasBaseURL: "http://www.ebi.ac.uk/gxa",
                 profileRows: profileRows,
                 eventEmitter: eventEmitter
             }
