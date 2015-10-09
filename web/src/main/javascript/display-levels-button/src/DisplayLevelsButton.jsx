@@ -19,7 +19,8 @@ var DisplayLevelsButton = React.createClass({
         hideText: React.PropTypes.string.isRequired,
         showText: React.PropTypes.string.isRequired,
         onClickCallback: React.PropTypes.func.isRequired,
-        displayLevels: React.PropTypes.bool.isRequired
+        displayLevels: React.PropTypes.bool.isRequired,
+        autoSize: React.PropTypes.bool
     },
 
     _buttonText: function () {
@@ -31,8 +32,9 @@ var DisplayLevelsButton = React.createClass({
     },
 
     render: function () {
+        var className = (this.props.autoSize) ? "" : "gxaWebpackMediumButton";
         return (
-            <button className="gxaWebpackMediumButton" onClick={this.props.onClickCallback}></button>
+            <button className={className} onClick={this.props.onClickCallback}></button>
         );
     },
 

@@ -18,20 +18,22 @@ var td = require('throttle-debounce');
 require('../lib/jquery.hc-sticky.js');
 require('../lib/jquery.toolbar.js');
 
-var Modernizr = require('../lib/modernizr.3.0.0-alpha3.js');  // Leaks Modernizr to the global window namespace
+require('../lib/modernizr.3.0.0-alpha3.js');  // Leaks Modernizr to the global window namespace
 var URI = require('urijs');
 
 //*------------------------------------------------------------------*
 
 var HeatmapBaselineCellVariance = require('heatmap-baseline-cell-variance');
 var Legend = require('legend');
-var NumberFormat = require('number-format');
 var CellDifferential = require('cell-differential');
+var DisplayLevelsButton = require('display-levels-button');
+var NumberFormat = require('number-format');
+var HelpTooltips = require('help-tooltips');
 
 var genePropertiesTooltipModule = require('./gene-properties-tooltip-module.js');
 var factorTooltipModule = require('./factor-tooltip-module.js');
 var contrastTooltipModule = require('./contrast-tooltip-module.js');
-var HelpTooltips = require('help-tooltips');
+
 //*------------------------------------------------------------------*
 
 require('../css/table-grid.css');
@@ -62,7 +64,6 @@ var Heatmap = React.createClass({
     },
 
     getInitialState: function () {
-        //var displayLevels = $prefFormDisplayLevelsInputElement ? ($prefFormDisplayLevelsInputElement.val() === "true") : false;
         var displayLevels = this.props.prefFormDisplayLevels ? (this.props.prefFormDisplayLevels.val() === "true") : false;
 
         return {
@@ -114,9 +115,6 @@ var Heatmap = React.createClass({
         if (this.props.prefFormDisplayLevels) {
             this.props.prefFormDisplayLevels.val(newDisplayLevels);
         }
-        //if ($prefFormDisplayLevelsInputElement) {
-        //    $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
-        //}
         $(window).resize();
     },
 
@@ -342,7 +340,9 @@ var Heatmap = React.createClass({
                         <DownloadProfilesButton ref="downloadProfilesButton"
                                                 heatmapConfig={this.props.heatmapConfig}/>
                     </div>
-                    {this.legendType()}
+                    <div style={{display: "inline-block", "paddingLeft": "20px"}}>
+                        {this.legendType()}
+                    </div>
                 </div>
 
                 <div ref="stickyWrap" className="gxaStickyTableWrap" style={{"marginTop": paddingMargin}}>
@@ -441,6 +441,7 @@ var Heatmap = React.createClass({
             </div>
         );
     }
+
 });
 
 
@@ -469,6 +470,7 @@ var DownloadProfilesButton = React.createClass({
         });
     }
 });
+
 
 var HeatmapTableHeader = React.createClass({
     renderContrastFactorHeaders: function () {
@@ -532,8 +534,8 @@ var HeatmapTableHeader = React.createClass({
             </thead>
         );
     }
-
 });
+
 
 var MultipleHeatmapTableHeader = React.createClass({
 
@@ -624,8 +626,8 @@ var MultipleHeatmapTableHeader = React.createClass({
             </thead>
         );
     }
-
 });
+
 
 var MultipleFactorHeader = React.createClass({
     render: function() {
@@ -636,6 +638,7 @@ var MultipleFactorHeader = React.createClass({
         );
     }
 });
+
 
 function restrictLabelSize(label, maxSize) {
     var result = label;
@@ -672,83 +675,84 @@ var FactorHeaders = React.createClass({
             <div>{factorHeaders}</div>
         );
     }
-
 });
 
 
 var FactorHeader = React.createClass({
 
-        getInitialState: function () {
-            return ({hover: false, selected: false});
-        },
+    getInitialState: function () {
+        return ({hover: false, selected: false});
+    },
 
-        onMouseEnter: function () {
-            if (this.props.heatmapConfig.enableEnsemblLauncher) {
-                this.setState({hover: true});
-            }
-            this.props.hoverColumnCallback(this.props.svgPathId);
-        },
-
-        onMouseLeave: function () {
-            if (this.props.heatmapConfig.enableEnsemblLauncher) {
-                this.setState({hover: false});
-            }
-            this.props.hoverColumnCallback(null);
-            this._closeTooltip();
-        },
-
-        _closeTooltip: function() {
-            if(!this.props.type.isMultiExperiment) {
-                $(this.getDOMNode()).tooltip("close");
-            }
-        },
-
-        _anatomogramTissueMouseEnter: function(svgPathId) {
-            if (svgPathId === this.props.svgPathId) {
-                $(this.refs.headerCell.getDOMNode()).addClass("gxaHeaderHover");
-            }
-        },
-
-        _anatomogramTissueMouseLeave: function(svgPathId) {
-            if (svgPathId === this.props.svgPathId) {
-                $(this.refs.headerCell.getDOMNode()).removeClass("gxaHeaderHover");
-            }
-        },
-
-        onClick: function () {
-            if (this.props.heatmapConfig.enableEnsemblLauncher) {
-                this.props.selectColumn(this.props.assayGroupId);
-            }
-        },
-
-        componentDidMount: function () {
-            if(!this.props.type.isMultiExperiment) {
-                factorTooltipModule.init(this.props.heatmapConfig.atlasBaseURL, this.props.heatmapConfig.accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
-            }
-            if (this.props.anatomogramEventEmitter) {
-                this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
-                this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
-            }
-        },
-
-        render: function () {
-            var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}>  select</span> : null;
-            var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}> &#10004; </span>: null ;
-            var thClass = "rotated_cell gxaHoverableHeader" + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (this.props.heatmapConfig.enableEnsemblLauncher ? " gxaSelectableHeader" : "");
-            var divClass = "rotate_text factor-header";
-            var factorName = Modernizr.csstransforms ? restrictLabelSize(this.props.factorName, 14) : this.props.factorName;
-
-            return (
-                <th ref="headerCell" className={thClass} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick} rowSpan="2">
-                    <div data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className={divClass}>
-                        {factorName}
-                        {showSelectTextOnHover}
-                        {showTickWhenSelected}
-                    </div>
-                </th>
-            );
+    onMouseEnter: function () {
+        if (this.props.heatmapConfig.enableEnsemblLauncher) {
+            this.setState({hover: true});
         }
+        this.props.hoverColumnCallback(this.props.svgPathId);
+    },
+
+    onMouseLeave: function () {
+        if (this.props.heatmapConfig.enableEnsemblLauncher) {
+            this.setState({hover: false});
+        }
+        this.props.hoverColumnCallback(null);
+        this._closeTooltip();
+    },
+
+    _closeTooltip: function() {
+        if(!this.props.type.isMultiExperiment) {
+            $(this.getDOMNode()).tooltip("close");
+        }
+    },
+
+    _anatomogramTissueMouseEnter: function(svgPathId) {
+        if (svgPathId === this.props.svgPathId) {
+            $(this.refs.headerCell.getDOMNode()).addClass("gxaHeaderHover");
+        }
+    },
+
+    _anatomogramTissueMouseLeave: function(svgPathId) {
+        if (svgPathId === this.props.svgPathId) {
+            $(this.refs.headerCell.getDOMNode()).removeClass("gxaHeaderHover");
+        }
+    },
+
+    onClick: function () {
+        if (this.props.heatmapConfig.enableEnsemblLauncher) {
+            this.props.selectColumn(this.props.assayGroupId);
+        }
+    },
+
+    componentDidMount: function () {
+        if(!this.props.type.isMultiExperiment) {
+            factorTooltipModule.init(this.props.heatmapConfig.atlasBaseURL, this.props.heatmapConfig.accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
+        }
+        if (this.props.anatomogramEventEmitter) {
+            this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
+            this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
+        }
+    },
+
+    render: function () {
+        var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}>  select</span> : null;
+        var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}> &#10004; </span>: null ;
+        var thClass = "rotated_cell gxaHoverableHeader" + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (this.props.heatmapConfig.enableEnsemblLauncher ? " gxaSelectableHeader" : "");
+        var divClass = "rotate_text factor-header";
+        var factorName = Modernizr.csstransforms ? restrictLabelSize(this.props.factorName, 14) : this.props.factorName;
+
+        return (
+            <th ref="headerCell" className={thClass} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick} rowSpan="2">
+                <div data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className={divClass}>
+                    {factorName}
+                    {showSelectTextOnHover}
+                    {showTickWhenSelected}
+                </div>
+            </th>
+        );
+    }
+
 });
+
 
 var ContrastHeaders = React.createClass({
 
@@ -895,68 +899,58 @@ var ContrastHeader = React.createClass({
             </th>
         );
     }
+
 });
 
 
 var TopLeftCorner = React.createClass({
 
-        displayLevelsBaseline: function() {
-            var DisplayLevelsButton = this.props.type.isDifferential ? DisplayLevelsButtonDifferential : DisplayLevelsButtonBaseline;
-            return ( this.props.hasQuartiles && this.props.isSingleGeneResult ?
+    displayLevelsBaseline: function() {
+        if (this.props.hasQuartiles && this.props.isSingleGeneResult) {
+            return (
                 <LevelsRadioGroup radioId={this.props.radioId}
                                   selectedRadioButton={this.props.selectedRadioButton}
-                                  toggleRadioButton={this.props.toggleRadioButton}/> :
-                <DisplayLevelsButton displayLevels={this.props.displayLevels}
-                                     toggleDisplayLevels={this.props.toggleDisplayLevels} />
+                                  toggleRadioButton={this.props.toggleRadioButton}/>
             );
-        },
-
-        render: function () {
+        } else if (this.props.type.isBaseline) {
             return (
-                <div className="gxaHeatmapMatrixTopLeftCorner">
-                    <span id='tooltip-span' data-help-loc={this.props.type.heatmapTooltip} ref='tooltipSpan'></span>
+                    <DisplayLevelsButton autoSize={true}
+                                         hideText='Hide levels'
+                                         showText='Display levels'
+                                         onClickCallback={this.props.toggleDisplayLevels}
+                                         displayLevels={this.props.displayLevels}/>
+            );
+        } else {
+            return (
+                    <DisplayLevelsButton autoSize={true}
+                                         hideText='Hide log<sub>2</sub>-fold change'
+                                         showText='Display log<sub>2</sub>-fold change'
+                                         onClickCallback={this.props.toggleDisplayLevels}
+                                         displayLevels={this.props.displayLevels}/>
+            );
+        }
+    },
+
+    render: function () {
+        return (
+            <div className="gxaHeatmapMatrixTopLeftCorner">
+                <span id='tooltip-span' data-help-loc={this.props.type.heatmapTooltip} ref='tooltipSpan'></span>
+                <div style={{display: "table-cell", verticalAlign: "middle", textAlign: "center"}}>
                     {this.displayLevelsBaseline()}
                 </div>
-            );
-        },
+            </div>
+        );
+    },
 
-        componentDidMount: function () {
-            HelpTooltips.init(this.props.heatmapConfig.atlasBaseURL, 'experiment', this.refs.tooltipSpan.getDOMNode());
-        }
+    componentDidMount: function () {
+        HelpTooltips.init(this.props.heatmapConfig.atlasBaseURL, 'experiment', this.refs.tooltipSpan.getDOMNode());
+    }
+
 });
 
 
-var createDisplayLevelsButton = function (hideText, showText) {
-
-    return React.createClass({
-
-        buttonText: function (displayLevels) {
-            return displayLevels ? hideText : showText;
-        },
-
-        updateButtonText: function () {
-            $(this.getDOMNode()).button({ label: this.buttonText(this.props.displayLevels) });
-        },
-
-        render: function () {
-            return (
-                <button id='display-levels' onClick={this.props.toggleDisplayLevels}></button>
-            );
-        },
-
-        componentDidMount: function () {
-            this.updateButtonText();
-        },
-
-        componentDidUpdate: function () {
-            this.updateButtonText();
-        }
-
-    });
-};
-
-
 var LevelsRadioGroup = React.createClass({
+
     getInitialState: function() {
         return {value: this.props.selectedRadioButton};
     },
@@ -981,12 +975,6 @@ var LevelsRadioGroup = React.createClass({
         $(window).resize();
     }
 });
-
-
-var DisplayLevelsButtonBaseline = createDisplayLevelsButton('Hide levels', 'Display levels');
-
-
-var DisplayLevelsButtonDifferential = createDisplayLevelsButton('Hide log<sub>2</sub>-fold change', 'Display log<sub>2</sub>-fold change');
 
 
 var HeatmapTableRows = React.createClass({

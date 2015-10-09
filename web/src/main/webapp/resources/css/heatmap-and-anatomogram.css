@@ -41,7 +41,6 @@
     display: table;
     height: 110px;
     width: 100%;
-    text-align: center;
     min-width: 160px;
 }
 
@@ -52,7 +51,7 @@
 #tooltip-span {
     display: block;
     position: absolute;
-    top: 0%;
+    top: 0;
     margin: 5px;
 }
 
