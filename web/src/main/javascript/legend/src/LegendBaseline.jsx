@@ -30,7 +30,9 @@ var LegendBaseline = React.createClass({
         return (
             <div className="gxaHeatmapLegendGradient">
                 <div style={{display: "inline-table"}}>
-                    <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={NumberFormat.baselineExpression(this.props.minExpressionLevel)} highExpressionLevel={NumberFormat.baselineExpression(this.props.maxExpressionLevel)} lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
+                    <LegendRow displayLevels={this.props.displayLevels}
+                               lowExpressionLevel={NumberFormat.baselineExpression(this.props.minExpressionLevel)}
+                               highExpressionLevel={NumberFormat.baselineExpression(this.props.maxExpressionLevel)} lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
                 </div>
                 <div ref="legendHelp" data-help-loc={this.props.helpTooltipLocation} className="gxaLegendHelp"/>
             </div>

@@ -2,15 +2,12 @@
 
 //*------------------------------------------------------------------*
 
-var URI = require('urijs');
+var HeatmapAnatomogramContainer = require('./heatmap-anatomogram-container.jsx');
 
 //*------------------------------------------------------------------*
 
-function drawHeatmap (data, targetElement, heatmapBuilder, isWidget, isMultiExperiment, heatmapKey) {
-
+function drawHeatmap (data, targetElement, isWidget, isMultiExperiment, heatmapKey) {
     var React = require('react');
-
-    var HeatmapAnatomogramContainer = require('./heatmap-anatomogram-container.jsx');
 
     var heatmapConfig = data.config,
         columnHeaders = data.columnHeaders,
@@ -19,14 +16,15 @@ function drawHeatmap (data, targetElement, heatmapBuilder, isWidget, isMultiExpe
         anatomogramData = data.anatomogram,
         experimentData = data.experiment;
 
-    var Heatmap = heatmapBuilder(heatmapConfig).Heatmap;
+    var type = isMultiExperiment ? "isMultiExperiment" : "isBaseline";
 
     React.render(
         React.createElement(
             HeatmapAnatomogramContainer,
-            {Heatmap: Heatmap, isWidget: isWidget, isMultiExperiment: isMultiExperiment, experiment: experimentData,
-             anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
-             geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig: heatmapConfig
+            {   type: type, heatmapConfig: heatmapConfig,
+                experiment: experimentData, isWidget: isWidget,
+                anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
+                geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey
             }
         ),
         targetElement
@@ -36,8 +34,8 @@ function drawHeatmap (data, targetElement, heatmapBuilder, isWidget, isMultiExpe
 //*------------------------------------------------------------------*
 
 module.exports = function(opt) {
+    var URI = require('urijs');
 
-    var heatmapModule = require('./heatmap.jsx');
     var $ = require('jquery');
     require('../lib/jquery.xdomainrequest.js');
 
@@ -103,9 +101,9 @@ module.exports = function(opt) {
         data.config.linksAtlasBaseURL = linksAtlasBaseURL;
 
         if (opt.isMultiExperiment) {
-            drawHeatmap(data, targetElement, heatmapModule.buildMultiExperiment, isWidget, opt.isMultiExperiment, opt.heatmapKey);
+            drawHeatmap(data, targetElement, isWidget, opt.isMultiExperiment, opt.heatmapKey);
         } else {
-            drawHeatmap(data, targetElement, heatmapModule.buildBaseline, isWidget, opt.isMultiExperiment);
+            drawHeatmap(data, targetElement, isWidget, opt.isMultiExperiment);
         }
 
     }).fail(function (jqXHR, textStatus, errorThrown) {

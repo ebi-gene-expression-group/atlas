@@ -14,6 +14,7 @@ var EventEmitter = require('wolfy87-eventemitter');
 //*------------------------------------------------------------------*
 
 var Anatomogram = require('anatomogram');
+var Heatmap = require('./heatmap.jsx');
 
 //*------------------------------------------------------------------*
 
@@ -40,6 +41,13 @@ var ExperimentDescription = React.createClass({
 
 });
 
+var TypeEnum = {
+    BASELINE: { isBaseline: true, heatmapTooltip: '#heatMapTableCellInfo', legendTooltip: '#gradient-base' },
+    PROTEOMICS_BASELINE: { isBaseline: true, isProteomics: true, heatmapTooltip: '#heatMapTableCellInfo-proteomics', legendTooltip: '#gradient-base' },
+    DIFFERENTIAL: { isDifferential: true, heatmapTooltip: '#heatMapTableCellInfo-differential' },
+    MULTIEXPERIMENT: { isMultiExperiment: true, heatmapTooltip: '#heatMapTableCellInfo-multiexp', legendTooltip: '#gradient-base-crossexp' }
+};
+
 
 var HeatmapAnatomogramContainer = React.createClass({
 
@@ -47,10 +55,19 @@ var HeatmapAnatomogramContainer = React.createClass({
         var ensemblEventEmitter = new EventEmitter();
         var anatomogramEventEmitter = new EventEmitter();
 
-        var anatomogramExpressedTissueColour = this.props.isMultiExperiment ? "red" : "gray";
-        var anatomogramHoveredTissueColour = this.props.isMultiExperiment ? "indigo" : "red";
+        var type;
+        if(this.props.type == "isBaseline") {
+            type = TypeEnum.BASELINE;
+        } else if(this.props.type == "isMultiExperiment") {
+            type = TypeEnum.MULTIEXPERIMENT;
+        } else if(this.props.type == "isDifferential") {
+            type = TypeEnum.DIFFERENTIAL;
+        } else if(this.props.type == "isProteomics") {
+            type = TypeEnum.PROTEOMICS_BASELINE;
+        }
 
-        var Heatmap = this.props.Heatmap;
+        var anatomogramExpressedTissueColour = type.isMultiExperiment ? "red" : "gray";
+        var anatomogramHoveredTissueColour = type.isMultiExperiment ? "indigo" : "red";
 
         var heatmapConfig = this.props.heatmapConfig;
 
@@ -72,8 +89,14 @@ var HeatmapAnatomogramContainer = React.createClass({
                         </div>
 
                         <div id="heatmap-react" className="gxaHeatmapPosition">
-                            <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} isWidget={this.props.isWidget}
-                                     ensemblEventEmitter={ensemblEventEmitter} anatomogramEventEmitter={anatomogramEventEmitter} />
+                            <Heatmap type={type}
+                                     heatmapConfig={this.props.heatmapConfig}
+                                     columnHeaders={this.props.columnHeaders}
+                                     profiles={this.props.profiles}
+                                     geneSetProfiles={this.props.geneSetProfiles}
+                                     isWidget={this.props.isWidget}
+                                     ensemblEventEmitter={ensemblEventEmitter}
+                                     anatomogramEventEmitter={anatomogramEventEmitter} />
                         </div>
 
                         {/* TODO Remove and use help-tooltips package */}
