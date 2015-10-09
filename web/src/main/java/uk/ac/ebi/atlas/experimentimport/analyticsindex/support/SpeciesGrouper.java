@@ -71,7 +71,6 @@ public final class SpeciesGrouper {
     }
 
     private static ImmutableMap<String, String> buildMultipleEnsemblSpeciesGroupedByContrastId(DifferentialExperiment experiment) {
-        //TODO: eg: example multi-species diff experiment: http://wwwdev.ebi.ac.uk/gxa/experiments/E-GEOD-6404/experiment-design
         throw new UnsupportedOperationException();
     }
 
