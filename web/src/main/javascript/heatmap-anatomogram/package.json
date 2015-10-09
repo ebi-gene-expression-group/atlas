@@ -11,43 +11,37 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "urijs": "^1.16.0",
+    "anatomogram": "file:../anatomogram",
+    "cell-differential": "file:../cell-differential",
     "fancybox": "^3.0.0",
     "heatmap-baseline-cell-variance": "file:../heatmap-baseline-cell-variance",
-    "anatomogram": "file:../anatomogram",
-    "legend": "file:../legend",
-    "number-format": "file:../number-format",
-    "cell-differential": "file:../cell-differential",
+    "help-tooltips": "file:../help-tooltips",
     "jquery": "^2.1.4",
     "jquery-highlight": "^3.2.2",
     "jquery-ui": "^1.10.5",
     "jquery.browser": "0.0.8",
+    "legend": "file:../legend",
     "modernizr": "^3.0.0-alpha.3",
+    "number-format": "file:../number-format",
     "react": "^0.12.2",
     "react-radio-group": "^1.1.0",
     "throttle-debounce": "^0.1.1",
+    "urijs": "^1.16.0",
     "wolfy87-eventemitter": "^4.2.11"
   },
   "devDependencies": {
     "jsx-loader": "^0.12.2",
     "react-hot-loader": "^1.2.8",
-
     "chai": "^3.0.0",
-
     "expose-loader": "^0.7.0",
-
     "imagemin": "^3.1.0",
     "file-loader": "^0.8.4",
     "image-webpack-loader": "^1.6.1",
-
     "mocha": "^2.0.1",
     "mocha-loader": "^0.7.1",
-
     "css-loader": "^0.19.0",
     "style-loader": "^0.12.3",
-
     "testdom": "^2.0.0",
-
     "webpack": "^1.10.1",
     "webpack-dev-server": "^1.10.1"
   }

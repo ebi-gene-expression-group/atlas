@@ -8,7 +8,7 @@ var React = require('react');
 
 var LegendRow = require('./LegendRow.jsx');
 var NumberFormat = require('number-format');
-var HelpTooltipsInit = require('help-tooltips');
+var HelpTooltips = require('help-tooltips');
 
 //*------------------------------------------------------------------*
 
@@ -19,8 +19,8 @@ require('../css/legend.css');
 var LegendBaseline = React.createClass({
 
     propTypes: {
-        minExpressionLevel: React.PropTypes.string.isRequired,
-        maxExpressionLevel: React.PropTypes.string.isRequired,
+        minExpressionLevel: React.PropTypes.number.isRequired,
+        maxExpressionLevel: React.PropTypes.number.isRequired,
         helpTooltipLocation: React.PropTypes.string.isRequired,
         displayLevels: React.PropTypes.bool.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired
@@ -32,7 +32,9 @@ var LegendBaseline = React.createClass({
                 <div style={{display: "inline-table"}}>
                     <LegendRow displayLevels={this.props.displayLevels}
                                lowExpressionLevel={NumberFormat.baselineExpression(this.props.minExpressionLevel)}
-                               highExpressionLevel={NumberFormat.baselineExpression(this.props.maxExpressionLevel)} lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
+                               highExpressionLevel={NumberFormat.baselineExpression(this.props.maxExpressionLevel)}
+                               lowValueColour="#C0C0C0"
+                               highValueColour="#0000FF"/>
                 </div>
                 <div ref="legendHelp" data-help-loc={this.props.helpTooltipLocation} className="gxaLegendHelp"/>
             </div>
@@ -40,7 +42,7 @@ var LegendBaseline = React.createClass({
     },
 
     componentDidMount: function () {
-        HelpTooltipsInit(this.props.atlasBaseURL, "experiment", this.refs.legendHelp.getDOMNode());
+        HelpTooltips.init(this.props.atlasBaseURL, "experiment", this.refs.legendHelp.getDOMNode());
     }
 });
 

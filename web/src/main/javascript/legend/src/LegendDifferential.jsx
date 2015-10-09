@@ -7,7 +7,7 @@ var React = require('react');
 //*------------------------------------------------------------------*
 
 var LegendRow = require('./LegendRow.jsx');
-var HelpTooltipsInit = require('help-tooltips');
+var HelpTooltips = require('help-tooltips');
 
 //*------------------------------------------------------------------*
 
@@ -31,10 +31,18 @@ var LegendDifferential = React.createClass({
             <div className="gxaLegend">
                 <div style={{display: "inline-table"}}>
                     {!isNaN(this.props.minDownLevel) && !isNaN(this.props.maxDownLevel) ?
-                        <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minDownLevel} highExpressionLevel={this.props.maxDownLevel} lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
+                        <LegendRow displayLevels={this.props.displayLevels}
+                                   lowExpressionLevel={this.props.minDownLevel}
+                                   highExpressionLevel={this.props.maxDownLevel}
+                                   lowValueColour="#C0C0C0"
+                                   highValueColour="#0000FF"/>
                         : null }
                     {!isNaN(this.props.minUpLevel) && !isNaN(this.props.maxUpLevel) ?
-                        <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minUpLevel} highExpressionLevel={this.props.maxUpLevel} lowValueColour="#FFAFAF" highValueColour="#FF0000"/>
+                        <LegendRow displayLevels={this.props.displayLevels}
+                                   lowExpressionLevel={this.props.minUpLevel}
+                                   highExpressionLevel={this.props.maxUpLevel}
+                                   lowValueColour="#FFAFAF"
+                                   highValueColour="#FF0000"/>
                         : null }
                 </div>
                 <div ref="legendHelp" data-help-loc="#gradient-differential" className="gxaLegendHelp"/>
@@ -43,7 +51,7 @@ var LegendDifferential = React.createClass({
     },
 
     componentDidMount: function () {
-        HelpTooltipsInit(this.props.atlasBaseURL, "experiment", this.refs.legendHelp.getDOMNode());
+        HelpTooltips.init(this.props.atlasBaseURL, "experiment", this.refs.legendHelp.getDOMNode());
     }
 });
 

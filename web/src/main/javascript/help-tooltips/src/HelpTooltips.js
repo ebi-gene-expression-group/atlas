@@ -67,4 +67,6 @@ function initTooltips(atlasBaseURL, pageName, parentElementId) {
 
 //*------------------------------------------------------------------*
 
-module.exports = initTooltips;
+exports.init = function (atlasBaseURL, pageName, parentElementId) {
+    initTooltips(atlasBaseURL, pageName, parentElementId);
+};

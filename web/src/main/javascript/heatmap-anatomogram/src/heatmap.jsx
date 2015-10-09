@@ -31,8 +31,7 @@ var CellDifferential = require('cell-differential');
 var genePropertiesTooltipModule = require('./gene-properties-tooltip-module.js');
 var factorTooltipModule = require('./factor-tooltip-module.js');
 var contrastTooltipModule = require('./contrast-tooltip-module.js');
-var helpTooltipsModule = require('./help-tooltips-module.js');
-
+var HelpTooltips = require('help-tooltips');
 //*------------------------------------------------------------------*
 
 require('../css/table-grid.css');
@@ -273,11 +272,12 @@ var Heatmap = React.createClass({
     legendType: function () {
         return (this.props.type.isBaseline || this.props.type.isMultiExperiment ?
             <Legend.LegendBaseline displayLevels={this.state.displayLevels}
-                                   contextRoot={this.props.heatmapConfig.contextRoot}
+                                   atlasBaseURL={this.props.heatmapConfig.atlasBaseURL}
                                    helpTooltipLocation={this.props.type.legendTooltip}
                                    minExpressionLevel={this.state.profiles.minExpressionLevel}
                                    maxExpressionLevel={this.state.profiles.maxExpressionLevel}/> :
             <Legend.LegendDifferential displayLevels={this.state.displayLevels}
+                                       atlasBaseURL={this.props.heatmapConfig.atlasBaseURL}
                                        minDownLevel={this.state.profiles.minDownLevel}
                                        maxDownLevel={this.state.profiles.maxDownLevel}
                                        minUpLevel={this.state.profiles.minUpLevel}
@@ -446,15 +446,14 @@ var Heatmap = React.createClass({
 
 var DownloadProfilesButton = React.createClass({
     render: function () {
-
-        var normalizedURL = URI("http://" + this.props.heatmapConfig.contextRoot + this.props.heatmapConfig.downloadProfilesURL).normalize();
-        var normalizedSrcURL = URI("http://" + this.props.heatmapConfig.contextRoot + "/resources/images/download_blue_small.png").normalize();
+        var downloadURL = this.props.heatmapConfig.atlasBaseURL + this.props.heatmapConfig.downloadProfilesURL;
+        var downloadImgSrcURL = this.props.heatmapConfig.atlasBaseURL + "/resources/images/download_blue_small.png";
 
         return (
             <a id="download-profiles-link" ref="downloadProfilesLink"
                title="Download all results"
-               href={normalizedURL} className="gxaButtonImage" target="_blank">
-                <img id="download-profiles" alt="Download query results" style={{width: "20px"}} src={normalizedSrcURL}/>
+               href={downloadURL} className="gxaButtonImage" target="_blank">
+                <img id="download-profiles" alt="Download query results" style={{width: "20px"}} src={downloadImgSrcURL}/>
             </a>
         );
     },
@@ -470,29 +469,6 @@ var DownloadProfilesButton = React.createClass({
         });
     }
 });
-
-
-var LegendRow = React.createClass({
-    render: function () {
-        var BACKGROUND_IMAGE_TEMPLATE = "-webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});background-image: -ms-linear-gradient(left, ${lowValueColour}, ${highValueColour}); background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour})";
-        var backgroundImage = BACKGROUND_IMAGE_TEMPLATE.replace(/\${lowValueColour}/g, this.props.lowValueColour).replace(/\${highValueColour}/g, this.props.highValueColour);
-
-        // for IE9
-        var LT_IE10_FILTER_TEMPLATE = "progid:DXImageTransform.Microsoft.Gradient(GradientType =1,startColorstr=${lowValueColour},endColorstr=${highValueColour})";
-        var lt_ie10_filter = LT_IE10_FILTER_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
-
-        return (
-            <div style={{display: "table-row"}}>
-                <div style={this.props.displayLevels ? {'whiteSpace': "nowrap", "fontSize": "10px", 'verticalAlign': "middle", display: "table-cell"} : {'whiteSpace': "nowrap", "fontSize": "10px", 'verticalAlign': "middle", display: "table-cell", visibility: "hidden"}} className="gxaGradientLevelMin">{this.props.lowExpressionLevel}</div>
-                <div style={{display: "table-cell"}}>
-                    <span className="gxaGradientColour" style={{overflow: "auto", 'verticalAlign': "middle", "backgroundImage": backgroundImage, filter: lt_ie10_filter, width: "200px", height: "15px", margin: "2px 6px 2px 6px", display: "inline-block"}} />
-                </div>
-                <div style={this.props.displayLevels ? {'whiteSpace': "nowrap", "fontSize": "10px", 'verticalAlign': "middle", display: "table-cell"} : {'whiteSpace': "nowrap", "fontSize": "10px", 'verticalAlign': "middle", display: "none", visibility: "hidden"}} className="gxaGradientLevelMax">{this.props.highExpressionLevel}</div>
-            </div>
-        );
-    }
-});
-
 
 var HeatmapTableHeader = React.createClass({
     renderContrastFactorHeaders: function () {
@@ -747,7 +723,7 @@ var FactorHeader = React.createClass({
 
         componentDidMount: function () {
             if(!this.props.type.isMultiExperiment) {
-                factorTooltipModule.init("http://" + this.props.heatmapConfig.contextRoot, this.props.heatmapConfig.accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
+                factorTooltipModule.init(this.props.heatmapConfig.atlasBaseURL, this.props.heatmapConfig.accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
             }
             if (this.props.anatomogramEventEmitter) {
                 this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
@@ -825,7 +801,7 @@ var ContrastHeader = React.createClass({
     },
 
     componentDidMount: function () {
-        contrastTooltipModule.init("http://" + this.props.heatmapConfig.contextRoot, this.props.heatmapConfig.accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
+        contrastTooltipModule.init(this.props.heatmapConfig.atlasBaseURL, this.props.heatmapConfig.accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
 
         if (this.showPlotsButton()) {
             this.renderToolBarContent(this.refs.plotsToolBarContent.getDOMNode());
@@ -843,28 +819,24 @@ var ContrastHeader = React.createClass({
 
         var $contentNode = $(contentNode);
 
-        var maPlotURL = "http://" + this.props.heatmapConfig.contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
-        var normalizedMaPlotURL = URI(maPlotURL).normalize();
-        var normalizedMaPlotSrcURL = URI("http://" + this.props.heatmapConfig.contextRoot + "/resources/images/maplot-button.png").normalize();
+        var maPlotURL = this.props.heatmapConfig.atlasBaseURL + "/external-resources/" + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
+        var maPlotImgSrcURL = this.props.heatmapConfig.atlasBaseURL + "/resources/images/maplot-button.png";
 
-        var gseaGoPlotURL = "http://" + this.props.heatmapConfig.contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_go.png";
-        var normalizedGSeaGoPlotURL = URI(gseaGoPlotURL).normalize();
-        var normalizedGseaGoPlotSrcURL = URI("http://" + this.props.heatmapConfig.contextRoot + "/resources/images/gsea-go-button.png").normalize();
+        var gseaGoPlotURL = this.props.heatmapConfig.atlasBaseURL + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_go.png";
+        var gseaGoPlotImgSrcURL = this.props.heatmapConfig.atlasBaseURL + "/resources/images/gsea-go-button.png";
 
-        var gseaInterproPlotURL = "http://" + this.props.heatmapConfig.contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_interpro.png";
-        var normalizedGSeaInterproURL = URI(gseaInterproPlotURL).normalize();
-        var normalizedGseaInterproSrcURL = URI("http://" + this.props.heatmapConfig.contextRoot + '/resources/images/gsea-interpro-button.png').normalize();
+        var gseaInterproPlotURL = this.props.heatmapConfig.atlasBaseURL + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_interpro.png";
+        var gseaInterproImgSrcURL = this.props.heatmapConfig.atlasBaseURL + '/resources/images/gsea-interpro-button.png';
 
-        var gseaReactomePlotURL = "http://" + this.props.heatmapConfig.contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_reactome.png";
-        var normalizedGseaReactomePlotURL = URI(gseaReactomePlotURL).normalize();
-        var normalizedGseaReactomePlotSrcURL = URI("http://" + this.props.heatmapConfig.contextRoot + "/resources/images/gsea-reactome-button.png").normalize();
+        var gseaReactomePlotURL = this.props.heatmapConfig.atlasBaseURL + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_reactome.png";
+        var gseaReactomePlotImgSrcURL = this.props.heatmapConfig.atlasBaseURL + "/resources/images/gsea-reactome-button.png";
 
         var content =
             <div>
-                {this.props.showMaPlotButton ? <a href={normalizedMaPlotURL} id="maButtonID" title="Click to view MA plot for the contrast across all genes" onClick={this.clickButton}><img src={normalizedMaPlotSrcURL} /></a> : null }
-                {this.props.showGseaGoPlot ? <a href={normalizedGSeaGoPlotURL} id="goButtonID" title="Click to view GO terms enrichment analysis plot" onClick={this.clickButton}><img src={normalizedGseaGoPlotSrcURL} /></a> : null }
-                {this.props.showGseaInterproPlot ? <a href={normalizedGSeaInterproURL} id="interproButtonID" title="Click to view Interpro domains enrichment analysis plot" onClick={this.clickButton}><img src={normalizedGseaInterproSrcURL} /></a> : null }
-                {this.props.showGseaReactomePlot ? <a href={normalizedGseaReactomePlotURL} id="reactomeButtonID" title="Click to view Reactome pathways enrichment analysis plot" onClick={this.clickButton}><img src={normalizedGseaReactomePlotSrcURL} /></a> : null }
+                {this.props.showMaPlotButton ? <a href={maPlotURL} id="maButtonID" title="Click to view MA plot for the contrast across all genes" onClick={this.clickButton}><img src={maPlotImgSrcURL} /></a> : null }
+                {this.props.showGseaGoPlot ? <a href={gseaGoPlotURL} id="goButtonID" title="Click to view GO terms enrichment analysis plot" onClick={this.clickButton}><img src={gseaGoPlotImgSrcURL} /></a> : null }
+                {this.props.showGseaInterproPlot ? <a href={gseaInterproPlotURL} id="interproButtonID" title="Click to view Interpro domains enrichment analysis plot" onClick={this.clickButton}><img src={gseaInterproImgSrcURL} /></a> : null }
+                {this.props.showGseaReactomePlot ? <a href={gseaReactomePlotURL} id="reactomeButtonID" title="Click to view Reactome pathways enrichment analysis plot" onClick={this.clickButton}><img src={gseaReactomePlotImgSrcURL} /></a> : null }
             </div>;
 
         // the tool bar content will be copied around the DOM by the toolbar plugin
@@ -897,11 +869,11 @@ var ContrastHeader = React.createClass({
         var thStyle = this.showPlotsButton() ? {minWidth: "80px"} : {};
         var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
-        var normalizedSrcURL = URI("http://" + this.props.heatmapConfig.contextRoot + "/resources/images/yellow-chart-icon.png").normalize();
+        var plotsImgSrcURL = this.props.heatmapConfig.atlasBaseURL + "/resources/images/yellow-chart-icon.png";
 
         var plotsButton = (
             <div style={{textAlign: "right", paddingRight: "3px"}} >
-                <a href="#" ref="plotsButton" onClick={this.clickButton} className="gxaButtonImage" title="Click to view plots"><img src={normalizedSrcURL}/></a>
+                <a href="#" ref="plotsButton" onClick={this.clickButton} className="gxaButtonImage" title="Click to view plots"><img src={plotsImgSrcURL}/></a>
             </div>
         );
 
@@ -949,7 +921,7 @@ var TopLeftCorner = React.createClass({
         },
 
         componentDidMount: function () {
-            helpTooltipsModule.init('experiment', "http://" + this.props.heatmapConfig.contextRoot, this.refs.tooltipSpan.getDOMNode());
+            HelpTooltips.init(this.props.heatmapConfig.atlasBaseURL, 'experiment', this.refs.tooltipSpan.getDOMNode());
         }
 });
 
@@ -1103,15 +1075,14 @@ var GeneProfileRow = React.createClass({
 
             var titleTooltip = this.props.type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "Protein Expression" : "RNA Expression" ) : "";
 
-            var experimentOrGeneURL = (this.props.type.isMultiExperiment ? experimentURL : geneURL);
-            var normalizedURL = URI("http://" + this.props.heatmapConfig.contextRoot + experimentOrGeneURL).normalize();
+            var experimentOrGeneURL = this.props.heatmapConfig.linksAtlasBaseURL + (this.props.type.isMultiExperiment ? experimentURL : geneURL);
 
             // don't render id for gene sets to prevent tooltips
             // The vertical align in the <a> element is needed because the kerning in the font used in icon-conceptual is vertically off
             return (
                 <span title={titleTooltip} style={{"display": "table-cell"}}>
                         <span className="icon icon-conceptual icon-c2" data-icon={this.props.type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}></span>
-                        <a ref="geneName" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={normalizedURL} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
+                        <a ref="geneName" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={experimentOrGeneURL} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
                     </span>
             );
         },
@@ -1174,9 +1145,11 @@ var GeneProfileRow = React.createClass({
                     <CellMultiExperiment key={this.props.id + expression.factorName}
                                          factorName={expression.factorName}
                                          serializedFilterFactors={this.props.serializedFilterFactors}
-                                         color={expression.color} value={expression.value}
+                                         color={expression.color}
+                                         value={expression.value}
                                          displayLevels={this.props.displayLevels}
-                                         svgPathId={expression.svgPathId} id={this.props.id}
+                                         svgPathId={expression.svgPathId}
+                                         id={this.props.id}
                                          name={this.props.name}
                                          hoverColumnCallback={this.props.hoverColumnCallback}/>
                 );
@@ -1215,7 +1188,7 @@ var GeneProfileRow = React.createClass({
 
         componentDidMount: function () {
             if(!this.props.type.isMultiExperiment) {
-                genePropertiesTooltipModule.init("http://" + this.props.heatmapConfig.contextRoot, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
+                genePropertiesTooltipModule.init(this.props.heatmapConfig.atlasBaseURL, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
             }
         },
 
@@ -1261,7 +1234,7 @@ var CellBaseline = React.createClass({
         }
 
         if (this._isUnknownExpression() && !hasQuestionMark(this.refs.unknownCell.getDOMNode())) {
-            helpTooltipsModule.init('experiment', "http://" + this.props.heatmapConfig.contextRoot, this.refs.unknownCell.getDOMNode());
+            HelpTooltips.init(this.props.heatmapConfig.atlasBaseURL, 'experiment', this.refs.unknownCell.getDOMNode());
         }
     },
 
