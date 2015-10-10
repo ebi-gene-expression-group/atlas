@@ -13,6 +13,7 @@
   "dependencies": {
     "anatomogram": "file:../anatomogram",
     "cell-differential": "file:../cell-differential",
+    "display-levels-button": "file:../display-levels-button",
     "fancybox": "^3.0.0",
     "heatmap-baseline-cell-variance": "file:../heatmap-baseline-cell-variance",
     "help-tooltips": "file:../help-tooltips",
