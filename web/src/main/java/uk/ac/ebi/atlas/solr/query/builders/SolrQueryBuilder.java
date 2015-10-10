@@ -76,11 +76,11 @@ public abstract class SolrQueryBuilder<T extends SolrQueryBuilder<T>> {
         return getThis();
     }
 
-    protected Collection<String> transformToConditions(final String filedName, Set<String> values){
+    protected Collection<String> transformToConditions(final String fieldName, Set<String> values){
         return Collections2.transform(values, new Function<String, String>() {
             @Override
             public String apply(String bioEntityType) {
-                return filedName.concat(":\"").concat(bioEntityType).concat("\"");
+                return fieldName.concat(":\"").concat(bioEntityType).concat("\"");
             }
         });
 

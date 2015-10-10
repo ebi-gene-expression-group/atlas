@@ -91,6 +91,7 @@
         -->
         <field name="id" type="uuid" indexed="true" stored="true" required="true" />
         <field name="bioentityIdentifier" type="string" indexed="true" stored="true" required="true"/>
+        <field name="identifierSearch" type="text_en" indexed="true" stored="true"/>
         <field name="species" type="string" indexed="true" stored="true" required="true"/>
         <field name="kingdom" type="string" indexed="true" stored="true" required="true" />
         <field name="experimentAccession" type="string" indexed="true" stored="true" required="true"/>

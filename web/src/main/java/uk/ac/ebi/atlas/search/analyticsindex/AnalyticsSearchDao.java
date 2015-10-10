@@ -33,7 +33,6 @@ public class AnalyticsSearchDao {
         this.analyticsSolrClient = analyticsSolrClient;
     }
 
-
     public ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery) {
         QueryResponse queryResponse = query(buildQuery(geneQuery));
         return SolrUtil.extractFirstFacetValues(queryResponse);
