@@ -20,7 +20,7 @@ do
     cd ..
 done
 
-rm -rf node_modules
-npm install
+# rm -rf node_modules
+# npm install
 
 npm run $1
