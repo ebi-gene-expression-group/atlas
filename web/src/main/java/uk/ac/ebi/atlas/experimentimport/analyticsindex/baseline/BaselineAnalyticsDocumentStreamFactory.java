@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline;
 
 import com.google.common.collect.SetMultimap;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.IdentifierSearchTermsTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -12,10 +13,13 @@ import java.util.Map;
 @Named
 public class BaselineAnalyticsDocumentStreamFactory {
 
+    private final IdentifierSearchTermsTrader identifierSearchTermsTrader;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     @Inject
-    public BaselineAnalyticsDocumentStreamFactory(SpeciesKingdomTrader speciesKingdomTrader) {
+    public BaselineAnalyticsDocumentStreamFactory(IdentifierSearchTermsTrader identifierSearchTermsTrader,
+                                                  SpeciesKingdomTrader speciesKingdomTrader) {
+        this.identifierSearchTermsTrader = identifierSearchTermsTrader;
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
@@ -25,8 +29,16 @@ public class BaselineAnalyticsDocumentStreamFactory {
                                           String defaultQueryFactorType,
                                           Iterable<BaselineAnalytics> inputStream,
                                           SetMultimap<String, String> conditionSearchTermsByAssayAccessionId) {
-        return new BaselineAnalyticsDocumentStream(experimentAccession, experimentType, ensemblSpeciesGroupedByAssayGroupId, defaultQueryFactorType,
-                inputStream, conditionSearchTermsByAssayAccessionId, speciesKingdomTrader);
+
+        return new BaselineAnalyticsDocumentStream(experimentAccession,
+                                                   experimentType,
+                                                   ensemblSpeciesGroupedByAssayGroupId,
+                                                   defaultQueryFactorType,
+                                                   inputStream,
+                                                   conditionSearchTermsByAssayAccessionId,
+                                                   identifierSearchTermsTrader,
+                                                   speciesKingdomTrader);
+
     }
 
 }

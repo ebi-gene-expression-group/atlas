@@ -45,13 +45,13 @@ public class AnalyticsIndexerController {
 
     private AnalyticsIndexerManager analyticsIndexerManager;
     private AnalyticsIndexerMonitor analyticsIndexerMonitor;
-    private IdentifierSearchTermsManager identifierSearchTermsManager;
+    private IdentifierSearchTermsTrader identifierSearchTermsTrader;
 
     @Inject
-    public AnalyticsIndexerController(AnalyticsIndexerManager analyticsIndexerManager, AnalyticsIndexerMonitor analyticsIndexerMonitor, IdentifierSearchTermsManager identifierSearchTermsManager) {
+    public AnalyticsIndexerController(AnalyticsIndexerManager analyticsIndexerManager, AnalyticsIndexerMonitor analyticsIndexerMonitor, IdentifierSearchTermsTrader identifierSearchTermsTrader) {
         this.analyticsIndexerManager = analyticsIndexerManager;
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
-        this.identifierSearchTermsManager = identifierSearchTermsManager;
+        this.identifierSearchTermsTrader = identifierSearchTermsTrader;
     }
 
     @RequestMapping("/analyticsIndex/buildIndex")
@@ -112,22 +112,24 @@ public class AnalyticsIndexerController {
     @RequestMapping("/analyticsIndex/updateIdentifierSearchTerms")
     @ResponseBody
     public String updateIdentifierSearchTerms(@RequestParam(value = "accession", required = false) String experimentAccession) {
-        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-        stopWatch.start();
-
-        int updatedIdentifiers = 0;
-        if (Strings.isNullOrEmpty(experimentAccession)) {
-            identifierSearchTermsManager.updateAllBioentityIdentifiers();
-        } else {
+//        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+//        stopWatch.start();
+//
+//        int updatedIdentifiers = 0;
+//        if (Strings.isNullOrEmpty(experimentAccession)) {
+//            identifierSearchTermsTrader.init();
+//        } else {
 //            updatedIdentifiers = identifierSearchTermsManager.updateSearchTerms(experimentAccession);
-        }
+//        }
+//
+//        stopWatch.stop();
+//
+//        String message = Strings.isNullOrEmpty(experimentAccession) ?
+//                String.format("All experiments search terms added for %,d identifiers in %s seconds", updatedIdentifiers, stopWatch.getTotalTimeSeconds()) :
+//                String.format("Experiment %s search terms added for %,d identifiers in %s seconds", experimentAccession, updatedIdentifiers, stopWatch.getTotalTimeSeconds());
+//        return message;
 
-        stopWatch.stop();
-
-        String message = Strings.isNullOrEmpty(experimentAccession) ?
-                String.format("All experiments search terms added for %,d identifiers in %s seconds", updatedIdentifiers, stopWatch.getTotalTimeSeconds()) :
-                String.format("Experiment %s search terms added for %,d identifiers in %s seconds", experimentAccession, updatedIdentifiers, stopWatch.getTotalTimeSeconds());
-        return message;
+        return "Operation not supported";
     }
 
     @ExceptionHandler(Exception.class)

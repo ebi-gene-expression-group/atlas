@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.IdentifierSearchTermsTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -47,6 +48,9 @@ public class BaselineAnalyticsDocumentStreamTest {
     private static final String ENSEMBL_ENSEMBLDB = "ensembl";
 
     @Mock
+    IdentifierSearchTermsTrader identifierSearchTermsTraderMock;
+
+    @Mock
     private SpeciesKingdomTrader speciesKingdomTraderMock;
 
     private ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId = ImmutableMap.of(ASSAY_GROUP_ID1, HOMO_SAPIENS, ASSAY_GROUP_ID2, MUS_MUSCULUS);
@@ -67,10 +71,15 @@ public class BaselineAnalyticsDocumentStreamTest {
 
         ImmutableSetMultimap<String, String> conditionSearchTermByAssayAccessionId = conditionSearchBuilder.build();
 
-        BaselineAnalyticsDocumentStream stream = new BaselineAnalyticsDocumentStreamFactory(speciesKingdomTraderMock).create(
-                EXPERIMENT_ACCESSION, EXPERIMENT_TYPE, ensemblSpeciesGroupedByAssayGroupId, DEFAULT_QUERY_FACTOR_TYPE,
-                ImmutableSet.of(BASELINE_ANALYTICS1, BASELINE_ANALYTICS2, BASELINE_ANALYTICS3),
-                conditionSearchTermByAssayAccessionId);
+        BaselineAnalyticsDocumentStream stream =
+                new BaselineAnalyticsDocumentStreamFactory(identifierSearchTermsTraderMock,
+                                                           speciesKingdomTraderMock)
+                        .create(EXPERIMENT_ACCESSION,
+                                EXPERIMENT_TYPE,
+                                ensemblSpeciesGroupedByAssayGroupId,
+                                DEFAULT_QUERY_FACTOR_TYPE,
+                                ImmutableSet.of(BASELINE_ANALYTICS1, BASELINE_ANALYTICS2, BASELINE_ANALYTICS3),
+                                conditionSearchTermByAssayAccessionId);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = stream.iterator();
 

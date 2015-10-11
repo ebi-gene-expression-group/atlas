@@ -52,7 +52,7 @@ public class BaselineAnalyticsSearchDao {
 
 
     String buildGeneIdentifierQuery(GeneQuery geneQuery) {
-        return geneQuery.isEmpty() ? "" : String.format("bioentityIdentifier:(\"%s\")", StringUtils.join(geneQuery.terms(), "\" OR \""));
+        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(\"%s\")", StringUtils.join(geneQuery.terms(), "\" OR \""));
     }
 
 

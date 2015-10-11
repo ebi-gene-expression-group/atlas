@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.IdentifierSearchTermsTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -26,6 +27,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
     private final Iterable<? extends DifferentialAnalytics> inputStream;
     private final SetMultimap<String, String> conditionSearchTermsByContrastId;
     private final Set<String> factors;
+    private final IdentifierSearchTermsTrader identifierSearchTermsTrader;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     public DiffAnalyticsDocumentStream(String experimentAccession,
@@ -35,6 +37,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
                                        Iterable<? extends DifferentialAnalytics> inputStream,
                                        SetMultimap<String, String> conditionSearchTermsByContrastId,
                                        Map<String, Integer> numReplicatesByContrastId,
+                                       IdentifierSearchTermsTrader identifierSearchTermsTrader,
                                        SpeciesKingdomTrader speciesKingdomTrader) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
@@ -43,6 +46,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
         this.inputStream = inputStream;
         this.conditionSearchTermsByContrastId = conditionSearchTermsByContrastId;
         this.numReplicatesByContrastId = numReplicatesByContrastId;
+        this.identifierSearchTermsTrader = identifierSearchTermsTrader;
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
@@ -70,6 +74,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
             DifferentialAnalytics analytics = inputIterator.next();
 
             String geneId = analytics.getGeneId();
+            String identifierSearch = geneId + " " + identifierSearchTermsTrader.getIdentifierSearch(geneId);
 
             String contrastId = analytics.getContrastId();
             String conditionSearch = getConditionSearchTerms(contrastId);
@@ -80,6 +85,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
                     .species(getEnsemblSpecies(contrastId))
                     .kingdom(speciesKingdomTrader.getKingdom(getEnsemblSpecies(contrastId)))
                     .bioentityIdentifier(geneId)
+                    .identifierSearch(identifierSearch)
                     .contrastId(contrastId)
                     .factors(factors)
                     .foldChange(analytics.getFoldChange())

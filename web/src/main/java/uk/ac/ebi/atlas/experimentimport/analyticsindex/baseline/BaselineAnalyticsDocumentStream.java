@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.IdentifierSearchTermsTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -25,6 +26,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
     private final String defaultQueryFactorType;
     private final Iterable<BaselineAnalytics> inputStream;
     private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
+    private final IdentifierSearchTermsTrader identifierSearchTermsTrader;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     public BaselineAnalyticsDocumentStream(String experimentAccession,
@@ -33,6 +35,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
                                            String defaultQueryFactorType,
                                            Iterable<BaselineAnalytics> inputStream,
                                            SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
+                                           IdentifierSearchTermsTrader identifierSearchTermsTrader,
                                            SpeciesKingdomTrader speciesKingdomTrader) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
@@ -40,6 +43,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.inputStream = inputStream;
         this.conditionSearchTermsByAssayAccessionId = conditionSearchTermsByAssayAccessionId;
+        this.identifierSearchTermsTrader = identifierSearchTermsTrader;
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
@@ -67,6 +71,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
             BaselineAnalytics baselineAnalytics = inputIterator.next();
 
             String geneId = baselineAnalytics.getGeneId();
+            String identifierSearch = geneId + " " + identifierSearchTermsTrader.getIdentifierSearch(geneId);
 
             String assayGroupId = baselineAnalytics.getAssayGroupId();
             String conditionSearch = getConditionSearchTerms(assayGroupId);
@@ -79,6 +84,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
                     .kingdom(speciesKingdomTrader.getKingdom(getEnsemblSpecies(assayGroupId)))
                     .bioentityIdentifier(geneId)
                     .expressionLevel(baselineAnalytics.getExpressionLevel())
+                    .identifierSearch(identifierSearch)
                     .assayGroupId(assayGroupId)
                     .conditionsSearch(conditionSearch);
 

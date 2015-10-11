@@ -34,6 +34,9 @@ public class AnalyticsDocument {
     String defaultQueryFactorType;
 
     @Field
+    String identifierSearch;
+
+    @Field
     String conditionsSearch;
 
     @Field
@@ -79,6 +82,10 @@ public class AnalyticsDocument {
 
     public String getDefaultQueryFactorType() {
         return defaultQueryFactorType;
+    }
+
+    public String getIdentifierSearch() {
+        return identifierSearch;
     }
 
     public String getConditionsSearch() {
@@ -130,7 +137,7 @@ public class AnalyticsDocument {
             checkNotNull(build.kingdom, "missing kingdom");
             checkNotNull(build.experimentAccession, "missing experimentAccession");
             checkNotNull(build.experimentType, "missing experimentType");
-            //checkNotNull(build.identifierSearch, "missing identifierSearch");
+            checkNotNull(build.identifierSearch, "missing identifierSearch");
             checkNotNull(build.conditionsSearch, "missing conditionsSearch");
 
             if (build.experimentType.isBaseline()) {
@@ -175,6 +182,11 @@ public class AnalyticsDocument {
 
         public Builder defaultQueryFactorType(String defaultQueryFactorType) {
             build.defaultQueryFactorType = defaultQueryFactorType;
+            return this;
+        }
+
+        public Builder identifierSearch(String identifierSearch) {
+            build.identifierSearch = identifierSearch;
             return this;
         }
 

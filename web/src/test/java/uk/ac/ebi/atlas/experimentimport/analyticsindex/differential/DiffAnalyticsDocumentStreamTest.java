@@ -8,6 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.IdentifierSearchTermsTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -39,6 +40,9 @@ public class DiffAnalyticsDocumentStreamTest {
     DiffAnalyticsDocumentStream subject;
 
     @Mock
+    IdentifierSearchTermsTrader identifierSearchTermsTraderMock;
+
+    @Mock
     SpeciesKingdomTrader speciesKingdomTraderMock;
 
     @Test
@@ -58,7 +62,7 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, speciesKingdomTraderMock);
+                numReplicatesByContrastId, identifierSearchTermsTraderMock, speciesKingdomTraderMock);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();
 
@@ -90,7 +94,7 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, speciesKingdomTraderMock);
+                numReplicatesByContrastId, identifierSearchTermsTraderMock, speciesKingdomTraderMock);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();
 
