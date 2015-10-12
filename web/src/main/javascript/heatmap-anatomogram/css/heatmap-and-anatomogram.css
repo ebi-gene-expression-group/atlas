@@ -73,3 +73,16 @@
     display: table;
     margin: 0 auto;
 }
+
+.gxaAnatomogramSpeciesLabel {
+    width: 245px;   /* Width of gxaHeatmapPosition margin minus anatomogram buttons width */
+}
+
+.gxaAnatomogramSpeciesLabel h5 {
+    text-align: center;
+    /*white-space: nowrap;*/
+}
+
+.gxaAnatomogramSpeciesLabel h5::first-letter {
+    text-transform: uppercase;
+}

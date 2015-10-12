@@ -81,11 +81,18 @@ var HeatmapAnatomogramContainer = React.createClass({
                     <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
                         <div ref="anatomogramEnsembl" className="gxaAside">
+                            { this.props.heatmapKey ?
+                                <div className="gxaAnatomogramSpeciesLabel">
+                                    <h5>{this.props.heatmapConfig.species}</h5>
+                                </div>
+                                : null
+                            }
                             { this.props.anatomogram ?
                                 <Anatomogram anatomogramData={this.props.anatomogram}
                                              expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
                                              profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.heatmapConfig.atlasBaseURL}/>
-                                : null}
+                                : null
+                            }
                         </div>
 
                         <div id="heatmap-react" className="gxaHeatmapPosition">

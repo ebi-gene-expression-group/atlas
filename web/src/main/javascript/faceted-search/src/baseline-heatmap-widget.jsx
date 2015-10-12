@@ -32,7 +32,7 @@ var BaselineHeatmapWidget = React.createClass({
 
     render: function() {
         return(
-            <div ref="widgetBody"></div>
+            <div ref="widgetBody" style={{paddingBottom: "30px"}}></div>
         );
     }
 

@@ -179,7 +179,7 @@ var Anatomogram = React.createClass({
         var height = containsHuman(this.props.anatomogramData.maleAnatomogramFile) ? "360" : "250";
 
         return (
-            <div className="gxaDoubleClickNoSelection" style={{display: "table", paddingTop: "60px"}}>
+            <div className="gxaDoubleClickNoSelection" style={{display: "table", paddingTop: "4px"}}>
                 <div style={{display: "table-row"}}>
                     <div style={{display: "table-cell", verticalAlign: "top"}}>
                         <AnatomogramSelectImageButtons selectedId={this.state.selectedId} availableAnatomograms={this.state.availableAnatomograms} onClick={this._handleChange}/>
