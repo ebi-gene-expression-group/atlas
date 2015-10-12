@@ -11,6 +11,7 @@ public class AnalyticsDocumentTest {
     public void cannotBuildBaselineWithoutExpressionLevel() {
         AnalyticsDocument.builder()
                 .bioentityIdentifier("foo")
+                .identifierSearch("foo")
                 .species("bar")
                 .kingdom("barimals")
                 .experimentAccession("E-FOO-1")
@@ -25,6 +26,7 @@ public class AnalyticsDocumentTest {
     public void buildBaseline() {
         AnalyticsDocument.builder()
                 .bioentityIdentifier("foo")
+                .identifierSearch("foo")
                 .species("bar")
                 .kingdom("barimals")
                 .experimentAccession("E-FOO-1")
@@ -40,6 +42,7 @@ public class AnalyticsDocumentTest {
     public void cannotBuildDifferentialWithoutNumReplicates() {
         AnalyticsDocument.builder()
                 .bioentityIdentifier("foo")
+                .identifierSearch("foo")
                 .species("bar")
                 .kingdom("barimals")
                 .experimentAccession("E-FOO-1")
@@ -55,6 +58,7 @@ public class AnalyticsDocumentTest {
     public void cannotBuildDifferentialWithoutFoldChange() {
         AnalyticsDocument.builder()
                 .bioentityIdentifier("foo")
+                .identifierSearch("foo")
                 .species("bar")
                 .kingdom("barimals")
                 .experimentAccession("E-FOO-1")
@@ -71,6 +75,7 @@ public class AnalyticsDocumentTest {
     public void buildDifferential() {
         AnalyticsDocument.builder()
                 .bioentityIdentifier("foo")
+                .identifierSearch("foo")
                 .species("bar")
                 .kingdom("barimals")
                 .experimentAccession("E-FOO-1")
