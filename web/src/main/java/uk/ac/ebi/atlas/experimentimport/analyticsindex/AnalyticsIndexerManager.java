@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.collect.TreeMultimap;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -25,6 +26,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Scope("singleton")
 public class AnalyticsIndexerManager extends Observable {
+
+    private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerManager.class);
 
     @Value("#{configuration['experiment.magetab.path.template']}")
     private String baselineTsvFileTemplate;
@@ -65,6 +68,8 @@ public class AnalyticsIndexerManager extends Observable {
     }
 
     private void indexPublicExperimentsConcurrently(Collection<String> experimentAccessions, int threads, int batchSize, int timeout) {
+
+        LOGGER.debug(String.format("Starting ExecutorService with %d threads, %,d Solr document batch size and %d hour(s) timeout", threads, batchSize, timeout));
         ExecutorService threadPool = Executors.newFixedThreadPool(threads);
 
         for (String experimentAccession : experimentAccessions) {

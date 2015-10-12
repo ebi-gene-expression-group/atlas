@@ -45,13 +45,11 @@ public class AnalyticsIndexerController {
 
     private AnalyticsIndexerManager analyticsIndexerManager;
     private AnalyticsIndexerMonitor analyticsIndexerMonitor;
-    private IdentifierSearchTermsTrader identifierSearchTermsTrader;
 
     @Inject
-    public AnalyticsIndexerController(AnalyticsIndexerManager analyticsIndexerManager, AnalyticsIndexerMonitor analyticsIndexerMonitor, IdentifierSearchTermsTrader identifierSearchTermsTrader) {
+    public AnalyticsIndexerController(AnalyticsIndexerManager analyticsIndexerManager, AnalyticsIndexerMonitor analyticsIndexerMonitor) {
         this.analyticsIndexerManager = analyticsIndexerManager;
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
-        this.identifierSearchTermsTrader = identifierSearchTermsTrader;
     }
 
     @RequestMapping("/analyticsIndex/buildIndex")
