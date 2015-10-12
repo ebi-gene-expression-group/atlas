@@ -34,7 +34,6 @@ do
     cd ..
 done
 
-# rm -rf node_modules
-# npm install
+npm install
 
 npm run $1
