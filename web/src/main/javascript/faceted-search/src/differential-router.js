@@ -7,8 +7,6 @@ var $ = require('jquery');
 var jQuery = $;
 require('jquery.browser');
 
-var queryString = require('query-string');
-
 var URI = require('urijs');
 
 //*------------------------------------------------------------------*
@@ -20,70 +18,61 @@ var DifferentialResults = require('./differential-results.jsx');
 
 module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData, atlasHost) {
 
-    var facetsElement = document.getElementById(facetsContainerId),
-        resultsElement = document.getElementById(resultsContainerId);
-
-    //TODO: add this outside the module, when module is first loaded
     var ie9 = $.browser.msie && $.browser.version < 10;
     if (!ie9) {
         window.addEventListener('popstate', renderPage, false);
     }
 
+    var facetsElement = document.getElementById(facetsContainerId),
+        resultsElement = document.getElementById(resultsContainerId),
+        host = atlasHost ? atlasHost : window.location.host;
 
-    renderPage();
+    var query = new URI(window.location).search(true);
+    query.select = query.select ? JSON.parse(query.select) : {};
+
+    var newQueryString = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
+    navigateTo(newQueryString);
 
     function renderPage() {
-        var locationSearch = window.location.search;
-        var query = queryString.parse(locationSearch.slice(1));
-        query.select = query.select && JSON.parse(query.select);
-        render(query);
-    }
-
-    function render(query) {
 
         React.render(
             React.createElement(FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked}),
-            facetsElement);
+            facetsElement
+        );
 
-        queryToResults(query.geneQuery, query.select);
+        renderQueryToResults(query);
+    }
 
-        function setChecked(checked, facet, facetItem) {
-            var newSelect = checked ? addSelection(query.select, facet, facetItem) : removeSelection(query.select, facet, facetItem);
-            var newQueryString = "?geneQuery=" + query.geneQuery + "&select=" + JSON.stringify(newSelect);
-            queryToResults(query.geneQuery, newSelect);
-            navigateTo(newQueryString);
-        }
+    function setChecked(checked, facet, facetItem) {
+        var newSelect = checked ? addSelection(query.select, facet, facetItem) : removeSelection(query.select, facet, facetItem);
+        var newQueryString = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
+        navigateTo(newQueryString);
+    }
 
-        function navigateTo(newQueryString) {
-            var state, title;
-            if (ie9) {
-                window.location.search = newQueryString;
-            } else {
-                history.pushState(null, null, window.location.pathname + newQueryString);
-                renderPage();
-            }
-        }
-
-
-        function addSelection(select, facet, facetItem) {
-            if (!select) {
-                select = {};
-            }
-
-            if (!select[facet]) {
-                select[facet] = {};
-            }
-            select[facet][facetItem] = true;
-            return select;
-        }
-
-        function removeSelection(select, facet, facetItem) {
-            select[facet][facetItem] = false;
-            return select;
+    function navigateTo(newQueryString) {
+        var state, title;
+        if (ie9) {
+            window.location.search = newQueryString;
+        } else {
+            history.pushState(null, null, window.location.pathname + newQueryString);
+            renderPage();
         }
     }
 
-    function queryToResults(geneQuery, query) {
+    function addSelection(select, facet, facetItem) {
+        if (!select[facet]) {
+            select[facet] = {};
+        }
+        select[facet][facetItem] = true;
+        return select;
+    }
+
+    function removeSelection(select, facet, facetItem) {
+        select[facet][facetItem] = false;
+        return select;
+    }
+
+    function renderQueryToResults(query) {
         /*
          query.geneQuery=zinc finger
          query.select= {
@@ -95,6 +84,9 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
          "regulation":{"UP":true}
          }
          */
+        var geneQuery = query.geneQuery,
+            select = query.select;
+
         var species = [];
         var experimentType = [];
         var kingdom = [];
@@ -102,7 +94,6 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
         var numReplicates = [];
         var regulation;
 
-        var select = query;
         for (var facets in select) {
             if (select.hasOwnProperty(facets)) {
                 var items = select[facets];
@@ -128,7 +119,6 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
             }
         }
 
-        var host = atlasHost ? atlasHost : window.location.host;
         var differentialResultsPath = "gxa/search/differential/json";
 
         $.ajaxSetup({ traditional:true });
@@ -152,7 +142,6 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
                 );
             }
         });
-
     }
 
 };

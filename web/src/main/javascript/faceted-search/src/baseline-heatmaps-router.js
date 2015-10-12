@@ -7,8 +7,6 @@ var $ = require('jquery');
 var jQuery = $;
 require('jquery.browser');
 
-var queryString = require('query-string');
-
 var URI = require('urijs');
 
 //*------------------------------------------------------------------*
@@ -20,86 +18,86 @@ var Heatmaps = require('./baseline-heatmaps.jsx');
 
 module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeData, atlasHost) {
 
-    var facetsElement = document.getElementById(facetsContainerId),
-        heatmapsElement = document.getElementById(heatmapsContainerId);
-
-    //TODO: add this outside the module, when module is first loaded
     var ie9 = $.browser.msie && $.browser.version < 10;
     if (!ie9) {
         window.addEventListener('popstate', renderPage, false);
     }
 
-    renderPage();
+    var facetsElement = document.getElementById(facetsContainerId),
+        heatmapsElement = document.getElementById(heatmapsContainerId),
+        host = atlasHost ? atlasHost : window.location.host;
+
+    var query = new URI(window.location).search(true);
+    query.select = query.select ? JSON.parse(query.select) : initializeQuerySelect();
+
+    var newQueryString = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
+    navigateTo(newQueryString);
 
     function renderPage() {
-        var query = queryString.parse(window.location.search.slice(1));
-        query.select = query.select && JSON.parse(query.select);
-        render(query);
-    }
-
-    function render(query) {
-        var host = atlasHost ? atlasHost : window.location.host;
-
-        if(query.select === undefined) {
-            initializeQuery(query);
-        }
-
         React.render(
-            React.createElement(FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked}),
-            facetsElement);
-
-        React.render(React.createElement(Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), atlasHost: host}),
-            heatmapsElement
+            React.createElement(FacetsTree, {
+                facets: facetsTreeData,
+                checkedFacets: query.select,
+                setChecked: setChecked
+            }),
+            facetsElement
         );
 
-        function initializeQuery(query) {
-            for (var facet in facetsTreeData) {
+        React.render(
+            React.createElement(Heatmaps, {
+                geneQuery: query.geneQuery,
+                heatmaps: queryToHeatmaps(query),
+                atlasHost: host
+            }),
+            heatmapsElement
+        );
+    }
+
+    function initializeQuerySelect() {
+        var querySelect = {};
+
+        for (var facet in facetsTreeData) {
+            if (facetsTreeData.hasOwnProperty(facet)) {
+
                 var factors = facetsTreeData[facet];
                 for(var factor in factors) {
-                    if(factors[factor].name === "ORGANISM_PART") {
-                        query.select = addSelection(query.select, facet, factors[factor].name);
+                    if (factors.hasOwnProperty(factor) && factors[factor].name === "ORGANISM_PART") {
+                        addSelection(querySelect, facet, factors[factor].name);
                     }
                 }
-            }
 
-            var newQueryString = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)}).normalize();
-            navigateTo(newQueryString);
-            return query.select;
-        }
-
-        function setChecked(checked, species, factor) {
-            var newSelect = checked ? addSelection(query.select, species, factor) : removeSelection(query.select, species, factor);
-            var newQueryString = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(newSelect)}).normalize();
-            navigateTo(newQueryString);
-        }
-
-        function navigateTo(newQueryString) {
-            var state, title;
-            if (ie9) {
-                window.location.search = newQueryString;
-            } else {
-                history.pushState(null, null, window.location.pathname + newQueryString);
-                renderPage();
             }
         }
 
-        function addSelection(select, species, factor) {
-            if (!select) {
-                select = {};
-            }
+        return querySelect;
+    }
 
-            if (!select[species]) {
-                select[species] = {};
-            }
-            select[species][factor] = true;
-            return select;
+    function setChecked(checked, species, factor) {
+        var newSelect = checked ? addSelection(query.select, species, factor) : removeSelection(query.select, species, factor);
+        var newQueryString = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(newSelect)});
+        navigateTo(newQueryString);
+    }
+
+    function navigateTo(newQueryString) {
+        var state, title;
+        if (ie9) {
+            window.location.search = newQueryString;
+        } else {
+            history.pushState(null, null, window.location.pathname + newQueryString);
+            renderPage();
         }
+    }
 
-        function removeSelection(select, species, factor) {
-            select[species][factor] = false;
-            return select;
+    function addSelection(querySelect, species, factor) {
+        if (!querySelect[species]) {
+            querySelect[species] = {};
         }
+        querySelect[species][factor] = true;
+    }
 
+    function removeSelection(select, species, factor) {
+        select[species][factor] = false;
+        return select;
     }
 
     function queryToHeatmaps(query) {
