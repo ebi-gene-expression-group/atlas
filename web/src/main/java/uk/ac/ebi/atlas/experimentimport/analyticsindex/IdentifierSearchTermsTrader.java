@@ -9,7 +9,6 @@ import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField;
-import org.apache.solr.common.SolrDocument;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StopWatch;
@@ -50,17 +49,19 @@ public class IdentifierSearchTermsTrader {
         protected Map<String, String> create() {
             ImmutableMap.Builder<String, String> mapBuilder= new ImmutableMap.Builder<>();
 
-            SolrQuery query = new SolrQuery();
-            query.setQuery("*:*");
-            query.setFacet(true);
-            query.setFacetLimit(FACET_LIMIT);
-            query.addFacetField("bioentityIdentifier");
-
-            ImmutableList<String> allBioentities;
             try {
+                SolrQuery query = new SolrQuery();
+                query.setQuery("*:*");
+                query.setFacet(true);
+                query.setFacetLimit(FACET_LIMIT);
+                query.addFacetField("bioentityIdentifier");
+
+                ImmutableList<String> allBioentities;
+
                 ImmutableList.Builder<String> builder = new ImmutableList.Builder<>();
                 StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
                 stopWatch.start();
+                LOGGER.info("Fetching bioentities from analytics index...");
 
                 FacetField bioentityIdentifierFacetField = analyticsSolrClient.query(query).getFacetField("bioentityIdentifier");
                 for (FacetField.Count bioentityIdentifierCount: bioentityIdentifierFacetField.getValues()) {
@@ -68,12 +69,13 @@ public class IdentifierSearchTermsTrader {
                 }
 
                 stopWatch.stop();
-                LOGGER.debug(String.format("%,d bioentities fetched in %s seconds", bioentityIdentifierFacetField.getValueCount(), stopWatch.getTotalTimeSeconds()));
+                LOGGER.info(String.format("%,d bioentities fetched in %s seconds", bioentityIdentifierFacetField.getValueCount(), stopWatch.getTotalTimeSeconds()));
                 allBioentities = builder.build();
 
 
 
                 stopWatch.start();
+                LOGGER.info("Building map of bioentities to bioentity properties...");
 
                 query = new SolrQuery();
                 query.setRows(PROPERTY_LIMIT);
