@@ -105,17 +105,30 @@ public class DifferentialAnalyticsFacetsReader {
 
         for (String facetField : FACET_FIELDS) {
             JsonArray facet = new JsonArray();
+            String fField="";
             for (Object facetFieldValue : (List<Object>) jsonReadContext.read("$.." + facetField + "..val")) {
                 JsonObject facetItem = new JsonObject();
                 facetItem.addProperty("name", facetFieldValue.toString());
                 if(facetField.equals("experimentType")) {
                     facetItem.addProperty("value", ExperimentsTypeMapConverter.getType(facetFieldValue.toString()));
-                } else {
+                    fField = "Experiment type";
+                } else if(facetField.equals("numReplicates")) {
+                    fField = "Number of replicates";
+                    facetItem.addProperty("value", facetFieldValue.toString());
+                } else if(facetField.equals("regulation")) {
+                    facetItem.addProperty("value", facetFieldValue.toString().toLowerCase());
+                }
+                else {
                     facetItem.addProperty("value", facetFieldValue.toString());
                 }
                 facet.add(facetItem);
             }
-            facets.add(facetField, facet);
+
+            if(!fField.isEmpty()) {
+                facets.add(fField, facet);
+            } else {
+                facets.add(facetField, facet);
+            }
         }
 
         return facets.toString();
@@ -128,9 +141,9 @@ public class DifferentialAnalyticsFacetsReader {
                 .put("rnaseq_mrna_baseline", "RNA-seq mRNA baseline")
                 .put("rnaseq_mrna_differential", "RNA-seq mRNA differential")
                 .put("proteomics_baseline", "proteomics baseline")
-                .put("microarray_1colour_microrna_differential", "microarray 1_colour microRNA differential")
-                .put("microarray_1colour_mrna_differential", "microarray 1_colour mRNA differential")
-                .put("microarray_2colour_mrna_differential", "microarray 2_colour mRNA differential")
+                .put("microarray_1colour_microrna_differential", "microarray 1-colour microRNA differential")
+                .put("microarray_1colour_mrna_differential", "microarray 1-colour mRNA differential")
+                .put("microarray_2colour_mrna_differential", "microarray 2-colour mRNA differential")
                 .build();
 
         public static String getType(String type) {
