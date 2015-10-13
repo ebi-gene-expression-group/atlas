@@ -595,7 +595,7 @@ var MultipleHeatmapTableHeader = React.createClass({
         return (
             <thead>
                 <tr>
-                    <th className="gxaHorizontalHeaderCell" rowSpan="3" >
+                    <th className="gxaHorizontalHeaderCell" rowSpan="3">
                         <TopLeftCorner type={this.props.type}
                                        hasQuartiles={this.props.hasQuartiles}
                                        radioId={this.props.radioId}
@@ -931,7 +931,7 @@ var TopLeftCorner = React.createClass({
 
     render: function () {
         return (
-            <div className="gxaHeatmapMatrixTopLeftCorner" style={{"marginTop":"20px"}}>
+            <div className="gxaHeatmapMatrixTopLeftCorner">
                 <span id='tooltip-span' data-help-loc={this.props.type.heatmapTooltip} ref='tooltipSpan'></span>
                 <div style={{display: "table-cell", verticalAlign: "middle", textAlign: "center"}}>
                     {this.displayLevelsBaseline()}
