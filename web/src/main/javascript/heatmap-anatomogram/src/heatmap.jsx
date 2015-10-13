@@ -546,10 +546,12 @@ var MultipleHeatmapTableHeader = React.createClass({
 
         if (this.props.type.isBaseline) {
             return (this.props.multipleColumnHeaders.children).map(function (children) {
+                var mainHeaderName = children.name;
                 return (children.children).map(function (child) {
+                    var subHeaderName = child.name;
                     return child.children.map(function (cell){
-                        return (<FactorHeaders key={cell.cellLines}
-                                               type={type}
+                        return (<FactorHeaders type={type}
+                                               mainHeaderNames={mainHeaderName + subHeaderName}
                                                heatmapConfig={heatmapConfig}
                                                assayGroupFactors={cell.cellLines}
                                                experimentAccession={heatmapConfig.experimentAccession}
@@ -592,37 +594,32 @@ var MultipleHeatmapTableHeader = React.createClass({
 
         return (
             <thead>
-
-            <tr>
-                <th className="gxaEmptyMultipleHeatmapHeaderFactor"></th>
-                { this.renderHeaders() }
-            </tr>
-
-            <tr>
-                <th className="gxaEmptyMultipleHeatmapHeaderFactor"></th>
-                { this.renderSubHeaders() }
-            </tr>
-
-            <tr>
-                <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" colSpan={this.props.isMicroarray ? 2 : undefined}>
-                    <TopLeftCorner type={this.props.type}
-                                   hasQuartiles={this.props.hasQuartiles}
-                                   radioId={this.props.radioId}
-                                   isSingleGeneResult={this.props.isSingleGeneResult}
-                                   heatmapConfig={this.props.heatmapConfig}
-                                   displayLevels={this.props.displayLevels}
-                                   toggleDisplayLevels={this.props.toggleDisplayLevels}
-                                   selectedRadioButton={this.props.selectedRadioButton}
-                                   toggleRadioButton={this.props.toggleRadioButton}/>
-                </th>
-
-                { this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null }
-            </tr>
-
-            <tr>
-                <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" style={ this.props.isMicroarray ? {width:"166px"} : undefined}><div>{ showExperimentProfile }</div></th>
-                { this.props.isMicroarray ? <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect"><div>Design Element</div></th> : null}
-            </tr>
+                <tr>
+                    <th className="gxaHorizontalHeaderCell" rowSpan="3" >
+                        <TopLeftCorner type={this.props.type}
+                                       hasQuartiles={this.props.hasQuartiles}
+                                       radioId={this.props.radioId}
+                                       isSingleGeneResult={this.props.isSingleGeneResult}
+                                       heatmapConfig={this.props.heatmapConfig}
+                                       displayLevels={this.props.displayLevels}
+                                       toggleDisplayLevels={this.props.toggleDisplayLevels}
+                                       selectedRadioButton={this.props.selectedRadioButton}
+                                       toggleRadioButton={this.props.toggleRadioButton}/>
+                    </th>
+                    { this.renderHeaders() }
+                </tr>
+                <tr>
+                    { this.renderSubHeaders() }
+                </tr>
+                <tr>
+                    { this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null }
+                </tr>
+                <tr>
+                    <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" style={ this.props.isMicroarray ? {width:"166px"} : undefined}>
+                        <div>{ showExperimentProfile }</div>
+                    </th>
+                    { this.props.isMicroarray ? <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect"><div>Design Element</div></th> : null}
+                </tr>
             </thead>
         );
     }
@@ -632,7 +629,7 @@ var MultipleHeatmapTableHeader = React.createClass({
 var MultipleFactorHeader = React.createClass({
     render: function() {
         return (
-            <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" colSpan={this.props.colspan}>
+            <th className="gxaHorizontalHeaderCell" colSpan={this.props.colspan}>
                 <div>{this.props.name}</div>
             </th>
         );
@@ -656,9 +653,10 @@ function restrictLabelSize(label, maxSize) {
 var FactorHeaders = React.createClass({
     render: function () {
         var heatmapConfig = this.props.heatmapConfig;
+        var mainHeaderNames = this.props.mainHeaderNames;
 
         var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
-            return <FactorHeader key={assayGroupFactor.factorValue}
+            return <FactorHeader key={mainHeaderNames + assayGroupFactor.factorValue}
                                  type={this.props.type}
                                  heatmapConfig={heatmapConfig}
                                  factorName={assayGroupFactor.factorValue}
@@ -933,7 +931,7 @@ var TopLeftCorner = React.createClass({
 
     render: function () {
         return (
-            <div className="gxaHeatmapMatrixTopLeftCorner">
+            <div className="gxaHeatmapMatrixTopLeftCorner" style={{"marginTop":"20px"}}>
                 <span id='tooltip-span' data-help-loc={this.props.type.heatmapTooltip} ref='tooltipSpan'></span>
                 <div style={{display: "table-cell", verticalAlign: "middle", textAlign: "center"}}>
                     {this.displayLevelsBaseline()}
@@ -1069,9 +1067,9 @@ var GeneProfileRow = React.createClass({
             // The vertical align in the <a> element is needed because the kerning in the font used in icon-conceptual is vertically off
             return (
                 <span title={titleTooltip} style={{"display": "table-cell"}}>
-                        <span className="icon icon-conceptual icon-c2" data-icon={this.props.type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}></span>
-                        <a ref="geneName" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={experimentOrGeneURL} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
-                    </span>
+                    <span className="icon icon-conceptual icon-c2" data-icon={this.props.type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}></span>
+                    <a ref="geneName" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={experimentOrGeneURL} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
+                </span>
             );
         },
 
