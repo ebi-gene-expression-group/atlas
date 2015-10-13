@@ -61,6 +61,10 @@ public class BaselineAnalyticsDocumentStreamTest {
     @Test
     public void test() {
 
+        when(identifierSearchTermsTraderMock.getIdentifierSearch(GENEID1)).thenReturn(GENE_1_SEARCHTERM_1);
+        when(identifierSearchTermsTraderMock.getIdentifierSearch(GENEID2)).thenReturn(GENE_2_SEARCHTERM_1 + " " + GENE_2_SEARCHTERM_2);
+        when(identifierSearchTermsTraderMock.getIdentifierSearch(UNKNOWN_GENEID)).thenReturn("");
+
         when(speciesKingdomTraderMock.getKingdom(HOMO_SAPIENS)).thenReturn(ANIMAL_KINGDOM);
         when(speciesKingdomTraderMock.getKingdom(MUS_MUSCULUS)).thenReturn(ANIMAL_KINGDOM);
 

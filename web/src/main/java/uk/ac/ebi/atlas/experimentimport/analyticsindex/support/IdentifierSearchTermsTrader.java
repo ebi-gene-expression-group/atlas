@@ -8,10 +8,6 @@ import com.google.common.collect.ImmutableSet;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.response.FacetField;
-import org.apache.solr.common.SolrDocument;
-import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StopWatch;
@@ -20,7 +16,6 @@ import uk.ac.ebi.atlas.utils.ExperimentSorter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
@@ -101,7 +96,11 @@ public class IdentifierSearchTermsTrader {
     };
 
     public String getIdentifierSearch(String bioentityIdentifier) {
-        return bioentityIdToIdentifierSearch.get().get(bioentityIdentifier);
+        try {
+            return bioentityIdToIdentifierSearch.get().get(bioentityIdentifier);
+        } catch (NullPointerException e) {
+            return "";
+        }
     }
 
 }

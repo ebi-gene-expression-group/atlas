@@ -71,7 +71,12 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
             BaselineAnalytics baselineAnalytics = inputIterator.next();
 
             String geneId = baselineAnalytics.getGeneId();
-            String identifierSearch = geneId + " " + identifierSearchTermsTrader.getIdentifierSearch(geneId);
+            String identifierSearch =
+                    geneId +
+                    (identifierSearchTermsTrader.getIdentifierSearch(geneId).isEmpty() ?
+                            ""
+                            :
+                            " " + identifierSearchTermsTrader.getIdentifierSearch(geneId));
 
             String assayGroupId = baselineAnalytics.getAssayGroupId();
             String conditionSearch = getConditionSearchTerms(assayGroupId);
