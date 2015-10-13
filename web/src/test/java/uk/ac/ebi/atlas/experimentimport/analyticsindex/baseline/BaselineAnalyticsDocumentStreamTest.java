@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.IdentifierSearchTermsTrader;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -41,7 +41,10 @@ public class BaselineAnalyticsDocumentStreamTest {
 
     private static final String G2_SEARCH_TERM_1 = "g2_1";
     private static final String G2_SEARCH_TERM_2 = "g2_2";
+    public static final String GENE_1_SEARCHTERM_1 = "gene1_searchterm_1";
 
+    public static final String GENE_2_SEARCHTERM_1 = "gene2_searchterm_1";
+    public static final String GENE_2_SEARCHTERM_2 = "gene2_searchterm_2";
     private static final String MUS_MUSCULUS = "mus musculus";
 
     private static final String ANIMAL_KINGDOM = "animals";
@@ -95,6 +98,7 @@ public class BaselineAnalyticsDocumentStreamTest {
         assertThat(analyticsDocument1.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(analyticsDocument1.getExperimentType(), is(EXPERIMENT_TYPE));
         assertThat(analyticsDocument1.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));
+        assertThat(analyticsDocument1.getIdentifierSearch(), is(GENEID1 + " " + GENE_1_SEARCHTERM_1));
         assertThat(analyticsDocument1.getConditionsSearch(), is(G1_SEARCH_TERM_1));
         assertThat(analyticsDocument1.getAssayGroupId(), is(ASSAY_GROUP_ID1));
         assertThat(analyticsDocument1.getExpressionLevel(), is(1.1));
@@ -105,6 +109,7 @@ public class BaselineAnalyticsDocumentStreamTest {
         assertThat(analyticsDocument2.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(analyticsDocument2.getExperimentType(), is(EXPERIMENT_TYPE));
         assertThat(analyticsDocument2.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));
+        assertThat(analyticsDocument2.getIdentifierSearch(), is(GENEID2 + " " + GENE_2_SEARCHTERM_1 + " " + GENE_2_SEARCHTERM_2));
         assertThat(analyticsDocument2.getConditionsSearch(), is(G2_SEARCH_TERM_1 + " " + G2_SEARCH_TERM_2));
         assertThat(analyticsDocument2.getAssayGroupId(), is(ASSAY_GROUP_ID2));
         assertThat(analyticsDocument2.getExpressionLevel(), is(2.2));
@@ -115,6 +120,7 @@ public class BaselineAnalyticsDocumentStreamTest {
         assertThat(analyticsDocument3.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(analyticsDocument3.getExperimentType(), is(EXPERIMENT_TYPE));
         assertThat(analyticsDocument3.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));
+        assertThat(analyticsDocument3.getIdentifierSearch(), is(UNKNOWN_GENEID));
         assertThat(analyticsDocument3.getConditionsSearch(), is(G2_SEARCH_TERM_1 + " " + G2_SEARCH_TERM_2));
         assertThat(analyticsDocument3.getAssayGroupId(), is(ASSAY_GROUP_ID2));
         assertThat(analyticsDocument3.getExpressionLevel(), is(3.3));

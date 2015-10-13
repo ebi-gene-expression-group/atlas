@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.google.common.collect.TreeMultimap;
 import org.springframework.context.annotation.Scope;
 
@@ -19,7 +20,7 @@ public class AnalyticsIndexerMonitor implements Observer {
     private long magetabFilesTotalSize;
     private long processedMagetabFilesSize;
     private int processedExperimentsCount;
-    private Map<String, Long> experimentAccessionsToFileSize;
+    private Map<String, Long> experimentAccessionsToFileSize = ImmutableMap.of();
     private StringBuilder stringBuilder = new StringBuilder("No builds have been run in this session.");
 
     private String progressTemplate;
@@ -67,7 +68,6 @@ public class AnalyticsIndexerMonitor implements Observer {
             initializeMonitor(descendingExperimentSizeToExperimentAccessions);
         }
         else if (arg instanceof String) {
-
             if (experimentAccessionsToFileSize.keySet().contains(arg)) {
                 processedMagetabFilesSize += experimentAccessionsToFileSize.get(arg);
                 processedExperimentsCount++;

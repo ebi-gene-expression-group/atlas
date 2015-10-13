@@ -110,8 +110,11 @@ public class AnalyticsIndexerController {
     @RequestMapping("/analyticsIndex/updateIdentifierSearchTerms")
     @ResponseBody
     public String updateIdentifierSearchTerms(@RequestParam(value = "accession", required = false) String experimentAccession) {
-//        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-//        stopWatch.start();
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+        stopWatch.start();
+
+
+
 //
 //        int updatedIdentifiers = 0;
 //        if (Strings.isNullOrEmpty(experimentAccession)) {
@@ -120,7 +123,7 @@ public class AnalyticsIndexerController {
 //            updatedIdentifiers = identifierSearchTermsManager.updateSearchTerms(experimentAccession);
 //        }
 //
-//        stopWatch.stop();
+        stopWatch.stop();
 //
 //        String message = Strings.isNullOrEmpty(experimentAccession) ?
 //                String.format("All experiments search terms added for %,d identifiers in %s seconds", updatedIdentifiers, stopWatch.getTotalTimeSeconds()) :

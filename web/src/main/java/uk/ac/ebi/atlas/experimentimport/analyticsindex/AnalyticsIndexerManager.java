@@ -4,6 +4,7 @@ import com.google.common.collect.TreeMultimap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsTrader;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -36,6 +37,7 @@ public class AnalyticsIndexerManager extends Observable {
     private String differentialTsvFileTemplate;
 
     private AnalyticsIndexerService analyticsIndexerService;
+    private IdentifierSearchTermsTrader identifierSearchTermsTrader;
     private final AnalyticsIndexerMonitor analyticsIndexerMonitor;
     private final ExperimentTrader experimentTrader;
     private final ExperimentSorter experimentSorter;
@@ -45,10 +47,11 @@ public class AnalyticsIndexerManager extends Observable {
     protected static final String DEFAULT_TIMEOUT_IN_HOURS_24 = "24";
 
     @Inject
-    public AnalyticsIndexerManager(AnalyticsIndexerService analyticsIndexerService, AnalyticsIndexerMonitor analyticsIndexerMonitor, ExperimentTrader experimentTrader, ExperimentSorter experimentSorter) {
+    public AnalyticsIndexerManager(AnalyticsIndexerService analyticsIndexerService, AnalyticsIndexerMonitor analyticsIndexerMonitor, ExperimentTrader experimentTrader, IdentifierSearchTermsTrader identifierSearchTermsTrader, ExperimentSorter experimentSorter) {
         this.analyticsIndexerService = analyticsIndexerService;
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
         this.experimentTrader = experimentTrader;
+        this.identifierSearchTermsTrader = identifierSearchTermsTrader;
         this.experimentSorter = experimentSorter;
     }
 
@@ -111,11 +114,16 @@ public class AnalyticsIndexerManager extends Observable {
     public void indexAllPublicExperiments(int threads, int batchSize, int timeout) throws InterruptedException {
         addObserver(analyticsIndexerMonitor);
 
+        setChanged();
+        notifyObservers("Analytics index build has started: sorting experiments by size");
+
         TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortAllExperimentsPerSize();
         setChanged();
         notifyObservers(descendingFileSizeToExperimentAccessions);
 
         indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), threads, batchSize, timeout);
+
+//        identifierSearchTermsTrader.letsDoThis();
 
         deleteObserver(analyticsIndexerMonitor);
     }

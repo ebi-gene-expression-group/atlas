@@ -137,7 +137,6 @@ public class AnalyticsDocument {
             checkNotNull(build.kingdom, "missing kingdom");
             checkNotNull(build.experimentAccession, "missing experimentAccession");
             checkNotNull(build.experimentType, "missing experimentType");
-            checkNotNull(build.identifierSearch, "missing identifierSearch");
             checkNotNull(build.conditionsSearch, "missing conditionsSearch");
 
             if (build.experimentType.isBaseline()) {
