@@ -140,67 +140,80 @@ public class ExperimentSorter {
 
         ImmutableSet.Builder<String> bioentityIdsBuilder = new ImmutableSet.Builder<>();
 
-        for (ExperimentType experimentType : experimentTypes) {
+        try {
+            for (ExperimentType experimentType : experimentTypes) {
 
-            if (experimentType.isBaseline()) {
+                if (experimentType.isBaseline()) {
 
-                LOGGER.info("Retrieving all bioentity identifiers from baseline experiments...");
-                for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
-                    BaselineAnalyticsInputStream inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession);
+                    LOGGER.info("Retrieving all bioentity identifiers from baseline experiments...");
+                    for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
+                        BaselineAnalyticsInputStream inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession);
 
-                    BaselineAnalytics analytics = inputStream.readNext();
-                    while (analytics != null) {
-                        bioentityIdsBuilder.add(analytics.getGeneId());
-                        analytics = inputStream.readNext();
+                        BaselineAnalytics analytics = inputStream.readNext();
+                        while (analytics != null) {
+                            bioentityIdsBuilder.add(analytics.getGeneId());
+                            analytics = inputStream.readNext();
+                        }
+
+                        inputStream.close();
                     }
-                }
 
-            } else if (experimentType.isProteomicsBaseline()) {
+                } else if (experimentType.isProteomicsBaseline()) {
 
-                LOGGER.info("Retrieving all bioentity identifiers from proteomics experiments...");
-                for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
-                    ProteomicsBaselineAnalyticsInputStream inputStream = proteomicsBaselineAnalyticsInputStreamFactory.create(experimentAccession);
+                    LOGGER.info("Retrieving all bioentity identifiers from proteomics experiments...");
+                    for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
+                        ProteomicsBaselineAnalyticsInputStream inputStream = proteomicsBaselineAnalyticsInputStreamFactory.create(experimentAccession);
 
-                    BaselineAnalytics analytics = inputStream.readNext();
-                    while (analytics != null) {
-                        bioentityIdsBuilder.add(analytics.getGeneId());
-                        analytics = inputStream.readNext();
+                        BaselineAnalytics analytics = inputStream.readNext();
+                        while (analytics != null) {
+                            bioentityIdsBuilder.add(analytics.getGeneId());
+                            analytics = inputStream.readNext();
+                        }
+
+                        inputStream.close();
                     }
-                }
 
-            } else if (experimentType.isMicroarray()) {
+                } else if (experimentType.isMicroarray()) {
 
-                LOGGER.info("Retrieving all bioentity identifiers from microarray experiments...");
-                for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
+                    LOGGER.info("Retrieving all bioentity identifiers from microarray experiments...");
+                    for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
 
-                    MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+                        MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
 
-                    for (String arrayDesign : experiment.getArrayDesignAccessions()) {
-                        MicroarrayDifferentialAnalyticsInputStream inputStream = microarrayDifferentialAnalyticsInputStreamFactory.create(experimentAccession, arrayDesign);
+                        for (String arrayDesign : experiment.getArrayDesignAccessions()) {
+                            MicroarrayDifferentialAnalyticsInputStream inputStream = microarrayDifferentialAnalyticsInputStreamFactory.create(experimentAccession, arrayDesign);
+
+                            DifferentialAnalytics analytics = inputStream.readNext();
+                            while (analytics != null) {
+                                bioentityIdsBuilder.add(analytics.getGeneId());
+                                analytics = inputStream.readNext();
+                            }
+
+                            inputStream.close();
+                        }
+                    }
+
+                } else if (experimentType.isRnaSeqDifferential()) {
+
+                    LOGGER.info("Retrieving all bioentity identifiers from RNA-seq differential experiments...");
+                    for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
+                        RnaSeqDifferentialAnalyticsInputStream inputStream = rnaSeqDifferentialAnalyticsInputStreamFactory.create(experimentAccession);
 
                         DifferentialAnalytics analytics = inputStream.readNext();
                         while (analytics != null) {
                             bioentityIdsBuilder.add(analytics.getGeneId());
                             analytics = inputStream.readNext();
                         }
+
+                        inputStream.close();
                     }
+
                 }
-
-            } else if (experimentType.isRnaSeqDifferential()) {
-
-                LOGGER.info("Retrieving all bioentity identifiers from RNA-seq differential experiments...");
-                for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
-                    RnaSeqDifferentialAnalyticsInputStream inputStream = rnaSeqDifferentialAnalyticsInputStreamFactory.create(experimentAccession);
-
-                    DifferentialAnalytics analytics = inputStream.readNext();
-                    while (analytics != null) {
-                        bioentityIdsBuilder.add(analytics.getGeneId());
-                        analytics = inputStream.readNext();
-                    }
-                }
-
             }
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
+
         stopWatch.stop();
         LOGGER.info(String.format("Retrieved bioentity identifiers in %s seconds. Building set...", stopWatch.getTotalTimeSeconds()));
 
