@@ -36,4 +36,4 @@ done
 
 npm install
 
-npm run $1
+#npm run $1
