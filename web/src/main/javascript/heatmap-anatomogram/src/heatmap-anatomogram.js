@@ -86,10 +86,10 @@ module.exports = function(opt) {
     var httpRequest = {
         url: url,
         dataType: "json",
-        method:"GET"
-    //    beforeSend:function () {
-    //        $targetElement.html("<img src='" + atlasBaseURL + "/resources/images/loading.gif' />");
-    //    }
+        method:"GET",
+        beforeSend:function () {
+            $targetElement.html("<img src='" + atlasBaseURL + "/resources/images/loading.gif' />");
+        }
     };
 
 

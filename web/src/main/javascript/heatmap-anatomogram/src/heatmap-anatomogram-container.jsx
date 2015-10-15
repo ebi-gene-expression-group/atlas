@@ -30,7 +30,7 @@ var ExperimentDescription = React.createClass({
         var experimentURL = this.props.linksAtlasBaseURL + this.props.experiment.URL;
 
         return (
-            <div style={{width: "100%"}}>
+            <div style={{width: "100%", paddingBottom: "20px"}}>
                 <div id="experimentDescription">
                     <a id="goto-experiment" className="gxaThickLink" title="Experiment Page" href={experimentURL}>{this.props.experiment.description}</a>
                 </div>
