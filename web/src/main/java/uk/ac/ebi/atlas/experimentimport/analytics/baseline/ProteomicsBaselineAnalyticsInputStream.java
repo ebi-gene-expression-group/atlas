@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -110,9 +111,9 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
     }
 
     private ImmutableList<BaselineAnalytics> createList(String geneId, Map<Integer, String> sampleAbundanceAssayGroupIds, String[] expressionLevels) {
-        checkArgument(StringUtils.isNotBlank(geneId), "Cannot load analytics - gene id is blank");
+        checkArgument(StringUtils.isNotBlank(geneId), "Cannot load proteomics baseline analytics - gene id is blank");
         checkArgument(sampleAbundanceAssayGroupIds.size() * 2 == expressionLevels.length,
-                      String.format("Cannot load analytics - expecting %s expressions but got %s instead.", sampleAbundanceAssayGroupIds.size() * 2, expressionLevels.length));
+                      String.format("Cannot load proteomics baseline analytics - expecting [%s]->[%s] expressions but got [%s] instead.", Joiner.on(", ").join(sampleAbundanceAssayGroupIds.keySet()),  Joiner.on(", ").join(sampleAbundanceAssayGroupIds.entrySet()), Joiner.on(", ").join(expressionLevels)));
 
         ImmutableList.Builder<BaselineAnalytics> builder = ImmutableList.builder();
 

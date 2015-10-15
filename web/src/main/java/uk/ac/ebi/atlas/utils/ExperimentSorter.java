@@ -28,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 21/07/15.
@@ -121,7 +122,7 @@ public class ExperimentSorter {
 
 
 
-    public ImmutableSet<String> getBioentityIdsFromAllExperiments() {
+    public HashSet<String> getBioentityIdsFromAllExperiments() {
         return getBioentityIdsFromExperiments(
                 ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
                 ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL,
@@ -132,18 +133,18 @@ public class ExperimentSorter {
     }
 
 
-    public ImmutableSet<String> getBioentityIdsFromExperiments(ExperimentType... experimentTypes) {
+    public HashSet<String> getBioentityIdsFromExperiments(ExperimentType... experimentTypes) {
 
         StopWatch stopWatch = new org.springframework.util.StopWatch(getClass().getSimpleName());
         stopWatch.start();
         LOGGER.info("Retrieving all bioentity identifiers...");
 
-        ImmutableSet.Builder<String> bioentityIdsBuilder = new ImmutableSet.Builder<>();
+        HashSet<String> bioentityIds = new HashSet<>();
 
         try {
             for (ExperimentType experimentType : experimentTypes) {
 
-                if (experimentType.isBaseline()) {
+                if (experimentType == ExperimentType.RNASEQ_MRNA_BASELINE) {
 
                     LOGGER.info("Retrieving all bioentity identifiers from baseline experiments:");
                     for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
@@ -152,14 +153,14 @@ public class ExperimentSorter {
 
                         BaselineAnalytics analytics = inputStream.readNext();
                         while (analytics != null) {
-                            bioentityIdsBuilder.add(analytics.getGeneId());
+                            bioentityIds.add(analytics.getGeneId());
                             analytics = inputStream.readNext();
                         }
 
                         inputStream.close();
                     }
 
-                } else if (experimentType.isProteomicsBaseline()) {
+                } else if (experimentType == ExperimentType.PROTEOMICS_BASELINE) {
 
                     LOGGER.info("Retrieving all bioentity identifiers from proteomics experiments...");
                     for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
@@ -168,7 +169,7 @@ public class ExperimentSorter {
 
                         BaselineAnalytics analytics = inputStream.readNext();
                         while (analytics != null) {
-                            bioentityIdsBuilder.add(analytics.getGeneId());
+                            bioentityIds.add(analytics.getGeneId());
                             analytics = inputStream.readNext();
                         }
 
@@ -187,7 +188,7 @@ public class ExperimentSorter {
 
                             DifferentialAnalytics analytics = inputStream.readNext();
                             while (analytics != null) {
-                                bioentityIdsBuilder.add(analytics.getGeneId());
+                                bioentityIds.add(analytics.getGeneId());
                                 analytics = inputStream.readNext();
                             }
 
@@ -204,7 +205,7 @@ public class ExperimentSorter {
 
                         DifferentialAnalytics analytics = inputStream.readNext();
                         while (analytics != null) {
-                            bioentityIdsBuilder.add(analytics.getGeneId());
+                            bioentityIds.add(analytics.getGeneId());
                             analytics = inputStream.readNext();
                         }
 
@@ -218,13 +219,8 @@ public class ExperimentSorter {
         }
 
         stopWatch.stop();
-        LOGGER.info(String.format("Retrieved bioentity identifiers in %s seconds. Building set...", stopWatch.getTotalTimeSeconds()));
+        LOGGER.info(String.format("Built a set of %,d bioentity identifiers in %s seconds.", bioentityIds.size(), stopWatch.getTotalTimeSeconds()));
 
-        stopWatch.start();
-        ImmutableSet<String> bioentityIdentifiers = bioentityIdsBuilder.build();
-        stopWatch.stop();
-        LOGGER.info(String.format("Built a set of %,d bioentity identifiers in %s seconds.", bioentityIdentifiers.size(), stopWatch.getTotalTimeSeconds()));
-
-        return bioentityIdentifiers;
+        return bioentityIds;
     }
 }

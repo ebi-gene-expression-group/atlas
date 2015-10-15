@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.utils.ExperimentSorter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -73,7 +74,7 @@ public class IdentifierSearchTermsTrader {
 //                LOGGER.debug(String.format("%,d bioentities fetched in %s seconds", bioentityIdentifierFacetField.getValueCount(), stopWatch.getTotalTimeSeconds()));
 //                allBioentities = builder.build();
 
-            ImmutableSet<String> allBioentities = experimentSorter.getBioentityIdsFromAllExperiments();
+            HashSet<String> allBioentities = experimentSorter.getBioentityIdsFromAllExperiments();
 
             StopWatch stopWatch = new StopWatch();
             stopWatch.start();
