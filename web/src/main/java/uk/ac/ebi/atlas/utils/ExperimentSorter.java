@@ -145,8 +145,9 @@ public class ExperimentSorter {
 
                 if (experimentType.isBaseline()) {
 
-                    LOGGER.info("Retrieving all bioentity identifiers from baseline experiments...");
+                    LOGGER.info("Retrieving all bioentity identifiers from baseline experiments:");
                     for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
+                        LOGGER.info(String.format("Retrieving all bioentity identifiers for %s", experimentAccession));
                         BaselineAnalyticsInputStream inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession);
 
                         BaselineAnalytics analytics = inputStream.readNext();
@@ -162,6 +163,7 @@ public class ExperimentSorter {
 
                     LOGGER.info("Retrieving all bioentity identifiers from proteomics experiments...");
                     for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
+                        LOGGER.info(String.format("Retrieving all bioentity identifiers for %s", experimentAccession));
                         ProteomicsBaselineAnalyticsInputStream inputStream = proteomicsBaselineAnalyticsInputStreamFactory.create(experimentAccession);
 
                         BaselineAnalytics analytics = inputStream.readNext();
@@ -177,7 +179,7 @@ public class ExperimentSorter {
 
                     LOGGER.info("Retrieving all bioentity identifiers from microarray experiments...");
                     for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
-
+                        LOGGER.info(String.format("Retrieving all bioentity identifiers for %s", experimentAccession));
                         MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
 
                         for (String arrayDesign : experiment.getArrayDesignAccessions()) {
@@ -197,6 +199,7 @@ public class ExperimentSorter {
 
                     LOGGER.info("Retrieving all bioentity identifiers from RNA-seq differential experiments...");
                     for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
+                        LOGGER.info(String.format("Retrieving all bioentity identifiers for %s", experimentAccession));
                         RnaSeqDifferentialAnalyticsInputStream inputStream = rnaSeqDifferentialAnalyticsInputStreamFactory.create(experimentAccession);
 
                         DifferentialAnalytics analytics = inputStream.readNext();
