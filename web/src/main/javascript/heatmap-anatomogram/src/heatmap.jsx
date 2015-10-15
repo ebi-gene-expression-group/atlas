@@ -49,9 +49,8 @@ var Heatmap = React.createClass({
             isProteomics: React.PropTypes.bool,
             isDifferential: React.PropTypes.bool,
             isMultiExperiment: React.PropTypes.bool,
-            heatmapTooltip: React.PropTypes.string.isRequired,
-            legendTooltip: React.PropTypes.string.isRequired
-            }),
+            heatmapTooltip: React.PropTypes.string.isRequired
+        }),
         heatmapConfig: React.PropTypes.object.isRequired,
         columnHeaders: React.PropTypes.array.isRequired,
         multipleColumnHeaders: React.PropTypes.object,
@@ -271,15 +270,15 @@ var Heatmap = React.createClass({
         return (this.props.type.isBaseline || this.props.type.isMultiExperiment ?
             <Legend.LegendBaseline displayLevels={this.state.displayLevels}
                                    atlasBaseURL={this.props.heatmapConfig.atlasBaseURL}
-                                   helpTooltipLocation={this.props.type.legendTooltip}
-                                   minExpressionLevel={this.state.profiles.minExpressionLevel}
-                                   maxExpressionLevel={this.state.profiles.maxExpressionLevel}/> :
+                                   minExpressionLevel={this.state.profiles.minExpressionLevel.toString()}
+                                   maxExpressionLevel={this.state.profiles.maxExpressionLevel.toString()}
+                                   isMultiExperiment={this.props.type.isMultiExperiment ? true : false}/> :
             <Legend.LegendDifferential displayLevels={this.state.displayLevels}
                                        atlasBaseURL={this.props.heatmapConfig.atlasBaseURL}
-                                       minDownLevel={this.state.profiles.minDownLevel}
-                                       maxDownLevel={this.state.profiles.maxDownLevel}
-                                       minUpLevel={this.state.profiles.minUpLevel}
-                                       maxUpLevel={this.state.profiles.maxUpLevel}/>);
+                                       minDownLevel={this.state.profiles.minDownLevel.toString()}
+                                       maxDownLevel={this.state.profiles.maxDownLevel.toString()}
+                                       minUpLevel={this.state.profiles.minUpLevel.toString()}
+                                       maxUpLevel={this.state.profiles.maxUpLevel.toString()}/>);
     },
 
     tableHeaderType: function () {
@@ -1119,7 +1118,7 @@ var GeneProfileRow = React.createClass({
             else if (this.props.type.isDifferential) {
                 return (
                     <CellDifferential key={this.props.designElement + this.props.name + expression.contrastName}
-                                      color={expression.color}
+                                      colour={expression.color}
                                       foldChange={expression.foldChange}
                                       pValue={expression.pValue}
                                       tStat={expression.tStat}

@@ -18,12 +18,12 @@ require('../css/legend.css');
 var LegendDifferential = React.createClass({
 
     propTypes: {
+        displayLevels: React.PropTypes.bool.isRequired,
+        atlasBaseURL: React.PropTypes.string.isRequired,
         minDownLevel: React.PropTypes.string.isRequired,
         maxDownLevel: React.PropTypes.string.isRequired,
         minUpLevel: React.PropTypes.string.isRequired,
-        maxUpLevel: React.PropTypes.string.isRequired,
-        displayLevels: React.PropTypes.bool.isRequired,
-        atlasBaseURL: React.PropTypes.string.isRequired
+        maxUpLevel: React.PropTypes.string.isRequired
     },
 
     render: function () {

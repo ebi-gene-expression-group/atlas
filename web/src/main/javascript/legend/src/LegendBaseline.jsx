@@ -19,14 +19,16 @@ require('../css/legend.css');
 var LegendBaseline = React.createClass({
 
     propTypes: {
-        minExpressionLevel: React.PropTypes.number.isRequired,
-        maxExpressionLevel: React.PropTypes.number.isRequired,
-        helpTooltipLocation: React.PropTypes.string.isRequired,
         displayLevels: React.PropTypes.bool.isRequired,
-        atlasBaseURL: React.PropTypes.string.isRequired
+        atlasBaseURL: React.PropTypes.string.isRequired,
+        minExpressionLevel: React.PropTypes.string.isRequired,
+        maxExpressionLevel: React.PropTypes.string.isRequired,
+        isMultiExperiment: React.PropTypes.bool.isRequired,
     },
 
     render: function () {
+        var dataHelpLoc = this.props.isMultiExperiment ? "#gradient-base-crossexp" : "#gradient-base";
+
         return (
             <div className="gxaHeatmapLegendGradient">
                 <div style={{display: "inline-table"}}>
@@ -36,7 +38,7 @@ var LegendBaseline = React.createClass({
                                lowValueColour="#C0C0C0"
                                highValueColour="#0000FF"/>
                 </div>
-                <div ref="legendHelp" data-help-loc={this.props.helpTooltipLocation} className="gxaLegendHelp"/>
+                <div ref="legendHelp" data-help-loc={dataHelpLoc} className="gxaLegendHelp"/>
             </div>
         );
     },
