@@ -63,8 +63,6 @@ public class DiffAnalyticsIndexerService {
     public int index(DifferentialExperiment experiment, int batchSize) {
         String experimentAccession = experiment.getAccession();
 
-        LOGGER.info("Preparing " + experimentAccession);
-
         ExperimentType experimentType = experiment.getType();
 
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();

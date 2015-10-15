@@ -61,8 +61,6 @@ public class MicroArrayDiffAnalyticsIndexerService {
     public int index(MicroarrayExperiment experiment, int batchSize) {
         String experimentAccession = experiment.getAccession();
 
-        LOGGER.info("Preparing " + experimentAccession);
-
         ExperimentType experimentType = experiment.getType();
 
         SortedSet<String> arrayDesignAccessions = experiment.getArrayDesignAccessions();
