@@ -49,9 +49,7 @@ public class BioentityIdentifiersReader {
 
     public HashSet<String> getBioentityIdsFromAllExperiments() {
         return getBioentityIdsFromExperiments(
-                ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
-                ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL,
-                ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
+                ExperimentType.MICROARRAY_ANY,
                 ExperimentType.RNASEQ_MRNA_DIFFERENTIAL,
                 ExperimentType.RNASEQ_MRNA_BASELINE,
                 ExperimentType.PROTEOMICS_BASELINE);
