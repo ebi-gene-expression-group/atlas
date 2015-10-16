@@ -43,11 +43,11 @@ public enum ExperimentType {
     private ExperimentType parent;
     private String description;
 
-    private ExperimentType(String description) {
+    ExperimentType(String description) {
         this.description = description;
     }
 
-    private ExperimentType(ExperimentType parent, String description) {
+    ExperimentType(ExperimentType parent, String description) {
         this(description);
         this.parent = parent;
     }
@@ -64,20 +64,12 @@ public enum ExperimentType {
         return equals(PROTEOMICS_BASELINE);
     }
 
-    public boolean isMicroRna() {
-        return equals(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
-    }
-
     public boolean isRnaSeqDifferential() {
         return equals(RNASEQ_MRNA_DIFFERENTIAL);
     }
 
     public boolean isDifferential() {
         return equals(RNASEQ_MRNA_DIFFERENTIAL) || isMicroarray();
-    }
-
-    public boolean isTwoColour() {
-        return equals(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL);
     }
 
     public ExperimentType getParent() {
