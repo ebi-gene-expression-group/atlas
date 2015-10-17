@@ -60,7 +60,7 @@ public class DiffAnalyticsIndexerService {
         this.diffAnalyticsDocumentStreamIndexer = diffAnalyticsDocumentStreamIndexer;
     }
 
-    public int index(DifferentialExperiment experiment, int batchSize) {
+    public int index(DifferentialExperiment experiment, Map<String, String> bioentityIdToIdentifierSearch, int batchSize) {
         String experimentAccession = experiment.getAccession();
 
         ExperimentType experimentType = experiment.getType();
@@ -78,7 +78,7 @@ public class DiffAnalyticsIndexerService {
         Map<String, Integer> numReplicatesByContrastId = buildNumReplicatesByContrastId(experiment);
 
         return  diffAnalyticsDocumentStreamIndexer.index(experimentAccession, experimentType, factors,
-                conditionSearchTermsByContrastId, ensemblSpeciesGroupedByContrastId, numReplicatesByContrastId, batchSize);
+                conditionSearchTermsByContrastId, ensemblSpeciesGroupedByContrastId, numReplicatesByContrastId, bioentityIdToIdentifierSearch, batchSize);
     }
 
     private Map<String, Integer> buildNumReplicatesByContrastId(DifferentialExperiment experiment) {

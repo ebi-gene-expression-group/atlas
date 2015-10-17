@@ -13,13 +13,10 @@ import java.util.Map;
 @Named
 public class BaselineAnalyticsDocumentStreamFactory {
 
-    private final IdentifierSearchTermsTrader identifierSearchTermsTrader;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     @Inject
-    public BaselineAnalyticsDocumentStreamFactory(IdentifierSearchTermsTrader identifierSearchTermsTrader,
-                                                  SpeciesKingdomTrader speciesKingdomTrader) {
-        this.identifierSearchTermsTrader = identifierSearchTermsTrader;
+    public BaselineAnalyticsDocumentStreamFactory(SpeciesKingdomTrader speciesKingdomTrader) {
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
@@ -28,7 +25,8 @@ public class BaselineAnalyticsDocumentStreamFactory {
                                           Map<String, String> ensemblSpeciesGroupedByAssayGroupId,
                                           String defaultQueryFactorType,
                                           Iterable<BaselineAnalytics> inputStream,
-                                          SetMultimap<String, String> conditionSearchTermsByAssayAccessionId) {
+                                          SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
+                                          Map<String, String> bioentityIdToIdentifierSearch) {
 
         return new BaselineAnalyticsDocumentStream(experimentAccession,
                                                    experimentType,
@@ -36,7 +34,7 @@ public class BaselineAnalyticsDocumentStreamFactory {
                                                    defaultQueryFactorType,
                                                    inputStream,
                                                    conditionSearchTermsByAssayAccessionId,
-                                                   identifierSearchTermsTrader,
+                                                   bioentityIdToIdentifierSearch,
                                                    speciesKingdomTrader);
 
     }

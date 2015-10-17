@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -91,7 +92,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Test
     public void indexBaselineExperimentAnalytics() {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-MTAB-2039");
-        subject.index(experiment, 0);
+        subject.index(experiment, ImmutableMap.of("", ""), 0);
         assertThat(documents, hasSize(14));
 
         AnalyticsDocument document = documents.get(0);
@@ -108,7 +109,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Test
     public void indexMultiSpeciesBaselineExperimentAnalytics() {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-GEOD-30352");
-        subject.index(experiment, 1024);
+        subject.index(experiment, ImmutableMap.of("", ""), 1024);
 
         assertThat(documents, hasSize(2179));
 
@@ -136,7 +137,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Test
     public void indexProteomicsBaselineExperimentAnalytics() {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1");
-        subject.index(experiment, 1024);
+        subject.index(experiment, ImmutableMap.of("", ""), 1024);
 
         assertThat(documents, hasSize(3366));
 

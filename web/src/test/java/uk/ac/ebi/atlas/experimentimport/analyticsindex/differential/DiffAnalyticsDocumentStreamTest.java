@@ -40,9 +40,6 @@ public class DiffAnalyticsDocumentStreamTest {
     DiffAnalyticsDocumentStream subject;
 
     @Mock
-    IdentifierSearchTermsTrader identifierSearchTermsTraderMock;
-
-    @Mock
     SpeciesKingdomTrader speciesKingdomTraderMock;
 
     @Test
@@ -62,7 +59,7 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, identifierSearchTermsTraderMock, speciesKingdomTraderMock);
+                numReplicatesByContrastId, ImmutableMap.of("", ""), speciesKingdomTraderMock);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();
 
@@ -94,7 +91,7 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, identifierSearchTermsTraderMock, speciesKingdomTraderMock);
+                numReplicatesByContrastId, ImmutableMap.of("", ""), speciesKingdomTraderMock);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();
 

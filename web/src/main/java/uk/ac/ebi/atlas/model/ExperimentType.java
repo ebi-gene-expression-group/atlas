@@ -53,7 +53,7 @@ public enum ExperimentType {
     }
 
     public boolean isMicroarray() {
-        return getParent().equals(MICROARRAY_ANY);
+        return equals(MICROARRAY_ANY) || getParent().equals(MICROARRAY_ANY);
     }
 
     public boolean isBaseline() {

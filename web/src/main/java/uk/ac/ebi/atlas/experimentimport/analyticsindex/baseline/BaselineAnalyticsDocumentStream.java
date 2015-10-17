@@ -26,7 +26,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
     private final String defaultQueryFactorType;
     private final Iterable<BaselineAnalytics> inputStream;
     private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
-    private final IdentifierSearchTermsTrader identifierSearchTermsTrader;
+    private final Map<String, String> bioentityIdToIdentifierSearch;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     public BaselineAnalyticsDocumentStream(String experimentAccession,
@@ -35,7 +35,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
                                            String defaultQueryFactorType,
                                            Iterable<BaselineAnalytics> inputStream,
                                            SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
-                                           IdentifierSearchTermsTrader identifierSearchTermsTrader,
+                                           Map<String, String> bioentityIdToIdentifierSearch,
                                            SpeciesKingdomTrader speciesKingdomTrader) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
@@ -43,7 +43,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.inputStream = inputStream;
         this.conditionSearchTermsByAssayAccessionId = conditionSearchTermsByAssayAccessionId;
-        this.identifierSearchTermsTrader = identifierSearchTermsTrader;
+        this.bioentityIdToIdentifierSearch = bioentityIdToIdentifierSearch;
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
@@ -73,10 +73,10 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
             String geneId = baselineAnalytics.getGeneId();
             String identifierSearch =
                     geneId +
-                    (identifierSearchTermsTrader.getIdentifierSearch(geneId).isEmpty() ?
+                    (bioentityIdToIdentifierSearch.get(geneId).isEmpty() ?
                             ""
                             :
-                            " " + identifierSearchTermsTrader.getIdentifierSearch(geneId));
+                            " " + bioentityIdToIdentifierSearch.get(geneId));
 
             String assayGroupId = baselineAnalytics.getAssayGroupId();
             String conditionSearch = getConditionSearchTerms(assayGroupId);

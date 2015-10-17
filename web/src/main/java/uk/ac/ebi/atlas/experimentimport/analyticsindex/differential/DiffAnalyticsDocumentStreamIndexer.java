@@ -38,6 +38,7 @@ public class DiffAnalyticsDocumentStreamIndexer {
                      SetMultimap<String, String> conditionSearchTermsByContrastGroupId,
                      ImmutableMap<String, String> ensemblSpeciesGroupedByContrastId,
                      Map<String, Integer> numReplicatesByContrastId,
+                     Map<String, String> bioentityIdToIdentifierSearch,
                      int batchSize) {
 
 
@@ -51,7 +52,7 @@ public class DiffAnalyticsDocumentStreamIndexer {
             IterableObjectInputStream<? extends DifferentialAnalytics> iterableInputStream = new IterableObjectInputStream<>(closeableInputStream);
 
             DiffAnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, factors, ensemblSpeciesGroupedByContrastId,
-                    iterableInputStream, conditionSearchTermsByContrastGroupId, numReplicatesByContrastId);
+                    iterableInputStream, conditionSearchTermsByContrastGroupId, numReplicatesByContrastId, bioentityIdToIdentifierSearch);
 
             int count = analyticsIndexDAO.addDocuments(analyticsDocuments, batchSize);
 

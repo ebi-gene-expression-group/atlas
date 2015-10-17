@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -115,7 +116,7 @@ public class DiffAnalyticsIndexerServiceIT {
     public void index() {
 
         DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment("E-GEOD-38400");
-        subject.index(experiment, 1024);
+        subject.index(experiment, ImmutableMap.of("", ""), 1024);
         assertThat(documents, hasSize(12));
 
         AnalyticsDocument document = documents.get(0);

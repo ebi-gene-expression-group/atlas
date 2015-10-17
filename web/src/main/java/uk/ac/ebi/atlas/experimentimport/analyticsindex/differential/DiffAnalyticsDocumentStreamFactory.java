@@ -14,13 +14,10 @@ import java.util.Set;
 @Named
 public class DiffAnalyticsDocumentStreamFactory {
 
-    private final IdentifierSearchTermsTrader identifierSearchTermsTrader;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     @Inject
-    public DiffAnalyticsDocumentStreamFactory(IdentifierSearchTermsTrader identifierSearchTermsTrader,
-                                              SpeciesKingdomTrader speciesKingdomTrader) {
-        this.identifierSearchTermsTrader = identifierSearchTermsTrader;
+    public DiffAnalyticsDocumentStreamFactory(SpeciesKingdomTrader speciesKingdomTrader) {
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
@@ -30,7 +27,8 @@ public class DiffAnalyticsDocumentStreamFactory {
                                           Map<String, String> ensemblSpeciesGroupedByAssayGroupId,
                                           Iterable<? extends DifferentialAnalytics> inputStream,
                                           SetMultimap<String, String> conditionSearchTermsByContrastId,
-                                          Map<String, Integer> numReplicatesByContrastId) {
+                                          Map<String, Integer> numReplicatesByContrastId,
+                                          Map<String, String>  bioentityIdToIdentifierSearch) {
 
         return new DiffAnalyticsDocumentStream(experimentAccession,
                                                experimentType, factors,
@@ -38,7 +36,7 @@ public class DiffAnalyticsDocumentStreamFactory {
                                                inputStream,
                                                conditionSearchTermsByContrastId,
                                                numReplicatesByContrastId,
-                                               identifierSearchTermsTrader,
+                                               bioentityIdToIdentifierSearch,
                                                speciesKingdomTrader);
 
     }

@@ -3,12 +3,14 @@ package uk.ac.ebi.atlas.utils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.*;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalyticsInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsInputStreamFactory;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -191,5 +193,66 @@ public class BioentityIdentifiersReader {
         }
 
         return bioentityIdentifiers.size() - bioentityIdentifiersSizeWithoutNewElements;
+    }
+
+    public HashSet<String> getBioentityIdsFromExperiment(String experimentAccession) {
+        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+
+        HashSet<String> bioentityIdentifiers = new HashSet<>();
+
+        if (experiment.getType().isBaseline()) {
+            ObjectInputStream<BaselineAnalytics> inputStream;
+            if (experiment.getType().isProteomicsBaseline()) {
+                inputStream = proteomicsBaselineAnalyticsInputStreamFactory.create(experimentAccession);
+            } else {
+                inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession);
+            }
+            BaselineAnalytics analytics = inputStream.readNext();
+            while (analytics != null) {
+                bioentityIdentifiers.add(analytics.getGeneId());
+                analytics = inputStream.readNext();
+            }
+            try {
+                inputStream.close();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+
+        } else {  //if (experimentType.isDifferential()) {
+
+            if (experiment.getType().isMicroarray()) {
+                for (String arrayDesign : ((MicroarrayExperiment) experiment).getArrayDesignAccessions()) {
+                    MicroarrayDifferentialAnalyticsInputStream inputStream = microarrayDifferentialAnalyticsInputStreamFactory.create(experimentAccession, arrayDesign);
+
+                    DifferentialAnalytics analytics = inputStream.readNext();
+                    while (analytics != null) {
+                        bioentityIdentifiers.add(analytics.getGeneId());
+                        analytics = inputStream.readNext();
+                    }
+                    try {
+                        inputStream.close();
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                    }
+                }
+
+            } else {
+                RnaSeqDifferentialAnalyticsInputStream inputStream = rnaSeqDifferentialAnalyticsInputStreamFactory.create(experimentAccession);
+
+                DifferentialAnalytics analytics = inputStream.readNext();
+                while (analytics != null) {
+                    bioentityIdentifiers.add(analytics.getGeneId());
+                    analytics = inputStream.readNext();
+                }
+                try {
+                    inputStream.close();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+            }
+
+        }
+
+        return bioentityIdentifiers;
     }
 }

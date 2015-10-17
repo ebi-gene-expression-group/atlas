@@ -30,8 +30,8 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
     var query = new URI(window.location).search(true);
     query.select = query.select ? JSON.parse(query.select) : {};
 
-    var newQueryString = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
-    navigateTo(newQueryString);
+    var newQueryURI = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
+    navigateTo(newQueryURI);
 
     function renderPage() {
 
@@ -44,19 +44,23 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
     }
 
     function setChecked(checked, facet, facetItem) {
-        var newSelect = checked ? addSelection(query.select, facet, facetItem) : removeSelection(query.select, facet, facetItem);
-        var newQueryString = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
-        navigateTo(newQueryString);
+        if (checked) {
+            addSelection(query.select, facet, facetItem)
+        } else {
+            removeSelection(query.select, facet, facetItem);
+        }
+        var newQueryURI = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
+        navigateTo(newQueryURI.toString());
     }
 
-    function navigateTo(newQueryString) {
+    function navigateTo(url) {
         var state, title;
         if (ie9) {
-            window.location.search = newQueryString;
+            //window.location.search = url;
         } else {
-            history.pushState(null, null, window.location.pathname + newQueryString);
-            renderPage();
+            history.pushState(null, null, window.location.pathname + url);
         }
+        renderPage();
     }
 
     function addSelection(select, facet, facetItem) {

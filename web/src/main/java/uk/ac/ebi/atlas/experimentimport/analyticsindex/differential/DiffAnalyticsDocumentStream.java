@@ -27,7 +27,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
     private final Iterable<? extends DifferentialAnalytics> inputStream;
     private final SetMultimap<String, String> conditionSearchTermsByContrastId;
     private final Set<String> factors;
-    private final IdentifierSearchTermsTrader identifierSearchTermsTrader;
+    private final Map<String, String> bioentityIdToIdentifierSearch;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     public DiffAnalyticsDocumentStream(String experimentAccession,
@@ -37,7 +37,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
                                        Iterable<? extends DifferentialAnalytics> inputStream,
                                        SetMultimap<String, String> conditionSearchTermsByContrastId,
                                        Map<String, Integer> numReplicatesByContrastId,
-                                       IdentifierSearchTermsTrader identifierSearchTermsTrader,
+                                       Map<String, String> bioentityIdToIdentifierSearch,
                                        SpeciesKingdomTrader speciesKingdomTrader) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
@@ -46,7 +46,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
         this.inputStream = inputStream;
         this.conditionSearchTermsByContrastId = conditionSearchTermsByContrastId;
         this.numReplicatesByContrastId = numReplicatesByContrastId;
-        this.identifierSearchTermsTrader = identifierSearchTermsTrader;
+        this.bioentityIdToIdentifierSearch = bioentityIdToIdentifierSearch;
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
@@ -74,7 +74,11 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
             DifferentialAnalytics analytics = inputIterator.next();
 
             String geneId = analytics.getGeneId();
-            String identifierSearch = geneId + " " + identifierSearchTermsTrader.getIdentifierSearch(geneId);
+            String identifierSearch =  geneId +
+                    (bioentityIdToIdentifierSearch.get(geneId).isEmpty() ?
+                            ""
+                            :
+                            " " + bioentityIdToIdentifierSearch.get(geneId));
 
             String contrastId = analytics.getContrastId();
             String conditionSearch = getConditionSearchTerms(contrastId);

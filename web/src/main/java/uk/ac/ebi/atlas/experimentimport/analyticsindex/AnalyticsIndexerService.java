@@ -36,6 +36,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Map;
 
 @Named
 @Scope("singleton")
@@ -55,19 +56,19 @@ public class AnalyticsIndexerService {
         this.microArrayDiffAnalyticsIndexerService = microArrayDiffAnalyticsIndexerService;
     }
 
-    public int index(Experiment experiment, int batchSize) {
+    public int index(Experiment experiment, Map<String, String> bioentityIdToIdentifierSearch, int batchSize) {
        ExperimentType experimentType = experiment.getType();
 
         if (experimentType == ExperimentType.RNASEQ_MRNA_BASELINE) {
-            return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment, batchSize);
+            return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);
         } else if (experimentType == ExperimentType.PROTEOMICS_BASELINE) {
-            return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment, batchSize);
+            return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);
         } else if (experimentType == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
-            return diffAnalyticsIndexerService.index((DifferentialExperiment) experiment, batchSize);
+            return diffAnalyticsIndexerService.index((DifferentialExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);
         } else if (experimentType == ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL ||
                    experimentType == ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL ||
                    experimentType == ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL) {
-            return microArrayDiffAnalyticsIndexerService.index((MicroarrayExperiment) experiment, batchSize);
+            return microArrayDiffAnalyticsIndexerService.index((MicroarrayExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);
         }
 
         throw new UnsupportedOperationException("No analytics loader for experiment type " + experimentType);

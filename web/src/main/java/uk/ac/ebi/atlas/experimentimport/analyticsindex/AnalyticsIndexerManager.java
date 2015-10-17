@@ -1,9 +1,11 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.TreeMultimap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsTrader;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -38,7 +40,10 @@ public class AnalyticsIndexerManager extends Observable {
     private AnalyticsIndexerService analyticsIndexerService;
     private final AnalyticsIndexerMonitor analyticsIndexerMonitor;
     private final ExperimentTrader experimentTrader;
+    private final IdentifierSearchTermsTrader identifierSearchTermsTrader;
     private final ExperimentSorter experimentSorter;
+
+    private ImmutableMap<String, String> bioentityIdToIdentifierSearch;
 
     protected static final String DEFAULT_THREADS_8 = "8";
     protected static final String DEFAULT_BATCH_SIZE_1024 = "1024";
@@ -47,10 +52,15 @@ public class AnalyticsIndexerManager extends Observable {
     protected static final int MORE_THAN_LONGEST_EXPERIMENT_INDEX_TIME = 60;   // in minutes
 
     @Inject
-    public AnalyticsIndexerManager(AnalyticsIndexerService analyticsIndexerService, AnalyticsIndexerMonitor analyticsIndexerMonitor, ExperimentTrader experimentTrader, ExperimentSorter experimentSorter) {
+    public AnalyticsIndexerManager(AnalyticsIndexerService analyticsIndexerService,
+                                   AnalyticsIndexerMonitor analyticsIndexerMonitor,
+                                   ExperimentTrader experimentTrader,
+                                   IdentifierSearchTermsTrader identifierSearchTermsTrader,
+                                   ExperimentSorter experimentSorter) {
         this.analyticsIndexerService = analyticsIndexerService;
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
         this.experimentTrader = experimentTrader;
+        this.identifierSearchTermsTrader = identifierSearchTermsTrader;
         this.experimentSorter = experimentSorter;
     }
 
@@ -62,7 +72,7 @@ public class AnalyticsIndexerManager extends Observable {
         checkNotNull(experimentAccession);
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
         analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
-        return analyticsIndexerService.index(experiment, batchSize);
+        return analyticsIndexerService.index(experiment, bioentityIdToIdentifierSearch, batchSize);
     }
 
     public void deleteFromAnalyticsIndex(String experimentAccession) {
@@ -120,6 +130,8 @@ public class AnalyticsIndexerManager extends Observable {
         setChanged();
         notifyObservers(descendingFileSizeToExperimentAccessions);
 
+        bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap();
+
         indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), threads, batchSize, timeout);
 
         deleteObserver(analyticsIndexerMonitor);
@@ -131,6 +143,8 @@ public class AnalyticsIndexerManager extends Observable {
         TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortExperimentsPerSize(experimentType);
         setChanged();
         notifyObservers(descendingFileSizeToExperimentAccessions);
+
+        bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap(experimentType);
 
         indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), threads, batchSize, timeout);
 
