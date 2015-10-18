@@ -59,7 +59,7 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, ImmutableMap.of("", ""), speciesKingdomTraderMock);
+                numReplicatesByContrastId, ImmutableMap.of(GENEID1, "foo"), speciesKingdomTraderMock);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();
 
