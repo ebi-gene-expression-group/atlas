@@ -109,11 +109,11 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
                             species.push(key);
                         } else if (facets == "factors" && value == true) {
                             factors.push(key);
-                        } else if (facets == "experimentType" && value == true) {
+                        } else if (facets == "Experiment type" && value == true) {
                             experimentType.push(key);
                         } else if (facets == "kingdom" && value == true) {
                             kingdom.push(key);
-                        } else if (facets == "numReplicates" && value == true) {
+                        } else if (facets == "Number of replicates" && value == true) {
                             numReplicates.push(key);
                         } else if (facets == "regulation" && value == true) {
                             regulation = key;
