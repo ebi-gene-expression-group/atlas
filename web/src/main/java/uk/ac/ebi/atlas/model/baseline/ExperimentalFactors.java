@@ -227,6 +227,10 @@ public class ExperimentalFactors implements Serializable {
         return xmlFactorsByType;
     }
 
+    public SortedSetMultimap<String, Factor> getFactorsByType() {
+        return factorsByType;
+    }
+
     // match each FactorGroup with the filterFactors, and for each match return the remaining single factor
     // (if there is one and only one)
     public SortedSet<AssayGroupFactor> getComplementAssayGroupFactors(final Set<Factor> filterFactors) {
@@ -270,6 +274,25 @@ public class ExperimentalFactors implements Serializable {
 
     public LinkedHashMap<String, List<Factor>> getHeadersComplementAssayGroupFactorsByXML(final Set<Factor> filterFactors) {
         LinkedHashMap<String, List<Factor>> result = Maps.newLinkedHashMap();
+
+        for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
+            List<Factor> remainingFactors;
+
+            if (CollectionUtils.isNotEmpty(filterFactors)) {
+                remainingFactors = orderedFactorGroupsByAssayGroupId.get(groupId).remove(filterFactors);
+            } else {
+                remainingFactors = Lists.newArrayList(orderedFactorGroupsByAssayGroupId.get(groupId).iterator());
+            }
+            if (remainingFactors.size() == 2) {
+                result.put(groupId, remainingFactors);
+            }
+        }
+
+        return result;
+    }
+
+    public SortedMap<String, List<Factor>> getHeadersComplementAssayGroupFactors(final Set<Factor> filterFactors) {
+        SortedMap<String, List<Factor>> result = new TreeMap<>();
 
         for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
             List<Factor> remainingFactors;
