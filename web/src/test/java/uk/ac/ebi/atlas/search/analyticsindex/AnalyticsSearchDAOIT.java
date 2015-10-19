@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDAO;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
@@ -22,7 +23,7 @@ import static org.junit.Assert.assertThat;
 public class AnalyticsSearchDAOIT {
 
     @Inject
-    private AnalyticsSearchDao subject;
+    private AnalyticsSearchDAO subject;
 
     // TODO Ignore until https://www.pivotaltracker.com/story/show/101118548
     @Ignore

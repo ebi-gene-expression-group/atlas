@@ -1,12 +1,9 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.support;
 
-import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
@@ -16,9 +13,7 @@ import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -36,7 +31,7 @@ public class IdentifierSearchTermsTrader {
     private BioentityIdentifiersReader bioentityIdentifiersReader;
 
     @Inject
-    public IdentifierSearchTermsTrader(@Qualifier("analyticsSolrClient") SolrClient analyticsSolrClient, GxaSolrClient gxaSolrClient,
+    public IdentifierSearchTermsTrader(GxaSolrClient gxaSolrClient,
                                        @Value("#{configuration['index.property_names.identifier.search']}") String[] searchProperties,
                                        BioentityIdentifiersReader bioentityIdentifiersReader) {
         this.gxaSolrClient = gxaSolrClient;

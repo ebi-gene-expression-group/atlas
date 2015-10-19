@@ -15,15 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
-import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
-import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
-import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
-import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDao;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDAO;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
-import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -50,9 +45,9 @@ public class SearchGeneSetController extends SearchBioentityController {
     }
 
     @Inject
-    public SearchGeneSetController(AnalyticsSearchDao analyticsSearchDao, ReactomeClient reactomeClient,
+    public SearchGeneSetController(AnalyticsSearchDAO analyticsSearchDAO, ReactomeClient reactomeClient,
                                    InterProTermTrader interProTermTrader) {
-        super(analyticsSearchDao);
+        super(analyticsSearchDAO);
         this.reactomeClient = reactomeClient;
         this.interProTermTrader = interProTermTrader;
     }

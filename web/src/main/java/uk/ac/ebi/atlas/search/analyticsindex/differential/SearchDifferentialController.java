@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
-import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDao;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDAO;
 import uk.ac.ebi.atlas.search.analyticsindex.SearchController;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.web.GeneQuery;
@@ -31,9 +30,9 @@ public class SearchDifferentialController extends SearchController {
 
     @Inject
     public SearchDifferentialController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder,
-                                        AnalyticsSearchDao analyticsSearchDao,
+                                        AnalyticsSearchDAO analyticsSearchDAO,
                                         DifferentialAnalyticsSearchService differentialAnalyticsSearchService) {
-        super(ebiGlobalSearchQueryBuilder, analyticsSearchDao);
+        super(ebiGlobalSearchQueryBuilder, analyticsSearchDAO);
         this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
     }
 
