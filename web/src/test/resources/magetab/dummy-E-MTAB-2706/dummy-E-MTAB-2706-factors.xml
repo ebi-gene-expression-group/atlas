@@ -34,7 +34,7 @@
     </defaultFilterFactors>
     <defaultQueryFactorType>CELL_LINE</defaultQueryFactorType>
     <menuFilterFactorTypes>ORGANISM_PART, DISEASE, CELL_LINE</menuFilterFactorTypes>
-    <factorTypes>DISEASE, ORGANISM_PART, CELL_LINE</factorTypes>
+    <factorTypes>ORGANISM_PART, DISEASE, CELL_LINE</factorTypes>
     <landingPageDisplayName>Cell Lines - 675 Genentech</landingPageDisplayName>
     <speciesMapping/>
     <dataProviderURL>http://www.gene.com</dataProviderURL>
