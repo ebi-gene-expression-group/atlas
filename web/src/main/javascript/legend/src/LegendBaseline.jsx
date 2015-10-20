@@ -21,9 +21,9 @@ var LegendBaseline = React.createClass({
     propTypes: {
         displayLevels: React.PropTypes.bool.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
-        minExpressionLevel: React.PropTypes.string.isRequired,
-        maxExpressionLevel: React.PropTypes.string.isRequired,
-        isMultiExperiment: React.PropTypes.bool.isRequired,
+        minExpressionLevel: React.PropTypes.number.isRequired,
+        maxExpressionLevel: React.PropTypes.number.isRequired,
+        isMultiExperiment: React.PropTypes.bool.isRequired
     },
 
     render: function () {
