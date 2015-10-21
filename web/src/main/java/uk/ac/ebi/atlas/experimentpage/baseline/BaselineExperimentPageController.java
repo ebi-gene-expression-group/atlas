@@ -24,6 +24,10 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.collect.*;
 import com.google.gson.Gson;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.Resource;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -49,6 +53,8 @@ import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 public abstract class BaselineExperimentPageController extends BaselineExperimentController {
@@ -70,6 +76,18 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     private final AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
+
+    @Value("classpath:dummy.profiles.json")
+    private Resource dummyProfilesJson;
+
+//    @Bean
+    public String dummyProfilesJson() {
+        try (InputStream inputStream = dummyProfilesJson.getInputStream()) {
+            return IOUtils.toString(inputStream);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
     public BaselineExperimentPageController(BaselineProfilesHeatMap baselineProfilesHeatMap,
                                             ApplicationProperties applicationProperties,
@@ -350,10 +368,15 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
         String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
         model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
-
         BaselineProfilesViewModel profilesViewModel = baselineProfilesViewModelBuilder.build(baselineProfiles, orderedFactors);
 
         String jsonProfiles = gson.toJson(profilesViewModel);
+
+        //TODO: remember to remove this as soon the back end is functional for multi-header-factors
+        if(experiment.getAccession().equals("dummy-E-MTAB-2706")) {
+            jsonProfiles = dummyProfilesJson();
+        }
+
         model.addAttribute("jsonProfiles", jsonProfiles);
 
         if (geneSetProfiles != null) {
