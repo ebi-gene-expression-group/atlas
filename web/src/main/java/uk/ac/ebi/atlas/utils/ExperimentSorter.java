@@ -28,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 21/07/15.
@@ -37,8 +38,6 @@ import java.util.Collections;
 @Scope("singleton")
 public class ExperimentSorter {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentSorter.class);
-
     @Value("#{configuration['experiment.magetab.path.template']}")
     private String baselineTsvFileTemplate;
 
@@ -47,22 +46,9 @@ public class ExperimentSorter {
 
     private ExperimentTrader experimentTrader;
 
-    private BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
-    private ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
-    private MicroarrayDifferentialAnalyticsInputStreamFactory microarrayDifferentialAnalyticsInputStreamFactory;
-    private RnaSeqDifferentialAnalyticsInputStreamFactory rnaSeqDifferentialAnalyticsInputStreamFactory;
-
     @Inject
-    public ExperimentSorter(ExperimentTrader experimentTrader,
-                            BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory,
-                            ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory,
-                            MicroarrayDifferentialAnalyticsInputStreamFactory microarrayDifferentialAnalyticsInputStreamFactory,
-                            RnaSeqDifferentialAnalyticsInputStreamFactory rnaSeqDifferentialAnalyticsInputStreamFactory) {
+    public ExperimentSorter(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
-        this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
-        this.proteomicsBaselineAnalyticsInputStreamFactory = proteomicsBaselineAnalyticsInputStreamFactory;
-        this.microarrayDifferentialAnalyticsInputStreamFactory = microarrayDifferentialAnalyticsInputStreamFactory;
-        this.rnaSeqDifferentialAnalyticsInputStreamFactory = rnaSeqDifferentialAnalyticsInputStreamFactory;
     }
 
     public TreeMultimap<Long, String> reverseSortAllExperimentsPerSize() {
@@ -117,98 +103,5 @@ public class ExperimentSorter {
         }
 
         return fileSizeToExperimentsMap;
-    }
-
-
-
-    public ImmutableSet<String> getBioentityIdsFromAllExperiments() {
-        return getBioentityIdsFromExperiments(
-                ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
-                ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL,
-                ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
-                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL,
-                ExperimentType.RNASEQ_MRNA_BASELINE,
-                ExperimentType.PROTEOMICS_BASELINE);
-    }
-
-
-    public ImmutableSet<String> getBioentityIdsFromExperiments(ExperimentType... experimentTypes) {
-
-        StopWatch stopWatch = new org.springframework.util.StopWatch(getClass().getSimpleName());
-        stopWatch.start();
-        LOGGER.info("Retrieving all bioentity identifiers...");
-
-        ImmutableSet.Builder<String> bioentityIdsBuilder = new ImmutableSet.Builder<>();
-
-        for (ExperimentType experimentType : experimentTypes) {
-
-            if (experimentType.isBaseline()) {
-
-                LOGGER.info("Retrieving all bioentity identifiers from baseline experiments...");
-                for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
-                    BaselineAnalyticsInputStream inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession);
-
-                    BaselineAnalytics analytics = inputStream.readNext();
-                    while (analytics != null) {
-                        bioentityIdsBuilder.add(analytics.getGeneId());
-                        analytics = inputStream.readNext();
-                    }
-                }
-
-            } else if (experimentType.isProteomicsBaseline()) {
-
-                LOGGER.info("Retrieving all bioentity identifiers from proteomics experiments...");
-                for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
-                    ProteomicsBaselineAnalyticsInputStream inputStream = proteomicsBaselineAnalyticsInputStreamFactory.create(experimentAccession);
-
-                    BaselineAnalytics analytics = inputStream.readNext();
-                    while (analytics != null) {
-                        bioentityIdsBuilder.add(analytics.getGeneId());
-                        analytics = inputStream.readNext();
-                    }
-                }
-
-            } else if (experimentType.isMicroarray()) {
-
-                LOGGER.info("Retrieving all bioentity identifiers from microarray experiments...");
-                for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
-
-                    MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-
-                    for (String arrayDesign : experiment.getArrayDesignAccessions()) {
-                        MicroarrayDifferentialAnalyticsInputStream inputStream = microarrayDifferentialAnalyticsInputStreamFactory.create(experimentAccession, arrayDesign);
-
-                        DifferentialAnalytics analytics = inputStream.readNext();
-                        while (analytics != null) {
-                            bioentityIdsBuilder.add(analytics.getGeneId());
-                            analytics = inputStream.readNext();
-                        }
-                    }
-                }
-
-            } else if (experimentType.isRnaSeqDifferential()) {
-
-                LOGGER.info("Retrieving all bioentity identifiers from RNA-seq differential experiments...");
-                for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
-                    RnaSeqDifferentialAnalyticsInputStream inputStream = rnaSeqDifferentialAnalyticsInputStreamFactory.create(experimentAccession);
-
-                    DifferentialAnalytics analytics = inputStream.readNext();
-                    while (analytics != null) {
-                        bioentityIdsBuilder.add(analytics.getGeneId());
-                        analytics = inputStream.readNext();
-                    }
-                }
-
-            }
-        }
-        stopWatch.stop();
-        LOGGER.info(String.format("Retrieved bioentity identifiers in %s seconds. Building set...", stopWatch.getTotalTimeSeconds()));
-
-        stopWatch.start();
-        ImmutableSet<String> bioentityIdentifiers = bioentityIdsBuilder.build();
-        stopWatch.stop();
-        LOGGER.info(String.format("Built a set of %,d bioentity identifiers in %s seconds.", bioentityIdentifiers.size(), stopWatch.getTotalTimeSeconds()));
-
-        return bioentityIdentifiers;
     }
 }

@@ -30,7 +30,7 @@ var ExperimentDescription = React.createClass({
         var experimentURL = this.props.linksAtlasBaseURL + this.props.experiment.URL;
 
         return (
-            <div style={{width: "100%"}}>
+            <div style={{width: "100%", paddingBottom: "20px"}}>
                 <div id="experimentDescription">
                     <a id="goto-experiment" className="gxaThickLink" title="Experiment Page" href={experimentURL}>{this.props.experiment.description}</a>
                 </div>
@@ -42,10 +42,10 @@ var ExperimentDescription = React.createClass({
 });
 
 var TypeEnum = {
-    BASELINE: { isBaseline: true, heatmapTooltip: '#heatMapTableCellInfo', legendTooltip: '#gradient-base' },
-    PROTEOMICS_BASELINE: { isBaseline: true, isProteomics: true, heatmapTooltip: '#heatMapTableCellInfo-proteomics', legendTooltip: '#gradient-base' },
+    BASELINE: { isBaseline: true, heatmapTooltip: '#heatMapTableCellInfo' },
+    PROTEOMICS_BASELINE: { isBaseline: true, isProteomics: true, heatmapTooltip: '#heatMapTableCellInfo-proteomics' },
     DIFFERENTIAL: { isDifferential: true, heatmapTooltip: '#heatMapTableCellInfo-differential' },
-    MULTIEXPERIMENT: { isMultiExperiment: true, heatmapTooltip: '#heatMapTableCellInfo-multiexp', legendTooltip: '#gradient-base-crossexp' }
+    MULTIEXPERIMENT: { isMultiExperiment: true, heatmapTooltip: '#heatMapTableCellInfo-multiexp' }
 };
 
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Heatmap demo</title>
+
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendor.bundle.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/expression-atlas-heatmap.bundle.js"></script>
+</head>
+<body>
+    <div>
+        <h2>Bundles loaded locally, request done to <code>http://www.ebi.ac.uk/gxa</code></h2>
+    </div>
+
+    <div id="heatmapContainer"></div>
+</body>
+
+<script language="JavaScript" type="text/javascript">
+    var AtlasHeatmapBuilder = window.exposed;
+    AtlasHeatmapBuilder({
+        proxyPrefix: "",
+        atlasHost: "10.0.2.2:8080",
+        params: "geneQuery=R-HSA-73864",
+        isMultiExperiment: false,
+        target: "heatmapContainer"
+    });
+</script>
+
+</html>

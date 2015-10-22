@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -51,19 +52,18 @@ public class BaselineAnalyticsDocumentStreamTest {
     private static final String ENSEMBL_ENSEMBLDB = "ensembl";
 
     @Mock
-    IdentifierSearchTermsTrader identifierSearchTermsTraderMock;
-
-    @Mock
     private SpeciesKingdomTrader speciesKingdomTraderMock;
+
+    private Map<String, String> bioentityIdToIdentifierSearch =
+            ImmutableMap.of(
+                    GENEID1, GENE_1_SEARCHTERM_1,
+                    GENEID2, GENE_2_SEARCHTERM_1 + " " + GENE_2_SEARCHTERM_2,
+                    UNKNOWN_GENEID, "");
 
     private ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId = ImmutableMap.of(ASSAY_GROUP_ID1, HOMO_SAPIENS, ASSAY_GROUP_ID2, MUS_MUSCULUS);
 
     @Test
     public void test() {
-
-        when(identifierSearchTermsTraderMock.getIdentifierSearch(GENEID1)).thenReturn(GENE_1_SEARCHTERM_1);
-        when(identifierSearchTermsTraderMock.getIdentifierSearch(GENEID2)).thenReturn(GENE_2_SEARCHTERM_1 + " " + GENE_2_SEARCHTERM_2);
-        when(identifierSearchTermsTraderMock.getIdentifierSearch(UNKNOWN_GENEID)).thenReturn("");
 
         when(speciesKingdomTraderMock.getKingdom(HOMO_SAPIENS)).thenReturn(ANIMAL_KINGDOM);
         when(speciesKingdomTraderMock.getKingdom(MUS_MUSCULUS)).thenReturn(ANIMAL_KINGDOM);
@@ -79,14 +79,14 @@ public class BaselineAnalyticsDocumentStreamTest {
         ImmutableSetMultimap<String, String> conditionSearchTermByAssayAccessionId = conditionSearchBuilder.build();
 
         BaselineAnalyticsDocumentStream stream =
-                new BaselineAnalyticsDocumentStreamFactory(identifierSearchTermsTraderMock,
-                                                           speciesKingdomTraderMock)
+                new BaselineAnalyticsDocumentStreamFactory(speciesKingdomTraderMock)
                         .create(EXPERIMENT_ACCESSION,
                                 EXPERIMENT_TYPE,
                                 ensemblSpeciesGroupedByAssayGroupId,
                                 DEFAULT_QUERY_FACTOR_TYPE,
                                 ImmutableSet.of(BASELINE_ANALYTICS1, BASELINE_ANALYTICS2, BASELINE_ANALYTICS3),
-                                conditionSearchTermByAssayAccessionId);
+                                conditionSearchTermByAssayAccessionId,
+                                bioentityIdToIdentifierSearch);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = stream.iterator();
 

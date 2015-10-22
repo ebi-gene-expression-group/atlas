@@ -27,13 +27,17 @@ module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeDat
         heatmapsElement = document.getElementById(heatmapsContainerId),
         host = atlasHost ? atlasHost : window.location.host;
 
-    var query = new URI(window.location).search(true);
-    query.select = query.select ? JSON.parse(query.select) : initializeQuerySelect();
-
-    var newQueryString = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
-    navigateTo(newQueryString);
+    renderPage();
 
     function renderPage() {
+        var query = new URI(window.location).search(true);
+        query.select = query.select ? JSON.parse(query.select) : initializeQuerySelect();
+
+        var newQueryURI = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
+        navigateTo(query, newQueryURI);
+    }
+
+    function render(query) {
         React.render(
             React.createElement(FacetsTree, {
                 facets: facetsTreeData,
@@ -73,19 +77,26 @@ module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeDat
     }
 
     function setChecked(checked, species, factor) {
-        var newSelect = checked ? addSelection(query.select, species, factor) : removeSelection(query.select, species, factor);
-        var newQueryString = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(newSelect)});
-        navigateTo(newQueryString);
+        var query = new URI(window.location).search(true);
+        query.select = query.select ? JSON.parse(query.select) : initializeQuerySelect();
+
+        if (checked) {
+            addSelection(query.select, species, factor);
+        } else {
+            removeSelection(query.select, species, factor);
+        }
+        var newQueryURI = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
+        navigateTo(query, newQueryURI);
     }
 
-    function navigateTo(newQueryString) {
+    function navigateTo(query, url) {
         var state, title;
         if (ie9) {
-            window.location.search = newQueryString;
+            //window.location.search = url;
         } else {
-            history.pushState(null, null, window.location.pathname + newQueryString);
-            renderPage();
+            history.pushState(null, null, window.location.pathname + url);
         }
+        render(query);
     }
 
     function addSelection(querySelect, species, factor) {

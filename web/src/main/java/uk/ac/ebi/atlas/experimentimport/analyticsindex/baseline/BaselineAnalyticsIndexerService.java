@@ -48,6 +48,7 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -75,10 +76,8 @@ public class BaselineAnalyticsIndexerService {
         this.baselineConditionsBuilder = baselineConditionsBuilder;
     }
 
-    public int index(BaselineExperiment experiment, int batchSize) {
+    public int index(BaselineExperiment experiment, Map<String, String> bioentityIdToIdentifierSearch, int batchSize) {
         String experimentAccession = experiment.getAccession();
-
-        LOGGER.info("Preparing " + experiment);
 
         ExperimentType experimentType = experiment.getType();
 
@@ -101,8 +100,10 @@ public class BaselineAnalyticsIndexerService {
         ObjectInputStream<BaselineAnalytics> inputStream = (experimentType == ExperimentType.PROTEOMICS_BASELINE) ?
                 proteomicsBaselineAnalyticsInputStreamFactory.create(experimentAccession) : baselineAnalyticsInputStreamFactory.create(experimentAccession);
 
-        int count = indexRnaSeqBaselineExperimentAnalytics(experimentAccession, experimentType,
-                defaultQueryFactorType, conditionSearchTermsByAssayGroupId, ensemblSpeciesGroupedByAssayGroupId, inputStream, batchSize);
+        int count =
+                indexBaselineExperimentAnalytics(
+                        experimentAccession, experimentType, defaultQueryFactorType, conditionSearchTermsByAssayGroupId,
+                        ensemblSpeciesGroupedByAssayGroupId, inputStream, bioentityIdToIdentifierSearch, batchSize);
 
         stopWatch.stop();
         LOGGER.info(String.format("Done indexing %s, indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds()));
@@ -139,20 +140,23 @@ public class BaselineAnalyticsIndexerService {
 
     }
 
-    public int indexRnaSeqBaselineExperimentAnalytics(String experimentAccession, ExperimentType experimentType,
-                                                      String defaultQueryFactorType,
-                                                      SetMultimap<String, String> conditionSearchTermsByAssayGroupId,
-                                                      ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId,
-                                                      ObjectInputStream<BaselineAnalytics> inputStream,
-                                                      int batchSize) {
+    public int indexBaselineExperimentAnalytics(String experimentAccession, ExperimentType experimentType,
+                                                String defaultQueryFactorType,
+                                                SetMultimap<String, String> conditionSearchTermsByAssayGroupId,
+                                                ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId,
+                                                ObjectInputStream<BaselineAnalytics> inputStream,
+                                                Map<String, String> bioentityIdToIdentifierSearch,
+                                                int batchSize) {
 
         try (ObjectInputStream<BaselineAnalytics> closeableInputStream = inputStream) {
 
             IterableObjectInputStream<BaselineAnalytics> iterableInputStream = new IterableObjectInputStream<>(closeableInputStream);
 
-            BaselineAnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, ensemblSpeciesGroupedByAssayGroupId,
-                    defaultQueryFactorType,
-                    iterableInputStream, conditionSearchTermsByAssayGroupId);
+            BaselineAnalyticsDocumentStream analyticsDocuments =
+                    streamFactory.create(
+                            experimentAccession, experimentType, ensemblSpeciesGroupedByAssayGroupId,
+                            defaultQueryFactorType, iterableInputStream, conditionSearchTermsByAssayGroupId,
+                            bioentityIdToIdentifierSearch);
 
             return analyticsIndexDAO.addDocuments(analyticsDocuments, batchSize);
 

@@ -11,25 +11,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
-import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
 import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
 import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.search.analyticsindex.bioentityInformation.SearchBioentityController;
-import uk.ac.ebi.atlas.search.analyticsindex.bioentityInformation.SearchGeneSetController;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Set;
 import java.util.SortedSet;
 
 import static org.apache.commons.lang3.text.WordUtils.capitalize;
@@ -38,7 +33,7 @@ public abstract class SearchController {
 
     private final EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder;
 
-    private final AnalyticsSearchDao analyticsSearchDao;
+    private final AnalyticsSearchDAO analyticsSearchDAO;
 
     protected static final String BIOENTITY_PROPERTY_NAME = "symbol";
 
@@ -99,14 +94,14 @@ public abstract class SearchController {
         this.bioentityPropertyNames = bioentityPropertyNames;
     }
 
-    public SearchController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, AnalyticsSearchDao analyticsSearchDao) {
+    public SearchController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, AnalyticsSearchDAO analyticsSearchDAO) {
         this.ebiGlobalSearchQueryBuilder = ebiGlobalSearchQueryBuilder;
-        this.analyticsSearchDao = analyticsSearchDao;
+        this.analyticsSearchDAO = analyticsSearchDAO;
     }
 
     public void addSearchHeader(GeneQuerySearchRequestParameters requestParameters, Model model) throws IOException, SolrServerException {
         GeneQuery geneQuery = requestParameters.getGeneQuery();
-        ImmutableSet<String> experimentTypes = analyticsSearchDao.fetchExperimentTypes(geneQuery);
+        ImmutableSet<String> experimentTypes = analyticsSearchDAO.fetchExperimentTypes(geneQuery);
 
         boolean hasBioEntities = bioEntityPropertyDao.hasBioentityProperties(geneQuery.description(), getPagePropertyTypes());
 

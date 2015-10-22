@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.TreeMultimap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,17 +38,25 @@ public class AnalyticsIndexerManager extends Observable {
     private String differentialTsvFileTemplate;
 
     private AnalyticsIndexerService analyticsIndexerService;
-    private IdentifierSearchTermsTrader identifierSearchTermsTrader;
     private final AnalyticsIndexerMonitor analyticsIndexerMonitor;
     private final ExperimentTrader experimentTrader;
+    private final IdentifierSearchTermsTrader identifierSearchTermsTrader;
     private final ExperimentSorter experimentSorter;
+
+    private ImmutableMap<String, String> bioentityIdToIdentifierSearch;
 
     protected static final String DEFAULT_THREADS_8 = "8";
     protected static final String DEFAULT_BATCH_SIZE_1024 = "1024";
     protected static final String DEFAULT_TIMEOUT_IN_HOURS_24 = "24";
 
+    protected static final int MORE_THAN_LONGEST_EXPERIMENT_INDEX_TIME = 60;   // in minutes
+
     @Inject
-    public AnalyticsIndexerManager(AnalyticsIndexerService analyticsIndexerService, AnalyticsIndexerMonitor analyticsIndexerMonitor, ExperimentTrader experimentTrader, IdentifierSearchTermsTrader identifierSearchTermsTrader, ExperimentSorter experimentSorter) {
+    public AnalyticsIndexerManager(AnalyticsIndexerService analyticsIndexerService,
+                                   AnalyticsIndexerMonitor analyticsIndexerMonitor,
+                                   ExperimentTrader experimentTrader,
+                                   IdentifierSearchTermsTrader identifierSearchTermsTrader,
+                                   ExperimentSorter experimentSorter) {
         this.analyticsIndexerService = analyticsIndexerService;
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
         this.experimentTrader = experimentTrader;
@@ -63,7 +72,7 @@ public class AnalyticsIndexerManager extends Observable {
         checkNotNull(experimentAccession);
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
         analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
-        return analyticsIndexerService.index(experiment, batchSize);
+        return analyticsIndexerService.index(experiment, bioentityIdToIdentifierSearch, batchSize);
     }
 
     public void deleteFromAnalyticsIndex(String experimentAccession) {
@@ -91,7 +100,7 @@ public class AnalyticsIndexerManager extends Observable {
                 notifyObservers("Pool timed out. Initiating shutdown of running threads...\n");
                 threadPool.shutdownNow();
                 // Wait a while for tasks to respond to being cancelled
-                if (threadPool.awaitTermination(10, TimeUnit.MINUTES)) {
+                if (threadPool.awaitTermination(MORE_THAN_LONGEST_EXPERIMENT_INDEX_TIME, TimeUnit.MINUTES)) {
                     setChanged();
                     notifyObservers("Threads closed successfully.\n");
                 } else {
@@ -121,9 +130,9 @@ public class AnalyticsIndexerManager extends Observable {
         setChanged();
         notifyObservers(descendingFileSizeToExperimentAccessions);
 
-        indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), threads, batchSize, timeout);
+        bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap();
 
-//        identifierSearchTermsTrader.letsDoThis();
+        indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), threads, batchSize, timeout);
 
         deleteObserver(analyticsIndexerMonitor);
     }
@@ -134,6 +143,8 @@ public class AnalyticsIndexerManager extends Observable {
         TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortExperimentsPerSize(experimentType);
         setChanged();
         notifyObservers(descendingFileSizeToExperimentAccessions);
+
+        bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap(experimentType);
 
         indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), threads, batchSize, timeout);
 
@@ -150,10 +161,14 @@ public class AnalyticsIndexerManager extends Observable {
         }
 
         public void run() {
-            addToAnalyticsIndex(experimentAccession, batchSize);
-
-            AnalyticsIndexerManager.this.setChanged();
-            AnalyticsIndexerManager.this.notifyObservers(experimentAccession);
+            try {
+                addToAnalyticsIndex(experimentAccession, batchSize);
+                AnalyticsIndexerManager.this.setChanged();
+                AnalyticsIndexerManager.this.notifyObservers(experimentAccession);
+            } catch (Exception exception) {
+                AnalyticsIndexerManager.this.setChanged();
+                AnalyticsIndexerManager.this.notifyObservers(String.format("Failed to index %s - Cause: %s", experimentAccession, exception.getMessage()));
+            }
         }
     }
 }

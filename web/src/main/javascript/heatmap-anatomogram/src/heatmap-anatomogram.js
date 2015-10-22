@@ -37,12 +37,13 @@ module.exports = function(opt) {
     var URI = require('urijs');
 
     var $ = require('jquery');
+    var jQuery = $;
     require('../lib/jquery.xdomainrequest.js');
 
     // Proxy prefix required by CTTV
     var proxyPrefix = opt.hasOwnProperty("proxyPrefix") ? opt.proxyPrefix : "";
     var atlasHost = opt.hasOwnProperty("atlasHost") ? opt.atlasHost : "";
-    if (atlasHost.startsWith("http://") || atlasHost.startsWith("https://")) {
+    if (atlasHost.indexOf("http://") != -1 || atlasHost.indexOf("https://") != -1) {
         atlasHost = URI(atlasHost).host();
     }
     var endpoint = opt.heatmapUrl ? opt.heatmapUrl : opt.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
@@ -93,8 +94,9 @@ module.exports = function(opt) {
 
 
 
-    $.ajax(httpRequest).done(function (data) {
+    //$.ajax(httpRequest).done(function (data) {
 
+    $.ajax(httpRequest).done(function (data) {
         var isWidget = opt.hasOwnProperty("isWidget") ? opt.isWidget : true;
 
         data.config.atlasBaseURL = atlasBaseURL;

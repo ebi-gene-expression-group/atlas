@@ -58,10 +58,8 @@ public class MicroArrayDiffAnalyticsIndexerService {
         this.microArrayDiffAnalyticsDocumentStreamIndexer = microArrayDiffAnalyticsDocumentStreamIndexer;
     }
 
-    public int index(MicroarrayExperiment experiment, int batchSize) {
+    public int index(MicroarrayExperiment experiment, Map<String, String> bioentityIdToIdentifierSearch, int batchSize) {
         String experimentAccession = experiment.getAccession();
-
-        LOGGER.info("Preparing " + experimentAccession);
 
         ExperimentType experimentType = experiment.getType();
 
@@ -80,7 +78,7 @@ public class MicroArrayDiffAnalyticsIndexerService {
         Map<String, Integer> numReplicatesByContrastId = buildNumReplicatesByContrastId(experiment);
 
         return  microArrayDiffAnalyticsDocumentStreamIndexer.index(experimentAccession, arrayDesignAccessions, experimentType, factors,
-                conditionSearchTermsByContrastId, ensemblSpeciesGroupedByContrastId, numReplicatesByContrastId, batchSize);
+                conditionSearchTermsByContrastId, ensemblSpeciesGroupedByContrastId, numReplicatesByContrastId, bioentityIdToIdentifierSearch, batchSize);
     }
 
     private Map<String, Integer> buildNumReplicatesByContrastId(DifferentialExperiment experiment) {

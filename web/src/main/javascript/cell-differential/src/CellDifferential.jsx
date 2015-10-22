@@ -22,9 +22,9 @@ var CellDifferential = React.createClass({
 
     propTypes: {
         fontSize: React.PropTypes.number,
-        colour: React.PropTypes.string.isRequired,
-        foldChange: React.PropTypes.string.isRequired,
-        pValue: React.PropTypes.number,
+        colour: React.PropTypes.string,
+        foldChange: React.PropTypes.string,
+        pValue: React.PropTypes.string,
         tStat: React.PropTypes.number,
         displayLevels: React.PropTypes.bool.isRequired
     },
@@ -78,7 +78,7 @@ var CellDifferential = React.createClass({
                        "<tbody>" +
                            "<tr>" +
                                (pValue !== undefined ?
-                                   "<td style='padding:6px'>" + React.renderToStaticMarkup(NumberFormat.scientificNotation(pValue.toString())) + "</td>" : "") +
+                                   "<td style='padding:6px'>" + React.renderToStaticMarkup(NumberFormat.scientificNotation(pValue)) + "</td>" : "") +
                                (tstatistic !== undefined ?
                                    "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
                                "<td style='padding:6px'>" + foldChange + "</td>" +

@@ -80,7 +80,7 @@ public class AnalyticsIndexerMonitor implements Observer {
                         processedExperimentsCount, processedMagetabFilesSize, (double) processedMagetabFilesSize / (double) magetabFilesTotalSize * 100));
             } else {
                 Date date = new Date();
-                stringBuilder.append(String.format("%tF %tT %s", date, date, arg));
+                stringBuilder.append(String.format("%tF %tT %s%n", date, date, arg));
             }
         }
     }

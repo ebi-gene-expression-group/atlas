@@ -48,7 +48,7 @@ public class ImmutableSetKryoSerializer extends Serializer<ImmutableSet<Object>>
      */
     public static void registerSerializers(final Kryo kryo) {
 
-        // ImmutableList (abstract class)
+        // ImmutableSet (abstract class)
         //  +- RegularImmutableSet
         //  |   RegularImmutableSet
         //  +- SingletonImmutableSet
@@ -60,23 +60,14 @@ public class ImmutableSetKryoSerializer extends Serializer<ImmutableSet<Object>>
 
         kryo.register(ImmutableSet.class, serializer);
 
-        // Note:
-        //  Only registering above is good enough for serializing/deserializing.
-        //  but if using Kryo#copy, following is required.
-
+        // To register for optimized ImmutableSet with a few values (e.g. SingletonImmutableSet)
+        // See https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/ImmutableSet.java
         kryo.register(ImmutableSet.of().getClass(), serializer);
         kryo.register(ImmutableSet.of(1).getClass(), serializer);
-//        kryo.register(ImmutableSet.of(1,2,3).subSet(1, 2).getClass(), serializer);
-//            kryo.register(ImmutableSet.of().reverse().getClass(), serializer);
-//
-//            kryo.register(Sets.charactersOf("KryoRocks").getClass(), serializer);
-//
-//            Table<Integer,Integer,Integer> baseTable = HashBasedTable.create();
-//            baseTable.put(1, 2, 3);
-//            baseTable.put(4, 5, 6);
-//            Table<Integer, Integer, Integer> table = ImmutableTable.copyOf(baseTable);
-//            kryo.register(table.values().getClass(), serializer);
-
+        kryo.register(ImmutableSet.of(1,2).getClass(), serializer);
+        kryo.register(ImmutableSet.of(1,2,3).getClass(), serializer);
+        kryo.register(ImmutableSet.of(1,2,3,4).getClass(), serializer);
+        kryo.register(ImmutableSet.of(1,2,3,4,5).getClass(), serializer);
     }
 }
 

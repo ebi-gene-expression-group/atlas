@@ -1,0 +1,39 @@
+Comment[ArrayExpressAccession]	dummy-E-MTAB-2706
+MAGE-TAB Version	1.1
+Investigation Title	RNA-seq of 675 commonly used human cancer cell lines
+Comment[Submitted Name]	RNA-seq of 675 commonly used human cancer cell lines
+Experiment Description	"Tumor-derived cell lines have served as vital models to advance our understanding of oncogene function and therapeutic response1. Although substantial effort has been directed to defining the genomic constitution of cancer cell line panels24, the transcriptome  which represents the active program of a cell  remains understudied. Here, we describe RNA sequencing and SNP array analysis of 675 commonly used human cancer cell lines. We explore numerous transcriptome features including coding and non-coding gene expression, transcribed mutations, gene fusion and expression of non-human sequences. Aside from many known aberrations we find new surprising characteristics, including more than 2200 unique fusion gene pairs representing a vast, testable repertoire of oncogenic fusions, many of which have analogs found in primary human tumors. We show that a combination of multiple genome and transcriptome features in a novel pathway-based approach enhances prediction of response to various targeted therapeutics. Our results provide valuable new insights into these critical pre-clinical models and provide added context for interpreting the numerous studies that employ these widely used cell lines. The raw sequence files were submitted to the European Genome-Phenome Archive (EGA) under accession EGAS00001000610 ( https://www.ebi.ac.uk/ega/datasets/EGAD00001000725 ).  Processed, human non-identifiable data, together with a README file describing the data (140625_Klijn_README.txt) are available here in dummy-E-MTAB-2706.additional.*.zip files: https://www.ebi.ac.uk/arrayexpress/experiments/dummy-E-MTAB-2706/files ."
+Experimental Design	in vitro design
+Experimental Design Term Source REF	EFO
+Experimental Factor Name	organism part	disease	cell line
+Experimental Factor Type	organism part	disease	cell line
+Person Last Name	Klijn
+Person First Name	Christiaan
+Person Mid Initials
+Person Email	klijn.christiaan@gene.com
+Person Phone
+Person Fax
+Person Address
+Person Affiliation	Genentech
+Person Roles	submitter
+Public Release Date	2014-11-25
+Protocol Name	P-MTAB-39821	P-MTAB-39822
+Protocol Type	nucleic acid sequencing protocol	nucleic acid library construction protocol
+Protocol Term Source REF	EFO	EFO
+Protocol Term Accession Number	EFO_0004170	EFO_0004184
+Protocol Description	Illumina HiSeq 2000 software.  http://www.illumina.com/technology/sequencing_technology.ilmn	Illumina HiSeq2000 flow cell preparation: PE-401-3001: TruSeq PE Cluster Kit v3 - cBot - HS; GD-401-3001: TruSeq SR Cluster Kit v3 - cBot - HS; FC-401-3001: TruSeq SBS Kit v3 - HS (200-cycles).
+Protocol Parameters
+Protocol Hardware	Illumina HiSeq 2000
+Term Source Name	NCBI Taxonomy	EFO
+Term Source File	http://www.ncbi.nlm.nih.gov/Taxonomy/	http://www.ebi.ac.uk/efo
+Term Source Version		2.38
+Publication Author List	"Christiaan Klijn, Steffen Durinck, Eric W Stawiski, Peter M Haverty, Zhaoshi Jiang, Hanbin Liu, Jeremiah Degenhardt, Oleg Mayba, Florian Gnad, Jinfeng Liu, Gregoire Pau, Jens Reeder, Yi Cao, Kiran Mukhyala, Suresh K Selvaraj, Mamie Yu, Gregory J Zynda, Matthew J Brauer, Thomas D Wu, Robert C Gentleman, Gerard Manning, Robert L Yauch, Richard Bourgon, David Stokoe, Zora Modrusan, Richard M Neve, Frederic J de Sauvage, Jeffrey Settleman, Somasekar Seshagiri & Zemin Zhang"
+Publication Title	A comprehensive transcriptional portrait of human cancer cell lines
+Publication DOI	doi:10.1038/nbt.3080
+PubMed ID	25485619
+Comment[SecondaryAccession]	EGAS00001000610
+Comment[SequenceDataURI]	https://www.ebi.ac.uk/ega/datasets/EGAD00001000725
+Comment[AEExperimentType]	RNA-seq of coding RNA
+Comment[SRASubmissionDate]	22/10/2013
+Comment[AdditionalFile:txt]	140625_Klijn_count_noncoding.txt	140625_Klijn_counts_coding.txt	140625_Klijn_geneToTranscript.txt	140625_Klijn_RPKM_coding.txt	140625_Klijn_RPKM_noncoding.txt	140625_Klijn_RPKM.txt
+SDRF File	dummy-E-MTAB-2706.sdrf.txt

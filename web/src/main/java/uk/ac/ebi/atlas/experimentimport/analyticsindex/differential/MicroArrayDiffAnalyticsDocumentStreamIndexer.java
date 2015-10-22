@@ -39,6 +39,7 @@ public class MicroArrayDiffAnalyticsDocumentStreamIndexer {
                      SetMultimap<String, String> conditionSearchTermsByContrastGroupId,
                      ImmutableMap<String, String> ensemblSpeciesGroupedByContrastId,
                      Map<String, Integer> numReplicatesByContrastId,
+                     Map<String, String> bioentityIdToIdentifierSearch,
                      int batchSize) {
 
 
@@ -54,7 +55,7 @@ public class MicroArrayDiffAnalyticsDocumentStreamIndexer {
                 IterableObjectInputStream<? extends DifferentialAnalytics> iterableInputStream = new IterableObjectInputStream<>(closeableInputStream);
 
                 DiffAnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, factors, ensemblSpeciesGroupedByContrastId,
-                        iterableInputStream, conditionSearchTermsByContrastGroupId, numReplicatesByContrastId);
+                        iterableInputStream, conditionSearchTermsByContrastGroupId, numReplicatesByContrastId, bioentityIdToIdentifierSearch);
 
                 int arrayDesignAccessionCount = analyticsIndexDAO.addDocuments(analyticsDocuments, batchSize);
 
