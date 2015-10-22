@@ -280,6 +280,15 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     border: 0 !important;
 }
 
+#gxaExperimentHeader:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 0;
+    font-size:0;
+    line-height:0;
+}
+
 #gxaExperimentHeader .ui-button-text, #download-experiment-design-link .ui-button-text {
     padding: 0;
 }
@@ -340,6 +349,7 @@ div.gxaExperimentRequestPreferencesBarchartTooltip {
 }
 
 div.gxaExperimentRequestPreferencesBlockMaxWidth {
+    clear: both;
     max-width: 950px;
 }
 

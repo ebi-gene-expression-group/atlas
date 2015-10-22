@@ -39,48 +39,49 @@
 
 <c:set var="experimentURL" value="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}${accessKeyQueryString}${additionalQueryOptionsString}"></c:set>
 
-<td width="100%">
-    <div id="experimentDescription">
-        <a id="goto-experiment" class="thick-link" title="Experiment Page"
-           href="${experimentURL}">${experimentDescription}</a>
-        <c:if test="${hasExtraInfo}">
-            <a id="extra-info"
-               href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">
-                <img alt="more information"
-                     src="${applicationProperties.buildServerURL(pageContext.request)}/resources/images/overview_button.png">
-            </a>
-        </c:if>
+
+<div id="experimentDescription">
+    <a id="goto-experiment" class="thick-link" title="Experiment Page"
+       href="${experimentURL}">${experimentDescription}</a>
+    <c:if test="${hasExtraInfo}">
+        <a id="extra-info"
+           href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">
+            <img alt="more information"
+                 src="${applicationProperties.buildServerURL(pageContext.request)}/resources/images/overview_button.png">
+        </a>
+    </c:if>
+</div>
+<div id="experimentOrganisms">Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
+<c:if test="${allArrayDesigns!=null}">
+    <div id="experimentArrayDesigns">Array Design(s):
+        <c:forEach items="${allArrayDesigns}" var="arrayDesign">
+            <a class="array-design" id="${arrayDesign}" title="View array design in ArrayExpress"
+               href="${applicationProperties.getArrayExpressArrayURL(arrayDesign)}"
+               target='_blank'>${arrayDesign}</a>
+        </c:forEach>
     </div>
-    <div id="experimentOrganisms">Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
-    <c:if test="${allArrayDesigns!=null}">
-        <div id="experimentArrayDesigns">Array Design(s):
-            <c:forEach items="${allArrayDesigns}" var="arrayDesign">
-                <a class="array-design" id="${arrayDesign}" title="View array design in ArrayExpress"
-                   href="${applicationProperties.getArrayExpressArrayURL(arrayDesign)}"
-                   target='_blank'>${arrayDesign}</a>
-            </c:forEach>
-        </div>
-    </c:if>
-    <c:if test="${not empty pubMedIds and not empty pubMedIds.get(0)}">
-        <div id="experimentReferences">Reference(s):
-            <c:forEach var="pubMedId" items="${pubMedIds}">
-                        <span><a class="pubmed-id" href="${applicationProperties.getPubMedURL(pubMedId)}"
-                                 title="View publication in PubMed" target='_blank'>${pubMedId}</a>
-                            <a class="pubmed-genequery" style="cursor: pointer" data-pubmed-id="${pubMedId}" title="Filter by text-mined genes/proteins in reference publication">(Filter by genes in paper)</a>
-                            &nbsp;&nbsp;&nbsp;
-                        </span>
-            </c:forEach>
-        </div>
-    </c:if>
-    <c:if test="${not empty dataProviderURL and not empty dataProviderDescription}">
-        <div id="dataProvider">Raw Data Provider:
-            <c:forEach var="dataProvider" items="${dataProviderURL}" varStatus="i">
-                <a id="goto-dataprovider" class="thick-link" title="Experiment Data Provider"
-            href="${dataProvider}">${dataProviderDescription.get(i.index)}</a>
-            </c:forEach>
-        </div>
-    </c:if>
-    </td>
+</c:if>
+<c:if test="${not empty pubMedIds and not empty pubMedIds.get(0)}">
+    <div id="experimentReferences">Reference(s):
+        <c:forEach var="pubMedId" items="${pubMedIds}">
+                    <span><a class="pubmed-id" href="${applicationProperties.getPubMedURL(pubMedId)}"
+                             title="View publication in PubMed" target='_blank'>${pubMedId}</a>
+                        <a class="pubmed-genequery" style="cursor: pointer" data-pubmed-id="${pubMedId}" title="Filter by text-mined genes/proteins in reference publication">(Filter by genes in paper)</a>
+                        &nbsp;&nbsp;&nbsp;
+                    </span>
+        </c:forEach>
+    </div>
+</c:if>
+<c:if test="${not empty dataProviderURL and not empty dataProviderDescription}">
+    <div id="dataProvider">Raw Data Provider:
+        <c:forEach var="dataProvider" items="${dataProviderURL}" varStatus="i">
+            <a id="goto-dataprovider" class="thick-link" title="Experiment Data Provider"
+        href="${dataProvider}">${dataProviderDescription.get(i.index)}</a>
+        </c:forEach>
+    </div>
+</c:if>
+
+
 <script>
     var europepmcUrl = "${configuration['europepmc.base.url']}" + "webservices/rest/MED/%pubmedId%/textMinedTerms/GENE_PROTEIN/1/json";
 </script>

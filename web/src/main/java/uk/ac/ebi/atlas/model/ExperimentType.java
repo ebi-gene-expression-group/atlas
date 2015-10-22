@@ -99,4 +99,16 @@ public enum ExperimentType {
     public static boolean containsDifferential(Set<String> experimentTypes) {
         return experimentTypes.contains(RNASEQ_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL.getDescription());
     }
+
+
+    // Do not remove: the following two methods are used in experiment-header.jsp
+    public boolean isTwoColour() {
+        return equals(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL);
+    }
+
+    public boolean isMicroRna() {
+        return equals(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
+    }
+
+
 }
