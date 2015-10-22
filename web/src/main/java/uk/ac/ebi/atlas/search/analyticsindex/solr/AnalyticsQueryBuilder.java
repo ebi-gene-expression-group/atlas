@@ -14,11 +14,12 @@ import static uk.ac.ebi.atlas.utils.StringUtil.quote;
 @Named
 @Scope("prototype")
 public class AnalyticsQueryBuilder {
-    private static final String ABOVE_CUTOFF =
-            "(" +
-                "(experimentType:rnaseq_mrna_baseline AND expressionLevel:[0.5 TO *]) OR (experimentType:proteomics_baseline  AND expressionLevel:[0 TO *]) OR " +
-                "(experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential) AND foldChange:([1.0 TO *] OR [* TO -1.0]))" +
-            ")";
+    private static final String BASELINE_ABOVE_CUTOFF =
+            "(experimentType:rnaseq_mrna_baseline AND expressionLevel:[0.5 TO *]) " +
+            "OR (experimentType:proteomics_baseline AND expressionLevel:[0 TO *])";
+    private static final String DIFFERENTIAL_ABOVE_CUTOFF =
+            "(experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential) " +
+            "AND foldChange:([* TO -1.0] OR [1.0 TO *]))";
 
     private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentityIdentifier";
     private static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
@@ -59,9 +60,10 @@ public class AnalyticsQueryBuilder {
 
 
     public AnalyticsQueryBuilder filterAboveDefaultCutoff() {
-        solrQuery.setFilterQueries(ABOVE_CUTOFF);
+        solrQuery.addFilterQuery(BASELINE_ABOVE_CUTOFF + " OR " + DIFFERENTIAL_ABOVE_CUTOFF);
         return this;
     }
+
 
     public SolrQuery build() {
         solrQuery.setQuery(queryStringBuilder.toString());

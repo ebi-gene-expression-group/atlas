@@ -19,28 +19,45 @@ var DifferentialResults = require('./differential-results.jsx');
 module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData, atlasHost) {
 
     var ie9 = $.browser.msie && $.browser.version < 10;
-    if (!ie9) {
-        window.addEventListener('popstate', renderPage, false);
-    }
+    !ie9 && window.addEventListener('popstate', backButtonListener, false);
 
     var facetsElement = document.getElementById(facetsContainerId),
         resultsElement = document.getElementById(resultsContainerId),
         host = atlasHost ? atlasHost : window.location.host;
 
-    var query = new URI(window.location).search(true);
-    query.select = query.select ? JSON.parse(query.select) : {};
+    var query = {};
 
-    var newQueryURI = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
-    navigateTo(newQueryURI);
+    parseCurrentURLToQueryObject();
+    pushQueryIntoBrowserHistory(true);
+    renderQueryPage();
 
-    function renderPage() {
+    function backButtonListener() {
+        parseCurrentURLToQueryObject();
+        renderQueryPage();
+    }
 
+    function parseCurrentURLToQueryObject() {
+        var currentURL = new URI(window.location);
+
+        // TODO Change to segment(1) when /new/ is removed
+        if (currentURL.segment(2) === "genes" || currentURL.segment(2) === "genesets") {
+            query.geneQuery = currentURL.segment(3);
+        } else {  // if (currentURL.segment(1) === "search") {
+            query.geneQuery = currentURL.search(true)["geneQuery"];
+        }
+
+        var selectString = currentURL.search(true)["ds"];
+        query.select = selectString ? JSON.parse(selectString) : {};
+
+    }
+
+    function renderQueryPage() {
         React.render(
             React.createElement(FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked}),
             facetsElement
         );
 
-        renderQueryToResults(query);
+        renderQueryToResults();
     }
 
     function setChecked(checked, facet, facetItem) {
@@ -49,18 +66,22 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
         } else {
             removeSelection(query.select, facet, facetItem);
         }
-        var newQueryURI = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
-        navigateTo(newQueryURI.toString());
+        pushQueryIntoBrowserHistory(false);
+        renderQueryPage();
     }
 
-    function navigateTo(url) {
-        var state, title;
-        if (ie9) {
-            //window.location.search = url;
-        } else {
-            history.pushState(null, null, window.location.pathname + url);
+    function pushQueryIntoBrowserHistory(replace) {
+        var newURL = new URI(window.location).search(function(data) {
+            data.ds = JSON.stringify(query.select);
+        });
+
+        if (!ie9) {
+            if (replace) {
+                history.replaceState(null, null, newURL);
+            } else {
+                history.pushState(null, null, newURL);
+            }
         }
-        renderPage();
     }
 
     function addSelection(select, facet, facetItem) {
@@ -76,7 +97,7 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
         return select;
     }
 
-    function renderQueryToResults(query) {
+    function renderQueryToResults() {
         /*
          query.geneQuery=zinc finger
          query.select= {

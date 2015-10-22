@@ -20,17 +20,15 @@ import javax.inject.Named;
 public class AnalyticsSearchDAO {
 
     private AnalyticsClient analyticsClient;
-    private AnalyticsQueryBuilder analyticsQueryBuilder;
 
     @Inject
-    public AnalyticsSearchDAO(AnalyticsClient analyticsClient, AnalyticsQueryBuilder analyticsQueryBuilder) {
+    public AnalyticsSearchDAO(AnalyticsClient analyticsClient) {
         this.analyticsClient = analyticsClient;
-        this.analyticsQueryBuilder = analyticsQueryBuilder;
     }
 
     public ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery) {
         SolrQuery solrQuery =
-                analyticsQueryBuilder
+               new AnalyticsQueryBuilder()
                         .queryIdentifierSearch(geneQuery)
                         .facetByExperimentType()
                         .filterAboveDefaultCutoff()
@@ -38,5 +36,28 @@ public class AnalyticsSearchDAO {
                         .build();
         QueryResponse queryResponse = analyticsClient.query(solrQuery);
         return SolrUtil.extractFirstFacetValues(queryResponse);
+    }
+
+    public ImmutableSet<String> fetchExperimentTypes(String bioentityIdentifier) {
+        SolrQuery solrQuery =
+                new AnalyticsQueryBuilder()
+                        .queryBioentityIdentifier(bioentityIdentifier)
+                        .facetByExperimentType()
+                        .filterAboveDefaultCutoff()
+                        .setRows(0)
+                        .build();
+        QueryResponse queryResponse = analyticsClient.query(solrQuery);
+        return SolrUtil.extractFirstFacetValues(queryResponse);
+    }
+
+    public boolean isValidBioentityIdentifier(String bioentityIdentifier) {
+        SolrQuery solrQuery =
+                new AnalyticsQueryBuilder()
+                    .queryBioentityIdentifier(bioentityIdentifier)
+                    .setRows(1)
+                    .build();
+        QueryResponse queryResponse = analyticsClient.query(solrQuery);
+
+        return !queryResponse.getResults().isEmpty();
     }
 }

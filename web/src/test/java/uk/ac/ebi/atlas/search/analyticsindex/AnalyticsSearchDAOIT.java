@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -55,9 +56,15 @@ public class AnalyticsSearchDAOIT {
         assertThat(experimentTypes, hasSize(0));
     }
 
+    @Test
+    public void validBioentityIdentifier() {
+        assertThat(subject.isValidBioentityIdentifier("ENSG00000002016"), is(true));
+    }
 
-
-
+    @Test
+    public void invalidBioentityIdentifier() {
+        assertThat(subject.isValidBioentityIdentifier("foo"), is(false));
+    }
 
 
 }

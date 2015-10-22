@@ -22,7 +22,7 @@ public class BaselineAnalyticsSearchDaoTest {
 
     @Test
     public void buildQueryParameters() {
-        assertThat(subject.buildQueryParameters("identifierSearch:ENSG00000126549", 0.5), is("query?q=identifierSearch:ENSG00000126549&rows=0&omitHeader=true&fq=expressionLevel:%5B0.5%20TO%20*%5D"));
+        assertThat(subject.buildQueryParameters("identifierSearch:ENSG00000126549", 0.5, 0), is("query?q=identifierSearch:ENSG00000126549&rows=0&omitHeader=true&fq=expressionLevel:%5B0.5%20TO%20*%5D"));
     }
 
 }

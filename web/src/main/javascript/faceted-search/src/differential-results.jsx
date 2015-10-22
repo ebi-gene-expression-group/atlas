@@ -63,7 +63,8 @@ var DifferentialResults = React.createClass({
             numReplicates: React.PropTypes.string.isRequired,  // faceting only works with strings https://issues.apache.org/jira/browse/SOLR-7496
             foldChange: React.PropTypes.string.isRequired,     // a string, a formatted value, to be able to work with Infinity values and rounding
             colour: React.PropTypes.string.isRequired,
-            regulation: React.PropTypes.string.isRequired
+            regulation: React.PropTypes.string.isRequired,
+            id: React.PropTypes.string.isRequired
         })).isRequired,
         maxDownLevel: React.PropTypes.string.isRequired,
         minDownLevel: React.PropTypes.string.isRequired,
@@ -85,7 +86,7 @@ var DifferentialResults = React.createClass({
     render: function () {
         var differentialResultRows = this.props.results.map(function (diffResult) {
             return <DifferentialResultRow
-                key={diffResult.bioentityIdentifier + diffResult.experimentAccession + diffResult.contrastId + diffResult.foldChange}
+                key={diffResult.id}
                 colour={diffResult.colour} foldChange={diffResult.foldChange} species={diffResult.species} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
                 contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession} displayLevels={this.state.displayLevels}
             />;

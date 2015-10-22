@@ -19,25 +19,45 @@ var Heatmaps = require('./baseline-heatmaps.jsx');
 module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeData, atlasHost) {
 
     var ie9 = $.browser.msie && $.browser.version < 10;
-    if (!ie9) {
-        window.addEventListener('popstate', renderPage, false);
-    }
+    !ie9 && window.addEventListener('popstate', backButtonListener, false);
 
     var facetsElement = document.getElementById(facetsContainerId),
         heatmapsElement = document.getElementById(heatmapsContainerId),
         host = atlasHost ? atlasHost : window.location.host;
 
-    renderPage();
+    var query = {};
 
-    function renderPage() {
-        var query = new URI(window.location).search(true);
-        query.select = query.select ? JSON.parse(query.select) : initializeQuerySelect();
+    parseCurrentURLToQueryObject();
+    pushQueryIntoBrowserHistory(true);
+    renderQueryPage();
 
-        var newQueryURI = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
-        navigateTo(query, newQueryURI);
+    function backButtonListener() {
+        parseCurrentURLToQueryObject();
+        renderQueryPage();
     }
 
-    function render(query) {
+
+    function parseCurrentURLToQueryObject() {
+        var currentURL = new URI(window.location);
+
+        // TODO Change to segment(1) when /new/ is removed
+        if (currentURL.segment(2) === "genes" || currentURL.segment(2) === "genesets") {
+            query.geneQuery = currentURL.segment(3);
+        } else {  // if (currentURL.segment(1) === "search") {
+            query.geneQuery = currentURL.search(true)["geneQuery"];
+        }
+        var selectString = currentURL.search(true)["bs"];
+
+        if (!selectString) {
+            initializeQuerySelect();
+        } else {
+            query.select = JSON.parse(selectString);
+        }
+    }
+
+
+
+    function renderQueryPage() {
         React.render(
             React.createElement(FacetsTree, {
                 facets: facetsTreeData,
@@ -58,7 +78,7 @@ module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeDat
     }
 
     function initializeQuerySelect() {
-        var querySelect = {};
+        query.select = {};
 
         for (var facet in facetsTreeData) {
             if (facetsTreeData.hasOwnProperty(facet)) {
@@ -66,37 +86,36 @@ module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeDat
                 var factors = facetsTreeData[facet];
                 for(var factor in factors) {
                     if (factors.hasOwnProperty(factor) && factors[factor].name === "ORGANISM_PART") {
-                        addSelection(querySelect, facet, factors[factor].name);
+                        addSelection(query.select, facet, factors[factor].name);
                     }
                 }
 
             }
         }
-
-        return querySelect;
     }
 
     function setChecked(checked, species, factor) {
-        var query = new URI(window.location).search(true);
-        query.select = query.select ? JSON.parse(query.select) : initializeQuerySelect();
-
         if (checked) {
             addSelection(query.select, species, factor);
         } else {
             removeSelection(query.select, species, factor);
         }
-        var newQueryURI = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)});
-        navigateTo(query, newQueryURI);
+        pushQueryIntoBrowserHistory(false);
+        renderQueryPage();
     }
 
-    function navigateTo(query, url) {
-        var state, title;
-        if (ie9) {
-            //window.location.search = url;
-        } else {
-            history.pushState(null, null, window.location.pathname + url);
+    function pushQueryIntoBrowserHistory(replace) {
+        var newURL = new URI(window.location).search(function(data) {
+            data.bs = JSON.stringify(query.select);
+        });
+
+        if (!ie9) {
+            if (replace) {
+                history.replaceState(null, null, newURL);
+            } else {
+                history.pushState(null, null, newURL);
+            }
         }
-        render(query);
     }
 
     function addSelection(querySelect, species, factor) {

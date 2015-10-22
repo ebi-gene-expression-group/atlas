@@ -20,84 +20,116 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.newbioentity;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Maps;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.FlashMap;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import uk.ac.ebi.atlas.solr.BioentityProperty;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
+import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDAO;
+import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
+import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
+
+import javax.inject.Inject;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Controller
 @Scope("request")
-public class GenePageController extends BioEntityPageController {
+public class NewGenePageController {
 
-    public static final String BIOENTITY_PROPERTY_NAME = "symbol";
+    private static final String BIOENTITY_PROPERTY_NAME = "symbol";
+    private static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
-    private String[] bioentityPropertyNames;
+    private AnalyticsSearchDAO analyticsSearchDAO;
+    private BioentityPropertyServiceInitializer bioentityPropertyServiceInitializer;
+    private BioEntityPropertyService bioEntityPropertyService;
+    private BioEntityCardProperties bioEntityCardProperties;
+    private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
+    private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
     @Value("#{configuration['index.property_names.genepage']}")
-    void setBioentityPropertyNames(String[] bioentityPropertyNames) {
-        this.bioentityPropertyNames = bioentityPropertyNames;
+    String[] genePropertyNames;
+
+    @Inject
+    public NewGenePageController(AnalyticsSearchDAO analyticsSearchDAO,
+                                 BioentityPropertyServiceInitializer bioentityPropertyServiceInitializer,
+                                 BioEntityPropertyService bioEntityPropertyService,
+                                 BioEntityCardProperties bioEntityCardProperties,
+                                 DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
+                                 BaselineAnalyticsSearchService baselineAnalyticsSearchService) {
+        this.analyticsSearchDAO = analyticsSearchDAO;
+        this.bioentityPropertyServiceInitializer = bioentityPropertyServiceInitializer;
+        this.bioEntityPropertyService = bioEntityPropertyService;
+        this.bioEntityCardProperties = bioEntityCardProperties;
+        this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
+        this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
     }
 
     // identifier = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
     // If it is a transcript/protein/mirna ID, the corresponding gene page will display
     // If it is an MGI term, then will redirect to the gene query page
-    @RequestMapping(value = "/genes/{identifier:.*}")
-    public String showGenePage(@PathVariable String identifier, Model model, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/new/genes/{identifier:.*}")
+    public String showGenePage(@PathVariable String identifier, Model model) {
 
         if(identifier.startsWith("MGI:")){
             return "forward:/query?geneQuery=" + identifier;
         }
 
-        if (!isSingleGene(identifier)) {
+        if (!analyticsSearchDAO.isValidBioentityIdentifier(identifier)) {
             throw new ResourceNotFoundException("No gene matching " + identifier);
         }
 
-        // throw ResourceNotFoundException, so we don't get a Solr SyntaxException later on
-        checkIdentifierDoesNotContainColon(identifier);
-
-        model.addAttribute("disableGeneLinks", true);
-        // TODO https://www.pivotaltracker.com/story/show/101029574
-        model.addAttribute("isSingleGene", true);
-
-        addBaselineResults(ImmutableSet.of(identifier), model);
-        loadDifferentialResults(identifier, model);
-
-        return showBioentityPage(identifier, model, true);
-    }
-
-    private boolean isSingleGene(String identifier) {
-        BioentityProperty bioentityProperty = solrQueryService.findBioentityIdentifierProperty(identifier);
-
-        return bioentityProperty != null;
-    }
-
-    private void checkIdentifierDoesNotContainColon(String identifier) {
-        if (identifier.contains(":")) {
-            throw new ResourceNotFoundException("No genes with identifier "+ identifier);
+        ImmutableSet<String> experimentTypes = analyticsSearchDAO.fetchExperimentTypes(identifier);
+        if (ExperimentType.containsDifferential(experimentTypes)) {
+            model.addAttribute("hasDifferentialResults", true);
+            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialGeneQueryFacetsAsJson(GeneQuery.create(identifier)));
+            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fetchDifferentialGeneQueryResultsAsJson(GeneQuery.create(identifier)));
+        } else {
+            model.addAttribute("hasDifferentialResults", false);
         }
+        if (ExperimentType.containsBaseline(experimentTypes)) {
+            model.addAttribute("hasBaselineResults", true);
+            model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(identifier)));
+        } else {
+            model.addAttribute("hasBaselineResults", false);
+        }
+
+        model.addAttribute("hasBaselineResults", ExperimentType.containsBaseline(experimentTypes));
+
+
+        bioentityPropertyServiceInitializer.initForGenePage(bioEntityPropertyService, identifier, genePropertyNames);
+
+        model.addAttribute("identifier", identifier);
+        model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
+        model.addAttribute("mainTitle", "Expression summary for " + bioEntityPropertyService.getEntityName() + " - " + StringUtils.capitalize(bioEntityPropertyService.getSpecies()));
+
+        return "new-bioentities";
     }
 
-    @Override
+    private Map<String, String> buildPropertyNamesByTypeMap() {
+        LinkedHashMap<String, String> result = Maps.newLinkedHashMap();
+        for (String propertyName : genePropertyNames) {
+            if (isDisplayedInPropertyList(propertyName)) {
+                result.put(propertyName, bioEntityCardProperties.getPropertyName(propertyName));
+            }
+        }
+        return result;
+    }
+
     protected boolean isDisplayedInPropertyList(String propertyType) {
-        return !propertyType.equals(BioEntityPageController.PROPERTY_TYPE_DESCRIPTION) && !propertyType.equals(BIOENTITY_PROPERTY_NAME);
+        return !propertyType.equals(PROPERTY_TYPE_DESCRIPTION) && !propertyType.equals(BIOENTITY_PROPERTY_NAME);
     }
 
-    @Override
-    String[] getPagePropertyTypes() {
-        return bioentityPropertyNames;
-    }
 
-    @Override
-    String getBioentityPropertyName() {
-        return BIOENTITY_PROPERTY_NAME;
-    }
 }
