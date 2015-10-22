@@ -41,7 +41,7 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
 
         // TODO Change to segment(1) when /new/ is removed
         if (currentURL.segment(2) === "genes" || currentURL.segment(2) === "genesets") {
-            query.geneQuery = currentURL.segment(3);
+            query.geneQuery = decodeURIComponent(currentURL.segment(3));
         } else {  // if (currentURL.segment(1) === "search") {
             query.geneQuery = currentURL.search(true)["geneQuery"];
         }
@@ -165,6 +165,11 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
                     React.createElement(DifferentialResults, {results: diffResultsData.results, maxDownLevel: diffResultsData.maxDownLevel, minDownLevel: diffResultsData.minDownLevel, minUpLevel: diffResultsData.minUpLevel, maxUpLevel: diffResultsData.maxUpLevel}),
                     resultsElement
                 );
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("ERROR");
+                console.log("Status: " + textStatus);
+                console.log("Error thrown: " + errorThrown);
             }
         });
     }

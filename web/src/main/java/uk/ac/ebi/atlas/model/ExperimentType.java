@@ -96,7 +96,7 @@ public enum ExperimentType {
         return experimentTypes.contains(RNASEQ_MRNA_BASELINE.getDescription()) || experimentTypes.contains(PROTEOMICS_BASELINE.getDescription());
     }
 
-    public static boolean containsDifferential(ImmutableSet<String> experimentTypes) {
+    public static boolean containsDifferential(Set<String> experimentTypes) {
         return experimentTypes.contains(RNASEQ_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL.getDescription());
     }
 }

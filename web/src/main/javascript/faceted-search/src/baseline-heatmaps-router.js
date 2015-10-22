@@ -42,7 +42,7 @@ module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeDat
 
         // TODO Change to segment(1) when /new/ is removed
         if (currentURL.segment(2) === "genes" || currentURL.segment(2) === "genesets") {
-            query.geneQuery = currentURL.segment(3);
+            query.geneQuery = decodeURIComponent(currentURL.segment(3));
         } else {  // if (currentURL.segment(1) === "search") {
             query.geneQuery = currentURL.search(true)["geneQuery"];
         }

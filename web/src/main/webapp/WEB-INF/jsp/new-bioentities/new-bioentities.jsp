@@ -66,7 +66,6 @@
     }
 
     function route() {
-        debugger;
         if (window.location.hash === "#information") {
             $informationTabLink.tab("show")
         } else if (window.location.hash === "#baseline") {
@@ -93,7 +92,7 @@
                 }
                 $differentialTabLink.tab("show");
             } else {
-                newLocation.hash = "#information;"
+                newLocation.hash = "#information";
                 if (ie9) {
                     window.location = newLocation;
                 } else {

@@ -30,29 +30,38 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 @Controller
 @Scope("request")
-public class NewGenePageController extends NewBioentityPageController {
+public class NewGeneSetPageController extends NewBioentityPageController {
 
-    @Value("#{configuration['index.property_names.genepage']}")
+    @Value("#{configuration['index.property_names.genesetpage']}")
     void setGenePagePropertyTypes(String[] propertyNames) {
         this.propertyNames = propertyNames;
     }
 
-    @RequestMapping(value = "/new/genes/{identifier:.*}")
-    public String showGenePage(@PathVariable String identifier, Model model) {
+    @RequestMapping(value = "/new/genesets/{identifier:.*}")
+    public String showGeneSetPage(@PathVariable String identifier, Model model) {
 
-        if (!analyticsSearchDAO.isValidBioentityIdentifier(identifier)) {
-            throw new ResourceNotFoundException("No gene matching " + identifier);
+        if (!GeneSetUtil.isGeneSet(identifier)) {
+            throw new ResourceNotFoundException("No gene set matching " + identifier);
         }
 
-        bioentityPropertyServiceInitializer.initForGenePage(bioEntityPropertyService, identifier, propertyNames);
+        bioentityPropertyServiceInitializer.initForGeneSetPage(bioEntityPropertyService, identifier);
 
-        model.addAttribute("mainTitle", "Expression summary for " + bioEntityPropertyService.getEntityName() + " - " + StringUtils.capitalize(bioEntityPropertyService.getSpecies()));
+        model.addAttribute(
+            "mainTitle",
 
-        ImmutableSet<String> experimentTypes = analyticsSearchDAO.fetchExperimentTypes(identifier);
+            "Expression summary for " + bioEntityPropertyService.getBioEntityDescription() +
+                (StringUtils.isNotBlank(bioEntityPropertyService.getSpecies()) ?
+                    " - " + StringUtils.capitalize(bioEntityPropertyService.getSpecies()) :
+                    "")
+        );
+
+        ImmutableSet<String> experimentTypes = analyticsSearchDAO.fetchExperimentTypes(GeneQuery.create(identifier));
 
         return super.showBioentityPage(identifier, model, experimentTypes);
     }
