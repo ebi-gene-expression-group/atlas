@@ -61,8 +61,6 @@
                     "toggleButtonMaleImageTemplate": "${toggleButtonMaleImageTemplate}",
                     "toggleButtonFemaleImageTemplate": "${toggleButtonFemaleImageTemplate}",
                     "toggleButtonBrainImageTemplate": "${toggleButtonBrainImageTemplate}",
-                    <%--TODO Remove when anatomogram without brains are no longer supported https://www.pivotaltracker.com/story/show/101029574--%>
-                    "toggleButtonImage": "${toggleButtonImage}"
                     }
                 </c:when>
                 <c:otherwise>
