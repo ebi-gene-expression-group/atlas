@@ -107,34 +107,6 @@ public class BaselineAnalyticsIndexerServiceIT {
     }
 
     @Test
-    public void indexMultiSpeciesBaselineExperimentAnalytics() {
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-GEOD-30352");
-        subject.index(experiment, ImmutableMap.of("", ""), 1024);
-
-        assertThat(documents, hasSize(2179));
-
-        AnalyticsDocument document = documents.get(0);
-        assertThat(document.getBioentityIdentifier(), is("ENSGALG00000009623"));
-        assertThat(document.getSpecies(), is("gallus gallus"));
-        assertThat(document.getExperimentAccession(), is("E-GEOD-30352"));
-        assertThat(document.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
-        assertThat(document.getDefaultQueryFactorType(), is("ORGANISM_PART"));
-        assertThat(document.getConditionsSearch(), is("EFO_0001265 EFO_0000399 Gallus gallus EFO_0000635 EFO_0000001 EFO_0001272 adult OBI_0100026 approx 1 year snap#MaterialEntity EFO_0000786 NCBITaxon_2759 EFO_0000787 NCBITaxon_9031 UBERON_0002037 female snap#SpecificallyDependentContinuant snap#Quality EFO_0000695 span#ProcessualEntity Facility of Linkoping University, Sweden cerebellum male EFO_0001266"));
-        assertThat(document.getAssayGroupId(), is("g52"));
-        assertThat(document.getExpressionLevel(), is(0.4));
-
-        AnalyticsDocument document2 = documents.get(2);
-        assertThat(document2.getBioentityIdentifier(), is("ENSMMUG00000032178"));
-        assertThat(document2.getSpecies(), is("macaca mulatta"));
-        assertThat(document2.getExperimentAccession(), is("E-GEOD-30352"));
-        assertThat(document2.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
-        assertThat(document2.getDefaultQueryFactorType(), is("ORGANISM_PART"));
-        assertThat(document2.getConditionsSearch(), is("8 year EFO_0000001 EFO_0000635 male Macaque facility in Souzhou, China OBI_0100026 snap#MaterialEntity EFO_0000786 NCBITaxon_2759 EFO_0000787 NCBITaxon_9544 UBERON_0002037 snap#Quality snap#SpecificallyDependentContinuant Macaca mulatta EFO_0000695 EFO_0001266 cerebellum EFO_0001265 female"));
-        assertThat(document2.getAssayGroupId(), is("g27"));
-        assertThat(document2.getExpressionLevel(), is(17.0));
-    }
-
-    @Test
     public void indexProteomicsBaselineExperimentAnalytics() {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1");
         subject.index(experiment, ImmutableMap.of("", ""), 1024);

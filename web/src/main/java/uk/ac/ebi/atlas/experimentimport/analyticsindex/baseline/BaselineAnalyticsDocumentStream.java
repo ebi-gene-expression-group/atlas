@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
 
@@ -73,7 +74,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
             String geneId = baselineAnalytics.getGeneId();
             String identifierSearch =
                     geneId +
-                    (bioentityIdToIdentifierSearch.get(geneId).isEmpty() ?
+                    (isEmpty(bioentityIdToIdentifierSearch.get(geneId)) ?
                             ""
                             :
                             " " + bioentityIdToIdentifierSearch.get(geneId));
