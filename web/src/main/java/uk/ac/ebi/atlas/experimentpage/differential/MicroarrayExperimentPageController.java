@@ -63,11 +63,9 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
-    public String showGeneProfiles(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
-            , BindingResult result, Model model, HttpServletRequest request) {
-
-        //TODO https://www.pivotaltracker.com/story/show/101029574
-        model.addAttribute("isSingleGene", false);
+    public String showGeneProfiles(
+            @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
+            BindingResult result, Model model, HttpServletRequest request) {
 
         return super.showGeneProfiles(preferences, result, model, request);
 

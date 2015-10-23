@@ -177,53 +177,6 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>com.github.searls</groupId>
-                <artifactId>jasmine-maven-plugin</artifactId>
-                <version>1.3.1.0</version>
-                <extensions>true</extensions>
-<!--
-                <executions>
-                    <execution>
-                        <id>default</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
--->
-                <configuration>
-                    <!-- unfortunately js files seem to be loaded only if added to preloadSources -->
-
-                    <!--
-                    <preloadSources>
-                        <include>...</include>
-                        <include>...</include>
-                    </preloadSources>
-                    -->
-                    <sourceIncludes>
-                        <include>jquery*.js</include>
-                        <include>jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.js</include>
-                        <include>*.js</include>
-                    </sourceIncludes>
-                    <jsSrcDir>${jasmine.js.src.location}/</jsSrcDir>
-                    <jsTestSrcDir>src/test/javascript/spec/</jsTestSrcDir>
-                    <browserVersion>FIREFOX_3_6</browserVersion>
-                    <haltOnFailure>true</haltOnFailure>
-                    <!--
-                    when spec execution exceeds the timeout (in seconds), the build fails
-                    -->
-                    <timeout>300</timeout>
-                    <!--
-                    the name of the generated JUnit XML report
-                    the plugin generates XML of the same brand JUnit does; this is handy for when your CI server is capable of aggregating these XML files (like Jenkins freestyle projects)
-                    -->
-                    <junitXmlReportFileName>TEST-jasmine.xml</junitXmlReportFileName>
-                    <debug>false</debug>
-                </configuration>
-            </plugin>
-
         </plugins>
     </build>
 
