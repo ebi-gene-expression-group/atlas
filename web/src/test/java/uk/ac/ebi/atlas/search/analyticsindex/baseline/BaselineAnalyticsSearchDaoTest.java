@@ -4,9 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.internal.matchers.Any;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.core.Is.is;
@@ -25,15 +24,15 @@ public class BaselineAnalyticsSearchDaoTest {
     private RestTemplate restTemplateMock;
 
     @Mock
-    private HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactoryMock;
+    private SimpleClientHttpRequestFactory simpleClientHttpRequestFactoryMock;
 
     private BaselineAnalyticsSearchDao subject;
 
     @Before
     public void setUp() {
-        doNothing().when(httpComponentsClientHttpRequestFactoryMock).setReadTimeout(anyInt());
-        doNothing().when(httpComponentsClientHttpRequestFactoryMock).setConnectTimeout(anyInt());
-        when(restTemplateMock.getRequestFactory()).thenReturn(httpComponentsClientHttpRequestFactoryMock);
+        doNothing().when(simpleClientHttpRequestFactoryMock).setReadTimeout(anyInt());
+        doNothing().when(simpleClientHttpRequestFactoryMock).setConnectTimeout(anyInt());
+        when(restTemplateMock.getRequestFactory()).thenReturn(simpleClientHttpRequestFactoryMock);
 
         subject = new BaselineAnalyticsSearchDao(restTemplateMock, SOLR_BASE_URL, JSON_FACET);
     }
