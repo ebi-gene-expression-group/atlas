@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -44,9 +45,9 @@ public class BaselineAnalyticsFacetsReader {
 
             for(Map<String, Object> assayGroup : buckets)  {
                 String assayGroupId = (String) assayGroup.get("val");
-                double sumExpressionLevel = (double) assayGroup.get("sumExpressionLevel");
+                BigDecimal sumExpressionLevel = (BigDecimal) assayGroup.get("sumExpressionLevel");
 
-                double expression = baselineExpressionLevelRounder.round(sumExpressionLevel / numberOfGenesExpressedAcrossAllAssayGroups);
+                double expression = baselineExpressionLevelRounder.round(sumExpressionLevel.doubleValue() / numberOfGenesExpressedAcrossAllAssayGroups);
                 BaselineExperimentExpression bslnExpression = BaselineExperimentExpression.create(experimentAccession, assayGroupId, expression);
 
                 builder.add(bslnExpression);
