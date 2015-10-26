@@ -45,9 +45,10 @@ public class BaselineAnalyticsFacetsReader {
 
             for(Map<String, Object> assayGroup : buckets)  {
                 String assayGroupId = (String) assayGroup.get("val");
-                BigDecimal sumExpressionLevel = (BigDecimal) assayGroup.get("sumExpressionLevel");
+                double sumExpressionLevel;
+                sumExpressionLevel = ((Number) assayGroup.get("sumExpressionLevel")).doubleValue();
 
-                double expression = baselineExpressionLevelRounder.round(sumExpressionLevel.doubleValue() / numberOfGenesExpressedAcrossAllAssayGroups);
+                double expression = baselineExpressionLevelRounder.round(sumExpressionLevel / numberOfGenesExpressedAcrossAllAssayGroups);
                 BaselineExperimentExpression bslnExpression = BaselineExperimentExpression.create(experimentAccession, assayGroupId, expression);
 
                 builder.add(bslnExpression);
