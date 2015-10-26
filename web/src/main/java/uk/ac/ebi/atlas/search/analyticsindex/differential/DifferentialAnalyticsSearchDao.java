@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.search.analyticsindex.differential;
 import com.google.common.base.Stopwatch;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
@@ -36,6 +37,10 @@ public class DifferentialAnalyticsSearchDao {
 
     @Inject
     public DifferentialAnalyticsSearchDao(RestTemplate restTemplate, @Value("#{configuration['solr.analytics.base.url']}") String solrBaseUrl, String differentialGeneFacetsQuery) {
+        HttpComponentsClientHttpRequestFactory rf = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
+        rf.setReadTimeout(60000);
+        rf.setConnectTimeout(60000);
+
         this.restTemplate = restTemplate;
         this.solrBaseUrl = solrBaseUrl;
         this.differentialGeneFacetsQuery ="&json.facet=" + encodeQueryParam(differentialGeneFacetsQuery);
