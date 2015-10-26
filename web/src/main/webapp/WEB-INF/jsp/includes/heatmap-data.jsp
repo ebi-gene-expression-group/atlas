@@ -60,7 +60,7 @@
                     "contextRoot": "${pageContext.request.contextPath}",
                     "toggleButtonMaleImageTemplate": "${toggleButtonMaleImageTemplate}",
                     "toggleButtonFemaleImageTemplate": "${toggleButtonFemaleImageTemplate}",
-                    "toggleButtonBrainImageTemplate": "${toggleButtonBrainImageTemplate}",
+                    "toggleButtonBrainImageTemplate": "${toggleButtonBrainImageTemplate}"
                     }
                 </c:when>
                 <c:otherwise>
