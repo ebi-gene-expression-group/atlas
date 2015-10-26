@@ -315,15 +315,15 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void conditionRenalGlomerulusQueryWithNoResults()  {
+    public void conditionFoobarQueryWithNoResults()  {
         String geneQuery = "";
-        String condition = "renal glomerulus";
+        String condition = "foobar condition";
         String species = "";
         boolean isExactMatch = true;
 
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
 
-        assertThat(results.size(), is(1));
+        assertThat(results.size(), is(0));
     }
 
     @Test

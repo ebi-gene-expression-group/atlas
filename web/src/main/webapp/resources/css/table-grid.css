@@ -31,6 +31,10 @@
     text-align: left;
 }
 
+.gxaFormGrid {
+    width: 100%;
+    border: 2px solid #cdcdcd !important;
+}
 
 .gxaTableGrid, .gxaAnalysisGrid {
     width: auto;
@@ -61,24 +65,26 @@
     white-space: nowrap;
 }
 
-.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {
+th.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {
     font-weight: normal;
     background-color: rgb(237, 246, 246) !important;
 }
 
-.gxaHoverableHeader:hover, .gxaHeaderHover {
+th.gxaHoverableHeader:hover, th.gxaHeaderHover {
     background-color: #deebeb !important;
 }
 
-.gxaSelectableHeader:hover {
+th.gxaSelectableHeader:hover {
     cursor: pointer;
 }
 
-.gxaVerticalHeaderCell-selected, .gxaVerticalHeaderCell-selected:hover, .gxaHorizontalHeaderCell-selected, .gxaHorizontalHeaderCell-selected:hover {
+th.gxaVerticalHeaderCell-selected, th.gxaVerticalHeaderCell-selected:hover, th.gxaHorizontalHeaderCell-selected, th.gxaHorizontalHeaderCell-selected:hover {
     background-color: rgb(181, 234, 234) !important;
+    border: 1px solid #cdcdcd;
+    padding:5px;
 }
 
-.gxaHorizontalHeaderCell {
+th.gxaHorizontalHeaderCell {
     border: 1px solid #cdcdcd;
     white-space: nowrap;
     padding:5px;
