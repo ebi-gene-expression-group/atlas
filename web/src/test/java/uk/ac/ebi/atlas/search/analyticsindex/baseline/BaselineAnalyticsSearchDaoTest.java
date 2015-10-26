@@ -1,13 +1,19 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.internal.matchers.Any;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineAnalyticsSearchDaoTest {
@@ -16,9 +22,21 @@ public class BaselineAnalyticsSearchDaoTest {
     private static final String JSON_FACET = "{}";
 
     @Mock
-    private RestTemplate restTemplate;
+    private RestTemplate restTemplateMock;
 
-    private final BaselineAnalyticsSearchDao subject = new BaselineAnalyticsSearchDao(restTemplate, SOLR_BASE_URL, JSON_FACET);
+    @Mock
+    private HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactoryMock;
+
+    private BaselineAnalyticsSearchDao subject;
+
+    @Before
+    public void setUp() {
+        doNothing().when(httpComponentsClientHttpRequestFactoryMock).setReadTimeout(anyInt());
+        doNothing().when(httpComponentsClientHttpRequestFactoryMock).setConnectTimeout(anyInt());
+        when(restTemplateMock.getRequestFactory()).thenReturn(httpComponentsClientHttpRequestFactoryMock);
+
+        subject = new BaselineAnalyticsSearchDao(restTemplateMock, SOLR_BASE_URL, JSON_FACET);
+    }
 
     @Test
     public void buildQueryParameters() {
