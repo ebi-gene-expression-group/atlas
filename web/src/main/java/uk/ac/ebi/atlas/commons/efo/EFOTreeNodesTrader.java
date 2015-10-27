@@ -1,7 +1,8 @@
 package uk.ac.ebi.atlas.commons.efo;
 
 import com.atlassian.util.concurrent.LazyReference;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress.utils.efo.EFOLoader;
@@ -16,7 +17,7 @@ import java.util.Map;
 @Scope("singleton")
 public class EFOTreeNodesTrader {
 
-    private static final Logger LOGGER = Logger.getLogger(EFOTreeNodesTrader.class);
+    private static final Logger LOGGER = LogManager.getLogger(EFOTreeNodesTrader.class);
 
     private String efoOwlFilePath;
 

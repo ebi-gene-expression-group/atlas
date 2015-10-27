@@ -1,7 +1,8 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.collect.SortedSetMultimap;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.solr.query.BioentityNotFoundException;
@@ -15,7 +16,7 @@ import java.util.Set;
 @Named
 public class BioEntityPropertyDao {
 
-    private static final Logger LOGGER = Logger.getLogger(BioEntityPropertyDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(BioEntityPropertyDao.class);
 
     private final SolrQueryBuilderFactory solrQueryBuilderFactory;
     private final GxaSolrClient solrServer;

@@ -1,7 +1,8 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
 import com.google.common.collect.SetMultimap;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -11,7 +12,7 @@ import java.util.Collection;
 
 public abstract class ConditionsIndex<T extends Experiment> {
 
-    private static final Logger LOGGER = Logger.getLogger(ConditionsIndex.class);
+    private static final Logger LOGGER = LogManager.getLogger(ConditionsIndex.class);
 
     private SolrClient solrClient;
 

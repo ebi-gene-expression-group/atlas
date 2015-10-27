@@ -25,7 +25,8 @@ package uk.ac.ebi.atlas.search.baseline;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
@@ -44,7 +45,7 @@ import java.util.concurrent.TimeUnit;
 @Scope("prototype")
 public class BaselineExpressionDao {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineExpressionDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(BaselineExpressionDao.class);
 
     private final JdbcTemplate jdbcTemplate;
 

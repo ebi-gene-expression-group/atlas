@@ -29,7 +29,8 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.model.Species;
@@ -52,7 +53,7 @@ import java.util.SortedSet;
 //TODO: merge this class with BaselineExperimentProfileSearchService, by adding the ability to search conditions to BaselineExperimentProfileSearchService
 public class BaselineExperimentAssayGroupSearchService {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineExperimentAssayGroupSearchService.class);
+    private static final Logger LOGGER = LogManager.getLogger(BaselineExperimentAssayGroupSearchService.class);
 
     private final ExperimentTrader experimentTrader;
 

@@ -7,7 +7,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.FoldChangeRounder;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
@@ -135,7 +136,7 @@ public class DifferentialAnalyticsFacetsReader {
     }
 
     protected static class ExperimentsTypeMapConverter {
-        private static final Logger LOGGER = Logger.getLogger(ExperimentsTypeMapConverter.class);
+        private static final Logger LOGGER = LogManager.getLogger(ExperimentsTypeMapConverter.class);
 
         private static final Map<String,String> EXPERIMENTS_TYPE_MAP = ImmutableMap.<String, String>builder()
                 .put("rnaseq_mrna_baseline", "RNA-seq mRNA baseline")

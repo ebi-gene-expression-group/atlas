@@ -23,13 +23,14 @@
 package uk.ac.ebi.atlas.commons.streams;
 
 import com.google.common.base.Predicate;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
 public abstract class ObjectInputStreamFilter<T> implements ObjectInputStream<T> {
 
-    private static final Logger LOGGER = Logger.getLogger(ObjectInputStreamFilter.class);
+    private static final Logger LOGGER = LogManager.getLogger(ObjectInputStreamFilter.class);
 
     private ObjectInputStream<T> inputStream;
 

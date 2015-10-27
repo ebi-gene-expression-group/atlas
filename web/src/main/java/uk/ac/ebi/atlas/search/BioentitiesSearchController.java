@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.search;
 
 import com.google.common.base.Optional;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.apache.solr.common.SolrException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -35,7 +34,6 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
@@ -64,8 +62,6 @@ import static uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroups.*;
 public class BioentitiesSearchController {
 
     private static final int DEFAULT_BASELINE_SPLIT = 10;
-
-    private static final Logger LOGGER = Logger.getLogger(BioentitiesSearchController.class);
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService;

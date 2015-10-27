@@ -27,7 +27,8 @@ import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
@@ -52,7 +53,7 @@ import java.util.concurrent.TimeUnit;
 @Scope("prototype")
 public class DiffAnalyticsDao {
 
-    private static final Logger LOGGER = Logger.getLogger(DiffAnalyticsDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(DiffAnalyticsDao.class);
 
     static final int RESULT_SIZE = 50;
 

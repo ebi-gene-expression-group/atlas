@@ -2,7 +2,8 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.support;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -23,7 +24,7 @@ import java.util.Set;
 @Scope("singleton")
 public class IdentifierSearchTermsTrader {
 
-    private static final Logger LOGGER = Logger.getLogger(IdentifierSearchTermsTrader.class);
+    private static final Logger LOGGER = LogManager.getLogger(IdentifierSearchTermsTrader.class);
 
     private GxaSolrClient gxaSolrClient;
     private String[] searchProperties;

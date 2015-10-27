@@ -22,7 +22,8 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest.admin;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,7 +38,7 @@ import javax.inject.Inject;
 @Scope("request")
 @RequestMapping(value = "/admin")
 public class BioentityIndexController {
-    private static final Logger LOGGER = Logger.getLogger(BioentityIndexController.class);
+    private static final Logger LOGGER = LogManager.getLogger(BioentityIndexController.class);
 
     private BioentityIndexAdmin bioentityIndexAdmin;
     private BioentityIndexMonitor bioentityIndexMonitor;

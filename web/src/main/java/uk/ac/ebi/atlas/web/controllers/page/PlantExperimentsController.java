@@ -24,7 +24,8 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,13 +40,18 @@ import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 
 @Controller
-// if we make it singleton it gets initialized during deployment, that means deployment become slow
+// if we make it singleton it gets initialized during deployment, that means deployment becomes slow
 @Scope("request")
 public class PlantExperimentsController {
-    private static final Logger LOGGER = Logger.getLogger(PlantExperimentsController.class);
+    private static final Logger LOGGER = LogManager.getLogger(PlantExperimentsController.class);
 
     private ExperimentTrader experimentTrader;
 

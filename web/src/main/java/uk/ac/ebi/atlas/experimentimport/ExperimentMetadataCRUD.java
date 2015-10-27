@@ -24,7 +24,8 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSetMultimap;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
@@ -52,7 +53,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Scope("prototype")
 public class ExperimentMetadataCRUD {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentMetadataCRUD.class);
+    private static final Logger LOGGER = LogManager.getLogger(ExperimentMetadataCRUD.class);
 
     private ExperimentDAO experimentDAO;
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;

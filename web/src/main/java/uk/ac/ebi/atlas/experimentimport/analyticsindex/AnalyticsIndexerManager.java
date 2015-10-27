@@ -2,7 +2,8 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.TreeMultimap;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsTrader;
@@ -29,7 +30,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Scope("singleton")
 public class AnalyticsIndexerManager extends Observable {
 
-    private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerManager.class);
+    private static final Logger LOGGER = LogManager.getLogger(AnalyticsIndexerManager.class);
 
     @Value("#{configuration['experiment.magetab.path.template']}")
     private String baselineTsvFileTemplate;

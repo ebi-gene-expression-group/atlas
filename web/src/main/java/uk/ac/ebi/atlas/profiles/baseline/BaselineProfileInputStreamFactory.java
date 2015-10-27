@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;

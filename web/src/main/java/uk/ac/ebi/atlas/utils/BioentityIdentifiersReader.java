@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.utils;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -27,7 +28,7 @@ import java.util.HashSet;
 @Scope("singleton")
 public class BioentityIdentifiersReader {
 
-    private static final Logger LOGGER = Logger.getLogger(BioentityIdentifiersReader.class);
+    private static final Logger LOGGER = LogManager.getLogger(BioentityIdentifiersReader.class);
 
     private ExperimentTrader experimentTrader;
 

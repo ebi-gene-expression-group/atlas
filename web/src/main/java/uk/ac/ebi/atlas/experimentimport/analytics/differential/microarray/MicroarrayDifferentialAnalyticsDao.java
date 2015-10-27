@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.AbstractInterruptibleBatchPreparedStatementSetter;
 
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 @Named
 public class MicroarrayDifferentialAnalyticsDao {
 
-    private static final Logger LOGGER = Logger.getLogger(MicroarrayDifferentialAnalyticsDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(MicroarrayDifferentialAnalyticsDao.class);
 
     private static final String ANALYTICS_INSERT = "INSERT INTO MICROARRAY_DIFF_ANALYTICS " +
             "(designelement, experiment, arraydesign, contrastid, isactive, pval, log2fold, tstat) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";

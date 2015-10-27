@@ -27,7 +27,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
@@ -51,7 +52,7 @@ import java.util.Set;
 @Scope("prototype")
 public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselineProfile, Factor, BaselineProfileStreamOptions> {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineProfilesTSVWriter.class);
+    private static final Logger LOGGER = LogManager.getLogger(BaselineProfilesTSVWriter.class);
     private static final String GENE_SET_COLUMN_NAME = "Gene set";
 
     private BaselineRequestContext requestContext;

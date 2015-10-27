@@ -22,7 +22,8 @@
 
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline.BaselineAnalyticsIndexerService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.DiffAnalyticsIndexerService;
@@ -41,7 +42,7 @@ import java.util.Map;
 @Named
 @Scope("singleton")
 public class AnalyticsIndexerService {
-    private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerService.class);
+    private static final Logger LOGGER = LogManager.getLogger(AnalyticsIndexerService.class);
 
     private final AnalyticsIndexDAO analyticsIndexDAO;
     private final BaselineAnalyticsIndexerService baselineAnalyticsIndexerService;

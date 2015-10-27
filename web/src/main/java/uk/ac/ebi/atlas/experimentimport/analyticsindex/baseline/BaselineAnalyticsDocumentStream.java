@@ -3,10 +3,10 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline;
 import com.google.common.base.Joiner;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -19,7 +19,7 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsDocumentStream.class);
+    private static final Logger LOGGER = LogManager.getLogger(BaselineAnalyticsDocumentStream.class);
 
     private final String experimentAccession;
     private final ExperimentType experimentType;

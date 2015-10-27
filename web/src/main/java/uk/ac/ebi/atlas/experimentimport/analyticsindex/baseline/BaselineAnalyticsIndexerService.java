@@ -26,7 +26,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -57,7 +58,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Scope("singleton")
 public class BaselineAnalyticsIndexerService {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsIndexerService.class);
+    private static final Logger LOGGER = LogManager.getLogger(BaselineAnalyticsIndexerService.class);
 
     private final BaselineAnalyticsDocumentStreamFactory streamFactory;
     private final EFOParentsLookupService efoParentsLookupService;

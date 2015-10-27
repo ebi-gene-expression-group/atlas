@@ -23,7 +23,8 @@
 package uk.ac.ebi.atlas.profiles.differential;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -40,7 +41,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Expression, K extends DifferentialExperiment> implements ExpressionsRowDeserializerBuilder<String, T> {
 
-    private static final Logger LOGGER = Logger.getLogger(ExpressionsRowDeserializerDifferentialBuilder.class);
+    private static final Logger LOGGER = LogManager.getLogger(ExpressionsRowDeserializerDifferentialBuilder.class);
     private ExperimentsCache<K> experimentsCache;
     private String experimentAccession;
     private List<Contrast> orderedContrasts;

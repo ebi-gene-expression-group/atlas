@@ -26,7 +26,8 @@ import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.context.annotation.Scope;
@@ -51,7 +52,7 @@ import static uk.ac.ebi.atlas.solr.BioentityType.GENE;
 @Scope("singleton")
 //can be singleton because HttpSolrClient is documented to be thread safe, please be careful not to add any other non thread safe state!
 public class SolrQueryService {
-    private static final Logger LOGGER = Logger.getLogger(SolrQueryService.class);
+    private static final Logger LOGGER = LogManager.getLogger(SolrQueryService.class);
 
     public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     public static final String BIOENTITY_TYPE_FIELD = "bioentity_type";

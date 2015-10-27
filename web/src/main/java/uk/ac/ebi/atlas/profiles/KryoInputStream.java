@@ -23,15 +23,12 @@
 package uk.ac.ebi.atlas.profiles;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 
 import java.io.IOException;
 
 public abstract class KryoInputStream<T, K extends Expression> implements ExpressionProfileInputStream<T, K> {
-
-    private static final Logger LOGGER = Logger.getLogger(KryoInputStream.class);
 
     private BaselineExpressionsKryoReader baselineExpressionsKryoReader;
 

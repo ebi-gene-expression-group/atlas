@@ -22,7 +22,8 @@
 
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -49,7 +50,7 @@ import java.util.zip.ZipOutputStream;
 @Scope("request")
 public class MicroarrayExperimentDownloadController {
 
-    private static final Logger LOGGER = Logger.getLogger(MicroarrayExperimentDownloadController.class);
+    private static final Logger LOGGER = LogManager.getLogger(MicroarrayExperimentDownloadController.class);
     private static final String NORMALIZED_EXPRESSIONS_TSV = "-normalized-expressions.tsv";
     private static final String LOG_FOLD_CHANGES_TSV = "-log-fold-changes.tsv";
     private static final String ANALYTICS_TSV = "-analytics.tsv";

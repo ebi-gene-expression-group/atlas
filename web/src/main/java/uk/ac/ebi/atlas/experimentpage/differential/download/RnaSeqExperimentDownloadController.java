@@ -22,7 +22,8 @@
 
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,7 +46,7 @@ import java.text.MessageFormat;
 @Scope("request")
 public class RnaSeqExperimentDownloadController {
 
-    private static final Logger LOGGER = Logger.getLogger(RnaSeqExperimentDownloadController.class);
+    private static final Logger LOGGER = LogManager.getLogger(RnaSeqExperimentDownloadController.class);
     private static final String ALL_ANALYTICS_TSV = "-analytics.tsv";
     private static final String RAW_COUNTS_TSV = "-raw-counts.tsv";
     private static final String PARAMS_TYPE_DIFFERENTIAL = "type=RNASEQ_MRNA_DIFFERENTIAL";

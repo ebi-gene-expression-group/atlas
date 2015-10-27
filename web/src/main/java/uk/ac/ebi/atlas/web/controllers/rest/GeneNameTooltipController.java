@@ -29,7 +29,8 @@ import com.google.common.collect.Multimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
@@ -50,7 +51,7 @@ import java.util.List;
 @Controller
 @Scope("request")
 public class GeneNameTooltipController {
-    private static final Logger LOGGER = Logger.getLogger(GeneNameTooltipController.class);
+    private static final Logger LOGGER = LogManager.getLogger(GeneNameTooltipController.class);
     private static final String WORD_SPAN_OPEN = "<span class='gxaPropertyValueMarkup'>";
     private static final String WORD_SPAN_CLOSE = "</span>";
     private static final int NUMBER_OF_TERMS_TO_SHOW = 5;

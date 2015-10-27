@@ -22,7 +22,8 @@
 
 package uk.ac.ebi.atlas.solr.admin;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.solr.admin.index.BioentityIndex;
@@ -38,7 +39,7 @@ import java.util.concurrent.ExecutorService;
 @Named
 @Scope("prototype")
 public class BioentityIndexAdmin {
-    private static final Logger LOGGER = Logger.getLogger(BioentityIndexAdmin.class);
+    private static final Logger LOGGER = LogManager.getLogger(BioentityIndexAdmin.class);
 
     private BioentityIndexMonitor bioentityIndexMonitor;
     private String bioentityPropertiesDirectory;

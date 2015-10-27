@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.dao;
 
 import com.google.common.collect.ImmutableMap;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -37,8 +36,6 @@ import java.util.Map;
 @Named
 @Scope("singleton")
 public class ArrayDesignDAO {
-
-    private static final Logger LOGGER = Logger.getLogger(ArrayDesignDAO.class);
 
     private JdbcTemplate jdbcTemplate;
 

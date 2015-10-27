@@ -1,7 +1,8 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.collect.ImmutableList;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrInputDocument;
@@ -17,7 +18,7 @@ import java.util.List;
 @Named
 @Scope("prototype")
 public class AnalyticsIndexDAO {
-    private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexDAO.class);
+    private static final Logger LOGGER = LogManager.getLogger(AnalyticsIndexDAO.class);
 
     private SolrClient solrClient;
 

@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.SpeciesGrouper;
@@ -37,7 +36,6 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
@@ -45,8 +43,6 @@ import java.util.*;
 @Named
 @Scope("singleton")
 public class MicroArrayDiffAnalyticsIndexerService {
-    private static final Logger LOGGER = Logger.getLogger(MicroArrayDiffAnalyticsIndexerService.class);
-
     private final EFOParentsLookupService efoParentsLookupService;
     private final DifferentialConditionsBuilder diffConditionsBuilder;
     private final MicroArrayDiffAnalyticsDocumentStreamIndexer microArrayDiffAnalyticsDocumentStreamIndexer;

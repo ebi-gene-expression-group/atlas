@@ -2,7 +2,8 @@ package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.base.Stopwatch;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 @Named
 public class BaselineAnalyticsExpressionAvailableDao {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsExpressionAvailableDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(BaselineAnalyticsExpressionAvailableDao.class);
 
     public static final double DEFAULT_CUT_OFF = 0.5;
     private final RestTemplate restTemplate;

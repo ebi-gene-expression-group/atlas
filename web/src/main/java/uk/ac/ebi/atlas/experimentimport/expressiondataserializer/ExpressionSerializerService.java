@@ -2,7 +2,8 @@ package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.UnsafeInput;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
 import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
@@ -23,7 +24,7 @@ import java.io.IOException;
 @Scope("singleton")
 public class ExpressionSerializerService {
 
-    private static final Logger LOGGER = Logger.getLogger(ExpressionSerializerService.class);
+    private static final Logger LOGGER = LogManager.getLogger(ExpressionSerializerService.class);
 
     private ExperimentTrader experimentTrader;
     private ExpressionSerializerFactory expressionSerializerFactory;

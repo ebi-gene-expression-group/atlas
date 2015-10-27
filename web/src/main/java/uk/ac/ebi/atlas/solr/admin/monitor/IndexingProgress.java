@@ -24,7 +24,8 @@ package uk.ac.ebi.atlas.solr.admin.monitor;
 
 import com.google.common.collect.Iterators;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
@@ -38,7 +39,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Named
 @Scope("singleton")
 public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile>{
-    private static final Logger LOGGER = Logger.getLogger(IndexingProgress.class);
+    private static final Logger LOGGER = LogManager.getLogger(IndexingProgress.class);
 
     // This list may be iterated from a different thread than the index build thread, generating a
     // ConcurrentModificationException if we didn't use a thread safe implementation like CopyOnWriteArrayList

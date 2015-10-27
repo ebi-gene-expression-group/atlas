@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +27,7 @@ import static org.mockito.Mockito.doNothing;
 public class ExperimentCRUDRnaSeqDifferentialIT {
 
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentCRUDRnaSeqDifferentialIT.class);
+    private static final Logger LOGGER = LogManager.getLogger(ExperimentCRUDRnaSeqDifferentialIT.class);
 
     public static final String NEW_EXPERIMENT_ACCESSION = "TEST-RNASEQ-DIFF";
 

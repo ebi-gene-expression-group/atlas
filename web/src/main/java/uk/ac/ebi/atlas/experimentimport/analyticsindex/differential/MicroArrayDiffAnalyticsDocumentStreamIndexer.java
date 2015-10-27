@@ -2,7 +2,8 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.SetMultimap;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
@@ -19,7 +20,7 @@ import java.util.Set;
 
 @Named
 public class MicroArrayDiffAnalyticsDocumentStreamIndexer {
-    private static final Logger LOGGER = Logger.getLogger(MicroArrayDiffAnalyticsDocumentStreamIndexer.class);
+    private static final Logger LOGGER = LogManager.getLogger(MicroArrayDiffAnalyticsDocumentStreamIndexer.class);
 
     private final MicroarrayDifferentialAnalyticsInputStreamFactory microarrayDifferentialAnalyticsInputStreamFactory;
     private DiffAnalyticsDocumentStreamFactory streamFactory;

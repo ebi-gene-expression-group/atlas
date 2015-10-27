@@ -22,7 +22,8 @@
 
 package uk.ac.ebi.atlas.web.interceptors;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.util.StopWatch;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -34,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 @Named
 public class TimingInterceptor extends HandlerInterceptorAdapter {
 
-    private static final Logger LOGGER = Logger.getLogger(TimingInterceptor.class);
+    private static final Logger LOGGER = LogManager.getLogger(TimingInterceptor.class);
 
     protected static final String STOP_WATCH = "requestURLStopWatch";
 

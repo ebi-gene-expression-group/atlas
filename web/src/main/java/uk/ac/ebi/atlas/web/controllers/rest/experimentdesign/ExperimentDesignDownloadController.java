@@ -23,7 +23,8 @@
 package uk.ac.ebi.atlas.web.controllers.rest.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
@@ -40,7 +41,7 @@ import java.util.Set;
 
 public abstract class ExperimentDesignDownloadController<T extends Experiment> {
 
-    private static final Logger LOGGER = Logger.getLogger(DifferentialDesignDownloadController.class);
+    private static final Logger LOGGER = LogManager.getLogger(DifferentialDesignDownloadController.class);
 
     @Value("#{configuration['experiment.experiment-design.path.template']}")
     private String pathTemplate;

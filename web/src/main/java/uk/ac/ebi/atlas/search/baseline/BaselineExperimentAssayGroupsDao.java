@@ -27,7 +27,8 @@ import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -47,7 +48,7 @@ import java.util.concurrent.TimeUnit;
 @Scope("prototype")
 public class BaselineExperimentAssayGroupsDao {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineExperimentAssayGroupsDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(BaselineExperimentAssayGroupsDao.class);
 
     private final JdbcTemplate jdbcTemplate;
 

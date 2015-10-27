@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
@@ -13,7 +14,7 @@ import java.util.Set;
 
 public class ProfilesWriter<P extends Profile, K, O extends ProfileStreamOptions> {
 
-    private static final Logger LOGGER = Logger.getLogger(ProfilesWriter.class);
+    private static final Logger LOGGER = LogManager.getLogger(ProfilesWriter.class);
 
     private ProfileStreamPipelineBuilder<P, O> pipelineBuilder;
     private GeneProfilesTSVWriter<P, K, O> tsvWriter;

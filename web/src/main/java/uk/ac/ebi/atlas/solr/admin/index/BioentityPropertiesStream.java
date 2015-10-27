@@ -24,7 +24,8 @@ package uk.ac.ebi.atlas.solr.admin.index;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.Lists;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 
 import java.io.Closeable;
@@ -34,7 +35,7 @@ import java.util.List;
 
 public class BioentityPropertiesStream implements Closeable {
 
-    private static final Logger LOGGER = Logger.getLogger(BioentityPropertiesStream.class);
+    private static final Logger LOGGER = LogManager.getLogger(BioentityPropertiesStream.class);
 
     private static final double BATCH_SIZE = 50000;
 

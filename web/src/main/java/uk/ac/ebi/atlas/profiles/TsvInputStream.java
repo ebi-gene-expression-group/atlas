@@ -22,17 +22,17 @@
 
 package uk.ac.ebi.atlas.profiles;
 
-
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import uk.ac.ebi.atlas.model.Expression;
 
 import java.io.IOException;
 
 public abstract class TsvInputStream<T, K extends Expression> implements ExpressionProfileInputStream<T, K> {
 
-    private static final Logger LOGGER = Logger.getLogger(TsvInputStream.class);
+    private static final Logger LOGGER = LogManager.getLogger(TsvInputStream.class);
 
     private CSVReader csvReader;
 

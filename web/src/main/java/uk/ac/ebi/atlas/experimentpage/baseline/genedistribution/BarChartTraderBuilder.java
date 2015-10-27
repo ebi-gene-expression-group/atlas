@@ -22,7 +22,8 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
@@ -39,7 +40,7 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class BarChartTraderBuilder {
 
-    private static final Logger LOGGER = Logger.getLogger(BarChartTraderBuilder.class);
+    private static final Logger LOGGER = LogManager.getLogger(BarChartTraderBuilder.class);
 
     private NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes = new TreeMap<>();
 

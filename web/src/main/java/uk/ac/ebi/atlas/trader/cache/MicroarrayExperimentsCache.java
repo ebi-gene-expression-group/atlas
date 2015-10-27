@@ -23,7 +23,8 @@
 package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
@@ -34,7 +35,7 @@ import javax.inject.Named;
 @Scope("singleton")
 public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayExperiment> {
 
-    private static final Logger LOGGER = Logger.getLogger(MicroarrayExperimentsCache.class);
+    private static final Logger LOGGER = LogManager.getLogger(MicroarrayExperimentsCache.class);
 
     private LoadingCache<String, MicroarrayExperiment> experiments;
 

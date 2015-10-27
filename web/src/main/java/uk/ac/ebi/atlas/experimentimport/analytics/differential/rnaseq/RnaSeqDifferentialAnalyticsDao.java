@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.AbstractInterruptibleBatchPreparedStatementSetter;
 
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 @Named
 public class RnaSeqDifferentialAnalyticsDao {
 
-    private static final Logger LOGGER = Logger.getLogger(RnaSeqDifferentialAnalyticsDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(RnaSeqDifferentialAnalyticsDao.class);
 
     private static final String ANALYTICS_INSERT = "INSERT INTO RNASEQ_DIFF_ANALYTICS " +
             "(identifier, experiment, contrastid, isactive, pval, log2fold) VALUES (?, ?, ?, ?, ?, ?)";

@@ -24,7 +24,8 @@ package uk.ac.ebi.atlas.solr.query.conditions;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -44,7 +45,7 @@ import java.util.List;
 @Scope("singleton")
 public class DifferentialConditionsSearchService {
 
-    private static final Logger LOGGER = Logger.getLogger(DifferentialConditionsSearchService.class);
+    private static final Logger LOGGER = LogManager.getLogger(DifferentialConditionsSearchService.class);
 
     private SolrClient differentialConditionsSolrClient;
 

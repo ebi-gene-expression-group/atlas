@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
 import com.google.common.base.Stopwatch;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @Named
 public class DifferentialAnalyticsSearchDao {
 
-    private static final Logger LOGGER = Logger.getLogger(DifferentialAnalyticsSearchDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(DifferentialAnalyticsSearchDao.class);
 
     public static final String DIFFERENTIAL_ONLY = "experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential)";
     public static final double POSITIVE_DEFAULT_FOLD_CHANGE = 1.0;

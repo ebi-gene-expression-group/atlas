@@ -24,7 +24,8 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -39,7 +40,7 @@ import java.util.Set;
 @Scope("request")
 public class BaselineExperimentProfileSearchService {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineExperimentProfileSearchService.class);
+    private static final Logger LOGGER = LogManager.getLogger(BaselineExperimentProfileSearchService.class);
 
     private final BaselineExpressionDao baselineExpressionDao;
 

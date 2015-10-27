@@ -23,7 +23,8 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,7 +47,7 @@ import java.text.MessageFormat;
 @Controller
 public class ExternalImageController {
 
-    private static final Logger LOGGER = Logger.getLogger(ExternalImageController.class);
+    private static final Logger LOGGER = LogManager.getLogger(ExternalImageController.class);
 
     private String gseaPathTemplate;
 

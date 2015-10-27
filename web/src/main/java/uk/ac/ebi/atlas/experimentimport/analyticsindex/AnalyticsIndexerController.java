@@ -23,7 +23,8 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.base.Strings;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,7 @@ import java.util.Arrays;
 @RequestMapping("/admin")
 public class AnalyticsIndexerController {
 
-    private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerController.class);
+    private static final Logger LOGGER = LogManager.getLogger(AnalyticsIndexerController.class);
 
     private AnalyticsIndexerManager analyticsIndexerManager;
     private AnalyticsIndexerMonitor analyticsIndexerMonitor;

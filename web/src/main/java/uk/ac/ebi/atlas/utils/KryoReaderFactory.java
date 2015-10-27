@@ -2,7 +2,8 @@ package uk.ac.ebi.atlas.utils;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.UnsafeInput;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
 import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
 import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
@@ -18,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 public class KryoReaderFactory {
 
-    private static final Logger LOGGER = Logger.getLogger(KryoReaderFactory.class);
+    private static final Logger LOGGER = LogManager.getLogger(KryoReaderFactory.class);
 
     private static Kryo createKryo() {
         Kryo kryo = new Kryo();

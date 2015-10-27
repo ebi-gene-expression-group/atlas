@@ -25,7 +25,8 @@ package uk.ac.ebi.atlas.solr.query;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -42,7 +43,7 @@ import java.util.Set;
 @Named
 @Scope("singleton")
 public class GxaSolrClient {
-    private static final Logger LOGGER = Logger.getLogger(GxaSolrClient.class);
+    private static final Logger LOGGER = LogManager.getLogger(GxaSolrClient.class);
 
     public static final String PROPERTY_NAME_FIELD = "property_name";
     private static final String PROPERTY_VALUE_FIELD = "property_value";

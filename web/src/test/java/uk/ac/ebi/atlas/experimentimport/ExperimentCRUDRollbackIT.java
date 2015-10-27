@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +32,7 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class ExperimentCRUDRollbackIT {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentCRUDRollbackIT.class);
+    private static final Logger LOGGER = LogManager.getLogger(ExperimentCRUDRollbackIT.class);
 
     public static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";
 

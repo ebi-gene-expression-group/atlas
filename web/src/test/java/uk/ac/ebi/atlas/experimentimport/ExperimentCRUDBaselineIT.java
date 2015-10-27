@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.doNothing;
 public class ExperimentCRUDBaselineIT {
 
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentCRUDBaselineIT.class);
+    private static final Logger LOGGER = LogManager.getLogger(ExperimentCRUDBaselineIT.class);
 
     public static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";
     public static final String EXISTING_EXPERIMENT_ACCESSION = "E-MTAB-599";
