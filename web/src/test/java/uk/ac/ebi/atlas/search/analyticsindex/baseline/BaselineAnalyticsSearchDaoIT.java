@@ -50,7 +50,7 @@ public class BaselineAnalyticsSearchDaoIT {
         assertThat(species, contains("homo sapiens"));
         assertThat(sourcesForHomoSapiens, hasItems("ORGANISM_PART", "CELL_LINE"));
         // TODO E-MTAB-1733 isn’t included until https://www.pivotaltracker.com/story/show/101118548
-        assertThat(experimentsForHomoSapiensOrganismPart, containsInAnyOrder("E-MTAB-1733", "E-MTAB-2836", "E-MTAB-513", "E-GEOD-30352"));
+        assertThat(experimentsForHomoSapiensOrganismPart, containsInAnyOrder("E-MTAB-1733", "E-MTAB-2836", "E-GEOD-30352"));
     }
 
 }

@@ -13,6 +13,10 @@ public class SearchTestUtil {
         return selectUnique(baselineCounts, having(on(BaselineBioEntitiesSearchResult.class).getExperimentAccession(), is(experimentAccession)));
     }
 
+    public static BaselineBioEntitiesSearchResult selectFirstResult(List<BaselineBioEntitiesSearchResult> baselineCounts, String experimentAccession) {
+        return selectFirst(baselineCounts, having(on(BaselineBioEntitiesSearchResult.class).getExperimentAccession(), is(experimentAccession)));
+    }
+
     public static boolean hasResult(List<BaselineBioEntitiesSearchResult> baselineCounts, String experimentAccession) {
         return selectFirst(baselineCounts, having(on(BaselineBioEntitiesSearchResult.class).getExperimentAccession(), is(experimentAccession))) != null;
     }

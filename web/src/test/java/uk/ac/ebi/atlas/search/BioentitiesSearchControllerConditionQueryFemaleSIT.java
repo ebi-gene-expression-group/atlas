@@ -31,6 +31,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static uk.ac.ebi.atlas.search.SearchTestUtil.selectFirstResult;
 import static uk.ac.ebi.atlas.search.SearchTestUtil.selectResult;
 
 public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePageSeleniumFixture {
@@ -48,11 +49,11 @@ public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePa
     public void checkBaselineExperimentCounts() {
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
 
-        assertThat(baselineCounts, hasSize(17));
-        BaselineBioEntitiesSearchResult result = selectResult(baselineCounts, "E-MTAB-513");
-        assertThat(result.getExperimentName(), is("Illumina Body Map"));
+        assertThat(baselineCounts, hasSize(71));
+        BaselineBioEntitiesSearchResult result = selectFirstResult(baselineCounts, "dummy-E-MTAB-2706");
+        assertThat(result.getExperimentName(), is("Cell Lines - 675 Genentech - B-cell lymphoma, lymph node"));
         assertThat(result.getSpecies(), is("Homo sapiens"));
-        assertThat(result.getHref(), endsWith("E-MTAB-513?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=adipose%20tissue,animal%20ovary,brain,breast,colon,kidney,lymph%20node,thyroid&geneQuery=&exactMatch=true"));
+        assertThat(result.getHref(), endsWith("experiments/dummy-E-MTAB-2706?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=OCI-LY-19,RI-1,SU-DHL-5,Toledo&geneQuery=&exactMatch=true&serializedFilterFactors=DISEASE:B-cell%20lymphoma,ORGANISM_PART:lymph%20node"));
 
     }
 

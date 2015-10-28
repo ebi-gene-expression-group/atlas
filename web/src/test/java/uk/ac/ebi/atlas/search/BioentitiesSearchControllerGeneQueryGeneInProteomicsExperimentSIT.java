@@ -43,7 +43,7 @@ public class BioentitiesSearchControllerGeneQueryGeneInProteomicsExperimentSIT e
     @Test
     public void baselinePaneResultsMessage() {
         assertThat(subject.isBaselinePaneExpanded(), is(true));
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("15 results"));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("117 results"));
     }
 
     @Test

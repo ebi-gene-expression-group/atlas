@@ -53,7 +53,7 @@ public class BioentitiesSearchControllerGeneQuery2GeneSetsMultipleExperimentResu
         assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-2836?geneQuery=R-HSA-69278%09R-HSA-162582"));
         assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-1733?geneQuery=R-HSA-69278%09R-HSA-162582"));
         assertThat(subject.getGeneLink(2), endsWith("/experiments/E-MTAB-513?geneQuery=R-HSA-69278%09R-HSA-162582"));
-        assertThat(subject.getGeneLink(3), endsWith("/experiments/E-GEOD-30352?geneQuery=R-HSA-69278%09R-HSA-162582&serializedFilterFactors=ORGANISM%3AHomo+sapiens"));
+        assertThat(subject.getGeneLink(3), endsWith("/experiments/E-GEOD-30352?geneQuery=R-HSA-69278%09R-HSA-162582&serializedFilterFactors=ORGANISM%3AHomo%20sapiens"));
         assertThat(subject.getGeneLink(4), endsWith("/experiments/E-PROT-1?geneQuery=R-HSA-69278%09R-HSA-162582&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Aadult"));
         assertThat(subject.getGeneLink(5), endsWith("/experiments/E-PROT-1?geneQuery=R-HSA-69278%09R-HSA-162582&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Afetus"));
     }
@@ -62,6 +62,6 @@ public class BioentitiesSearchControllerGeneQuery2GeneSetsMultipleExperimentResu
     public void hiddenBaselineResults() {
         assertThat(subject.getVisibleBaselineResultsWithoutSpecies(), hasSize(10));
         subject.clickMoreBaselineResults();
-        assertThat(subject.getVisibleBaselineResultsWithoutSpecies(), hasSize(20));
+        assertThat(subject.getVisibleBaselineResultsWithoutSpecies(), hasSize(131));
     }
 }
