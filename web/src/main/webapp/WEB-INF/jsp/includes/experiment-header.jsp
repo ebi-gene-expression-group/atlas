@@ -73,6 +73,16 @@
                         </td>
                     </c:if>
 
+                    <%--@elvariable id="hierarchicalClusteringPdfViewHelper" type="uk.ac.ebi.atlas.experimentpage.HierarchicalClusteringPdfViewHelper"--%>
+                    <c:if test="${experiment.multiOrganismExperiment ? hierarchicalClusteringPdfViewHelper.hasPdf(experimentAccession, species) : hierarchicalClusteringPdfViewHelper.hasSingleSpeciesPdf(experimentAccession)}" >
+                        <td>
+                            <a id="clustering-pdf" class="gxaButtonImage" title="Explore hierarchical clustering between experimental conditions and the top 100 most variable genes in the experiment"
+                               href="${pageContext.request.contextPath}${experiment.multiOrganismExperiment ? hierarchicalClusteringPdfViewHelper.generateUrl(experimentAccession, species) : hierarchicalClusteringPdfViewHelper.generateSingleSpeciesUrl(experimentAccession)}${accessKeyQueryString}">
+                                <img src="${pageContext.request.contextPath}/resources/images/cluster_button.png"/>
+                            </a>
+                        </td>
+                    </c:if>
+
                     <!-- download-r button section -->
                     <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
                     <c:if test="${type.differential}">
