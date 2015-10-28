@@ -7,7 +7,7 @@
             </PatternLayout>
         </Console>
 
-        <RollingRandomAccessFile name="DailyRollingFile" fileName="${sys:catalina.base}/logs/atlas.log" filePattern="${sys:catalina.base}/logs/atlas-%d{yyyy-MM-dd-HH}.log">
+        <RollingRandomAccessFile name="DailyRollingFile" fileName="${sys:catalina.base}/logs/atlas.log" filePattern="${sys:catalina.base}/logs/atlas-%d{yyyy-MM-dd}.log">
             <PatternLayout>
                 <Pattern>%d %-5p [%t] %C{2} (%F:%L) - %m%n</Pattern>
             </PatternLayout>
