@@ -362,7 +362,7 @@ var Heatmap = React.createClass({
                                           renderExpressionCells={true}/>
                     </table>
                     <div ref="stickyIntersect" className="gxaStickyTableIntersect">
-                        <table>
+                        <table className="gxaTableGrid">
                             <HeatmapTableHeader isMicroarray={this.isMicroarray()}
                                                 radioId="intersect"
                                                 hasQuartiles={this.hasQuartiles()}
@@ -382,7 +382,7 @@ var Heatmap = React.createClass({
                         </table>
                     </div>
                     <div ref="stickyColumn" className="gxaStickyTableColumn">
-                        <table>
+                        <table className="gxaTableGrid">
                             <HeatmapTableHeader isMicroarray={this.isMicroarray()}
                                                 radioId="column"
                                                 hasQuartiles={this.hasQuartiles()}
@@ -414,7 +414,7 @@ var Heatmap = React.createClass({
                         </table>
                     </div>
                     <div ref="stickyHeader" className="gxaStickyTableHeader">
-                        <table>
+                        <table className="gxaTableGrid">
                             <HeatmapTableHeader isMicroarray={this.isMicroarray()}
                                                 radioId="header"
                                                 hasQuartiles={this.hasQuartiles()}
