@@ -175,7 +175,7 @@
     <div id="content" class="grid_24">
 
         <div id="atlas-content">
-            <tiles:insertAttribute name="menu" ignore="true"/>
+            <tiles:insertAttribute name="experiment-header" ignore="true"/>
             <tiles:insertAttribute name="body"/>
         </div>
 

@@ -73,17 +73,6 @@
                         </td>
                     </c:if>
 
-                    <%--@elvariable id="fastQReportUtil" type="uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil"--%>
-                    <c:set var="hasFastQcReport" value="${fastQReportUtil.hasFastQC(experimentAccession, species)}"/>
-                    <c:if test="${hasFastQcReport && qcArrayDesigns==null}" >
-                        <td>
-                            <a id="display-fastqc-report" class="gxaButtonImage" title="Quality Metrics Report"
-                               href="${pageContext.request.contextPath}/experiments/${experimentAccession}/fastqc/${species}/qc.html${accessKeyQueryString}">
-                                <img src="${pageContext.request.contextPath}/resources/images/qc_v15.png"/>
-                            </a>
-                        </td>
-                    </c:if>
-
                     <!-- download-r button section -->
                     <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
                     <c:if test="${type.differential}">
