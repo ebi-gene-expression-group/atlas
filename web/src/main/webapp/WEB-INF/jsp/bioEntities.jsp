@@ -321,6 +321,7 @@
         <c:set var="defaultPanelIndex" value="${hasBaselineResults ? 0 : (not empty bioentities ? 1 : false)}"/>
     </c:otherwise>
 </c:choose>
+<c:set var="initialPanelIndex" value="${defaultPanelIndex}"/>
 
 <%-- hide expand/collapse icons when accordion sections don't have enough results --%>
 <c:set var="hideIcons" value="${(showBioentityPropertiesPane && !hasBaselineResults && empty bioentities) || (!showBioentityPropertiesPane && !(hasBaselineResult && not empty bioentities))}"/>
@@ -340,7 +341,7 @@
         var $accordion = $("#accordion");
         $accordion.accordion({
             collapsible: true,
-            active: 1,
+            active: ${initialPanelIndex},
             heightStyle: "content",
             icons: ${hideIcons ? "{ 'header': 'ui-icon-blank'}" : "{ 'header': 'gxaBioEntityCardIconPlus', 'activeHeader': 'gxaBioEntityCardIconMinus' }"},
             header: "ul",
