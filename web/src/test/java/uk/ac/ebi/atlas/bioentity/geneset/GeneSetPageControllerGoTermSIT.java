@@ -62,13 +62,13 @@ public class GeneSetPageControllerGoTermSIT extends SinglePageSeleniumFixture {
     @Test
     public void baselineResults() {
         subject.clickBaselinePane();
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("47 results"));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("158 results"));
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
-        assertThat(baselineCounts, hasSize(47));
+        assertThat(baselineCounts, hasSize(158));
 
         List<String> accessions = extract(baselineCounts, on(BaselineBioEntitiesSearchResult.class).getExperimentAccession());
-        assertThat(accessions, hasItems("E-GEOD-30352", "E-PROT-1"));
+        assertThat(accessions, hasItems("E-GEOD-30352", "E-PROT-1", "dummy-E-MTAB-2706"));
     }
 
     @Test

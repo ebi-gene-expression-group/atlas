@@ -269,7 +269,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public WebElement getDisplayLevelsButton() {
-        return SeleniumUtil.findElementByCssWaitingUntilAvailable(driver, "#display-levels");
+        return SeleniumUtil.findElementByCssWaitingUntilAvailable(driver, "#heatmap-table button");
     }
 
     public void clickDisplayLevelsButton() {

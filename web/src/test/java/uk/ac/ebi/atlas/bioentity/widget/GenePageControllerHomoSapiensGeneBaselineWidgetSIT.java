@@ -66,7 +66,7 @@ public class GenePageControllerHomoSapiensGeneBaselineWidgetSIT extends SinglePa
 
         assertThat(subject.getGeneNames().size(), is(3));
         assertThat(subject.getGeneNames(), contains("Twenty seven tissues","Illumina Body Map","Vertebrate tissues"));
-        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSG00000163331&serializedFilterFactors=ORGANISM%3AHomo+sapiens"));
+        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSG00000163331&serializedFilterFactors=ORGANISM%3AHomo%20sapiens"));
         assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=ENSG00000163331"));
         assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-513?geneQuery=ENSG00000163331"));
         assertThat(subject.hasAnatomogram(), is(true));

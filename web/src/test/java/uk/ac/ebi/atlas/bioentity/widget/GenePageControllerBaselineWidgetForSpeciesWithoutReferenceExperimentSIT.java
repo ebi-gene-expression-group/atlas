@@ -51,7 +51,7 @@ public class GenePageControllerBaselineWidgetForSpeciesWithoutReferenceExperimen
 
         assertThat(subject.getGeneNames().size(), is(1));
         assertThat(subject.getGeneNames(), contains("Vertebrate tissues"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSGGOG00000005112&serializedFilterFactors=ORGANISM%3AGorilla+gorilla"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSGGOG00000005112&serializedFilterFactors=ORGANISM%3AGorilla%20gorilla"));
 
     }
 

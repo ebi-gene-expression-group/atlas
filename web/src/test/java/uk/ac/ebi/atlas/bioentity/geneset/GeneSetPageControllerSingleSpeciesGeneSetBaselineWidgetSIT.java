@@ -68,7 +68,7 @@ public class GeneSetPageControllerSingleSpeciesGeneSetBaselineWidgetSIT extends 
         assertThat(subject.getGeneNames(), contains("Thirty two tissues", "Twenty seven tissues", "Vertebrate tissues", "Human Proteome Map - adult"));
         assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-2836?geneQuery=R-HSA-73887"));
         assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-1733?geneQuery=R-HSA-73887"));
-        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-GEOD-30352?geneQuery=R-HSA-73887&serializedFilterFactors=ORGANISM%3AHomo+sapiens"));
+        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-GEOD-30352?geneQuery=R-HSA-73887&serializedFilterFactors=ORGANISM%3AHomo%20sapiens"));
         assertThat(subject.getGeneLink(3), endsWith("/experiments/E-PROT-1?geneQuery=R-HSA-73887&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Aadult"));
     }
 }

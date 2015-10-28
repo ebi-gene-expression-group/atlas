@@ -78,10 +78,10 @@ public class GeneSetPageControllerPrivateExperimentSIT extends SinglePageSeleniu
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results found"));
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
-        assertThat(baselineCounts, hasSize(20));
+        assertThat(baselineCounts, hasSize(131));
 
         List<String> accessions = extract(baselineCounts, on(BaselineBioEntitiesSearchResult.class).getExperimentAccession());
-        assertThat(accessions, hasItems("E-GEOD-26284", "E-MTAB-2980"));
+        assertThat(accessions, hasItems("E-GEOD-26284", "E-MTAB-2980", "dummy-E-MTAB-2706"));
         // TODO Uncomment when https://www.pivotaltracker.com/story/show/101118548 is done
         //assertThat(accessions, not(hasItem("E-MTAB-1733")));
     }

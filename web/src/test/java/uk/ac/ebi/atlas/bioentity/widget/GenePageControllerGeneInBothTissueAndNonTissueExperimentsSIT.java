@@ -42,19 +42,19 @@ public class GenePageControllerGeneInBothTissueAndNonTissueExperimentsSIT extend
     public void baselineResults() {
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResultsWithoutSpecies();
 
-        assertThat(baselineCounts, hasSize(20));
+        assertThat(baselineCounts, hasSize(131));
 
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-GEOD-26284"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("ENCODE cell lines - long non-polyA RNA, cytosol"));
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("dummy-E-MTAB-2706"));
+        assertThat(baselineCounts.get(0).getExperimentName(), is("Cell Lines - 675 Genentech - B-cell lymphoma, blood"));
         assertThat(baselineCounts.get(0).getSpecies(), is(nullValue()));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("/experiments/E-GEOD-26284?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=&geneQuery=ENSG00000005194&exactMatch=true&serializedFilterFactors=RNA:long%20non-polyA%20RNA,CELLULAR_COMPONENT:cytosol"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("/experiments/dummy-E-MTAB-2706?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=&geneQuery=ENSG00000005194&exactMatch=true&serializedFilterFactors=DISEASE:B-cell%20lymphoma,ORGANISM_PART:blood"));
     }
 
     @Test
     public void hiddenBaselineResults() {
         assertThat(subject.getVisibleBaselineResultsWithoutSpecies(), hasSize(10));
         subject.clickMoreBaselineResults();
-        assertThat(subject.getVisibleBaselineResultsWithoutSpecies(), hasSize(20));
+        assertThat(subject.getVisibleBaselineResultsWithoutSpecies(), hasSize(131));
     }
 
 }
