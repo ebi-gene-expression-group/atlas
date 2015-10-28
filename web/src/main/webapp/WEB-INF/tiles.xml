@@ -27,8 +27,8 @@
 <tiles-definitions>
     <definition name="base.definition" template="/WEB-INF/jsp/layout.jsp">
         <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="header" value="/WEB-INF/jsp/layout/header.jsp"/>
-        <put-attribute name="experiment-header" value="/WEB-INF/jsp/includes/experiment-header.jsp"/>
+        <put-attribute name="top-menu" value="/WEB-INF/jsp/layout/top-menu.jsp"/>
+        <put-attribute name="header" value="/WEB-INF/jsp/includes/experiment-header.jsp"/>
         <put-attribute name="body" value=""/>
         <put-attribute name="footer" value="/WEB-INF/jsp/layout/footer.jsp"/>
     </definition>
@@ -50,82 +50,82 @@
 
     <definition name="experiments" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/experiments.jsp"/>
     </definition>
 
     <definition name="home" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/home.jsp"/>
     </definition>
 
     <definition name="baseline-experiments" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/baseline-experiments.jsp"/>
     </definition>
 
     <definition name="plant-experiments" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/plant-experiments.jsp"/>
     </definition>
 
     <definition name="bioEntities" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/bioEntities.jsp"/>
     </definition>
 
     <definition name="search-results-baseline" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/analyticsIndex/search-results-baseline.jsp"/>
     </definition>
 
     <definition name="search-results-differential" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/analyticsIndex/search-results-differential.jsp"/>
     </definition>
 
     <definition name="search-gene-information" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/analyticsIndex/search-gene-information.jsp"/>
     </definition>
 
     <definition name="new-bioentities" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas > Gene information"/>
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/new-bioentities/new-bioentities.jsp"/>
     </definition>
 
     <!-- error pages -->
     <definition name="error-page" extends="base.definition">
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/error-page.jsp"/>
     </definition>
 
     <definition name="experiment-notFound-page" extends="base.definition">
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/experiment-notFound-page.jsp"/>
     </definition>
 
     <definition name="query-error-page" extends="base.definition">
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/query-error-page.jsp"/>
     </definition>
 
     <definition name="search-error" extends="base.definition">
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/search-error.jsp"/>
     </definition>
 
     <!-- static pages, eg: about, help -->
     <definition name="static-template" extends="base.definition">
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="header" value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/static-template.jsp"/>
     </definition>
 

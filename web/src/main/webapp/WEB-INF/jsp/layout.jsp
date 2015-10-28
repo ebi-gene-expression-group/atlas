@@ -170,12 +170,12 @@
 
 <div id="wrapper" class="container_24">
 
-    <tiles:insertAttribute name="header"/>
+    <tiles:insertAttribute name="top-menu"/>
 
     <div id="content" class="grid_24">
 
         <div id="atlas-content">
-            <tiles:insertAttribute name="experiment-header" ignore="true"/>
+            <tiles:insertAttribute name="header" ignore="true"/>
             <tiles:insertAttribute name="body"/>
         </div>
 

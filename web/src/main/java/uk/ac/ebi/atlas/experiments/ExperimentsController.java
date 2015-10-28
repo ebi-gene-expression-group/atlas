@@ -16,7 +16,7 @@ public class ExperimentsController {
 
     @RequestMapping(value = "/experiments", method = RequestMethod.GET, produces = "application/json")
     public String getExperimentsListParameters(
-            @RequestParam(value = "type", required = false) String experimentType,
+            @RequestParam(value = "experimentType", required = false) String experimentType,
             @RequestParam(value = "kingdom", required = false) String kingdom,
             @RequestParam(value = "organism", required = false) String organism,
             Model model) {

@@ -10,7 +10,7 @@
 
     <div id="helpContentTooltip" style='display:none'></div>
 
-    <div style="display: inline-block;">
+    <div style="display: inline-block; max-width: 950px">
         <%@ include file="experiment-description.jsp" %>
     </div>
 

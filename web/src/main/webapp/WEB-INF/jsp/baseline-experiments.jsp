@@ -38,96 +38,96 @@
     </div>
     <!-- /Simple page header -->
 
-    <c:forEach items="${experimentAccessionsBySpecies.keySet()}" var="specie">
+    <c:forEach items="${experimentAccessionsBySpecies.keySet()}" var="species">
 
         <div class="grid_8 specie_item">
 
             <c:choose>
-                <c:when test="${specie == 'Anolis carolinensis'}">
+                <c:when test="${species == 'Anolis carolinensis'}">
                     <c:set var="speciesIconCode" value="7"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Arabidopsis thaliana'}">
+                <c:when test="${species == 'Arabidopsis thaliana'}">
                     <c:set var="speciesIconCode" value="B"/>
                     <c:set var="speciesColorCode" value="green"/>
                 </c:when>
-                <c:when test="${specie == 'Bos taurus'}">
+                <c:when test="${species == 'Bos taurus'}">
                     <c:set var="speciesIconCode" value="C"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Caenorhabditis elegans'}">
+                <c:when test="${species == 'Caenorhabditis elegans'}">
                     <c:set var="speciesIconCode" value="W"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Gallus gallus'}">
+                <c:when test="${species == 'Gallus gallus'}">
                     <c:set var="speciesIconCode" value="k"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Gorilla gorilla'}">
+                <c:when test="${species == 'Gorilla gorilla'}">
                     <c:set var="speciesIconCode" value="G"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Homo sapiens'}">
+                <c:when test="${species == 'Homo sapiens'}">
                     <c:set var="speciesIconCode" value="H"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Hordeum vulgare subsp. vulgare'}">
+                <c:when test="${species == 'Hordeum vulgare subsp. vulgare'}">
                     <c:set var="speciesIconCode" value="5"/>
                     <c:set var="speciesColorCode" value="green"/>
                 </c:when>
-                <c:when test="${specie == 'Macaca mulatta'}">
+                <c:when test="${species == 'Macaca mulatta'}">
                     <c:set var="speciesIconCode" value="r"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Monodelphis domestica'}">
+                <c:when test="${species == 'Monodelphis domestica'}">
                     <c:set var="speciesIconCode" value="9"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Mus musculus'}">
+                <c:when test="${species == 'Mus musculus'}">
                     <c:set var="speciesIconCode" value="M"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Mus musculus'}">
+                <c:when test="${species == 'Mus musculus'}">
                     <c:set var="speciesIconCode" value="M"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Oryctolagus cuniculus'}">
+                <c:when test="${species == 'Oryctolagus cuniculus'}">
                     <c:set var="speciesIconCode" value="t"/>
 					<c:set var="speciesColorCode" value="red" />
                 </c:when>
-                <c:when test="${specie == 'Oryza sativa Japonica Group'}">
+                <c:when test="${species == 'Oryza sativa Japonica Group'}">
                     <c:set var="speciesIconCode" value="6"/>
                     <c:set var="speciesColorCode" value="green"/>
                 </c:when>
-                <c:when test="${specie == 'Pan paniscus'}">
+                <c:when test="${species == 'Pan paniscus'}">
                     <c:set var="speciesIconCode" value="i"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Pan troglodytes'}">
+                <c:when test="${species == 'Pan troglodytes'}">
                     <c:set var="speciesIconCode" value="i"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Papio anubis'}">
+                <c:when test="${species == 'Papio anubis'}">
                     <c:set var="speciesIconCode" value="8"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Pongo pygmaeus'}">
+                <c:when test="${species == 'Pongo pygmaeus'}">
                     <c:set var="speciesIconCode" value=""/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Rattus norvegicus'}">
+                <c:when test="${species == 'Rattus norvegicus'}">
                     <c:set var="speciesIconCode" value="R"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Tetraodon nigroviridis'}">
+                <c:when test="${species == 'Tetraodon nigroviridis'}">
                     <c:set var="speciesIconCode" value="E"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${specie == 'Zea mays'}">
+                <c:when test="${species == 'Zea mays'}">
                     <c:set var="speciesIconCode" value="5"/>
 					<c:set var="speciesColorCode" value="green" />
                 </c:when>
-                <c:when test="${specie == 'Xenopus (Silurana) tropicalis'}">
+                <c:when test="${species == 'Xenopus (Silurana) tropicalis'}">
                     <c:set var="speciesIconCode" value="f"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
@@ -137,11 +137,11 @@
                 </c:otherwise>
             </c:choose>
 
-            <h3>${specie}</h3>
+            <h3>${species}</h3>
             <span class="icon icon-species ${speciesColorCode}" data-icon="${speciesIconCode}"></span>
             <ul style="list-style:none;padding-left:0; margin-left:0;">
-                <c:forEach items="${experimentAccessionsBySpecies.get(specie)}" begin="0" end="20" var="experimentAccession">
-                    <c:set var="key" value="${experimentAccession}${specie}"/>
+                <c:forEach items="${experimentAccessionsBySpecies.get(species)}" begin="0" end="20" var="experimentAccession">
+                    <c:set var="key" value="${experimentAccession}${species}"/>
                     <li>
                         <a href="experiments/${experimentAccession}${experimentLinks.get(key)}" style="color:#337ab7; border-bottom: none;">
                                 ${experimentDisplayNames.get(experimentAccession)}</a>
