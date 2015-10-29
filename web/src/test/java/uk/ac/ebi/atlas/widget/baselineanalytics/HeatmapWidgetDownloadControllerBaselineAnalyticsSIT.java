@@ -20,7 +20,7 @@ public class HeatmapWidgetDownloadControllerBaselineAnalyticsSIT extends RestAss
 
         response.then().assertThat().body(containsString("# Query: Experiments with expression for ENSG00000163331 exactly, given the False Discovery Rate cutoff: 0.05"));
         response.then().assertThat().body(containsString("Twenty seven tissues"));
-        response.then().assertThat().body(containsString("Illumina Body Map"));
+        response.then().assertThat().body(containsString("Vertebrate tissues"));
     }
 
     @Test
@@ -32,8 +32,8 @@ public class HeatmapWidgetDownloadControllerBaselineAnalyticsSIT extends RestAss
         response.then().assertThat().header("Content-Disposition", containsString("attachment; filename=\"blood_baseline.tsv\""));
 
         response.then().assertThat().body(containsString("# Query: Experiments with expression for blood exactly, given the False Discovery Rate cutoff: 0.05"));
+        response.then().assertThat().body(containsString("Thirty two tissues"));
         response.then().assertThat().body(containsString("Twenty seven tissues"));
-        response.then().assertThat().body(containsString("Illumina Body Map"));
     }
 
     @Test
