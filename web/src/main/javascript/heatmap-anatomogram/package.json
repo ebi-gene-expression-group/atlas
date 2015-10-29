@@ -27,7 +27,6 @@
     "number-format": "file:../number-format",
     "react": "^0.12.2",
     "react-radio-group": "^1.1.0",
-    "throttle-debounce": "^0.1.1",
     "urijs": "^1.16.0",
     "wolfy87-eventemitter": "^4.2.11"
   },

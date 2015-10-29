@@ -358,6 +358,9 @@
                 if(emptyPanel(ui.newPanel) && !collapsingCurrentlyOpenPanel(ui) ) {
                     event.preventDefault();
                 }
+            },
+            activate: function(event, ui) {
+                $(window).resize();
             }
         });
         $accordion.accordion("option", "active", openPanelIndex)

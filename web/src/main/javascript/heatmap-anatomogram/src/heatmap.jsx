@@ -13,7 +13,6 @@ require('../css/jquery-ui.min.css');
 
 require('jquery.browser');
 require('fancybox')($);
-var td = require('throttle-debounce');
 
 require('../lib/jquery.hc-sticky.js');
 require('../lib/jquery.toolbar.js');
@@ -256,10 +255,10 @@ var Heatmap = React.createClass({
         $t.parent('.gxaStickyTableWrap').scroll(repositionSticky);
         $w
             .load(setWidths)
-            .resize(td.debounce(settings.resizeThrottle, function () {
+            .resize(function () {
                 setWidths();
                 repositionSticky();
-            }))
+            })
             .scroll(repositionSticky);
 
         $(this.refs.countAndLegend.getDOMNode()).hcSticky({bottomEnd: calcAllowance()});
@@ -909,7 +908,7 @@ var TopLeftCorner = React.createClass({
                                   selectedRadioButton={this.props.selectedRadioButton}
                                   toggleRadioButton={this.props.toggleRadioButton}/>
             );
-        } else if (this.props.type.isBaseline) {
+        } else if (this.props.type.isBaseline || this.props.type.isMultiExperiment) {
             return (
                     <DisplayLevelsButton autoSize={true}
                                          hideText='Hide levels'
