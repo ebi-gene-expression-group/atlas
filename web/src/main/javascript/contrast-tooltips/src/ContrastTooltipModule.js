@@ -12,12 +12,11 @@ require('../css/jquery-ui.min.css');
 
 //*------------------------------------------------------------------*
 
-var ContrastTooltip = require('./contrast-tooltip.jsx');
+var ContrastTooltip = require('./ContrastTooltip.jsx');
 
 //*------------------------------------------------------------------*
 
-require('../css/atlas.css');
-require('../css/heatmap-and-anatomogram.css');
+require('../css/contrast-tooltips.css');
 
 //*------------------------------------------------------------------*
 
@@ -29,7 +28,7 @@ function initTooltip(contextRoot, accessKey, element, experimentAccession, contr
 
         show: false,
 
-        tooltipClass: "gxaHelpTooltip gxaPvalueTooltipStyling gxaContrastTooltip",
+        tooltipClass: "gxaContrastTooltip",
 
         close: function() {
             $(".gxaContrastTooltip").remove();

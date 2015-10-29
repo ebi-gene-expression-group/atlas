@@ -12,6 +12,7 @@
   "dependencies": {
     "heatmap-anatomogram": "file:../heatmap-anatomogram",
     "display-levels-button": "file:../display-levels-button",
+    "contrast-tooltips": "file:../contrast-tooltips",
     "legend": "file:../legend",
     "cell-differential": "file:../cell-differential",
     "jquery": "^2.1.4",

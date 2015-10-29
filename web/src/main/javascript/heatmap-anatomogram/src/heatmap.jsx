@@ -29,10 +29,10 @@ var CellDifferential = require('cell-differential');
 var DisplayLevelsButton = require('display-levels-button');
 var NumberFormat = require('number-format');
 var HelpTooltips = require('help-tooltips');
+var ContrastTooltips = require('contrast-tooltips');
 
 var genePropertiesTooltipModule = require('./gene-properties-tooltip-module.js');
 var factorTooltipModule = require('./factor-tooltip-module.js');
-var contrastTooltipModule = require('./contrast-tooltip-module.js');
 
 //*------------------------------------------------------------------*
 
@@ -802,7 +802,7 @@ var ContrastHeader = React.createClass({
     },
 
     componentDidMount: function () {
-        contrastTooltipModule.init(this.props.heatmapConfig.atlasBaseURL, this.props.heatmapConfig.accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
+        ContrastTooltips.init(this.props.heatmapConfig.atlasBaseURL, this.props.heatmapConfig.accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
 
         if (this.showPlotsButton()) {
             this.renderToolBarContent(this.refs.plotsToolBarContent.getDOMNode());

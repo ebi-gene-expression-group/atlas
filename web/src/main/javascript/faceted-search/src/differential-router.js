@@ -162,7 +162,10 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
             success: function(response) {
                 var diffResultsData = $.parseJSON(response["results"]);
                 React.render(
-                    React.createElement(DifferentialResults, {results: diffResultsData.results, maxDownLevel: diffResultsData.maxDownLevel, minDownLevel: diffResultsData.minDownLevel, minUpLevel: diffResultsData.minUpLevel, maxUpLevel: diffResultsData.maxUpLevel}),
+                    React.createElement(
+                        DifferentialResults,
+                        {results: diffResultsData.results, maxDownLevel: diffResultsData.maxDownLevel, minDownLevel: diffResultsData.minDownLevel, minUpLevel: diffResultsData.minUpLevel, maxUpLevel: diffResultsData.maxUpLevel}
+                    ),
                     resultsElement
                 );
             },

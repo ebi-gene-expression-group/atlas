@@ -12,6 +12,10 @@ var CellDifferential = require('cell-differential');
 
 //*------------------------------------------------------------------*
 
+var ContrastTooltips = require('contrast-tooltips');
+
+//*------------------------------------------------------------------*
+
 require('../css/differential-results.css');
 
 //*------------------------------------------------------------------*
@@ -88,7 +92,7 @@ var DifferentialResults = React.createClass({
             return <DifferentialResultRow
                 key={diffResult.id}
                 colour={diffResult.colour} foldChange={diffResult.foldChange} species={diffResult.species} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
-                contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession} displayLevels={this.state.displayLevels}
+                contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession} displayLevels={this.state.displayLevels} atlasBaseURL={"/gxa"}
             />;
         }.bind(this));
 
@@ -134,7 +138,8 @@ var DifferentialResultRow = React.createClass({
         experimentName: React.PropTypes.string.isRequired,
         contrastId: React.PropTypes.string.isRequired,
         experimentAccession: React.PropTypes.string.isRequired,
-        displayLevels: React.PropTypes.bool.isRequired
+        displayLevels: React.PropTypes.bool.isRequired,
+        atlasBaseURL: React.PropTypes.string.isRequired
     },
 
     // TODO Use this.props.contrastId and this.props.experimentAccession to add link to the relevant experiment/comparison
@@ -199,11 +204,15 @@ var DifferentialResultRow = React.createClass({
             <tr>
                 <CellDifferential colour={this.props.colour} infinity={this.props.infinity} foldChange={this.props.foldChange} displayLevels={this.props.displayLevels}/>
                 <td className="col_species"><span className={"icon icon-species " + classColor} data-icon={classIcon} style={{color: 'red'}} title={this.props.species}></span></td>
-                <td><a href="#">{this.props.comparison}</a></td>
+                <td ref="comparison"><a href="#">{this.props.comparison}</a></td>
                 <td className="gxaColOrganismPart">organism part</td>
                 <td>{this.props.experimentName}</td>
             </tr>
         );
+    },
+
+    componentDidMount: function () {
+        ContrastTooltips.init(this.props.atlasBaseURL, "", this.refs.comparison.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
     }
 });
 

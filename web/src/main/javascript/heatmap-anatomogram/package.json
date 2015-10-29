@@ -16,6 +16,7 @@
     "display-levels-button": "file:../display-levels-button",
     "fancybox": "^3.0.0",
     "heatmap-baseline-cell-variance": "file:../heatmap-baseline-cell-variance",
+    "contrast-tooltips": "file:../contrast-tooltips",
     "help-tooltips": "file:../help-tooltips",
     "jquery": "^2.1.4",
     "jquery-highlight": "^3.2.2",

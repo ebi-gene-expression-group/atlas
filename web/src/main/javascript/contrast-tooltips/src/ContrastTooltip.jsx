@@ -42,15 +42,9 @@ var ContrastTooltip = React.createClass({
                 <table className="gxaTableGrid" style={{padding: '0px', margin: '0px', width: '100%'}}>
                     <thead>
                         <tr>
-                            <th className='gxaHeaderCell'>
-                            Property
-                            </th>
-                            <th className='gxaHeaderCell'>
-                            Test value (N={this.props.testReplicates})
-                            </th>
-                            <th className='gxaHeaderCell'>
-                            Reference value (N={this.props.referenceReplicates})
-                            </th>
+                            <th className='gxaHeaderCell'>Property</th>
+                            <th className='gxaHeaderCell'>Test value (N={this.props.testReplicates})</th>
+                            <th className='gxaHeaderCell'>Reference value (N={this.props.referenceReplicates})</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -1,14 +1,3 @@
-.gxaHelpTooltip {
-    background: #fafafa;
-    border: 1px solid #2777A5 !important;
-    padding: 4px;
-    max-width: 400px !important;
-    color: #2777A5;
-    border-radius: 4px;
-    font: 10px Verdana, Helvetica, Arial, sans-serif;
-    box-shadow: 0 0 7px gray;
-}
-
 /* JQuery UI overrides: start */
 .ui-tooltip {
     background: #FAFAFA;
@@ -36,7 +25,6 @@
 .fancybox-close {
     border: 0 !important;
 }
-
 /* JQuery UI overrides: end */
 
 .gxaThickLink {
@@ -86,16 +74,6 @@ div.gxaDoubleClickNoSelection {
     div#wrapper {
         min-height: 450px;
     }
-}
-
-/* help tooltip */
-a.help-icon {
-    color: rgb(255, 82, 0) !important;
-    vertical-align: top;
-    font-size: 10px !important;
-    font-weight: bold !important;
-    font-family: Verdana, Helvetica, Arial, sans-serif !important;
-    background: rgba(250, 250, 202, 0.28);
 }
 
 a.ext, a.ext:link {
