@@ -106,9 +106,6 @@ var HeatmapAnatomogramContainer = React.createClass({
                                      anatomogramEventEmitter={anatomogramEventEmitter} />
                         </div>
 
-                        {/* TODO Remove and use help-tooltips package */}
-                        <div id="help-placeholder" style={{display: "none"}}></div>
-
                     </div>
 
                     { this.props.isWidget ?

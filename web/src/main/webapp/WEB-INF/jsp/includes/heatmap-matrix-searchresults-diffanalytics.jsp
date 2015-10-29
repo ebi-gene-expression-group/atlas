@@ -33,6 +33,8 @@
 
 <c:set var="showMultiGeneColumns" value="${!singleGeneDiffHeatmap}" />
 
+<div id="help-placeholder" style="display: none"></div>
+
 <table id="diff-heatmap-table" class="gxaTableGrid">
     <thead>
 
@@ -140,4 +142,6 @@
             $("#heatmap-table th").attr("rowspan", "1");
         });
     })(jQuery, heatmapModuleDeprecated, contrastTooltipModule);
+
+    helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 </script>

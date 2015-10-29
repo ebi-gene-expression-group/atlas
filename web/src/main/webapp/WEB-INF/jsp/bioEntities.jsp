@@ -302,8 +302,6 @@
 
 <br/>
 
-<div id="help-placeholder" style="display: none"></div>
-
 <c:if test="${showWidget}">
 
     <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor.bundle.js"></script>
@@ -327,10 +325,21 @@
 <c:set var="hideIcons" value="${(showBioentityPropertiesPane && !hasBaselineResults && empty bioentities) || (!showBioentityPropertiesPane && !(hasBaselineResult && not empty bioentities))}"/>
 <%-- Assemble the full query information for SEO --%>
 <c:set var="fullQueryDescription" value="${fn:replace(searchDescription,'&quot;','')} ${entityNamesList} ${species}"/>
+
 <script>
+    <c:if test="${showWidget}">
+    var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
+    var heatmapBuilder = window.exposed;
+    heatmapBuilder({
+        atlasHost: '${pageContext.request.serverName}:${pageContext.request.serverPort}',
+        params: 'geneQuery=${geneQuery.asUrlQueryParameter()}' + widgetParameters,
+        isMultiExperiment: true,
+        target: "widgetBody",
+        isWidget: false
+    });
+    </c:if>
 
-    window.onload = function (fullSearchDescription) {
-
+    $(document).ready(function() {
         var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : defaultPanelIndex};
 
         $('head').append('<meta name="description" content="Baseline and differential expression for ${he.encode(fullQueryDescription)}" />');
@@ -345,7 +354,7 @@
             heightStyle: "content",
             icons: ${hideIcons ? "{ 'header': 'ui-icon-blank'}" : "{ 'header': 'gxaBioEntityCardIconPlus', 'activeHeader': 'gxaBioEntityCardIconMinus' }"},
             header: "ul",
-            beforeActivate: function( event, ui ) {
+            beforeActivate: function(event, ui) {
                 // prevent empty panel from being opened
                 function emptyPanel(panel) {
                     return $.trim($(panel).html()).length == 0;
@@ -359,52 +368,33 @@
                     event.preventDefault();
                 }
             },
-            activate: function(event, ui) {
+            activate: function() {
                 $(window).resize();
             }
         });
-        $accordion.accordion("option", "active", openPanelIndex)
-
-        helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
-
-        <c:if test="${showWidget}"><%--@elvariable id="geneQuery" type="uk.ac.ebi.atlas.web.GeneQuery"--%>
-
-        var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
-
-
-        var heatmapBuilder = window.exposed;
-        heatmapBuilder({
-            atlasHost: '${pageContext.request.serverName}:${pageContext.request.serverPort}',
-            params: 'geneQuery=${geneQuery.asUrlQueryParameter()}' + widgetParameters,
-            isMultiExperiment: true,
-            target: "widgetBody",
-            isWidget: false
-        });
-
-        </c:if>
-
+        $accordion.accordion("option", "active", openPanelIndex);
 
         (function addClickEventsToExpandAndCollapseGoAndPoTermNames() {
             $.each(
-                    ["go", "po"],
-                    function (i, val) {
-                        $('#' + val + 'MoreLinks').click(function () {
-                            $('#' + val + 'MoreLinks').hide();
-                            $('#' + val + 'RelevantLinks').hide();
-                            $('#' + val + 'AllLinks').show();
-                            $('#' + val + 'LessLinks').show();
-                            return false;
-                        });
-                        $('#' + val + 'LessLinks').click(function () {
-                            $('#' + val + 'LessLinks').hide();
-                            $('#' + val + 'AllLinks').hide();
-                            $('#' + val + 'RelevantLinks').show();
-                            $('#' + val + 'MoreLinks').show();
-                            return false;
-                        });
+                ["go", "po"],
+                function (i, val) {
+                    $('#' + val + 'MoreLinks').click(function () {
+                        $('#' + val + 'MoreLinks').hide();
+                        $('#' + val + 'RelevantLinks').hide();
+                        $('#' + val + 'AllLinks').show();
+                        $('#' + val + 'LessLinks').show();
+                        return false;
                     });
+                    $('#' + val + 'LessLinks').click(function () {
+                        $('#' + val + 'LessLinks').hide();
+                        $('#' + val + 'AllLinks').hide();
+                        $('#' + val + 'RelevantLinks').show();
+                        $('#' + val + 'MoreLinks').show();
+                        return false;
+                    });
+                });
         })();
-    }
+    });
 </script>
 
 </c:otherwise>
