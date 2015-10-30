@@ -41,6 +41,7 @@
 <script>
 
     var ie9 = $.browser.msie && $.browser.version < 10;
+    var $w = $(window);
 
     var hasBaselineResults = ${hasBaselineResults},
         hasDifferentialResults = ${hasDifferentialResults};
@@ -54,6 +55,7 @@
     });
     $baselineTabLink.click(function() {
         window.location.hash = "#baseline";
+        $w.resize();
     });
     $differentialTabLink.click(function() {
         window.location.hash = "#differential";
