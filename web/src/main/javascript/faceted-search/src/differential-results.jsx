@@ -91,7 +91,7 @@ var DifferentialResults = React.createClass({
         var differentialResultRows = this.props.results.map(function (diffResult) {
             return <DifferentialResultRow
                 key={diffResult.id}
-                colour={diffResult.colour} foldChange={diffResult.foldChange} species={diffResult.species} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
+                bioentityIdentifier={diffResult.bioentityIdentifier} colour={diffResult.colour} foldChange={diffResult.foldChange} species={diffResult.species} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
                 contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession} displayLevels={this.state.displayLevels} atlasBaseURL={"/gxa"}
             />;
         }.bind(this));
@@ -131,6 +131,7 @@ var DifferentialResults = React.createClass({
 
 var DifferentialResultRow = React.createClass({
     propTypes: {
+        bioentityIdentifier: React.PropTypes.string.isRequired,
         foldChange: React.PropTypes.string.isRequired,
         colour: React.PropTypes.string.isRequired,
         species: React.PropTypes.string.isRequired,
@@ -196,6 +197,8 @@ var DifferentialResultRow = React.createClass({
             classIcon="5";
         } else if (this.props.species === "xenopus (silurana) tropicalis") {
             classIcon="f";
+        } else if (this.props.species === "xenopus tropicalis") {
+            classIcon="f";
         } else if (this.props.species === "drosophila melanogaster") {
             classIcon="F";
         } else {classIcon="";}
@@ -204,9 +207,9 @@ var DifferentialResultRow = React.createClass({
             <tr>
                 <CellDifferential colour={this.props.colour} infinity={this.props.infinity} foldChange={this.props.foldChange} displayLevels={this.props.displayLevels}/>
                 <td className="col_species"><span className={"icon icon-species " + classColor} data-icon={classIcon} style={{color: 'red'}} title={this.props.species}></span></td>
-                <td ref="comparison"><a href="#">{this.props.comparison}</a></td>
+                <td ref="comparison"><a href={"experiments/" + this.props.experimentAccession + "?geneQuery=" + this.props.bioentityIdentifier + "&queryFactorValues=" + this.props.contrastId + "&_specific=on"}>{this.props.comparison}</a></td>
                 <td className="gxaColOrganismPart">organism part</td>
-                <td>{this.props.experimentName}</td>
+                <td><a href={"experiments/" + this.props.experimentAccession}>{this.props.experimentName}</a></td>
             </tr>
         );
     },
