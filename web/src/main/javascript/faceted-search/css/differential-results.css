@@ -1,11 +1,11 @@
 table.table-striped tr:nth-child(even) {background-color: #f9f9f9;}
 table.table-striped tr:nth-child(odd) {background: #FFF;}
 
-table.atlasDifferentialFacetedSearchResults th, table.atlasDifferentialFacetedSearchResults th span {
+table.gxaDifferentialFacetedSearchResults th, table.gxaDifferentialFacetedSearchResults th span {
     font-weight: bold;
 }
 
-table.atlasDifferentialFacetedSearchResults th {
+table.gxaDifferentialFacetedSearchResults th {
     font-size: 90%;
     border-top: 0px #ddd solid;
     border-left: 0px #ddd solid;
@@ -14,17 +14,17 @@ table.atlasDifferentialFacetedSearchResults th {
     vertical-align: bottom;
 }
 
-table.atlasDifferentialFacetedSearchResults tr td {
+table.gxaDifferentialFacetedSearchResults tr td {
     padding: 8px;
     line-height: 1.42857143;
     vertical-align: top;
     border-top: 1px solid #ddd
 }
 
-table.atlasDifferentialFacetedSearchResults tr td.col_species span.icon-species {  font-size: 300%; margin-left: 4px;}
-table.atlasDifferentialFacetedSearchResults tr td.col_species span.icon-species.red:before {color:#d9534f;} /*animal*/
-table.atlasDifferentialFacetedSearchResults tr td.col_species span.icon-species.green:before {color:#5cb85c;}/*plants*/
-table.atlasDifferentialFacetedSearchResults tr td.col_species span.icon-species.blue:before {color:#5bc0de;}/*other*/
+table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species {  font-size: 300%; margin-left: 4px;}
+table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.red:before {color:#d9534f;} /*animal*/
+table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.green:before {color:#5cb85c;}/*plants*/
+table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.blue:before {color:#5bc0de;}/*other*/
 
 td.gxaColOrganismPart {
     text-align: center;

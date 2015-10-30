@@ -57,7 +57,7 @@ var FacetsTree = React.createClass({
         }.bind(this));
 
         return (
-            <div className="hidden-xs atlasFacetedSearchFacetsContainer"><h3>Filter your results</h3>
+            <div className="hidden-xs gxaFacetedSearchFacetsContainer"><h3>Filter your results</h3>
                 {facets}
             </div>
         );
@@ -93,10 +93,12 @@ var Facet = React.createClass({
 
         }.bind(this));
 
+        var className = this.props.facetName === "species" ? "gxaSpeciesFacet" : "";
+
         return (
-            <div className="atlasFacetedSearchFacetItem">
+            <div className="gxaFacetedSearchFacetItem">
                 <h4>{this.props.facetName}</h4>
-                <ul >
+                <ul className={className}>
                     {facetItems}
                 </ul>
             </div>

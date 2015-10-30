@@ -109,7 +109,7 @@ var DifferentialResults = React.createClass({
                         displayLevels={this.state.displayLevels}/>
                 </div>
 
-                <table className="table-striped atlasDifferentialFacetedSearchResults">
+                <table className="table-striped gxaDifferentialFacetedSearchResults">
                     <thead>
                         <tr>
                             <th>Log<sub>2</sub>-fold change</th>
