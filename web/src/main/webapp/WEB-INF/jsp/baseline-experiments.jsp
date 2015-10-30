@@ -131,8 +131,16 @@
                     <c:set var="speciesIconCode" value="f"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
+                <c:when test="${species == 'Xenopus tropicalis'}">
+                    <c:set var="speciesIconCode" value="f"/>
+                    <c:set var="speciesColorCode" value="red"/>
+                </c:when>
+                <c:when test="${species == 'Sorghum bicolor'}">
+                    <c:set var="speciesIconCode" value="P"/>
+                    <c:set var="speciesColorCode" value="green"/>
+                </c:when>
                 <c:otherwise>
-                    <c:set var="speciesIconCode" value="X"/>
+                    <c:set var="speciesIconCode" value="×"/>
 					<c:set var="speciesColorCode" value="grey" />
                 </c:otherwise>
             </c:choose>
