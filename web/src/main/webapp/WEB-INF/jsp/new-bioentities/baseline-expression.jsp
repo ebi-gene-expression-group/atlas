@@ -14,10 +14,13 @@
 </div>
 
 <script>
+    var selectedSpecies = "${hasSelectedSpecies ? selectedSpecies : ''}";
+
     <c:if test="${hasBaselineResults}">
     var baselineSearcher = window.exposed.baseline,
         baselineFacetsData = ${empty jsonFacets ? 'null' : jsonFacets};
-    baselineSearcher("atlasBaselineFacetedSearchFacetsContainer", "atlasBaselineFacetedSearchResultsContainer", baselineFacetsData);
+
+    baselineSearcher("atlasBaselineFacetedSearchFacetsContainer", "atlasBaselineFacetedSearchResultsContainer", selectedSpecies, baselineFacetsData);
     </c:if>
 </script>
 

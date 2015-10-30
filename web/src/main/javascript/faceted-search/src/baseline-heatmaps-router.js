@@ -16,7 +16,7 @@ var Heatmaps = require('./baseline-heatmaps.jsx');
 
 //*------------------------------------------------------------------*
 
-module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeData, atlasHost) {
+module.exports = function (facetsContainerId, heatmapsContainerId, selectedSpecies, facetsTreeData, atlasHost) {
 
     var ie9 = $.browser.msie && $.browser.version < 10;
     !ie9 && window.addEventListener('popstate', backButtonListener, false);
@@ -25,19 +25,35 @@ module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeDat
         heatmapsElement = document.getElementById(heatmapsContainerId),
         host = atlasHost ? atlasHost : window.location.host;
 
-    var query = {};
+    var query = {
+        geneQuery : "",
+        select    : {}
+    };
+    query.select = {};
+    query.geneQuery = "";
 
-    parseCurrentURLToQueryObject();
+    parseGeneQueryFromLocation();
+    if (selectedSpecies && facetsTreeData.hasOwnProperty(selectedSpecies)) {
+        var selectedSpeciesFactors = facetsTreeData[selectedSpecies];
+        for(var selectedSpeciesFactor in selectedSpeciesFactors) {
+            if (selectedSpeciesFactors.hasOwnProperty(selectedSpeciesFactor)) {
+                addSelection(query.select, selectedSpecies, selectedSpeciesFactors[selectedSpeciesFactor].name);
+            }
+        }
+    } else {
+        parseSelectedFacetsFromLocation();
+    }
     pushQueryIntoBrowserHistory(true);
     renderQueryPage();
 
     function backButtonListener() {
-        parseCurrentURLToQueryObject();
+        parseGeneQueryFromLocation();
+        parseSelectedFacetsFromLocation();
         renderQueryPage();
     }
 
 
-    function parseCurrentURLToQueryObject() {
+    function parseGeneQueryFromLocation() {
         var currentURL = new URI(window.location);
 
         // TODO Change to segment(1) when /new/ is removed
@@ -46,6 +62,10 @@ module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeDat
         } else {  // if (currentURL.segment(1) === "search") {
             query.geneQuery = currentURL.search(true)["geneQuery"];
         }
+    }
+
+    function parseSelectedFacetsFromLocation() {
+        var currentURL = new URI(window.location);
         var selectString = currentURL.search(true)["bs"];
 
         if (!selectString) {
@@ -54,8 +74,6 @@ module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeDat
             query.select = JSON.parse(selectString);
         }
     }
-
-
 
     function renderQueryPage() {
         React.render(
@@ -78,7 +96,6 @@ module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeDat
     }
 
     function initializeQuerySelect() {
-        query.select = {};
 
         for (var facet in facetsTreeData) {
             if (facetsTreeData.hasOwnProperty(facet)) {
@@ -92,6 +109,7 @@ module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeDat
 
             }
         }
+
     }
 
     function setChecked(checked, species, factor) {

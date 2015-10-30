@@ -15,6 +15,7 @@
 .atlasFacetedSearchFacetsContainer .atlasFacetedSearchFacetItem {padding:0 0 9px 0;}
 .atlasFacetedSearchFacetsContainer .atlasFacetedSearchFacetItem ul li span {display:inline-block;/*IMPORTANT TO KEEP FOR SPAN make first-letter work*/ }
 .atlasFacetedSearchFacetsContainer .atlasFacetedSearchFacetItem ul li span:first-letter  {text-transform: capitalize;}
-.atlasFacetedSearchFacetsContainer .atlasFacetedSearchFacetItem:nth-child(3) ul li span {font-style: italic;} /*target species facet*/
-.atlasFacetedSearchFacetsContainer .atlasFacetedSearchFacetItem h4 {font-weight: bold;font-size: 144%;text-transform: capitalize; padding-left:0;  margin-bottom: 9px;}
+/*.atlasFacetedSearchFacetsContainer .atlasFacetedSearchFacetItem:nth-child(3) ul li span {font-style: italic;} /!*target species facet*!/*/
+.atlasFacetedSearchFacetsContainer .atlasFacetedSearchFacetItem h4 {font-weight: bold;font-size: 144%; padding-left:0;  margin-bottom: 9px;}
+.atlasFacetedSearchFacetsContainer .atlasFacetedSearchFacetItem h4:first-letter {text-transform: capitalize;}
 .atlasFacetedSearchFacetsContainer ul li  {padding:1px 0; }

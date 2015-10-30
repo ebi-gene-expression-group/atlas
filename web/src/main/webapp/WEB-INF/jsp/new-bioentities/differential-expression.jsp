@@ -14,11 +14,13 @@
 </div>
 
 <script>
+    var selectedSpecies = "${hasSelectedSpecies ? selectedSpecies : ''}";
+
     <c:if test="${hasDifferentialResults}">
     var differentialSearcher = window.exposed.differential,
         differentialFacetsData = ${empty jsonDifferentialGeneQueryFacets ? 'null' : jsonDifferentialGeneQueryFacets};
 
-    differentialSearcher("atlasDifferentialFacetedSearchFacetsContainer", "atlasDifferentialFacetedSearchResultsContainer", differentialFacetsData);
+    differentialSearcher("atlasDifferentialFacetedSearchFacetsContainer", "atlasDifferentialFacetedSearchResultsContainer", selectedSpecies, differentialFacetsData);
     </c:if>
 </script>
 

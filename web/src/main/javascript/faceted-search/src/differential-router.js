@@ -16,7 +16,7 @@ var DifferentialResults = require('./differential-results.jsx');
 
 //*------------------------------------------------------------------*
 
-module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData, atlasHost) {
+module.exports = function (facetsContainerId, resultsContainerId, selectedSpecies, facetsTreeData, atlasHost) {
 
     var ie9 = $.browser.msie && $.browser.version < 10;
     !ie9 && window.addEventListener('popstate', backButtonListener, false);
@@ -25,18 +25,33 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
         resultsElement = document.getElementById(resultsContainerId),
         host = atlasHost ? atlasHost : window.location.host;
 
-    var query = {};
+    var query = {
+        geneQuery : "",
+        select    : {}
+    };
 
-    parseCurrentURLToQueryObject();
+    parseGeneQueryFromLocation();
+    debugger;
+    if (selectedSpecies) {
+        for (var i = 0 ; i < facetsTreeData["species"].length ; i++) {
+            if (facetsTreeData["species"][i]["name"] === selectedSpecies) {
+                addSelection(query.select, "species", selectedSpecies);
+            }
+        }
+    }
+    if (Object.keys(query.select).length === 0) {
+        parseSelectedFacetsFromLocation();
+    }
     pushQueryIntoBrowserHistory(true);
     renderQueryPage();
 
     function backButtonListener() {
-        parseCurrentURLToQueryObject();
+        parseGeneQueryFromLocation();
+        parseSelectedFacetsFromLocation();
         renderQueryPage();
     }
 
-    function parseCurrentURLToQueryObject() {
+    function parseGeneQueryFromLocation() {
         var currentURL = new URI(window.location);
 
         // TODO Change to segment(1) when /new/ is removed
@@ -45,10 +60,12 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
         } else {  // if (currentURL.segment(1) === "search") {
             query.geneQuery = currentURL.search(true)["geneQuery"];
         }
+    }
 
+    function parseSelectedFacetsFromLocation() {
+        var currentURL = new URI(window.location);
         var selectString = currentURL.search(true)["ds"];
         query.select = selectString ? JSON.parse(selectString) : {};
-
     }
 
     function renderQueryPage() {
@@ -62,7 +79,7 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
 
     function setChecked(checked, facet, facetItem) {
         if (checked) {
-            addSelection(query.select, facet, facetItem)
+            addSelection(query.select, facet, facetItem);
         } else {
             removeSelection(query.select, facet, facetItem);
         }
@@ -126,17 +143,17 @@ module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData
                 for (var key in items) {
                     if (items.hasOwnProperty(key)) {
                         var value = items[key];
-                        if (facets == "species" && value == true) {
+                        if (facets === "species" && value === true) {
                             species.push(key);
-                        } else if (facets == "factors" && value == true) {
+                        } else if (facets === "factors" && value === true) {
                             factors.push(key);
-                        } else if (facets == "Experiment type" && value == true) {
+                        } else if (facets === "experiment type" && value === true) {
                             experimentType.push(key);
-                        } else if (facets == "kingdom" && value == true) {
+                        } else if (facets === "kingdom" && value === true) {
                             kingdom.push(key);
-                        } else if (facets == "Number of replicates" && value == true) {
+                        } else if (facets === "number of replicates" && value === true) {
                             numReplicates.push(key);
-                        } else if (facets == "regulation" && value == true) {
+                        } else if (facets === "regulation" && value === true) {
                             regulation = key;
                         }
                     }

@@ -13,7 +13,7 @@
 <c:if test="${isSearch}">
 <section>
     <h2 class="strapline">
-        Results for <span class="searchterm">${searchDescription}</span>
+        Results for <span class="searchterm">${searchDescription}</span> for ${selectedSpecies}
     </h2>
 </section>
 </c:if>

@@ -106,15 +106,12 @@ public class DifferentialAnalyticsFacetsReader {
 
         for (String facetField : FACET_FIELDS) {
             JsonArray facet = new JsonArray();
-            String fField="";
             for (Object facetFieldValue : (List<Object>) jsonReadContext.read("$.." + facetField + "..val")) {
                 JsonObject facetItem = new JsonObject();
                 facetItem.addProperty("name", facetFieldValue.toString());
                 if(facetField.equals("experimentType")) {
-                    facetItem.addProperty("value", ExperimentsTypeMapConverter.getType(facetFieldValue.toString()));
-                    fField = "Experiment type";
+                    facetItem.addProperty("value", ExperimentsTypeMapConverter.get(facetFieldValue.toString()));
                 } else if(facetField.equals("numReplicates")) {
-                    fField = "Number of replicates";
                     facetItem.addProperty("value", facetFieldValue.toString());
                 } else if(facetField.equals("regulation")) {
                     facetItem.addProperty("value", facetFieldValue.toString().toLowerCase());
@@ -124,12 +121,7 @@ public class DifferentialAnalyticsFacetsReader {
                 }
                 facet.add(facetItem);
             }
-
-            if(!fField.isEmpty()) {
-                facets.add(fField, facet);
-            } else {
-                facets.add(facetField, facet);
-            }
+            facets.add(FacetFieldMapConverter.get(facetField), facet);
         }
 
         return facets.toString();
@@ -147,11 +139,33 @@ public class DifferentialAnalyticsFacetsReader {
                 .put("microarray_2colour_mrna_differential", "microarray 2-colour mRNA differential")
                 .build();
 
-        public static String getType(String type) {
+        public static String get(String type) {
             if(EXPERIMENTS_TYPE_MAP.get(type) != null) {
                 return EXPERIMENTS_TYPE_MAP.get(type);
             } else {
                 LOGGER.warn(String.format("Experiment type not found %s", type));
+                return type;
+            }
+        }
+    }
+
+    protected static class FacetFieldMapConverter {
+        private static final Logger LOGGER = LogManager.getLogger(FacetFieldMapConverter.class);
+
+        private static final Map<String,String> FACET_FIELDS_MAP = ImmutableMap.<String, String>builder()
+                .put("kingdom", "kingdom")
+                .put("species", "species")
+                .put("experimentType", "experiment type")
+                .put("factors", "factors")
+                .put("numReplicates", "number of replicates")
+                .put("regulation", "regulation")
+                .build();
+
+        public static String get(String type) {
+            if(FACET_FIELDS_MAP.get(type) != null) {
+                return FACET_FIELDS_MAP.get(type);
+            } else {
+                LOGGER.warn(String.format("Facet field not found %s", type));
                 return type;
             }
         }

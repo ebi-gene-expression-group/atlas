@@ -93,6 +93,14 @@ public abstract class NewBioentityPageController {
 
         model.addAttribute("hasBaselineResults", ExperimentType.containsBaseline(experimentTypes));
 
+        if (model.containsAttribute("searchDescription")) {
+            model.addAttribute("isSearch", true);
+        }
+
+        if (model.containsAttribute("selectedSpecies")) {
+            model.addAttribute("hasSelectedSpecies", true);
+        }
+
         model.addAttribute("identifier", identifier);
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 
