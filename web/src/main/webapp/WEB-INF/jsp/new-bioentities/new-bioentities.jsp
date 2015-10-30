@@ -10,15 +10,23 @@
 <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor.bundle.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js-bundles/faceted-search.bundle.js"></script>
 
+<c:if test="${isSearch}">
+<section>
+    <h2 class="strapline">
+        Results for <span class="searchterm">${searchDescription}</span>
+    </h2>
+</section>
+</c:if>
+
 <!-- Simple page header -->
-<div class="gxaBioentityHeader">
+<section class="gxaBioentityHeader">
     <p class="gxaBioentityName">${bioEntityPropertyService.getEntityName()}</p>
     <p class="gxaBioentitySpecies">${bioEntityPropertyService.getSpecies()}</p>
     <p class="gxaBioentityDescription">${bioEntityPropertyService.getBioEntityDescription()}</p>
-</div>
+</section>
 <!-- /Simple page header -->
 
-<section class="grid_24">
+<section>
 
     <ul class="nav nav-tabs" role="tablist">
         <c:if test="${hasBaselineResults}"><li title="Baseline experiments" role="presentation"><a href="new/genes/${identifier}#baseline" data-toggle="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
@@ -41,7 +49,7 @@
 <script>
 
     var ie9 = $.browser.msie && $.browser.version < 10;
-    var $w = $(window);
+    var resizeEvent = new UIEvent("resize");
 
     var hasBaselineResults = ${hasBaselineResults},
         hasDifferentialResults = ${hasDifferentialResults};
@@ -55,7 +63,7 @@
     });
     $baselineTabLink.click(function() {
         window.location.hash = "#baseline";
-        $w.resize();
+        window.dispatchEvent(resizeEvent);
     });
     $differentialTabLink.click(function() {
         window.location.hash = "#differential";

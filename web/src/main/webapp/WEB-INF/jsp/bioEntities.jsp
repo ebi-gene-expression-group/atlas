@@ -347,6 +347,7 @@
         $("#bioentity-info-image").tooltip();
         $("#differential-info-image").tooltip();
 
+        var resizeEvent = new UIEvent("resize");
         var $accordion = $("#accordion");
         $accordion.accordion({
             collapsible: true,
@@ -369,7 +370,7 @@
                 }
             },
             activate: function() {
-                $(window).resize();
+                window.dispatchEvent(resizeEvent);
             }
         });
         $accordion.accordion("option", "active", openPanelIndex);
