@@ -291,19 +291,75 @@ public class ExperimentalFactors implements Serializable {
         return result;
     }
 
-    public SortedMap<String, List<Factor>> getHeadersComplementAssayGroupFactors(final Set<Factor> filterFactors) {
-        SortedMap<String, List<Factor>> result = new TreeMap<>();
+    public Map<String, List<Factor>> getHeadersComplementAssayGroupFactors(final Factor filterFactor) {
+        Map<String, List<Factor>> result;
+        if(!factorsByType.isEmpty()) {
+            result = new TreeMap<>();
+        } else {
+            result = Maps.newLinkedHashMap();
+        }
 
         for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
             List<Factor> remainingFactors;
 
-            if (CollectionUtils.isNotEmpty(filterFactors)) {
-                remainingFactors = orderedFactorGroupsByAssayGroupId.get(groupId).remove(filterFactors);
+            if (filterFactor != null) {
+                remainingFactors = orderedFactorGroupsByAssayGroupId.get(groupId).remove(filterFactor);
             } else {
                 remainingFactors = Lists.newArrayList(orderedFactorGroupsByAssayGroupId.get(groupId).iterator());
             }
             if (remainingFactors.size() == 2) {
                 result.put(groupId, remainingFactors);
+            }
+        }
+
+        return result;
+    }
+
+    public Set<ImmutableSet<Factor>> getAllMultiHeaderFactors(List<String> headerFactorTypes) {
+        Map<Factor, Set<Factor>> result;
+        Multimap <String, Factor> factorsByType;
+        if(!getFactorsByType().isEmpty()) {
+            result = new TreeMap<>();
+            factorsByType = getFactorsByType();
+        } else {
+            result = new LinkedHashMap<>();
+            factorsByType = getXmlFactorsByType();
+        }
+
+        for(Factor headerFactor : factorsByType.get(headerFactorTypes.get(0))) {
+
+            Map<String, List<Factor>> subHeaderAssayGroupFactors = getHeadersComplementAssayGroupFactors(headerFactor);
+
+            SortedSet<Factor> subHeaderFactors = new TreeSet<>();
+            for (Factor subHeaderFactor : factorsByType.get(headerFactorTypes.get(1))) {
+
+                for(Map.Entry<String, List<Factor>> entry : subHeaderAssayGroupFactors.entrySet()) {
+
+                    for (Factor factor : entry.getValue()) {
+                        if (factor.getValue().equals(subHeaderFactor.getValue())) {
+                            subHeaderFactors.add(factor);
+                        }
+                    }
+                }
+            }
+
+            result.put(headerFactor, subHeaderFactors);
+        }
+
+        return createPairSetOfMultiHeaderFactors(result);
+    }
+
+    private Set<ImmutableSet<Factor>> createPairSetOfMultiHeaderFactors (Map<Factor, Set<Factor>> multiHeaderFactors) {
+        Set<ImmutableSet<Factor>> result = Sets.newLinkedHashSet();
+
+        for(Map.Entry<Factor, Set<Factor>> entry : multiHeaderFactors.entrySet()) {
+            Factor header = entry.getKey();
+            Set<Factor> subHeaders = entry.getValue();
+            for (Factor factor : subHeaders) {
+                ImmutableSet.Builder<Factor> builder = ImmutableSet.builder();
+                builder.add(header);
+                builder.add(factor);
+                result.add(builder.build());
             }
         }
 

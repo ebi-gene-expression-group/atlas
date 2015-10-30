@@ -22,8 +22,12 @@
 
 package uk.ac.ebi.atlas.experimentpage.context;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
@@ -89,15 +93,30 @@ public class BaselineRequestContextBuilder {
         }
         requestContext.setSelectedQueryFactors(queryFactors);
 
-        if(experiment.getExperimentalFactors().getAllFactorsOrderedByXML() != null &&
-                !experiment.getExperimentalFactors().getAllFactorsOrderedByXML().isEmpty()) {
-            Set<Factor> allQueryFactors = experiment.getExperimentalFactors().getComplementFactorsByXML(selectedFilterFactors);
-            checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
+        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
+        if (CollectionUtils.isNotEmpty(experimentalFactors.getHeaderFactorTypes())) {
+            Set<ImmutableSet<Factor>> allMultiHeaderFactors = experimentalFactors.getAllMultiHeaderFactors(experimentalFactors.getHeaderFactorTypes());
+            requestContext.setAllMultiHeaderFactors(allMultiHeaderFactors);
+
+            Set<Factor> allQueryFactors = Sets.newLinkedHashSet();
+            for (ImmutableSet<Factor> filterFactors : allMultiHeaderFactors) {
+                Set<Factor> factorsSet = experimentalFactors.getComplementFactors(filterFactors);
+                allQueryFactors.addAll(factorsSet);
+            }
             requestContext.setAllQueryFactors(allQueryFactors);
-        } else {
-            SortedSet<Factor> allQueryFactors = experiment.getExperimentalFactors().getComplementFactors(selectedFilterFactors);
-            checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
-            requestContext.setAllQueryFactors(allQueryFactors);
+        }
+
+        if(CollectionUtils.isNotEmpty(selectedFilterFactors)) {
+            if (experimentalFactors.getXmlFactorsByType() != null &&
+                    !experimentalFactors.getXmlFactorsByType().isEmpty()) {
+                Set<Factor> allQueryFactors = experimentalFactors.getComplementFactorsByXML(selectedFilterFactors);
+                checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
+                requestContext.setAllQueryFactors(allQueryFactors);
+            } else {
+                SortedSet<Factor> allQueryFactors = experimentalFactors.getComplementFactors(selectedFilterFactors);
+                checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
+                requestContext.setAllQueryFactors(allQueryFactors);
+            }
         }
 
         return requestContext;

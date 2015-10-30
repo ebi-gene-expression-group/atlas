@@ -131,7 +131,13 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                                                                 AssayGroups assayGroups, String[] orderedAssayGroupIds) {
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
         Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
-        Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
+        List<String> headerFactorsType = factorsConfig.getFactorTypes();
+        Set<String> requiredFactorTypes;
+        if(!defaultFilterFactors.isEmpty()) {
+            requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
+        } else {
+            requiredFactorTypes = getRequiredHeaderFactorTypes(defaultQueryFactorType, headerFactorsType);
+        }
         Map<String, String> factorNamesByType = getFactorDisplayNameByType(experimentDesign.getFactorHeaders(), requiredFactorTypes);
 
         List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(orderedAssayGroupIds, assayGroups, experimentDesign);
@@ -179,6 +185,17 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         for (Factor defaultFilterFactor : defaultFilterFactors) {
             requiredFactorTypes.add(defaultFilterFactor.getType());
+        }
+        return requiredFactorTypes;
+    }
+
+    Set<String> getRequiredHeaderFactorTypes(String defaultQueryFactorType, List<String> headerFactorsType) {
+        Set<String> requiredFactorTypes = Sets.newHashSet(defaultQueryFactorType);
+
+        for (String headerFactor : headerFactorsType) {
+            if(!headerFactor.equals(defaultQueryFactorType)) {
+                requiredFactorTypes.add(headerFactor);
+            }
         }
         return requiredFactorTypes;
     }

@@ -22,16 +22,7 @@
   -->
 
 <factors-definition>
-    <defaultFilterFactors>
-        <filterFactor>
-            <type>ORGANISM_PART</type>
-            <value>brain</value>
-        </filterFactor>
-        <filterFactor>
-            <type>DISEASE</type>
-            <value>glioma</value>
-        </filterFactor>
-    </defaultFilterFactors>
+    <defaultFilterFactors/>
     <defaultQueryFactorType>CELL_LINE</defaultQueryFactorType>
     <menuFilterFactorTypes>ORGANISM_PART, DISEASE, CELL_LINE</menuFilterFactorTypes>
     <factorTypes>ORGANISM_PART, DISEASE, CELL_LINE</factorTypes>

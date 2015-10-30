@@ -143,6 +143,14 @@ public class FactorSet implements FactorGroup {
         return allFactors;
     }
 
+    public List<Factor> remove(Factor factor) {
+        ArrayList<Factor> allFactors = Lists.newArrayList(factorsByType.values());
+
+        allFactors.remove(factor);
+
+        return allFactors;
+    }
+
     @Override
     public FactorSet removeType(String factorType) {
         HashMap<String, Factor> factorsByTypeClone = new HashMap<>(factorsByType);

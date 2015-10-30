@@ -41,6 +41,8 @@ public interface FactorGroup extends Iterable<Factor>, Comparable<FactorGroup> {
 
     List<Factor> remove(Collection<Factor> factors);
 
+    List<Factor> remove(Factor factor);
+
     boolean contains(Factor factor);
 
     FactorGroup removeType(String factorType);

@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -31,7 +32,9 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Named;
+import java.util.LinkedHashMap;
 import java.util.Set;
+import java.util.SortedMap;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -42,6 +45,8 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
     private BaselineExperiment experiment;
 
     private Set<Factor> selectedFilterFactors;
+
+    private Set<ImmutableSet<Factor>> allMultiHeaderFactors;
 
     public BaselineRequestContext() {
     }
@@ -67,6 +72,14 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
 
     void setSelectedFilterFactors(Set<Factor> selectedFilterFactors) {
         this.selectedFilterFactors = selectedFilterFactors;
+    }
+
+    public Set<ImmutableSet<Factor>> getAllMultiHeaderFactors() {
+        return allMultiHeaderFactors;
+    }
+
+    public void setAllMultiHeaderFactors(Set<ImmutableSet<Factor>> allMultiHeaderFactors) {
+        this.allMultiHeaderFactors = allMultiHeaderFactors;
     }
 
     void setExperiment(BaselineExperiment experiment) {

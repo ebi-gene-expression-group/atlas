@@ -9,7 +9,9 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Set;
+import java.util.SortedMap;
 
 /*
  * This will load baseline profiles in the same way as when baseline profiles are loaded
@@ -22,6 +24,7 @@ public class BaselineProfileStreamOptionsWidgetQuery implements BaselineProfileS
     private final BaselineExperiment baselineExperiment;
     private final Set<Factor> selectedFilterFactors;
     private final Set<String> geneIDs;
+    private Set<ImmutableSet<Factor>> allMultiHeaderFactors;
 
     public BaselineProfileStreamOptionsWidgetQuery(BaselineExperiment baselineExperiment, String species, Set<String> geneIDs) {
         this.baselineExperiment = baselineExperiment;
@@ -48,6 +51,15 @@ public class BaselineProfileStreamOptionsWidgetQuery implements BaselineProfileS
     @Override
     public Set<Factor> getAllQueryFactors() {
         return baselineExperiment.getExperimentalFactors().getComplementFactors(selectedFilterFactors);
+    }
+
+    @Override
+    public Set<ImmutableSet<Factor>> getAllMultiHeaderFactors() {
+        return allMultiHeaderFactors;
+    }
+
+    public void setAllMultiHeaderFactors(Set<ImmutableSet<Factor>> allMultiHeaderFactors) {
+        this.allMultiHeaderFactors = allMultiHeaderFactors;
     }
 
     @Override

@@ -1,10 +1,13 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
+import java.util.LinkedHashMap;
 import java.util.Set;
+import java.util.SortedMap;
 
 public class BaselineProfileStreamOptionsWrapperAsGeneSets implements BaselineProfileStreamOptions {
 
@@ -32,6 +35,11 @@ public class BaselineProfileStreamOptionsWrapperAsGeneSets implements BaselinePr
     @Override
     public Set<Factor> getAllQueryFactors() {
         return context.getAllQueryFactors();
+    }
+
+    @Override
+    public Set<ImmutableSet<Factor>> getAllMultiHeaderFactors() {
+        return context.getAllMultiHeaderFactors();
     }
 
     @Override

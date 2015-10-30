@@ -27,6 +27,7 @@ import com.esotericsoftware.kryo.KryoSerializable;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.atlas.model.Expression;
 
@@ -146,6 +147,11 @@ public class BaselineExpression implements Expression, KryoSerializable {
 
     public boolean containsAll(Set<Factor> factors) {
         return factorGroup.containsAll(factors);
+    }
+
+    public boolean containsAllMultiheaderFactors(Set<ImmutableSet<Factor>> allMultiHeaderFactors) {
+        return true;
+
     }
 
     static String removeTrailingZero(double value) {
