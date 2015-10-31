@@ -68,6 +68,7 @@ var DifferentialResults = React.createClass({
             foldChange: React.PropTypes.string.isRequired,     // a string, a formatted value, to be able to work with Infinity values and rounding
             colour: React.PropTypes.string.isRequired,
             regulation: React.PropTypes.string.isRequired,
+            factors: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
             id: React.PropTypes.string.isRequired
         })).isRequired,
         maxDownLevel: React.PropTypes.string.isRequired,
@@ -92,7 +93,7 @@ var DifferentialResults = React.createClass({
             return <DifferentialResultRow
                 key={diffResult.id}
                 bioentityIdentifier={diffResult.bioentityIdentifier} colour={diffResult.colour} foldChange={diffResult.foldChange} species={diffResult.species} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
-                contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession} displayLevels={this.state.displayLevels} atlasBaseURL={"/gxa"}
+                factors={diffResult.factors} contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession} displayLevels={this.state.displayLevels} atlasBaseURL={"/gxa"}
             />;
         }.bind(this));
 
@@ -136,6 +137,7 @@ var DifferentialResultRow = React.createClass({
         colour: React.PropTypes.string.isRequired,
         species: React.PropTypes.string.isRequired,
         comparison: React.PropTypes.string.isRequired,
+        factors: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         experimentName: React.PropTypes.string.isRequired,
         contrastId: React.PropTypes.string.isRequired,
         experimentAccession: React.PropTypes.string.isRequired,
@@ -208,7 +210,7 @@ var DifferentialResultRow = React.createClass({
                 <CellDifferential colour={this.props.colour} infinity={this.props.infinity} foldChange={this.props.foldChange} displayLevels={this.props.displayLevels}/>
                 <td className="col_species"><span className={"icon icon-species " + classColor} data-icon={classIcon} style={{color: 'red'}} title={this.props.species}></span></td>
                 <td ref="comparison"><a href={"experiments/" + this.props.experimentAccession + "?geneQuery=" + this.props.bioentityIdentifier + "&queryFactorValues=" + this.props.contrastId + "&_specific=on"}>{this.props.comparison}</a></td>
-                <td className="gxaColOrganismPart">organism part</td>
+                <td className="gxaExperimentalVariable">{this.props.factors.toString().replace(/,/g, ", ")}</td>
                 <td><a href={"experiments/" + this.props.experimentAccession}>{this.props.experimentName}</a></td>
             </tr>
         );

@@ -26,6 +26,6 @@ table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.re
 table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.green:before {color:#5cb85c;}/*plants*/
 table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.blue:before {color:#5bc0de;}/*other*/
 
-td.gxaColOrganismPart {
+td.gxaExperimentalVariables {
     text-align: center;
 }
