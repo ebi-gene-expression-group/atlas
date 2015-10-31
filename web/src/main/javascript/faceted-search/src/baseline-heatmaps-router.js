@@ -80,7 +80,8 @@ module.exports = function (facetsContainerId, heatmapsContainerId, selectedSpeci
             React.createElement(FacetsTree, {
                 facets: facetsTreeData,
                 checkedFacets: query.select,
-                setChecked: setChecked
+                setChecked: setChecked,
+                isDifferential: false
             }),
             facetsElement
         );

@@ -31,7 +31,7 @@ module.exports = function (facetsContainerId, resultsContainerId, selectedSpecie
     };
 
     parseGeneQueryFromLocation();
-    debugger;
+    preselectSingleFacetItems();
     if (selectedSpecies) {
         for (var i = 0 ; i < facetsTreeData["species"].length ; i++) {
             if (facetsTreeData["species"][i]["name"] === selectedSpecies) {
@@ -68,9 +68,22 @@ module.exports = function (facetsContainerId, resultsContainerId, selectedSpecie
         query.select = selectString ? JSON.parse(selectString) : {};
     }
 
+    function preselectSingleFacetItems() {
+        for (var facet in facetsTreeData) {
+            if (facetsTreeData[facet].length === 1) {
+                addSelection(query.select, facet, facetsTreeData[facet][0]["name"]);
+            }
+        }
+    }
+
     function renderQueryPage() {
         React.render(
-            React.createElement(FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked}),
+            React.createElement(
+                FacetsTree,
+                {facets: facetsTreeData,
+                 checkedFacets: query.select,
+                 setChecked: setChecked,
+                 isDifferential: true}),
             facetsElement
         );
 

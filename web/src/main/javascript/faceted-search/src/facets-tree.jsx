@@ -40,8 +40,8 @@ var FacetsTree = React.createClass({
          { "homo sapiens" : { "CELL_LINE": true, "ORGANISM_PART": true } }
          */
         checkedFacets: React.PropTypes.object,
-
-        setChecked: React.PropTypes.func.isRequired
+        setChecked: React.PropTypes.func.isRequired,
+        isDifferential: React.PropTypes.bool.isRequired
     },
 
     _setChecked: function (checked, facet, facetItem) {
@@ -52,7 +52,7 @@ var FacetsTree = React.createClass({
         var facets = Object.keys(this.props.facets).map(function (facet) {
             return <Facet key={facet} facetName={facet} facetItems={this.props.facets[facet]}
                 checkedFacetItems={this.props.checkedFacets && this.props.checkedFacets[facet]}
-                setChecked={this._setChecked}
+                setChecked={this._setChecked} isDifferential={this.props.isDifferential}
             />;
         }.bind(this));
 
@@ -76,7 +76,7 @@ var Facet = React.createClass({
 
         // eg: { "rnaseq_mrna_differential": true, "microarray_1colour_mrna_differential": true }
         checkedFacetItems: React.PropTypes.object,
-
+        isDifferential: React.PropTypes.bool.isRequired,
         setChecked: React.PropTypes.func.isRequired
     },
 
@@ -85,10 +85,11 @@ var Facet = React.createClass({
     },
 
     render: function () {
+        var disabled = this.props.isDifferential && this.props.facetItems.length === 1;
         var facetItems = this.props.facetItems.map(function (facetItem) {
             return <FacetItem key={facetItem.name} name={facetItem.name} value={facetItem.value}
                 checked={this.props.checkedFacetItems && this.props.checkedFacetItems[facetItem.name]}
-                setChecked={this._setChecked}
+                setChecked={this._setChecked} disabled={disabled}
             />;
 
         }.bind(this));
@@ -111,7 +112,8 @@ var FacetItem = React.createClass({
         name: React.PropTypes.string.isRequired,
         value: React.PropTypes.string.isRequired,
         checked: React.PropTypes.bool,
-        setChecked: React.PropTypes.func.isRequired
+        setChecked: React.PropTypes.func.isRequired,
+        disabled: React.PropTypes.bool.isRequired
     },
 
     _setChecked: function () {
@@ -119,10 +121,11 @@ var FacetItem = React.createClass({
     },
 
     render: function () {
+        var className=this.props.disabled ? "gxaDisabledFacet" : "";
         return (
-            <li>
+            <li className={className}>
                 <input type="checkbox" checked={this.props.checked ? true : false}
-                    onChange={this._setChecked}
+                    onChange={this._setChecked} disabled={this.props.disabled}
                 />{this.props.value}</li>
         );
     }

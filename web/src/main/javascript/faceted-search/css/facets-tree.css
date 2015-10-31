@@ -19,3 +19,4 @@
 .gxaFacetedSearchFacetsContainer .gxaFacetedSearchFacetItem h4 {font-weight: bold;font-size: 144%; padding-left:0;  margin-bottom: 9px;}
 .gxaFacetedSearchFacetsContainer .gxaFacetedSearchFacetItem h4:first-letter {text-transform: capitalize;}
 .gxaFacetedSearchFacetsContainer ul li  {padding:1px 0; }
+.gxaFacetedSearchFacetsContainer .gxaFacetedSearchFacetItem .gxaDisabledFacet span {color: gray;}
