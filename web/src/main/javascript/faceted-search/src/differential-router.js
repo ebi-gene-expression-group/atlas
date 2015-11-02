@@ -158,7 +158,7 @@ module.exports = function (facetsContainerId, resultsContainerId, selectedSpecie
                         var value = items[key];
                         if (facets === "species" && value === true) {
                             species.push(key);
-                        } else if (facets === "factors" && value === true) {
+                        } else if (facets === "experimental variables" && value === true) {
                             factors.push(key);
                         } else if (facets === "experiment type" && value === true) {
                             experimentType.push(key);

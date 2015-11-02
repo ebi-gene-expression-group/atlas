@@ -156,7 +156,7 @@ public class DifferentialAnalyticsFacetsReader {
                 .put("kingdom", "kingdom")
                 .put("species", "species")
                 .put("experimentType", "experiment type")
-                .put("factors", "factors")
+                .put("factors", "experimental variables")
                 .put("numReplicates", "number of replicates")
                 .put("regulation", "regulation")
                 .build();
