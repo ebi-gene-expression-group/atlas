@@ -90,7 +90,7 @@
 
     <c:if test="${hasBaselineResults}">
     var facetsData = ${empty jsonFacets ? 'null' : jsonFacets};
-        facetedSearcher.baseline("atlasBaselineFacetedSearchFacetsContainer", "atlasBaselineFacetedSearchResultsContainer", facetsData);
+        facetedSearcher.baseline("atlasBaselineFacetedSearchFacetsContainer", "atlasBaselineFacetedSearchResultsContainer", "", facetsData);
     </c:if>
 
 </script>

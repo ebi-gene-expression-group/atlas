@@ -102,10 +102,17 @@ module.exports = function (facetsContainerId, heatmapsContainerId, selectedSpeci
             if (facetsTreeData.hasOwnProperty(facet)) {
 
                 var factors = facetsTreeData[facet];
+                var checked = false;
                 for(var factor in factors) {
                     if (factors.hasOwnProperty(factor) && factors[factor].name === "ORGANISM_PART") {
                         addSelection(query.select, facet, factors[factor].name);
+                        checked = true;
+                        break;
                     }
+                }
+
+                if(factors.length >= 1 && !checked) {
+                    addSelection(query.select, facet, factors[0].name);
                 }
 
             }

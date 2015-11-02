@@ -88,7 +88,7 @@
 
     <c:if test="${hasDifferentialResults}">
     var differentialFacetsData = ${empty jsonDifferentialGeneQueryFacets ? 'null' : jsonDifferentialGeneQueryFacets};
-    facetedSearcher.differential("atlasDifferentialFacetedSearchFacetsContainer", "atlasDifferentialFacetedSearchResultsContainer", differentialFacetsData);
+    facetedSearcher.differential("atlasDifferentialFacetedSearchFacetsContainer", "atlasDifferentialFacetedSearchResultsContainer", "", differentialFacetsData);
     </c:if>
 
 </script>
