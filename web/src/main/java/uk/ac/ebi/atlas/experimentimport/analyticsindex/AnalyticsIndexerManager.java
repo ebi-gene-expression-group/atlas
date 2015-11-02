@@ -73,6 +73,7 @@ public class AnalyticsIndexerManager extends Observable {
         checkNotNull(experimentAccession);
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
         analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
+        bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap(experimentAccession);
         return analyticsIndexerService.index(experiment, bioentityIdToIdentifierSearch, batchSize);
     }
 
