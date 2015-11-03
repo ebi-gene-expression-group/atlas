@@ -135,10 +135,12 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
         List<String> factorTypes = experimentalFactors.getHeaderFactorTypes();
 
-        Set<Factor> orderedFactors = Sets.newLinkedHashSet();
-        Set<AssayGroupFactor> filteredAssayGroupFactors = Sets.newLinkedHashSet();
-
-        if(CollectionUtils.isNotEmpty(selectedFilterFactors)) {
+        Set<Factor> orderedFactors;
+        Set<AssayGroupFactor> filteredAssayGroupFactors;
+        if(experimentalFactors.getAllFactorsOrderedByXML() != null && !experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
+            filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactorsByXML(selectedFilterFactors);
+            orderedFactors = experimentalFactors.getComplementFactorsByXML(selectedFilterFactors);
+        } else {
             filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors);
             orderedFactors = experimentalFactors.getComplementFactors(selectedFilterFactors);
         }
