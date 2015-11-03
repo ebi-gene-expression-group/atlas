@@ -12,10 +12,6 @@ var experimentDesignTableModule = (function ($) {
         _assayHeaders,
         _oTable;
 
-    var calcDataTableHeight = function () {
-        return $(window).height() - 270;
-    };
-
     var calcDataTableWidth = function () {
         return $('#contents').width() - 100;
     };
@@ -97,8 +93,8 @@ var experimentDesignTableModule = (function ($) {
             "aoColumnDefs":initColumnDefs(),
             "bPaginate":false,
             "bScrollCollapse":true,
-            "sScrollY":calcDataTableHeight(),
-            "sScrollX":calcDataTableWidth(),
+            //"sScrollY":calcDataTableHeight(),
+            //"sScrollX": calcDataTableWidth(),
             "sDom":'i<"gxaDownload">f<"gxaClear">t',
             "aaSorting": aaSorting
         });
@@ -107,18 +103,18 @@ var experimentDesignTableModule = (function ($) {
             _oTable.fnDraw();
         });
 
-        $('div.gxaDownload').html($('#download-button'));
-        $('div.gxaDownload').attr('style', 'float: right');
+        $('div.gxaDownload').html($('#download-button')).attr('style', 'float: right');
 
         $(window).resize(function () {
             _adjustTableSize();
         });
 
-        var tableHeaderRow = $(".dataTables_scrollHeadInner").find('thead > tr');
+        $("th").addClass("gxaHeaderCell");
 
-        $("<tr><th id='assaysHeader' class='gxaHeaderCell gxaBR gxaBT gxaBL'></th>" +
-            "<th id='samplesHeader' class='gxaSamples gxaHeaderCell  gxaBR gxaBT'>Sample Characteristics<span class='doc-span' data-help-loc='#sampleChars'></span></th>" +
-            "<th id='factorsHeader' class='gxaFactors gxaHeaderCell gxaBR gxaBT'>Experimental Variables<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>")
+        var tableHeaderRow = $(".dataTable").find('thead > tr');
+        $("<tr><th id='assaysHeader' class='gxaHeaderCellNoHover gxaBR gxaBT gxaBL'></th>" +
+            "<th id='samplesHeader' class='gxaHeaderCellNoHover gxaBR gxaBT'>Sample Characteristics<span class='doc-span' data-help-loc='#sampleChars'></span></th>" +
+            "<th id='factorsHeader' class='gxaHeaderCellNoHover gxaBR gxaBT'>Experimental Variables<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>")
             .insertBefore(tableHeaderRow);
 
         /* Set colspan for each category */
@@ -127,19 +123,14 @@ var experimentDesignTableModule = (function ($) {
         $('#factorsHeader').attr('colspan', Object.keys(_factorHeaders).length);
 
         $('#download-experiment-design-link').button().tooltip();
-
-        $("th").addClass("gxaHeaderCell");
-
     }
 
     function _adjustTableSize() {
         var oSettings = _oTable.fnSettings();
-        oSettings.oScroll.sY = calcDataTableHeight(); // <- updated!
-        //oSettings.oScroll.sX = calcDataTableWidth();
+        oSettings.oScroll.sX = calcDataTableWidth();
 
         // maybe you need to redraw the table (not sure about this)
         _oTable.fnAdjustColumnSizing(false);
-        _oTable.fnDraw(false);
     }
 
     function _init(assayHeaders, dataSet, runAccessions, sampleHeaders, factorHeaders) {
@@ -154,8 +145,8 @@ var experimentDesignTableModule = (function ($) {
     }
 
     return {
-        init:_init,
-        adjustTableSize:_adjustTableSize
+        init: _init,
+        adjustTableSize: _adjustTableSize
     };
 
 }(jQuery));

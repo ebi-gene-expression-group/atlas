@@ -76,7 +76,7 @@ var experimentsPageModule = (function ($) {
 
     var asInitVals = [];
 
-    function init(experimentType, kingdom, organism) {
+    function _init(experimentType, kingdom, organism) {
 
         /* Create an array with the values of all the img title attributes in a column */
         $.fn.dataTableExt.afnSortData['dom-text'] = function (oSettings, iColumn) {
@@ -290,11 +290,13 @@ var experimentsPageModule = (function ($) {
             }
         });
 
-        $("#gxaExperimentsTableOrganismInput").val(organism).keyup();
+        if (organism) {
+            $("#gxaExperimentsTableOrganismInput").val(organism).keyup();
+        }
     }
 
     return {
-        init: init
+        init: _init
     };
 
 }(jQuery));

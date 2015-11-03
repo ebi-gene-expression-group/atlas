@@ -36,31 +36,31 @@
 
     <div id="table-caption"><b>Experiment Design</b></div>
 
-    <div id="toolbar" style="padding-bottom:5px">
-        <div style="display:inline">
+    <div id="toolbar" style="overflow: auto; padding-bottom: 5px">
+        <div style="float: left">
             <span>Show analysed only?</span>
             <input type="checkbox" id="showOnlyAnalysedRuns" name="showOnlyAnalysedRuns" checked="yes"/>
         </div>
 
         <c:if test="${!type.isBaseline()}">
-            <div style="display:inline; float:right">
-                <span>
+            <div style="float: right">
+                <div style="display: inline-block">
                     <form:label path="selectedContrast" cssStyle="vertical-align: middle;">Comparison: </form:label>
                     <input type="hidden" name="accessKey" value="${param.accessKey}"/>
                     <form:select path="selectedContrast" items="${contrasts}" itemValue="id"
                                  itemLabel="displayName"/>
-                </span>
-                <span style="padding-left:10px">Reference:</span>
-                <span style="display:inline-block; vertical-align: middle; padding: 0px; background-color:#FFC266;width:20px;">&nbsp;</span>
-                <span style="vertical-align: middle; padding: 0px 4px 0px 10px;">Test:</span>
-                <span style="display:inline-block; vertical-align: middle; padding: 0px; background-color:#82CDCD;width:20px;">&nbsp;</span>
+                </div>
+                <div style="display: inline-block; text-align: right">
+                    <span style="vertical-align: middle; padding-left: 10px">Reference:</span>
+                    <span style="vertical-align: middle; background-color: #FFC266; width: 20px; display: inline-block;">&nbsp;</span>
+                    <span style="vertical-align: middle; padding-left: 10px;">Test:</span>
+                    <span style="vertical-align: middle; background-color: #82CDCD; width: 20px; display: inline-block;">&nbsp;</span>
+                </div>
             </div>
         </c:if>
     </div>
 
-    <table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table">
-
-    </table>
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="experiment-design-table"></table>
 
     <p></p>
 

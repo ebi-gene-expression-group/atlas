@@ -20,6 +20,10 @@
  * http://gxa.github.com/gxa
  */
 
+th {
+    border-style: none; /* Override ebi-visual.css */
+}
+
 .gxaBT {
     border-top: 1px solid #cdcdcd !important;
 }
@@ -36,15 +40,7 @@
     border-left: 1px solid #cdcdcd !important;
 }
 
-.gxaSamples {
-    background-color: #FAFAFA !important;
-}
-
-.gxaFactors {
-    background-color: #FAFAFA !important;
-}
-
-.gxaHeaderCell {
+.gxaHeaderCellNoHover, .gxaHeaderCell {
     background-color: rgb(237, 246, 246) !important;
     font-weight: bold;
     padding-left: 5px;
@@ -52,7 +48,7 @@
 }
 
 /* needed for span inside header-cell that is added by React */
-.gxaHeaderCell span {
+.gxaHeaderCellNoHover, .gxaHeaderCell span {
     font-weight: bold;
 }
 
@@ -86,7 +82,11 @@
     width: 50%;
     float: right;
     text-align: right;
-    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
+.dataTables_filter label input {
+    margin-right: 0 !important;
 }
 
 .dataTables_info {
@@ -157,7 +157,6 @@
 
 #atlas-content table.display thead th {
     padding: 3px 18px 3px 10px;
-    /*border-bottom: 1px solid black; */
     font-weight: bold;
     vertical-align: middle;
 }
