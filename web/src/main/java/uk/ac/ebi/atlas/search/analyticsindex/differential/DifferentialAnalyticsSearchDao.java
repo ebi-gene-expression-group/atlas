@@ -44,7 +44,7 @@ public class DifferentialAnalyticsSearchDao {
 
         this.restTemplate = restTemplate;
         this.solrBaseUrl = solrBaseUrl;
-        this.differentialGeneFacetsQuery ="&json.facet=" + encodeQueryParam(differentialGeneFacetsQuery);
+        this.differentialGeneFacetsQuery ="&json.facet=" + encodeQueryParam(differentialGeneFacetsQuery.replaceAll("\\s+",""));
     }
 
 

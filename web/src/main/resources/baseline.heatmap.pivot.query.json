@@ -18,6 +18,7 @@
                           "assayGroupId": {
                             "terms": {
                               "field": "assayGroupId",
+                              "limit": 50,
                               "facet": {
                                 "sumExpressionLevel": "sum(expressionLevel)"
                               }

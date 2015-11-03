@@ -43,7 +43,7 @@ public class BaselineAnalyticsSearchDao {
 
         this.restTemplate = restTemplate;
         this.solrBaseUrl = solrBaseUrl;
-        this.baselineHeatmapPivotQuery = "&json.facet=" + encodeQueryParam(baselineHeatmapPivotQuery);
+        this.baselineHeatmapPivotQuery = "&json.facet=" + encodeQueryParam(baselineHeatmapPivotQuery.replaceAll("\\s+",""));
     }
 
 
