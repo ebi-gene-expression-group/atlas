@@ -205,12 +205,14 @@ var DifferentialResultRow = React.createClass({
             classIcon="F";
         } else {classIcon="";}
 
+        var factors = this.props.factors ? this.props.factors.toString().replace(/,/g, ", ") : "";
+
         return (
             <tr>
                 <CellDifferential colour={this.props.colour} infinity={this.props.infinity} foldChange={this.props.foldChange} displayLevels={this.props.displayLevels}/>
                 <td className="col_species"><span className={"icon icon-species " + classColor} data-icon={classIcon} style={{color: 'red'}} title={this.props.species}></span></td>
                 <td ref="comparison"><a href={"experiments/" + this.props.experimentAccession + "?geneQuery=" + this.props.bioentityIdentifier + "&queryFactorValues=" + this.props.contrastId + "&_specific=on"}>{this.props.comparison}</a></td>
-                <td className="gxaExperimentalVariable">{this.props.factors.toString().replace(/,/g, ", ")}</td>
+                <td className="gxaExperimentalVariable">{factors}</td>
                 <td><a href={"experiments/" + this.props.experimentAccession}>{this.props.experimentName}</a></td>
             </tr>
         );
