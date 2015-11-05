@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableSortedSet;
-import oracle.jdbc.dcn.TableChangeDescription;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,8 +22,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -92,6 +89,7 @@ public class BaselineAnalyticsSearchServiceIT {
     private static final Factor SK_N_SH = new Factor(CELL_LINE, "SK-N-SH");
     private static final Factor SK_N_SH_RA = new Factor(CELL_LINE, "SK-N-SH_RA");
 
+
     @Inject
     private BaselineAnalyticsSearchService subject;
 
@@ -108,7 +106,7 @@ public class BaselineAnalyticsSearchServiceIT {
         assertThat(baselineProfile.getId(), is("E-MTAB-2836"));
         assertThat(baselineProfile.getName(), is("Thirty two tissues"));
         assertThat(baselineProfile.getFilterFactors(), is(EMPTY_FACTOR_SET));
-        assertThat(baselineProfile.getConditions(), hasSize(10));
+        assertThat(baselineProfile.getConditions(), hasSize(32));
         assertThat(baselineProfile.getMinExpressionLevel(), is(2.0));
         assertThat(baselineProfile.getMaxExpressionLevel(), is(14.0));
         assertThat(baselineProfile.getKnownExpressionLevel(RECTUM), is(4.0));
@@ -198,22 +196,21 @@ public class BaselineAnalyticsSearchServiceIT {
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
-        assertThat(baselineProfilesList, hasSize(13));
-        assertThat(baselineProfilesList.getTotalResultCount(), is(13));
+        assertThat(baselineProfilesList, hasSize(48));
+        assertThat(baselineProfilesList.getTotalResultCount(), is(48));
 
-        BaselineExperimentProfile baselineProfile = baselineProfilesList.get(0);
+        BaselineExperimentProfile baselineProfile = baselineProfilesList.get(45);
         assertThat(baselineProfile.getId(), is("E-GEOD-26284"));
-        assertThat(baselineProfile.getName(), is("ENCODE cell lines - long polyA RNA, whole cell"));
-        assertThat(baselineProfile.getFilterFactors(), is((FactorGroup) new FactorSet(new Factor("RNA", "long polyA RNA"), new Factor("CELLULAR_COMPONENT", "whole cell"))));
-        assertThat(baselineProfile.getConditions(), hasSize(31));
-        assertThat(baselineProfile.getMinExpressionLevel(), is(7.0));
-        assertThat(baselineProfile.getMaxExpressionLevel(), is(7.0));
-        assertThat(baselineProfile.getKnownExpressionLevel(H1_hESC), is(7.0));
+        assertThat(baselineProfile.getName(), is("ENCODE cell lines - total RNA, nucleolus"));
+        assertThat(baselineProfile.getFilterFactors(), is((FactorGroup) new FactorSet(new Factor("RNA", "total RNA"), new Factor("CELLULAR_COMPONENT", "nucleolus"))));
+        assertThat(baselineProfile.getConditions(), hasSize(385));
+        assertThat(baselineProfile.getMinExpressionLevel(), is(5.0));
+        assertThat(baselineProfile.getMaxExpressionLevel(), is(5.0));
 
         SortedSet<Factor> factors = result.getFactorsAcrossAllExperiments();
         assertThat(factors, hasItems(getEGeod26284CellLines().toArray(new Factor[getEGeod26284CellLines().size()])));
 
-        assertThat(factors, hasSize(48));
+        assertThat(factors, hasSize(385));
     }
 
 }
