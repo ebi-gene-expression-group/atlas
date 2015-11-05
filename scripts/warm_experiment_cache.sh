@@ -4,7 +4,7 @@
 
 if [ $# -lt 1 ]; then
         echo "Accesses the json experiments URL, which on the first access after application startup will load all experiments into the experiments cache."
-        echo "First access will take >30sec, subsequent accesses will take 0.2sec"
+        echo "First access will take around 15 minutes, subsequent accesses will take between 1 and 2 seconds"
         echo
         echo "Usage: $0 HOSTNAME"
         exit;
