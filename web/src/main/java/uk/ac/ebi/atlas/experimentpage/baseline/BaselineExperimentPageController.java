@@ -147,7 +147,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
         if (CollectionUtils.isNotEmpty(factorTypes)) {
             Set<ImmutableSet<Factor>> allMultiHeaderFactors = experimentalFactors.getAllMultiHeaderFactors(factorTypes);
-
+            orderedFactors = Sets.newLinkedHashSet();
             for (ImmutableSet<Factor> filterFactors : allMultiHeaderFactors) {
                 Set<AssayGroupFactor> selectedSlice = experimentalFactors.getComplementAssayGroupFactors(filterFactors);
                 filteredAssayGroupFactors.addAll(selectedSlice);
