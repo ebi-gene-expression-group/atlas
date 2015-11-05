@@ -18,9 +18,13 @@
 
     <c:if test="${hasDifferentialResults}">
     var differentialSearcher = window.exposed.differential,
-        differentialFacetsData = ${empty jsonDifferentialGeneQueryFacets ? 'null' : jsonDifferentialGeneQueryFacets};
+        differentialFacetsData = ${empty jsonDifferentialGeneQueryFacets ? 'null' : jsonDifferentialGeneQueryFacets},
+        differentialResultsData = ${empty jsonDifferentialGeneQueryResults ? 'null' : jsonDifferentialGeneQueryResults};
 
-    differentialSearcher("atlasDifferentialFacetedSearchFacetsContainer", "atlasDifferentialFacetedSearchResultsContainer", selectedSpecies, differentialFacetsData);
+    differentialSearcher(
+            "atlasDifferentialFacetedSearchFacetsContainer", "atlasDifferentialFacetedSearchResultsContainer",
+            selectedSpecies, differentialFacetsData, differentialResultsData
+    );
     </c:if>
 </script>
 

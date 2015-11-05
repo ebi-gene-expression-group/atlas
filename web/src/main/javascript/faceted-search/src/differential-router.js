@@ -11,19 +11,19 @@ var URI = require('urijs');
 
 //*------------------------------------------------------------------*
 
-var FacetsTree = require('./facets-tree.jsx');
+var FacetsTree = require('./differential-facets-tree.jsx');
 var DifferentialResults = require('./differential-results.jsx');
 
 //*------------------------------------------------------------------*
 
-module.exports = function (facetsContainerId, resultsContainerId, selectedSpecies, facetsTreeData, atlasHost) {
+module.exports = function (facetsContainerId, resultsContainerId, selectedSpecies, facetsTreeData, resultsData) {
 
     var ie9 = $.browser.msie && $.browser.version < 10;
     !ie9 && window.addEventListener('popstate', backButtonListener, false);
 
     var facetsElement = document.getElementById(facetsContainerId),
         resultsElement = document.getElementById(resultsContainerId),
-        host = atlasHost ? atlasHost : window.location.host;
+        host = window.location.host;
 
     var query = {
         geneQuery : "",
@@ -31,7 +31,7 @@ module.exports = function (facetsContainerId, resultsContainerId, selectedSpecie
     };
 
     parseGeneQueryFromLocation();
-    preselectSingleFacetItems();
+
     if (selectedSpecies) {
         for (var i = 0 ; i < facetsTreeData["species"].length ; i++) {
             if (facetsTreeData["species"][i]["name"] === selectedSpecies) {
@@ -68,22 +68,11 @@ module.exports = function (facetsContainerId, resultsContainerId, selectedSpecie
         query.select = selectString ? JSON.parse(selectString) : {};
     }
 
-    function preselectSingleFacetItems() {
-        for (var facet in facetsTreeData) {
-            if (facetsTreeData[facet].length === 1) {
-                addSelection(query.select, facet, facetsTreeData[facet][0]["name"]);
-            }
-        }
-    }
-
     function renderQueryPage() {
         React.render(
             React.createElement(
-                FacetsTree,
-                {facets: facetsTreeData,
-                 checkedFacets: query.select,
-                 setChecked: setChecked,
-                 isDifferential: true}),
+                FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked, disabledFacets: resultsData["commonFacetItems"]}
+            ),
             facetsElement
         );
 

@@ -30,7 +30,6 @@ public class DifferentialAnalyticsSearchService {
 
     public String fetchDifferentialGeneQuerySelectionResultsAsJson(GeneQuery geneQuery, List<String> species, List<String> experimentType, List<String> kingdoms, List<String> factors, List<Integer> numReplicates, String regulation) {
         String differentialResults = differentialAnalyticsSearchDao.fetchDifferentialGeneQueryResultsAboveDefaultFoldChange(geneQuery, species, experimentType, kingdoms, factors, numReplicates, regulation);
-
         return differentialAnalyticsFacetsReader.extractResultsAsJson(differentialResults);
     }
 

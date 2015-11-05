@@ -4,19 +4,19 @@
 }
 
 /* Facets-tree container */
-.gxaFacetedSearchFacetsContainer ul {
+.gxaFacetsContainer ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-.gxaFacetedSearchFacetsContainer {padding:0 9px;}
-.gxaFacetedSearchFacetsContainer  h3 {padding-left:0;}
-.gxaFacetedSearchFacetsContainer .gxaFacetedSearchFacetItem {padding:0 0 9px 0;}
-.gxaFacetedSearchFacetsContainer .gxaFacetedSearchFacetItem ul li span {display:inline-block;/*IMPORTANT TO KEEP FOR SPAN make first-letter work*/ }
-.gxaFacetedSearchFacetsContainer .gxaFacetedSearchFacetItem ul li span:first-letter  {text-transform: capitalize;}
+.gxaFacetsContainer {padding:0 9px;}
+.gxaFacetsContainer  h3 {padding-left:0;}
+.gxaFacetsContainer .gxaFacetItem {padding:0 0 9px 0;}
+.gxaFacetsContainer .gxaFacetItem ul li span {display:inline-block;/*IMPORTANT TO KEEP FOR SPAN make first-letter work*/ }
+.gxaFacetsContainer .gxaFacetItem ul li span:first-letter  {text-transform: capitalize;}
 .gxaSpeciesFacet li span {font-style: italic;} /*target species facet*/
-.gxaFacetedSearchFacetsContainer .gxaFacetedSearchFacetItem h4 {font-weight: bold;font-size: 144%; padding-left:0;  margin-bottom: 9px;}
-.gxaFacetedSearchFacetsContainer .gxaFacetedSearchFacetItem h4:first-letter {text-transform: capitalize;}
-.gxaFacetedSearchFacetsContainer ul li  {padding:1px 0; }
-.gxaFacetedSearchFacetsContainer .gxaFacetedSearchFacetItem .gxaDisabledFacet span {color: gray;}
+.gxaFacetsContainer .gxaFacetItem h4 {font-weight: bold;font-size: 144%; padding-left:0;  margin-bottom: 9px;}
+.gxaFacetsContainer .gxaFacetItem h4:first-letter {text-transform: capitalize;}
+.gxaFacetsContainer ul li  {padding:1px 0; }
+.gxaFacetsContainer .gxaFacetItem .gxaDisabledFacet span {color: gray;}

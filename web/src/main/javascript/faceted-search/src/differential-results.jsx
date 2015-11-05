@@ -56,19 +56,20 @@ var DifferentialResults = React.createClass({
     */
     propTypes: {
         results: React.PropTypes.arrayOf(React.PropTypes.shape({
-            bioentityIdentifier: React.PropTypes.string.isRequired,
             species: React.PropTypes.string.isRequired,
             kingdom: React.PropTypes.string.isRequired,
-            experimentAccession: React.PropTypes.string.isRequired,
-            experimentName: React.PropTypes.string.isRequired,
             experimentType: React.PropTypes.string.isRequired,
-            contrastId: React.PropTypes.string.isRequired,
-            comparison: React.PropTypes.string.isRequired,
             numReplicates: React.PropTypes.string.isRequired,  // faceting only works with strings https://issues.apache.org/jira/browse/SOLR-7496
-            foldChange: React.PropTypes.string.isRequired,     // a string, a formatted value, to be able to work with Infinity values and rounding
-            colour: React.PropTypes.string.isRequired,
             regulation: React.PropTypes.string.isRequired,
             factors: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+
+            bioentityIdentifier: React.PropTypes.string.isRequired,
+            experimentAccession: React.PropTypes.string.isRequired,
+            experimentName: React.PropTypes.string.isRequired,
+            contrastId: React.PropTypes.string.isRequired,
+            comparison: React.PropTypes.string.isRequired,
+            foldChange: React.PropTypes.string.isRequired,     // a string, a formatted value, to be able to work with Infinity values and rounding
+            colour: React.PropTypes.string.isRequired,
             id: React.PropTypes.string.isRequired
         })).isRequired,
         maxDownLevel: React.PropTypes.string.isRequired,

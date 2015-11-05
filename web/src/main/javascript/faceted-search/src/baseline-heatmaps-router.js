@@ -11,7 +11,7 @@ var URI = require('urijs');
 
 //*------------------------------------------------------------------*
 
-var FacetsTree = require('./facets-tree.jsx');
+var FacetsTree = require('./baseline-facets-tree.jsx');
 var Heatmaps = require('./baseline-heatmaps.jsx');
 
 //*------------------------------------------------------------------*
@@ -77,21 +77,16 @@ module.exports = function (facetsContainerId, heatmapsContainerId, selectedSpeci
 
     function renderQueryPage() {
         React.render(
-            React.createElement(FacetsTree, {
-                facets: facetsTreeData,
-                checkedFacets: query.select,
-                setChecked: setChecked,
-                isDifferential: false
-            }),
+            React.createElement(
+                FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked}
+            ),
             facetsElement
         );
 
         React.render(
-            React.createElement(Heatmaps, {
-                geneQuery: query.geneQuery,
-                heatmaps: queryToHeatmaps(query),
-                atlasHost: host
-            }),
+            React.createElement(
+                Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), atlasHost: host}
+            ),
             heatmapsElement
         );
     }
