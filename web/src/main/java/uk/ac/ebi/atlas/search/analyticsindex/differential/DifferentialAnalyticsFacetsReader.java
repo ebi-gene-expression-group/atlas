@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -17,9 +19,7 @@ import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Named
 public class DifferentialAnalyticsFacetsReader {
@@ -86,7 +86,24 @@ public class DifferentialAnalyticsFacetsReader {
             document.put("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
 
         }
-        resultsWithLevels.put("results", documents);
+
+        Set<Map<String, Object>> setDocuments = Sets.newHashSet();
+        Set<LinkedHashMap<String, String>> experimentContrastMap = Sets.newHashSet();
+        for (Map<String, Object> document : documents) {
+            String contrastId = (String) document.get("contrastId");
+            String experimentAccession = (String) document.get("experimentAccession");
+
+            LinkedHashMap<String, String> doc = Maps.newLinkedHashMap();
+            doc.put(experimentAccession, contrastId);
+
+            if(experimentContrastMap.isEmpty() || !experimentContrastMap.contains(doc)) {
+                experimentContrastMap.add(doc);
+                setDocuments.add(document);
+            }
+
+        }
+
+        resultsWithLevels.put("results", setDocuments);
 
         if (documents.size() > 0) {
             resultsWithLevels.put("maxDownLevel", foldChangeRounder.format(maxDownLevel));
