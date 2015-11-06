@@ -568,7 +568,7 @@ var MultipleHeatmapTableHeader = React.createClass({
         });
 
         return (
-            <div>{multipleHeaders}</div>
+            {multipleHeaders}
         );
     },
 
@@ -582,7 +582,7 @@ var MultipleHeatmapTableHeader = React.createClass({
         });
 
         return (
-            <div>{subHeaders}</div>
+            {subHeaders}
         );
     },
 
