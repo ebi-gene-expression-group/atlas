@@ -66,48 +66,46 @@ public class DifferentialAnalyticsFacetsReader {
         ReadContext jsonReadContext = JsonPath.using(jsonPathConfiguration).parse(solrResponseAsJson);
         List<Map<String, Object>> documents = jsonReadContext.read(DOCS_PATH);
 
-        Map<String, Set<String>> commonFacetItems = new HashMap<>();
-        for (String facetField : FACET_FIELDS) {
-            commonFacetItems.put(facetField, stringOrStringCollectionAsSet(documents.get(0).get(facetField)));
-        }
-
-        for (Map<String, Object> document : documents) {
-            String experimentAccession = (String) document.get(EXPERIMENT_ACCESSION_FIELD);
-            String contrastId = (String) document.get(CONTRAST_ID_FIELD);
-            if (experimentContrastMap.put(experimentAccession, contrastId)) {
-                intersectMaps(commonFacetItems, document);
-
-                ExperimentType experimentType = ExperimentType.get((String) document.get(EXPERIMENT_TYPE_FIELD));
-
-                Object foldChangeSymbol = document.get(LOG2_FOLD_CHANGE_FIELD);
-                double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
-
-                document.put("foldChange", foldChange);
-                document.put("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
-                document.put("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
-
-                if (foldChange > 0.0) {
-                    minUpLevel = Math.min(minUpLevel, foldChange);
-                    maxUpLevel = Math.max(maxUpLevel, foldChange);
-                } else {
-                    minDownLevel = Math.max(minDownLevel, foldChange);
-                    maxDownLevel = Math.min(maxDownLevel, foldChange);
-                }
-
-                filteredDocuments.add(document);
+        if(!documents.isEmpty()) {
+            Map<String, Set<String>> commonFacetItems = new HashMap<>();
+            for (String facetField : FACET_FIELDS) {
+                commonFacetItems.put(facetField, stringOrStringCollectionAsSet(documents.get(0).get(facetField)));
             }
-        }
 
-        for (Map<String, Object> document : filteredDocuments) {
-            double foldChange = (Double) document.get("foldChange");
-            String colour = foldChange > 0.0 ? colourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red") : colourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
-            document.put("colour", colour);
-            document.put("foldChange", foldChangeRounder.format(foldChange));
-        }
+            for (Map<String, Object> document : documents) {
+                String experimentAccession = (String) document.get(EXPERIMENT_ACCESSION_FIELD);
+                String contrastId = (String) document.get(CONTRAST_ID_FIELD);
+                if (experimentContrastMap.put(experimentAccession, contrastId)) {
+                    intersectMaps(commonFacetItems, document);
 
-        resultsWithLevels.put("results", filteredDocuments);
+                    ExperimentType experimentType = ExperimentType.get((String) document.get(EXPERIMENT_TYPE_FIELD));
 
-        if (documents.size() > 0) {
+                    Object foldChangeSymbol = document.get(LOG2_FOLD_CHANGE_FIELD);
+                    double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
+
+                    document.put("foldChange", foldChange);
+                    document.put("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
+                    document.put("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
+
+                    if (foldChange > 0.0) {
+                        minUpLevel = Math.min(minUpLevel, foldChange);
+                        maxUpLevel = Math.max(maxUpLevel, foldChange);
+                    } else {
+                        minDownLevel = Math.max(minDownLevel, foldChange);
+                        maxDownLevel = Math.min(maxDownLevel, foldChange);
+                    }
+
+                    filteredDocuments.add(document);
+                }
+            }
+
+            for (Map<String, Object> document : filteredDocuments) {
+                double foldChange = (Double) document.get("foldChange");
+                String colour = foldChange > 0.0 ? colourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red") : colourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
+                document.put("colour", colour);
+                document.put("foldChange", foldChangeRounder.format(foldChange));
+            }
+
             resultsWithLevels.put("maxDownLevel", foldChangeRounder.format(maxDownLevel));
             resultsWithLevels.put("minDownLevel", foldChangeRounder.format(minDownLevel));
             resultsWithLevels.put("minUpLevel", foldChangeRounder.format(minUpLevel));
@@ -119,7 +117,10 @@ public class DifferentialAnalyticsFacetsReader {
                 commonFacetItems.put(FacetFieldMapConverter.get(facetField), items);
             }
             resultsWithLevels.put("commonFacetItems", commonFacetItems);
+
         }
+
+        resultsWithLevels.put("results", filteredDocuments);
 
         Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
         return gson.toJson(resultsWithLevels);
