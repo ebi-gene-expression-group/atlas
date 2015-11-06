@@ -31,7 +31,13 @@ public class BaselineAnalyticsSearchDaoIT {
 
     @Test
     public void buildQueryUrl() {
-        assertThat(subject.buildQueryUrl(SPECIES_HOMO_SAPIENS, 0.5, 0), Matchers.endsWith("solr/analytics/query?q=species:%22homo%20sapiens%22&rows=0&omitHeader=true&fq=(experimentType:rnaseq_mrna_baseline%20AND%20expressionLevel:%5B0.5%20TO%20*%5D)%20OR%20(experimentType:proteomics_baseline%20AND%20expressionLevel:%5B0%20TO%20*%5D)&json.facet=%7B%22experimentType%22:%7B%22terms%22:%7B%22field%22:%22experimentType%22,%22facet%22:%7B%22species%22:%7B%22terms%22:%7B%22field%22:%22species%22,%22facet%22:%7B%22defaultQueryFactorType%22:%7B%22terms%22:%7B%22field%22:%22defaultQueryFactorType%22,%22facet%22:%7B%22experimentAccession%22:%7B%22terms%22:%7B%22field%22:%22experimentAccession%22,%22facet%22:%7B%22assayGroupId%22:%7B%22terms%22:%7B%22field%22:%22assayGroupId%22,%22limit%22:50,%22facet%22:%7B%22sumExpressionLevel%22:%22sum(expressionLevel)%22%7D%7D%7D,%22uniqueIdentifiers%22:%22unique(bioentityIdentifier)%22%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D"));
+        assertThat(subject.buildQueryUrl(SPECIES_HOMO_SAPIENS, 0.5, 0), Matchers.endsWith("solr/analytics/query?q=species:%22homo%20sapiens%22&rows=0&omitHeader=true&" +
+                "fq=(experimentType:rnaseq_mrna_baseline%20AND%20expressionLevel:%5B0.5%20TO%20*%5D)%20OR%20(experimentType:proteomics_baseline%20AND%20expressionLevel" +
+                ":%5B0%20TO%20*%5D)&json.facet=%7B%22experimentType%22:%7B%22terms%22:%7B%22field%22:%22experimentType%22,%22facet%22:%7B%22species%22:%7B%22terms%22:" +
+                "%7B%22field%22:%22species%22,%22facet%22:%7B%22defaultQueryFactorType%22:%7B%22terms%22:%7B%22field%22:%22defaultQueryFactorType%22,%22facet%22:%7B%22" +
+                "experimentAccession%22:%7B%22terms%22:%7B%22field%22:%22experimentAccession%22,%22facet%22:%7B%22assayGroupId%22:%7B%22terms%22:%7B%22field%22:%22assayGroupId%22" +
+                ",%22limit%22:1000,%22facet%22:%7B%22sumExpressionLevel%22:%22sum(expressionLevel)%22%7D%7D%7D,%22uniqueIdentifiers%22:%22unique(bioentityIdentifier)" +
+                "%22%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D"));
     }
 
     @Test

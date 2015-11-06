@@ -196,21 +196,21 @@ public class BaselineAnalyticsSearchServiceIT {
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
-        assertThat(baselineProfilesList, hasSize(48));
-        assertThat(baselineProfilesList.getTotalResultCount(), is(48));
+        assertThat(baselineProfilesList, hasSize(131));
+        assertThat(baselineProfilesList.getTotalResultCount(), is(131));
 
-        BaselineExperimentProfile baselineProfile = baselineProfilesList.get(45);
+        BaselineExperimentProfile baselineProfile = baselineProfilesList.get(128);
         assertThat(baselineProfile.getId(), is("E-GEOD-26284"));
         assertThat(baselineProfile.getName(), is("ENCODE cell lines - total RNA, nucleolus"));
         assertThat(baselineProfile.getFilterFactors(), is((FactorGroup) new FactorSet(new Factor("RNA", "total RNA"), new Factor("CELLULAR_COMPONENT", "nucleolus"))));
-        assertThat(baselineProfile.getConditions(), hasSize(385));
+        assertThat(baselineProfile.getConditions(), hasSize(655));
         assertThat(baselineProfile.getMinExpressionLevel(), is(5.0));
         assertThat(baselineProfile.getMaxExpressionLevel(), is(5.0));
 
         SortedSet<Factor> factors = result.getFactorsAcrossAllExperiments();
         assertThat(factors, hasItems(getEGeod26284CellLines().toArray(new Factor[getEGeod26284CellLines().size()])));
 
-        assertThat(factors, hasSize(385));
+        assertThat(factors, hasSize(655));
     }
 
 }
