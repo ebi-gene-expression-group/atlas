@@ -1,3 +1,8 @@
+<%--@elvariable id="hasBaselineResults" type="boolean"--%>
+<%--@elvariable id="hasSelectedSpecies" type="boolean"--%>
+<%--@elvariable id="selectedSpecies" type="String"--%>
+<%--@elvariable id="jsonFacets" type="String"--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
@@ -18,7 +23,7 @@
 
     <c:if test="${hasBaselineResults}">
     var baselineSearcher = window.exposed.baseline,
-        baselineFacetsData = ${empty jsonFacets ? 'null' : jsonFacets};
+        baselineFacetsData = JSON.parse("${empty jsonFacets ? '' : jsonFacets}");
 
     baselineSearcher("atlasBaselineFacetedSearchFacetsContainer", "atlasBaselineFacetedSearchResultsContainer", selectedSpecies, baselineFacetsData);
     </c:if>

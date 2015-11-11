@@ -1,3 +1,10 @@
+<%--@elvariable id="bioEntityPropertyService" type="BioEntityPropertyService"--%>
+<%--@elvariable id="isSearch" type="boolean"--%>
+<%--@elvariable id="searchDescription" type="String"--%>
+<%--@elvariable id="identifier" type="String"--%>
+<%--@elvariable id="hasBaselineResults" type="boolean"--%>
+<%--@elvariable id="hasDifferentialResults" type="boolean"--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>

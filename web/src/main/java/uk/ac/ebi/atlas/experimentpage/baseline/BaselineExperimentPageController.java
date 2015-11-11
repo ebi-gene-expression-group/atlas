@@ -77,18 +77,6 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
     private final AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
 
-    @Value("classpath:dummy.profiles.json")
-    private Resource dummyProfilesJson;
-
-//    @Bean
-    public String dummyProfilesJson() {
-        try (InputStream inputStream = dummyProfilesJson.getInputStream()) {
-            return IOUtils.toString(inputStream);
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
     public BaselineExperimentPageController(BaselineProfilesHeatMap baselineProfilesHeatMap,
                                             ApplicationProperties applicationProperties,
                                             BaselineRequestContextBuilder requestContextBuilder,

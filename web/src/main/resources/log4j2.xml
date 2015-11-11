@@ -27,11 +27,6 @@
             <AppenderRef ref="Console"/>
         </Logger>
 
-        <Logger name="uk.ac.ebi.atlas.utils.spring.servlet.view.TilesExposingBeansView" level="info" additivity="false">
-            <AppenderRef ref="DailyRollingFile"/>
-            <AppenderRef ref="Console"/>
-        </Logger>
-
         <Root level="error">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="DailyRollingFile"/>

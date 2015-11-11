@@ -1,6 +1,4 @@
-package uk.ac.ebi.atlas.utils.spring.servlet.view;
-
-import uk.ac.ebi.atlas.utils.Visitor;
+package uk.ac.ebi.atlas.utils;
 
 public class CountingVisitor<T> implements Visitor<T> {
 

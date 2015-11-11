@@ -68,8 +68,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")
-    public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
-            , BindingResult result, Model model, HttpServletRequest request) {
+    public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request) {
 
         prepareModel(preferences, result, model, request);
 

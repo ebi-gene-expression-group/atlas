@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Controller
 @Scope("request")
-public class SearchBaselineController extends SearchController {
+public class    SearchBaselineController extends SearchController {
 
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
