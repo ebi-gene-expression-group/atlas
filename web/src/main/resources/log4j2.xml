@@ -7,14 +7,14 @@
             </PatternLayout>
         </Console>
 
-        <RollingRandomAccessFile name="DailyRollingFile" fileName="${sys:catalina.base}/logs/atlas.log" filePattern="${sys:catalina.base}/logs/atlas-%d{yyyy-MM-dd}.log">
+        <RollingFile name="DailyRollingFile" fileName="${sys:catalina.base}/logs/atlas.log" filePattern="${sys:catalina.base}/logs/atlas-%d{yyyy-MM-dd}.log">
             <PatternLayout>
                 <Pattern>%d %-5p [%t] %C{2} (%F:%L) - %m%n</Pattern>
             </PatternLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
-        </RollingRandomAccessFile>
+        </RollingFile>
     </Appenders>
 
     <Loggers>
