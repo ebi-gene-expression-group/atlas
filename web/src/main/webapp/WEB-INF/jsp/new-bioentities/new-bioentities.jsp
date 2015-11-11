@@ -11,7 +11,7 @@
 <script src="${pageContext.request.contextPath}/resources/js-bundles/faceted-search.bundle.js"></script>
 
 <c:if test="${isSearch}">
-<section>
+<section id="gxaSearchHeaderSection">
     <h2 class="strapline">
         Results for <span class="searchterm">${searchDescription}</span>
     </h2>
@@ -19,14 +19,14 @@
 </c:if>
 
 <!-- Simple page header -->
-<section class="gxaBioentityHeader">
+<section class="gxaBioentityHeader" id="gxaBioentityHeaderSection">
     <p class="gxaBioentityName">${bioEntityPropertyService.getEntityName()}</p>
     <p class="gxaBioentitySpecies">${bioEntityPropertyService.getSpecies()}</p>
     <p class="gxaBioentityDescription">${bioEntityPropertyService.getBioEntityDescription()}</p>
 </section>
 <!-- /Simple page header -->
 
-<section>
+<section id="gxaBioentityTabsSection">
 
     <ul class="nav nav-tabs" role="tablist">
         <c:if test="${hasBaselineResults}"><li title="Baseline experiments" role="presentation"><a href="new/genes/${identifier}#baseline" data-toggle="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
