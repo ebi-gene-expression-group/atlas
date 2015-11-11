@@ -23,13 +23,16 @@
 package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
+import com.google.common.util.concurrent.UncheckedExecutionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("singleton")
@@ -40,22 +43,19 @@ public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayEx
     private LoadingCache<String, MicroarrayExperiment> experiments;
 
     @Inject
-    @Named("microarrayExperimentsLoadingCache")
-    //this is the name of the implementation being injected, required because LoadingCache is an interface
-    public MicroarrayExperimentsCache(LoadingCache<String, MicroarrayExperiment> experiments) {
+    public MicroarrayExperimentsCache(@Qualifier("microarrayExperimentsLoadingCache") LoadingCache<String, MicroarrayExperiment> experiments) {
         this.experiments = experiments;
     }
 
     @Override
     public MicroarrayExperiment getExperiment(String experimentAccession) {
         try {
-
             return experiments.get(experimentAccession);
-
-        } catch (Exception e) {
+        } catch (ExecutionException | UncheckedExecutionException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(String.format("Exception while loading experiment %s: %s", experimentAccession, e.getMessage()), e.getCause());
         }
+
+        return null;
     }
 
     @Override

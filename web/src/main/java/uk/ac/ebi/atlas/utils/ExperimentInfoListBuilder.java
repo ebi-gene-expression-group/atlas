@@ -97,13 +97,15 @@ public class ExperimentInfoListBuilder {
         for (String experimentAccession : experimentTrader.getMicroarrayExperimentAccessions()) {
             MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
 
-            ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
-            experimentInfo.setNumberOfAssays(experiment.getAssayAccessions().size());
-            experimentInfo.setNumberOfContrasts(experiment.getContrastIds().size());
-            experimentInfo.setArrayDesigns(experiment.getArrayDesignAccessions());
-            experimentInfo.setArrayDesignNames(arrayDesignTrader.getArrayDesignNames(experiment.getArrayDesignAccessions()));
+            if (experiment != null) {
+                ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
+                experimentInfo.setNumberOfAssays(experiment.getAssayAccessions().size());
+                experimentInfo.setNumberOfContrasts(experiment.getContrastIds().size());
+                experimentInfo.setArrayDesigns(experiment.getArrayDesignAccessions());
+                experimentInfo.setArrayDesignNames(arrayDesignTrader.getArrayDesignNames(experiment.getArrayDesignAccessions()));
 
-            experimentInfos.add(experimentInfo);
+                experimentInfos.add(experimentInfo);
+            }
         }
 
         return experimentInfos;
@@ -116,11 +118,13 @@ public class ExperimentInfoListBuilder {
         for (String experimentAccession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()) {
             DifferentialExperiment experiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
 
-            ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
-            experimentInfo.setNumberOfAssays(experiment.getAssayAccessions().size());
-            experimentInfo.setNumberOfContrasts(experiment.getContrastIds().size());
+            if (experiment != null) {
+                ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
+                experimentInfo.setNumberOfAssays(experiment.getAssayAccessions().size());
+                experimentInfo.setNumberOfContrasts(experiment.getContrastIds().size());
 
-            experimentInfos.add(experimentInfo);
+                experimentInfos.add(experimentInfo);
+            }
         }
 
         return experimentInfos;
@@ -133,10 +137,12 @@ public class ExperimentInfoListBuilder {
         for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
             BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
-            ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
-            experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());
+            if (experiment != null) {
+                ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
+                experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());
 
-            experimentInfos.add(experimentInfo);
+                experimentInfos.add(experimentInfo);
+            }
         }
 
         return experimentInfos;
@@ -149,10 +155,12 @@ public class ExperimentInfoListBuilder {
         for (String experimentAccession : experimentTrader.getProteomicsBaselineExperimentAccessions()) {
             BaselineExperiment experiment = proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
 
-            ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
-            experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());
+            if (experiment != null) {
+                ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
+                experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());
 
-            experimentInfos.add(experimentInfo);
+                experimentInfos.add(experimentInfo);
+            }
         }
 
         return experimentInfos;

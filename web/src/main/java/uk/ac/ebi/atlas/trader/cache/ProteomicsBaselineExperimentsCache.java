@@ -23,8 +23,10 @@
 package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
+import com.google.common.util.concurrent.UncheckedExecutionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
 
@@ -41,9 +43,7 @@ public class ProteomicsBaselineExperimentsCache implements ExperimentsCache<Prot
     private LoadingCache<String, ProteomicsBaselineExperiment> experiments;
 
     @Inject
-    @Named("proteomicsBaselineExperimentsLoadingCache")
-    //this is the name of the implementation being injected, required because LoadingCache is an interface
-    public ProteomicsBaselineExperimentsCache(LoadingCache<String, ProteomicsBaselineExperiment> experiments) {
+    public ProteomicsBaselineExperimentsCache(@Qualifier("proteomicsBaselineExperimentsLoadingCache") LoadingCache<String, ProteomicsBaselineExperiment> experiments) {
         this.experiments = experiments;
     }
 
@@ -54,13 +54,12 @@ public class ProteomicsBaselineExperimentsCache implements ExperimentsCache<Prot
     @Override
     public ProteomicsBaselineExperiment getExperiment(String experimentAccession) {
         try {
-
             return experiments.get(experimentAccession);
-
-        } catch (ExecutionException e) {
+        } catch (ExecutionException | UncheckedExecutionException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Exception while loading MAGE TAB file: " + e.getMessage(), e.getCause());
         }
+
+        return null;
     }
 
     @Override
