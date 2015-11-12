@@ -44,7 +44,7 @@
 //        List<String> factors = Lists.newArrayList();
 //        factors.add("clinical information");
 //
-//        String json = subject.fetchDifferentialGeneQueryResultsAboveDefaultFoldChange(GeneQuery.create("zinc finger"), species, experimentTypes, kingdoms, factors, null, null);
+//        String json = subject.fetchDifferentialResultsAboveDefaultFoldChangeForSearch(GeneQuery.create("zinc finger"), species, experimentTypes, kingdoms, factors, null, null);
 //
 //        ReadContext jsonCtx = JsonPath.parse(json);
 //

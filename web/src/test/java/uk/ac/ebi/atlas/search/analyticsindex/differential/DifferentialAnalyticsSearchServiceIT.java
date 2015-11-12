@@ -43,7 +43,7 @@ public class DifferentialAnalyticsSearchServiceIT extends TestCase {
 
         GeneQuery geneQuery = GeneQuery.create("zinc finger");
 
-        String json = subject.fetchDifferentialGeneQuerySelectionResultsAsJson(geneQuery, species, experimentTypes, kingdoms, factors, null, null);
+        String json = subject.fetchDifferentialSearchSelectionResultsAsJson(geneQuery, species, experimentTypes, kingdoms, factors, null, null);
 
         assertTrue(!json.isEmpty());
 

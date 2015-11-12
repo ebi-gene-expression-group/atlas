@@ -23,7 +23,7 @@
 
     <c:if test="${hasBaselineResults}">
     var baselineSearcher = window.exposed.baseline,
-        baselineFacetsData = JSON.parse("${empty jsonFacets ? '' : jsonFacets}");
+        baselineFacetsData = JSON.parse('${jsonFacets}');
 
     baselineSearcher("atlasBaselineFacetedSearchFacetsContainer", "atlasBaselineFacetedSearchResultsContainer", selectedSpecies, baselineFacetsData);
     </c:if>

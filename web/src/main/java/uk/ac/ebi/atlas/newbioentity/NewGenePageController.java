@@ -30,6 +30,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 @Controller
@@ -56,4 +57,15 @@ public class NewGenePageController extends NewBioentityPageController {
 
         return super.showBioentityPage(identifier, model, experimentTypes);
     }
+
+    @RequestMapping(value = "/new/genes/{identifier:.*}/differentialFacets.json", method = RequestMethod.GET, produces = "application/json")
+    public String fetchDifferentialJsonFacets(@PathVariable String identifier) {
+        return "some_json";
+    }
+
+    @RequestMapping(value = "/new/genes/{identifier:.*}/differentialResults.json", method = RequestMethod.GET, produces = "application/json")
+    public String fetchDifferentialJsonResults(@PathVariable String identifier) {
+        return "some_other_json";
+    }
+
 }

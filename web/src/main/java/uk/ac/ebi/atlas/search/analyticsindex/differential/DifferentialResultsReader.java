@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
-import autovalue.shaded.com.google.common.common.collect.Maps;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -26,7 +25,7 @@ import javax.inject.Named;
 import java.util.*;
 
 @Named
-public class DifferentialAnalyticsFacetsReader {
+public class DifferentialResultsReader {
 
     private final ExperimentTrader experimentTrader;
     private final ContrastTrader contrastTrader;
@@ -43,7 +42,7 @@ public class DifferentialAnalyticsFacetsReader {
     private final ColourGradient colourGradient;
 
     @Inject
-    public DifferentialAnalyticsFacetsReader(ExperimentTrader experimentTrader, ContrastTrader contrastTrader, FoldChangeRounder foldChangeRounder, ColourGradient colourGradient) {
+    public DifferentialResultsReader(ExperimentTrader experimentTrader, ContrastTrader contrastTrader, FoldChangeRounder foldChangeRounder, ColourGradient colourGradient) {
         this.experimentTrader = experimentTrader;
         this.contrastTrader = contrastTrader;
         this.foldChangeRounder = foldChangeRounder;
@@ -114,7 +113,7 @@ public class DifferentialAnalyticsFacetsReader {
             String[] keySet = commonFacetItems.keySet().toArray(new String[commonFacetItems.keySet().size()]);
             for (String facetField : keySet) {
                 Set<String> items = commonFacetItems.remove(facetField);
-                commonFacetItems.put(FacetFieldMapConverter.get(facetField), items);
+                commonFacetItems.put(DifferentialFacetsReader.FacetFieldMapConverter.get(facetField), items);
             }
             resultsWithLevels.put("commonFacetItems", commonFacetItems);
 
@@ -149,74 +148,5 @@ public class DifferentialAnalyticsFacetsReader {
         }
 
         return stringSet;
-    }
-
-    public String generateFacetsTreeJson(String solrResponseAsJson) {
-        JsonObject facets = new JsonObject();
-
-        ReadContext jsonReadContext = JsonPath.parse(solrResponseAsJson);
-
-        for (String facetField : FACET_FIELDS) {
-            JsonArray facet = new JsonArray();
-            List<Object> facetFieldValues = jsonReadContext.read("$.." + facetField + "..val");
-            for (Object facetFieldValue : facetFieldValues) {
-                JsonObject facetItem = new JsonObject();
-                facetItem.addProperty("name", facetFieldValue.toString());
-                if(facetField.equals("experimentType")) {
-                    facetItem.addProperty("value", ExperimentsTypeMapConverter.get(facetFieldValue.toString()));
-                } else {
-                    facetItem.addProperty("value", facetFieldValue.toString().toLowerCase());
-                }
-                facet.add(facetItem);
-            }
-
-            facets.add(FacetFieldMapConverter.get(facetField), facet);
-        }
-
-        return facets.toString();
-    }
-
-    protected static class ExperimentsTypeMapConverter {
-        private static final Logger LOGGER = LogManager.getLogger(ExperimentsTypeMapConverter.class);
-
-        private static final Map<String,String> EXPERIMENTS_TYPE_MAP = ImmutableMap.<String, String>builder()
-                .put("rnaseq_mrna_baseline", "RNA-seq mRNA baseline")
-                .put("rnaseq_mrna_differential", "RNA-seq mRNA differential")
-                .put("proteomics_baseline", "proteomics baseline")
-                .put("microarray_1colour_microrna_differential", "microarray 1-colour microRNA differential")
-                .put("microarray_1colour_mrna_differential", "microarray 1-colour mRNA differential")
-                .put("microarray_2colour_mrna_differential", "microarray 2-colour mRNA differential")
-                .build();
-
-        public static String get(String type) {
-            if(EXPERIMENTS_TYPE_MAP.get(type) != null) {
-                return EXPERIMENTS_TYPE_MAP.get(type);
-            } else {
-                LOGGER.warn(String.format("Experiment type not found %s", type));
-                return type;
-            }
-        }
-    }
-
-    protected static class FacetFieldMapConverter {
-        private static final Logger LOGGER = LogManager.getLogger(FacetFieldMapConverter.class);
-
-        private static final Map<String,String> FACET_FIELDS_MAP = ImmutableMap.<String, String>builder()
-                .put("kingdom", "kingdom")
-                .put("species", "species")
-                .put("experimentType", "experiment type")
-                .put("factors", "experimental variables")
-                .put("numReplicates", "number of replicates")
-                .put("regulation", "regulation")
-                .build();
-
-        public static String get(String type) {
-            if(FACET_FIELDS_MAP.get(type) != null) {
-                return FACET_FIELDS_MAP.get(type);
-            } else {
-                LOGGER.warn(String.format("Facet field not found %s", type));
-                return type;
-            }
-        }
     }
 }

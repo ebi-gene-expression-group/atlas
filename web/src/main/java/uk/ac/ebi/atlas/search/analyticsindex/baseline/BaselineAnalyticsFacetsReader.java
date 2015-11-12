@@ -40,7 +40,9 @@ public class BaselineAnalyticsFacetsReader {
             String experimentAccession = (String) experiment.get("val");
             int numberOfGenesExpressedAcrossAllAssayGroups = (int) experiment.get("uniqueIdentifiers");
 
+            @SuppressWarnings("unchecked")
             Map<String, Object> assayGroupIdRoot = (Map<String, Object>) experiment.get("assayGroupId");
+            @SuppressWarnings("unchecked")
             List<Map<String, Object>> buckets = (List<Map<String, Object>>) assayGroupIdRoot.get("buckets");
 
             for(Map<String, Object> assayGroup : buckets)  {
@@ -68,7 +70,9 @@ public class BaselineAnalyticsFacetsReader {
         for (Map<String, Object> experiment : results) {
             String species = (String) experiment.get("val");
 
+            @SuppressWarnings("unchecked")
             Map<String, Object> factorRoot = (Map<String, Object>) experiment.get("defaultQueryFactorType");
+            @SuppressWarnings("unchecked")
             List<Map<String, Object>> buckets = (List<Map<String, Object>>) factorRoot.get("buckets");
 
             List<FacetTree> facetTreeList = Lists.newArrayList();

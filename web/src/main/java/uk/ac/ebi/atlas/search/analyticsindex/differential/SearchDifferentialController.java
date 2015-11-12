@@ -42,8 +42,8 @@ public class SearchDifferentialController extends SearchController {
 
         if (!geneQuery.isEmpty()) {
             addSearchHeader(requestParameters, model);
-            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialGeneQueryFacetsAsJson(geneQuery));
-            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fetchDifferentialGeneQueryResultsAsJson(geneQuery));
+            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialSearchFacetsAsJson(geneQuery));
+            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fetchDifferentialSearchResultsAsJson(geneQuery));
         }
 
         return "search-results-differential";
@@ -62,7 +62,7 @@ public class SearchDifferentialController extends SearchController {
         GeneQuery geneQuery = requestParameters.getGeneQuery();
 
         if(!geneQuery.isEmpty()) {
-            jsonResults = differentialAnalyticsSearchService.fetchDifferentialGeneQuerySelectionResultsAsJson(geneQuery, species, experimentType, kingdom, factors, numReplicates, regulation);
+            jsonResults = differentialAnalyticsSearchService.fetchDifferentialSearchSelectionResultsAsJson(geneQuery, species, experimentType, kingdom, factors, numReplicates, regulation);
         }
 
         ModelAndView mav = new ModelAndView(new MappingJacksonJsonView());

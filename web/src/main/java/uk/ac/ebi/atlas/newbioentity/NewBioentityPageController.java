@@ -1,12 +1,7 @@
 package uk.ac.ebi.atlas.newbioentity;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -14,7 +9,6 @@ import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDAO;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
 import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import java.util.LinkedHashMap;
@@ -79,8 +73,8 @@ public abstract class NewBioentityPageController {
 
         if (ExperimentType.containsDifferential(experimentTypes)) {
             model.addAttribute("hasDifferentialResults", true);
-            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialGeneQueryFacetsAsJson(GeneQuery.create(identifier)));
-            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fetchDifferentialGeneQueryResultsAsJson(GeneQuery.create(identifier)));
+            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialSearchFacetsAsJson(GeneQuery.create(identifier)));
+            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fetchDifferentialSearchResultsAsJson(GeneQuery.create(identifier)));
         } else {
             model.addAttribute("hasDifferentialResults", false);
         }
