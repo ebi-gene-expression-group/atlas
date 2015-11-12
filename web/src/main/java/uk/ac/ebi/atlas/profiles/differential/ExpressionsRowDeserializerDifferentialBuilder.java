@@ -36,6 +36,7 @@ import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -51,34 +52,35 @@ public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Ex
     }
 
     @Override
-    public ExpressionsRowDeserializerDifferentialBuilder forExperiment(String experimentAccession) {
-
+    public ExpressionsRowDeserializerDifferentialBuilder<T, K> forExperiment(String experimentAccession) {
         this.experimentAccession = experimentAccession;
-
         return this;
-
     }
 
     @Override
-    public ExpressionsRowDeserializerDifferentialBuilder withHeaders(String... tsvFileHeaders) {
+    public ExpressionsRowDeserializerDifferentialBuilder<T, K> withHeaders(String... tsvFileHeaders) {
 
-        LOGGER.debug("<withHeaders> data file headers: " + Arrays.toString(tsvFileHeaders));
+        try {
+            LOGGER.debug("<withHeaders> data file headers: " + Arrays.toString(tsvFileHeaders));
 
-        checkState(experimentAccession != null, "Builder not properly initialized!");
+            checkState(experimentAccession != null, "Builder not properly initialized!");
 
-        DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
+            DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        List<String> columnHeaders = Arrays.asList(tsvFileHeaders);
+            List<String> columnHeaders = Arrays.asList(tsvFileHeaders);
 
-        orderedContrasts = new LinkedList<>();
-        for (String columnHeader : columnHeaders) {
-            if (columnHeader.endsWith(".p-value")) {
-                String contrastId = StringUtils.substringBefore(columnHeader, ".");
-                orderedContrasts.add(experiment.getContrast(contrastId));
+            orderedContrasts = new LinkedList<>();
+            for (String columnHeader : columnHeaders) {
+                if (columnHeader.endsWith(".p-value")) {
+                    String contrastId = StringUtils.substringBefore(columnHeader, ".");
+                    orderedContrasts.add(experiment.getContrast(contrastId));
+                }
             }
-        }
 
-        return this;
+            return this;
+        } catch (ExecutionException e) {
+            throw new IllegalStateException("Failed to load experiment from cache: " + experimentAccession, e);
+        }
     }
 
     @Override

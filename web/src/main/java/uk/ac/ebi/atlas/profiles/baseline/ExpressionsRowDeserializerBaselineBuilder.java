@@ -31,6 +31,8 @@ import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import java.util.concurrent.ExecutionException;
+
 import static com.google.common.base.Preconditions.checkState;
 
 @Named
@@ -65,12 +67,16 @@ public class ExpressionsRowDeserializerBaselineBuilder implements ExpressionsRow
 
     @Override
     public ExpressionsRowTsvDeserializerBaseline build() {
-        checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
+        try {
+            checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
 
-        BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
+            BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
-        //TODO: ordered factor groups should be passed in from the top, not looked up here
-        return new ExpressionsRowTsvDeserializerBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder());
+            //TODO: ordered factor groups should be passed in from the top, not looked up here
+            return new ExpressionsRowTsvDeserializerBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder());
+        } catch (ExecutionException e) {
+            throw new IllegalStateException("Failed to load experiment from cache: " + experimentAccession, e);
+        }
     }
 
 }

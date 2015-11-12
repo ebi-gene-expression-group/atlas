@@ -35,6 +35,7 @@ import java.io.Writer;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -83,7 +84,7 @@ public class MicroarrayProfilesWriterIT {
     @Inject
     private DifferentialProfileStreamPipelineBuilder<MicroarrayProfile> pipelineBuilder;
 
-    private MicroarrayRequestContext populateRequestContext(String experimentAccession) {
+    private MicroarrayRequestContext populateRequestContext(String experimentAccession) throws ExecutionException {
         MockitoAnnotations.initMocks(this);
         MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
 
@@ -106,7 +107,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv
     @Test
-    public void defaultParameters_Header() throws GenesNotFoundException {
+    public void defaultParameters_Header() throws GenesNotFoundException, ExecutionException {
         MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
         subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
@@ -121,7 +122,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv
     @Test
-    public void defaultParameters() throws GenesNotFoundException {
+    public void defaultParameters() throws GenesNotFoundException, ExecutionException {
         MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
@@ -138,7 +139,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E_MTAB_1066.tsv&_specific=on
     @Test
-    public void notSpecific() throws GenesNotFoundException {
+    public void notSpecific() throws GenesNotFoundException, ExecutionException {
         setNotSpecific();
         defaultParameters();
     }
@@ -146,7 +147,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-43049.tsv
     @Test
-    public void eGeod43049() throws GenesNotFoundException {
+    public void eGeod43049() throws GenesNotFoundException, ExecutionException {
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
@@ -169,7 +170,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-43049.tsv?geneQuery=protein_coding
     @Test
-    public void geneQuery_ProteinCoding() throws GenesNotFoundException {
+    public void geneQuery_ProteinCoding() throws GenesNotFoundException, ExecutionException {
         setGeneQuery("protein_coding");
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
@@ -188,7 +189,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-43049.tsv?regulation=UP&foldChangeCutOff=0
     @Test
-    public void upRegulatedOnly() throws GenesNotFoundException {
+    public void upRegulatedOnly() throws GenesNotFoundException, ExecutionException {
         setFoldChangeCutOff(0);
         requestPreferences.setRegulation(Regulation.UP);
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
@@ -208,7 +209,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-43049.tsv?regulation=DOWN&foldChangeCutOff=0
     @Test
-    public void downRegulatedOnly() throws GenesNotFoundException {
+    public void downRegulatedOnly() throws GenesNotFoundException, ExecutionException {
         setFoldChangeCutOff(0);
         requestPreferences.setRegulation(Regulation.DOWN);
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
@@ -226,7 +227,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-43049.tsv?cutoff=0.002
     @Test
-    public void withCutoff() throws GenesNotFoundException {
+    public void withCutoff() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setCutoff(0.00014);
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
@@ -243,7 +244,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv?queryFactorValues=g2_g3&_specific=on
     @Test
-    public void withContrastQueryFactor() throws GenesNotFoundException {
+    public void withContrastQueryFactor() throws GenesNotFoundException, ExecutionException {
         setNotSpecific();
         requestPreferences.setQueryFactorValues(Collections.singleton("g2_g3"));
         MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
@@ -264,7 +265,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv?queryFactorValues=g2_g3
     @Test
-    public void withContrastQueryFactor_Specific() throws GenesNotFoundException {
+    public void withContrastQueryFactor_Specific() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setQueryFactorValues(Collections.singleton("g2_g3"));
         MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
@@ -285,7 +286,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-TABM-713.tsv?foldChangeCutOff=0
     @Test
-    public void eTabm713() throws GenesNotFoundException {
+    public void eTabm713() throws GenesNotFoundException, ExecutionException {
         setFoldChangeCutOff(0);
         MicroarrayRequestContext requestContext = populateRequestContext(E_TABM_713);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
@@ -310,7 +311,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-3307.tsv?foldChangeCutOff=0
     @Test
-    public void experimentWithMultipleArrayDesigns_ArrayDesignAccession1() throws GenesNotFoundException {
+    public void experimentWithMultipleArrayDesigns_ArrayDesignAccession1() throws GenesNotFoundException, ExecutionException {
         setFoldChangeCutOff(0);
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_3307);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
@@ -336,7 +337,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-3307.tsv?foldChangeCutOff=0
     @Test
-    public void experimentWithMultipleArrayDesigns_ArrayDesignAccession2() throws GenesNotFoundException {
+    public void experimentWithMultipleArrayDesigns_ArrayDesignAccession2() throws GenesNotFoundException, ExecutionException {
         setFoldChangeCutOff(0);
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_3307);
         requestContext.setArrayDesignAccession(requestContext.getExperiment().getArrayDesignAccessions().last());

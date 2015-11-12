@@ -31,6 +31,8 @@ import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.inject.Inject;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -43,13 +45,13 @@ public class BaselineExperimentIT {
     private BaselineExperimentsCache experimentsCache;
 
     @Test
-    public void isTissueExperiment() {
+    public void isTissueExperiment() throws ExecutionException {
         BaselineExperiment subject = experimentsCache.getExperiment("E-MTAB-599");
         assertThat(subject.isTissueExperiment(), is(true));
     }
 
     @Test
-    public void isNotTissueExperiment() {
+    public void isNotTissueExperiment() throws ExecutionException {
         BaselineExperiment subject = experimentsCache.getExperiment("E-GEOD-26284");
         assertThat(subject.isTissueExperiment(), is(false));
     }

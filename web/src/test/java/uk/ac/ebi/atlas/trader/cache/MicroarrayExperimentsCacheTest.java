@@ -29,7 +29,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 
 import java.net.MalformedURLException;
 import java.util.concurrent.ExecutionException;
@@ -57,21 +56,13 @@ public class MicroarrayExperimentsCacheTest {
 
     @Test
     public void testGetExperiment() throws Exception {
-
-        // given
         given(loadingCacheMock.get(anyString())).willReturn(microarrayExperimentMock);
-
-        // then
         assertThat(subject.getExperiment("bla"), is(microarrayExperimentMock));
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void whenGetFromCacheFailsCacheShallThrowIllegalStateException() throws ExecutionException {
-        //given
+    @Test(expected = ExecutionException.class)
+    public void whenGetFromCacheFailsCacheShallThrowExecutionException() throws ExecutionException {
         given(loadingCacheMock.get("")).willThrow(new ExecutionException(new MalformedURLException()));
-        //when
         subject.getExperiment("");
-        //then should throw IllegalStateException
-
     }
 }

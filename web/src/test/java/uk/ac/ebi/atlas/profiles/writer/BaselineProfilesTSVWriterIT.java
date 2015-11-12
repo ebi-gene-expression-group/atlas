@@ -38,6 +38,8 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Inject;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -134,7 +136,7 @@ public class BaselineProfilesTSVWriterIT {
     }
 
     @Test
-    public void secondHeaderLineShouldDescribeExactMatchQueryAlsoForMultidimensionalExperiments(){
+    public void secondHeaderLineShouldDescribeExactMatchQueryAlsoForMultidimensionalExperiments() throws ExecutionException {
         BaselineExperiment multidimensionalExperiment = baselineExperimentsCache.getExperiment(MULTIDIMENSIONAL_EXPERIMENT_ACCESSION);
 
         requestPreferences.setSerializedFilterFactors("RNA:total RNA,CELLULAR_COMPONENT:whole cell");
@@ -154,7 +156,7 @@ public class BaselineProfilesTSVWriterIT {
     }
 
     @Test
-    public void secondHeaderLineShouldDescribeExactMatchQueryAlsoForTwodimensionalExperiments(){
+    public void secondHeaderLineShouldDescribeExactMatchQueryAlsoForTwodimensionalExperiments() throws ExecutionException {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment("E-GEOD-41338");
 
         requestPreferences.setSerializedFilterFactors("ORGANISM:Gallus gallus");

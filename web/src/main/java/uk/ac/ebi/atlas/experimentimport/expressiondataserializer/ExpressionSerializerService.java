@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 02/04/15.
@@ -40,9 +41,13 @@ public class ExpressionSerializerService {
     }
 
     public void kryoSerializeExpressionData(String experimentAccession) {
-        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-        expressionSerializerFactory.getKryoSerializer(experiment.getType())
-                                   .serializeExpressionData(experimentAccession, baselineExperimentsCache.getExperiment(experimentAccession).getExperimentalFactors());
+        try {
+            Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+            expressionSerializerFactory.getKryoSerializer(experiment.getType())
+                    .serializeExpressionData(experimentAccession, baselineExperimentsCache.getExperiment(experimentAccession).getExperimentalFactors());
+        } catch (ExecutionException e) {
+            throw new IllegalStateException("Failed to load experiment from cache: " + experimentAccession, e);
+        }
     }
 
     public void kryoDeserializeExpressionData(String experimentAccession) {

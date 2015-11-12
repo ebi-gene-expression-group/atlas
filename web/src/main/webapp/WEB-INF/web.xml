@@ -26,6 +26,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
+
     <context-param>
         <param-name>log4jConfiguration</param-name>
         <param-value>classpath:log4j2.xml</param-value>
@@ -54,9 +55,7 @@
 
     <filter>
         <filter-name>encoding-filter</filter-name>
-        <filter-class>
-            org.springframework.web.filter.CharacterEncodingFilter
-        </filter-class>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
         <init-param>
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
@@ -70,9 +69,7 @@
 
     <filter>
         <filter-name>cors-headers</filter-name>
-        <filter-class>
-            uk.ac.ebi.atlas.web.filters.CORSHeaders
-        </filter-class>
+        <filter-class>uk.ac.ebi.atlas.web.filters.CORSHeaders</filter-class>
     </filter>
 
     <filter-mapping>

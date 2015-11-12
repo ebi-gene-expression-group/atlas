@@ -24,6 +24,8 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
@@ -82,11 +84,11 @@ public class BaselineProfilesHeatMapEMTab1733IT {
     private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
 
     @Before
-    public void initRequestContext() {
+    public void initRequestContext() throws ExecutionException {
         populateRequestContext();
     }
 
-    private void populateRequestContext() {
+    private void populateRequestContext() throws ExecutionException {
         BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(E_MTAB_1733);
 
         requestPreferences.setQueryFactorType("ORGANISM_PART");

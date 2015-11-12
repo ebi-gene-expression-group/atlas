@@ -13,6 +13,8 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -28,7 +30,7 @@ public class BaselineExperimentControllerIT {
     BaselineExperimentController subject;
 
     @Test
-    public void searchingForAllFactorsSetsSpecificToFalse_singleFactorExperiment() {
+    public void searchingForAllFactorsSetsSpecificToFalse_singleFactorExperiment() throws ExecutionException {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment("E-MTAB-599");
         ImmutableSet<String> allFactors = ImmutableSet.of("heart", "hippocampus", "liver", "lung", "spleen", "thymus");
 
@@ -42,7 +44,7 @@ public class BaselineExperimentControllerIT {
     }
 
     @Test
-    public void searchingForAllFactorsSetsSpecificToFalse_multiFactorExperiment() {
+    public void searchingForAllFactorsSetsSpecificToFalse_multiFactorExperiment() throws ExecutionException {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment("E-MTAB-2812");
         ImmutableSet<String> allFactors = ImmutableSet.of("hermaphrodite");
 

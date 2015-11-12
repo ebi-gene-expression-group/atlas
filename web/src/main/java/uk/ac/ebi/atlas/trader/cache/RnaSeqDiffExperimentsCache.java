@@ -38,8 +38,6 @@ import java.util.concurrent.ExecutionException;
 @Scope("singleton")
 public class RnaSeqDiffExperimentsCache implements ExperimentsCache<DifferentialExperiment> {
 
-    private static final Logger LOGGER = LogManager.getLogger(RnaSeqDiffExperimentsCache.class);
-
     private LoadingCache<String, DifferentialExperiment> experiments;
 
     @Inject
@@ -48,14 +46,8 @@ public class RnaSeqDiffExperimentsCache implements ExperimentsCache<Differential
     }
 
     @Override
-    public DifferentialExperiment getExperiment(String experimentAccession) {
-        try {
-            return experiments.get(experimentAccession);
-        } catch (ExecutionException | UncheckedExecutionException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
-
-        return null;
+    public DifferentialExperiment getExperiment(String experimentAccession) throws ExecutionException {
+        return experiments.get(experimentAccession);
     }
 
     @Override

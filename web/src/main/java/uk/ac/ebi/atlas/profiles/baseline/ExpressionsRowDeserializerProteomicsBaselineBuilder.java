@@ -30,6 +30,8 @@ import uk.ac.ebi.atlas.trader.loader.ProteomicsBaselineExperimentExpressionLevel
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import java.util.concurrent.ExecutionException;
+
 import static com.google.common.base.Preconditions.checkState;
 
 @Named
@@ -59,13 +61,16 @@ public class ExpressionsRowDeserializerProteomicsBaselineBuilder extends Express
 
     @Override
     public ExpressionsRowTsvDeserializerBaseline build() {
-        checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
+        try {
+            checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
 
-        BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
+            BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
-        //TODO: ordered factor groups should be passed in from the top, not looked up here
-        return new ExpressionsRowTsvDeserializerProteomicsBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder(), indicesOfAssayGroups);
-
+            //TODO: ordered factor groups should be passed in from the top, not looked up here
+            return new ExpressionsRowTsvDeserializerProteomicsBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder(), indicesOfAssayGroups);
+        } catch (ExecutionException e) {
+            throw new IllegalStateException("Failed to load experiment from cache: " + experimentAccession, e);
+        }
     }
 
 }

@@ -38,6 +38,7 @@ import javax.inject.Named;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("prototype")
@@ -95,9 +96,10 @@ public class ExperimentInfoListBuilder {
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
         for (String experimentAccession : experimentTrader.getMicroarrayExperimentAccessions()) {
-            MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
+            try {
 
-            if (experiment != null) {
+                MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
+
                 ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
                 experimentInfo.setNumberOfAssays(experiment.getAssayAccessions().size());
                 experimentInfo.setNumberOfContrasts(experiment.getContrastIds().size());
@@ -105,6 +107,9 @@ public class ExperimentInfoListBuilder {
                 experimentInfo.setArrayDesignNames(arrayDesignTrader.getArrayDesignNames(experiment.getArrayDesignAccessions()));
 
                 experimentInfos.add(experimentInfo);
+
+            } catch (ExecutionException e) {
+                // continue;
             }
         }
 
@@ -116,14 +121,18 @@ public class ExperimentInfoListBuilder {
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
         for (String experimentAccession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()) {
-            DifferentialExperiment experiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
+            try {
 
-            if (experiment != null) {
+                DifferentialExperiment experiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
+
                 ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
                 experimentInfo.setNumberOfAssays(experiment.getAssayAccessions().size());
                 experimentInfo.setNumberOfContrasts(experiment.getContrastIds().size());
 
                 experimentInfos.add(experimentInfo);
+
+            } catch (ExecutionException e) {
+                // continue;
             }
         }
 
@@ -135,13 +144,17 @@ public class ExperimentInfoListBuilder {
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
         for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
-            BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
+            try {
 
-            if (experiment != null) {
+                BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
+
                 ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
                 experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());
 
                 experimentInfos.add(experimentInfo);
+
+            } catch (ExecutionException e) {
+                // continue;
             }
         }
 
@@ -153,13 +166,17 @@ public class ExperimentInfoListBuilder {
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
         for (String experimentAccession : experimentTrader.getProteomicsBaselineExperimentAccessions()) {
-            BaselineExperiment experiment = proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
+            try {
 
-            if (experiment != null) {
+                  BaselineExperiment experiment = proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
+
                 ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
                 experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());
 
                 experimentInfos.add(experimentInfo);
+
+            } catch (ExecutionException e) {
+                // continue;
             }
         }
 

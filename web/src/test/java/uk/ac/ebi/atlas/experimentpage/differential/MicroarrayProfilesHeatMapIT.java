@@ -22,6 +22,7 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -47,7 +48,7 @@ public class MicroarrayProfilesHeatMapIT {
 
     private MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
 
-    private MicroarrayRequestContext populateRequestContext(String experimentAccession) throws GenesNotFoundException {
+    private MicroarrayRequestContext populateRequestContext(String experimentAccession) throws GenesNotFoundException, ExecutionException {
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
         return requestContextBuilder.forExperiment(experiment)
@@ -58,7 +59,7 @@ public class MicroarrayProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066
     @Test
-    public void defaultParameters() throws GenesNotFoundException {
+    public void defaultParameters() throws GenesNotFoundException, ExecutionException {
         MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
         MicroarrayExperiment experiment = requestContext.getExperiment();
         DifferentialProfilesList profiles = subject.fetch(requestContext);
@@ -80,7 +81,7 @@ public class MicroarrayProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066&_specific=on
     @Test
-    public void notSpecific() throws GenesNotFoundException {
+    public void notSpecific() throws GenesNotFoundException, ExecutionException {
         setNotSpecific();
         MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
         DifferentialProfilesList profiles = subject.fetch(requestContext);
@@ -93,7 +94,7 @@ public class MicroarrayProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-43049?geneQuery=protein_coding
     @Test
-    public void geneQuery_ProteinCoding() throws GenesNotFoundException {
+    public void geneQuery_ProteinCoding() throws GenesNotFoundException, ExecutionException {
         setGeneQuery("protein_coding");
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
         DifferentialProfilesList profiles = subject.fetch(requestContext);
@@ -106,7 +107,7 @@ public class MicroarrayProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-43049?regulation=UP&foldChangeCutOff=0
     @Test
-    public void upRegulatedOnly() throws GenesNotFoundException {
+    public void upRegulatedOnly() throws GenesNotFoundException, ExecutionException {
         setFoldChangeCutOff(0);
         requestPreferences.setRegulation(Regulation.UP);
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
@@ -120,7 +121,7 @@ public class MicroarrayProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-43049?regulation=DOWN&foldChangeCutOff=0
     @Test
-    public void downRegulatedOnly() throws GenesNotFoundException {
+    public void downRegulatedOnly() throws GenesNotFoundException, ExecutionException {
         setFoldChangeCutOff(0);
         requestPreferences.setRegulation(Regulation.DOWN);
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
@@ -134,7 +135,7 @@ public class MicroarrayProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-43049?cutoff=0.002
     @Test
-    public void withCutoff() throws GenesNotFoundException {
+    public void withCutoff() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setCutoff(0.00014);
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
         DifferentialProfilesList profiles = subject.fetch(requestContext);
@@ -145,7 +146,7 @@ public class MicroarrayProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066?queryFactorValues=g2_g3&_specific=on
     @Test
-    public void withContrastQueryFactor() throws GenesNotFoundException {
+    public void withContrastQueryFactor() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setQueryFactorValues(Collections.singleton("g2_g3"));
         setNotSpecific();
         MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
@@ -159,7 +160,7 @@ public class MicroarrayProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066?queryFactorValues=g2_g3
     @Test
-    public void withContrastQueryFactor_Specific() throws GenesNotFoundException {
+    public void withContrastQueryFactor_Specific() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setQueryFactorValues(Collections.singleton("g2_g3"));
         MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
         DifferentialProfilesList profiles = subject.fetch(requestContext);
@@ -173,7 +174,7 @@ public class MicroarrayProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-MEXP-3628?foldChangeCutOff=0
     @Test
-    public void eMexp3628() throws GenesNotFoundException {
+    public void eMexp3628() throws GenesNotFoundException, ExecutionException {
         setFoldChangeCutOff(0);
         MicroarrayRequestContext requestContext = populateRequestContext(E_MEXP_3628);
         DifferentialProfilesList profiles = subject.fetch(requestContext);

@@ -35,6 +35,7 @@ import java.io.Writer;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -83,7 +84,7 @@ public class RnaSeqProfilesWriterIT {
     @Inject
     private DifferentialProfileStreamPipelineBuilder<RnaSeqProfile> pipelineBuilder;
 
-    private RnaSeqRequestContext populateRequestContext(String experimentAccession) {
+    private RnaSeqRequestContext populateRequestContext(String experimentAccession) throws ExecutionException {
         MockitoAnnotations.initMocks(this);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
@@ -106,7 +107,7 @@ public class RnaSeqProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv
     @Test
-    public void defaultParameters_Header() throws GenesNotFoundException {
+    public void defaultParameters_Header() throws GenesNotFoundException, ExecutionException {
         RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
         subject.write(printWriterMock, requestContext);
 
@@ -123,7 +124,7 @@ public class RnaSeqProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv
     @Test
-    public void defaultParameters() throws GenesNotFoundException {
+    public void defaultParameters() throws GenesNotFoundException, ExecutionException {
         RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
         long genesCount = subject.write(printWriterMock, requestContext);
 
@@ -146,14 +147,14 @@ public class RnaSeqProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv&_specific=on
     @Test
-    public void notSpecific() throws GenesNotFoundException {
+    public void notSpecific() throws GenesNotFoundException, ExecutionException {
         setNotSpecific();
         defaultParameters();
     }
 
     // http://localhost:8080/gxa/experiments/E-GEOD-21860.tsv?geneQuery=protein_coding
     @Test
-    public void geneQuery_ProteinCoding() throws GenesNotFoundException {
+    public void geneQuery_ProteinCoding() throws GenesNotFoundException, ExecutionException {
         setGeneQuery("protein_coding");
         RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_21860);
         long genesCount = subject.write(printWriterMock, requestContext);
@@ -171,7 +172,7 @@ public class RnaSeqProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?regulation=UP
     @Test
-    public void upRegulatedOnly() throws GenesNotFoundException {
+    public void upRegulatedOnly() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setRegulation(Regulation.UP);
 
         RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
@@ -188,7 +189,7 @@ public class RnaSeqProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?regulation=DOWN
     @Test
-    public void downRegulatedOnly() throws GenesNotFoundException {
+    public void downRegulatedOnly() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setRegulation(Regulation.DOWN);
         RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
         long genesCount = subject.write(printWriterMock, requestContext);
@@ -204,7 +205,7 @@ public class RnaSeqProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?cutoff=0.002
     @Test
-    public void withCutoff() throws GenesNotFoundException {
+    public void withCutoff() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setCutoff(0.002);
         RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
         long genesCount = subject.write(printWriterMock, requestContext);
@@ -220,7 +221,7 @@ public class RnaSeqProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?foldChangeCutOff=5
     @Test
-    public void withFoldChangeCutoff() throws GenesNotFoundException {
+    public void withFoldChangeCutoff() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setFoldChangeCutOff(5D);
         RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
         long genesCount = subject.write(printWriterMock, requestContext);
@@ -238,7 +239,7 @@ public class RnaSeqProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?queryFactorValues=g1_g2&_specific=on
     @Test
-    public void withContrastQueryFactor() throws GenesNotFoundException {
+    public void withContrastQueryFactor() throws GenesNotFoundException, ExecutionException {
         setNotSpecific();
         requestPreferences.setQueryFactorValues(Collections.singleton("g1_g2"));
         RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
@@ -258,7 +259,7 @@ public class RnaSeqProfilesWriterIT {
 
     //  http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?queryFactorValues=g1_g2
     @Test
-    public void withContrastQueryFactor_Specific() throws GenesNotFoundException {
+    public void withContrastQueryFactor_Specific() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setQueryFactorValues(Collections.singleton("g1_g2"));
         RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
         long genesCount = subject.write(printWriterMock, requestContext);

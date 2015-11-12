@@ -38,8 +38,6 @@ import java.util.concurrent.ExecutionException;
 @Scope("singleton")
 public class ProteomicsBaselineExperimentsCache implements ExperimentsCache<ProteomicsBaselineExperiment> {
 
-    private static final Logger LOGGER = LogManager.getLogger(ProteomicsBaselineExperimentsCache.class);
-
     private LoadingCache<String, ProteomicsBaselineExperiment> experiments;
 
     @Inject
@@ -47,19 +45,9 @@ public class ProteomicsBaselineExperimentsCache implements ExperimentsCache<Prot
         this.experiments = experiments;
     }
 
-    /*
-     * @throws IllegalStateException if an error was thrown while loading the experiment, or the experiment
-     * doesn't exist
-     */
     @Override
-    public ProteomicsBaselineExperiment getExperiment(String experimentAccession) {
-        try {
-            return experiments.get(experimentAccession);
-        } catch (ExecutionException | UncheckedExecutionException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
-
-        return null;
+    public ProteomicsBaselineExperiment getExperiment(String experimentAccession) throws ExecutionException {
+        return experiments.get(experimentAccession);
     }
 
     @Override
@@ -71,6 +59,5 @@ public class ProteomicsBaselineExperimentsCache implements ExperimentsCache<Prot
     public void evictAll() {
         experiments.invalidateAll();
     }
-
 
 }

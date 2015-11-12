@@ -23,6 +23,7 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -54,11 +55,11 @@ public class BaselineProfilesHeatMapIT {
     private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
 
     @Before
-    public void initRequestContext() {
+    public void initRequestContext() throws ExecutionException {
         populateRequestContext();
     }
 
-    private void populateRequestContext() {
+    private void populateRequestContext() throws ExecutionException{
         BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(E_MTAB_513);
 
         requestPreferences.setQueryFactorType("ORGANISM_PART");
@@ -94,7 +95,7 @@ public class BaselineProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true&queryFactorValues=leukocyte
     @Test
-    public void eMTAB513_Specific_QueryFactorLeukocyte() throws GenesNotFoundException {
+    public void eMTAB513_Specific_QueryFactorLeukocyte() throws GenesNotFoundException, ExecutionException  {
         setQueryFactor(FACTOR_LEUKOCYTE);
 
         BaselineProfilesList profiles = subject.fetch(baselineRequestContext);
@@ -106,7 +107,7 @@ public class BaselineProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&_specific=on&queryFactorValues=leukocyte
     @Test
-    public void eMTAB513_NotSpecific_QueryFactorLeukocyte() throws GenesNotFoundException {
+    public void eMTAB513_NotSpecific_QueryFactorLeukocyte() throws GenesNotFoundException, ExecutionException {
         setNotSpecific();
         setQueryFactor(FACTOR_LEUKOCYTE);
 
@@ -155,7 +156,7 @@ public class BaselineProfilesHeatMapIT {
         requestPreferences.setSpecific(false);
     }
 
-    private void setQueryFactor(Factor factor) {
+    private void setQueryFactor(Factor factor) throws ExecutionException {
         requestPreferences.setQueryFactorType(factor.getType());
         requestPreferences.setQueryFactorValues(Collections.singleton(factor.getValue()));
 

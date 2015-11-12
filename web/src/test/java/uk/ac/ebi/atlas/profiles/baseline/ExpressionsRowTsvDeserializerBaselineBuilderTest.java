@@ -34,6 +34,8 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -70,7 +72,7 @@ public class ExpressionsRowTsvDeserializerBaselineBuilderTest {
 
 
     @Before
-    public void initializeSubject() {
+    public void initializeSubject() throws ExecutionException {
 
         when(factorMock1.getType()).thenReturn("ORGANISM_PART");
         when(factorMock1.getValue()).thenReturn("heart");

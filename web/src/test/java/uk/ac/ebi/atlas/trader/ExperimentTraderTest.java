@@ -34,6 +34,8 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.cache.*;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -112,7 +114,7 @@ public class ExperimentTraderTest {
     }
 
     @Test
-    public void getExperimentShouldUseTheCache(){
+    public void getExperimentShouldUseTheCache() throws ExecutionException {
         given(publicExperimentTypesCacheMock.getExperimentType(E_GEOD_21860)).willReturn(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
         subject.getPublicExperiment(E_GEOD_21860);
         verify(baselineExperimentsCacheMock,times(0)).getExperiment(E_GEOD_21860);

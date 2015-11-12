@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -150,12 +151,12 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(factors, contains(allFactors.toArray()));
     }
 
-    private ImmutableSortedSet<Factor> getOrganismPartFactorsInBaselineExperiment(String experimentAccession) {
+    private ImmutableSortedSet<Factor> getOrganismPartFactorsInBaselineExperiment(String experimentAccession) throws ExecutionException {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
         return experiment.getExperimentalFactors().getFactors("ORGANISM_PART");
     }
 
-    private SortedSet<Factor> getDefaultFilterFactorsInProteomicsExperiment(String experimentAccession) {
+    private SortedSet<Factor> getDefaultFilterFactorsInProteomicsExperiment(String experimentAccession) throws ExecutionException {
         ProteomicsBaselineExperiment experiment = proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
         return experiment.getExperimentalFactors().getCoOccurringFactors(experiment.getExperimentalFactors().getDefaultFilterFactors().iterator().next());
     }
@@ -414,7 +415,7 @@ public class BaselineExperimentProfileSearchServiceIT {
     private static final String GENE_IN_CELL_LINES_EXPERIMENT = "ENSG00000007062";
 
     @Test
-    public void onlyTissueExperimentsReturned() {
+    public void onlyTissueExperimentsReturned() throws ExecutionException {
         // test gene has expression in cell lines experiment (E-GEOD-26284)
         List<BaselineExperimentExpression> expressions = baselineExpressionDao.fetchAverageExpressionByExperimentAssayGroup(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT));
         assertThat(expressions,  hasItem(hasExperimentAccession("E-GEOD-26284")));

@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 
-import java.net.MalformedURLException;
+import java.io.FileNotFoundException;
 import java.util.concurrent.ExecutionException;
 
 import static org.mockito.BDDMockito.given;
@@ -23,18 +23,12 @@ public class ExperimentsCacheTest {
 
     @Before
     public void init() throws Exception {
-
         subject = new BaselineExperimentsCache(loadingCacheMock);
     }
 
-
-    @Test(expected = IllegalStateException.class)
-    public void whenGetFromCacheFailsCacheShallThrowIllegalStateException() throws ExecutionException {
-        //given
-        given(loadingCacheMock.get("")).willThrow(new ExecutionException(new MalformedURLException()));
-        //when
+    @Test(expected = ExecutionException.class)
+    public void whenGetFromCacheFailsCacheShallThrowExecutionException() throws ExecutionException {
+        given(loadingCacheMock.get("")).willThrow(new ExecutionException(new FileNotFoundException()));
         subject.getExperiment("");
-        //then should throw IllegalStateException
-
     }
 }

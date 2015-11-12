@@ -37,8 +37,6 @@ import java.util.concurrent.ExecutionException;
 @Scope("singleton")
 public class BaselineExperimentsCache implements ExperimentsCache<BaselineExperiment> {
 
-    private static final Logger LOGGER = LogManager.getLogger(BaselineExperimentsCache.class);
-
     private LoadingCache<String, BaselineExperiment> experiments;
 
     @Inject
@@ -46,19 +44,9 @@ public class BaselineExperimentsCache implements ExperimentsCache<BaselineExperi
         this.experiments = experiments;
     }
 
-    /*
-     * @throws IllegalStateException if an error was thrown while loading the experiment, or the experiment
-     * doesn't exist
-     */
     @Override
-    public BaselineExperiment getExperiment(String experimentAccession) {
-        try {
-            return experiments.get(experimentAccession);
-        } catch (ExecutionException | UncheckedExecutionException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
-
-        return null;
+    public BaselineExperiment getExperiment(String experimentAccession) throws ExecutionException {
+        return experiments.get(experimentAccession);
     }
 
     @Override

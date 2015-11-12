@@ -29,9 +29,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
-import java.net.MalformedURLException;
+import java.io.FileNotFoundException;
 import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -58,21 +57,13 @@ public class BaselineExperimentsCacheTest {
 
     @Test
     public void testGetExperiment() throws Exception {
-
-        // given
         given(loadingCacheMock.get(anyString())).willReturn(baselineExperimentMock);
-
-        // then
         assertThat(subject.getExperiment("bla"), is(baselineExperimentMock));
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void whenGetFromCacheFailsCacheShallThrowIllegalStateException() throws ExecutionException {
-        //given
-        given(loadingCacheMock.get("")).willThrow(new ExecutionException(new MalformedURLException()));
-        //when
+    @Test(expected = ExecutionException.class)
+    public void whenGetFromCacheFailsCacheShallThrowExecutionException() throws ExecutionException {
+        given(loadingCacheMock.get("")).willThrow(new ExecutionException(new FileNotFoundException()));
         subject.getExperiment("");
-        //then should throw IllegalStateException
-
     }
 }

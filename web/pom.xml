@@ -22,16 +22,16 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <parent>
         <groupId>uk.ac.ebi.gxa</groupId>
         <artifactId>atlas</artifactId>
-        <version>0.1.4-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>web</artifactId>
-    <!--
-    <version>... let's inherit version from parent</version>
-    -->
+    <!-- <version>... let's inherit version from parent</version> -->
     <packaging>war</packaging>
     <name>Gene Expression Atlas WebApp</name>
     <url>http://www.ebi.ac.uk/gxa</url>

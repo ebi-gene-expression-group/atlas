@@ -38,8 +38,6 @@ import java.util.concurrent.ExecutionException;
 @Scope("singleton")
 public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayExperiment> {
 
-    private static final Logger LOGGER = LogManager.getLogger(MicroarrayExperimentsCache.class);
-
     private LoadingCache<String, MicroarrayExperiment> experiments;
 
     @Inject
@@ -48,14 +46,8 @@ public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayEx
     }
 
     @Override
-    public MicroarrayExperiment getExperiment(String experimentAccession) {
-        try {
-            return experiments.get(experimentAccession);
-        } catch (ExecutionException | UncheckedExecutionException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
-
-        return null;
+    public MicroarrayExperiment getExperiment(String experimentAccession) throws ExecutionException {
+        return experiments.get(experimentAccession);
     }
 
     @Override

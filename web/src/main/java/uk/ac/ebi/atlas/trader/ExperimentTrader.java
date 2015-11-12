@@ -37,6 +37,7 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("singleton")
@@ -125,21 +126,24 @@ public class ExperimentTrader {
 
     public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
 
-        switch (experimentType) {
-            case RNASEQ_MRNA_BASELINE:
-                return baselineExperimentsCache.getExperiment(experimentAccession);
-            case RNASEQ_MRNA_DIFFERENTIAL:
-                return rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
-            case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:
-            case MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL:
-            case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
-                return microarrayExperimentsCache.getExperiment(experimentAccession);
-            case PROTEOMICS_BASELINE:
-                return proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
-            default:
-                throw new IllegalStateException("invalid enum value: " + experimentType);
+        try {
+            switch (experimentType) {
+                case RNASEQ_MRNA_BASELINE:
+                    return baselineExperimentsCache.getExperiment(experimentAccession);
+                case RNASEQ_MRNA_DIFFERENTIAL:
+                    return rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
+                case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:
+                case MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL:
+                case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
+                    return microarrayExperimentsCache.getExperiment(experimentAccession);
+                case PROTEOMICS_BASELINE:
+                    return proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
+                default:
+                    throw new IllegalStateException("Invalid enum value: " + experimentType);
+            }
+        } catch (ExecutionException e) {
+            throw new IllegalStateException("Failed to load experiment from cache: " + experimentAccession, e);
         }
-
     }
 
     //ToDo (NK): to get Experiment accession we go 4 times to the DB (for each experiment type)

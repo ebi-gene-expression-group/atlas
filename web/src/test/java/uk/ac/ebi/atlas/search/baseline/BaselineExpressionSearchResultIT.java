@@ -15,6 +15,7 @@ import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import javax.inject.Inject;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -34,7 +35,7 @@ public class BaselineExpressionSearchResultIT {
     private BaselineExperimentsCache baselineExperimentsCache;
 
     @Test
-    public void e_mtab_513_TwoSpecificAssayGroups() {
+    public void e_mtab_513_TwoSpecificAssayGroups() throws ExecutionException {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_MTAB_513);
 
         BaselineExperimentAssayGroup subject = new BaselineExperimentAssayGroup(E_MTAB_513, E_MTAB_513, "Homo sapiens", ORGANISM_PART, true);
@@ -52,7 +53,7 @@ public class BaselineExpressionSearchResultIT {
     }
 
     @Test
-    public void e_mtab_513_AllAssayGroups() {
+    public void e_mtab_513_AllAssayGroups() throws ExecutionException {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_MTAB_513);
 
         BaselineExperimentAssayGroup subject = new BaselineExperimentAssayGroup(E_MTAB_513, E_MTAB_513, "Homo sapiens", ORGANISM_PART, true);
@@ -66,7 +67,7 @@ public class BaselineExpressionSearchResultIT {
     }
 
     @Test
-    public void multiFactor_TwoSpecificAssayGroups_InSlice() {
+    public void multiFactor_TwoSpecificAssayGroups_InSlice() throws ExecutionException  {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_GEOD_26284);
 
         BaselineExperimentAssayGroup subject = new BaselineExperimentAssayGroup(E_GEOD_26284, E_GEOD_26284, "Homo sapiens", CELL_LINE, true);
@@ -86,7 +87,7 @@ public class BaselineExpressionSearchResultIT {
     }
 
     @Test
-    public void multiFactor_AllAssayGroups_InSlice() {
+    public void multiFactor_AllAssayGroups_InSlice() throws ExecutionException {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_GEOD_26284);
 
         BaselineExperimentAssayGroup subject = new BaselineExperimentAssayGroup(E_GEOD_26284, E_GEOD_26284, "Homo sapiens", CELL_LINE, true);

@@ -22,11 +22,12 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>uk.ac.ebi.gxa</groupId>
     <artifactId>atlas</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.4-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>Gene Expression Atlas</name>
     <url>http://www.ebi.ac.uk/gxa/</url>
 
@@ -44,13 +45,14 @@
         <solr.data.location>${user.home}/ATLAS3.TEST/solr</solr.data.location>
         <solr.host>localhost</solr.host>
         <solr.test.host>lime.ebi.ac.uk</solr.test.host>
-        <gxa.server.url>http://ves-hx-74:8080/gxa</gxa.server.url>
         <arrayexpress.ac.url>/gxa/arrayexpress</arrayexpress.ac.url>
         <europepmc.base.url>/gxa/europepmc</europepmc.base.url>
+
         <!-- set the next two properties to non empty value only if you want
         to run the selenium tests against a different host/port than localhost:9090 -->
         <integration.test.host>lime</integration.test.host>
         <integration.test.portnumber>14092</integration.test.portnumber>
+
         <!-- mailtrap.io user: atlas-developers@ebi.ac.uk -->
         <!-- mailtrap.io password: atlas-ebi-14 -->
         <mail.smtp.host>mailtrap.io</mail.smtp.host>
@@ -59,13 +61,13 @@
         <mail.smtp.password>324c3bac45dfb398</mail.smtp.password>
         <mail.smtp.auth>true</mail.smtp.auth>
 
+        <!-- Code Coverage with SONAR -->
         <sonar.jdbc.url>jdbc:h2:tcp://lime:9092/sonar</sonar.jdbc.url>
         <sonar.jdbc.driver>org.h2.Driver</sonar.jdbc.driver>
         <sonar.jdbc.username>sonar</sonar.jdbc.username>
         <sonar.jdbc.password>sonar</sonar.jdbc.password>
         <sonar.host.url>http://lime:9000</sonar.host.url>
 
-        <!-- Code Coverage with SONAR -->
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <!-- Tells Sonar to reuse existing reports, NEEDED when testing with TestNG! -->
 
@@ -231,12 +233,10 @@
                         </additionalClasspathDirs>
                     </configuration>
                 </plugin>
-
             </plugins>
         </pluginManagement>
 
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
@@ -263,13 +263,11 @@
                 <artifactId>jmeter-maven-plugin</artifactId>
                 <version>1.6.0</version>
             </plugin>
-
         </plugins>
 
     </build>
 
     <dependencies>
-
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
@@ -375,13 +373,13 @@
         </dependency>
 
         <!-- Logging -->
-        <!-- For Spring, which uses JCL -->
+        <!-- Route Spring JCL logs to Log4j -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jcl</artifactId>
             <version>2.4.1</version>
         </dependency>
-        <!-- There are other packages (JsonPath, Solr...) that use SLF4J-->
+        <!-- There are other packages (JsonPath, Solr...) that use SLF4J; route them to Log4j too -->
         <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-slf4j-impl</artifactId>
@@ -583,7 +581,7 @@
     <developers>
         <developer>
             <id>amunoz</id>
-            <name>Alfonso Muñoz-Pome Fuentes</name>
+            <name>Alfonso Muñoz-Pomer Fuentes</name>
             <email>amunoz@ebi.ac.uk</email>
             <organization>EBI</organization>
             <organizationUrl>http://www.ebi.ac.uk</organizationUrl>

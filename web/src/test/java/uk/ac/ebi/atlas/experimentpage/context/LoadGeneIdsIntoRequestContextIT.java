@@ -12,6 +12,8 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.assertThat;
 
@@ -34,7 +36,7 @@ public class LoadGeneIdsIntoRequestContextIT {
     private BaselineExperimentsCache baselineExperimentsCache;
 
 
-    public void populateRequestContext(String experimentAccession) {
+    public void populateRequestContext(String experimentAccession) throws ExecutionException {
         BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
         requestPreferences.setQueryFactorType("ORGANISM_PART");
@@ -44,7 +46,7 @@ public class LoadGeneIdsIntoRequestContextIT {
     }
 
     @Test
-    public void mirbaseGeneIdsAreExpanded() throws GenesNotFoundException {
+    public void mirbaseGeneIdsAreExpanded() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setGeneQuery(GeneQuery.create("hsa-mir-636"));
         populateRequestContext("E-MTAB-1733");
         subject.load(baselineRequestContext, "homo sapiens");

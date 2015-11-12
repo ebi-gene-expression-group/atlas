@@ -32,6 +32,7 @@ import java.io.Writer;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -78,7 +79,7 @@ public class BaselineProfilesWriterIT {
     @Value("classpath:/file-templates/download-headers-baseline.txt")
     public Resource tsvFileMastheadTemplateResource;
 
-    private BaselineRequestContext populateRequestContext(String experimentAccession) {
+    private BaselineRequestContext populateRequestContext(String experimentAccession) throws ExecutionException {
         MockitoAnnotations.initMocks(this);
         BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
@@ -100,7 +101,7 @@ public class BaselineProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true
     @Test
-    public void eMTab513_Specific() throws GenesNotFoundException {
+    public void eMTab513_Specific() throws GenesNotFoundException, ExecutionException {
         BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
         long genesCount = subject.write(printWriterMock, requestContext);
 
@@ -131,14 +132,14 @@ public class BaselineProfilesWriterIT {
 
     //http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&_specific=on
     @Test
-    public void eMTab513_NotSpecific() throws GenesNotFoundException {
+    public void eMTab513_NotSpecific() throws GenesNotFoundException, ExecutionException {
         setNotSpecific();
         eMTab513_Specific();
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true&queryFactorValues=leukocyte
     @Test
-    public void eMTab513_Specific_QueryFactorLeukocyte() throws GenesNotFoundException {
+    public void eMTab513_Specific_QueryFactorLeukocyte() throws GenesNotFoundException, ExecutionException {
         setQueryFactor(FACTOR_LEUKOCYTE);
 
         BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
@@ -168,7 +169,7 @@ public class BaselineProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&_specific=on&queryFactorValues=leukocyte
     @Test
-    public void eMTab513_NotSpecific_QueryFactorLeukocyte() throws GenesNotFoundException {
+    public void eMTab513_NotSpecific_QueryFactorLeukocyte() throws GenesNotFoundException, ExecutionException {
         setNotSpecific();
         setQueryFactor(FACTOR_LEUKOCYTE);
 
@@ -198,14 +199,14 @@ public class BaselineProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&_specific=on&geneQuery=R-HSA-372790%09R-HSA-388396%09R-HSA-109582%09R-HSA-162582%09R-HSA-1430728%09R-HSA-168256%09R-HSA-74160%09R-HSA-1643685%09R-HSA-1280218%09R-HSA-168249%09R-HSA-392499%09R-HSA-556833%09R-HSA-382551%09R-HSA-1640170%09R-HSA-212436&exactMatch=true
     @Test
-    public void eMTab513_NotSpecific_MultipleGeneSets() throws GenesNotFoundException {
+    public void eMTab513_NotSpecific_MultipleGeneSets() throws GenesNotFoundException, ExecutionException {
         setNotSpecific();
         eMTab513_Specific_MultipleGeneSets();
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true&geneQuery=R-HSA-372790%09R-HSA-388396%09R-HSA-109582%09R-HSA-162582%09R-HSA-1430728%09R-HSA-168256%09R-HSA-74160%09R-HSA-1643685%09R-HSA-1280218%09R-HSA-168249%09R-HSA-392499%09R-HSA-556833%09R-HSA-382551%09R-HSA-1640170%09R-HSA-212436&geneSetMatch=true
     @Test
-    public void eMTab513_Specific_MultipleGeneSets() throws GenesNotFoundException {
+    public void eMTab513_Specific_MultipleGeneSets() throws GenesNotFoundException, ExecutionException {
         String geneSets = "R-HSA-372790\tR-HSA-388396\tR-HSA-109582\tR-HSA-162582\tR-HSA-1430728\tR-HSA-168256\tR-HSA-74160\tR-HSA-1643685\tR-HSA-1280218\tR-HSA-168249\tR-HSA-392499\tR-HSA-556833\tR-HSA-382551\tR-HSA-1640170\tR-HSA-212436";
         setGeneQuery(geneSets);
 
@@ -235,7 +236,7 @@ public class BaselineProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=R-HSA-74160&specific=true&queryFactorValues=leukocyte&geneSetMatch=true
     @Test
-    public void eMTab513r_hsa_74160_Specific_GeneSet_QueryFactorLeukocyteGeneSet_NoResults() throws GenesNotFoundException {
+    public void eMTab513r_hsa_74160_Specific_GeneSet_QueryFactorLeukocyteGeneSet_NoResults() throws GenesNotFoundException, ExecutionException {
         setQueryFactor(FACTOR_LEUKOCYTE);
         setGeneQuery("R-HSA-74160");
 
