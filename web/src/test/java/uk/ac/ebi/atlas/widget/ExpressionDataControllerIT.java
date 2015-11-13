@@ -51,7 +51,7 @@ public class ExpressionDataControllerIT extends RestAssuredFixture {
     @Test
     public void geneExpressedInDifferentialExperimentsOnlyReturnsFalse() {
         assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(DIFFERENTIAL_GENE)).equals(EMPTY_JSON_OBJECT), is(true));
-        assertThat(differentialAnalyticsSearchService.fetchDifferentialSearchFacetsAsJson(GeneQuery.create(DIFFERENTIAL_GENE)).matches(NON_EMPTY_JSON_OBJECT_REGEX), is(true));
+        assertThat(differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(GeneQuery.create(DIFFERENTIAL_GENE)).matches(NON_EMPTY_JSON_OBJECT_REGEX), is(true));
 
         Response response = get("/json/expressionData?geneId=" + DIFFERENTIAL_GENE);
 
@@ -63,7 +63,7 @@ public class ExpressionDataControllerIT extends RestAssuredFixture {
     @Test
     public void nonExistentGeneReturnsFalse() {
         assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(NON_EXISTENT_GENE)).equals(EMPTY_JSON_OBJECT), is(true));
-        assertThat(differentialAnalyticsSearchService.fetchDifferentialSearchResultsAsJson(GeneQuery.create(NON_EXISTENT_GENE)).equals(EMPTY_JSON_ARRAY), is(true));
+        assertThat(differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(GeneQuery.create(NON_EXISTENT_GENE)).equals(EMPTY_JSON_ARRAY), is(true));
 
         Response response = get("/json/expressionData?geneId=" + NON_EXISTENT_GENE);
 

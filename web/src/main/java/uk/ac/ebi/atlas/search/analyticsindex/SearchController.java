@@ -33,7 +33,7 @@ public abstract class SearchController {
 
     private final EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder;
 
-    private final AnalyticsSearchDAO analyticsSearchDAO;
+    private final AnalyticsIndexSearchDAO analyticsIndexSearchDAO;
 
     protected static final String BIOENTITY_PROPERTY_NAME = "symbol";
 
@@ -94,14 +94,14 @@ public abstract class SearchController {
         this.bioentityPropertyNames = bioentityPropertyNames;
     }
 
-    public SearchController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, AnalyticsSearchDAO analyticsSearchDAO) {
+    public SearchController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, AnalyticsIndexSearchDAO analyticsIndexSearchDAO) {
         this.ebiGlobalSearchQueryBuilder = ebiGlobalSearchQueryBuilder;
-        this.analyticsSearchDAO = analyticsSearchDAO;
+        this.analyticsIndexSearchDAO = analyticsIndexSearchDAO;
     }
 
     public void addSearchHeader(GeneQuerySearchRequestParameters requestParameters, Model model) throws IOException, SolrServerException {
         GeneQuery geneQuery = requestParameters.getGeneQuery();
-        ImmutableSet<String> experimentTypes = analyticsSearchDAO.fetchExperimentTypes(geneQuery);
+        ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(geneQuery);
 
         boolean hasBioEntities = bioEntityPropertyDao.hasBioentityProperties(geneQuery.description(), getPagePropertyTypes());
 

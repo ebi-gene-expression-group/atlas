@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDAO;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsIndexSearchDAO;
 import uk.ac.ebi.atlas.search.analyticsindex.SearchController;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.web.GeneQuery;
@@ -22,8 +22,8 @@ public class    SearchBaselineController extends SearchController {
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
     @Inject
-    public SearchBaselineController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, BaselineAnalyticsSearchService baselineAnalyticsSearchService, AnalyticsSearchDAO analyticsSearchDAO) {
-        super(ebiGlobalSearchQueryBuilder, analyticsSearchDAO);
+    public SearchBaselineController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, BaselineAnalyticsSearchService baselineAnalyticsSearchService, AnalyticsIndexSearchDAO analyticsIndexSearchDAO) {
+        super(ebiGlobalSearchQueryBuilder, analyticsIndexSearchDAO);
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
     }
 

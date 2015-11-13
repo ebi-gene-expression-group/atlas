@@ -1,3 +1,7 @@
+<%--@elvariable id="hasDifferentialResults" type="boolean"--%>
+<%--@elvariable id="jsonDifferentialGeneQueryFacets" type="String"--%>
+<%--@elvariable id="jsonDifferentialGeneQueryResults" type="String"--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
@@ -16,10 +20,14 @@
 <script>
     var selectedSpecies = "${hasSelectedSpecies ? selectedSpecies : ''}";
 
+    var baselineSearcher = window.exposed.baseline,
+            baselineFacetsData = JSON.parse('${jsonFacets}');
+
+
     <c:if test="${hasDifferentialResults}">
     var differentialSearcher = window.exposed.differential,
-        differentialFacetsData = ${empty jsonDifferentialGeneQueryFacets ? 'null' : jsonDifferentialGeneQueryFacets},
-        differentialResultsData = ${empty jsonDifferentialGeneQueryResults ? 'null' : jsonDifferentialGeneQueryResults};
+        differentialFacetsData = JSON.parse('${jsonDifferentialGeneQueryFacets}'),
+        differentialResultsData = JSON.parse('${jsonDifferentialGeneQueryResults}');
 
     differentialSearcher(
             "atlasDifferentialFacetedSearchFacetsContainer", "atlasDifferentialFacetedSearchResultsContainer",

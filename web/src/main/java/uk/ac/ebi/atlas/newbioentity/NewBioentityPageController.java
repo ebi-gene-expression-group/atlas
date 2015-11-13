@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDAO;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsIndexSearchDAO;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
 import uk.ac.ebi.atlas.web.GeneQuery;
@@ -23,7 +23,7 @@ public abstract class NewBioentityPageController {
     private static final String BIOENTITY_PROPERTY_NAME = "symbol";
     private static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
-    protected AnalyticsSearchDAO analyticsSearchDAO;
+    protected AnalyticsIndexSearchDAO analyticsIndexSearchDAO;
     protected BioentityPropertyServiceInitializer bioentityPropertyServiceInitializer;
     protected BioEntityPropertyService bioEntityPropertyService;
     protected BioEntityCardProperties bioEntityCardProperties;
@@ -33,8 +33,8 @@ public abstract class NewBioentityPageController {
     protected String[] propertyNames;
 
     @Inject
-    public void setAnalyticsSearchDAO(AnalyticsSearchDAO analyticsSearchDAO) {
-        this.analyticsSearchDAO = analyticsSearchDAO;
+    public void setAnalyticsIndexSearchDAO(AnalyticsIndexSearchDAO analyticsIndexSearchDAO) {
+        this.analyticsIndexSearchDAO = analyticsIndexSearchDAO;
     }
 
     @Inject
@@ -73,8 +73,8 @@ public abstract class NewBioentityPageController {
 
         if (ExperimentType.containsDifferential(experimentTypes)) {
             model.addAttribute("hasDifferentialResults", true);
-            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialSearchFacetsAsJson(GeneQuery.create(identifier)));
-            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fetchDifferentialSearchResultsAsJson(GeneQuery.create(identifier)));
+            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialFacetsForIdentifier(GeneQuery.create(identifier)));
+            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fetchDifferentialResultsForIdentifier(GeneQuery.create(identifier)));
         } else {
             model.addAttribute("hasDifferentialResults", false);
         }

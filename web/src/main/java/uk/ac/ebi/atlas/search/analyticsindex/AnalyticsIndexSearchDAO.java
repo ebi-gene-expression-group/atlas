@@ -17,12 +17,12 @@ import javax.inject.Named;
  */
 @Named
 @Scope("singleton")
-public class AnalyticsSearchDAO {
+public class AnalyticsIndexSearchDAO {
 
     private AnalyticsClient analyticsClient;
 
     @Inject
-    public AnalyticsSearchDAO(AnalyticsClient analyticsClient) {
+    public AnalyticsIndexSearchDAO(AnalyticsClient analyticsClient) {
         this.analyticsClient = analyticsClient;
     }
 

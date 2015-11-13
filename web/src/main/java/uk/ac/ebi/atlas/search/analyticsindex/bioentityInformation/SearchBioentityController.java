@@ -13,7 +13,7 @@ import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDAO;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsIndexSearchDAO;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
@@ -70,11 +70,11 @@ public abstract class SearchBioentityController {
         this.bioEntityCardProperties = bioEntityCardProperties;
     }
 
-    private final AnalyticsSearchDAO analyticsSearchDAO;
+    private final AnalyticsIndexSearchDAO analyticsIndexSearchDAO;
 
     @Inject
-    public SearchBioentityController(AnalyticsSearchDAO analyticsSearchDAO) {
-        this.analyticsSearchDAO = analyticsSearchDAO;
+    public SearchBioentityController(AnalyticsIndexSearchDAO analyticsIndexSearchDAO) {
+        this.analyticsIndexSearchDAO = analyticsIndexSearchDAO;
     }
 
     public String showBioentityPage(GeneQuery geneQuery, Model model) throws IOException, SolrServerException {
@@ -92,7 +92,7 @@ public abstract class SearchBioentityController {
 
     protected void addSearchHeader(GeneQuery geneQuery, Model model) {
 
-        ImmutableSet<String> experimentTypes = analyticsSearchDAO.fetchExperimentTypes(geneQuery);
+        ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(geneQuery);
 
         model.addAttribute("hasGeneInformation", true);
         model.addAttribute("hasBaselineResults", ExperimentType.containsBaseline(experimentTypes));

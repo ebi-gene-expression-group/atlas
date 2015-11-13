@@ -61,7 +61,7 @@ public class NewGeneSetPageController extends NewBioentityPageController {
                     "")
         );
 
-        ImmutableSet<String> experimentTypes = analyticsSearchDAO.fetchExperimentTypes(GeneQuery.create(identifier));
+        ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(GeneQuery.create(identifier));
 
         return super.showBioentityPage(identifier, model, experimentTypes);
     }

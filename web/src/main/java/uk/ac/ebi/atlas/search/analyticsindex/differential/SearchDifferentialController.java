@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDAO;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsIndexSearchDAO;
 import uk.ac.ebi.atlas.search.analyticsindex.SearchController;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.web.GeneQuery;
@@ -30,9 +30,9 @@ public class SearchDifferentialController extends SearchController {
 
     @Inject
     public SearchDifferentialController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder,
-                                        AnalyticsSearchDAO analyticsSearchDAO,
+                                        AnalyticsIndexSearchDAO analyticsIndexSearchDAO,
                                         DifferentialAnalyticsSearchService differentialAnalyticsSearchService) {
-        super(ebiGlobalSearchQueryBuilder, analyticsSearchDAO);
+        super(ebiGlobalSearchQueryBuilder, analyticsIndexSearchDAO);
         this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
     }
 
@@ -42,8 +42,8 @@ public class SearchDifferentialController extends SearchController {
 
         if (!geneQuery.isEmpty()) {
             addSearchHeader(requestParameters, model);
-            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialSearchFacetsAsJson(geneQuery));
-            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fetchDifferentialSearchResultsAsJson(geneQuery));
+            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(geneQuery));
+            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(geneQuery));
         }
 
         return "search-results-differential";
@@ -62,7 +62,7 @@ public class SearchDifferentialController extends SearchController {
         GeneQuery geneQuery = requestParameters.getGeneQuery();
 
         if(!geneQuery.isEmpty()) {
-            jsonResults = differentialAnalyticsSearchService.fetchDifferentialSearchSelectionResultsAsJson(geneQuery, species, experimentType, kingdom, factors, numReplicates, regulation);
+            jsonResults = differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(geneQuery, species, experimentType, kingdom, factors, numReplicates, regulation);
         }
 
         ModelAndView mav = new ModelAndView(new MappingJacksonJsonView());

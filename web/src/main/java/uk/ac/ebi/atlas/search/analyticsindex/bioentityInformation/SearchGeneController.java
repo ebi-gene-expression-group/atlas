@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDAO;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsIndexSearchDAO;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
@@ -24,8 +24,8 @@ public class SearchGeneController extends SearchBioentityController {
     private String[] bioentityPropertyNames;
 
     @Inject
-    public SearchGeneController(AnalyticsSearchDAO analyticsSearchDAO) {
-        super(analyticsSearchDAO);
+    public SearchGeneController(AnalyticsIndexSearchDAO analyticsIndexSearchDAO) {
+        super(analyticsIndexSearchDAO);
     }
 
     @Value("#{configuration['index.property_names.genepage']}")

@@ -17,7 +17,7 @@ import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDAO;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsIndexSearchDAO;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 import uk.ac.ebi.atlas.web.GeneQuery;
@@ -45,9 +45,9 @@ public class SearchGeneSetController extends SearchBioentityController {
     }
 
     @Inject
-    public SearchGeneSetController(AnalyticsSearchDAO analyticsSearchDAO, ReactomeClient reactomeClient,
+    public SearchGeneSetController(AnalyticsIndexSearchDAO analyticsIndexSearchDAO, ReactomeClient reactomeClient,
                                    InterProTermTrader interProTermTrader) {
-        super(analyticsSearchDAO);
+        super(analyticsIndexSearchDAO);
         this.reactomeClient = reactomeClient;
         this.interProTermTrader = interProTermTrader;
     }

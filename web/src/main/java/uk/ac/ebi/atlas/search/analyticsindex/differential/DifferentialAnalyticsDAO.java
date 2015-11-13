@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestClientException;
@@ -9,9 +7,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
-import javax.inject.Inject;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;

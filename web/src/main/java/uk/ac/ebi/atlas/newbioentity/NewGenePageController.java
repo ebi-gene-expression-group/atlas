@@ -31,6 +31,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 @Controller
@@ -45,7 +47,7 @@ public class NewGenePageController extends NewBioentityPageController {
     @RequestMapping(value = "/new/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
 
-        if (!analyticsSearchDAO.isValidBioentityIdentifier(identifier)) {
+        if (!analyticsIndexSearchDAO.isValidBioentityIdentifier(identifier)) {
             throw new ResourceNotFoundException("No gene matching " + identifier);
         }
 
@@ -53,19 +55,21 @@ public class NewGenePageController extends NewBioentityPageController {
 
         model.addAttribute("mainTitle", "Expression summary for " + bioEntityPropertyService.getEntityName() + " - " + StringUtils.capitalize(bioEntityPropertyService.getSpecies()));
 
-        ImmutableSet<String> experimentTypes = analyticsSearchDAO.fetchExperimentTypes(identifier);
+        ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(identifier);
 
         return super.showBioentityPage(identifier, model, experimentTypes);
     }
 
     @RequestMapping(value = "/new/genes/{identifier:.*}/differentialFacets.json", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
     public String fetchDifferentialJsonFacets(@PathVariable String identifier) {
-        return "some_json";
+        return differentialAnalyticsSearchService.fetchDifferentialFacetsForIdentifier(GeneQuery.create(identifier));
     }
 
     @RequestMapping(value = "/new/genes/{identifier:.*}/differentialResults.json", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
     public String fetchDifferentialJsonResults(@PathVariable String identifier) {
-        return "some_other_json";
+        return differentialAnalyticsSearchService.fetchDifferentialResultsForIdentifier(GeneQuery.create(identifier));
     }
 
 }
