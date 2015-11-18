@@ -26,99 +26,40 @@ public class IdentifierSearchTermsTrader {
 
     private static final Logger LOGGER = LogManager.getLogger(IdentifierSearchTermsTrader.class);
 
-    private GxaSolrClient gxaSolrClient;
-    private String[] searchProperties;
-
     private BioentityIdentifiersReader bioentityIdentifiersReader;
+    private IdentifierSearchDAO identifierSearchDAO;
 
     @Inject
-    public IdentifierSearchTermsTrader(GxaSolrClient gxaSolrClient,
-                                       @Value("#{configuration['index.property_names.identifier.search']}") String[] searchProperties,
-                                       BioentityIdentifiersReader bioentityIdentifiersReader) {
-        this.gxaSolrClient = gxaSolrClient;
-        this.searchProperties = searchProperties;
+    public IdentifierSearchTermsTrader(IdentifierSearchDAO identifierSearchDAO, BioentityIdentifiersReader bioentityIdentifiersReader) {
+        this.identifierSearchDAO = identifierSearchDAO;
         this.bioentityIdentifiersReader = bioentityIdentifiersReader;
     }
 
     public ImmutableMap<String, String> getBioentityIdToIdentifierSearchMap(ExperimentType experimentType) {
-        int PROPERTY_LIMIT = 1000;
-        String PROPERTY_VALUE_FIELD = "property_value";
-        ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder<>();
-
-        HashSet<String> allBioentities = bioentityIdentifiersReader.getBioentityIdsFromExperiments(experimentType);
-
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-
-        SolrQuery query = new SolrQuery();
-
-        query.setRows(PROPERTY_LIMIT);
-        query.setFilterQueries("property_name:(\"" + Joiner.on("\" OR \"").join(searchProperties) + "\")");
-        query.setFields(PROPERTY_VALUE_FIELD);
-        for (String bioentityIdentifier : allBioentities) {
-            query.setQuery("bioentity_identifier:\"" + bioentityIdentifier + "\"");
-            Set<String> propertyValueTerms = gxaSolrClient.query(query, PROPERTY_VALUE_FIELD, false);
-            mapBuilder.put(bioentityIdentifier, Joiner.on(" ").join(propertyValueTerms));
-        }
-
-        stopWatch.stop();
-        LOGGER.debug(String.format("Bioentity properties for %,d bioentities fetched in %s seconds", allBioentities.size(), stopWatch.getTotalTimeSeconds()));
-
-        return mapBuilder.build();
+        return getMap(bioentityIdentifiersReader.getBioentityIdsFromExperiments(experimentType));
     }
 
     public ImmutableMap<String, String> getBioentityIdToIdentifierSearchMap() {
-        int PROPERTY_LIMIT = 1000;
-        String PROPERTY_VALUE_FIELD = "property_value";
-        ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder<>();
-
-        HashSet<String> allBioentities = bioentityIdentifiersReader.getBioentityIdsFromAllExperiments();
-
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-
-        SolrQuery query = new SolrQuery();
-
-        query.setRows(PROPERTY_LIMIT);
-        query.setFilterQueries("property_name:(\"" + Joiner.on("\" OR \"").join(searchProperties) + "\")");
-        query.setFields(PROPERTY_VALUE_FIELD);
-        for (String bioentityIdentifier : allBioentities) {
-            query.setQuery("bioentity_identifier:\"" + bioentityIdentifier + "\"");
-            Set<String> propertyValueTerms = gxaSolrClient.query(query, PROPERTY_VALUE_FIELD, false);
-            mapBuilder.put(bioentityIdentifier, Joiner.on(" ").join(propertyValueTerms));
-        }
-
-        stopWatch.stop();
-        LOGGER.debug(String.format("Bioentity properties for %,d bioentities fetched in %s seconds", allBioentities.size(), stopWatch.getTotalTimeSeconds()));
-
-        return mapBuilder.build();
+        return getMap(bioentityIdentifiersReader.getBioentityIdsFromAllExperiments());
     }
 
     public ImmutableMap<String, String> getBioentityIdToIdentifierSearchMap(String experimentAccession) {
-        int PROPERTY_LIMIT = 1000;
-        String PROPERTY_VALUE_FIELD = "property_value";
-        ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder<>();
+        return getMap(bioentityIdentifiersReader.getBioentityIdsFromExperiment(experimentAccession));
+    }
 
-        HashSet<String> allBioentities = bioentityIdentifiersReader.getBioentityIdsFromExperiment(experimentAccession);
-
+    private ImmutableMap<String, String> getMap(Set<String> bioentityIdentifiers) {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
-        SolrQuery query = new SolrQuery();
-
-        query.setRows(PROPERTY_LIMIT);
-        query.setFilterQueries("property_name:(\"" + Joiner.on("\" OR \"").join(searchProperties) + "\")");
-        query.setFields(PROPERTY_VALUE_FIELD);
-        for (String bioentityIdentifier : allBioentities) {
-            query.setQuery("bioentity_identifier:\"" + bioentityIdentifier + "\"");
-            Set<String> propertyValueTerms = gxaSolrClient.query(query, PROPERTY_VALUE_FIELD, false);
+        ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder<>();
+        for (String bioentityIdentifier : bioentityIdentifiers) {
+            Set<String> propertyValueTerms = identifierSearchDAO.getProperties(bioentityIdentifier);
             mapBuilder.put(bioentityIdentifier, Joiner.on(" ").join(propertyValueTerms));
         }
 
         stopWatch.stop();
-        LOGGER.debug(String.format("Bioentity properties for %,d bioentities fetched in %s seconds", allBioentities.size(), stopWatch.getTotalTimeSeconds()));
+        LOGGER.debug(String.format("Bioentity properties for %,d bioentities fetched in %s seconds", bioentityIdentifiers.size(), stopWatch.getTotalTimeSeconds()));
 
         return mapBuilder.build();
     }
-
 }
