@@ -1,7 +1,7 @@
-<%--@elvariable id="bioEntityPropertyService" type="BioEntityPropertyService"--%>
+<%--@elvariable id="bioEntityPropertyService" type="uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService"--%>
 <%--@elvariable id="isSearch" type="boolean"--%>
-<%--@elvariable id="searchDescription" type="String"--%>
-<%--@elvariable id="identifier" type="String"--%>
+<%--@elvariable id="searchDescription" type="java.lang.String"--%>
+<%--@elvariable id="identifier" type="java.lang.String"--%>
 <%--@elvariable id="hasBaselineResults" type="boolean"--%>
 <%--@elvariable id="hasDifferentialResults" type="boolean"--%>
 
@@ -31,7 +31,6 @@
     <p class="gxaBioentitySpecies">${bioEntityPropertyService.getSpecies()}</p>
     <p class="gxaBioentityDescription">${bioEntityPropertyService.getBioEntityDescription()}</p>
 </section>
-<!-- /Simple page header -->
 
 <section id="gxaBioentityTabsSection">
 
@@ -52,6 +51,7 @@
     </div>
 
 </section>
+
 
 <script>
 
@@ -124,4 +124,3 @@
     route();
 
 </script>
-

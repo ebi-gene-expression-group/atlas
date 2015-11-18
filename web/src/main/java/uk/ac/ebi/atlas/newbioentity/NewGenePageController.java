@@ -32,12 +32,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 @Controller
 @Scope("request")
-public class NewGenePageController extends NewBioentityPageController {
+public class    NewGenePageController extends NewBioentityPageController {
 
     @Value("#{configuration['index.property_names.genepage']}")
     void setGenePagePropertyTypes(String[] propertyNames) {
@@ -54,8 +55,10 @@ public class NewGenePageController extends NewBioentityPageController {
         bioentityPropertyServiceInitializer.initForGenePage(bioEntityPropertyService, identifier, propertyNames);
 
         model.addAttribute("mainTitle", "Expression summary for " + bioEntityPropertyService.getEntityName() + " - " + StringUtils.capitalize(bioEntityPropertyService.getSpecies()));
+        model.addAttribute("queryType", "gene");
 
         ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(identifier);
+        model.addAttribute("hasDifferentialResults", ExperimentType.containsDifferential(experimentTypes));
 
         return super.showBioentityPage(identifier, model, experimentTypes);
     }

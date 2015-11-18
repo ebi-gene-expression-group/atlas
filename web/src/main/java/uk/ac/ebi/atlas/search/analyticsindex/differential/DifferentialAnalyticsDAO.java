@@ -19,8 +19,8 @@ import static uk.ac.ebi.atlas.utils.ResourceUtils.readPlainTextResource;
  */
 public abstract class DifferentialAnalyticsDAO {
 
-    protected static final String FQ_TEMPLATE = "&fq=foldChange:([* TO {0}] OR [{1} TO *])";
-    protected static final String QUERY_TEMPLATE = "query?q={0}&rows=1000&omitHeader=true";
+    protected static final String FQ_TEMPLATE = "&fq=foldChange:([* TO {0,number,#}] OR [{1,number,#} TO *])";
+    protected static final String QUERY_TEMPLATE = "query?q={0}&rows={1,number,#}&omitHeader=true";
     protected static final String DIFFERENTIAL_ONLY = "experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential)";
     protected static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
     protected static final String BIOENTITY_IDENTIFIER_FIELD = "bioentityIdentifier";
@@ -46,8 +46,8 @@ public abstract class DifferentialAnalyticsDAO {
         return geneQuery.isEmpty() ? "" : String.format("%s:(%s)", searchField, geneQuery.as1DNF());
     }
 
-    protected String buildQueryParameters(String q, double negativeFoldChange, double positiveFoldChange) {
-        return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q)) + encodeQuery(MessageFormat.format(FQ_TEMPLATE, negativeFoldChange, positiveFoldChange));
+    protected String buildQueryParameters(String q, int rows, double negativeFoldChange, double positiveFoldChange) {
+        return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q), rows) + encodeQuery(MessageFormat.format(FQ_TEMPLATE, negativeFoldChange, positiveFoldChange));
     }
 
     protected static String encodeQueryParam(String param) {

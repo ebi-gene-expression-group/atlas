@@ -30,7 +30,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -61,8 +64,23 @@ public class NewGeneSetPageController extends NewBioentityPageController {
                     "")
         );
 
+        model.addAttribute("queryType", "geneSet");
+
         ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(GeneQuery.create(identifier));
+        model.addAttribute("hasDifferentialResults", ExperimentType.containsDifferential(experimentTypes));
 
         return super.showBioentityPage(identifier, model, experimentTypes);
+    }
+
+    @RequestMapping(value = "/new/genesets/{identifier:.*}/differentialFacets.json", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public String fetchDifferentialJsonFacets(@PathVariable String identifier) {
+        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(GeneQuery.create(identifier));
+    }
+
+    @RequestMapping(value = "/new/genesets/{identifier:.*}/differentialResults.json", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public String fetchDifferentialJsonResults(@PathVariable String identifier) {
+        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(GeneQuery.create(identifier));
     }
 }

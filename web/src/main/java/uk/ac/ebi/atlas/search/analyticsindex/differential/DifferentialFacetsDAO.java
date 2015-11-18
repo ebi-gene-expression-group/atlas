@@ -17,6 +17,8 @@ public class DifferentialFacetsDAO extends DifferentialAnalyticsDAO {
 
     private static final Logger LOGGER = LogManager.getLogger(DifferentialFacetsDAO.class);
 
+    private static final int ROWS = 0;
+
     @Inject
     public DifferentialFacetsDAO(RestTemplate restTemplate, @Value("#{configuration['solr.analytics.base.url']}") String solrBaseUrl, @Value("classpath:differential.facets.query.json") Resource differentialFacetsQueryJSON) {
         super(restTemplate, solrBaseUrl, differentialFacetsQueryJSON);
@@ -43,6 +45,6 @@ public class DifferentialFacetsDAO extends DifferentialAnalyticsDAO {
 
     private String buildDifferentialFacetsAboveFoldChangeQueryUrl(String q, double negativeFoldChange, double positiveFoldChange) {
         String query = q.isEmpty() ? DIFFERENTIAL_ONLY : q + " AND " + DIFFERENTIAL_ONLY;
-        return solrBaseUrl + buildQueryParameters(query, negativeFoldChange, positiveFoldChange) + differentialGeneFacetsQuery;
+        return solrBaseUrl + buildQueryParameters(query, ROWS, negativeFoldChange, positiveFoldChange) + differentialGeneFacetsQuery;
     }
 }

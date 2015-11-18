@@ -1,7 +1,7 @@
 <%--@elvariable id="hasBaselineResults" type="boolean"--%>
 <%--@elvariable id="hasSelectedSpecies" type="boolean"--%>
-<%--@elvariable id="selectedSpecies" type="String"--%>
-<%--@elvariable id="jsonFacets" type="String"--%>
+<%--@elvariable id="selectedSpecies" type="java.lang.String"--%>
+<%--@elvariable id="jsonFacets" type="java.lang.String"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

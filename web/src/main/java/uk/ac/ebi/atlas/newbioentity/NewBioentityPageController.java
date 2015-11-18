@@ -64,28 +64,19 @@ public abstract class NewBioentityPageController {
 
     // identifier (gene) = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
     // identifier (gene set) = a Reactome id, Plant Ontology or Gene Ontology accession or an InterPro term
-    // If it is an MGI term, then will redirect to the gene query page
+    // If it is a MGI term, then will redirect to the gene query page
     public String showBioentityPage(String identifier, Model model, Set<String> experimentTypes) {
 
         if(identifier.startsWith("MGI:")){
             return "forward:/query?geneQuery=" + identifier;
         }
 
-        if (ExperimentType.containsDifferential(experimentTypes)) {
-            model.addAttribute("hasDifferentialResults", true);
-            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialFacetsForIdentifier(GeneQuery.create(identifier)));
-            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fetchDifferentialResultsForIdentifier(GeneQuery.create(identifier)));
-        } else {
-            model.addAttribute("hasDifferentialResults", false);
-        }
         if (ExperimentType.containsBaseline(experimentTypes)) {
             model.addAttribute("hasBaselineResults", true);
             model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(identifier)));
         } else {
             model.addAttribute("hasBaselineResults", false);
         }
-
-        model.addAttribute("hasBaselineResults", ExperimentType.containsBaseline(experimentTypes));
 
         if (model.containsAttribute("searchDescription")) {
             model.addAttribute("isSearch", true);

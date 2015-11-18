@@ -7,7 +7,7 @@ var React = require('react');
 //*------------------------------------------------------------------*
 
 var DisplayLevelsButton = require('display-levels-button');
-var Legend = require('legend');
+var Legend = require('legend').LegendDifferential;
 var CellDifferential = require('cell-differential');
 
 //*------------------------------------------------------------------*
@@ -105,7 +105,7 @@ var DifferentialResults = React.createClass({
                 </div>
 
                 <div style={{display: "inline-block", verticalAlign: "middle"}}>
-                    <Legend.LegendDifferential
+                    <Legend
                         atlasBaseURL={"/gxa"}
                         minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
                         displayLevels={this.state.displayLevels}/>

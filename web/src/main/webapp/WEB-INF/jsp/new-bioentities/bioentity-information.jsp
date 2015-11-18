@@ -1,5 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--@elvariable id="propertyNames" type="java.util.Map"--%>
+<%--@elvariable id="bioEntityPropertyService" type="uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService"--%>
+<%--@elvariable id="relevantGoPoLinks" type="java.util.List"--%>
+<%--@elvariable id="allGoPoLinks" type="java.util.List"--%>
 
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/new-bioentities/bioentity-information.css"/>
 
 <div class="grid_18 omega gxaBioentityInformationCard">
