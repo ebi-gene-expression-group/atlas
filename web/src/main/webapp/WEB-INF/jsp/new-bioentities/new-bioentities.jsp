@@ -16,6 +16,7 @@
 
 <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor.bundle.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js-bundles/faceted-search.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 
 <c:if test="${isSearch}">
 <section id="gxaSearchHeaderSection">
@@ -56,7 +57,6 @@
 <script>
 
     var ie9 = $.browser.msie && $.browser.version < 10;
-    var resizeEvent = new UIEvent("resize");
 
     var hasBaselineResults = ${hasBaselineResults},
         hasDifferentialResults = ${hasDifferentialResults};
@@ -70,57 +70,50 @@
     });
     $baselineTabLink.click(function() {
         window.location.hash = "#baseline";
-        window.dispatchEvent(resizeEvent);
     });
     $differentialTabLink.click(function() {
         window.location.hash = "#differential";
     });
 
+    setInitialHash();
+    showTabOnHash();
+
     if (ie9) {
-        window.onhashchange = route;
+        window.onhashchange = showTabOnHash;
     } else {
-        window.addEventListener('popstate', route);
+        window.addEventListener('popstate', showTabOnHash);
     }
 
-    function route() {
-        if (window.location.hash === "#information") {
-            $informationTabLink.tab("show")
-        } else if (window.location.hash === "#baseline") {
+
+
+    function showTabOnHash() {
+        if (window.location.hash === "#baseline") {
             $baselineTabLink.tab("show");
         } else if (window.location.hash === "#differential") {
             $differentialTabLink.tab("show");
         } else {
-
-            var newLocation = window.location;
-            if (hasBaselineResults) {
-                newLocation.hash = "#baseline";
-                if (ie9) {
-                    window.location = newLocation;
-                } else {
-                    history.replaceState(null, null, newLocation);
-                }
-                $baselineTabLink.tab("show");
-            } else if (hasDifferentialResults) {
-                newLocation.hash = "#differential";
-                if (ie9) {
-                    window.location = newLocation;
-                } else {
-                    history.replaceState(null, null, newLocation);
-                }
-                $differentialTabLink.tab("show");
-            } else {
-                newLocation.hash = "#information";
-                if (ie9) {
-                    window.location = newLocation;
-                } else {
-                    history.replaceState(null, null, newLocation);
-                }
-                $informationTabLink.tab("show");
-            }
-
+            $informationTabLink.tab("show");
         }
     }
 
-    route();
+    function setInitialHash() {
+        if (window.location.hash != "#baseline" && window.location.hash != "#differential" && window.location.hash != "#information") {
+            var hash = "#information";
+
+            if (hasBaselineResults) {
+                hash = "#baseline";
+            }
+            else if (hasDifferentialResults) {
+                hash = "#differential";
+            }
+
+            if (ie9) {
+                window.location.hash = hash;
+            } else {
+                var newURL = new URI(window.location).hash(hash);
+                history.replaceState(null, null, newURL);
+            }
+        }
+    }
 
 </script>

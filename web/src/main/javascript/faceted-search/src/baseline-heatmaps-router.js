@@ -47,9 +47,11 @@ module.exports = function (facetsContainerId, heatmapsContainerId, selectedSpeci
     renderQueryPage();
 
     function backButtonListener() {
-        parseGeneQueryFromLocation();
-        parseSelectedFacetsFromLocation();
-        renderQueryPage();
+        if (window.location.hash === "#baseline") {
+            parseGeneQueryFromLocation();
+            parseSelectedFacetsFromLocation();
+            renderQueryPage();
+        }
     }
 
 
@@ -125,6 +127,7 @@ module.exports = function (facetsContainerId, heatmapsContainerId, selectedSpeci
         renderQueryPage();
     }
 
+
     function pushQueryIntoBrowserHistory(replace) {
         var newURL = new URI(window.location).search(function(data) {
             data.bs = JSON.stringify(query.select);
@@ -148,7 +151,6 @@ module.exports = function (facetsContainerId, heatmapsContainerId, selectedSpeci
 
     function removeSelection(select, species, factor) {
         select[species][factor] = false;
-        return select;
     }
 
     function queryToHeatmaps(query) {

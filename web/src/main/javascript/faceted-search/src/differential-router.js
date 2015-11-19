@@ -98,7 +98,10 @@ module.exports = function (options) {
 
 
     function backButtonListener() {
-        parseSelectedFacetsFromLocation();
+        if (window.location.hash === "#differential") {
+            parseSelectedFacetsFromLocation();
+            filterAndRenderResults();
+        }
     }
 
     /**
