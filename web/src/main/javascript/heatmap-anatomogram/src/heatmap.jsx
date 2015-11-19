@@ -141,6 +141,7 @@ var Heatmap = React.createClass({
     },
 
     componentDidMount: function() {
+        if (this.props.heatmapConfig.showMultipleColumnHeaders) { return; }
         // Default settings
         var settings = {
             scrollThrottle: 10,
@@ -360,7 +361,9 @@ var Heatmap = React.createClass({
                                           isSingleGeneResult={this.isSingleGeneResult()}
                                           renderExpressionCells={true}/>
                     </table>
-                    <div ref="stickyIntersect" className="gxaStickyTableIntersect">
+
+                    {this.props.heatmapConfig.showMultipleColumnHeaders ? null :
+                        <div ref="stickyIntersect" className="gxaStickyTableIntersect">
                         <table className="gxaTableGrid">
                             <HeatmapTableHeader isMicroarray={this.isMicroarray()}
                                                 radioId="intersect"
@@ -379,7 +382,8 @@ var Heatmap = React.createClass({
                                                 toggleRadioButton={this.toggleRadioButton}
                                                 renderContrastFactorHeaders={false}/>
                         </table>
-                    </div>
+                    </div> }
+                    {this.props.heatmapConfig.showMultipleColumnHeaders ? null :
                     <div ref="stickyColumn" className="gxaStickyTableColumn">
                         <table className="gxaTableGrid">
                             <HeatmapTableHeader isMicroarray={this.isMicroarray()}
@@ -411,7 +415,9 @@ var Heatmap = React.createClass({
                                               isSingleGeneResult={this.isSingleGeneResult()}
                                               renderExpressionCells={false}/>
                         </table>
-                    </div>
+                    </div> }
+
+                    {this.props.heatmapConfig.showMultipleColumnHeaders ? null :
                     <div ref="stickyHeader" className="gxaStickyTableHeader">
                         <table className="gxaTableGrid">
                             <HeatmapTableHeader isMicroarray={this.isMicroarray()}
@@ -433,7 +439,7 @@ var Heatmap = React.createClass({
                                                 renderContrastFactorHeaders={true}
                                                 anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>
                         </table>
-                    </div>
+                    </div>}
                 </div>
 
             </div>
@@ -474,14 +480,8 @@ var HeatmapTableHeader = React.createClass({
     renderContrastFactorHeaders: function () {
         var heatmapConfig = this.props.heatmapConfig;
         if (this.props.type.isBaseline) {
-            return (<FactorHeaders heatmapConfig={heatmapConfig}
-                                   type={this.props.type}
-                                   assayGroupFactors={this.props.columnHeaders}
-                                   selectedColumnId={this.props.selectedColumnId}
-                                   hoverColumnCallback={this.props.hoverColumnCallback}
-                                   selectColumn={this.props.selectColumn}
-                                   experimentAccession={heatmapConfig.experimentAccession}
-                                   anatomogramEventEmitter={this.props.anatomogramEventEmitter}/> );
+            return renderFactorHeaders(heatmapConfig, this.props.mainHeaderNames, this.props.type, this.props.columnHeaders, heatmapConfig.experimentAccession,
+                                        this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
         }
         else if (this.props.type.isDifferential) {
             return (<ContrastHeaders heatmapConfig={heatmapConfig}
@@ -493,13 +493,8 @@ var HeatmapTableHeader = React.createClass({
                                      gseaPlots={heatmapConfig.gseaPlots}/>);
         }
         else if (this.props.type.isMultiExperiment) {
-            return (<FactorHeaders heatmapConfig={heatmapConfig}
-                                   type={this.props.type}
-                                   assayGroupFactors={this.props.columnHeaders}
-                                   selectedColumnId={this.props.selectedColumnId}
-                                   hoverColumnCallback={this.props.hoverColumnCallback}
-                                   selectColumn={this.props.selectColumn}
-                                   anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>);
+            return renderFactorHeaders(heatmapConfig, null, this.props.type, this.props.columnHeaders,
+                this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
         }
     },
 
@@ -543,20 +538,29 @@ var MultipleHeatmapTableHeader = React.createClass({
         var type = this.props.type;
 
         if (this.props.type.isBaseline) {
-            return (this.props.multipleColumnHeaders.children).map(function (children) {
-                var mainHeaderName = children.name;
-                return (children.children).map(function (child) {
-                    var subHeaderName = child.name;
-                    return child.children.map(function (cell){
-                        return (<FactorHeaders type={type}
-                                               mainHeaderNames={mainHeaderName + subHeaderName}
-                                               heatmapConfig={heatmapConfig}
-                                               assayGroupFactors={cell.cellLines}
-                                               experimentAccession={heatmapConfig.experimentAccession}
-                                               hoverColumnCallback={hoverColumnCallback} />);
-                    });
-                });
+            var factorHeadersArray = [];
+
+            var multipleColumnHeaders = this.props.multipleColumnHeaders.children;
+            for (var children in multipleColumnHeaders) {
+                var mainHeaderName = multipleColumnHeaders[children].name;
+                var childs = multipleColumnHeaders[children].children;
+                for (var child in childs) {
+                    var subHeaderName = childs[child].name;
+                    var cellLines = childs[child].children[0].cellLines;
+
+                    var cellLinesObject = {
+                        mHNames: mainHeaderName + subHeaderName,
+                        cellLines: cellLines
+                    };
+                    factorHeadersArray.push(cellLinesObject);
+                }
+            }
+
+            var factorHeaders = factorHeadersArray.map(function (factorHeader) {
+                return renderFactorHeaders(heatmapConfig, factorHeader.mHNames, type, factorHeader.cellLines, heatmapConfig.experimentAccession, null, null, hoverColumnCallback, null);
             });
+
+            return factorHeaders;
         }
     },
 
@@ -648,31 +652,27 @@ function restrictLabelSize(label, maxSize) {
 }
 
 
-var FactorHeaders = React.createClass({
-    render: function () {
-        var heatmapConfig = this.props.heatmapConfig;
-        var mainHeaderNames = this.props.mainHeaderNames;
+function renderFactorHeaders(heatmapConfig, mainHeaderNames, type, assayGroupFactors, experimentAccession, selectColumn,
+                                    selectedColumnId, hoverColumnCallback, anatomogramEventEmitter) {
 
-        var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
+        var factorHeaders = assayGroupFactors.map(function (assayGroupFactor) {
             return <FactorHeader key={mainHeaderNames + assayGroupFactor.factorValue}
-                                 type={this.props.type}
+                                 type={type}
                                  heatmapConfig={heatmapConfig}
                                  factorName={assayGroupFactor.factorValue}
                                  svgPathId={assayGroupFactor.factorValueOntologyTermId}
                                  assayGroupId={assayGroupFactor.assayGroupId}
-                                 experimentAccession={this.props.experimentAccession}
-                                 selectColumn={this.props.selectColumn}
-                                 selected={assayGroupFactor.assayGroupId === this.props.selectedColumnId}
-                                 hoverColumnCallback={this.props.hoverColumnCallback}
-                                 anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>;
+                                 experimentAccession={experimentAccession}
+                                 selectColumn={selectColumn}
+                                 selected={assayGroupFactor.assayGroupId === selectedColumnId}
+                                 hoverColumnCallback={hoverColumnCallback}
+                                 anatomogramEventEmitter={anatomogramEventEmitter}/>;
         }.bind(this));
 
         return (
-            <div>{factorHeaders}</div>
+            {factorHeaders}
         );
-    }
-});
-
+}
 
 var FactorHeader = React.createClass({
 
