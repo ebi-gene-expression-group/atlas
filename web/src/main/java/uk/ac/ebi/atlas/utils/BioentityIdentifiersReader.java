@@ -50,6 +50,12 @@ public class BioentityIdentifiersReader {
         this.rnaSeqDifferentialAnalyticsInputStreamFactory = rnaSeqDifferentialAnalyticsInputStreamFactory;
     }
 
+    /*
+    In this class we’re not using ImmutableSet because an immutable builder has a copy of all the elements in memory (including repeated ones)
+    before flattening the set when we call builder.build() and therefore using up much more memory than needed in this case, where the number
+    of repeated elements is very high.
+     */
+
     public HashSet<String> getBioentityIdsFromAllExperiments() {
         return getBioentityIdsFromExperiments(
                 ExperimentType.MICROARRAY_ANY,
