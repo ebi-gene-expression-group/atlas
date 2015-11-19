@@ -18,7 +18,7 @@ public class ExperimentsTypeMapConverterTest {
 
     @Test
     public void testGetTypeNotExists() throws Exception {
-        assertThat(DifferentialFacetsReader.FacetFieldMapConverter.get("microarray_5colour_microrna_differential"), is("microarray_5colour_microrna_differential"));
+        assertThat(DifferentialFacetsReader.FacetFieldMapConverter.get("microarray_5colour_microrna_differential"), is("Microarray_5colour_microrna_differential"));
     }
 
 }
