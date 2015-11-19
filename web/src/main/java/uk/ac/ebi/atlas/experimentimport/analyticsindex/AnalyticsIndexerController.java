@@ -53,7 +53,7 @@ public class AnalyticsIndexerController {
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
     }
 
-    @RequestMapping("/analyticsIndex/buildIndex")
+    @RequestMapping(value = "/analyticsIndex/buildIndex", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String analyticsIndexBuild(@RequestParam(value = "type", required = false, defaultValue = "") String experimentType,
                                       @RequestParam(value = "threads", required = false, defaultValue =  AnalyticsIndexerManager.DEFAULT_THREADS_8) int numThreads,
@@ -76,13 +76,13 @@ public class AnalyticsIndexerController {
         return analyticsIndexerMonitor.toString();
     }
 
-    @RequestMapping("/analyticsIndex/buildIndex/status")
+    @RequestMapping(value = "/analyticsIndex/buildIndex/status", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String analyticsIndexBuildStatus() {
         return analyticsIndexerMonitor.toString();
     }
 
-    @RequestMapping("/analyticsIndex/indexExperiment")
+    @RequestMapping(value = "/analyticsIndex/indexExperiment", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String indexExperiment(@RequestParam("accession") String experimentAccession) {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
@@ -95,7 +95,7 @@ public class AnalyticsIndexerController {
         return String.format("Experiment %s (re)indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
     }
 
-    @RequestMapping("/analyticsIndex/deleteExperiment")
+    @RequestMapping(value = "/analyticsIndex/deleteExperiment", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String unindexExperiment(@RequestParam("accession") String experimentAccession) {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
@@ -108,14 +108,11 @@ public class AnalyticsIndexerController {
         return String.format("Experiment %s removed from index in %s seconds", experimentAccession, stopWatch.getTotalTimeSeconds());
     }
 
-    @RequestMapping("/analyticsIndex/updateIdentifierSearchTerms")
+    @RequestMapping(value = "/analyticsIndex/updateIdentifierSearchTerms", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String updateIdentifierSearchTerms(@RequestParam(value = "accession", required = false) String experimentAccession) {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
-
-
-
 //
 //        int updatedIdentifiers = 0;
 //        if (Strings.isNullOrEmpty(experimentAccession)) {

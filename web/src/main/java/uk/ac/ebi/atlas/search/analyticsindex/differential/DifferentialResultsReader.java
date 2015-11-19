@@ -113,7 +113,7 @@ public class DifferentialResultsReader {
             String[] keySet = commonFacetItems.keySet().toArray(new String[commonFacetItems.keySet().size()]);
             for (String facetField : keySet) {
                 Set<String> items = commonFacetItems.remove(facetField);
-                commonFacetItems.put(DifferentialFacetsReader.FacetFieldMapConverter.get(facetField), items);
+                commonFacetItems.put(facetField, items);
             }
             resultsWithLevels.put("commonFacetItems", commonFacetItems);
 
@@ -121,7 +121,7 @@ public class DifferentialResultsReader {
 
         resultsWithLevels.put("results", filteredDocuments);
 
-        Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(resultsWithLevels);
     }
 

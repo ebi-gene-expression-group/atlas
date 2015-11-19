@@ -17,6 +17,5 @@
 .gxaFacetsContainer .gxaFacetItem ul li span:first-letter  {text-transform: capitalize;}
 .gxaSpeciesFacet li span {font-style: italic;} /*target species facet*/
 .gxaFacetsContainer .gxaFacetItem h4 {font-weight: bold;font-size: 144%; padding-left:0;  margin-bottom: 9px;}
-.gxaFacetsContainer .gxaFacetItem h4:first-letter {text-transform: capitalize;}
 .gxaFacetsContainer ul li  {padding:1px 0; }
 .gxaFacetsContainer .gxaFacetItem .gxaDisabledFacet span {color: gray;}

@@ -55,7 +55,7 @@ public class BaselineBarChartController {
         this.barChartExperimentAccessKeyTrader = barChartExperimentAccessKeyTrader;
     }
 
-    @RequestMapping(value = "/json/barchart/{experimentAccession}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/json/barchart/{experimentAccession}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getMap(@PathVariable String experimentAccession,

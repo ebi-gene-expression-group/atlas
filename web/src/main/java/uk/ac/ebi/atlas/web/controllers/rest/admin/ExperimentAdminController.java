@@ -61,7 +61,7 @@ public class ExperimentAdminController {
         this.experimentMetadataCRUD = experimentMetadataCRUD;
     }
 
-    @RequestMapping("/importExperiment")
+    @RequestMapping(value = "/importExperiment", produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String importExperiment(@RequestParam("accession") String experimentAccession,
                                    @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
@@ -70,21 +70,21 @@ public class ExperimentAdminController {
     }
 
     // TODO This should be automatically done when an experiment is imported. See TODO note in ExperimentCRUD
-    @RequestMapping("/serializeExpressionData")
+    @RequestMapping(value = "/serializeExpressionData", produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String serializeExpressionData(@RequestParam("accession") String experimentAccession) throws IOException {
         experimentCRUD.serializeExpressionData(experimentAccession);
         return "Expression data successfully serialized for " + experimentAccession;
     }
 
-    @RequestMapping("/deserializeExpressionData")
+    @RequestMapping(value = "/deserializeExpressionData", produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String deserializeExpressionData(@RequestParam("accession") String experimentAccession) throws IOException {
         experimentCRUD.deserializeExpressionData(experimentAccession);
         return "Expression data successfully deserialized for " + experimentAccession;
     }
 
-    @RequestMapping("/serializeAllBaselineExpressionData")
+    @RequestMapping(value = "/serializeAllBaselineExpressionData", produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String serializeAllBaselineExpressionData() throws IOException {
         for (String baselineExperimentAccession : trader.getBaselineExperimentAccessions()) {
@@ -93,21 +93,21 @@ public class ExperimentAdminController {
         return "All baseline experiments expression data successfully serialized";
     }
 
-    @RequestMapping("/deleteExperiment")
+    @RequestMapping(value = "/deleteExperiment", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String deleteExperiment(@RequestParam("accession") String experimentAccession) {
         experimentCRUD.deleteExperiment(experimentAccession);
         return "Experiment " + experimentAccession + " successfully deleted.";
     }
 
-    @RequestMapping("/deleteInactiveAnalytics")
+    @RequestMapping(value = "/deleteInactiveAnalytics", produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String deleteInactiveExpressions() {
         experimentCRUD.deleteInactiveAnalytics();
         return "Deleted all inactive analytics";
     }
 
-    @RequestMapping("/updateStatus")
+    @RequestMapping(value = "/updateStatus", produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String updateExperiment(@RequestParam("accession") String experimentAccession,
                                    @RequestParam("private") boolean isPrivate) throws IOException {
@@ -116,7 +116,7 @@ public class ExperimentAdminController {
         return "Experiment " + experimentAccession + " successfully updated.";
     }
 
-    @RequestMapping(value = "/listExperiments", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/listExperiments", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String listExperiments(@RequestParam(value = "accession", required = false) Set<String> experimentAccessions) {
         List<ExperimentDTO> experiments;
@@ -129,14 +129,14 @@ public class ExperimentAdminController {
 
     }
 
-    @RequestMapping("/updateAllExperimentDesigns")
+    @RequestMapping(value = "/updateAllExperimentDesigns", produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String updateAllExperimentDesigns() {
         int updatedExperimentsCount = experimentMetadataCRUD.updateAllExperimentDesigns();
         return "Experiment design was updated for " + updatedExperimentsCount + " experiments";
     }
 
-    @RequestMapping("/updateExperimentDesign")
+    @RequestMapping(value = "/updateExperimentDesign", produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String updateExperimentDesign(@RequestParam("accession") String experimentAccession) {
         experimentMetadataCRUD.updateExperimentDesign(experimentAccession);
@@ -144,7 +144,7 @@ public class ExperimentAdminController {
     }
 
 
-    @RequestMapping("/invalidateExperimentCache")
+    @RequestMapping(value = "/invalidateExperimentCache", produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String invalidateExperimentCache() throws IOException {
         trader.removeAllExperimentsFromCache();

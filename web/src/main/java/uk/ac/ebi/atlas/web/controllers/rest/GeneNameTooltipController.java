@@ -79,7 +79,7 @@ public class GeneNameTooltipController {
         }
     }
 
-    @RequestMapping(value = "/rest/genename-tooltip", method = RequestMethod.GET, produces = "text/html")
+    @RequestMapping(value = "/rest/genename-tooltip", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getTooltipContent(@RequestParam(value = "geneName") String geneName,

@@ -58,14 +58,14 @@ public class BioentityIndexController {
         return e.getMessage();
     }
 
-    @RequestMapping(value = "/buildIndex/status")
+    @RequestMapping(value = "/buildIndex/status", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String buildStatus() {
         return bioentityIndexMonitor.reportProgress();
     }
 
 
-    @RequestMapping(value = "/buildIndex")
+    @RequestMapping(value = "/buildIndex",  produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String build() {
 

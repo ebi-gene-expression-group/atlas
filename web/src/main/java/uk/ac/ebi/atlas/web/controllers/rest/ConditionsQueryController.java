@@ -21,7 +21,7 @@ public class ConditionsQueryController {
         this.differentialConditionsSearchService = differentialConditionsSearchService;
     }
 
-    @RequestMapping(value = "/json/conditions", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/json/conditions", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
         @ResponseStatus(HttpStatus.OK)
         @ResponseBody
     public String findContrasts(@RequestParam(value = "query") String query) {

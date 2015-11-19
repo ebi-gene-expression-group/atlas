@@ -48,7 +48,7 @@ public class AssayGroupSummaryController {
         this.assayGroupSummaryBuilder = assayGroupSummaryBuilder;
     }
 
-    @RequestMapping(value = "/rest/assayGroup-summary", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/rest/assayGroup-summary", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getTooltipAssayGroupContent(@RequestParam(value = "experimentAccession") String experimentAccession,

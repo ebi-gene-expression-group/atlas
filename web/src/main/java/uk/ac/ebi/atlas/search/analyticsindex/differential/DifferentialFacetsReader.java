@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jayway.jsonpath.JsonPath;
@@ -34,33 +36,28 @@ public class DifferentialFacetsReader {
                 facet.add(facetItem);
             }
 
-            facets.add(FacetFieldMapConverter.get(facetField), facet);
+            facets.add(facetField, facet);
         }
 
-        return facets.toString();
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
+        return gson.toJson(facets);
     }
 
     protected static class FacetFieldMapConverter {
         private static final Map<String,String> FACET_FIELDS_MAP = ImmutableMap.<String, String>builder()
-                .put("kingdom", "kingdom")
-                .put("species", "species")
-                .put("experimentType", "experiment type")
-                .put("factors", "experimental variables")
-                .put("numReplicates", "number of replicates")
-                .put("regulation", "regulation")
                 .put("rnaseq_mrna_baseline", "RNA-seq mRNA baseline")
                 .put("rnaseq_mrna_differential", "RNA-seq mRNA differential")
                 .put("proteomics_baseline", "proteomics baseline")
-                .put("microarray_1colour_microrna_differential", "microarray 1-colour microRNA differential")
-                .put("microarray_1colour_mrna_differential", "microarray 1-colour mRNA differential")
-                .put("microarray_2colour_mrna_differential", "microarray 2-colour mRNA differential")
+                .put("microarray_1colour_microrna_differential", "Microarray 1-colour microRNA differential")
+                .put("microarray_1colour_mrna_differential", "Microarray 1-colour mRNA differential")
+                .put("microarray_2colour_mrna_differential", "Microarray 2-colour mRNA differential")
                 .build();
 
-        public static String get(String type) {
-            if(FACET_FIELDS_MAP.get(type) != null) {
-                return FACET_FIELDS_MAP.get(type);
+        public static String get(String field) {
+            if(FACET_FIELDS_MAP.get(field) != null) {
+                return FACET_FIELDS_MAP.get(field);
             } else {
-                return type.toLowerCase();
+                return field.substring(0, 1).toUpperCase() + field.substring(1).toLowerCase();
             }
         }
     }

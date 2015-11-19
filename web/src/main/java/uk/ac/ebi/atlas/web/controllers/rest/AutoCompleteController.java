@@ -47,7 +47,7 @@ public class AutoCompleteController {
         this.suggestionService = suggestionService;
     }
 
-    @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String fetchTopSuggestions(@RequestParam(value = "query") String query, @RequestParam(value = "species", required = false) String species) {

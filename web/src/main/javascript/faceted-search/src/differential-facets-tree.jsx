@@ -70,6 +70,25 @@ var Facet = React.createClass({
         this.props.setChecked(checked, this.props.facetName, facetItem);
     },
 
+    _prettifyFacetName: function(facetName) {
+        switch (facetName) {
+            case "kingdom":
+                return "Kingdom";
+            case "species":
+                return "Species";
+            case "experimentType":
+                return "Experiment type";
+            case "factors":
+                return "Experimental variables";
+            case "numReplicates":
+                return "Number of replicates";
+            case "regulation":
+                return "Regulation";
+            default:
+                return facetName;
+        }
+    },
+
     render: function () {
         var facetItems = this.props.facetItems.map(function (facetItem) {
             var disabled = this.props.disabledFacetItems.indexOf(facetItem.name) != -1;
@@ -84,7 +103,7 @@ var Facet = React.createClass({
 
         return (
             <div className="gxaFacetItem">
-                <h4>{this.props.facetName}</h4>
+                <h4>{this._prettifyFacetName(this.props.facetName)}</h4>
                 <ul className={className}>
                     {facetItems}
                 </ul>
@@ -110,9 +129,9 @@ var FacetItem = React.createClass({
         var className=this.props.disabled ? "gxaDisabledFacet" : "";
         return (
             <li className={className}>
-                <input type="checkbox" checked={this.props.checked || this.props.disabled}
-                    onChange={this._setChecked} disabled={this.props.disabled}
-                />{this.props.value}</li>
+                <input type="checkbox" checked={this.props.checked || this.props.disabled} onChange={this._setChecked} disabled={this.props.disabled}/>
+                {this.props.value}
+            </li>
         );
     }
 });

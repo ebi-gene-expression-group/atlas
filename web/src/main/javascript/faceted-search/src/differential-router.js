@@ -80,15 +80,6 @@ module.exports = function (options) {
                 success: function(response) {
                     resultsData = response;
 
-                    var disabledFacets = resultsData["commonFacetItems"] ? resultsData["commonFacetItems"] : {};
-
-                    React.render(
-                        React.createElement(
-                            DifferentialFacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked, disabledFacets: disabledFacets}
-                        ),
-                        facetsElement
-                    );
-
                     filterAndRenderResults();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -162,14 +153,54 @@ module.exports = function (options) {
 
 
     function filterAndRenderResults() {
+        var disabledFacets = resultsData["commonFacetItems"] ? resultsData["commonFacetItems"] : {};
+
+        React.render(
+            React.createElement(
+                DifferentialFacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked, disabledFacets: disabledFacets}
+            ),
+            facetsElement
+        );
+
         var filteredResults = resultsData.results.filter(function(result) {
 
+            for (var facetName in query.select) {
+                if (query.select.hasOwnProperty(facetName)) {
+
+                    var hasCheckedItemsInThisFacet = false;
+                    var facetMatch = false;
+
+                    for (var facetItem in query.select[facetName]) {
+                        if (query.select[facetName].hasOwnProperty(facetItem)) {
+
+                            if (query.select[facetName][facetItem]) {
+                                hasCheckedItemsInThisFacet = true;
+
+                                if (result[facetName].constructor === Array) {
+                                    facetMatch = facetMatch || result[facetName].indexOf(facetItem) != -1;
+                                }
+                                else {
+                                    facetMatch = facetMatch || result[facetName] === facetItem;
+                                }
+                            }
+
+                        }
+                    }
+
+                    if (hasCheckedItemsInThisFacet && !facetMatch) {
+                        return false;
+                    }
+
+                }
+            }
+
+            return true;
         });
 
         React.render(
             React.createElement(
                 DifferentialResults,
-                {results: resultsData.results, maxDownLevel: resultsData.maxDownLevel, minDownLevel: resultsData.minDownLevel, minUpLevel: resultsData.minUpLevel, maxUpLevel: resultsData.maxUpLevel}
+                {results: filteredResults, maxDownLevel: resultsData.maxDownLevel, minDownLevel: resultsData.minDownLevel, minUpLevel: resultsData.minUpLevel, maxUpLevel: resultsData.maxUpLevel}
             ),
             resultsElement
         );

@@ -22,7 +22,7 @@ public class AssayDesignController {
         this.arrayDesignDAO = arrayDesignDAO;
     }
 
-    @RequestMapping(value = "/api/arraydesigns.txt", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/arraydesigns.txt", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String getAllArrayDesignsWithNames() {
 

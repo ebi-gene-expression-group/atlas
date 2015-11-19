@@ -48,7 +48,7 @@ public class ContrastSummaryController {
         this.contrastSummaryBuilder = contrastSummaryBuilder;
     }
 
-    @RequestMapping(value = "/rest/contrast-summary", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/rest/contrast-summary", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getTooltipContrastContent(@RequestParam(value = "experimentAccession") String experimentAccession,
