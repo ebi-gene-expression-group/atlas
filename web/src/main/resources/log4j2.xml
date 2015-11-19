@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout>
-                <Pattern>%d %-5p [%t] %C{2} (%F:%L) - %m%n</Pattern>
-            </PatternLayout>
-        </Console>
-
         <RollingFile name="DailyRollingFile" fileName="${sys:catalina.base}/logs/atlas.log" filePattern="${sys:catalina.base}/logs/atlas-%d{yyyy-MM-dd}.log">
             <PatternLayout>
                 <Pattern>%d %-5p [%t] %C{2} (%F:%L) - %m%n</Pattern>
@@ -24,11 +18,9 @@
 
         <Logger name="uk.ac.ebi.atlas.web.interceptors.AdminInterceptor" level="info" additivity="false">
             <AppenderRef ref="DailyRollingFile"/>
-            <AppenderRef ref="Console"/>
         </Logger>
 
         <Root level="error">
-            <AppenderRef ref="Console"/>
             <AppenderRef ref="DailyRollingFile"/>
         </Root>
     </Loggers>
