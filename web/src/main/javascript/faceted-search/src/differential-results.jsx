@@ -114,11 +114,11 @@ var DifferentialResults = React.createClass({
                 <table className="table-striped gxaDifferentialFacetedSearchResults">
                     <thead>
                         <tr>
-                            <th>Log<sub>2</sub>-fold change</th>
-                            <th>Species</th>
-                            <th>Comparison</th>
-                            <th>Experimental variables</th>
-                            <th>Experiment name</th>
+                            <th style={{width: "10%"}}>Log<sub>2</sub>-fold change</th>
+                            <th style={{width: "5%"}}>Species</th>
+                            <th style={{width: "30%"}}>Comparison</th>
+                            <th style={{width: "15%"}}>Experimental variables</th>
+                            <th style={{width: "40%"}}>Experiment name</th>
                         </tr>
                     </thead>
                     <tbody>
