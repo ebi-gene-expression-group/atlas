@@ -8,12 +8,12 @@
 
 <c:set var="thisPage" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
-<div class="grid_6 alpha" id="atlasDifferentialFacetedSearchFacetsContainer"></div>
+<div class="grid_6 alpha" id="gxaDifferentialFacetsContainerDiv"></div>
 
 <div class="grid_18 omega">
     <c:if test="${!hasDifferentialResults}"><p>No differential results<p></c:if>
     <c:if test="${hasDifferentialResults}">
-    <div id="atlasDifferentialFacetedSearchResultsContainer"></div>
+    <div id="gxaDifferentialResultsContainerDiv"></div>
     </c:if>
 </div>
 
@@ -25,8 +25,8 @@
 
     differentialSearcher(
         {
-            "facetsContainer": "atlasDifferentialFacetedSearchFacetsContainer",
-            "resultsContainer": "atlasDifferentialFacetedSearchResultsContainer",
+            "facetsContainer": "gxaDifferentialFacetsContainerDiv",
+            "resultsContainer": "gxaDifferentialResultsContainerDiv",
             "identifier": "${identifier}",
             "queryType": "${queryType}",
             "species": selectedSpecies

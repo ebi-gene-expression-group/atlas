@@ -28,9 +28,9 @@
 
 <!-- Simple page header -->
 <section class="gxaBioentityHeader" id="gxaBioentityHeaderSection">
-    <p class="gxaBioentityName">${bioEntityPropertyService.getEntityName()}</p>
-    <p class="gxaBioentitySpecies">${bioEntityPropertyService.getSpecies()}</p>
-    <p class="gxaBioentityDescription">${bioEntityPropertyService.getBioEntityDescription()}</p>
+    <p class="gxaBioentityName">${bioEntityPropertyService.entityName}</p>
+    <p class="gxaBioentitySpecies">${bioEntityPropertyService.species}</p>
+    <p class="gxaBioentityDescription">${bioEntityPropertyService.bioEntityDescription}</p>
 </section>
 
 <section id="gxaBioentityTabsSection">
@@ -70,6 +70,7 @@
     });
     $baselineTabLink.click(function() {
         window.location.hash = "#baseline";
+        window.scroll();
     });
     $differentialTabLink.click(function() {
         window.location.hash = "#differential";
@@ -111,7 +112,7 @@
                 window.location.hash = hash;
             } else {
                 var newURL = new URI(window.location).hash(hash);
-                history.replaceState(null, null, newURL);
+                history.replaceState(null, "", newURL);
             }
         }
     }

@@ -9,12 +9,12 @@
 
 <c:set var="thisPage" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
-<div class="grid_6 alpha" style="width:15%" id="atlasBaselineFacetedSearchFacetsContainer"></div>
+<div class="grid_4 alpha" id="gxaBaselineFacetsContainerDiv"></div>
 
-<div class="grid_18 omega">
+<div class="grid_20 omega">
     <c:if test="${!hasBaselineResults}"><p>No baseline results<p></c:if>
     <c:if test="${hasBaselineResults}">
-    <div id="atlasBaselineFacetedSearchResultsContainer"></div>
+    <div id="gxaBaselineResultsContainerDiv"></div>
     </c:if>
 </div>
 
@@ -25,7 +25,7 @@
     var baselineSearcher = window.exposed.baseline,
         baselineFacetsData = JSON.parse('${jsonFacets}');
 
-    baselineSearcher("atlasBaselineFacetedSearchFacetsContainer", "atlasBaselineFacetedSearchResultsContainer", selectedSpecies, baselineFacetsData);
+    baselineSearcher("gxaBaselineFacetsContainerDiv", "gxaBaselineResultsContainerDiv", selectedSpecies, baselineFacetsData);
     </c:if>
 </script>
 
