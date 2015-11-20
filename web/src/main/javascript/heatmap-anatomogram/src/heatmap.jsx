@@ -493,7 +493,7 @@ var HeatmapTableHeader = React.createClass({
                                      gseaPlots={heatmapConfig.gseaPlots}/>);
         }
         else if (this.props.type.isMultiExperiment) {
-            return renderFactorHeaders(heatmapConfig, null, this.props.type, this.props.columnHeaders,
+            return renderFactorHeaders(heatmapConfig, null, this.props.type, this.props.columnHeaders, "",
                 this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
         }
     },
@@ -571,9 +571,7 @@ var MultipleHeatmapTableHeader = React.createClass({
                                           colspan={children.colSpan} />);
         });
 
-        return (
-            {multipleHeaders}
-        );
+        return multipleHeaders;
     },
 
     renderSubHeaders: function () {
@@ -585,9 +583,7 @@ var MultipleHeatmapTableHeader = React.createClass({
             });
         });
 
-        return (
-            {subHeaders}
-        );
+        return subHeaders;
     },
 
     render: function () {
@@ -669,9 +665,7 @@ function renderFactorHeaders(heatmapConfig, mainHeaderNames, type, assayGroupFac
                                  anatomogramEventEmitter={anatomogramEventEmitter}/>;
         }.bind(this));
 
-        return (
-            {factorHeaders}
-        );
+        return factorHeaders;
 }
 
 var FactorHeader = React.createClass({
