@@ -52,7 +52,7 @@ var TypeEnum = {
 var HeatmapAnatomogramContainer = React.createClass({
     // TODO Keep populating propTypes until we have everything here
     propTypes: {
-        type: React.PropTypes.oneOf([TypeEnum.BASELINE, TypeEnum.PROTEOMICS_BASELINE, TypeEnum.DIFFERENTIAL, TypeEnum.MULTIEXPERIMENT]).isRequired,
+        type: React.PropTypes.oneOf(["isBaseline", "isMultiExperiment", "isDifferential", "isProteomics"]).isRequired,
         showAnatomogramLabel: React.PropTypes.bool.isRequired
     },
 
