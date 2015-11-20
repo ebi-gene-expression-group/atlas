@@ -7,6 +7,21 @@ var React = require('react');
 //*------------------------------------------------------------------*
 
 var ContrastTooltip = React.createClass({
+    propTypes: {
+        experimentDescription: React.PropTypes.string.isRequired,
+        contrastDescription: React.PropTypes.string.isRequired,
+        testReplicates: React.PropTypes.number.isRequired,
+        referenceReplicates: React.PropTypes.number.isRequired,
+        properties: React.PropTypes.arrayOf(
+            React.PropTypes.shape({
+                contrastPropertyType: React.PropTypes.string,
+                propertyName: React.PropTypes.string.isRequired,
+                referenceValue: React.PropTypes.string.isRequired,
+                testValue: React.PropTypes.string.isRequired
+            })
+        )
+    },
+
 
     propertyRow: function (property) {
         if (!property.testValue && !property.referenceValue) {
@@ -26,7 +41,7 @@ var ContrastTooltip = React.createClass({
         }
 
         return (
-            <tr key={property.propertyName}>
+            <tr key={property.contrastPropertyType + "-" + property.propertyName}>
                 <td style={style}>{property.propertyName}</td>
                 <td style={style}>{property.testValue}</td>
                 <td style={style}>{property.referenceValue}</td>
