@@ -51,7 +51,7 @@ public class AutocompleteControllerIT {
         assertThat(response.getStatusCode(), is(200));
 
         // unicode encoded plain text
-        assertThat(response.getContentType(), is("application/json"));
+        assertThat(response.getContentType(), is("application/json;charset=UTF-8"));
 
     }
 
