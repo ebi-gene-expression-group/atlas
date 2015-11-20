@@ -28,13 +28,23 @@ var Heatmaps = React.createClass({
     },
 
     render: function () {
+        var moreThanOneSpecies = function() {
+            var species = [];
+            for (var i = 0 ; i < this.props.heatmaps.length ; i++) {
+                if(species.indexOf(this.props.heatmaps[i].species) === -1) {
+                    species.push(this.props.heatmaps[i].species);
+                }
+            }
+            return species.length > 1;
+        }.bind(this)();
+
         var geneQuery = this.props.geneQuery;
         var gxaBaseURL = new URI({hostname: this.props.atlasHost, path: "/gxa"});
 
         return (
             <div>
                 {this.props.heatmaps.map(function (heatmap) {
-                    return <BaselineHeatmapWidget key={heatmap.species + "_" + heatmap.factor}
+                    return <BaselineHeatmapWidget key={heatmap.species + "_" + heatmap.factor} showAnatomogramLabel={moreThanOneSpecies}
                                                   gxaBaseUrl={gxaBaseURL.normalize().toString()} geneQuery={geneQuery} species={heatmap.species} factor={heatmap.factor} />;
                 })}
             </div>

@@ -50,6 +50,11 @@ var TypeEnum = {
 
 
 var HeatmapAnatomogramContainer = React.createClass({
+    // TODO Keep populating propTypes until we have everything here
+    propTypes: {
+        type: React.PropTypes.oneOf([TypeEnum.BASELINE, TypeEnum.PROTEOMICS_BASELINE, TypeEnum.DIFFERENTIAL, TypeEnum.MULTIEXPERIMENT]).isRequired,
+        showAnatomogramLabel: React.PropTypes.bool.isRequired
+    },
 
     render: function () {
         var ensemblEventEmitter = new EventEmitter();
@@ -74,49 +79,49 @@ var HeatmapAnatomogramContainer = React.createClass({
         var geneURL = heatmapConfig.linksAtlasBaseURL + '/query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch=' + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
 
         return (
-                <div className="gxaBlock">
+            <div className="gxaBlock">
 
-                    { this.props.experiment ? <ExperimentDescription experiment={this.props.experiment} linksAtlasBaseURL={this.props.heatmapConfig.linksAtlasBaseURL}/> : null }
+                { this.props.experiment ? <ExperimentDescription experiment={this.props.experiment} linksAtlasBaseURL={this.props.heatmapConfig.linksAtlasBaseURL}/> : null }
 
-                    <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
+                <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
-                        <div ref="anatomogramEnsembl" className="gxaAside">
-                            { this.props.heatmapKey ?
-                                <div className="gxaAnatomogramSpeciesLabel">
-                                    <h5>{this.props.heatmapConfig.species}</h5>
-                                </div>
-                                : null
-                            }
-                            { this.props.anatomogram ?
-                                <Anatomogram anatomogramData={this.props.anatomogram}
-                                             expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
-                                             profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.heatmapConfig.atlasBaseURL}/>
-                                : null
-                            }
-                        </div>
-
-                        <div id="heatmap-react" className="gxaHeatmapPosition">
-                            <Heatmap type={type}
-                                     heatmapConfig={this.props.heatmapConfig}
-                                     columnHeaders={this.props.columnHeaders}
-                                     profiles={this.props.profiles}
-                                     geneSetProfiles={this.props.geneSetProfiles}
-                                     isWidget={this.props.isWidget}
-                                     ensemblEventEmitter={ensemblEventEmitter}
-                                     anatomogramEventEmitter={anatomogramEventEmitter} />
-                        </div>
-
+                    <div ref="anatomogramEnsembl" className="gxaAside">
+                        { this.props.heatmapKey && this.props.showAnatomogramLabel ?
+                            <div className="gxaAnatomogramSpeciesLabel">
+                                <h5>{this.props.heatmapConfig.species}</h5>
+                            </div>
+                            : null
+                        }
+                        { this.props.anatomogram ?
+                            <Anatomogram anatomogramData={this.props.anatomogram}
+                                         expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
+                                         profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.heatmapConfig.atlasBaseURL}/>
+                            : null
+                        }
                     </div>
 
-                    { this.props.isWidget ?
-                            <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
-                                <br/>This expression view is provided by <a href={this.props.heatmapConfig.atlasBaseURL}>Expression Atlas</a>.
-                                <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p>
-                            </div>
-                        :
-                        null}
+                    <div id="heatmap-react" className="gxaHeatmapPosition">
+                        <Heatmap type={type}
+                                 heatmapConfig={this.props.heatmapConfig}
+                                 columnHeaders={this.props.columnHeaders}
+                                 profiles={this.props.profiles}
+                                 geneSetProfiles={this.props.geneSetProfiles}
+                                 isWidget={this.props.isWidget}
+                                 ensemblEventEmitter={ensemblEventEmitter}
+                                 anatomogramEventEmitter={anatomogramEventEmitter} />
+                    </div>
 
                 </div>
+
+                { this.props.isWidget ?
+                        <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
+                            <br/>This expression view is provided by <a href={this.props.heatmapConfig.atlasBaseURL}>Expression Atlas</a>.
+                            <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p>
+                        </div>
+                    :
+                    null}
+
+            </div>
         );
     },
 

@@ -77,10 +77,10 @@ public class BaselineAnalyticsFacetsReader {
 
             List<FacetTree> facetTreeList = Lists.newArrayList();
             for(Map<String, Object> defaultQueryFactorType : buckets)  {
-                String organism = (String) defaultQueryFactorType.get("val");
-                String source = Factor.convertToLowerCase(organism);
+                String key = (String) defaultQueryFactorType.get("val");
+                String name = Factor.convertToLowerCase(key);
 
-                FacetTree factor = new FacetTree(organism, source);
+                FacetTree factor = new FacetTree(key, name);
 
                 facetTreeList.add(factor);
             }

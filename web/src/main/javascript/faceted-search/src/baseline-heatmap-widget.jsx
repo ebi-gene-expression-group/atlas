@@ -15,7 +15,8 @@ var BaselineHeatmapWidget = React.createClass({
         gxaBaseUrl: React.PropTypes.string.isRequired,
         geneQuery: React.PropTypes.string.isRequired,
         species: React.PropTypes.string.isRequired,
-        factor: React.PropTypes.string.isRequired
+        factor: React.PropTypes.string.isRequired,
+        showAnatomogramLabel: React.PropTypes.bool.isRequired
     },
 
     componentDidMount: function() {
@@ -25,8 +26,9 @@ var BaselineHeatmapWidget = React.createClass({
             isMultiExperiment: true,
             target: this.refs.widgetBody.getDOMNode(),
             heatmapUrl: "/widgets/heatmap/baselineAnalytics",
-            heatmapKey: this.props.species + this.props.factor,
-            isWidget: false
+            heatmapKey: this.props.species + "-" + this.props.factor,
+            isWidget: false,
+            showAnatomogramLabel: this.props.showAnatomogramLabel
         });
     },
 
