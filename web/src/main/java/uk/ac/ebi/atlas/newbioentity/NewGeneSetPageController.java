@@ -55,15 +55,18 @@ public class NewGeneSetPageController extends NewBioentityPageController {
 
         bioentityPropertyServiceInitializer.initForGeneSetPage(bioEntityPropertyService, identifier);
 
+        String species = GeneSetUtil.isReactome(identifier) ? bioEntityPropertyService.getSpecies() : "";
+
         model.addAttribute(
             "mainTitle",
 
             "Expression summary for " + bioEntityPropertyService.getBioEntityDescription() +
-                (StringUtils.isNotBlank(bioEntityPropertyService.getSpecies()) ?
-                    " - " + StringUtils.capitalize(bioEntityPropertyService.getSpecies()) :
+                (StringUtils.isNotBlank(species) ?
+                    " - " + StringUtils.capitalize(species) :
                     "")
         );
 
+        model.addAttribute("species", species);
         model.addAttribute("queryType", "geneSet");
 
         ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(GeneQuery.create(identifier));

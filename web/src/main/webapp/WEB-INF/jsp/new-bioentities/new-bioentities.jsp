@@ -2,6 +2,7 @@
 <%--@elvariable id="isSearch" type="boolean"--%>
 <%--@elvariable id="searchDescription" type="java.lang.String"--%>
 <%--@elvariable id="identifier" type="java.lang.String"--%>
+<%--@elvariable id="species" type="java.lang.String"--%>
 <%--@elvariable id="hasBaselineResults" type="boolean"--%>
 <%--@elvariable id="hasDifferentialResults" type="boolean"--%>
 
@@ -29,7 +30,7 @@
 <!-- Simple page header -->
 <section class="gxaBioentityHeader" id="gxaBioentityHeaderSection">
     <p class="gxaBioentityName">${bioEntityPropertyService.entityName}</p>
-    <p class="gxaBioentitySpecies">${bioEntityPropertyService.species}</p>
+    <p class="gxaBioentitySpecies">${species}</p>
     <p class="gxaBioentityDescription">${bioEntityPropertyService.bioEntityDescription}</p>
 </section>
 
