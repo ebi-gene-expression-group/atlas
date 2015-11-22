@@ -19,4 +19,3 @@ web/src/test/resources/serialized_expression
 npm-debug.log
 web/src/main/**/node_modules
 web/src/main/javascript/**/dist
-web/src/main/webapp/resources/js-bundles/**
