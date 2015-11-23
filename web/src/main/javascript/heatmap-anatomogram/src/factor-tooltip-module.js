@@ -21,9 +21,17 @@ require('../css/heatmap-and-anatomogram.css');
 
 //*------------------------------------------------------------------*
 
-function initTooltip(contextRoot, accessKey, element, experimentAccession, assayGroupId) {
+/**
+ * @param {Object} options
+ * @param {string} options.contextRoot
+ * @param {string} options.accessKey
+ * @param {string} options.experimentAccession
+ * @param {string} options.assayGroupId
+ * @param {Object} options.element
+ */
+function initTooltip(options) {
 
-    $(element).attr("title", "").tooltip({
+    $(options.element).attr("title", "").tooltip({
 
         hide:false,
 
@@ -37,11 +45,11 @@ function initTooltip(contextRoot, accessKey, element, experimentAccession, assay
 
         content: function (callback) {
             $.ajax({
-                url:contextRoot + "/rest/assayGroup-summary",
+                url: options.contextRoot + "/rest/assayGroup-summary",
                 data:{
-                    experimentAccession:experimentAccession,
-                    assayGroupId: assayGroupId,
-                    accessKey: accessKey
+                    experimentAccession: options.experimentAccession,
+                    assayGroupId: options.assayGroupId,
+                    accessKey: options.accessKey
                 },
                 type:"GET",
                 success:function (data) {
@@ -68,5 +76,5 @@ function initTooltip(contextRoot, accessKey, element, experimentAccession, assay
 //*------------------------------------------------------------------*
 
 exports.init = function (contextRoot, accessKey, element, experimentAccession, assayGroupId) {
-    initTooltip(contextRoot, accessKey, element, experimentAccession, assayGroupId);
+    initTooltip({contextRoot: contextRoot, accessKey: accessKey, element: element, experimentAccession: experimentAccession, assayGroupId: assayGroupId});
 };

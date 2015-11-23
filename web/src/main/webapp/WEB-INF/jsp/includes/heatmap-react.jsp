@@ -1,3 +1,5 @@
+<%--@elvariable id="isMultiExperiment" type="boolean"--%>
+
 <c:choose>
     <c:when test="${empty jsonProfiles}">
         <c:if test="${not isPreferenceError}">
@@ -19,10 +21,15 @@
         <script type="text/javascript">
 
             var heatmapData = <%@ include file="heatmap-data.jsp" %>;
-            var multiExperiment = ${isMultiExperiment ? true : false};
+            var isMultiExperiment = ${isMultiExperiment ? true : false};
 
             var heatmapBuilder = window.exposed;
-            heatmapBuilder(heatmapData, multiExperiment, ${type.differential}, ${type.proteomicsBaseline});
+            heatmapBuilder({
+                heatmapData: heatmapData,
+                isMultiExperiment: isMultiExperiment,
+                isDifferential: ${type.differential},
+                isProteomicsBaseline: ${type.proteomicsBaseline}
+            });
 
         </script>
     </c:otherwise>

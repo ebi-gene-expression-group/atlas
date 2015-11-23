@@ -13,24 +13,31 @@ var HeatmapAnatomogramContainer = require('./internal-heatmap-anatomogram-contai
 
 //*------------------------------------------------------------------*
 
-function drawHeatmap (heatmapData, isMultiExperiment, isDifferential, isProteomicsBaseline) {
+/**
+ * @param {Object} options
+ * @param {Object} options.heatmapData
+ * @param {boolean} options.isMultiExperiment
+ * @param {boolean} options.isDifferential
+ * @param {boolean} options.isProteomicsBaseline
+ */
+function drawHeatmap (options) {
 
-    var heatmapConfig = heatmapData.config,
-        columnHeaders = heatmapData.columnHeaders,
-        multipleColumnHeaders = heatmapData.multipleColumnHeaders,
-        profiles = heatmapData.profiles,
-        geneSetProfiles = heatmapData.geneSetProfiles,
-        anatomogramData = heatmapData.anatomogram;
+    var heatmapConfig = options.heatmapData.config,
+        columnHeaders = options.heatmapData.columnHeaders,
+        multipleColumnHeaders = options.heatmapData.multipleColumnHeaders,
+        profiles = options.heatmapData.profiles,
+        geneSetProfiles = options.heatmapData.geneSetProfiles,
+        anatomogramData = options.heatmapData.anatomogram;
 
-    var isBaseline = (!isMultiExperiment && !isDifferential && !isProteomicsBaseline);
+    var isBaseline = (!options.isMultiExperiment && !options.isDifferential && !options.isProteomicsBaseline);
 
     heatmapConfig.atlasBaseURL = "/gxa";
     heatmapConfig.linksAtlasBaseURL = "/gxa";
 
     var type =
-        isMultiExperiment ? "isMultiExperiment" :
-            isDifferential ? "isDifferential" :
-                isProteomicsBaseline ? "isProteomics" : "isBaseline";
+        options.isMultiExperiment ? "isMultiExperiment" :
+            options.isDifferential ? "isDifferential" :
+                options.isProteomicsBaseline ? "isProteomics" : "isBaseline";
 
     React.render(
         React.createElement(

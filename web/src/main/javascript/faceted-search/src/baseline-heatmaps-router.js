@@ -16,23 +16,34 @@ var Heatmaps = require('./baseline-heatmaps.jsx');
 
 //*------------------------------------------------------------------*
 
-module.exports = function (facetsContainerId, heatmapsContainerId, selectedSpecies, facetsTreeData, atlasHost) {
+/**
+ * @param {Object} options
+ * @param {string} options.facetsContainer - id of the facets container, i.e. a <div> id
+ * @param {string} options.resultsContainer - id of the results container, i.e. a <div> id
+ * @param {Object} options.facetsTreeData
+ * @param {string} options.atlasHost
+ * @param {string} options.selectedSpecies
+ * @param {string} options.identifier
+ * @param {string} options.queryType - "gene", "geneSet"
+ */
+module.exports = function (options) {
+
+    var selectedSpecies = options.selectedSpecies,
+        facetsTreeData = options.facetsTreeData;
 
     var ie9 = $.browser.msie && $.browser.version < 10;
-    !ie9 && window.addEventListener('popstate', backButtonListener, false);
+    !ie9 && window.addEventListener("popstate", backButtonListener, false);
 
-    var facetsElement = document.getElementById(facetsContainerId),
-        heatmapsElement = document.getElementById(heatmapsContainerId),
-        host = atlasHost ? atlasHost : window.location.host;
+    var facetsElement = document.getElementById(options.facetsContainer),
+        heatmapsElement = document.getElementById(options.resultsContainer),
+        host = options.atlasHost ? options.atlasHost : window.location.host;
 
     var query = {
-        geneQuery : "",
+        geneQuery : options.identifier,
+        queryType : options.queryType,
         select    : {}
     };
-    query.select = {};
-    query.geneQuery = "";
 
-    parseGeneQueryFromLocation();
     if (selectedSpecies && facetsTreeData.hasOwnProperty(selectedSpecies)) {
         var selectedSpeciesFactors = facetsTreeData[selectedSpecies];
         for(var selectedSpeciesFactor in selectedSpeciesFactors) {
@@ -48,21 +59,8 @@ module.exports = function (facetsContainerId, heatmapsContainerId, selectedSpeci
 
     function backButtonListener() {
         if (window.location.hash === "#baseline") {
-            parseGeneQueryFromLocation();
             parseSelectedFacetsFromLocation();
             renderQueryPage();
-        }
-    }
-
-
-    function parseGeneQueryFromLocation() {
-        var currentURL = new URI(window.location);
-
-        // TODO Change to segment(1) when /new/ is removed
-        if (currentURL.segment(2) === "genes" || currentURL.segment(2) === "genesets") {
-            query.geneQuery = decodeURIComponent(currentURL.segment(3));
-        } else {  // if (currentURL.segment(1) === "search") {
-            query.geneQuery = currentURL.search(true)["geneQuery"];
         }
     }
 
@@ -95,8 +93,8 @@ module.exports = function (facetsContainerId, heatmapsContainerId, selectedSpeci
 
     function initializeQuerySelect() {
 
-        for (var facet in facetsTreeData) {
-            if (facetsTreeData.hasOwnProperty(facet)) {
+        for (var facet in options.facetsTreeData) {
+            if (options.facetsTreeData.hasOwnProperty(facet)) {
 
                 var factors = facetsTreeData[facet];
                 var checked = false;
@@ -135,9 +133,9 @@ module.exports = function (facetsContainerId, heatmapsContainerId, selectedSpeci
 
         if (!ie9) {
             if (replace) {
-                history.replaceState(null, null, newURL);
+                history.replaceState(null, "", newURL);
             } else {
-                history.pushState(null, null, newURL);
+                history.pushState(null, "", newURL);
             }
         }
     }

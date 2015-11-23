@@ -4,15 +4,24 @@
 
 // ensemblSpecies is the first two words only, with underscores instead of spaces, and all lower case except for the first character
 // used to launch the ensembl genome browser for tracks
+/**
+ * @param {string} species
+ */
 function toEnsemblSpecies(species) {
-    function capitaliseFirstLetter(string)
+    /**
+     * @param {string} str
+     */
+    function capitaliseFirstLetter(str)
     {
-        return string.charAt(0).toUpperCase() + string.slice(1);
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    function firstTwoWords(text) {
-        var words = text.split(" ");
-        return (words.length <= 2) ? text : words[0] + " " + words[1];
+    /**
+     * @param {string} str
+     */
+    function firstTwoWords(str) {
+        var words = str.split(" ");
+        return (words.length <= 2) ? str : words[0] + " " + words[1];
     }
 
     return capitaliseFirstLetter(firstTwoWords(species).replace(" ", "_").toLowerCase());

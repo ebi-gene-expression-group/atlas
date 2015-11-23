@@ -21,6 +21,7 @@
   --%>
 
 <%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
+<%--@elvariable id="singleGeneDiffHeatmap" type="boolean"--%>
 
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

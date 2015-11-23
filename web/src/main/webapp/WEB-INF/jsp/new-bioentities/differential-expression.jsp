@@ -23,15 +23,13 @@
     <c:if test="${hasDifferentialResults}">
     var differentialSearcher = window.exposed.differential;
 
-    differentialSearcher(
-        {
-            "facetsContainer": "gxaDifferentialFacetsContainerDiv",
-            "resultsContainer": "gxaDifferentialResultsContainerDiv",
-            "identifier": "${identifier}",
-            "queryType": "${queryType}",
-            "species": selectedSpecies
-        }
-    );
+    differentialSearcher({
+        facetsContainer: "gxaDifferentialFacetsContainerDiv",
+        resultsContainer: "gxaDifferentialResultsContainerDiv",
+        identifier: "${identifier}",
+        queryType: "${queryType}",
+        species: selectedSpecies
+    });
     </c:if>
 </script>
 

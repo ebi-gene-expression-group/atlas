@@ -14,9 +14,16 @@ require('../css/atlas.css');
 
 //*------------------------------------------------------------------*
 
-function initTooltip(contextRoot, element, identifier, geneName){
+/**
+ * @param {Object} options
+ * @param {string} options.contextRoot
+ * @param {string} options.geneName
+ * @param {string} options.identifier
+ * @param {Object} options.element
+ */
+function initTooltip(options){
 
-    $(element).attr("title", "").tooltip({
+    $(options.element).attr("title", "").tooltip({
 
         hide: false,
 
@@ -31,17 +38,17 @@ function initTooltip(contextRoot, element, identifier, geneName){
         position: { my: "left+120 top", at: "left top", collision: "flipfit" },
 
         content: function (callback) {
-            if (identifier)  {
+            if (options.identifier)  {
                 $.ajax({
-                    url: contextRoot + "/rest/genename-tooltip",
+                    url: options.contextRoot + "/rest/genename-tooltip",
                     data: {
-                        geneName: geneName,
-                        identifier: identifier
+                        geneName: options.geneName,
+                        identifier: options.identifier
                     },
                     type:"GET",
                     success: function (response) {
                         if (!response) {
-                            callback("Missing properties for id = " + identifier + " in Solr.");
+                            callback("Missing properties for id = " + options.identifier + " in Solr.");
                         }
 
                         callback(response);
@@ -60,5 +67,5 @@ function initTooltip(contextRoot, element, identifier, geneName){
 //*------------------------------------------------------------------*
 
 exports.init = function(contextRoot, element, identifier, geneName) {
-    initTooltip(contextRoot, element, identifier, geneName);
+    initTooltip({contextRoot: contextRoot, element: element, identifier: identifier, geneName: geneName});
 };

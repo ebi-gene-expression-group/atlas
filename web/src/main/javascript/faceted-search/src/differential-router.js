@@ -27,7 +27,7 @@ var DifferentialResults = require('./differential-results.jsx');
 module.exports = function (options) {
 
     var ie9 = $.browser.msie && $.browser.version < 10;
-    !ie9 && window.addEventListener('popstate', backButtonListener, false);
+    !ie9 && window.addEventListener("popstate", backButtonListener, false);
 
     var facetsElement = document.getElementById(options.facetsContainer),
         resultsElement = document.getElementById(options.resultsContainer),
@@ -47,7 +47,7 @@ module.exports = function (options) {
             differentialResultsPath = "gxa/new/genes/" + query.geneQuery + "/differentialResults.json";
             break;
         case "geneSet":
-            differentialFacetsPath = "gxa/new/genesets/" + query.geneQuery + "/differentialFacets.json"
+            differentialFacetsPath = "gxa/new/genesets/" + query.geneQuery + "/differentialFacets.json";
             differentialResultsPath = "gxa/new/genesets/" + query.geneQuery + "/differentialResults.json";
             break;
         default:
@@ -58,7 +58,7 @@ module.exports = function (options) {
         resultsData;
     $.ajaxSetup({ traditional:true });
     $.ajax({
-        url: new URI({protocol: "http", hostname: host, path: differentialFacetsPath}).normalize(),
+        url: new URI({protocol: URI(window.location).protocol(), hostname: host, path: differentialFacetsPath}).normalize(),
         dataType: 'json',
         success: function(response) {
             facetsTreeData = response;
@@ -75,7 +75,7 @@ module.exports = function (options) {
             pushQueryIntoBrowserHistory(true);
 
             $.ajax({
-                url: new URI({protocol: "http", hostname: host, path: differentialResultsPath}).normalize(),
+                url: new URI({protocol: URI(window.location).protocol(), hostname: host, path: differentialResultsPath}).normalize(),
                 dataType: 'json',
                 success: function(response) {
                     resultsData = response;
@@ -146,9 +146,9 @@ module.exports = function (options) {
 
         if (!ie9) {
             if (replace) {
-                history.replaceState(null, null, newURL);
+                history.replaceState(null, "", newURL);
             } else {
-                history.pushState(null, null, newURL);
+                history.pushState(null, "", newURL);
             }
         }
     }
