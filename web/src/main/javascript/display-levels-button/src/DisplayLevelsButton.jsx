@@ -34,7 +34,7 @@ var DisplayLevelsButton = React.createClass({
     render: function () {
         var className = (this.props.autoSize) ? "" : "gxaWebpackMediumButton";
         return (
-            <button className={className} onClick={this.props.onClickCallback}></button>
+            <button className={className} onClick={this.props.onClickCallback}/>
         );
     },
 

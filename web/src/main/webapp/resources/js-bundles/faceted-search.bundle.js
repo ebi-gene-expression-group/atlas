@@ -4249,7 +4249,7 @@ webpackJsonp([2],[
 	
 	
 	// module
-	exports.push([module.id, "/*Responsive*/\n@media (max-width: 768px) {\n    .hidden-xs {display: none!important;} /*remove column like filter for small devices*/\n}\n\n/* Facets-tree container */\n.gxaFacetsContainer ul {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n}\n\n.gxaFacetsContainer {padding:0 9px;}\n.gxaFacetsContainer  h3 {padding-left:0;}\n.gxaFacetsContainer .gxaFacetItem {padding:0 0 9px 0;}\n.gxaFacetsContainer .gxaFacetItem ul li span:first-letter  {text-transform: capitalize;}\n.gxaSpeciesFacet li span {font-style: italic;} /*target species facet*/\n.gxaFacetsContainer .gxaFacetItem h4 {font-weight: bold;font-size: 144%; padding-left:0;  margin-bottom: 9px;}\n.gxaFacetsContainer .gxaFacetItem h4:first-letter {text-transform: capitalize;}\n.gxaFacetsContainer ul li  {padding:1px 0; }\n.gxaFacetsContainer .gxaFacetItem .gxaDisabledFacet span {color: gray;}\n", ""]);
+	exports.push([module.id, "/*Responsive*/\n@media (max-width: 768px) {\n    .hidden-xs {display: none!important;} /*remove column like filter for small devices*/\n}\n\n/* Facets-tree container */\n.gxaFacetsContainer ul, .gxaFacetsContainer li {\n    list-style-type: none;\n    padding: 2px 0;\n}\n\n.gxaFacetsContainer .gxaFacetItem {\n    padding-bottom: 8px;\n}\n\n.gxaFacetsContainer .gxaFacetItem h4:first-letter, .gxaFacetsContainer .gxaFacetItem ul li span:first-letter {\n    text-transform: capitalize;\n}\n\n.gxaFacetsContainer .gxaFacetItem h4 {\n    font-weight: bold;\n    font-size: 133%;\n    padding: 0;\n}\n\n.gxaFacetsContainer .gxaFacetItem .gxaDisabledFacet span {\n    color: gray;\n}\n\n.gxaSpeciesFacet li span {\n    font-style: italic;\n}\n", ""]);
 	
 	// exports
 
@@ -46727,7 +46727,7 @@ webpackJsonp([2],[
 	
 	        return (
 	            React.createElement("div", null, 
-	                React.createElement("div", {style: {display: "inline-block", verticalAlign: "middle", paddingTop: "10px"}}, 
+	                React.createElement("div", {style: {display: "inline-block", verticalAlign: "middle"}}, 
 	                    React.createElement(DisplayLevelsButton, {hideText: "Hide log<sub>2</sub>-fold change", showText: "Display log<sub>2</sub>-fold change", onClickCallback: this._toggleDisplayLevels, displayLevels: this.state.displayLevels})
 	                ), 
 	
@@ -46896,7 +46896,7 @@ webpackJsonp([2],[
 	
 	
 	// module
-	exports.push([module.id, "table.table-striped tr:nth-child(even) {background-color: #f9f9f9;}\ntable.table-striped tr:nth-child(odd) {background: #FFF;}\n\ntable.gxaDifferentialFacetedSearchResults th, table.gxaDifferentialFacetedSearchResults th span {\n    font-weight: bold;\n}\n\ntable.gxaDifferentialFacetedSearchResults th {\n    font-size: 90%;\n    border-top: 0px #ddd solid;\n    border-left: 0px #ddd solid;\n    border-right: 0px #ddd solid;\n    border-bottom: 2px solid #ddd;\n    vertical-align: bottom;\n}\n\ntable.gxaDifferentialFacetedSearchResults tr td {\n    padding: 8px;\n    line-height: 1.42857143;\n    vertical-align: top;\n    border-top: 1px solid #ddd\n}\n\ntable.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species {  font-size: 300%; margin-left: 4px;}\ntable.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.red:before {color:#d9534f;} /*animal*/\ntable.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.green:before {color:#5cb85c;}/*plants*/\ntable.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.blue:before {color:#5bc0de;}/*other*/\n\ntd.gxaExperimentalVariable {\n    text-align: center;\n}\n", ""]);
+	exports.push([module.id, "table.table-striped tr:nth-child(even) {\n    background-color: #f9f9f9;\n}\n\ntable.table-striped tr:nth-child(odd) {\n    background: #FFF;\n}\n\ntable.gxaDifferentialFacetedSearchResults th, table.gxaDifferentialFacetedSearchResults th span {\n    font-weight: bold;\n}\n\ntable.gxaDifferentialFacetedSearchResults th {\n    font-size: 90%;\n    border: 0 solid #ddd;\n    border-bottom-width: 2px;\n    vertical-align: bottom;\n}\n\ntable.gxaDifferentialFacetedSearchResults tr td {\n    padding: 8px;\n    line-height: 1.42857143;\n    vertical-align: top;\n    border-top: 1px solid #ddd\n}\n\ntable.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species {\n    font-size: 300%;\n    margin-left: 4px;\n}\n\ntable.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.red:before {\n    /*animal*/\n    color:#d9534f;\n}\n\ntable.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.green:before {\n    /*plants*/\n    color:#5cb85c;\n}\n\ntable.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.blue:before {\n    /*other*/\n    color:#5bc0de;\n}\n\ntd.gxaExperimentalVariable {\n    text-align: center;\n}\n", ""]);
 	
 	// exports
 

@@ -100,7 +100,7 @@ var DifferentialResults = React.createClass({
 
         return (
             <div>
-                <div style={{display: "inline-block", verticalAlign: "middle", paddingTop: "10px"}}>
+                <div style={{display: "inline-block", verticalAlign: "middle"}}>
                     <DisplayLevelsButton hideText="Hide log<sub>2</sub>-fold change" showText="Display log<sub>2</sub>-fold change" onClickCallback={this._toggleDisplayLevels} displayLevels={this.state.displayLevels} />
                 </div>
 
@@ -211,7 +211,7 @@ var DifferentialResultRow = React.createClass({
         return (
             <tr>
                 <CellDifferential colour={this.props.colour} infinity={this.props.infinity} foldChange={this.props.foldChange} displayLevels={this.props.displayLevels}/>
-                <td className="col_species"><span className={"icon icon-species " + classColor} data-icon={classIcon} style={{color: 'red'}} title={this.props.species}></span></td>
+                <td className="col_species"><span className={"icon icon-species " + classColor} data-icon={classIcon} style={{color: 'red'}} title={this.props.species}/></td>
                 <td ref="comparison"><a href={"experiments/" + this.props.experimentAccession + "?geneQuery=" + this.props.bioentityIdentifier + "&queryFactorValues=" + this.props.contrastId + "&_specific=on"}>{this.props.comparison}</a></td>
                 <td className="gxaExperimentalVariable">{factors}</td>
                 <td><a href={"experiments/" + this.props.experimentAccession}>{this.props.experimentName}</a></td>

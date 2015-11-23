@@ -1,5 +1,10 @@
-table.table-striped tr:nth-child(even) {background-color: #f9f9f9;}
-table.table-striped tr:nth-child(odd) {background: #FFF;}
+table.table-striped tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table.table-striped tr:nth-child(odd) {
+    background: #FFF;
+}
 
 table.gxaDifferentialFacetedSearchResults th, table.gxaDifferentialFacetedSearchResults th span {
     font-weight: bold;
@@ -7,10 +12,8 @@ table.gxaDifferentialFacetedSearchResults th, table.gxaDifferentialFacetedSearch
 
 table.gxaDifferentialFacetedSearchResults th {
     font-size: 90%;
-    border-top: 0px #ddd solid;
-    border-left: 0px #ddd solid;
-    border-right: 0px #ddd solid;
-    border-bottom: 2px solid #ddd;
+    border: 0 solid #ddd;
+    border-bottom-width: 2px;
     vertical-align: bottom;
 }
 
@@ -21,10 +24,25 @@ table.gxaDifferentialFacetedSearchResults tr td {
     border-top: 1px solid #ddd
 }
 
-table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species {  font-size: 300%; margin-left: 4px;}
-table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.red:before {color:#d9534f;} /*animal*/
-table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.green:before {color:#5cb85c;}/*plants*/
-table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.blue:before {color:#5bc0de;}/*other*/
+table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species {
+    font-size: 300%;
+    margin-left: 4px;
+}
+
+table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.red:before {
+    /*animal*/
+    color:#d9534f;
+}
+
+table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.green:before {
+    /*plants*/
+    color:#5cb85c;
+}
+
+table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.blue:before {
+    /*other*/
+    color:#5bc0de;
+}
 
 td.gxaExperimentalVariable {
     text-align: center;

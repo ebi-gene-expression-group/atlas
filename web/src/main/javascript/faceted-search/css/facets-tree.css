@@ -4,18 +4,29 @@
 }
 
 /* Facets-tree container */
-.gxaFacetsContainer ul {
+.gxaFacetsContainer ul, .gxaFacetsContainer li {
     list-style-type: none;
-    padding: 0;
-    margin: 0;
+    padding: 2px 0;
 }
 
-.gxaFacetsContainer {padding:0 9px;}
-.gxaFacetsContainer  h3 {padding-left:0;}
-.gxaFacetsContainer .gxaFacetItem {padding:0 0 9px 0;}
-.gxaFacetsContainer .gxaFacetItem ul li span:first-letter  {text-transform: capitalize;}
-.gxaSpeciesFacet li span {font-style: italic;} /*target species facet*/
-.gxaFacetsContainer .gxaFacetItem h4 {font-weight: bold;font-size: 144%; padding-left:0;  margin-bottom: 9px;}
-.gxaFacetsContainer .gxaFacetItem h4:first-letter {text-transform: capitalize;}
-.gxaFacetsContainer ul li  {padding:1px 0; }
-.gxaFacetsContainer .gxaFacetItem .gxaDisabledFacet span {color: gray;}
+.gxaFacetsContainer .gxaFacetItem {
+    padding-bottom: 8px;
+}
+
+.gxaFacetsContainer .gxaFacetItem h4:first-letter, .gxaFacetsContainer .gxaFacetItem ul li span:first-letter {
+    text-transform: capitalize;
+}
+
+.gxaFacetsContainer .gxaFacetItem h4 {
+    font-weight: bold;
+    font-size: 133%;
+    padding: 0;
+}
+
+.gxaFacetsContainer .gxaFacetItem .gxaDisabledFacet span {
+    color: gray;
+}
+
+.gxaSpeciesFacet li span {
+    font-style: italic;
+}
