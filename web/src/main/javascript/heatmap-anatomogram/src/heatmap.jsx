@@ -1153,8 +1153,8 @@ var GeneProfileRow = React.createClass({
                         <div style={{"display": "table", "width": "100%"}}>
                             <div style={{"display": "table-row"}}>
                                 { this.props.heatmapConfig.enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked()}
-                                {showSelectTextOnHover}
-                                {showTickWhenSelected}
+                                { this.props.heatmapConfig.enableEnsemblLauncher ? showSelectTextOnHover : null }
+                                { this.props.heatmapConfig.enableEnsemblLauncher ? showTickWhenSelected : null }
                             </div>
                         </div>
                     </th>
