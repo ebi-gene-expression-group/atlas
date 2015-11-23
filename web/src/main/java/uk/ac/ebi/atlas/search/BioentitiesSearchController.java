@@ -45,6 +45,7 @@ import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
+import uk.ac.ebi.atlas.utils.ColourGradient;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
@@ -71,13 +72,16 @@ public class BioentitiesSearchController {
     private SolrQueryService solrQueryService;
     private ConditionSearchEFOExpander efoExpander;
 
+    private ColourGradient colourGradient;
+
     @Inject
-    public BioentitiesSearchController(DiffAnalyticsSearchService diffAnalyticsSearchService, BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService, ConditionSearchEFOExpander efoExpander) {
+    public BioentitiesSearchController(DiffAnalyticsSearchService diffAnalyticsSearchService, BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService, ConditionSearchEFOExpander efoExpander, ColourGradient colourGradient) {
         this.diffAnalyticsSearchService = diffAnalyticsSearchService;
         this.baselineExperimentAssayGroupSearchService = baselineExperimentAssayGroupSearchService;
         this.ebiGlobalSearchQueryBuilder = ebiGlobalSearchQueryBuilder;
         this.solrQueryService = solrQueryService;
         this.efoExpander = efoExpander;
+        this.colourGradient = colourGradient;
     }
 
     @RequestMapping(value = "/query")
@@ -132,6 +136,8 @@ public class BioentitiesSearchController {
         model.addAttribute("preferences", new DifferentialRequestPreferences());
         model.addAttribute("requestParameters", requestParameters);
         model.addAttribute("exactMatch", requestParameters.isExactMatch());
+
+        model.addAttribute("colourGradient", colourGradient);
 
         String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQueryString, requestParameters.getConditionQuery());
 
