@@ -46,7 +46,7 @@ public class BaselineExperimentProfilesViewModelBuilder {
 
     public BaselineExperimentProfileRowViewModel buildExperiment(BaselineExperimentProfile profile, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
         String geneId = profile.getId();
-        String geneName = profile.getName();
+        String geneName = profile.getShortName();
         String experimentType = profile.getExperimentType();
         String serializedFilterFactors = filterFactorsConverter.serialize(profile.getFilterFactors());
         BaselineExpressionViewModel[] expressions = baselineExpressionViewModelBuilder.buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);

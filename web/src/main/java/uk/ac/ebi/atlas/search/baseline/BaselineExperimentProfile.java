@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.baseline;
 
+import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
@@ -49,6 +50,27 @@ public class BaselineExperimentProfile extends BaselineProfile implements Compar
     public String getName() {
         StringBuilder sb = new StringBuilder();
         sb.append(super.getName());
+        if (!filterFactors.isEmpty() && !filterFactors.containsOnlyOrganism()) {
+            sb.append(" - ").append(filterFactorsConverter.prettyPrint(filterFactors));
+        }
+        return sb.toString();
+    }
+
+    public String getShortName() {
+        StringBuilder sb = new StringBuilder();
+        String name = super.getName();
+        if(StringUtils.startsWithAny(name, new String[]{"Tissues - ", "Cell Type - ", "Cell Lines - ", "Individual - ",
+                                                        "Developmental Stages - ", "Strains - ", "Cultivars - ", "Ecotypes - "})) {
+            String shortenName = name.substring(0, name.indexOf("-") + 2);
+            name = name.replace(shortenName, "");
+            sb.append(name);
+        } else if (StringUtils.startsWith(name, "Proteomics - Tissues - ")) {
+            name = name.replace("Proteomics - Tissues - ", "");
+            sb.append(name);
+        } else {
+            sb.append(name);
+        }
+
         if (!filterFactors.isEmpty() && !filterFactors.containsOnlyOrganism()) {
             sb.append(" - ").append(filterFactorsConverter.prettyPrint(filterFactors));
         }
