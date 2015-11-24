@@ -39,13 +39,12 @@ var Heatmaps = React.createClass({
         }.bind(this)();
 
         var geneQuery = this.props.geneQuery;
-        var gxaBaseURL = new URI({hostname: this.props.atlasHost, path: "/gxa"});
 
         return (
             <div>
                 {this.props.heatmaps.map(function (heatmap) {
                     return <BaselineHeatmapWidget key={heatmap.species + "_" + heatmap.factor} showAnatomogramLabel={moreThanOneSpecies}
-                                                  gxaBaseUrl={gxaBaseURL.normalize().toString()} geneQuery={geneQuery} species={heatmap.species} factor={heatmap.factor} />;
+                                                  atlasHost={this.props.atlasHost} geneQuery={geneQuery} species={heatmap.species} factor={heatmap.factor} />;
                 })}
             </div>
         );

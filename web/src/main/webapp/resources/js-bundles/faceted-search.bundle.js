@@ -558,15 +558,12 @@ webpackJsonp([2],[
 	 */
 	module.exports = function (options) {
 	
-	    var selectedSpecies = options.selectedSpecies,
-	        facetsTreeData = options.facetsTreeData;
-	
 	    var ie9 = $.browser.msie && $.browser.version < 10;
 	    !ie9 && window.addEventListener("popstate", backButtonListener, false);
 	
 	    var facetsElement = document.getElementById(options.facetsContainer),
 	        heatmapsElement = document.getElementById(options.resultsContainer),
-	        host = options.atlasHost ? options.atlasHost : window.location.host;
+	        host = options.atlasHost ? options.atlasHost : window.location.protocol + "//" + window.location.host;
 	
 	    var query = {
 	        geneQuery : options.identifier,
@@ -574,6 +571,8 @@ webpackJsonp([2],[
 	        select    : {}
 	    };
 	
+	    var selectedSpecies = options.selectedSpecies,
+	        facetsTreeData = options.facetsTreeData;
 	    if (selectedSpecies && facetsTreeData.hasOwnProperty(selectedSpecies)) {
 	        var selectedSpeciesFactors = facetsTreeData[selectedSpecies];
 	        for(var selectedSpeciesFactor in selectedSpeciesFactors) {
@@ -584,6 +583,7 @@ webpackJsonp([2],[
 	    } else {
 	        parseSelectedFacetsFromLocation();
 	    }
+	
 	    pushQueryIntoBrowserHistory(true);
 	    renderQueryPage();
 	
@@ -1985,13 +1985,12 @@ webpackJsonp([2],[
 	        }.bind(this)();
 	
 	        var geneQuery = this.props.geneQuery;
-	        var gxaBaseURL = new URI({hostname: this.props.atlasHost, path: "/gxa"});
 	
 	        return (
 	            React.createElement("div", null, 
 	                this.props.heatmaps.map(function (heatmap) {
 	                    return React.createElement(BaselineHeatmapWidget, {key: heatmap.species + "_" + heatmap.factor, showAnatomogramLabel: moreThanOneSpecies, 
-	                                                  gxaBaseUrl: gxaBaseURL.normalize().toString(), geneQuery: geneQuery, species: heatmap.species, factor: heatmap.factor});
+	                                                  atlasHost: this.props.atlasHost, geneQuery: geneQuery, species: heatmap.species, factor: heatmap.factor});
 	                })
 	            )
 	        );
@@ -2026,7 +2025,7 @@ webpackJsonp([2],[
 	
 	var BaselineHeatmapWidget = React.createClass({displayName: "BaselineHeatmapWidget",
 	    propTypes: {
-	        gxaBaseUrl: React.PropTypes.string.isRequired,
+	        atlasHost: React.PropTypes.string.isRequired,
 	        geneQuery: React.PropTypes.string.isRequired,
 	        species: React.PropTypes.string.isRequired,
 	        factor: React.PropTypes.string.isRequired,
@@ -2035,7 +2034,7 @@ webpackJsonp([2],[
 	
 	    componentDidMount: function() {
 	        AtlasHeatmapBuilder({
-	            gxaBaseUrl: this.props.gxaBaseUrl,
+	            atlasHost: this.props.atlasHost,
 	            params: 'geneQuery=' + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
 	            isMultiExperiment: true,
 	            target: this.refs.widgetBody.getDOMNode(),
@@ -2145,7 +2144,7 @@ webpackJsonp([2],[
 	 * @param {string}  options.heatmapKey
 	 * @param {boolean} options.isWidget
 	 * @param {string}  options.proxyPrefix - only used by CTTV
-	 * @param {string}  options.atlasHost - for debugging
+	 * @param {string}  options.atlasHost
 	 * @param {boolean} options.showAnatomogramLabel
 	 */
 	module.exports = function(options) {
@@ -2159,11 +2158,20 @@ webpackJsonp([2],[
 	
 	    // Proxy prefix required by CTTV
 	    var proxyPrefix = options.hasOwnProperty("proxyPrefix") ? options.proxyPrefix : "";
+	
+	    // Atlas host with protocol
 	    var atlasHost = options.hasOwnProperty("atlasHost") ? options.atlasHost : "";
-	    if (atlasHost.indexOf("http://") != -1 || atlasHost.indexOf("https://") != -1) {
+	    var protocol = "";
+	    if (atlasHost.indexOf("http://") != -1) {
+	        protocol = "http://";
 	        atlasHost = URI(atlasHost).host();
+	    } else if (atlasHost.indexOf("https://") != -1) {
+	        protocol = "https://";
+	        atlasHost = URI(atlasHost).host();
+	    } else {
+	        protocol = "http";
 	    }
-	    var endpoint = options.heatmapUrl ? options.heatmapUrl : options.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
+	    var endpointPath = options.heatmapUrl ? options.heatmapUrl : options.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
 	
 	    // Legacy parameter
 	    if (options.hasOwnProperty("gxaBaseUrl")) {
@@ -2182,20 +2190,20 @@ webpackJsonp([2],[
 	            atlasBaseURL = proxyPrefix + "/" + defaultAtlasHost + defaultAtlasPath;
 	        }
 	    } else if (atlasHost) {
-	        atlasBaseURL = "http://" + atlasHost + defaultAtlasPath;
+	        atlasBaseURL = protocol + atlasHost + defaultAtlasPath;
 	    } else {
-	        atlasBaseURL = "http://" + defaultAtlasHost + defaultAtlasPath;
+	        atlasBaseURL = protocol + defaultAtlasHost + defaultAtlasPath;
 	    }
 	
 	    // linksContextRoot -> for links that take you to a new URL
 	    var linksAtlasBaseURL = "";
 	    if (atlasHost) {
-	        linksAtlasBaseURL = "http://" + atlasHost + defaultAtlasPath;
+	        linksAtlasBaseURL = "https://" + atlasHost + defaultAtlasPath;
 	    } else {
-	        linksAtlasBaseURL = "http://" + defaultAtlasHost + defaultAtlasPath;
+	        linksAtlasBaseURL = "https://" + defaultAtlasHost + defaultAtlasPath;
 	    }
 	
-	    var url = atlasBaseURL + endpoint + "?" + options.params;
+	    var url = atlasBaseURL + endpointPath + "?" + options.params;
 	
 	    var targetElement = (typeof options.target == 'string') ? document.getElementById(options.target) : options.target;
 	    var $targetElement = $(targetElement);

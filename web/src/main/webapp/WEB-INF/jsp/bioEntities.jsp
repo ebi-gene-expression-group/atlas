@@ -331,7 +331,7 @@
     var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
     var heatmapBuilder = window.exposed;
     heatmapBuilder({
-        atlasHost: '${pageContext.request.serverName}:${pageContext.request.serverPort}',
+        atlasHost: '${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}',
         params: 'geneQuery=${geneQuery.asUrlQueryParameter()}' + widgetParameters,
         isMultiExperiment: true,
         target: "widgetBody",

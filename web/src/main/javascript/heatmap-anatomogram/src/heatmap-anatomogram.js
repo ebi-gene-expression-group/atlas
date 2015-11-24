@@ -53,7 +53,7 @@ function drawHeatmap (options) {
  * @param {string}  options.heatmapKey
  * @param {boolean} options.isWidget
  * @param {string}  options.proxyPrefix - only used by CTTV
- * @param {string}  options.atlasHost - for debugging
+ * @param {string}  options.atlasHost
  * @param {boolean} options.showAnatomogramLabel
  */
 module.exports = function(options) {
@@ -67,11 +67,20 @@ module.exports = function(options) {
 
     // Proxy prefix required by CTTV
     var proxyPrefix = options.hasOwnProperty("proxyPrefix") ? options.proxyPrefix : "";
+
+    // Atlas host with protocol
     var atlasHost = options.hasOwnProperty("atlasHost") ? options.atlasHost : "";
-    if (atlasHost.indexOf("http://") != -1 || atlasHost.indexOf("https://") != -1) {
+    var protocol = "";
+    if (atlasHost.indexOf("http://") != -1) {
+        protocol = "http://";
         atlasHost = URI(atlasHost).host();
+    } else if (atlasHost.indexOf("https://") != -1) {
+        protocol = "https://";
+        atlasHost = URI(atlasHost).host();
+    } else {
+        protocol = "http";
     }
-    var endpoint = options.heatmapUrl ? options.heatmapUrl : options.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
+    var endpointPath = options.heatmapUrl ? options.heatmapUrl : options.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
 
     // Legacy parameter
     if (options.hasOwnProperty("gxaBaseUrl")) {
@@ -90,20 +99,20 @@ module.exports = function(options) {
             atlasBaseURL = proxyPrefix + "/" + defaultAtlasHost + defaultAtlasPath;
         }
     } else if (atlasHost) {
-        atlasBaseURL = "http://" + atlasHost + defaultAtlasPath;
+        atlasBaseURL = protocol + atlasHost + defaultAtlasPath;
     } else {
-        atlasBaseURL = "http://" + defaultAtlasHost + defaultAtlasPath;
+        atlasBaseURL = protocol + defaultAtlasHost + defaultAtlasPath;
     }
 
     // linksContextRoot -> for links that take you to a new URL
     var linksAtlasBaseURL = "";
     if (atlasHost) {
-        linksAtlasBaseURL = "http://" + atlasHost + defaultAtlasPath;
+        linksAtlasBaseURL = "https://" + atlasHost + defaultAtlasPath;
     } else {
-        linksAtlasBaseURL = "http://" + defaultAtlasHost + defaultAtlasPath;
+        linksAtlasBaseURL = "https://" + defaultAtlasHost + defaultAtlasPath;
     }
 
-    var url = atlasBaseURL + endpoint + "?" + options.params;
+    var url = atlasBaseURL + endpointPath + "?" + options.params;
 
     var targetElement = (typeof options.target == 'string') ? document.getElementById(options.target) : options.target;
     var $targetElement = $(targetElement);

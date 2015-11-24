@@ -28,15 +28,12 @@ var Heatmaps = require('./baseline-heatmaps.jsx');
  */
 module.exports = function (options) {
 
-    var selectedSpecies = options.selectedSpecies,
-        facetsTreeData = options.facetsTreeData;
-
     var ie9 = $.browser.msie && $.browser.version < 10;
     !ie9 && window.addEventListener("popstate", backButtonListener, false);
 
     var facetsElement = document.getElementById(options.facetsContainer),
         heatmapsElement = document.getElementById(options.resultsContainer),
-        host = options.atlasHost ? options.atlasHost : window.location.host;
+        host = options.atlasHost ? options.atlasHost : window.location.protocol + "//" + window.location.host;
 
     var query = {
         geneQuery : options.identifier,
@@ -44,6 +41,8 @@ module.exports = function (options) {
         select    : {}
     };
 
+    var selectedSpecies = options.selectedSpecies,
+        facetsTreeData = options.facetsTreeData;
     if (selectedSpecies && facetsTreeData.hasOwnProperty(selectedSpecies)) {
         var selectedSpeciesFactors = facetsTreeData[selectedSpecies];
         for(var selectedSpeciesFactor in selectedSpeciesFactors) {
@@ -54,6 +53,7 @@ module.exports = function (options) {
     } else {
         parseSelectedFacetsFromLocation();
     }
+
     pushQueryIntoBrowserHistory(true);
     renderQueryPage();
 

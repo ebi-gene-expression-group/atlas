@@ -12,7 +12,7 @@ var AtlasHeatmapBuilder = require('heatmap-anatomogram');
 
 var BaselineHeatmapWidget = React.createClass({
     propTypes: {
-        gxaBaseUrl: React.PropTypes.string.isRequired,
+        atlasHost: React.PropTypes.string.isRequired,
         geneQuery: React.PropTypes.string.isRequired,
         species: React.PropTypes.string.isRequired,
         factor: React.PropTypes.string.isRequired,
@@ -21,7 +21,7 @@ var BaselineHeatmapWidget = React.createClass({
 
     componentDidMount: function() {
         AtlasHeatmapBuilder({
-            gxaBaseUrl: this.props.gxaBaseUrl,
+            atlasHost: this.props.atlasHost,
             params: 'geneQuery=' + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
             isMultiExperiment: true,
             target: this.refs.widgetBody.getDOMNode(),
