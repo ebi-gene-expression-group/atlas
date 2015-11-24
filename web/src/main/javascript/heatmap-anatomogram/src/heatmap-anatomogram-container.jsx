@@ -53,6 +53,7 @@ var HeatmapAnatomogramContainer = React.createClass({
     // TODO Keep populating propTypes until we have everything here
     propTypes: {
         type: React.PropTypes.oneOf(["isBaseline", "isMultiExperiment", "isDifferential", "isProteomics"]).isRequired,
+        showAnatomogram: React.PropTypes.bool.isRequired,
         showAnatomogramLabel: React.PropTypes.bool.isRequired
     },
 
@@ -85,7 +86,7 @@ var HeatmapAnatomogramContainer = React.createClass({
 
                 <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
-                    <div ref="anatomogramEnsembl" className="gxaAside">
+                    <div ref="anatomogramEnsembl" className={"gxaAside " + (this.props.showAnatomogram ? "gxaVisible" : "gxaInvisible")}>
                         { this.props.heatmapKey && this.props.showAnatomogramLabel ?
                             <div className="gxaAnatomogramSpeciesLabel">
                                 <h5>{this.props.heatmapConfig.species}</h5>
@@ -100,7 +101,7 @@ var HeatmapAnatomogramContainer = React.createClass({
                         }
                     </div>
 
-                    <div id="heatmap-react" className="gxaHeatmapPosition">
+                    <div id="heatmap-react" className={this.props.showAnatomogram ? "gxaHeatmapWithAnatomogram" : "gxaHeatmapWithoutAnatomogram"}>
                         <Heatmap type={type}
                                  heatmapConfig={this.props.heatmapConfig}
                                  columnHeaders={this.props.columnHeaders}

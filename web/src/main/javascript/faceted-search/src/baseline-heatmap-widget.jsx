@@ -16,6 +16,7 @@ var BaselineHeatmapWidget = React.createClass({
         geneQuery: React.PropTypes.string.isRequired,
         species: React.PropTypes.string.isRequired,
         factor: React.PropTypes.string.isRequired,
+        showAnatomogram: React.PropTypes.bool.isRequired,
         showAnatomogramLabel: React.PropTypes.bool.isRequired
     },
 
@@ -28,6 +29,7 @@ var BaselineHeatmapWidget = React.createClass({
             heatmapUrl: "/widgets/heatmap/baselineAnalytics",
             heatmapKey: this.props.species + "-" + this.props.factor,
             isWidget: false,
+            showAnatomogram: this.props.showAnatomogram,
             showAnatomogramLabel: this.props.showAnatomogramLabel
         });
     },

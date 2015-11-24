@@ -218,6 +218,7 @@ webpackJsonp([1],[
 	 * @param {boolean} options.isWidget
 	 * @param {boolean} options.isMultiExperiment
 	 * @param {string}  options.heatmapKey
+	 * @param {boolean} options.showAnatomogram
 	 * @param {boolean} options.showAnatomogramLabel
 	 */
 	function drawHeatmap (options) {
@@ -239,7 +240,7 @@ webpackJsonp([1],[
 	                experiment: experimentData, isWidget: options.isWidget,
 	                anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
 	                geneSetProfiles: geneSetProfiles, heatmapKey: options.heatmapKey,
-	                showAnatomogramLabel: options.showAnatomogramLabel
+	                showAnatomogram: options.showAnatomogram, showAnatomogramLabel: options.showAnatomogramLabel
 	            }
 	        ),
 	        options.targetElement
@@ -259,6 +260,7 @@ webpackJsonp([1],[
 	 * @param {boolean} options.isWidget
 	 * @param {string}  options.proxyPrefix - only used by CTTV
 	 * @param {string}  options.atlasHost
+	 * @param {boolean} options.showAnatomogram
 	 * @param {boolean} options.showAnatomogramLabel
 	 */
 	module.exports = function(options) {
@@ -339,9 +341,9 @@ webpackJsonp([1],[
 	        data.config.linksAtlasBaseURL = linksAtlasBaseURL;
 	
 	        if (options.isMultiExperiment) {
-	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogramLabel: showAnatomogramLabel});
+	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogram: options.showAnatomogram, showAnatomogramLabel: showAnatomogramLabel});
 	        } else {
-	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogramLabel: showAnatomogramLabel});
+	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogram: options.showAnatomogram, showAnatomogramLabel: showAnatomogramLabel});
 	        }
 	
 	    }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -416,6 +418,7 @@ webpackJsonp([1],[
 	    // TODO Keep populating propTypes until we have everything here
 	    propTypes: {
 	        type: React.PropTypes.oneOf(["isBaseline", "isMultiExperiment", "isDifferential", "isProteomics"]).isRequired,
+	        showAnatomogram: React.PropTypes.bool.isRequired,
 	        showAnatomogramLabel: React.PropTypes.bool.isRequired
 	    },
 	
@@ -448,7 +451,7 @@ webpackJsonp([1],[
 	
 	                React.createElement("div", {id: "heatmap-anatomogram", className: "gxaHeatmapAnatomogramRow"}, 
 	
-	                    React.createElement("div", {ref: "anatomogramEnsembl", className: "gxaAside"}, 
+	                    React.createElement("div", {ref: "anatomogramEnsembl", className: "gxaAside " + (this.props.showAnatomogram ? "gxaVisible" : "gxaInvisible")}, 
 	                         this.props.heatmapKey && this.props.showAnatomogramLabel ?
 	                            React.createElement("div", {className: "gxaAnatomogramSpeciesLabel"}, 
 	                                React.createElement("h5", null, this.props.heatmapConfig.species)
@@ -463,7 +466,7 @@ webpackJsonp([1],[
 	                        
 	                    ), 
 	
-	                    React.createElement("div", {id: "heatmap-react", className: "gxaHeatmapPosition"}, 
+	                    React.createElement("div", {id: "heatmap-react", className: this.props.showAnatomogram ? "gxaHeatmapWithAnatomogram" : "gxaHeatmapWithoutAnatomogram"}, 
 	                        React.createElement(Heatmap, {type: type, 
 	                                 heatmapConfig: this.props.heatmapConfig, 
 	                                 columnHeaders: this.props.columnHeaders, 
@@ -42786,7 +42789,7 @@ webpackJsonp([1],[
 	
 	
 	// module
-	exports.push([module.id, ".gxaSvg #anatomogram {\n    display:inline\n}\n\n.gxaHeatmapAnatomogramRow {\n    position: relative;\n}\n\n.gxaHeatmapAnatomogramRow:after {\n    clear: both;\n    content: \".\";\n    display: block;\n    visibility: hidden;\n}\n\n.gxaHeatmapPosition {\n    position: relative;\n    margin-left: 270px;\n    overflow: hidden;\n}\n\n.gxaAside {\n    float: left;\n    /*padding: 0 20px;*/\n}\n\n.gxaGradientLevelMin {\n    text-align: right;\n}\n\n.gxaGradientLevelMax {\n    text-align: left;\n}\n\n.gxaHeatmapMatrixTopLeftCorner {\n    position: relative;\n    display: table;\n    height: 110px;\n    width: 100%;\n    min-width: 160px;\n}\n\n#display-levels {\n    margin-top: 40px;\n}\n\n#tooltip-span {\n    display: block;\n    position: absolute;\n    top: 0;\n    margin: 5px;\n}\n\n.gxaPvalueTooltipStyling {\n    padding: 2px !important;\n    margin: 0 !important;\n}\n\n#ensembl-launcher-box {\n    border: 1px solid #cdcdcd;\n}\n\n#ensembl-launcher-box-ensembl, #ensembl-launcher-box-gramene {\n    padding: 4px 9px;\n}\n\n#ensembl-launcher-box-ensembl label, #ensembl-launcher-box-gramene label {\n    font-weight: bold;\n    font-family: Helvetica, sans-serif;\n}\n\n#ensembl-launcher-box-ensembl button, #ensembl-launcher-box-gramene button {\n    display: table;\n    margin: 0 auto;\n}\n\n.gxaAnatomogramSpeciesLabel {\n    width: 245px;   /* Width of gxaHeatmapPosition margin minus anatomogram buttons width */\n}\n\n.gxaAnatomogramSpeciesLabel h5 {\n    text-align: center;\n    /*white-space: nowrap;*/\n}\n\n.gxaAnatomogramSpeciesLabel h5::first-letter {\n    text-transform: uppercase;\n}", ""]);
+	exports.push([module.id, ".gxaSvg #anatomogram {\n    display:inline\n}\n\n.gxaHeatmapAnatomogramRow {\n    position: relative;\n}\n\n.gxaHeatmapAnatomogramRow:after {\n    clear: both;\n    content: \".\";\n    display: block;\n    visibility: hidden;\n}\n\n.gxaHeatmapWithAnatomogram {\n    position: relative;\n    margin-left: 270px;\n    overflow: hidden;\n}\n\n.gxaHeatmapWithoutAnatomogram {\n    position: relative;\n    margin-left: 0;\n    overflow: hidden;\n}\n\n\n.gxaAside {\n    float: left;\n    /*padding: 0 20px;*/\n}\n\n.gxaVisible {\n    visibility: visible;\n}\n\n.gxaInvisible {\n    visibility: hidden;\n}\n\n.gxaGradientLevelMin {\n    text-align: right;\n}\n\n.gxaGradientLevelMax {\n    text-align: left;\n}\n\n.gxaHeatmapMatrixTopLeftCorner {\n    position: relative;\n    display: table;\n    height: 110px;\n    width: 100%;\n    min-width: 160px;\n}\n\n#display-levels {\n    margin-top: 40px;\n}\n\n#tooltip-span {\n    display: block;\n    position: absolute;\n    top: 0;\n    margin: 5px;\n}\n\n.gxaPvalueTooltipStyling {\n    padding: 2px !important;\n    margin: 0 !important;\n}\n\n#ensembl-launcher-box {\n    border: 1px solid #cdcdcd;\n}\n\n#ensembl-launcher-box-ensembl, #ensembl-launcher-box-gramene {\n    padding: 4px 9px;\n}\n\n#ensembl-launcher-box-ensembl label, #ensembl-launcher-box-gramene label {\n    font-weight: bold;\n    font-family: Helvetica, sans-serif;\n}\n\n#ensembl-launcher-box-ensembl button, #ensembl-launcher-box-gramene button {\n    display: table;\n    margin: 0 auto;\n}\n\n.gxaAnatomogramSpeciesLabel {\n    width: 245px;   /* Width of gxaHeatmapPosition margin minus anatomogram buttons width */\n}\n\n.gxaAnatomogramSpeciesLabel h5 {\n    text-align: center;\n    /*white-space: nowrap;*/\n}\n\n.gxaAnatomogramSpeciesLabel h5::first-letter {\n    text-transform: uppercase;\n}", ""]);
 	
 	// exports
 

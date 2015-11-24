@@ -20,6 +20,7 @@ var Heatmaps = require('./baseline-heatmaps.jsx');
  * @param {Object} options
  * @param {string} options.facetsContainer - id of the facets container, i.e. a <div> id
  * @param {string} options.resultsContainer - id of the results container, i.e. a <div> id
+ * @param {string} options.showAnatomogramsInput - id of the show/hide anatomograms control, i.e. an <input> id
  * @param {Object} options.facetsTreeData
  * @param {string} options.atlasHost
  * @param {string} options.selectedSpecies
@@ -85,7 +86,7 @@ module.exports = function (options) {
 
         React.render(
             React.createElement(
-                Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), atlasHost: host}
+                Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms:$("#" + options.showAnatomogramsInput).is(":checked"), atlasHost: host}
             ),
             heatmapsElement
         );

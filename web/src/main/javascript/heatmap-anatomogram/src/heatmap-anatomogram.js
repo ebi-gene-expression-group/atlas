@@ -13,6 +13,7 @@ var HeatmapAnatomogramContainer = require('./heatmap-anatomogram-container.jsx')
  * @param {boolean} options.isWidget
  * @param {boolean} options.isMultiExperiment
  * @param {string}  options.heatmapKey
+ * @param {boolean} options.showAnatomogram
  * @param {boolean} options.showAnatomogramLabel
  */
 function drawHeatmap (options) {
@@ -34,7 +35,7 @@ function drawHeatmap (options) {
                 experiment: experimentData, isWidget: options.isWidget,
                 anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
                 geneSetProfiles: geneSetProfiles, heatmapKey: options.heatmapKey,
-                showAnatomogramLabel: options.showAnatomogramLabel
+                showAnatomogram: options.showAnatomogram, showAnatomogramLabel: options.showAnatomogramLabel
             }
         ),
         options.targetElement
@@ -54,6 +55,7 @@ function drawHeatmap (options) {
  * @param {boolean} options.isWidget
  * @param {string}  options.proxyPrefix - only used by CTTV
  * @param {string}  options.atlasHost
+ * @param {boolean} options.showAnatomogram
  * @param {boolean} options.showAnatomogramLabel
  */
 module.exports = function(options) {
@@ -134,9 +136,9 @@ module.exports = function(options) {
         data.config.linksAtlasBaseURL = linksAtlasBaseURL;
 
         if (options.isMultiExperiment) {
-            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogramLabel: showAnatomogramLabel});
+            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogram: options.showAnatomogram, showAnatomogramLabel: showAnatomogramLabel});
         } else {
-            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogramLabel: showAnatomogramLabel});
+            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogram: options.showAnatomogram, showAnatomogramLabel: showAnatomogramLabel});
         }
 
     }).fail(function (jqXHR, textStatus, errorThrown) {

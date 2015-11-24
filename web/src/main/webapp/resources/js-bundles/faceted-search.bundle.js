@@ -550,6 +550,7 @@ webpackJsonp([2],[
 	 * @param {Object} options
 	 * @param {string} options.facetsContainer - id of the facets container, i.e. a <div> id
 	 * @param {string} options.resultsContainer - id of the results container, i.e. a <div> id
+	 * @param {string} options.showAnatomogramsInput - id of the show/hide anatomograms control, i.e. an <input> id
 	 * @param {Object} options.facetsTreeData
 	 * @param {string} options.atlasHost
 	 * @param {string} options.selectedSpecies
@@ -615,7 +616,7 @@ webpackJsonp([2],[
 	
 	        React.render(
 	            React.createElement(
-	                Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), atlasHost: host}
+	                Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms:$("#" + options.showAnatomogramsInput).is(":checked"), atlasHost: host}
 	            ),
 	            heatmapsElement
 	        );
@@ -1963,9 +1964,10 @@ webpackJsonp([2],[
 	        geneQuery: React.PropTypes.string.isRequired,
 	        atlasHost: React.PropTypes.string.isRequired,
 	        /*
-	         [{"geneQuery":"zinc finger","species":"Homo sapiens","factor":"CELL_LINE"},
-	          {"geneQuery":"zinc finger","species":"Homo sapiens","factor":"ORGANISM_PART"}]
+	         [{"geneQuery":"GO:0001234","species":"Homo sapiens","factor":"CELL_LINE"},
+	          {"geneQuery":"GO:0001234","species":"Mus musculus","factor":"ORGANISM_PART"}]
 	         */
+	        showAnatomograms: React.PropTypes.bool.isRequired,
 	        heatmaps: React.PropTypes.arrayOf(React.PropTypes.shape({
 	            geneQuery: React.PropTypes.string.isRequired,
 	            species: React.PropTypes.string.isRequired,
@@ -1974,27 +1976,26 @@ webpackJsonp([2],[
 	    },
 	
 	    render: function () {
-	        var moreThanOneSpecies = function() {
-	            var species = [];
-	            for (var i = 0 ; i < this.props.heatmaps.length ; i++) {
-	                if(species.indexOf(this.props.heatmaps[i].species) === -1) {
-	                    species.push(this.props.heatmaps[i].species);
-	                }
-	            }
-	            return species.length > 1;
-	        }.bind(this)();
-	
-	        var geneQuery = this.props.geneQuery;
-	        var atlasHost = this.props.atlasHost;
-	
 	        return (
 	            React.createElement("div", null, 
 	                this.props.heatmaps.map(function (heatmap) {
-	                    return React.createElement(BaselineHeatmapWidget, {key: heatmap.species + "_" + heatmap.factor, showAnatomogramLabel: moreThanOneSpecies, 
-	                                                  atlasHost: atlasHost, geneQuery: geneQuery, species: heatmap.species, factor: heatmap.factor});
-	                })
+	                    return React.createElement(BaselineHeatmapWidget, {key: heatmap.species + "_" + heatmap.factor, 
+	                                                  showAnatomogram: this.props.showAnatomograms, showAnatomogramLabel: this._hasMoreThanOneSpecies(), 
+	                                                  species: heatmap.species, factor: heatmap.factor, 
+	                                                  atlasHost: this.props.atlasHost, geneQuery: this.props.geneQuery});
+	                }.bind(this))
 	            )
 	        );
+	    },
+	
+	    _hasMoreThanOneSpecies: function() {
+	        var species = [];
+	        for (var i = 0 ; i < this.props.heatmaps.length ; i++) {
+	            if (species.indexOf(this.props.heatmaps[i].species) === -1) {
+	                species.push(this.props.heatmaps[i].species);
+	            }
+	        }
+	        return species.length > 1;
 	    }
 	});
 	
@@ -2030,6 +2031,7 @@ webpackJsonp([2],[
 	        geneQuery: React.PropTypes.string.isRequired,
 	        species: React.PropTypes.string.isRequired,
 	        factor: React.PropTypes.string.isRequired,
+	        showAnatomogram: React.PropTypes.bool.isRequired,
 	        showAnatomogramLabel: React.PropTypes.bool.isRequired
 	    },
 	
@@ -2042,6 +2044,7 @@ webpackJsonp([2],[
 	            heatmapUrl: "/widgets/heatmap/baselineAnalytics",
 	            heatmapKey: this.props.species + "-" + this.props.factor,
 	            isWidget: false,
+	            showAnatomogram: this.props.showAnatomogram,
 	            showAnatomogramLabel: this.props.showAnatomogramLabel
 	        });
 	    },
@@ -2105,6 +2108,7 @@ webpackJsonp([2],[
 	 * @param {boolean} options.isWidget
 	 * @param {boolean} options.isMultiExperiment
 	 * @param {string}  options.heatmapKey
+	 * @param {boolean} options.showAnatomogram
 	 * @param {boolean} options.showAnatomogramLabel
 	 */
 	function drawHeatmap (options) {
@@ -2126,7 +2130,7 @@ webpackJsonp([2],[
 	                experiment: experimentData, isWidget: options.isWidget,
 	                anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
 	                geneSetProfiles: geneSetProfiles, heatmapKey: options.heatmapKey,
-	                showAnatomogramLabel: options.showAnatomogramLabel
+	                showAnatomogram: options.showAnatomogram, showAnatomogramLabel: options.showAnatomogramLabel
 	            }
 	        ),
 	        options.targetElement
@@ -2146,6 +2150,7 @@ webpackJsonp([2],[
 	 * @param {boolean} options.isWidget
 	 * @param {string}  options.proxyPrefix - only used by CTTV
 	 * @param {string}  options.atlasHost
+	 * @param {boolean} options.showAnatomogram
 	 * @param {boolean} options.showAnatomogramLabel
 	 */
 	module.exports = function(options) {
@@ -2226,9 +2231,9 @@ webpackJsonp([2],[
 	        data.config.linksAtlasBaseURL = linksAtlasBaseURL;
 	
 	        if (options.isMultiExperiment) {
-	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogramLabel: showAnatomogramLabel});
+	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogram: options.showAnatomogram, showAnatomogramLabel: showAnatomogramLabel});
 	        } else {
-	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogramLabel: showAnatomogramLabel});
+	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogram: options.showAnatomogram, showAnatomogramLabel: showAnatomogramLabel});
 	        }
 	
 	    }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -2303,6 +2308,7 @@ webpackJsonp([2],[
 	    // TODO Keep populating propTypes until we have everything here
 	    propTypes: {
 	        type: React.PropTypes.oneOf(["isBaseline", "isMultiExperiment", "isDifferential", "isProteomics"]).isRequired,
+	        showAnatomogram: React.PropTypes.bool.isRequired,
 	        showAnatomogramLabel: React.PropTypes.bool.isRequired
 	    },
 	
@@ -2335,7 +2341,7 @@ webpackJsonp([2],[
 	
 	                React.createElement("div", {id: "heatmap-anatomogram", className: "gxaHeatmapAnatomogramRow"}, 
 	
-	                    React.createElement("div", {ref: "anatomogramEnsembl", className: "gxaAside"}, 
+	                    React.createElement("div", {ref: "anatomogramEnsembl", className: "gxaAside " + (this.props.showAnatomogram ? "gxaVisible" : "gxaInvisible")}, 
 	                         this.props.heatmapKey && this.props.showAnatomogramLabel ?
 	                            React.createElement("div", {className: "gxaAnatomogramSpeciesLabel"}, 
 	                                React.createElement("h5", null, this.props.heatmapConfig.species)
@@ -2350,7 +2356,7 @@ webpackJsonp([2],[
 	                        
 	                    ), 
 	
-	                    React.createElement("div", {id: "heatmap-react", className: "gxaHeatmapPosition"}, 
+	                    React.createElement("div", {id: "heatmap-react", className: this.props.showAnatomogram ? "gxaHeatmapWithAnatomogram" : "gxaHeatmapWithoutAnatomogram"}, 
 	                        React.createElement(Heatmap, {type: type, 
 	                                 heatmapConfig: this.props.heatmapConfig, 
 	                                 columnHeaders: this.props.columnHeaders, 
@@ -43613,7 +43619,7 @@ webpackJsonp([2],[
 	
 	
 	// module
-	exports.push([module.id, ".gxaSvg #anatomogram {\n    display:inline\n}\n\n.gxaHeatmapAnatomogramRow {\n    position: relative;\n}\n\n.gxaHeatmapAnatomogramRow:after {\n    clear: both;\n    content: \".\";\n    display: block;\n    visibility: hidden;\n}\n\n.gxaHeatmapPosition {\n    position: relative;\n    margin-left: 270px;\n    overflow: hidden;\n}\n\n.gxaAside {\n    float: left;\n    /*padding: 0 20px;*/\n}\n\n.gxaGradientLevelMin {\n    text-align: right;\n}\n\n.gxaGradientLevelMax {\n    text-align: left;\n}\n\n.gxaHeatmapMatrixTopLeftCorner {\n    position: relative;\n    display: table;\n    height: 110px;\n    width: 100%;\n    min-width: 160px;\n}\n\n#display-levels {\n    margin-top: 40px;\n}\n\n#tooltip-span {\n    display: block;\n    position: absolute;\n    top: 0;\n    margin: 5px;\n}\n\n.gxaPvalueTooltipStyling {\n    padding: 2px !important;\n    margin: 0 !important;\n}\n\n#ensembl-launcher-box {\n    border: 1px solid #cdcdcd;\n}\n\n#ensembl-launcher-box-ensembl, #ensembl-launcher-box-gramene {\n    padding: 4px 9px;\n}\n\n#ensembl-launcher-box-ensembl label, #ensembl-launcher-box-gramene label {\n    font-weight: bold;\n    font-family: Helvetica, sans-serif;\n}\n\n#ensembl-launcher-box-ensembl button, #ensembl-launcher-box-gramene button {\n    display: table;\n    margin: 0 auto;\n}\n\n.gxaAnatomogramSpeciesLabel {\n    width: 245px;   /* Width of gxaHeatmapPosition margin minus anatomogram buttons width */\n}\n\n.gxaAnatomogramSpeciesLabel h5 {\n    text-align: center;\n    /*white-space: nowrap;*/\n}\n\n.gxaAnatomogramSpeciesLabel h5::first-letter {\n    text-transform: uppercase;\n}", ""]);
+	exports.push([module.id, ".gxaSvg #anatomogram {\n    display:inline\n}\n\n.gxaHeatmapAnatomogramRow {\n    position: relative;\n}\n\n.gxaHeatmapAnatomogramRow:after {\n    clear: both;\n    content: \".\";\n    display: block;\n    visibility: hidden;\n}\n\n.gxaHeatmapWithAnatomogram {\n    position: relative;\n    margin-left: 270px;\n    overflow: hidden;\n}\n\n.gxaHeatmapWithoutAnatomogram {\n    position: relative;\n    margin-left: 0;\n    overflow: hidden;\n}\n\n\n.gxaAside {\n    float: left;\n    /*padding: 0 20px;*/\n}\n\n.gxaVisible {\n    visibility: visible;\n}\n\n.gxaInvisible {\n    visibility: hidden;\n}\n\n.gxaGradientLevelMin {\n    text-align: right;\n}\n\n.gxaGradientLevelMax {\n    text-align: left;\n}\n\n.gxaHeatmapMatrixTopLeftCorner {\n    position: relative;\n    display: table;\n    height: 110px;\n    width: 100%;\n    min-width: 160px;\n}\n\n#display-levels {\n    margin-top: 40px;\n}\n\n#tooltip-span {\n    display: block;\n    position: absolute;\n    top: 0;\n    margin: 5px;\n}\n\n.gxaPvalueTooltipStyling {\n    padding: 2px !important;\n    margin: 0 !important;\n}\n\n#ensembl-launcher-box {\n    border: 1px solid #cdcdcd;\n}\n\n#ensembl-launcher-box-ensembl, #ensembl-launcher-box-gramene {\n    padding: 4px 9px;\n}\n\n#ensembl-launcher-box-ensembl label, #ensembl-launcher-box-gramene label {\n    font-weight: bold;\n    font-family: Helvetica, sans-serif;\n}\n\n#ensembl-launcher-box-ensembl button, #ensembl-launcher-box-gramene button {\n    display: table;\n    margin: 0 auto;\n}\n\n.gxaAnatomogramSpeciesLabel {\n    width: 245px;   /* Width of gxaHeatmapPosition margin minus anatomogram buttons width */\n}\n\n.gxaAnatomogramSpeciesLabel h5 {\n    text-align: center;\n    /*white-space: nowrap;*/\n}\n\n.gxaAnatomogramSpeciesLabel h5::first-letter {\n    text-transform: uppercase;\n}", ""]);
 	
 	// exports
 

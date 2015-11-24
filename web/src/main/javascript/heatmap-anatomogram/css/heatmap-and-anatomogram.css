@@ -13,15 +13,30 @@
     visibility: hidden;
 }
 
-.gxaHeatmapPosition {
+.gxaHeatmapWithAnatomogram {
     position: relative;
     margin-left: 270px;
     overflow: hidden;
 }
 
+.gxaHeatmapWithoutAnatomogram {
+    position: relative;
+    margin-left: 0;
+    overflow: hidden;
+}
+
+
 .gxaAside {
     float: left;
     /*padding: 0 20px;*/
+}
+
+.gxaVisible {
+    visibility: visible;
+}
+
+.gxaInvisible {
+    visibility: hidden;
 }
 
 .gxaGradientLevelMin {

@@ -17,9 +17,10 @@ var Heatmaps = React.createClass({
         geneQuery: React.PropTypes.string.isRequired,
         atlasHost: React.PropTypes.string.isRequired,
         /*
-         [{"geneQuery":"zinc finger","species":"Homo sapiens","factor":"CELL_LINE"},
-          {"geneQuery":"zinc finger","species":"Homo sapiens","factor":"ORGANISM_PART"}]
+         [{"geneQuery":"GO:0001234","species":"Homo sapiens","factor":"CELL_LINE"},
+          {"geneQuery":"GO:0001234","species":"Mus musculus","factor":"ORGANISM_PART"}]
          */
+        showAnatomograms: React.PropTypes.bool.isRequired,
         heatmaps: React.PropTypes.arrayOf(React.PropTypes.shape({
             geneQuery: React.PropTypes.string.isRequired,
             species: React.PropTypes.string.isRequired,
@@ -28,27 +29,26 @@ var Heatmaps = React.createClass({
     },
 
     render: function () {
-        var moreThanOneSpecies = function() {
-            var species = [];
-            for (var i = 0 ; i < this.props.heatmaps.length ; i++) {
-                if(species.indexOf(this.props.heatmaps[i].species) === -1) {
-                    species.push(this.props.heatmaps[i].species);
-                }
-            }
-            return species.length > 1;
-        }.bind(this)();
-
-        var geneQuery = this.props.geneQuery;
-        var atlasHost = this.props.atlasHost;
-
         return (
             <div>
                 {this.props.heatmaps.map(function (heatmap) {
-                    return <BaselineHeatmapWidget key={heatmap.species + "_" + heatmap.factor} showAnatomogramLabel={moreThanOneSpecies}
-                                                  atlasHost={atlasHost} geneQuery={geneQuery} species={heatmap.species} factor={heatmap.factor} />;
-                })}
+                    return <BaselineHeatmapWidget key={heatmap.species + "_" + heatmap.factor}
+                                                  showAnatomogram={this.props.showAnatomograms} showAnatomogramLabel={this._hasMoreThanOneSpecies()}
+                                                  species={heatmap.species} factor={heatmap.factor}
+                                                  atlasHost={this.props.atlasHost} geneQuery={this.props.geneQuery} />;
+                }.bind(this))}
             </div>
         );
+    },
+
+    _hasMoreThanOneSpecies: function() {
+        var species = [];
+        for (var i = 0 ; i < this.props.heatmaps.length ; i++) {
+            if (species.indexOf(this.props.heatmaps[i].species) === -1) {
+                species.push(this.props.heatmaps[i].species);
+            }
+        }
+        return species.length > 1;
     }
 });
 
