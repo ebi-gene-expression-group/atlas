@@ -1985,12 +1985,13 @@ webpackJsonp([2],[
 	        }.bind(this)();
 	
 	        var geneQuery = this.props.geneQuery;
+	        var atlasHost = this.props.atlasHost;
 	
 	        return (
 	            React.createElement("div", null, 
 	                this.props.heatmaps.map(function (heatmap) {
 	                    return React.createElement(BaselineHeatmapWidget, {key: heatmap.species + "_" + heatmap.factor, showAnatomogramLabel: moreThanOneSpecies, 
-	                                                  atlasHost: this.props.atlasHost, geneQuery: geneQuery, species: heatmap.species, factor: heatmap.factor});
+	                                                  atlasHost: atlasHost, geneQuery: geneQuery, species: heatmap.species, factor: heatmap.factor});
 	                })
 	            )
 	        );
