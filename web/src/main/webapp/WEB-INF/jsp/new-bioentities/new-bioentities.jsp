@@ -70,9 +70,7 @@
     });
     $baselineTabLink.click(function() {
         window.location.hash = "#baseline";
-        if (!ie9) {
-            window.dispatchEvent(new UIEvent("resize"));    // Force repositioning of sticky header. See https://www.pivotaltracker.com/story/show/107035268
-        }
+
     });
     $differentialTabLink.click(function() {
         window.location.hash = "#differential";
@@ -84,7 +82,7 @@
     if (ie9) {
         window.onhashchange = showTabOnHash;
     } else {
-        window.addEventListener('popstate', showTabOnHash);
+        window.addEventListener("popstate", showTabOnHash);
     }
 
 

@@ -78,6 +78,9 @@ var HeatmapAnatomogramContainer = React.createClass({
 
         var geneURL = heatmapConfig.linksAtlasBaseURL + '/query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch=' + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
 
+        var display = this.props.showAnatomogram ? "block" : "none";
+        var marginLeft = this.props.showAnatomogram ? "270px" : "0";
+
         return (
             <div className="gxaBlock">
 
@@ -85,7 +88,7 @@ var HeatmapAnatomogramContainer = React.createClass({
 
                 <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
-                    <div ref="anatomogramEnsembl" className={"gxaAside " + (this.props.showAnatomogram ? "gxaVisible" : "gxaInvisible")}>
+                    <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
                         { this.props.anatomogram ?
                             <Anatomogram anatomogramData={this.props.anatomogram}
                                          expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
@@ -94,7 +97,7 @@ var HeatmapAnatomogramContainer = React.createClass({
                         }
                     </div>
 
-                    <div id="heatmap-react" className={this.props.showAnatomogram ? "gxaHeatmapWithAnatomogram" : "gxaHeatmapWithoutAnatomogram"}>
+                    <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft}}>
                         <Heatmap type={type}
                                  heatmapConfig={this.props.heatmapConfig}
                                  columnHeaders={this.props.columnHeaders}
@@ -102,7 +105,8 @@ var HeatmapAnatomogramContainer = React.createClass({
                                  geneSetProfiles={this.props.geneSetProfiles}
                                  isWidget={this.props.isWidget}
                                  ensemblEventEmitter={ensemblEventEmitter}
-                                 anatomogramEventEmitter={anatomogramEventEmitter} />
+                                 anatomogramEventEmitter={anatomogramEventEmitter}
+                                 showAnatomogram={this.props.showAnatomogram} />
                     </div>
 
                 </div>
@@ -121,8 +125,16 @@ var HeatmapAnatomogramContainer = React.createClass({
 
     componentDidMount: function() {
         var $anatomogram = $(this.refs.anatomogramEnsembl.getDOMNode());
-        $anatomogram.hcSticky({responsive: true});
+        $anatomogram.on(
+            "gxaAnatomogramSticky",
+            function() {
+                $anatomogram.hcSticky({responsive: true});
+            }
+        );
 
+        if (this.props.showAnatomogram) {
+            $anatomogram.hcSticky({responsive: true});
+        }
 
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-37676851-1']);
@@ -135,6 +147,13 @@ var HeatmapAnatomogramContainer = React.createClass({
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(ga, s);
         })();
+    },
+
+    componentDidUpdate: function() {
+        if (this.props.showAnatomogram) {
+            var $anatomogram = $(this.refs.anatomogramEnsembl.getDOMNode());
+            $anatomogram.hcSticky({responsive: true});
+        }
     }
 });
 

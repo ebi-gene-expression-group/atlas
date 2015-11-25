@@ -38,40 +38,6 @@
         identifier: "${identifier}",
         queryType: "${queryType}"
     });
-
-    $showAnatomogramsCheckbox = $("#showAnatomogramsCheckbox");
-
-    $showAnatomogramsCheckbox.change(function() {
-        var $gxaAside = $(".gxaAside");
-
-        if ($gxaAside.length > 0) {
-            $showAnatomogramsCheckbox.prop("disabled", true);
-
-            if ($showAnatomogramsCheckbox.is(":checked")) {
-                $(".gxaHeatmapWithoutAnatomogram").switchClass(
-                    "gxaHeatmapWithoutAnatomogram", "gxaHeatmapWithAnatomogram", 200, "easeOutSine",
-                    function() {
-                        $gxaAside.switchClass("gxaInvisible", "gxaVisible", 200, "easeInSine",
-                            function() {
-                                $showAnatomogramsCheckbox.prop("disabled", false);
-                            }
-                        );
-                    }
-                );
-            } else {
-                $gxaAside.switchClass("gxaVisible", "gxaInvisible", 200, "easeOutSine",
-                    function() {
-                        $(".gxaHeatmapWithAnatomogram").switchClass(
-                            "gxaHeatmapWithAnatomogram", "gxaHeatmapWithoutAnatomogram", 200, "easeOutSine",
-                            function() {
-                                $showAnatomogramsCheckbox.prop("disabled", false);
-                            }
-                        );
-                    }
-                );
-            }
-        }
-    });
     </c:if>
 </script>
 

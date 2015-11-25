@@ -11315,11 +11315,6 @@ webpackJsonp([3],[
 	
 	    componentDidMount: function() {
 	        if (this.props.heatmapConfig.showMultipleColumnHeaders) { return; }
-	        // Default settings
-	        var settings = {
-	            scrollThrottle: 10,
-	            resizeThrottle: 250
-	        };
 	
 	        var $w	            = $(window),
 	            $t	            = $(this.refs.heatmapTable.getDOMNode()),
@@ -11435,8 +11430,9 @@ webpackJsonp([3],[
 	            })
 	            .scroll(repositionSticky);
 	
-	        $(this.refs.countAndLegend.getDOMNode()).hcSticky({bottomEnd: calcAllowance()});
-	        $w.resize();
+	        setWidths();
+	        repositionSticky();
+	        $countAndLegend.hcSticky({bottomEnd: calcAllowance()});
 	    },
 	
 	    legendType: function () {
@@ -42460,7 +42456,7 @@ webpackJsonp([3],[
 	
 	
 	// module
-	exports.push([module.id, ".gxaSvg #anatomogram {\n    display:inline\n}\n\n.gxaHeatmapAnatomogramRow {\n    position: relative;\n}\n\n.gxaHeatmapAnatomogramRow:after {\n    clear: both;\n    content: \".\";\n    display: block;\n    visibility: hidden;\n}\n\n.gxaHeatmapWithAnatomogram {\n    position: relative;\n    margin-left: 270px;\n    overflow: hidden;\n}\n\n.gxaHeatmapWithoutAnatomogram {\n    position: relative;\n    margin-left: 0;\n    overflow: hidden;\n}\n\n\n.gxaAside {\n    float: left;\n    /*padding: 0 20px;*/\n}\n\n.gxaVisible {\n    visibility: visible;\n}\n\n.gxaInvisible {\n    visibility: hidden;\n}\n\n.gxaGradientLevelMin {\n    text-align: right;\n}\n\n.gxaGradientLevelMax {\n    text-align: left;\n}\n\n.gxaHeatmapMatrixTopLeftCorner {\n    position: relative;\n    display: table;\n    height: 110px;\n    width: 100%;\n    min-width: 160px;\n}\n\n#display-levels {\n    margin-top: 40px;\n}\n\n#tooltip-span {\n    display: block;\n    position: absolute;\n    top: 0;\n    margin: 5px;\n}\n\n.gxaPvalueTooltipStyling {\n    padding: 2px !important;\n    margin: 0 !important;\n}\n\n#ensembl-launcher-box {\n    border: 1px solid #cdcdcd;\n}\n\n#ensembl-launcher-box-ensembl, #ensembl-launcher-box-gramene {\n    padding: 4px 9px;\n}\n\n#ensembl-launcher-box-ensembl label, #ensembl-launcher-box-gramene label {\n    font-weight: bold;\n    font-family: Helvetica, sans-serif;\n}\n\n#ensembl-launcher-box-ensembl button, #ensembl-launcher-box-gramene button {\n    display: table;\n    margin: 0 auto;\n}\n\n.gxaAnatomogramSpeciesLabel {\n    width: 245px;   /* Width of gxaHeatmapPosition margin minus anatomogram buttons width */\n}\n\n.gxaAnatomogramSpeciesLabel h5 {\n    text-align: center;\n    /*white-space: nowrap;*/\n}\n\n.gxaAnatomogramSpeciesLabel h5::first-letter {\n    text-transform: uppercase;\n}", ""]);
+	exports.push([module.id, ".gxaSvg #anatomogram {\n    display:inline\n}\n\n.gxaHeatmapAnatomogramRow {\n    position: relative;\n}\n\n.gxaHeatmapAnatomogramRow:after {\n    clear: both;\n    content: \".\";\n    display: block;\n    visibility: hidden;\n}\n\n.gxaInnerHeatmap {\n    position: relative;\n    overflow: hidden;\n}\n\n.gxaAside {\n    float: left;\n    /*padding: 0 20px;*/\n}\n\n.gxaGradientLevelMin {\n    text-align: right;\n}\n\n.gxaGradientLevelMax {\n    text-align: left;\n}\n\n.gxaHeatmapMatrixTopLeftCorner {\n    position: relative;\n    display: table;\n    height: 110px;\n    width: 100%;\n    min-width: 160px;\n}\n\n#display-levels {\n    margin-top: 40px;\n}\n\n#tooltip-span {\n    display: block;\n    position: absolute;\n    top: 0;\n    margin: 5px;\n}\n\n.gxaPvalueTooltipStyling {\n    padding: 2px !important;\n    margin: 0 !important;\n}\n\n#ensembl-launcher-box {\n    border: 1px solid #cdcdcd;\n}\n\n#ensembl-launcher-box-ensembl, #ensembl-launcher-box-gramene {\n    padding: 4px 9px;\n}\n\n#ensembl-launcher-box-ensembl label, #ensembl-launcher-box-gramene label {\n    font-weight: bold;\n    font-family: Helvetica, sans-serif;\n}\n\n#ensembl-launcher-box-ensembl button, #ensembl-launcher-box-gramene button {\n    display: table;\n    margin: 0 auto;\n}\n\n.gxaAnatomogramSpeciesLabel {\n    width: 245px;   /* Width of gxaHeatmapPosition margin minus anatomogram buttons width */\n}\n\n.gxaAnatomogramSpeciesLabel h5 {\n    text-align: center;\n    /*white-space: nowrap;*/\n}\n\n.gxaAnatomogramSpeciesLabel h5::first-letter {\n    text-transform: uppercase;\n}", ""]);
 	
 	// exports
 

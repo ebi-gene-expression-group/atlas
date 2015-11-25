@@ -42,6 +42,36 @@ module.exports = function (options) {
         select    : {}
     };
 
+
+    var $showAnatomogramsCheckbox = $("#showAnatomogramsCheckbox");
+    $showAnatomogramsCheckbox.change(function() {
+        if ($(".gxaBaselineHeatmap").length > 0) {
+            if ($showAnatomogramsCheckbox.is(":checked")) {
+                $(".gxaInnerHeatmap").animate({"margin-left": "270px"}, 200, "swing", triggerResize);
+                $(".gxaAside").show(
+                    200, "swing",
+                    function() {
+                        $(".gxaAside").trigger("gxaAnatomogramSticky");
+                    }
+                );
+            } else {
+                $(".gxaInnerHeatmap").animate({"margin-left": "0"}, 200, "swing", triggerResize);
+                $(".gxaAside").hide(200, "swing");
+            }
+        }
+    });
+
+    function triggerResize() {
+        if (ie9) {
+            var event = document.createEvent("Event");
+            event.initEvent("resize", true, true);
+            window.dispatchEvent(event);
+        } else {
+            window.dispatchEvent(new UIEvent("resize"));
+        }
+    }
+
+
     var selectedSpecies = options.selectedSpecies,
         facetsTreeData = options.facetsTreeData;
     if (selectedSpecies && facetsTreeData.hasOwnProperty(selectedSpecies)) {

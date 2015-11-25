@@ -142,11 +142,6 @@ var Heatmap = React.createClass({
 
     componentDidMount: function() {
         if (this.props.heatmapConfig.showMultipleColumnHeaders) { return; }
-        // Default settings
-        var settings = {
-            scrollThrottle: 10,
-            resizeThrottle: 250
-        };
 
         var $w	            = $(window),
             $t	            = $(this.refs.heatmapTable.getDOMNode()),
@@ -262,8 +257,9 @@ var Heatmap = React.createClass({
             })
             .scroll(repositionSticky);
 
-        $(this.refs.countAndLegend.getDOMNode()).hcSticky({bottomEnd: calcAllowance()});
-        $w.resize();
+        setWidths();
+        repositionSticky();
+        $countAndLegend.hcSticky({bottomEnd: calcAllowance()});
     },
 
     legendType: function () {
