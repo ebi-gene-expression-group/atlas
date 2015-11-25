@@ -9,13 +9,7 @@
 <c:set var="thisPage" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
 <div class="grid_6 alpha" id="gxaDifferentialFacetsContainerDiv"></div>
-
-<div class="grid_18 omega">
-    <c:if test="${!hasDifferentialResults}"><p>No differential results<p></c:if>
-    <c:if test="${hasDifferentialResults}">
-    <div id="gxaDifferentialResultsContainerDiv"></div>
-    </c:if>
-</div>
+<div class="grid_18 omega" id="gxaDifferentialResultsContainerDiv"></div>
 
 <script>
     var selectedSpecies = "${hasSelectedSpecies ? selectedSpecies : ''}";

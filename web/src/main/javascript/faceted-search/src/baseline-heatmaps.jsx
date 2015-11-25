@@ -33,7 +33,7 @@ var Heatmaps = React.createClass({
             <div>
                 {this.props.heatmaps.map(function (heatmap) {
                     return <BaselineHeatmapWidget key={heatmap.species + "_" + heatmap.factor}
-                                                  showAnatomogram={this.props.showAnatomograms} showAnatomogramLabel={this._hasMoreThanOneSpecies()}
+                                                  showAnatomogram={this.props.showAnatomograms} showHeatmapLabel={this._hasMoreThanOneSpecies()}
                                                   species={heatmap.species} factor={heatmap.factor}
                                                   atlasHost={this.props.atlasHost} geneQuery={this.props.geneQuery} />;
                 }.bind(this))}

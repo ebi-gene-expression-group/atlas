@@ -17,7 +17,7 @@ var BaselineHeatmapWidget = React.createClass({
         species: React.PropTypes.string.isRequired,
         factor: React.PropTypes.string.isRequired,
         showAnatomogram: React.PropTypes.bool.isRequired,
-        showAnatomogramLabel: React.PropTypes.bool.isRequired
+        showHeatmapLabel: React.PropTypes.bool.isRequired
     },
 
     componentDidMount: function() {
@@ -29,15 +29,21 @@ var BaselineHeatmapWidget = React.createClass({
             heatmapUrl: "/widgets/heatmap/baselineAnalytics",
             heatmapKey: this.props.species + "-" + this.props.factor,
             isWidget: false,
-            showAnatomogram: this.props.showAnatomogram,
-            showAnatomogramLabel: this.props.showAnatomogramLabel
+            showAnatomogram: this.props.showAnatomogram
         });
     },
 
     render: function() {
         return(
-            <div ref="widgetBody" style={{paddingBottom: "30px"}}></div>
+            <div className="gxaBaselineHeatmap">
+                {this.props.showHeatmapLabel ? <h5>{this._capitalize(this.props.species)}</h5> : null }
+                <div ref="widgetBody" style={{paddingBottom: "30px"}}></div>
+            </div>
         );
+    },
+
+    _capitalize: function capitalizeFirstLetter(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     }
 
 });

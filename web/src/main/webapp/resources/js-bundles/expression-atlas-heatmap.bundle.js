@@ -219,7 +219,6 @@ webpackJsonp([1],[
 	 * @param {boolean} options.isMultiExperiment
 	 * @param {string}  options.heatmapKey
 	 * @param {boolean} options.showAnatomogram
-	 * @param {boolean} options.showAnatomogramLabel
 	 */
 	function drawHeatmap (options) {
 	    var React = __webpack_require__(/*! react */ 178);
@@ -236,11 +235,12 @@ webpackJsonp([1],[
 	    React.render(
 	        React.createElement(
 	            HeatmapAnatomogramContainer,
-	            {   type: type, heatmapConfig: heatmapConfig,
+	            {
+	                type: type, heatmapConfig: heatmapConfig,
 	                experiment: experimentData, isWidget: options.isWidget,
 	                anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
 	                geneSetProfiles: geneSetProfiles, heatmapKey: options.heatmapKey,
-	                showAnatomogram: options.showAnatomogram, showAnatomogramLabel: options.showAnatomogramLabel
+	                showAnatomogram: options.showAnatomogram
 	            }
 	        ),
 	        options.targetElement
@@ -261,7 +261,6 @@ webpackJsonp([1],[
 	 * @param {string}  options.proxyPrefix - only used by CTTV
 	 * @param {string}  options.atlasHost
 	 * @param {boolean} options.showAnatomogram
-	 * @param {boolean} options.showAnatomogramLabel
 	 */
 	module.exports = function(options) {
 	    var URI = __webpack_require__(/*! urijs */ 376);
@@ -269,8 +268,6 @@ webpackJsonp([1],[
 	    var $ = __webpack_require__(/*! jquery */ 324);
 	    var jQuery = $;
 	    __webpack_require__(/*! ../lib/jquery.xdomainrequest.js */ 497);
-	
-	    var showAnatomogramLabel = options.hasOwnProperty("showAnatomogramLabel") ? options.showAnatomogramLabel : false;
 	
 	    // Proxy prefix required by CTTV
 	    var proxyPrefix = options.hasOwnProperty("proxyPrefix") ? options.proxyPrefix : "";
@@ -341,12 +338,12 @@ webpackJsonp([1],[
 	        data.config.linksAtlasBaseURL = linksAtlasBaseURL;
 	
 	        if (options.isMultiExperiment) {
-	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogram: options.showAnatomogram, showAnatomogramLabel: showAnatomogramLabel});
+	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogram: options.showAnatomogram});
 	        } else {
-	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogram: options.showAnatomogram, showAnatomogramLabel: showAnatomogramLabel});
+	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogram: options.showAnatomogram});
 	        }
 	
-	    }).fail(function (jqXHR, textStatus, errorThrown) {
+	    }).fail(function (jqXHR, textStatus) {
 	        if (textStatus === "parsererror") {
 	            $targetElement.html("<div class='error'>Could not parse JSON response</div>");
 	        } else {
@@ -418,8 +415,7 @@ webpackJsonp([1],[
 	    // TODO Keep populating propTypes until we have everything here
 	    propTypes: {
 	        type: React.PropTypes.oneOf(["isBaseline", "isMultiExperiment", "isDifferential", "isProteomics"]).isRequired,
-	        showAnatomogram: React.PropTypes.bool.isRequired,
-	        showAnatomogramLabel: React.PropTypes.bool.isRequired
+	        showAnatomogram: React.PropTypes.bool.isRequired
 	    },
 	
 	    render: function () {
@@ -452,12 +448,6 @@ webpackJsonp([1],[
 	                React.createElement("div", {id: "heatmap-anatomogram", className: "gxaHeatmapAnatomogramRow"}, 
 	
 	                    React.createElement("div", {ref: "anatomogramEnsembl", className: "gxaAside " + (this.props.showAnatomogram ? "gxaVisible" : "gxaInvisible")}, 
-	                         this.props.heatmapKey && this.props.showAnatomogramLabel ?
-	                            React.createElement("div", {className: "gxaAnatomogramSpeciesLabel"}, 
-	                                React.createElement("h5", null, this.props.heatmapConfig.species)
-	                            )
-	                            : null, 
-	                        
 	                         this.props.anatomogram ?
 	                            React.createElement(Anatomogram, {anatomogramData: this.props.anatomogram, 
 	                                         expressedTissueColour: anatomogramExpressedTissueColour, hoveredTissueColour: anatomogramHoveredTissueColour, 
