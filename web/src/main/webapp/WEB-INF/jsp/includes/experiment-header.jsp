@@ -1,9 +1,19 @@
+<%--@elvariable id="experimentAccession" type="java.lang.String"--%>
+<%--@elvariable id="species" type="java.lang.String"--%>
+<%--@elvariable id="rawDownloadUrl" type="java.lang.String"--%>
+<%--@elvariable id="analyticsDownloadUrl" type="java.lang.String"--%>
+<%--@elvariable id="normalizedUrl" type="java.lang.String"--%>
+<%--@elvariable id="logFoldUrl" type="java.lang.String"--%>
+<%--@elvariable id="rDownloadUrl" type="java.lang.String"--%>
+<%--@elvariable id="qcArrayDesigns" type="java.util.SortedSet"--%>
+<%--@elvariable id="experiment" type="uk.ac.ebi.atlas.model.Experiment"--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:if test="${not empty param.accessKey}">
-    <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"></c:set>
+    <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"/>
 </c:if>
 
 <section class="gxaExtraPadding" id="gxaExperimentHeader" style="text-align: justify;">
@@ -21,6 +31,7 @@
                     <td>
                         <a id="display-ae" class="gxaButtonImage"
                            title="View experiment in ArrayExpress"
+                           <%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
                            href="${applicationProperties.getArrayExpressURL(experimentAccession)}">
                             <img src="${pageContext.request.contextPath}/resources/images/ae-logo-64.png"/></a>
                     </td>
@@ -107,7 +118,7 @@
                     <c:if test="${type.microarray}">
                         <td>
                             <c:choose>
-                                <c:when test="${type.isTwoColour()}">
+                                <c:when test="${type.twoColour}">
                                     <a id="download-logFold" class="gxaButtonImage"
                                        title="Download all log fold expression changes for the experiment"
                                        href="${logFoldUrl}${accessKeyQueryString}">

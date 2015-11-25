@@ -114,7 +114,6 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-tagEditor/jquery.tag-editor.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/experiment-design-table.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/arrayQualityMetrics.css" media="screen">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ae-autocomplete.css" media="screen">
 
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/json2.js"></script>

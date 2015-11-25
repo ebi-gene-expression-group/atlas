@@ -69,7 +69,10 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
     public RnaSeqExperimentPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
                                           RnaSeqProfilesHeatMap profilesHeatMap,
                                           DownloadURLBuilder downloadURLBuilder,
-                                          DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
+                                          DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
+                                          SpeciesKingdomTrader speciesKingdomTrader,
+                                          TracksUtil tracksUtil,
+                                          GseaPlotsBuilder gseaPlotsBuilder) {
         super(rnaSeqRequestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder, speciesKingdomTrader, tracksUtil, gseaPlotsBuilder);
     }
 
@@ -79,8 +82,8 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
-    public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences, @PathVariable String experimentAccession
-            , BindingResult result, Model model, HttpServletRequest request) {
+    public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
+                                   @PathVariable String experimentAccession, BindingResult result, Model model, HttpServletRequest request) {
 
         if(request.getAttribute(EXPERIMENT_ATTRIBUTE) == null) {
             DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession);

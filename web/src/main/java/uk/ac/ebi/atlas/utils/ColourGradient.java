@@ -30,7 +30,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.awt.*;
 
-@Named("colourGradient")
+@Named
 @Scope("prototype")
 public class ColourGradient {
 

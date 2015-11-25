@@ -17,7 +17,7 @@ import java.text.MessageFormat;
  * User: barrera
  */
 
-@Named("fastQReportUtil")
+@Named
 @Scope("singleton")
 public class FastQCReportUtil {
 

@@ -20,13 +20,7 @@
 </div>
 
 <div class="grid_5 alpha" id="gxaBaselineFacetsContainerDiv"></div>
-
-<div class="grid_19 omega">
-    <c:if test="${!hasBaselineResults}"><p>No baseline results<p></c:if>
-    <c:if test="${hasBaselineResults}">
-    <div id="gxaBaselineResultsContainerDiv"></div>
-    </c:if>
-</div>
+<div class="grid_19 omega" id="gxaBaselineResultsContainerDiv"></div>
 
 <script>
     <c:if test="${hasBaselineResults}">
@@ -55,25 +49,25 @@
 
             if ($showAnatomogramsCheckbox.is(":checked")) {
                 $(".gxaHeatmapWithoutAnatomogram").switchClass(
-                        "gxaHeatmapWithoutAnatomogram", "gxaHeatmapWithAnatomogram", 200, "easeOutSine",
-                        function() {
-                            $gxaAside.switchClass("gxaInvisible", "gxaVisible", 200, "easeInSine",
-                                    function() {
-                                        $showAnatomogramsCheckbox.prop("disabled", false);
-                                    }
-                            );
-                        }
+                    "gxaHeatmapWithoutAnatomogram", "gxaHeatmapWithAnatomogram", 200, "easeOutSine",
+                    function() {
+                        $gxaAside.switchClass("gxaInvisible", "gxaVisible", 200, "easeInSine",
+                            function() {
+                                $showAnatomogramsCheckbox.prop("disabled", false);
+                            }
+                        );
+                    }
                 );
             } else {
                 $gxaAside.switchClass("gxaVisible", "gxaInvisible", 200, "easeOutSine",
-                        function() {
-                            $(".gxaHeatmapWithAnatomogram").switchClass(
-                                    "gxaHeatmapWithAnatomogram", "gxaHeatmapWithoutAnatomogram", 200, "easeOutSine",
-                                    function() {
-                                        $showAnatomogramsCheckbox.prop("disabled", false);
-                                    }
-                            );
-                        }
+                    function() {
+                        $(".gxaHeatmapWithAnatomogram").switchClass(
+                            "gxaHeatmapWithAnatomogram", "gxaHeatmapWithoutAnatomogram", 200, "easeOutSine",
+                            function() {
+                                $showAnatomogramsCheckbox.prop("disabled", false);
+                            }
+                        );
+                    }
                 );
             }
         }

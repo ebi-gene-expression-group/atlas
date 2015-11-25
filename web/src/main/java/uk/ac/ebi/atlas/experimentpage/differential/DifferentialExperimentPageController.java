@@ -62,7 +62,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     private ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap;
     private TracksUtil tracksUtil;
 
-
     @SuppressWarnings("unchecked")
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
                                                    ProfilesHeatMap<P, ? extends DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap,
@@ -78,7 +77,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         this.gseaPlotsBuilder = gseaPlotsBuilder;
     }
 
-    @InitBinder
+    @InitBinder("preferences")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(new DifferentialRequestPreferencesValidator());
     }
@@ -98,19 +97,14 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
         //required by autocomplete
         model.addAttribute("species", requestContext.getFilteredBySpecies());
-
         model.addAttribute("queryFactorName", "Comparison");
-
         model.addAttribute("allQueryFactors", contrasts);
-
         model.addAttribute("regulationValues", Regulation.values());
-
         model.addAttribute("enableEnsemblLauncher", tracksUtil.hasDiffTracksPath(experiment.getAccession(), contrasts.iterator().next().getId()));
 
         if (!result.hasErrors()) {
 
             try {
-
                 ImmutableMap<String, GseaPlots> gseaPlots = gseaPlotsBuilder.createMapByContrastId(experiment.getAccession(), contrasts);
 
                 DifferentialProfilesList differentialProfiles = profilesHeatMap.fetch(requestContext);

@@ -10,7 +10,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.text.MessageFormat;
 
-@Named("qcReportUtil")
+@Named
 @Scope("singleton")
 public class QCReportUtil {
 

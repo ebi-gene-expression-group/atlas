@@ -25,9 +25,6 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 import com.google.common.collect.*;
 import com.google.gson.Gson;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -53,28 +50,18 @@ import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 public abstract class BaselineExperimentPageController extends BaselineExperimentController {
 
     private final TracksUtil tracksUtil;
-
     private final BaselineProfilesHeatMap baselineProfilesHeatMap;
-
     private final ApplicationProperties applicationProperties;
-
     private final FilterFactorMenuBuilder filterFactorMenuBuilder;
-
     private BaselineRequestContext requestContext;
-
     private BaselineExperiment experiment;
-
     private final BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
-
     private final SpeciesKingdomTrader speciesKingdomTrader;
-
     private final AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
 
     public BaselineExperimentPageController(BaselineProfilesHeatMap baselineProfilesHeatMap,
