@@ -41,13 +41,17 @@
         <property name="basename" value="bundles.messages"/>
     </bean>
 
+    <!-- Expose Spring beans to Tiles views -->
     <bean class="org.springframework.web.context.support.ServletContextAttributeExporter">
         <property name="attributes">
             <map>
+                <!-- experiment-header.jsp -->
                 <entry key="applicationProperties" value-ref="applicationProperties"/>
                 <entry key="qcReportUtil" value-ref="QCReportUtil"/>
                 <entry key="fastQCReportUtil" value-ref="fastQCReportUtil"/>
                 <entry key="hierarchicalClusteringPdfViewHelper" value-ref="hierarchicalClusteringPdfViewHelper"/>
+                <!-- heatmap-matrix-searchresults-diffanalytics.jsp -->
+                <entry key="colourGradient" value-ref="colourGradient"/>
             </map>
         </property>
     </bean>
