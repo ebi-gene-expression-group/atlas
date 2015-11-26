@@ -77,7 +77,7 @@ module.exports = function(options) {
         protocol = "https://";
         atlasHost = URI(atlasHost).host();
     } else {
-        protocol = "http";
+        protocol = URI(window.location).protocol() + "://";
     }
     var endpointPath = options.heatmapUrl ? options.heatmapUrl : options.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
 
@@ -125,6 +125,7 @@ module.exports = function(options) {
         }
     };
 
+    var showAnatomogram = options.showAnatomogram === undefined ? true : options.showAnatomogram;
 
     $.ajax(httpRequest).done(function (data) {
         var isWidget = options.hasOwnProperty("isWidget") ? options.isWidget : true;
@@ -133,9 +134,9 @@ module.exports = function(options) {
         data.config.linksAtlasBaseURL = linksAtlasBaseURL;
 
         if (options.isMultiExperiment) {
-            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogram: options.showAnatomogram});
+            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogram: showAnatomogram});
         } else {
-            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogram: options.showAnatomogram});
+            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogram: showAnatomogram   });
         }
 
     }).fail(function (jqXHR, textStatus) {

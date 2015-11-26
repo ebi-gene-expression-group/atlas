@@ -213,7 +213,7 @@
                         <span style="float: right">Within Sample Abundance (Proteomics) > 0</span>
                         <span style="float: left">FPKM/TPM (Transcriptomics) > 0.5</span>
                     </div>
-                    <div id="widgetBody"></div>
+                    <div id="widgetBody" style="margin-top: 1em"></div>
 
 
                     <c:if test="${not empty firstBaselineCounts}">
@@ -331,7 +331,7 @@
     var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
     var heatmapBuilder = window.exposed;
     heatmapBuilder({
-        atlasHost: '${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}',
+        atlasHost: '${pageContext.request.serverName}:${pageContext.request.serverPort}',
         params: 'geneQuery=${geneQuery.asUrlQueryParameter()}' + widgetParameters,
         isMultiExperiment: true,
         target: "widgetBody",
