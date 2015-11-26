@@ -120,8 +120,19 @@ module.exports = function (options) {
             React.createElement(
                 Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms:$("#" + options.showAnatomogramsInput).is(":checked"), atlasHost: host}
             ),
-            heatmapsElement
+            heatmapsElement, triggerScrollEvent
         );
+    }
+
+    function triggerScrollEvent() {
+        console.log("Triggy");
+        if (ie9) {
+            var event = document.createEvent("Events");
+            event.initEvent("scroll", true, true);
+            window.dispatchEvent(event);
+        } else {
+            window.dispatchEvent(new Event("scroll"));
+        }
     }
 
     function initializeQuerySelect() {
