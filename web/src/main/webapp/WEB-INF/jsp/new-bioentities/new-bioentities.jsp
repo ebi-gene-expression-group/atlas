@@ -70,7 +70,9 @@
     });
     $baselineTabLink.click(function() {
         window.location.hash = "#baseline";
-
+        if (!ie9) {
+            window.dispatchEvent(new Event("scroll"));
+        }
     });
     $differentialTabLink.click(function() {
         window.location.hash = "#differential";

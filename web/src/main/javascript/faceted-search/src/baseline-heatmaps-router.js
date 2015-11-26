@@ -46,31 +46,33 @@ module.exports = function (options) {
     var $showAnatomogramsCheckbox = $("#showAnatomogramsCheckbox");
     $showAnatomogramsCheckbox.change(function() {
         if ($(".gxaBaselineHeatmap").length > 0) {
+            var LEFT_DELTA = 270,
+                ANIMATION_DELAY = 200;
+
+            var $stickyTableElements = $(".gxaStickyTableIntersect").add(".gxaStickyTableColumn").add(".gxaStickyTableHeader"),
+                $innerHeatmaps = $(".gxaInnerHeatmap"),
+                $countAndLegend = $(".gxaHeatmapCountAndLegend");
+
+            var stickyTableElementsLeft = parseInt($stickyTableElements.css("left")),
+                innerHeatmapMarginLeft  = parseInt($innerHeatmaps.css("margin-left")),
+                countAndLegendWidth     = parseInt($countAndLegend.css("width"));
+
             if ($showAnatomogramsCheckbox.is(":checked")) {
-                $(".gxaInnerHeatmap").animate({"margin-left": "270px"}, 200, "swing", triggerResize);
+                $stickyTableElements.animate({"left": stickyTableElementsLeft + LEFT_DELTA}, ANIMATION_DELAY, "swing");
+                $innerHeatmaps.animate({"margin-left": innerHeatmapMarginLeft + LEFT_DELTA}, ANIMATION_DELAY, "swing");
                 $(".gxaAside").show(
-                    200, "swing",
-                    function() {
-                        $(".gxaAside").trigger("gxaAnatomogramSticky");
-                    }
+                    ANIMATION_DELAY, "swing",
+                    function() { $(".gxaAside").trigger("gxaAnatomogramSticky"); }
                 );
+                    $countAndLegend.add(".gxaStickyTableHeader").css("width", countAndLegendWidth - LEFT_DELTA);
             } else {
-                $(".gxaInnerHeatmap").animate({"margin-left": "0"}, 200, "swing", triggerResize);
-                $(".gxaAside").hide(200, "swing");
+                $stickyTableElements.animate({"left": stickyTableElementsLeft - LEFT_DELTA}, ANIMATION_DELAY, "swing");
+                $innerHeatmaps.animate({"margin-left": innerHeatmapMarginLeft - LEFT_DELTA}, ANIMATION_DELAY, "swing");
+                $(".gxaAside").hide(ANIMATION_DELAY, "swing");
+                $countAndLegend.add(".gxaStickyTableHeader").css("width", countAndLegendWidth + LEFT_DELTA);
             }
         }
     });
-
-    function triggerResize() {
-        if (ie9) {
-            var event = document.createEvent("Event");
-            event.initEvent("resize", true, true);
-            window.dispatchEvent(event);
-        } else {
-            window.dispatchEvent(new UIEvent("resize"));
-        }
-    }
-
 
     var selectedSpecies = options.selectedSpecies,
         facetsTreeData = options.facetsTreeData;

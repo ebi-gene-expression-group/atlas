@@ -11698,14 +11698,14 @@ webpackJsonp([1],[
 	                $stickyInsct.find('tr:nth-child(2) th').each(function(i) {
 	                    $(this).width($t.find('tr:nth-child(2) th').eq(i).width());
 	                });
-	
+	            },
+	            repositionSticky = function () {
 	                // Set position sticky col
 	                $stickyHead.add($stickyInsct).add($stickyCol).css({
 	                    left: $stickyWrap.offset().left,
 	                    top: $stickyWrap.offset().top
 	                });
-	            },
-	            repositionSticky = function () {
+	
 	                // Return value of calculated allowance
 	                var allowance = calcAllowance();
 	
@@ -11762,13 +11762,7 @@ webpackJsonp([1],[
 	            };
 	
 	        $t.parent('.gxaStickyTableWrap').scroll(repositionSticky);
-	        $w
-	            .load(setWidths)
-	            .resize(function () {
-	                setWidths();
-	                repositionSticky();
-	            })
-	            .scroll(repositionSticky);
+	        $w.resize(repositionSticky).scroll(repositionSticky);
 	
 	        setWidths();
 	        repositionSticky();
@@ -12536,7 +12530,7 @@ webpackJsonp([1],[
 	var HeatmapTableRows = React.createClass({displayName: "HeatmapTableRows",
 	
 	    profileRowType: function (profile)  {
-	        var geneProfileKey = this.props.type.isDifferential ? profile.name + "-" + profile.designElement : profile.name;
+	        var geneProfileKey = this.props.heatmapConfig.species + "-" + (this.props.type.isDifferential ? profile.name + "-" + profile.designElement : profile.name);
 	        return (this.props.type.isMultiExperiment ?
 	            React.createElement(GeneProfileRow, {key: geneProfileKey, 
 	                            id: profile.id, 

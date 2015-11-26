@@ -187,14 +187,14 @@ var Heatmap = React.createClass({
                 $stickyInsct.find('tr:nth-child(2) th').each(function(i) {
                     $(this).width($t.find('tr:nth-child(2) th').eq(i).width());
                 });
-
+            },
+            repositionSticky = function () {
                 // Set position sticky col
                 $stickyHead.add($stickyInsct).add($stickyCol).css({
                     left: $stickyWrap.offset().left,
                     top: $stickyWrap.offset().top
                 });
-            },
-            repositionSticky = function () {
+
                 // Return value of calculated allowance
                 var allowance = calcAllowance();
 
@@ -251,13 +251,7 @@ var Heatmap = React.createClass({
             };
 
         $t.parent('.gxaStickyTableWrap').scroll(repositionSticky);
-        $w
-            .load(setWidths)
-            .resize(function () {
-                setWidths();
-                repositionSticky();
-            })
-            .scroll(repositionSticky);
+        $w.resize(repositionSticky).scroll(repositionSticky);
 
         setWidths();
         repositionSticky();
@@ -1025,7 +1019,7 @@ var LevelsRadioGroup = React.createClass({
 var HeatmapTableRows = React.createClass({
 
     profileRowType: function (profile)  {
-        var geneProfileKey = this.props.type.isDifferential ? profile.name + "-" + profile.designElement : profile.name;
+        var geneProfileKey = this.props.heatmapConfig.species + "-" + (this.props.type.isDifferential ? profile.name + "-" + profile.designElement : profile.name);
         return (this.props.type.isMultiExperiment ?
             <GeneProfileRow key={geneProfileKey}
                             id={profile.id}
