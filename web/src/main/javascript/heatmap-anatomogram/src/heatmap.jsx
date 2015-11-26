@@ -29,6 +29,7 @@ var DisplayLevelsButton = require('display-levels-button');
 var NumberFormat = require('number-format');
 var HelpTooltips = require('help-tooltips');
 var ContrastTooltips = require('contrast-tooltips');
+var MultipleHeatmapTableHeader = require('multiple-heatmap-headers');
 
 var genePropertiesTooltipModule = require('./gene-properties-tooltip-module.js');
 var factorTooltipModule = require('./factor-tooltip-module.js');
@@ -141,7 +142,7 @@ var Heatmap = React.createClass({
     },
 
     componentDidMount: function() {
-        if (this.props.heatmapConfig.showMultipleColumnHeaders) { return; }
+        //if (this.props.heatmapConfig.showMultipleColumnHeaders) { return; }
 
         var $w	            = $(window),
             $t	            = $(this.refs.heatmapTable.getDOMNode()),
@@ -162,6 +163,7 @@ var Heatmap = React.createClass({
                     .end()
                     .find('tr').each(function (i) {
                         $stickyCol.find('tr').eq(i).height($(this).height());
+                        $stickyInsct.find('tr').eq(i).height($(this).height());
                     });
 
                 // Set width of sticky header table and intersect. WebKit does it wrong...
@@ -319,6 +321,43 @@ var Heatmap = React.createClass({
         );
     },
 
+    tableHeaderTypeStickyColumn: function () {
+        return (this.props.heatmapConfig.showMultipleColumnHeaders ?
+            <MultipleHeatmapTableHeader radioId="column"
+                                        isMicroarray={this.isMicroarray()}
+                                        hasQuartiles={this.hasQuartiles()}
+                                        isSingleGeneResult={this.isSingleGeneResult()}
+                                        type={this.props.type}
+                                        multipleColumnHeaders={this.props.multipleColumnHeaders}
+                                        selectedColumnId={this.state.selectedColumnId}
+                                        selectColumn={this.selectColumn}
+                                        heatmapConfig={this.props.heatmapConfig}
+                                        displayLevels={this.state.displayLevels}
+                                        toggleDisplayLevels={this.toggleDisplayLevels}
+                                        showGeneSetProfiles={this.state.showGeneSetProfiles}
+                                        selectedRadioButton={this.state.selectedRadioButton}
+                                        toggleRadioButton={this.toggleRadioButton}
+                                        renderContrastFactorHeaders={false}/> :
+            <HeatmapTableHeader isMicroarray={this.isMicroarray()}
+                                radioId="column"
+                                hasQuartiles={this.hasQuartiles()}
+                                isSingleGeneResult={this.isSingleGeneResult()}
+                                columnHeaders={this.props.columnHeaders}
+                                type={this.props.type}
+                                multipleColumnHeaders={this.props.multipleColumnHeaders}
+                                selectedColumnId={this.state.selectedColumnId}
+                                selectColumn={this.selectColumn}
+                                heatmapConfig={this.props.heatmapConfig}
+                                displayLevels={this.state.displayLevels}
+                                toggleDisplayLevels={this.toggleDisplayLevels}
+                                showGeneSetProfiles={this.state.showGeneSetProfiles}
+                                selectedRadioButton={this.state.selectedRadioButton}
+                                toggleRadioButton={this.toggleRadioButton}
+                                renderContrastFactorHeaders={false}/>
+
+        );
+    },
+
     render: function () {
         var paddingMargin = "15px";
 
@@ -358,9 +397,24 @@ var Heatmap = React.createClass({
                                           renderExpressionCells={true}/>
                     </table>
 
-                    {this.props.heatmapConfig.showMultipleColumnHeaders ? null :
-                        <div ref="stickyIntersect" className="gxaStickyTableIntersect">
-                        <table className="gxaTableGrid">
+                    <div ref="stickyIntersect" className="gxaStickyTableIntersect">
+                    <table className="gxaTableGrid">
+                        {this.props.heatmapConfig.showMultipleColumnHeaders ?
+                            <MultipleHeatmapTableHeader radioId="intersect"
+                                                        isMicroarray={this.isMicroarray()}
+                                                        hasQuartiles={this.hasQuartiles()}
+                                                        isSingleGeneResult={this.isSingleGeneResult()}
+                                                        type={this.props.type}
+                                                        multipleColumnHeaders={this.props.multipleColumnHeaders}
+                                                        selectedColumnId={this.state.selectedColumnId}
+                                                        selectColumn={this.selectColumn}
+                                                        heatmapConfig={this.props.heatmapConfig}
+                                                        displayLevels={this.state.displayLevels}
+                                                        toggleDisplayLevels={this.toggleDisplayLevels}
+                                                        showGeneSetProfiles={this.state.showGeneSetProfiles}
+                                                        selectedRadioButton={this.state.selectedRadioButton}
+                                                        toggleRadioButton={this.toggleRadioButton}
+                                                        renderContrastFactorHeaders={false}/> :
                             <HeatmapTableHeader isMicroarray={this.isMicroarray()}
                                                 radioId="intersect"
                                                 hasQuartiles={this.hasQuartiles()}
@@ -377,65 +431,70 @@ var Heatmap = React.createClass({
                                                 selectedRadioButton={this.state.selectedRadioButton}
                                                 toggleRadioButton={this.toggleRadioButton}
                                                 renderContrastFactorHeaders={false}/>
-                        </table>
-                    </div> }
-                    {this.props.heatmapConfig.showMultipleColumnHeaders ? null :
-                    <div ref="stickyColumn" className="gxaStickyTableColumn">
-                        <table className="gxaTableGrid">
-                            <HeatmapTableHeader isMicroarray={this.isMicroarray()}
-                                                radioId="column"
-                                                hasQuartiles={this.hasQuartiles()}
-                                                isSingleGeneResult={this.isSingleGeneResult()}
-                                                columnHeaders={this.props.columnHeaders}
-                                                type={this.props.type}
-                                                multipleColumnHeaders={this.props.multipleColumnHeaders}
-                                                selectedColumnId={this.state.selectedColumnId}
-                                                selectColumn={this.selectColumn}
-                                                heatmapConfig={this.props.heatmapConfig}
-                                                displayLevels={this.state.displayLevels}
-                                                toggleDisplayLevels={this.toggleDisplayLevels}
-                                                showGeneSetProfiles={this.state.showGeneSetProfiles}
-                                                selectedRadioButton={this.state.selectedRadioButton}
-                                                toggleRadioButton={this.toggleRadioButton}
-                                                renderContrastFactorHeaders={false}/>
-                            <HeatmapTableRows profiles={this.state.profiles.rows}
-                                              selectedGeneId={this.state.selectedGeneId}
-                                              selectGene={this.selectGene}
-                                              type={this.props.type}
-                                              heatmapConfig={this.props.heatmapConfig}
-                                              displayLevels={this.state.displayLevels}
-                                              showGeneSetProfiles={this.state.showGeneSetProfiles}
-                                              selectedRadioButton={this.state.selectedRadioButton}
-                                              hoverRowCallback={this._hoverRow}
-                                              hasQuartiles={this.hasQuartiles()}
-                                              isSingleGeneResult={this.isSingleGeneResult()}
-                                              renderExpressionCells={false}/>
-                        </table>
-                    </div> }
+                        }
+                    </table>
+                </div>
 
-                    {this.props.heatmapConfig.showMultipleColumnHeaders ? null :
+                <div ref="stickyColumn" className="gxaStickyTableColumn">
+                    <table className="gxaTableGrid">
+                        {this.tableHeaderTypeStickyColumn()}
+                        <HeatmapTableRows profiles={this.state.profiles.rows}
+                                          selectedGeneId={this.state.selectedGeneId}
+                                          selectGene={this.selectGene}
+                                          type={this.props.type}
+                                          heatmapConfig={this.props.heatmapConfig}
+                                          displayLevels={this.state.displayLevels}
+                                          showGeneSetProfiles={this.state.showGeneSetProfiles}
+                                          selectedRadioButton={this.state.selectedRadioButton}
+                                          hoverRowCallback={this._hoverRow}
+                                          hasQuartiles={this.hasQuartiles()}
+                                          isSingleGeneResult={this.isSingleGeneResult()}
+                                          renderExpressionCells={false}/>
+                    </table>
+                </div>
+
+
                     <div ref="stickyHeader" className="gxaStickyTableHeader">
                         <table className="gxaTableGrid">
-                            <HeatmapTableHeader isMicroarray={this.isMicroarray()}
-                                                radioId="header"
-                                                hasQuartiles={this.hasQuartiles()}
-                                                isSingleGeneResult={this.isSingleGeneResult()}
-                                                hoverColumnCallback={this._hoverColumn}
-                                                type={this.props.type}
-                                                columnHeaders={this.props.columnHeaders}
-                                                multipleColumnHeaders={this.props.multipleColumnHeaders}
-                                                selectedColumnId={this.state.selectedColumnId}
-                                                selectColumn={this.selectColumn}
-                                                heatmapConfig={this.props.heatmapConfig}
-                                                displayLevels={this.state.displayLevels}
-                                                toggleDisplayLevels={this.toggleDisplayLevels}
-                                                showGeneSetProfiles={this.state.showGeneSetProfiles}
-                                                selectedRadioButton={this.state.selectedRadioButton}
-                                                toggleRadioButton={this.toggleRadioButton}
-                                                renderContrastFactorHeaders={true}
-                                                anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>
+                            {this.props.heatmapConfig.showMultipleColumnHeaders ?
+                                <MultipleHeatmapTableHeader radioId="header"
+                                                            isMicroarray={this.isMicroarray()}
+                                                            hasQuartiles={this.hasQuartiles()}
+                                                            isSingleGeneResult={this.isSingleGeneResult()}
+                                                            hoverColumnCallback={this._hoverColumn}
+                                                            type={this.props.type}
+                                                            multipleColumnHeaders={this.props.multipleColumnHeaders}
+                                                            selectedColumnId={this.state.selectedColumnId}
+                                                            selectColumn={this.selectColumn}
+                                                            heatmapConfig={this.props.heatmapConfig}
+                                                            displayLevels={this.state.displayLevels}
+                                                            toggleDisplayLevels={this.toggleDisplayLevels}
+                                                            showGeneSetProfiles={this.state.showGeneSetProfiles}
+                                                            selectedRadioButton={this.state.selectedRadioButton}
+                                                            toggleRadioButton={this.toggleRadioButton}
+                                                            renderContrastFactorHeaders={true}
+                                                            anatomogramEventEmitter={this.props.anatomogramEventEmitter}/> :
+                                <HeatmapTableHeader isMicroarray={this.isMicroarray()}
+                                                    radioId="header"
+                                                    hasQuartiles={this.hasQuartiles()}
+                                                    isSingleGeneResult={this.isSingleGeneResult()}
+                                                    hoverColumnCallback={this._hoverColumn}
+                                                    type={this.props.type}
+                                                    columnHeaders={this.props.columnHeaders}
+                                                    multipleColumnHeaders={this.props.multipleColumnHeaders}
+                                                    selectedColumnId={this.state.selectedColumnId}
+                                                    selectColumn={this.selectColumn}
+                                                    heatmapConfig={this.props.heatmapConfig}
+                                                    displayLevels={this.state.displayLevels}
+                                                    toggleDisplayLevels={this.toggleDisplayLevels}
+                                                    showGeneSetProfiles={this.state.showGeneSetProfiles}
+                                                    selectedRadioButton={this.state.selectedRadioButton}
+                                                    toggleRadioButton={this.toggleRadioButton}
+                                                    renderContrastFactorHeaders={true}
+                                                    anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>
+                            }
                         </table>
-                    </div>}
+                    </div>
                 </div>
 
             </div>
@@ -600,10 +659,10 @@ var MultipleHeatmapTableHeader = React.createClass({
                                        selectedRadioButton={this.props.selectedRadioButton}
                                        toggleRadioButton={this.props.toggleRadioButton}/>
                     </th>
-                    { this.renderHeaders() }
+                    { this.props.renderContrastFactorHeaders ? this.renderHeaders() : null}
                 </tr>
                 <tr>
-                    { this.renderSubHeaders() }
+                    { this.props.renderContrastFactorHeaders ? this.renderSubHeaders() : null}
                 </tr>
                 <tr>
                     { this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null }
