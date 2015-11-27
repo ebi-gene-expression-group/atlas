@@ -659,7 +659,6 @@ webpackJsonp([2],[
 	    }
 	
 	    function triggerScrollEvent() {
-	        console.log("Triggy");
 	        if (ie9) {
 	            var event = document.createEvent("Events");
 	            event.initEvent("scroll", true, true);
