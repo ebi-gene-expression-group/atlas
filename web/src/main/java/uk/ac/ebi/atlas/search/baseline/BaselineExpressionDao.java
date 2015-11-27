@@ -25,8 +25,8 @@ package uk.ac.ebi.atlas.search.baseline;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
 @Scope("prototype")
 public class BaselineExpressionDao {
 
-    private static final Logger LOGGER = LogManager.getLogger(BaselineExpressionDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExpressionDao.class);
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -66,7 +66,7 @@ public class BaselineExpressionDao {
             return ImmutableList.of();
         }
 
-        LOGGER.debug(String.format("fetchAverageExpressionByExperimentAssayGroup for %s genes", geneIds.size()));
+        LOGGER.debug("fetchAverageExpressionByExperimentAssayGroup for {} genes", geneIds.size());
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -104,7 +104,8 @@ public class BaselineExpressionDao {
             ImmutableList<BaselineExperimentExpression> results = builder.build();
 
             stopwatch.stop();
-            LOGGER.debug(String.format("fetchAverageExpressionByExperimentAssayGroup returned %s results in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+            LOGGER.debug("fetchAverageExpressionByExperimentAssayGroup returned {} results in {} seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
+
             return results;
 
         } catch (Exception e) {

@@ -22,8 +22,8 @@
 
 package uk.ac.ebi.atlas.search.diffanalytics;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,7 +44,7 @@ import java.util.Date;
 @Scope("request")
 public class BioentitiesSearchDifferentialDownloadController {
 
-    private static final Logger LOGGER = LogManager.getLogger(BioentitiesSearchDifferentialDownloadController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BioentitiesSearchDifferentialDownloadController.class);
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private DiffAnalyticsTSVWriter tsvWriter;
@@ -63,7 +63,7 @@ public class BioentitiesSearchDifferentialDownloadController {
 
     @RequestMapping(value = "/query.tsv")
     public void downloadGeneQueryDifferentialExpressions(@Valid GeneQuerySearchRequestParameters requestParameters, HttpServletResponse response) throws IOException {
-        LOGGER.info("downloadGeneQueryDifferentialExpressions for " + requestParameters);
+        LOGGER.info("downloadGeneQueryDifferentialExpressions for {}", requestParameters);
 
         downloadExpressions(response, requestParameters);
     }
@@ -75,7 +75,7 @@ public class BioentitiesSearchDifferentialDownloadController {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery(GeneQuery.create(identifier));
 
-        LOGGER.info("downloadGeneDifferentialExpressions for " + requestParameters);
+        LOGGER.info("downloadGeneDifferentialExpressions for {}", requestParameters);
 
         downloadExpressions(response, requestParameters);
     }
@@ -97,9 +97,9 @@ public class BioentitiesSearchDifferentialDownloadController {
             //String condition = requestParameters.getConditionQuery().asString();
 
             int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery().asString(), condition, requestParameters.getOrganism(), requestParameters.isExactMatch(), writer);
-            LOGGER.info("downloadGeneQueryResults streamed " + count + " differential gene expressions");
+            LOGGER.info("downloadGeneQueryResults streamed {} differential gene expressions", count);
         } catch (VisitorException e) {
-            LOGGER.warn("downloadGeneQueryResults aborted, connection may have been lost with the client:" + e.getMessage());
+            LOGGER.warn("downloadGeneQueryResults aborted, connection may have been lost with the client: {}", e.getMessage());
         }
     }
 

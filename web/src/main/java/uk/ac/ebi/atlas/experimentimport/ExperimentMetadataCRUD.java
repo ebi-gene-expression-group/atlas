@@ -24,13 +24,14 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSetMultimap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.*;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParser;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -53,7 +54,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Scope("prototype")
 public class ExperimentMetadataCRUD {
 
-    private static final Logger LOGGER = LogManager.getLogger(ExperimentMetadataCRUD.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentMetadataCRUD.class);
 
     private ExperimentDAO experimentDAO;
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
@@ -214,7 +215,7 @@ public class ExperimentMetadataCRUD {
             ExperimentDesign experimentDesign = condensedSdrfParserOutput.getExperimentDesign();
             writeExperimentDesignFile(accession, type, experimentDesign);
 
-            LOGGER.info("updated design for experiment " + accession);
+            LOGGER.info("updated design for experiment {}", accession);
 
             if (!experimentDTO.isPrivate()) {
                 Experiment experiment = experimentTrader.getPublicExperiment(accession);

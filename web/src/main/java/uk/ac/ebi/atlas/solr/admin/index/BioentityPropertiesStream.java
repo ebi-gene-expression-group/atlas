@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.solr.admin.index;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.Lists;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 
 import java.io.Closeable;
@@ -35,7 +35,7 @@ import java.util.List;
 
 public class BioentityPropertiesStream implements Closeable {
 
-    private static final Logger LOGGER = LogManager.getLogger(BioentityPropertiesStream.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BioentityPropertiesStream.class);
 
     private static final double BATCH_SIZE = 50000;
 
@@ -68,7 +68,7 @@ public class BioentityPropertiesStream implements Closeable {
             String bioentityIdentifier = propertyValues.remove(0);
 
             if (bioentityIdentifier.trim().isEmpty()) {
-                LOGGER.warn("Line " + lineCount + " ignored because bioentityIdentifier is empty");
+                LOGGER.warn("Line {} ignored because bioentityIdentifier is empty", lineCount);
             }
             else {
                 Collection<BioentityProperty> properties = bioentityPropertiesBuilder
@@ -92,4 +92,5 @@ public class BioentityPropertiesStream implements Closeable {
         LOGGER.debug("<close> close invoked on PropertyStream");
         csvReader.close();
     }
+
 }

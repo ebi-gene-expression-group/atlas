@@ -5,9 +5,7 @@ import com.google.common.collect.ImmutableSetMultimap;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
-import java.util.LinkedHashMap;
 import java.util.Set;
-import java.util.SortedMap;
 
 public class BaselineProfileStreamOptionsWrapperAsGeneSets implements BaselineProfileStreamOptions {
 

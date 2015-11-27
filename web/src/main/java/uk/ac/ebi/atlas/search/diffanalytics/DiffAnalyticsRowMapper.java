@@ -2,10 +2,10 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.RowMapper;
-import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.trader.ContrastTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;

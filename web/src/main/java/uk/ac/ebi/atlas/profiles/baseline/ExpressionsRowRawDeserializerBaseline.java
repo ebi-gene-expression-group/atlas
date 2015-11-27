@@ -32,8 +32,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 public class ExpressionsRowRawDeserializerBaseline extends ExpressionsRowRawDeserializer<BaselineExpression> {
 
     final int expectedNumberOfValues;

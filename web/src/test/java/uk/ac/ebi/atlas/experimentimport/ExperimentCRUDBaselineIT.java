@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,8 +27,7 @@ import static org.mockito.Mockito.doNothing;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class ExperimentCRUDBaselineIT {
 
-
-    private static final Logger LOGGER = LogManager.getLogger(ExperimentCRUDBaselineIT.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentCRUDBaselineIT.class);
 
     public static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";
     public static final String EXISTING_EXPERIMENT_ACCESSION = "E-MTAB-599";
@@ -110,7 +109,7 @@ public class ExperimentCRUDBaselineIT {
 
     private void deleteInactiveAnalytics() {
         int count = jdbcTemplate.update("delete from RNASEQ_BSLN_EXPRESSIONS WHERE ISACTIVE = 'F'");
-        LOGGER.info(String.format("RNASEQ_BSLN_EXPRESSIONS %s rows deleted",count));
+        LOGGER.info("RNASEQ_BSLN_EXPRESSIONS {} rows deleted", count);
     }
 
 }

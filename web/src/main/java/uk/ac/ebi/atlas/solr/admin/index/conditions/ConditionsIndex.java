@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
 import com.google.common.collect.SetMultimap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.model.Experiment;
 
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.Collection;
 
 public abstract class ConditionsIndex<T extends Experiment> {
 
-    private static final Logger LOGGER = LogManager.getLogger(ConditionsIndex.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConditionsIndex.class);
 
     private SolrClient solrClient;
 
@@ -27,7 +27,7 @@ public abstract class ConditionsIndex<T extends Experiment> {
 
     public void updateConditions(T experiment, SetMultimap<String, String> ontologyTerms) {
 
-        LOGGER.info("<updateConditions> " + experiment.getAccession());
+        LOGGER.info("<updateConditions> {}", experiment.getAccession());
 
         removeConditions(experiment.getAccession());
 

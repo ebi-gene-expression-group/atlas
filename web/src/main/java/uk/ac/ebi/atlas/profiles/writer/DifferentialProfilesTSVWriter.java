@@ -28,8 +28,8 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
@@ -46,7 +46,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfile<K>, K extends DifferentialExpression> extends GeneProfilesTSVWriter<T, Contrast, DifferentialProfileStreamOptions> {
-    private static final Logger LOGGER = LogManager.getLogger(DifferentialProfilesTSVWriter.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialProfilesTSVWriter.class);
+
     private Resource tsvFileMastheadResource;
     private String tsvFileMastheadTemplate;
 
@@ -162,4 +164,5 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
         }
         return Double.toString(value);
     }
+
 }

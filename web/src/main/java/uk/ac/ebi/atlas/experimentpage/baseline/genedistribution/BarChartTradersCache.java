@@ -23,8 +23,8 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import com.google.common.cache.LoadingCache;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 
@@ -36,7 +36,7 @@ import java.util.concurrent.ExecutionException;
 @Scope("singleton")
 public class BarChartTradersCache {
 
-    private static final Logger LOGGER = LogManager.getLogger(BarChartTradersCache.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BarChartTradersCache.class);
 
     private LoadingCache<String, BarChartTrader> barchartTraders;
 

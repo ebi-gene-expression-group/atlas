@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 

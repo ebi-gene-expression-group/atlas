@@ -26,8 +26,8 @@ package uk.ac.ebi.atlas.solr.query;
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -40,7 +40,7 @@ import java.util.List;
 @Scope("request")
 public class SuggestionService {
 
-    private static final Logger LOGGER = LogManager.getLogger(SuggestionService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SuggestionService.class);
 
     private static final int MAX_NUMBER_OF_SUGGESTIONS = 15;
 
@@ -54,7 +54,7 @@ public class SuggestionService {
     }
 
     public List<TermSourceSuggestion> fetchTopSuggestions(String query, @Nullable String species) {
-        LOGGER.info(String.format("fetchTopSuggestions for query %s, species %s", query, species));
+        LOGGER.info("fetchTopSuggestions for query {}, species {}", query, species);
 
         LinkedHashSet<TermSourceSuggestion> suggestions = Sets.newLinkedHashSet();
 

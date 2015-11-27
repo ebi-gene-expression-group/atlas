@@ -22,10 +22,10 @@
 
 package uk.ac.ebi.atlas.solr.admin.index;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
@@ -42,7 +42,8 @@ import java.util.Collection;
 @Scope("prototype")
 public class BioentityIndex {
 
-    private static final Logger LOGGER = LogManager.getLogger(BioentityIndex.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BioentityIndex.class);
+
     private static final String REACTOME_DIR = "reactome";
 
     private BioentityIndexMonitor bioentityIndexMonitor;
@@ -97,7 +98,7 @@ public class BioentityIndex {
             try (BioentityPropertiesStream bioentityBioentityPropertiesStream =
                          bioentityPropertiesStreamBuilder.build()) {
 
-                LOGGER.info("<indexFile> streaming started for file: " + filePath);
+                LOGGER.info("<indexFile> streaming started for file: {}", filePath);
 
                 bioentityIndexMonitor.processing(filePath);
 

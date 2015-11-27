@@ -23,11 +23,11 @@
 package uk.ac.ebi.atlas.web.controllers.rest.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -41,7 +41,7 @@ import java.util.Set;
 
 public abstract class ExperimentDesignDownloadController<T extends Experiment> {
 
-    private static final Logger LOGGER = LogManager.getLogger(DifferentialDesignDownloadController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialDesignDownloadController.class);
 
     @Value("#{configuration['experiment.experiment-design.path.template']}")
     private String pathTemplate;
@@ -89,7 +89,7 @@ public abstract class ExperimentDesignDownloadController<T extends Experiment> {
         CSVWriter csvWriter = new CSVWriter(response.getWriter(), '\t', CSVWriter.NO_QUOTE_CHARACTER);
         csvWriter.writeAll(newCsvLines);
 
-        LOGGER.debug("<downloadExperimentDesign> streamed " + newCsvLines.size() + " rows");
+        LOGGER.debug("<downloadExperimentDesign> streamed {} rows", newCsvLines.size());
 
         csvWriter.flush();
         csvWriter.close();

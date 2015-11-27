@@ -25,9 +25,10 @@ package uk.ac.ebi.atlas.model.baseline;
 import com.google.common.collect.Lists;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
-import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.*;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 public class BaselineExperimentConfiguration {
 

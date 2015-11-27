@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
-import org.apache.commons.lang.ArrayUtils;
 
 import java.lang.reflect.Array;
 import java.util.Iterator;

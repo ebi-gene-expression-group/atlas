@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Scope;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * Created by barrera on 21/07/2014.

@@ -5,8 +5,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestClientException;
@@ -25,7 +25,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Scope("prototype") //can't be singleton because RestTemplate is not thread safe
 public class MultiTermSuggestionService {
 
-    private static final Logger LOGGER = LogManager.getLogger(MultiTermSuggestionService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MultiTermSuggestionService.class);
 
     private RestTemplate restTemplate;
 

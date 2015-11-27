@@ -3,8 +3,8 @@ package uk.ac.ebi.atlas.trader.loader;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
 import javax.inject.Inject;
 import javax.inject.Named;

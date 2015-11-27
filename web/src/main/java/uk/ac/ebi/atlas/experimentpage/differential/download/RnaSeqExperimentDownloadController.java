@@ -22,8 +22,8 @@
 
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,7 +46,8 @@ import java.text.MessageFormat;
 @Scope("request")
 public class RnaSeqExperimentDownloadController {
 
-    private static final Logger LOGGER = LogManager.getLogger(RnaSeqExperimentDownloadController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RnaSeqExperimentDownloadController.class);
+
     private static final String ALL_ANALYTICS_TSV = "-analytics.tsv";
     private static final String RAW_COUNTS_TSV = "-raw-counts.tsv";
     private static final String PARAMS_TYPE_DIFFERENTIAL = "type=RNASEQ_MRNA_DIFFERENTIAL";
@@ -76,7 +77,7 @@ public class RnaSeqExperimentDownloadController {
         DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
 
-        LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
+        LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: {}", preferences);
 
         response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-query-results.tsv\"");
 
@@ -88,7 +89,7 @@ public class RnaSeqExperimentDownloadController {
         try {
 
             long genesCount = profilesWriter.write(response.getWriter(), requestContext);
-            LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + " gene expression profiles");
+            LOGGER.info("<downloadGeneProfiles> streamed {} gene expression profiles", genesCount);
 
         } catch (GenesNotFoundException e) {
             LOGGER.info("<downloadGeneProfiles> no genes found");
@@ -105,7 +106,7 @@ public class RnaSeqExperimentDownloadController {
         ExpressionsWriter rnaSeqRawDataWriter = dataWriterFactory.getRnaSeqRawDataWriter(experiment, response.getWriter());
 
         long genesCount = rnaSeqRawDataWriter.write();
-        LOGGER.info("<download" + RAW_COUNTS_TSV + "> streamed " + genesCount + " gene expression profiles");
+        LOGGER.info("<download{}> streamed {} gene expression profiles", RAW_COUNTS_TSV, genesCount);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = PARAMS_TYPE_DIFFERENTIAL)
@@ -117,7 +118,7 @@ public class RnaSeqExperimentDownloadController {
         ExpressionsWriter rnaSeqAnalyticsDataWriter = dataWriterFactory.getRnaSeqAnalyticsDataWriter(experiment, response.getWriter());
 
         long genesCount = rnaSeqAnalyticsDataWriter.write();
-        LOGGER.info("<download" + ALL_ANALYTICS_TSV + "> streamed " + genesCount + " gene expression profiles");
+        LOGGER.info("<download{}> streamed {} gene expression profiles", ALL_ANALYTICS_TSV, genesCount);
 
     }
 
@@ -132,7 +133,7 @@ public class RnaSeqExperimentDownloadController {
 
     private void prepareResponse(HttpServletResponse response, String experimentAccession, String fileExtension) {
         response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + fileExtension + "\"");
-
         response.setContentType("text/plain; charset=utf-8");
     }
+
 }

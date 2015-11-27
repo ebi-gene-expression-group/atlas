@@ -23,8 +23,8 @@
 package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
@@ -36,7 +36,7 @@ import java.util.concurrent.ExecutionException;
 @Scope("singleton")
 public class PublicExperimentTypesCache {
 
-    private static final Logger LOGGER = LogManager.getLogger(PublicExperimentTypesCache.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PublicExperimentTypesCache.class);
 
     private LoadingCache<String, ExperimentType> experimentTypes;
 
@@ -47,10 +47,7 @@ public class PublicExperimentTypesCache {
         this.experimentTypes = experimentTypes;
     }
 
-    /*
-     * @throws IllegalStateException if an error was thrown while loading the experiment, or the experiment
-     * doesn't exist
-     */
+    // Throws IllegalStateException if an error was thrown while loading the experiment, or the experiment doesn't exist
     public ExperimentType getExperimentType(String experimentAccession) {
         try {
             return experimentTypes.get(experimentAccession);

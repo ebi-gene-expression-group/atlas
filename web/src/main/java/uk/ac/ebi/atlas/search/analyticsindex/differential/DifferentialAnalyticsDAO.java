@@ -7,6 +7,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -17,6 +19,7 @@ import static uk.ac.ebi.atlas.utils.ResourceUtils.readPlainTextResource;
 /**
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 12/11/2015.
  */
+@Named
 public abstract class DifferentialAnalyticsDAO {
 
     protected static final String FQ_TEMPLATE = "&fq=foldChange:([* TO {0,number,#}] OR [{1,number,#} TO *])";
@@ -33,11 +36,7 @@ public abstract class DifferentialAnalyticsDAO {
     protected final String differentialGeneFacetsQuery;
 
     public DifferentialAnalyticsDAO(RestTemplate restTemplate, String solrBaseUrl, Resource differentialFacetsQueryJSON) {
-        SimpleClientHttpRequestFactory rf = (SimpleClientHttpRequestFactory) restTemplate.getRequestFactory();
-        rf.setReadTimeout(60000);
-        rf.setConnectTimeout(60000);
-
-        this.restTemplate = restTemplate;
+        this.restTemplate = restTemplate;   // settings of restTemplate in applicationContext.xml
         this.solrBaseUrl = solrBaseUrl;
         this.differentialGeneFacetsQuery = "&json.facet=" + encodeQueryParam(readPlainTextResource(differentialFacetsQueryJSON).replaceAll("\\s+",""));
     }

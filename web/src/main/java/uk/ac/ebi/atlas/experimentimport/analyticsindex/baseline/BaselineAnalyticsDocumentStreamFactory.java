@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline;
 
 import com.google.common.collect.SetMultimap;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 

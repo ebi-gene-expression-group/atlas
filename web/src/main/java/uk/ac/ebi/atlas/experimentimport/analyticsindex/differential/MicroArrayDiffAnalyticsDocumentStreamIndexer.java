@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.SetMultimap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
@@ -20,7 +20,7 @@ import java.util.Set;
 
 @Named
 public class MicroArrayDiffAnalyticsDocumentStreamIndexer {
-    private static final Logger LOGGER = LogManager.getLogger(MicroArrayDiffAnalyticsDocumentStreamIndexer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MicroArrayDiffAnalyticsDocumentStreamIndexer.class);
 
     private final MicroarrayDifferentialAnalyticsInputStreamFactory microarrayDifferentialAnalyticsInputStreamFactory;
     private DiffAnalyticsDocumentStreamFactory streamFactory;
@@ -49,7 +49,7 @@ public class MicroArrayDiffAnalyticsDocumentStreamIndexer {
         for (String arrayDesignAccession : arrayDesignAccessions) {
             try (ObjectInputStream<? extends DifferentialAnalytics> closeableInputStream =  microarrayDifferentialAnalyticsInputStreamFactory.create(experimentAccession, arrayDesignAccession)) {
 
-                LOGGER.info("Start indexing " + experimentAccession);
+                LOGGER.info("Start indexing {}", experimentAccession);
                 StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
                 stopWatch.start();
 
@@ -61,7 +61,7 @@ public class MicroArrayDiffAnalyticsDocumentStreamIndexer {
                 int arrayDesignAccessionCount = analyticsIndexDAO.addDocuments(analyticsDocuments, batchSize);
 
                 stopWatch.stop();
-                LOGGER.info(String.format("Done indexing %s_%s, indexed %,d documents in %s seconds", experimentAccession, arrayDesignAccession, arrayDesignAccessionCount, stopWatch.getTotalTimeSeconds()));
+                LOGGER.info("Done indexing {}_{}, indexed {} documents in {} seconds", experimentAccession, arrayDesignAccession, arrayDesignAccessionCount, stopWatch.getTotalTimeSeconds());
 
                 count += arrayDesignAccessionCount;
 

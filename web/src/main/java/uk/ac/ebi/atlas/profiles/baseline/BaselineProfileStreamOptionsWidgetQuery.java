@@ -9,9 +9,7 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.Set;
-import java.util.SortedMap;
 
 /*
  * This will load baseline profiles in the same way as when baseline profiles are loaded

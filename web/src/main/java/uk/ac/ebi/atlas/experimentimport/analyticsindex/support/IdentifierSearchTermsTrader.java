@@ -2,19 +2,15 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.support;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
 import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -24,7 +20,7 @@ import java.util.Set;
 @Scope("singleton")
 public class IdentifierSearchTermsTrader {
 
-    private static final Logger LOGGER = LogManager.getLogger(IdentifierSearchTermsTrader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(IdentifierSearchTermsTrader.class);
 
     private BioentityIdentifiersReader bioentityIdentifiersReader;
     private IdentifierSearchDAO identifierSearchDAO;
@@ -58,7 +54,7 @@ public class IdentifierSearchTermsTrader {
         }
 
         stopWatch.stop();
-        LOGGER.debug(String.format("Bioentity properties for %,d bioentities fetched in %s seconds", bioentityIdentifiers.size(), stopWatch.getTotalTimeSeconds()));
+        LOGGER.debug("Bioentity properties for {} bioentities fetched in {} seconds", bioentityIdentifiers.size(), stopWatch.getTotalTimeSeconds());
 
         return mapBuilder.build();
     }

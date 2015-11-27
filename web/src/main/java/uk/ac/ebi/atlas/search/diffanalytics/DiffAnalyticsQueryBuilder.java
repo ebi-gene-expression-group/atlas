@@ -4,7 +4,6 @@ import oracle.sql.ARRAY;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.search.DatabaseQuery;
-import uk.ac.ebi.atlas.utils.StringUtil;
 
 import javax.inject.Named;
 

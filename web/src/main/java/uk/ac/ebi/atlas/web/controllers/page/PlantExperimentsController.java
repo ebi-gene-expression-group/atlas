@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,28 +36,21 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 
 @Controller
 // if we make it singleton it gets initialized during deployment, that means deployment becomes slow
 @Scope("request")
 public class PlantExperimentsController {
-    private static final Logger LOGGER = LogManager.getLogger(PlantExperimentsController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlantExperimentsController.class);
 
     private ExperimentTrader experimentTrader;
 
     private SpeciesKingdomTrader speciesKingdomTrader;
-
-    private BaselineExperimentsCache experimentsCache;
 
     private SortedSetMultimap<String, String> baselineExperimentAccessionsBySpecies;
 
@@ -71,10 +64,8 @@ public class PlantExperimentsController {
 
     @Inject
     public PlantExperimentsController(ExperimentTrader experimentTrader,
-                                      SpeciesKingdomTrader speciesKingdomTrader,
-                                         BaselineExperimentsCache experimentsCache) {
+                                      SpeciesKingdomTrader speciesKingdomTrader) {
         this.experimentTrader = experimentTrader;
-        this.experimentsCache = experimentsCache;
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
@@ -153,14 +144,13 @@ public class PlantExperimentsController {
         populateExperimentAccessionToSpecies(ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL);
         populateExperimentAccessionToSpecies(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
         populateExperimentAccessionToSpecies(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
-        LOGGER.info(" DE exps took: " + (System.currentTimeMillis() - start) + " ms");
+        LOGGER.info("Differential experiments took: {} ms", System.currentTimeMillis() - start);
     }
 
 
     /**
      * Populates numDifferentialExperimentsBySpecies and numberOfPlantExperiments for a given experimentType
      * This is a part of a work-around until https://www.pivotaltracker.com/story/show/88885788 gets implemented.
-     * @param experimentType
      */
     private void populateExperimentAccessionToSpecies(ExperimentType experimentType) {
         for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {

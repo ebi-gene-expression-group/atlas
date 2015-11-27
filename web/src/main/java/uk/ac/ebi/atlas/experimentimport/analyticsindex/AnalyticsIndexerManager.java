@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.TreeMultimap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsTrader;
@@ -30,7 +30,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Scope("singleton")
 public class AnalyticsIndexerManager extends Observable {
 
-    private static final Logger LOGGER = LogManager.getLogger(AnalyticsIndexerManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsIndexerManager.class);
 
     @Value("#{configuration['experiment.magetab.path.template']}")
     private String baselineTsvFileTemplate;
@@ -116,7 +116,8 @@ public class AnalyticsIndexerManager extends Observable {
 
     private void indexPublicExperimentsConcurrently(Collection<String> experimentAccessions, ImmutableMap<String, String> bioentityIdToIdentifierSearch, int threads, int batchSize, int timeout) {
 
-        LOGGER.debug(String.format("Starting ExecutorService with %d threads, %,d Solr document batch size and %d hour(s) timeout", threads, batchSize, timeout));
+        LOGGER.debug("Starting ExecutorService with {} threads, {} Solr document batch size and {} hour(s) timeout", threads, batchSize, timeout);
+
         ExecutorService threadPool = Executors.newFixedThreadPool(threads);
 
         for (String experimentAccession : experimentAccessions) {

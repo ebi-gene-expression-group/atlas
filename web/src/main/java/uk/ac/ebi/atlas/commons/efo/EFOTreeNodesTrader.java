@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.commons.efo;
 
 import com.atlassian.util.concurrent.LazyReference;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress.utils.efo.EFOLoader;
@@ -17,7 +17,7 @@ import java.util.Map;
 @Scope("singleton")
 public class EFOTreeNodesTrader {
 
-    private static final Logger LOGGER = LogManager.getLogger(EFOTreeNodesTrader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EFOTreeNodesTrader.class);
 
     private String efoOwlFilePath;
 
@@ -26,7 +26,7 @@ public class EFOTreeNodesTrader {
         @Override
         protected Map<String, EFONode> create() throws Exception {
             EFOLoader efoLoader = new EFOLoader();
-            LOGGER.debug("load " + efoOwlFilePath);
+            LOGGER.debug("load {}", efoOwlFilePath);
             Map<String, EFONode> urlToEFONode = efoLoader.load(new FileInputStream(efoOwlFilePath)).getMap();
             LOGGER.debug("load done");
             return urlToEFONode;

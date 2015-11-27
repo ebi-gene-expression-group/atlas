@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.AbstractInterruptibleBatchPreparedStatementSetter;
 
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 @Named
 public class MicroarrayDifferentialAnalyticsDao {
 
-    private static final Logger LOGGER = LogManager.getLogger(MicroarrayDifferentialAnalyticsDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MicroarrayDifferentialAnalyticsDao.class);
 
     private static final String ANALYTICS_INSERT = "INSERT INTO MICROARRAY_DIFF_ANALYTICS " +
             "(designelement, experiment, arraydesign, contrastid, isactive, pval, log2fold, tstat) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -38,7 +38,7 @@ public class MicroarrayDifferentialAnalyticsDao {
     }
 
     public void loadAnalytics(final String experimentAccession, final String arrayDesign, MicroarrayDifferentialAnalyticsInputStream analyticsInputStream)  {
-        LOGGER.info(String.format("loadAnalytics for experiment %s begin", experimentAccession));
+        LOGGER.info("loadAnalytics for experiment {} begin", experimentAccession);
 
         // will autoclose if DataAccessException thrown by jdbcTemplate
         try (MicroarrayDifferentialAnalyticsInputStream source = analyticsInputStream) {
@@ -69,21 +69,20 @@ public class MicroarrayDifferentialAnalyticsDao {
                 }
             });
         } catch (IOException e) {
-            LOGGER.warn(String.format("Cannot close MicroarrayDifferentialAnalyticsInputStream: %s", e.getMessage()));
+            LOGGER.warn("Cannot close MicroarrayDifferentialAnalyticsInputStream: {}", e.getMessage());
         }
 
-        LOGGER.info(String.format("loadAnalytics for experiment %s complete", experimentAccession));
+        LOGGER.info("loadAnalytics for experiment {} complete", experimentAccession);
     }
 
     public void deleteAnalytics(String experimentAccession) {
-        LOGGER.info("deleteAnalytics for experiment " + experimentAccession);
-        jdbcTemplate.update("UPDATE MICROARRAY_DIFF_ANALYTICS SET ISACTIVE='F' WHERE experiment = ?",
-                experimentAccession);
+        LOGGER.info("deleteAnalytics for experiment {}", experimentAccession);
+        jdbcTemplate.update("UPDATE MICROARRAY_DIFF_ANALYTICS SET ISACTIVE='F' WHERE experiment = ?", experimentAccession);
     }
 
     public void deleteInactiveAnalytics() {
         int count = jdbcTemplate.update("delete from MICROARRAY_DIFF_ANALYTICS WHERE ISACTIVE = 'F'");
-        LOGGER.info(String.format("deleteInactiveAnalytics %s rows deleted",count));
+        LOGGER.info("deleteInactiveAnalytics {} rows deleted", count);
     }
 
 }

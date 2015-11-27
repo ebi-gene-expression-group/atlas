@@ -25,8 +25,8 @@ package uk.ac.ebi.atlas.utils;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -42,7 +42,7 @@ public class UniProtClient {
 
     public static final String UNIPROT_URL = "http://www.ebi.uniprot.org/uniprot/?query=accession:{0}&format=tab&columns=id,database(reactome)";
 
-    private static final Logger LOGGER = LogManager.getLogger(UniProtClient.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UniProtClient.class);
 
     private RestTemplate restTemplate;
 
@@ -58,7 +58,7 @@ public class UniProtClient {
             String result = restTemplate.getForObject(url, String.class);
             return parseResult(result);
         } catch (RestClientException e) {
-            LOGGER.error(e);
+            LOGGER.error(e.getMessage(), e);
             return Lists.newArrayList();
         }
     }

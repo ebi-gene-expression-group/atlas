@@ -27,8 +27,8 @@ import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
@@ -53,7 +53,7 @@ import java.util.concurrent.TimeUnit;
 @Scope("prototype")
 public class DiffAnalyticsDao {
 
-    private static final Logger LOGGER = LogManager.getLogger(DiffAnalyticsDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DiffAnalyticsDao.class);
 
     static final int RESULT_SIZE = 50;
 
@@ -93,7 +93,7 @@ public class DiffAnalyticsDao {
 
             stopwatch.stop();
 
-            LOGGER.debug(String.format("fetchTopExpressions returned %s expressions in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+            LOGGER.debug("fetchTopExpressions returned {} expressions in {} seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
@@ -161,7 +161,7 @@ public class DiffAnalyticsDao {
         }
 
         stopwatch.stop();
-        LOGGER.debug(String.format("visitEachExpression processed %s expressions in %s seconds", count.intValue(), stopwatch.elapsed(TimeUnit.SECONDS)));
+        LOGGER.debug("visitEachExpression processed {} expressions in {} seconds", count.intValue(), stopwatch.elapsed(TimeUnit.SECONDS));
     }
 
 

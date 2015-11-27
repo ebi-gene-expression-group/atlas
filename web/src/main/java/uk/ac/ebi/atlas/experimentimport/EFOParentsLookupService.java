@@ -8,7 +8,9 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 @Named
 @Scope("singleton")

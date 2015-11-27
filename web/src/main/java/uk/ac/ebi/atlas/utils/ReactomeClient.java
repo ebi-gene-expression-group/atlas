@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.utils;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestClientException;
@@ -21,7 +21,7 @@ import java.text.MessageFormat;
 @Scope("prototype")
 public class ReactomeClient {
 
-    private static final Logger LOGGER = LogManager.getLogger(ReactomeClient.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReactomeClient.class);
 
     private RestTemplate restTemplate;
 
@@ -45,7 +45,7 @@ public class ReactomeClient {
             return StringUtils.trimToEmpty(result);
 
         } catch (RestClientException e) {
-            LOGGER.error(e);
+            LOGGER.error(e.getMessage(), e);
             return reactomeId;
         }
 

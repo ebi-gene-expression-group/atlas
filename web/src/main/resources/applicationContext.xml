@@ -90,29 +90,10 @@
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
         <constructor-arg>
             <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory"
-                  p:readTimeout="6000"
-                  p:connectTimeout="6000" />
+                  p:readTimeout="20000"
+                  p:connectTimeout="20000" />
         </constructor-arg>
-        <!--<property name="messageConverters">-->
-        <!--<list>-->
-        <!--<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>-->
-        <!--</list>-->
-        <!--</property>-->
     </bean>
-
-    <bean id="restTemplateLongTimeout" class="org.springframework.web.client.RestTemplate">
-        <constructor-arg>
-            <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory"
-                  p:readTimeout="15000"
-                  p:connectTimeout="15000" />
-        </constructor-arg>
-        <!--<property name="messageConverters">-->
-        <!--<list>-->
-        <!--<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>-->
-        <!--</list>-->
-        <!--</property>-->
-    </bean>
-
 
     <bean id="jdbcTemplateOracle" class="org.springframework.jdbc.core.JdbcTemplate">
         <constructor-arg ref="dataSourceOracle"/>

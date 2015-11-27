@@ -3,8 +3,8 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 import com.google.common.base.Joiner;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -19,7 +19,7 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
 
-    private static final Logger LOGGER = LogManager.getLogger(DiffAnalyticsDocumentStream.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DiffAnalyticsDocumentStream.class);
 
     private final String experimentAccession;
     private final ExperimentType experimentType;
@@ -117,7 +117,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
 
             if (searchTerms.isEmpty() && !assaysSeen.contains(contrastId)) {
                 assaysSeen.add(contrastId);
-                LOGGER.warn("No condition search terms found for " + contrastId);
+                LOGGER.warn("No condition search terms found for {}", contrastId);
             }
 
             return Joiner.on(" ").join(searchTerms);

@@ -4,8 +4,8 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.UnsafeOutput;
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
 import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
@@ -20,7 +20,6 @@ import javax.inject.Named;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.text.NumberFormat;
 
 /**
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 01/04/15.
@@ -28,7 +27,7 @@ import java.text.NumberFormat;
 @Named
 public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSerializer {
 
-    private static final Logger LOGGER = LogManager.getLogger(RnaSeqBaselineExpressionKryoSerializer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RnaSeqBaselineExpressionKryoSerializer.class);
 
     // TODO Refactor constants here and in BaselineAnalyticsInputStream to something like ExperimentTsvFileFormat and maybe some parsing utilities (?)
     private static final int GENE_ID_COLUMN_INDEX = 0;
@@ -71,9 +70,9 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
              CSVReader tsvReaderForLineCount = csvReaderFactory.createTsvReader(tsvFilePath);
              CSVReader tsvReader = csvReaderFactory.createTsvReader(tsvFilePath)) {
 
-            LOGGER.debug("Parsing " + tsvFilePath);
-            LOGGER.debug("Writing full baseline expressions to " + serializedExpressionsFileURL);
-            LOGGER.debug("Writing expression levels to " + serializedExpressionLevelsFileURL);
+            LOGGER.debug("Parsing {}", tsvFilePath);
+            LOGGER.debug("Writing full baseline expressions to {}", serializedExpressionsFileURL);
+            LOGGER.debug("Writing expression levels to {}", serializedExpressionLevelsFileURL);
 
             // Count number of genes (lines except the header)
             int geneCount = 0;
@@ -97,7 +96,7 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
             kryo.writeObject(expressionsOutput, factorGroups);
             kryo.writeObject(expressionLevelsOutput, factorGroups);
 
-            LOGGER.debug("Writing " + geneCount + " genes with " + assays.length + " assay groups each");
+            LOGGER.debug("Writing {} genes with {} assay groups each", geneCount, assays.length);
 
             long start = System.currentTimeMillis();
 
@@ -121,7 +120,7 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
                 kryo.writeObject(expressionLevelsOutput, geneName);
                 kryo.writeObject(expressionLevelsOutput, expressionLevels);
             }
-            LOGGER.info("Files successfully written in " + NumberFormat.getInstance().format((System.currentTimeMillis() - start)) + " ms");
+            LOGGER.info("Files successfully written in {} ms", System.currentTimeMillis() - start);
 
         }
         catch (IOException exception) {

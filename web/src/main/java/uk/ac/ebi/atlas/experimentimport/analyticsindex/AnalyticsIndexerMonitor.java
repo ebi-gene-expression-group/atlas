@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import com.google.common.collect.TreeMultimap;
 import org.springframework.context.annotation.Scope;
 

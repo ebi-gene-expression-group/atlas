@@ -29,7 +29,6 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Named;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 

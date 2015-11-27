@@ -10,7 +10,6 @@ import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;

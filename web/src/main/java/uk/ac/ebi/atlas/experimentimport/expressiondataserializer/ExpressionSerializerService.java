@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.UnsafeInput;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
 import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 @Scope("singleton")
 public class ExpressionSerializerService {
 
-    private static final Logger LOGGER = LogManager.getLogger(ExpressionSerializerService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExpressionSerializerService.class);
 
     private ExperimentTrader experimentTrader;
     private ExpressionSerializerFactory expressionSerializerFactory;
@@ -51,7 +51,7 @@ public class ExpressionSerializerService {
     }
 
     public void kryoDeserializeExpressionData(String experimentAccession) {
-        LOGGER.info("Starting to read Kryo-serialized file for " + experimentAccession);
+        LOGGER.info("Starting to read Kryo-serialized file for {}", experimentAccession);
 
         String serializedBaselineExpressionFileName = "/Users/amunoz/ATLAS3.TEST/integration-test-data/serialized_expression/E-MTAB-2706.ser";
         try (FileInputStream fis = new FileInputStream(serializedBaselineExpressionFileName)) {

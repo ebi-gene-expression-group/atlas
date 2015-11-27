@@ -25,8 +25,8 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
@@ -51,7 +51,9 @@ import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 @Named
 @Scope("prototype")
 public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalytics> {
-    private static final Logger LOGGER = LogManager.getLogger(DiffAnalyticsTSVWriter.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DiffAnalyticsTSVWriter.class);
+
     private String tsvFileMastheadTemplate;
     private static final String[] HEADERS = {"Gene", "Organism", "Experiment Accession", "Comparison", "p-value", "log2foldchange", "t-statistic"};
 

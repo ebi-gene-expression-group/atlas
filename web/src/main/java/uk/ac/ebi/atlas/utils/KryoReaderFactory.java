@@ -2,14 +2,15 @@ package uk.ac.ebi.atlas.utils;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.UnsafeInput;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
 import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
 import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 
 import javax.inject.Named;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 public class KryoReaderFactory {
 
-    private static final Logger LOGGER = LogManager.getLogger(KryoReaderFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(KryoReaderFactory.class);
 
     private static Kryo createKryo() {
         Kryo kryo = new Kryo();
@@ -34,7 +35,7 @@ public class KryoReaderFactory {
             InputStream inputStream = Files.newInputStream(filePath);
             return createBaselineExpressionsKryoReader(new UnsafeInput(inputStream));
         } catch (IOException e) {
-            LOGGER.warn(e.getMessage() + " maybe the file does not exist?");
+            LOGGER.warn("{} maybe the file does not exist?", e.getMessage());
             throw new IllegalArgumentException("Error trying to open " + serializedFilePath, e);
         }
     }

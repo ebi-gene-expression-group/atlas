@@ -22,8 +22,8 @@
 
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -50,7 +50,7 @@ import java.util.zip.ZipOutputStream;
 @Scope("request")
 public class MicroarrayExperimentDownloadController {
 
-    private static final Logger LOGGER = LogManager.getLogger(MicroarrayExperimentDownloadController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MicroarrayExperimentDownloadController.class);
     private static final String NORMALIZED_EXPRESSIONS_TSV = "-normalized-expressions.tsv";
     private static final String LOG_FOLD_CHANGES_TSV = "-log-fold-changes.tsv";
     private static final String ANALYTICS_TSV = "-analytics.tsv";
@@ -74,13 +74,13 @@ public class MicroarrayExperimentDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_MICROARRAY)
-    public void downloadGeneProfiles(HttpServletRequest request
-            , @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
-            , HttpServletResponse response) throws IOException {
+    public void downloadGeneProfiles(
+        HttpServletRequest request,
+        @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences, HttpServletResponse response) throws IOException {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        LOGGER.info("<downloadMicroarrayGeneProfiles> received download request for requestPreferences: " + preferences);
+        LOGGER.info("<downloadMicroarrayGeneProfiles> received download request for requestPreferences: {}", preferences);
 
         prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), QUERY_RESULTS_TSV);
 
@@ -97,15 +97,12 @@ public class MicroarrayExperimentDownloadController {
             ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
-
                 String filename = experiment.getAccession() + "_" + selectedArrayDesign + QUERY_RESULTS_TSV;
 
                 ZipEntry ze = new ZipEntry(filename);
-
                 zipOutputStream.putNextEntry(ze);
 
                 writeMicroarrayGeneProfiles(new PrintWriter(zipOutputStream), experiment, requestContext, selectedArrayDesign);
-
                 zipOutputStream.closeEntry();
             }
 
@@ -128,7 +125,7 @@ public class MicroarrayExperimentDownloadController {
         try {
 
             long genesCount = profilesWriter.write(writer, requestContext, arrayDesign);
-            LOGGER.info("<writeMicroarrayGeneProfiles> wrote " + genesCount + " genes for experiment " + experiment.getAccession());
+            LOGGER.info("<writeMicroarrayGeneProfiles> wrote {} genes for experiment {}", genesCount, experiment.getAccession());
 
         } catch (GenesNotFoundException e) {
             LOGGER.info("<writeMicroarrayGeneProfiles> no genes found");
@@ -152,7 +149,7 @@ public class MicroarrayExperimentDownloadController {
 
             long genesCount = writer.write();
 
-            LOGGER.info("<download" + NORMALIZED_EXPRESSIONS_TSV + "> streamed " + genesCount + " gene expression profiles");
+            LOGGER.info("<download{}> streamed {} gene expression profiles", NORMALIZED_EXPRESSIONS_TSV, genesCount);
 
             writer.close();
 
@@ -173,7 +170,7 @@ public class MicroarrayExperimentDownloadController {
 
                 long genesCount = writer.write();
 
-                LOGGER.info("<download" + NORMALIZED_EXPRESSIONS_TSV + "> zipped " + genesCount + " in " + filename);
+                LOGGER.info("<download{}> zipped {} in {}", NORMALIZED_EXPRESSIONS_TSV, genesCount, filename);
 
                 zipOutputStream.closeEntry();
             }
@@ -198,7 +195,7 @@ public class MicroarrayExperimentDownloadController {
 
             long genesCount = writer.write();
 
-            LOGGER.info("<download" + LOG_FOLD_CHANGES_TSV + "> streamed " + genesCount + " gene expression profiles");
+            LOGGER.info("<download{}> streamed {} gene expression profiles", LOG_FOLD_CHANGES_TSV, genesCount);
 
             writer.close();
 
@@ -219,7 +216,7 @@ public class MicroarrayExperimentDownloadController {
 
                 long genesCount = writer.write();
 
-                LOGGER.info("<download" + LOG_FOLD_CHANGES_TSV + "> zipped " + genesCount + " in " + filename);
+                LOGGER.info("<download{}> zipped {} in {}", LOG_FOLD_CHANGES_TSV, genesCount, filename);
 
                 zipOutputStream.closeEntry();
             }
@@ -244,7 +241,7 @@ public class MicroarrayExperimentDownloadController {
 
             long genesCount = writer.write();
 
-            LOGGER.info("<download" + ANALYTICS_TSV + "> streamed " + genesCount + " gene expression profiles");
+            LOGGER.info("<download{}> streamed gene expression profiles", ANALYTICS_TSV, genesCount);
 
             writer.close();
 
@@ -265,7 +262,7 @@ public class MicroarrayExperimentDownloadController {
 
                 long genesCount = writer.write();
 
-                LOGGER.info("<download" + ANALYTICS_TSV + "> zipped " + genesCount + " in " + filename);
+                LOGGER.info("<download{}> zipped {} in {}", ANALYTICS_TSV, genesCount, filename);
 
                 zipOutputStream.closeEntry();
             }

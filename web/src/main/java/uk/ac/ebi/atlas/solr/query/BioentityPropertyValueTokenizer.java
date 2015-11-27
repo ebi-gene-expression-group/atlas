@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.utils.StringUtil;
 

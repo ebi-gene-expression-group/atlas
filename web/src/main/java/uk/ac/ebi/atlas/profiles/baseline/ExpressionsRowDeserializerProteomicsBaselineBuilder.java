@@ -29,7 +29,6 @@ import uk.ac.ebi.atlas.trader.loader.ProteomicsBaselineExperimentExpressionLevel
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkState;

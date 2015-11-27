@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.profiles.KryoInputStream;
 import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
+import uk.ac.ebi.atlas.profiles.KryoInputStream;
 
 public class BaselineProfilesKryoInputStream extends KryoInputStream<BaselineProfile, BaselineExpression> {
 

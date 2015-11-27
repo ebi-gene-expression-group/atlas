@@ -25,10 +25,10 @@ package uk.ac.ebi.atlas.solr.query;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.solr.SolrUtil;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -43,7 +43,7 @@ import java.util.List;
 //can be singleton because HttpSolrClient is documented to be thread safe, please be careful not to add any other non thread safe state!
 public class SpeciesLookupService {
 
-    private static final Logger LOGGER = LogManager.getLogger(SpeciesLookupService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpeciesLookupService.class);
 
     public static final String SPECIES_FIELD = "species";
     public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
@@ -85,7 +85,7 @@ public class SpeciesLookupService {
 
     // this is faster than fetchSpeciesForGeneSet because it doesn't facet
     Optional<String> fetchFirstSpecies(String fieldName, String queryToken) {
-        LOGGER.debug("fetch first species for " + fieldName + ":" + queryToken);
+        LOGGER.debug("fetch first species for {}:{}", fieldName, queryToken);
 
         SolrQuery query = new SolrQuery(fieldName + ":" + queryToken);
 
@@ -105,7 +105,7 @@ public class SpeciesLookupService {
         // eg: property_value_lower:"IPR027417"
         String queryText = PROPERTY_LOWER_FIELD + ":" + encloseInQuotes(term) +
                 " AND property_name:(pathwayid OR go OR po OR interpro)";  // Needed to exclude Entrez numerical ids, identical to Plant Reactome ids (pathwayid)
-        LOGGER.debug("fetch species for geneset " + queryText);
+        LOGGER.debug("fetch species for geneset {}", queryText);
 
         SolrQuery query = new SolrQuery(queryText);
 

@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -28,7 +28,7 @@ import java.util.HashSet;
 @Scope("singleton")
 public class BioentityIdentifiersReader {
 
-    private static final Logger LOGGER = LogManager.getLogger(BioentityIdentifiersReader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BioentityIdentifiersReader.class);
 
     private ExperimentTrader experimentTrader;
 
@@ -73,17 +73,17 @@ public class BioentityIdentifiersReader {
         LOGGER.info("Reading all bioentity identifiers from analytics TSV/kryo files...");
 
         for (ExperimentType experimentType : experimentTypes) {
-            LOGGER.info(String.format("Reading all bioentity identifiers for experiments of type %s...",
-                    experimentType.getDescription()));
+            LOGGER.info("Reading all bioentity identifiers for experiments of type {}...", experimentType.getDescription());
 
             int count = addBioentityIdentifiers(bioentityIds, experimentType);
 
-            LOGGER.info(String.format("Finished reading all bioentity identifiers for experiments of type %s: %,d bioentities added (total %,d)",
-                    experimentType.getDescription(), count, bioentityIds.size()));
+            LOGGER.info(
+                "Finished reading all bioentity identifiers for experiments of type {}: {} bioentities added (total {})",
+                experimentType.getDescription(), count, bioentityIds.size());
         }
 
         stopWatch.stop();
-        LOGGER.info(String.format("Built a set of %,d bioentity identifiers in %s seconds.", bioentityIds.size(), stopWatch.getTotalTimeSeconds()));
+        LOGGER.info("Built a set of %,d bioentity identifiers in %s seconds", bioentityIds.size(), stopWatch.getTotalTimeSeconds());
 
         return bioentityIds;
     }
@@ -113,7 +113,7 @@ public class BioentityIdentifiersReader {
 
         for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
 
-            LOGGER.debug(String.format("Reading bioentity identifiers in %s", experimentAccession));
+            LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
 
             BaselineAnalyticsInputStream inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession);
             BaselineAnalytics analytics = inputStream.readNext();
@@ -136,7 +136,7 @@ public class BioentityIdentifiersReader {
 
         for (String experimentAccession : experimentTrader.getProteomicsBaselineExperimentAccessions()) {
 
-            LOGGER.debug(String.format("Reading bioentity identifiers in %s", experimentAccession));
+            LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
 
             ProteomicsBaselineAnalyticsInputStream inputStream = proteomicsBaselineAnalyticsInputStreamFactory.create(experimentAccession);
             BaselineAnalytics analytics = inputStream.readNext();
@@ -158,7 +158,7 @@ public class BioentityIdentifiersReader {
         int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
 
         for (String experimentAccession : experimentTrader.getMicroarrayExperimentAccessions()) {
-            LOGGER.debug(String.format("Reading bioentity identifiers in %s", experimentAccession));
+            LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
             MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
 
             for (String arrayDesign : experiment.getArrayDesignAccessions()) {
@@ -184,7 +184,7 @@ public class BioentityIdentifiersReader {
         int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
 
         for (String experimentAccession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()) {
-            LOGGER.debug(String.format("Reading bioentity identifiers in %s", experimentAccession));
+            LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
             RnaSeqDifferentialAnalyticsInputStream inputStream = rnaSeqDifferentialAnalyticsInputStreamFactory.create(experimentAccession);
 
             DifferentialAnalytics analytics = inputStream.readNext();

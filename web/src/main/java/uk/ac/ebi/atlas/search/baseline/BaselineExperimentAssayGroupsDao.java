@@ -27,8 +27,8 @@ import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,10 +48,9 @@ import java.util.concurrent.TimeUnit;
 @Scope("prototype")
 public class BaselineExperimentAssayGroupsDao {
 
-    private static final Logger LOGGER = LogManager.getLogger(BaselineExperimentAssayGroupsDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentAssayGroupsDao.class);
 
     private final JdbcTemplate jdbcTemplate;
-
     private OracleObjectFactory oracleObjectFactory;
 
     @Inject
@@ -100,7 +99,7 @@ public class BaselineExperimentAssayGroupsDao {
 
             stopwatch.stop();
 
-            LOGGER.debug(String.format("fetchExperimentAssayGroupsWithNonSpecificExpression returned %s results in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+            LOGGER.debug("fetchExperimentAssayGroupsWithNonSpecificExpression returned {} results in {} seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
 
             return results;
 
@@ -143,8 +142,9 @@ public class BaselineExperimentAssayGroupsDao {
 
 
     private void log(final String methodName, Optional<? extends Collection<IndexedAssayGroup>> indexedAssayGroups, Optional<? extends Collection<String>> geneIds) {
-        LOGGER.debug(String.format(methodName + " for %s unique contrasts and %s genes", (indexedAssayGroups.isPresent()) ? indexedAssayGroups.get().size() : 0,
-                (geneIds.isPresent()) ? geneIds.get().size() : 0));
+        LOGGER.debug(
+            "{} for {} unique contrasts and {} genes",
+            methodName, indexedAssayGroups.isPresent() ? indexedAssayGroups.get().size() : 0, geneIds.isPresent() ? geneIds.get().size() : 0);
     }
 
 }

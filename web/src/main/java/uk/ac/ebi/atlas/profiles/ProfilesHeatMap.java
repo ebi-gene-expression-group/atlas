@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.profiles;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public abstract class ProfilesHeatMap<P extends Profile, C extends RequestContext, L extends GeneProfilesList<P>, O extends ProfileStreamOptions> {
 
-    private static final Logger LOGGER = LogManager.getLogger(ProfilesHeatMap.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProfilesHeatMap.class);
 
     private ProfileStreamPipelineBuilder<P, O> pipelineBuilder;
     private RankProfilesFactory<P, L, O> rankProfilesFactory;

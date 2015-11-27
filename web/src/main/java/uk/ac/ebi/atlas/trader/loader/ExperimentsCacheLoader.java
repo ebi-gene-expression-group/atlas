@@ -23,8 +23,8 @@
 package uk.ac.ebi.atlas.trader.loader;
 
 import com.google.common.cache.CacheLoader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
@@ -40,7 +40,8 @@ import java.nio.file.Paths;
 import java.text.MessageFormat;
 
 public abstract class ExperimentsCacheLoader<T extends Experiment> extends CacheLoader<String, T> {
-    private static final Logger LOGGER = LogManager.getLogger(ExperimentsCacheLoader.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentsCacheLoader.class);
 
     private String extraInfoPathTemplate;
 
@@ -76,7 +77,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
     @Override
     public T load(String experimentAccession) throws IOException {
 
-        LOGGER.info("loading experiment with accession: " + experimentAccession);
+        LOGGER.info("loading experiment with accession: {}", experimentAccession);
 
         boolean hasExtraInfoFile = extraInfoFileExists(experimentAccession);
 

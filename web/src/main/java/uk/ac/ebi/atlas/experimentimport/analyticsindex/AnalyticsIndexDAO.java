@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.collect.ImmutableList;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrInputDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @Named
 @Scope("prototype")
 public class AnalyticsIndexDAO {
-    private static final Logger LOGGER = LogManager.getLogger(AnalyticsIndexDAO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsIndexDAO.class);
 
     private SolrClient solrClient;
 
@@ -51,7 +51,7 @@ public class AnalyticsIndexDAO {
 
             solrClient.commit(false, false);
         } catch (Exception e) {
-            LOGGER.error(e);
+            LOGGER.error(e.getMessage(), e);
             rollBack();
             throw new AnalyticsIndexerException(e);
         }
@@ -66,7 +66,7 @@ public class AnalyticsIndexDAO {
             solrClient.add(documents, COMMIT_TIME_IN_MILLISECONDS);
             solrClient.commit(false, false);
         } catch (Exception e) {
-            LOGGER.error(e);
+            LOGGER.error(e.getMessage(), e);
             rollBack();
             throw new AnalyticsIndexerException(e);
         }
@@ -79,7 +79,7 @@ public class AnalyticsIndexDAO {
             solrClient.deleteByQuery("experimentAccession:" + accession);
             solrClient.commit();
         } catch (IOException | SolrServerException e) {
-            LOGGER.error(e);
+            LOGGER.error(e.getMessage(), e);
             rollBack();
             throw new AnalyticsIndexerException(e);
         }
@@ -89,7 +89,7 @@ public class AnalyticsIndexDAO {
         try {
             solrClient.rollback();
         } catch (IOException | SolrServerException e) {
-            LOGGER.error(e);
+            LOGGER.error(e.getMessage(), e);
         }
     }
 

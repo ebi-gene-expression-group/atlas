@@ -32,9 +32,7 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Named;
-import java.util.LinkedHashMap;
 import java.util.Set;
-import java.util.SortedMap;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

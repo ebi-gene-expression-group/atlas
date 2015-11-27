@@ -29,8 +29,8 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.model.Species;
@@ -53,14 +53,11 @@ import java.util.SortedSet;
 //TODO: merge this class with BaselineExperimentProfileSearchService, by adding the ability to search conditions to BaselineExperimentProfileSearchService
 public class BaselineExperimentAssayGroupSearchService {
 
-    private static final Logger LOGGER = LogManager.getLogger(BaselineExperimentAssayGroupSearchService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentAssayGroupSearchService.class);
 
     private final ExperimentTrader experimentTrader;
-
     private BaselineExperimentAssayGroupsDao baselineExperimentAssayGroupsDao;
-
     private BaselineConditionsSearchService baselineConditionsSearchService;
-
     private SolrQueryService solrQueryService;
 
     @Inject
@@ -80,7 +77,7 @@ public class BaselineExperimentAssayGroupSearchService {
     }
 
     public SortedSet<BaselineExperimentAssayGroup> query(Set<String> geneIds, Optional<String> condition, Optional<String> species) {
-        LOGGER.info(String.format("<query> geneIds=%s, condition=%s", Joiner.on(", ").join(geneIds), condition));
+        LOGGER.info("<query> geneIds={}, condition={}", Joiner.on(", ").join(geneIds), condition);
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
@@ -96,7 +93,7 @@ public class BaselineExperimentAssayGroupSearchService {
                 : buildResults(assayGroupsWithExpressionByExperiment, !StringUtils.isBlank(conditionString), speciesString);
 
         stopWatch.stop();
-        LOGGER.info(String.format("<query> %s results, took %s seconds", baselineExperimentAssayGroups.size(), stopWatch.getTotalTimeSeconds()));
+        LOGGER.info("<query> {} results, took {} seconds", baselineExperimentAssayGroups.size(), stopWatch.getTotalTimeSeconds());
 
         return baselineExperimentAssayGroups;
     }
@@ -112,7 +109,7 @@ public class BaselineExperimentAssayGroupSearchService {
     // use above query instead, see TODO below
     @Deprecated
     public SortedSet<BaselineExperimentAssayGroup> query(String geneQuery, String condition, String species, boolean isExactMatch) {
-        LOGGER.info(String.format("<query> geneQuery=%s, condition=%s", geneQuery, condition));
+        LOGGER.info("<query> geneQuery={}, condition={}", geneQuery, condition);
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
@@ -135,7 +132,7 @@ public class BaselineExperimentAssayGroupSearchService {
         }
 
         stopWatch.stop();
-        LOGGER.info(String.format("<query> %s results, took %s seconds", baselineExperimentAssayGroups.size(), stopWatch.getTotalTimeSeconds()));
+        LOGGER.info("<query> {} results, took {} seconds", baselineExperimentAssayGroups.size(), stopWatch.getTotalTimeSeconds());
 
         return baselineExperimentAssayGroups;
     }

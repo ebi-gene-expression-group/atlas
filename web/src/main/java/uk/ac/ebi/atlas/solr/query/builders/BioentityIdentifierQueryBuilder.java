@@ -22,9 +22,9 @@
 
 package uk.ac.ebi.atlas.solr.query.builders;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is a builder, keep always in mind that builders are potentially stateful.
@@ -32,7 +32,7 @@ import org.apache.solr.client.solrj.SolrQuery;
  * you must use a new instance of builder for each query.
  */
 public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityIdentifierQueryBuilder>{
-    private static final Logger LOGGER = LogManager.getLogger(BioentityIdentifierQueryBuilder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BioentityIdentifierQueryBuilder.class);
 
     public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     public static final String PROPERTY_SEARCH_FIELD = "property_value_search";
@@ -79,7 +79,7 @@ public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityI
         solrQuery.setParam("group.main", true);
         solrQuery.setRows(MAX_GENE_IDS_TO_FETCH);
 
-        LOGGER.trace("<buildQueryObject> solr query: " + solrQuery.toString());
+        LOGGER.trace("<buildQueryObject> solr query: {}", solrQuery.toString());
 
         return solrQuery;
     }

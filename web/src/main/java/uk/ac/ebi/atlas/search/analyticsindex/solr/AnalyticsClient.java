@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 
@@ -18,7 +18,7 @@ import java.io.IOException;
 @Scope("singleton")
 public class AnalyticsClient {
 
-    private static final Logger LOGGER = LogManager.getLogger(AnalyticsClient.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsClient.class);
 
     private SolrClient analyticsSolrClient;
 

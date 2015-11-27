@@ -4,8 +4,8 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialTsvFileParsingUtil;
 
@@ -33,7 +33,7 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream<RnaSeqDifferentialAnalytics> {
 
-    private static final Logger LOGGER = LogManager.getLogger(RnaSeqDifferentialAnalyticsInputStream.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RnaSeqDifferentialAnalyticsInputStream.class);
 
     private static final int GENE_ID_INDEX = 0;
     private static final int FIRST_CONTRAST_INDEX = 2;

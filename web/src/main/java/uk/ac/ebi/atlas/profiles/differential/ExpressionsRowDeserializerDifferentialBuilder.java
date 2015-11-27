@@ -23,14 +23,14 @@
 package uk.ac.ebi.atlas.profiles.differential;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializerBuilder;
+import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
 import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
 
 import java.util.Arrays;
@@ -42,7 +42,8 @@ import static com.google.common.base.Preconditions.checkState;
 
 public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Expression, K extends DifferentialExperiment> implements ExpressionsRowDeserializerBuilder<String, T> {
 
-    private static final Logger LOGGER = LogManager.getLogger(ExpressionsRowDeserializerDifferentialBuilder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExpressionsRowDeserializerDifferentialBuilder.class);
+
     private ExperimentsCache<K> experimentsCache;
     private String experimentAccession;
     private List<Contrast> orderedContrasts;
@@ -61,7 +62,7 @@ public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Ex
     public ExpressionsRowDeserializerDifferentialBuilder<T, K> withHeaders(String... tsvFileHeaders) {
 
         try {
-            LOGGER.debug("<withHeaders> data file headers: " + Arrays.toString(tsvFileHeaders));
+            LOGGER.debug("<withHeaders> data file headers: {}", Arrays.toString(tsvFileHeaders));
 
             checkState(experimentAccession != null, "Builder not properly initialized!");
 

@@ -29,8 +29,6 @@ import uk.ac.ebi.atlas.utils.StringArrayUtil;
 
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 public class ExpressionsRowTsvDeserializerProteomicsBaseline extends ExpressionsRowTsvDeserializerBaseline {
 
     private final int[] orderedAssayGroupIndices;

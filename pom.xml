@@ -27,7 +27,7 @@
     <groupId>uk.ac.ebi.gxa</groupId>
     <artifactId>atlas</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>3.0</version>
     <name>Gene Expression Atlas</name>
     <url>http://www.ebi.ac.uk/gxa/</url>
 
@@ -60,6 +60,11 @@
         <mail.smtp.user>feedback-mail-3e3ccf8bbcedeb96</mail.smtp.user>
         <mail.smtp.password>324c3bac45dfb398</mail.smtp.password>
         <mail.smtp.auth>true</mail.smtp.auth>
+
+        <!-- Default log settings -->
+        <log.level.root>warn</log.level.root>
+        <log.level.atlas>info</log.level.atlas>
+        <log.prudent>true</log.prudent>
 
         <!-- Code Coverage with SONAR -->
         <sonar.jdbc.url>jdbc:h2:tcp://lime:9092/sonar</sonar.jdbc.url>
@@ -113,6 +118,15 @@
             <testResource>
                 <directory>src/test/resources</directory>
                 <filtering>true</filtering>
+                <excludes>
+                    <exclude>src/test/resources/arraydesigns</exclude>
+                    <exclude>src/test/resources/bioentity_properties</exclude>
+                    <exclude>src/test/resources/expdesign</exclude>
+                    <exclude>src/test/resources/magetab</exclude>
+                    <exclude>src/test/resources/mirbase</exclude>
+                    <exclude>src/test/resources/ontology</exclude>
+                    <exclude>src/test/resources/    serialized_expression</exclude>
+                </excludes>
             </testResource>
         </testResources>
 
@@ -165,6 +179,7 @@
                         </execution>
                     </executions>
                     <configuration>
+                        <!--suppress MavenModelInspection -->
                         <argLine>${jacoco.agent.argLine},destfile=${sonar.jacoco.reportPath}</argLine>
                         <excludes>
                             <exclude>${test.acceptance.pattern}</exclude>
@@ -183,6 +198,7 @@
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>2.12</version>
                     <configuration>
+                        <!--suppress MavenModelInspection -->
                         <argLine>${jacoco.agent.argLine},destfile=${sonar.jacoco.itReportPath}</argLine>
                         <systemProperties>
                             <property>
@@ -199,6 +215,7 @@
                             <include>${test.integration.pattern}</include>
                         </includes>
                         <excludes>
+                            <!--suppress MavenModelInspection -->
                             <exclude>${failsafe.excludes}</exclude>
                         </excludes>
                     </configuration>
@@ -362,6 +379,17 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${org.springframework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.13</version>
         </dependency>
         <!--
             Required by Spring MVC 3 @Configuration
@@ -373,34 +401,25 @@
         </dependency>
 
         <!-- Logging -->
-        <!-- Route Spring JCL logs to Log4j -->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-jcl</artifactId>
-            <version>2.4.1</version>
-        </dependency>
-        <!-- There are other packages (JsonPath, Solr...) that use SLF4J; route them to Log4j too -->
-        <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-slf4j-impl</artifactId>
-        <version>2.4.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.4.1</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.1.3</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.4.1</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.3</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-web</artifactId>
-            <version>2.4.1</version>
-            <scope>runtime</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>2.7.8</version>
         </dependency>
 
         <!-- Test -->
@@ -617,6 +636,9 @@
             <!-- oracleContext.xml is located on the filesystem and specified in tomcat's context xml -->
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
+                <log.level.root>warn</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
             </properties>
         </profile>
         <profile>
@@ -655,6 +677,9 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3it</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3it</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
             </properties>
         </profile>
         <profile>
@@ -678,6 +703,9 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
             </properties>
         </profile>
         <profile>
@@ -702,6 +730,9 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
             </properties>
         </profile>
         <profile>
@@ -726,6 +757,9 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@localhost:1521:orcl</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
             </properties>
         </profile>
         <profile>
@@ -749,6 +783,9 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3it</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3it</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
             </properties>
         </profile>
         <profile>
@@ -772,6 +809,9 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
             </properties>
         </profile>
         <profile>
@@ -795,6 +835,9 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@localhost:5205:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
             </properties>
         </profile>
         <profile>
@@ -817,6 +860,9 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-oyvm-009.ebi.ac.uk:1531:ATLASPUB</oracle.jdbc.url>
                 <oracle.jdbc.username>atlasprd3</oracle.jdbc.username>
                 <oracle.jdbc.password>atla5p4d3</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
             </properties>
         </profile>
         <profile>
@@ -839,6 +885,9 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-pgvm-009.ebi.ac.uk:1531:ATLASPUB</oracle.jdbc.url>
                 <oracle.jdbc.username>atlasprd3</oracle.jdbc.username>
                 <oracle.jdbc.password>atla5p4d3</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
             </properties>
         </profile>
         <!-- execution profiles -->

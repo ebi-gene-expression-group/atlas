@@ -24,15 +24,14 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -44,11 +43,10 @@ import java.util.Map;
 // if we make it singleton it gets initialized during deployment, that means deployment become slow
 @Scope("request")
 public class BaselineExperimentsController {
-    private static final Logger LOGGER = LogManager.getLogger(BaselineExperimentsController.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentsController.class);
 
     private ExperimentTrader experimentTrader;
-
-    private BaselineExperimentsCache experimentsCache;
 
     private SortedSetMultimap<String, String> experimentAccessionsBySpecies;
 
@@ -57,10 +55,8 @@ public class BaselineExperimentsController {
     private Map<String, String> experimentDisplayNames = new HashMap<>();
 
     @Inject
-    public BaselineExperimentsController(ExperimentTrader experimentTrader,
-                                         BaselineExperimentsCache experimentsCache) {
+    public BaselineExperimentsController(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
-        this.experimentsCache = experimentsCache;
     }
 
     @RequestMapping("/baseline/experiments")

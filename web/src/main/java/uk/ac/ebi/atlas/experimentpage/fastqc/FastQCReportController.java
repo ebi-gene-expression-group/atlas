@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.experimentpage.fastqc;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -34,6 +34,8 @@ import java.util.Set;
 @Scope("singleton")
 public class FastQCReportController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(FastQCReportController.class);
+
     public static final String EXPERIMENT_ATTRIBUTE = "experiment";
     private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
     private static final String PUBMED_IDS_ATTRIBUTE = "pubMedIds";
@@ -43,8 +45,6 @@ public class FastQCReportController {
 
     private final FastQCReportUtil fastQCReportUtil;
     private ExperimentTrader experimentTrader;
-
-    private static final Logger LOGGER = LogManager.getLogger(FastQCReportController.class);
 
     @Inject
     public FastQCReportController(FastQCReportUtil fastQCReportUtil, ExperimentTrader experimentTrader) {

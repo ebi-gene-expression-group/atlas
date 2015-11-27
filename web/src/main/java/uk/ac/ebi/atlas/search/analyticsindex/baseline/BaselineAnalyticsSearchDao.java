@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.base.Stopwatch;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestClientException;
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 @Named
 public class BaselineAnalyticsSearchDao {
 
-    private static final Logger LOGGER = LogManager.getLogger(BaselineAnalyticsSearchDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineAnalyticsSearchDao.class);
 
     public static final double DEFAULT_BASELINE_CUT_OFF = 0.5;
     public static final double DEFAULT_PROTEOMICS_CUT_OFF = 0;
@@ -37,11 +37,7 @@ public class BaselineAnalyticsSearchDao {
 
     @Inject
     public BaselineAnalyticsSearchDao(RestTemplate restTemplate, @Value("#{configuration['solr.analytics.base.url']}") String solrBaseUrl, String baselineHeatmapPivotQuery) {
-        SimpleClientHttpRequestFactory rf = (SimpleClientHttpRequestFactory) restTemplate.getRequestFactory();
-        rf.setReadTimeout(60000);
-        rf.setConnectTimeout(60000);
-
-        this.restTemplate = restTemplate;
+        this.restTemplate = restTemplate;   // settings of restTemplate in applicationContext.xml
         this.solrBaseUrl = solrBaseUrl;
         this.baselineHeatmapPivotQuery = "&json.facet=" + encodeQueryParam(baselineHeatmapPivotQuery.replaceAll("\\s+",""));
     }
@@ -78,7 +74,8 @@ public class BaselineAnalyticsSearchDao {
 
         stopwatch.stop();
 
-        LOGGER.debug(String.format("fetchFacets q=%s baselineCutOff=%s proteomicsCutOff=%s took %.2f seconds", q, baselineCutOff, proteomicsCutOff, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+        LOGGER.debug("fetchFacets q={} baselineCutOff={} proteomicsCutOff={} took {} seconds", q, baselineCutOff, proteomicsCutOff, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
+
         return result;
 
     }

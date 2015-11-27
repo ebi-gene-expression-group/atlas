@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.doNothing;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class ExperimentCRUDMicroArrayDifferentialIT {
 
-    private static final Logger LOGGER = LogManager.getLogger(ExperimentCRUDMicroArrayDifferentialIT.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentCRUDMicroArrayDifferentialIT.class);
 
     public static final String NEW_EXPERIMENT_ACCESSION = "TEST-MICROARRAY";
 
@@ -85,7 +85,7 @@ public class ExperimentCRUDMicroArrayDifferentialIT {
 
     private void deleteInactiveAnalytics() {
         int count = jdbcTemplate.update("delete from MICROARRAY_DIFF_ANALYTICS WHERE ISACTIVE = 'F'");
-        LOGGER.info(String.format("deleteInactiveAnalytics %s rows deleted", count));
+        LOGGER.info("deleteInactiveAnalytics {} rows deleted", count);
     }
 
 }

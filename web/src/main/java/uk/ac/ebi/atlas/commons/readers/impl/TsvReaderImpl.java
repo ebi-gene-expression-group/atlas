@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.commons.readers.impl;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ import java.util.List;
 
 public class TsvReaderImpl implements TsvReader {
 
-    private static final Logger LOGGER = LogManager.getLogger(TsvReaderImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TsvReaderImpl.class);
 
     private InputStreamReader tsvFileInputStreamReader;
 

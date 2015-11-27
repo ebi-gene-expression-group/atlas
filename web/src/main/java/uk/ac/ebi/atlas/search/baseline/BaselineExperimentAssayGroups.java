@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.search.baseline;
 
-import autovalue.shaded.com.google.common.common.collect.Sets;
 import com.google.common.collect.ImmutableSet;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 
 import java.util.Iterator;
 import java.util.Set;

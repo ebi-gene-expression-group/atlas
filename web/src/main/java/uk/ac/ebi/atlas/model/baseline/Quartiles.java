@@ -4,7 +4,6 @@ import com.google.auto.value.AutoValue;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 
-import java.lang.reflect.Array;
 import java.util.Iterator;
 
 import static com.google.common.base.Preconditions.checkArgument;

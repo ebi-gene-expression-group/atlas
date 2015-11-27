@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.commons.mail;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 
@@ -34,7 +34,7 @@ import javax.inject.Named;
 @Named("mailSender")
 @Scope("singleton")
 public class MailService {
-    private static final Logger LOGGER = LogManager.getLogger(MailService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MailService.class);
 
     @Value("#{configuration['mail.smtp.host']}")
     private String smtpHost;
@@ -68,7 +68,7 @@ public class MailService {
             email.setAuthentication(smtpUser, smtpPassword);
         }
         email.send();
-        LOGGER.debug("<send> email sent to host " + smtpHost + ":" + smtpPort + " : " + email);
+        LOGGER.debug("<send> email sent to host {}:{} : {}", smtpHost, smtpPort, email);
 
     }
 }

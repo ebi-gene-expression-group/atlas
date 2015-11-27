@@ -30,8 +30,8 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
-import uk.ac.ebi.atlas.utils.Visitor;
 import uk.ac.ebi.atlas.utils.CountingVisitor;
+import uk.ac.ebi.atlas.utils.Visitor;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -22,8 +22,8 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,7 +46,8 @@ import java.io.IOException;
 @Controller
 @Scope("request")
 public class BaselineExperimentDownloadController extends BaselineExperimentController {
-    private static final Logger LOGGER = LogManager.getLogger(BaselineExperimentDownloadController.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentDownloadController.class);
 
     private BaselineProfilesWriter baselineProfilesWriter;
 
@@ -63,7 +64,7 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
         setPreferenceDefaults(preferences, experiment);
 
-        LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
+        LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: {}", preferences);
 
         response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-query-results.tsv\"");
 
@@ -75,7 +76,7 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
             long genesCount = baselineProfilesWriter.write(response.getWriter(), requestContext);
 
-            LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
+            LOGGER.info("<downloadGeneProfiles> streamed {} gene expression profiles", genesCount);
 
         } catch (GenesNotFoundException e) {
             LOGGER.info("<downloadGeneProfiles> no genes found");

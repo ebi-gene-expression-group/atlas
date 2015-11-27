@@ -3,8 +3,8 @@ package uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf;
 import com.google.common.collect.ImmutableSet;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.UrlTsvReaderBuilder;
 
 import javax.inject.Inject;

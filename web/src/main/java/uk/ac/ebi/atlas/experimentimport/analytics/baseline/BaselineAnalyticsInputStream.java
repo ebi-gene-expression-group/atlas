@@ -5,8 +5,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
 
@@ -33,7 +33,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineAnalytics> {
 
-    private static final Logger LOGGER = LogManager.getLogger(BaselineAnalyticsInputStream.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineAnalyticsInputStream.class);
 
     private static final int GENE_ID_COLUMN_INDEX = 0;
     private static final int FIRST_EXPRESSION_LEVEL_INDEX = 2;

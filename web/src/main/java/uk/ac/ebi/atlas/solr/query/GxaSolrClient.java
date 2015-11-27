@@ -25,14 +25,14 @@ package uk.ac.ebi.atlas.solr.query;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
@@ -43,7 +43,7 @@ import java.util.Set;
 @Named
 @Scope("singleton")
 public class GxaSolrClient {
-    private static final Logger LOGGER = LogManager.getLogger(GxaSolrClient.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GxaSolrClient.class);
 
     public static final String PROPERTY_NAME_FIELD = "property_name";
     private static final String PROPERTY_VALUE_FIELD = "property_value";
@@ -58,7 +58,9 @@ public class GxaSolrClient {
     public QueryResponse query(SolrQuery solrQuery) {
         try {
             QueryResponse queryResponse = solrClient.query(solrQuery);
-            //LOGGER.debug("<query> Solr query time: " + queryResponse.getQTime() + "ms, status code: " + queryResponse.getStatus());
+
+            LOGGER.debug("<query> Solr query time: {} ms, status code: {}", queryResponse.getStatus(), queryResponse.getQTime() );
+
             return queryResponse;
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);

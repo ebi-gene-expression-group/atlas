@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.collect.SortedSetMultimap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.solr.query.BioentityNotFoundException;
 import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
@@ -16,7 +16,7 @@ import java.util.Set;
 @Named
 public class BioEntityPropertyDao {
 
-    private static final Logger LOGGER = LogManager.getLogger(BioEntityPropertyDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BioEntityPropertyDao.class);
 
     private final SolrQueryBuilderFactory solrQueryBuilderFactory;
     private final GxaSolrClient solrServer;
@@ -73,7 +73,7 @@ public class BioEntityPropertyDao {
         solrQuery.setRows(PROPERTY_VALUES_LIMIT);
         solrQuery.setFields(PROPERTY_VALUE_FIELD, PROPERTY_NAME_FIELD);
 
-        LOGGER.debug("<querySolrForProperties> processing solr query: " + solrQuery.getQuery());
+        LOGGER.debug("<querySolrForProperties> processing solr query: {}", solrQuery.getQuery());
 
         return solrServer.queryForProperties(solrQuery);
 

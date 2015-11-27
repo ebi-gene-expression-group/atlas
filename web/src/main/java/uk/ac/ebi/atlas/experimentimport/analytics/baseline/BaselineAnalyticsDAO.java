@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.AbstractInterruptibleBatchPreparedStatementSetter;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -15,10 +15,9 @@ import java.sql.SQLException;
 @Named
 public class BaselineAnalyticsDAO {
 
-    private static final Logger LOGGER = LogManager.getLogger(BaselineAnalyticsDAO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineAnalyticsDAO.class);
 
-    private static final String ANALYTICS_INSERT = "INSERT INTO RNASEQ_BSLN_EXPRESSIONS " +
-            "(identifier, experiment, assaygroupid, isactive, expression) VALUES (?, ?, ?, ?, ?)";
+    private static final String ANALYTICS_INSERT = "INSERT INTO RNASEQ_BSLN_EXPRESSIONS (identifier, experiment, assaygroupid, isactive, expression) VALUES (?, ?, ?, ?, ?)";
     private static final int IDENTIFIER = 1;
     private static final int EXPERIMENT = 2;
     private static final int ASSAY_GROUP_ID = 3;
@@ -58,20 +57,20 @@ public class BaselineAnalyticsDAO {
                 }
             });
         } catch (IOException e) {
-            LOGGER.warn(String.format("Cannot close BaselineAnalyticsInputStream: %s", e.getMessage()));
+            LOGGER.warn("Cannot close BaselineAnalyticsInputStream: {}", e.getMessage());
         }
 
-        LOGGER.info(String.format("loadAnalytics for experiment %s complete", experimentAccession));
+        LOGGER.info("loadAnalytics for experiment {} complete", experimentAccession);
     }
 
     public void deleteAnalytics(String experimentAccession) {
-        LOGGER.info("deleteAnalytics for experiment " + experimentAccession);
+        LOGGER.info("deleteAnalytics for experiment {}", experimentAccession);
         jdbcTemplate.update("UPDATE RNASEQ_BSLN_EXPRESSIONS SET ISACTIVE='F' WHERE experiment = ?", experimentAccession);
     }
 
     public void deleteInactiveAnalytics() {
         int count = jdbcTemplate.update("delete from RNASEQ_BSLN_EXPRESSIONS WHERE ISACTIVE = 'F'");
-        LOGGER.info(String.format("deleteInactiveBaselineExpressions %s rows deleted",count));
+        LOGGER.info("deleteInactiveBaselineExpressions {} rows deleted", count);
     }
 
 }

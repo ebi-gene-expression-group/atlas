@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.SetMultimap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
@@ -20,7 +20,8 @@ import java.util.Set;
 
 @Named
 public class DiffAnalyticsDocumentStreamIndexer {
-    private static final Logger LOGGER = LogManager.getLogger(DiffAnalyticsDocumentStreamIndexer.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DiffAnalyticsDocumentStreamIndexer.class);
 
     private final RnaSeqDifferentialAnalyticsInputStreamFactory rnaSeqDifferentialAnalyticsInputStreamFactory;
     private DiffAnalyticsDocumentStreamFactory streamFactory;
@@ -58,7 +59,7 @@ public class DiffAnalyticsDocumentStreamIndexer {
             int count = analyticsIndexDAO.addDocuments(analyticsDocuments, batchSize);
 
             stopWatch.stop();
-            LOGGER.info(String.format("Done indexing %s, indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds()));
+            LOGGER.info("Done indexing {}, indexed {} documents in {} seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
 
             return count;
 

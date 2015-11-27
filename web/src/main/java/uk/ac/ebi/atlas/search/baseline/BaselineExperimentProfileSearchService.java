@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -40,7 +40,7 @@ import java.util.Set;
 @Scope("request")
 public class BaselineExperimentProfileSearchService {
 
-    private static final Logger LOGGER = LogManager.getLogger(BaselineExperimentProfileSearchService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentProfileSearchService.class);
 
     private final BaselineExpressionDao baselineExpressionDao;
 
@@ -62,7 +62,7 @@ public class BaselineExperimentProfileSearchService {
     // query(Set<String> geneIds) to be used going forward, see TODO below
     @Deprecated
     public BaselineExperimentSearchResult query(String geneQuery, String species, boolean isExactMatch)  {
-        LOGGER.info(String.format("<query> geneQuery=%s", geneQuery));
+        LOGGER.info("<query> geneQuery={}", geneQuery);
 
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
@@ -74,13 +74,13 @@ public class BaselineExperimentProfileSearchService {
         BaselineExperimentSearchResult result = fetchTissueExperimentProfiles(geneIds);
 
         stopWatch.stop();
-        LOGGER.info(String.format("<query> %s results, took %s seconds", result.experimentProfiles.size(), stopWatch.getTotalTimeSeconds()));
+        LOGGER.info("<query> {} results, took {} seconds", result.experimentProfiles.size(), stopWatch.getTotalTimeSeconds());
 
         return result;
     }
 
     public BaselineExperimentSearchResult query(Set<String> geneIds)  {
-        LOGGER.info(String.format("<query> geneIds=%s", Joiner.on(",").join(geneIds)));
+        LOGGER.info("<query> geneIds={}", Joiner.on(",").join(geneIds));
 
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
@@ -88,7 +88,7 @@ public class BaselineExperimentProfileSearchService {
         BaselineExperimentSearchResult result = fetchTissueExperimentProfiles(Optional.of(geneIds));
 
         stopWatch.stop();
-        LOGGER.info(String.format("<query> %s results, took %s seconds", result.experimentProfiles.size(), stopWatch.getTotalTimeSeconds()));
+        LOGGER.info("<query> {} results, took {} seconds", result.experimentProfiles.size(), stopWatch.getTotalTimeSeconds());
 
         return result;
     }

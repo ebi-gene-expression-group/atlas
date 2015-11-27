@@ -24,8 +24,8 @@ package uk.ac.ebi.atlas.experiments;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -54,7 +54,7 @@ import static org.hamcrest.Matchers.*;
 
 public class ExperimentsTablePageSIT extends SinglePageSeleniumFixture {
 
-    private static final Logger LOGGER = LogManager.getLogger(ExperimentsTablePageSIT.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentsTablePageSIT.class);
 
     private static final String EXPERIMENTS_REST_URI = "/gxa/json/experiments";
 
@@ -117,7 +117,7 @@ public class ExperimentsTablePageSIT extends SinglePageSeleniumFixture {
             }
             numberResults = totalExperiments < 10 ? totalExperiments : 10;
         } catch (IOException e) {
-            LOGGER.error(e);
+            LOGGER.error(e.getMessage(), e);
         }
     }
 

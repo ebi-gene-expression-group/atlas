@@ -8,8 +8,8 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
-import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfilesTsvInputStream;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfilesTsvInputStream;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.profiles.writer.RnaSeqProfilesTSVWriter;
 

@@ -30,7 +30,6 @@ import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkState;

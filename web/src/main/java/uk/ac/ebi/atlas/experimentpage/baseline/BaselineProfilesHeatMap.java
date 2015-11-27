@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.base.Stopwatch;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 @Scope("prototype")
 public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, BaselineRequestContext, BaselineProfilesList, BaselineProfileStreamOptions> {
 
-    private static final Logger LOGGER = LogManager.getLogger(BaselineProfilesHeatMap.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesHeatMap.class);
 
     private BaselineProfileInputStreamFactory inputStreamFactory;
     private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
@@ -42,7 +42,10 @@ public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, Ba
 
     public BaselineProfilesList fetch(BaselineRequestContext requestContext) throws GenesNotFoundException {
         loadGeneIdsIntoRequestContext.load(requestContext, requestContext.getFilteredBySpecies());
-        LOGGER.debug(String.format("<fetch> for %s genes (asGeneSets=%s) for gene query [%s]", requestContext.getSelectedGeneIDs().size(), requestContext.asGeneSets(), requestContext.getGeneQuery()));
+
+        LOGGER.debug(
+            "<fetch> for {} genes (asGeneSets={}) for gene query [{}]",
+            requestContext.getSelectedGeneIDs().size(), requestContext.asGeneSets(), requestContext.getGeneQuery());
 
         return fetch((BaselineProfileStreamOptions)requestContext);
     }
@@ -54,7 +57,10 @@ public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, Ba
         BaselineProfilesList profiles = super.fetch(inputStream, options);
 
         stopwatch.stop();
-        LOGGER.debug(String.format("<fetch> for [%s] (asGeneSets=%s) took %s secs", options.getSelectedGeneIDs().size(), options.asGeneSets(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+
+        LOGGER.debug(
+            "<fetch> for [{}] (asGeneSets={}) took {} secs",
+            options.getSelectedGeneIDs().size(), options.asGeneSets(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
 
         return profiles;
     }
