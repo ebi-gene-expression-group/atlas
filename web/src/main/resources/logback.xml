@@ -17,7 +17,6 @@
         <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-            <immediateFlush>false</immediateFlush>
         </encoder>
     </appender>
 
