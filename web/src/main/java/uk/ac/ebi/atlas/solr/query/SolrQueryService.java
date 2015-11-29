@@ -26,10 +26,10 @@ import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
@@ -52,7 +52,7 @@ import static uk.ac.ebi.atlas.solr.BioentityType.GENE;
 @Scope("singleton")
 //can be singleton because HttpSolrClient is documented to be thread safe, please be careful not to add any other non thread safe state!
 public class SolrQueryService {
-    private static final Logger LOGGER = LogManager.getLogger(SolrQueryService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SolrQueryService.class);
 
     public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     public static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
@@ -61,8 +61,8 @@ public class SolrQueryService {
     public static final String PROPERTY_EDGENGRAM_FIELD = "property_value_edgengram";
 
     private static final String BIOENTITY_TYPE_QUERY =
-            "(property_name:\"ensgene\"" +
-                    "OR property_name:\"mirna\" OR property_name:\"ensprotein\" OR property_name:\"enstranscript\") AND property_value_lower: \"{0}\"";
+            "(property_name:\"ensgene\" OR property_name:\"mirna\" OR property_name:\"ensprotein\" OR property_name:\"enstranscript\") " +
+                    "AND property_value_lower:\"{0}\"";
 
     private static final int PROPERTY_VALUES_LIMIT = 1000;
 
@@ -83,7 +83,6 @@ public class SolrQueryService {
         this.bioEntityPropertyDao = bioEntityPropertyDao;
     }
 
-    //(property_name:"ensgene"OR property_name:"mirna" OR property_name:"ensprotein" OR property_name:"enstranscript") AND property_value_lower: "hsa-mir-6717"
     public BioentityProperty findBioentityIdentifierProperty(String bioentityId) {
         String _bioentityId = bioentityId.replace(":", "\\:").replace("[", "\\[").replace("]", "\\]");
 
@@ -107,7 +106,6 @@ public class SolrQueryService {
 
 
     public Set<String> fetchGeneIdentifiersFromSolr(String queryString, String bioentityType, boolean toUppercase, String... propertyNames) {
-
         //eg: property_value_lower:"hsa-mir-636" AND (bioentity_type:"ensgene") AND (property_name:"mirbase_id")
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
                 .forQueryString(queryString, false)
@@ -132,7 +130,6 @@ public class SolrQueryService {
 
         }
         return expandedIdentifiers;
-
     }
 
     Set<String> findMatureRNAIds(String geneQuery) {
@@ -227,6 +224,5 @@ public class SolrQueryService {
 
         return geneIds;
     }
-
 
 }
