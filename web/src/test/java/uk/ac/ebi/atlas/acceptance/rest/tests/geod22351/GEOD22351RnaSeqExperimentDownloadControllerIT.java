@@ -57,7 +57,7 @@ public class GEOD22351RnaSeqExperimentDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("# Expression Atlas version: 1.0.0-SNAPSHOT")
+                contains("# Expression Atlas version: 3.0")
         );
 
     }
