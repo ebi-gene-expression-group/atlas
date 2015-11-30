@@ -24,7 +24,7 @@
         <prudent>true</prudent>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${catalina.base}/logs/%d{yyyy-MM}/atlas.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${catalina.base}/logs/atlas/atlas.%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
 
         <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
