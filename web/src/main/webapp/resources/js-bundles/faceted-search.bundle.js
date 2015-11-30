@@ -2197,19 +2197,19 @@ webpackJsonp([2],[
 	//*------------------------------------------------------------------*
 	
 	/**
-	 * @param {Object}  options
-	 * @param {string}  options.params
-	 * @param {boolean} options.isMultiExperiment
-	 * @param {string}  options.target
-	 * @param {string}  options.heatmapUrl
-	 * @param {string}  options.heatmapKey
-	 * @param {boolean} options.isWidget
-	 * @param {boolean} options.showAnatomogram
-	 * @param {string}  options.proxyPrefix - Proxy URL with protocol: required by CTTV
-	 * @param {string}  options.atlasHost - Atlas host with port (note: don’t include port)
+	 * @param {Object}   options
+	 * @param {string}   options.params
+	 * @param {boolean}  options.isMultiExperiment
+	 * @param {string}   options.heatmapUrl
+	 * @param {string}   options.heatmapKey
+	 * @param {boolean}  options.isWidget
+	 * @param {boolean=} options.showAnatomogram
+	 * @param {string}   options.proxyPrefix - Proxy URL with protocol: required by CTTV
+	 * @param {string}   options.atlasHost - Atlas host with port (note: don’t include port)
+	 * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
 	 */
 	module.exports = function(options) {
-	    var targetElement = document.getElementById(options.target),
+	    var targetElement = (typeof options.target == 'string') ? document.getElementById(options.target) : options.target,
 	        $targetElement = $(targetElement),
 	        showAnatomogram = options.showAnatomogram === undefined ? true : options.showAnatomogram,
 	        isWidget = options.hasOwnProperty("isWidget") ? options.isWidget : true;
