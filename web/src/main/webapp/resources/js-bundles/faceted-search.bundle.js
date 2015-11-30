@@ -568,7 +568,7 @@ webpackJsonp([2],[
 	
 	    var facetsElement = document.getElementById(options.facetsContainer),
 	        heatmapsElement = document.getElementById(options.resultsContainer),
-	        host = options.atlasHost ? options.atlasHost : window.location.protocol + "//" + window.location.host;
+	        host = options.atlasHost ? options.atlasHost : window.location.host;
 	
 	    var query = {
 	        geneQuery : options.identifier,
