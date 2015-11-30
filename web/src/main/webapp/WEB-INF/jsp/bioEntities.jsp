@@ -311,6 +311,7 @@
 
 <c:set var="hasBaselineResults" value="${showWidget || not empty firstBaselineCounts}"/>
 
+<%--@elvariable id="showBioentityPropertiesPane" type="boolean"--%>
 <c:choose>
     <c:when test="${showBioentityPropertiesPane}">
         <c:set var="defaultPanelIndex" value="${hasBaselineResults ? 1 : (not empty bioentities ? 2 : 0)}"/>
@@ -326,13 +327,14 @@
 <%-- Assemble the full query information for SEO --%>
 <c:set var="fullQueryDescription" value="${fn:replace(searchDescription,'&quot;','')} ${entityNamesList} ${species}"/>
 
+<%--@elvariable id="isGeneSet" type="boolean"--%>
 <script>
     <c:if test="${showWidget}">
     var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
     var heatmapBuilder = window.exposed;
     heatmapBuilder({
-        atlasHost: '${pageContext.request.serverName}:${pageContext.request.serverPort}',
-        params: 'geneQuery=${geneQuery.asUrlQueryParameter()}' + widgetParameters,
+        atlasHost: "${pageContext.request.serverName}",
+        params: "geneQuery=${geneQuery.asUrlQueryParameter()}" + widgetParameters,
         isMultiExperiment: true,
         target: "widgetBody",
         isWidget: false
@@ -379,18 +381,18 @@
             $.each(
                 ["go", "po"],
                 function (i, val) {
-                    $('#' + val + 'MoreLinks').click(function () {
-                        $('#' + val + 'MoreLinks').hide();
-                        $('#' + val + 'RelevantLinks').hide();
-                        $('#' + val + 'AllLinks').show();
-                        $('#' + val + 'LessLinks').show();
+                    $("#" + val + "MoreLinks").click(function () {
+                        $("#" + val + "MoreLinks").hide();
+                        $("#" + val + "RelevantLinks").hide();
+                        $("#" + val + "AllLinks").show();
+                        $("#" + val + "LessLinks").show();
                         return false;
                     });
-                    $('#' + val + 'LessLinks').click(function () {
-                        $('#' + val + 'LessLinks').hide();
-                        $('#' + val + 'AllLinks').hide();
-                        $('#' + val + 'RelevantLinks').show();
-                        $('#' + val + 'MoreLinks').show();
+                    $("#" + val + "LessLinks").click(function () {
+                        $("#" + val + "LessLinks").hide();
+                        $("#" + val + "AllLinks").hide();
+                        $("#" + val + "RelevantLinks").show();
+                        $("#" + val + "MoreLinks").show();
                         return false;
                     });
                 });

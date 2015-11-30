@@ -13,23 +13,13 @@
         <h2>Bundles loaded locally, request done to <code>http://wwwdev.ebi.ac.uk/gxa</code></h2>
     </div>
 
-    <div id="human"></div>
-
     <div id="rice"></div>
 </body>
 
 <script language="JavaScript" type="text/javascript">
     var AtlasHeatmapBuilder = window.exposed;
-
     AtlasHeatmapBuilder({
         atlasHost: "wwwdev.ebi.ac.uk",
-        params: "geneQuery=3899368",
-        isMultiExperiment: true,
-        target: "human"
-    });
-
-    AtlasHeatmapBuilder({
-        gxaBaseUrl: "http://wwwdev.ebi.ac.uk/gxa",
         params: "geneQuery=3899368&species=oryza+sativa",
         isMultiExperiment: true,
         target: "rice"
