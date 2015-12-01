@@ -2147,10 +2147,13 @@ webpackJsonp([2],[
 
 	"use strict";
 	
-	var URI = __webpack_require__(/*! urijs */ 652);
+	var React = __webpack_require__(/*! react */ 504);
+	
 	var $ = __webpack_require__(/*! jquery */ 650);
 	var jQuery = $;
 	__webpack_require__(/*! ../lib/jquery.xdomainrequest.js */ 666);
+	
+	var URI = __webpack_require__(/*! urijs */ 652);
 	
 	//*------------------------------------------------------------------*
 	
@@ -2159,17 +2162,16 @@ webpackJsonp([2],[
 	//*------------------------------------------------------------------*
 	
 	/**
-	 * @param {Object}  options
-	 * @param {Object}  options.data
-	 * @param {Object}  options.targetElement
-	 * @param {boolean} options.isWidget
-	 * @param {boolean} options.isMultiExperiment
-	 * @param {string}  options.heatmapKey
-	 * @param {boolean} options.showAnatomogram
+	 * @param {Object}   options
+	 * @param {Object}   options.data
+	 * @param {Object}   options.targetElement
+	 * @param {boolean}  options.isWidget
+	 * @param {boolean}  options.isMultiExperiment
+	 * @param {string}   options.heatmapKey
+	 * @param {boolean}  options.showAnatomogram
+	 * @param {boolean=} options.disableGoogleAnalytics
 	 */
 	function drawHeatmap (options) {
-	    var React = __webpack_require__(/*! react */ 504);
-	
 	    var heatmapConfig = options.data.config,
 	        columnHeaders = options.data.columnHeaders,
 	        profiles = options.data.profiles,
@@ -2187,7 +2189,8 @@ webpackJsonp([2],[
 	                experiment: experimentData, isWidget: options.isWidget,
 	                anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
 	                geneSetProfiles: geneSetProfiles, heatmapKey: options.heatmapKey,
-	                showAnatomogram: options.showAnatomogram
+	                showAnatomogram: options.showAnatomogram,
+	                disableGoogleAnalytics: options.disableGoogleAnalytics
 	            }
 	        ),
 	        options.targetElement
@@ -2205,6 +2208,7 @@ webpackJsonp([2],[
 	 * @param {boolean}  options.isWidget
 	 * @param {boolean=} options.showAnatomogram
 	 * @param {string}   options.proxyPrefix - Proxy URL with protocol: required by CTTV
+	 * @param {boolean=} options.disableGoogleAnalytics - Disable Google Analytics: required by CTTV
 	 * @param {string}   options.atlasHost - Atlas host with port (note: don’t include port)
 	 * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
 	 */
@@ -2242,9 +2246,9 @@ webpackJsonp([2],[
 	        data.config.linksAtlasBaseURL = linksAtlasBaseURL;
 	
 	        if (options.isMultiExperiment) {
-	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogram: showAnatomogram});
+	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogram: showAnatomogram, disableGoogleAnalytics: options.disableGoogleAnalytics});
 	        } else {
-	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogram: showAnatomogram   });
+	            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogram: showAnatomogram, disableGoogleAnalytics: options.disableGoogleAnalytics});
 	        }
 	    }).fail(function (jqXHR, textStatus) {
 	        if (textStatus === "parsererror") {
@@ -2446,7 +2450,8 @@ webpackJsonp([2],[
 	    // TODO Keep populating propTypes until we have everything here
 	    propTypes: {
 	        type: React.PropTypes.oneOf(["isBaseline", "isMultiExperiment", "isDifferential", "isProteomics"]).isRequired,
-	        showAnatomogram: React.PropTypes.bool.isRequired
+	        showAnatomogram: React.PropTypes.bool.isRequired,
+	        disableGoogleAnalytics: React.PropTypes.bool
 	    },
 	
 	    render: function () {
@@ -2529,17 +2534,20 @@ webpackJsonp([2],[
 	            $anatomogram.hcSticky({responsive: true});
 	        }
 	
-	        var _gaq = _gaq || [];
-	        _gaq.push(['_setAccount', 'UA-37676851-1']);
-	        _gaq.push(['_trackPageview']);
-	        (function () {
-	            var ga = document.createElement('script');
-	            ga.type = 'text/javascript';
-	            ga.async = true;
-	            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	            var s = document.getElementsByTagName('script')[0];
-	            s.parentNode.insertBefore(ga, s);
-	        })();
+	        var ga = this.props.disableGoogleAnalytics === undefined ? false : this.props.disableGoogleAnalytics;
+	        if (!ga) {
+	            var _gaq = _gaq || [];
+	            _gaq.push(["_setAccount", "UA-37676851-1"]);
+	            _gaq.push(["_trackPageview"]);
+	            (function () {
+	                var ga = document.createElement("script");
+	                ga.type = "text/javascript";
+	                ga.async = true;
+	                ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+	                var s = document.getElementsByTagName("script")[0];
+	                s.parentNode.insertBefore(ga, s);
+	            })();
+	        }
 	    },
 	
 	    componentDidUpdate: function() {
@@ -12615,7 +12623,8 @@ webpackJsonp([2],[
 	        isWidget: React.PropTypes.bool.isRequired,
 	        prefFormDisplayLevels: React.PropTypes.object,
 	        ensemblEventEmitter: React.PropTypes.object,
-	        anatomogramEventEmitter: React.PropTypes.object
+	        anatomogramEventEmitter: React.PropTypes.object,
+	        googleAnalytics: React.PropTypes.bool
 	    },
 	
 	    getInitialState: function () {

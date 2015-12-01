@@ -83,7 +83,7 @@ public class BioentityIdentifiersReader {
         }
 
         stopWatch.stop();
-        LOGGER.info("Built a set of %,d bioentity identifiers in %s seconds", bioentityIds.size(), stopWatch.getTotalTimeSeconds());
+        LOGGER.info("Built a set of {} bioentity identifiers in {} seconds", bioentityIds.size(), stopWatch.getTotalTimeSeconds());
 
         return bioentityIds;
     }

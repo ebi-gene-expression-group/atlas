@@ -15,13 +15,14 @@ var HeatmapAnatomogramContainer = require('./heatmap-anatomogram-container.jsx')
 //*------------------------------------------------------------------*
 
 /**
- * @param {Object}  options
- * @param {Object}  options.data
- * @param {Object}  options.targetElement
- * @param {boolean} options.isWidget
- * @param {boolean} options.isMultiExperiment
- * @param {string}  options.heatmapKey
- * @param {boolean} options.showAnatomogram
+ * @param {Object}   options
+ * @param {Object}   options.data
+ * @param {Object}   options.targetElement
+ * @param {boolean}  options.isWidget
+ * @param {boolean}  options.isMultiExperiment
+ * @param {string}   options.heatmapKey
+ * @param {boolean}  options.showAnatomogram
+ * @param {boolean=} options.disableGoogleAnalytics
  */
 function drawHeatmap (options) {
     var heatmapConfig = options.data.config,
@@ -41,7 +42,8 @@ function drawHeatmap (options) {
                 experiment: experimentData, isWidget: options.isWidget,
                 anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
                 geneSetProfiles: geneSetProfiles, heatmapKey: options.heatmapKey,
-                showAnatomogram: options.showAnatomogram
+                showAnatomogram: options.showAnatomogram,
+                disableGoogleAnalytics: options.disableGoogleAnalytics
             }
         ),
         options.targetElement
@@ -59,6 +61,7 @@ function drawHeatmap (options) {
  * @param {boolean}  options.isWidget
  * @param {boolean=} options.showAnatomogram
  * @param {string}   options.proxyPrefix - Proxy URL with protocol: required by CTTV
+ * @param {boolean=} options.disableGoogleAnalytics - Disable Google Analytics: required by CTTV
  * @param {string}   options.atlasHost - Atlas host with port (note: don’t include port)
  * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
  */
@@ -96,9 +99,9 @@ module.exports = function(options) {
         data.config.linksAtlasBaseURL = linksAtlasBaseURL;
 
         if (options.isMultiExperiment) {
-            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogram: showAnatomogram});
+            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: options.heatmapKey, showAnatomogram: showAnatomogram, disableGoogleAnalytics: options.disableGoogleAnalytics});
         } else {
-            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogram: showAnatomogram   });
+            drawHeatmap({data: data, targetElement: targetElement, isWidget: isWidget, isMultiExperiment: options.isMultiExperiment, heatmapKey: "", showAnatomogram: showAnatomogram, disableGoogleAnalytics: options.disableGoogleAnalytics});
         }
     }).fail(function (jqXHR, textStatus) {
         if (textStatus === "parsererror") {

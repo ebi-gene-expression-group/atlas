@@ -59,7 +59,8 @@ var Heatmap = React.createClass({
         isWidget: React.PropTypes.bool.isRequired,
         prefFormDisplayLevels: React.PropTypes.object,
         ensemblEventEmitter: React.PropTypes.object,
-        anatomogramEventEmitter: React.PropTypes.object
+        anatomogramEventEmitter: React.PropTypes.object,
+        googleAnalytics: React.PropTypes.bool
     },
 
     getInitialState: function () {
