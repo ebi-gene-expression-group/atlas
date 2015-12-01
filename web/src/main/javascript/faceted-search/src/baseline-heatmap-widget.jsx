@@ -34,9 +34,12 @@ var BaselineHeatmapWidget = React.createClass({
     },
 
     render: function() {
+        var factorLabel = <h7>{this._capitalize(this._removeUnderScore(this.props.factor))}</h7>;
+        var factorHeatmapLabel = <div><h5>{this._capitalize(this.props.species)}</h5><h7>{this._capitalize(this._removeUnderScore(this.props.factor))}</h7></div>;
+
         return(
             <div className="gxaBaselineHeatmap">
-                {this.props.showHeatmapLabel ? <h5>{this._capitalize(this.props.species)}</h5> : null }
+                {this.props.showHeatmapLabel ? factorHeatmapLabel : factorLabel }
                 <div ref="widgetBody" style={{paddingBottom: "30px"}}></div>
             </div>
         );
@@ -44,6 +47,10 @@ var BaselineHeatmapWidget = React.createClass({
 
     _capitalize: function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    },
+
+    _removeUnderScore: function removeUnderScoreForWhiteSpace(str) {
+        return str.replace(/[-_.]/g, ' ');
     }
 
 });
