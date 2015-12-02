@@ -21,6 +21,7 @@
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:if test="${not empty param.accessKey}">
@@ -83,7 +84,7 @@
 
 
 <script>
-    var europepmcUrl = "${configuration['europepmc.base.url']}" + "webservices/rest/MED/%pubmedId%/textMinedTerms/GENE_PROTEIN/1/json";
+    var europepmcUrl = "<spring:eval expression="@configuration['europepmc.base.url']"/>" + "webservices/rest/MED/%pubmedId%/textMinedTerms/GENE_PROTEIN/1/json";
 </script>
 
 <script src="${pageContext.request.contextPath}/resources/js/pubmedMinedBioentitiesModule.js"></script>

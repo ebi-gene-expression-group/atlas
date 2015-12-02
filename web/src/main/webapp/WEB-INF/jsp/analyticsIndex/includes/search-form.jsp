@@ -1,3 +1,5 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <%--@elvariable id="geneQuery" type="uk.ac.ebi.atlas.web.GeneQuery"--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -51,7 +53,7 @@
 
             geneQueryTagEditorModule.init("#geneQuery", undefined, disableButtonsOnChange);
 
-            conditonAutocompleteModule.init("${configuration['arrayexpress.autocomplete.url']}", disableButtonsOnChange);
+            conditionAutocompleteModule.init("<spring:eval expression="@configuration['arrayexpress.autocomplete.url']"/>", disableButtonsOnChange);
 
             searchFormModule.searchBoxEnterEventHandler("#submit-button");
 

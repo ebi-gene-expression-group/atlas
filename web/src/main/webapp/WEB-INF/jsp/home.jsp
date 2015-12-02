@@ -23,9 +23,7 @@
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
-
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 
 <h2>Expression Atlas: Differential and Baseline Expression</h2>
 
@@ -186,15 +184,13 @@
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
 
         $(document).ready(function () {
-            var $buttons = $('#submit-button, #reset-button'),
-                    $searchFields = $('#geneQuery, #condition');
+            var $buttons = $('#submit-button, #reset-button'), $searchFields = $('#geneQuery, #condition');
 
             geneQueryTagEditorModule.init("#geneQuery", undefined, disableButtonsOnChange);
 
-            conditonAutocompleteModule.init("${arrayexpressUrl}", disableButtonsOnChange);
+            conditionAutocompleteModule.init("${arrayexpressUrl}", disableButtonsOnChange);
 
             searchFormModule.searchBoxEnterEventHandler("#submit-button");
-
             searchFormModule.disableCarriageReturn("#condition");
 
             helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
