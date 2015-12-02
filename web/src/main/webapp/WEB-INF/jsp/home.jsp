@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   ~ Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
   ~
@@ -177,6 +178,7 @@
 <%-- placeholder which is loaded with tooltip text --%>
 <div id="help-placeholder" style="display: none"></div>
 
+<spring:eval var="arrayexpressUrl" expression="@configuration['arrayexpress.autocomplete.url']" />
 <%@ include file="includes/condition-autocomplete-js.jsp" %>
 
 <script type="text/javascript">
@@ -189,7 +191,7 @@
 
             geneQueryTagEditorModule.init("#geneQuery", undefined, disableButtonsOnChange);
 
-            conditonAutocompleteModule.init("${configuration['arrayexpress.autocomplete.url']}", disableButtonsOnChange);
+            conditonAutocompleteModule.init("${arrayexpressUrl}", disableButtonsOnChange);
 
             searchFormModule.searchBoxEnterEventHandler("#submit-button");
 
