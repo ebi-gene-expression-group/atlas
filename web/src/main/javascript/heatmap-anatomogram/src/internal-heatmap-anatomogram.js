@@ -11,6 +11,8 @@ var jQuery = $;
 
 var HeatmapAnatomogramContainer = require('./internal-heatmap-anatomogram-container.jsx');
 
+var ExperimentTypes = require('./experiment-types.js');
+
 //*------------------------------------------------------------------*
 
 /**
@@ -29,22 +31,18 @@ function drawHeatmap (options) {
         geneSetProfiles = options.heatmapData.geneSetProfiles,
         anatomogramData = options.heatmapData.anatomogram;
 
-    var isBaseline = (!options.isMultiExperiment && !options.isDifferential && !options.isProteomicsBaseline);
-
-    heatmapConfig.atlasBaseURL = "/gxa";
-    heatmapConfig.linksAtlasBaseURL = "/gxa";
-
     var type =
-        options.isMultiExperiment ? "isMultiExperiment" :
-            options.isDifferential ? "isDifferential" :
-                options.isProteomicsBaseline ? "isProteomics" : "isBaseline";
+        options.isMultiExperiment ? ExperimentTypes.MULTIEXPERIMENT :
+            options.isDifferential ? ExperimentTypes.DIFFERENTIAL :
+                options.isProteomicsBaseline ? ExperimentTypes.PROTEOMICS_BASELINE :
+                    ExperimentTypes.BASELINE;
 
     React.render(
         React.createElement(
             HeatmapAnatomogramContainer,
             {   type: type, heatmapConfig: heatmapConfig, isWidget: false,
                 anatomogram: anatomogramData, columnHeaders: columnHeaders, multipleColumnHeaders: multipleColumnHeaders,
-                profiles: profiles, geneSetProfiles: geneSetProfiles}
+                profiles: profiles, geneSetProfiles: geneSetProfiles, atlasBaseURL: "/gxa", linksAtlasBaseURL: "/gxa"}
         ),
         document.getElementById("gxaExperimentPageHeatmapAnatomogram")
     );

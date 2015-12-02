@@ -15,6 +15,7 @@ var EventEmitter = require('wolfy87-eventemitter');
 
 var Anatomogram = require('anatomogram');
 var Heatmap = require('./heatmap.jsx');
+var ExperimentTypes = require('./experiment-types.js');
 
 //*------------------------------------------------------------------*
 
@@ -24,6 +25,14 @@ require('../css/heatmap-and-anatomogram.css');
 //*------------------------------------------------------------------*
 
 var ExperimentDescription = React.createClass({
+    propTypes: {
+        linksAtlasBaseURL: React.PropTypes.string.isRequired,
+        experiment: React.PropTypes.shape({
+            URL: React.PropTypes.string.isRequired,
+            description: React.PropTypes.string.isRequired,
+            allSpecies: React.PropTypes.string.isRequired
+        }).isRequired
+    },
 
     render: function () {
 
@@ -41,104 +50,133 @@ var ExperimentDescription = React.createClass({
 
 });
 
-var TypeEnum = {
-    BASELINE: { isBaseline: true, heatmapTooltip: '#heatMapTableCellInfo' },
-    PROTEOMICS_BASELINE: { isBaseline: true, isProteomics: true, heatmapTooltip: '#heatMapTableCellInfo-proteomics' },
-    DIFFERENTIAL: { isDifferential: true, heatmapTooltip: '#heatMapTableCellInfo-differential' },
-    MULTIEXPERIMENT: { isMultiExperiment: true, heatmapTooltip: '#heatMapTableCellInfo-multiexp' }
-};
-
-
 var HeatmapAnatomogramContainer = React.createClass({
-    // TODO Keep populating propTypes until we have everything here
     propTypes: {
-        type: React.PropTypes.oneOf(["isBaseline", "isMultiExperiment", "isDifferential", "isProteomics"]).isRequired,
+        sourceURL: React.PropTypes.string.isRequired,
+        atlasBaseURL: React.PropTypes.string.isRequired,
+        linksAtlasBaseURL: React.PropTypes.string.isRequired,
+        type: React.PropTypes.oneOf([
+            ExperimentTypes.BASELINE, ExperimentTypes.MULTIEXPERIMENT, ExperimentTypes.DIFFERENTIAL, ExperimentTypes.PROTEOMICS_BASELINE
+        ]).isRequired,
         showAnatomogram: React.PropTypes.bool.isRequired,
-        disableGoogleAnalytics: React.PropTypes.bool
+        isWidget: React.PropTypes.bool.isRequired,
+        disableGoogleAnalytics: React.PropTypes.bool.isRequired
     },
 
     render: function () {
         var ensemblEventEmitter = new EventEmitter();
         var anatomogramEventEmitter = new EventEmitter();
 
-        var type;
-        if(this.props.type == "isBaseline") {
-            type = TypeEnum.BASELINE;
-        } else if(this.props.type == "isMultiExperiment") {
-            type = TypeEnum.MULTIEXPERIMENT;
-        } else if(this.props.type == "isDifferential") {
-            type = TypeEnum.DIFFERENTIAL;
-        } else if(this.props.type == "isProteomics") {
-            type = TypeEnum.PROTEOMICS_BASELINE;
-        }
+        var anatomogramExpressedTissueColour = this.props.type.isMultiExperiment ? "red" : "gray";
+        var anatomogramHoveredTissueColour = this.props.type.isMultiExperiment ? "indigo" : "red";
 
-        var anatomogramExpressedTissueColour = type.isMultiExperiment ? "red" : "gray";
-        var anatomogramHoveredTissueColour = type.isMultiExperiment ? "indigo" : "red";
-
-        var heatmapConfig = this.props.heatmapConfig;
-
-        var geneURL = heatmapConfig.linksAtlasBaseURL + '/query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch=' + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
+        var geneURL =
+            this.props.linksAtlasBaseURL + "/query" +
+            "?geneQuery=" + this.state.heatmapConfig.geneQuery +
+            "&exactMatch=" + this.state.heatmapConfig.isExactMatch +
+            "&organism=" + this.state.heatmapConfig.species;
 
         var display = this.props.showAnatomogram ? "block" : "none";
         var marginLeft = this.props.showAnatomogram ? "270px" : "0";
 
         return (
-            <div className="gxaBlock">
+            <div ref="this" className="gxaBlock">
 
-                { this.props.experiment ? <ExperimentDescription experiment={this.props.experiment} linksAtlasBaseURL={this.props.heatmapConfig.linksAtlasBaseURL}/> : null }
+                { this.state.experimentData ?
+                        <ExperimentDescription experiment={this.state.experimentData} linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>
+                        : null
+                }
 
-                <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
+                { this.state.heatmapConfig ?
+                        <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
-                    <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
-                        { this.props.anatomogram ?
-                            <Anatomogram anatomogramData={this.props.anatomogram}
-                                         expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
-                                         profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.heatmapConfig.atlasBaseURL}/>
-                            : null
-                        }
-                    </div>
+                            <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
+                                { this.state.anatomogramData ?
+                                <Anatomogram anatomogramData={this.state.anatomogramData}
+                                             expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
+                                             profileRows={this.state.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
+                                    : null
+                                    }
+                            </div>
 
-                    <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft}}>
-                        <Heatmap type={type}
-                                 heatmapConfig={this.props.heatmapConfig}
-                                 columnHeaders={this.props.columnHeaders}
-                                 profiles={this.props.profiles}
-                                 geneSetProfiles={this.props.geneSetProfiles}
-                                 isWidget={this.props.isWidget}
-                                 ensemblEventEmitter={ensemblEventEmitter}
-                                 anatomogramEventEmitter={anatomogramEventEmitter}
-                                 showAnatomogram={this.props.showAnatomogram} />
-                    </div>
+                            <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft}}>
+                                <Heatmap type={this.props.type}
+                                         heatmapConfig={this.state.heatmapConfig}
+                                         columnHeaders={this.state.columnHeaders}
+                                         profiles={this.state.profiles}
+                                         geneSetProfiles={this.state.geneSetProfiles}
+                                         ensemblEventEmitter={ensemblEventEmitter}
+                                         anatomogramEventEmitter={anatomogramEventEmitter}
+                                         atlasBaseURL={this.props.atlasBaseURL}
+                                         linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>
+                            </div>
 
-                </div>
+                        </div>
+                        :
+                        <div ref="loadingImagePlaceholder">
+                            <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
+                        </div>
+                }
 
                 { this.props.isWidget ?
                         <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
-                            <br/>This expression view is provided by <a href={this.props.heatmapConfig.atlasBaseURL}>Expression Atlas</a>.
+                            <br/>This expression view is provided by <a href={this.props.atlasBaseURL}>Expression Atlas</a>.
                             <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p>
                         </div>
-                    :
-                    null}
+                        :
+                        null
+                }
 
             </div>
         );
     },
 
+    getInitialState: function() {
+        return {
+            heatmapConfig: '',
+            columnHeaders: [],
+            profiles: {
+                rows: [],
+                minExpressionLevel: 0,
+                maxExpressionLevel: 0
+            },
+            geneSetProfiles: {},
+            anatomogramData: {},
+            experimentData: ''
+        }
+    },
+
     componentDidMount: function() {
-        var $anatomogram = $(this.refs.anatomogramEnsembl.getDOMNode());
-        $anatomogram.on(
-            "gxaAnatomogramSticky",
-            function() {
-                $anatomogram.hcSticky({responsive: true});
-            }
+        var httpRequest = {
+            url: this.props.sourceURL,
+            dataType: "json",
+            method: "GET"
+        };
+
+        $.ajax(httpRequest).done(
+            function (data) {
+                if (this.isMounted()) {
+                    this.setState({
+                        heatmapConfig: data.config,
+                        columnHeaders: data.columnHeaders,
+                        profiles: data.profiles,
+                        geneSetProfiles: data.geneSetProfiles,
+                        anatomogramData: data.anatomogram,
+                        experimentData: data.experiment
+                    });
+                }
+            }.bind(this)
+        ).fail(
+            function (jqXHR, textStatus) {
+                if (textStatus === "parsererror") {
+                    $(this.refs.this.getDOMNode()).html("<div class='error'>Could not parse JSON response</div>");
+                } else {
+                    $(this.refs.this.getDOMNode()).html(jqXHR.responseText);
+                }
+            }.bind(this)
         );
 
-        if (this.props.showAnatomogram) {
-            $anatomogram.hcSticky({responsive: true});
-        }
-
-        var ga = this.props.disableGoogleAnalytics === undefined ? false : this.props.disableGoogleAnalytics;
-        if (!ga) {
+        if (!this.props.disableGoogleAnalytics) {
             var _gaq = _gaq || [];
             _gaq.push(["_setAccount", "UA-37676851-1"]);
             _gaq.push(["_trackPageview"]);
@@ -154,8 +192,15 @@ var HeatmapAnatomogramContainer = React.createClass({
     },
 
     componentDidUpdate: function() {
+        var $anatomogram = $(this.refs.anatomogramEnsembl.getDOMNode());
+        $anatomogram.on(
+            "gxaAnatomogramSticky",
+            function() {
+                $anatomogram.hcSticky({responsive: true});
+            }
+        );
+
         if (this.props.showAnatomogram) {
-            var $anatomogram = $(this.refs.anatomogramEnsembl.getDOMNode());
             $anatomogram.hcSticky({responsive: true});
         }
     }

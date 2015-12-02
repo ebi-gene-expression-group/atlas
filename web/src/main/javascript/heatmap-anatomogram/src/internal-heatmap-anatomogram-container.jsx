@@ -6,10 +6,8 @@ var React = require('react');
 
 var $ = require('jquery');
 var jQuery = $;
-
 require('../lib/jquery.hc-sticky.js');
 
-var URI = require('urijs');
 var EventEmitter = require('wolfy87-eventemitter');
 
 //*------------------------------------------------------------------*
@@ -18,18 +16,13 @@ var Anatomogram = require('anatomogram');
 var Heatmap = require('./heatmap.jsx');
 var EnsemblLauncher = require('./ensembl-launcher.jsx');
 
+var ExperimentTypes = require('./experiment-types.js');
+
 //*------------------------------------------------------------------*
 
 require('../css/heatmap-and-anatomogram.css');
 
 //*------------------------------------------------------------------*
-
-var TypeEnum = {
-    BASELINE: { isBaseline: true, heatmapTooltip: '#heatMapTableCellInfo' },
-    PROTEOMICS_BASELINE: { isBaseline: true, isProteomics: true, heatmapTooltip: '#heatMapTableCellInfo-proteomics' },
-    DIFFERENTIAL: { isDifferential: true, heatmapTooltip: '#heatMapTableCellInfo-differential' },
-    MULTIEXPERIMENT: { isMultiExperiment: true, heatmapTooltip: '#heatMapTableCellInfo-multiexp' }
-};
 
 var InternalHeatmapAnatomogramContainer = React.createClass({
     propTypes: {
@@ -39,26 +32,20 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
         profiles: React.PropTypes.object.isRequired,
         geneSetProfiles: React.PropTypes.object,
         heatmapConfig: React.PropTypes.object.isRequired,
-        isWidget: React.PropTypes.bool.isRequired
+        type: React.PropTypes.oneOf([
+            ExperimentTypes.BASELINE, ExperimentTypes.MULTIEXPERIMENT, ExperimentTypes.DIFFERENTIAL, ExperimentTypes.PROTEOMICS_BASELINE
+        ]).isRequired,
+        isWidget: React.PropTypes.bool.isRequired,
+        atlasBaseURL: React.PropTypes.string.isRequired,
+        linksAtlasBaseURL: React.PropTypes.string.isRequired
     },
 
     render: function () {
         var ensemblEventEmitter = new EventEmitter();
         var anatomogramEventEmitter = new EventEmitter();
 
-        var type;
-        if(this.props.type === "isBaseline") {
-            type = TypeEnum.BASELINE;
-        } else if(this.props.type === "isMultiExperiment") {
-            type = TypeEnum.MULTIEXPERIMENT;
-        } else if(this.props.type === "isDifferential") {
-            type = TypeEnum.DIFFERENTIAL;
-        } else if(this.props.type === "isProteomics") {
-            type = TypeEnum.PROTEOMICS_BASELINE;
-        }
-
-        var anatomogramExpressedTissueColour = type.isMultiExperiment ? "red" : "gray";
-        var anatomogramHoveredTissueColour = type.isMultiExperiment ? "indigo" : "red";
+        var anatomogramExpressedTissueColour = this.props.type.isMultiExperiment ? "red" : "gray";
+        var anatomogramHoveredTissueColour = this.props.type.isMultiExperiment ? "indigo" : "red";
 
         var prefFormDisplayLevels = $('#displayLevels');
 
@@ -69,21 +56,21 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                     { this.props.anatomogram ?
                         <Anatomogram anatomogramData={this.props.anatomogram}
                                      expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
-                                     profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.heatmapConfig.atlasBaseURL} />
+                                     profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL} />
                         : null}
                     { this.props.heatmapConfig.enableEnsemblLauncher ?
-                        <EnsemblLauncher isBaseline={type.isBaseline}
+                        <EnsemblLauncher isBaseline={this.props.type === ExperimentTypes.BASELINE || this.props.type === ExperimentTypes.PROTEOMICS_BASELINE}
                                          experimentAccession={this.props.heatmapConfig.experimentAccession}
                                          species={this.props.heatmapConfig.species}
                                          ensemblDB={this.props.heatmapConfig.ensemblDB}
                                          columnType={this.props.heatmapConfig.columnType}
                                          eventEmitter={ensemblEventEmitter}
-                                         atlasBaseURL={this.props.heatmapConfig.atlasBaseURL}/>
+                                         atlasBaseURL={this.props.atlasBaseURL} />
                         : null }
                 </div>
 
                 <div id="heatmap-react" className="gxaHeatmapPosition">
-                    <Heatmap type={type}
+                    <Heatmap type={this.props.type}
                              heatmapConfig={this.props.heatmapConfig}
                              columnHeaders={this.props.columnHeaders}
                              multipleColumnHeaders={this.props.multipleColumnHeaders}
@@ -92,7 +79,9 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                              isWidget={false}
                              prefFormDisplayLevels={prefFormDisplayLevels}
                              ensemblEventEmitter={ensemblEventEmitter}
-                             anatomogramEventEmitter={anatomogramEventEmitter} />
+                             anatomogramEventEmitter={anatomogramEventEmitter}
+                             atlasBaseURL={this.props.atlasBaseURL}
+                             linksAtlasBaseURL={this.props.linksAtlasBaseURL} />
                 </div>
 
             </div>

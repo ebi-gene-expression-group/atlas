@@ -331,10 +331,11 @@
 <script>
     <c:if test="${showWidget}">
     var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
-    var heatmapBuilder = window.exposed;
-    heatmapBuilder({
+    var AtlasHeatmapBuilder = window.exposed;
+    AtlasHeatmapBuilder({
         atlasHost: window.location.host,
         params: "geneQuery=${geneQuery.asUrlQueryParameter()}" + widgetParameters,
+        analyticsSearch: false,
         isMultiExperiment: true,
         target: "widgetBody",
         isWidget: false

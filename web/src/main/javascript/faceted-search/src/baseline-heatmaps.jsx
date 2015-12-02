@@ -33,7 +33,7 @@ var Heatmaps = React.createClass({
             <div>
                 {this.props.heatmaps.map(function (heatmap) {
                     return <BaselineHeatmapWidget key={heatmap.species + "_" + heatmap.factor}
-                                                  showAnatomogram={this.props.showAnatomograms} showHeatmapLabel={this._hasMoreThanOneSpecies()}
+                                                  showAnatomogram={this.props.showAnatomograms && this._hasOrganismPart()} showHeatmapLabel={this._hasMoreThanOneSpecies()}
                                                   species={heatmap.species} factor={heatmap.factor}
                                                   atlasHost={this.props.atlasHost} geneQuery={this.props.geneQuery} />;
                 }.bind(this))}
@@ -49,6 +49,15 @@ var Heatmaps = React.createClass({
             }
         }
         return species.length > 1;
+    },
+
+    _hasOrganismPart: function() {
+        for (var i = 0 ; i < this.props.heatmaps.length ; i++) {
+            if (this.props.heatmaps[i].factor === "ORGANISM_PART") {
+                return true;
+            }
+        }
+        return false;
     }
 });
 

@@ -23,11 +23,10 @@ var BaselineHeatmapWidget = React.createClass({
     componentDidMount: function() {
         AtlasHeatmapBuilder({
             atlasHost: this.props.atlasHost,
-            params: 'geneQuery=' + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
+            params: "geneQuery=" + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
+            analyticsSearch: true,
             isMultiExperiment: true,
             target: this.refs.widgetBody.getDOMNode(),
-            heatmapUrl: "/widgets/heatmap/baselineAnalytics",
-            heatmapKey: this.props.species + "-" + this.props.factor,
             isWidget: false,
             showAnatomogram: this.props.showAnatomogram
         });

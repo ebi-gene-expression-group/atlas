@@ -36,7 +36,7 @@ var AnatomogramSelectImageButton = React.createClass({
         return(
             <div>
                 <img ref="toggleButton" onClick={this._onClick} src={this.props.selected ? selectedToggleSrc : unselectedToggleSrc}
-                     style={{width: "20px", height: "20px", padding: "2px"}}></img>
+                     style={{width: "20px", height: "20px", padding: "2px"}}/>
             </div>
         );
     },
@@ -172,8 +172,8 @@ var Anatomogram = React.createClass({
     },
 
     render: function () {
-        function containsHuman(s) {
-            return s.indexOf("human") > -1;
+        function containsHuman(str) {
+            return str.indexOf("human") > -1;
         }
 
         var height = containsHuman(this.props.anatomogramData.maleAnatomogramFile) ? "360" : "250";
