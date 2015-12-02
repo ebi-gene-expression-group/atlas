@@ -6,7 +6,7 @@ SOLR_CONF=/nfs/public/rw/fg/atlas/solr_dev_conf
 SOLR_LOG=/srv/gxa/solr/log/
 SOLR_BIN=${SOLR_DIST}/example
 JAVA="/nfs/public/rw/webadmin/java/jdks/jdk1.7.0_04/bin/java"
-JAVA_OPTIONS="-Dsolr.indexes.dir=$SOLR_INDEXES_DIR -Dsolr.solr.home=$SOLR_CONF -Dsolr.log=$SOLR_LOG -Dlog4j.configuration=file:$SOLR_CONF/log4j.properties -server -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Xmx8192M -Xms1024M -jar start.jar"
+JAVA_OPTIONS="-Dsolr.indexes.dir=$SOLR_INDEXES_DIR -Dsolr.solr.home=$SOLR_CONF -Dsolr.log=$SOLR_LOG -Dlog4j.configuration=file:$SOLR_CONF/log4j.properties -server -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Xmx8g -Xms1g -jar start.jar"
 CONSOLE_LOG=/srv/gxa/solr/log/console.log
 set -e
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin

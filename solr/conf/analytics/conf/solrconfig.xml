@@ -171,7 +171,7 @@
          indexing documents at once in IndexWriter; if more than this
          many threads arrive they will wait for others to finish.
          Default in Solr/Lucene is 8. -->
-    <!-- <maxIndexingThreads>8</maxIndexingThreads>  -->
+    <maxIndexingThreads>16</maxIndexingThreads>
 
     <!-- Expert: Enabling compound file will use less files for the index,
          using fewer file descriptors on the expense of performance decrease.
@@ -368,7 +368,7 @@
     <autoCommit>
       <maxDocs>${solr.autoCommit.maxDocs:100000}</maxDocs>
       <maxTime>${solr.autoCommit.maxTime:1800000}</maxTime>
-      <openSearcher>false</openSearcher>
+      <openSearcher>true</openSearcher>
     </autoCommit>
 
     <!-- softAutoCommit is like autoCommit except it causes a
