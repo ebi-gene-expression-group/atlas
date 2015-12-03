@@ -203,6 +203,12 @@ var $ = require('jquery');
 
                     // destroy wrapper
                     $this.unwrap();
+                },
+                resize: function() {
+                    var $this = $(this),
+                        options = $this.pluginOptions('hcSticky');
+
+                    options.fn.resize();
                 }
             });
 
@@ -536,7 +542,7 @@ var $ = require('jquery');
                             resize_clone_width = parseInt($this.css('width'));
                         }
 
-                        // recalculate wrpaeer width
+                        // recalculate wrapper width
                         if (resize_clone_width != wrapper_width) {
                             $wrapper.width(resize_clone_width);
                         }
@@ -545,7 +551,7 @@ var $ = require('jquery');
                         if (resize_timeout) {
                             clearTimeout(resize_timeout);
                         }
-                        // timedout destroing of cloned elements so we don't clone it again and again while resizing the window
+                        // time out destroying cloned elements so we don't clone it again and again while resizing the window
                         resize_timeout = setTimeout(function() {
                             // clear timeout id
                             resize_timeout = false;

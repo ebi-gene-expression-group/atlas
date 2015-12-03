@@ -192,17 +192,15 @@ var HeatmapAnatomogramContainer = React.createClass({
     },
 
     componentDidUpdate: function() {
+        // This mounted component is only going to be updated when changing this.props.showAnatomogram, so we only take
+        // care of the anatomogram, the legend and the sticky header (the last two through an event)
         var $anatomogram = $(this.refs.anatomogramEnsembl.getDOMNode());
-        $anatomogram.on(
-            "gxaAnatomogramSticky",
-            function() {
-                $anatomogram.hcSticky({responsive: true});
-            }
-        );
 
         if (this.props.showAnatomogram) {
             $anatomogram.hcSticky({responsive: true});
         }
+
+        $(window).trigger("gxaResizeHeatmapAnatomogramHeader");
     }
 });
 

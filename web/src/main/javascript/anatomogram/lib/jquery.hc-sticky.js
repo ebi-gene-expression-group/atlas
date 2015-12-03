@@ -203,6 +203,12 @@ var $ = require('jquery');
 
                     // destroy wrapper
                     $this.unwrap();
+                },
+                resize: function() {
+                    var $this = $(this),
+                        options = $this.pluginOptions('hcSticky');
+
+                    options.fn.resize();
                 }
             });
 

@@ -60,11 +60,12 @@ module.exports = function (options) {
             if ($showAnatomogramsCheckbox.is(":checked")) {
                 $stickyTableElements.animate({"left": stickyTableElementsLeft + LEFT_DELTA}, ANIMATION_DELAY, "swing");
                 $innerHeatmaps.animate({"margin-left": innerHeatmapMarginLeft + LEFT_DELTA}, ANIMATION_DELAY, "swing");
-                $(".gxaAside").show(
-                    ANIMATION_DELAY, "swing",
-                    function() { $(".gxaAside").trigger("gxaAnatomogramSticky"); }
-                );
-                    $countAndLegend.add(".gxaStickyTableHeader").css("width", countAndLegendWidth - LEFT_DELTA);
+                //$(".gxaAside").show(
+                //    ANIMATION_DELAY, "swing",
+                //    function() { $(".gxaAside").trigger("gxaAnatomogramSticky"); }
+                //);
+                $(".gxaAside").show(ANIMATION_DELAY, "swing");
+                $countAndLegend.add(".gxaStickyTableHeader").css("width", countAndLegendWidth - LEFT_DELTA);
             } else {
                 $stickyTableElements.animate({"left": stickyTableElementsLeft - LEFT_DELTA}, ANIMATION_DELAY, "swing");
                 $innerHeatmaps.animate({"margin-left": innerHeatmapMarginLeft - LEFT_DELTA}, ANIMATION_DELAY, "swing");

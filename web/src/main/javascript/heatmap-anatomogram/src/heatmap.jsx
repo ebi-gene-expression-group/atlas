@@ -34,6 +34,8 @@ var ContrastTooltips = require('contrast-tooltips');
 var GenePropertiesTooltipModule = require('./gene-properties-tooltip-module.js');
 var FactorTooltipModule = require('./factor-tooltip-module.js');
 
+var StickyHeaderModule = require('./sticky-header-module.js');
+
 //*------------------------------------------------------------------*
 
 require('../css/table-grid.css');
@@ -144,120 +146,28 @@ var Heatmap = React.createClass({
     },
 
     componentDidMount: function() {
-        //if (this.props.heatmapConfig.showMultipleColumnHeaders) { return; }
+        var table	        = this.refs.heatmapTable.getDOMNode(),
+            stickyIntersect = this.refs.stickyIntersect.getDOMNode(),
+            stickyColumn    = this.refs.stickyColumn.getDOMNode(),
+            stickyHeadRow   = this.refs.stickyHeader.getDOMNode(),
+            stickyWrap      = this.refs.stickyWrap.getDOMNode(),
+            countAndLegend  = this.refs.countAndLegend.getDOMNode();
 
-        var $w	            = $(window),
-            $t	            = $(this.refs.heatmapTable.getDOMNode()),
-            $stickyInsct    = $(this.refs.stickyIntersect.getDOMNode()),
-            $stickyCol      = $(this.refs.stickyColumn.getDOMNode()),
-            $stickyHead     = $(this.refs.stickyHeader.getDOMNode()),
-            $stickyWrap     = $(this.refs.stickyWrap.getDOMNode()),
-            $countAndLegend = $(this.refs.countAndLegend.getDOMNode());
+        var stickyHeader = StickyHeaderModule(table, stickyIntersect, stickyColumn, stickyHeadRow, stickyWrap, countAndLegend);
 
-        if($t.hasClass('overflow-y')) $t.removeClass('overflow-y').parent().addClass('overflow-y');
+        stickyHeader.setWidthsAndReposition();
+        $(countAndLegend).hcSticky({bottomEnd: stickyHeader.calculateAllowance()});
 
-        // Set widths
-        var setWidths = function () {
-                $t
-                    .find('thead th').each(function (i) {
-                        $stickyHead.find('th').eq(i).width($(this).width());
-                    })
-                    .end()
-                    .find('tr').each(function (i) {
-                        $stickyCol.find('tr').eq(i).height($(this).height());
-                        $stickyInsct.find('tr').eq(i).height($(this).height());
-                    });
-
-                // Set width of sticky header table and intersect. WebKit does it wrong...
-                if ($.browser.webkit) {
-                    $stickyHead
-                        .width($stickyWrap.width())
-                        .find('table')
-                        .width($t.outerWidth());
-                    $stickyInsct.find('table').width($t.find('thead th').eq(0).outerWidth() + 1);
-                    $stickyCol.find('table').width($t.find('thead th').eq(0).outerWidth() + 1);
-                } else {
-                    $stickyHead
-                        .width($stickyWrap.width())
-                        .find('table')
-                        .width($t.width());
-                    $stickyInsct.find('table').width($t.find('thead th').eq(0).outerWidth());
-                    $stickyCol.find('table').width($t.find('thead th').eq(0).outerWidth());
-                }
-
-                // Set width of sticky table col
-                $stickyInsct.find('tr:nth-child(2) th').each(function(i) {
-                    $(this).width($t.find('tr:nth-child(2) th').eq(i).width());
-                });
-            },
-            repositionSticky = function () {
-                // Set position sticky col
-                $stickyHead.add($stickyInsct).add($stickyCol).css({
-                    left: $stickyWrap.offset().left,
-                    top: $stickyWrap.offset().top
-                });
-
-                // Return value of calculated allowance
-                var allowance = calcAllowance();
-
-                $stickyHead.find('table').css({
-                    left: -$stickyWrap.scrollLeft()
-                });
-                $stickyCol.css({
-                    top: $stickyWrap.offset().top - $w.scrollTop(),
-                    left: $stickyWrap.offset().left
-                });
-
-                // 1. Position sticky header based on viewport scrollTop
-                if ($w.scrollTop() + $countAndLegend.outerHeight() > $t.offset().top &&
-                    $w.scrollTop() + $countAndLegend.outerHeight() < $t.offset().top + $t.outerHeight() - allowance) {
-                    // When top of viewport is in the table itself
-                    $stickyHead.add($stickyInsct).css({
-                        visibility: "visible",
-                        top: $countAndLegend.outerHeight()
-                    });
-                } else if ($w.scrollTop() + $countAndLegend.outerHeight() > $t.offset().top + $t.outerHeight() - allowance) {
-                    $stickyHead.add($stickyInsct).css({
-                        visibility: "visible",
-                        top: $t.offset().top + $t.outerHeight() - allowance - $w.scrollTop()
-                    });
-                } else {
-                    // When top of viewport is above or below table
-                    $stickyHead.add($stickyInsct).css({
-                        visibility: "hidden",
-                        top: $stickyWrap.offset().top - $w.scrollTop()
-                    });
-                }
-
-                // 2. Now deal with positioning of sticky column
-                if($stickyWrap.scrollLeft() > 0) {
-                    // When left of wrapping parent is out of view
-                    $stickyCol.css({
-                        visibility: "visible",
-                        "z-index": 40
-                    });
-                } else {
-                    $stickyCol.css({
-                        visibility: "hidden",
-                        "z-index": -5
-                    });
-                }
-            },
-            calcAllowance = function () {
-                var rowHeight = 0;
-                // Calculate allowance
-                $t.find('tbody tr:lt(1)').each(function () {
-                    rowHeight += $(this).height();
-                });
-                return rowHeight + $stickyHead.height();
-            };
-
-        $t.parent('.gxaStickyTableWrap').scroll(repositionSticky);
-        $w.resize(repositionSticky).scroll(repositionSticky);
-
-        setWidths();
-        repositionSticky();
-        $countAndLegend.hcSticky({bottomEnd: calcAllowance()});
+        $(stickyWrap).scroll(stickyHeader.stickyReposition);
+        $(window).resize(stickyHeader.setWidthsAndReposition)
+                 .scroll(stickyHeader.stickyReposition)
+                 .on(
+                     "gxaResizeHeatmapAnatomogramHeader",
+                     function() {
+                         stickyHeader.setWidthAndHeight();
+                         $(countAndLegend).hcSticky("resize");
+                     }
+                 );
     },
 
     legendType: function () {
