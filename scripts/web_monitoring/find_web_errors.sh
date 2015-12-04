@@ -13,7 +13,7 @@ WEBLOG_DIR=$2
 
 today="`eval date +%Y-%m-%d`"
 process_file="/tmp/find_web_errors.$today"
-atlaslog_file="${WEBLOG_DIR}/atlas/atlas.$today.log"
+atlaslog_file="${WEBLOG_DIR}/${HOSTNAME}/atlas/atlas.$today.log"
 accesslog_file="${WEBLOG_DIR}/${HOSTNAME}/access/access.$today.log"
 catalina_file="${WEBLOG_DIR}/${HOSTNAME}/tomcat/catalina.$today.log"
 
