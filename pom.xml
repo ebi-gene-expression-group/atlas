@@ -119,13 +119,13 @@
                 <directory>src/test/resources</directory>
                 <filtering>true</filtering>
                 <excludes>
-                    <exclude>src/test/resources/arraydesigns</exclude>
-                    <exclude>src/test/resources/bioentity_properties</exclude>
-                    <exclude>src/test/resources/expdesign</exclude>
-                    <exclude>src/test/resources/magetab</exclude>
-                    <exclude>src/test/resources/mirbase</exclude>
-                    <exclude>src/test/resources/ontology</exclude>
-                    <exclude>src/test/resources/    serialized_expression</exclude>
+                    <exclude>arraydesigns/**</exclude>
+                    <exclude>bioentity_properties/**</exclude>
+                    <exclude>expdesign/**</exclude>
+                    <exclude>magetab/**</exclude>
+                    <exclude>mirbase/**</exclude>
+                    <exclude>ontology/**</exclude>
+                    <exclude>serialized_expression/**</exclude>
                 </excludes>
             </testResource>
         </testResources>
