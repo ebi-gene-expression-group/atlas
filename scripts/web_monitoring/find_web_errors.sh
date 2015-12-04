@@ -2,7 +2,7 @@
 # @author: rpetry
 # @date:   08 Feb 2013
 
-# This script allows to find the errors in atlas.log and catalina-<YYYY-MM-DD>.out along with their usage context in access.log<YYYY-MM-DD>
+# This script allows to find the errors in atlas.log and catalina.<YYYY-MM-DD>.log along with their usage context in access.<YYYY-MM-DD>.log
 if [ $# -lt 1 ]; then
         echo "Usage: $0 HOSTNAME WEBLOG_DIR"
         exit;
@@ -13,9 +13,9 @@ WEBLOG_DIR=$2
 
 today="`eval date +%Y-%m-%d`"
 process_file="/tmp/find_web_errors.$today"
-atlaslog_file="${WEBLOG_DIR}/atlas.log"
-accesslog_file="${WEBLOG_DIR}/${HOSTNAME}/access_$today.log"
-catalina_file="${WEBLOG_DIR}/${HOSTNAME}/catalina-$today.out"
+atlaslog_file="${WEBLOG_DIR}/atlas/atlas.$today.log"
+accesslog_file="${WEBLOG_DIR}/${HOSTNAME}/access/access.$today.log"
+catalina_file="${WEBLOG_DIR}/${HOSTNAME}/tomcat/catalina.$today.log"
 
 rm -rf $process_file.log
 
