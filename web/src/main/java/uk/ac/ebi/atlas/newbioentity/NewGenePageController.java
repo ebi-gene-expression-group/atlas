@@ -26,19 +26,30 @@ import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.solr.BioentityProperty;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
+import javax.inject.Inject;
+
 @Controller
 @Scope("request")
-public class    NewGenePageController extends NewBioentityPageController {
+public class NewGenePageController extends NewBioentityPageController {
+
+    private SolrQueryService solrQueryService;
+
+    @Inject
+    public NewGenePageController(SolrQueryService solrQueryService) {
+        super();
+        this.solrQueryService = solrQueryService;
+    }
 
     @Value("#{configuration['index.property_names.genepage']}")
     void setGenePagePropertyTypes(String[] propertyNames) {
@@ -47,8 +58,7 @@ public class    NewGenePageController extends NewBioentityPageController {
 
     @RequestMapping(value = "/new/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
-
-        if (!analyticsIndexSearchDAO.isValidBioentityIdentifier(identifier)) {
+        if (!isSingleGene(identifier)) {
             throw new ResourceNotFoundException("No gene matching " + identifier);
         }
 
@@ -75,4 +85,8 @@ public class    NewGenePageController extends NewBioentityPageController {
         return differentialAnalyticsSearchService.fetchDifferentialResultsForIdentifier(GeneQuery.create(identifier));
     }
 
+    private boolean isSingleGene(String identifier) {
+        BioentityProperty bioentityProperty = solrQueryService.findBioentityIdentifierProperty(identifier);
+        return bioentityProperty != null;
+    }
 }
