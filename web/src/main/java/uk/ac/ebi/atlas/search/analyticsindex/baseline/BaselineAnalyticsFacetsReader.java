@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +65,7 @@ public class BaselineAnalyticsFacetsReader {
 
         List<Map<String, Object>> results = JsonPath.read(json, FACET_TREE_PATH);
 
-        Map<String,List<FacetTree>> facetTree = Maps.newLinkedHashMap();
+        Map<String, List<FacetTree>> facetTree = Maps.newLinkedHashMap();
 
         for (Map<String, Object> experiment : results) {
             String species = (String) experiment.get("val");
@@ -74,7 +75,7 @@ public class BaselineAnalyticsFacetsReader {
             @SuppressWarnings("unchecked")
             List<Map<String, Object>> buckets = (List<Map<String, Object>>) factorRoot.get("buckets");
 
-            List<FacetTree> facetTreeList = Lists.newArrayList();
+            List<FacetTree> facetTreeList = facetTree.containsKey(species) ? facetTree.get(species) : new ArrayList<FacetTree>();
             for(Map<String, Object> defaultQueryFactorType : buckets)  {
                 String key = (String) defaultQueryFactorType.get("val");
                 String name = Factor.convertToLowerCase(key);
