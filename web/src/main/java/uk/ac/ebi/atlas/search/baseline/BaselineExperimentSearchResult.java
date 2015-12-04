@@ -31,4 +31,12 @@ public class BaselineExperimentSearchResult {
     public SortedSet<Factor> getFactorsAcrossAllExperiments() {
         return factorsAcrossAllExperiments;
     }
+
+    public boolean containsFactorOfType(String type) {
+        for (Factor factor : factorsAcrossAllExperiments) {
+            if (factor.getType().equals(type)) return true;
+        }
+
+        return false;
+    }
 }

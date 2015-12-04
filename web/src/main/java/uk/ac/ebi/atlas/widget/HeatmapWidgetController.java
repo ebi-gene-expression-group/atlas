@@ -99,7 +99,7 @@ public final class HeatmapWidgetController {
 
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
-    //TODO: refactor, too many colloborators
+    //TODO: refactor, too many collaborators
     @Inject
     private HeatmapWidgetController(ExperimentTrader experimentTrader,
                                     ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService,
@@ -220,8 +220,11 @@ public final class HeatmapWidgetController {
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
 
         ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);
-        addAnatomogram(allSvgPathIds, model, ensemblSpecies);
-        setToggleImageButton(model, ensemblSpecies);
+
+        if (searchResult.containsFactorOfType("ORGANISM_PART")) {
+            addAnatomogram(allSvgPathIds, model, ensemblSpecies);
+            setToggleImageButton(model, ensemblSpecies);
+        }
 
         BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
         addJsonForHeatMap(experimentProfiles, filteredAssayGroupFactors, orderedFactors, model);
