@@ -52,6 +52,8 @@
                 <entry key="hierarchicalClusteringPdfViewHelper" value-ref="hierarchicalClusteringPdfViewHelper"/>
                 <!-- heatmap-matrix-searchresults-diffanalytics.jsp -->
                 <entry key="colourGradient" value-ref="colourGradient"/>
+                <!-- request-preferences.jsp -->
+                <entry key="stringUtil" value-ref="stringUtil"/>
             </map>
         </property>
     </bean>
