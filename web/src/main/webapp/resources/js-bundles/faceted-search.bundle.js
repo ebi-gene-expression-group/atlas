@@ -46458,7 +46458,7 @@ webpackJsonp([2],[
 	            removeSelection(query.select, facet, facetItem);
 	        }
 	        pushQueryIntoBrowserHistory(false);
-	        filterAndRenderResults(checked, facet, facetItem);
+	        filterAndRenderResults(facetItem);
 	    }
 	
 	    function addSelection(select, facet, facetItem) {
@@ -46492,8 +46492,7 @@ webpackJsonp([2],[
 	
 	
 	
-	    function filterAndRenderResults(checked, facetChecked, facetItemChecked) {
-	        var disabledFacets = resultsData["commonFacetItems"] ? resultsData["commonFacetItems"] : {};
+	    function filterAndRenderResults(facetItemChecked) {
 	
 	        var filteredResults = resultsData.results.filter(function(result) {
 	
@@ -46530,34 +46529,54 @@ webpackJsonp([2],[
 	            return true;
 	        });
 	
-	        var facetTypes = ["kingdom", "species", "experimentType", "factors", "numReplicates", "regulation"];
 	        var disabledCheckedFacets = {};
-	        for (var facetIndex in facetTypes) {
-	            var facetItem = facetTypes[facetIndex];
+	        var disabledUncheckedFacets = {};
+	
+	        for (var facet in facetsTreeData) {
+	            var facetItems = facetsTreeData[facet];
+	
 	            var facetsInCommon = {};
 	            var facetValue = [];
 	            var sameValue = true;
-	            for (var index in filteredResults) {
-	                var filtered = filteredResults[index];
-	                var facet = filtered[facetItem];
 	
-	                if(!facetsInCommon.hasOwnProperty(facetItem)) { //if is empty the first time
-	                    facetValue.push(facet);
-	                    facetsInCommon[facetItem] = facetValue;
-	                }
-	                if(facetsInCommon.hasOwnProperty(facetItem) && facetsInCommon[facetItem].toString() !== facet) {
-	                    sameValue = false;
+	            for (var item in facetItems) {
+	                var facetItem = facetItems[item];
+	                var existsFacet = false;
+	                var facetNotExistsValue = [];
+	
+	                for (var index in filteredResults) {
+	                    var filtered = filteredResults[index];
+	                    var facetResults = filtered[facet];
+	
+	                    if (!facetsInCommon.hasOwnProperty(facet)) { //if is empty the first time
+	                        facetValue.push(facetResults);
+	                        facetsInCommon[facet] = facetValue;
+	                    }
+	
+	                    if (facetsInCommon.hasOwnProperty(facet) && facetsInCommon[facet].toString() !== facetItem.name) {
+	                        sameValue = false;
+	                    }
+	
+	                    if (facetResults === facetItem.name ) {
+	                        existsFacet = true;
+	                    }
 	                }
 	
-	            }
-	            if(sameValue && facetItemChecked != facetValue.toString()) {
-	                disabledCheckedFacets[facetItem] = facetValue;
+	                if (sameValue && facetItemChecked != facetValue.toString()) {
+	                    disabledCheckedFacets[facet] = facetValue;
+	                }
+	
+	                if (!existsFacet) { //unchecked and grey out facetItems with no results
+	                    facetNotExistsValue.push(facetItem.name);
+	                    disabledUncheckedFacets[facet] = facetNotExistsValue;
+	                }
 	            }
 	        }
 	
 	        React.render(
 	            React.createElement(
-	                DifferentialFacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked, disabledFacets: disabledCheckedFacets}
+	                DifferentialFacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked,
+	                    disabledCheckedFacets: disabledCheckedFacets, disabledUncheckedFacets: disabledUncheckedFacets}
 	            ),
 	            facetsElement
 	        );
@@ -46607,7 +46626,8 @@ webpackJsonp([2],[
 	        /*
 	        { "species" : { "homo sapiens": true, "arabidopsis thaliana": true }, "regulation": {"UP": true } }
 	        */
-	        disabledFacets: React.PropTypes.object.isRequired,
+	        disabledCheckedFacets: React.PropTypes.object.isRequired,
+	        disabledUncheckedFacets: React.PropTypes.object.isRequired,
 	        checkedFacets: React.PropTypes.object,
 	        setChecked: React.PropTypes.func.isRequired
 	    },
@@ -46620,7 +46640,8 @@ webpackJsonp([2],[
 	        var facets = Object.keys(this.props.facets).map(function (facet) {
 	            return React.createElement(Facet, {key: facet, facetName: facet, facetItems: this.props.facets[facet], 
 	                checkedFacetItems: this.props.checkedFacets && this.props.checkedFacets[facet], 
-	                setChecked: this._setChecked, disabledFacetItems: this.props.disabledFacets[facet] ? this.props.disabledFacets[facet] : []}
+	                setChecked: this._setChecked, disabledFacetItems: this.props.disabledCheckedFacets[facet] ? this.props.disabledCheckedFacets[facet] : [], 
+	                disabledUncheckedFacetItems: this.props.disabledUncheckedFacets[facet] ? this.props.disabledUncheckedFacets[facet] : []}
 	            );
 	        }.bind(this));
 	
@@ -46643,6 +46664,7 @@ webpackJsonp([2],[
 	        })).isRequired,
 	
 	        disabledFacetItems: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+	        disabledUncheckedFacetItems: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
 	        // eg: { "rnaseq_mrna_differential": true, "microarray_1colour_mrna_differential": true }
 	        checkedFacetItems: React.PropTypes.object,
 	        setChecked: React.PropTypes.func.isRequired
@@ -46674,9 +46696,11 @@ webpackJsonp([2],[
 	    render: function () {
 	        var facetItems = this.props.facetItems.map(function (facetItem) {
 	            var disabled = this.props.disabledFacetItems.indexOf(facetItem.name) != -1;
+	            var disabledUnchecked = this.props.disabledUncheckedFacetItems.indexOf(facetItem.name) != -1;
+	
 	            return React.createElement(FacetItem, {key: facetItem.name, name: facetItem.name, value: facetItem.value, 
 	                checked: this.props.checkedFacetItems && this.props.checkedFacetItems[facetItem.name], 
-	                setChecked: this._setChecked, disabled: disabled}
+	                setChecked: this._setChecked, disabled: disabled, disabledUnchecked: disabledUnchecked}
 	            );
 	
 	        }.bind(this));
@@ -46700,7 +46724,8 @@ webpackJsonp([2],[
 	        value: React.PropTypes.string.isRequired,
 	        checked: React.PropTypes.bool,
 	        setChecked: React.PropTypes.func.isRequired,
-	        disabled: React.PropTypes.bool.isRequired
+	        disabled: React.PropTypes.bool.isRequired,
+	        disabledUnchecked: React.PropTypes.bool.isRequired
 	    },
 	
 	    _setChecked: function () {
@@ -46708,10 +46733,11 @@ webpackJsonp([2],[
 	    },
 	
 	    render: function () {
-	        var className=this.props.disabled ? "gxaDisabledFacet" : "";
+	        var className=this.props.disabled || this.props.disabledUnchecked ? "gxaDisabledFacet" : "";
+	        var _checked = this.props.checked || this.props.disabled;
 	        return (
 	            React.createElement("li", {className: className}, 
-	                React.createElement("input", {type: "checkbox", checked: this.props.checked || this.props.disabled, onChange: this._setChecked, disabled: this.props.disabled}), 
+	                React.createElement("input", {type: "checkbox", checked: _checked, onChange: this._setChecked, disabled: this.props.disabled || this.props.disabledUnchecked}), 
 	                this.props.value
 	            )
 	        );
