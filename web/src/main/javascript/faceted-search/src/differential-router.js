@@ -121,7 +121,7 @@ module.exports = function (options) {
             removeSelection(query.select, facet, facetItem);
         }
         pushQueryIntoBrowserHistory(false);
-        filterAndRenderResults();
+        filterAndRenderResults(checked, facet, facetItem);
     }
 
     function addSelection(select, facet, facetItem) {
@@ -155,15 +155,8 @@ module.exports = function (options) {
 
 
 
-    function filterAndRenderResults() {
+    function filterAndRenderResults(checked, facetChecked, facetItemChecked) {
         var disabledFacets = resultsData["commonFacetItems"] ? resultsData["commonFacetItems"] : {};
-
-        React.render(
-            React.createElement(
-                DifferentialFacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked, disabledFacets: disabledFacets}
-            ),
-            facetsElement
-        );
 
         var filteredResults = resultsData.results.filter(function(result) {
 
@@ -199,6 +192,38 @@ module.exports = function (options) {
 
             return true;
         });
+
+        var facetTypes = ["kingdom", "species", "experimentType", "factors", "numReplicates", "regulation"];
+        var disabledCheckedFacets = {};
+        for (var facetIndex in facetTypes) {
+            var facetItem = facetTypes[facetIndex];
+            var facetsInCommon = {};
+            var facetValue = [];
+            var sameValue = true;
+            for (var index in filteredResults) {
+                var filtered = filteredResults[index];
+                var facet = filtered[facetItem];
+
+                if(!facetsInCommon.hasOwnProperty(facetItem)) { //if is empty the first time
+                    facetValue.push(facet);
+                    facetsInCommon[facetItem] = facetValue;
+                }
+                if(facetsInCommon.hasOwnProperty(facetItem) && facetsInCommon[facetItem].toString() !== facet) {
+                    sameValue = false;
+                }
+
+            }
+            if(sameValue && facetItemChecked != facetValue.toString()) {
+                disabledCheckedFacets[facetItem] = facetValue;
+            }
+        }
+
+        React.render(
+            React.createElement(
+                DifferentialFacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked, disabledFacets: disabledCheckedFacets}
+            ),
+            facetsElement
+        );
 
         React.render(
             React.createElement(
