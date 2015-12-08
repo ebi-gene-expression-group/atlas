@@ -27,6 +27,10 @@
     color: gray;
 }
 
+.gxaFacetsContainer .gxaDisabledCheckbox {
+    color: lightgray;
+}
+
 .gxaSpeciesFacet li span {
     font-style: italic;
 }

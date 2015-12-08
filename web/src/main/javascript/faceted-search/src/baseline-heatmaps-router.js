@@ -42,41 +42,9 @@ module.exports = function (options) {
         select    : {}
     };
 
-
-    var $showAnatomogramsCheckbox = $("#showAnatomogramsCheckbox");
-    $showAnatomogramsCheckbox.change(function() {
-        if ($(".gxaBaselineHeatmap").length > 0) {
-            var LEFT_DELTA = 270,
-                ANIMATION_DELAY = 200;
-
-            var $stickyTableElements = $(".gxaStickyTableIntersect").add(".gxaStickyTableColumn").add(".gxaStickyTableHeader"),
-                $innerHeatmaps = $(".gxaInnerHeatmap"),
-                $countAndLegend = $(".gxaHeatmapCountAndLegend");
-
-            var stickyTableElementsLeft = parseInt($stickyTableElements.css("left")),
-                innerHeatmapMarginLeft  = parseInt($innerHeatmaps.css("margin-left")),
-                countAndLegendWidth     = parseInt($countAndLegend.css("width"));
-
-            if ($showAnatomogramsCheckbox.is(":checked")) {
-                $stickyTableElements.animate({"left": stickyTableElementsLeft + LEFT_DELTA}, ANIMATION_DELAY, "swing");
-                $innerHeatmaps.animate({"margin-left": innerHeatmapMarginLeft + LEFT_DELTA}, ANIMATION_DELAY, "swing");
-                //$(".gxaAside").show(
-                //    ANIMATION_DELAY, "swing",
-                //    function() { $(".gxaAside").trigger("gxaAnatomogramSticky"); }
-                //);
-                $(".gxaAside").show(ANIMATION_DELAY, "swing");
-                $countAndLegend.add(".gxaStickyTableHeader").css("width", countAndLegendWidth - LEFT_DELTA);
-            } else {
-                $stickyTableElements.animate({"left": stickyTableElementsLeft - LEFT_DELTA}, ANIMATION_DELAY, "swing");
-                $innerHeatmaps.animate({"margin-left": innerHeatmapMarginLeft - LEFT_DELTA}, ANIMATION_DELAY, "swing");
-                $(".gxaAside").hide(ANIMATION_DELAY, "swing");
-                $countAndLegend.add(".gxaStickyTableHeader").css("width", countAndLegendWidth + LEFT_DELTA);
-            }
-        }
-    });
-
     var selectedSpecies = options.selectedSpecies,
         facetsTreeData = options.facetsTreeData;
+
     if (selectedSpecies && facetsTreeData.hasOwnProperty(selectedSpecies)) {
         var selectedSpeciesFactors = facetsTreeData[selectedSpecies];
         for(var selectedSpeciesFactor in selectedSpeciesFactors) {
@@ -87,6 +55,10 @@ module.exports = function (options) {
     } else {
         parseSelectedFacetsFromLocation();
     }
+
+    var anatomogramsInManualMode = false,
+        showAnatomogramsManual, showAnatomograms;
+    showAnatomogramsManual = showAnatomograms = organismPartInQuerySelect();
 
     pushQueryIntoBrowserHistory(true);
     renderQueryPage();
@@ -109,17 +81,36 @@ module.exports = function (options) {
         }
     }
 
+    function organismPartInQuerySelect() {
+        for (var species in query.select) {
+            if (query.select.hasOwnProperty(species)) {
+                if (query.select[species].hasOwnProperty("ORGANISM_PART") && query.select[species]["ORGANISM_PART"]) {
+                        return true;
+                    }
+                }
+            }
+        return false;
+    }
+
+    function toggleAnatomograms() {
+        anatomogramsInManualMode = true;
+        showAnatomogramsManual = showAnatomograms = !showAnatomograms;
+
+        renderQueryPage();
+    }
+
     function renderQueryPage() {
         React.render(
             React.createElement(
-                FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked}
+                FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked,
+                    toggleAnatomograms: toggleAnatomograms, showAnatomograms: showAnatomograms, disableAnatomogramsCheckbox: !organismPartInQuerySelect()}
             ),
             facetsElement
         );
 
         React.render(
             React.createElement(
-                Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms:$("#" + options.showAnatomogramsInput).is(":checked"), atlasHost: host}
+                Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms: showAnatomograms, atlasHost: host}
             ),
             heatmapsElement, triggerScrollEvent
         );
@@ -165,6 +156,13 @@ module.exports = function (options) {
         } else {
             removeSelection(query.select, species, factor);
         }
+
+        if (anatomogramsInManualMode) {
+            showAnatomograms = showAnatomogramsManual && organismPartInQuerySelect();
+        } else {
+            showAnatomograms = organismPartInQuerySelect();
+        }
+
         pushQueryIntoBrowserHistory(false);
         renderQueryPage();
     }

@@ -14,8 +14,8 @@ var BaselineFacetsTree = React.createClass({
     propTypes: {
         /*
         {
-            "homo sapiens" : [ {"factor": "CELL_LINE", "source": "Cell line"}, {"factor": "ORGANISM_PART", "source": "Tissue"} ],
-            "mus musculus" : [ {"factor": "CELL_LINE", "source": "Cell line"}, {"factor": "INDIVIDUAL", "source": "Individual"} ]
+            "homo sapiens" : [ {"name": "CELL_LINE", "value": "Cell line"}, {"name": "ORGANISM_PART", "value": "Tissue"} ],
+            "mus musculus" : [ {"name": "CELL_LINE", "value": "Cell line"}, {"name": "INDIVIDUAL", "value": "Individual"} ]
         }
         */
         facets: React.PropTypes.object.isRequired,
@@ -23,7 +23,10 @@ var BaselineFacetsTree = React.createClass({
         { "homo sapiens" : { "CELL_LINE": true, "ORGANISM_PART": true } }
         */
         checkedFacets: React.PropTypes.object,
-        setChecked: React.PropTypes.func.isRequired
+        setChecked: React.PropTypes.func.isRequired,
+        showAnatomograms: React.PropTypes.bool.isRequired,
+        toggleAnatomograms: React.PropTypes.func.isRequired,
+        disableAnatomogramsCheckbox: React.PropTypes.bool.isRequired
     },
 
     _setChecked: function (checked, facet, facetItem) {
@@ -39,7 +42,12 @@ var BaselineFacetsTree = React.createClass({
         }.bind(this));
 
         return (
-            <div className="hidden-xs gxaFacetsContainer"><h3>Filter your results</h3>
+            <div className="hidden-xs gxaFacetsContainer">
+                <h5 style={{padding: 0}}>
+                    <input type="checkbox" checked={this.props.showAnatomograms} onChange={this.props.toggleAnatomograms} disabled={this.props.disableAnatomogramsCheckbox}/>
+                    <span className={this.props.disableAnatomogramsCheckbox ? "gxaDisabledCheckbox" : ""}>Show anatomograms</span>
+                </h5>
+                <h3>Filter your results</h3>
                 {facets}
             </div>
         );

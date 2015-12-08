@@ -46,9 +46,9 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane" id="information"><%@ include file="bioentity-information.jsp" %></div>
-        <div role="tabpanel" class="tab-pane" id="baseline"><%@ include file="baseline-expression.jsp" %></div>
-        <div role="tabpanel" class="tab-pane" id="differential"><%@ include file="differential-expression.jsp" %></div>
+        <div role="tabpanel" class="tab-pane fade" id="information"><%@ include file="bioentity-information.jsp" %></div>
+        <div role="tabpanel" class="tab-pane fade" id="baseline"><%@ include file="baseline-expression.jsp" %></div>
+        <div role="tabpanel" class="tab-pane fade" id="differential"><%@ include file="differential-expression.jsp" %></div>
     </div>
 
 </section>

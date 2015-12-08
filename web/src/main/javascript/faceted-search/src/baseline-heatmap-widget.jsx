@@ -17,7 +17,7 @@ var BaselineHeatmapWidget = React.createClass({
         species: React.PropTypes.string.isRequired,
         factor: React.PropTypes.string.isRequired,
         showAnatomogram: React.PropTypes.bool.isRequired,
-        showHeatmapLabel: React.PropTypes.bool.isRequired
+        showHeatmapLabel: React.PropTypes.bool.isRequired,
     },
 
     componentDidMount: function() {

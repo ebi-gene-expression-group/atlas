@@ -12,13 +12,6 @@
 
 <c:set var="thisPage" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
-<div class="grid_24 alpha omega">
-    <h5 style="padding: 0">
-    <input type="checkbox" checked="true" name="anatomogram" value="showAnatomogram" id="showAnatomogramsCheckbox">
-        <label for="showAnatomogramsCheckbox">Show anatomograms</label>
-    </h5>
-</div>
-
 <div class="grid_5 alpha" id="gxaBaselineFacetsContainerDiv"></div>
 <div class="grid_19 omega" id="gxaBaselineResultsContainerDiv"></div>
 
