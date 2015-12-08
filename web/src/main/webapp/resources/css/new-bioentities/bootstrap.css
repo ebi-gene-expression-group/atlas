@@ -16,6 +16,7 @@
     padding-left: 0;
     margin-bottom: 0;
     list-style: none;
+    font-size: larger;
 }
 .nav > li {
     position: relative;
@@ -77,6 +78,7 @@
     background-color: #fff;
     border: 1px solid #ddd;
     border-bottom-color: transparent;
+    font-weight: bolder;
 }
 
 /*tab content*/
