@@ -56,7 +56,7 @@ public class DifferentialExperiment extends Experiment {
 
     public Contrast getContrast(String contrastId) {
         Contrast contrast = contrastsById.get(contrastId);
-        checkArgument(contrast != null, "Cannot find a contrast with contrastId: " + contrastId);
+        checkArgument(contrast != null, this.getAccession() + ": cannot find a contrast with contrastId: " + contrastId);
         return contrast;
     }
 
