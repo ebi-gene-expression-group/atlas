@@ -12866,6 +12866,7 @@ webpackJsonp([3],[
 	                            serializedFilterFactors: profile.serializedFilterFactors, 
 	                            heatmapConfig: this.props.heatmapConfig, 
 	                            atlasBaseURL: this.props.atlasBaseURL, 
+	                            linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
 	                            displayLevels: this.props.displayLevels, 
 	                            renderExpressionCells: this.props.renderExpressionCells, 
 	                            hoverColumnCallback: this.props.hoverColumnCallback, 
@@ -12881,6 +12882,7 @@ webpackJsonp([3],[
 	                            expressions: profile.expressions, 
 	                            heatmapConfig: this.props.heatmapConfig, 
 	                            atlasBaseURL: this.props.atlasBaseURL, 
+	                            linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
 	                            displayLevels: this.props.displayLevels, 
 	                            showGeneSetProfiles: this.props.showGeneSetProfiles, 
 	                            selectedRadioButton: this.props.selectedRadioButton, 
@@ -12907,6 +12909,10 @@ webpackJsonp([3],[
 	
 	
 	var GeneProfileRow = React.createClass({displayName: "GeneProfileRow",
+	    propTypes: {
+	        atlasBaseURL: React.PropTypes.string.isRequired,
+	        linksAtlasBaseURL: React.PropTypes.string.isRequired
+	    },
 	
 	    getInitialState: function () {
 	        return ({hover:false, selected:false, levels: this.props.displayLevels});
@@ -43792,9 +43798,9 @@ webpackJsonp([3],[
 	    React.render(
 	        React.createElement(
 	            HeatmapAnatomogramContainer,
-	            {   type: type, heatmapConfig: heatmapConfig, isWidget: false,
-	                anatomogram: anatomogramData, columnHeaders: columnHeaders, multipleColumnHeaders: multipleColumnHeaders,
-	                profiles: profiles, geneSetProfiles: geneSetProfiles, atlasBaseURL: "/gxa", linksAtlasBaseURL: "/gxa"}
+	            {type: type, heatmapConfig: heatmapConfig, isWidget: false,
+	             anatomogram: anatomogramData, columnHeaders: columnHeaders, multipleColumnHeaders: multipleColumnHeaders,
+	             profiles: profiles, geneSetProfiles: geneSetProfiles, atlasBaseURL: "/gxa", linksAtlasBaseURL: "/gxa"}
 	        ),
 	        document.getElementById("gxaExperimentPageHeatmapAnatomogram")
 	    );

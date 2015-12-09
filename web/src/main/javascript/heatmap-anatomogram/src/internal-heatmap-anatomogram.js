@@ -40,9 +40,9 @@ function drawHeatmap (options) {
     React.render(
         React.createElement(
             HeatmapAnatomogramContainer,
-            {   type: type, heatmapConfig: heatmapConfig, isWidget: false,
-                anatomogram: anatomogramData, columnHeaders: columnHeaders, multipleColumnHeaders: multipleColumnHeaders,
-                profiles: profiles, geneSetProfiles: geneSetProfiles, atlasBaseURL: "/gxa", linksAtlasBaseURL: "/gxa"}
+            {type: type, heatmapConfig: heatmapConfig, isWidget: false,
+             anatomogram: anatomogramData, columnHeaders: columnHeaders, multipleColumnHeaders: multipleColumnHeaders,
+             profiles: profiles, geneSetProfiles: geneSetProfiles, atlasBaseURL: "/gxa", linksAtlasBaseURL: "/gxa"}
         ),
         document.getElementById("gxaExperimentPageHeatmapAnatomogram")
     );
