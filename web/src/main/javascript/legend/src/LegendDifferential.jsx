@@ -29,20 +29,22 @@ var LegendDifferential = React.createClass({
         return (
             <div className="gxaLegend">
                 <div style={{display: "inline-table"}}>
-                    {!isNaN(this.props.minDownLevel) && !isNaN(this.props.maxDownLevel) ?
+                    {isNaN(this.props.minDownLevel) && isNaN(this.props.maxDownLevel) ?
+                        null :
                         <LegendRow lowExpressionLevel={this.props.minDownLevel}
                                    highExpressionLevel={this.props.maxDownLevel}
                                    lowValueColour="#C0C0C0"
                                    highValueColour="#0000FF"/>
-                        : null }
-                    {!isNaN(this.props.minUpLevel) && !isNaN(this.props.maxUpLevel) ?
+                    }
+                    {isNaN(this.props.minUpLevel) && isNaN(this.props.maxUpLevel) ?
+                        null :
                         <LegendRow lowExpressionLevel={this.props.minUpLevel}
                                    highExpressionLevel={this.props.maxUpLevel}
                                    lowValueColour="#FFAFAF"
                                    highValueColour="#FF0000"/>
-                        : null }
+                    }
                 </div>
-                <div ref="legendHelp" data-help-loc="#gradient-differential" className="gxaLegendHelp"/>
+                <div ref="legendHelp" data-help-loc="#gradient-differential" className="gxaLegendHelp"></div>
             </div>
         );
     },

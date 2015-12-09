@@ -41392,18 +41392,20 @@ webpackJsonp([3],[
 	        return (
 	            React.createElement("div", {className: "gxaLegend"}, 
 	                React.createElement("div", {style: {display: "inline-table"}}, 
-	                    !isNaN(this.props.minDownLevel) && !isNaN(this.props.maxDownLevel) ?
+	                    isNaN(this.props.minDownLevel) && isNaN(this.props.maxDownLevel) ?
+	                        null :
 	                        React.createElement(LegendRow, {lowExpressionLevel: this.props.minDownLevel, 
 	                                   highExpressionLevel: this.props.maxDownLevel, 
 	                                   lowValueColour: "#C0C0C0", 
-	                                   highValueColour: "#0000FF"})
-	                        : null, 
-	                    !isNaN(this.props.minUpLevel) && !isNaN(this.props.maxUpLevel) ?
+	                                   highValueColour: "#0000FF"}), 
+	                    
+	                    isNaN(this.props.minUpLevel) && isNaN(this.props.maxUpLevel) ?
+	                        null :
 	                        React.createElement(LegendRow, {lowExpressionLevel: this.props.minUpLevel, 
 	                                   highExpressionLevel: this.props.maxUpLevel, 
 	                                   lowValueColour: "#FFAFAF", 
 	                                   highValueColour: "#FF0000"})
-	                        : null
+	                    
 	                ), 
 	                React.createElement("div", {ref: "legendHelp", "data-help-loc": "#gradient-differential", className: "gxaLegendHelp"})
 	            )
