@@ -64,19 +64,17 @@
     <tbody>
 
     <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList"--%>
+    <%--@elvariable id="diffAnalytics" type="uk.ac.ebi.atlas.search.diffanalytics.DiffAnalytics"--%>
     <c:forEach items="${bioentities}" var="diffAnalytics">
         <tr>
-         <c:if test="${showMultiGeneColumns}">
-            <td class="gxaHorizontalHeaderCell">
-                <a href="genes/${diffAnalytics.bioentityId}">${diffAnalytics.bioentityName}</a>
-            </td>
-         </c:if>
-          <c:if test="${showMultiGeneColumns}">
-            <td class="gxaHorizontalHeaderCell">
-                ${diffAnalytics.species}
-            </td>
-          </c:if>
-
+            <c:if test="${showMultiGeneColumns}">
+                <td class="gxaHorizontalHeaderCell">
+                    <a href="genes/${diffAnalytics.bioentityId}">${diffAnalytics.bioentityName}</a>
+                </td>
+            </c:if>
+            <c:if test="${showMultiGeneColumns}">
+                <td class="gxaHorizontalHeaderCell">${diffAnalytics.species}</td>
+            </c:if>
             <td class="gxaHorizontalHeaderCell contrastNameCell"
                 data-experiment-accession="${diffAnalytics.experimentAccession}"
                 data-contrast-id="${diffAnalytics.contrastId}">
@@ -84,12 +82,9 @@
             </td>
 
             <c:set var="expression" value="${diffAnalytics.expression}"/>
-
-            <c:set var="expressionLevel"
-                   value="${expression.level}"/>
+            <c:set var="expressionLevel" value="${expression.level}"/>
 
             <c:if test="${! empty expressionLevel}">
-
                 <c:choose>
                     <%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
                     <c:when test="${expression.overExpressed}">
@@ -109,6 +104,7 @@
             <td style="${style}">
 
                 <c:if test="${not empty expressionLevel}">
+                    <%--@elvariable id="foldChangeRounder" type="uk.ac.ebi.atlas.profiles.differential.viewmodel.FoldChangeRounder"--%>
                     <c:set var="foldChange" value="${foldChangeRounder.format(expression.foldChange)}"/>
 
                     <div class="gxaHideCell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}

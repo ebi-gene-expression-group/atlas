@@ -54,6 +54,9 @@
                 <entry key="colourGradient" value-ref="colourGradient"/>
                 <!-- request-preferences.jsp -->
                 <entry key="stringUtil" value-ref="stringUtil"/>
+                <!-- heatmap-matrix-searchresults-diffanalytics.jsp -->
+                <entry key="foldChangeRounder" value-ref="foldChangeRounder"/>
+                <!--<entry key="type" value-ref="experimentType"/>-->
             </map>
         </property>
     </bean>
