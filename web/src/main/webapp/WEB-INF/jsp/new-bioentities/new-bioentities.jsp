@@ -70,12 +70,14 @@
     });
     $baselineTabLink.click(function() {
         window.location.hash = "#baseline";
-        if (!ie9) {
-            window.dispatchEvent(new Event("scroll"));
-        }
     });
     $differentialTabLink.click(function() {
         window.location.hash = "#differential";
+    });
+
+    $baselineTabLink.on("shown.bs.tab", function() {
+        window.dispatchEvent(new Event("scroll"));
+        window.dispatchEvent(new Event("gxaResizeHeatmapAnatomogramHeader"));
     });
 
     setInitialHash();
