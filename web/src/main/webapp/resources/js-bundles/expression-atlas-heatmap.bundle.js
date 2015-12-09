@@ -12513,13 +12513,11 @@ webpackJsonp([1],[
 	
 	    legendType: function () {
 	        return (this.props.type.isBaseline || this.props.type.isMultiExperiment ?
-	            React.createElement(Legend.LegendBaseline, {displayLevels: this.state.displayLevels, 
-	                                   atlasBaseURL: this.props.atlasBaseURL, 
+	            React.createElement(Legend.LegendBaseline, {atlasBaseURL: this.props.atlasBaseURL, 
 	                                   minExpressionLevel: this.state.profiles.minExpressionLevel.toString(), 
 	                                   maxExpressionLevel: this.state.profiles.maxExpressionLevel.toString(), 
 	                                   isMultiExperiment: this.props.type.isMultiExperiment ? true : false}) :
-	            React.createElement(Legend.LegendDifferential, {displayLevels: this.state.displayLevels, 
-	                                       atlasBaseURL: this.props.atlasBaseURL, 
+	            React.createElement(Legend.LegendDifferential, {atlasBaseURL: this.props.atlasBaseURL, 
 	                                       minDownLevel: this.state.profiles.minDownLevel.toString(), 
 	                                       maxDownLevel: this.state.profiles.maxDownLevel.toString(), 
 	                                       minUpLevel: this.state.profiles.minUpLevel.toString(), 
@@ -41809,7 +41807,6 @@ webpackJsonp([1],[
 	var LegendDifferential = React.createClass({displayName: "LegendDifferential",
 	
 	    propTypes: {
-	        displayLevels: React.PropTypes.bool.isRequired,
 	        atlasBaseURL: React.PropTypes.string.isRequired,
 	        minDownLevel: React.PropTypes.string.isRequired,
 	        maxDownLevel: React.PropTypes.string.isRequired,
@@ -41822,15 +41819,13 @@ webpackJsonp([1],[
 	            React.createElement("div", {className: "gxaLegend"}, 
 	                React.createElement("div", {style: {display: "inline-table"}}, 
 	                    !isNaN(this.props.minDownLevel) && !isNaN(this.props.maxDownLevel) ?
-	                        React.createElement(LegendRow, {displayLevels: this.props.displayLevels, 
-	                                   lowExpressionLevel: this.props.minDownLevel, 
+	                        React.createElement(LegendRow, {lowExpressionLevel: this.props.minDownLevel, 
 	                                   highExpressionLevel: this.props.maxDownLevel, 
 	                                   lowValueColour: "#C0C0C0", 
 	                                   highValueColour: "#0000FF"})
 	                        : null, 
 	                    !isNaN(this.props.minUpLevel) && !isNaN(this.props.maxUpLevel) ?
-	                        React.createElement(LegendRow, {displayLevels: this.props.displayLevels, 
-	                                   lowExpressionLevel: this.props.minUpLevel, 
+	                        React.createElement(LegendRow, {lowExpressionLevel: this.props.minUpLevel, 
 	                                   highExpressionLevel: this.props.maxUpLevel, 
 	                                   lowValueColour: "#FFAFAF", 
 	                                   highValueColour: "#FF0000"})
@@ -41876,8 +41871,7 @@ webpackJsonp([1],[
 	        lowValueColour: React.PropTypes.string.isRequired,
 	        highValueColour: React.PropTypes.string.isRequired,
 	        lowExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired,    // Baseline legend rows can be a React <span> element returned by NumberFormat
-	        highExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired,
-	        displayLevels: React.PropTypes.bool.isRequired
+	        highExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired
 	    },
 	
 	    render: function () {
@@ -41890,11 +41884,11 @@ webpackJsonp([1],[
 	
 	        return (
 	            React.createElement("div", {style: {display: "table-row"}}, 
-	                React.createElement("div", {style: this.props.displayLevels ? {} : {visibility: "hidden"}, className: "gxaGradientLevel gxaGradientLevelMin"}, this.props.lowExpressionLevel), 
+	                React.createElement("div", {className: "gxaGradientLevel gxaGradientLevelMin"}, this.props.lowExpressionLevel), 
 	                React.createElement("div", {style: {display: "table-cell"}}, 
 	                    React.createElement("span", {className: "gxaGradientColour", style: {backgroundImage: backgroundImage, filter: lt_ie10_filter}})
 	                ), 
-	                React.createElement("div", {style: this.props.displayLevels ? {} : {visibility: "hidden"}, className: "gxaGradientLevel gxaGradientLevelMax"}, this.props.highExpressionLevel)
+	                React.createElement("div", {className: "gxaGradientLevel gxaGradientLevelMax"}, this.props.highExpressionLevel)
 	            )
 	        );
 	    }
@@ -42182,7 +42176,6 @@ webpackJsonp([1],[
 	var LegendBaseline = React.createClass({displayName: "LegendBaseline",
 	
 	    propTypes: {
-	        displayLevels: React.PropTypes.bool.isRequired,
 	        atlasBaseURL: React.PropTypes.string.isRequired,
 	        minExpressionLevel: React.PropTypes.string.isRequired,
 	        maxExpressionLevel: React.PropTypes.string.isRequired,
@@ -42195,8 +42188,7 @@ webpackJsonp([1],[
 	        return (
 	            React.createElement("div", {className: "gxaHeatmapLegendGradient"}, 
 	                React.createElement("div", {style: {display: "inline-table"}}, 
-	                    React.createElement(LegendRow, {displayLevels: this.props.displayLevels, 
-	                               lowExpressionLevel: NumberFormat.baselineExpression(this.props.minExpressionLevel), 
+	                    React.createElement(LegendRow, {lowExpressionLevel: NumberFormat.baselineExpression(this.props.minExpressionLevel), 
 	                               highExpressionLevel: NumberFormat.baselineExpression(this.props.maxExpressionLevel), 
 	                               lowValueColour: "#C0C0C0", 
 	                               highValueColour: "#0000FF"})

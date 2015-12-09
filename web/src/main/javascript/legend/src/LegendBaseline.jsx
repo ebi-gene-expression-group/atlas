@@ -19,7 +19,6 @@ require('../css/legend.css');
 var LegendBaseline = React.createClass({
 
     propTypes: {
-        displayLevels: React.PropTypes.bool.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
         minExpressionLevel: React.PropTypes.string.isRequired,
         maxExpressionLevel: React.PropTypes.string.isRequired,
@@ -32,8 +31,7 @@ var LegendBaseline = React.createClass({
         return (
             <div className="gxaHeatmapLegendGradient">
                 <div style={{display: "inline-table"}}>
-                    <LegendRow displayLevels={this.props.displayLevels}
-                               lowExpressionLevel={NumberFormat.baselineExpression(this.props.minExpressionLevel)}
+                    <LegendRow lowExpressionLevel={NumberFormat.baselineExpression(this.props.minExpressionLevel)}
                                highExpressionLevel={NumberFormat.baselineExpression(this.props.maxExpressionLevel)}
                                lowValueColour="#C0C0C0"
                                highValueColour="#0000FF"/>

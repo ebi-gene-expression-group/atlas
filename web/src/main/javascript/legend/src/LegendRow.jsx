@@ -16,8 +16,7 @@ var LegendRow = React.createClass({
         lowValueColour: React.PropTypes.string.isRequired,
         highValueColour: React.PropTypes.string.isRequired,
         lowExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired,    // Baseline legend rows can be a React <span> element returned by NumberFormat
-        highExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired,
-        displayLevels: React.PropTypes.bool.isRequired
+        highExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired
     },
 
     render: function () {
@@ -30,11 +29,11 @@ var LegendRow = React.createClass({
 
         return (
             <div style={{display: "table-row"}}>
-                <div style={this.props.displayLevels ? {} : {visibility: "hidden"}} className="gxaGradientLevel gxaGradientLevelMin">{this.props.lowExpressionLevel}</div>
+                <div className="gxaGradientLevel gxaGradientLevelMin">{this.props.lowExpressionLevel}</div>
                 <div style={{display: "table-cell"}}>
                     <span className="gxaGradientColour" style={{backgroundImage: backgroundImage, filter: lt_ie10_filter}} />
                 </div>
-                <div style={this.props.displayLevels ? {} : {visibility: "hidden"}} className="gxaGradientLevel gxaGradientLevelMax">{this.props.highExpressionLevel}</div>
+                <div className="gxaGradientLevel gxaGradientLevelMax">{this.props.highExpressionLevel}</div>
             </div>
         );
     }

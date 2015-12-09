@@ -64,17 +64,16 @@
     <tbody>
 
     <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList"--%>
-    <c:forEach items="${bioentities}"
-               var="diffAnalytics">
+    <c:forEach items="${bioentities}" var="diffAnalytics">
         <tr>
          <c:if test="${showMultiGeneColumns}">
             <td class="gxaHorizontalHeaderCell">
-                    <a href="genes/${diffAnalytics.bioentityId}">${diffAnalytics.bioentityName}</a>
+                <a href="genes/${diffAnalytics.bioentityId}">${diffAnalytics.bioentityName}</a>
             </td>
          </c:if>
           <c:if test="${showMultiGeneColumns}">
             <td class="gxaHorizontalHeaderCell">
-                    ${diffAnalytics.species}
+                ${diffAnalytics.species}
             </td>
           </c:if>
 

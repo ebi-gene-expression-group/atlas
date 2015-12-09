@@ -172,13 +172,11 @@ var Heatmap = React.createClass({
 
     legendType: function () {
         return (this.props.type.isBaseline || this.props.type.isMultiExperiment ?
-            <Legend.LegendBaseline displayLevels={this.state.displayLevels}
-                                   atlasBaseURL={this.props.atlasBaseURL}
+            <Legend.LegendBaseline atlasBaseURL={this.props.atlasBaseURL}
                                    minExpressionLevel={this.state.profiles.minExpressionLevel.toString()}
                                    maxExpressionLevel={this.state.profiles.maxExpressionLevel.toString()}
                                    isMultiExperiment={this.props.type.isMultiExperiment ? true : false}/> :
-            <Legend.LegendDifferential displayLevels={this.state.displayLevels}
-                                       atlasBaseURL={this.props.atlasBaseURL}
+            <Legend.LegendDifferential atlasBaseURL={this.props.atlasBaseURL}
                                        minDownLevel={this.state.profiles.minDownLevel.toString()}
                                        maxDownLevel={this.state.profiles.maxDownLevel.toString()}
                                        minUpLevel={this.state.profiles.minUpLevel.toString()}

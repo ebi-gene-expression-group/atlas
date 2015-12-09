@@ -106,9 +106,8 @@ var DifferentialResults = React.createClass({
 
                 <div style={{display: "inline-block", verticalAlign: "middle"}}>
                     <Legend
-                        atlasBaseURL={"/gxa"}
-                        minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
-                        displayLevels={this.state.displayLevels}/>
+                        atlasBaseURL={"/gxa"} minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
+                    />
                 </div>
 
                 <table className="table-striped gxaDifferentialFacetedSearchResults">
