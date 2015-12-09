@@ -19,7 +19,7 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialResultsDAO.class);
 
-    private static final int ROWS = 1000;
+    private static final int ROWS = 1000000;
     private static final String SORT_FIELD = "&sort=abs(foldChange)desc";
 
     @Inject

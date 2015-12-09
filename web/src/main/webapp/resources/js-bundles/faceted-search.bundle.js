@@ -44747,7 +44747,14 @@ webpackJsonp([2],[
 	
 	    function filterAndRenderResults(facetItemChecked) {
 	
+	        var MAX_RESULTS = 1000;
+	        var count = 0;
+	
 	        var filteredResults = resultsData.results.filter(function(result) {
+	
+	            if (count >= MAX_RESULTS) {
+	                return false;
+	            }
 	
 	            for (var facetName in query.select) {
 	                if (query.select.hasOwnProperty(facetName)) {
@@ -44779,6 +44786,7 @@ webpackJsonp([2],[
 	                }
 	            }
 	
+	            count += 1;
 	            return true;
 	        });
 	
