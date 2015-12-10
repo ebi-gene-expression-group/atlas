@@ -19,6 +19,30 @@ public class BaselineAnalyticsFacetsReaderTest {
 
     private BaselineAnalyticsFacetsReader subject = new BaselineAnalyticsFacetsReader(baselineExpressionLevelRounder);
 
+    private final static String RESPONSE_2_JSON_FACETS =
+            "{\n" +
+            "  \"Homo sapiens\": [\n" +
+            "    {\n" +
+            "      \"name\": \"CELL_LINE\",\n" +
+            "      \"value\": \"Cell line\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"name\": \"ORGANISM_PART\",\n" +
+            "      \"value\": \"Organism part\"\n" +
+            "    }\n" +
+            "  ],\n" +
+            "  \"Mus musculus\": [\n" +
+            "    {\n" +
+            "      \"name\": \"CELL_LINE\",\n" +
+            "      \"value\": \"Cell line\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"name\": \"ORGANISM_PART\",\n" +
+            "      \"value\": \"Organism part\"\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}";
+
     @Test
     public void extractAverageExpressionLevel() {
         ImmutableList<BaselineExperimentExpression> expressions = subject.extractAverageExpressionLevel(loadJson(), "Homo sapiens", "ORGANISM_PART");
@@ -52,7 +76,7 @@ public class BaselineAnalyticsFacetsReaderTest {
     public void extractTreeFacets() {
         String facetsTreeJson = subject.generateFacetsTreeJson(load2Json());
 
-        assertThat(facetsTreeJson, is("{\"Homo sapiens\":[{\"name\":\"ORGANISM_PART\",\"value\":\"Organism part\"},{\"name\":\"CELL_LINE\",\"value\":\"Cell line\"}],\"Mus musculus\":[{\"name\":\"ORGANISM_PART\",\"value\":\"Organism part\"},{\"name\":\"CELL_LINE\",\"value\":\"Cell line\"}]}"));
+        assertThat(facetsTreeJson, is(RESPONSE_2_JSON_FACETS));
     }
 
 }
