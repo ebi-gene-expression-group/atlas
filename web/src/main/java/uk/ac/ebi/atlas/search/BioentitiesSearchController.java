@@ -151,10 +151,13 @@ public class BioentitiesSearchController {
 
         if (bioentityProperty != null) {
             String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
+            // TODO Remove if clause and redirecto to "redirect:/"+ bioentityPageName... -> https://www.pivotaltracker.com/story/show/109817868
+            //return Optional.of("redirect:/" + bioentityPageName + "/" + geneQuery.asUrlQueryParameter());
+
             if (bioentityPageName.equalsIgnoreCase("genes")) {
                 return Optional.of("redirect:/new/" + bioentityPageName + "/" + bioentityProperty.getBioentityIdentifier());
             }
-            return Optional.of("redirect:/" + bioentityPageName + "/" + geneQuery);
+            return Optional.of("redirect:/" + bioentityPageName + "/" + bioentityProperty.getBioentityIdentifier());
         }
 
         if (StringUtils.isBlank(species)) {

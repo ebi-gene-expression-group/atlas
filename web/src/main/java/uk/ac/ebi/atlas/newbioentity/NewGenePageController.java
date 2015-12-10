@@ -26,13 +26,12 @@ import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
+import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -44,6 +43,7 @@ import javax.inject.Inject;
 public class NewGenePageController extends NewBioentityPageController {
 
     private SolrQueryService solrQueryService;
+    private static final String GENES = "genes";
 
     @Inject
     public NewGenePageController(SolrQueryService solrQueryService) {
@@ -87,6 +87,7 @@ public class NewGenePageController extends NewBioentityPageController {
 
     private boolean isSingleGene(String identifier) {
         BioentityProperty bioentityProperty = solrQueryService.findBioentityIdentifierProperty(identifier);
-        return bioentityProperty != null;
+        String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
+        return bioentityPageName.equalsIgnoreCase(GENES);
     }
 }
