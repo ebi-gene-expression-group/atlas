@@ -491,7 +491,8 @@ var HeatmapTableHeader = React.createClass({
                                    displayLevels={this.props.displayLevels}
                                    toggleDisplayLevels={this.props.toggleDisplayLevels}
                                    selectedRadioButton={this.props.selectedRadioButton}
-                                   toggleRadioButton={this.props.toggleRadioButton}/>
+                                   toggleRadioButton={this.props.toggleRadioButton}
+                                   atlasBaseURL={this.props.atlasBaseURL}/>
                 </th>
 
                 { this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null }
@@ -575,7 +576,8 @@ var MultipleHeatmapTableHeader = React.createClass({
                                        displayLevels={this.props.displayLevels}
                                        toggleDisplayLevels={this.props.toggleDisplayLevels}
                                        selectedRadioButton={this.props.selectedRadioButton}
-                                       toggleRadioButton={this.props.toggleRadioButton}/>
+                                       toggleRadioButton={this.props.toggleRadioButton}
+                                       atlasBaseURL={this.props.atlasBaseURL}/>
                     </th>
                     { this.props.renderContrastFactorHeaders ? this.renderHeaders() : null}
                 </tr>
@@ -900,7 +902,7 @@ var TopLeftCorner = React.createClass({
     render: function () {
         return (
             <div className="gxaHeatmapMatrixTopLeftCorner">
-                <span id='tooltip-span' data-help-loc={this.props.type.heatmapTooltip} ref='tooltipSpan'></span>
+                <span className="gxaTooltip" data-help-loc={this.props.type.heatmapTooltip} ref="tooltipSpan"/>
                 <div style={{display: "table-cell", verticalAlign: "middle", textAlign: "center"}}>
                     {this.displayLevelsBaseline()}
                 </div>

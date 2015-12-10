@@ -51,7 +51,7 @@
     margin-top: 40px;
 }
 
-#tooltip-span {
+span.gxaTooltip {
     display: block;
     position: absolute;
     top: 0;

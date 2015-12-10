@@ -12832,7 +12832,8 @@ webpackJsonp([1],[
 	                                   displayLevels: this.props.displayLevels, 
 	                                   toggleDisplayLevels: this.props.toggleDisplayLevels, 
 	                                   selectedRadioButton: this.props.selectedRadioButton, 
-	                                   toggleRadioButton: this.props.toggleRadioButton})
+	                                   toggleRadioButton: this.props.toggleRadioButton, 
+	                                   atlasBaseURL: this.props.atlasBaseURL})
 	                ), 
 	
 	                 this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null
@@ -12916,7 +12917,8 @@ webpackJsonp([1],[
 	                                       displayLevels: this.props.displayLevels, 
 	                                       toggleDisplayLevels: this.props.toggleDisplayLevels, 
 	                                       selectedRadioButton: this.props.selectedRadioButton, 
-	                                       toggleRadioButton: this.props.toggleRadioButton})
+	                                       toggleRadioButton: this.props.toggleRadioButton, 
+	                                       atlasBaseURL: this.props.atlasBaseURL})
 	                    ), 
 	                     this.props.renderContrastFactorHeaders ? this.renderHeaders() : null
 	                ), 
@@ -13241,7 +13243,7 @@ webpackJsonp([1],[
 	    render: function () {
 	        return (
 	            React.createElement("div", {className: "gxaHeatmapMatrixTopLeftCorner"}, 
-	                React.createElement("span", {id: "tooltip-span", "data-help-loc": this.props.type.heatmapTooltip, ref: "tooltipSpan"}), 
+	                React.createElement("span", {className: "gxaTooltip", "data-help-loc": this.props.type.heatmapTooltip, ref: "tooltipSpan"}), 
 	                React.createElement("div", {style: {display: "table-cell", verticalAlign: "middle", textAlign: "center"}}, 
 	                    this.displayLevelsBaseline()
 	                )
@@ -43466,7 +43468,7 @@ webpackJsonp([1],[
 	
 	
 	// module
-	exports.push([module.id, ".gxaSvg #anatomogram {\n    display:inline\n}\n\n.gxaHeatmapAnatomogramRow {\n    position: relative;\n}\n\n.gxaHeatmapAnatomogramRow:after {\n    clear: both;\n    content: \".\";\n    display: block;\n    visibility: hidden;\n}\n\n.gxaInnerHeatmap {\n    position: relative;\n    overflow: hidden;\n}\n\n.gxaAside {\n    float: left;\n    /*padding: 0 20px;*/\n}\n\n.gxaGradientLevelMin {\n    text-align: right;\n}\n\n.gxaGradientLevelMax {\n    text-align: left;\n}\n\n.gxaHeatmapMatrixTopLeftCorner {\n    position: relative;\n    display: table;\n    height: 110px;\n    width: 100%;\n    min-width: 160px;\n}\n\n#display-levels {\n    margin-top: 40px;\n}\n\n#tooltip-span {\n    display: block;\n    position: absolute;\n    top: 0;\n    margin: 5px;\n}\n\n.gxaPvalueTooltipStyling {\n    padding: 2px !important;\n    margin: 0 !important;\n}\n\n#ensembl-launcher-box {\n    border: 1px solid #cdcdcd;\n}\n\n#ensembl-launcher-box-ensembl, #ensembl-launcher-box-gramene {\n    padding: 4px 9px;\n}\n\n#ensembl-launcher-box-ensembl label, #ensembl-launcher-box-gramene label {\n    font-weight: bold;\n    font-family: Helvetica, sans-serif;\n}\n\n#ensembl-launcher-box-ensembl button, #ensembl-launcher-box-gramene button {\n    display: table;\n    margin: 0 auto;\n}\n\n.gxaAnatomogramSpeciesLabel {\n    width: 245px;   /* Width of gxaHeatmapPosition margin minus anatomogram buttons width */\n}\n\n.gxaAnatomogramSpeciesLabel h5 {\n    text-align: center;\n    /*white-space: nowrap;*/\n}\n\n.gxaAnatomogramSpeciesLabel h5::first-letter {\n    text-transform: uppercase;\n}", ""]);
+	exports.push([module.id, ".gxaSvg #anatomogram {\n    display:inline\n}\n\n.gxaHeatmapAnatomogramRow {\n    position: relative;\n}\n\n.gxaHeatmapAnatomogramRow:after {\n    clear: both;\n    content: \".\";\n    display: block;\n    visibility: hidden;\n}\n\n.gxaInnerHeatmap {\n    position: relative;\n    overflow: hidden;\n}\n\n.gxaAside {\n    float: left;\n    /*padding: 0 20px;*/\n}\n\n.gxaGradientLevelMin {\n    text-align: right;\n}\n\n.gxaGradientLevelMax {\n    text-align: left;\n}\n\n.gxaHeatmapMatrixTopLeftCorner {\n    position: relative;\n    display: table;\n    height: 110px;\n    width: 100%;\n    min-width: 160px;\n}\n\n#display-levels {\n    margin-top: 40px;\n}\n\nspan.gxaTooltip {\n    display: block;\n    position: absolute;\n    top: 0;\n    margin: 5px;\n}\n\n.gxaPvalueTooltipStyling {\n    padding: 2px !important;\n    margin: 0 !important;\n}\n\n#ensembl-launcher-box {\n    border: 1px solid #cdcdcd;\n}\n\n#ensembl-launcher-box-ensembl, #ensembl-launcher-box-gramene {\n    padding: 4px 9px;\n}\n\n#ensembl-launcher-box-ensembl label, #ensembl-launcher-box-gramene label {\n    font-weight: bold;\n    font-family: Helvetica, sans-serif;\n}\n\n#ensembl-launcher-box-ensembl button, #ensembl-launcher-box-gramene button {\n    display: table;\n    margin: 0 auto;\n}\n\n.gxaAnatomogramSpeciesLabel {\n    width: 245px;   /* Width of gxaHeatmapPosition margin minus anatomogram buttons width */\n}\n\n.gxaAnatomogramSpeciesLabel h5 {\n    text-align: center;\n    /*white-space: nowrap;*/\n}\n\n.gxaAnatomogramSpeciesLabel h5::first-letter {\n    text-transform: uppercase;\n}", ""]);
 	
 	// exports
 
