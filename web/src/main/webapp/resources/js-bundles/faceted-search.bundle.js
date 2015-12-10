@@ -1576,7 +1576,7 @@ webpackJsonp([2],[
 	
 	    render: function () {
 	        var facets = Object.keys(this.props.facets).map(function (facet) {
-	            return React.createElement(Facet, {key: facet, facetName: facet, facetItems: this.props.facets[facet], 
+	            return React.createElement(Facet, {key: Math.random(), facetName: facet, facetItems: this.props.facets[facet], 
 	                checkedFacetItems: this.props.checkedFacets && this.props.checkedFacets[facet], 
 	                setChecked: this._setChecked}
 	            );
@@ -2489,7 +2489,7 @@ webpackJsonp([2],[
 	
 	                 this.props.isWidget ?
 	                        React.createElement("div", null, React.createElement("p", null, React.createElement("a", {href: geneURL}, "See more expression data at Expression Atlas."), 
-	                            React.createElement("br", null), "This expression view is provided by ", React.createElement("a", {href: this.props.atlasBaseURL}, "Expression Atlas"), ".", 
+	                            React.createElement("br", null), "This expression view is provided by ", React.createElement("a", {href: this.props.linksAtlasBaseURL}, "Expression Atlas"), ".", 
 	                            React.createElement("br", null), "Please direct any queries or feedback to ", React.createElement("a", {href: "mailto:arrayexpress-atlas@ebi.ac.uk"}, "arrayexpress-atlas@ebi.ac.uk"))
 	                        )
 	                        :

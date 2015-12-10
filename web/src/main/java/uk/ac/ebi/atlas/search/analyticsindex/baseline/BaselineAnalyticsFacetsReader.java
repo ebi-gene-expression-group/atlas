@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.auto.value.AutoValue;
+import com.google.common.collect.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jayway.jsonpath.JsonPath;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
@@ -11,9 +11,7 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Named
 public class BaselineAnalyticsFacetsReader {
@@ -65,7 +63,7 @@ public class BaselineAnalyticsFacetsReader {
 
         List<Map<String, Object>> results = JsonPath.read(json, FACET_TREE_PATH);
 
-        Map<String, List<FacetTree>> facetTree = Maps.newLinkedHashMap();
+        Multimap<String, FacetTree> facetTreeMultimap = HashMultimap.create();
 
         for (Map<String, Object> experiment : results) {
             String species = (String) experiment.get("val");
@@ -75,33 +73,28 @@ public class BaselineAnalyticsFacetsReader {
             @SuppressWarnings("unchecked")
             List<Map<String, Object>> buckets = (List<Map<String, Object>>) factorRoot.get("buckets");
 
-            List<FacetTree> facetTreeList = facetTree.containsKey(species) ? facetTree.get(species) : new ArrayList<FacetTree>();
             for(Map<String, Object> defaultQueryFactorType : buckets)  {
                 String key = (String) defaultQueryFactorType.get("val");
                 String name = Factor.convertToLowerCase(key);
+                FacetTree factor = FacetTree.create(key, name);
 
-                FacetTree factor = new FacetTree(key, name);
-
-                facetTreeList.add(factor);
+                facetTreeMultimap.put(species, factor);
             }
-
-            facetTree.put(species, facetTreeList);
-
         }
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        return gson.toJson(facetTree);
+        return gson.toJson(facetTreeMultimap.asMap());
     }
 
 
-    private static class FacetTree {
-        String name;
-        String value;
-
-        public FacetTree(String name, String value) {
-            this.name = name;
-            this.value = value;
+    @AutoValue
+    abstract static class FacetTree {
+        static FacetTree create(String name, String value) {
+            return new AutoValue_BaselineAnalyticsFacetsReader_FacetTree(name, value);
         }
+
+        abstract String name();
+        abstract String value();
     }
 }

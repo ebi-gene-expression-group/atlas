@@ -120,7 +120,7 @@ var HeatmapAnatomogramContainer = React.createClass({
 
                 { this.props.isWidget ?
                         <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
-                            <br/>This expression view is provided by <a href={this.props.atlasBaseURL}>Expression Atlas</a>.
+                            <br/>This expression view is provided by <a href={this.props.linksAtlasBaseURL}>Expression Atlas</a>.
                             <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p>
                         </div>
                         :

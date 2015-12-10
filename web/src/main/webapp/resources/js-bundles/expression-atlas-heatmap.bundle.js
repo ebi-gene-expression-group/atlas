@@ -1280,7 +1280,7 @@ webpackJsonp([1],[
 	
 	                 this.props.isWidget ?
 	                        React.createElement("div", null, React.createElement("p", null, React.createElement("a", {href: geneURL}, "See more expression data at Expression Atlas."), 
-	                            React.createElement("br", null), "This expression view is provided by ", React.createElement("a", {href: this.props.atlasBaseURL}, "Expression Atlas"), ".", 
+	                            React.createElement("br", null), "This expression view is provided by ", React.createElement("a", {href: this.props.linksAtlasBaseURL}, "Expression Atlas"), ".", 
 	                            React.createElement("br", null), "Please direct any queries or feedback to ", React.createElement("a", {href: "mailto:arrayexpress-atlas@ebi.ac.uk"}, "arrayexpress-atlas@ebi.ac.uk"))
 	                        )
 	                        :
