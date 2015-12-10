@@ -66,12 +66,15 @@
         $differentialTabLink = $("#differentialTabLink");
 
     $informationTabLink.click(function() {
+        $(".gxaContrastTooltip").add(".gxaWebpackHelpTooltip").remove();
         window.location.hash = "#information";
     });
     $baselineTabLink.click(function() {
+        $(".gxaContrastTooltip").add(".gxaWebpackHelpTooltip").remove();
         window.location.hash = "#baseline";
     });
     $differentialTabLink.click(function() {
+        $(".gxaContrastTooltip").add(".gxaWebpackHelpTooltip").remove();
         window.location.hash = "#differential";
     });
 

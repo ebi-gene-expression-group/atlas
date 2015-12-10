@@ -20,7 +20,7 @@
     var selectedSpecies = "${hasSelectedSpecies ? selectedSpecies : ''}";
 
     var baselineSearcher = window.exposed.baseline,
-        baselineFacetsData = JSON.parse('${jsonFacets}');
+        baselineFacetsData = ${jsonFacets};
 
     baselineSearcher({
         facetsContainer: "gxaBaselineFacetsContainerDiv",

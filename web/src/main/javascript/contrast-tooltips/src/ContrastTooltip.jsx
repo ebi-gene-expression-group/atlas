@@ -29,15 +29,15 @@ var ContrastTooltip = React.createClass({
         }
 
         function isFactor(property) {
-            return property.contrastPropertyType === 'FACTOR';
+            return property.contrastPropertyType === "FACTOR";
         }
 
-        var style = {'whiteSpace': 'normal'};
+        var style = {whiteSpace: "normal"};
 
         if (isFactor(property)) {
-            style['fontWeight'] = 'bold';
+            style.fontWeight = "bold";
         } else {
-            style['color'] = 'gray';
+            style.color = "gray";
         }
 
         return (
@@ -52,14 +52,14 @@ var ContrastTooltip = React.createClass({
     render: function () {
         return (
             <div>
-                <div id="contrastExperimentDescription" style={{'fontWeight':'bold', 'color':'blue', 'textAlign': 'center'}}>{this.props.experimentDescription}</div>
-                <div id="contrastDescription" style={{'textAlign': 'center'}}>{this.props.contrastDescription}</div>
-                <table className="gxaTableGrid" style={{padding: '0px', margin: '0px', width: '100%'}}>
+                <div id="contrastExperimentDescription" style={{fontWeight: "bold", color: "blue", textAlign: "center"}}>{this.props.experimentDescription}</div>
+                <div id="contrastDescription" style={{textAlign: "center"}}>{this.props.contrastDescription}</div>
+                <table className="gxaTableGrid" style={{padding: "0px", margin: "0px", width: "100%"}}>
                     <thead>
                         <tr>
-                            <th className='gxaHeaderCell'>Property</th>
-                            <th className='gxaHeaderCell'>Test value (N={this.props.testReplicates})</th>
-                            <th className='gxaHeaderCell'>Reference value (N={this.props.referenceReplicates})</th>
+                            <th className="gxaHeaderCell">Property</th>
+                            <th className="gxaHeaderCell">Test value (N={this.props.testReplicates})</th>
+                            <th className="gxaHeaderCell">Reference value (N={this.props.referenceReplicates})</th>
                         </tr>
                     </thead>
                     <tbody>
