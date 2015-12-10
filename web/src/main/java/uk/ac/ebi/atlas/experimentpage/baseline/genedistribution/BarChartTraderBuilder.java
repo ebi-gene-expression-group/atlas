@@ -49,19 +49,15 @@ public class BarChartTraderBuilder {
     private BaselineExpressionsInputStreamFactory inputStreamFactory;
 
     @Inject
-    public BarChartTraderBuilder(BaselineExpressionsInputStreamFactory inputStreamFactory
-            , CutoffScale cutoffScale) {
+    public BarChartTraderBuilder(BaselineExpressionsInputStreamFactory inputStreamFactory, CutoffScale cutoffScale) {
         this.cutoffScale = cutoffScale;
         this.inputStreamFactory = inputStreamFactory;
     }
 
     public BarChartTraderBuilder forExperiment(String experimentAccession) {
 
-        try (ObjectInputStream<BaselineExpressions> inputStream =
-                     inputStreamFactory.createGeneExpressionsInputStream(experimentAccession)) {
-
+        try (ObjectInputStream<BaselineExpressions> inputStream = inputStreamFactory.createGeneExpressionsInputStream(experimentAccession)) {
             populateGeneExpressionIndexes(inputStream);
-
             return this;
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
