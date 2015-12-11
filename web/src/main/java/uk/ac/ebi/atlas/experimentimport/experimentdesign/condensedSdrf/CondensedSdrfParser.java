@@ -98,7 +98,10 @@ public class CondensedSdrfParser {
             OntologyTerm[] characteristicOntologyTerms = parseOntologyTerms(characteristicValueOntologyTermAsString);
 
             SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(header, value, characteristicOntologyTerms);
-            experimentDesign.putSampleCharacteristic(sampleCharacteristicTsvLine[RUN_OR_ASSAY_INDEX], header, sampleCharacteristic);
+
+            if (experimentDesign.getFactors(sampleCharacteristicTsvLine[RUN_OR_ASSAY_INDEX]) != null) {
+                experimentDesign.putSampleCharacteristic(sampleCharacteristicTsvLine[RUN_OR_ASSAY_INDEX], header, sampleCharacteristic);
+            }
         }
     }
 
