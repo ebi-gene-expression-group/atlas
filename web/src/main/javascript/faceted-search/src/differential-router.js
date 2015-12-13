@@ -208,13 +208,12 @@ module.exports = function (options) {
 
             var facetsInCommon = {};
             var facetValue = [];
+            var facetNotExistsValue = [];
 
             for (var item in facetItems) {
                 var facetItem = facetItems[item];
                 var facetWithNoResults = false;
-                var existsFactor = false;
                 var sameValue = true;
-                var facetNotExistsValue = [];
 
                 for (var index in filteredResults) {
                     var filtered = filteredResults[index];
@@ -230,9 +229,11 @@ module.exports = function (options) {
 
                         for(var index in facetResults) {
                             var _facetItem = facetResults[index];
-                            if (_facetItem.toString() === facetItem.name) {
-                                existsFactor = true;
-                                facetValue.push(_facetItem);
+                            if (_facetItem.toString() !== facetItem.name) {
+                                sameValue = false;
+                            }
+                            if (_facetItem.toString() === facetItem.name)  {
+                                facetWithNoResults = true;
                             }
                         }
                     }
@@ -241,24 +242,35 @@ module.exports = function (options) {
                         if (!facetsInCommon.hasOwnProperty(facet)) { //if is empty the first time
                             facetValue.push(facetResults.toString());
                             facetsInCommon[facet] = facetValue;
+                            facetValue = [];
                         }
 
                         if (facetsInCommon.hasOwnProperty(facet) && facetResults.toString() !== facetItem.name) {
                             sameValue = false;
-                        } else {
+                        }
+                        if (facetResults.toString() === facetItem.name)  {
                             facetWithNoResults = true;
                         }
                     }
                 }
                 //check and grey out facets that has results
-                if (sameValue && facetItemChecked != facetValue.toString() || existsFactor ) {
-                    disabledCheckedFacets[facet] = facetValue;
+                if (sameValue) {
+                    if(facetValue.indexOf(facetResults.toString()) === -1) {
+                        facetValue.push(facetResults.toString());
+                    }
                 }
                 //unchecked and grey out facetItems with no results
                 if (!facetWithNoResults) {
-                    facetNotExistsValue.push(facetItem.name);
-                    disabledUncheckedFacets[facet] = facetNotExistsValue;
+                    if(facetNotExistsValue.indexOf(facetItem.name) === -1) {
+                        facetNotExistsValue.push(facetItem.name);
+                    }
                 }
+            }
+            if (facetValue.length > 0 && facetItemChecked != facetValue.toString()) {
+                disabledCheckedFacets[facet] = facetValue;
+            }
+            if (facetNotExistsValue.length > 0) {
+                disabledUncheckedFacets[facet] = facetNotExistsValue;
             }
         }
 
