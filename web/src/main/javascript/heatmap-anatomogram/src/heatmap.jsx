@@ -54,7 +54,12 @@ var Heatmap = React.createClass({
             heatmapTooltip: React.PropTypes.string.isRequired
         }),
         heatmapConfig: React.PropTypes.object.isRequired,
-        columnHeaders: React.PropTypes.array.isRequired,
+        columnHeaders: React.PropTypes.arrayOf(React.PropTypes.shape({
+            assayGroupId: React.PropTypes.string.isRequired,
+            factorValue: React.PropTypes.string.isRequired,
+            factorValueOntologyTermId: React.PropTypes.string
+        })).isRequired,
+        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         multipleColumnHeaders: React.PropTypes.object,
         profiles: React.PropTypes.object.isRequired,
         geneSetProfiles: React.PropTypes.object,
@@ -211,6 +216,7 @@ var Heatmap = React.createClass({
                                 isSingleGeneResult={this.isSingleGeneResult()}
                                 type={this.props.type}
                                 columnHeaders={this.props.columnHeaders}
+                                nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                 multipleColumnHeaders={this.props.multipleColumnHeaders}
                                 selectedColumnId={this.state.selectedColumnId}
                                 selectColumn={this.selectColumn}
@@ -250,6 +256,7 @@ var Heatmap = React.createClass({
                                 hasQuartiles={this.hasQuartiles()}
                                 isSingleGeneResult={this.isSingleGeneResult()}
                                 columnHeaders={this.props.columnHeaders}
+                                nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                 type={this.props.type}
                                 multipleColumnHeaders={this.props.multipleColumnHeaders}
                                 selectedColumnId={this.state.selectedColumnId}
@@ -292,6 +299,7 @@ var Heatmap = React.createClass({
                     <table ref="heatmapTable" className="gxaTableGrid gxaStickyEnabled" id="heatmap-table">
                         {this.tableHeaderType()}
                         <HeatmapTableRows profiles={this.state.profiles.rows}
+                                          nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                           selectedGeneId={this.state.selectedGeneId}
                                           selectGene={this.selectGene}
                                           type={this.props.type}
@@ -309,66 +317,68 @@ var Heatmap = React.createClass({
                     </table>
 
                     <div ref="stickyIntersect" className="gxaStickyTableIntersect">
-                    <table className="gxaTableGrid">
-                        {this.props.heatmapConfig.showMultipleColumnHeaders ?
-                            <MultipleHeatmapTableHeader radioId="intersect"
-                                                        isMicroarray={this.isMicroarray()}
-                                                        hasQuartiles={this.hasQuartiles()}
-                                                        isSingleGeneResult={this.isSingleGeneResult()}
-                                                        type={this.props.type}
-                                                        multipleColumnHeaders={this.props.multipleColumnHeaders}
-                                                        selectedColumnId={this.state.selectedColumnId}
-                                                        selectColumn={this.selectColumn}
-                                                        heatmapConfig={this.props.heatmapConfig}
-                                                        atlasBaseURL={this.props.atlasBaseURL}
-                                                        linksAtlasBaseURL={this.props.linksAtlasBaseURL}
-                                                        displayLevels={this.state.displayLevels}
-                                                        toggleDisplayLevels={this.toggleDisplayLevels}
-                                                        showGeneSetProfiles={this.state.showGeneSetProfiles}
-                                                        selectedRadioButton={this.state.selectedRadioButton}
-                                                        toggleRadioButton={this.toggleRadioButton}
-                                                        renderContrastFactorHeaders={false}/> :
-                            <HeatmapTableHeader isMicroarray={this.isMicroarray()}
-                                                radioId="intersect"
-                                                hasQuartiles={this.hasQuartiles()}
-                                                isSingleGeneResult={this.isSingleGeneResult()}
-                                                type={this.props.type}
-                                                columnHeaders={this.props.columnHeaders}
-                                                multipleColumnHeaders={this.props.multipleColumnHeaders}
-                                                selectedColumnId={this.state.selectedColumnId}
-                                                selectColumn={this.selectColumn}
-                                                heatmapConfig={this.props.heatmapConfig}
-                                                atlasBaseURL={this.props.atlasBaseURL}
-                                                linksAtlasBaseURL={this.props.linksAtlasBaseURL}
-                                                displayLevels={this.state.displayLevels}
-                                                toggleDisplayLevels={this.toggleDisplayLevels}
-                                                showGeneSetProfiles={this.state.showGeneSetProfiles}
-                                                selectedRadioButton={this.state.selectedRadioButton}
-                                                toggleRadioButton={this.toggleRadioButton}
-                                                renderContrastFactorHeaders={false}/>
-                        }
-                    </table>
-                </div>
+                        <table className="gxaTableGrid">
+                            {this.props.heatmapConfig.showMultipleColumnHeaders ?
+                                <MultipleHeatmapTableHeader radioId="intersect"
+                                                            isMicroarray={this.isMicroarray()}
+                                                            hasQuartiles={this.hasQuartiles()}
+                                                            isSingleGeneResult={this.isSingleGeneResult()}
+                                                            type={this.props.type}
+                                                            multipleColumnHeaders={this.props.multipleColumnHeaders}
+                                                            selectedColumnId={this.state.selectedColumnId}
+                                                            selectColumn={this.selectColumn}
+                                                            heatmapConfig={this.props.heatmapConfig}
+                                                            atlasBaseURL={this.props.atlasBaseURL}
+                                                            linksAtlasBaseURL={this.props.linksAtlasBaseURL}
+                                                            displayLevels={this.state.displayLevels}
+                                                            toggleDisplayLevels={this.toggleDisplayLevels}
+                                                            showGeneSetProfiles={this.state.showGeneSetProfiles}
+                                                            selectedRadioButton={this.state.selectedRadioButton}
+                                                            toggleRadioButton={this.toggleRadioButton}
+                                                            renderContrastFactorHeaders={false}/> :
+                                <HeatmapTableHeader isMicroarray={this.isMicroarray()}
+                                                    radioId="intersect"
+                                                    hasQuartiles={this.hasQuartiles()}
+                                                    isSingleGeneResult={this.isSingleGeneResult()}
+                                                    type={this.props.type}
+                                                    columnHeaders={this.props.columnHeaders}
+                                                    nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
+                                                    multipleColumnHeaders={this.props.multipleColumnHeaders}
+                                                    selectedColumnId={this.state.selectedColumnId}
+                                                    selectColumn={this.selectColumn}
+                                                    heatmapConfig={this.props.heatmapConfig}
+                                                    atlasBaseURL={this.props.atlasBaseURL}
+                                                    linksAtlasBaseURL={this.props.linksAtlasBaseURL}
+                                                    displayLevels={this.state.displayLevels}
+                                                    toggleDisplayLevels={this.toggleDisplayLevels}
+                                                    showGeneSetProfiles={this.state.showGeneSetProfiles}
+                                                    selectedRadioButton={this.state.selectedRadioButton}
+                                                    toggleRadioButton={this.toggleRadioButton}
+                                                    renderContrastFactorHeaders={false}/>
+                            }
+                        </table>
+                    </div>
 
-                <div ref="stickyColumn" className="gxaStickyTableColumn">
-                    <table className="gxaTableGrid">
-                        {this.tableHeaderTypeStickyColumn()}
-                            <HeatmapTableRows profiles={this.state.profiles.rows}
-                                          selectedGeneId={this.state.selectedGeneId}
-                                          selectGene={this.selectGene}
-                                          type={this.props.type}
-                                          heatmapConfig={this.props.heatmapConfig}
-                                          atlasBaseURL={this.props.atlasBaseURL}
-                                          linksAtlasBaseURL={this.props.linksAtlasBaseURL}
-                                          displayLevels={this.state.displayLevels}
-                                          showGeneSetProfiles={this.state.showGeneSetProfiles}
-                                          selectedRadioButton={this.state.selectedRadioButton}
-                                          hoverRowCallback={this._hoverRow}
-                                          hasQuartiles={this.hasQuartiles()}
-                                          isSingleGeneResult={this.isSingleGeneResult()}
-                                          renderExpressionCells={false}/>
-                    </table>
-                </div>
+                    <div ref="stickyColumn" className="gxaStickyTableColumn">
+                        <table className="gxaTableGrid">
+                            {this.tableHeaderTypeStickyColumn()}
+                                <HeatmapTableRows profiles={this.state.profiles.rows}
+                                                  nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
+                                                  selectedGeneId={this.state.selectedGeneId}
+                                                  selectGene={this.selectGene}
+                                                  type={this.props.type}
+                                                  heatmapConfig={this.props.heatmapConfig}
+                                                  atlasBaseURL={this.props.atlasBaseURL}
+                                                  linksAtlasBaseURL={this.props.linksAtlasBaseURL}
+                                                  displayLevels={this.state.displayLevels}
+                                                  showGeneSetProfiles={this.state.showGeneSetProfiles}
+                                                  selectedRadioButton={this.state.selectedRadioButton}
+                                                  hoverRowCallback={this._hoverRow}
+                                                  hasQuartiles={this.hasQuartiles()}
+                                                  isSingleGeneResult={this.isSingleGeneResult()}
+                                                  renderExpressionCells={false}/>
+                        </table>
+                    </div>
 
 
                     <div ref="stickyHeader" className="gxaStickyTableHeader">
@@ -400,6 +410,7 @@ var Heatmap = React.createClass({
                                                     hoverColumnCallback={this._hoverColumn}
                                                     type={this.props.type}
                                                     columnHeaders={this.props.columnHeaders}
+                                                    nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                                     multipleColumnHeaders={this.props.multipleColumnHeaders}
                                                     selectedColumnId={this.state.selectedColumnId}
                                                     selectColumn={this.selectColumn}
@@ -453,10 +464,14 @@ var DownloadProfilesButton = React.createClass({
 
 
 var HeatmapTableHeader = React.createClass({
+    propTypes: {
+        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string)
+    },
+
     renderContrastFactorHeaders: function () {
         var heatmapConfig = this.props.heatmapConfig;
         if (this.props.type.isBaseline) {
-            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, this.props.mainHeaderNames, this.props.type, this.props.columnHeaders, heatmapConfig.experimentAccession,
+            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, this.props.mainHeaderNames, this.props.type, this.props.columnHeaders, this.props.nonExpressedColumnHeaders, heatmapConfig.experimentAccession,
                                         this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
         }
         else if (this.props.type.isDifferential) {
@@ -470,38 +485,38 @@ var HeatmapTableHeader = React.createClass({
                                      gseaPlots={heatmapConfig.gseaPlots}/>);
         }
         else if (this.props.type.isMultiExperiment) {
-            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, null, this.props.type, this.props.columnHeaders, "",
+            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, null, this.props.type, this.props.columnHeaders, this.props.nonExpressedColumnHeaders, "",
                 this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
         }
     },
 
     render: function () {
-        var showGeneProfile = this.props.showGeneSetProfiles ? 'Gene set' : 'Gene';
-        var showExperimentProfile = this.props.type.isMultiExperiment ? 'Experiment' : showGeneProfile;
+        var showGeneProfile = this.props.showGeneSetProfiles ? "Gene set" : "Gene";
+        var showExperimentProfile = this.props.type.isMultiExperiment ? "Experiment" : showGeneProfile;
 
         return (
             <thead>
-            <tr>
-                <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" colSpan={this.props.isMicroarray ? 2 : undefined}>
-                    <TopLeftCorner type={this.props.type}
-                                   hasQuartiles={this.props.hasQuartiles}
-                                   radioId={this.props.radioId}
-                                   isSingleGeneResult={this.props.isSingleGeneResult}
-                                   heatmapConfig={this.props.heatmapConfig}
-                                   displayLevels={this.props.displayLevels}
-                                   toggleDisplayLevels={this.props.toggleDisplayLevels}
-                                   selectedRadioButton={this.props.selectedRadioButton}
-                                   toggleRadioButton={this.props.toggleRadioButton}
-                                   atlasBaseURL={this.props.atlasBaseURL}/>
-                </th>
+                <tr>
+                    <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" colSpan={this.props.isMicroarray ? 2 : undefined}>
+                        <TopLeftCorner type={this.props.type}
+                                       hasQuartiles={this.props.hasQuartiles}
+                                       radioId={this.props.radioId}
+                                       isSingleGeneResult={this.props.isSingleGeneResult}
+                                       heatmapConfig={this.props.heatmapConfig}
+                                       displayLevels={this.props.displayLevels}
+                                       toggleDisplayLevels={this.props.toggleDisplayLevels}
+                                       selectedRadioButton={this.props.selectedRadioButton}
+                                       toggleRadioButton={this.props.toggleRadioButton}
+                                       atlasBaseURL={this.props.atlasBaseURL}/>
+                    </th>
 
-                { this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null }
-            </tr>
+                    { this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null }
+                </tr>
 
-            <tr>
-                <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" style={ this.props.isMicroarray ? {width:"166px"} : undefined}><div>{ showExperimentProfile }</div></th>
-                { this.props.isMicroarray ? <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect"><div>Design Element</div></th> : null}
-            </tr>
+                <tr>
+                    <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" style={ this.props.isMicroarray ? {width: "166px"} : {}}><div>{ showExperimentProfile }</div></th>
+                    { this.props.isMicroarray ? <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect"><div>Design Element</div></th> : null}
+                </tr>
             </thead>
         );
     }
@@ -623,22 +638,26 @@ function restrictLabelSize(label, maxSize) {
 }
 
 
-function renderFactorHeaders(heatmapConfig, atlasBaseURL, mainHeaderNames, type, assayGroupFactors, experimentAccession, selectColumn,
+function renderFactorHeaders(heatmapConfig, atlasBaseURL, mainHeaderNames, type, assayGroupFactors, nonExpressedGroupFactors, experimentAccession, selectColumn,
                              selectedColumnId, hoverColumnCallback, anatomogramEventEmitter) {
 
-    var factorHeaders = assayGroupFactors.map(function (assayGroupFactor) {
-        return <FactorHeader key={mainHeaderNames + assayGroupFactor.factorValue}
-                             type={type}
-                             heatmapConfig={heatmapConfig}
-                             factorName={assayGroupFactor.factorValue}
-                             svgPathId={assayGroupFactor.factorValueOntologyTermId}
-                             assayGroupId={assayGroupFactor.assayGroupId}
-                             experimentAccession={experimentAccession}
-                             selectColumn={selectColumn}
-                             selected={assayGroupFactor.assayGroupId === selectedColumnId}
-                             hoverColumnCallback={hoverColumnCallback}
-                             anatomogramEventEmitter={anatomogramEventEmitter}
-                             atlasBaseURL={atlasBaseURL} />;
+    var factorHeaders =
+        assayGroupFactors.filter(function(assayGroupFactor) {
+            return (nonExpressedGroupFactors.indexOf(assayGroupFactor.factorValue) == -1)
+        })
+        .map(function (assayGroupFactor) {
+            return <FactorHeader key={mainHeaderNames + assayGroupFactor.factorValue}
+                                 type={type}
+                                 heatmapConfig={heatmapConfig}
+                                 factorName={assayGroupFactor.factorValue}
+                                 svgPathId={assayGroupFactor.factorValueOntologyTermId}
+                                 assayGroupId={assayGroupFactor.assayGroupId}
+                                 experimentAccession={experimentAccession}
+                                 selectColumn={selectColumn}
+                                 selected={assayGroupFactor.assayGroupId === selectedColumnId}
+                                 hoverColumnCallback={hoverColumnCallback}
+                                 anatomogramEventEmitter={anatomogramEventEmitter}
+                                 atlasBaseURL={atlasBaseURL} />;
     });
 
     return factorHeaders;
@@ -946,6 +965,9 @@ var LevelsRadioGroup = React.createClass({
 
 
 var HeatmapTableRows = React.createClass({
+    propTypes: {
+        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string)
+    },
 
     profileRowType: function (profile)  {
         var geneProfileKey = this.props.heatmapConfig.species + "-" + (this.props.type.isDifferential ? profile.name + "-" + profile.designElement : profile.name);
@@ -956,6 +978,7 @@ var HeatmapTableRows = React.createClass({
                             type={this.props.type}
                             experimentType={profile.experimentType}
                             expressions={profile.expressions}
+                            nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                             serializedFilterFactors={profile.serializedFilterFactors}
                             heatmapConfig={this.props.heatmapConfig}
                             atlasBaseURL={this.props.atlasBaseURL}
@@ -973,6 +996,7 @@ var HeatmapTableRows = React.createClass({
                             name={profile.name}
                             type={this.props.type}
                             expressions={profile.expressions}
+                            nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                             heatmapConfig={this.props.heatmapConfig}
                             atlasBaseURL={this.props.atlasBaseURL}
                             linksAtlasBaseURL={this.props.linksAtlasBaseURL}
@@ -989,6 +1013,7 @@ var HeatmapTableRows = React.createClass({
 
     render: function () {
         var geneProfilesRows = this.props.profiles.map(function (profile) {
+
             return this.profileRowType(profile);
         }.bind(this));
 
@@ -1003,6 +1028,7 @@ var HeatmapTableRows = React.createClass({
 
 var GeneProfileRow = React.createClass({
     propTypes: {
+        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string),
         atlasBaseURL: React.PropTypes.string.isRequired,
         linksAtlasBaseURL: React.PropTypes.string.isRequired
     },
@@ -1121,8 +1147,12 @@ var GeneProfileRow = React.createClass({
         }
     },
 
-    cells: function (expressions) {
-        return expressions.map(function (expression) {
+    cells: function (expressions, nonExpressedColumnHeaders) {
+        var filteredExpressions = expressions.filter(function(expression) {
+            return (nonExpressedColumnHeaders.indexOf(expression.factorName) == -1)
+        });
+
+        return filteredExpressions.map(function (expression) {
             return this.cellType(expression);
         }.bind(this));
     },
@@ -1146,7 +1176,7 @@ var GeneProfileRow = React.createClass({
                     </div>
                 </th>
                 {this.props.designElement ? <th className="gxaHeatmapTableDesignElement">{this.props.designElement}</th> : null}
-                {this.props.renderExpressionCells ? this.cells(this.props.expressions) : null}
+                {this.props.renderExpressionCells ? this.cells(this.props.expressions, this.props.nonExpressedColumnHeaders) : null}
             </tr>
         );
     },

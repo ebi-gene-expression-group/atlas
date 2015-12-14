@@ -1263,6 +1263,7 @@ webpackJsonp([1],[
 	                                React.createElement(Heatmap, {type: this.props.type, 
 	                                         heatmapConfig: this.state.heatmapConfig, 
 	                                         columnHeaders: this.state.columnHeaders, 
+	                                         nonExpressedColumnHeaders: this.state.nonExpressedColumnHeaders, 
 	                                         profiles: this.state.profiles, 
 	                                         geneSetProfiles: this.state.geneSetProfiles, 
 	                                         ensemblEventEmitter: ensemblEventEmitter, 
@@ -1295,6 +1296,7 @@ webpackJsonp([1],[
 	        return {
 	            heatmapConfig: '',
 	            columnHeaders: [],
+	            nonExpressedColumnHeaders: [],
 	            profiles: {
 	                rows: [],
 	                minExpressionLevel: 0,
@@ -1319,6 +1321,7 @@ webpackJsonp([1],[
 	                    this.setState({
 	                        heatmapConfig: data.config,
 	                        columnHeaders: data.columnHeaders,
+	                        nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
 	                        profiles: data.profiles,
 	                        geneSetProfiles: data.geneSetProfiles,
 	                        anatomogramData: data.anatomogram,
@@ -12395,7 +12398,12 @@ webpackJsonp([1],[
 	            heatmapTooltip: React.PropTypes.string.isRequired
 	        }),
 	        heatmapConfig: React.PropTypes.object.isRequired,
-	        columnHeaders: React.PropTypes.array.isRequired,
+	        columnHeaders: React.PropTypes.arrayOf(React.PropTypes.shape({
+	            assayGroupId: React.PropTypes.string.isRequired,
+	            factorValue: React.PropTypes.string.isRequired,
+	            factorValueOntologyTermId: React.PropTypes.string
+	        })).isRequired,
+	        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
 	        multipleColumnHeaders: React.PropTypes.object,
 	        profiles: React.PropTypes.object.isRequired,
 	        geneSetProfiles: React.PropTypes.object,
@@ -12552,6 +12560,7 @@ webpackJsonp([1],[
 	                                isSingleGeneResult: this.isSingleGeneResult(), 
 	                                type: this.props.type, 
 	                                columnHeaders: this.props.columnHeaders, 
+	                                nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
 	                                multipleColumnHeaders: this.props.multipleColumnHeaders, 
 	                                selectedColumnId: this.state.selectedColumnId, 
 	                                selectColumn: this.selectColumn, 
@@ -12591,6 +12600,7 @@ webpackJsonp([1],[
 	                                hasQuartiles: this.hasQuartiles(), 
 	                                isSingleGeneResult: this.isSingleGeneResult(), 
 	                                columnHeaders: this.props.columnHeaders, 
+	                                nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
 	                                type: this.props.type, 
 	                                multipleColumnHeaders: this.props.multipleColumnHeaders, 
 	                                selectedColumnId: this.state.selectedColumnId, 
@@ -12633,6 +12643,7 @@ webpackJsonp([1],[
 	                    React.createElement("table", {ref: "heatmapTable", className: "gxaTableGrid gxaStickyEnabled", id: "heatmap-table"}, 
 	                        this.tableHeaderType(), 
 	                        React.createElement(HeatmapTableRows, {profiles: this.state.profiles.rows, 
+	                                          nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
 	                                          selectedGeneId: this.state.selectedGeneId, 
 	                                          selectGene: this.selectGene, 
 	                                          type: this.props.type, 
@@ -12650,66 +12661,68 @@ webpackJsonp([1],[
 	                    ), 
 	
 	                    React.createElement("div", {ref: "stickyIntersect", className: "gxaStickyTableIntersect"}, 
-	                    React.createElement("table", {className: "gxaTableGrid"}, 
-	                        this.props.heatmapConfig.showMultipleColumnHeaders ?
-	                            React.createElement(MultipleHeatmapTableHeader, {radioId: "intersect", 
-	                                                        isMicroarray: this.isMicroarray(), 
-	                                                        hasQuartiles: this.hasQuartiles(), 
-	                                                        isSingleGeneResult: this.isSingleGeneResult(), 
-	                                                        type: this.props.type, 
-	                                                        multipleColumnHeaders: this.props.multipleColumnHeaders, 
-	                                                        selectedColumnId: this.state.selectedColumnId, 
-	                                                        selectColumn: this.selectColumn, 
-	                                                        heatmapConfig: this.props.heatmapConfig, 
-	                                                        atlasBaseURL: this.props.atlasBaseURL, 
-	                                                        linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
-	                                                        displayLevels: this.state.displayLevels, 
-	                                                        toggleDisplayLevels: this.toggleDisplayLevels, 
-	                                                        showGeneSetProfiles: this.state.showGeneSetProfiles, 
-	                                                        selectedRadioButton: this.state.selectedRadioButton, 
-	                                                        toggleRadioButton: this.toggleRadioButton, 
-	                                                        renderContrastFactorHeaders: false}) :
-	                            React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), 
-	                                                radioId: "intersect", 
-	                                                hasQuartiles: this.hasQuartiles(), 
-	                                                isSingleGeneResult: this.isSingleGeneResult(), 
-	                                                type: this.props.type, 
-	                                                columnHeaders: this.props.columnHeaders, 
-	                                                multipleColumnHeaders: this.props.multipleColumnHeaders, 
-	                                                selectedColumnId: this.state.selectedColumnId, 
-	                                                selectColumn: this.selectColumn, 
-	                                                heatmapConfig: this.props.heatmapConfig, 
-	                                                atlasBaseURL: this.props.atlasBaseURL, 
-	                                                linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
-	                                                displayLevels: this.state.displayLevels, 
-	                                                toggleDisplayLevels: this.toggleDisplayLevels, 
-	                                                showGeneSetProfiles: this.state.showGeneSetProfiles, 
-	                                                selectedRadioButton: this.state.selectedRadioButton, 
-	                                                toggleRadioButton: this.toggleRadioButton, 
-	                                                renderContrastFactorHeaders: false})
-	                        
-	                    )
-	                ), 
+	                        React.createElement("table", {className: "gxaTableGrid"}, 
+	                            this.props.heatmapConfig.showMultipleColumnHeaders ?
+	                                React.createElement(MultipleHeatmapTableHeader, {radioId: "intersect", 
+	                                                            isMicroarray: this.isMicroarray(), 
+	                                                            hasQuartiles: this.hasQuartiles(), 
+	                                                            isSingleGeneResult: this.isSingleGeneResult(), 
+	                                                            type: this.props.type, 
+	                                                            multipleColumnHeaders: this.props.multipleColumnHeaders, 
+	                                                            selectedColumnId: this.state.selectedColumnId, 
+	                                                            selectColumn: this.selectColumn, 
+	                                                            heatmapConfig: this.props.heatmapConfig, 
+	                                                            atlasBaseURL: this.props.atlasBaseURL, 
+	                                                            linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
+	                                                            displayLevels: this.state.displayLevels, 
+	                                                            toggleDisplayLevels: this.toggleDisplayLevels, 
+	                                                            showGeneSetProfiles: this.state.showGeneSetProfiles, 
+	                                                            selectedRadioButton: this.state.selectedRadioButton, 
+	                                                            toggleRadioButton: this.toggleRadioButton, 
+	                                                            renderContrastFactorHeaders: false}) :
+	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), 
+	                                                    radioId: "intersect", 
+	                                                    hasQuartiles: this.hasQuartiles(), 
+	                                                    isSingleGeneResult: this.isSingleGeneResult(), 
+	                                                    type: this.props.type, 
+	                                                    columnHeaders: this.props.columnHeaders, 
+	                                                    nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
+	                                                    multipleColumnHeaders: this.props.multipleColumnHeaders, 
+	                                                    selectedColumnId: this.state.selectedColumnId, 
+	                                                    selectColumn: this.selectColumn, 
+	                                                    heatmapConfig: this.props.heatmapConfig, 
+	                                                    atlasBaseURL: this.props.atlasBaseURL, 
+	                                                    linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
+	                                                    displayLevels: this.state.displayLevels, 
+	                                                    toggleDisplayLevels: this.toggleDisplayLevels, 
+	                                                    showGeneSetProfiles: this.state.showGeneSetProfiles, 
+	                                                    selectedRadioButton: this.state.selectedRadioButton, 
+	                                                    toggleRadioButton: this.toggleRadioButton, 
+	                                                    renderContrastFactorHeaders: false})
+	                            
+	                        )
+	                    ), 
 	
-	                React.createElement("div", {ref: "stickyColumn", className: "gxaStickyTableColumn"}, 
-	                    React.createElement("table", {className: "gxaTableGrid"}, 
-	                        this.tableHeaderTypeStickyColumn(), 
-	                            React.createElement(HeatmapTableRows, {profiles: this.state.profiles.rows, 
-	                                          selectedGeneId: this.state.selectedGeneId, 
-	                                          selectGene: this.selectGene, 
-	                                          type: this.props.type, 
-	                                          heatmapConfig: this.props.heatmapConfig, 
-	                                          atlasBaseURL: this.props.atlasBaseURL, 
-	                                          linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
-	                                          displayLevels: this.state.displayLevels, 
-	                                          showGeneSetProfiles: this.state.showGeneSetProfiles, 
-	                                          selectedRadioButton: this.state.selectedRadioButton, 
-	                                          hoverRowCallback: this._hoverRow, 
-	                                          hasQuartiles: this.hasQuartiles(), 
-	                                          isSingleGeneResult: this.isSingleGeneResult(), 
-	                                          renderExpressionCells: false})
-	                    )
-	                ), 
+	                    React.createElement("div", {ref: "stickyColumn", className: "gxaStickyTableColumn"}, 
+	                        React.createElement("table", {className: "gxaTableGrid"}, 
+	                            this.tableHeaderTypeStickyColumn(), 
+	                                React.createElement(HeatmapTableRows, {profiles: this.state.profiles.rows, 
+	                                                  nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
+	                                                  selectedGeneId: this.state.selectedGeneId, 
+	                                                  selectGene: this.selectGene, 
+	                                                  type: this.props.type, 
+	                                                  heatmapConfig: this.props.heatmapConfig, 
+	                                                  atlasBaseURL: this.props.atlasBaseURL, 
+	                                                  linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
+	                                                  displayLevels: this.state.displayLevels, 
+	                                                  showGeneSetProfiles: this.state.showGeneSetProfiles, 
+	                                                  selectedRadioButton: this.state.selectedRadioButton, 
+	                                                  hoverRowCallback: this._hoverRow, 
+	                                                  hasQuartiles: this.hasQuartiles(), 
+	                                                  isSingleGeneResult: this.isSingleGeneResult(), 
+	                                                  renderExpressionCells: false})
+	                        )
+	                    ), 
 	
 	
 	                    React.createElement("div", {ref: "stickyHeader", className: "gxaStickyTableHeader"}, 
@@ -12741,6 +12754,7 @@ webpackJsonp([1],[
 	                                                    hoverColumnCallback: this._hoverColumn, 
 	                                                    type: this.props.type, 
 	                                                    columnHeaders: this.props.columnHeaders, 
+	                                                    nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
 	                                                    multipleColumnHeaders: this.props.multipleColumnHeaders, 
 	                                                    selectedColumnId: this.state.selectedColumnId, 
 	                                                    selectColumn: this.selectColumn, 
@@ -12794,10 +12808,14 @@ webpackJsonp([1],[
 	
 	
 	var HeatmapTableHeader = React.createClass({displayName: "HeatmapTableHeader",
+	    propTypes: {
+	        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string)
+	    },
+	
 	    renderContrastFactorHeaders: function () {
 	        var heatmapConfig = this.props.heatmapConfig;
 	        if (this.props.type.isBaseline) {
-	            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, this.props.mainHeaderNames, this.props.type, this.props.columnHeaders, heatmapConfig.experimentAccession,
+	            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, this.props.mainHeaderNames, this.props.type, this.props.columnHeaders, this.props.nonExpressedColumnHeaders, heatmapConfig.experimentAccession,
 	                                        this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
 	        }
 	        else if (this.props.type.isDifferential) {
@@ -12811,38 +12829,38 @@ webpackJsonp([1],[
 	                                     gseaPlots: heatmapConfig.gseaPlots}));
 	        }
 	        else if (this.props.type.isMultiExperiment) {
-	            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, null, this.props.type, this.props.columnHeaders, "",
+	            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, null, this.props.type, this.props.columnHeaders, this.props.nonExpressedColumnHeaders, "",
 	                this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
 	        }
 	    },
 	
 	    render: function () {
-	        var showGeneProfile = this.props.showGeneSetProfiles ? 'Gene set' : 'Gene';
-	        var showExperimentProfile = this.props.type.isMultiExperiment ? 'Experiment' : showGeneProfile;
+	        var showGeneProfile = this.props.showGeneSetProfiles ? "Gene set" : "Gene";
+	        var showExperimentProfile = this.props.type.isMultiExperiment ? "Experiment" : showGeneProfile;
 	
 	        return (
 	            React.createElement("thead", null, 
-	            React.createElement("tr", null, 
-	                React.createElement("th", {className: "gxaHorizontalHeaderCell gxaHeatmapTableIntersect", colSpan: this.props.isMicroarray ? 2 : undefined}, 
-	                    React.createElement(TopLeftCorner, {type: this.props.type, 
-	                                   hasQuartiles: this.props.hasQuartiles, 
-	                                   radioId: this.props.radioId, 
-	                                   isSingleGeneResult: this.props.isSingleGeneResult, 
-	                                   heatmapConfig: this.props.heatmapConfig, 
-	                                   displayLevels: this.props.displayLevels, 
-	                                   toggleDisplayLevels: this.props.toggleDisplayLevels, 
-	                                   selectedRadioButton: this.props.selectedRadioButton, 
-	                                   toggleRadioButton: this.props.toggleRadioButton, 
-	                                   atlasBaseURL: this.props.atlasBaseURL})
+	                React.createElement("tr", null, 
+	                    React.createElement("th", {className: "gxaHorizontalHeaderCell gxaHeatmapTableIntersect", colSpan: this.props.isMicroarray ? 2 : undefined}, 
+	                        React.createElement(TopLeftCorner, {type: this.props.type, 
+	                                       hasQuartiles: this.props.hasQuartiles, 
+	                                       radioId: this.props.radioId, 
+	                                       isSingleGeneResult: this.props.isSingleGeneResult, 
+	                                       heatmapConfig: this.props.heatmapConfig, 
+	                                       displayLevels: this.props.displayLevels, 
+	                                       toggleDisplayLevels: this.props.toggleDisplayLevels, 
+	                                       selectedRadioButton: this.props.selectedRadioButton, 
+	                                       toggleRadioButton: this.props.toggleRadioButton, 
+	                                       atlasBaseURL: this.props.atlasBaseURL})
+	                    ), 
+	
+	                     this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null
 	                ), 
 	
-	                 this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null
-	            ), 
-	
-	            React.createElement("tr", null, 
-	                React.createElement("th", {className: "gxaHorizontalHeaderCell gxaHeatmapTableIntersect", style:  this.props.isMicroarray ? {width:"166px"} : undefined}, React.createElement("div", null,  showExperimentProfile )), 
-	                 this.props.isMicroarray ? React.createElement("th", {className: "gxaHorizontalHeaderCell gxaHeatmapTableIntersect"}, React.createElement("div", null, "Design Element")) : null
-	            )
+	                React.createElement("tr", null, 
+	                    React.createElement("th", {className: "gxaHorizontalHeaderCell gxaHeatmapTableIntersect", style:  this.props.isMicroarray ? {width: "166px"} : {}}, React.createElement("div", null,  showExperimentProfile )), 
+	                     this.props.isMicroarray ? React.createElement("th", {className: "gxaHorizontalHeaderCell gxaHeatmapTableIntersect"}, React.createElement("div", null, "Design Element")) : null
+	                )
 	            )
 	        );
 	    }
@@ -12964,22 +12982,26 @@ webpackJsonp([1],[
 	}
 	
 	
-	function renderFactorHeaders(heatmapConfig, atlasBaseURL, mainHeaderNames, type, assayGroupFactors, experimentAccession, selectColumn,
+	function renderFactorHeaders(heatmapConfig, atlasBaseURL, mainHeaderNames, type, assayGroupFactors, nonExpressedGroupFactors, experimentAccession, selectColumn,
 	                             selectedColumnId, hoverColumnCallback, anatomogramEventEmitter) {
 	
-	    var factorHeaders = assayGroupFactors.map(function (assayGroupFactor) {
-	        return React.createElement(FactorHeader, {key: mainHeaderNames + assayGroupFactor.factorValue, 
-	                             type: type, 
-	                             heatmapConfig: heatmapConfig, 
-	                             factorName: assayGroupFactor.factorValue, 
-	                             svgPathId: assayGroupFactor.factorValueOntologyTermId, 
-	                             assayGroupId: assayGroupFactor.assayGroupId, 
-	                             experimentAccession: experimentAccession, 
-	                             selectColumn: selectColumn, 
-	                             selected: assayGroupFactor.assayGroupId === selectedColumnId, 
-	                             hoverColumnCallback: hoverColumnCallback, 
-	                             anatomogramEventEmitter: anatomogramEventEmitter, 
-	                             atlasBaseURL: atlasBaseURL});
+	    var factorHeaders =
+	        assayGroupFactors.filter(function(assayGroupFactor) {
+	            return (nonExpressedGroupFactors.indexOf(assayGroupFactor.factorValue) == -1)
+	        })
+	        .map(function (assayGroupFactor) {
+	            return React.createElement(FactorHeader, {key: mainHeaderNames + assayGroupFactor.factorValue, 
+	                                 type: type, 
+	                                 heatmapConfig: heatmapConfig, 
+	                                 factorName: assayGroupFactor.factorValue, 
+	                                 svgPathId: assayGroupFactor.factorValueOntologyTermId, 
+	                                 assayGroupId: assayGroupFactor.assayGroupId, 
+	                                 experimentAccession: experimentAccession, 
+	                                 selectColumn: selectColumn, 
+	                                 selected: assayGroupFactor.assayGroupId === selectedColumnId, 
+	                                 hoverColumnCallback: hoverColumnCallback, 
+	                                 anatomogramEventEmitter: anatomogramEventEmitter, 
+	                                 atlasBaseURL: atlasBaseURL});
 	    });
 	
 	    return factorHeaders;
@@ -13287,6 +13309,9 @@ webpackJsonp([1],[
 	
 	
 	var HeatmapTableRows = React.createClass({displayName: "HeatmapTableRows",
+	    propTypes: {
+	        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string)
+	    },
 	
 	    profileRowType: function (profile)  {
 	        var geneProfileKey = this.props.heatmapConfig.species + "-" + (this.props.type.isDifferential ? profile.name + "-" + profile.designElement : profile.name);
@@ -13297,6 +13322,7 @@ webpackJsonp([1],[
 	                            type: this.props.type, 
 	                            experimentType: profile.experimentType, 
 	                            expressions: profile.expressions, 
+	                            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
 	                            serializedFilterFactors: profile.serializedFilterFactors, 
 	                            heatmapConfig: this.props.heatmapConfig, 
 	                            atlasBaseURL: this.props.atlasBaseURL, 
@@ -13314,6 +13340,7 @@ webpackJsonp([1],[
 	                            name: profile.name, 
 	                            type: this.props.type, 
 	                            expressions: profile.expressions, 
+	                            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
 	                            heatmapConfig: this.props.heatmapConfig, 
 	                            atlasBaseURL: this.props.atlasBaseURL, 
 	                            linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
@@ -13330,6 +13357,7 @@ webpackJsonp([1],[
 	
 	    render: function () {
 	        var geneProfilesRows = this.props.profiles.map(function (profile) {
+	
 	            return this.profileRowType(profile);
 	        }.bind(this));
 	
@@ -13344,6 +13372,7 @@ webpackJsonp([1],[
 	
 	var GeneProfileRow = React.createClass({displayName: "GeneProfileRow",
 	    propTypes: {
+	        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string),
 	        atlasBaseURL: React.PropTypes.string.isRequired,
 	        linksAtlasBaseURL: React.PropTypes.string.isRequired
 	    },
@@ -13462,8 +13491,12 @@ webpackJsonp([1],[
 	        }
 	    },
 	
-	    cells: function (expressions) {
-	        return expressions.map(function (expression) {
+	    cells: function (expressions, nonExpressedColumnHeaders) {
+	        var filteredExpressions = expressions.filter(function(expression) {
+	            return (nonExpressedColumnHeaders.indexOf(expression.factorName) == -1)
+	        });
+	
+	        return filteredExpressions.map(function (expression) {
 	            return this.cellType(expression);
 	        }.bind(this));
 	    },
@@ -13487,7 +13520,7 @@ webpackJsonp([1],[
 	                    )
 	                ), 
 	                this.props.designElement ? React.createElement("th", {className: "gxaHeatmapTableDesignElement"}, this.props.designElement) : null, 
-	                this.props.renderExpressionCells ? this.cells(this.props.expressions) : null
+	                this.props.renderExpressionCells ? this.cells(this.props.expressions, this.props.nonExpressedColumnHeaders) : null
 	            )
 	        );
 	    },

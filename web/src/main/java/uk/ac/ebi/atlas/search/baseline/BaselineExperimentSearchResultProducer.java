@@ -34,11 +34,9 @@ public class BaselineExperimentSearchResultProducer {
     public BaselineExperimentSearchResult buildProfilesForExperiments(List<BaselineExperimentExpression> expressions, String defaultQueryFactorType) {
 
         ImmutableListMultimap<BaselineExperimentSlice, BaselineExperimentExpression> expressionsByExperimentSlice = groupByExperimentSlice(expressions);
-
         ImmutableListMultimap<BaselineExperimentSlice, BaselineExperimentExpression> tissueExperimentsBySlice = filter(expressionsByExperimentSlice, defaultQueryFactorType);
 
         SortedSet<Factor> tissueFactorsAcrossAllExperiments = extractAllNonFilterFactors(tissueExperimentsBySlice);
-
         BaselineExperimentProfilesList profiles = createBaselineExperimentProfiles(tissueExperimentsBySlice, tissueFactorsAcrossAllExperiments, defaultQueryFactorType);
 
         return new BaselineExperimentSearchResult(profiles, tissueFactorsAcrossAllExperiments);

@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.widget;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -40,16 +41,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.model.AnatomogramType;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuilder;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineExperimentProfilesViewModelBuilder;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
+import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.*;
+import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchDao;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
@@ -67,6 +65,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.lang.reflect.Type;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -310,9 +309,30 @@ public final class HeatmapWidgetController {
         model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
 
         BaselineProfilesViewModel profilesViewModel = baselineExperimentProfilesViewModelBuilder.build(baselineProfiles, orderedFactors);
-
         String jsonProfiles = gson.toJson(profilesViewModel);
         model.addAttribute("jsonProfiles", jsonProfiles);
+
+
+
+        Set<Factor> nonExpressedFactors = Sets.newHashSet(orderedFactors);
+        for (BaselineExperimentProfile baselineProfile : baselineProfiles) {
+            double defaultCutoff =
+                    baselineProfile.getExperimentType().equalsIgnoreCase(ExperimentType.PROTEOMICS_BASELINE.toString()) ?
+                            BaselineAnalyticsSearchDao.DEFAULT_PROTEOMICS_CUT_OFF : BaselineAnalyticsSearchDao.DEFAULT_BASELINE_CUT_OFF;
+
+            for (Factor factor : Sets.newHashSet(nonExpressedFactors)) {
+                BaselineExpression expression = baselineProfile.getExpression(factor);
+                if (expression != null && expression.isKnown() && expression.getLevel() >= defaultCutoff) {
+                    nonExpressedFactors.remove(factor);
+                }
+            }
+        }
+        Set<String> nonExpressedColumnHeaders = Sets.newHashSetWithExpectedSize(nonExpressedFactors.size());
+        for (Factor nonExpressedFactor : nonExpressedFactors) {
+            nonExpressedColumnHeaders.add(nonExpressedFactor.getValue());
+        }
+
+        model.addAttribute("jsonNonExpressedColumnHeaders", gson.toJson(nonExpressedColumnHeaders));
     }
 
     //TODO: is this needed anymore, now that we don't have transcripts

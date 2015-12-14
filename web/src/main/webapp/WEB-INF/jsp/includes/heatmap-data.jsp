@@ -1,6 +1,6 @@
 <%--@elvariable id="geneQuery" type="uk.ac.ebi.atlas.web.GeneQuery"--%>
 <%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
-<%--@elvariable id="preferences" type="uk.ac.ebi.atlas.web.SearchRequest"--%>
+<%--@elvariable id="preferences" type="uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences"--%>
 <%--@elvariable id="species" type="java.lang.String"--%>
 <%--@elvariable id="jsonProfiles" type="java.lang.String"--%>
 <%--@elvariable id="experimentAccession" type="java.lang.String"--%>
@@ -12,6 +12,7 @@
 <%--@elvariable id="downloadURL" type="java.lang.String"--%>
 <%--@elvariable id="showMultipleColumnHeaders" type="boolean"--%>
 <%--@elvariable id="jsonColumnHeaders" type="java.lang.String"--%>
+<%--@elvariable id="jsonNonExpressedColumnHeaders" type="java.lang.String"--%>
 <%--@elvariable id="jsonMultipleColumnHeaders" type="java.lang.String"--%>
 <%--@elvariable id="jsonGeneSetProfiles" type="java.lang.String"--%>
 <%--@elvariable id="hasAnatomogram" type="boolean"--%>
@@ -72,6 +73,7 @@
                 "showMultipleColumnHeaders": ${not empty showMultipleColumnHeaders ? showMultipleColumnHeaders : "false"}
             },
             "columnHeaders": ${not empty jsonColumnHeaders ? jsonColumnHeaders : "null"},
+            "nonExpressedColumnHeaders": ${not empty jsonNonExpressedColumnHeaders ? jsonNonExpressedColumnHeaders : "[]"},
             "multipleColumnHeaders": ${not empty jsonMultipleColumnHeaders ? jsonMultipleColumnHeaders : "null"},
             "profiles": ${not empty jsonProfiles ? jsonProfiles : "null"},
             "geneSetProfiles": ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : "null"},
@@ -96,9 +98,8 @@
             "experiment" :
             <c:choose>
                 <c:when test="${isWidget && !isMultiExperiment}">
-                    <c:set var="additionalQueryOptionsString"
-                           value="?geneQuery=${geneQuery.asUrlQueryParameter()}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
-                    <c:set var="experimentURL" value="/experiments/${experimentAccession}${additionalQueryOptionsString}"></c:set>
+                    <c:set var="additionalQueryOptionsString" value="?geneQuery=${geneQuery.asUrlQueryParameter()}&serializedFilterFactors=${preferences.serializedFilterFactors}"/>
+                    <c:set var="experimentURL" value="/experiments/${experimentAccession}${additionalQueryOptionsString}"/>
                     {
                     "URL": "${experimentURL}",
                     "description":  "${experimentDescription}",

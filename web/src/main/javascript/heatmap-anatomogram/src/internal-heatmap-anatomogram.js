@@ -26,6 +26,7 @@ function drawHeatmap (options) {
 
     var heatmapConfig = options.heatmapData.config,
         columnHeaders = options.heatmapData.columnHeaders,
+        nonExpressedColumnHeaders = options.heatmapData.nonExpressedColumnHeaders,
         multipleColumnHeaders = options.heatmapData.multipleColumnHeaders,
         profiles = options.heatmapData.profiles,
         geneSetProfiles = options.heatmapData.geneSetProfiles,
@@ -40,9 +41,13 @@ function drawHeatmap (options) {
     React.render(
         React.createElement(
             HeatmapAnatomogramContainer,
-            {type: type, heatmapConfig: heatmapConfig, isWidget: false,
-             anatomogram: anatomogramData, columnHeaders: columnHeaders, multipleColumnHeaders: multipleColumnHeaders,
-             profiles: profiles, geneSetProfiles: geneSetProfiles, atlasBaseURL: "/gxa", linksAtlasBaseURL: "/gxa"}
+            {
+                type: type, heatmapConfig: heatmapConfig, isWidget: false,
+                anatomogram: anatomogramData, columnHeaders: columnHeaders, nonExpressedColumnHeaders: nonExpressedColumnHeaders,
+                multipleColumnHeaders: multipleColumnHeaders,
+                profiles: profiles, geneSetProfiles: geneSetProfiles,
+                atlasBaseURL: "/gxa", linksAtlasBaseURL: "/gxa"
+            }
         ),
         document.getElementById("gxaExperimentPageHeatmapAnatomogram")
     );
