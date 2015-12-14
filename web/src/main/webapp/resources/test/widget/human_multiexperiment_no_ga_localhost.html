@@ -10,7 +10,7 @@
 </head>
 <body>
     <div>
-        <h2>Bundles loaded locally, request done to <code>http://www.ebi.ac.uk/gxa</code>, no Google Analytics</h2>
+        <h2>Bundles loaded locally, request done to <code>http://localhost:8080/gxa</code>, no Google Analytics</h2>
     </div>
 
     <div id="heatmapContainer"></div>
@@ -19,6 +19,7 @@
 <script language="JavaScript" type="text/javascript">
     var AtlasHeatmapBuilder = window.exposed;
     AtlasHeatmapBuilder({
+        atlasHost: "localhost:8080",
         params: "geneQuery=R-HSA-73887",
         isMultiExperiment: true,
         target: "heatmapContainer",
