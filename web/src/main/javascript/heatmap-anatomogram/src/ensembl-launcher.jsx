@@ -49,7 +49,7 @@ var EnsemblLauncher = React.createClass({
 
         var ensemblSpecies = ensemblUtils.toEnsemblSpecies(this.props.species);
         var trackFileHeader = this.props.experimentAccession + "." + this.state.selectedColumnId;
-        var atlasTrackBaseURL = this.props.atlasBaseURL + "/experiments/" + this.props.experimentAccession + "/tracks/";
+        var atlasTrackBaseURL = window.location.protocol + "//" + window.location.host + "/" + this.props.atlasBaseURL + "/experiments/" + this.props.experimentAccession + "/tracks/";
         var contigViewBottom = "contigviewbottom=url:" + atlasTrackBaseURL + trackFileHeader + (this.props.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
         var tiling = (this.props.isBaseline || this.props.ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseURL + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
         var ensemblTrackURL =  baseURL + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigViewBottom + tiling + ";format=BEDGRAPH";
