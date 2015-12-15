@@ -641,27 +641,39 @@ function restrictLabelSize(label, maxSize) {
 function renderFactorHeaders(heatmapConfig, atlasBaseURL, mainHeaderNames, type, assayGroupFactors, nonExpressedGroupFactors, experimentAccession, selectColumn,
                              selectedColumnId, hoverColumnCallback, anatomogramEventEmitter) {
 
-    var factorHeaders =
-        assayGroupFactors.filter(function(assayGroupFactor) {
-            return (nonExpressedGroupFactors.indexOf(assayGroupFactor.factorValue) == -1)
-        })
-        .map(function (assayGroupFactor) {
-            return <FactorHeader key={mainHeaderNames + assayGroupFactor.factorValue}
-                                 type={type}
-                                 heatmapConfig={heatmapConfig}
-                                 factorName={assayGroupFactor.factorValue}
-                                 svgPathId={assayGroupFactor.factorValueOntologyTermId}
-                                 assayGroupId={assayGroupFactor.assayGroupId}
-                                 experimentAccession={experimentAccession}
-                                 selectColumn={selectColumn}
-                                 selected={assayGroupFactor.assayGroupId === selectedColumnId}
-                                 hoverColumnCallback={hoverColumnCallback}
-                                 anatomogramEventEmitter={anatomogramEventEmitter}
-                                 atlasBaseURL={atlasBaseURL} />;
+    //var factorHeaders =
+    //    assayGroupFactors.filter(function(assayGroupFactor) {
+    //        return (nonExpressedGroupFactors.indexOf(assayGroupFactor.factorValue) == -1)
+    //    })
+    //    .map(function (assayGroupFactor) {
+    //        return <FactorHeader key={mainHeaderNames + assayGroupFactor.factorValue}
+    //                             type={type}
+    //                             heatmapConfig={heatmapConfig}
+    //                             factorName={assayGroupFactor.factorValue}
+    //                             svgPathId={assayGroupFactor.factorValueOntologyTermId}
+    //                             assayGroupId={assayGroupFactor.assayGroupId}
+    //                             experimentAccession={experimentAccession}
+    //                             selectColumn={selectColumn}
+    //                             selected={assayGroupFactor.assayGroupId === selectedColumnId}
+    //                             hoverColumnCallback={hoverColumnCallback}
+    //                             anatomogramEventEmitter={anatomogramEventEmitter}
+    //                             atlasBaseURL={atlasBaseURL} />;
+    //});
+
+    return assayGroupFactors.map(function (assayGroupFactor) {
+        return <FactorHeader key={mainHeaderNames + assayGroupFactor.factorValue}
+                             type={type}
+                             heatmapConfig={heatmapConfig}
+                             factorName={assayGroupFactor.factorValue}
+                             svgPathId={assayGroupFactor.factorValueOntologyTermId}
+                             assayGroupId={assayGroupFactor.assayGroupId}
+                             experimentAccession={experimentAccession}
+                             selectColumn={selectColumn}
+                             selected={assayGroupFactor.assayGroupId === selectedColumnId}
+                             hoverColumnCallback={hoverColumnCallback}
+                             anatomogramEventEmitter={anatomogramEventEmitter}
+                             atlasBaseURL={atlasBaseURL}/>;
     });
-
-    return factorHeaders;
-
 }
 
 var FactorHeader = React.createClass({
@@ -1148,11 +1160,15 @@ var GeneProfileRow = React.createClass({
     },
 
     cells: function (expressions, nonExpressedColumnHeaders) {
-        var filteredExpressions = expressions.filter(function(expression) {
-            return (nonExpressedColumnHeaders.indexOf(expression.factorName) == -1)
-        });
+        //var filteredExpressions = expressions.filter(function(expression) {
+        //    return (nonExpressedColumnHeaders.indexOf(expression.factorName) == -1)
+        //});
+        //
+        //return filteredExpressions.map(function (expression) {
+        //    return this.cellType(expression);
+        //}.bind(this));
 
-        return filteredExpressions.map(function (expression) {
+        return expressions.map(function (expression) {
             return this.cellType(expression);
         }.bind(this));
     },
