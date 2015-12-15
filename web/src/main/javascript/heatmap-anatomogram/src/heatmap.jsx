@@ -18,7 +18,6 @@ require('../lib/jquery.hc-sticky.js');
 require('../lib/jquery.toolbar.js');
 
 require('../lib/modernizr.3.0.0-alpha3.js');  // Leaks Modernizr to the global window namespace
-var URI = require('urijs');
 
 //*------------------------------------------------------------------*
 

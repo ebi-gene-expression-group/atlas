@@ -10,11 +10,13 @@ var jQuery = $;
 require('../lib/jquery.hc-sticky.js');
 
 var EventEmitter = require('wolfy87-eventemitter');
+var URI = require('urijs');
 
 //*------------------------------------------------------------------*
 
 var Anatomogram = require('anatomogram');
 var Heatmap = require('./heatmap.jsx');
+var ExperimentsList = require('./experiments-list.jsx');
 var ExperimentTypes = require('./experiment-types.js');
 
 //*------------------------------------------------------------------*
@@ -79,26 +81,29 @@ var HeatmapAnatomogramContainer = React.createClass({
         var display = this.props.showAnatomogram ? "block" : "none";
         var marginLeft = this.props.showAnatomogram ? "270px" : "0";
 
+        var homoSapiensCellLine = this.state.heatmapConfig.species === "homo sapiens" && new URI(this.props.sourceURL).search(true).source === "CELL_LINE";
+
         return (
             <div ref="this" className="gxaBlock">
 
                 { this.state.experimentData ?
-                        <ExperimentDescription experiment={this.state.experimentData} linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>
-                        : null
+                    <ExperimentDescription experiment={this.state.experimentData} linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>
+                    : null
                 }
 
                 { this.state.heatmapConfig ?
-                        <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
+                    <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
-                            <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
-                                { this.state.anatomogramData ?
-                                <Anatomogram anatomogramData={this.state.anatomogramData}
-                                             expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
-                                             profileRows={this.state.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
-                                    : null
-                                    }
-                            </div>
+                        <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
+                            { this.state.anatomogramData ?
+                            <Anatomogram anatomogramData={this.state.anatomogramData}
+                                         expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
+                                         profileRows={this.state.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
+                                : null
+                                }
+                        </div>
 
+                        { !homoSapiensCellLine ?
                             <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft}}>
                                 <Heatmap type={this.props.type}
                                          heatmapConfig={this.state.heatmapConfig}
@@ -110,22 +115,29 @@ var HeatmapAnatomogramContainer = React.createClass({
                                          anatomogramEventEmitter={anatomogramEventEmitter}
                                          atlasBaseURL={this.props.atlasBaseURL}
                                          linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>
+                            </div> :
+                            <div style={{marginLeft: marginLeft}}>
+                                <ExperimentsList profiles={this.state.profiles}
+                                                 atlasBaseURL={this.props.atlasBaseURL}
+                                                 linksAtlasBaseURL={this.props.linksAtlasBaseURL}
+                                                 geneQuery={this.state.heatmapConfig.geneQuery}/>
                             </div>
+                        }
 
-                        </div>
-                        :
-                        <div ref="loadingImagePlaceholder">
-                            <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
-                        </div>
+                    </div>
+                    :
+                    <div ref="loadingImagePlaceholder">
+                        <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
+                    </div>
                 }
 
                 { this.props.isWidget ?
-                        <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
-                            <br/>This expression view is provided by <a href={this.props.linksAtlasBaseURL}>Expression Atlas</a>.
-                            <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p>
-                        </div>
-                        :
-                        null
+                    <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
+                        <br/>This expression view is provided by <a href={this.props.linksAtlasBaseURL}>Expression Atlas</a>.
+                        <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p>
+                    </div>
+                    :
+                    null
                 }
 
             </div>

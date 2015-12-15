@@ -45,12 +45,14 @@ var BaselineHeatmapWidget = React.createClass({
     },
 
     render: function() {
-        var factorLabel = <h7>{this._capitalize(this._removeUnderScore(this.props.factor))}</h7>;
-        var factorHeatmapLabel = <div><h5>{this._capitalize(this.props.species)}</h5><h7>{this._capitalize(this._removeUnderScore(this.props.factor))}</h7></div>;
+        var speciesLabel = this._capitalize(this.props.species);
+        var factorLabel = this._capitalize(this._removeUnderScore(this.props.factor));
+
+        var widgetTitle = <h5>{(this.props.showHeatmapLabel ? speciesLabel + " — " : "") + factorLabel}</h5>;
 
         return(
             <div className="gxaBaselineHeatmap">
-                {this.props.showHeatmapLabel ? factorHeatmapLabel : factorLabel }
+                {widgetTitle}
                 <div ref="widgetBody" style={{paddingBottom: "30px"}}></div>
             </div>
         );
