@@ -121,7 +121,7 @@ module.exports = function (options) {
             removeSelection(query.select, facet, facetItem);
         }
         pushQueryIntoBrowserHistory(false);
-        filterAndRenderResults(facetItem);
+        filterAndRenderResults();
     }
 
     function addSelection(select, facet, facetItem) {
@@ -153,29 +153,18 @@ module.exports = function (options) {
         }
     }
 
-
-
-    function filterAndRenderResults(facetItemChecked) {
-
-        var MAX_RESULTS = 1000;
-        var count = 0;
-
-        var filteredResults = resultsData.results.filter(function(result) {
-
-            if (count >= MAX_RESULTS) {
-                return false;
-            }
-
-            for (var facetName in query.select) {
-                if (query.select.hasOwnProperty(facetName)) {
+    function filterResults(query) {
+        return resultsData.results.filter(function(result) {
+            for (var facetName in query) {
+                if (query.hasOwnProperty(facetName)) {
 
                     var hasCheckedItemsInThisFacet = false;
                     var facetMatch = false;
 
-                    for (var facetItem in query.select[facetName]) {
-                        if (query.select[facetName].hasOwnProperty(facetItem)) {
+                    for (var facetItem in query[facetName]) {
+                        if (query[facetName].hasOwnProperty(facetItem)) {
 
-                            if (query.select[facetName][facetItem]) {
+                            if (query[facetName][facetItem]) {
                                 hasCheckedItemsInThisFacet = true;
 
                                 if (result[facetName].constructor === Array) {
@@ -195,89 +184,75 @@ module.exports = function (options) {
 
                 }
             }
-
-            count += 1;
             return true;
         });
 
-        var disabledCheckedFacets = {};
+    }
+
+    function filterAndRenderResults() {
+
+        var filteredResults = filterResults (query.select);
+
+        var enabledCheckedFacets = {};
         var disabledUncheckedFacets = {};
 
-        for (var facet in facetsTreeData) {
-            var facetItems = facetsTreeData[facet];
+        var selectedFacets = [];
+        for (var facet in query.select) {
+            var itemFacet = query.select[facet];
+            for (var item in itemFacet) {
+                if (itemFacet[item]) {
+                    selectedFacets.push(item);
+                }
+            }
+        }
 
-            var facetsInCommon = {};
-            var facetValue = [];
-            var facetNotExistsValue = [];
-
-            for (var item in facetItems) {
-                var facetItem = facetItems[item];
-                var facetWithNoResults = false;
-                var sameValue = true;
-
-                for (var index in filteredResults) {
-                    var filtered = filteredResults[index];
-                    var facetResults = filtered[facet];
-                    var factorValue = [];
-
-                    //If the facetResults contains an array of facets in common
-                    if(facet === "factors" && facetResults.length > 1) {
-                        factorValue.push(facetResults);
-                        if (!facetsInCommon.hasOwnProperty(facet)) {
-                            facetsInCommon[facet] = factorValue;
-                        }
-
-                        for(var index in facetResults) {
-                            var _facetItem = facetResults[index];
-                            if (_facetItem.toString() !== facetItem.name) {
-                                sameValue = false;
-                            }
-                            if (_facetItem.toString() === facetItem.name)  {
-                                facetWithNoResults = true;
-                            }
-                        }
-                    }
-
-                    else {
-                        if (!facetsInCommon.hasOwnProperty(facet)) { //if is empty the first time
-                            facetValue.push(facetResults.toString());
-                            facetsInCommon[facet] = facetValue;
-                            facetValue = [];
-                        }
-
-                        if (facetsInCommon.hasOwnProperty(facet) && facetResults.toString() !== facetItem.name) {
-                            sameValue = false;
-                        }
-                        if (facetResults.toString() === facetItem.name)  {
-                            facetWithNoResults = true;
-                        }
+        if (selectedFacets.length != 0) {
+            var notSelectedFacets = {};
+            for (var facet in facetsTreeData) {
+                var facetItems = facetsTreeData[facet];
+                var unSelectedFacets = [];
+                for (var item in facetItems) {
+                    var facetItem = facetItems[item];
+                    if (selectedFacets.indexOf(facetItem.name) === -1) {
+                        unSelectedFacets.push(facetItem);
                     }
                 }
-                //check and grey out facets that has results
-                if (sameValue) {
-                    if(facetValue.indexOf(facetResults.toString()) === -1) {
-                        facetValue.push(facetResults.toString());
+                notSelectedFacets[facet] = unSelectedFacets;
+            }
+
+            for (var facet in notSelectedFacets) {
+                var facetNotExistsValue = [];
+                var _query = query.select;
+
+                for (var item in notSelectedFacets[facet]) {
+                    var facetItem = notSelectedFacets[facet][item];
+
+                    if (_query.hasOwnProperty(facet)) {
+                        _query[facet][facetItem.name] = true;
+                    } else {
+                        var _item = {};
+                        _item[facetItem.name] = true;
+                        _query[facet] = _item;
                     }
-                }
-                //unchecked and grey out facetItems with no results
-                if (!facetWithNoResults) {
-                    if(facetNotExistsValue.indexOf(facetItem.name) === -1) {
+
+                    var queryResults = filterResults(_query);
+                    if (queryResults.length === 0 || queryResults.length === filteredResults.length) {
                         facetNotExistsValue.push(facetItem.name);
                     }
+                    _query[facet][facetItem.name] = false; // once calculated, leave it as it was
                 }
-            }
-            if (facetValue.length > 0 && facetItemChecked != facetValue.toString()) {
-                disabledCheckedFacets[facet] = facetValue;
-            }
-            if (facetNotExistsValue.length > 0) {
-                disabledUncheckedFacets[facet] = facetNotExistsValue;
+
+                if (facetNotExistsValue.length > 0) {
+                    disabledUncheckedFacets[facet] = facetNotExistsValue;
+                }
+
             }
         }
 
         React.render(
             React.createElement(
                 DifferentialFacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked,
-                    disabledCheckedFacets: disabledCheckedFacets, disabledUncheckedFacets: disabledUncheckedFacets}
+                    disabledCheckedFacets: enabledCheckedFacets, disabledUncheckedFacets: disabledUncheckedFacets}
             ),
             facetsElement
         );
@@ -285,7 +260,7 @@ module.exports = function (options) {
         React.render(
             React.createElement(
                 DifferentialResults,
-                {results: filteredResults, maxDownLevel: resultsData.maxDownLevel, minDownLevel: resultsData.minDownLevel, minUpLevel: resultsData.minUpLevel, maxUpLevel: resultsData.maxUpLevel}
+                {results: filteredResults.slice(0, 1000), maxDownLevel: resultsData.maxDownLevel, minDownLevel: resultsData.minDownLevel, minUpLevel: resultsData.minUpLevel, maxUpLevel: resultsData.maxUpLevel}
             ),
             resultsElement
         );

@@ -2594,7 +2594,7 @@ webpackJsonp([3],[
   \************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "3fca3c951beb235c9962a9b2d99080dc.png"
+	module.exports = __webpack_require__.p + "3fca3c951beb235c9962a9b2d99080dc.png";
 
 /***/ },
 /* 341 */
@@ -2603,7 +2603,7 @@ webpackJsonp([3],[
   \*********************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "12db03ee98699e8d7a4543e35a1b21cb.png"
+	module.exports = __webpack_require__.p + "12db03ee98699e8d7a4543e35a1b21cb.png";
 
 /***/ },
 /* 342 */
@@ -2612,7 +2612,7 @@ webpackJsonp([3],[
   \***************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "fa11126411f24a60de22e09b545c933c.png"
+	module.exports = __webpack_require__.p + "fa11126411f24a60de22e09b545c933c.png";
 
 /***/ },
 /* 343 */
@@ -2621,7 +2621,7 @@ webpackJsonp([3],[
   \***************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "17878d040f9149a36cc0bf702a93abb0.png"
+	module.exports = __webpack_require__.p + "17878d040f9149a36cc0bf702a93abb0.png";
 
 /***/ },
 /* 344 */
@@ -2630,7 +2630,7 @@ webpackJsonp([3],[
   \**************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "f79c58bc06375dc0349f3d425ccd3b82.png"
+	module.exports = __webpack_require__.p + "f79c58bc06375dc0349f3d425ccd3b82.png";
 
 /***/ },
 /* 345 */
@@ -2639,7 +2639,7 @@ webpackJsonp([3],[
   \***********************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "b7bfc9bf348027c677913e8326723151.png"
+	module.exports = __webpack_require__.p + "b7bfc9bf348027c677913e8326723151.png";
 
 /***/ },
 /* 346 */
@@ -2648,7 +2648,7 @@ webpackJsonp([3],[
   \************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "2f8dfcace8d8aa81883d1d30503dd133.png"
+	module.exports = __webpack_require__.p + "2f8dfcace8d8aa81883d1d30503dd133.png";
 
 /***/ },
 /* 347 */
@@ -2657,7 +2657,7 @@ webpackJsonp([3],[
   \**********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "3a3c5468f484f07ac4a320d9e22acb8c.png"
+	module.exports = __webpack_require__.p + "3a3c5468f484f07ac4a320d9e22acb8c.png";
 
 /***/ },
 /* 348 */
@@ -2666,7 +2666,7 @@ webpackJsonp([3],[
   \**********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "41612b0f4a034424f8321c9f824a94da.png"
+	module.exports = __webpack_require__.p + "41612b0f4a034424f8321c9f824a94da.png";
 
 /***/ },
 /* 349 */
@@ -2675,7 +2675,7 @@ webpackJsonp([3],[
   \**********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "f492970693640894fb54166c75dd2925.png"
+	module.exports = __webpack_require__.p + "f492970693640894fb54166c75dd2925.png";
 
 /***/ },
 /* 350 */
@@ -2684,7 +2684,7 @@ webpackJsonp([3],[
   \**********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "92b29683b6a48eae7de7eb4b1cfa039c.png"
+	module.exports = __webpack_require__.p + "92b29683b6a48eae7de7eb4b1cfa039c.png";
 
 /***/ },
 /* 351 */
@@ -2693,7 +2693,7 @@ webpackJsonp([3],[
   \**********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "dda1b6f694b0d196aefc66a1d6d758f6.png"
+	module.exports = __webpack_require__.p + "dda1b6f694b0d196aefc66a1d6d758f6.png";
 
 /***/ },
 /* 352 */
@@ -2702,7 +2702,7 @@ webpackJsonp([3],[
   \************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "214dabfc2ff6afdef11b799702cbdf04.png"
+	module.exports = __webpack_require__.p + "214dabfc2ff6afdef11b799702cbdf04.png";
 
 /***/ },
 /* 353 */
@@ -2711,7 +2711,7 @@ webpackJsonp([3],[
   \**************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "ab2eb9d0d426f7b16c998c19dba65e47.png"
+	module.exports = __webpack_require__.p + "ab2eb9d0d426f7b16c998c19dba65e47.png";
 
 /***/ },
 /* 354 */
@@ -42746,6 +42746,21 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var ContrastTooltip = React.createClass({displayName: "ContrastTooltip",
+	    propTypes: {
+	        experimentDescription: React.PropTypes.string.isRequired,
+	        contrastDescription: React.PropTypes.string.isRequired,
+	        testReplicates: React.PropTypes.number.isRequired,
+	        referenceReplicates: React.PropTypes.number.isRequired,
+	        properties: React.PropTypes.arrayOf(
+	            React.PropTypes.shape({
+	                contrastPropertyType: React.PropTypes.string,
+	                propertyName: React.PropTypes.string.isRequired,
+	                referenceValue: React.PropTypes.string.isRequired,
+	                testValue: React.PropTypes.string.isRequired
+	            })
+	        )
+	    },
+	
 	
 	    propertyRow: function (property) {
 	        if (!property.testValue && !property.referenceValue) {
@@ -42765,7 +42780,7 @@ webpackJsonp([3],[
 	        }
 	
 	        return (
-	            React.createElement("tr", {key: property.propertyName}, 
+	            React.createElement("tr", {key: property.contrastPropertyType + "-" + property.propertyName}, 
 	                React.createElement("td", {style: style}, property.propertyName), 
 	                React.createElement("td", {style: style}, property.testValue), 
 	                React.createElement("td", {style: style}, property.referenceValue)
@@ -42979,7 +42994,7 @@ webpackJsonp([3],[
   \************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "b29b95ab68a01cc4ac12aef619784a28.png"
+	module.exports = __webpack_require__.p + "b29b95ab68a01cc4ac12aef619784a28.png";
 
 /***/ },
 /* 490 */
@@ -42988,7 +43003,7 @@ webpackJsonp([3],[
   \*****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "89e02878afcbea431a1450ba40a8a682.png"
+	module.exports = __webpack_require__.p + "89e02878afcbea431a1450ba40a8a682.png";
 
 /***/ },
 /* 491 */
@@ -42997,7 +43012,7 @@ webpackJsonp([3],[
   \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "ddbdb9378a821fc07947f54d26237b51.png"
+	module.exports = __webpack_require__.p + "ddbdb9378a821fc07947f54d26237b51.png";
 
 /***/ },
 /* 492 */

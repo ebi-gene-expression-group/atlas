@@ -35,12 +35,16 @@ var DifferentialFacetsTree = React.createClass({
         this.props.setChecked(checked, facet, facetItem);
     },
 
+    _disableUncheckedFacetItems: function (facet) {
+        return this.props.disabledUncheckedFacets[facet] ? this.props.disabledUncheckedFacets[facet] : [];
+    },
+
     render: function () {
         var facets = Object.keys(this.props.facets).map(function (facet) {
             return <Facet key={facet} facetName={facet} facetItems={this.props.facets[facet]}
                 checkedFacetItems={this.props.checkedFacets && this.props.checkedFacets[facet]}
                 setChecked={this._setChecked} disabledFacetItems={this.props.disabledCheckedFacets[facet] ? this.props.disabledCheckedFacets[facet] : []}
-                disabledUncheckedFacetItems={this.props.disabledUncheckedFacets[facet] ? this.props.disabledUncheckedFacets[facet] : []}
+                disabledUncheckedFacetItems={this._disableUncheckedFacetItems(facet)}
             />;
         }.bind(this));
 
@@ -67,6 +71,10 @@ var Facet = React.createClass({
         // eg: { "rnaseq_mrna_differential": true, "microarray_1colour_mrna_differential": true }
         checkedFacetItems: React.PropTypes.object,
         setChecked: React.PropTypes.func.isRequired
+    },
+
+    _disableFacets: function () {
+        this.setState({disabledFacetItems: this.props.disabledUncheckedFacetItems});
     },
 
     _setChecked: function (checked, facetItem) {
@@ -132,11 +140,11 @@ var FacetItem = React.createClass({
     },
 
     render: function () {
-        var className=this.props.disabled || this.props.disabledUnchecked ? "gxaDisabledFacet" : "";
-        var _checked = this.props.checked || this.props.disabled;
+        var className = this.props.disabledUnchecked ? "gxaDisabledFacet" : "";
+        var _checked = this.props.checked; // || this.props.disabled;
         return (
             <li className={className}>
-                <input type="checkbox" checked={_checked} onChange={this._setChecked} disabled={this.props.disabled || this.props.disabledUnchecked}/>
+                <input type="checkbox" checked={_checked} onChange={this._setChecked} disabled={this.props.disabledUnchecked}/>
                 {this.props.value}
             </li>
         );
