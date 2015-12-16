@@ -79,8 +79,19 @@
     });
 
     $baselineTabLink.on("shown.bs.tab", function() {
-        window.dispatchEvent(new Event("scroll"));
-        window.dispatchEvent(new Event("gxaResizeHeatmapAnatomogramHeader"));
+        if (ie9) {
+            function dispatchEvent(eventName) {
+                var evt = document.createEvent("CustomEvent");
+                evt.initCustomEvent(eventName, true, false, {});
+                window.dispatchEvent(evt);
+            }
+
+            dispatchEvent("gxaResizeHeatmapAnatomogramHeader");
+            dispatchEvent("scroll");
+        } else {
+            window.dispatchEvent(new Event("scroll"));
+            window.dispatchEvent(new Event("gxaResizeHeatmapAnatomogramHeader"));
+        }
     });
 
     setInitialHash();

@@ -343,6 +343,8 @@
     </c:if>
 
     $(document).ready(function() {
+        var ie9 = $.browser.msie && $.browser.version < 10;
+
         var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : defaultPanelIndex};
 
         $('head').append('<meta name="description" content="Baseline and differential expression for ${he.encode(fullQueryDescription)}" />');
@@ -372,8 +374,19 @@
                 }
             },
             activate: function() {
-                $(window).trigger("gxaResizeHeatmapAnatomogramHeader");
-                $(window).trigger("scroll");
+                if (ie9) {
+                    function dispatchEvent(eventName) {
+                        var evt = document.createEvent("CustomEvent");
+                        evt.initCustomEvent(eventName, true, false, {});
+                        window.dispatchEvent(evt);
+                    }
+
+                    dispatchEvent("gxaResizeHeatmapAnatomogramHeader");
+                    dispatchEvent("scroll");
+                } else {
+                    window.dispatchEvent(new Event("scroll"));
+                    window.dispatchEvent(new Event("gxaResizeHeatmapAnatomogramHeader"));
+                }
             }
         });
         $accordion.accordion("option", "active", openPanelIndex);
