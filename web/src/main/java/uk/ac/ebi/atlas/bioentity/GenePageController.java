@@ -49,7 +49,7 @@ public class GenePageController extends BioEntityPageController {
     // identifier = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
     // If it is a transcript/protein/mirna ID, the corresponding gene page will display
     // If it is an MGI term, then will redirect to the gene query page
-    @RequestMapping(value = "/genes/{identifier:.*}")
+    @RequestMapping(value = "/old/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model, RedirectAttributes redirectAttributes) {
 
         if(identifier.startsWith("MGI:")){

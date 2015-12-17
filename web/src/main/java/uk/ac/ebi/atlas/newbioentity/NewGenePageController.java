@@ -56,7 +56,7 @@ public class NewGenePageController extends NewBioentityPageController {
         this.propertyNames = propertyNames;
     }
 
-    @RequestMapping(value = "/new/genes/{identifier:.*}")
+    @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
         if (!isSingleGene(identifier)) {
             throw new ResourceNotFoundException("No gene matching " + identifier);
@@ -73,13 +73,13 @@ public class NewGenePageController extends NewBioentityPageController {
         return super.showBioentityPage(identifier, model, experimentTypes);
     }
 
-    @RequestMapping(value = "/new/genes/{identifier:.*}/differentialFacets.json", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/genes/{identifier:.*}/differentialFacets.json", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchDifferentialJsonFacets(@PathVariable String identifier) {
         return differentialAnalyticsSearchService.fetchDifferentialFacetsForIdentifier(GeneQuery.create(identifier));
     }
 
-    @RequestMapping(value = "/new/genes/{identifier:.*}/differentialResults.json", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/genes/{identifier:.*}/differentialResults.json", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchDifferentialJsonResults(@PathVariable String identifier) {
         return differentialAnalyticsSearchService.fetchDifferentialResultsForIdentifier(GeneQuery.create(identifier));

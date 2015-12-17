@@ -36,12 +36,12 @@
 <section id="gxaBioentityTabsSection">
 
     <ul class="nav nav-tabs" role="tablist">
-        <c:if test="${hasBaselineResults}"><li title="Baseline experiments" role="presentation"><a href="new/genes/${identifier}#baseline" data-toggle="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
+        <c:if test="${hasBaselineResults}"><li title="Baseline experiments" role="presentation"><a href="genes/${identifier}#baseline" data-toggle="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
         <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" role="presentation" class="disabled noBorderTab">Baseline expression</li></c:if>
-            <c:if test="${hasDifferentialResults}"><li title="Differential experiments" role="presentation"><a href="new/genes/${identifier}#differential" data-toggle="tab" id="differentialTabLink">Differential expression</a></li></c:if>
+            <c:if test="${hasDifferentialResults}"><li title="Differential experiments" role="presentation"><a href="genes/${identifier}#differential" data-toggle="tab" id="differentialTabLink">Differential expression</a></li></c:if>
         <c:if test="${!hasDifferentialResults}"><li title="Differential experiments" role="presentation" class="disabled noBorderTab">Differential expression</li></c:if>
 
-        <li role="presentation" title="Bioentity information"><a href="new/genes/${identifier}#information" data-toggle="tab" id="informationTabLink">Bioentity information</a></li>
+        <li role="presentation" title="Bioentity information"><a href="genes/${identifier}#information" data-toggle="tab" id="informationTabLink">Bioentity information</a></li>
     </ul>
 
     <!-- Tab panes -->

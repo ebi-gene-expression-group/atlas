@@ -46,7 +46,7 @@ public class NewGeneSetPageController extends NewBioentityPageController {
         this.propertyNames = propertyNames;
     }
 
-    @RequestMapping(value = "/new/genesets/{identifier:.*}")
+    @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showGeneSetPage(@PathVariable String identifier, Model model) {
 
         if (!GeneSetUtil.isGeneSet(identifier)) {
@@ -75,13 +75,13 @@ public class NewGeneSetPageController extends NewBioentityPageController {
         return super.showBioentityPage(identifier, model, experimentTypes);
     }
 
-    @RequestMapping(value = "/new/genesets/{identifier:.*}/differentialFacets.json", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/genesets/{identifier:.*}/differentialFacets.json", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchDifferentialJsonFacets(@PathVariable String identifier) {
         return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(GeneQuery.create(identifier));
     }
 
-    @RequestMapping(value = "/new/genesets/{identifier:.*}/differentialResults.json", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/genesets/{identifier:.*}/differentialResults.json", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchDifferentialJsonResults(@PathVariable String identifier) {
         return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(GeneQuery.create(identifier));
