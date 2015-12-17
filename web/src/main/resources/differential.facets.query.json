@@ -3,13 +3,15 @@
     "field": "kingdom"
   }},
   "species": { "terms": {
-    "field": "species"
+    "field": "species",
+    "limit": 40
   }},
   "experimentType": { "terms": {
     "field": "experimentType"
   }},
   "factors": { "terms" : {
-    "field": "factors"
+    "field": "factors",
+    "limit": 40
   }},
   "numReplicates": { "terms" : {
     "field": "numReplicates"
