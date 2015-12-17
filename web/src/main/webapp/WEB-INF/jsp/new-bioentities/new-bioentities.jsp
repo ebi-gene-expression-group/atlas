@@ -36,19 +36,20 @@
 <section id="gxaBioentityTabsSection">
 
     <ul class="nav nav-tabs" role="tablist">
-        <c:if test="${hasBaselineResults}"><li title="Baseline experiments" role="presentation"><a href="genes/${identifier}#baseline" data-toggle="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
+        <c:if test="${hasBaselineResults}"><li title="Baseline experiments" role="presentation"><a href="genes/${identifier}#base" data-toggle="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
         <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" role="presentation" class="disabled noBorderTab">Baseline expression</li></c:if>
-            <c:if test="${hasDifferentialResults}"><li title="Differential experiments" role="presentation"><a href="genes/${identifier}#differential" data-toggle="tab" id="differentialTabLink">Differential expression</a></li></c:if>
+
+        <c:if test="${hasDifferentialResults}"><li title="Differential experiments" role="presentation"><a href="genes/${identifier}#diff" data-toggle="tab" id="differentialTabLink">Differential expression</a></li></c:if>
         <c:if test="${!hasDifferentialResults}"><li title="Differential experiments" role="presentation" class="disabled noBorderTab">Differential expression</li></c:if>
 
-        <li role="presentation" title="Bioentity information"><a href="genes/${identifier}#information" data-toggle="tab" id="informationTabLink">Bioentity information</a></li>
+        <li role="presentation" title="Bioentity information"><a href="genes/${identifier}#info" data-toggle="tab" id="informationTabLink">Bioentity information</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade" id="information"><%@ include file="bioentity-information.jsp" %></div>
-        <div role="tabpanel" class="tab-pane fade" id="baseline"><%@ include file="baseline-expression.jsp" %></div>
-        <div role="tabpanel" class="tab-pane fade" id="differential"><%@ include file="differential-expression.jsp" %></div>
+        <div role="tabpanel" class="tab-pane fade" id="info"><%@ include file="bioentity-information.jsp" %></div>
+        <div role="tabpanel" class="tab-pane fade" id="base"><%@ include file="baseline-expression.jsp" %></div>
+        <div role="tabpanel" class="tab-pane fade" id="diff"><%@ include file="differential-expression.jsp" %></div>
     </div>
 
 </section>
