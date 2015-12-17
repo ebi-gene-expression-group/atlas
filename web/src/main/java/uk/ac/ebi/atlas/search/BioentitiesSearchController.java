@@ -144,19 +144,13 @@ public class BioentitiesSearchController {
 
         boolean singleTerm = geneQuery.size() == 1;
         if (singleTerm && GeneSetUtil.isGeneSet(geneQuery.terms().get(0).toUpperCase())) {
-            return Optional.of("redirect:/new/genesets/" + geneQuery.terms().get(0));
+            return Optional.of("redirect:/genesets/" + geneQuery.terms().get(0));
         }
 
         BioentityProperty bioentityProperty = solrQueryService.findBioentityIdentifierProperty(geneQuery.asString().trim());
 
         if (bioentityProperty != null) {
             String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
-            // TODO Remove if clause and redirecto to "redirect:/"+ bioentityPageName... -> https://www.pivotaltracker.com/story/show/109817868
-            //return Optional.of("redirect:/" + bioentityPageName + "/" + geneQuery.asUrlQueryParameter());
-
-            if (bioentityPageName.equalsIgnoreCase("genes")) {
-                return Optional.of("redirect:/new/" + bioentityPageName + "/" + bioentityProperty.getBioentityIdentifier());
-            }
             return Optional.of("redirect:/" + bioentityPageName + "/" + bioentityProperty.getBioentityIdentifier());
         }
 
@@ -166,7 +160,7 @@ public class BioentitiesSearchController {
         Optional<Set<String>> geneIdsOrSets = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery.asString().trim(), species, isExactMatch);
 
         if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
-            return Optional.of("redirect:/new/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());
+            return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());
         }
 
         return Optional.absent();

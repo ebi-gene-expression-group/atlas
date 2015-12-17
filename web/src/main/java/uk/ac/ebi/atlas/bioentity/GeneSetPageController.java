@@ -83,7 +83,7 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     // identifier = Reactome, Plant Reactome, GO, or Interpro term
-    @RequestMapping(value = "/genesets/{identifier:.*}")
+    @RequestMapping(value = "/old/genesets/{identifier:.*}")
     public String showBioentityPage(@PathVariable String  identifier, Model model) {
         checkIdentifierIsGeneSet(identifier);
 

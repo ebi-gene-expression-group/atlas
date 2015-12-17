@@ -43,12 +43,12 @@ module.exports = function (options) {
     var differentialResultsPath = "";
     switch (query.queryType) {
         case "gene":
-            differentialFacetsPath = "gxa/new/genes/" + query.geneQuery + "/differentialFacets.json";
-            differentialResultsPath = "gxa/new/genes/" + query.geneQuery + "/differentialResults.json";
+            differentialFacetsPath = "gxa/genes/" + query.geneQuery + "/differentialFacets.json";
+            differentialResultsPath = "gxa/genes/" + query.geneQuery + "/differentialResults.json";
             break;
         case "geneSet":
-            differentialFacetsPath = "gxa/new/genesets/" + query.geneQuery + "/differentialFacets.json";
-            differentialResultsPath = "gxa/new/genesets/" + query.geneQuery + "/differentialResults.json";
+            differentialFacetsPath = "gxa/genesets/" + query.geneQuery + "/differentialFacets.json";
+            differentialResultsPath = "gxa/genesets/" + query.geneQuery + "/differentialResults.json";
             break;
         default:
             break;
