@@ -10,6 +10,8 @@ if [ $# -lt 1 ]; then
 fi
 
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 function test_command_status {
     $@
     local status=$?
@@ -19,5 +21,5 @@ function test_command_status {
     return ${status}
 }
 
-test_command_status "./warm_experiment_cache.sh $1"
-test_command_status "./build_efo_tree.sh $1"
+test_command_status "$DIR/warm_experiment_cache.sh $1"
+test_command_status "$DIR/build_efo_tree.sh $1"
