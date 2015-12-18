@@ -193,7 +193,7 @@ module.exports = function (options) {
 
         var filteredResults = filterResults (query.select);
 
-        var enabledCheckedFacets = {};
+        var disabledCheckedFacets = {};
         var disabledUncheckedFacets = {};
 
         var selectedFacets = [];
@@ -206,53 +206,83 @@ module.exports = function (options) {
             }
         }
 
-        if (selectedFacets.length != 0) {
-            var notSelectedFacets = {};
-            for (var facet in facetsTreeData) {
-                var facetItems = facetsTreeData[facet];
-                var unSelectedFacets = [];
-                for (var item in facetItems) {
-                    var facetItem = facetItems[item];
-                    if (selectedFacets.indexOf(facetItem.name) === -1) {
-                        unSelectedFacets.push(facetItem);
-                    }
+        var notSelectedFacets = {};
+        for (var facet in facetsTreeData) {
+            var facetItems = facetsTreeData[facet];
+            var unSelectedFacets = [];
+            for (var item in facetItems) {
+                var facetItem = facetItems[item];
+                if (selectedFacets.indexOf(facetItem.name) === -1) {
+                    unSelectedFacets.push(facetItem);
                 }
-                notSelectedFacets[facet] = unSelectedFacets;
+            }
+            notSelectedFacets[facet] = unSelectedFacets;
+        }
+
+        for (var facet in notSelectedFacets) {
+            var facetNotExistsValue = [];
+            var _query = query.select;
+
+            for (var item in notSelectedFacets[facet]) {
+                var facetItem = notSelectedFacets[facet][item];
+
+                if (_query.hasOwnProperty(facet)) {
+                    _query[facet][facetItem.name] = true;
+                } else {
+                    var _item = {};
+                    _item[facetItem.name] = true;
+                    _query[facet] = _item;
+                }
+
+                var queryResults = filterResults(_query);
+                if (queryResults.length === 0 || queryResults.length === filteredResults.length) {
+                    facetNotExistsValue.push(facetItem.name);
+                }
+                _query[facet][facetItem.name] = false; // once calculated, leave it as it was
             }
 
-            for (var facet in notSelectedFacets) {
-                var facetNotExistsValue = [];
-                var _query = query.select;
+            if (facetNotExistsValue.length > 0) {
+                disabledUncheckedFacets[facet] = facetNotExistsValue;
+            }
+        }
 
-                for (var item in notSelectedFacets[facet]) {
-                    var facetItem = notSelectedFacets[facet][item];
+        for (var facet in disabledUncheckedFacets) {
+            var facetValue = [];
 
-                    if (_query.hasOwnProperty(facet)) {
-                        _query[facet][facetItem.name] = true;
-                    } else {
-                        var _item = {};
-                        _item[facetItem.name] = true;
-                        _query[facet] = _item;
+            for (var item in disabledUncheckedFacets[facet]) {
+                var existsFacet = true;
+
+                for (var index in filteredResults) {
+                    var filtered = filteredResults[index];
+                    var facetResults = filtered[facet];
+
+                    if (facet === "factors" && facetResults.length > 1 ) {
+                        for (var ind in facetResults) {
+                            var _facetItem = facetResults[ind];
+                            if (_facetItem.toString() !== facetItem.name) {
+                                existsFacet = false;
+                            }
+                        }
+
+                    } else if (disabledUncheckedFacets[facet][item].toString() !== facetResults.toString()) {
+                        existsFacet = false;
                     }
-
-                    var queryResults = filterResults(_query);
-                    if (queryResults.length === 0 || queryResults.length === filteredResults.length) {
-                        facetNotExistsValue.push(facetItem.name);
-                    }
-                    _query[facet][facetItem.name] = false; // once calculated, leave it as it was
                 }
 
-                if (facetNotExistsValue.length > 0) {
-                    disabledUncheckedFacets[facet] = facetNotExistsValue;
+                if (existsFacet) {
+                    facetValue.push(disabledUncheckedFacets[facet][item]);
                 }
+            }
 
+            if (facetValue.length > 0) {
+                disabledCheckedFacets[facet] = facetValue;
             }
         }
 
         React.render(
             React.createElement(
                 DifferentialFacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked,
-                    disabledCheckedFacets: enabledCheckedFacets, disabledUncheckedFacets: disabledUncheckedFacets}
+                    disabledCheckedFacets: disabledCheckedFacets, disabledUncheckedFacets: disabledUncheckedFacets}
             ),
             facetsElement
         );

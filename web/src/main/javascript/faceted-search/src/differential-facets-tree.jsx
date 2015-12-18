@@ -141,7 +141,7 @@ var FacetItem = React.createClass({
 
     render: function () {
         var className = this.props.disabledUnchecked ? "gxaDisabledFacet" : "";
-        var _checked = this.props.checked; // || this.props.disabled;
+        var _checked = this.props.checked || this.props.disabled;
         return (
             <li className={className}>
                 <input type="checkbox" checked={_checked} onChange={this._setChecked} disabled={this.props.disabledUnchecked}/>
