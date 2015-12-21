@@ -58,6 +58,11 @@ public class NewGenePageController extends NewBioentityPageController {
 
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
+
+        if(identifier.startsWith("MGI:")){
+            return "forward:/query?geneQuery=" + identifier;
+        }
+
         if (!isSingleGene(identifier)) {
             throw new ResourceNotFoundException("No gene matching " + identifier);
         }
@@ -87,7 +92,12 @@ public class NewGenePageController extends NewBioentityPageController {
 
     private boolean isSingleGene(String identifier) {
         BioentityProperty bioentityProperty = solrQueryService.findBioentityIdentifierProperty(identifier);
-        String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
-        return bioentityPageName.equalsIgnoreCase(GENES);
+
+        if (bioentityProperty == null) {
+            return false;
+        } else {
+            String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
+            return bioentityPageName.equalsIgnoreCase(GENES);
+        }
     }
 }
