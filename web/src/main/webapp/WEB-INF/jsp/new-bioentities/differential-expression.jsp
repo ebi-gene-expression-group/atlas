@@ -8,8 +8,10 @@
 
 <c:set var="thisPage" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
-<div class="grid_6 alpha" id="gxaDifferentialFacetsContainerDiv"></div>
-<div class="grid_18 omega" id="gxaDifferentialResultsContainerDiv"></div>
+<div class="grid_6 alpha" id="gxaDifferentialFacetsContainerDiv"><img src="/gxa/resources/images/loading.gif"/></div>
+<div class="grid_18 omega" id="gxaDifferentialResultsContainerDiv">
+    <img src="/gxa/resources/images/loading.gif"/>
+</div>
 
 <script>
     var selectedSpecies = "${hasSelectedSpecies ? selectedSpecies : ''}";

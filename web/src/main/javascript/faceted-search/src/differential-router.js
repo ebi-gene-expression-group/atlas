@@ -59,7 +59,7 @@ module.exports = function (options) {
     $.ajaxSetup({ traditional:true });
     $.ajax({
         url: new URI({protocol: URI(window.location).protocol(), hostname: host, path: differentialFacetsPath}).normalize(),
-        dataType: 'json',
+        dataType: "json",
         success: function(response) {
             facetsTreeData = response;
             if (options.species) {
@@ -76,7 +76,7 @@ module.exports = function (options) {
 
             $.ajax({
                 url: new URI({protocol: URI(window.location).protocol(), hostname: host, path: differentialResultsPath}).normalize(),
-                dataType: 'json',
+                dataType: "json",
                 success: function(response) {
                     resultsData = response;
 
