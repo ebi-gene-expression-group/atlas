@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.google.common.collect.TreeMultimap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,8 +24,6 @@ public class DifferentialResultsReader {
     private final ExperimentTrader experimentTrader;
     private final ContrastTrader contrastTrader;
     private final FoldChangeRounder foldChangeRounder;
-
-    private static final String[] FACET_FIELDS = {"kingdom", "species", "experimentType", "factors", "numReplicates", "regulation"};
 
     private static final String DOCS_PATH                  = "$.response.docs[*]";
     private static final String EXPERIMENT_TYPE_FIELD      = "experimentType";
@@ -61,17 +58,10 @@ public class DifferentialResultsReader {
         List<Map<String, Object>> documents = jsonReadContext.read(DOCS_PATH);
 
         if(!documents.isEmpty()) {
-            Map<String, Set<String>> commonFacetItems = new HashMap<>();
-            for (String facetField : FACET_FIELDS) {
-                commonFacetItems.put(facetField, stringOrStringCollectionAsSet(documents.get(0).get(facetField)));
-            }
-
             for (Map<String, Object> document : documents) {
                 String experimentAccession = (String) document.get(EXPERIMENT_ACCESSION_FIELD);
                 String contrastId = (String) document.get(CONTRAST_ID_FIELD);
                 if (experimentContrastMap.put(experimentAccession, contrastId)) {
-                    intersectMaps(commonFacetItems, document);
-
                     ExperimentType experimentType = ExperimentType.get((String) document.get(EXPERIMENT_TYPE_FIELD));
 
                     Object foldChangeSymbol = document.get(LOG2_FOLD_CHANGE_FIELD);
@@ -104,44 +94,11 @@ public class DifferentialResultsReader {
             resultsWithLevels.put("minDownLevel", foldChangeRounder.format(minDownLevel));
             resultsWithLevels.put("minUpLevel", foldChangeRounder.format(minUpLevel));
             resultsWithLevels.put("maxUpLevel", foldChangeRounder.format(maxUpLevel));
-
-            String[] keySet = commonFacetItems.keySet().toArray(new String[commonFacetItems.keySet().size()]);
-            for (String facetField : keySet) {
-                Set<String> items = commonFacetItems.remove(facetField);
-                commonFacetItems.put(facetField, items);
-            }
-            resultsWithLevels.put("commonFacetItems", commonFacetItems);
-
         }
 
         resultsWithLevels.put("results", filteredDocuments);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(resultsWithLevels);
-    }
-
-    private void intersectMaps(Map<String, Set<String>> thisMap, Map<String, Object> document) {
-        for (String key : thisMap.keySet()) {
-            if (!thisMap.get(key).isEmpty()) {
-                Set<String> otherMapValueAsStringSet = stringOrStringCollectionAsSet(document.get(key));
-                thisMap.get(key).retainAll(otherMapValueAsStringSet);
-            }
-        }
-    }
-
-    private Set<String> stringOrStringCollectionAsSet(Object stringOrStringCollection) {
-        Set<String> stringSet = Sets.newHashSet();
-
-        if (stringOrStringCollection instanceof String) {
-            stringSet.add((String) stringOrStringCollection);
-        } else if (stringOrStringCollection instanceof Collection) {
-            for (Object o : (Collection) stringOrStringCollection) {
-                if (o instanceof String) {
-                    stringSet.add((String) o);
-                }
-            }
-        }
-
-        return stringSet;
     }
 }
