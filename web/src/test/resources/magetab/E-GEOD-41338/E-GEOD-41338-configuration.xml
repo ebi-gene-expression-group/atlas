@@ -9,10 +9,10 @@
             <assay_group id="g2" label="Gallus gallus; brain">
                 <assay>SRR579551</assay>
             </assay_group>
-            <assay_group id="g3" label="Xenopus (Silurana) tropicalis; kidney">
+            <assay_group id="g3" label="Xenopus tropicalis; kidney">
                 <assay>SRR579562</assay>
             </assay_group>
-            <assay_group id="g4" label="Xenopus (Silurana) tropicalis; liver">
+            <assay_group id="g4" label="Xenopus tropicalis; liver">
                 <assay>SRR579561</assay>
             </assay_group>
             <assay_group id="g5" label="Mus musculus; liver">
@@ -33,10 +33,10 @@
             <assay_group id="g10" label="Mus musculus; kidney">
                 <assay>SRR579548</assay>
             </assay_group>
-            <assay_group id="g11" label="Xenopus (Silurana) tropicalis; brain">
+            <assay_group id="g11" label="Xenopus tropicalis; brain">
                 <assay>SRR579560</assay>
             </assay_group>
-            <assay_group id="g12" label="Xenopus (Silurana) tropicalis; heart">
+            <assay_group id="g12" label="Xenopus tropicalis; heart">
                 <assay>SRR579563</assay>
             </assay_group>
             <assay_group id="g13" label="Mus musculus; skeletal muscle">
@@ -58,7 +58,7 @@
             <assay_group id="g18" label="Tetraodon nigroviridis; brain">
                 <assay>SRR579565</assay>
             </assay_group>
-            <assay_group id="g19" label="Xenopus (Silurana) tropicalis; muscle">
+            <assay_group id="g19" label="Xenopus tropicalis; muscle">
                 <assay>SRR579564</assay>
             </assay_group>
             <assay_group id="g20" label="Mus musculus; heart">

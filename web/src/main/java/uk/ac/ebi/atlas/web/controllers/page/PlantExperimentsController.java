@@ -49,22 +49,18 @@ public class PlantExperimentsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlantExperimentsController.class);
 
     private ExperimentTrader experimentTrader;
-
     private SpeciesKingdomTrader speciesKingdomTrader;
-
-    private SortedSetMultimap<String, String> baselineExperimentAccessionsBySpecies;
 
     private Integer numberOfPlantExperiments;
 
+    private SortedSetMultimap<String, String> baselineExperimentAccessionsBySpecies;
     private SortedMap<String, Integer> numDifferentialExperimentsBySpecies;
 
     private Map<String, String> experimentLinks = new HashMap<>();
-
     private Map<String, String> experimentDisplayNames = new HashMap<>();
 
     @Inject
-    public PlantExperimentsController(ExperimentTrader experimentTrader,
-                                      SpeciesKingdomTrader speciesKingdomTrader) {
+    public PlantExperimentsController(ExperimentTrader experimentTrader, SpeciesKingdomTrader speciesKingdomTrader) {
         this.experimentTrader = experimentTrader;
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
@@ -107,10 +103,19 @@ public class PlantExperimentsController {
         baselineExperimentAccessionsBySpecies = TreeMultimap.create(keyComparator, valueComparator);
 
         for (String experimentAccession : experimentTrader.getAllBaselineExperimentAccessions()) {
-            String displayName = null;
             try {
-                BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-                displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
+                int numberOfAssays = 0;
+                Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+                if (experiment.getType() == ExperimentType.RNASEQ_MRNA_BASELINE || experiment.getType() == ExperimentType.PROTEOMICS_BASELINE) {
+                    numberOfAssays = ((BaselineExperiment) experiment).getExperimentRunAccessions().size();
+                }
+                else if (experiment.getType() == ExperimentType.MICROARRAY_ANY || experiment.getType() == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
+                    numberOfAssays = ((DifferentialExperiment) experiment).getAssayAccessions().size();
+                }
+
+                String displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
+                experimentDisplayNames.put(experimentAccession, displayName + " (" + numberOfAssays + " assays)");
+
                 for (String species : experiment.getOrganisms()) {
                     if (speciesKingdomTrader.getKingdom(species).equals("plants")) {
                         baselineExperimentAccessionsBySpecies.put(species, experimentAccession);
@@ -126,16 +131,6 @@ public class PlantExperimentsController {
                 // we don't want the entire application to crash just because one condensedSdrf file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
             }
-
-            int numberOfAssays = 0;
-            Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-            if (experiment.getType() == ExperimentType.RNASEQ_MRNA_BASELINE || experiment.getType() == ExperimentType.PROTEOMICS_BASELINE) {
-                numberOfAssays = ((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession)).getExperimentRunAccessions().size();
-            }
-            else if (experiment.getType() == ExperimentType.MICROARRAY_ANY || experiment.getType() == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
-                numberOfAssays = ((DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession)).getAssayAccessions().size();
-            }
-            experimentDisplayNames.put(experimentAccession, displayName + " (" + numberOfAssays + " assays)");
         }
 
         numDifferentialExperimentsBySpecies = new TreeMap<>();
