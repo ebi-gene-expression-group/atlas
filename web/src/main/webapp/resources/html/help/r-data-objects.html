@@ -1,6 +1,6 @@
 <h1>Expression Atlas data in R</h1>
 
-<p>For <a href="help/differential-atlas.html">differential expression</a> experiments in Expression Atlas,
+<p>For microarray and RNA-seq experiments in Expression Atlas,
 you can download a file containing the expression data and meta-data that you
 can load into <a href="http://www.r-project.org/">R</a>. Click the <strong>R</strong> button on the top-right of any
 differential experiment page to download one.</p>
@@ -15,6 +15,26 @@ project website</a>.</p>
 
 <img src="resources/images/help/Rhelp_startR.png" alt="New R session screenshot" />
 
+<h3>Required packages</h3>
+
+<p>In order to use the object you will need to install a few packages from <a href="http://www.bioconductor.org/">Bioconductor</a>. These are:
+<ul>
+    <li><a href="http://www.bioconductor.org/packages/release/bioc/html/S4Vectors.html">S4Vectors</a>.</li>
+    <li><a href="http://www.bioconductor.org/packages/release/bioc/html/IRanges.html">IRanges</a>.</li>
+    <li><a href="http://www.bioconductor.org/packages/release/bioc/html/GenomicRanges.html">GenomicRanges</a>.</li>
+    <li><a href="http://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">SummarizedExperiment</a>.</li>
+</ul>
+
+<p>If you have not already installed these packages, do this
+by running the following two commands:</p>
+
+<p><code>source( &quot;http://bioconductor.org/biocLite.R&quot; )</code></p>
+<p><code>biocLite( c( &quot;S4Vectors&quot;, &quot;IRanges&quot;, &quot;GenomicRanges&quot;, &quot;SummarizedExperiment&quot; ) )</code></p>
+
+<p>For more details about using using this package please refer to <a href="http://www.bioconductor.org/">Bioconductor</a>.
+
+<h3>Load the Expression Atlas data</h3>
+
 <p>Load the object you downloaded into your R session, e.g.:</p>
 
 <p><code>load( "/path/to/E-GEOD-38400-atlasExperimentSummary.Rdata" )</code></p>
@@ -22,47 +42,33 @@ project website</a>.</p>
 <img src="resources/images/help/Rhelp_loadData.png" alt="Load Atlas Rdata object screenshot" />
 
 <p>This has created an object called <code>experimentSummary</code>. This
-object is a <a href="http://www.bioconductor.org/packages/release/bioc/manuals/IRanges/man/IRanges.pdf#page.123">SimpleList</a> object. Each element is one of three <a
+object is a SimpleList object (see the <a
+href="http://www.bioconductor.org/packages/release/bioc/html/S4Vectors.html">S4Vectors package</a>).
+Each element is one of three <a
 href="http://www.bioconductor.org">Bioconductor</a> objects: 
 	<ul>
-		<li><a href="http://www.bioconductor.org/packages/release/bioc/manuals/GenomicRanges/man/GenomicRanges.pdf#page.59">SummarizedExperiment</a> (RNA-seq experiments)</li>
+		<li><a href="https://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">RangedSummarizedExperiment</a> (RNA-seq experiments)</li>
 		<li><a href="http://www.bioconductor.org/packages/release/bioc/manuals/Biobase/man/Biobase.pdf#page.34">ExpressionSet</a> (1-colour microarray experiments)</li>
 		<li><a href="http://www.bioconductor.org/packages/release/bioc/manuals/limma/man/limma.pdf#page.96">MAList</a> (2-colour microarray experiments)</li>
 	</ul>
 </p>
 
+
 <h2>How to use it</h2>
-
-<p>In order to use the object you will need to install and load the <a
-	href="http://www.bioconductor.org/packages/release/bioc/html/GenomicRanges.html">GenomicRanges</a> package from <a href="http://www.bioconductor.org/">Bioconductor</a>.</p>
-
-<p>If you have not already installed this package, do this
-by running the following two commands:</p>
-
-<p><code>source( &quot;http://bioconductor.org/biocLite.R&quot; )</code></p>
-<p><code>biocLite( &quot;GenomicRanges&quot; )</code></p>
-
-<p>Now load the package into your R session:</p>
-
-<p><code>library( GenomicRanges )</code></p>
-
-<img src="resources/images/help/Rhelp_loadGranges.png" alt="Load GenomicRanges screenshot" />
-
-<p>For more details about using using this package please see the <a href="http://www.bioconductor.org/packages/release/bioc/html/GenomicRanges.html">documentation</a>.
 
 <h3>RNA-seq data</h3>
 
 <p>Data from an RNA-seq experiment is contained in a single <a
-	href="http://www.bioconductor.org/packages/release/bioc/manuals/GenomicRanges/man/GenomicRanges.pdf#page.59">SummarizedExperiment</a> object in the SimpleList you have loaded.
-<p>The SummarizedExperiment object is stored under the name "rnaseq", so you
+	href="http://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">RangedSummarizedExperiment</a> object in the SimpleList you have loaded.
+<p>The RangedSummarizedExperiment object is stored under the name "rnaseq", so you
 can assign it to a new variable like this:</p>
 
-<p><code>summarizedExperiment &lt;- experimentSummary$rnaseq</code></p>
+<p><code>rSumExp &lt;- experimentSummary$rnaseq</code></p>
 
-<img src="resources/images/help/Rhelp_sumExp.png" alt="SummarizedExperiment screenshot" />
+<img src="resources/images/help/Rhelp_sumExp.png" alt="RangedSummarizedExperiment screenshot" />
 
 
-<p>The SummarizedExperiment object contains the following:
+<p>The RangedSummarizedExperiment object contains the following:
 	<ul>
 		<li>Matrix of raw counts (not normalized), in the
 		<strong>assays</strong> slot, in a <strong>counts</strong>
@@ -71,13 +77,13 @@ can assign it to a new variable like this:</p>
 		<li>Sample annotations, in the <strong>colData</strong> slot.</li>
 <img src="resources/images/help/Rhelp_sumExp_coldata.png" alt="SummarizedExperiment coldata screenshot" />
 		<li>Brief outline of methods, from QC of FASTQ files to production of
-		raw counts, in the <strong>exptData</strong> slot.</li>
+		raw counts, in the <strong>metadata</strong> slot.</li>
 <img src="resources/images/help/Rhelp_sumExp_exptdata.png" alt="SummarizedExperiment exptdata screenshot" />
 	</ul>
 </p>
 
-<p>For more information on how to use a SummarizedExperiment object, please see
-the <a href="http://www.bioconductor.org/packages/release/bioc/manuals/GenomicRanges/man/GenomicRanges.pdf#page.59">documentation</a> from <a href="http://www.bioconductor.org/">Bioconductor</a>.</p>
+<p>For more information on how to use a RangedSummarizedExperiment object, please see
+the <a href="http://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">documentation</a> from <a href="http://www.bioconductor.org/">Bioconductor</a>.</p>
 
 <h3>One-colour microarray data</h3>
 
@@ -113,22 +119,24 @@ e.g. <code>expressionSet &lt;- experimentSummary[[ "A-AFFY-18" ]]</code></p>
 <p>For more information on how to use an ExpressionSet object, please see the
 <a href="http://www.bioconductor.org/packages/release/bioc/manuals/Biobase/man/Biobase.pdf#page.34">documentation</a> from <a href="http://www.bioconductor.org">Bioconductor</a>.
 
-<h3>Two-colour microarray data</h3>
-
-<p> Data from a two-colour microarray experiment is stored in one or more <a
-href="http://www.bioconductor.org/packages/release/bioc/manuals/limma/man/limma.pdf#page.96">MAList</a> objects. As for ExpressionSet objects, there is one MAList
-per array design used in the experiment. This means you can access each MAList
-object via its <a herf="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> array design accession.</p>
-
-<p>Each MAList object contains the following:
-	<ul>
-		<li>Vector of probe names, in the <strong>genes</strong> element.</li>
-		<li>Matrix of log<sub>2</sub>(fold-change) values, in the <strong>M</strong> element.</li>
-		<li>Matrix of <a href="bioconductor.org/packages/release/bioc/vignettes/limma/inst/doc/usersguide.pdf">LOESS</a> normalized average intensities, in the <strong>A</strong> element.</li>
-	</ul>
-</p>
-
-<img src="resources/images/help/Rhelp_malist.png" alt="MAList screenshot" />
-
-<p>For more information on how to use an MAList object, please see the <a
-href="http://www.bioconductor.org/packages/release/bioc/manuals/limma/man/limma.pdf#page.96">documentation</a> from <a href="http://www.bioconductor.org">Bioconductor</a>.</p>
+<!----------------------------------------------------
+! <h3>Two-colour microarray data</h3>
+! 
+! <p> Data from a two-colour microarray experiment is stored in one or more <a
+! href="http://www.bioconductor.org/packages/release/bioc/manuals/limma/man/limma.pdf#page.96">MAList</a> objects. As for ExpressionSet objects, there is one MAList
+! per array design used in the experiment. This means you can access each MAList
+! object via its <a herf="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> array design accession.</p>
+! 
+! <p>Each MAList object contains the following:
+! 	<ul>
+! 		<li>Vector of probe names, in the <strong>genes</strong> element.</li>
+! 		<li>Matrix of log<sub>2</sub>(fold-change) values, in the <strong>M</strong> element.</li>
+! 		<li>Matrix of <a href="bioconductor.org/packages/release/bioc/vignettes/limma/inst/doc/usersguide.pdf">LOESS</a> normalized average intensities, in the <strong>A</strong> element.</li>
+! 	</ul>
+! </p>
+! 
+! <img src="resources/images/help/Rhelp_malist.png" alt="MAList screenshot" />
+! 
+! <p>For more information on how to use an MAList object, please see the <a
+! href="http://www.bioconductor.org/packages/release/bioc/manuals/limma/man/limma.pdf#page.96">documentation</a> from <a href="http://www.bioconductor.org">Bioconductor</a>.</p>
+!---------------------------------------------------->
