@@ -257,11 +257,8 @@ module.exports = function (options) {
                     var facetResults = filtered[facet];
 
                     if (facet === "factors" && facetResults.length > 1 ) {
-                        for (var ind in facetResults) {
-                            var _facetItem = facetResults[ind];
-                            if (_facetItem.toString() !== facetItem.name) {
-                                existsFacet = false;
-                            }
+                        if (facetResults.indexOf(disabledUncheckedFacets[facet][item].toString()) === -1) {
+                            existsFacet = false;
                         }
 
                     } else if (disabledUncheckedFacets[facet][item].toString() !== facetResults.toString()) {
