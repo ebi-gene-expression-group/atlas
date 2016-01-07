@@ -23,13 +23,10 @@
 package uk.ac.ebi.atlas.utils;
 
 import com.google.common.base.Preconditions;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Nodes;
 import nu.xom.ParsingException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -42,8 +39,6 @@ import java.io.StringReader;
 @Named
 @Scope("prototype")
 public class ArrayExpressClient {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ArrayExpressClient.class);
 
     private static final String EXPERIMENT_NAME_XPATH = "//experiment/name/text()";
 
