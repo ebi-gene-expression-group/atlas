@@ -88,7 +88,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
         return quartiles;
     }
 
-    //ToDo: this method is only required by BarChartTraderBuilder and is just exposing internal data structure, maybe it should not be here.
     public FactorGroup getFactorGroup() {
         return factorGroup;
     }
