@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2009 Jörn Zaefferer
  * Portions written by European Molecular Biology Laboratory
- *
+	 *
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
@@ -345,6 +345,7 @@ $.Autocompleter = function(input, options) {
 
     function getTermText(term)
     {
+        term = term.replace(/\s+$/, "");
         var quotePos = term.indexOf("\"");
         if (-1 != quotePos) {
             return substringBeforeFirst(term.substring(quotePos + 1), "\""); 
@@ -359,6 +360,7 @@ $.Autocompleter = function(input, options) {
     {
         var field = getTermField(term);
 
+        var isTextMultiWord = -1 != text.indexOf(" ");
         return getTermModifier(term)
                 + (field.length > 0 ? field + ":" : "")
                 + text;
@@ -379,7 +381,7 @@ $.Autocompleter = function(input, options) {
 
     function stripQuotes(text)
     {
-        return String(text).replace("\"", "");   
+        return String(text).replace("\"", "");
     }
 
     function firstTerm(value)

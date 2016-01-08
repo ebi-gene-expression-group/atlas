@@ -19,3 +19,4 @@ web/src/test/resources/serialized_expression
 npm-debug.log
 web/src/main/**/node_modules
 web/src/main/javascript/**/dist
+tmp/**
