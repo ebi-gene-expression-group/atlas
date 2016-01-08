@@ -99,14 +99,13 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
                 FactorGroup otherFactorGroup = otherExpression.getFactorGroup();
                 FactorGroup thisFactorGroup = thisExpression.getFactorGroup();
 
-                // We can have the same factor in different groups (e.g. adipocyts in E-PROT-3)
-                if (thisFactorGroup.equals(otherFactorGroup)) {
-                        BaselineExpression totalExpression = otherExpression.isKnown() ?
-                            new BaselineExpression(thisExpression.getLevel() + otherExpression.getLevel(), thisFactorGroup)
-                            : new BaselineExpression(otherExpression.getLevelAsString(), thisFactorGroup);
+                checkArgument(thisFactorGroup.equals(otherFactorGroup), "%s != %s", thisFactorGroup, otherFactorGroup);
 
-                    add(factor.getType(), totalExpression);
-                }
+                BaselineExpression totalExpression = otherExpression.isKnown() ?
+                        new BaselineExpression(thisExpression.getLevel() + otherExpression.getLevel(), thisFactorGroup)
+                        : new BaselineExpression(otherExpression.getLevelAsString(), thisFactorGroup);
+
+                add(factor.getType(), totalExpression);
             }
         }
         return this;
