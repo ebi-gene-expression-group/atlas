@@ -53,6 +53,7 @@ public class DifferentialFacetsReader {
                 .put("microarray_1colour_mrna_differential", "Microarray 1-colour mRNA differential")
                 .put("microarray_2colour_mrna_differential", "Microarray 2-colour mRNA differential")
                 .put("rna interference", "RNA interference")
+                .put("rna", "RNA")
                 .build();
 
         public static String get(String field) {
