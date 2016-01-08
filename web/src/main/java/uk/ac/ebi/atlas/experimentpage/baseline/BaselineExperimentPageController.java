@@ -347,7 +347,6 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
                     .build();
 
             model.addAttribute("filterFactorMenu", filterFactorMenu);
-
             model.addAttribute("menuFactorNames", menuFactorNames);
 
         }

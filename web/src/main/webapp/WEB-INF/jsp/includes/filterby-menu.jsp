@@ -25,6 +25,7 @@
   ~ http://gxa.github.com/gxa
   --%>
 
+<%--@elvariable id="selectedFilterFactorNamesAndValues" type="java.util.Map"--%>
 
 <div class="gxaFiltersFrame">
     <c:forEach items="${selectedFilterFactorNamesAndValues}" var="nameFactorEntry">
@@ -33,6 +34,11 @@
     </c:forEach>
 </div>
 <c:set var="filterMenuLabel" value="Change filters"/>
+
+<%--@elvariable id="filterFactorMenu" type="java.util.Set"--%>
+<%--@elvariable id="firstFactorName" type="uk.ac.ebi.atlas.experimentpage.baseline.FilterFactorMenuVoice"--%>
+<%--@elvariable id="menuFactorNames" type="java.util.Set"--%>
+<%--@elvariable id="filterFactorMenuBuilder" type="uk.ac.ebi.atlas.experimentpage.baseline.filterfactormenubuilder"--%>
 
 <div id="filterby-menu" style="display:table-cell">
     <ul id="filterBy" style="display: none">
@@ -89,8 +95,9 @@
 
 <script type="text/javascript">
 
+    var $filterBy = $("#filterBy");
     $(function () {
-        $("#filterBy").menu();
+        $filterBy.menu();
         $('li:not(:has(>ul))', 'ul#filterBy').on('click', function () {
             var json = $(this).attr('data-serialized-factors');
             var factorsCombination = $.parseJSON(json);
@@ -99,7 +106,7 @@
             $("#serializedFilterFactors").val(factorsCombination.serializedFactors);
             $("form#prefForm").submit();
         });
-        $("#filterBy").show();
+        $filterBy.show();
     });
 
 </script>

@@ -29,11 +29,8 @@ import java.util.SortedSet;
 public class FilterFactorMenuVoice implements Comparable<FilterFactorMenuVoice> {
 
     private SortedSet<FilterFactorMenuVoice> children;
-
     private String displayName;
-
     private String type;
-
     private Factor factor;
 
     public FilterFactorMenuVoice(String displayName) {

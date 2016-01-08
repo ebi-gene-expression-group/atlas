@@ -56,7 +56,8 @@
                 <entry key="stringUtil" value-ref="stringUtil"/>
                 <!-- heatmap-matrix-searchresults-diffanalytics.jsp -->
                 <entry key="foldChangeRounder" value-ref="foldChangeRounder"/>
-                <!--<entry key="type" value-ref="experimentType"/>-->
+                <!-- filterby-menu.jsp -->
+                <entry key="filterFactorMenuBuilder" value-ref="filterFactorMenuBuilder"/>
             </map>
         </property>
     </bean>

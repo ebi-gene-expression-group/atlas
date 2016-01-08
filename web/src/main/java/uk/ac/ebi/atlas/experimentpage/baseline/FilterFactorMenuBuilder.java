@@ -128,6 +128,7 @@ public class FilterFactorMenuBuilder {
 
     protected Map<String, Set<Factor>> extractFactorNames(Set<Factor> setOfFactor) {
 
+        @SuppressWarnings("unchecked")
         Map<String, Set<Factor>> result = LazyMap.decorate(new HashMap<>(), new Factory() {
             @Override
             public Object create() {
