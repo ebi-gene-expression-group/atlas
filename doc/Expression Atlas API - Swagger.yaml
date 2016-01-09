@@ -1,0 +1,104 @@
+swagger: '2.0'
+info:
+  title: Expression Atlas API
+  description: 'Public API for [Expression Atlas](https://www.ebi.ac.uk/gxa).'
+  version: 3.0.0
+host: localhost:8080
+schemes:
+  - http
+  - https
+basePath: /gxa/rest
+produces:
+  - application/json
+paths:
+  /genes/{gene_id}/differentialResults.json:
+    get:
+      summary: Product Types
+      description: |
+        Description goes here
+      parameters:
+        - name: gene_id
+          in: path
+          description: Unique gene identificator (Ensembl accession, e.g. <em>ENSG00000003402</em>).
+          required: true
+          type: string
+      tags:
+        - Genes Expression
+      responses:
+        '200':
+          description: An array of products
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/GeneId'
+              
+  
+definitions:
+  GeneId:
+    type: object
+    properties:
+      maxDownLevel:
+        type: string
+        description: Maximum of down-regulated fold-change in expression.
+      minDownLevel:
+        type: string
+        description: Minimum of down-regulated fold-change in expression.
+      maxUpLevel:
+        type: string
+        description: Maximum of up-regulated fold-change in expression.
+      minUpLevel:
+        type: string
+        description: Minimum of up-regulated fold-change in expression.
+      results:
+        type: array
+        description: Array of results above the default fold-change cutoff.
+        items:
+          $ref: '#/definitions/Result'
+  
+  Result:
+    type: object
+    description: Differential result
+    properties:
+      bioentityIdentifier:
+        type: string
+        description: Gene id
+      species:
+        type: string
+        description: Species
+      kingdom:
+        type: string
+        description: Kingdom
+      experimentAccession:
+        type: string
+        description: Experiment
+      experimentType:
+        type: string
+        description: Experiment Type
+      contrastId:
+        type: string
+        description: Contrast
+      factors:
+        type: array
+        description: Array of experimental variables
+        items:
+          type: string
+          description: Experimental variable
+      numReplicates:
+        type: string
+        description: Number of replicates
+      foldChange:
+        type: string
+        description: Log<sub>2</sub> fold-change
+      regulation:
+        type: string
+        description: UP or DOWN
+      comparison:
+        type: string
+        description: Comparison description for the contrast
+      experimentName:
+        type: string
+        description: Name of the experiment
+      colour:
+        type: string
+        description: Hexadecimal of the relative colour.
+
