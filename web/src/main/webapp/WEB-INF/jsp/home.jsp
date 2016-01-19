@@ -138,9 +138,7 @@
 				Systematic Empirical Comparison</a> (<i>PLoS One</i>, 2014).</p>
 
 				<p class="icon icon-conceptual" data-icon="l"><a
-				href="http://nar.oxfordjournals.org/content/42/D1/D926.full">Expression
-				Atlas update - a database of gene and transcript expression from microarray
-				and sequencing-based functional genomics experiments</a> (<i>Nucleic Acids Research</i>, 2014).</p>
+				href="http://nar.oxfordjournals.org/content/44/D1/D746.full">Expression Atlas update — an integrated database of gene and protein expression in humans, animals and plants</a> (<i>Nucleic Acids Research</i>, 2016).</p>
 
 			</div>
 		</div>
