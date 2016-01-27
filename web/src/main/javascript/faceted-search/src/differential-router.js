@@ -287,7 +287,9 @@ module.exports = function (options) {
         React.render(
             React.createElement(
                 DifferentialResults,
-                {results: filteredResults.slice(0, 1000), maxDownLevel: resultsData.maxDownLevel, minDownLevel: resultsData.minDownLevel, minUpLevel: resultsData.minUpLevel, maxUpLevel: resultsData.maxUpLevel}
+                {results: filteredResults.slice(0, 1000), maxDownLevel: resultsData.maxDownLevel,
+                    minDownLevel: resultsData.minDownLevel, minUpLevel: resultsData.minUpLevel,
+                    maxUpLevel: resultsData.maxUpLevel, host: host}
             ),
             resultsElement
         );

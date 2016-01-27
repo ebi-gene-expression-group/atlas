@@ -9,6 +9,7 @@ var React = require('react');
 var DisplayLevelsButton = require('display-levels-button');
 var Legend = require('legend').LegendDifferential;
 var CellDifferential = require('cell-differential');
+var DownloadDifferentialButton = require('download-differential-button');
 
 //*------------------------------------------------------------------*
 
@@ -75,7 +76,8 @@ var DifferentialResults = React.createClass({
         maxDownLevel: React.PropTypes.string.isRequired,
         minDownLevel: React.PropTypes.string.isRequired,
         minUpLevel: React.PropTypes.string.isRequired,
-        maxUpLevel: React.PropTypes.string.isRequired
+        maxUpLevel: React.PropTypes.string.isRequired,
+        host: React.PropTypes.string.isRequired
     },
 
     getInitialState: function () {
@@ -108,6 +110,11 @@ var DifferentialResults = React.createClass({
                     <Legend
                         atlasBaseURL={"/gxa"} minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
                     />
+                </div>
+                <div style={{display: "inline-block", paddingLeft: "10px", verticalAlign: "top"}}>
+                    <DownloadDifferentialButton ref="downloadProfilesButton"
+                                                host={this.props.host}
+                                                results={this.props.results} />
                 </div>
 
                 <table className="table-striped gxaDifferentialFacetedSearchResults">

@@ -15,6 +15,7 @@
     "contrast-tooltips": "file:../contrast-tooltips",
     "legend": "file:../legend",
     "cell-differential": "file:../cell-differential",
+    "download-differential-button": "file:../download-differential-button",
     "jquery": "^2.1.4",
     "jquery.browser": "0.0.8",
     "query-string": "^2.3.0",
