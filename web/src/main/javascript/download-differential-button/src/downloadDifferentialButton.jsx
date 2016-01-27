@@ -46,8 +46,6 @@ var DownloadDifferentialButton = React.createClass({
 
         bodyFields.unshift(headerFields);
         var str = bodyFields.join('\n');
-        console.log(str);
-
         return str;
     },
 
