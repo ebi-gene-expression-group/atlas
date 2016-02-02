@@ -22,6 +22,8 @@ public class BaselineExperimentAssayGroup implements Comparable<BaselineExperime
 
     private FactorGroup filterFactors;
 
+    private String serializedFilterFactors;
+
     private String defaultQueryFactorType;
 
     private FilterFactorsConverter filterFactorsConverter = new FilterFactorsConverter();
@@ -91,6 +93,14 @@ public class BaselineExperimentAssayGroup implements Comparable<BaselineExperime
 
     public FactorGroup getFilterFactors() {
         return filterFactors;
+    }
+
+    public String getSerializedFilterFactors() {
+        return serializedFilterFactors;
+    }
+
+    public void setSerializedFilterFactors(FactorGroup filterFactors) {
+        this.serializedFilterFactors = filterFactorsConverter.serialize(filterFactors);
     }
 
     @Override

@@ -25,7 +25,6 @@
 <%--@elvariable id="preferences" type="uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences"--%>
 <%--@elvariable id="requestParameters" type="uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters"--%>
 
-
 <%@ attribute name="exactMatch" required="true" type="java.lang.Boolean"%>
 <%@ attribute name="geneQuery" required="true" type="uk.ac.ebi.atlas.web.GeneQuery"%>
 <%@ attribute name="firstBaselineCounts" required="true" type="java.lang.Iterable"%>
@@ -43,7 +42,7 @@
             <tr>
                 <td>
                     <a class="gxaBioEntityCardLink"
-                       href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
+                       href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(baselineResult.serializedFilterFactors)}"
                        title="experiment">
                         <c:choose>
                             <c:when test="${hideSpecies}">
@@ -64,11 +63,11 @@
                 <td><a id="gxaMoreBaselineResultsLink" href="">${remainingBaselineCounts.size()} more results...</a></td>
             </tr>
 
-            <c:forEach var="baselineResult" items="${remainingBaselineCounts}"><%--@elvariable id="filterFactorsConverter" type="uk.ac.ebi.atlas.web.FilterFactorsConverter"--%>
+            <c:forEach var="baselineResult" items="${remainingBaselineCounts}">
                 <tr class="gxaAdditionalResultRow" style="display:none">
                     <td>
                         <a class="gxaBioEntityCardLink"
-                           href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
+                           href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(baselineResult.serializedFilterFactors)}"
                            title="experiment">
                             <c:choose>
                                 <c:when test="${hideSpecies}">

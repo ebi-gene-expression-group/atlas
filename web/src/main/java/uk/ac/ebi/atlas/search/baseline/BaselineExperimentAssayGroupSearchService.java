@@ -159,6 +159,7 @@ public class BaselineExperimentAssayGroupSearchService {
                     BaselineExperimentAssayGroup result = new BaselineExperimentAssayGroup(experiment.getAccession(), experiment.getDisplayName(),
                             experimentSpecies, experiment.getExperimentalFactors().getDefaultQueryFactorType(), experiment.isTissueExperiment());
                     result.setFilterFactors(filterFactor);
+                    result.setSerializedFilterFactors(filterFactor);
                     if (conditionSearch) {
                         result.setAssayGroupsWithCondition(ImmutableSet.copyOf(assayGroupIdsForFilterFactor), experiment);
                     }
