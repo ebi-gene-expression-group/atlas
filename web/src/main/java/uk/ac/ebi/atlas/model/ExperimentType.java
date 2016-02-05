@@ -99,7 +99,7 @@ public enum ExperimentType {
     }
 
 
-    // Do not remove: the following two methods are used in experiment-header.jsp
+    // Do not remove: the following three methods are used in experiment-header.jsp
     public boolean isTwoColour() {
         return equals(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL);
     }
@@ -108,5 +108,7 @@ public enum ExperimentType {
         return equals(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
     }
 
-
+    public boolean isRnaSeqBaseline() {
+        return equals(RNASEQ_MRNA_BASELINE);
+    }
 }

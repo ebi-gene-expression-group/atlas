@@ -38,6 +38,7 @@ import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuil
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.*;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
@@ -50,6 +51,7 @@ import javax.validation.Valid;
 @Scope("request")
 public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPageController {
 
+    private final DownloadURLBuilder downloadURLBuilder;
     private final ApplicationProperties applicationProperties;
 
     @Inject
@@ -58,12 +60,14 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
                                                   BaselineRequestContextBuilder requestContextBuilder,
                                                   FilterFactorsConverter filterFactorsConverter,
                                                   FilterFactorMenuBuilder filterFactorMenuBuilder,
+                                                  DownloadURLBuilder downloadURLBuilder,
                                                   BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                                   AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
                                                   SpeciesKingdomTrader speciesKingdomTrader,
                                                   TracksUtil tracksUtil) {
         super(baselineProfilesHeatMap, applicationProperties, requestContextBuilder, filterFactorsConverter, filterFactorMenuBuilder,
                 baselineProfilesViewModelBuilder, assayGroupFactorViewModelBuilder, speciesKingdomTrader, tracksUtil);
+        this.downloadURLBuilder = downloadURLBuilder;
         this.applicationProperties = applicationProperties;
     }
 
@@ -75,6 +79,8 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
         addFactorMenu(model);
 
         model.addAttribute("isWidget", false);
+
+        downloadURLBuilder.addRDownloadUrlToModel(model, request);
 
         return "experiment";
     }

@@ -37,7 +37,7 @@ import java.io.IOException;
 
 @Controller
 @Scope("singleton")
-public class StaticPageController {
+public class    StaticPageController {
 
     private final ServletContextResourceLoader servletContextResourceLoader;
 

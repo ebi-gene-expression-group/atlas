@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -42,6 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.text.MessageFormat;
 
 @Controller
 @Scope("request")
@@ -49,6 +51,7 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentDownloadController.class);
 
+    private static final String PARAMS_TYPE_RNASEQ_BASELINE = "type=RNASEQ_MRNA_BASELINE";
     private BaselineProfilesWriter baselineProfilesWriter;
 
     @Inject
@@ -84,7 +87,7 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=RNASEQ_MRNA_BASELINE")
+    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_RNASEQ_BASELINE)
     public void downloadGeneProfiles(HttpServletRequest request
             , @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
@@ -93,4 +96,12 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
     }
 
+    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = PARAMS_TYPE_RNASEQ_BASELINE)
+    public String downloadRdataURL(HttpServletRequest request) throws IOException {
+        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+        String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experiment.getAccession());
+
+        return "forward:" + path;
+    }
 }

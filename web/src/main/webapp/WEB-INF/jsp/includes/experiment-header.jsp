@@ -96,7 +96,7 @@
 
                     <!-- download-r button section -->
                     <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
-                    <c:if test="${type.differential}">
+                    <c:if test="${type.differential || type.rnaSeqBaseline}">
                         <td>
                             <a id="download-r" class="gxaButtonImage"
                                title="Download experiment data ready to load into R"

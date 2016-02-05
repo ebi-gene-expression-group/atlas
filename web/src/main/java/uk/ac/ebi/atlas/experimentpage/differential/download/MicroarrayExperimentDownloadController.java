@@ -51,6 +51,7 @@ import java.util.zip.ZipOutputStream;
 public class MicroarrayExperimentDownloadController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MicroarrayExperimentDownloadController.class);
+
     private static final String NORMALIZED_EXPRESSIONS_TSV = "-normalized-expressions.tsv";
     private static final String LOG_FOLD_CHANGES_TSV = "-log-fold-changes.tsv";
     private static final String ANALYTICS_TSV = "-analytics.tsv";

@@ -43,18 +43,16 @@ public class DownloadURLBuilder {
     private static final String R_FILE_EXTENSION = "-atlasExperimentSummary.Rdata";
 
     public void addDataDownloadUrlsToModel(Model model, HttpServletRequest request) {
-
         model.addAttribute("rawDownloadUrl", buildDownloadRawUrl(request));
-
         model.addAttribute("normalizedUrl", buildDownloadNormalizedDataUrl(request));
-
         model.addAttribute("logFoldUrl", buildDownloadLogFoldDataUrl(request));
-
         model.addAttribute("analyticsDownloadUrl", buildDownloadAllAnalyticsUrl(request));
-
         model.addAttribute("rDownloadUrl", buildDownloadRFileUrl(request));
-
         model.addAttribute("clusteringPdfUrl", buildDownloadClusteringPdfFileUrl(request));
+    }
+
+    public void addRDownloadUrlToModel(Model model, HttpServletRequest request) {
+        model.addAttribute("rDownloadUrl", buildDownloadRFileUrl(request));
     }
 
     private String buildDownloadRawUrl(HttpServletRequest request) {
