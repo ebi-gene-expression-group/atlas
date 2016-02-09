@@ -1,4 +1,5 @@
-<configuration experimentType="microarray_1colour_mrna_differential">
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
 	<analytics>
 		<array_design>
 			A-AFFY-36
@@ -17,7 +18,7 @@
 		</assay_groups>
 		<contrasts>
 			<contrast id="g2_g1">
-				<name>compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36</name>
+				<name>'dibenzazapine 10 micromoles per kilogram' vs 'none'</name>
 				<reference_assay_group>g2</reference_assay_group>
 				<test_assay_group>g1</test_assay_group>
 			</contrast>

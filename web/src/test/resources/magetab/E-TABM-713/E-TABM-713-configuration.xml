@@ -1,4 +1,5 @@
-<configuration experimentType="1color_microarray_microrna_differential">
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration experimentType="microarray_1colour_microrna_differential" r_data="1">
     <analytics>
         <array_design>
             A-MEXP-1551
@@ -27,7 +28,7 @@
         </assay_groups>
         <contrasts>
             <contrast id="g1_g2">
-                <name>disease state: 'sepsis' vs 'control'</name>
+                <name>'sepsis' vs 'control'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g2</test_assay_group>
             </contrast>

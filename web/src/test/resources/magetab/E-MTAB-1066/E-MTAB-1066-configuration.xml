@@ -1,26 +1,5 @@
-<!--
-  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  ~
-  ~
-  ~ For further details of the Gene Expression Atlas project, including source code,
-  ~ downloads and documentation, please see:
-  ~
-  ~ http://gxa.github.com/gxa
-  -->
-
-<configuration experimentType="1color_microarray_mrna_differential">
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
     <analytics>
         <array_design>
             A-AFFY-35
@@ -44,15 +23,15 @@
         </assay_groups>
         <contrasts>
             <contrast id="g2_g1">
-                <name>genotype:'cycC mutant' vs 'wild type'</name>
+                <name>'cycC mutant' vs 'wild type'</name>
                 <reference_assay_group>g2</reference_assay_group>
                 <test_assay_group>g1</test_assay_group>
             </contrast>
             <contrast id="g2_g3">
-                <name>genotype:'cdk8 mutant' vs 'wild type'</name>
+                <name>'cdk8 mutant' vs 'wild type'</name>
                 <reference_assay_group>g2</reference_assay_group>
                 <test_assay_group>g3</test_assay_group>
             </contrast>
         </contrasts>
-    </analytics>
+	</analytics>
 </configuration>

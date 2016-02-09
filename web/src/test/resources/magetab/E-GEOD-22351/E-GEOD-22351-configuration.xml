@@ -1,12 +1,13 @@
-<configuration experimentType="rnaseq_mrna_differential">
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration experimentType="rnaseq_mrna_differential" r_data="1">
     <analytics>
         <assay_groups>
-            <assay_group id="g1">
+            <assay_group id="g1" label="non transgenic">
                 <assay>SRR057596</assay>
                 <assay>SRR057597</assay>
                 <assay>SRR057598</assay>
             </assay_group>
-            <assay_group id="g2">
+            <assay_group id="g2" label="expressing human TDP-43">
                 <assay>SRR057599</assay>
                 <assay>SRR057600</assay>
                 <assay>SRR057601</assay>
@@ -14,7 +15,7 @@
         </assay_groups>
         <contrasts>
             <contrast id="g1_g2">
-                <name>genotype:'expressing human TDP-43' vs 'non transgenic'</name>
+                <name>'expressing human TDP-43' vs 'non transgenic'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g2</test_assay_group>
             </contrast>

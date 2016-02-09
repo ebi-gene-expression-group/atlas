@@ -1,26 +1,5 @@
-<!--
-  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  ~
-  ~
-  ~ For further details of the Gene Expression Atlas project, including source code,
-  ~ downloads and documentation, please see:
-  ~
-  ~ http://gxa.github.com/gxa
-  -->
-
-<configuration experimentType="microarray_1colour_mrna_differential">
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
     <analytics>
         <array_design>
             A-AFFY-2
@@ -40,39 +19,39 @@
                 <assay>325</assay>
                 <assay>398</assay>
                 <assay>284b</assay>
-            </assay_group>
-            <assay_group id="g4">
-                <assay>328</assay>
-                <assay>400</assay>
-                <assay>287b</assay>
-            </assay_group>
-            <assay_group id="g5">
-                <assay>311</assay>
-                <assay>353</assay>
-                <assay>273b</assay>
-            </assay_group>
-            <assay_group id="g6">
-                <assay>317</assay>
-                <assay>277b</assay>
-                <assay>357-2</assay>
-            </assay_group>
+	    </assay_group>
+	    <assay_group id="g4">
+		<assay>328</assay>
+		<assay>400</assay>
+		<assay>287b</assay>
+	    </assay_group>
+	    <assay_group id="g5">
+		<assay>311</assay>
+		<assay>353</assay>
+		<assay>273b</assay>
+	    </assay_group>
+	    <assay_group id="g6">
+		<assay>317</assay>
+		<assay>277b</assay>
+		<assay>357-2</assay>
+	    </assay_group>
         </assay_groups>
         <contrasts>
             <contrast id="g1_g2">
-                <name>treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'</name>
+                <name>'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g2</test_assay_group>
             </contrast>
             <contrast id="g3_g4">
-                <name>treatment: 'salicylic acid' vs 'Silwet' at time: '28 hours' in ecotype: 'Col-0'</name>
+                <name>'salicylic acid' vs 'Silwet' at time: '28 hours' in ecotype: 'Col-0'</name>
                 <reference_assay_group>g3</reference_assay_group>
                 <test_assay_group>g4</test_assay_group>
-            </contrast>
-            <contrast id="g5_g6">
-                <name>treatment: 'salicylic acid' vs 'Silwet' at time: '52 hours' in ecotype: 'Col-0'</name>
-                <reference_assay_group>g5</reference_assay_group>
-                <test_assay_group>g6</test_assay_group>
-            </contrast>
+	    </contrast>
+	    <contrast id="g5_g6">
+		<name>'salicylic acid' vs 'Silwet' at time: '52 hours' in ecotype: 'Col-0'</name>
+		<reference_assay_group>g5</reference_assay_group>
+		<test_assay_group>g6</test_assay_group>
+	    </contrast>
         </contrasts>
     </analytics>
 </configuration>

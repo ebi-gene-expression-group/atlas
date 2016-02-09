@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration experimentType="proteomics_baseline">
+<configuration experimentType="proteomics_baseline" r_data="0">
     <analytics>
         <assay_groups>
             <assay_group id="g1" label="adult; adrenal gland">

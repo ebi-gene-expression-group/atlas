@@ -1,52 +1,53 @@
-<configuration experimentType="rnaseq_mrna_baseline">
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
     <analytics>
         <assay_groups>
-          <assay_group id="g1">
-                <assay>ERR030876</assay>
-          </assay_group>
-          <assay_group id="g2">
+          <assay_group id="g1" label="leukocyte">
                 <assay>ERR030875</assay>
           </assay_group>
-          <assay_group id="g3">
-                <assay>ERR030886</assay>
-          </assay_group>
-          <assay_group id="g4">
-                <assay>ERR030874</assay>
-          </assay_group>
-          <assay_group id="g5">
+          <assay_group id="g2" label="lymph node">
                 <assay>ERR030878</assay>
           </assay_group>
-          <assay_group id="g6">
+          <assay_group id="g3" label="ovary">
+                <assay>ERR030874</assay>
+          </assay_group>
+          <assay_group id="g4" label="breast">
                 <assay>ERR030883</assay>
           </assay_group>
-          <assay_group id="g7">
-                <assay>ERR030882</assay>
-          </assay_group>
-          <assay_group id="g8">
-                <assay>ERR030877</assay>
-          </assay_group>
-          <assay_group id="g9">
-                <assay>ERR030879</assay>
-          </assay_group>
-          <assay_group id="g10">
-                <assay>ERR030872</assay>
-          </assay_group>
-          <assay_group id="g11">
+          <assay_group id="g5" label="kidney">
                 <assay>ERR030885</assay>
           </assay_group>
-          <assay_group id="g12">
-                <assay>ERR030884</assay>
-          </assay_group>
-          <assay_group id="g13">
-                <assay>ERR030873</assay>
-          </assay_group>
-          <assay_group id="g14">
+          <assay_group id="g6" label="liver">
                 <assay>ERR030887</assay>
           </assay_group>
-          <assay_group id="g15">
+          <assay_group id="g7" label="skeletal muscle">
+                <assay>ERR030876</assay>
+          </assay_group>
+          <assay_group id="g8" label="heart">
+                <assay>ERR030886</assay>
+          </assay_group>
+          <assay_group id="g9" label="brain">
+                <assay>ERR030882</assay>
+          </assay_group>
+          <assay_group id="g10" label="prostate">
+                <assay>ERR030877</assay>
+          </assay_group>
+          <assay_group id="g11" label="lung">
+                <assay>ERR030879</assay>
+          </assay_group>
+          <assay_group id="g12" label="thyroid">
+                <assay>ERR030872</assay>
+          </assay_group>
+          <assay_group id="g13" label="colon">
+                <assay>ERR030884</assay>
+          </assay_group>
+          <assay_group id="g14" label="testis">
+                <assay>ERR030873</assay>
+          </assay_group>
+          <assay_group id="g15" label="adipose">
                 <assay>ERR030880</assay>
           </assay_group>
-          <assay_group id="g16">
+          <assay_group id="g16" label="adrenal">
                 <assay>ERR030881</assay>
           </assay_group>
         </assay_groups>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration experimentType="microarray_1colour_mrna_differential">
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
     <analytics>
         <array_design>A-AFFY-33</array_design>
         <assay_groups>
@@ -22,6 +23,48 @@
                 <assay>GSM74407</assay>
                 <assay>GSM74362</assay>
                 <assay>GSM74357</assay>
+            </assay_group>
+            <assay_group id="g10" label="LGMD2B">
+                <assay>GSM74384</assay>
+                <assay>GSM74382</assay>
+                <assay>GSM74355</assay>
+                <assay>GSM74385</assay>
+                <assay>GSM74353</assay>
+                <assay>GSM74352</assay>
+                <assay>GSM74386</assay>
+                <assay>GSM74351</assay>
+                <assay>GSM74354</assay>
+                <assay>GSM74383</assay>
+            </assay_group>
+            <assay_group id="g11" label="ALS">
+                <assay>GSM74242</assay>
+                <assay>GSM74240</assay>
+                <assay>GSM74246</assay>
+                <assay>GSM74244</assay>
+                <assay>GSM74241</assay>
+                <assay>GSM74245</assay>
+                <assay>GSM74247</assay>
+                <assay>GSM74243</assay>
+                <assay>GSM74248</assay>
+            </assay_group>
+            <assay_group id="g12" label="AQM">
+                <assay>GSM74411</assay>
+                <assay>GSM74414</assay>
+                <assay>GSM74413</assay>
+                <assay>GSM74415</assay>
+                <assay>GSM74412</assay>
+            </assay_group>
+            <assay_group id="g13" label="LGMD2A">
+                <assay>GSM74405</assay>
+                <assay>GSM74368</assay>
+                <assay>GSM74376</assay>
+                <assay>GSM74372</assay>
+                <assay>GSM74370</assay>
+                <assay>GSM74371</assay>
+                <assay>GSM74375</assay>
+                <assay>GSM74373</assay>
+                <assay>GSM74374</assay>
+                <assay>GSM74369</assay>
             </assay_group>
             <assay_group id="g2" label="DMD">
                 <assay>GSM121369</assay>
@@ -108,106 +151,64 @@
                 <assay>GSM121383</assay>
                 <assay>GSM121392</assay>
             </assay_group>
-            <assay_group id="g10" label="LGMD2B">
-                <assay>GSM74384</assay>
-                <assay>GSM74382</assay>
-                <assay>GSM74355</assay>
-                <assay>GSM74385</assay>
-                <assay>GSM74353</assay>
-                <assay>GSM74352</assay>
-                <assay>GSM74386</assay>
-                <assay>GSM74351</assay>
-                <assay>GSM74354</assay>
-                <assay>GSM74383</assay>
-            </assay_group>
-            <assay_group id="g11" label="ALS">
-                <assay>GSM74242</assay>
-                <assay>GSM74240</assay>
-                <assay>GSM74246</assay>
-                <assay>GSM74244</assay>
-                <assay>GSM74241</assay>
-                <assay>GSM74245</assay>
-                <assay>GSM74247</assay>
-                <assay>GSM74243</assay>
-                <assay>GSM74248</assay>
-            </assay_group>
-            <assay_group id="g12" label="AQM">
-                <assay>GSM74411</assay>
-                <assay>GSM74414</assay>
-                <assay>GSM74413</assay>
-                <assay>GSM74415</assay>
-                <assay>GSM74412</assay>
-            </assay_group>
-            <assay_group id="g13" label="LGMD2A">
-                <assay>GSM74405</assay>
-                <assay>GSM74368</assay>
-                <assay>GSM74376</assay>
-                <assay>GSM74372</assay>
-                <assay>GSM74370</assay>
-                <assay>GSM74371</assay>
-                <assay>GSM74375</assay>
-                <assay>GSM74373</assay>
-                <assay>GSM74374</assay>
-                <assay>GSM74369</assay>
-            </assay_group>
         </assay_groups>
         <contrasts>
-            <contrast id="g1_g2">
+            <contrast id="g1_g2" cttv_primary="1">
                 <name>'DMD' vs 'normal' on 'Affymetrix HG-U133A'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g2</test_assay_group>
             </contrast>
-            <contrast id="g1_g3">
+            <contrast id="g1_g3" cttv_primary="1">
                 <name>'EDMD XR' vs 'normal' on 'Affymetrix HG-U133A'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g3</test_assay_group>
             </contrast>
-            <contrast id="g1_g4">
+            <contrast id="g1_g4" cttv_primary="1">
                 <name>'LGMD2I' vs 'normal' on 'Affymetrix HG-U133A'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g4</test_assay_group>
             </contrast>
-            <contrast id="g1_g5">
+            <contrast id="g1_g5" cttv_primary="1">
                 <name>'EDMD AD' vs 'normal' on 'Affymetrix HG-U133A'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g5</test_assay_group>
             </contrast>
-            <contrast id="g1_g6">
+            <contrast id="g1_g6" cttv_primary="1">
                 <name>'BMD' vs 'normal' on 'Affymetrix HG-U133A'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g6</test_assay_group>
             </contrast>
-            <contrast id="g1_g7">
+            <contrast id="g1_g7" cttv_primary="1">
                 <name>'FSHD' vs 'normal' on 'Affymetrix HG-U133A'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g7</test_assay_group>
             </contrast>
-            <contrast id="g1_g8">
+            <contrast id="g1_g8" cttv_primary="1">
                 <name>'HSP' vs 'normal' on 'Affymetrix HG-U133A'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g8</test_assay_group>
             </contrast>
-            <contrast id="g1_g9">
+            <contrast id="g1_g9" cttv_primary="1">
                 <name>'JDM' vs 'normal' on 'Affymetrix HG-U133A'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g9</test_assay_group>
             </contrast>
-            <contrast id="g1_g10">
+            <contrast id="g1_g10" cttv_primary="1">
                 <name>'LGMD2B' vs 'normal' on 'Affymetrix HG-U133A'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g10</test_assay_group>
             </contrast>
-            <contrast id="g1_g11">
+            <contrast id="g1_g11" cttv_primary="1">
                 <name>'ALS' vs 'normal' on 'Affymetrix HG-U133A'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g11</test_assay_group>
             </contrast>
-            <contrast id="g1_g12">
+            <contrast id="g1_g12" cttv_primary="1">
                 <name>'AQM' vs 'normal' on 'Affymetrix HG-U133A'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g12</test_assay_group>
             </contrast>
-            <contrast id="g1_g13">
+            <contrast id="g1_g13" cttv_primary="1">
                 <name>'LGMD2A' vs 'normal' on 'Affymetrix HG-U133A'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g13</test_assay_group>
@@ -366,62 +367,62 @@
             </assay_group>
         </assay_groups>
         <contrasts>
-            <contrast id="g14_g15">
+            <contrast id="g14_g15" cttv_primary="1">
                 <name>'DMD' vs 'normal' on 'Affymetrix HG-U133B'</name>
                 <reference_assay_group>g14</reference_assay_group>
                 <test_assay_group>g15</test_assay_group>
             </contrast>
-            <contrast id="g14_g16">
+            <contrast id="g14_g16" cttv_primary="1">
                 <name>'EDMD XR' vs 'normal' on 'Affymetrix HG-U133B'</name>
                 <reference_assay_group>g14</reference_assay_group>
                 <test_assay_group>g16</test_assay_group>
             </contrast>
-            <contrast id="g14_g17">
+            <contrast id="g14_g17" cttv_primary="1">
                 <name>'LGMD2I' vs 'normal' on 'Affymetrix HG-U133B'</name>
                 <reference_assay_group>g14</reference_assay_group>
                 <test_assay_group>g17</test_assay_group>
             </contrast>
-            <contrast id="g14_g18">
+            <contrast id="g14_g18" cttv_primary="1">
                 <name>'BMD' vs 'normal' on 'Affymetrix HG-U133B'</name>
                 <reference_assay_group>g14</reference_assay_group>
                 <test_assay_group>g18</test_assay_group>
             </contrast>
-            <contrast id="g14_g19">
+            <contrast id="g14_g19" cttv_primary="1">
                 <name>'EDMD AD' vs 'normal' on 'Affymetrix HG-U133B'</name>
                 <reference_assay_group>g14</reference_assay_group>
                 <test_assay_group>g19</test_assay_group>
             </contrast>
-            <contrast id="g14_g20">
+            <contrast id="g14_g20" cttv_primary="1">
                 <name>'FSHD' vs 'normal' on 'Affymetrix HG-U133B'</name>
                 <reference_assay_group>g14</reference_assay_group>
                 <test_assay_group>g20</test_assay_group>
             </contrast>
-            <contrast id="g14_g21">
+            <contrast id="g14_g21" cttv_primary="1">
                 <name>'HSP' vs 'normal' on 'Affymetrix HG-U133B'</name>
                 <reference_assay_group>g14</reference_assay_group>
                 <test_assay_group>g21</test_assay_group>
             </contrast>
-            <contrast id="g14_g22">
+            <contrast id="g14_g22" cttv_primary="1">
                 <name>'JDM' vs 'normal' on 'Affymetrix HG-U133B'</name>
                 <reference_assay_group>g14</reference_assay_group>
                 <test_assay_group>g22</test_assay_group>
             </contrast>
-            <contrast id="g14_g23">
+            <contrast id="g14_g23" cttv_primary="1">
                 <name>'LGMD2B' vs 'normal' on 'Affymetrix HG-U133B'</name>
                 <reference_assay_group>g14</reference_assay_group>
                 <test_assay_group>g23</test_assay_group>
             </contrast>
-            <contrast id="g14_g24">
+            <contrast id="g14_g24" cttv_primary="1">
                 <name>'ALS' vs 'normal' on 'Affymetrix HG-U133B'</name>
                 <reference_assay_group>g14</reference_assay_group>
                 <test_assay_group>g24</test_assay_group>
             </contrast>
-            <contrast id="g14_g25">
+            <contrast id="g14_g25" cttv_primary="1">
                 <name>'AQM' vs 'normal' on 'Affymetrix HG-U133B'</name>
                 <reference_assay_group>g14</reference_assay_group>
                 <test_assay_group>g25</test_assay_group>
             </contrast>
-            <contrast id="g14_g26">
+            <contrast id="g14_g26" cttv_primary="1">
                 <name>'LGMD2A' vs 'normal' on 'Affymetrix HG-U133B'</name>
                 <reference_assay_group>g14</reference_assay_group>
                 <test_assay_group>g26</test_assay_group>
