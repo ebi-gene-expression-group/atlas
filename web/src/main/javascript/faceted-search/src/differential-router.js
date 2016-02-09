@@ -251,6 +251,7 @@ module.exports = function (options) {
 
             for (var item in disabledUncheckedFacets[facet]) {
                 var existsFacet = true;
+                var existMultiValueFacet = false;
 
                 for (var index in filteredResults) {
                     var filtered = filteredResults[index];
@@ -259,6 +260,8 @@ module.exports = function (options) {
                     if (facet === "factors" && facetResults.length > 1 ) {
                         if (facetResults.indexOf(disabledUncheckedFacets[facet][item].toString()) === -1) {
                             existsFacet = false;
+                        } else {
+                            existMultiValueFacet = true;
                         }
 
                     } else if (disabledUncheckedFacets[facet][item].toString() !== facetResults.toString()) {
@@ -266,11 +269,18 @@ module.exports = function (options) {
                     }
                 }
 
+                //All the results contain the same item
                 if (existsFacet) {
                     facetValue.push(disabledUncheckedFacets[facet][item]);
                 }
+
+                //If all the results don't contain the same facet but the factor multiValue exists in more than one result
+                if (!existsFacet && existMultiValueFacet) {
+                    disabledUncheckedFacets[facet].splice(item, 1);
+                }
             }
 
+            //FacetValue contains all the items that are present in the results for a facet
             if (facetValue.length > 0) {
                 disabledCheckedFacets[facet] = facetValue;
             }
