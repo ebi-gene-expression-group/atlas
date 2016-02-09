@@ -1,0 +1,332 @@
+E-PROT-3		follicle cells from ovary	characteristic	cell type	follicle cells	http://purl.obolibrary.org/obo/CL_0000477
+E-PROT-3		follicle cells from ovary	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		follicle cells from ovary	characteristic	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-PROT-3		follicle cells from ovary	factor	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-PROT-3		pneumocytes from lung	characteristic	cell type	pneumocytes
+E-PROT-3		pneumocytes from lung	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		pneumocytes from lung	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-PROT-3		pneumocytes from lung	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-PROT-3		glandular cells from endometrium 1	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from endometrium 1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from endometrium 1	characteristic	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-PROT-3		glandular cells from endometrium 1	factor	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-PROT-3		trophoblastic cells from placenta	characteristic	cell type	trophoblastic cells
+E-PROT-3		trophoblastic cells from placenta	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		trophoblastic cells from placenta	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-PROT-3		trophoblastic cells from placenta	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-PROT-3		peripheral nerve from soft tissue 2	characteristic	cell type	peripheral nerve
+E-PROT-3		peripheral nerve from soft tissue 2	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		peripheral nerve from soft tissue 2	characteristic	organism part	soft tissue
+E-PROT-3		peripheral nerve from soft tissue 2	factor	organism part	soft tissue
+E-PROT-3		smooth muscle cells from smooth muscle	characteristic	cell type	smooth muscle cells	http://purl.obolibrary.org/obo/CL_0000192
+E-PROT-3		smooth muscle cells from smooth muscle	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		smooth muscle cells from smooth muscle	characteristic	organism part	smooth muscle	http://www.ebi.ac.uk/efo/EFO_0000889
+E-PROT-3		smooth muscle cells from smooth muscle	factor	organism part	smooth muscle	http://www.ebi.ac.uk/efo/EFO_0000889
+E-PROT-3		hepatocytes from liver	characteristic	cell type	hepatocytes	http://purl.obolibrary.org/obo/CL_0000182
+E-PROT-3		hepatocytes from liver	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		hepatocytes from liver	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-PROT-3		hepatocytes from liver	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-PROT-3		chondrocytes from soft tissue 1	characteristic	cell type	chondrocytes	http://purl.obolibrary.org/obo/CL_0000138
+E-PROT-3		chondrocytes from soft tissue 1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		chondrocytes from soft tissue 1	characteristic	organism part	soft tissue
+E-PROT-3		chondrocytes from soft tissue 1	factor	organism part	soft tissue
+E-PROT-3		neuronal cells from hippocampus	characteristic	cell type	neuronal cells	http://purl.obolibrary.org/obo/CL_0000540
+E-PROT-3		neuronal cells from hippocampus	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		neuronal cells from hippocampus	characteristic	organism part	hippocampus	http://www.ebi.ac.uk/efo/EFO_0000530
+E-PROT-3		neuronal cells from hippocampus	factor	organism part	hippocampus	http://www.ebi.ac.uk/efo/EFO_0000530
+E-PROT-3		fibroblasts from skin 1	characteristic	cell type	fibroblasts	http://purl.obolibrary.org/obo/CL_0000057
+E-PROT-3		fibroblasts from skin 1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		fibroblasts from skin 1	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-PROT-3		fibroblasts from skin 1	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-PROT-3		islets of Langerhans from pancreas	characteristic	cell type	islets of Langerhans
+E-PROT-3		islets of Langerhans from pancreas	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		islets of Langerhans from pancreas	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-PROT-3		islets of Langerhans from pancreas	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-PROT-3		hematopoietic cells from bone marrow	characteristic	cell type	hematopoietic cells
+E-PROT-3		hematopoietic cells from bone marrow	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		hematopoietic cells from bone marrow	characteristic	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-PROT-3		hematopoietic cells from bone marrow	factor	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-PROT-3		macrophages from lung	characteristic	cell type	macrophages	http://purl.obolibrary.org/obo/CL_0000235
+E-PROT-3		macrophages from lung	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		macrophages from lung	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-PROT-3		macrophages from lung	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-PROT-3		lymphoid tissue from appendix	characteristic	cell type	lymphoid tissue	http://purl.obolibrary.org/obo/UBERON_0001744
+E-PROT-3		lymphoid tissue from appendix	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		lymphoid tissue from appendix	characteristic	organism part	appendix	http://purl.obolibrary.org/obo/UBERON_0001154
+E-PROT-3		lymphoid tissue from appendix	factor	organism part	appendix	http://purl.obolibrary.org/obo/UBERON_0001154
+E-PROT-3		endothelial cells from cerebral cortex	characteristic	cell type	endothelial cells	http://purl.obolibrary.org/obo/CL_0000115
+E-PROT-3		endothelial cells from cerebral cortex	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		endothelial cells from cerebral cortex	characteristic	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-PROT-3		endothelial cells from cerebral cortex	factor	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-PROT-3		germinal center cells from tonsil	characteristic	cell type	germinal center cells	http://purl.obolibrary.org/obo/CL_0000844
+E-PROT-3		germinal center cells from tonsil	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		germinal center cells from tonsil	characteristic	organism part	tonsil	http://purl.obolibrary.org/obo/UBERON_0002372
+E-PROT-3		germinal center cells from tonsil	factor	organism part	tonsil	http://purl.obolibrary.org/obo/UBERON_0002372
+E-PROT-3		glandular cells from seminal vesicle	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from seminal vesicle	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from seminal vesicle	characteristic	organism part	seminal vesicle	http://purl.obolibrary.org/obo/UBERON_0000998
+E-PROT-3		glandular cells from seminal vesicle	factor	organism part	seminal vesicle	http://purl.obolibrary.org/obo/UBERON_0000998
+E-PROT-3		respiratory epithelial cells from bronchus	characteristic	cell type	respiratory epithelial cells
+E-PROT-3		respiratory epithelial cells from bronchus	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		respiratory epithelial cells from bronchus	characteristic	organism part	bronchus	http://purl.obolibrary.org/obo/UBERON_0002185
+E-PROT-3		respiratory epithelial cells from bronchus	factor	organism part	bronchus	http://purl.obolibrary.org/obo/UBERON_0002185
+E-PROT-3		cells in molecular layer from cerebellum	characteristic	cell type	cells in molecular layer
+E-PROT-3		cells in molecular layer from cerebellum	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		cells in molecular layer from cerebellum	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-PROT-3		cells in molecular layer from cerebellum	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-PROT-3		myocytes from skeletal muscle	characteristic	cell type	myocytes	http://purl.obolibrary.org/obo/CL_0000187
+E-PROT-3		myocytes from skeletal muscle	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		myocytes from skeletal muscle	characteristic	organism part	skeletal muscle	http://purl.obolibrary.org/obo/UBERON_0014892
+E-PROT-3		myocytes from skeletal muscle	factor	organism part	skeletal muscle	http://purl.obolibrary.org/obo/UBERON_0014892
+E-PROT-3		cells in seminiferous ducts from testis	characteristic	cell type	cells in seminiferous ducts
+E-PROT-3		cells in seminiferous ducts from testis	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		cells in seminiferous ducts from testis	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-PROT-3		cells in seminiferous ducts from testis	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-PROT-3		endothelial cells from colon	characteristic	cell type	endothelial cells	http://purl.obolibrary.org/obo/CL_0000115
+E-PROT-3		endothelial cells from colon	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		endothelial cells from colon	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-3		endothelial cells from colon	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-3		respiratory epithelial cells from nasopharynx	characteristic	cell type	respiratory epithelial cells
+E-PROT-3		respiratory epithelial cells from nasopharynx	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		respiratory epithelial cells from nasopharynx	characteristic	organism part	nasopharynx	http://purl.obolibrary.org/obo/UBERON_0001728
+E-PROT-3		respiratory epithelial cells from nasopharynx	factor	organism part	nasopharynx	http://purl.obolibrary.org/obo/UBERON_0001728
+E-PROT-3		neuropil from cerebral cortex	characteristic	cell type	neurophil
+E-PROT-3		neuropil from cerebral cortex	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		neuropil from cerebral cortex	characteristic	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-PROT-3		neuropil from cerebral cortex	factor	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-PROT-3		glandular cells from stomach 1	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from stomach 1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from stomach 1	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-PROT-3		glandular cells from stomach 1	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-PROT-3		fibroblasts from soft tissue 2	characteristic	cell type	fibroblasts	http://purl.obolibrary.org/obo/CL_0000057
+E-PROT-3		fibroblasts from soft tissue 2	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		fibroblasts from soft tissue 2	characteristic	organism part	soft tissue
+E-PROT-3		fibroblasts from soft tissue 2	factor	organism part	soft tissue
+E-PROT-3		cells in endometrial stroma from endometrium 2	characteristic	cell type	cells in endometrial stroma
+E-PROT-3		cells in endometrial stroma from endometrium 2	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		cells in endometrial stroma from endometrium 2	characteristic	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-PROT-3		cells in endometrial stroma from endometrium 2	factor	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-PROT-3		myoepithelial cells from breast	characteristic	cell type	myoepithelial cells
+E-PROT-3		myoepithelial cells from breast	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		myoepithelial cells from breast	characteristic	organism part	breast	http://purl.obolibrary.org/obo/UBERON_0000310
+E-PROT-3		myoepithelial cells from breast	factor	organism part	breast	http://purl.obolibrary.org/obo/UBERON_0000310
+E-PROT-3		Leydig cells from testis	characteristic	cell type	Leydig cells	http://purl.obolibrary.org/obo/CL_0000178
+E-PROT-3		Leydig cells from testis	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		Leydig cells from testis	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-PROT-3		Leydig cells from testis	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-PROT-3		glandular cells from colon	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from colon	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from colon	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-3		glandular cells from colon	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-3		adipocytes from soft tissue 2	characteristic	cell type	adipocytes	http://purl.obolibrary.org/obo/CL_0000136
+E-PROT-3		adipocytes from soft tissue 2	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		adipocytes from soft tissue 2	characteristic	organism part	soft tissue
+E-PROT-3		adipocytes from soft tissue 2	factor	organism part	soft tissue
+E-PROT-3		glandular cells from epididymis	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from epididymis	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from epididymis	characteristic	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-PROT-3		glandular cells from epididymis	factor	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-PROT-3		glandular cells from stomach 2	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from stomach 2	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from stomach 2	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-PROT-3		glandular cells from stomach 2	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-PROT-3		germinal center cells from lymph node	characteristic	cell type	germinal center cells	http://purl.obolibrary.org/obo/CL_0000844
+E-PROT-3		germinal center cells from lymph node	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		germinal center cells from lymph node	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-PROT-3		germinal center cells from lymph node	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-PROT-3		glandular cells from breast	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from breast	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from breast	characteristic	organism part	breast	http://purl.obolibrary.org/obo/UBERON_0000310
+E-PROT-3		glandular cells from breast	factor	organism part	breast	http://purl.obolibrary.org/obo/UBERON_0000310
+E-PROT-3		cells in white pulp from spleen	characteristic	cell type	cells in white pulp
+E-PROT-3		cells in white pulp from spleen	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		cells in white pulp from spleen	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-PROT-3		cells in white pulp from spleen	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-PROT-3		glial cells from hippocampus	characteristic	cell type	glial cells	http://purl.obolibrary.org/obo/CL_0000125
+E-PROT-3		glial cells from hippocampus	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glial cells from hippocampus	characteristic	organism part	hippocampus	http://www.ebi.ac.uk/efo/EFO_0000530
+E-PROT-3		glial cells from hippocampus	factor	organism part	hippocampus	http://www.ebi.ac.uk/efo/EFO_0000530
+E-PROT-3		cells in red pulp from spleen	characteristic	cell type	cells in red pulp
+E-PROT-3		cells in red pulp from spleen	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		cells in red pulp from spleen	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-PROT-3		cells in red pulp from spleen	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-PROT-3		glandular cells from duodenum	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from duodenum	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from duodenum	characteristic	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-PROT-3		glandular cells from duodenum	factor	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-PROT-3		cells in granular layer from cerebellum	characteristic	cell type	cells in granular layer
+E-PROT-3		cells in granular layer from cerebellum	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		cells in granular layer from cerebellum	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-PROT-3		cells in granular layer from cerebellum	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-PROT-3		glial cells from lateral ventricle	characteristic	cell type	glial cells	http://purl.obolibrary.org/obo/CL_0000125
+E-PROT-3		glial cells from lateral ventricle	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glial cells from lateral ventricle	characteristic	organism part	lateral ventricle
+E-PROT-3		glial cells from lateral ventricle	factor	organism part	lateral ventricle
+E-PROT-3		glandular cells from cervix, uterine	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from cervix, uterine	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from cervix, uterine	characteristic	organism part	cervix, uterine
+E-PROT-3		glandular cells from cervix, uterine	factor	organism part	cervix, uterine
+E-PROT-3		non-germinal center cells from lymph node	characteristic	cell type	non-germinal center cells
+E-PROT-3		non-germinal center cells from lymph node	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		non-germinal center cells from lymph node	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-PROT-3		non-germinal center cells from lymph node	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-PROT-3		squamous epithelial cells from tonsil	characteristic	cell type	squamous epithelial cells
+E-PROT-3		squamous epithelial cells from tonsil	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		squamous epithelial cells from tonsil	characteristic	organism part	tonsil	http://purl.obolibrary.org/obo/UBERON_0002372
+E-PROT-3		squamous epithelial cells from tonsil	factor	organism part	tonsil	http://purl.obolibrary.org/obo/UBERON_0002372
+E-PROT-3		glandular cells from parathyroid gland	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from parathyroid gland	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from parathyroid gland	characteristic	organism part	parathyroid gland
+E-PROT-3		glandular cells from parathyroid gland	factor	organism part	parathyroid gland
+E-PROT-3		glandular cells from fallopian tube	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from fallopian tube	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from fallopian tube	characteristic	organism part	fallopian tube	http://purl.obolibrary.org/obo/UBERON_0003889
+E-PROT-3		glandular cells from fallopian tube	factor	organism part	fallopian tube	http://purl.obolibrary.org/obo/UBERON_0003889
+E-PROT-3		glandular cells from prostate	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from prostate	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from prostate	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-PROT-3		glandular cells from prostate	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-PROT-3		non-germinal center cells from tonsil	characteristic	cell type	non-germinal center cells
+E-PROT-3		non-germinal center cells from tonsil	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		non-germinal center cells from tonsil	characteristic	organism part	tonsil	http://purl.obolibrary.org/obo/UBERON_0002372
+E-PROT-3		non-germinal center cells from tonsil	factor	organism part	tonsil	http://purl.obolibrary.org/obo/UBERON_0002372
+E-PROT-3		bile duct cells from liver	characteristic	cell type	bile duct cells
+E-PROT-3		bile duct cells from liver	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		bile duct cells from liver	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-PROT-3		bile duct cells from liver	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-PROT-3		peripheral nerve from soft tissue 1	characteristic	cell type	peripheral nerve
+E-PROT-3		peripheral nerve from soft tissue 1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		peripheral nerve from soft tissue 1	characteristic	organism part	soft tissue
+E-PROT-3		peripheral nerve from soft tissue 1	factor	organism part	soft tissue
+E-PROT-3		glandular cells from thyroid gland	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from thyroid gland	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from thyroid gland	characteristic	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-PROT-3		glandular cells from thyroid gland	factor	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-PROT-3		epidermal cells from skin 2	characteristic	cell type	epidermal cells
+E-PROT-3		epidermal cells from skin 2	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		epidermal cells from skin 2	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-PROT-3		epidermal cells from skin 2	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-PROT-3		glandular cells from gallbladder	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from gallbladder	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from gallbladder	characteristic	organism part	gallbladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-PROT-3		glandular cells from gallbladder	factor	organism part	gallbladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-PROT-3		glandular cells from salivary gland	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from salivary gland	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from salivary gland	characteristic	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-PROT-3		glandular cells from salivary gland	factor	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-PROT-3		glandular cells from endometrium 2	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from endometrium 2	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from endometrium 2	characteristic	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-PROT-3		glandular cells from endometrium 2	factor	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-PROT-3		cells in tubules from kidney	characteristic	cell type	cells in tubules
+E-PROT-3		cells in tubules from kidney	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		cells in tubules from kidney	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-PROT-3		cells in tubules from kidney	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-PROT-3		glial cells from cerebral cortex	characteristic	cell type	glial cells	http://purl.obolibrary.org/obo/CL_0000125
+E-PROT-3		glial cells from cerebral cortex	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glial cells from cerebral cortex	characteristic	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-PROT-3		glial cells from cerebral cortex	factor	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-PROT-3		neuronal cells from lateral ventricle	characteristic	cell type	neuronal cells	http://purl.obolibrary.org/obo/CL_0000540
+E-PROT-3		neuronal cells from lateral ventricle	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		neuronal cells from lateral ventricle	characteristic	organism part	lateral ventricle
+E-PROT-3		neuronal cells from lateral ventricle	factor	organism part	lateral ventricle
+E-PROT-3		cells in glomeruli from kidney	characteristic	cell type	cells in glomeruli
+E-PROT-3		cells in glomeruli from kidney	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		cells in glomeruli from kidney	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-PROT-3		cells in glomeruli from kidney	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-PROT-3		exocrine glandular cells from pancreas	characteristic	cell type	exocrine glandular cells
+E-PROT-3		exocrine glandular cells from pancreas	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		exocrine glandular cells from pancreas	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-PROT-3		exocrine glandular cells from pancreas	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-PROT-3		chondrocytes from soft tissue 2	characteristic	cell type	chondrocytes	http://purl.obolibrary.org/obo/CL_0000138
+E-PROT-3		chondrocytes from soft tissue 2	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		chondrocytes from soft tissue 2	characteristic	organism part	soft tissue
+E-PROT-3		chondrocytes from soft tissue 2	factor	organism part	soft tissue
+E-PROT-3		glandular cells from rectum	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from rectum	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from rectum	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-PROT-3		glandular cells from rectum	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-PROT-3		myocytes from heart muscle	characteristic	cell type	myocytes	http://purl.obolibrary.org/obo/CL_0000187
+E-PROT-3		myocytes from heart muscle	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		myocytes from heart muscle	characteristic	organism part	heart muscle
+E-PROT-3		myocytes from heart muscle	factor	organism part	heart muscle
+E-PROT-3		ovarian stroma cells from ovary	characteristic	cell type	ovarian stroma cells
+E-PROT-3		ovarian stroma cells from ovary	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		ovarian stroma cells from ovary	characteristic	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-PROT-3		ovarian stroma cells from ovary	factor	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-PROT-3		neuronal cells from cerebral cortex	characteristic	cell type	neuronal cells	http://purl.obolibrary.org/obo/CL_0000540
+E-PROT-3		neuronal cells from cerebral cortex	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		neuronal cells from cerebral cortex	characteristic	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-PROT-3		neuronal cells from cerebral cortex	factor	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-PROT-3		Purkinje cells from cerebellum	characteristic	cell type	Purkinje cells
+E-PROT-3		Purkinje cells from cerebellum	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		Purkinje cells from cerebellum	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-PROT-3		Purkinje cells from cerebellum	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-PROT-3		cells in endometrial stroma from endometrium 1	characteristic	cell type	cells in endometrial stroma
+E-PROT-3		cells in endometrial stroma from endometrium 1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		cells in endometrial stroma from endometrium 1	characteristic	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-PROT-3		cells in endometrial stroma from endometrium 1	factor	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-PROT-3		urothelial cells from urinary bladder	characteristic	cell type	urothelial cells	http://www.ebi.ac.uk/efo/EFO_0005913
+E-PROT-3		urothelial cells from urinary bladder	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		urothelial cells from urinary bladder	characteristic	organism part	urinary bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-PROT-3		urothelial cells from urinary bladder	factor	organism part	urinary bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-PROT-3		adipocytes from soft tissue 1	characteristic	cell type	adipocytes	http://purl.obolibrary.org/obo/CL_0000136
+E-PROT-3		adipocytes from soft tissue 1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		adipocytes from soft tissue 1	characteristic	organism part	soft tissue
+E-PROT-3		adipocytes from soft tissue 1	factor	organism part	soft tissue
+E-PROT-3		Langerhans from skin 1	characteristic	cell type	Langerhans
+E-PROT-3		Langerhans from skin 1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		Langerhans from skin 1	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-PROT-3		Langerhans from skin 1	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-PROT-3		glandular cells from adrenal gland	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from adrenal gland	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from adrenal gland	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-PROT-3		glandular cells from adrenal gland	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-PROT-3		melanocytes from skin 1	characteristic	cell type	melanocytes	http://purl.obolibrary.org/obo/CL_0000148
+E-PROT-3		melanocytes from skin 1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		melanocytes from skin 1	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-PROT-3		melanocytes from skin 1	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-PROT-3		keratinocytes from skin 1	characteristic	cell type	keratinocytes	http://purl.obolibrary.org/obo/CL_0000312
+E-PROT-3		keratinocytes from skin 1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		keratinocytes from skin 1	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-PROT-3		keratinocytes from skin 1	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-PROT-3		fibroblasts from soft tissue 1	characteristic	cell type	fibroblasts	http://purl.obolibrary.org/obo/CL_0000057
+E-PROT-3		fibroblasts from soft tissue 1	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		fibroblasts from soft tissue 1	characteristic	organism part	soft tissue
+E-PROT-3		fibroblasts from soft tissue 1	factor	organism part	soft tissue
+E-PROT-3		peripheral nerve/ganglion from colon	characteristic	cell type	peripheral nerve/ganglion
+E-PROT-3		peripheral nerve/ganglion from colon	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		peripheral nerve/ganglion from colon	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-3		peripheral nerve/ganglion from colon	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-3		squamous epithelial cells from oral mucosa	characteristic	cell type	squamous epithelial cells
+E-PROT-3		squamous epithelial cells from oral mucosa	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		squamous epithelial cells from oral mucosa	characteristic	organism part	oral mucosa
+E-PROT-3		squamous epithelial cells from oral mucosa	factor	organism part	oral mucosa
+E-PROT-3		adipocytes from breast	characteristic	cell type	adipocytes	http://purl.obolibrary.org/obo/CL_0000136
+E-PROT-3		adipocytes from breast	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		adipocytes from breast	characteristic	organism part	breast	http://purl.obolibrary.org/obo/UBERON_0000310
+E-PROT-3		adipocytes from breast	factor	organism part	breast	http://purl.obolibrary.org/obo/UBERON_0000310
+E-PROT-3		squamous epithelial cells from cervix, uterine	characteristic	cell type	squamous epithelial cells
+E-PROT-3		squamous epithelial cells from cervix, uterine	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		squamous epithelial cells from cervix, uterine	characteristic	organism part	cervix, uterine
+E-PROT-3		squamous epithelial cells from cervix, uterine	factor	organism part	cervix, uterine
+E-PROT-3		squamous epithelial cells from vagina	characteristic	cell type	squamous epithelial cells
+E-PROT-3		squamous epithelial cells from vagina	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		squamous epithelial cells from vagina	characteristic	organism part	vagina	http://purl.obolibrary.org/obo/UBERON_0000996
+E-PROT-3		squamous epithelial cells from vagina	factor	organism part	vagina	http://purl.obolibrary.org/obo/UBERON_0000996
+E-PROT-3		decidual cells from placenta	characteristic	cell type	decidual cells
+E-PROT-3		decidual cells from placenta	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		decidual cells from placenta	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-PROT-3		decidual cells from placenta	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-PROT-3		squamous epithelial cells from esophagus	characteristic	cell type	squamous epithelial cells
+E-PROT-3		squamous epithelial cells from esophagus	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		squamous epithelial cells from esophagus	characteristic	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-PROT-3		squamous epithelial cells from esophagus	factor	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-PROT-3		glandular cells from small intestine	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from small intestine	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from small intestine	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-PROT-3		glandular cells from small intestine	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-PROT-3		glandular cells from appendix	characteristic	cell type	glandular cells
+E-PROT-3		glandular cells from appendix	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-3		glandular cells from appendix	characteristic	organism part	appendix	http://purl.obolibrary.org/obo/UBERON_0001154
+E-PROT-3		glandular cells from appendix	factor	organism part	appendix	http://purl.obolibrary.org/obo/UBERON_0001154
