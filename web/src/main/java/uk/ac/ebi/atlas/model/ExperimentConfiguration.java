@@ -34,6 +34,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.utils.StringUtil;
 
 import javax.xml.xpath.*;
 import java.util.EnumSet;
@@ -43,6 +44,7 @@ import java.util.Set;
 public class ExperimentConfiguration {
 
     public static final String EXPERIMENT_TYPE = "experimentType";
+    public static final String RDATA = "r_data";
     private XMLConfiguration xmlConfiguration;
 
     private Document document;
@@ -170,5 +172,16 @@ public class ExperimentConfiguration {
         }
 
         return experimentType;
+    }
+
+    public boolean hasRData() {
+        Element configuration = document.getDocumentElement();
+        String rData = configuration.getAttribute(RDATA);
+
+        if (StringUtils.isEmpty(rData)) {
+            return false;
+        } else {
+            return rData.equals("1");
+        }
     }
 }

@@ -39,37 +39,37 @@ public class BaselineExperiment extends Experiment {
 
     BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description, String displayName, Set<String> organisms, String kingdom, String ensemblDB,
-                       Map<String, String> speciesMapping, boolean hasExtraInfoFile, Set<String> pubMedIds,
+                       Map<String, String> speciesMapping, boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds,
                        ExperimentDesign experimentDesign, AssayGroups assayGroups) {
         this(
                 accession, lastUpdate, experimentalFactors, description, displayName, organisms, kingdom, ensemblDB, speciesMapping,
-                hasExtraInfoFile, pubMedIds, experimentDesign,  assayGroups, Collections.<String>emptyList(), Collections.<String>emptyList());
+                hasExtraInfoFile, hasRData, pubMedIds, experimentDesign,  assayGroups, Collections.<String>emptyList(), Collections.<String>emptyList());
     }
 
     BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description, String displayName, Set<String> organisms, String kingdom, String ensemblDB,
-                       Map<String, String> speciesMapping, boolean hasExtraInfoFile, Set<String> pubMedIds,
+                       Map<String, String> speciesMapping, boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds,
                        ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription) {
         this(
                 ExperimentType.RNASEQ_MRNA_BASELINE, accession, lastUpdate, experimentalFactors,
                 description, displayName, organisms, kingdom, ensemblDB, speciesMapping,
-                hasExtraInfoFile, pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
+                hasExtraInfoFile, hasRData, pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
     }
 
     BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description, String displayName, Set<String> organisms, String kingdom, String ensemblDB,
-                       Map<String, String> speciesMapping, boolean hasExtraInfoFile, Set<String> pubMedIds,
+                       Map<String, String> speciesMapping, boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds,
                        ExperimentDesign experimentDesign, AssayGroups assayGroups) {
         this(
                 experimentType, accession, lastUpdate, experimentalFactors, description, displayName, organisms, kingdom,
-                ensemblDB, speciesMapping, hasExtraInfoFile, pubMedIds, experimentDesign, assayGroups, Collections.<String>emptyList(),
+                ensemblDB, speciesMapping, hasExtraInfoFile, hasRData, pubMedIds, experimentDesign, assayGroups, Collections.<String>emptyList(),
                 Collections.<String>emptyList());
     }
 
     BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description, String displayName, Set <String> organisms, String kingdom, String ensemblDB, Map <String, String> speciesMapping,
-                       boolean hasExtraInfoFile, Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription) {
-        super(experimentType, accession, lastUpdate, displayName, description, hasExtraInfoFile, organisms, kingdom, ensemblDB, speciesMapping, pubMedIds, experimentDesign);
+                       boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription) {
+        super(experimentType, accession, lastUpdate, displayName, description, hasExtraInfoFile, hasRData, organisms, kingdom, ensemblDB, speciesMapping, pubMedIds, experimentDesign);
         this.experimentalFactors = experimentalFactors;
         this.assayGroups = assayGroups;
         this.dataProviderURL = dataProviderURL;

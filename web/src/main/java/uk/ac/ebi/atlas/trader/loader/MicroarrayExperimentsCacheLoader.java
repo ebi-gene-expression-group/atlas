@@ -68,6 +68,8 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
         SortedSet<String> arrayDesignAccessions = microarrayExperimentConfiguration.getArrayDesignAccessions();
 
+        boolean hasRData = microarrayExperimentConfiguration.hasRData();
+
         String logFoldChangeFileLocation = MessageFormat.format(logFoldChangePathTemplate, experimentAccession, arrayDesignAccessions.first());
 
         boolean hasLogFoldChangeFile = Files.exists(Paths.get(logFoldChangeFileLocation));
@@ -76,7 +78,7 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
         String ensemblDB = speciesKingdomTrader.getEnsemblDB(experimentDTO.getSpecies());
 
         return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession, experimentDTO.getLastUpdate(),
-                                        contrasts, experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), kingdom, ensemblDB, arrayDesignAccessions,
+                                        contrasts, experimentDescription, hasExtraInfoFile, hasRData, experimentDTO.getSpecies(), kingdom, ensemblDB, arrayDesignAccessions,
                                         hasLogFoldChangeFile, experimentDTO.getPubmedIds(), experimentDesign);
 
     }

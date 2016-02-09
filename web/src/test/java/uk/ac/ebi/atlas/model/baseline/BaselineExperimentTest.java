@@ -89,7 +89,7 @@ public class BaselineExperimentTest {
 
         subject = new BaselineExperiment("accession", new Date(), experimentalFactorsMock,
                                          "description", "displayName", Sets.newHashSet("species"), "kingdom", "ensembl", speciesMapping,
-                                         true, Sets.newHashSet(PUBMEDID), experimentDesignMock, assayGroupsMock);
+                                         true, true, Sets.newHashSet(PUBMEDID), experimentDesignMock, assayGroupsMock);
     }
 
 
