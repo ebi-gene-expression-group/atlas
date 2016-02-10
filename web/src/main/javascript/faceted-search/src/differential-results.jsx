@@ -9,7 +9,7 @@ var React = require('react');
 var DisplayLevelsButton = require('display-levels-button');
 var Legend = require('legend').LegendDifferential;
 var CellDifferential = require('cell-differential');
-var DownloadDifferentialButton = require('download-differential-button');
+var DownloadDifferentialButton = require('./download-differential-button.jsx');
 
 //*------------------------------------------------------------------*
 

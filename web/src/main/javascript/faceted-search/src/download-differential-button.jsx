@@ -64,7 +64,7 @@ var DownloadDifferentialButton = React.createClass({
             <div style={{display: "inline-block", verticalAlign: "top", paddingLeft: "10px"}}>
                 <a id="download-profiles-link" ref="downloadProfilesLink"
                    href={uri} download={fileName} className="gxaButtonImage" target="_blank"
-                   onClick={this._downloadDifferentialProfiles.bind(this)}>
+                   onClick={this._downloadDifferentialProfiles}>
                     <img id="download-profiles" alt="Download query results" style={{width: "20px"}}
                          src={downloadImgSrcURL} />
                 </a>
