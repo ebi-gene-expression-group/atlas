@@ -117,7 +117,7 @@ public class MicroarrayProfilesWriterIT {
         assertThat(queryLine, is("# Query: Genes matching: '' exactly, specifically up/down differentially expressed in any contrast given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment E-MTAB-1066"));
 
         String[] columnHeaders = csvLines().get(0);
-        assertThat(columnHeaders, is(new String[]{"Gene ID", "Gene Name", "Design Element", "genotype:'cycC mutant' vs 'wild type'.p-value", "genotype:'cycC mutant' vs 'wild type'.log2foldchange", "genotype:'cycC mutant' vs 'wild type'.t-statistic", "genotype:'cdk8 mutant' vs 'wild type'.p-value", "genotype:'cdk8 mutant' vs 'wild type'.log2foldchange", "genotype:'cdk8 mutant' vs 'wild type'.t-statistic"}));
+        assertThat(columnHeaders, is(new String[]{"Gene ID", "Gene Name", "Design Element", "'cycC mutant' vs 'wild type'.p-value", "'cycC mutant' vs 'wild type'.log2foldchange", "'cycC mutant' vs 'wild type'.t-statistic", "'cdk8 mutant' vs 'wild type'.p-value", "'cdk8 mutant' vs 'wild type'.log2foldchange", "'cdk8 mutant' vs 'wild type'.t-statistic"}));
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv

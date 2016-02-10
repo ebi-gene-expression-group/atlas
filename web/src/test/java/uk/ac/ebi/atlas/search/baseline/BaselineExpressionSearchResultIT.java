@@ -46,7 +46,7 @@ public class BaselineExpressionSearchResultIT {
         SortedSet<Factor> factors = subject.getDefaultFactorsForSpecificAssayGroupsWithCondition();
 
         Factor factor1 = new Factor("ORGANISM_PART", "leukocyte", OntologyTerm.create("CL:0000738"));
-        Factor factor2 = new Factor("ORGANISM_PART", "skeletal muscle", OntologyTerm.create("CL:0000188"));
+        Factor factor2 = new Factor("ORGANISM_PART", "lymph node", OntologyTerm.create("UBERON_0000029", "http://purl.obolibrary.org/obo/"));
 
         assertThat(factors, hasSize(2));
         assertThat(factors, containsInAnyOrder(factor1, factor2));

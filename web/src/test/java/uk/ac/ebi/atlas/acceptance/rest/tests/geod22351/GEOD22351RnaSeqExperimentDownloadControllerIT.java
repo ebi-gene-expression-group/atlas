@@ -63,24 +63,12 @@ public class GEOD22351RnaSeqExperimentDownloadControllerIT {
     }
 
     @Test
-    public void verifyTimestampHeader() {
-
-        List<String> firstLine = subject.getRowValues(3);
-
-        assertThat(firstLine,
-                contains("Gene ID", "Gene Name", "genotype:'expressing human TDP-43' vs 'non transgenic'.p-value", "genotype:'expressing human TDP-43' vs 'non transgenic'.log2foldchange")
-        );
-
-    }
-
-
-    @Test
     public void verifyHeaders() {
 
         List<String> firstLine = subject.getRowValues(3);
 
         assertThat(firstLine,
-                contains("Gene ID", "Gene Name", "genotype:'expressing human TDP-43' vs 'non transgenic'.p-value", "genotype:'expressing human TDP-43' vs 'non transgenic'.log2foldchange")
+                contains("Gene ID", "Gene Name", "'expressing human TDP-43' vs 'non transgenic'.p-value", "'expressing human TDP-43' vs 'non transgenic'.log2foldchange")
         );
 
     }
