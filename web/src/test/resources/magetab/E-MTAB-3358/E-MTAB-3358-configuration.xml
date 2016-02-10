@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="0">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="fetal; small intestine">
+                <assay>DRR009597</assay>
+            </assay_group>
+            <assay_group id="g2" label="adult; parietal lobe">
+                <assay>DRR009572</assay>
+                <assay>DRR009573</assay>
+            </assay_group>
+            <assay_group id="g3" label="seminal vesicle; adult">
+                <assay>DRR009590</assay>
+            </assay_group>
+            <assay_group id="g4" label="middle temporal gyrus; adult">
+                <assay>DRR009557</assay>
+                <assay>DRR009556</assay>
+            </assay_group>
+            <assay_group id="g5" label="lymph node; adult">
+                <assay>DRR009553</assay>
+            </assay_group>
+            <assay_group id="g6" label="adult; cervix">
+                <assay>DRR009508</assay>
+            </assay_group>
+            <assay_group id="g7" label="substantia nigra; adult">
+                <assay>DRR009606</assay>
+                <assay>DRR009607</assay>
+            </assay_group>
+            <assay_group id="g8" label="appendix; adult">
+                <assay>DRR009492</assay>
+            </assay_group>
+            <assay_group id="g9" label="adult; lung">
+                <assay>DRR009552</assay>
+            </assay_group>
+            <assay_group id="g10" label="adult; kidney">
+                <assay>DRR009542</assay>
+            </assay_group>
+            <assay_group id="g11" label="adult; amygdala">
+                <assay>DRR009490</assay>
+                <assay>DRR009489</assay>
+            </assay_group>
+            <assay_group id="g12" label="brain; adult">
+                <assay>DRR009497</assay>
+            </assay_group>
+            <assay_group id="g13" label="adult; ovary">
+                <assay>DRR009569</assay>
+            </assay_group>
+            <assay_group id="g14" label="fetal; diaphragm">
+                <assay>DRR009514</assay>
+            </assay_group>
+            <assay_group id="g15" label="adult; cerebellum">
+                <assay>DRR009504</assay>
+                <assay>DRR009503</assay>
+            </assay_group>
+            <assay_group id="g16" label="fetal; throat">
+                <assay>DRR009616</assay>
+            </assay_group>
+            <assay_group id="g17" label="pulmonary valve; adult">
+                <assay>DRR009533</assay>
+            </assay_group>
+            <assay_group id="g18" label="adult; submandibular gland">
+                <assay>DRR009605</assay>
+            </assay_group>
+            <assay_group id="g19" label="adult; dura mater">
+                <assay>DRR009519</assay>
+            </assay_group>
+            <assay_group id="g20" label="smooth muscle; adult">
+                <assay>DRR009598</assay>
+            </assay_group>
+            <assay_group id="g21" label="fetal; umbilical cord">
+                <assay>DRR009627</assay>
+            </assay_group>
+            <assay_group id="g22" label="parietal lobe; fetal">
+                <assay>DRR009575</assay>
+            </assay_group>
+            <assay_group id="g23" label="thalamus; adult">
+                <assay>DRR009614</assay>
+                <assay>DRR009613</assay>
+            </assay_group>
+            <assay_group id="g24" label="trachea; fetal">
+                <assay>DRR009626</assay>
+            </assay_group>
+            <assay_group id="g25" label="breast; adult">
+                <assay>DRR009500</assay>
+            </assay_group>
+            <assay_group id="g26" label="pineal gland; adult">
+                <assay>DRR009578</assay>
+                <assay>DRR009579</assay>
+            </assay_group>
+            <assay_group id="g27" label="adult; gall bladder">
+                <assay>DRR009529</assay>
+            </assay_group>
+            <assay_group id="g28" label="fetal; skin">
+                <assay>DRR009595</assay>
+            </assay_group>
+            <assay_group id="g29" label="adult; olfactory apparatus">
+                <assay>DRR009567</assay>
+            </assay_group>
+            <assay_group id="g30" label="spinal cord; adult">
+                <assay>DRR009599</assay>
+                <assay>DRR009600</assay>
+            </assay_group>
+            <assay_group id="g31" label="adult; globus pallidus">
+                <assay>DRR009530</assay>
+                <assay>DRR009531</assay>
+            </assay_group>
+            <assay_group id="g32" label="diencephalon; adult">
+                <assay>DRR009515</assay>
+            </assay_group>
+            <assay_group id="g34" label="adult; triscuspid valve">
+                <assay>DRR009534</assay>
+            </assay_group>
+            <assay_group id="g35" label="medulla oblongata; adult">
+                <assay>DRR009558</assay>
+                <assay>DRR009559</assay>
+            </assay_group>
+            <assay_group id="g36" label="adult; epididymis">
+                <assay>DRR009520</assay>
+            </assay_group>
+            <assay_group id="g37" label="thyroid; fetal">
+                <assay>DRR009620</assay>
+            </assay_group>
+            <assay_group id="g38" label="adult; middle frontal gyrus">
+                <assay>DRR009555</assay>
+                <assay>DRR009554</assay>
+            </assay_group>
+            <assay_group id="g39" label="vas deferens; adult">
+                <assay>DRR009516</assay>
+            </assay_group>
+            <assay_group id="g41" label="adult; left ventricle">
+                <assay>DRR009545</assay>
+            </assay_group>
+            <assay_group id="g42" label="colon; adult">
+                <assay>DRR009509</assay>
+            </assay_group>
+            <assay_group id="g43" label="adult; left atrium">
+                <assay>DRR009544</assay>
+            </assay_group>
+            <assay_group id="g44" label="adult; putamen">
+                <assay>DRR009586</assay>
+            </assay_group>
+            <assay_group id="g46" label="adult; tongue">
+                <assay>DRR009622</assay>
+            </assay_group>
+            <assay_group id="g47" label="placenta; adult">
+                <assay>DRR009582</assay>
+            </assay_group>
+            <assay_group id="g48" label="stomach; fetal">
+                <assay>DRR009604</assay>
+            </assay_group>
+            <assay_group id="g49" label="adult; vagina">
+                <assay>DRR009630</assay>
+            </assay_group>
+            <assay_group id="g50" label="parotid gland; adult">
+                <assay>DRR009576</assay>
+            </assay_group>
+            <assay_group id="g51" label="skeletal muscle; fetal">
+                <assay>DRR009593</assay>
+            </assay_group>
+            <assay_group id="g52" label="adult; testis">
+                <assay>DRR009611</assay>
+                <assay>DRR009612</assay>
+            </assay_group>
+            <assay_group id="g53" label="heart; adult">
+                <assay>DRR009535</assay>
+                <assay>DRR009536</assay>
+            </assay_group>
+            <assay_group id="g54" label="bone marrow; adult">
+                <assay>DRR009496</assay>
+            </assay_group>
+            <assay_group id="g55" label="pituitary gland; adult">
+                <assay>DRR009581</assay>
+                <assay>DRR009580</assay>
+            </assay_group>
+            <assay_group id="g56" label="fetal; lung">
+                <assay>DRR009551</assay>
+            </assay_group>
+            <assay_group id="g57" label="spleen; adult">
+                <assay>DRR009602</assay>
+            </assay_group>
+            <assay_group id="g58" label="adult; locus coeruleus">
+                <assay>DRR009549</assay>
+                <assay>DRR009548</assay>
+            </assay_group>
+            <assay_group id="g59" label="eye; fetal">
+                <assay>DRR009527</assay>
+            </assay_group>
+            <assay_group id="g60" label="occipital cortex; adult">
+                <assay>DRR009563</assay>
+                <assay>DRR009562</assay>
+            </assay_group>
+            <assay_group id="g61" label="adult; mitral valve">
+                <assay>DRR009532</assay>
+            </assay_group>
+            <assay_group id="g62" label="fetal; tongue">
+                <assay>DRR009623</assay>
+            </assay_group>
+            <assay_group id="g63" label="artery; adult">
+                <assay>DRR009493</assay>
+            </assay_group>
+            <assay_group id="g64" label="adult; uterus">
+                <assay>DRR009628</assay>
+            </assay_group>
+            <assay_group id="g65" label="fetal; spinal cord">
+                <assay>DRR009601</assay>
+            </assay_group>
+            <assay_group id="g66" label="temporal lobe; fetal">
+                <assay technical_replicate_id="t1">DRR009609</assay>
+                <assay technical_replicate_id="t1">DRR009610</assay>
+            </assay_group>
+            <assay_group id="g67" label="cerebral meninges; adult">
+                <assay>DRR009506</assay>
+            </assay_group>
+            <assay_group id="g68" label="penis; adult">
+                <assay>DRR009577</assay>
+            </assay_group>
+            <assay_group id="g69" label="fetal; occipital lobe">
+                <assay>DRR009565</assay>
+            </assay_group>
+            <assay_group id="g70" label="colon; fetal">
+                <assay>DRR009511</assay>
+            </assay_group>
+            <assay_group id="g71" label="caudate nucleus; adult">
+                <assay>DRR009501</assay>
+                <assay>DRR009502</assay>
+            </assay_group>
+            <assay_group id="g73" label="fetal; rectum">
+                <assay>DRR009587</assay>
+            </assay_group>
+            <assay_group id="g74" label="prostate; adult">
+                <assay>DRR009585</assay>
+            </assay_group>
+            <assay_group id="g75" label="skin; adult">
+                <assay>DRR009594</assay>
+            </assay_group>
+            <assay_group id="g76" label="fetal; uterus">
+                <assay>DRR009629</assay>
+            </assay_group>
+            <assay_group id="g77" label="pancreas; adult">
+                <assay>DRR009570</assay>
+            </assay_group>
+            <assay_group id="g78" label="adult; hippocampus">
+                <assay>DRR009540</assay>
+                <assay>DRR009539</assay>
+            </assay_group>
+            <assay_group id="g79" label="adult; occipital lobe">
+                <assay>DRR009564</assay>
+            </assay_group>
+            <assay_group id="g80" label="fetal; duodenum">
+                <assay technical_replicate_id="t2">DRR009518</assay>
+                <assay technical_replicate_id="t2">DRR009517</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

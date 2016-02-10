@@ -70,6 +70,8 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
 
         AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 
+        boolean hasRData = configurationTrader.getExperimentConfiguration(experimentAccession).hasRData();
+
         String kingdom = speciesKingdomTrader.getKingdom(experimentDTO.getSpecies());
         if (kingdom.isEmpty()) {
             Iterator<String> speciesIterator = experimentDTO.getSpecies().iterator();
@@ -80,7 +82,7 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
 
         String[] orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
 
-        ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
+        ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentAccession, experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
 
         return createExperimentBuilder().forOrganisms(experimentDTO.getSpecies())
                 .ofKingdom(kingdom)
@@ -88,6 +90,7 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)
                 .withExtraInfo(hasExtraInfoFile)
+                .withRData(hasRData)
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
                 .withSpeciesMapping(factorsConfig.getSpeciesMapping())
                 .withPubMedIds(experimentDTO.getPubmedIds())
@@ -101,13 +104,13 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
     }
 
     //TODO: move this elsewhere, it is duplication of the same method in BaselineExperimentsCacheLoader
-    private ExperimentalFactors createExperimentalFactors(ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig, AssayGroups assayGroups, String[] orderedAssayGroupIds) {
+    private ExperimentalFactors createExperimentalFactors(String experimentAccession, ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig, AssayGroups assayGroups, String[] orderedAssayGroupIds) {
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
         Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
         Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
         Map<String, String> factorNamesByType = getFactorDisplayNameByType(experimentDesign.getFactorHeaders(), requiredFactorTypes);
 
-        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(orderedAssayGroupIds, assayGroups, experimentDesign);
+        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(experimentAccession, orderedAssayGroupIds, assayGroups, experimentDesign);
         Map<String, FactorGroup> orderedFactorGroupsByAssayGroup = extractOrderedFactorGroupsByAssayGroup(orderedAssayGroupIds, assayGroups, experimentDesign);
 
         ExperimentalFactorsBuilder experimentalFactorsBuilder = createExperimentalFactorsBuilder();
@@ -132,14 +135,14 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
         return requiredFactorTypes;
     }
 
-    List<FactorGroup> extractOrderedFactorGroups(String[] orderedAssayGroupIds, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
+    List<FactorGroup> extractOrderedFactorGroups(String experimentAccession, String[] orderedAssayGroupIds, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
 
         List<FactorGroup> factorGroups = Lists.newArrayList();
 
         for (String groupId : orderedAssayGroupIds) {
             AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
 
-            checkNotNull(assayGroup, String.format("No assay group \"%s\"", groupId));
+            checkNotNull(assayGroup, String.format("%s: No assay group \"%s\"", experimentAccession, groupId));
 
             FactorGroup factorGroup = experimentDesign.getFactors(assayGroup.getFirstAssayAccession());
             factorGroups.add(factorGroup);

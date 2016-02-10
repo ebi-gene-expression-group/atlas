@@ -53,7 +53,7 @@ public class ExperimentConfigurationIT {
     public void testGetContrast() throws Exception {
         subject = configurationTrader.getExperimentConfiguration("E-GEOD-22351");
         Contrast contrast = subject.getContrast("g1_g2", ARRAY_DESIGN);
-        assertThat(contrast.getDisplayName(), is("genotype:\'expressing human TDP-43\' vs \'non transgenic\'"));
+        assertThat(contrast.getDisplayName(), is("\'expressing human TDP-43\' vs \'non transgenic\'"));
         assertThat(Sets.newHashSet(contrast.getReferenceAssayGroup()), containsInAnyOrder("SRR057596", "SRR057598", "SRR057597"));
         assertThat(Sets.newHashSet(contrast.getTestAssayGroup()), containsInAnyOrder("SRR057599", "SRR057600", "SRR057601"));
         assertThat(contrast.getArrayDesignAccession(), is(ARRAY_DESIGN));
@@ -72,7 +72,7 @@ public class ExperimentConfigurationIT {
         AssayGroups assayGroups = subject.getAssayGroups();
 
         assertThat(assayGroups.getAssayGroupIds(), hasSize(16));
-        assertThat(assayGroups, hasItem(new AssayGroup("g7", "ERR030882")));
+        assertThat(assayGroups, hasItem(new AssayGroup("g7", "ERR030876")));
 
     }
 

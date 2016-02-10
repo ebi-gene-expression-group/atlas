@@ -69,6 +69,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 
+        boolean hasRData = configurationTrader.getExperimentConfiguration(experimentAccession).hasRData();
+
         String kingdom = speciesKingdomTrader.getKingdom(experimentDTO.getSpecies());
         if (kingdom.isEmpty()) {
             Iterator<String> speciesIterator = experimentDTO.getSpecies().iterator();
@@ -96,7 +98,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
             orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
         }
 
-        ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds, orderCurated);
+        ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentAccession, experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds, orderCurated);
 
         return createExperimentBuilder().forOrganisms(experimentDTO.getSpecies())
                 .ofKingdom(kingdom)
@@ -113,21 +115,22 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withExperimentalFactors(experimentalFactors)
                 .withDataProviderURL(factorsConfig.getDataProviderURL())
                 .withDataProviderDescription(factorsConfig.getDataProviderDescription())
+                .withRData(hasRData)
                 .create();
 
     }
 
-    private ExperimentalFactors createExperimentalFactors(ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig,
+    private ExperimentalFactors createExperimentalFactors(String experimentAccession, ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig,
                                                           AssayGroups assayGroups, String[] orderedAssayGroupIds, boolean orderCurated) {
         if(!orderCurated){
-            return createExperimentalFactorFromTSV(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
+            return createExperimentalFactorFromTSV(experimentAccession, experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
         } else {
-            return createExperimentalFactorFromXML(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
+            return createExperimentalFactorFromXML(experimentAccession, experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
         }
 
     }
 
-    private ExperimentalFactors createExperimentalFactorFromTSV(ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig,
+    private ExperimentalFactors createExperimentalFactorFromTSV(String experimentAccession, ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig,
                                                                 AssayGroups assayGroups, String[] orderedAssayGroupIds) {
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
         Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
@@ -140,7 +143,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         }
         Map<String, String> factorNamesByType = getFactorDisplayNameByType(experimentDesign.getFactorHeaders(), requiredFactorTypes);
 
-        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(orderedAssayGroupIds, assayGroups, experimentDesign);
+        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(experimentAccession, orderedAssayGroupIds, assayGroups, experimentDesign);
         Map<String, FactorGroup> orderedFactorGroupsByAssayGroup = extractOrderedFactorGroupsByAssayGroup(orderedAssayGroupIds, assayGroups, experimentDesign);
 
         ExperimentalFactorsBuilder experimentalFactorsBuilder = createExperimentalFactorsBuilder();
@@ -156,14 +159,14 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .create();
     }
 
-    private ExperimentalFactors createExperimentalFactorFromXML(ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig,
+    private ExperimentalFactors createExperimentalFactorFromXML(String experimentAccession, ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig,
                                                                 AssayGroups assayGroups, String[] orderedAssayGroupIds) {
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
         Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
         Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
         Map<String, String> factorNamesByType = getFactorDisplayNameByType(experimentDesign.getFactorHeaders(), requiredFactorTypes);
 
-        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(orderedAssayGroupIds, assayGroups, experimentDesign);
+        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(experimentAccession, orderedAssayGroupIds, assayGroups, experimentDesign);
         Map<String, FactorGroup> orderedFactorGroupsByAssayGroup = extractOrderedFactorGroupsByAssayGroup(orderedAssayGroupIds, assayGroups, experimentDesign);
 
         ExperimentalFactorsBuilder experimentalFactorsBuilder = createExperimentalFactorsBuilder();
@@ -200,14 +203,14 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         return requiredFactorTypes;
     }
 
-    List<FactorGroup> extractOrderedFactorGroups(String[] orderedAssayGroupIds, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
+    List<FactorGroup> extractOrderedFactorGroups(String experimentAccession, String[] orderedAssayGroupIds, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
 
         List<FactorGroup> factorGroups = Lists.newArrayList();
 
         for (String groupId : orderedAssayGroupIds) {
             AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
 
-            checkNotNull(assayGroup, String.format("No assay group \"%s\"", groupId));
+            checkNotNull(assayGroup, String.format("%s: No assay group \"%s\"", experimentAccession, groupId));
 
             FactorGroup factorGroup = experimentDesign.getFactors(assayGroup.getFirstAssayAccession());
             factorGroups.add(factorGroup);

@@ -1,313 +1,313 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration experimentType="rnaseq_mrna_baseline">
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
     <analytics>
         <assay_groups>
             <assay_group id="g1" label="fully-elongated embryo Ce; hermaphrodite; pharyngeal muscle cell">
-                <assay technical_replicate_id="49">SRR316928</assay>
-                <assay technical_replicate_id="49">SRR316929</assay>
+                <assay technical_replicate_id="t49">SRR316928</assay>
+                <assay technical_replicate_id="t49">SRR316929</assay>
             </assay_group>
             <assay_group id="g3" label="L4 larva Ce; male; organism">
-<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="6">SRR016685</assay> -->
-<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="6">SRR016686</assay> -->
-<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="6">SRR016684</assay> -->
-                <assay technical_replicate_id="36">SRR124274</assay>
-                <assay technical_replicate_id="36">SRR124273</assay>
-                <assay technical_replicate_id="44">SRR137926</assay>
-                <assay technical_replicate_id="44">SRR139148</assay>
+<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="t6">SRR016685</assay> -->
+<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="t6">SRR016686</assay> -->
+<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="t6">SRR016684</assay> -->
+                <assay technical_replicate_id="t36">SRR124274</assay>
+                <assay technical_replicate_id="t36">SRR124273</assay>
+                <assay technical_replicate_id="t44">SRR137926</assay>
+                <assay technical_replicate_id="t44">SRR139148</assay>
             </assay_group>
             <assay_group id="g7" label="4-cell embryo Ce; hermaphrodite; organism">
-                <assay technical_replicate_id="96">SRR493099</assay>
-                <assay technical_replicate_id="96">SRR493100</assay>
-                <assay technical_replicate_id="47">SRR316754</assay>
-                <assay technical_replicate_id="48">SRR316756</assay>
-                <assay technical_replicate_id="48">SRR316755</assay>
+                <assay technical_replicate_id="t96">SRR493099</assay>
+                <assay technical_replicate_id="t96">SRR493100</assay>
+                <assay technical_replicate_id="t47">SRR316754</assay>
+                <assay technical_replicate_id="t48">SRR316756</assay>
+                <assay technical_replicate_id="t48">SRR316755</assay>
             </assay_group>
             <assay_group id="g8" label="3-fold embryo Ce; hermaphrodite; organism">
-                <assay technical_replicate_id="53">SRR350987</assay>
-                <assay technical_replicate_id="53">SRR350988</assay>
-                <assay technical_replicate_id="53">SRR359089</assay>
-                <assay technical_replicate_id="53">SRR350989</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR351020</assay> -->
-                <assay technical_replicate_id="65">SRR351018</assay>
-                <assay technical_replicate_id="65">SRR351017</assay>
-                <assay technical_replicate_id="65">SRR359087</assay>
-                <assay technical_replicate_id="65">SRR351019</assay>
-                <assay technical_replicate_id="54">SRR350992</assay>
-                <assay technical_replicate_id="54">SRR359088</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR350993</assay> -->
-                <assay technical_replicate_id="54">SRR350991</assay>
-                <assay technical_replicate_id="54">SRR350990</assay>
+                <assay technical_replicate_id="t53">SRR350987</assay>
+                <assay technical_replicate_id="t53">SRR350988</assay>
+                <assay technical_replicate_id="t53">SRR359089</assay>
+                <assay technical_replicate_id="t53">SRR350989</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR351020</assay> -->
+                <assay technical_replicate_id="t65">SRR351018</assay>
+                <assay technical_replicate_id="t65">SRR351017</assay>
+                <assay technical_replicate_id="t65">SRR359087</assay>
+                <assay technical_replicate_id="t65">SRR351019</assay>
+                <assay technical_replicate_id="t54">SRR350992</assay>
+                <assay technical_replicate_id="t54">SRR359088</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR350993</assay> -->
+                <assay technical_replicate_id="t54">SRR350991</assay>
+                <assay technical_replicate_id="t54">SRR350990</assay>
             </assay_group>
             <assay_group id="g9" label="late cleavage stage embryo Ce; hermaphrodite; organism">
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR351003</assay> -->
-                <assay technical_replicate_id="59">SRR351002</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR359094</assay> -->
-<!-- Too small library                <assay technical_replicate_id="69">SRR351033</assay> -->
-                <assay technical_replicate_id="69">SRR351030</assay>
-                <assay technical_replicate_id="69">SRR351031</assay>
-                <assay technical_replicate_id="69">SRR351032</assay>
-                <assay technical_replicate_id="75">SRR352279</assay>
-                <assay technical_replicate_id="75">SRR352280</assay>
-                <assay technical_replicate_id="58">SRR351001</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR351000</assay> -->
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR351003</assay> -->
+                <assay technical_replicate_id="t59">SRR351002</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR359094</assay> -->
+<!-- Too small library                <assay technical_replicate_id="t69">SRR351033</assay> -->
+                <assay technical_replicate_id="t69">SRR351030</assay>
+                <assay technical_replicate_id="t69">SRR351031</assay>
+                <assay technical_replicate_id="t69">SRR351032</assay>
+                <assay technical_replicate_id="t75">SRR352279</assay>
+                <assay technical_replicate_id="t75">SRR352280</assay>
+                <assay technical_replicate_id="t58">SRR351001</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR351000</assay> -->
             </assay_group>
             <assay_group id="g10" label="embryo Ce; male; organism">
-                <assay technical_replicate_id="13">SRR027904</assay>
-                <assay technical_replicate_id="13">SRR027905</assay>
-                <assay technical_replicate_id="31">SRR089797</assay>
-                <assay technical_replicate_id="31">SRR125491</assay>
+                <assay technical_replicate_id="t13">SRR027904</assay>
+                <assay technical_replicate_id="t13">SRR027905</assay>
+                <assay technical_replicate_id="t31">SRR089797</assay>
+                <assay technical_replicate_id="t31">SRR125491</assay>
             </assay_group>
             <assay_group id="g11" label="enclosing embryo Ce; hermaphrodite; organism">
-<!-- Too small library                                <assay technical_replicate_id="63">SRR351012</assay> -->
-<!-- Too small library                                <assay technical_replicate_id="63">SRR359069</assay> -->
-                <assay technical_replicate_id="63">SRR351011</assay>
-                <assay technical_replicate_id="63">SRR351010</assay>
-                <assay technical_replicate_id="68">SRR351027</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR351025</assay> -->
-                <assay technical_replicate_id="68">SRR359067</assay>
-                <assay technical_replicate_id="68">SRR351028</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR351029</assay> -->
+<!-- Too small library                                <assay technical_replicate_id="t63">SRR351012</assay> -->
+<!-- Too small library                                <assay technical_replicate_id="t63">SRR359069</assay> -->
+                <assay technical_replicate_id="t63">SRR351011</assay>
+                <assay technical_replicate_id="t63">SRR351010</assay>
+                <assay technical_replicate_id="t68">SRR351027</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR351025</assay> -->
+                <assay technical_replicate_id="t68">SRR359067</assay>
+                <assay technical_replicate_id="t68">SRR351028</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR351029</assay> -->
             </assay_group>
             <assay_group id="g12" label="L2 larva Ce; hermaphrodite; motor neuron">
-                <assay technical_replicate_id="88">SRR473086</assay>
-                <assay technical_replicate_id="90">SRR474828</assay>
-                <assay technical_replicate_id="89">SRR473300</assay>
+                <assay technical_replicate_id="t88">SRR473086</assay>
+                <assay technical_replicate_id="t90">SRR474828</assay>
+                <assay technical_replicate_id="t89">SRR473300</assay>
             </assay_group>
             <assay_group id="g13" label="newly molted young adult hermaphrodite Ce; hermaphrodite; organism">
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR360132</assay> -->
-                <assay technical_replicate_id="84">SRR360133</assay>
-                <assay technical_replicate_id="84">SRR360134</assay>
-<!-- Too small library                                <assay technical_replicate_id="39">SRR125482</assay> -->
-                <assay technical_replicate_id="39">SRR125481</assay>
-                <assay technical_replicate_id="83">SRR360127</assay>
-                <assay technical_replicate_id="83">SRR473298</assay>
-                <assay technical_replicate_id="83">SRR473297</assay>
-                <assay technical_replicate_id="83">SRR360126</assay>
-                <assay technical_replicate_id="83">SRR360128</assay>
-                <assay technical_replicate_id="83">SRR360129</assay>
-                <assay technical_replicate_id="83">SRR360130</assay>
-                <assay technical_replicate_id="2">SRR006516</assay>
-                <assay technical_replicate_id="2">SRR006514</assay>
-                <assay technical_replicate_id="2">SRR006515</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR360132</assay> -->
+                <assay technical_replicate_id="t84">SRR360133</assay>
+                <assay technical_replicate_id="t84">SRR360134</assay>
+<!-- Too small library                                <assay technical_replicate_id="t39">SRR125482</assay> -->
+                <assay technical_replicate_id="t39">SRR125481</assay>
+                <assay technical_replicate_id="t83">SRR360127</assay>
+                <assay technical_replicate_id="t83">SRR473298</assay>
+                <assay technical_replicate_id="t83">SRR473297</assay>
+                <assay technical_replicate_id="t83">SRR360126</assay>
+                <assay technical_replicate_id="t83">SRR360128</assay>
+                <assay technical_replicate_id="t83">SRR360129</assay>
+                <assay technical_replicate_id="t83">SRR360130</assay>
+                <assay technical_replicate_id="t2">SRR006516</assay>
+                <assay technical_replicate_id="t2">SRR006514</assay>
+                <assay technical_replicate_id="t2">SRR006515</assay>
             </assay_group>
             <assay_group id="g14" label="gastrulating embryo Ce; hermaphrodite; organism">
-                <assay technical_replicate_id="67">SRR351024</assay>
-                <assay technical_replicate_id="67">SRR351023</assay>
-                <assay technical_replicate_id="46">SRR316753</assay>
-                <assay technical_replicate_id="46">SRR350977</assay>
-                <assay technical_replicate_id="46">SRR317082</assay>
-                <assay technical_replicate_id="97">SRR493102</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR493103</assay> -->
-                <assay technical_replicate_id="62">SRR351009</assay>
+                <assay technical_replicate_id="t67">SRR351024</assay>
+                <assay technical_replicate_id="t67">SRR351023</assay>
+                <assay technical_replicate_id="t46">SRR316753</assay>
+                <assay technical_replicate_id="t46">SRR350977</assay>
+                <assay technical_replicate_id="t46">SRR317082</assay>
+                <assay technical_replicate_id="t97">SRR493102</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR493103</assay> -->
+                <assay technical_replicate_id="t62">SRR351009</assay>
             </assay_group>
             <assay_group id="g15" label="L4 larva Ce; hermaphrodite; organism">
-                <assay technical_replicate_id="22">SRR031123</assay>
-                <assay technical_replicate_id="22">SRR031122</assay>
-                <assay technical_replicate_id="33">SRR089799</assay>
-                <assay technical_replicate_id="4">SRR006518</assay>
-                <assay technical_replicate_id="4">SRR006517</assay>
-                <assay technical_replicate_id="40">SRR136597</assay>
-                <assay technical_replicate_id="17">SRR023580</assay>
-                <assay technical_replicate_id="17">SRR023579</assay>
-                <assay technical_replicate_id="17">SRR023581</assay>
-                <assay technical_replicate_id="41">SRR136598</assay>
+                <assay technical_replicate_id="t22">SRR031123</assay>
+                <assay technical_replicate_id="t22">SRR031122</assay>
+                <assay technical_replicate_id="t33">SRR089799</assay>
+                <assay technical_replicate_id="t4">SRR006518</assay>
+                <assay technical_replicate_id="t4">SRR006517</assay>
+                <assay technical_replicate_id="t40">SRR136597</assay>
+                <assay technical_replicate_id="t17">SRR023580</assay>
+                <assay technical_replicate_id="t17">SRR023579</assay>
+                <assay technical_replicate_id="t17">SRR023581</assay>
+                <assay technical_replicate_id="t41">SRR136598</assay>
             </assay_group>
             <assay_group id="g16" label="adult Ce; hermaphrodite; gonad">
-                <assay technical_replicate_id="107">SRR504339</assay>
-                <assay technical_replicate_id="107">SRR504338</assay>
-<!-- Too small library                                <assay technical_replicate_id="107">SRR578034</assay> -->
+                <assay technical_replicate_id="t107">SRR504339</assay>
+                <assay technical_replicate_id="t107">SRR504338</assay>
+<!-- Too small library                                <assay technical_replicate_id="t107">SRR578034</assay> -->
             </assay_group>
             <assay_group id="g17" label="L2 larva Ce; hermaphrodite; organism">
-<!-- Too small library                                <assay technical_replicate_id="38">SRR125339</assay> -->
-                <assay technical_replicate_id="38">SRR125337</assay>
-<!-- Too small library                                <assay technical_replicate_id="38">SRR125338</assay> -->
-                <assay technical_replicate_id="1">SRR006511</assay>
-<!-- Majority of the reads are low quality                <assay technical_replicate_id="1">SRR006513</assay> -->
-<!-- Majority of the reads are low quality                <assay technical_replicate_id="1">SRR006512</assay> -->
-                <assay technical_replicate_id="105">SRR504324</assay>
-                <assay technical_replicate_id="105">SRR504325</assay>
-<!-- Too small library                                <assay technical_replicate_id="100">SRR578144</assay> -->
-                <assay technical_replicate_id="100">SRR493363</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR493365</assay> -->
-                <assay technical_replicate_id="100">SRR493364</assay>
-                <assay technical_replicate_id="100">SRR493362</assay>
+<!-- Too small library                                <assay technical_replicate_id="t38">SRR125339</assay> -->
+                <assay technical_replicate_id="t38">SRR125337</assay>
+<!-- Too small library                                <assay technical_replicate_id="t38">SRR125338</assay> -->
+                <assay technical_replicate_id="t1">SRR006511</assay>
+<!-- Majority of the reads are low quality                <assay technical_replicate_id="t1">SRR006513</assay> -->
+<!-- Majority of the reads are low quality                <assay technical_replicate_id="t1">SRR006512</assay> -->
+                <assay technical_replicate_id="t105">SRR504324</assay>
+                <assay technical_replicate_id="t105">SRR504325</assay>
+<!-- Too small library                                <assay technical_replicate_id="t100">SRR578144</assay> -->
+                <assay technical_replicate_id="t100">SRR493363</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR493365</assay> -->
+                <assay technical_replicate_id="t100">SRR493364</assay>
+                <assay technical_replicate_id="t100">SRR493362</assay>
             </assay_group>
             <assay_group id="g19" label="fully-elongated embryo Ce; hermaphrodite; organism">
-                <assay technical_replicate_id="35">SRR124256</assay>
-                <assay technical_replicate_id="35">SRR124255</assay>
-                <assay technical_replicate_id="35">SRR124257</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR350998</assay> -->
-                <assay technical_replicate_id="57">SRR350997</assay>
-                <assay technical_replicate_id="57">SRR350999</assay>
-                <assay technical_replicate_id="9">SRR016674</assay>
-                <assay technical_replicate_id="9">SRR016675</assay>
-                <assay technical_replicate_id="42">SRR136599</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR350995</assay> -->
-                <assay technical_replicate_id="56">SRR350996</assay>
-                <assay technical_replicate_id="56">SRR350994</assay>
-                <assay technical_replicate_id="72">SRR351041</assay>
-                <assay technical_replicate_id="72">SRR351040</assay>
-                <assay technical_replicate_id="66">SRR351021</assay>
-                <assay technical_replicate_id="66">SRR351022</assay>
-<!-- Quality encoding not Phred33 or 64          <assay technical_replicate_id="10">SRR016677</assay> -->
-<!-- Quality encoding not Phred33 or 64          <assay technical_replicate_id="10">SRR016687</assay> -->
-                <assay technical_replicate_id="10">SRR016678</assay>
-<!-- Quality encoding not Phred33 or 64          <assay technical_replicate_id="10">SRR016676</assay> -->
+                <assay technical_replicate_id="t35">SRR124256</assay>
+                <assay technical_replicate_id="t35">SRR124255</assay>
+                <assay technical_replicate_id="t35">SRR124257</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR350998</assay> -->
+                <assay technical_replicate_id="t57">SRR350997</assay>
+                <assay technical_replicate_id="t57">SRR350999</assay>
+                <assay technical_replicate_id="t9">SRR016674</assay>
+                <assay technical_replicate_id="t9">SRR016675</assay>
+                <assay technical_replicate_id="t42">SRR136599</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR350995</assay> -->
+                <assay technical_replicate_id="t56">SRR350996</assay>
+                <assay technical_replicate_id="t56">SRR350994</assay>
+                <assay technical_replicate_id="t72">SRR351041</assay>
+                <assay technical_replicate_id="t72">SRR351040</assay>
+                <assay technical_replicate_id="t66">SRR351021</assay>
+                <assay technical_replicate_id="t66">SRR351022</assay>
+<!-- Quality encoding not Phred33 or 64          <assay technical_replicate_id="t10">SRR016677</assay> -->
+<!-- Quality encoding not Phred33 or 64          <assay technical_replicate_id="t10">SRR016687</assay> -->
+                <assay technical_replicate_id="t10">SRR016678</assay>
+<!-- Quality encoding not Phred33 or 64          <assay technical_replicate_id="t10">SRR016676</assay> -->
             </assay_group>
             <assay_group id="g20" label="dauer larva Ce; hermaphrodite; organism">
-                <assay technical_replicate_id="81">SRR360122</assay>
-                <assay technical_replicate_id="81">SRR360123</assay>
-                <assay technical_replicate_id="80">SRR360121</assay>
-                <assay technical_replicate_id="80">SRR360120</assay>
-                <assay technical_replicate_id="82">SRR360124</assay>
-                <assay technical_replicate_id="82">SRR360125</assay>
-                <assay technical_replicate_id="14">SRR027187</assay>
-                <assay technical_replicate_id="14">SRR027188</assay>
+                <assay technical_replicate_id="t81">SRR360122</assay>
+                <assay technical_replicate_id="t81">SRR360123</assay>
+                <assay technical_replicate_id="t80">SRR360121</assay>
+                <assay technical_replicate_id="t80">SRR360120</assay>
+                <assay technical_replicate_id="t82">SRR360124</assay>
+                <assay technical_replicate_id="t82">SRR360125</assay>
+                <assay technical_replicate_id="t14">SRR027187</assay>
+                <assay technical_replicate_id="t14">SRR027188</assay>
             </assay_group>
             <assay_group id="g23" label="proliferating embryo Ce; hermaphrodite; organism">
-                <assay technical_replicate_id="50">SRR332924</assay>
-                <assay technical_replicate_id="50">SRR332923</assay>
-                <assay technical_replicate_id="50">SRR350956</assay>
-                <assay technical_replicate_id="50">SRR359065</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR350957</assay> -->
-                <assay technical_replicate_id="7">SRR016669</assay>
-                <assay technical_replicate_id="7">SRR016670</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR359063</assay> -->
-                <assay technical_replicate_id="51">SRR350954</assay>
-                <assay technical_replicate_id="51">SRR478539</assay>
-                <assay technical_replicate_id="51">SRR332922</assay>
-<!-- Too small library                                <assay technical_replicate_id="51">SRR350955</assay> -->
-                <assay technical_replicate_id="51">SRR332921</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR016682</assay> -->
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR016671</assay> -->
-<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="8">SRR016672</assay> --> 
-<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="8">SRR016673</assay> -->
-                <assay technical_replicate_id="52">SRR332925</assay>
-                <assay technical_replicate_id="52">SRR359066</assay>
-                <assay technical_replicate_id="52">SRR350958</assay>
-                <assay technical_replicate_id="52">SRR332926</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR332927</assay> -->
-                <assay technical_replicate_id="99">SRR493360</assay>
-                <assay technical_replicate_id="99">SRR493358</assay>
-                <assay technical_replicate_id="99">SRR493359</assay>
-                <assay technical_replicate_id="99">SRR493361</assay>
-<!-- Too small library                                <assay technical_replicate_id="99">SRR578143</assay> -->
-                <assay technical_replicate_id="98">SRR493105</assay>
-                <assay technical_replicate_id="98">SRR554453</assay>
-                <assay technical_replicate_id="30">SRR089796</assay>
-                <assay technical_replicate_id="30">SRR089795</assay>
-                <assay technical_replicate_id="45">SRR317083</assay>
-                <assay technical_replicate_id="45">SRR316196</assay>
-<!-- Too small library                                <assay technical_replicate_id="101">SRR578031</assay> -->
-                <assay technical_replicate_id="101">SRR504316</assay>
-                <assay technical_replicate_id="29">SRR089786</assay>
-                <assay technical_replicate_id="29">SRR089784</assay>
-                <assay technical_replicate_id="29">SRR089785</assay>
+                <assay technical_replicate_id="t50">SRR332924</assay>
+                <assay technical_replicate_id="t50">SRR332923</assay>
+                <assay technical_replicate_id="t50">SRR350956</assay>
+                <assay technical_replicate_id="t50">SRR359065</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR350957</assay> -->
+                <assay technical_replicate_id="t7">SRR016669</assay>
+                <assay technical_replicate_id="t7">SRR016670</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR359063</assay> -->
+                <assay technical_replicate_id="t51">SRR350954</assay>
+                <assay technical_replicate_id="t51">SRR478539</assay>
+                <assay technical_replicate_id="t51">SRR332922</assay>
+<!-- Too small library                                <assay technical_replicate_id="t51">SRR350955</assay> -->
+                <assay technical_replicate_id="t51">SRR332921</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR016682</assay> -->
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR016671</assay> -->
+<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="t8">SRR016672</assay> --> 
+<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="t8">SRR016673</assay> -->
+                <assay technical_replicate_id="t52">SRR332925</assay>
+                <assay technical_replicate_id="t52">SRR359066</assay>
+                <assay technical_replicate_id="t52">SRR350958</assay>
+                <assay technical_replicate_id="t52">SRR332926</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR332927</assay> -->
+                <assay technical_replicate_id="t99">SRR493360</assay>
+                <assay technical_replicate_id="t99">SRR493358</assay>
+                <assay technical_replicate_id="t99">SRR493359</assay>
+                <assay technical_replicate_id="t99">SRR493361</assay>
+<!-- Too small library                                <assay technical_replicate_id="t99">SRR578143</assay> -->
+                <assay technical_replicate_id="t98">SRR493105</assay>
+                <assay technical_replicate_id="t98">SRR554453</assay>
+                <assay technical_replicate_id="t30">SRR089796</assay>
+                <assay technical_replicate_id="t30">SRR089795</assay>
+                <assay technical_replicate_id="t45">SRR317083</assay>
+                <assay technical_replicate_id="t45">SRR316196</assay>
+<!-- Too small library                                <assay technical_replicate_id="t101">SRR578031</assay> -->
+                <assay technical_replicate_id="t101">SRR504316</assay>
+                <assay technical_replicate_id="t29">SRR089786</assay>
+                <assay technical_replicate_id="t29">SRR089784</assay>
+                <assay technical_replicate_id="t29">SRR089785</assay>
             </assay_group>
             <assay_group id="g24" label="L1 larva Ce; hermaphrodite; organism">
-                <assay technical_replicate_id="92">SRR493076</assay>
-<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="11">SRR016683</assay> -->
-<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="11">SRR016681</assay> -->
-<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="11">SRR016679</assay> -->
-<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="11">SRR016680</assay> -->
-                <assay technical_replicate_id="87">SRR473085</assay>
-                <assay technical_replicate_id="34">SRR089823</assay>
-                <assay technical_replicate_id="34">SRR089822</assay>
-                <assay technical_replicate_id="34">SRR089821</assay>
-                <assay technical_replicate_id="95">SRR493079</assay>
-                <assay technical_replicate_id="43">SRR139094</assay>
-                <assay technical_replicate_id="43">SRR137925</assay>
-                <assay technical_replicate_id="86">SRR473299</assay>
-<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="5">SRR016689</assay> -->
-<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="5">SRR016688</assay> -->
-                <assay technical_replicate_id="5">SRR016690</assay>
-                <assay technical_replicate_id="5">SRR016691</assay>
+                <assay technical_replicate_id="t92">SRR493076</assay>
+<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="t11">SRR016683</assay> -->
+<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="t11">SRR016681</assay> -->
+<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="t11">SRR016679</assay> -->
+<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="t11">SRR016680</assay> -->
+                <assay technical_replicate_id="t87">SRR473085</assay>
+                <assay technical_replicate_id="t34">SRR089823</assay>
+                <assay technical_replicate_id="t34">SRR089822</assay>
+                <assay technical_replicate_id="t34">SRR089821</assay>
+                <assay technical_replicate_id="t95">SRR493079</assay>
+                <assay technical_replicate_id="t43">SRR139094</assay>
+                <assay technical_replicate_id="t43">SRR137925</assay>
+                <assay technical_replicate_id="t86">SRR473299</assay>
+<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="t5">SRR016689</assay> -->
+<!-- Quality encoding not Phred33 or 64                <assay technical_replicate_id="t5">SRR016688</assay> -->
+                <assay technical_replicate_id="t5">SRR016690</assay>
+                <assay technical_replicate_id="t5">SRR016691</assay>
             </assay_group>
             <assay_group id="g25" label="L1 larva Ce; hermaphrodite; NSM">
-                <assay technical_replicate_id="93">SRR493077</assay>
-                <assay technical_replicate_id="85">SRR474827</assay>
-<!-- Too small library                                <assay technical_replicate_id="106">SRR578035</assay> -->
-                <assay technical_replicate_id="106">SRR504337</assay>
-                <assay technical_replicate_id="106">SRR504336</assay>
+                <assay technical_replicate_id="t93">SRR493077</assay>
+                <assay technical_replicate_id="t85">SRR474827</assay>
+<!-- Too small library                                <assay technical_replicate_id="t106">SRR578035</assay> -->
+                <assay technical_replicate_id="t106">SRR504337</assay>
+                <assay technical_replicate_id="t106">SRR504336</assay>
             </assay_group>
             <assay_group id="g26" label="adult Ce; hermaphrodite; organism">
-                <assay technical_replicate_id="26">SRR089352</assay>
-                <assay technical_replicate_id="26">SRR089354</assay>
-                <assay technical_replicate_id="26">SRR089353</assay>
-                <assay technical_replicate_id="12">SRR023535</assay>
-                <assay technical_replicate_id="12">SRR023536</assay>
-                <assay technical_replicate_id="12">SRR023534</assay>
-                <assay technical_replicate_id="12">SRR023537</assay>
+                <assay technical_replicate_id="t26">SRR089352</assay>
+                <assay technical_replicate_id="t26">SRR089354</assay>
+                <assay technical_replicate_id="t26">SRR089353</assay>
+                <assay technical_replicate_id="t12">SRR023535</assay>
+                <assay technical_replicate_id="t12">SRR023536</assay>
+                <assay technical_replicate_id="t12">SRR023534</assay>
+                <assay technical_replicate_id="t12">SRR023537</assay>
             </assay_group>
             <assay_group id="g28" label="post dauer stage Ce; hermaphrodite; organism">
-                <assay technical_replicate_id="32">SRR089798</assay>
-                <assay technical_replicate_id="16">SRR027192</assay>
-                <assay technical_replicate_id="16">SRR027191</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR358687</assay> -->
-                <assay technical_replicate_id="76">SRR358683</assay>
-                <assay technical_replicate_id="76">SRR358684</assay>
-                <assay technical_replicate_id="76">SRR358686</assay>
-                <assay technical_replicate_id="76">SRR358685</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR358699</assay> -->
-                <assay technical_replicate_id="79">SRR358695</assay>
-                <assay technical_replicate_id="79">SRR358696</assay>
-                <assay technical_replicate_id="79">SRR358698</assay>
-                <assay technical_replicate_id="79">SRR358697</assay>
+                <assay technical_replicate_id="t32">SRR089798</assay>
+                <assay technical_replicate_id="t16">SRR027192</assay>
+                <assay technical_replicate_id="t16">SRR027191</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR358687</assay> -->
+                <assay technical_replicate_id="t76">SRR358683</assay>
+                <assay technical_replicate_id="t76">SRR358684</assay>
+                <assay technical_replicate_id="t76">SRR358686</assay>
+                <assay technical_replicate_id="t76">SRR358685</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR358699</assay> -->
+                <assay technical_replicate_id="t79">SRR358695</assay>
+                <assay technical_replicate_id="t79">SRR358696</assay>
+                <assay technical_replicate_id="t79">SRR358698</assay>
+                <assay technical_replicate_id="t79">SRR358697</assay>
             </assay_group>
             <assay_group id="g29" label="embryo Ce; hermaphrodite; somatic cell">
-                <assay technical_replicate_id="102">SRR504317</assay>
-                <assay technical_replicate_id="102">SRR504318</assay>
-<!-- Too small library                                <assay technical_replicate_id="102">SRR578030</assay> -->
+                <assay technical_replicate_id="t102">SRR504317</assay>
+                <assay technical_replicate_id="t102">SRR504318</assay>
+<!-- Too small library                                <assay technical_replicate_id="t102">SRR578030</assay> -->
             </assay_group>
             <assay_group id="g31" label="L2d-dauer molt Ce; hermaphrodite; organism">
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR358692</assay> -->
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR358689</assay> -->
-                <assay technical_replicate_id="77">SRR358688</assay>
-                <assay technical_replicate_id="77">SRR358690</assay>
-                <assay technical_replicate_id="77">SRR358691</assay>
-                <assay technical_replicate_id="37">SRR124276</assay>
-                <assay technical_replicate_id="37">SRR124275</assay>
-                <assay technical_replicate_id="78">SRR358694</assay>
-                <assay technical_replicate_id="78">SRR358693</assay>
-                <assay technical_replicate_id="15">SRR027189</assay>
-                <assay technical_replicate_id="15">SRR027190</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR358692</assay> -->
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR358689</assay> -->
+                <assay technical_replicate_id="t77">SRR358688</assay>
+                <assay technical_replicate_id="t77">SRR358690</assay>
+                <assay technical_replicate_id="t77">SRR358691</assay>
+                <assay technical_replicate_id="t37">SRR124276</assay>
+                <assay technical_replicate_id="t37">SRR124275</assay>
+                <assay technical_replicate_id="t78">SRR358694</assay>
+                <assay technical_replicate_id="t78">SRR358693</assay>
+                <assay technical_replicate_id="t15">SRR027189</assay>
+                <assay technical_replicate_id="t15">SRR027190</assay>
             </assay_group>
             <assay_group id="g32" label="L1 larva Ce; hermaphrodite; neuron">
-<!-- Too small library                                <assay technical_replicate_id="104">SRR578032</assay> -->
-                <assay technical_replicate_id="104">SRR504323</assay>
-                <assay technical_replicate_id="104">SRR504322</assay>
-<!-- Too small library                                <assay technical_replicate_id="103">SRR578033</assay> -->
-                <assay technical_replicate_id="103">SRR504319</assay>
-                <assay technical_replicate_id="94">SRR493078</assay>
-                <assay technical_replicate_id="91">SRR493075</assay>
+<!-- Too small library                                <assay technical_replicate_id="t104">SRR578032</assay> -->
+                <assay technical_replicate_id="t104">SRR504323</assay>
+                <assay technical_replicate_id="t104">SRR504322</assay>
+<!-- Too small library                                <assay technical_replicate_id="t103">SRR578033</assay> -->
+                <assay technical_replicate_id="t103">SRR504319</assay>
+                <assay technical_replicate_id="t94">SRR493078</assay>
+                <assay technical_replicate_id="t91">SRR493075</assay>
             </assay_group>
             <assay_group id="g34" label="elongating embryo Ce; hermaphrodite; organism">
-                <assay technical_replicate_id="60">SRR351004</assay>
-                <assay technical_replicate_id="60">SRR478540</assay>
-                <assay technical_replicate_id="60">SRR351005</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR351006</assay> -->
-                <assay technical_replicate_id="70">SRR351035</assay>
-                <assay technical_replicate_id="70">SRR351034</assay>
-                <assay technical_replicate_id="71">SRR351038</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR351039</assay> -->
-                <assay technical_replicate_id="71">SRR359091</assay>
-                <assay technical_replicate_id="71">SRR351036</assay>
-                <assay technical_replicate_id="71">SRR351037</assay>
-                <assay technical_replicate_id="64">SRR359090</assay>
-                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="d+">SRR351016</assay> -->
-                <assay technical_replicate_id="64">SRR351015</assay>
-                <assay technical_replicate_id="64">SRR351014</assay>
-                <assay technical_replicate_id="64">SRR351013</assay>
-                <assay technical_replicate_id="61">SRR351007</assay>
-                <assay technical_replicate_id="61">SRR351008</assay>
+                <assay technical_replicate_id="t60">SRR351004</assay>
+                <assay technical_replicate_id="t60">SRR478540</assay>
+                <assay technical_replicate_id="t60">SRR351005</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR351006</assay> -->
+                <assay technical_replicate_id="t70">SRR351035</assay>
+                <assay technical_replicate_id="t70">SRR351034</assay>
+                <assay technical_replicate_id="t71">SRR351038</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR351039</assay> -->
+                <assay technical_replicate_id="t71">SRR359091</assay>
+                <assay technical_replicate_id="t71">SRR351036</assay>
+                <assay technical_replicate_id="t71">SRR351037</assay>
+                <assay technical_replicate_id="t64">SRR359090</assay>
+                <!-- Less than 1 mln reads passed fastq QC <assay technical_replicate_id="td+">SRR351016</assay> -->
+                <assay technical_replicate_id="t64">SRR351015</assay>
+                <assay technical_replicate_id="t64">SRR351014</assay>
+                <assay technical_replicate_id="t64">SRR351013</assay>
+                <assay technical_replicate_id="t61">SRR351007</assay>
+                <assay technical_replicate_id="t61">SRR351008</assay>
             </assay_group>
             <assay_group id="g35" label="L3 larva Ce; hermaphrodite; organism">
-                <assay technical_replicate_id="3">SRR006519</assay>
-                <assay technical_replicate_id="3">SRR006520</assay>
-                <assay technical_replicate_id="24">SRR089406</assay>
-                <assay technical_replicate_id="24">SRR089405</assay>
-                <assay technical_replicate_id="24">SRR089407</assay>
+                <assay technical_replicate_id="t3">SRR006519</assay>
+                <assay technical_replicate_id="t3">SRR006520</assay>
+                <assay technical_replicate_id="t24">SRR089406</assay>
+                <assay technical_replicate_id="t24">SRR089405</assay>
+                <assay technical_replicate_id="t24">SRR089407</assay>
             </assay_group>
         </assay_groups>
     </analytics>

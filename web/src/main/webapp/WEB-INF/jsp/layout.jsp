@@ -81,8 +81,8 @@
           href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/embl-petrol-colours.css"/>
 
     <style type="text/css">
-            /* You have the option of setting a maximum width for your page, and making sure everything is centered */
-            /* body { max-width: 1600px; margin: 0 auto; } */
+        /* You have the option of setting a maximum width for your page, and making sure everything is centered */
+        /* body { max-width: 1600px; margin: 0 auto; } */
     </style>
 
     <!-- end CSS-->
@@ -95,16 +95,14 @@
     <script src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
 
     <!-- compliance style end -->
-
     <c:set var="mainTitle" value="${mainTitle}"/>
-
-     <c:if test="${mainTitle != null}"> 
-         <c:set var="completeTitle" value="${mainTitle.concat(' < Expression Atlas < EMBL-EBI ')}"/> 
-        <title>${completeTitle}</title>
-     </c:if>
-    <c:if test="${mainTitle == null}"> 
+    <c:if test="${mainTitle != null}">
+        <c:set var="completeTitle" value="${mainTitle.concat(' < Expression Atlas < EMBL-EBI ')}"/>
+        <title>${completeTitle}</title></c:if>
+    <c:if test="${mainTitle == null}">
         <title><tiles:insertAttribute name="title" ignore="true"/> &lt; EMBL-EBI</title>
     </c:if>
+
 
 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">

@@ -1,4 +1,5 @@
-<configuration experimentType="microarray_1colour_mrna_differential">
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
     <analytics>
         <array_design>
             A-AFFY-2
