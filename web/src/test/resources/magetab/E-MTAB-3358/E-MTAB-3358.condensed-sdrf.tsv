@@ -1,0 +1,864 @@
+E-MTAB-3358		DRR009532	characteristic	age	49 year
+E-MTAB-3358		DRR009532	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009532	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009532	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009532	characteristic	tissue supergroup	circulatory system
+E-MTAB-3358		DRR009532	characteristic	organism part	mitral valve	http://purl.obolibrary.org/obo/UBERON_0002135
+E-MTAB-3358		DRR009532	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009532	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009532	factor	organism part	mitral valve	http://purl.obolibrary.org/obo/UBERON_0002135
+E-MTAB-3358		DRR009598	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009598	characteristic	age	20-68 year
+E-MTAB-3358		DRR009598	characteristic	sample lot number	9052728A
+E-MTAB-3358		DRR009598	characteristic	organism part	smooth muscle	http://www.ebi.ac.uk/efo/EFO_0000889
+E-MTAB-3358		DRR009598	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009598	characteristic	tissue supergroup	muscoloskeletal system
+E-MTAB-3358		DRR009598	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009598	factor	organism part	smooth muscle	http://www.ebi.ac.uk/efo/EFO_0000889
+E-MTAB-3358		DRR009598	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009506	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009506	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009506	characteristic	organism part	cerebral meninges
+E-MTAB-3358		DRR009506	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009506	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009506	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009506	characteristic	age	82 year
+E-MTAB-3358		DRR009506	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009506	factor	organism part	cerebral meninges
+E-MTAB-3358		DRR009556	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009556	characteristic	age	60 year
+E-MTAB-3358		DRR009556	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009556	characteristic	organism part	middle temporal gyrus	http://purl.obolibrary.org/obo/UBERON_0002771
+E-MTAB-3358		DRR009556	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009556	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009556	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009556	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009556	factor	organism part	middle temporal gyrus	http://purl.obolibrary.org/obo/UBERON_0002771
+E-MTAB-3358		DRR009564	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009564	characteristic	age	27 year
+E-MTAB-3358		DRR009564	characteristic	sample lot number	A505663
+E-MTAB-3358		DRR009564	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009564	characteristic	organism part	occipital lobe	http://purl.obolibrary.org/obo/UBERON_0002021
+E-MTAB-3358		DRR009564	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009564	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009564	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009564	factor	organism part	occipital lobe	http://purl.obolibrary.org/obo/UBERON_0002021
+E-MTAB-3358		DRR009612	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009612	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009612	characteristic	sample lot number	8101369A-16
+E-MTAB-3358		DRR009612	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3358		DRR009612	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009612	characteristic	age	14 to 64 year
+E-MTAB-3358		DRR009612	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009612	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009612	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3358		DRR009578	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009578	characteristic	age	60 year
+E-MTAB-3358		DRR009578	characteristic	organism part	pineal gland	http://purl.obolibrary.org/obo/UBERON_0001905
+E-MTAB-3358		DRR009578	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009578	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009578	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009578	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009578	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009578	factor	organism part	pineal gland	http://purl.obolibrary.org/obo/UBERON_0001905
+E-MTAB-3358		DRR009610	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009610	characteristic	age	22 week
+E-MTAB-3358		DRR009610	characteristic	sample lot number	A702181
+E-MTAB-3358		DRR009610	characteristic	organism part	temporal lobe	http://purl.obolibrary.org/obo/UBERON_0001871
+E-MTAB-3358		DRR009610	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009610	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009610	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009610	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009610	factor	organism part	temporal lobe	http://purl.obolibrary.org/obo/UBERON_0001871
+E-MTAB-3358		DRR009609	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009609	characteristic	age	22 week
+E-MTAB-3358		DRR009609	characteristic	sample lot number	A702181
+E-MTAB-3358		DRR009609	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009609	characteristic	organism part	temporal lobe	http://purl.obolibrary.org/obo/UBERON_0001871
+E-MTAB-3358		DRR009609	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009609	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009609	factor	organism part	temporal lobe	http://purl.obolibrary.org/obo/UBERON_0001871
+E-MTAB-3358		DRR009609	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009501	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009501	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009501	characteristic	organism part	caudate nucleus	http://purl.obolibrary.org/obo/UBERON_0001873
+E-MTAB-3358		DRR009501	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009501	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009501	characteristic	age	60 year
+E-MTAB-3358		DRR009501	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009501	factor	organism part	caudate nucleus	http://purl.obolibrary.org/obo/UBERON_0001873
+E-MTAB-3358		DRR009501	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009530	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009530	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009530	characteristic	organism part	globus pallidus	http://purl.obolibrary.org/obo/UBERON_0001875
+E-MTAB-3358		DRR009530	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009530	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009530	characteristic	age	60 year
+E-MTAB-3358		DRR009530	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009530	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009530	factor	organism part	globus pallidus	http://purl.obolibrary.org/obo/UBERON_0001875
+E-MTAB-3358		DRR009504	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3358		DRR009504	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009504	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009504	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009504	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009504	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009504	characteristic	age	76 year
+E-MTAB-3358		DRR009504	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3358		DRR009504	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009500	characteristic	age	77 year
+E-MTAB-3358		DRR009500	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009500	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009500	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009500	characteristic	sample lot number	808002
+E-MTAB-3358		DRR009500	characteristic	organism part	breast	http://purl.obolibrary.org/obo/UBERON_0000310
+E-MTAB-3358		DRR009500	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009500	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009500	factor	organism part	breast	http://purl.obolibrary.org/obo/UBERON_0000310
+E-MTAB-3358		DRR009629	characteristic	age	26 week
+E-MTAB-3358		DRR009629	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009629	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009629	characteristic	sample lot number	B402230
+E-MTAB-3358		DRR009629	characteristic	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3358		DRR009629	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009629	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009629	factor	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3358		DRR009629	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009548	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009548	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009548	characteristic	organism part	locus coeruleus	http://purl.obolibrary.org/obo/UBERON_0002148
+E-MTAB-3358		DRR009548	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009548	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009548	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009548	characteristic	age	60 year
+E-MTAB-3358		DRR009548	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009548	factor	organism part	locus coeruleus	http://purl.obolibrary.org/obo/UBERON_0002148
+E-MTAB-3358		DRR009489	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009489	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009489	characteristic	organism part	amygdala	http://purl.obolibrary.org/obo/UBERON_0001876
+E-MTAB-3358		DRR009489	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009489	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009489	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009489	characteristic	age	60 year
+E-MTAB-3358		DRR009489	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009489	factor	organism part	amygdala	http://purl.obolibrary.org/obo/UBERON_0001876
+E-MTAB-3358		DRR009630	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009630	characteristic	age	68, 68, or 69 year
+E-MTAB-3358		DRR009630	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009630	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009630	characteristic	organism part	vagina	http://purl.obolibrary.org/obo/UBERON_0000996
+E-MTAB-3358		DRR009630	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009630	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009630	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009630	factor	organism part	vagina	http://purl.obolibrary.org/obo/UBERON_0000996
+E-MTAB-3358		DRR009518	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009518	characteristic	sample lot number	A706076
+E-MTAB-3358		DRR009518	characteristic	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-3358		DRR009518	characteristic	tissue supergroup	digestive system	http://purl.obolibrary.org/obo/UBERON_0001007
+E-MTAB-3358		DRR009518	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009518	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009518	characteristic	age	36 week
+E-MTAB-3358		DRR009518	factor	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-3358		DRR009518	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009517	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009517	characteristic	sample lot number	A706076
+E-MTAB-3358		DRR009517	characteristic	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-3358		DRR009517	characteristic	tissue supergroup	digestive system	http://purl.obolibrary.org/obo/UBERON_0001007
+E-MTAB-3358		DRR009517	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009517	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009517	characteristic	age	36 week
+E-MTAB-3358		DRR009517	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009517	factor	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-3358		DRR009572	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009572	characteristic	organism part	parietal lobe	http://purl.obolibrary.org/obo/UBERON_0001872
+E-MTAB-3358		DRR009572	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009572	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009572	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009572	characteristic	age	60 year
+E-MTAB-3358		DRR009572	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009572	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009572	factor	organism part	parietal lobe	http://purl.obolibrary.org/obo/UBERON_0001872
+E-MTAB-3358		DRR009573	characteristic	age	76 year
+E-MTAB-3358		DRR009573	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009573	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009573	characteristic	organism part	parietal lobe	http://purl.obolibrary.org/obo/UBERON_0001872
+E-MTAB-3358		DRR009573	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009573	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009573	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009573	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009573	factor	organism part	parietal lobe	http://purl.obolibrary.org/obo/UBERON_0001872
+E-MTAB-3358		DRR009533	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009533	characteristic	tissue supergroup	circulatory system
+E-MTAB-3358		DRR009533	characteristic	organism part	pulmonary valve
+E-MTAB-3358		DRR009533	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009533	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009533	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009533	characteristic	age	26 year
+E-MTAB-3358		DRR009533	factor	organism part	pulmonary valve
+E-MTAB-3358		DRR009533	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009557	characteristic	age	76 year
+E-MTAB-3358		DRR009557	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009557	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009557	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009557	characteristic	organism part	middle temporal gyrus	http://purl.obolibrary.org/obo/UBERON_0002771
+E-MTAB-3358		DRR009557	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009557	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009557	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009557	factor	organism part	middle temporal gyrus	http://purl.obolibrary.org/obo/UBERON_0002771
+E-MTAB-3358		DRR009626	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009626	characteristic	organism part	trachea	http://purl.obolibrary.org/obo/UBERON_0003126
+E-MTAB-3358		DRR009626	characteristic	sample lot number	B402231
+E-MTAB-3358		DRR009626	characteristic	tissue supergroup	respiratory system	http://purl.obolibrary.org/obo/UBERON_0001004
+E-MTAB-3358		DRR009626	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009626	characteristic	age	29 week
+E-MTAB-3358		DRR009626	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009626	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009626	factor	organism part	trachea	http://purl.obolibrary.org/obo/UBERON_0003126
+E-MTAB-3358		DRR009595	characteristic	sample lot number	A507299
+E-MTAB-3358		DRR009595	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3358		DRR009595	characteristic	tissue supergroup	sensory system	http://purl.obolibrary.org/obo/UBERON_0001032
+E-MTAB-3358		DRR009595	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009595	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009595	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009595	characteristic	age	26 week
+E-MTAB-3358		DRR009595	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3358		DRR009595	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009540	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009540	characteristic	age	76 year
+E-MTAB-3358		DRR009540	characteristic	organism part	hippocampus	http://www.ebi.ac.uk/efo/EFO_0000530
+E-MTAB-3358		DRR009540	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009540	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009540	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009540	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009540	factor	organism part	hippocampus	http://www.ebi.ac.uk/efo/EFO_0000530
+E-MTAB-3358		DRR009540	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009567	characteristic	tissue supergroup	sensory system	http://purl.obolibrary.org/obo/UBERON_0001032
+E-MTAB-3358		DRR009567	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009567	characteristic	organism part	olfactory apparatus	http://purl.obolibrary.org/obo/UBERON_0000004
+E-MTAB-3358		DRR009567	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009567	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009567	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009567	characteristic	age	87 year
+E-MTAB-3358		DRR009567	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009567	factor	organism part	olfactory apparatus	http://purl.obolibrary.org/obo/UBERON_0000004
+E-MTAB-3358		DRR009542	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3358		DRR009542	characteristic	sample lot number	0910061 -8
+E-MTAB-3358		DRR009542	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009542	characteristic	tissue supergroup	renal system	http://www.ebi.ac.uk/efo/EFO_0000803
+E-MTAB-3358		DRR009542	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009542	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009542	characteristic	age	60,62,63 year
+E-MTAB-3358		DRR009542	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009542	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3358		DRR009502	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009502	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009502	characteristic	organism part	caudate nucleus	http://purl.obolibrary.org/obo/UBERON_0001873
+E-MTAB-3358		DRR009502	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009502	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009502	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009502	characteristic	age	76 year
+E-MTAB-3358		DRR009502	factor	organism part	caudate nucleus	http://purl.obolibrary.org/obo/UBERON_0001873
+E-MTAB-3358		DRR009502	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009497	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009497	characteristic	age	18 year
+E-MTAB-3358		DRR009497	characteristic	sample lot number	8101369A-4
+E-MTAB-3358		DRR009497	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009497	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3358		DRR009497	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009497	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009497	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009497	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3358		DRR009607	characteristic	organism part	substantia nigra	http://purl.obolibrary.org/obo/UBERON_0002038
+E-MTAB-3358		DRR009607	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009607	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009607	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009607	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009607	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009607	characteristic	age	76 year
+E-MTAB-3358		DRR009607	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009607	factor	organism part	substantia nigra	http://purl.obolibrary.org/obo/UBERON_0002038
+E-MTAB-3358		DRR009602	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009602	characteristic	age	39,50,70 year
+E-MTAB-3358		DRR009602	characteristic	sample lot number	0910061 -16
+E-MTAB-3358		DRR009602	characteristic	tissue supergroup	immune system	http://purl.obolibrary.org/obo/UBERON_0002405
+E-MTAB-3358		DRR009602	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3358		DRR009602	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009602	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009602	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3358		DRR009602	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009601	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009601	characteristic	sample lot number	A703261
+E-MTAB-3358		DRR009601	characteristic	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3358		DRR009601	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009601	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009601	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009601	characteristic	age	29 week
+E-MTAB-3358		DRR009601	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009601	factor	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3358		DRR009493	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009493	characteristic	tissue supergroup	circulatory system
+E-MTAB-3358		DRR009493	characteristic	organism part	artery	http://purl.obolibrary.org/obo/UBERON_0001637
+E-MTAB-3358		DRR009493	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009493	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009493	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009493	characteristic	age	44 year
+E-MTAB-3358		DRR009493	factor	organism part	artery	http://purl.obolibrary.org/obo/UBERON_0001637
+E-MTAB-3358		DRR009493	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009576	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009576	characteristic	age	23 year
+E-MTAB-3358		DRR009576	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009576	characteristic	organism part	parotid gland	http://purl.obolibrary.org/obo/UBERON_0001831
+E-MTAB-3358		DRR009576	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009576	characteristic	tissue supergroup	digestive system	http://purl.obolibrary.org/obo/UBERON_0001007
+E-MTAB-3358		DRR009576	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009576	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009576	factor	organism part	parotid gland	http://purl.obolibrary.org/obo/UBERON_0001831
+E-MTAB-3358		DRR009539	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009539	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009539	characteristic	organism part	hippocampus	http://www.ebi.ac.uk/efo/EFO_0000530
+E-MTAB-3358		DRR009539	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009539	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009539	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009539	characteristic	age	60 year
+E-MTAB-3358		DRR009539	factor	organism part	hippocampus	http://www.ebi.ac.uk/efo/EFO_0000530
+E-MTAB-3358		DRR009539	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009514	characteristic	age	36 week
+E-MTAB-3358		DRR009514	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009514	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009514	characteristic	sample lot number	A912092
+E-MTAB-3358		DRR009514	characteristic	organism part	diaphragm	http://purl.obolibrary.org/obo/UBERON_0001103
+E-MTAB-3358		DRR009514	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009514	characteristic	tissue supergroup	respiratory system	http://purl.obolibrary.org/obo/UBERON_0001004
+E-MTAB-3358		DRR009514	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009514	factor	organism part	diaphragm	http://purl.obolibrary.org/obo/UBERON_0001103
+E-MTAB-3358		DRR009597	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009597	characteristic	age	16 week
+E-MTAB-3358		DRR009597	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3358		DRR009597	characteristic	sample lot number	B205082
+E-MTAB-3358		DRR009597	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009597	characteristic	tissue supergroup	digestive system	http://purl.obolibrary.org/obo/UBERON_0001007
+E-MTAB-3358		DRR009597	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009597	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009597	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3358		DRR009628	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009628	characteristic	age	23 to 63 year
+E-MTAB-3358		DRR009628	characteristic	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3358		DRR009628	characteristic	sample lot number	8101369A-20
+E-MTAB-3358		DRR009628	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009628	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009628	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009628	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009628	factor	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3358		DRR009600	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009600	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009600	characteristic	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3358		DRR009600	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009600	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009600	characteristic	age	76 year
+E-MTAB-3358		DRR009600	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009600	factor	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3358		DRR009600	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009565	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009565	characteristic	sample lot number	A602123
+E-MTAB-3358		DRR009565	characteristic	organism part	occipital lobe	http://purl.obolibrary.org/obo/UBERON_0002021
+E-MTAB-3358		DRR009565	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009565	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009565	characteristic	age	22 week
+E-MTAB-3358		DRR009565	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009565	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009565	factor	organism part	occipital lobe	http://purl.obolibrary.org/obo/UBERON_0002021
+E-MTAB-3358		DRR009503	characteristic	age	60 year
+E-MTAB-3358		DRR009503	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009503	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009503	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009503	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3358		DRR009503	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009503	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009503	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009503	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3358		DRR009534	characteristic	age	77 year
+E-MTAB-3358		DRR009534	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009534	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009534	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009534	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009534	characteristic	organism part	triscuspid valve
+E-MTAB-3358		DRR009534	characteristic	tissue supergroup	circulatory system
+E-MTAB-3358		DRR009534	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009534	factor	organism part	triscuspid valve
+E-MTAB-3358		DRR009511	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009511	characteristic	sample lot number	B207218
+E-MTAB-3358		DRR009511	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009511	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3358		DRR009511	characteristic	tissue supergroup	digestive system	http://purl.obolibrary.org/obo/UBERON_0001007
+E-MTAB-3358		DRR009511	characteristic	age	37 week
+E-MTAB-3358		DRR009511	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009511	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3358		DRR009511	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009616	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009616	characteristic	age	25 week
+E-MTAB-3358		DRR009616	characteristic	sample lot number	B212133
+E-MTAB-3358		DRR009616	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009616	characteristic	organism part	throat
+E-MTAB-3358		DRR009616	characteristic	tissue supergroup	respiratory system	http://purl.obolibrary.org/obo/UBERON_0001004
+E-MTAB-3358		DRR009616	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009616	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009616	factor	organism part	throat
+E-MTAB-3358		DRR009554	characteristic	organism part	middle frontal gyrus	http://purl.obolibrary.org/obo/UBERON_0002703
+E-MTAB-3358		DRR009554	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009554	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009554	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009554	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009554	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009554	characteristic	age	60 year
+E-MTAB-3358		DRR009554	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009554	factor	organism part	middle frontal gyrus	http://purl.obolibrary.org/obo/UBERON_0002703
+E-MTAB-3358		DRR009586	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009586	characteristic	organism part	putamen	http://purl.obolibrary.org/obo/UBERON_0001874
+E-MTAB-3358		DRR009586	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009586	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009586	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009586	characteristic	age	60 year
+E-MTAB-3358		DRR009586	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009586	factor	organism part	putamen	http://purl.obolibrary.org/obo/UBERON_0001874
+E-MTAB-3358		DRR009586	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009520	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009520	characteristic	age	24 or 29 year
+E-MTAB-3358		DRR009520	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009520	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009520	characteristic	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-MTAB-3358		DRR009520	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009520	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009520	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009520	factor	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-MTAB-3358		DRR009604	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009604	characteristic	age	40 week
+E-MTAB-3358		DRR009604	characteristic	sample lot number	A805052
+E-MTAB-3358		DRR009604	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3358		DRR009604	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009604	characteristic	tissue supergroup	digestive system	http://purl.obolibrary.org/obo/UBERON_0001007
+E-MTAB-3358		DRR009604	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009604	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3358		DRR009604	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009545	characteristic	organism part	left ventricle
+E-MTAB-3358		DRR009545	characteristic	sample lot number	5060611
+E-MTAB-3358		DRR009545	characteristic	tissue supergroup	circulatory system
+E-MTAB-3358		DRR009545	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009545	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009545	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009545	characteristic	age	73 year
+E-MTAB-3358		DRR009545	factor	organism part	left ventricle
+E-MTAB-3358		DRR009545	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009553	characteristic	age	30 year
+E-MTAB-3358		DRR009553	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009553	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009553	characteristic	tissue supergroup	immune system	http://purl.obolibrary.org/obo/UBERON_0002405
+E-MTAB-3358		DRR009553	characteristic	sample lot number	8060051
+E-MTAB-3358		DRR009553	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3358		DRR009553	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009553	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3358		DRR009553	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009587	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009587	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3358		DRR009587	characteristic	sample lot number	A912096
+E-MTAB-3358		DRR009587	characteristic	tissue supergroup	digestive system	http://purl.obolibrary.org/obo/UBERON_0001007
+E-MTAB-3358		DRR009587	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009587	characteristic	age	19 week
+E-MTAB-3358		DRR009587	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009587	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3358		DRR009587	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009496	characteristic	age	27 year
+E-MTAB-3358		DRR009496	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009496	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009496	characteristic	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-3358		DRR009496	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009496	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009496	characteristic	tissue supergroup	muscoloskeletal system
+E-MTAB-3358		DRR009496	factor	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-3358		DRR009496	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009527	characteristic	age	36 week
+E-MTAB-3358		DRR009527	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009527	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009527	characteristic	tissue supergroup	sensory system	http://purl.obolibrary.org/obo/UBERON_0001032
+E-MTAB-3358		DRR009527	characteristic	sample lot number	B210179
+E-MTAB-3358		DRR009527	characteristic	organism part	eye	http://purl.obolibrary.org/obo/UBERON_0000970
+E-MTAB-3358		DRR009527	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009527	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009527	factor	organism part	eye	http://purl.obolibrary.org/obo/UBERON_0000970
+E-MTAB-3358		DRR009563	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009563	characteristic	organism part	occipital cortex	http://purl.obolibrary.org/obo/UBERON_0002021
+E-MTAB-3358		DRR009563	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009563	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009563	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009563	characteristic	age	76 year
+E-MTAB-3358		DRR009563	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009563	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009563	factor	organism part	occipital cortex	http://purl.obolibrary.org/obo/UBERON_0002021
+E-MTAB-3358		DRR009582	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009582	characteristic	sample lot number	0910061 -12
+E-MTAB-3358		DRR009582	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009582	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3358		DRR009582	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009582	characteristic	age	not available
+E-MTAB-3358		DRR009582	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009582	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009582	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3358		DRR009570	characteristic	age	52 year
+E-MTAB-3358		DRR009570	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009570	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009570	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3358		DRR009570	characteristic	sample lot number	8081302A
+E-MTAB-3358		DRR009570	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009570	characteristic	tissue supergroup	digestive system	http://purl.obolibrary.org/obo/UBERON_0001007
+E-MTAB-3358		DRR009570	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009570	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3358		DRR009544	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009544	characteristic	age	40 year
+E-MTAB-3358		DRR009544	characteristic	sample lot number	8060182
+E-MTAB-3358		DRR009544	characteristic	organism part	left atrium	http://www.ebi.ac.uk/efo/EFO_0005885
+E-MTAB-3358		DRR009544	characteristic	tissue supergroup	circulatory system
+E-MTAB-3358		DRR009544	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009544	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009544	factor	organism part	left atrium	http://www.ebi.ac.uk/efo/EFO_0005885
+E-MTAB-3358		DRR009544	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009516	characteristic	age	not available
+E-MTAB-3358		DRR009516	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009516	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009516	characteristic	organism part	vas deferens	http://purl.obolibrary.org/obo/UBERON_0001000
+E-MTAB-3358		DRR009516	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009516	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009516	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009516	factor	organism part	vas deferens	http://purl.obolibrary.org/obo/UBERON_0001000
+E-MTAB-3358		DRR009516	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009490	characteristic	organism part	amygdala	http://purl.obolibrary.org/obo/UBERON_0001876
+E-MTAB-3358		DRR009490	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009490	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009490	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009490	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009490	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009490	characteristic	age	76 year
+E-MTAB-3358		DRR009490	factor	organism part	amygdala	http://purl.obolibrary.org/obo/UBERON_0001876
+E-MTAB-3358		DRR009490	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009535	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009535	characteristic	sample lot number	9070074A
+E-MTAB-3358		DRR009535	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3358		DRR009535	characteristic	tissue supergroup	circulatory system
+E-MTAB-3358		DRR009535	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009535	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009535	characteristic	age	92 year
+E-MTAB-3358		DRR009535	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009535	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3358		DRR009536	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009536	characteristic	age	92 year
+E-MTAB-3358		DRR009536	characteristic	sample lot number	3040792
+E-MTAB-3358		DRR009536	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009536	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3358		DRR009536	characteristic	tissue supergroup	circulatory system
+E-MTAB-3358		DRR009536	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009536	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009536	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3358		DRR009529	characteristic	age	34, 46, or 64 year
+E-MTAB-3358		DRR009529	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009529	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009529	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009529	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009529	characteristic	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-3358		DRR009529	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009529	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009529	factor	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-3358		DRR009569	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009569	characteristic	age	47,75,84 year
+E-MTAB-3358		DRR009569	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009569	characteristic	sample lot number	0910061 -11
+E-MTAB-3358		DRR009569	characteristic	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3358		DRR009569	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009569	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009569	factor	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3358		DRR009569	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009590	characteristic	organism part	seminal vesicle	http://purl.obolibrary.org/obo/UBERON_0000998
+E-MTAB-3358		DRR009590	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009590	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009590	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009590	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009590	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009590	characteristic	age	not available
+E-MTAB-3358		DRR009590	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009590	factor	organism part	seminal vesicle	http://purl.obolibrary.org/obo/UBERON_0000998
+E-MTAB-3358		DRR009606	characteristic	age	60 year
+E-MTAB-3358		DRR009606	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009606	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009606	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009606	characteristic	organism part	substantia nigra	http://purl.obolibrary.org/obo/UBERON_0002038
+E-MTAB-3358		DRR009606	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009606	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009606	factor	organism part	substantia nigra	http://purl.obolibrary.org/obo/UBERON_0002038
+E-MTAB-3358		DRR009606	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009594	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3358		DRR009594	characteristic	sample lot number	B309058
+E-MTAB-3358		DRR009594	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009594	characteristic	tissue supergroup	sensory system	http://purl.obolibrary.org/obo/UBERON_0001032
+E-MTAB-3358		DRR009594	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009594	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009594	characteristic	age	24 year
+E-MTAB-3358		DRR009594	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009594	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3358		DRR009549	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009549	characteristic	age	76 year
+E-MTAB-3358		DRR009549	characteristic	organism part	locus coeruleus	http://purl.obolibrary.org/obo/UBERON_0002148
+E-MTAB-3358		DRR009549	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009549	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009549	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009549	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009549	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009549	factor	organism part	locus coeruleus	http://purl.obolibrary.org/obo/UBERON_0002148
+E-MTAB-3358		DRR009551	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009551	characteristic	age	40 week
+E-MTAB-3358		DRR009551	characteristic	sample lot number	A506331
+E-MTAB-3358		DRR009551	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3358		DRR009551	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009551	characteristic	tissue supergroup	respiratory system	http://purl.obolibrary.org/obo/UBERON_0001004
+E-MTAB-3358		DRR009551	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009551	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009551	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3358		DRR009552	characteristic	sample lot number	A511335
+E-MTAB-3358		DRR009552	characteristic	tissue supergroup	respiratory system	http://purl.obolibrary.org/obo/UBERON_0001004
+E-MTAB-3358		DRR009552	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3358		DRR009552	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009552	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009552	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009552	characteristic	age	29 year
+E-MTAB-3358		DRR009552	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009552	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3358		DRR009555	characteristic	age	76 year
+E-MTAB-3358		DRR009555	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009555	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009555	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009555	characteristic	organism part	middle frontal gyrus	http://purl.obolibrary.org/obo/UBERON_0002703
+E-MTAB-3358		DRR009555	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009555	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009555	factor	organism part	middle frontal gyrus	http://purl.obolibrary.org/obo/UBERON_0002703
+E-MTAB-3358		DRR009555	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009509	characteristic	age	23 year
+E-MTAB-3358		DRR009509	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009509	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009509	characteristic	sample lot number	8101369A-2
+E-MTAB-3358		DRR009509	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3358		DRR009509	characteristic	tissue supergroup	digestive system	http://purl.obolibrary.org/obo/UBERON_0001007
+E-MTAB-3358		DRR009509	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009509	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3358		DRR009509	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009623	characteristic	age	32 week
+E-MTAB-3358		DRR009623	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009623	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009623	characteristic	sample lot number	B301061
+E-MTAB-3358		DRR009623	characteristic	organism part	tongue	http://purl.obolibrary.org/obo/UBERON_0001723
+E-MTAB-3358		DRR009623	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009623	characteristic	tissue supergroup	sensory system	http://purl.obolibrary.org/obo/UBERON_0001032
+E-MTAB-3358		DRR009623	factor	organism part	tongue	http://purl.obolibrary.org/obo/UBERON_0001723
+E-MTAB-3358		DRR009623	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009577	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009577	characteristic	age	29 or 44 year
+E-MTAB-3358		DRR009577	characteristic	organism part	penis	http://purl.obolibrary.org/obo/UBERON_0000989
+E-MTAB-3358		DRR009577	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009577	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009577	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009577	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009577	factor	organism part	penis	http://purl.obolibrary.org/obo/UBERON_0000989
+E-MTAB-3358		DRR009577	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009622	characteristic	age	26, 28, or 44 year
+E-MTAB-3358		DRR009622	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009622	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009622	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009622	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009622	characteristic	organism part	tongue	http://purl.obolibrary.org/obo/UBERON_0001723
+E-MTAB-3358		DRR009622	characteristic	tissue supergroup	sensory system	http://purl.obolibrary.org/obo/UBERON_0001032
+E-MTAB-3358		DRR009622	factor	organism part	tongue	http://purl.obolibrary.org/obo/UBERON_0001723
+E-MTAB-3358		DRR009622	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009605	characteristic	age	21 or 24 year
+E-MTAB-3358		DRR009605	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009605	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009605	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009605	characteristic	organism part	submandibular gland	http://purl.obolibrary.org/obo/UBERON_0001736
+E-MTAB-3358		DRR009605	characteristic	tissue supergroup	digestive system	http://purl.obolibrary.org/obo/UBERON_0001007
+E-MTAB-3358		DRR009605	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009605	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009605	factor	organism part	submandibular gland	http://purl.obolibrary.org/obo/UBERON_0001736
+E-MTAB-3358		DRR009575	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009575	characteristic	sample lot number	A601609
+E-MTAB-3358		DRR009575	characteristic	organism part	parietal lobe	http://purl.obolibrary.org/obo/UBERON_0001872
+E-MTAB-3358		DRR009575	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009575	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009575	characteristic	age	20 week
+E-MTAB-3358		DRR009575	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009575	factor	organism part	parietal lobe	http://purl.obolibrary.org/obo/UBERON_0001872
+E-MTAB-3358		DRR009575	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009531	characteristic	age	76 year
+E-MTAB-3358		DRR009531	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009531	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009531	characteristic	organism part	globus pallidus	http://purl.obolibrary.org/obo/UBERON_0001875
+E-MTAB-3358		DRR009531	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009531	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009531	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009531	factor	organism part	globus pallidus	http://purl.obolibrary.org/obo/UBERON_0001875
+E-MTAB-3358		DRR009531	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009562	characteristic	age	60 year
+E-MTAB-3358		DRR009562	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009562	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009562	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009562	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009562	characteristic	organism part	occipital cortex	http://purl.obolibrary.org/obo/UBERON_0002021
+E-MTAB-3358		DRR009562	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009562	factor	organism part	occipital cortex	http://purl.obolibrary.org/obo/UBERON_0002021
+E-MTAB-3358		DRR009562	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009599	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009599	characteristic	age	60 year
+E-MTAB-3358		DRR009599	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009599	characteristic	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3358		DRR009599	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009599	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009599	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009599	factor	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3358		DRR009599	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009519	characteristic	sample lot number	3040808
+E-MTAB-3358		DRR009519	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009519	characteristic	organism part	dura mater
+E-MTAB-3358		DRR009519	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009519	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009519	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009519	characteristic	age	59 year
+E-MTAB-3358		DRR009519	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009519	factor	organism part	dura mater
+E-MTAB-3358		DRR009559	characteristic	age	76 year
+E-MTAB-3358		DRR009559	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009559	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009559	characteristic	organism part	medulla oblongata	http://purl.obolibrary.org/obo/UBERON_0001896
+E-MTAB-3358		DRR009559	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009559	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009559	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009559	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009559	factor	organism part	medulla oblongata	http://purl.obolibrary.org/obo/UBERON_0001896
+E-MTAB-3358		DRR009579	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009579	characteristic	organism part	pineal gland	http://purl.obolibrary.org/obo/UBERON_0001905
+E-MTAB-3358		DRR009579	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009579	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009579	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009579	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009579	characteristic	age	76 year
+E-MTAB-3358		DRR009579	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009579	factor	organism part	pineal gland	http://purl.obolibrary.org/obo/UBERON_0001905
+E-MTAB-3358		DRR009627	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009627	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009627	characteristic	sample lot number	B110269
+E-MTAB-3358		DRR009627	characteristic	organism part	umbilical cord	http://purl.obolibrary.org/obo/UBERON_0002331
+E-MTAB-3358		DRR009627	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009627	characteristic	age	31 week
+E-MTAB-3358		DRR009627	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009627	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009627	factor	organism part	umbilical cord	http://purl.obolibrary.org/obo/UBERON_0002331
+E-MTAB-3358		DRR009581	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009581	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3358		DRR009581	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009581	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009581	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009581	characteristic	age	76 year
+E-MTAB-3358		DRR009581	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009581	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3358		DRR009581	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009580	characteristic	age	60 year
+E-MTAB-3358		DRR009580	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009580	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009580	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009580	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009580	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3358		DRR009580	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009580	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3358		DRR009580	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009614	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009614	characteristic	age	76 year
+E-MTAB-3358		DRR009614	characteristic	organism part	thalamus	http://purl.obolibrary.org/obo/UBERON_0001897
+E-MTAB-3358		DRR009614	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009614	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009614	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009614	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009614	factor	organism part	thalamus	http://purl.obolibrary.org/obo/UBERON_0001897
+E-MTAB-3358		DRR009614	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009611	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3358		DRR009611	characteristic	sample lot number	0910061 -17
+E-MTAB-3358		DRR009611	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009611	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009611	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009611	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009611	characteristic	age	34,53,86 year
+E-MTAB-3358		DRR009611	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009611	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3358		DRR009620	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009620	characteristic	sample lot number	A811069
+E-MTAB-3358		DRR009620	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009620	characteristic	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3358		DRR009620	characteristic	tissue supergroup	endocrine system	http://purl.obolibrary.org/obo/UBERON_0000949
+E-MTAB-3358		DRR009620	characteristic	age	36 week
+E-MTAB-3358		DRR009620	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009620	factor	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3358		DRR009620	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009515	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009515	characteristic	organism part	diencephalon	http://purl.obolibrary.org/obo/UBERON_0001894
+E-MTAB-3358		DRR009515	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009515	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009515	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009515	characteristic	age	26 or 29 year
+E-MTAB-3358		DRR009515	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009515	factor	organism part	diencephalon	http://purl.obolibrary.org/obo/UBERON_0001894
+E-MTAB-3358		DRR009515	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009585	characteristic	sample lot number	0910061 -13
+E-MTAB-3358		DRR009585	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009585	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-3358		DRR009585	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009585	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009585	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009585	characteristic	age	73,79,93 year
+E-MTAB-3358		DRR009585	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-3358		DRR009585	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009593	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009593	characteristic	age	22 week
+E-MTAB-3358		DRR009593	characteristic	organism part	skeletal muscle	http://purl.obolibrary.org/obo/UBERON_0014892
+E-MTAB-3358		DRR009593	characteristic	sample lot number	A503105
+E-MTAB-3358		DRR009593	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009593	characteristic	tissue supergroup	muscoloskeletal system
+E-MTAB-3358		DRR009593	characteristic	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009593	factor	organism part	skeletal muscle	http://purl.obolibrary.org/obo/UBERON_0014892
+E-MTAB-3358		DRR009593	factor	developmental stage	fetal	http://purl.obolibrary.org/obo/UBERON_0000323
+E-MTAB-3358		DRR009492	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009492	characteristic	organism part	appendix	http://purl.obolibrary.org/obo/UBERON_0001154
+E-MTAB-3358		DRR009492	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009492	characteristic	tissue supergroup	digestive system	http://purl.obolibrary.org/obo/UBERON_0001007
+E-MTAB-3358		DRR009492	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009492	characteristic	age	27 or 29 year
+E-MTAB-3358		DRR009492	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3358		DRR009492	factor	organism part	appendix	http://purl.obolibrary.org/obo/UBERON_0001154
+E-MTAB-3358		DRR009492	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009508	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009508	characteristic	age	40,46,57,65 year
+E-MTAB-3358		DRR009508	characteristic	sample lot number	0910061 -4
+E-MTAB-3358		DRR009508	characteristic	organism part	cervix	http://purl.obolibrary.org/obo/UBERON_0000002
+E-MTAB-3358		DRR009508	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009508	characteristic	tissue supergroup	reproductive system	http://purl.obolibrary.org/obo/UBERON_0000990
+E-MTAB-3358		DRR009508	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009508	factor	organism part	cervix	http://purl.obolibrary.org/obo/UBERON_0000002
+E-MTAB-3358		DRR009508	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009613	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009613	characteristic	organism part	thalamus	http://purl.obolibrary.org/obo/UBERON_0001897
+E-MTAB-3358		DRR009613	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009613	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009613	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009613	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009613	characteristic	age	60 year
+E-MTAB-3358		DRR009613	factor	organism part	thalamus	http://purl.obolibrary.org/obo/UBERON_0001897
+E-MTAB-3358		DRR009613	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009558	characteristic	age	60 year
+E-MTAB-3358		DRR009558	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3358		DRR009558	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3358		DRR009558	characteristic	sample lot number	NA
+E-MTAB-3358		DRR009558	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3358		DRR009558	characteristic	organism part	medulla oblongata	http://purl.obolibrary.org/obo/UBERON_0001896
+E-MTAB-3358		DRR009558	characteristic	tissue supergroup	nervous system	http://purl.obolibrary.org/obo/UBERON_0001016
+E-MTAB-3358		DRR009558	factor	organism part	medulla oblongata	http://purl.obolibrary.org/obo/UBERON_0001896
+E-MTAB-3358		DRR009558	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272

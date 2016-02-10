@@ -35,14 +35,12 @@ import static org.junit.Assert.assertThat;
 public class BaselineRDataDownloadSIT extends SinglePageSeleniumFixture {
 
     private static final String BASELINE_EXPERIMENT_WITH_R_DATA_DOWNLOAD_BUTTON = "E-GEOD-26284";
-    private static final String BASELINE_EXPERIMENT_WITH_NO_R_DATA_DOWNLOAD_BUTTON = "E-GEOD-41338";
+    private static final String BASELINE_EXPERIMENT_WITH_NO_R_DATA_DOWNLOAD_BUTTON = "E-MTAB-3358";
     private static final String PROTEOMICS_EXPERIMENT_WITH_NO_R_DATA_DOWNLOAD_BUTTON = "E-PROT-1";
 
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(driver, BASELINE_EXPERIMENT_WITH_R_DATA_DOWNLOAD_BUTTON);
-        subject.get();
     }
 
     @Test
