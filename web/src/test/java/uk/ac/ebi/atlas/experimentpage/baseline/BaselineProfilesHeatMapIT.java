@@ -99,9 +99,9 @@ public class BaselineProfilesHeatMapIT {
         setQueryFactor(FACTOR_LEUKOCYTE);
 
         BaselineProfilesList profiles = subject.fetch(baselineRequestContext);
-
-        assertThat(profiles.getTotalResultCount(), is(20));
-        assertThat(profiles.extractGeneNames(), contains("APOBR", "INPP5D", "PTBP3", "ZDHHC18", "PPT1", "ARPC5", "GFI1", "RP11-466P24.2", "INPP4A", "SNX27", "KDM4A", "POLR2B", "PLCG2", "SLAMF6", "COL4A3BP", "RAB27B", "FBXO38", "C6orf1", "TMSB10", "POLE3"));
+        //System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
+        assertThat(profiles.getTotalResultCount(), is(10));
+        assertThat(profiles.extractGeneNames(), contains("MYOD1", "DVL1", "IL12RB2", "VPS4A", "DEPTOR", "CC2D1B", "CRY2", "GPD2", "RPRD2", "TERF2"));
 
     }
 
@@ -113,9 +113,9 @@ public class BaselineProfilesHeatMapIT {
 
         BaselineProfilesList profiles = subject.fetch(baselineRequestContext);
 
-        assertThat(profiles.getTotalResultCount(), is(103));
-        // System.out.println(Joiner.on("\", \"").join(profiles.extractGeneNames()));
-        assertThat(profiles.extractGeneNames(), containsInAnyOrder("MT-ATP6", "TMSB10", "ARPC5", "RP11-466P24.2", "NEDD8", "RTN4", "PPT1", "INPP5D", "S1PR1", "PTBP3", "ATP1B3", "PLEKHB2", "POLR2B", "CTNNA1", "MAPRE2", "SLAMF6", "IL13RA1", "APOBR", "ZDHHC18", "ARHGAP1", "POLE3", "AIDA", "VPS4A", "COL4A3BP", "CBX1", "PLCG2", "GGPS1", "BMI1", "RNF41", "SNX27", "INPP4A", "SNRPA", "TUBA1C", "OCEL1", "ZCRB1", "VRK3", "VTI1B", "FBXO38", "RNF25", "CALU", "RAE1", "C6orf1", "MRPL13", "CRLS1", "SLK", "MSH6", "BET1", "KDM4A", "TERF2", "VAPB"));
+        assertThat(profiles.getTotalResultCount(), is(101));
+        //System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
+        assertThat(profiles.extractGeneNames(), containsInAnyOrder("VPS4A", "TMSB10", "DEPTOR", "RTN4", "NEDD8", "CTNNA1", "SNRPA", "DVL1", "CALU", "VTI1B", "BOD1", "RAB13", "POLR2B", "CRY2", "VAPB", "ZCRB1", "CRLS1", "TERF2", "POLE3", "CC2D1B", "BMI1", "CBX1", "ARHGAP1", "AIDA", "GPD2", "IL13RA1", "RP11-466P24.2", "GSTZ1", "RPRD2", "SLK", "ATP1B3", "ASNS", "S1PR1", "OCEL1", "VRK3", "MAPRE2", "RNF41", "B3GNT1", "RNF25", "SNX27", "C6orf203", "AXIN2", "GFPT1", "ARPC5", "IL12RB2", "C6orf1", "GOLPH3L", "MSH6", "THOC6", "MRPL13"));
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&_specific=on&geneQuery=react_14797+react_19184+react_604+react_111102+react_111217+react_6900+react_71+react_116125+react_75774+react_6802+react_17015+react_22258+react_15518+react_115566+react_12627&geneSetMatch=true
