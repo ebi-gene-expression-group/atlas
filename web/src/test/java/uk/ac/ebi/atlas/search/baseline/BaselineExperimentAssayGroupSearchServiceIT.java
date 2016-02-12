@@ -52,8 +52,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
         List<String> experimentAccessions = getExperimentAccessions(results);
-        System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
-        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-1733", "E-MTAB-599", "E-MTAB-2800", "E-MTAB-2800", "E-MTAB-2800"));
+        //System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
+        assertThat(experimentAccessions, contains("E-MTAB-513", "E-PROT-3", "E-MTAB-1733", "E-MTAB-599", "E-MTAB-2800", "E-MTAB-2800", "E-MTAB-2800"));
     }
 
     @Test
@@ -78,11 +78,11 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         List<String> experimentAccessions = getExperimentAccessions(results);
         ImmutableList<String> descriptions = toStrings(results);
 
-        System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
-        assertThat(experimentAccessions, contains("E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-PROT-1", "E-MTAB-513", "E-PROT-3", "E-MTAB-2836", "E-MTAB-3358", "E-MTAB-3358", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352"));
+        assertThat(experimentAccessions, contains("E-PROT-1", "E-MTAB-513", "E-PROT-3", "E-MTAB-2836", "E-MTAB-3358", "E-MTAB-3358", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352"));
     }
 
     @Test
+    // TODO modify test after https://www.pivotaltracker.com/story/show/113564787 and https://www.pivotaltracker.com/story/show/113159921
     public void geneQueryKeywordKinase()  {
         String geneQuery = "kinase";
         String condition = "";
@@ -92,32 +92,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
-        assertThat(experimentAccessions, contains(
-                "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812",
-                "E-GEOD-30352", "E-GEOD-30352",
-                "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706",
-                "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706",
-                "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706",
-                "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706",
-                "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706",
-                "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706",
-                "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706",
-                "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706",
-                "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706",
-                "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706",
-                "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706","dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706", "dummy-E-MTAB-2706",
-                "dummy-E-MTAB-2706",
-                "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284",
-                "E-PROT-1", "E-PROT-1",
-                "E-MTAB-513",
-                "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980",
-                "E-MTAB-2836",
-                "E-MTAB-1733",
-                "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352",
-                "E-MTAB-599",
-                "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352",
-                "E-MTAB-2800", "E-MTAB-2800", "E-MTAB-2800"
-        ));
+        assertThat(experimentAccessions.size(), is(0));
     }
 
     @Test
@@ -129,7 +104,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, hasSize(158));
+        assertThat(experimentAccessions, hasSize(50));
     }
 
     @Test
@@ -205,8 +180,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         BaselineExperimentAssayGroup first = results.iterator().next();
 
         //System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
-        assertThat(experimentAccessions, containsInAnyOrder("E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-PROT-1", "E-PROT-1", "E-MTAB-2980", "E-MTAB-2980", "E-PROT-3", "E-MTAB-2836", "E-MTAB-3358", "E-MTAB-3358", "E-MTAB-1733", "E-MTAB-599"));
-        assertThat(first.getFilterFactors(), contains(new Factor("DISEASE", "B-cell lymphoma"), new Factor("ORGANISM_PART", "lymph node")));
+        assertThat(experimentAccessions, containsInAnyOrder("E-PROT-1", "E-PROT-1", "E-MTAB-2980", "E-MTAB-2980", "E-PROT-3", "E-MTAB-2836", "E-MTAB-3358", "E-MTAB-3358", "E-MTAB-1733", "E-MTAB-599"));
+        assertThat(first.getFilterFactors(), contains(new Factor("DEVELOPMENTAL_STAGE", "adult", OntologyTerm.create("EFO_0001272", "http://www.ebi.ac.uk/efo/"))));
     }
 
     @Test
@@ -218,8 +193,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        //System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
-        assertThat(experimentAccessions, containsInAnyOrder("E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-MTAB-2706", "E-PROT-1", "E-PROT-1", "E-MTAB-2980", "E-MTAB-2980", "E-PROT-3", "E-MTAB-2836", "E-MTAB-3358", "E-MTAB-3358", "E-MTAB-1733"                ));
+        System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
+        assertThat(experimentAccessions, containsInAnyOrder("E-PROT-1", "E-PROT-1", "E-MTAB-2980", "E-MTAB-2980", "E-PROT-3", "E-MTAB-2836", "E-MTAB-3358", "E-MTAB-3358", "E-MTAB-1733"));
     }
 
     @Test
@@ -271,7 +246,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         BaselineExperimentAssayGroup[] resultsArray = results.toArray(new BaselineExperimentAssayGroup[results.size()]);
 
         BaselineExperimentAssayGroup eMtab599 = resultsArray[0];
-        assertThat(eMtab599.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "heart", OntologyTerm.create("UBERON:0000948"))));
+        assertThat(eMtab599.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "heart muscle")));
 
         BaselineExperimentAssayGroup eMtab1733 = resultsArray[1];
         assertThat(eMtab1733.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "heart", OntologyTerm.create("UBERON:0000948"))));
@@ -358,7 +333,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(results.size(), is(9));
-        assertThat(experimentAccessions, containsInAnyOrder("E-PROT-3", "E-MTAB-2812", "E-MTAB-2812", "E-GEOD-30352", "E-PROT-1", "E-MTAB-2836", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352"));
+        assertThat(experimentAccessions, containsInAnyOrder("E-MTAB-3358", "E-MTAB-2812", "E-MTAB-2812", "E-GEOD-30352", "E-PROT-1", "E-MTAB-2836", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352"));
     }
 
     @Test

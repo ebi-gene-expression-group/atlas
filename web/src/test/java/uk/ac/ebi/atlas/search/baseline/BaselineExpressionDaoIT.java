@@ -41,12 +41,12 @@ public class BaselineExpressionDaoIT {
 
 
     @Test
-    public void findsExpressionByGeneIdsInReact71() throws Exception {
+    public void findsExpressionByGeneIdsInRHSA74160() throws Exception {
 
-        ImmutableList<String> react71geneIds = ImmutableList.of("ENSG00000196652", "ENSG00000082258", "ENSG00000047315", "ENSG00000077312", "ENSG00000198939", "ENSG00000178665", "ENSG00000161547");
+        ImmutableList<String> RHSA74160GeneIds = ImmutableList.of("ENSG00000196652", "ENSG00000082258", "ENSG00000047315", "ENSG00000077312", "ENSG00000198939", "ENSG00000178665", "ENSG00000161547");
 
-        List<BaselineExperimentExpression> results = subject.fetchAverageExpressionByExperimentAssayGroup(react71geneIds);
-        assertThat(results, hasSize(49));
+        List<BaselineExperimentExpression> results = subject.fetchAverageExpressionByExperimentAssayGroup(RHSA74160GeneIds);
+        assertThat(results, hasSize(89));
 
         BaselineExperimentExpression adipose = BaselineExperimentExpression.create("E-MTAB-513", "g15", 7D);
         BaselineExperimentExpression adrenalGland = BaselineExperimentExpression.create("E-MTAB-513", "g16", 10D);

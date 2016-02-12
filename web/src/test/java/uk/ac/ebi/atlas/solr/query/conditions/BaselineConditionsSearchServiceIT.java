@@ -33,6 +33,6 @@ public class BaselineConditionsSearchServiceIT {
     public void findContrastsByEFOTerm() throws Exception {
         Collection<IndexedAssayGroup> contrasts = subject.findAssayGroups("EFO:0001265");
         assertThat(contrasts, hasItem(new IndexedAssayGroup("E-GEOD-30352", "g37")));
-        assertThat(contrasts, hasItem(new IndexedAssayGroup("E-MTAB-513", "g10")));
+        assertThat(contrasts, hasItem(new IndexedAssayGroup("E-MTAB-3579", "g140")));
     }
 }
