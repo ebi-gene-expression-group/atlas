@@ -30,7 +30,7 @@
 	</defaultFilterFactors>
     <defaultQueryFactorType>ORGANISM_PART</defaultQueryFactorType>
     <menuFilterFactorTypes>DEVELOPMENTAL_STAGE,ORGANISM_PART</menuFilterFactorTypes>
-    <landingPageDisplayName>Tissues -  68 FANTOM5 project</landingPageDisplayName>
+    <landingPageDisplayName>Tissues - 68 FANTOM5 project</landingPageDisplayName>
     <dataProviderURL>http://fantom.gsc.riken.jp/data/</dataProviderURL>
     <dataProviderDescription>The FANTOM5 project</dataProviderDescription>
     <speciesMapping/>
