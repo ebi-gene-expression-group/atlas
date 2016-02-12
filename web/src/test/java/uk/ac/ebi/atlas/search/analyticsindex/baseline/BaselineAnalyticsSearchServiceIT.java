@@ -94,7 +94,7 @@ public class BaselineAnalyticsSearchServiceIT {
     private BaselineAnalyticsSearchService subject;
 
     @Test
-    public void singleSpeciesGeneAccession_Tissues() {
+    public void singleSpeciesGeneAccessionTissues() {
         BaselineExperimentSearchResult result = subject.findExpressions(GeneQuery.create("ENSG00000006062"), "Homo sapiens", "ORGANISM_PART");
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
@@ -191,26 +191,26 @@ public class BaselineAnalyticsSearchServiceIT {
     }
 
     @Test
-    public void geneQuery_CellLine() {
+    public void geneQueryCellLine() {
         BaselineExperimentSearchResult result = subject.findExpressions(GeneQuery.create("blood"), "Homo sapiens", CELL_LINE);
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
-        assertThat(baselineProfilesList, hasSize(131));
-        assertThat(baselineProfilesList.getTotalResultCount(), is(131));
+        assertThat(baselineProfilesList, hasSize(20));
+        assertThat(baselineProfilesList.getTotalResultCount(), is(20));
 
-        BaselineExperimentProfile baselineProfile = baselineProfilesList.get(128);
+        BaselineExperimentProfile baselineProfile = baselineProfilesList.get(18);
         assertThat(baselineProfile.getId(), is("E-GEOD-26284"));
-        assertThat(baselineProfile.getName(), is("ENCODE cell lines - total RNA, nucleolus"));
-        assertThat(baselineProfile.getFilterFactors(), is((FactorGroup) new FactorSet(new Factor("RNA", "total RNA"), new Factor("CELLULAR_COMPONENT", "nucleolus"))));
-        assertThat(baselineProfile.getConditions(), hasSize(655));
+        assertThat(baselineProfile.getName(), is("ENCODE cell lines - total RNA, nucleoplasm"));
+        assertThat(baselineProfile.getFilterFactors(), is((FactorGroup) new FactorSet(new Factor("RNA", "total RNA"), new Factor("CELLULAR_COMPONENT", "nucleoplasm"))));
+        assertThat(baselineProfile.getConditions(), hasSize(60));
         assertThat(baselineProfile.getMinExpressionLevel(), is(5.0));
         assertThat(baselineProfile.getMaxExpressionLevel(), is(5.0));
 
         SortedSet<Factor> factors = result.getFactorsAcrossAllExperiments();
         assertThat(factors, hasItems(getEGeod26284CellLines().toArray(new Factor[getEGeod26284CellLines().size()])));
 
-        assertThat(factors, hasSize(655));
+        assertThat(factors, hasSize(60));
     }
 
 }

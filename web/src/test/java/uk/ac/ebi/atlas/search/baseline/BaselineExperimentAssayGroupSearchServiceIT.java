@@ -76,9 +76,14 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
         List<String> experimentAccessions = getExperimentAccessions(results);
-        ImmutableList<String> descriptions = toStrings(results);
 
-        assertThat(experimentAccessions, contains("E-PROT-1", "E-MTAB-513", "E-PROT-3", "E-MTAB-2836", "E-MTAB-3358", "E-MTAB-3358", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352"));
+        assertThat(
+                experimentAccessions,
+                containsInAnyOrder(
+                        "E-MTAB-513", "E-PROT-1", "E-PROT-3", "E-MTAB-2836", "E-MTAB-1733", "E-MTAB-599",
+                        "E-MTAB-3358", "E-MTAB-3358",
+                        "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352",
+                        "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284"));
     }
 
     @Test
@@ -180,8 +185,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         BaselineExperimentAssayGroup first = results.iterator().next();
 
         //System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
-        assertThat(experimentAccessions, containsInAnyOrder("E-PROT-1", "E-PROT-1", "E-MTAB-2980", "E-MTAB-2980", "E-PROT-3", "E-MTAB-2836", "E-MTAB-3358", "E-MTAB-3358", "E-MTAB-1733", "E-MTAB-599"));
-        assertThat(first.getFilterFactors(), contains(new Factor("DEVELOPMENTAL_STAGE", "adult", OntologyTerm.create("EFO_0001272", "http://www.ebi.ac.uk/efo/"))));
+        assertThat(experimentAccessions, containsInAnyOrder("E-PROT-1", "E-PROT-1", "E-MTAB-2980", "E-MTAB-2980", "E-PROT-3", "E-MTAB-2836", "E-MTAB-3358", "E-MTAB-3358", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-26284", "E-GEOD-26284"));
+        assertThat(first.getFilterFactors(), hasItem(new Factor("RNA", "long non-polyA RNA", OntologyTerm.create("EFO_0005018", "http://www.ebi.ac.uk/efo/"))));
     }
 
     @Test
@@ -193,8 +198,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
-        assertThat(experimentAccessions, containsInAnyOrder("E-PROT-1", "E-PROT-1", "E-MTAB-2980", "E-MTAB-2980", "E-PROT-3", "E-MTAB-2836", "E-MTAB-3358", "E-MTAB-3358", "E-MTAB-1733"));
+        //System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
+        assertThat(experimentAccessions, containsInAnyOrder("E-PROT-1", "E-PROT-1", "E-MTAB-2980", "E-MTAB-2980", "E-PROT-3", "E-MTAB-2836", "E-MTAB-3358", "E-MTAB-3358", "E-MTAB-1733", "E-GEOD-26284", "E-GEOD-26284"));
     }
 
     @Test
