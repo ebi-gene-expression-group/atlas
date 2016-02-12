@@ -78,24 +78,6 @@
         <put-attribute name="body" value="/WEB-INF/jsp/bioEntities.jsp"/>
     </definition>
 
-    <definition name="search-results-baseline" extends="base.definition">
-        <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="header" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/analyticsIndex/search-results-baseline.jsp"/>
-    </definition>
-
-    <definition name="search-results-differential" extends="base.definition">
-        <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="header" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/analyticsIndex/search-results-differential.jsp"/>
-    </definition>
-
-    <definition name="search-gene-information" extends="base.definition">
-        <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="header" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/analyticsIndex/search-gene-information.jsp"/>
-    </definition>
-
     <definition name="new-bioentities" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas > Gene information"/>
         <put-attribute name="header" value=""/>
