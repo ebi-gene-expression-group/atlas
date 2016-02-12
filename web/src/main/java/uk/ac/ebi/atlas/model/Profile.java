@@ -91,7 +91,6 @@ public abstract class Profile<K, T extends Expression> {
         return this;
     }
 
-    @Nullable
     public T getExpression(K condition) {
         return expressionsByCondition.get(condition);
     }
