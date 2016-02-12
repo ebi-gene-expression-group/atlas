@@ -58,16 +58,14 @@ public class SuggestionService {
 
         LinkedHashSet<TermSourceSuggestion> suggestions = Sets.newLinkedHashSet();
 
-        if (!CharMatcher.WHITESPACE.or(CharMatcher.is('-')).matchesAnyOf(query)) {
-            suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInName(query, species));
+        suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInName(query, species));
 
-            if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-                suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInSynonym(query, species));
-            }
+        if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
+            suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInSynonym(query, species));
+        }
 
-            if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-                suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInIdentifier(query, species));
-            }
+        if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
+            suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInIdentifier(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
