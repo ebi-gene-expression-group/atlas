@@ -87,8 +87,8 @@
                     <c:set var="speciesIconCode" value="M"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
-                <c:when test="${species == 'Mus musculus'}">
-                    <c:set var="speciesIconCode" value="M"/>
+                <c:when test="${species == 'Ovis aries'}">
+                    <c:set var="speciesIconCode" value="x"/>
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
                 <c:when test="${species == 'Oryctolagus cuniculus'}">
