@@ -24,25 +24,40 @@ var DownloadDifferentialButton = React.createClass({
             contrastId: React.PropTypes.string.isRequired,
             comparison: React.PropTypes.string.isRequired,
             foldChange: React.PropTypes.string.isRequired,     // a string, a formatted value, to be able to work with Infinity values and rounding
+            pValue: React.PropTypes.string.isRequired,
             colour: React.PropTypes.string.isRequired,
             id: React.PropTypes.string.isRequired
         })).isRequired
     },
 
     convertJSONtoTSV: function (results) {
-        var headers = ["Gene", "Organism", "Experiment Accession", "Comparison", "log2foldchange"];
+        var headers;
+        var containsTStatistics = false;
         var arrayResults = typeof results != 'object' ? JSON.parse(results) : results;
 
-        var headerFields = headers.join('\t');
         var bodyFields = arrayResults.map(function(diffResults) {
             var line = "";
 
             line = line + diffResults.bioentityIdentifier + "\t" + diffResults.species + "\t" +
                     diffResults.experimentAccession + "\t" +
-                    diffResults.comparison + "\t" + diffResults.foldChange + "\n";
+                    diffResults.comparison + "\t" + diffResults.foldChange +
+                    "\t" + diffResults.pValue;
 
-            return line;
+            if (diffResults.tStatistics != null) {
+                line = line + "\t" + diffResults.tStatistics;
+                containsTStatistics = true;
+            }
+
+            return line + "\n";
         });
+
+        if(containsTStatistics) {
+            headers = ["Gene", "Organism", "Experiment Accession", "Comparison", "log2foldchange", "pValue", "tStatistics"];
+        } else {
+            headers = ["Gene", "Organism", "Experiment Accession", "Comparison", "log2foldchange", "pValue"];
+        }
+
+        var headerFields = headers.join('\t');
 
         bodyFields.unshift(headerFields);
         var str = bodyFields.join('\n');
