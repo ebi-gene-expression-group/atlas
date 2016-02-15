@@ -162,7 +162,6 @@ public class AnalyticsDocument {
                 checkNotNull(build.numReplicates, "missing numReplicates for differential experiment");
                 checkNotNull(build.foldChange, "missing foldChange for differential experiment");
                 checkNotNull(build.pValue, "missing pValue for differential experiment");
-//                checkNotNull(build.tStatistics, "missing tStatistics for differential experiment");
                 checkNotNull(build.regulation, "missing regulation for differential experiment");
             }
 
