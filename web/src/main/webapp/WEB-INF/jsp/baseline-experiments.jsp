@@ -124,7 +124,7 @@
                     <c:set var="speciesColorCode" value="red"/>
                 </c:when>
                 <c:when test="${species == 'Zea mays'}">
-                    <c:set var="speciesIconCode" value="5"/>
+                    <c:set var="speciesIconCode" value="c"/>
 					<c:set var="speciesColorCode" value="green" />
                 </c:when>
                 <c:when test="${species == 'Xenopus (Silurana) tropicalis'}">
@@ -134,6 +134,10 @@
                 <c:when test="${species == 'Xenopus tropicalis'}">
                     <c:set var="speciesIconCode" value="f"/>
                     <c:set var="speciesColorCode" value="red"/>
+                </c:when>
+                <c:when test="${species == 'Triticum aestivum'}">
+                    <c:set var="speciesIconCode" value="5"/>
+                    <c:set var="speciesColorCode" value="green"/>
                 </c:when>
                 <c:when test="${species == 'Sorghum bicolor'}">
                     <c:set var="speciesIconCode" value="P"/>

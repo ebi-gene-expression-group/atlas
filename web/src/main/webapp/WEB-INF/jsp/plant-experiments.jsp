@@ -78,8 +78,12 @@
                     <c:set var="speciesIconCode" value="6"/>
 					<c:set var="speciesColorCode" value="green" />
                 </c:when>
-                <c:when test="${species == 'Zea mays'}">
+                <c:when test="${species == 'Triticum aestivum'}">
                     <c:set var="speciesIconCode" value="5"/>
+                    <c:set var="speciesColorCode" value="green"/>
+		    	   </c:when>
+                <c:when test="${species == 'Zea mays'}">
+                    <c:set var="speciesIconCode" value="c"/>
 					<c:set var="speciesColorCode" value="green" />
                 </c:when>
 
