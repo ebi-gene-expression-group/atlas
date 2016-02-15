@@ -96,7 +96,7 @@
                 </c:when>
 
                 <c:otherwise>
-                    <c:set var="speciesIconCode" value="x"/>
+                    <c:set var="speciesIconCode" value="×"/>
 					<c:set var="speciesColorCode" value="grey" />
                 </c:otherwise>
             </c:choose>
@@ -161,7 +161,7 @@
                               <c:set var="speciesColorCode" value="green"/>
                        </c:when>
                         <c:otherwise>
-                            <c:set var="speciesIconCode" value="x"/>
+                            <c:set var="speciesIconCode" value="×"/>
 							<c:set var="speciesColorCode" value="grey" />
                         </c:otherwise>
                     </c:choose>
