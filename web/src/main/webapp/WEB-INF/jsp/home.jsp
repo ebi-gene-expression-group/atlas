@@ -242,8 +242,6 @@
                 $buttons.button("option", "disabled", tags.length == 0);
             }
 
-            // TODO: This change has been requested by Alvis for the services review. We should review it
-            // with him once the faceting is in place.
             function selectDefaultOrganism(){
                 $('select[id="organism"] option[value="Homo sapiens"]').attr("selected","selected");
 
