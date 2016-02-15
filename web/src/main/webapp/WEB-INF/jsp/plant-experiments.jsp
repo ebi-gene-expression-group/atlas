@@ -150,8 +150,8 @@
                         </c:when>
 
                         <c:otherwise>
-                            <c:set var="speciesIconCode" value="P"/>
-							<c:set var="speciesColorCode" value="green" />
+                            <c:set var="speciesIconCode" value="x"/>
+							<c:set var="speciesColorCode" value="grey" />
                         </c:otherwise>
                     </c:choose>
 
