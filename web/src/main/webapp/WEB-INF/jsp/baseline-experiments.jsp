@@ -140,8 +140,8 @@
                     <c:set var="speciesColorCode" value="green"/>
                 </c:when>
                 <c:when test="${species == 'Sorghum bicolor'}">
-                    <c:set var="speciesIconCode" value="P"/>
-                    <c:set var="speciesColorCode" value="green"/>
+                    <c:set var="speciesIconCode" value="x"/>
+                    <c:set var="speciesColorCode" value="grey"/>
                 </c:when>
                 <c:otherwise>
                     <c:set var="speciesIconCode" value="×"/>
