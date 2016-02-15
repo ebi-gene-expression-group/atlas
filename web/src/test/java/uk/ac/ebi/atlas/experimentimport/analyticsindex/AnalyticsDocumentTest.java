@@ -86,6 +86,8 @@ public class AnalyticsDocumentTest {
                 .factors(Collections.singleton("sex"))
                 .numReplicates(1)
                 .foldChange(0.02)
+                .pValue(0.86)
+                .tStatistics(-0.184)
                 .build();
     }
 

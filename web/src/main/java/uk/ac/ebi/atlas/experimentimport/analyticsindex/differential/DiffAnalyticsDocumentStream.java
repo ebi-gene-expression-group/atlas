@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
+import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
@@ -84,6 +85,11 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
             String contrastId = analytics.getContrastId();
             String conditionSearch = getConditionSearchTerms(contrastId);
 
+            double tStatistics = 0;
+            if(analytics.getClass().isAssignableFrom(MicroarrayDifferentialAnalytics.class)) {
+                tStatistics = ((MicroarrayDifferentialAnalytics) analytics).getTstatistic();
+            }
+
             AnalyticsDocument.Builder builder = AnalyticsDocument.builder();
             builder.experimentAccession(experimentAccession)
                     .experimentType(experimentType)
@@ -94,8 +100,13 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
                     .contrastId(contrastId)
                     .factors(factors)
                     .foldChange(analytics.getFoldChange())
+                    .pValue(analytics.getpValue())
                     .numReplicates(getNumReplicates(contrastId))
                     .conditionsSearch(conditionSearch);
+
+            if(tStatistics != 0) {
+                builder.tStatistics(tStatistics);
+            }
 
             return builder.build();
         }
