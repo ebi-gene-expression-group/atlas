@@ -73,8 +73,8 @@
 
                     </c:if>
 
-                    <%--@elvariable id="fastQReportUtil" type="uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil"--%>
-                    <c:set var="hasFastQcReport" value="${fastQReportUtil.hasFastQC(experimentAccession, species)}"/>
+                    <%--@elvariable id="fastQCReportUtil" type="uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil"--%>
+                    <c:set var="hasFastQcReport" value="${fastQCReportUtil.hasFastQC(experimentAccession, species)}"/>
                     <c:if test="${hasFastQcReport && qcArrayDesigns==null}" >
                         <td>
                             <a id="display-fastqc-report" class="gxaButtonImage" title="Quality Metrics Report"
