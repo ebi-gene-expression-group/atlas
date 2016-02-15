@@ -32,33 +32,4 @@ public class SuggestionServiceIT {
         assertThat(suggestions.get(13).source, is(""));
     }
 
-    @Test
-    public void multiTermAutoComplete_ReturnedPhrasesMustStartWithSearchTerm() {
-        List<TermSourceSuggestion> suggestions = suggestionService.fetchTopSuggestions("G protein", null);
-        //System.out.println(Joiner.on("\", \"").join(suggestions));
-        assertThat(suggestions.get(0).term, is("G-protein coupled receptor signaling pathway"));
-        assertThat(suggestions.get(0).source, is(""));
-        assertThat(suggestions.get(1).term, is("G-protein coupled receptor activity"));
-        assertThat(suggestions.get(1).source, is(""));
-
-        suggestions = suggestionService.fetchTopSuggestions("G prot 1", null);
-
-        assertThat(suggestions.size(), is(0));
-
-    }
-
-    @Test
-    public void multiTermAutoComplete_HyphenIsTreatedSameAsWhiteSpace() {
-        List<TermSourceSuggestion> gSpaceProtein = suggestionService.fetchTopSuggestions("G protein", null);
-        System.out.println(Joiner.on(",\n").join(gSpaceProtein));
-
-        assertThat(gSpaceProtein.size(), is(15));
-
-        List<TermSourceSuggestion> gHyphenProtein = suggestionService.fetchTopSuggestions("G-protein", null);
-        System.out.println(Joiner.on(",\n").join(gHyphenProtein));
-
-        assertThat(gHyphenProtein.size(), is(15));
-    }
-
-
 }
