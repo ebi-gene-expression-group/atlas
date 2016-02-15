@@ -58,6 +58,12 @@ public class AnalyticsDocument {
     Double foldChange;
 
     @Field
+    Double pValue;
+
+    @Field
+    Double tStatistics;
+
+    @Field
     Regulation regulation;
 
     public String getBioentityIdentifier() {
@@ -116,6 +122,14 @@ public class AnalyticsDocument {
         return foldChange;
     }
 
+    public Double getPValue() {
+        return pValue;
+    }
+
+    public Double getTStatistics() {
+        return tStatistics;
+    }
+
     public Regulation getRegulation() {
         return regulation;
     }
@@ -147,6 +161,8 @@ public class AnalyticsDocument {
                 checkNotNull(build.factors, "missing factors for differential experiment");
                 checkNotNull(build.numReplicates, "missing numReplicates for differential experiment");
                 checkNotNull(build.foldChange, "missing foldChange for differential experiment");
+                checkNotNull(build.pValue, "missing pValue for differential experiment");
+//                checkNotNull(build.tStatistics, "missing tStatistics for differential experiment");
                 checkNotNull(build.regulation, "missing regulation for differential experiment");
             }
 
@@ -224,6 +240,17 @@ public class AnalyticsDocument {
             build.regulation = Regulation.valueOf(foldChange);
             return this;
         }
+
+        public Builder pValue(double pValue) {
+            build.pValue = pValue;
+            return this;
+        }
+
+        public Builder tStatistics(double tStatistics) {
+            build.tStatistics = tStatistics;
+            return this;
+        }
+
     }
 
 }
