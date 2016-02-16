@@ -636,7 +636,7 @@
             <!-- oracleContext.xml is located on the filesystem and specified in tomcat's context xml -->
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
-                <log.level.root>warn</log.level.root>
+                <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
             </properties>
