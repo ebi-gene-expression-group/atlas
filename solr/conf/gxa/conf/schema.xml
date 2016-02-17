@@ -80,7 +80,7 @@ http://wiki.apache.org/solr/SchemaXml
                         catenateWords="1" catenateNumbers="1" catenateAll="0"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
-		<filter class="solr.PorterStemFilterFactory"/>
+		        <filter class="solr.PorterStemFilterFactory"/>
             </analyzer>
             <analyzer type="query">
                 <tokenizer class="solr.WhitespaceTokenizerFactory"/>
@@ -90,7 +90,7 @@ http://wiki.apache.org/solr/SchemaXml
                         catenateWords="0" catenateNumbers="0" catenateAll="0"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
-		<filter class="solr.PorterStemFilterFactory"/>
+		        <filter class="solr.PorterStemFilterFactory"/>
             </analyzer>
         </fieldtype>
 
