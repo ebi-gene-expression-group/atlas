@@ -93,7 +93,7 @@ public class SpeciesLookupService {
         query.setFields(SPECIES_FIELD);
         query.setRows(1);
 
-        Collection<String> species = solrServer.query(query, SPECIES_FIELD, false);
+        Collection<String> species = solrServer.query(query, false, SPECIES_FIELD);
 
         return species.isEmpty() ? Optional.<String>absent() : Optional.of(species.iterator().next());
     }

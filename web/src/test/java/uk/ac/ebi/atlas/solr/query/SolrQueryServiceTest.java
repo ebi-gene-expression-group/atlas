@@ -79,7 +79,7 @@ public class SolrQueryServiceTest {
     @Before
     public void initSubject() throws Exception {
 
-        given(gxaSolrClientMock.query(solrQueryMock, PROPERTY_VALUE_FIELD, false)).willReturn(Sets.newHashSet("symbol"));
+        given(gxaSolrClientMock.query(solrQueryMock, false, PROPERTY_VALUE_FIELD)).willReturn(Sets.newHashSet("symbol"));
         given(facetedPropertyValueQueryBuilderMock.withPropertyNames(SYMBOL)).willReturn(facetedPropertyValueQueryBuilderMock);
         given(facetedPropertyValueQueryBuilderMock.withPropertyNames(GENE_PAGE_PROPERTY_NAMES)).willReturn(facetedPropertyValueQueryBuilderMock);
         given(facetedPropertyValueQueryBuilderMock.buildBioentityQuery(BIOENTITY_IDENTIFIER)).willReturn(solrQueryMock);

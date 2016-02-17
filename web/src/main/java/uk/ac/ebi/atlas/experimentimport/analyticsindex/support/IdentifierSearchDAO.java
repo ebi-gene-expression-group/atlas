@@ -37,9 +37,22 @@ public class IdentifierSearchDAO {
 
         query.setRows(PROPERTY_LIMIT);
         query.setFilterQueries(PROPERTY_NAME_FIELD + ":(\"" + Joiner.on("\" OR \"").join(searchProperties) + "\")");
-        query.setFields(PROPERTY_VALUE_FIELD);
+        query.setFields(PROPERTY_NAME_FIELD, PROPERTY_VALUE_FIELD);
         query.setQuery(BIOENTITY_IDENTIFIER_FIELD + ":\"" + bioentityIdentifier + "\"");
 
-        return gxaSolrClient.query(query, PROPERTY_VALUE_FIELD, false);
+        return gxaSolrClient.query(query, false, PROPERTY_VALUE_FIELD);
+    }
+
+    public Set<String> getFormattedProperties(String bioentityIdentifier) {
+        int PROPERTY_LIMIT = 1000;
+
+        SolrQuery query = new SolrQuery();
+
+        query.setRows(PROPERTY_LIMIT);
+        query.setFilterQueries(PROPERTY_NAME_FIELD + ":(\"" + Joiner.on("\" OR \"").join(searchProperties) + "\")");
+        query.setFields(PROPERTY_NAME_FIELD, PROPERTY_VALUE_FIELD);
+        query.setQuery(BIOENTITY_IDENTIFIER_FIELD + ":\"" + bioentityIdentifier + "\"");
+
+        return gxaSolrClient.queryFormatted(query, false, "%s:{%s}", PROPERTY_NAME_FIELD, PROPERTY_VALUE_FIELD);
     }
 }

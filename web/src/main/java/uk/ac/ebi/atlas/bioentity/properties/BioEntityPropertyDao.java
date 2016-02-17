@@ -41,7 +41,7 @@ public class BioEntityPropertyDao {
         query.setFields(PROPERTY_VALUE_FIELD);
         query.setRows(PROPERTY_VALUES_LIMIT);
 
-        return solrServer.query(query, PROPERTY_VALUE_FIELD, false);
+        return solrServer.query(query, false, PROPERTY_VALUE_FIELD);
 
     }
 

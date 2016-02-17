@@ -49,7 +49,7 @@ public class IdentifierSearchTermsTrader {
 
         ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder<>();
         for (String bioentityIdentifier : bioentityIdentifiers) {
-            Set<String> propertyValueTerms = identifierSearchDAO.getProperties(bioentityIdentifier);
+            Set<String> propertyValueTerms = identifierSearchDAO.getFormattedProperties(bioentityIdentifier);
             mapBuilder.put(bioentityIdentifier, Joiner.on(" ").join(propertyValueTerms));
         }
 

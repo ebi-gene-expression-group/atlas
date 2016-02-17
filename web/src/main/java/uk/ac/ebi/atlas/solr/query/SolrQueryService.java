@@ -112,7 +112,7 @@ public class SolrQueryService {
                 .withBioentityTypes(Sets.newHashSet(bioentityType))
                 .withPropertyNames(propertyNames).build();
 
-        return solrServer.query(solrQuery, BIOENTITY_IDENTIFIER_FIELD, toUppercase);
+        return solrServer.query(solrQuery, toUppercase, BIOENTITY_IDENTIFIER_FIELD);
     }
 
     public Set<String> findMatureRNAIds(Set<String> geneIdentifiers) {
@@ -217,7 +217,7 @@ public class SolrQueryService {
                 .forQueryString(geneQuery, true).withExactMatch(exactMatch)
                 .withSpecies(species).withBioentityTypes(GENE.getSolrAliases()).build();
 
-        Set<String> geneIds = solrServer.query(solrQuery, BIOENTITY_IDENTIFIER_FIELD, false);
+        Set<String> geneIds = solrServer.query(solrQuery, false, BIOENTITY_IDENTIFIER_FIELD);
 
         stopwatch.stop();
         LOGGER.debug(String.format("Fetched gene ids for %s: returned %s results in %s secs", geneQuery, geneIds.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
