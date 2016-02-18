@@ -178,13 +178,13 @@ module.exports = function (options) {
                         }
                     }
 
-                    if (hasCheckedItemsInThisFacet && !facetMatch) {
+                    if (hasCheckedItemsInThisFacet && !facetMatch || result.pValue > 0.05) {
                         return false;
                     }
-
                 }
             }
-            return true;
+
+            return (result.pValue <= 0.05);
         });
 
     }

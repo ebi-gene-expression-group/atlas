@@ -44911,13 +44911,13 @@ webpackJsonp([2],[
 	                        }
 	                    }
 	
-	                    if (hasCheckedItemsInThisFacet && !facetMatch) {
+	                    if (hasCheckedItemsInThisFacet && !facetMatch || result.pValue > 0.05) {
 	                        return false;
 	                    }
-	
 	                }
 	            }
-	            return true;
+	            
+	            return (result.pValue <= 0.05);
 	        });
 	
 	    }
@@ -45480,7 +45480,7 @@ webpackJsonp([2],[
 	            contrastId: React.PropTypes.string.isRequired,
 	            comparison: React.PropTypes.string.isRequired,
 	            foldChange: React.PropTypes.string.isRequired,     // a string, a formatted value, to be able to work with Infinity values and rounding
-	            pValue: React.PropTypes.string.isRequired,
+	            pValue: React.PropTypes.number.isRequired,
 	            colour: React.PropTypes.string.isRequired,
 	            id: React.PropTypes.string.isRequired
 	        })).isRequired
