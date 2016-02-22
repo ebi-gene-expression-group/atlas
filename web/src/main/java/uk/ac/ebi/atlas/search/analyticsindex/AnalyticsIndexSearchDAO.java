@@ -50,14 +50,4 @@ public class AnalyticsIndexSearchDAO {
         return SolrUtil.extractFirstFacetValues(queryResponse);
     }
 
-    public boolean isValidBioentityIdentifier(String bioentityIdentifier) {
-        SolrQuery solrQuery =
-                new AnalyticsQueryBuilder()
-                    .queryBioentityIdentifier(bioentityIdentifier)
-                    .setRows(1)
-                    .build();
-        QueryResponse queryResponse = analyticsClient.query(solrQuery);
-
-        return !queryResponse.getResults().isEmpty();
-    }
 }

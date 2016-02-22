@@ -55,15 +55,4 @@ public class AnalyticsSearchDAOIT {
         assertThat(experimentTypes, hasSize(0));
     }
 
-    @Test
-    public void validBioentityIdentifier() {
-        assertThat(subject.isValidBioentityIdentifier("ENSG00000002016"), is(true));
-    }
-
-    @Test
-    public void invalidBioentityIdentifier() {
-        assertThat(subject.isValidBioentityIdentifier("foo"), is(false));
-    }
-
-
 }
