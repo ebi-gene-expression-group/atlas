@@ -162,12 +162,13 @@
 
 </div>
 
-<%-- Link to the old Atlas in its own section at the bottom --%>
+<%-- Link to the old Atlas in its own section at the bottom
 <div class="grid_24 alpha">
 	<div>
 <p>Still need the old Expression Atlas? <a href="http://www-test.ebi.ac.uk/gxa">Click here</a>.</p>
 </div>
 </div>
+--%>
 
 
 
