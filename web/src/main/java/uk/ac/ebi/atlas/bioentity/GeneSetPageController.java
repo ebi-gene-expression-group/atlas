@@ -145,24 +145,24 @@ public class GeneSetPageController extends BioEntityPageController {
 
         identifier = identifier.toUpperCase();
 
-        if (GeneSetUtil.isReactome(identifier)) {
+        if (GeneSetUtil.matchesReactomeID(identifier)) {
             propertyValuesByType.put("reactome", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeClient.fetchPathwayNameFailSafe(identifier));
-        } else if (GeneSetUtil.isGeneOntology(identifier)) {
+        } else if (GeneSetUtil.matchesGeneOntologyAccession(identifier)) {
             String termName = goTermTrader.getTermName(identifier);
             propertyValuesByType.put("go", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
             goTermsByDepth = mapGoTermsByDepth(propertyValuesByType.get("go"));
-        } else if (GeneSetUtil.isPlantOntology(identifier)) {
+        } else if (GeneSetUtil.matchesPlantOntologyAccession(identifier)) {
             String termName = poTermTrader.getTermName(identifier);
             propertyValuesByType.put("po", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
             poTermsByDepth = mapPoTermsByDepth(propertyValuesByType.get("po"));
-        } else if (GeneSetUtil.isInterPro(identifier)) {
+        } else if (GeneSetUtil.matchesInterProAccession(identifier)) {
             String term = interProTermTrader.getTerm(identifier);
             propertyValuesByType.put("interpro", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
-        } else if (GeneSetUtil.isPlantReactome(identifier)) {
+        } else if (GeneSetUtil.matchesPlantReactomeID(identifier)) {
             propertyValuesByType.put("plant_reactome", identifier);
         }
 
@@ -195,7 +195,7 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     private void checkIdentifierIsGeneSet(String identifier) {
-        if (!GeneSetUtil.isGeneSet(identifier)) {
+        if (!GeneSetUtil.matchesGeneSetAccession(identifier)) {
             throw new ResourceNotFoundException("Resource not found");
         }
     }

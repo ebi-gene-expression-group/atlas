@@ -44,7 +44,7 @@ public enum BioentityType {
 
     private Set<String> solrAliases;
 
-    private BioentityType(String bioentityPageName, String... solrAliases){
+    BioentityType(String bioentityPageName, String... solrAliases){
         this.bioentityPageName = bioentityPageName;
         this.solrAliases = Sets.newHashSet(solrAliases);
     }

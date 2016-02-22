@@ -179,7 +179,7 @@ public class SolrQueryService {
             return Optional.absent();
         }
 
-        LOGGER.info(String.format("<expandGeneQueryIntoGeneIds> geneQuery=" + geneQuery));
+        LOGGER.info(String.format("<expandGeneQueryIntoGeneIds> geneQuery=%s", geneQuery));
 
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();

@@ -49,13 +49,13 @@ public class NewGeneSetPageController extends NewBioentityPageController {
     @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showGeneSetPage(@PathVariable String identifier, Model model) {
 
-        if (!GeneSetUtil.isGeneSet(identifier)) {
+        if (!GeneSetUtil.matchesGeneSetAccession(identifier)) {
             throw new ResourceNotFoundException("No gene set matching " + identifier);
         }
 
         bioentityPropertyServiceInitializer.initForGeneSetPage(bioEntityPropertyService, identifier);
 
-        String species = GeneSetUtil.isReactome(identifier) ? bioEntityPropertyService.getSpecies() : "";
+        String species = GeneSetUtil.matchesReactomeID(identifier) ? bioEntityPropertyService.getSpecies() : "";
 
         model.addAttribute(
             "mainTitle",

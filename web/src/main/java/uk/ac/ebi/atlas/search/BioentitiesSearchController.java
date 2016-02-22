@@ -143,7 +143,7 @@ public class BioentitiesSearchController {
     private Optional<String> getGeneIdRedirectString(GeneQuery geneQuery, String species, boolean isExactMatch) {
 
         boolean singleTerm = geneQuery.size() == 1;
-        if (singleTerm && GeneSetUtil.isGeneSet(geneQuery.terms().get(0).toUpperCase())) {
+        if (singleTerm && GeneSetUtil.matchesGeneSetAccession(geneQuery.terms().get(0).toUpperCase())) {
             return Optional.of("redirect:/genesets/" + geneQuery.terms().get(0));
         }
 

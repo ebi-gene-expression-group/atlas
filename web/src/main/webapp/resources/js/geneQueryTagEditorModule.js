@@ -26,7 +26,7 @@ var geneQueryTagEditorModule = (function($) {
     function initAutocomplete(element, species, onChange){
         $(element)
             // don't navigate away from the field on tab when selecting an item
-            .bind( "keydown", function( event ) {
+            .bind( 'keydown', function( event ) {
                 if ( event.keyCode === $.ui.keyCode.TAB &&
                     $( this ).data( "ui-autocomplete" ).menu.active ) {
                     event.preventDefault();
@@ -34,7 +34,7 @@ var geneQueryTagEditorModule = (function($) {
             })
             .on('paste',function(e) {
                 e.preventDefault();
-                var text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('Paste something..');
+                var text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('Paste something...');
                 window.document.execCommand('insertText', false, text);
             })
             .tagEditor({
@@ -51,7 +51,7 @@ var geneQueryTagEditorModule = (function($) {
                     source: function (request, response) {
                         $.ajax({
                             url: 'json/suggestions',
-                            dataType: "json",
+                            dataType: 'json',
                             data: {
                                 'query': request.term,
                                 'species': species

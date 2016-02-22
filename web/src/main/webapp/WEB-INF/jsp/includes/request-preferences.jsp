@@ -36,7 +36,7 @@
         <form:hidden path="heatmapMatrixSize"/>
         <form:hidden id="displayLevels" path="displayLevels"/>
         <form:hidden id="displayGeneDistribution" path="displayGeneDistribution"/>
-        <c:if test="${type.isMicroarray()}">
+        <c:if test="${type.microarray}">
             <form:hidden path="arrayDesignAccession"/>
         </c:if>
 

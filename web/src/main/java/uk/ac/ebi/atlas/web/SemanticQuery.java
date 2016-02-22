@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -45,7 +44,7 @@ public class SemanticQuery implements Iterable<SemanticQueryTerm> {
 
     public boolean isEmpty() {
         for (SemanticQueryTerm term : terms) {
-            if (!StringUtils.isBlank(term.value())) {
+            if (term.hasValue()) {
                 return false;
             }
         }
