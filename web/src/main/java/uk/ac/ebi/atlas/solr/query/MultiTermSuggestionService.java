@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -41,7 +42,7 @@ public class MultiTermSuggestionService {
         this.restTemplate = restTemplate;
     }
 
-    public List<TermSourceSuggestion> fetchMultiTermSuggestions(String multiTermToken) {
+    public List<SemanticQueryTerm> fetchMultiTermSuggestions(String multiTermToken) {
         // uses Spelling suggester, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Solr+server#Solrserver-Suggestcomponent
         // ie: http://lime:8983/solr/gxa/suggest_properties?spellcheck.q=<multiTermPhrase>&wt=json&omitHeader=true&rows=0&json.nl=arrarr
 
@@ -63,8 +64,8 @@ public class MultiTermSuggestionService {
         return null;
     }
 
-    List<TermSourceSuggestion> extractSuggestions(String jsonString) {
-        List<TermSourceSuggestion> suggestionStrings = new ArrayList<>();
+    List<SemanticQueryTerm> extractSuggestions(String jsonString) {
+        List<SemanticQueryTerm> suggestionStrings = new ArrayList<>();
 
         JsonElement suggestionsElement = extractSuggestionsElement(jsonString);
 
@@ -77,7 +78,7 @@ public class MultiTermSuggestionService {
 
                 for (JsonElement suggestionElement : suggestionElements) {
                     String term = suggestionElement.getAsString();
-                    TermSourceSuggestion termSource = new TermSourceSuggestion(term, "");
+                    SemanticQueryTerm termSource = SemanticQueryTerm.create(term);
 
                     suggestionStrings.add(termSource);
                 }

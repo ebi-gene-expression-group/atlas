@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -23,13 +24,13 @@ public class SuggestionServiceIT {
 
     @Test
     public void apop() {
-        List<TermSourceSuggestion> suggestions = suggestionService.fetchTopSuggestions("apop", null);
+        List<SemanticQueryTerm> suggestions = suggestionService.fetchTopSuggestions("apop", null);
         System.out.println(Joiner.on(",\n").join(suggestions));
 
-        assertThat(suggestions.get(0).term, is("APOPT1"));
-        assertThat(suggestions.get(0).source, is("symbol"));
-        assertThat(suggestions.get(13).term, is("apoptotic process"));
-        assertThat(suggestions.get(13).source, is(""));
+        assertThat(suggestions.get(0).value(), is("APOPT1"));
+        assertThat(suggestions.get(0).source(), is("symbol"));
+        assertThat(suggestions.get(13).value(), is("apoptotic process"));
+        assertThat(suggestions.get(13).source(), is(""));
     }
 
 }

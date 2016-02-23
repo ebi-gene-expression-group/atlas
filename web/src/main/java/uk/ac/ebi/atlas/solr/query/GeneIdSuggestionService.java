@@ -32,6 +32,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
+import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -60,22 +61,22 @@ public class GeneIdSuggestionService {
         this.solrServer = solrServer;
     }
 
-    public List<TermSourceSuggestion> fetchGeneIdSuggestionsInName(String geneName, String species) {
+    public List<SemanticQueryTerm> fetchGeneIdSuggestionsInName(String geneName, String species) {
         // ie: property_value_edgengram:"<geneName>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"symbol")
         return fetchAutoCompleteSuggestions(geneName, species, bioentityNamePropertyNames);
     }
 
-    public List<TermSourceSuggestion> fetchGeneIdSuggestionsInSynonym(String geneName, String species) {
+    public List<SemanticQueryTerm> fetchGeneIdSuggestionsInSynonym(String geneName, String species) {
         // ie: property_value_edgengram:"<geneName>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"synonym")
         return fetchAutoCompleteSuggestions(geneName, species, synonymPropertyNames);
     }
 
-    public List<TermSourceSuggestion> fetchGeneIdSuggestionsInIdentifier(String geneName, String species) {
+    public List<SemanticQueryTerm> fetchGeneIdSuggestionsInIdentifier(String geneName, String species) {
         // ie: property_value_edgengram:"<geneName>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"gene_biotype" OR property_name:"ensfamily" OR property_name:"refseq" OR property_name:"rgd" OR property_name:"design_element" OR property_name:"mirbase_accession" OR property_name:"mirbase_name" OR property_name:"flybase_transcript_id" OR property_name:"unigene" OR property_name:"embl" OR property_name:"interpro" OR property_name:"ensgene" OR property_name:"flybase_gene_id" OR property_name:"pathwayid" OR property_name:"mgi_id" OR property_name:"ensprotein" OR property_name:"mirbase_id" OR property_name:"enstranscript" OR property_name:"entrezgene" OR property_name:"uniprot" OR property_name:"go")
         return fetchAutoCompleteSuggestions(geneName, species, identifierPropertyNames);
     }
 
-    List<TermSourceSuggestion> fetchAutoCompleteSuggestions(String queryString, String species, String[] propertyNames) {
+    List<SemanticQueryTerm> fetchAutoCompleteSuggestions(String queryString, String species, String[] propertyNames) {
         SolrQuery solrQuery = solrQueryBuilderFactory.createAutocompleteGroupedPropertyValueQueryBuilder()
                 .withSpecies(Species.convertToEnsemblSpecies(species))
                 .withBioentityTypes(BioentityType.getAllSolrAliases())
@@ -87,10 +88,10 @@ public class GeneIdSuggestionService {
 
     //TODO: replace with SolrUtil.extractFirstFacetValues
 
-    List<TermSourceSuggestion> fetchGroupedFacetedResults(SolrQuery solrQuery) {
+    List<SemanticQueryTerm> fetchGroupedFacetedResults(SolrQuery solrQuery) {
         QueryResponse queryResponse = solrServer.query(solrQuery);
 
-        List<TermSourceSuggestion> geneNames = Lists.newArrayList();
+        List<SemanticQueryTerm> geneNames = Lists.newArrayList();
 
         SolrDocumentList results = queryResponse.getResults();
         if(results != null) {
@@ -98,8 +99,7 @@ public class GeneIdSuggestionService {
                 String propertyValue = doc.getFieldValue("property_value").toString();
                 String propertyName = doc.getFieldValue("property_name").toString();    //TODO: create mapping between property_name and source to show in the UI
 
-                TermSourceSuggestion termSource = new TermSourceSuggestion(propertyValue, propertyName);
-                geneNames.add(termSource);
+                geneNames.add(SemanticQueryTerm.create(propertyValue, propertyName));
             }
         }
 

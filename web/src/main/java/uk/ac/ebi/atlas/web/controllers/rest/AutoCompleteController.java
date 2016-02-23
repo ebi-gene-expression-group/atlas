@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2016 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.solr.query.SuggestionService;
-import uk.ac.ebi.atlas.solr.query.TermSourceSuggestion;
+import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -55,7 +55,7 @@ public class AutoCompleteController {
             return StringUtils.EMPTY;
         }
 
-        List<TermSourceSuggestion> suggestions = suggestionService.fetchTopSuggestions(query, species);
+        List<SemanticQueryTerm> suggestions = suggestionService.fetchTopSuggestions(query, species);
 
         return new Gson().toJson(suggestions);
     }

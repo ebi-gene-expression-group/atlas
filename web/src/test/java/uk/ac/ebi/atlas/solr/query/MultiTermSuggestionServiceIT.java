@@ -27,8 +27,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import javax.inject.Inject;
+
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -43,43 +45,43 @@ public class MultiTermSuggestionServiceIT {
     private MultiTermSuggestionService subject;
 
     @Test
-    public void apop_suggests_multi_term_suggestion() {
-        List<TermSourceSuggestion> suggestions = subject.fetchMultiTermSuggestions("apop");
+    public void apopSuggestsMultiTermSuggestion() {
+        List<SemanticQueryTerm> suggestions = subject.fetchMultiTermSuggestions("apop");
 
-        assertThat(suggestions.get(0).term, is("apoptotic process"));
-        assertThat(suggestions.get(0).source, is(""));
+        assertThat(suggestions.get(0).value(), is("apoptotic process"));
+        assertThat(suggestions.get(0).source(), is(""));
     }
 
     @Test
-    public void apoptotic_p_suggests_apototic_process() {
-        List<TermSourceSuggestion> suggestions = subject.fetchMultiTermSuggestions("apoptotic p");
+    public void apoptotic_pSuggestsApototicProcess() {
+        List<SemanticQueryTerm> suggestions = subject.fetchMultiTermSuggestions("apoptotic p");
 
-        assertThat(suggestions.get(0).term, is("apoptotic process"));
-        assertThat(suggestions.get(0).source, is(""));
+        assertThat(suggestions.get(0).value(), is("apoptotic process"));
+        assertThat(suggestions.get(0).source(), is(""));
     }
 
     @Test
-    public void mitochondrial_enc() {
-        List<TermSourceSuggestion> suggestions = subject.fetchMultiTermSuggestions("mitochondrial enc");
+    public void mitochondrial_encSuggestsMitochondrialEncoded() {
+        List<SemanticQueryTerm> suggestions = subject.fetchMultiTermSuggestions("mitochondrial enc");
 
-        assertThat(suggestions.get(0).term, is("Mitochondrial-encoded proline-accepting tRNA. [Source:TAIR;Acc:ATMG00350]"));
-        assertThat(suggestions.get(0).source, is(""));
+        assertThat(suggestions.get(0).value(), is("Mitochondrial-encoded proline-accepting tRNA. [Source:TAIR;Acc:ATMG00350]"));
+        assertThat(suggestions.get(0).source(), is(""));
 
     }
 
     @Test
     public void ifContainsNonWordCharactersReturnNoSuggestions() {
-        List<TermSourceSuggestion> properties = subject.fetchMultiTermSuggestions("prot%");
+        List<SemanticQueryTerm> properties = subject.fetchMultiTermSuggestions("prot%");
         assertThat(properties.size(), is(0));
     }
 
     @Test
     public void searchTermContainingHyphen() {
-        List<TermSourceSuggestion> properties = subject.fetchMultiTermSuggestions("G-protein");
+        List<SemanticQueryTerm> properties = subject.fetchMultiTermSuggestions("G-protein");
         assertThat(properties.size(), is(30));
 
-        assertThat(properties.get(0).term, is("G-protein coupled receptor signaling pathway"));
-        assertThat(properties.get(0).source, is(""));
+        assertThat(properties.get(0).value(), is("G-protein coupled receptor signaling pathway"));
+        assertThat(properties.get(0).source(), is(""));
     }
 
 }

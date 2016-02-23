@@ -41,6 +41,7 @@ var geneQueryTagEditorModule = (function($) {
                 delimiter:'\t\n',
                 maxLength: 50,
                 autocomplete: {
+                    select: function( event, ui ) {debugger;},
                     delay: 500,
                     minLength: 1,
                     autoFocus: false,
@@ -59,8 +60,8 @@ var geneQueryTagEditorModule = (function($) {
                             success: function(data) {
                                 var source_data = $.map(data, function (obj) {
                                     return {
-                                        label: obj.term,
-                                        value: obj.term,
+                                        label: obj.value,
+                                        value: obj.value,
                                         source: obj.source
 
                                     };
@@ -70,19 +71,21 @@ var geneQueryTagEditorModule = (function($) {
 
                             error: function (jqXHR, textStatus, errorThrown) {
                                 console.log("Error. Status: " + textStatus + ", errorThrown: " + errorThrown);
+                                response([]);
                             }
                         });
                     },
                     _renderItem: function( ul, item) {
-                                    var source_des ='&nbsp;';
-                                    if(item.source.length != 0) {
-                                        source_des = item.source;
-                                    }
+                        var source_des ='&nbsp;';
+                        if(item.source.length != 0) {
+                            source_des = item.source;
+                        }
 
-                                    return $( "<li style='width: 300px;'></li>" )
-                                        .data( "item.autocomplete", item )
-                                        .append( "<a>" + "<div style='float:left;text-align: left'>" + item.label + "</div><div style='text-align: right'><small>" + source_des + "</small></div></a>" )
-                                        .appendTo( ul );
+                        return $( "<li style='width: 300px;'></li>" )
+                            .attr( "data-value", item.value )
+                            .attr( "data-source", item.source )
+                            .append( "<a>" + "<div style='float:left;text-align: left'>" + item.label + "</div><div style='text-align: right'><small>" + source_des + "</small></div></a>" )
+                            .appendTo( ul );
                     }
                 },
 

@@ -28,7 +28,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
-import uk.ac.ebi.atlas.solr.query.TermSourceSuggestion;
+import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import java.util.Arrays;
 import java.util.List;
@@ -63,12 +63,12 @@ public class AutocompleteControllerIT {
         String jsonString = responseBody.asString();
         Gson gson = new Gson();
         //when
-        TermSourceSuggestion[] suggestions = gson.fromJson(jsonString, TermSourceSuggestion[].class);
+        SemanticQueryTerm[] suggestions = gson.fromJson(jsonString, SemanticQueryTerm[].class);
 
-        List<TermSourceSuggestion> suggestionList = Arrays.asList(suggestions);
+        List<SemanticQueryTerm> suggestionList = Arrays.asList(suggestions);
 
-        assertThat(suggestionList.get(0).term, is("ASPN"));
-        assertThat(suggestionList.get(0).source, is("symbol"));
+        assertThat(suggestionList.get(0).value(), is("ASPN"));
+        assertThat(suggestionList.get(0).source(), is("symbol"));
         assertThat(suggestionList, hasSize(15));
 
     }
@@ -81,13 +81,13 @@ public class AutocompleteControllerIT {
         String jsonString = responseBody.asString();
         Gson gson = new Gson();
         //when
-        TermSourceSuggestion[] suggestions = gson.fromJson(jsonString, TermSourceSuggestion[].class);
-        List<TermSourceSuggestion> suggestionList = Arrays.asList(suggestions);
+        SemanticQueryTerm[] suggestions = gson.fromJson(jsonString, SemanticQueryTerm[].class);
+        List<SemanticQueryTerm> suggestionList = Arrays.asList(suggestions);
 
-        assertThat(suggestionList.get(11).term, is("ASPG (2 of 3)"));
-        assertThat(suggestionList.get(11).source, is("symbol"));
-        assertThat(suggestionList.get(14).term, is("asph"));
-        assertThat(suggestionList.get(14).source, is("symbol"));
+        assertThat(suggestionList.get(11).value(), is("ASPG (2 of 3)"));
+        assertThat(suggestionList.get(11).source(), is("symbol"));
+        assertThat(suggestionList.get(14).value(), is("asph"));
+        assertThat(suggestionList.get(14).source(), is("symbol"));
 
         assertThat(suggestionList, hasSize(15));
 

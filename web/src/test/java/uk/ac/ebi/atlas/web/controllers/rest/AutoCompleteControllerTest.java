@@ -32,7 +32,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.solr.query.MultiTermSuggestionService;
 import uk.ac.ebi.atlas.solr.query.SuggestionService;
-import uk.ac.ebi.atlas.solr.query.TermSourceSuggestion;
+import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import java.util.List;
 
@@ -60,10 +60,10 @@ public class AutoCompleteControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        TermSourceSuggestion termSource1 = new TermSourceSuggestion("Value1", "");
-        TermSourceSuggestion termSource2 = new TermSourceSuggestion("Value2", "");
+        SemanticQueryTerm termSource1 = SemanticQueryTerm.create("Value1");
+        SemanticQueryTerm termSource2 = SemanticQueryTerm.create("Value2");
 
-        List<TermSourceSuggestion> suggestions = Lists.newArrayList(termSource1, termSource2);
+        List<SemanticQueryTerm> suggestions = Lists.newArrayList(termSource1, termSource2);
 
         when(suggestionServiceMock.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS)).thenReturn(suggestions);
 
@@ -85,13 +85,13 @@ public class AutoCompleteControllerTest {
     @Test
     public void fetchTermSource() throws Exception {
 
-        TermSourceSuggestion termSource1 = new TermSourceSuggestion("TERM1", "SOURCE1");
-        TermSourceSuggestion termSource2 = new TermSourceSuggestion("TERM2", "SOURCE2");
+        SemanticQueryTerm termSource1 = SemanticQueryTerm.create("TERM1", "SOURCE1");
+        SemanticQueryTerm termSource2 = SemanticQueryTerm.create("TERM2", "SOURCE2");
 
-        TermSourceSuggestion termSource3 = new TermSourceSuggestion("TERM3", "SOURCE3");
-        TermSourceSuggestion termSource4 = new TermSourceSuggestion("TERM4", "SOURCE4");
+        SemanticQueryTerm termSource3 = SemanticQueryTerm.create("TERM3", "SOURCE3");
+        SemanticQueryTerm termSource4 = SemanticQueryTerm.create("TERM4", "SOURCE4");
 
-        List<TermSourceSuggestion> termSourceList = Lists.newArrayList(termSource1,termSource2,termSource3,termSource4);
+        List<SemanticQueryTerm> termSourceList = Lists.newArrayList(termSource1,termSource2,termSource3,termSource4);
 
         Gson gson = new Gson();
 

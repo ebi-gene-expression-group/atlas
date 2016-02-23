@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -53,10 +54,10 @@ public class SuggestionService {
         this.multiTermSuggestionService = multiTermSuggestionService;
     }
 
-    public List<TermSourceSuggestion> fetchTopSuggestions(String query, @Nullable String species) {
+    public List<SemanticQueryTerm> fetchTopSuggestions(String query, @Nullable String species) {
         LOGGER.info("fetchTopSuggestions for query {}, species {}", query, species);
 
-        LinkedHashSet<TermSourceSuggestion> suggestions = Sets.newLinkedHashSet();
+        LinkedHashSet<SemanticQueryTerm> suggestions = Sets.newLinkedHashSet();
 
         suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInName(query, species));
 
@@ -69,11 +70,11 @@ public class SuggestionService {
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            List<TermSourceSuggestion> multiTermSuggestions = multiTermSuggestionService.fetchMultiTermSuggestions(query);
+            List<SemanticQueryTerm> multiTermSuggestions = multiTermSuggestionService.fetchMultiTermSuggestions(query);
             suggestions.addAll(multiTermSuggestions);
         }
 
-        List<TermSourceSuggestion> topSuggestions = Lists.newArrayList(suggestions);
+        List<SemanticQueryTerm> topSuggestions = Lists.newArrayList(suggestions);
 
         if (topSuggestions.size() > MAX_NUMBER_OF_SUGGESTIONS) {
             topSuggestions = topSuggestions.subList(0, MAX_NUMBER_OF_SUGGESTIONS);

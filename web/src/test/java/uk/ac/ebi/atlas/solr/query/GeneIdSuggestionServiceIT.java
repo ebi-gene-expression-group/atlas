@@ -29,6 +29,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
+import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -50,11 +51,11 @@ public class GeneIdSuggestionServiceIT {
     @Test
     public void findGeneNameSuggestionsForPartialGeneNames() {
 
-        List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInName("mt-at", HOMO_SAPIENS_SPECIES);
+        List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInName("mt-at", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(2));
-        assertThat(properties.get(0).term, is("MT-ATP8"));
-        assertThat(properties.get(0).source, is("symbol"));
+        assertThat(properties.get(0).value(), is("MT-ATP8"));
+        assertThat(properties.get(0).source(), is("symbol"));
 
         properties = subject.fetchGeneIdSuggestionsInIdentifier("mt-at", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(0));
@@ -63,78 +64,78 @@ public class GeneIdSuggestionServiceIT {
     @Test
     public void findGeneNameSuggestionsForFullGeneNames() {
 
-        List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInName("mt-atp6", HOMO_SAPIENS_SPECIES);
+        List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInName("mt-atp6", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(1));
-        assertThat(properties.get(0).term, is("MT-ATP6"));
-        assertThat(properties.get(0).source, is("symbol"));
+        assertThat(properties.get(0).value(), is("MT-ATP6"));
+        assertThat(properties.get(0).source(), is("symbol"));
 
         properties = subject.fetchGeneIdSuggestionsInName("mt-atp8", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(1));
-        assertThat(properties.get(0).term, is("MT-ATP8"));
-        assertThat(properties.get(0).source, is("symbol"));
+        assertThat(properties.get(0).value(), is("MT-ATP8"));
+        assertThat(properties.get(0).source(), is("symbol"));
 
     }
 
     @Test
     public void findSuggestionsForProteinCoding() {
 
-        List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInIdentifier("protein_c", HOMO_SAPIENS_SPECIES);
+        List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInIdentifier("protein_c", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(1));
-        assertThat(properties.get(0).term, is("protein_coding"));
-        assertThat(properties.get(0).source, is("gene_biotype"));
+        assertThat(properties.get(0).value(), is("protein_coding"));
+        assertThat(properties.get(0).source(), is("gene_biotype"));
     }
 
     @Test
     public void findSuggestionsForGOTerm() {
         //GO:0016021
-        List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInIdentifier("GO:0016", HOMO_SAPIENS_SPECIES);
+        List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInIdentifier("GO:0016", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties.get(7).term, is("GO:0016323"));
-        assertThat(properties.get(7).source, is("go"));
-        assertThat(properties.get(5).term, is("GO:0016324"));
-        assertThat(properties.get(5).source, is("go"));
-        assertThat(properties.get(10).term, is("GO:0016884"));
-        assertThat(properties.get(10).source, is("go"));
+        assertThat(properties.get(7).value(), is("GO:0016323"));
+        assertThat(properties.get(7).source(), is("go"));
+        assertThat(properties.get(5).value(), is("GO:0016324"));
+        assertThat(properties.get(5).source(), is("go"));
+        assertThat(properties.get(10).value(), is("GO:0016884"));
+        assertThat(properties.get(10).source(), is("go"));
 
         properties = subject.fetchGeneIdSuggestionsInIdentifier("GO:001602", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(5));
-        assertThat(properties.get(1).term, is("GO:0016021"));
-        assertThat(properties.get(1).source, is("go"));
-        assertThat(properties.get(0).term, is("GO:0016020"));
-        assertThat(properties.get(0).source, is("go"));
-        assertThat(properties.get(4).term, is("GO:0016028"));
-        assertThat(properties.get(4).source, is("go"));
+        assertThat(properties.get(1).value(), is("GO:0016021"));
+        assertThat(properties.get(1).source(), is("go"));
+        assertThat(properties.get(0).value(), is("GO:0016020"));
+        assertThat(properties.get(0).source(), is("go"));
+        assertThat(properties.get(4).value(), is("GO:0016028"));
+        assertThat(properties.get(4).source(), is("go"));
     }
 
     @Test
     public void findSuggestionsForDesignElement() {
         //Hs2Affx.1.41.S1_3p_s_at
-        List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx", HOMO_SAPIENS_SPECIES);
+        List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties.get(0).term, is("Hs2Affx.1.51.S1_3p_at"));
-        assertThat(properties.get(0).source, is("design_element"));
-        assertThat(properties.get(4).term, is("Hs2Affx.1.309.S1_3p_at"));
-        assertThat(properties.get(4).source, is("design_element"));
-        assertThat(properties.get(14).term, is("Hs2Affx.1.6.S1_3p_s_at"));
-        assertThat(properties.get(14).source, is("design_element"));
+        assertThat(properties.get(0).value(), is("Hs2Affx.1.51.S1_3p_at"));
+        assertThat(properties.get(0).source(), is("design_element"));
+        assertThat(properties.get(4).value(), is("Hs2Affx.1.309.S1_3p_at"));
+        assertThat(properties.get(4).source(), is("design_element"));
+        assertThat(properties.get(14).value(), is("Hs2Affx.1.6.S1_3p_s_at"));
+        assertThat(properties.get(14).source(), is("design_element"));
 
         properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx.1.41", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(7));
-        assertThat(properties.get(0).term, is("Hs2Affx.1.411.S1_3p_at"));
-        assertThat(properties.get(0).source, is("design_element"));
+        assertThat(properties.get(0).value(), is("Hs2Affx.1.411.S1_3p_at"));
+        assertThat(properties.get(0).source(), is("design_element"));
     }
 
     @Test
     public void findSomethingStupidShouldReturnEmpty() {
 
-        List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx>", HOMO_SAPIENS_SPECIES);
+        List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx>", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(0));
 
         properties = subject.fetchGeneIdSuggestionsInName("mt-at$", HOMO_SAPIENS_SPECIES);
@@ -144,56 +145,56 @@ public class GeneIdSuggestionServiceIT {
     @Test
     public void findGeneSynonymSuggestions() {
 
-        List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInSynonym("atpase-", HOMO_SAPIENS_SPECIES);
+        List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInSynonym("atpase-", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(1));
-        assertThat(properties.get(0).term, is("ATPase-6"));
-        assertThat(properties.get(0).source, is("synonym"));
+        assertThat(properties.get(0).value(), is("ATPase-6"));
+        assertThat(properties.get(0).source(), is("synonym"));
 
         properties = subject.fetchGeneIdSuggestionsInSynonym("mtatp", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(2));
-        assertThat(properties.get(0).term, is("MTATP8"));
-        assertThat(properties.get(0).source, is("synonym"));
-        assertThat(properties.get(1).term, is("MTATP6"));
-        assertThat(properties.get(1).source, is("synonym"));
+        assertThat(properties.get(0).value(), is("MTATP8"));
+        assertThat(properties.get(0).source(), is("synonym"));
+        assertThat(properties.get(1).value(), is("MTATP6"));
+        assertThat(properties.get(1).source(), is("synonym"));
 
         properties = subject.fetchGeneIdSuggestionsInSynonym("su6", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(1));
-        assertThat(properties.get(0).term, is("Su6m"));
-        assertThat(properties.get(0).source, is("synonym"));
+        assertThat(properties.get(0).value(), is("Su6m"));
+        assertThat(properties.get(0).source(), is("synonym"));
 
     }
 
     @Test
     public void findGeneNameSuggestionsShouldSupportSingleTermQueries() {
 
-        List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInName("p", HOMO_SAPIENS_SPECIES);
+        List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInName("p", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties.get(0).term, is("PTRH2"));
-        assertThat(properties.get(0).source, is("symbol"));
-        assertThat(properties.get(1).term, is("PSMD8P1"));
-        assertThat(properties.get(1).source, is("symbol"));
+        assertThat(properties.get(0).value(), is("PTRH2"));
+        assertThat(properties.get(0).source(), is("symbol"));
+        assertThat(properties.get(1).value(), is("PSMD8P1"));
+        assertThat(properties.get(1).source(), is("symbol"));
     }
 
     @Test
     public void findGeneNameSuggestionsShouldNotContainSpeciesTerms() {
 
-        List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInName("mus", MUS_MUSCULUS_SPECIES);
+        List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInName("mus", MUS_MUSCULUS_SPECIES);
 
         assertThat(properties.size(), is(3));
 
-        assertThat(properties.get(0).term, is("Mustn1"));
-        assertThat(properties.get(0).source, is("symbol"));
-        assertThat(properties.get(1).term, is("Musk"));
-        assertThat(properties.get(1).source, is("symbol"));
-        assertThat(properties.get(2).term, is("Mus81"));
-        assertThat(properties.get(2).source, is("symbol"));
+        assertThat(properties.get(0).value(), is("Mustn1"));
+        assertThat(properties.get(0).source(), is("symbol"));
+        assertThat(properties.get(1).value(), is("Musk"));
+        assertThat(properties.get(1).source(), is("symbol"));
+        assertThat(properties.get(2).value(), is("Mus81"));
+        assertThat(properties.get(2).source(), is("symbol"));
     }
 
     @Test
     public void findGeneNameSuggestionsShouldNotSupportMultitermQueries() {
 
-        List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInName("En p", HOMO_SAPIENS_SPECIES);
+        List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInName("En p", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(0));
     }
@@ -201,10 +202,10 @@ public class GeneIdSuggestionServiceIT {
     @Test
     public void testGetSolrResultsForQuery() throws SolrServerException, GenesNotFoundException {
         // given
-        List<TermSourceSuggestion> geneNames = subject.fetchGeneIdSuggestionsInName("aspm", "homo sapiens");
+        List<SemanticQueryTerm> geneNames = subject.fetchGeneIdSuggestionsInName("aspm", "homo sapiens");
 
-        assertThat(geneNames.get(0).term, is("ASPM"));
-        assertThat(geneNames.get(0).source, is("symbol"));
+        assertThat(geneNames.get(0).value(), is("ASPM"));
+        assertThat(geneNames.get(0).source(), is("symbol"));
 
     }
 
