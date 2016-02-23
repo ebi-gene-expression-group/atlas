@@ -120,7 +120,9 @@ public class AnalyticsQueryBuilder {
         StringBuilder stringBuilder = new StringBuilder();
         Joiner joinerOr = Joiner.on(" OR ");
 
-        stringBuilder.append(IDENTIFIER_SEARCH_FIELD).append(":(").append(joinerOr.join(identifierSearchTerms)).append(")");
+        if (identifierSearchTerms.size() > 0) {
+            stringBuilder.append(IDENTIFIER_SEARCH_FIELD).append(":(").append(joinerOr.join(identifierSearchTerms)).append(")");
+        }
 
         if (bioentityIdentifierTerms.size() > 0) {
             if (stringBuilder.length() > 0) {
