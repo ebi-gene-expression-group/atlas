@@ -41,7 +41,6 @@ var geneQueryTagEditorModule = (function($) {
                 delimiter:'\t\n',
                 maxLength: 50,
                 autocomplete: {
-                    select: function( event, ui ) {debugger;},
                     delay: 500,
                     minLength: 1,
                     autoFocus: false,
