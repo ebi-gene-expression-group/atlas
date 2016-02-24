@@ -109,7 +109,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/heatmap-and-anatomogram.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/chosen/chosen.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-tagEditor/jquery.tag-editor.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-tageditor-1.0.20/jquery.tag-editor.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/experiment-design-table.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home.css" media="screen">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ae-autocomplete.css" media="screen">
@@ -123,7 +123,9 @@
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.11.4.custom/jquery-ui.min.css">
     <!-- jQuery UI end -->
-    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-tagEditor/jquery.tag-editor.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-caret/jquery.caret.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-tageditor-1.0.20/jquery.tag-editor.js"></script>
+
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneQueryTagEditorModule.js"></script>
