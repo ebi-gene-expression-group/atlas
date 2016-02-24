@@ -23,7 +23,7 @@
 var geneQueryTagEditorModule = (function($) {
     "use strict";
 
-    function initAutocomplete(element, species, onChange){
+    function initAutocomplete(element, species, onChange) {
         $(element)
             // don't navigate away from the field on tab when selecting an item
             .bind( 'keydown', function( event ) {
@@ -74,8 +74,8 @@ var geneQueryTagEditorModule = (function($) {
                             }
                         });
                     },
-                    _renderItem: function( ul, item) {
-                        var source_des ='&nbsp;';
+                    _renderItem: function(ul, item) {
+                        var source_des ="&nbsp;";
                         if(item.source.length != 0) {
                             source_des = item.source;
                         }
@@ -85,14 +85,14 @@ var geneQueryTagEditorModule = (function($) {
                             .attr( "data-source", item.source )
                             .append( "<a>" + "<div style='float:left;text-align: left'>" + item.label + "</div><div style='text-align: right'><small>" + source_des + "</small></div></a>" )
                             .appendTo( ul );
+                    },
+                    select: function(event, ui) {
+                        window.selectedTagSource = [ui.item.source];
                     }
                 },
-
                 onChange: onChange,
-
                 placeholder: 'Enter gene query...',
                 forceLowercase: false
-
         });
 
     }

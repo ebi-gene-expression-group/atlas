@@ -207,7 +207,7 @@
                     if (o.removeDuplicates && ~$.inArray(tag, old_tags))
                         $('.tag-editor-tag', ed).each(function(){ if ($(this).text() == tag) $(this).closest('li').remove(); });
                     old_tags.push(tag);
-                    li.before('<li><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag">'+escape(tag)+'</div><div class="tag-editor-delete"><i></i></div></li>');
+                    li.before('<li data-value="' + tag + '" data-source=""><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag">'+escape(tag)+'</div><div class="tag-editor-delete"><i></i></div></li>');
                     if (o.maxTags && old_tags.length >= o.maxTags) { exceeded = true; break; }
                 }
                 input.attr('maxlength', o.maxLength).removeData('old_tag').val('')
@@ -258,6 +258,9 @@
                 }
 
                 if(!isTreeExpansionHit) {
+                    input.closest("li")
+                        .attr('data-value', tag)
+                        .attr('data-source', window.selectedTagSource && window.selectedTagSource.length > 0 ? window.selectedTagSource.pop() : "");
                     input.parent().html(tag).removeClass('active');
                 }
                 if (tag != old_tag) update_globals();
