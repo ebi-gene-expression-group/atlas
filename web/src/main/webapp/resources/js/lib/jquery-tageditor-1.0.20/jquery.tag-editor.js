@@ -180,9 +180,13 @@
                         aco.select = function(e, ui){ if (ac_select) ac_select(e, ui); setTimeout(function(){
                             ed.trigger('click', [$('.active', ed).find('input').closest('li').next('li').find('.tag-editor-tag')]);
                         }, 20); };
-                        input.autocomplete(aco);
-                        if (aco._renderItem) {
-                            input.autocomplete('instance')._renderItem = aco._renderItem;
+                        if (aco.plugin) {
+                            input[aco.plugin](aco);
+                        } else {
+                            input.autocomplete(aco);
+                            if (aco._renderItem) {
+                                input.autocomplete( "instance" )._renderItem = aco._renderItem;
+                            }
                         }
                     }
                 }
@@ -210,6 +214,15 @@
                 if (exceeded) input.blur(); else input.focus();
                 update_globals();
             }
+
+            var isTreeExpansionHit = false;
+            ed.on('onTreeExpansionHit', function (e) {
+                isTreeExpansionHit = true;
+            });
+
+            ed.on('onTreeNoExpansionHit', function (e) {
+                isTreeExpansionHit = false;
+            });
 
             ed.on('blur', 'input', function(e){
                 e.stopPropagation();
@@ -243,7 +256,10 @@
                     else if (o.removeDuplicates)
                         $('.tag-editor-tag:not(.active)', ed).each(function(){ if ($(this).text() == tag) $(this).closest('li').remove(); });
                 }
-                input.parent().html(escape(tag)).removeClass('active');
+
+                if(!isTreeExpansionHit) {
+                    input.parent().html(tag).removeClass('active');
+                }
                 if (tag != old_tag) update_globals();
                 set_placeholder();
             });
@@ -280,7 +296,9 @@
                 else if ((e.which == 39 || !o.autocomplete && e.which == 40) && ($t.caret() == $t.val().length)) {
                     var next_tag = $t.closest('li').next('li').find('.tag-editor-tag');
                     if (next_tag.length) next_tag.click().find('input').caret(0);
-                    else if ($t.val()) ed.click();
+                    else if ($t.val() && !isTreeExpansionHit) {
+                        ed.click();
+                    }
                     return false;
                 }
                 // tab key
