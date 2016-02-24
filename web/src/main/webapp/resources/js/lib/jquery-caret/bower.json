@@ -1,0 +1,20 @@
+{
+  "name": "caret",
+  "description": "Manipulate the caret's position in a text box or content-editable element.",
+  "main": "jquery.caret.js",
+  "license": ["BSD-3-Clause"],
+  "ignore": [
+    "bower_components",
+    "node_modules",
+    "test.html"
+  ],
+  "keywords": ["caret"],
+  "authors": [{
+    "name": "Gideon Sireling",
+    "homepage": "https://www.linkedin.com/in/gideonsireling"
+  }],
+  "homepage": "https://bitbucket.org/accursoft/caret",
+  "dependencies": {
+    "jquery": ">=1.3"
+  }
+}
