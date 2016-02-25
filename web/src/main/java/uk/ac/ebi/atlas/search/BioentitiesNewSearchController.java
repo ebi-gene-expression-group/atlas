@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.web.SemanticQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
@@ -64,6 +65,7 @@ public class BioentitiesNewSearchController {
         String selectedSpecies = requestParameters.hasOrganism() ? requestParameters.getOrganism().trim().toLowerCase() : "";
 
         if (requestParameters.hasSemanticQuery() && !requestParameters.hasCondition()) {
+
             if (requestParameters.getSemanticQuery().size() == 1) {
                 return singleTermGeneQuery(requestParameters.getSemanticQuery(), selectedSpecies, model, redirectAttributes);
             } else {
@@ -71,24 +73,26 @@ public class BioentitiesNewSearchController {
             }
 
         } else if (!requestParameters.hasSemanticQuery() && requestParameters.hasCondition()) {
+
             // Only condition was specified
             // if (requestParameters.getConditionQuery().size() == 1) {
             //     return singleTermConditionQuery(requestParameters.getConditionQuery(), selectedSpecies, requestParameters.isExactMatch(), model, redirectAttributes);
             // } else {
             //     return multiTermConditionQuery(requestParameters.getConditionQuery(), selectedSpecies, requestParameters.isExactMatch(), model, redirectAttributes);
             // }
+            return "";
 
         } else {
-            // Both gene query and condition were specified
-        }
 
-        return "home";
+            return "";
+            // Both gene query and condition were specified
+
+        }
     }
 
 
     private String singleTermGeneQuery(SemanticQuery geneQuery, String species, Model model, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("searchDescription", geneQuery.toString());
-        redirectAttributes.addFlashAttribute("selectedSpecies", StringUtils.capitalize(species));
 
         // Gene set ID
         if (GeneSetUtil.isGeneSetSourceOrMatchesGeneSetAccession(geneQuery)) {
@@ -101,6 +105,7 @@ public class BioentitiesNewSearchController {
             return "redirect:/genes/" + geneIds.get().iterator().next();
         }
 
+        // Resolves to more than one gene ID
         return "";
 
 

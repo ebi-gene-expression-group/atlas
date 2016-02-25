@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search;
+package uk.ac.ebi.atlas.search.analyticsindex;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
@@ -20,17 +20,14 @@ import javax.inject.Named;
 public class AnalyticsSearchService {
 
     private AnalyticsClient analyticsClient;
-    private AnalyticsQueryBuilder analyticsQueryBuilder;
-
 
     @Inject
-    public AnalyticsSearchService(AnalyticsClient analyticsClient, AnalyticsQueryBuilder analyticsQueryBuilder) {
+    public AnalyticsSearchService(AnalyticsClient analyticsClient) {
         this.analyticsClient = analyticsClient;
-        this.analyticsQueryBuilder = analyticsQueryBuilder;
     }
 
     public Optional<ImmutableSet<String>> searchBioentityIdentifiers(SemanticQuery geneQuery, String species) {
-        QueryResponse queryResponse = analyticsClient.query(analyticsQueryBuilder.queryIdentifierSearch(geneQuery).ofSpecies(species).setRows(0).facetByBioentityIdentifier().build());
+        QueryResponse queryResponse = analyticsClient.query(new AnalyticsQueryBuilder().queryIdentifierSearch(geneQuery).ofSpecies(species).setRows(0).facetByBioentityIdentifier().build());
         return Optional.of(SolrUtil.extractFirstFacetValues(queryResponse));
     }
 }
