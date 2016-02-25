@@ -24,17 +24,13 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
 import com.google.gson.Gson;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import uk.ac.ebi.atlas.experimentpage.baseline.model.HeaderTree;
-import uk.ac.ebi.atlas.experimentpage.baseline.model.HeaderTreeNode;
+import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
@@ -66,6 +62,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
     private final BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
     private final SpeciesKingdomTrader speciesKingdomTrader;
     private final AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
+    private BaselineExperimentUtil bslnUtil;
 
     public BaselineExperimentPageController(BaselineProfilesHeatMap baselineProfilesHeatMap,
                                             ApplicationProperties applicationProperties,
@@ -75,7 +72,8 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
                                             BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                             AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
                                             SpeciesKingdomTrader speciesKingdomTrader,
-                                            TracksUtil tracksUtil) {
+                                            TracksUtil tracksUtil,
+                                            BaselineExperimentUtil bslnUtil) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
@@ -85,6 +83,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         this.assayGroupFactorViewModelBuilder = assayGroupFactorViewModelBuilder;
         this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
+        this.bslnUtil = bslnUtil;
     }
 
     @InitBinder("preferences")
@@ -109,9 +108,9 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
         model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
 
-        Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
+//        model.addAttribute("isCTTV", bslnUtil.hasCTTV(experiment.getAccession()));
 
-        List<String> factorTypes = experimentalFactors.getHeaderFactorTypes();
+        Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
         Set<Factor> orderedFactors;
         Set<AssayGroupFactor> filteredAssayGroupFactors;
@@ -121,18 +120,6 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         } else {
             filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors);
             orderedFactors = experimentalFactors.getComplementFactors(selectedFilterFactors);
-        }
-
-        if (CollectionUtils.isNotEmpty(factorTypes)) {
-            Set<ImmutableSet<Factor>> allMultiHeaderFactors = experimentalFactors.getAllMultiHeaderFactors(factorTypes);
-            orderedFactors = Sets.newLinkedHashSet();
-            filteredAssayGroupFactors = Sets.newLinkedHashSet();
-            for (ImmutableSet<Factor> filterFactors : allMultiHeaderFactors) {
-                Set<AssayGroupFactor> selectedSlice = experimentalFactors.getComplementAssayGroupFactors(filterFactors);
-                filteredAssayGroupFactors.addAll(selectedSlice);
-                Set<Factor> orderedSlice = experimentalFactors.getComplementFactors(filterFactors);
-                orderedFactors.addAll(orderedSlice);
-            }
         }
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
@@ -168,7 +155,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
                 BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext);
                 BaselineProfilesList profilesAsGeneSets = requestContext.geneQueryResponseContainsGeneSets() ? fetchGeneProfilesAsGeneSets() : null;
 
-                addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, factorTypes, model);
+                addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, model);
 
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
                     ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);
@@ -241,20 +228,13 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
     private void addJsonForHeatMap(BaselineProfilesList baselineProfiles, BaselineProfilesList geneSetProfiles,
                                    Set<AssayGroupFactor> filteredAssayGroupFactors, Set<Factor> orderedFactors,
-                                   List<String> factorTypes, Model model) {
+                                   Model model) {
         if (baselineProfiles.isEmpty()) {
             return;
         }
         Gson gson = new Gson();
 
         ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = assayGroupFactorViewModelBuilder.build(filteredAssayGroupFactors);
-
-        model.addAttribute("showMultipleColumnHeaders", !factorTypes.isEmpty());
-
-        if(!factorTypes.isEmpty()) {
-            String jsonMultipleHeadersAssayGroupFactors = gson.toJson(createJsonForMultipleHeatmapHeaders(factorTypes));
-            model.addAttribute("jsonMultipleColumnHeaders", jsonMultipleHeadersAssayGroupFactors);
-        }
 
         String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
         model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
@@ -267,63 +247,6 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         if (geneSetProfiles != null) {
             String jsonGeneSetProfiles = gson.toJson(baselineProfilesViewModelBuilder.build(geneSetProfiles, orderedFactors));
             model.addAttribute("jsonGeneSetProfiles", jsonGeneSetProfiles);
-        }
-    }
-
-    private HeaderTree populateHeaders(List<String> factorTypes, Multimap<String, Factor> factorsByType) {
-        HeaderTree tree = new HeaderTree();
-
-        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-        //For each first header in the hierarchy
-        for(Factor headerFactor : factorsByType.get(factorTypes.get(0))) {
-
-            Map<String, List<Factor>> firstHierarchyAssayGroupHeaderFactors = experimentalFactors.getHeadersComplementAssayGroupFactors(headerFactor);
-
-            HeaderTreeNode headerTree = new HeaderTreeNode(headerFactor.getValue());
-            //For each sub header in the hierarchy
-            for (Factor subHeaderFactor : factorsByType.get(factorTypes.get(1))) {
-                HeaderTreeNode subHeaderTree = new HeaderTreeNode(subHeaderFactor.getValue());
-
-                //Extract the assayGroupHeaderFactors
-                LinkedHashSet<AssayGroupFactor> assayGroupFactors = Sets.newLinkedHashSet();
-                for(Map.Entry<String, List<Factor>> entry : firstHierarchyAssayGroupHeaderFactors.entrySet()) {
-                    String key = entry.getKey();
-                    List<Factor> factors = entry.getValue();
-                    for(Factor factor : factors) {
-                        if(factor.getValue().equals(subHeaderFactor.getValue())) {
-                            AssayGroupFactor assayGroupFactor = new AssayGroupFactor(key, factors.get(1));
-                            assayGroupFactors.add(assayGroupFactor);
-                        }
-                    }
-                }
-
-                ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = assayGroupFactorViewModelBuilder.build(assayGroupFactors);
-                HeaderTreeNode leafNodes = new HeaderTreeNode(assayGroupFactorViewModels);
-                subHeaderTree.addChild(leafNodes);
-                subHeaderTree.setCounters();
-
-                //Add to the parent if it has celllines
-                if(!assayGroupFactorViewModels.isEmpty()) {
-                    headerTree.addChild(subHeaderTree);
-                }
-            }
-            headerTree.setCounters();
-            tree.addChild(headerTree);
-        }
-
-        return tree.setCounters();
-    }
-
-    private HeaderTree createJsonForMultipleHeatmapHeaders(List<String> factorTypes){
-        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-        Multimap<String, Factor> factorsByType;
-
-        if(experimentalFactors.getXmlFactorsByType() != null && !experimentalFactors.getXmlFactorsByType().isEmpty()) {
-            factorsByType = experimentalFactors.getXmlFactorsByType();
-            return populateHeaders(factorTypes, factorsByType);
-        } else {
-            factorsByType = experimentalFactors.getFactorsByType();
-            return populateHeaders(factorTypes, factorsByType);
         }
     }
 
