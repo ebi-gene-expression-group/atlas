@@ -8,4 +8,4 @@
     // $.fn.btn = btn // assigns bootstrap button functionality to $.fn.btn
 </script>
 
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/new-bioentities/bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/new-bioentities/custom-bootstrap-additions.css"/>
