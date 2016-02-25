@@ -22,9 +22,6 @@
 
 package uk.ac.ebi.atlas.experimentpage.context;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
@@ -107,19 +104,6 @@ public class BaselineRequestContextBuilder {
             checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
             requestContext.setAllQueryFactors(allQueryFactors);
         }
-
-        if (CollectionUtils.isNotEmpty(experimentalFactors.getHeaderFactorTypes())) {
-            Set<ImmutableSet<Factor>> allMultiHeaderFactors = experimentalFactors.getAllMultiHeaderFactors(experimentalFactors.getHeaderFactorTypes());
-            requestContext.setAllMultiHeaderFactors(allMultiHeaderFactors);
-
-            Set<Factor> allQueryFactors = Sets.newLinkedHashSet();
-            for (ImmutableSet<Factor> filterFactors : allMultiHeaderFactors) {
-                Set<Factor> factorsSet = experimentalFactors.getComplementFactors(filterFactors);
-                allQueryFactors.addAll(factorsSet);
-            }
-            requestContext.setAllQueryFactors(allQueryFactors);
-        }
-
 
         return requestContext;
     }

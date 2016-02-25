@@ -44,8 +44,6 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
 
     private Set<Factor> selectedFilterFactors;
 
-    private Set<ImmutableSet<Factor>> allMultiHeaderFactors;
-
     public BaselineRequestContext() {
     }
 
@@ -70,14 +68,6 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
 
     void setSelectedFilterFactors(Set<Factor> selectedFilterFactors) {
         this.selectedFilterFactors = selectedFilterFactors;
-    }
-
-    public Set<ImmutableSet<Factor>> getAllMultiHeaderFactors() {
-        return allMultiHeaderFactors;
-    }
-
-    public void setAllMultiHeaderFactors(Set<ImmutableSet<Factor>> allMultiHeaderFactors) {
-        this.allMultiHeaderFactors = allMultiHeaderFactors;
     }
 
     void setExperiment(BaselineExperiment experiment) {

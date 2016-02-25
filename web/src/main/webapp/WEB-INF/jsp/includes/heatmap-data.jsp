@@ -10,7 +10,6 @@
 <%--@elvariable id="enableEnsemblLauncher" type="boolean"--%>
 <%--@elvariable id="gseaPlots" type="java.lang.String"--%>
 <%--@elvariable id="downloadURL" type="java.lang.String"--%>
-<%--@elvariable id="showMultipleColumnHeaders" type="boolean"--%>
 <%--@elvariable id="jsonColumnHeaders" type="java.lang.String"--%>
 <%--@elvariable id="jsonNonExpressedColumnHeaders" type="java.lang.String"--%>
 <%--@elvariable id="jsonMultipleColumnHeaders" type="java.lang.String"--%>
@@ -69,8 +68,7 @@
                 "enableEnsemblLauncher": ${isMultiExperiment ? false : (empty enableEnsemblLauncher ? true : enableEnsemblLauncher)},
                 "showMaPlotButton": true,
                 "gseaPlots": ${empty gseaPlots ? "null" : gseaPlots},
-                "downloadProfilesURL": "${not empty downloadURL ? downloadURL : applicationProperties.buildDownloadURL(pageContext.request)}",
-                "showMultipleColumnHeaders": ${not empty showMultipleColumnHeaders ? showMultipleColumnHeaders : "false"}
+                "downloadProfilesURL": "${not empty downloadURL ? downloadURL : applicationProperties.buildDownloadURL(pageContext.request)}"
             },
             "columnHeaders": ${not empty jsonColumnHeaders ? jsonColumnHeaders : "null"},
             "nonExpressedColumnHeaders": ${not empty jsonNonExpressedColumnHeaders ? jsonNonExpressedColumnHeaders : "[]"},

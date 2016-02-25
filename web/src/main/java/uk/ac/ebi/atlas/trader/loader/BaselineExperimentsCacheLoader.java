@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
 //This class is wired into CacheConfiguration. Guava CacheBuilder, that is the one only client of this class, is not spring managed and only accepts an initial instance
 //of BaselineExperimentsCacheLoader, hence BaselineExperimentsCacheLoader is a singleton. However BaselineExperimentsCacheLoader uses ExperimentBuilder and ExperimentalFactorsBuilder
 //which have a prototype scope. To get around this BaselineExperimentsCacheLoader uses lookup-method injection to get a new prototypical instance of
@@ -134,13 +135,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                                                                 AssayGroups assayGroups, String[] orderedAssayGroupIds) {
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
         Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
-        List<String> headerFactorsType = factorsConfig.getFactorTypes();
-        Set<String> requiredFactorTypes;
-        if(!defaultFilterFactors.isEmpty()) {
-            requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
-        } else {
-            requiredFactorTypes = getRequiredHeaderFactorTypes(defaultQueryFactorType, headerFactorsType);
-        }
+        Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
+
         Map<String, String> factorNamesByType = getFactorDisplayNameByType(experimentDesign.getFactorHeaders(), requiredFactorTypes);
 
         List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(experimentAccession, orderedAssayGroupIds, assayGroups, experimentDesign);
@@ -152,7 +148,6 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withOrderedFactorGroups(orderedFactorGroups)
                 .withOrderedFactorGroupsByAssayGroupId(orderedFactorGroupsByAssayGroup)
                 .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
-                .withFactorTypes(factorsConfig.getFactorTypes())
                 .withFactorNamesByType(factorNamesByType)
                 .withDefaultQueryType(factorsConfig.getDefaultQueryFactorType())
                 .withDefaultFilterFactors(defaultFilterFactors)
@@ -175,7 +170,6 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withOrderedFactorGroups(orderedFactorGroups)
                 .withOrderedFactorGroupsByAssayGroupId(orderedFactorGroupsByAssayGroup)
                 .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
-                .withFactorTypes(factorsConfig.getFactorTypes())
                 .withFactorNamesByType(factorNamesByType)
                 .withDefaultQueryType(factorsConfig.getDefaultQueryFactorType())
                 .withDefaultFilterFactors(defaultFilterFactors)
@@ -188,17 +182,6 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         for (Factor defaultFilterFactor : defaultFilterFactors) {
             requiredFactorTypes.add(defaultFilterFactor.getType());
-        }
-        return requiredFactorTypes;
-    }
-
-    Set<String> getRequiredHeaderFactorTypes(String defaultQueryFactorType, List<String> headerFactorsType) {
-        Set<String> requiredFactorTypes = Sets.newHashSet(defaultQueryFactorType);
-
-        for (String headerFactor : headerFactorsType) {
-            if(!headerFactor.equals(defaultQueryFactorType)) {
-                requiredFactorTypes.add(headerFactor);
-            }
         }
         return requiredFactorTypes;
     }
