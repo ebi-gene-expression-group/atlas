@@ -23,11 +23,13 @@
 package uk.ac.ebi.atlas.acceptance.rest.tests;
 
 
+import autovalue.shaded.com.google.common.common.collect.Lists;
 import com.google.gson.Gson;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
+import uk.ac.ebi.atlas.web.SemanticQuery;
 import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import java.util.Arrays;
@@ -35,6 +37,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 
 public class AutocompleteControllerIT {
 
@@ -61,15 +64,14 @@ public class AutocompleteControllerIT {
         //given
         ResponseBody responseBody = subject.getResponse().body();
         String jsonString = responseBody.asString();
-        Gson gson = new Gson();
         //when
-        SemanticQueryTerm[] suggestions = gson.fromJson(jsonString, SemanticQueryTerm[].class);
+        SemanticQuery query = SemanticQuery.fromJson(jsonString);
 
-        List<SemanticQueryTerm> suggestionList = Arrays.asList(suggestions);
+        SemanticQueryTerm firstTerm = query.iterator().next();
 
-        assertThat(suggestionList.get(0).value(), is("ASPN"));
-        assertThat(suggestionList.get(0).source(), is("symbol"));
-        assertThat(suggestionList, hasSize(15));
+        assertThat(firstTerm.value(), is("ASPN"));
+        assertThat(firstTerm.source(), is("symbol"));
+        assertEquals(query.size(), 15);
 
     }
 
@@ -79,10 +81,9 @@ public class AutocompleteControllerIT {
         EndPoint emptySpeciesRequest = new EndPoint(END_POINT_URL,"query=ASP");
         ResponseBody responseBody = emptySpeciesRequest.getResponse().body();
         String jsonString = responseBody.asString();
-        Gson gson = new Gson();
         //when
-        SemanticQueryTerm[] suggestions = gson.fromJson(jsonString, SemanticQueryTerm[].class);
-        List<SemanticQueryTerm> suggestionList = Arrays.asList(suggestions);
+        SemanticQuery query = SemanticQuery.fromJson(jsonString);
+        List<SemanticQueryTerm> suggestionList = Lists.newArrayList(query);
 
         assertThat(suggestionList.get(11).value(), is("ASPG (2 of 3)"));
         assertThat(suggestionList.get(11).source(), is("symbol"));
