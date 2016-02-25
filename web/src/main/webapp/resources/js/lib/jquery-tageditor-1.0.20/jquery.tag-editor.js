@@ -14,7 +14,8 @@
 
         // helper
         function escape(tag) {
-            return tag.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+            var trimmedTag = tag.length > o.tagMaxLength ? tag.substring(0, o.tagMaxLength) + "…" : tag;
+            return trimmedTag.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/…/g, "&hellip;");;
         }
 
         // build options dictionary with default values
@@ -226,7 +227,7 @@
 
             ed.on('blur', 'input', function(e){
                 e.stopPropagation();
-                var input = $(this), old_tag = input.data('old_tag'), tag = $.trim(input.val().replace(/ +/, ' ').replace(o.dregex, o.delimiter[0]));
+                var input = $(this), old_tag = input.data('old_tag'), tag = escape($.trim(input.val().replace(/ +/, ' ').replace(o.dregex, o.delimiter[0])));
                 if (!tag) {
                     if (old_tag && o.beforeTagDelete(el, ed, tag_list, old_tag) === false) {
                         input.val(old_tag).focus();
@@ -387,6 +388,7 @@
         animateDelete: 175,
         sortable: true, // jQuery UI sortable
         autocomplete: null, // options dict for jQuery UI autocomplete
+        tagMaxLength: 9999,
 
         // callbacks
         onChange: function(){},
