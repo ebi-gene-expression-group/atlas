@@ -79,7 +79,7 @@ public class AutoCompleteControllerTest {
         String jsonResponse = subject.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS);
 
         //then
-        assertThat(jsonResponse, is("[{\"term\":\"Value1\",\"source\":\"\"},{\"term\":\"Value2\",\"source\":\"\"}]"));
+        assertThat(jsonResponse, is("[{\"value\":\"Value1\",\"source\":\"\"},{\"value\":\"Value2\",\"source\":\"\"}]"));
     }
 
     @Test
@@ -97,7 +97,7 @@ public class AutoCompleteControllerTest {
 
         String suggestions = gson.toJson(termSourceList);
 
-        assertThat(suggestions, is("[{\"term\":\"TERM1\",\"source\":\"SOURCE1\"},{\"term\":\"TERM2\",\"source\":\"SOURCE2\"},{\"term\":\"TERM3\",\"source\":\"SOURCE3\"},{\"term\":\"TERM4\",\"source\":\"SOURCE4\"}]"));
+        assertThat(suggestions, is("[{\"value\":\"TERM1\",\"source\":\"SOURCE1\"},{\"value\":\"TERM2\",\"source\":\"SOURCE2\"},{\"value\":\"TERM3\",\"source\":\"SOURCE3\"},{\"value\":\"TERM4\",\"source\":\"SOURCE4\"}]"));
     }
 
 }
