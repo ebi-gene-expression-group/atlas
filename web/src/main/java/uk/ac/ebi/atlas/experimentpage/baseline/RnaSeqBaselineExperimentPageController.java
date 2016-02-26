@@ -30,6 +30,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
@@ -64,9 +65,10 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
                                                   BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                                   AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
                                                   SpeciesKingdomTrader speciesKingdomTrader,
-                                                  TracksUtil tracksUtil) {
+                                                  TracksUtil tracksUtil,
+                                                  BaselineExperimentUtil bslnUtil) {
         super(baselineProfilesHeatMap, applicationProperties, requestContextBuilder, filterFactorsConverter, filterFactorMenuBuilder,
-                baselineProfilesViewModelBuilder, assayGroupFactorViewModelBuilder, speciesKingdomTrader, tracksUtil);
+                baselineProfilesViewModelBuilder, assayGroupFactorViewModelBuilder, speciesKingdomTrader, tracksUtil, bslnUtil);
         this.downloadURLBuilder = downloadURLBuilder;
         this.applicationProperties = applicationProperties;
     }

@@ -22,9 +22,9 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
@@ -101,19 +101,6 @@ public class BaselineExperimentConfiguration {
         return results;
     }
 
-    public List<String> getFactorTypes() {
-        List<String> results = Lists.newArrayList();
-
-        List<Object> factorTypes = config.getList("factorTypes");
-        for (Object o : factorTypes) {
-            String filterFactorType = (String) o;
-            if (filterFactorType.trim().length() > 0) {
-                results.add(filterFactorType);
-            }
-        }
-        return results;
-    }
-
     public Map<String, String> getSpeciesMapping() {
 
         Map<String, String> mapping = new HashMap<>();
@@ -126,5 +113,16 @@ public class BaselineExperimentConfiguration {
         }
 
         return mapping;
+    }
+
+
+    public boolean isCTTVExperiment() {
+        String cttv = config.getString("cttv");
+
+        if (StringUtils.isEmpty(cttv)) {
+            return false;
+        } else {
+            return cttv.equals("true");
+        }
     }
 }

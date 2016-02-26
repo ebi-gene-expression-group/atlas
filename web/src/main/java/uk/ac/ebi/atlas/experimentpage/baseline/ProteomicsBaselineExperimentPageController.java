@@ -28,6 +28,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
@@ -54,10 +55,11 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
                                                       BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                                       AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
                                                       SpeciesKingdomTrader speciesKingdomTrader,
-                                                      TracksUtil tracksUtil) {
+                                                      TracksUtil tracksUtil,
+                                                      BaselineExperimentUtil bslnUtil) {
 
         super(baselineProfilesHeatMap, applicationProperties, requestContextBuilder, filterFactorsConverter, filterFactorMenuBuilder,
-                baselineProfilesViewModelBuilder, assayGroupFactorViewModelBuilder, speciesKingdomTrader, tracksUtil);
+                baselineProfilesViewModelBuilder, assayGroupFactorViewModelBuilder, speciesKingdomTrader, tracksUtil, bslnUtil);
     }
 
 

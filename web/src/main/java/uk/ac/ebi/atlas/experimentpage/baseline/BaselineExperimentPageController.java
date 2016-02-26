@@ -108,7 +108,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
         model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
 
-//        model.addAttribute("isCTTV", bslnUtil.hasCTTV(experiment.getAccession()));
+        model.addAttribute("isCTTV", bslnUtil.hasCTTV(experiment.getAccession()));
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
