@@ -33,6 +33,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.RecoverableDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -64,6 +65,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.lang.reflect.Type;
+import java.sql.SQLRecoverableException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -249,7 +251,7 @@ public final class HeatmapWidgetController {
 
 
     private void addAnatomogram(ImmutableSet<String> allSvgPathIds, Model model, String species) {
-        //TODO: check if this can be externalized in the view with a cutom EL or tag function
+        //TODO: check if this can be externalized in the view with a custom EL or tag function
         //or another code block because it's repeated with BaselineExperimentPageController
         String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.MALE);
         model.addAttribute("maleAnatomogramFile", maleAnatomogramFileName);
@@ -388,6 +390,15 @@ public final class HeatmapWidgetController {
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ModelAndView widgetSpecific404(Exception e) {
+        ModelAndView mav = new ModelAndView("widget-error");
+        mav.addObject("errorMessage", e.getMessage());
+
+        return mav;
+    }
+
+    @ExceptionHandler(value = {RecoverableDataAccessException.class})
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ModelAndView blah(Exception e) {
         ModelAndView mav = new ModelAndView("widget-error");
         mav.addObject("errorMessage", e.getMessage());
 

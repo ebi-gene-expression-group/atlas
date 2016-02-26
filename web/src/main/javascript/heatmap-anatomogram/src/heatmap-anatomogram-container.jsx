@@ -62,7 +62,8 @@ var HeatmapAnatomogramContainer = React.createClass({
         ]).isRequired,
         showAnatomogram: React.PropTypes.bool.isRequired,
         isWidget: React.PropTypes.bool.isRequired,
-        disableGoogleAnalytics: React.PropTypes.bool.isRequired
+        disableGoogleAnalytics: React.PropTypes.bool.isRequired,
+        fail: React.PropTypes.func
     },
 
     render: function () {
@@ -182,9 +183,11 @@ var HeatmapAnatomogramContainer = React.createClass({
                 }
             }.bind(this)
         ).fail(
-            function (jqXHR, textStatus) {
-                if (textStatus === "parsererror") {
-                    $(this.refs.this.getDOMNode()).html("<div class='error'>Could not parse JSON response</div>");
+            function (jqXHR, textStatus, errorThrown) {
+                if (this.props.fail) {
+                    this.props.fail(jqXHR, textStatus, errorThrown);
+                } else if (textStatus === "parsererror") {
+                    $(this.refs.this.getDOMNode()).html("<div class='gxaError'>Could not parse JSON response</div>");
                 } else {
                     $(this.refs.this.getDOMNode()).html(jqXHR.responseText);
                 }
