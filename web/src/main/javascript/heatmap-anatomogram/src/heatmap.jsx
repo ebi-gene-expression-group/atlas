@@ -269,7 +269,7 @@ var Heatmap = React.createClass({
                                                     selectedRadioButton={this.state.selectedRadioButton}
                                                     toggleRadioButton={this.toggleRadioButton}
                                                     renderContrastFactorHeaders={false}/>
-                            }
+
                         </table>
                     </div>
 
@@ -335,7 +335,7 @@ var Heatmap = React.createClass({
                                                     toggleRadioButton={this.toggleRadioButton}
                                                     renderContrastFactorHeaders={true}
                                                     anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>
-                            }
+
                         </table>
                     </div>
                 </div>

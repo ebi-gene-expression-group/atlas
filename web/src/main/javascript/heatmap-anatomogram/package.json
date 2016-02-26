@@ -18,7 +18,6 @@
     "heatmap-baseline-cell-variance": "file:../heatmap-baseline-cell-variance",
     "contrast-tooltips": "file:../contrast-tooltips",
     "help-tooltips": "file:../help-tooltips",
-    "multiple-heatmap-headers": "file:../multiple-heatmap-header",
     "jquery": "^2.1.4",
     "jquery-highlight": "^3.2.2",
     "jquery-ui": "^1.10.5",
