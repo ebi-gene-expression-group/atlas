@@ -27,7 +27,7 @@ public class AnalyticsQueryBuilder {
             "OR (experimentType:proteomics_baseline AND expressionLevel:[0 TO *])";
     private static final String DIFFERENTIAL_ABOVE_CUTOFF =
             "(experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential) " +
-            "AND foldChange:([* TO -1.0] OR [1.0 TO *]))";
+            "AND foldChange:([* TO -1.0] OR [1.0 TO *]) AND pValue:[* TO 0.05])";
 
     private static final String IDENTIFIER_SEARCH_VALUE_TEMPLATE = "%s:{%s}";
 

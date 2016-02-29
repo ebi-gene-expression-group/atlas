@@ -79,7 +79,7 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
 
     private String buildDifferentialResultsSortedAboveDefaultFoldChangeUrl(String q) {
         String query = q.isEmpty() ? DIFFERENTIAL_ONLY : q + " AND " + DIFFERENTIAL_ONLY;
-        return solrBaseUrl + buildQueryParameters(query, ROWS, DEFAULT_NEGATIVE_FOLD_CHANGE, DEFAULT_POSITIVE_FOLD_CHANGE) + SORT_FIELD;
+        return solrBaseUrl + buildQueryParameters(query, ROWS, DEFAULT_NEGATIVE_FOLD_CHANGE, DEFAULT_POSITIVE_FOLD_CHANGE, DEFAULT_P_VALUE) + SORT_FIELD;
     }
 
     private String buildDifferentialResultsSortedAboveDefaultFoldChangeUrl(String q, List<String> species, List<String> experimentTypes, List<String> kingdoms,
@@ -105,6 +105,6 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
             query = query + " AND regulation:" + regulation;
         }
 
-        return solrBaseUrl + buildQueryParameters(query, ROWS, DEFAULT_NEGATIVE_FOLD_CHANGE, DEFAULT_POSITIVE_FOLD_CHANGE) + SORT_FIELD;
+        return solrBaseUrl + buildQueryParameters(query, ROWS, DEFAULT_NEGATIVE_FOLD_CHANGE, DEFAULT_POSITIVE_FOLD_CHANGE, DEFAULT_P_VALUE) + SORT_FIELD;
     }
 }
