@@ -43,7 +43,7 @@ public class AnalyticsSearchDAOIT {
 
     @Test
     public void diffResultOnly() {
-        ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("AT5G32505"));
+        ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("AT3G54730"));
 
         assertThat(experimentTypes, contains("rnaseq_mrna_differential"));
     }
