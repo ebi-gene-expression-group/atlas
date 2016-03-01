@@ -34,7 +34,9 @@ function initExperimentPageButtonsAndTooltips() {
     if (undefined !== $('#download-logFold')) $('#download-logFold').button().tooltip();
     if (undefined !== $('#download-analytics')) $('#download-analytics').button().tooltip();
     if (undefined !== $('#download-expressions')) $('#download-expressions').button().tooltip();
+    if (undefined !== $('#download-expressions-modal')) $('#download-expressions-modal').button().tooltip();
     $('#download-r').button().tooltip();
+    $('#download-r-modal').button().tooltip();
     $('#goto-ae').tooltip();
     $('#goto-experiment').tooltip();
     $("#goto-experiment-name").tooltip();

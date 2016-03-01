@@ -16,6 +16,17 @@
     <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"/>
 </c:if>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customized-bootstrap-3.3.5.css" />
+<script src="${pageContext.request.contextPath}/resources/js/lib/bootstrap-3.3.5.min.js"></script>
+
+<script>
+    var bootstrapButton = $.fn.button.noConflict(); // return $.fn.button to previously assigned value
+    $.fn.bootstrapBtn = bootstrapButton;            // give $().bootstrapBtn the Bootstrap functionality
+
+    var bootstrapTooltip = $.fn.tooltip.noConflict();
+    $.fn.bootstrapTt = bootstrapTooltip;
+</script>
+
 <section class="gxaExtraPadding" id="gxaExperimentHeader" style="text-align: justify;">
 
     <div id="helpContentTooltip" style='display:none'></div>
@@ -95,14 +106,25 @@
                     </c:if>
 
                     <!-- download-r button section -->
+                    <c:set var="download-expressions" value="${false}"/>
                     <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
                     <c:if test="${experiment.hasRData()}">
                         <td>
-                            <a id="download-r" class="gxaButtonImage"
-                               title="Download experiment data ready to load into R"
-                               href="${rDownloadUrl}${accessKeyQueryString}">
-                                <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
-                            </a>
+                            <c:choose>
+                                <c:when test="${isCTTV}">
+                                    <a id="download-r-modal" class="gxaButtonImage" role="button" data-toggle="modal" data-target="#download-modal"
+                                       title="Download experiment data ready to load into R">
+                                        <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
+                                    </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a id="download-r" class="gxaButtonImage"
+                                       title="Download experiment data ready to load into R"
+                                       href="${rDownloadUrl}${accessKeyQueryString}">
+                                        <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                     </c:if>
 
@@ -137,10 +159,21 @@
                     <c:choose>
                         <c:when test="${type.baseline}">
                             <td>
-                                <a id="download-expressions" class="gxaButtonImage"
-                                   title="Download all expressions for the experiment"
-                                   href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=-0.1">
-                                    <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/></a>
+                                <c:choose>
+                                    <c:when test="${isCTTV}">
+                                        <a id="download-expressions-modal" role="button" class="gxaButtonImage" data-toggle="modal" data-target="#download-modal"
+                                           title="Download all expressions for the experiment" >
+                                            <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/>
+                                        </a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a id="download-expressions" class="gxaButtonImage"
+                                           title="Download all expressions for the experiment"
+                                           href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=-0.1">
+                                            <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/>
+                                        </a>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                         </c:when>
                         <c:otherwise>
@@ -157,6 +190,36 @@
         </table>
     </div>
 
+    <!-- Modal -->
+    <div id="download-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class = "modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4></h4>
+                </div>
+
+                <div class="modal-body">
+                    <c:import url="/resources/html/blueprint.html" />
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                        <c:if test="${type.baseline && isCTTV}">
+                            <a class="btn btn-primary" id="continue-download-expressions"
+                               href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=-0.1">Continue downloading</a>
+                        </c:if>
+                        <c:if test="${experiment.hasRData()}">
+                             <a class="btn btn-primary" id="continue-download-R"
+                               href="${rDownloadUrl}${accessKeyQueryString}">Continue downloading</a>
+                        </c:if>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 </section>
 
 <script>
@@ -171,6 +234,27 @@
                 padding:0,
                 openEffect:'elastic',
                 closeEffect:'elastic'
+            });
+
+            $("#download-expressions-modal").click(function(event) {
+                event.preventDefault();
+                $("#continue-download-R").hide();
+                $("#continue-download-expressions").show();
+
+            });
+            $("#download-r-modal").click(function(event) {
+                event.preventDefault();
+                $("#continue-download-expressions").hide();
+                $("#continue-download-R").show();
+
+            });
+
+            $("#continue-download-expressions").click(function(event) {
+                $('#download-modal').modal('hide');
+            });
+
+            $("#continue-download-R").click(function(event) {
+                $('#download-modal').modal('hide');
             });
 
         });
