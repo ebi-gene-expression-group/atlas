@@ -18,10 +18,10 @@ public class BaselineExperimentUtil {
         this.configurationTrader = configuration;
     }
 
-    public boolean hasCTTV(String experimentAccession) {
+    public boolean hasFortLauderdale(String experimentAccession) {
 
         BaselineExperimentConfiguration factorsConfig = configurationTrader.getFactorsConfiguration(experimentAccession);
 
-        return factorsConfig.isCTTVExperiment();
+        return factorsConfig.isFortLauderdale();
     }
 }

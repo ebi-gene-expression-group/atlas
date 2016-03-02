@@ -111,7 +111,7 @@
                     <c:if test="${experiment.hasRData()}">
                         <td>
                             <c:choose>
-                                <c:when test="${isCTTV}">
+                                <c:when test="${isFortLauderdale}">
                                     <a id="download-r-modal" class="gxaButtonImage" role="button" data-toggle="modal" data-target="#download-modal"
                                        title="Download experiment data ready to load into R">
                                         <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
@@ -160,7 +160,7 @@
                         <c:when test="${type.baseline}">
                             <td>
                                 <c:choose>
-                                    <c:when test="${isCTTV}">
+                                    <c:when test="${isFortLauderdale}">
                                         <a id="download-expressions-modal" role="button" class="gxaButtonImage" data-toggle="modal" data-target="#download-modal"
                                            title="Download all expressions for the experiment" >
                                             <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/>
@@ -206,7 +206,7 @@
 
                 <div class="modal-footer">
                     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                        <c:if test="${type.baseline && isCTTV}">
+                        <c:if test="${type.baseline && isFortLauderdale}">
                             <a class="btn btn-primary" id="continue-download-expressions"
                                href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=-0.1">Continue downloading</a>
                         </c:if>

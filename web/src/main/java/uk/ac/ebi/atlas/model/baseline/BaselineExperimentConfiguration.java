@@ -116,13 +116,13 @@ public class BaselineExperimentConfiguration {
     }
 
 
-    public boolean isCTTVExperiment() {
-        String cttv = config.getString("cttv");
+    public boolean isFortLauderdale() {
+        String fla = config.getString("fort_lauderdale");
 
-        if (StringUtils.isEmpty(cttv)) {
+        if (StringUtils.isEmpty(fla)) {
             return false;
         } else {
-            return cttv.equals("true");
+            return fla.equals("true");
         }
     }
 }
