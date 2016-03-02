@@ -22,6 +22,7 @@
 <!-- blue icon 5bc0de-->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="grid_24" id="species-nav">
 
@@ -151,17 +152,47 @@
 
             <h3>${species}</h3>
             <span class="icon icon-species ${speciesColorCode}" data-icon="${speciesIconCode}"></span>
-            <ul style="list-style:none;padding-left:0; margin-left:0;">
+            <ul class="show_more" style="list-style:none;padding-left:0; margin-left:0;">
+                <c:set var="total" value="${fn:length(experimentAccessionsBySpecies.get(species))}"/>
                 <c:forEach items="${experimentAccessionsBySpecies.get(species)}" begin="0" end="20" var="experimentAccession">
                     <c:set var="key" value="${experimentAccession}${species}"/>
+
                     <li>
                         <a href="experiments/${experimentAccession}${experimentLinks.get(key)}" style="color:#337ab7; border-bottom: none;">
                                 ${experimentDisplayNames.get(experimentAccession)}</a>
                     </li>
+
+
                 </c:forEach>
+
+                <c:if test="${total > 5}">
+                    <div class="show_more_buttons">
+                        <button class="show_button"> See more..</button>
+                        <button class="hide_button"> Hide ...</button>
+                    </div>
+                </c:if>
+
             </ul>
 
         </div>
     </c:forEach>
 
+<script>
+    //hide/show when there is more than 5 items in the list
+    $(function() {
+        $("ul").find(".hide_button").hide();//temp - to add in css by default
+        $("ul").find("li:gt(4)").hide();//hide extra list item
+
+        $("ul.show_more").find(".show_button").click(function() {
+            $(this).parent().parent().find("li:gt(4)").show();
+            $(this).hide();
+            $(this).parent().find(".hide_button").show();
+        });
+        $("ul.show_more").find(".hide_button").click(function() {
+            $(this).parent().parent().find("li:gt(4)").hide();
+            $(this).hide();
+            $(this).parent().find(".show_button").show();
+        });
+});
+</script>
 </div>
