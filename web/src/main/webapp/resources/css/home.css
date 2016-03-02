@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-
+/*to move to atlas.css?*/
 #species-nav h2 small {color:grey;font-size: 76%;}
 #species-nav .specie_item {min-height: 338px; text-align: center;}
 #species-nav .specie_item h2 {color:black;font-size: 140%;padding-left:0;
@@ -31,6 +31,7 @@
 #species-nav .specie_item span.red:before {color:#d9534f;} /*animal*/
 #species-nav .specie_item span.green:before {color:#5cb85c;}/*plants*/
 #species-nav .specie_item span.blue:before {color:#5bc0de;}/*other*/
+.show_more_buttons {text-align: center;margin-top:9px;}
 /*FEED NEWS*/
 .bloc_blog  ul {padding: 0 9px;}
 .bloc_blog ul li {list-style: none;}
