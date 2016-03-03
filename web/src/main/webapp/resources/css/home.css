@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-/* browse baseline experiments - to move to atlas css?*/
+/* browse baseline experiments - to move to atlas css*/
 #species-nav h2 small {color:grey; font-size: 76%;}
 #species-nav .specie_item {min-height: 338px; text-align: center;}
 #species-nav .specie_item h2 {padding-left:0; margin-left:0; color:black; font-size: 140%;font-weight: bold;/*display: inline;*/}
