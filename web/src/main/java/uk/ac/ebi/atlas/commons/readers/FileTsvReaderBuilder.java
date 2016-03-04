@@ -60,7 +60,7 @@ public class FileTsvReaderBuilder {
             InputStreamReader tsvFileInputStreamReader = new InputStreamReader(Files.newInputStream(tsvFileSystemPath));
             return new TsvReaderImpl(tsvFileInputStreamReader);
         } catch (IOException e) {
-            throw new IllegalStateException("Cannot read Tsv file from path " + tsvFileSystemPath.toString(), e);
+            throw new IllegalStateException("Cannot read TSV file from path " + tsvFileSystemPath.toString(), e);
         }
     }
 
