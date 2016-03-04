@@ -117,7 +117,7 @@ public class BaselineExperimentConfiguration {
 
 
     public boolean isFortLauderdale() {
-        String fla = config.getString("fort_lauderdale");
+        String fla = config.getString("fortLauderdale");
 
         if (StringUtils.isEmpty(fla)) {
             return false;
