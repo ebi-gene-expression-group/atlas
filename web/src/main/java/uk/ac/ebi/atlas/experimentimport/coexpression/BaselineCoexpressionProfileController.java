@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2016 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2016 Gene Expression Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,21 +44,21 @@ import java.io.IOException;
 @Controller
 @Scope("request")
 @RequestMapping("/admin")
-public class BaselineCoexpressionsProfileController {
+public class BaselineCoexpressionProfileController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineCoexpressionsProfileController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineCoexpressionProfileController.class);
 
-    private BaselineCoexpressionsProfileLoader baselineCoexpressionsProfileLoader;
+    private BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
     private ExperimentTrader experimentTrader;
 
     @Inject
-    public BaselineCoexpressionsProfileController(BaselineCoexpressionsProfileLoader baselineCoexpressionsProfileLoader,
-                                                  ExperimentTrader experimentTrader) {
-        this.baselineCoexpressionsProfileLoader = baselineCoexpressionsProfileLoader;
+    public BaselineCoexpressionProfileController(BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
+                                                 ExperimentTrader experimentTrader) {
+        this.baselineCoexpressionProfileLoader = baselineCoexpressionProfileLoader;
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/importAllCoexpressionsProfiles", produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/importAllCoexpressionProfiles", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String importAllCoexpressionsProfiles() {
 
@@ -67,7 +67,7 @@ public class BaselineCoexpressionsProfileController {
 
         for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
             stopWatch.start();
-            int count = baselineCoexpressionsProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
+            int count = baselineCoexpressionProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
             stopWatch.stop();
 
             stringBuilder.append(String.format("Experiment %s coexpressions imported: %,d genes in %s seconds\n", experimentAccession, count, stopWatch.getTotalTimeSeconds()));
@@ -77,40 +77,40 @@ public class BaselineCoexpressionsProfileController {
     }
 
 
-    @RequestMapping(value = "/importCoexpressionsProfile", produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/importCoexpressionProfile", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String importCoexpressions(@RequestParam("accession") String experimentAccession) {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        int count = baselineCoexpressionsProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
+        int count = baselineCoexpressionProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
 
         stopWatch.stop();
 
         return String.format("Experiment %s coexpressions imported: %,d genes in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
     }
 
-    @RequestMapping(value = "/deleteCoexpressionsProfile", produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/deleteCoexpressionProfile", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String deleteCoexpressions(@RequestParam("accession") String experimentAccession) {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        int count = baselineCoexpressionsProfileLoader.deleteCoexpressionsProfile(experimentAccession);
+        int count = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(experimentAccession);
 
         stopWatch.stop();
 
         return String.format("Experiment %s coexpressions deleted: %,d genes in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
     }
 
-    @RequestMapping(value = "/updateCoexpressionsProfile", produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/updateCoexpressionProfile", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String updateCoexpressions(@RequestParam("accession") String experimentAccession) {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        int deleteCount = baselineCoexpressionsProfileLoader.deleteCoexpressionsProfile(experimentAccession);
-        int loadCount = baselineCoexpressionsProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
+        int deleteCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(experimentAccession);
+        int loadCount = baselineCoexpressionProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
 
         stopWatch.stop();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2016 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2016 Gene Expression Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,21 +39,21 @@ import java.text.MessageFormat;
 
 @Named
 @Scope("singleton")
-public class BaselineCoexpressionsProfileInputStreamFactory {
+public class BaselineCoexpressionProfileInputStreamFactory {
 
     private final CsvReaderFactory csvReaderFactory;
     private final String fileTemplate;
 
     @Inject
-    public BaselineCoexpressionsProfileInputStreamFactory(@Value("#{configuration['experiment.coexpression_matrix.template']}") String fileTemplate,
-                                                          CsvReaderFactory csvReaderFactory) {
+    public BaselineCoexpressionProfileInputStreamFactory(@Value("#{configuration['experiment.coexpression_matrix.template']}") String fileTemplate,
+                                                         CsvReaderFactory csvReaderFactory) {
         this.fileTemplate = fileTemplate;
         this.csvReaderFactory = csvReaderFactory;
     }
 
-    public BaselineCoexpressionsProfileInputStream create(String experimentAccession) {
+    public BaselineCoexpressionProfileInputStream create(String experimentAccession) {
         String tsvGzFilePath = MessageFormat.format(fileTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvGzReader(tsvGzFilePath);
-        return new BaselineCoexpressionsProfileInputStream(csvReader, tsvGzFilePath);
+        return new BaselineCoexpressionProfileInputStream(csvReader, tsvGzFilePath);
     }
 }

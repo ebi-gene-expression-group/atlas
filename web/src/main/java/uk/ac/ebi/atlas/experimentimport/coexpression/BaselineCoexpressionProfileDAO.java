@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2016 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2016 Gene Expression Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,9 +44,9 @@ import java.sql.SQLException;
 
 @Named
 @Scope("singleton")
-public class BaselineCoexpressionsProfileDAO {
+public class BaselineCoexpressionProfileDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineCoexpressionsProfileDAO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineCoexpressionProfileDAO.class);
 
     private static final String COEXPRESSIONS_INSERT = "INSERT INTO RNASEQ_BSLN_CE_PROFILES (EXPERIMENT, IDENTIFIER, CE_IDENTIFIERS) VALUES (?, ?, ?)";
     private static final int EXPERIMENT = 1;
@@ -56,22 +56,22 @@ public class BaselineCoexpressionsProfileDAO {
     private final JdbcTemplate jdbcTemplate;
 
     @Inject
-    public BaselineCoexpressionsProfileDAO(JdbcTemplate jdbcTemplate) {
+    public BaselineCoexpressionProfileDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public int loadCoexpressionsProfile(final String experimentAccession, ObjectInputStream<BaselineCoexpressionsProfile> coexpressionsProfileInputStream)  {
+    public int loadCoexpressionsProfile(final String experimentAccession, ObjectInputStream<BaselineCoexpressionProfile> coexpressionsProfileInputStream)  {
         LOGGER.info(String.format("loadCoexpressions for experiment %s begin", experimentAccession));
 
         int[] rows = {};
 
         // try with resources: input stream will auto-close if DataAccessException is thrown by jdbcTemplate
-        try (ObjectInputStream<BaselineCoexpressionsProfile> source = coexpressionsProfileInputStream) {
+        try (ObjectInputStream<BaselineCoexpressionProfile> source = coexpressionsProfileInputStream) {
             rows = jdbcTemplate.batchUpdate(COEXPRESSIONS_INSERT, new AbstractInterruptibleBatchPreparedStatementSetter() {
 
                 @Override
                 protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
-                    BaselineCoexpressionsProfile coexpressionProfile = source.readNext();
+                    BaselineCoexpressionProfile coexpressionProfile = source.readNext();
 
                     if (coexpressionProfile == null) {
                         return false;

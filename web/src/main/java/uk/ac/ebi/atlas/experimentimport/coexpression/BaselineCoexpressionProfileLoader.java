@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2016 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2016 Gene Expression Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import javax.inject.Named;
 
 @Named
 @Scope("singleton")
-public class BaselineCoexpressionsProfileLoader {
+public class BaselineCoexpressionProfileLoader {
 
     // @Transactional kicks in Spring’s AOP capabilities, which in turn proxies the target class and must have a null constructor for CGLIB-based proxies or
     // implement an interface for JDK-based proxies (e.g. AnalyticsLoader). Therefore we can’t use final or inject beans via the constructor
@@ -44,28 +44,28 @@ public class BaselineCoexpressionsProfileLoader {
     // http://blog.codeleak.pl/2014/07/spring-4-cglib-based-proxy-classes-with-no-default-ctor.html
     // http://forum.spring.io/forum/spring-projects/aop/4971-transaction-proxy-on-class-with-no-default-constructor
 
-    private BaselineCoexpressionsProfileDAO baselineCoexpressionsProfileDAO;
-    private BaselineCoexpressionsProfileInputStreamFactory baselineCoexpressionsProfileInputStreamFactory;
+    private BaselineCoexpressionProfileDAO baselineCoexpressionProfileDAO;
+    private BaselineCoexpressionProfileInputStreamFactory baselineCoexpressionProfileInputStreamFactory;
 
     @Inject
-    public void setBaselineCoexpressionsProfileDAO (BaselineCoexpressionsProfileDAO baselineCoexpressionsProfileDAO) {
-        this.baselineCoexpressionsProfileDAO = baselineCoexpressionsProfileDAO;
+    public void setBaselineCoexpressionProfileDAO(BaselineCoexpressionProfileDAO baselineCoexpressionProfileDAO) {
+        this.baselineCoexpressionProfileDAO = baselineCoexpressionProfileDAO;
     }
 
     @Inject
-    public void setBaselineCoexpressionsProfileInputStreamFactory(BaselineCoexpressionsProfileInputStreamFactory baselineCoexpressionsProfileInputStreamFactory) {
-        this.baselineCoexpressionsProfileInputStreamFactory = baselineCoexpressionsProfileInputStreamFactory;
+    public void setBaselineCoexpressionProfileInputStreamFactory(BaselineCoexpressionProfileInputStreamFactory baselineCoexpressionProfileInputStreamFactory) {
+        this.baselineCoexpressionProfileInputStreamFactory = baselineCoexpressionProfileInputStreamFactory;
     }
 
     @Transactional
     public int loadBaselineCoexpressionsProfile(String experimentAccession) {
-        BaselineCoexpressionsProfileInputStream baselineCoexpressionsProfileInputStream = baselineCoexpressionsProfileInputStreamFactory.create(experimentAccession);
-        return baselineCoexpressionsProfileDAO.loadCoexpressionsProfile(experimentAccession, baselineCoexpressionsProfileInputStream);
+        BaselineCoexpressionProfileInputStream baselineCoexpressionProfileInputStream = baselineCoexpressionProfileInputStreamFactory.create(experimentAccession);
+        return baselineCoexpressionProfileDAO.loadCoexpressionsProfile(experimentAccession, baselineCoexpressionProfileInputStream);
     }
 
     @Transactional
     public int deleteCoexpressionsProfile(String accession) {
-        return baselineCoexpressionsProfileDAO.deleteCoexpressionsProfile(accession);
+        return baselineCoexpressionProfileDAO.deleteCoexpressionsProfile(accession);
     }
 
 }

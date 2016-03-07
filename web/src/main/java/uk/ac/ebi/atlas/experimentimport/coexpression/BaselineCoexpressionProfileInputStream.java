@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2016 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2016 Gene Expression Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,25 +43,9 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-/*
- * Reads TSV input of:
- *
- * \t g1   g2   g3   g4   g5
- * g1 0    0.12 0.54 0.87 0
- * g2 0.12 0    ...
- *
- * and returns BaselineCoexpression of:
- *
- * g1, g2, 0.12
- * g1, g3, 0.54
- * g1, g4, 0.87
- * ...
- * g2, g1, 0.12
- * ...
- */
-public class BaselineCoexpressionsProfileInputStream implements ObjectInputStream<BaselineCoexpressionsProfile> {
+public class BaselineCoexpressionProfileInputStream implements ObjectInputStream<BaselineCoexpressionProfile> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineCoexpressionsProfileInputStream.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineCoexpressionProfileInputStream.class);
 
     private static final int COEXPRESSION_PROFILE_SIZE = 100;
 
@@ -71,11 +55,11 @@ public class BaselineCoexpressionsProfileInputStream implements ObjectInputStrea
     private final CSVReader csvReader;
     private final String fileName;
     private final String[] geneIDsHeader;
-    private final Queue<BaselineCoexpressionsProfile> queue = new LinkedList<>();
+    private final Queue<BaselineCoexpressionProfile> queue = new LinkedList<>();
     private int lineNumber = 0;
 
 
-    public BaselineCoexpressionsProfileInputStream(CSVReader csvReader, String fileName) {
+    public BaselineCoexpressionProfileInputStream(CSVReader csvReader, String fileName) {
         this.fileName = fileName;
         this.csvReader = csvReader;
         this.geneIDsHeader = (String[]) ArrayUtils.remove(readCsvLine(), 0);
@@ -99,9 +83,9 @@ public class BaselineCoexpressionsProfileInputStream implements ObjectInputStrea
     }
 
     @Override
-    public BaselineCoexpressionsProfile readNext() {
+    public BaselineCoexpressionProfile readNext() {
         if (queue.isEmpty()) {
-            BaselineCoexpressionsProfile baselineCoexpressionProfile = readNextNonZeroLine();
+            BaselineCoexpressionProfile baselineCoexpressionProfile = readNextNonZeroLine();
 
             if (baselineCoexpressionProfile == null) {
                 //EOF
@@ -114,7 +98,7 @@ public class BaselineCoexpressionsProfileInputStream implements ObjectInputStrea
         return queue.remove();
     }
 
-    private BaselineCoexpressionsProfile readNextNonZeroLine() {
+    private BaselineCoexpressionProfile readNextNonZeroLine() {
 
         String[] line = readCsvLine();
         if (line == null) {
@@ -134,7 +118,7 @@ public class BaselineCoexpressionsProfileInputStream implements ObjectInputStrea
         for (BaselineCoexpression baselineCoexpression : coexpressionProfile) {
             geneIDsBuilder.add(baselineCoexpression.ceGeneID());
         }
-        return new BaselineCoexpressionsProfile(geneID, coexpressionProfile);
+        return new BaselineCoexpressionProfile(geneID, coexpressionProfile);
     }
 
 

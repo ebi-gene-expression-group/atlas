@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2016 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2016 Gene Expression Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,20 +26,19 @@
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 04/03/2016.
  */
 
-
 package uk.ac.ebi.atlas.experimentimport.coexpression;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.MinMaxPriorityQueue;
 
-public class BaselineCoexpressionsProfile {
+public class BaselineCoexpressionProfile {
     private String geneID;
-    private MinMaxPriorityQueue<BaselineCoexpression> coexpressionProfile;
+    private MinMaxPriorityQueue<BaselineCoexpression> coexpressions;
 
-    public BaselineCoexpressionsProfile(String geneID, MinMaxPriorityQueue<BaselineCoexpression> coexpressionProfile) {
+    public BaselineCoexpressionProfile(String geneID, MinMaxPriorityQueue<BaselineCoexpression> coexpressions) {
         this.geneID = geneID;
-        this.coexpressionProfile = coexpressionProfile;
+        this.coexpressions = coexpressions;
     }
 
     public String geneID() {
@@ -52,7 +51,7 @@ public class BaselineCoexpressionsProfile {
 
     public ImmutableList<String> coexpressedGenesToList() {
         ImmutableList.Builder<String> geneIDsBuilder = new ImmutableList.Builder<>();
-        for (BaselineCoexpression baselineCoexpression : coexpressionProfile) {
+        for (BaselineCoexpression baselineCoexpression : coexpressions) {
             geneIDsBuilder.add(baselineCoexpression.ceGeneID());
         }
         return geneIDsBuilder.build();
