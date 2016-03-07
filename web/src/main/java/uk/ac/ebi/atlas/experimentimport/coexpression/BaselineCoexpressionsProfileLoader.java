@@ -58,14 +58,14 @@ public class BaselineCoexpressionsProfileLoader {
     }
 
     @Transactional
-    public void loadBaselineCoexpressionsProfile(String experimentAccession) {
+    public int loadBaselineCoexpressionsProfile(String experimentAccession) {
         BaselineCoexpressionsProfileInputStream baselineCoexpressionsProfileInputStream = baselineCoexpressionsProfileInputStreamFactory.create(experimentAccession);
-        baselineCoexpressionsProfileDAO.loadCoexpressionsProfile(experimentAccession, baselineCoexpressionsProfileInputStream);
+        return baselineCoexpressionsProfileDAO.loadCoexpressionsProfile(experimentAccession, baselineCoexpressionsProfileInputStream);
     }
 
     @Transactional
-    public void deleteCoexpressionsProfile(String accession) {
-        baselineCoexpressionsProfileDAO.deleteCoexpressionsProfile(accession);
+    public int deleteCoexpressionsProfile(String accession) {
+        return baselineCoexpressionsProfileDAO.deleteCoexpressionsProfile(accession);
     }
 
 }

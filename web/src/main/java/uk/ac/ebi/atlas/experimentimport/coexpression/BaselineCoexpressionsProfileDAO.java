@@ -60,12 +60,14 @@ public class BaselineCoexpressionsProfileDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void loadCoexpressionsProfile(final String experimentAccession, ObjectInputStream<BaselineCoexpressionsProfile> coexpressionsProfileInputStream)  {
+    public int loadCoexpressionsProfile(final String experimentAccession, ObjectInputStream<BaselineCoexpressionsProfile> coexpressionsProfileInputStream)  {
         LOGGER.info(String.format("loadCoexpressions for experiment %s begin", experimentAccession));
+
+        int[] rows = {};
 
         // try with resources: input stream will auto-close if DataAccessException is thrown by jdbcTemplate
         try (ObjectInputStream<BaselineCoexpressionsProfile> source = coexpressionsProfileInputStream) {
-            jdbcTemplate.batchUpdate(COEXPRESSIONS_INSERT, new AbstractInterruptibleBatchPreparedStatementSetter() {
+            rows = jdbcTemplate.batchUpdate(COEXPRESSIONS_INSERT, new AbstractInterruptibleBatchPreparedStatementSetter() {
 
                 @Override
                 protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
@@ -87,11 +89,13 @@ public class BaselineCoexpressionsProfileDAO {
         }
 
         LOGGER.info("loadCoexpressions for experiment {} complete", experimentAccession);
+
+        return rows.length;
     }
 
-    public void deleteCoexpressionsProfile(String experimentAccession) {
+    public int deleteCoexpressionsProfile(String experimentAccession) {
         LOGGER.info("deleteCoexpressions for experiment {}", experimentAccession);
-        jdbcTemplate.update("DELETE FROM RNASEQ_BSLN_CE_PROFILES WHERE EXPERIMENT=?", experimentAccession);
+        return jdbcTemplate.update("DELETE FROM RNASEQ_BSLN_CE_PROFILES WHERE EXPERIMENT=?", experimentAccession);
     }
 
 }

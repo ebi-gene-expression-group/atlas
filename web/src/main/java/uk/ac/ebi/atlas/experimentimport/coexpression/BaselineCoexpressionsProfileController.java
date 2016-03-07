@@ -35,6 +35,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -48,17 +49,31 @@ public class BaselineCoexpressionsProfileController {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineCoexpressionsProfileController.class);
 
     private BaselineCoexpressionsProfileLoader baselineCoexpressionsProfileLoader;
+    private ExperimentTrader experimentTrader;
 
     @Inject
-    public BaselineCoexpressionsProfileController(BaselineCoexpressionsProfileLoader baselineCoexpressionsProfileLoader) {
+    public BaselineCoexpressionsProfileController(BaselineCoexpressionsProfileLoader baselineCoexpressionsProfileLoader,
+                                                  ExperimentTrader experimentTrader) {
         this.baselineCoexpressionsProfileLoader = baselineCoexpressionsProfileLoader;
+        this.experimentTrader = experimentTrader;
     }
 
     @RequestMapping(value = "/importAllCoexpressionsProfiles", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String analyticsIndexBuild() {
+    public String importAllCoexpressionsProfiles() {
 
-        return("");
+        StringBuilder stringBuilder = new StringBuilder();
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+
+        for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
+            stopWatch.start();
+            int count = baselineCoexpressionsProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
+            stopWatch.stop();
+
+            stringBuilder.append(String.format("Experiment %s coexpressions imported: %,d genes in %s seconds\n", experimentAccession, count, stopWatch.getTotalTimeSeconds()));
+        }
+
+        return stringBuilder.toString();
     }
 
 
@@ -68,9 +83,7 @@ public class BaselineCoexpressionsProfileController {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        int count = 0;
-//        int count = analyticsIndexerManager.addToAnalyticsIndex(experimentAccession);
-        baselineCoexpressionsProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
+        int count = baselineCoexpressionsProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
 
         stopWatch.stop();
 
@@ -83,11 +96,11 @@ public class BaselineCoexpressionsProfileController {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        baselineCoexpressionsProfileLoader.deleteCoexpressionsProfile(experimentAccession);
+        int count = baselineCoexpressionsProfileLoader.deleteCoexpressionsProfile(experimentAccession);
 
         stopWatch.stop();
 
-        return String.format("Experiment %s coexpressions deleted in %s seconds", experimentAccession, stopWatch.getTotalTimeSeconds());
+        return String.format("Experiment %s coexpressions deleted: %,d genes in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
     }
 
     @RequestMapping(value = "/updateCoexpressionsProfile", produces = "text/plain;charset=UTF-8")
@@ -96,12 +109,12 @@ public class BaselineCoexpressionsProfileController {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        baselineCoexpressionsProfileLoader.deleteCoexpressionsProfile(experimentAccession);
-        baselineCoexpressionsProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
+        int deleteCount = baselineCoexpressionsProfileLoader.deleteCoexpressionsProfile(experimentAccession);
+        int loadCount = baselineCoexpressionsProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
 
         stopWatch.stop();
 
-        return String.format("Experiment %s coexpressions updated in %s seconds", experimentAccession, stopWatch.getTotalTimeSeconds());
+        return String.format("Experiment %s coexpressions updated: %,d genes deleted and %,d genes loaded in %s seconds", experimentAccession, deleteCount, loadCount, stopWatch.getTotalTimeSeconds());
     }
 
     @ExceptionHandler(Exception.class)
