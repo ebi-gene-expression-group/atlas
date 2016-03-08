@@ -66,11 +66,22 @@ public class BaselineCoexpressionProfileController {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
 
         for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
-            stopWatch.start();
-            int count = baselineCoexpressionProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
-            stopWatch.stop();
+            try {
+                stopWatch.start(experimentAccession);
 
-            stringBuilder.append(String.format("Experiment %s coexpressions imported: %,d genes in %s seconds\n", experimentAccession, count, stopWatch.getTotalTimeSeconds()));
+                int count = baselineCoexpressionProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
+
+                stopWatch.stop();
+
+                stringBuilder.append(String.format("%s: %,d coexpression profiles loaded in %s seconds\n", experimentAccession, count, stopWatch.getLastTaskTimeMillis() / 1000.0));
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage());
+                stringBuilder.append(String.format("%s: there was an error updating coexpression profiles; see the logs for more details \n", experimentAccession));
+            } finally {
+                if (stopWatch.isRunning()) {
+                    stopWatch.stop();
+                }
+            }
         }
 
         return stringBuilder.toString();
@@ -79,7 +90,7 @@ public class BaselineCoexpressionProfileController {
 
     @RequestMapping(value = "/importCoexpressionProfile", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String importCoexpressions(@RequestParam("accession") String experimentAccession) {
+    public String importCoexpressionProfile(@RequestParam("accession") String experimentAccession) {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
@@ -87,12 +98,41 @@ public class BaselineCoexpressionProfileController {
 
         stopWatch.stop();
 
-        return String.format("Experiment %s coexpressions imported: %,d genes in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
+        return String.format("%s: %,d coexpression profiles loaded in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
+    }
+
+    @RequestMapping(value = "/deleteAllCoexpressionProfiles", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String deleteAllCoexpressionProfiles() {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+
+        for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
+            try {
+                stopWatch.start(experimentAccession);
+
+                int count = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(experimentAccession);
+
+                stopWatch.stop();
+
+                stringBuilder.append(String.format("%s: %,d coexpression profiles deleted in %s seconds\n", experimentAccession, count, stopWatch.getLastTaskTimeMillis() / 1000.0));
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage());
+                stringBuilder.append(String.format("%s: there was an error updating coexpression profiles; see the logs for more details \n", experimentAccession));
+            } finally {
+                if (stopWatch.isRunning()) {
+                    stopWatch.stop();
+                }
+            }
+        }
+
+        return stringBuilder.toString();
     }
 
     @RequestMapping(value = "/deleteCoexpressionProfile", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String deleteCoexpressions(@RequestParam("accession") String experimentAccession) {
+    public String deleteCoexpressionProfile(@RequestParam("accession") String experimentAccession) {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
@@ -100,12 +140,41 @@ public class BaselineCoexpressionProfileController {
 
         stopWatch.stop();
 
-        return String.format("Experiment %s coexpressions deleted: %,d genes in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
+        return String.format("%s: %,d coexpression profiles deleted in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
+    }
+
+    @RequestMapping(value = "/updateAllCoexpressionProfiles", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String updateAllCoexpressionProfiles() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+        for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
+            try {
+                stopWatch.start(experimentAccession);
+
+                int deleteCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(experimentAccession);
+                int loadCount = baselineCoexpressionProfileLoader.loadBaselineCoexpressionsProfile(experimentAccession);
+
+                stopWatch.stop();
+
+                stringBuilder.append(String.format("%s: %,d coexpression profiles deleted and %,d coexpression profiles loaded in %s seconds\n", experimentAccession, deleteCount, loadCount, stopWatch.getLastTaskTimeMillis() / 1000.0));
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage());
+                stringBuilder.append(String.format("%s: there was an error updating coexpression profiles; see the logs for more details \n", experimentAccession));
+            } finally {
+                if (stopWatch.isRunning()) {
+                    stopWatch.stop();
+                }
+            }
+        }
+
+        return stringBuilder.toString();
     }
 
     @RequestMapping(value = "/updateCoexpressionProfile", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String updateCoexpressions(@RequestParam("accession") String experimentAccession) {
+    public String updateCoexpressionProfile(@RequestParam("accession") String experimentAccession) {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
@@ -114,7 +183,7 @@ public class BaselineCoexpressionProfileController {
 
         stopWatch.stop();
 
-        return String.format("Experiment %s coexpressions updated: %,d genes deleted and %,d genes loaded in %s seconds", experimentAccession, deleteCount, loadCount, stopWatch.getTotalTimeSeconds());
+        return String.format("%s: %,d coexpression profiles deleted and %,d coexpression profiles loaded in %s seconds", experimentAccession, deleteCount, loadCount, stopWatch.getTotalTimeSeconds());
     }
 
     @ExceptionHandler(Exception.class)

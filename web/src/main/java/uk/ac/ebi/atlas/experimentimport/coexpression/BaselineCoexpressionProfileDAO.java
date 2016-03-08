@@ -31,6 +31,7 @@ package uk.ac.ebi.atlas.experimentimport.coexpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.AbstractInterruptibleBatchPreparedStatementSetter;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -83,6 +84,7 @@ public class BaselineCoexpressionProfileDAO {
 
                     return true;
                 }
+
             });
         } catch (IOException e) {
             LOGGER.warn("Cannot close BaselineCoexpressionsInputStream: {}", e.getMessage());
