@@ -124,12 +124,10 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
 
     private MinMaxPriorityQueue<BaselineCoexpression> createProfile(String geneID, String[] baselineCoexpressionsLine) {
         checkArgument(StringUtils.isNotBlank(geneID), "Cannot load baseline coexpressions profile - gene ID is blank");
-        checkArgument(baselineCoexpressionsLine[lineNumber - 2].equals("0"), "Profile does not contain own gene ID in line " + lineNumber);
-        checkArgument(
-                baselineCoexpressionsLine.length == geneIDsHeader.length,
-                String.format(
-                        "Cannot load baseline coexpressions profile - expecting %d expressions but got %d instead.",
-                        geneIDsHeader.length, baselineCoexpressionsLine.length));
+        checkArgument(baselineCoexpressionsLine.length == geneIDsHeader.length,
+                      String.format(
+                          "Cannot load baseline coexpressions profile - expecting %d expressions but got %d instead.",
+                          geneIDsHeader.length, baselineCoexpressionsLine.length));
 
 
         baselineCoexpressionsLine = (String[]) ArrayUtils.remove(baselineCoexpressionsLine, lineNumber - 2);
