@@ -25,6 +25,8 @@ package uk.ac.ebi.atlas.acceptance.rest.tests.admin;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
 import org.apache.commons.lang.StringUtils;
+import org.hamcrest.Matcher;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
@@ -40,9 +42,11 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     private static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";
     private static final String DIFFERENTIAL_EXPERIMENT_ACCESSION = "E-GEOD-22351";
 
-    @Test
-    public void listExperiments() {
+    @BeforeClass
+    public static void assertDatabaseStateIsInExpectedState(){
         expect().body(containsString(EXISTING_EXPERIMENT_ACCESSION)).when().get("listExperiments?accession=" + EXISTING_EXPERIMENT_ACCESSION);
+        assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(2));
+        deleteInactiveAnalytics();
     }
 
     @Test
@@ -51,14 +55,14 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 .get("listExperiments?accession=" + EXISTING_EXPERIMENT_ACCESSION + ",E-MTAB-513");
     }
 
-    public void deleteInactiveAnalytics() {
+    public static void deleteInactiveAnalytics() {
         get("/deleteInactiveAnalytics").then().assertThat().statusCode(200);
     }
 
     @Ignore
     public void loadAndDeleteNewBaselineExperimentPublic() {
 
-        expect().body(startsWith("Experiment " + NEW_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
+        expect().body(loaded(NEW_EXPERIMENT_ACCESSION )).when()
                 .get("importExperiment?accession=" + NEW_EXPERIMENT_ACCESSION + "&private=false");
 
         expect().body("experimentAccession", hasItem(NEW_EXPERIMENT_ACCESSION))
@@ -77,7 +81,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     @Ignore
     public void loadAndDeleteNewBaselineExperimentPrivate() {
 
-        expect().body(startsWith("Experiment " + NEW_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
+        expect().body(loaded(NEW_EXPERIMENT_ACCESSION )).when()
                 .get("importExperiment?accession=" + NEW_EXPERIMENT_ACCESSION + "&private=true");
 
         expect().body("experimentAccession", hasItem(NEW_EXPERIMENT_ACCESSION))
@@ -107,7 +111,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
         expect().body("experimentAccession", hasItem(EXISTING_EXPERIMENT_ACCESSION))
                 .when().get("listExperiments?accession=" + EXISTING_EXPERIMENT_ACCESSION);
 
-        expect().body(startsWith("Experiment " + EXISTING_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
+        expect().body(loaded(EXISTING_EXPERIMENT_ACCESSION )).when()
                 .get("importExperiment?accession=" + EXISTING_EXPERIMENT_ACCESSION + "&private=false");
     }
 
@@ -125,10 +129,10 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     @Test
     public void updateDifferentialExperiment() {
 
-        expect().body(is("Experiment " + DIFFERENTIAL_EXPERIMENT_ACCESSION + " successfully updated.")).when()
+        expect().body(updated(DIFFERENTIAL_EXPERIMENT_ACCESSION)).when()
                 .get("updateStatus?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=true");
 
-        expect().body(is("Experiment " + DIFFERENTIAL_EXPERIMENT_ACCESSION + " successfully updated.")).when()
+        expect().body(updated(DIFFERENTIAL_EXPERIMENT_ACCESSION)).when()
                 .get("updateStatus?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=false");
 
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(2));
@@ -139,14 +143,14 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     @Test
     public void deleteAndLoadDifferentialExperimentPublic() {
 
-        expect().body(is("Experiment " + DIFFERENTIAL_EXPERIMENT_ACCESSION + " successfully deleted.")).when()
+        expect().body(deleted(DIFFERENTIAL_EXPERIMENT_ACCESSION)).when()
                 .get("deleteExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
 
         get("/deleteInactiveAnalytics").then().assertThat().statusCode(200);
 
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(0));
 
-        expect().body(startsWith("Experiment " + DIFFERENTIAL_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
+        expect().body(loaded(DIFFERENTIAL_EXPERIMENT_ACCESSION)).when()
                 .get("importExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=false");
 
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(2));
@@ -170,8 +174,19 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 .when().get("serializeExpressionData?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
     }
 
+    private Matcher<String> loaded(String experiment){
+        return startsWith("Experiment " + experiment + " loaded, accessKey:");
+    }
 
-    private int countConditionProperties(String experimentAccession) {
+    private Matcher<String> updated(String experiment){
+        return is("Experiment " + experiment + " successfully updated.");
+    }
+
+    private Matcher<String> deleted(String experiment){
+        return is("Experiment " + experiment + " successfully deleted.");
+    }
+
+    private static int countConditionProperties(String experimentAccession) {
         Response conditionIndexResponse = queryConditionIndex(experimentAccession);
 
         String responseBody = conditionIndexResponse.body().asString();
@@ -179,7 +194,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
         return Integer.parseInt(StringUtils.substringBetween(responseBody, "\"numFound\":", ","));
     }
 
-    private Response queryConditionIndex(String experimentAccession) {
+    private static Response queryConditionIndex(String experimentAccession) {
         return RestAssured.get("http://lime:8983/solr/differentialConditions/select?q=experiment_accession:"
                 + experimentAccession + "&wt=json&indent=true");
     }
