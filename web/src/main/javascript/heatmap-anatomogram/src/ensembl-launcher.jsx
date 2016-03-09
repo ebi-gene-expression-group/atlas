@@ -53,7 +53,7 @@ var EnsemblLauncher = React.createClass({
             "contigviewbottom=url:" + atlasTrackBaseURLWithTrackFileHeader
             + (this.props.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
         var tiling =
-            (this.props.isBaseline || this.props.ensemblDB == "ensembl")
+            this.props.isBaseline
             ? ""
             : "=tiling,url:" + atlasTrackBaseURLWithTrackFileHeader + ".genes.pval.bedGraph=pvalue;";
         return baseURL + ensemblSpecies +
