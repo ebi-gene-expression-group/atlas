@@ -42,19 +42,32 @@ var EnsemblLauncher = React.createClass({
         return beginsWithVowel(this.props.columnType) ? "an " : "a ";
     },
 
+    _ensemblTrackURL: function (baseURL, selectedColumnId, selectedGeneId) {
+        var ensemblSpecies = ensemblUtils.toEnsemblSpecies(this.props.species);
+        var atlasTrackBaseURLWithTrackFileHeader =
+            window.location.protocol
+            + "//" + window.location.host + this.props.atlasBaseURL
+            + "/experiments/" + this.props.experimentAccession
+            + "/tracks/" + this.props.experimentAccession + "." + selectedColumnId;
+        var contigViewBottom =
+            "contigviewbottom=url:" + atlasTrackBaseURLWithTrackFileHeader
+            + (this.props.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
+        var tiling =
+            (this.props.isBaseline || this.props.ensemblDB == "ensembl")
+            ? ""
+            : "=tiling,url:" + atlasTrackBaseURLWithTrackFileHeader + ".genes.pval.bedGraph=pvalue;";
+        return baseURL + ensemblSpecies +
+            "/Location/View?g=" + selectedGeneId
+            + ";db=core;"
+            + contigViewBottom + tiling
+            + ";format=BEDGRAPH";
+    },
+
     _openEnsemblWindow: function (baseURL) {
         if (!this.state.selectedColumnId || !this.state.selectedGeneId) {
             return;
         }
-
-        var ensemblSpecies = ensemblUtils.toEnsemblSpecies(this.props.species);
-        var trackFileHeader = this.props.experimentAccession + "." + this.state.selectedColumnId;
-        var atlasTrackBaseURL = window.location.protocol + "//" + window.location.host + this.props.atlasBaseURL + "/experiments/" + this.props.experimentAccession + "/tracks/";
-        var contigViewBottom = "contigviewbottom=url:" + atlasTrackBaseURL + trackFileHeader + (this.props.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
-        var tiling = (this.props.isBaseline || this.props.ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseURL + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
-        var ensemblTrackURL =  baseURL + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigViewBottom + tiling + ";format=BEDGRAPH";
-
-        window.open(ensemblTrackURL, '_blank');
+        window.open(this._ensemblTrackURL(baseURL,this.state.selectedColumnId,this.state.selectedGeneId), '_blank');
     },
 
     _onColumnSelectionChange: function (selectedColumnId) {
