@@ -1296,6 +1296,8 @@ webpackJsonp([0],[
 	//*------------------------------------------------------------------*
 	
 	var AnatomogramSelectImageButton = React.createClass({
+	    displayName: 'AnatomogramSelectImageButton',
+	
 	    propTypes: {
 	        anatomogramId: React.PropTypes.string.isRequired,
 	        selected: React.PropTypes.bool.isRequired,
@@ -1325,6 +1327,8 @@ webpackJsonp([0],[
 	});
 	
 	var AnatomogramSelectImageButtons = React.createClass({
+	    displayName: 'AnatomogramSelectImageButtons',
+	
 	    propTypes: {
 	        selectedId: React.PropTypes.string.isRequired,
 	        availableAnatomograms: React.PropTypes.array.isRequired,
@@ -1353,6 +1357,8 @@ webpackJsonp([0],[
 	});
 	
 	var Anatomogram = React.createClass({
+	    displayName: 'Anatomogram',
+	
 	    /*
 	     E.g. of profileRows:
 	     {"id":"ENSMUSG00000029019","name":"Nppb","expressions":[{"factorName":"heart","color":"#C0C0C0","value":"152","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"","value":"","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"","value":"","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},

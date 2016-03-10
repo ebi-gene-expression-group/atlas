@@ -2182,6 +2182,8 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var AnatomogramSelectImageButton = React.createClass({
+	    displayName: 'AnatomogramSelectImageButton',
+	
 	    propTypes: {
 	        anatomogramId: React.PropTypes.string.isRequired,
 	        selected: React.PropTypes.bool.isRequired,
@@ -2211,6 +2213,8 @@ webpackJsonp([3],[
 	});
 	
 	var AnatomogramSelectImageButtons = React.createClass({
+	    displayName: 'AnatomogramSelectImageButtons',
+	
 	    propTypes: {
 	        selectedId: React.PropTypes.string.isRequired,
 	        availableAnatomograms: React.PropTypes.array.isRequired,
@@ -2239,6 +2243,8 @@ webpackJsonp([3],[
 	});
 	
 	var Anatomogram = React.createClass({
+	    displayName: 'Anatomogram',
+	
 	    /*
 	     E.g. of profileRows:
 	     {"id":"ENSMUSG00000029019","name":"Nppb","expressions":[{"factorName":"heart","color":"#C0C0C0","value":"152","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"","value":"","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"","value":"","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},
@@ -11926,6 +11932,8 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var Heatmap = React.createClass({
+	    displayName: 'Heatmap',
+	
 	
 	    propTypes: {
 	        type: React.PropTypes.shape({
@@ -12260,6 +12268,8 @@ webpackJsonp([3],[
 	});
 	
 	var DownloadProfilesButton = React.createClass({
+	    displayName: 'DownloadProfilesButton',
+	
 	    propTypes: {
 	        atlasBaseURL: React.PropTypes.string.isRequired,
 	        downloadProfilesURL: React.PropTypes.string.isRequired
@@ -12286,6 +12296,8 @@ webpackJsonp([3],[
 	});
 	
 	var HeatmapTableHeader = React.createClass({
+	    displayName: 'HeatmapTableHeader',
+	
 	    propTypes: {
 	        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string)
 	    },
@@ -12411,6 +12423,8 @@ webpackJsonp([3],[
 	}
 	
 	var FactorHeader = React.createClass({
+	    displayName: 'FactorHeader',
+	
 	
 	    getInitialState: function () {
 	        return { hover: false, selected: false };
@@ -12496,6 +12510,8 @@ webpackJsonp([3],[
 	});
 	
 	var ContrastHeaders = React.createClass({
+	    displayName: 'ContrastHeaders',
+	
 	
 	    render: function () {
 	        var heatmapConfig = this.props.heatmapConfig;
@@ -12525,6 +12541,8 @@ webpackJsonp([3],[
 	});
 	
 	var ContrastHeader = React.createClass({
+	    displayName: 'ContrastHeader',
+	
 	
 	    getInitialState: function () {
 	        return { hover: false, selected: false };
@@ -12681,6 +12699,8 @@ webpackJsonp([3],[
 	});
 	
 	var TopLeftCorner = React.createClass({
+	    displayName: 'TopLeftCorner',
+	
 	
 	    displayLevelsBaseline: function () {
 	        if (this.props.hasQuartiles && this.props.isSingleGeneResult) {
@@ -12722,6 +12742,8 @@ webpackJsonp([3],[
 	});
 	
 	var LevelsRadioGroup = React.createClass({
+	    displayName: 'LevelsRadioGroup',
+	
 	
 	    getInitialState: function () {
 	        return { value: this.props.selectedRadioButton };
@@ -12756,6 +12778,8 @@ webpackJsonp([3],[
 	});
 	
 	var HeatmapTableRows = React.createClass({
+	    displayName: 'HeatmapTableRows',
+	
 	    propTypes: {
 	        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string)
 	    },
@@ -12813,6 +12837,8 @@ webpackJsonp([3],[
 	});
 	
 	var GeneProfileRow = React.createClass({
+	    displayName: 'GeneProfileRow',
+	
 	    propTypes: {
 	        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string),
 	        atlasBaseURL: React.PropTypes.string.isRequired,
@@ -13001,6 +13027,8 @@ webpackJsonp([3],[
 	});
 	
 	var CellBaseline = React.createClass({
+	    displayName: 'CellBaseline',
+	
 	    render: function () {
 	        if (this._noExpression()) {
 	            return React.createElement('td', null);
@@ -13072,6 +13100,8 @@ webpackJsonp([3],[
 	});
 	
 	var CellMultiExperiment = React.createClass({
+	    displayName: 'CellMultiExperiment',
+	
 	    _isNAExpression: function () {
 	        return this.props.value === "NT";
 	    },
@@ -17273,6 +17303,8 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var HeatmapBaselineCellVariance = React.createClass({
+	    displayName: 'HeatmapBaselineCellVariance',
+	
 	
 	    propTypes: {
 	        quartiles: React.PropTypes.shape({
@@ -41316,6 +41348,8 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var LegendDifferential = React.createClass({
+	    displayName: 'LegendDifferential',
+	
 	
 	    propTypes: {
 	        atlasBaseURL: React.PropTypes.string.isRequired,
@@ -41374,6 +41408,8 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var LegendRow = React.createClass({
+	    displayName: 'LegendRow',
+	
 	
 	    propTypes: {
 	        lowValueColour: React.PropTypes.string.isRequired,
@@ -41814,6 +41850,8 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var LegendBaseline = React.createClass({
+	    displayName: 'LegendBaseline',
+	
 	
 	    propTypes: {
 	        atlasBaseURL: React.PropTypes.string.isRequired,
@@ -41977,6 +42015,8 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var CellDifferential = React.createClass({
+	    displayName: 'CellDifferential',
+	
 	
 	    propTypes: {
 	        fontSize: React.PropTypes.number,
@@ -42269,6 +42309,8 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var DisplayLevelsButton = React.createClass({
+	    displayName: 'DisplayLevelsButton',
+	
 	
 	    propTypes: {
 	        hideText: React.PropTypes.string.isRequired,
@@ -42637,6 +42679,8 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var ContrastTooltip = React.createClass({
+	    displayName: "ContrastTooltip",
+	
 	    propTypes: {
 	        experimentDescription: React.PropTypes.string.isRequired,
 	        contrastDescription: React.PropTypes.string.isRequired,
@@ -43051,6 +43095,8 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var FactorTooltip = React.createClass({
+	    displayName: 'FactorTooltip',
+	
 	
 	    propertyRow: function (property) {
 	        if (!property.testValue) {
@@ -43863,6 +43909,8 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var InternalHeatmapAnatomogramContainer = React.createClass({
+	    displayName: 'InternalHeatmapAnatomogramContainer',
+	
 	    propTypes: {
 	        anatomogram: React.PropTypes.object,
 	        columnHeaders: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -43963,6 +44011,8 @@ webpackJsonp([3],[
 	//*------------------------------------------------------------------*
 	
 	var EnsemblLauncher = React.createClass({
+	    displayName: 'EnsemblLauncher',
+	
 	    propTypes: {
 	        isBaseline: React.PropTypes.bool.isRequired,
 	        experimentAccession: React.PropTypes.string.isRequired,
