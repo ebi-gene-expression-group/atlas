@@ -1188,7 +1188,7 @@ webpackJsonp([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	var ExperimentDescription = React.createClass({displayName: "ExperimentDescription",
+	var ExperimentDescription = React.createClass({
 	    propTypes: {
 	        linksAtlasBaseURL: React.PropTypes.string.isRequired,
 	        experiment: React.PropTypes.shape({
@@ -1202,26 +1202,39 @@ webpackJsonp([1],[
 	
 	        var experimentURL = this.props.linksAtlasBaseURL + this.props.experiment.URL;
 	
-	        return (
-	            React.createElement("div", {style: {width: "100%", paddingBottom: "20px"}}, 
-	                React.createElement("div", {id: "experimentDescription"}, 
-	                    React.createElement("a", {id: "goto-experiment", className: "gxaThickLink", title: "Experiment Page", href: experimentURL}, this.props.experiment.description)
-	                ), 
-	                React.createElement("div", {id: "experimentOrganisms"}, "Organism(s): ", React.createElement("span", {style: {"fontStyle":"italic"}}, this.props.experiment.allSpecies))
+	        return React.createElement(
+	            'div',
+	            { style: { width: "100%", paddingBottom: "20px" } },
+	            React.createElement(
+	                'div',
+	                { id: 'experimentDescription' },
+	                React.createElement(
+	                    'a',
+	                    { id: 'goto-experiment', className: 'gxaThickLink', title: 'Experiment Page', href: experimentURL },
+	                    this.props.experiment.description
+	                )
+	            ),
+	            React.createElement(
+	                'div',
+	                { id: 'experimentOrganisms' },
+	                'Organism(s): ',
+	                React.createElement(
+	                    'span',
+	                    { style: { "fontStyle": "italic" } },
+	                    this.props.experiment.allSpecies
+	                )
 	            )
 	        );
 	    }
 	
 	});
 	
-	var HeatmapAnatomogramContainer = React.createClass({displayName: "HeatmapAnatomogramContainer",
+	var HeatmapAnatomogramContainer = React.createClass({
 	    propTypes: {
 	        sourceURL: React.PropTypes.string.isRequired,
 	        atlasBaseURL: React.PropTypes.string.isRequired,
 	        linksAtlasBaseURL: React.PropTypes.string.isRequired,
-	        type: React.PropTypes.oneOf([
-	            ExperimentTypes.BASELINE, ExperimentTypes.MULTIEXPERIMENT, ExperimentTypes.DIFFERENTIAL, ExperimentTypes.PROTEOMICS_BASELINE
-	        ]).isRequired,
+	        type: React.PropTypes.oneOf([ExperimentTypes.BASELINE, ExperimentTypes.MULTIEXPERIMENT, ExperimentTypes.DIFFERENTIAL, ExperimentTypes.PROTEOMICS_BASELINE]).isRequired,
 	        showAnatomogram: React.PropTypes.bool.isRequired,
 	        isWidget: React.PropTypes.bool.isRequired,
 	        disableGoogleAnalytics: React.PropTypes.bool.isRequired,
@@ -1235,79 +1248,85 @@ webpackJsonp([1],[
 	        var anatomogramExpressedTissueColour = this.props.type.isMultiExperiment ? "red" : "gray";
 	        var anatomogramHoveredTissueColour = this.props.type.isMultiExperiment ? "indigo" : "red";
 	
-	        var geneURL =
-	            this.props.linksAtlasBaseURL + "/query" +
-	            "?geneQuery=" + this.state.heatmapConfig.geneQuery +
-	            "&exactMatch=" + this.state.heatmapConfig.isExactMatch +
-	            "&organism=" + this.state.heatmapConfig.species;
+	        var geneURL = this.props.linksAtlasBaseURL + "/query" + "?geneQuery=" + this.state.heatmapConfig.geneQuery + "&exactMatch=" + this.state.heatmapConfig.isExactMatch + "&organism=" + this.state.heatmapConfig.species;
 	
 	        var display = this.props.showAnatomogram ? "block" : "none";
 	        var marginLeft = this.props.showAnatomogram ? "270px" : "0";
 	
 	        var homoSapiensCellLine = this.state.heatmapConfig.species === "homo sapiens" && new URI(this.props.sourceURL).search(true).source === "CELL_LINE";
 	
-	        return (
-	            React.createElement("div", {ref: "this", className: "gxaBlock"}, 
-	
-	                 this.state.experimentData ?
-	                    React.createElement(ExperimentDescription, {experiment: this.state.experimentData, linksAtlasBaseURL: this.props.linksAtlasBaseURL})
-	                    : null, 
-	                
-	
-	                 this.state.heatmapConfig ?
-	                    React.createElement("div", {id: "heatmap-anatomogram", className: "gxaHeatmapAnatomogramRow"}, 
-	
-	                        React.createElement("div", {ref: "anatomogramEnsembl", className: "gxaAside", style: {display: display}}, 
-	                             this.state.anatomogramData ?
-	                            React.createElement(Anatomogram, {anatomogramData: this.state.anatomogramData, 
-	                                         expressedTissueColour: anatomogramExpressedTissueColour, hoveredTissueColour: anatomogramHoveredTissueColour, 
-	                                         profileRows: this.state.profiles.rows, eventEmitter: anatomogramEventEmitter, atlasBaseURL: this.props.atlasBaseURL})
-	                                : null
-	                                
-	                        ), 
-	
-	                         !homoSapiensCellLine ?
-	                            React.createElement("div", {id: "heatmap-react", className: "gxaInnerHeatmap", style: {marginLeft: marginLeft}}, 
-	                                React.createElement(Heatmap, {type: this.props.type, 
-	                                         heatmapConfig: this.state.heatmapConfig, 
-	                                         columnHeaders: this.state.columnHeaders, 
-	                                         nonExpressedColumnHeaders: this.state.nonExpressedColumnHeaders, 
-	                                         profiles: this.state.profiles, 
-	                                         geneSetProfiles: this.state.geneSetProfiles, 
-	                                         ensemblEventEmitter: ensemblEventEmitter, 
-	                                         anatomogramEventEmitter: anatomogramEventEmitter, 
-	                                         atlasBaseURL: this.props.atlasBaseURL, 
-	                                         linksAtlasBaseURL: this.props.linksAtlasBaseURL})
-	                            ) :
-	                            React.createElement("div", {style: {marginLeft: marginLeft}}, 
-	                                React.createElement(ExperimentsList, {profiles: this.state.profiles, 
-	                                                 atlasBaseURL: this.props.atlasBaseURL, 
-	                                                 linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
-	                                                 geneQuery: this.state.heatmapConfig.geneQuery})
-	                            )
-	                        
-	
+	        return React.createElement(
+	            'div',
+	            { ref: 'this', className: 'gxaBlock' },
+	            this.state.experimentData ? React.createElement(ExperimentDescription, { experiment: this.state.experimentData, linksAtlasBaseURL: this.props.linksAtlasBaseURL }) : null,
+	            this.state.heatmapConfig ? React.createElement(
+	                'div',
+	                { id: 'heatmap-anatomogram', className: 'gxaHeatmapAnatomogramRow' },
+	                React.createElement(
+	                    'div',
+	                    { ref: 'anatomogramEnsembl', className: 'gxaAside', style: { display: display } },
+	                    this.state.anatomogramData ? React.createElement(Anatomogram, { anatomogramData: this.state.anatomogramData,
+	                        expressedTissueColour: anatomogramExpressedTissueColour, hoveredTissueColour: anatomogramHoveredTissueColour,
+	                        profileRows: this.state.profiles.rows, eventEmitter: anatomogramEventEmitter, atlasBaseURL: this.props.atlasBaseURL }) : null
+	                ),
+	                !homoSapiensCellLine ? React.createElement(
+	                    'div',
+	                    { id: 'heatmap-react', className: 'gxaInnerHeatmap', style: { marginLeft: marginLeft } },
+	                    React.createElement(Heatmap, { type: this.props.type,
+	                        heatmapConfig: this.state.heatmapConfig,
+	                        columnHeaders: this.state.columnHeaders,
+	                        nonExpressedColumnHeaders: this.state.nonExpressedColumnHeaders,
+	                        profiles: this.state.profiles,
+	                        geneSetProfiles: this.state.geneSetProfiles,
+	                        ensemblEventEmitter: ensemblEventEmitter,
+	                        anatomogramEventEmitter: anatomogramEventEmitter,
+	                        atlasBaseURL: this.props.atlasBaseURL,
+	                        linksAtlasBaseURL: this.props.linksAtlasBaseURL })
+	                ) : React.createElement(
+	                    'div',
+	                    { style: { marginLeft: marginLeft } },
+	                    React.createElement(ExperimentsList, { profiles: this.state.profiles,
+	                        atlasBaseURL: this.props.atlasBaseURL,
+	                        linksAtlasBaseURL: this.props.linksAtlasBaseURL,
+	                        geneQuery: this.state.heatmapConfig.geneQuery })
+	                )
+	            ) : React.createElement(
+	                'div',
+	                { ref: 'loadingImagePlaceholder' },
+	                React.createElement('img', { src: this.props.atlasBaseURL + "/resources/images/loading.gif" })
+	            ),
+	            this.props.isWidget ? React.createElement(
+	                'div',
+	                null,
+	                React.createElement(
+	                    'p',
+	                    null,
+	                    React.createElement(
+	                        'a',
+	                        { href: geneURL },
+	                        'See more expression data at Expression Atlas.'
+	                    ),
+	                    React.createElement('br', null),
+	                    'This expression view is provided by ',
+	                    React.createElement(
+	                        'a',
+	                        { href: this.props.linksAtlasBaseURL },
+	                        'Expression Atlas'
+	                    ),
+	                    '.',
+	                    React.createElement('br', null),
+	                    'Please direct any queries or feedback to ',
+	                    React.createElement(
+	                        'a',
+	                        { href: 'mailto:arrayexpress-atlas@ebi.ac.uk' },
+	                        'arrayexpress-atlas@ebi.ac.uk'
 	                    )
-	                    :
-	                    React.createElement("div", {ref: "loadingImagePlaceholder"}, 
-	                        React.createElement("img", {src: this.props.atlasBaseURL + "/resources/images/loading.gif"})
-	                    ), 
-	                
-	
-	                 this.props.isWidget ?
-	                    React.createElement("div", null, React.createElement("p", null, React.createElement("a", {href: geneURL}, "See more expression data at Expression Atlas."), 
-	                        React.createElement("br", null), "This expression view is provided by ", React.createElement("a", {href: this.props.linksAtlasBaseURL}, "Expression Atlas"), ".", 
-	                        React.createElement("br", null), "Please direct any queries or feedback to ", React.createElement("a", {href: "mailto:arrayexpress-atlas@ebi.ac.uk"}, "arrayexpress-atlas@ebi.ac.uk"))
-	                    )
-	                    :
-	                    null
-	                
-	
-	            )
+	                )
+	            ) : null
 	        );
 	    },
 	
-	    getInitialState: function() {
+	    getInitialState: function () {
 	        return {
 	            heatmapConfig: '',
 	            columnHeaders: [],
@@ -1320,41 +1339,37 @@ webpackJsonp([1],[
 	            geneSetProfiles: {},
 	            anatomogramData: {},
 	            experimentData: ''
-	        }
+	        };
 	    },
 	
-	    componentDidMount: function() {
+	    componentDidMount: function () {
 	        var httpRequest = {
 	            url: this.props.sourceURL,
 	            dataType: "json",
 	            method: "GET"
 	        };
 	
-	        $.ajax(httpRequest).done(
-	            function (data) {
-	                if (this.isMounted()) {
-	                    this.setState({
-	                        heatmapConfig: data.config,
-	                        columnHeaders: data.columnHeaders,
-	                        nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
-	                        profiles: data.profiles,
-	                        geneSetProfiles: data.geneSetProfiles,
-	                        anatomogramData: data.anatomogram,
-	                        experimentData: data.experiment
-	                    });
-	                }
-	            }.bind(this)
-	        ).fail(
-	            function (jqXHR, textStatus, errorThrown) {
-	                if (this.props.fail) {
-	                    this.props.fail(jqXHR, textStatus, errorThrown);
-	                } else if (textStatus === "parsererror") {
-	                    $(this.refs.this.getDOMNode()).html("<div class='gxaError'>Could not parse JSON response</div>");
-	                } else {
-	                    $(this.refs.this.getDOMNode()).html(jqXHR.responseText);
-	                }
-	            }.bind(this)
-	        );
+	        $.ajax(httpRequest).done(function (data) {
+	            if (this.isMounted()) {
+	                this.setState({
+	                    heatmapConfig: data.config,
+	                    columnHeaders: data.columnHeaders,
+	                    nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
+	                    profiles: data.profiles,
+	                    geneSetProfiles: data.geneSetProfiles,
+	                    anatomogramData: data.anatomogram,
+	                    experimentData: data.experiment
+	                });
+	            }
+	        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+	            if (this.props.fail) {
+	                this.props.fail(jqXHR, textStatus, errorThrown);
+	            } else if (textStatus === "parsererror") {
+	                $(this.refs.this.getDOMNode()).html("<div class='gxaError'>Could not parse JSON response</div>");
+	            } else {
+	                $(this.refs.this.getDOMNode()).html(jqXHR.responseText);
+	            }
+	        }.bind(this));
 	
 	        if (!this.props.disableGoogleAnalytics) {
 	            var _gaq = _gaq || [];
@@ -1371,13 +1386,13 @@ webpackJsonp([1],[
 	        }
 	    },
 	
-	    componentDidUpdate: function() {
+	    componentDidUpdate: function () {
 	        // This mounted component is only going to be updated when changing this.props.showAnatomogram, so we only take
 	        // care of the anatomogram, the legend and the sticky header (the last two through an event)
 	        var $anatomogram = $(this.refs.anatomogramEnsembl.getDOMNode());
 	
 	        if (this.props.showAnatomogram) {
-	            $anatomogram.hcSticky({responsive: true});
+	            $anatomogram.hcSticky({ responsive: true });
 	        }
 	
 	        $(window).trigger("gxaResizeHeatmapAnatomogramHeader");
@@ -2634,7 +2649,7 @@ webpackJsonp([1],[
 	
 	__webpack_require__(/*! ../lib/jquery.hc-sticky.js */ 355);
 	
-	var Snap = __webpack_require__( /*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 356 );
+	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 356);
 	var EventEmitter = __webpack_require__(/*! wolfy87-eventemitter */ 332);
 	
 	//*------------------------------------------------------------------*
@@ -2643,7 +2658,7 @@ webpackJsonp([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	var AnatomogramSelectImageButton = React.createClass({displayName: "AnatomogramSelectImageButton",
+	var AnatomogramSelectImageButton = React.createClass({
 	    propTypes: {
 	        anatomogramId: React.PropTypes.string.isRequired,
 	        selected: React.PropTypes.bool.isRequired,
@@ -2651,63 +2666,56 @@ webpackJsonp([1],[
 	        onClick: React.PropTypes.func.isRequired
 	    },
 	
-	    render: function() {
+	    render: function () {
 	        var selectedToggleSrc = this.props.toggleSrcTemplate + "_selected.png",
 	            unselectedToggleSrc = this.props.toggleSrcTemplate + "_unselected.png";
 	
-	        return(
-	            React.createElement("div", null, 
-	                React.createElement("img", {ref: "toggleButton", onClick: this._onClick, src: this.props.selected ? selectedToggleSrc : unselectedToggleSrc, 
-	                     style: {width: "20px", height: "20px", padding: "2px"}})
-	            )
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement('img', { ref: 'toggleButton', onClick: this._onClick, src: this.props.selected ? selectedToggleSrc : unselectedToggleSrc,
+	                style: { width: "20px", height: "20px", padding: "2px" } })
 	        );
 	    },
 	
-	    componentDidMount: function() {
+	    componentDidMount: function () {
 	        $(this.refs.toggleButton.getDOMNode()).button();
 	    },
 	
-	    _onClick: function() {
+	    _onClick: function () {
 	        this.props.onClick(this.props.anatomogramId);
 	    }
 	});
 	
-	
-	var AnatomogramSelectImageButtons = React.createClass({displayName: "AnatomogramSelectImageButtons",
+	var AnatomogramSelectImageButtons = React.createClass({
 	    propTypes: {
 	        selectedId: React.PropTypes.string.isRequired,
 	        availableAnatomograms: React.PropTypes.array.isRequired,
 	        onClick: React.PropTypes.func.isRequired
 	    },
 	
-	    render: function() {
+	    render: function () {
 	        if (this.props.availableAnatomograms.length > 1) {
 	            var selectedId = this.props.selectedId,
 	                onClick = this.props.onClick;
-	            var anatomogramSelectImageButtons = this.props.availableAnatomograms.map(function(availableAnatomogram) {
-	               return(
-	                   React.createElement(AnatomogramSelectImageButton, {key: availableAnatomogram.id + "_toggle", 
-	                    anatomogramId: availableAnatomogram.id, selected: selectedId === availableAnatomogram.id, toggleSrcTemplate: availableAnatomogram.toggleSrcTemplate, onClick: onClick})
-	               )
+	            var anatomogramSelectImageButtons = this.props.availableAnatomograms.map(function (availableAnatomogram) {
+	                return React.createElement(AnatomogramSelectImageButton, { key: availableAnatomogram.id + "_toggle",
+	                    anatomogramId: availableAnatomogram.id, selected: selectedId === availableAnatomogram.id, toggleSrcTemplate: availableAnatomogram.toggleSrcTemplate, onClick: onClick });
 	            });
 	
-	            return (
-	                React.createElement("span", null, 
-	                    anatomogramSelectImageButtons
-	                )
+	            return React.createElement(
+	                'span',
+	                null,
+	                anatomogramSelectImageButtons
 	            );
-	
 	        } else {
-	            return (
-	                null
-	            )
+	            return null;
 	        }
 	    }
 	
 	});
 	
-	
-	var Anatomogram = React.createClass({displayName: "Anatomogram",
+	var Anatomogram = React.createClass({
 	    /*
 	     E.g. of profileRows:
 	     {"id":"ENSMUSG00000029019","name":"Nppb","expressions":[{"factorName":"heart","color":"#C0C0C0","value":"152","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"","value":"","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"","value":"","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},
@@ -2723,54 +2731,43 @@ webpackJsonp([1],[
 	        anatomogramData: React.PropTypes.object.isRequired,
 	        expressedTissueColour: React.PropTypes.string.isRequired,
 	        hoveredTissueColour: React.PropTypes.string.isRequired,
-	        profileRows: React.PropTypes.arrayOf(
-	            React.PropTypes.shape({
-	                id: React.PropTypes.string,
-	                name: React.PropTypes.string.isRequired,
-	                expressions: React.PropTypes.arrayOf(
-	                    React.PropTypes.shape({
-	                        factorName: React.PropTypes.string,
-	                        color: React.PropTypes.string,
-	                        value: React.PropTypes.string.isRequired,
-	                        svgPathId: React.PropTypes.string
-	                    })
-	                ).isRequired
-	            })
-	        ).isRequired,
+	        profileRows: React.PropTypes.arrayOf(React.PropTypes.shape({
+	            id: React.PropTypes.string,
+	            name: React.PropTypes.string.isRequired,
+	            expressions: React.PropTypes.arrayOf(React.PropTypes.shape({
+	                factorName: React.PropTypes.string,
+	                color: React.PropTypes.string,
+	                value: React.PropTypes.string.isRequired,
+	                svgPathId: React.PropTypes.string
+	            })).isRequired
+	        })).isRequired,
 	        eventEmitter: React.PropTypes.instanceOf(EventEmitter),
 	        atlasBaseURL: React.PropTypes.string.isRequired
 	    },
 	
-	    getInitialState: function() {
+	    getInitialState: function () {
 	        var availableAnatomograms = [];
 	        if (this.props.anatomogramData.maleAnatomogramFile) {
-	            availableAnatomograms.push(
-	                {id: "male",
-	                 anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.maleAnatomogramFile,
-	                 toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonMaleImageTemplate}
-	            );
+	            availableAnatomograms.push({ id: "male",
+	                anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.maleAnatomogramFile,
+	                toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonMaleImageTemplate });
 	        }
 	        if (this.props.anatomogramData.femaleAnatomogramFile) {
-	            availableAnatomograms.push(
-	                {id: "female",
-	                 anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.femaleAnatomogramFile,
-	                 toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonFemaleImageTemplate}
-	            );
+	            availableAnatomograms.push({ id: "female",
+	                anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.femaleAnatomogramFile,
+	                toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonFemaleImageTemplate });
 	        }
 	        if (this.props.anatomogramData.brainAnatomogramFile) {
-	            availableAnatomograms.push(
-	                {id: "brain",
-	                 anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.brainAnatomogramFile,
-	                 toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonBrainImageTemplate}
-	            );
+	            availableAnatomograms.push({ id: "brain",
+	                anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.brainAnatomogramFile,
+	                toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonBrainImageTemplate });
 	        }
-	
 	
 	        var allExpressedFactors = [],
 	            expressedFactorsPerRow = {};
-	        this.props.profileRows.forEach(function(profileRow) {
+	        this.props.profileRows.forEach(function (profileRow) {
 	            var expressedFactors = [];
-	            profileRow.expressions.forEach(function(expression) {
+	            profileRow.expressions.forEach(function (expression) {
 	                if (expression.value !== "NT" && expression.value !== "") {
 	                    expressedFactors.push(expression.svgPathId);
 	                }
@@ -2790,7 +2787,7 @@ webpackJsonp([1],[
 	            expressedFactorsPerRow: expressedFactorsPerRow,
 	            hoveredPathId: null,
 	            hoveredRowId: null
-	        }
+	        };
 	    },
 	
 	    render: function () {
@@ -2800,58 +2797,59 @@ webpackJsonp([1],[
 	
 	        var height = containsHuman(this.props.anatomogramData.maleAnatomogramFile) ? "360" : "250";
 	
-	        return (
-	            React.createElement("div", {className: "gxaDoubleClickNoSelection gxaAnatomogram", style: {display: "table", paddingTop: "4px"}}, 
-	                React.createElement("div", {style: {display: "table-row"}}, 
-	                    React.createElement("div", {style: {display: "table-cell", verticalAlign: "top"}}, 
-	                        React.createElement(AnatomogramSelectImageButtons, {selectedId: this.state.selectedId, availableAnatomograms: this.state.availableAnatomograms, onClick: this._handleChange})
-	                    ), 
-	
-	                    React.createElement("svg", {ref: "anatomogram", style: {display: "table-cell", width: "230px", height:height + "px"}}
-	                    )
-	                )
+	        return React.createElement(
+	            'div',
+	            { className: 'gxaDoubleClickNoSelection gxaAnatomogram', style: { display: "table", paddingTop: "4px" } },
+	            React.createElement(
+	                'div',
+	                { style: { display: "table-row" } },
+	                React.createElement(
+	                    'div',
+	                    { style: { display: "table-cell", verticalAlign: "top" } },
+	                    React.createElement(AnatomogramSelectImageButtons, { selectedId: this.state.selectedId, availableAnatomograms: this.state.availableAnatomograms, onClick: this._handleChange })
+	                ),
+	                React.createElement('svg', { ref: 'anatomogram', style: { display: "table-cell", width: "230px", height: height + "px" } })
 	            )
 	        );
 	    },
 	
-	    componentDidMount: function() {
+	    componentDidMount: function () {
 	        this.props.eventEmitter.addListener("gxaHeatmapColumnHoverChange", this._highlightPath);
 	        this.props.eventEmitter.addListener("gxaHeatmapRowHoverChange", this._highlightRow);
 	        this._loadAnatomogram(this._getAnatomogramSVGFile(this.state.selectedId));
 	    },
 	
 	    // Only displays/highlights the relevant tissues to avoid loading the anatomogram every time we hover over a tissue or a factor header
-	    componentDidUpdate: function() {
+	    componentDidUpdate: function () {
 	        var svg = Snap(this.refs.anatomogram.getDOMNode()).select("g");
 	        this._displayAllOrganismParts(svg);
 	    },
 	
-	    _handleChange: function(newSelectedId) {
+	    _handleChange: function (newSelectedId) {
 	        if (newSelectedId !== this.state.selectedId) {
 	            this._loadAnatomogram(this._getAnatomogramSVGFile(newSelectedId));
-	            this.setState({selectedId: newSelectedId});
+	            this.setState({ selectedId: newSelectedId });
 	        }
 	    },
 	
 	    // TODO We could manually highlight un-highlight the affected tissues instead of re-displaying all of them, as setState triggers componentDidUpdate
-	    _highlightPath: function(svgPathId) {
-	        this.setState({hoveredPathId: svgPathId});
+	    _highlightPath: function (svgPathId) {
+	        this.setState({ hoveredPathId: svgPathId });
 	    },
 	
-	    _highlightRow: function(rowId) {
-	        this.setState({hoveredRowId: rowId});
-	
+	    _highlightRow: function (rowId) {
+	        this.setState({ hoveredRowId: rowId });
 	    },
 	
-	    _getAnatomogramSVGFile: function(id) {
-	        for (var i = 0 ; i < this.state.availableAnatomograms.length ; i++) {
+	    _getAnatomogramSVGFile: function (id) {
+	        for (var i = 0; i < this.state.availableAnatomograms.length; i++) {
 	            if (id === this.state.availableAnatomograms[i].id) {
 	                return this.state.availableAnatomograms[i].anatomogramFile;
 	            }
 	        }
 	    },
 	
-	    _loadAnatomogram: function(svgFile) {
+	    _loadAnatomogram: function (svgFile) {
 	
 	        var svgCanvas = Snap(this.refs.anatomogram.getDOMNode()),
 	            allElements = svgCanvas.selectAll("*");
@@ -2862,38 +2860,36 @@ webpackJsonp([1],[
 	
 	        var displayAllOrganismPartsCallback = this._displayAllOrganismParts;
 	        var registerHoverEventsCallback = this._registerHoverEvents;
-	        Snap.load(
-	            svgFile,
-	            function (fragment) {
-	                var g = fragment.select("g");
-	                g.transform("S1.6,0,0");
-	                displayAllOrganismPartsCallback(g);
-	                registerHoverEventsCallback(g);
-	                svgCanvas.append(g);
-	            }
-	        );
+	        Snap.load(svgFile, function (fragment) {
+	            var g = fragment.select("g");
+	            g.transform("S1.6,0,0");
+	            displayAllOrganismPartsCallback(g);
+	            registerHoverEventsCallback(g);
+	            svgCanvas.append(g);
+	        });
 	    },
 	
-	    _displayAllOrganismParts: function(svg) {
-	        if (svg) {  // Sometimes svg is null... why?
-	            this.props.anatomogramData.allSvgPathIds.forEach(function(svgPathId) {
+	    _displayAllOrganismParts: function (svg) {
+	        if (svg) {
+	            // Sometimes svg is null... why?
+	            this.props.anatomogramData.allSvgPathIds.forEach(function (svgPathId) {
 	                this._displayOrganismPartsWithDefaultProperties(svg, svgPathId);
 	            }, this);
 	        }
 	    },
 	
-	    _hoveredRowContainsPathId: function(svgPathId) {
+	    _hoveredRowContainsPathId: function (svgPathId) {
 	        if (!this.state.hoveredRowId) {
 	            return false;
 	        }
 	
-	        return (this.state.expressedFactorsPerRow[this.state.hoveredRowId].indexOf(svgPathId) > -1);
+	        return this.state.expressedFactorsPerRow[this.state.hoveredRowId].indexOf(svgPathId) > -1;
 	    },
 	
-	    _displayOrganismPartsWithDefaultProperties: function(svg, svgPathId) {
+	    _displayOrganismPartsWithDefaultProperties: function (svg, svgPathId) {
 	
 	        var colour = this.props.expressedTissueColour;
-	        if (this.state.hoveredPathId === svgPathId || this._hoveredRowContainsPathId(svgPathId))  {
+	        if (this.state.hoveredPathId === svgPathId || this._hoveredRowContainsPathId(svgPathId)) {
 	            colour = this.props.hoveredTissueColour;
 	        }
 	
@@ -2904,53 +2900,58 @@ webpackJsonp([1],[
 	        }
 	    },
 	
-	    _highlightOrganismParts: function(svg, svgPathId, colour, opacity) {
+	    _highlightOrganismParts: function (svg, svgPathId, colour, opacity) {
 	        Anatomogram._recursivelyChangeProperties(svg.select("#" + svgPathId), colour, opacity);
 	    },
 	
-	    _registerHoverEvents: function(svg) {
-	        if (svg) {  // Sometimes svg is null... why?
+	    _registerHoverEvents: function (svg) {
+	        if (svg) {
+	            // Sometimes svg is null... why?
 	
 	            var eventEmitter = this.props.eventEmitter,
 	                hoverColour = this.props.hoveredTissueColour,
 	                highlightOrganismPartsCallback = this._highlightOrganismParts,
 	                displayOrganismPartsWithDefaultPropertiesCallback = this._displayOrganismPartsWithDefaultProperties;
-	            var mouseoverCallback = function(svgPathId) {
+	            var mouseoverCallback = function (svgPathId) {
 	                highlightOrganismPartsCallback(svg, svgPathId, hoverColour, 0.7);
 	                eventEmitter.emitEvent('gxaAnatomogramTissueMouseEnter', [svgPathId]);
 	            };
-	            var mouseoutCallback = function(svgPathId) {
+	            var mouseoutCallback = function (svgPathId) {
 	                displayOrganismPartsWithDefaultPropertiesCallback(svg, svgPathId);
 	                eventEmitter.emitEvent('gxaAnatomogramTissueMouseLeave', [svgPathId]);
 	            };
 	
-	            this.props.anatomogramData.allSvgPathIds.forEach(function(svgPathId) {
+	            this.props.anatomogramData.allSvgPathIds.forEach(function (svgPathId) {
 	                var svgElement = svg.select("#" + svgPathId);
 	                if (svgElement) {
-	                    svgElement.mouseover(function() {mouseoverCallback(svgPathId)});
-	                    svgElement.mouseout(function() {mouseoutCallback(svgPathId)});
+	                    svgElement.mouseover(function () {
+	                        mouseoverCallback(svgPathId);
+	                    });
+	                    svgElement.mouseout(function () {
+	                        mouseoutCallback(svgPathId);
+	                    });
 	                }
 	            }, this);
 	        }
 	    },
 	
 	    statics: {
-	        _recursivelyChangeProperties: function(svgElement, colour, opacity) {
+	        _recursivelyChangeProperties: function (svgElement, colour, opacity) {
 	
 	            if (svgElement) {
 	                var innerElements = svgElement.selectAll("*");
 	
 	                if (innerElements.length > 0) {
-	                    innerElements.forEach(function(innerElement) {
+	                    innerElements.forEach(function (innerElement) {
 	                        Anatomogram._recursivelyChangeProperties(innerElement);
 	                    });
 	                }
 	
-	                svgElement.attr({"fill": colour, "fill-opacity": opacity});
+	                svgElement.attr({ "fill": colour, "fill-opacity": opacity });
 	            }
 	        },
 	
-	        _recursivelySelectElements: function(svgElement) {
+	        _recursivelySelectElements: function (svgElement) {
 	            if (!svgElement) {
 	                return [];
 	            }
@@ -2960,7 +2961,7 @@ webpackJsonp([1],[
 	                return [svgElement];
 	            } else {
 	                var allElements = [];
-	                innerElements.forEach(function(innerElement) {
+	                innerElements.forEach(function (innerElement) {
 	                    allElements = allElements.concat(Anatomogram._recursivelySelectElements(innerElement));
 	                });
 	                return allElements;
@@ -2973,7 +2974,6 @@ webpackJsonp([1],[
 	//*------------------------------------------------------------------*
 	
 	module.exports = Anatomogram;
-
 
 /***/ },
 /* 336 */
@@ -12378,7 +12378,7 @@ webpackJsonp([1],[
 	__webpack_require__(/*! ../lib/jquery.hc-sticky.js */ 331);
 	__webpack_require__(/*! ../lib/jquery.toolbar.js */ 380);
 	
-	__webpack_require__(/*! ../lib/modernizr.3.0.0-alpha3.js */ 381);  // Leaks Modernizr to the global window namespace
+	__webpack_require__(/*! ../lib/modernizr.3.0.0-alpha3.js */ 381); // Leaks Modernizr to the global window namespace
 	
 	//*------------------------------------------------------------------*
 	
@@ -12402,7 +12402,7 @@ webpackJsonp([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	var Heatmap = React.createClass({displayName: "Heatmap",
+	var Heatmap = React.createClass({
 	
 	    propTypes: {
 	        type: React.PropTypes.shape({
@@ -12430,7 +12430,7 @@ webpackJsonp([1],[
 	    },
 	
 	    getInitialState: function () {
-	        var displayLevels = this.props.prefFormDisplayLevels ? (this.props.prefFormDisplayLevels.val() === "true") : false;
+	        var displayLevels = this.props.prefFormDisplayLevels ? this.props.prefFormDisplayLevels.val() === "true" : false;
 	
 	        return {
 	            showGeneSetProfiles: false,
@@ -12444,59 +12444,59 @@ webpackJsonp([1],[
 	        };
 	    },
 	
-	    _hoverColumn: function(columnId) {
-	        this.setState({hoveredColumnId: columnId}, function() {
+	    _hoverColumn: function (columnId) {
+	        this.setState({ hoveredColumnId: columnId }, function () {
 	            this.props.anatomogramEventEmitter.emitEvent('gxaHeatmapColumnHoverChange', [columnId]);
 	        });
 	    },
 	
-	    _hoverRow: function(rowId) {
-	        this.setState({hoveredRowId: rowId}, function() {
+	    _hoverRow: function (rowId) {
+	        this.setState({ hoveredRowId: rowId }, function () {
 	            this.props.anatomogramEventEmitter.emitEvent('gxaHeatmapRowHoverChange', [rowId]);
 	        });
 	    },
 	
 	    selectColumn: function (columnId) {
-	        var selectedColumnId = (columnId === this.state.selectedColumnId) ? null : columnId;
-	        this.setState({selectedColumnId: selectedColumnId}, function() {
+	        var selectedColumnId = columnId === this.state.selectedColumnId ? null : columnId;
+	        this.setState({ selectedColumnId: selectedColumnId }, function () {
 	            this.props.ensemblEventEmitter.emitEvent('onColumnSelectionChange', [selectedColumnId]);
 	        });
 	    },
 	
 	    selectGene: function (geneId) {
-	        var selectedGeneId = (geneId === this.state.selectedGeneId) ? null : geneId;
-	        this.setState({selectedGeneId: selectedGeneId}, function() {
+	        var selectedGeneId = geneId === this.state.selectedGeneId ? null : geneId;
+	        this.setState({ selectedGeneId: selectedGeneId }, function () {
 	            this.props.ensemblEventEmitter.emitEvent('onGeneSelectionChange', [selectedGeneId]);
 	        });
 	    },
 	
 	    toggleGeneSets: function () {
 	        var newProfiles = this.state.showGeneSetProfiles ? this.props.profiles : this.props.geneSetProfiles;
-	        this.setState({showGeneSetProfiles: !this.state.showGeneSetProfiles, profiles: newProfiles});
+	        this.setState({ showGeneSetProfiles: !this.state.showGeneSetProfiles, profiles: newProfiles });
 	    },
 	
 	    toggleDisplayLevels: function () {
 	        var newDisplayLevels = !this.state.displayLevels;
-	        this.setState({displayLevels: newDisplayLevels});
+	        this.setState({ displayLevels: newDisplayLevels });
 	        if (this.props.prefFormDisplayLevels) {
 	            this.props.prefFormDisplayLevels.val(newDisplayLevels);
 	        }
 	        $(window).resize();
 	    },
 	
-	    toggleRadioButton: function(newSelected) {
-	        this.setState({selectedRadioButton: newSelected});
-	        this.setState({displayLevels: (newSelected === "levels")}); //update the LegendType
+	    toggleRadioButton: function (newSelected) {
+	        this.setState({ selectedRadioButton: newSelected });
+	        this.setState({ displayLevels: newSelected === "levels" }); //update the LegendType
 	    },
 	
 	    isMicroarray: function () {
-	        return !(typeof(this.props.profiles.rows[0].designElement) === "undefined");
+	        return !(typeof this.props.profiles.rows[0].designElement === "undefined");
 	    },
 	
-	    hasQuartiles: function() {
+	    hasQuartiles: function () {
 	        var hasQuartiles = false;
-	        for(var i=0; i < this.props.profiles.rows[0].expressions.length; i++) {
-	            if(this.props.profiles.rows[0].expressions[i].quartiles != undefined) {
+	        for (var i = 0; i < this.props.profiles.rows[0].expressions.length; i++) {
+	            if (this.props.profiles.rows[0].expressions[i].quartiles != undefined) {
 	                hasQuartiles = true;
 	                break;
 	            }
@@ -12505,210 +12505,238 @@ webpackJsonp([1],[
 	    },
 	
 	    isSingleGeneResult: function () {
-	        return (this.props.profiles.rows.length == 1);
+	        return this.props.profiles.rows.length == 1;
 	    },
 	
-	    componentDidMount: function() {
-	        var table	        = this.refs.heatmapTable.getDOMNode(),
+	    componentDidMount: function () {
+	        var table = this.refs.heatmapTable.getDOMNode(),
 	            stickyIntersect = this.refs.stickyIntersect.getDOMNode(),
-	            stickyColumn    = this.refs.stickyColumn.getDOMNode(),
-	            stickyHeadRow   = this.refs.stickyHeader.getDOMNode(),
-	            stickyWrap      = this.refs.stickyWrap.getDOMNode(),
-	            countAndLegend  = this.refs.countAndLegend.getDOMNode();
+	            stickyColumn = this.refs.stickyColumn.getDOMNode(),
+	            stickyHeadRow = this.refs.stickyHeader.getDOMNode(),
+	            stickyWrap = this.refs.stickyWrap.getDOMNode(),
+	            countAndLegend = this.refs.countAndLegend.getDOMNode();
 	
 	        var stickyHeader = StickyHeaderModule(table, stickyIntersect, stickyColumn, stickyHeadRow, stickyWrap, countAndLegend);
 	
 	        stickyHeader.setWidthsAndReposition();
-	        $(countAndLegend).hcSticky({bottomEnd: stickyHeader.calculateAllowance()});
+	        $(countAndLegend).hcSticky({ bottomEnd: stickyHeader.calculateAllowance() });
 	
 	        $(stickyWrap).scroll(stickyHeader.stickyReposition);
-	        $(window).resize(stickyHeader.setWidthsAndReposition)
-	                 .scroll(stickyHeader.stickyReposition)
-	                 .on(
-	                     "gxaResizeHeatmapAnatomogramHeader",
-	                     function() {
-	                         stickyHeader.setWidthAndHeight();
-	                         $(countAndLegend).hcSticky("resize");
-	                     }
-	                 );
+	        $(window).resize(stickyHeader.setWidthsAndReposition).scroll(stickyHeader.stickyReposition).on("gxaResizeHeatmapAnatomogramHeader", function () {
+	            stickyHeader.setWidthAndHeight();
+	            $(countAndLegend).hcSticky("resize");
+	        });
 	    },
 	
 	    legendType: function () {
-	        return (this.props.type.isBaseline || this.props.type.isMultiExperiment ?
-	            React.createElement(Legend.LegendBaseline, {atlasBaseURL: this.props.atlasBaseURL, 
-	                                   minExpressionLevel: this.state.profiles.minExpressionLevel.toString(), 
-	                                   maxExpressionLevel: this.state.profiles.maxExpressionLevel.toString(), 
-	                                   isMultiExperiment: this.props.type.isMultiExperiment ? true : false}) :
-	            React.createElement(Legend.LegendDifferential, {atlasBaseURL: this.props.atlasBaseURL, 
-	                                       minDownLevel: this.state.profiles.minDownLevel.toString(), 
-	                                       maxDownLevel: this.state.profiles.maxDownLevel.toString(), 
-	                                       minUpLevel: this.state.profiles.minUpLevel.toString(), 
-	                                       maxUpLevel: this.state.profiles.maxUpLevel.toString()}));
+	        return this.props.type.isBaseline || this.props.type.isMultiExperiment ? React.createElement(Legend.LegendBaseline, { atlasBaseURL: this.props.atlasBaseURL,
+	            minExpressionLevel: this.state.profiles.minExpressionLevel.toString(),
+	            maxExpressionLevel: this.state.profiles.maxExpressionLevel.toString(),
+	            isMultiExperiment: this.props.type.isMultiExperiment ? true : false }) : React.createElement(Legend.LegendDifferential, { atlasBaseURL: this.props.atlasBaseURL,
+	            minDownLevel: this.state.profiles.minDownLevel.toString(),
+	            maxDownLevel: this.state.profiles.maxDownLevel.toString(),
+	            minUpLevel: this.state.profiles.minUpLevel.toString(),
+	            maxUpLevel: this.state.profiles.maxUpLevel.toString() });
 	    },
 	
 	    render: function () {
 	        var paddingMargin = "15px";
 	
-	        return (
-	            React.createElement("div", null, 
-	
-	                React.createElement("div", {ref: "countAndLegend", className: "gxaHeatmapCountAndLegend", style: {"paddingBottom": paddingMargin, "position": "sticky"}}, 
-	                    React.createElement("div", {style: {display: "inline-block", 'verticalAlign': "top"}}, 
-	                        this.props.type.isMultiExperiment ? React.createElement("span", {id: "geneCount"}, "Showing ", this.state.profiles.rows.length, " of ", this.state.profiles.searchResultTotal, " experiments found: ") :
-	                            React.createElement("span", {id: "geneCount"}, "Showing ", this.state.profiles.rows.length, " of ", this.state.profiles.searchResultTotal, " ", this.state.showGeneSetProfiles ? 'gene sets' : 'genes', " found: "), 
-	                        this.props.geneSetProfiles && !this.props.type.isMultiExperiment ? React.createElement("a", {href: "javascript:void(0)", onClick: this.toggleGeneSets}, this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)') : ''
-	                    ), 
-	                    React.createElement("div", {style: {display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top"}}, 
-	                        React.createElement(DownloadProfilesButton, {ref: "downloadProfilesButton", 
-	                                                downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL, 
-	                                                atlasBaseURL: this.props.atlasBaseURL})
-	                    ), 
-	                    React.createElement("div", {style: {display: "inline-block", "paddingLeft": "20px"}}, 
-	                        this.legendType()
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	                'div',
+	                { ref: 'countAndLegend', className: 'gxaHeatmapCountAndLegend', style: { "paddingBottom": paddingMargin, "position": "sticky" } },
+	                React.createElement(
+	                    'div',
+	                    { style: { display: "inline-block", 'verticalAlign': "top" } },
+	                    this.props.type.isMultiExperiment ? React.createElement(
+	                        'span',
+	                        { id: 'geneCount' },
+	                        'Showing ',
+	                        this.state.profiles.rows.length,
+	                        ' of ',
+	                        this.state.profiles.searchResultTotal,
+	                        ' experiments found: '
+	                    ) : React.createElement(
+	                        'span',
+	                        { id: 'geneCount' },
+	                        'Showing ',
+	                        this.state.profiles.rows.length,
+	                        ' of ',
+	                        this.state.profiles.searchResultTotal,
+	                        ' ',
+	                        this.state.showGeneSetProfiles ? 'gene sets' : 'genes',
+	                        ' found: '
+	                    ),
+	                    this.props.geneSetProfiles && !this.props.type.isMultiExperiment ? React.createElement(
+	                        'a',
+	                        { href: 'javascript:void(0)', onClick: this.toggleGeneSets },
+	                        this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'
+	                    ) : ''
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { style: { display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top" } },
+	                    React.createElement(DownloadProfilesButton, { ref: 'downloadProfilesButton',
+	                        downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
+	                        atlasBaseURL: this.props.atlasBaseURL })
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { style: { display: "inline-block", "paddingLeft": "20px" } },
+	                    this.legendType()
+	                )
+	            ),
+	            React.createElement(
+	                'div',
+	                { ref: 'stickyWrap', className: 'gxaStickyTableWrap', style: { "marginTop": paddingMargin } },
+	                React.createElement(
+	                    'table',
+	                    { ref: 'heatmapTable', className: 'gxaTableGrid gxaStickyEnabled', id: 'heatmap-table' },
+	                    React.createElement(HeatmapTableHeader, { ref: 'heatmapTableHeader',
+	                        radioId: 'table',
+	                        isMicroarray: this.isMicroarray(),
+	                        hasQuartiles: this.hasQuartiles(),
+	                        isSingleGeneResult: this.isSingleGeneResult(),
+	                        type: this.props.type,
+	                        columnHeaders: this.props.columnHeaders,
+	                        nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders,
+	                        multipleColumnHeaders: this.props.multipleColumnHeaders,
+	                        selectedColumnId: this.state.selectedColumnId,
+	                        selectColumn: this.selectColumn,
+	                        hoverColumnCallback: this._hoverColumn,
+	                        heatmapConfig: this.props.heatmapConfig,
+	                        atlasBaseURL: this.props.atlasBaseURL,
+	                        displayLevels: this.state.displayLevels,
+	                        toggleDisplayLevels: this.toggleDisplayLevels,
+	                        showGeneSetProfiles: this.state.showGeneSetProfiles,
+	                        selectedRadioButton: this.state.selectedRadioButton,
+	                        toggleRadioButton: this.toggleRadioButton,
+	                        renderContrastFactorHeaders: true,
+	                        anatomogramEventEmitter: this.props.anatomogramEventEmitter }),
+	                    React.createElement(HeatmapTableRows, { profiles: this.state.profiles.rows,
+	                        nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders,
+	                        selectedGeneId: this.state.selectedGeneId,
+	                        selectGene: this.selectGene,
+	                        type: this.props.type,
+	                        heatmapConfig: this.props.heatmapConfig,
+	                        atlasBaseURL: this.props.atlasBaseURL,
+	                        linksAtlasBaseURL: this.props.linksAtlasBaseURL,
+	                        displayLevels: this.state.displayLevels,
+	                        showGeneSetProfiles: this.state.showGeneSetProfiles,
+	                        selectedRadioButton: this.state.selectedRadioButton,
+	                        hoverColumnCallback: this._hoverColumn,
+	                        hoverRowCallback: this._hoverRow,
+	                        hasQuartiles: this.hasQuartiles(),
+	                        isSingleGeneResult: this.isSingleGeneResult(),
+	                        renderExpressionCells: true })
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { ref: 'stickyIntersect', className: 'gxaStickyTableIntersect' },
+	                    React.createElement(
+	                        'table',
+	                        { className: 'gxaTableGrid' },
+	                        React.createElement(HeatmapTableHeader, { isMicroarray: this.isMicroarray(),
+	                            radioId: 'intersect',
+	                            hasQuartiles: this.hasQuartiles(),
+	                            isSingleGeneResult: this.isSingleGeneResult(),
+	                            type: this.props.type,
+	                            columnHeaders: this.props.columnHeaders,
+	                            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders,
+	                            multipleColumnHeaders: this.props.multipleColumnHeaders,
+	                            selectedColumnId: this.state.selectedColumnId,
+	                            selectColumn: this.selectColumn,
+	                            heatmapConfig: this.props.heatmapConfig,
+	                            atlasBaseURL: this.props.atlasBaseURL,
+	                            linksAtlasBaseURL: this.props.linksAtlasBaseURL,
+	                            displayLevels: this.state.displayLevels,
+	                            toggleDisplayLevels: this.toggleDisplayLevels,
+	                            showGeneSetProfiles: this.state.showGeneSetProfiles,
+	                            selectedRadioButton: this.state.selectedRadioButton,
+	                            toggleRadioButton: this.toggleRadioButton,
+	                            renderContrastFactorHeaders: false })
 	                    )
-	                ), 
-	
-	                React.createElement("div", {ref: "stickyWrap", className: "gxaStickyTableWrap", style: {"marginTop": paddingMargin}}, 
-	                    React.createElement("table", {ref: "heatmapTable", className: "gxaTableGrid gxaStickyEnabled", id: "heatmap-table"}, 
-	                        React.createElement(HeatmapTableHeader, {ref: "heatmapTableHeader", 
-	                                            radioId: "table", 
-	                                            isMicroarray: this.isMicroarray(), 
-	                                            hasQuartiles: this.hasQuartiles(), 
-	                                            isSingleGeneResult: this.isSingleGeneResult(), 
-	                                            type: this.props.type, 
-	                                            columnHeaders: this.props.columnHeaders, 
-	                                            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
-	                                            multipleColumnHeaders: this.props.multipleColumnHeaders, 
-	                                            selectedColumnId: this.state.selectedColumnId, 
-	                                            selectColumn: this.selectColumn, 
-	                                            hoverColumnCallback: this._hoverColumn, 
-	                                            heatmapConfig: this.props.heatmapConfig, 
-	                                            atlasBaseURL: this.props.atlasBaseURL, 
-	                                            displayLevels: this.state.displayLevels, 
-	                                            toggleDisplayLevels: this.toggleDisplayLevels, 
-	                                            showGeneSetProfiles: this.state.showGeneSetProfiles, 
-	                                            selectedRadioButton: this.state.selectedRadioButton, 
-	                                            toggleRadioButton: this.toggleRadioButton, 
-	                                            renderContrastFactorHeaders: true, 
-	                                            anatomogramEventEmitter: this.props.anatomogramEventEmitter}), 
-	                        React.createElement(HeatmapTableRows, {profiles: this.state.profiles.rows, 
-	                                          nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
-	                                          selectedGeneId: this.state.selectedGeneId, 
-	                                          selectGene: this.selectGene, 
-	                                          type: this.props.type, 
-	                                          heatmapConfig: this.props.heatmapConfig, 
-	                                          atlasBaseURL: this.props.atlasBaseURL, 
-	                                          linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
-	                                          displayLevels: this.state.displayLevels, 
-	                                          showGeneSetProfiles: this.state.showGeneSetProfiles, 
-	                                          selectedRadioButton: this.state.selectedRadioButton, 
-	                                          hoverColumnCallback: this._hoverColumn, 
-	                                          hoverRowCallback: this._hoverRow, 
-	                                          hasQuartiles: this.hasQuartiles(), 
-	                                          isSingleGeneResult: this.isSingleGeneResult(), 
-	                                          renderExpressionCells: true})
-	                    ), 
-	
-	                    React.createElement("div", {ref: "stickyIntersect", className: "gxaStickyTableIntersect"}, 
-	                        React.createElement("table", {className: "gxaTableGrid"}, 
-	                            React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), 
-	                                                    radioId: "intersect", 
-	                                                    hasQuartiles: this.hasQuartiles(), 
-	                                                    isSingleGeneResult: this.isSingleGeneResult(), 
-	                                                    type: this.props.type, 
-	                                                    columnHeaders: this.props.columnHeaders, 
-	                                                    nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
-	                                                    multipleColumnHeaders: this.props.multipleColumnHeaders, 
-	                                                    selectedColumnId: this.state.selectedColumnId, 
-	                                                    selectColumn: this.selectColumn, 
-	                                                    heatmapConfig: this.props.heatmapConfig, 
-	                                                    atlasBaseURL: this.props.atlasBaseURL, 
-	                                                    linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
-	                                                    displayLevels: this.state.displayLevels, 
-	                                                    toggleDisplayLevels: this.toggleDisplayLevels, 
-	                                                    showGeneSetProfiles: this.state.showGeneSetProfiles, 
-	                                                    selectedRadioButton: this.state.selectedRadioButton, 
-	                                                    toggleRadioButton: this.toggleRadioButton, 
-	                                                    renderContrastFactorHeaders: false})
-	
-	                        )
-	                    ), 
-	
-	                    React.createElement("div", {ref: "stickyColumn", className: "gxaStickyTableColumn"}, 
-	                        React.createElement("table", {className: "gxaTableGrid"}, 
-	                            React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), 
-	                                                radioId: "column", 
-	                                                hasQuartiles: this.hasQuartiles(), 
-	                                                isSingleGeneResult: this.isSingleGeneResult(), 
-	                                                columnHeaders: this.props.columnHeaders, 
-	                                                nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
-	                                                type: this.props.type, 
-	                                                multipleColumnHeaders: this.props.multipleColumnHeaders, 
-	                                                selectedColumnId: this.state.selectedColumnId, 
-	                                                selectColumn: this.selectColumn, 
-	                                                heatmapConfig: this.props.heatmapConfig, 
-	                                                atlasBaseURL: this.props.atlasBaseURL, 
-	                                                displayLevels: this.state.displayLevels, 
-	                                                toggleDisplayLevels: this.toggleDisplayLevels, 
-	                                                showGeneSetProfiles: this.state.showGeneSetProfiles, 
-	                                                selectedRadioButton: this.state.selectedRadioButton, 
-	                                                toggleRadioButton: this.toggleRadioButton, 
-	                                                renderContrastFactorHeaders: false}), 
-	                            React.createElement(HeatmapTableRows, {profiles: this.state.profiles.rows, 
-	                                              nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
-	                                              selectedGeneId: this.state.selectedGeneId, 
-	                                              selectGene: this.selectGene, 
-	                                              type: this.props.type, 
-	                                              heatmapConfig: this.props.heatmapConfig, 
-	                                              atlasBaseURL: this.props.atlasBaseURL, 
-	                                              linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
-	                                              displayLevels: this.state.displayLevels, 
-	                                              showGeneSetProfiles: this.state.showGeneSetProfiles, 
-	                                              selectedRadioButton: this.state.selectedRadioButton, 
-	                                              hoverRowCallback: this._hoverRow, 
-	                                              hasQuartiles: this.hasQuartiles(), 
-	                                              isSingleGeneResult: this.isSingleGeneResult(), 
-	                                              renderExpressionCells: false})
-	                        )
-	                    ), 
-	
-	
-	                    React.createElement("div", {ref: "stickyHeader", className: "gxaStickyTableHeader"}, 
-	                        React.createElement("table", {className: "gxaTableGrid"}, 
-	                            React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), 
-	                                                    radioId: "header", 
-	                                                    hasQuartiles: this.hasQuartiles(), 
-	                                                    isSingleGeneResult: this.isSingleGeneResult(), 
-	                                                    hoverColumnCallback: this._hoverColumn, 
-	                                                    type: this.props.type, 
-	                                                    columnHeaders: this.props.columnHeaders, 
-	                                                    nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
-	                                                    multipleColumnHeaders: this.props.multipleColumnHeaders, 
-	                                                    selectedColumnId: this.state.selectedColumnId, 
-	                                                    selectColumn: this.selectColumn, 
-	                                                    heatmapConfig: this.props.heatmapConfig, 
-	                                                    atlasBaseURL: this.props.atlasBaseURL, 
-	                                                    linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
-	                                                    displayLevels: this.state.displayLevels, 
-	                                                    toggleDisplayLevels: this.toggleDisplayLevels, 
-	                                                    showGeneSetProfiles: this.state.showGeneSetProfiles, 
-	                                                    selectedRadioButton: this.state.selectedRadioButton, 
-	                                                    toggleRadioButton: this.toggleRadioButton, 
-	                                                    renderContrastFactorHeaders: true, 
-	                                                    anatomogramEventEmitter: this.props.anatomogramEventEmitter})
-	
-	                        )
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { ref: 'stickyColumn', className: 'gxaStickyTableColumn' },
+	                    React.createElement(
+	                        'table',
+	                        { className: 'gxaTableGrid' },
+	                        React.createElement(HeatmapTableHeader, { isMicroarray: this.isMicroarray(),
+	                            radioId: 'column',
+	                            hasQuartiles: this.hasQuartiles(),
+	                            isSingleGeneResult: this.isSingleGeneResult(),
+	                            columnHeaders: this.props.columnHeaders,
+	                            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders,
+	                            type: this.props.type,
+	                            multipleColumnHeaders: this.props.multipleColumnHeaders,
+	                            selectedColumnId: this.state.selectedColumnId,
+	                            selectColumn: this.selectColumn,
+	                            heatmapConfig: this.props.heatmapConfig,
+	                            atlasBaseURL: this.props.atlasBaseURL,
+	                            displayLevels: this.state.displayLevels,
+	                            toggleDisplayLevels: this.toggleDisplayLevels,
+	                            showGeneSetProfiles: this.state.showGeneSetProfiles,
+	                            selectedRadioButton: this.state.selectedRadioButton,
+	                            toggleRadioButton: this.toggleRadioButton,
+	                            renderContrastFactorHeaders: false }),
+	                        React.createElement(HeatmapTableRows, { profiles: this.state.profiles.rows,
+	                            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders,
+	                            selectedGeneId: this.state.selectedGeneId,
+	                            selectGene: this.selectGene,
+	                            type: this.props.type,
+	                            heatmapConfig: this.props.heatmapConfig,
+	                            atlasBaseURL: this.props.atlasBaseURL,
+	                            linksAtlasBaseURL: this.props.linksAtlasBaseURL,
+	                            displayLevels: this.state.displayLevels,
+	                            showGeneSetProfiles: this.state.showGeneSetProfiles,
+	                            selectedRadioButton: this.state.selectedRadioButton,
+	                            hoverRowCallback: this._hoverRow,
+	                            hasQuartiles: this.hasQuartiles(),
+	                            isSingleGeneResult: this.isSingleGeneResult(),
+	                            renderExpressionCells: false })
+	                    )
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { ref: 'stickyHeader', className: 'gxaStickyTableHeader' },
+	                    React.createElement(
+	                        'table',
+	                        { className: 'gxaTableGrid' },
+	                        React.createElement(HeatmapTableHeader, { isMicroarray: this.isMicroarray(),
+	                            radioId: 'header',
+	                            hasQuartiles: this.hasQuartiles(),
+	                            isSingleGeneResult: this.isSingleGeneResult(),
+	                            hoverColumnCallback: this._hoverColumn,
+	                            type: this.props.type,
+	                            columnHeaders: this.props.columnHeaders,
+	                            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders,
+	                            multipleColumnHeaders: this.props.multipleColumnHeaders,
+	                            selectedColumnId: this.state.selectedColumnId,
+	                            selectColumn: this.selectColumn,
+	                            heatmapConfig: this.props.heatmapConfig,
+	                            atlasBaseURL: this.props.atlasBaseURL,
+	                            linksAtlasBaseURL: this.props.linksAtlasBaseURL,
+	                            displayLevels: this.state.displayLevels,
+	                            toggleDisplayLevels: this.toggleDisplayLevels,
+	                            showGeneSetProfiles: this.state.showGeneSetProfiles,
+	                            selectedRadioButton: this.state.selectedRadioButton,
+	                            toggleRadioButton: this.toggleRadioButton,
+	                            renderContrastFactorHeaders: true,
+	                            anatomogramEventEmitter: this.props.anatomogramEventEmitter })
 	                    )
 	                )
-	
 	            )
 	        );
 	    }
 	
 	});
 	
-	
-	var DownloadProfilesButton = React.createClass({displayName: "DownloadProfilesButton",
+	var DownloadProfilesButton = React.createClass({
 	    propTypes: {
 	        atlasBaseURL: React.PropTypes.string.isRequired,
 	        downloadProfilesURL: React.PropTypes.string.isRequired
@@ -12718,12 +12746,12 @@ webpackJsonp([1],[
 	        var downloadURL = this.props.atlasBaseURL + this.props.downloadProfilesURL;
 	        var downloadImgSrcURL = this.props.atlasBaseURL + "/resources/images/download_blue_small.png";
 	
-	        return (
-	            React.createElement("a", {id: "download-profiles-link", ref: "downloadProfilesLink", 
-	               title: "Download all results", 
-	               href: downloadURL, className: "gxaButtonImage", target: "_blank"}, 
-	               React.createElement("img", {id: "download-profiles", alt: "Download query results", style: {width: "20px"}, src: downloadImgSrcURL})
-	            )
+	        return React.createElement(
+	            'a',
+	            { id: 'download-profiles-link', ref: 'downloadProfilesLink',
+	                title: 'Download all results',
+	                href: downloadURL, className: 'gxaButtonImage', target: '_blank' },
+	            React.createElement('img', { id: 'download-profiles', alt: 'Download query results', style: { width: "20px" }, src: downloadImgSrcURL })
 	        );
 	    },
 	
@@ -12734,8 +12762,7 @@ webpackJsonp([1],[
 	    }
 	});
 	
-	
-	var HeatmapTableHeader = React.createClass({displayName: "HeatmapTableHeader",
+	var HeatmapTableHeader = React.createClass({
 	    propTypes: {
 	        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string)
 	    },
@@ -12743,22 +12770,18 @@ webpackJsonp([1],[
 	    renderContrastFactorHeaders: function () {
 	        var heatmapConfig = this.props.heatmapConfig;
 	        if (this.props.type.isBaseline) {
-	            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, this.props.mainHeaderNames, this.props.type, this.props.columnHeaders, this.props.nonExpressedColumnHeaders, heatmapConfig.experimentAccession,
-	                                        this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
-	        }
-	        else if (this.props.type.isDifferential) {
-	            return (React.createElement(ContrastHeaders, {heatmapConfig: heatmapConfig, 
-	                                     atlasBaseURL: this.props.atlasBaseURL, 
-	                                     contrasts: this.props.columnHeaders, 
-	                                     selectedColumnId: this.props.selectedColumnId, 
-	                                     selectColumn: this.props.selectColumn, 
-	                                     experimentAccession: heatmapConfig.experimentAccession, 
-	                                     showMaPlotButton: heatmapConfig.showMaPlotButton, 
-	                                     gseaPlots: heatmapConfig.gseaPlots}));
-	        }
-	        else if (this.props.type.isMultiExperiment) {
-	            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, null, this.props.type, this.props.columnHeaders, this.props.nonExpressedColumnHeaders, "",
-	                this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
+	            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, this.props.mainHeaderNames, this.props.type, this.props.columnHeaders, this.props.nonExpressedColumnHeaders, heatmapConfig.experimentAccession, this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
+	        } else if (this.props.type.isDifferential) {
+	            return React.createElement(ContrastHeaders, { heatmapConfig: heatmapConfig,
+	                atlasBaseURL: this.props.atlasBaseURL,
+	                contrasts: this.props.columnHeaders,
+	                selectedColumnId: this.props.selectedColumnId,
+	                selectColumn: this.props.selectColumn,
+	                experimentAccession: heatmapConfig.experimentAccession,
+	                showMaPlotButton: heatmapConfig.showMaPlotButton,
+	                gseaPlots: heatmapConfig.gseaPlots });
+	        } else if (this.props.type.isMultiExperiment) {
+	            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, null, this.props.type, this.props.columnHeaders, this.props.nonExpressedColumnHeaders, "", this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
 	        }
 	    },
 	
@@ -12766,38 +12789,58 @@ webpackJsonp([1],[
 	        var showGeneProfile = this.props.showGeneSetProfiles ? "Gene set" : "Gene";
 	        var showExperimentProfile = this.props.type.isMultiExperiment ? "Experiment" : showGeneProfile;
 	
-	        return (
-	            React.createElement("thead", null, 
-	                React.createElement("tr", null, 
-	                    React.createElement("th", {className: "gxaHorizontalHeaderCell gxaHeatmapTableIntersect", colSpan: this.props.isMicroarray ? 2 : undefined}, 
-	                        React.createElement(TopLeftCorner, {type: this.props.type, 
-	                                       hasQuartiles: this.props.hasQuartiles, 
-	                                       radioId: this.props.radioId, 
-	                                       isSingleGeneResult: this.props.isSingleGeneResult, 
-	                                       heatmapConfig: this.props.heatmapConfig, 
-	                                       displayLevels: this.props.displayLevels, 
-	                                       toggleDisplayLevels: this.props.toggleDisplayLevels, 
-	                                       selectedRadioButton: this.props.selectedRadioButton, 
-	                                       toggleRadioButton: this.props.toggleRadioButton, 
-	                                       atlasBaseURL: this.props.atlasBaseURL})
-	                    ), 
-	
-	                     this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null
-	                ), 
-	
-	                React.createElement("tr", null, 
-	                    React.createElement("th", {className: "gxaHorizontalHeaderCell gxaHeatmapTableIntersect", style:  this.props.isMicroarray ? {width: "166px"} : {}}, React.createElement("div", null,  showExperimentProfile )), 
-	                     this.props.isMicroarray ? React.createElement("th", {className: "gxaHorizontalHeaderCell gxaHeatmapTableIntersect"}, React.createElement("div", null, "Design Element")) : null
-	                )
+	        return React.createElement(
+	            'thead',
+	            null,
+	            React.createElement(
+	                'tr',
+	                null,
+	                React.createElement(
+	                    'th',
+	                    { className: 'gxaHorizontalHeaderCell gxaHeatmapTableIntersect', colSpan: this.props.isMicroarray ? 2 : undefined },
+	                    React.createElement(TopLeftCorner, { type: this.props.type,
+	                        hasQuartiles: this.props.hasQuartiles,
+	                        radioId: this.props.radioId,
+	                        isSingleGeneResult: this.props.isSingleGeneResult,
+	                        heatmapConfig: this.props.heatmapConfig,
+	                        displayLevels: this.props.displayLevels,
+	                        toggleDisplayLevels: this.props.toggleDisplayLevels,
+	                        selectedRadioButton: this.props.selectedRadioButton,
+	                        toggleRadioButton: this.props.toggleRadioButton,
+	                        atlasBaseURL: this.props.atlasBaseURL })
+	                ),
+	                this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null
+	            ),
+	            React.createElement(
+	                'tr',
+	                null,
+	                React.createElement(
+	                    'th',
+	                    { className: 'gxaHorizontalHeaderCell gxaHeatmapTableIntersect', style: this.props.isMicroarray ? { width: "166px" } : {} },
+	                    React.createElement(
+	                        'div',
+	                        null,
+	                        showExperimentProfile
+	                    )
+	                ),
+	                this.props.isMicroarray ? React.createElement(
+	                    'th',
+	                    { className: 'gxaHorizontalHeaderCell gxaHeatmapTableIntersect' },
+	                    React.createElement(
+	                        'div',
+	                        null,
+	                        'Design Element'
+	                    )
+	                ) : null
 	            )
 	        );
 	    }
 	});
 	
-	
 	function restrictLabelSize(label, maxSize) {
 	    var result = label;
-	    if (result.length > maxSize + 1) {  // +1 to account for the extra ellipsis character appended
+	    if (result.length > maxSize + 1) {
+	        // +1 to account for the extra ellipsis character appended
 	        result = result.substring(0, maxSize);
 	        if (result.lastIndexOf(" ") > maxSize - 5) {
 	            result = result.substring(0, result.lastIndexOf(" "));
@@ -12807,9 +12850,7 @@ webpackJsonp([1],[
 	    return result;
 	}
 	
-	
-	function renderFactorHeaders(heatmapConfig, atlasBaseURL, mainHeaderNames, type, assayGroupFactors, nonExpressedGroupFactors, experimentAccession, selectColumn,
-	                             selectedColumnId, hoverColumnCallback, anatomogramEventEmitter) {
+	function renderFactorHeaders(heatmapConfig, atlasBaseURL, mainHeaderNames, type, assayGroupFactors, nonExpressedGroupFactors, experimentAccession, selectColumn, selectedColumnId, hoverColumnCallback, anatomogramEventEmitter) {
 	
 	    //var factorHeaders =
 	    //    assayGroupFactors.filter(function(assayGroupFactor) {
@@ -12831,55 +12872,55 @@ webpackJsonp([1],[
 	    //});
 	
 	    return assayGroupFactors.map(function (assayGroupFactor) {
-	        return React.createElement(FactorHeader, {key: mainHeaderNames + assayGroupFactor.factorValue, 
-	                             type: type, 
-	                             heatmapConfig: heatmapConfig, 
-	                             factorName: assayGroupFactor.factorValue, 
-	                             svgPathId: assayGroupFactor.factorValueOntologyTermId, 
-	                             assayGroupId: assayGroupFactor.assayGroupId, 
-	                             experimentAccession: experimentAccession, 
-	                             selectColumn: selectColumn, 
-	                             selected: assayGroupFactor.assayGroupId === selectedColumnId, 
-	                             hoverColumnCallback: hoverColumnCallback, 
-	                             anatomogramEventEmitter: anatomogramEventEmitter, 
-	                             atlasBaseURL: atlasBaseURL});
+	        return React.createElement(FactorHeader, { key: mainHeaderNames + assayGroupFactor.factorValue,
+	            type: type,
+	            heatmapConfig: heatmapConfig,
+	            factorName: assayGroupFactor.factorValue,
+	            svgPathId: assayGroupFactor.factorValueOntologyTermId,
+	            assayGroupId: assayGroupFactor.assayGroupId,
+	            experimentAccession: experimentAccession,
+	            selectColumn: selectColumn,
+	            selected: assayGroupFactor.assayGroupId === selectedColumnId,
+	            hoverColumnCallback: hoverColumnCallback,
+	            anatomogramEventEmitter: anatomogramEventEmitter,
+	            atlasBaseURL: atlasBaseURL });
 	    });
 	}
 	
-	var FactorHeader = React.createClass({displayName: "FactorHeader",
+	var FactorHeader = React.createClass({
 	
 	    getInitialState: function () {
-	        return ({hover: false, selected: false});
+	        return { hover: false, selected: false };
 	    },
 	
 	    onMouseEnter: function () {
 	        if (this.props.heatmapConfig.enableEnsemblLauncher) {
-	            this.setState({hover: true});
+	            this.setState({ hover: true });
 	        }
 	        this.props.hoverColumnCallback(this.props.svgPathId);
 	    },
 	
 	    onMouseLeave: function () {
 	        if (this.props.heatmapConfig.enableEnsemblLauncher) {
-	            this.setState({hover: false});
+	            this.setState({ hover: false });
 	        }
 	        this.props.hoverColumnCallback(null);
 	        this._closeTooltip();
 	    },
 	
-	    _closeTooltip: function() {
-	        if(!this.props.type.isMultiExperiment) {
+	    _closeTooltip: function () {
+	        if (!this.props.type.isMultiExperiment) {
 	            $(this.getDOMNode()).tooltip("close");
 	        }
 	    },
 	
-	    _anatomogramTissueMouseEnter: function(svgPathId) {
+	    _anatomogramTissueMouseEnter: function (svgPathId) {
 	        if (svgPathId === this.props.svgPathId) {
 	            $(this.refs.headerCell.getDOMNode()).addClass("gxaHeaderHover");
 	        }
 	    },
 	
-	    _anatomogramTissueMouseLeave: function(svgPathId) {
+	    _anatomogramTissueMouseLeave: function (svgPathId) {
 	        if (svgPathId === this.props.svgPathId) {
 	            $(this.refs.headerCell.getDOMNode()).removeClass("gxaHeaderHover");
 	        }
@@ -12892,7 +12933,7 @@ webpackJsonp([1],[
 	    },
 	
 	    componentDidMount: function () {
-	        if(!this.props.type.isMultiExperiment) {
+	        if (!this.props.type.isMultiExperiment) {
 	            FactorTooltipModule.init(this.props.atlasBaseURL, this.props.heatmapConfig.accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
 	        }
 	        if (this.props.anatomogramEventEmitter) {
@@ -12902,70 +12943,80 @@ webpackJsonp([1],[
 	    },
 	
 	    render: function () {
-	        var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.createElement("span", {style: {position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}, "  select") : null;
-	        var showTickWhenSelected = this.props.selected ? React.createElement("span", {className: "rotate_tick", style: {position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}, " ✔ "): null ;
+	        var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.createElement(
+	            'span',
+	            { style: { position: "absolute", width: "10px", right: "0px", left: "95px", float: "right", color: "green" } },
+	            '  select'
+	        ) : null;
+	        var showTickWhenSelected = this.props.selected ? React.createElement(
+	            'span',
+	            { className: 'rotate_tick', style: { position: "absolute", width: "5px", right: "0px", left: "125px", float: "right", color: "green" } },
+	            ' ✔ '
+	        ) : null;
 	        var thClass = "rotated_cell gxaHoverableHeader" + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (this.props.heatmapConfig.enableEnsemblLauncher ? " gxaSelectableHeader" : "");
 	        var divClass = "rotate_text factor-header";
 	        var factorName = Modernizr.csstransforms ? restrictLabelSize(this.props.factorName, 14) : this.props.factorName;
 	
-	        return (
-	            React.createElement("th", {ref: "headerCell", className: thClass, onMouseEnter: this.onMouseEnter, onMouseLeave: this.onMouseLeave, onClick: this.onClick, rowSpan: "2"}, 
-	                React.createElement("div", {"data-assay-group-id": this.props.assayGroupId, "data-experiment-accession": this.props.experimentAccession, className: divClass}, 
-	                    factorName, 
-	                    showSelectTextOnHover, 
-	                    showTickWhenSelected
-	                )
+	        return React.createElement(
+	            'th',
+	            { ref: 'headerCell', className: thClass, onMouseEnter: this.onMouseEnter, onMouseLeave: this.onMouseLeave, onClick: this.onClick, rowSpan: '2' },
+	            React.createElement(
+	                'div',
+	                { 'data-assay-group-id': this.props.assayGroupId, 'data-experiment-accession': this.props.experimentAccession, className: divClass },
+	                factorName,
+	                showSelectTextOnHover,
+	                showTickWhenSelected
 	            )
 	        );
 	    }
 	
 	});
 	
-	
-	var ContrastHeaders = React.createClass({displayName: "ContrastHeaders",
+	var ContrastHeaders = React.createClass({
 	
 	    render: function () {
 	        var heatmapConfig = this.props.heatmapConfig;
 	
 	        var contrastHeaders = this.props.contrasts.map(function (contrast) {
-	            var gseaPlotsThisContrast = this.props.gseaPlots ? this.props.gseaPlots[contrast.id] : {go: false, interpro: false, reactome: false};
-	            return React.createElement(ContrastHeader, {key: contrast.id, 
-	                                   heatmapConfig: heatmapConfig, 
-	                                   atlasBaseURL: this.props.atlasBaseURL, 
-	                                   selectColumn: this.props.selectColumn, 
-	                                   selected: contrast.id === this.props.selectedColumnId, 
-	                                   contrastName: contrast.displayName, arrayDesignAccession: contrast.arrayDesignAccession, 
-	                                   contrastId: contrast.id, experimentAccession: this.props.experimentAccession, 
-	                                   showMaPlotButton: this.props.showMaPlotButton, 
-	                                   showGseaGoPlot: gseaPlotsThisContrast.go, 
-	                                   showGseaInterproPlot: gseaPlotsThisContrast.interpro, 
-	                                   showGseaReactomePlot: gseaPlotsThisContrast.reactome});
+	            var gseaPlotsThisContrast = this.props.gseaPlots ? this.props.gseaPlots[contrast.id] : { go: false, interpro: false, reactome: false };
+	            return React.createElement(ContrastHeader, { key: contrast.id,
+	                heatmapConfig: heatmapConfig,
+	                atlasBaseURL: this.props.atlasBaseURL,
+	                selectColumn: this.props.selectColumn,
+	                selected: contrast.id === this.props.selectedColumnId,
+	                contrastName: contrast.displayName, arrayDesignAccession: contrast.arrayDesignAccession,
+	                contrastId: contrast.id, experimentAccession: this.props.experimentAccession,
+	                showMaPlotButton: this.props.showMaPlotButton,
+	                showGseaGoPlot: gseaPlotsThisContrast.go,
+	                showGseaInterproPlot: gseaPlotsThisContrast.interpro,
+	                showGseaReactomePlot: gseaPlotsThisContrast.reactome });
 	        }.bind(this));
 	
-	        return (
-	            React.createElement("div", null, contrastHeaders)
+	        return React.createElement(
+	            'div',
+	            null,
+	            contrastHeaders
 	        );
 	    }
 	
 	});
 	
-	
-	var ContrastHeader = React.createClass({displayName: "ContrastHeader",
+	var ContrastHeader = React.createClass({
 	
 	    getInitialState: function () {
-	        return ({hover:false, selected:false});
+	        return { hover: false, selected: false };
 	    },
 	
 	    onMouseEnter: function () {
-	        this.setState({hover:true});
+	        this.setState({ hover: true });
 	    },
 	
 	    onMouseLeave: function () {
-	        this.setState({hover:false});
+	        this.setState({ hover: false });
 	        this._closeTooltip();
 	    },
 	
-	    _closeTooltip: function() {
+	    _closeTooltip: function () {
 	        $(this.getDOMNode()).tooltip("close");
 	    },
 	
@@ -12980,7 +13031,7 @@ webpackJsonp([1],[
 	            this.renderToolBarContent(this.refs.plotsToolBarContent.getDOMNode());
 	
 	            var plotsButton = this.refs.plotsButton.getDOMNode();
-	            $(plotsButton).tooltip({hide: false, show: false}).button();
+	            $(plotsButton).tooltip({ hide: false, show: false }).button();
 	            $(plotsButton).toolbar({
 	                content: this.refs.plotsToolBarContent.getDOMNode(),
 	                position: 'right'
@@ -12988,11 +13039,11 @@ webpackJsonp([1],[
 	        }
 	    },
 	
-	    renderToolBarContent: function(contentNode) {
+	    renderToolBarContent: function (contentNode) {
 	
 	        var $contentNode = $(contentNode);
 	
-	        var maPlotURL = this.props.atlasBaseURL + "/external-resources/" + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
+	        var maPlotURL = this.props.atlasBaseURL + "/external-resources/" + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "") + this.props.contrastId + "/ma-plot.png";
 	        var maPlotImgSrcURL = this.props.atlasBaseURL + "/resources/images/maplot-button.png";
 	
 	        var gseaGoPlotURL = this.props.atlasBaseURL + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_go.png";
@@ -13004,13 +13055,30 @@ webpackJsonp([1],[
 	        var gseaReactomePlotURL = this.props.atlasBaseURL + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_reactome.png";
 	        var gseaReactomePlotImgSrcURL = this.props.atlasBaseURL + "/resources/images/gsea-reactome-button.png";
 	
-	        var content =
-	            React.createElement("div", null, 
-	                this.props.showMaPlotButton ? React.createElement("a", {href: maPlotURL, id: "maButtonID", title: "Click to view MA plot for the contrast across all genes", onClick: this.clickButton}, React.createElement("img", {src: maPlotImgSrcURL})) : null, 
-	                this.props.showGseaGoPlot ? React.createElement("a", {href: gseaGoPlotURL, id: "goButtonID", title: "Click to view GO terms enrichment analysis plot", onClick: this.clickButton}, React.createElement("img", {src: gseaGoPlotImgSrcURL})) : null, 
-	                this.props.showGseaInterproPlot ? React.createElement("a", {href: gseaInterproPlotURL, id: "interproButtonID", title: "Click to view Interpro domains enrichment analysis plot", onClick: this.clickButton}, React.createElement("img", {src: gseaInterproImgSrcURL})) : null, 
-	                this.props.showGseaReactomePlot ? React.createElement("a", {href: gseaReactomePlotURL, id: "reactomeButtonID", title: "Click to view Reactome pathways enrichment analysis plot", onClick: this.clickButton}, React.createElement("img", {src: gseaReactomePlotImgSrcURL})) : null
-	            );
+	        var content = React.createElement(
+	            'div',
+	            null,
+	            this.props.showMaPlotButton ? React.createElement(
+	                'a',
+	                { href: maPlotURL, id: 'maButtonID', title: 'Click to view MA plot for the contrast across all genes', onClick: this.clickButton },
+	                React.createElement('img', { src: maPlotImgSrcURL })
+	            ) : null,
+	            this.props.showGseaGoPlot ? React.createElement(
+	                'a',
+	                { href: gseaGoPlotURL, id: 'goButtonID', title: 'Click to view GO terms enrichment analysis plot', onClick: this.clickButton },
+	                React.createElement('img', { src: gseaGoPlotImgSrcURL })
+	            ) : null,
+	            this.props.showGseaInterproPlot ? React.createElement(
+	                'a',
+	                { href: gseaInterproPlotURL, id: 'interproButtonID', title: 'Click to view Interpro domains enrichment analysis plot', onClick: this.clickButton },
+	                React.createElement('img', { src: gseaInterproImgSrcURL })
+	            ) : null,
+	            this.props.showGseaReactomePlot ? React.createElement(
+	                'a',
+	                { href: gseaReactomePlotURL, id: 'reactomeButtonID', title: 'Click to view Reactome pathways enrichment analysis plot', onClick: this.clickButton },
+	                React.createElement('img', { src: gseaReactomePlotImgSrcURL })
+	            ) : null
+	        );
 	
 	        // the tool bar content will be copied around the DOM by the toolbar plugin
 	        // so we render using static markup because otherwise when copied, we'll end up with
@@ -13022,9 +13090,9 @@ webpackJsonp([1],[
 	        //need to use each here otherwise we get a fancybox error
 	        $contentNode.find('a').each(function (index, button) {
 	            $(button).fancybox({
-	                padding:0,
-	                openEffect:'elastic',
-	                closeEffect:'elastic'
+	                padding: 0,
+	                openEffect: 'elastic',
+	                closeEffect: 'elastic'
 	            });
 	        });
 	    },
@@ -13039,74 +13107,87 @@ webpackJsonp([1],[
 	    },
 	
 	    render: function () {
-	        var thStyle = this.showPlotsButton() ? {minWidth: "80px"} : {};
-	        var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
+	        var thStyle = this.showPlotsButton() ? { minWidth: "80px" } : {};
+	        var textStyle = this.showPlotsButton() ? { top: "57px" } : {};
 	
 	        var plotsImgSrcURL = this.props.atlasBaseURL + "/resources/images/yellow-chart-icon.png";
 	
-	        var plotsButton = (
-	            React.createElement("div", {style: {textAlign: "right", paddingRight: "3px"}}, 
-	                React.createElement("a", {href: "#", ref: "plotsButton", onClick: this.clickButton, className: "gxaButtonImage", title: "Click to view plots"}, React.createElement("img", {src: plotsImgSrcURL}))
+	        var plotsButton = React.createElement(
+	            'div',
+	            { style: { textAlign: "right", paddingRight: "3px" } },
+	            React.createElement(
+	                'a',
+	                { href: '#', ref: 'plotsButton', onClick: this.clickButton, className: 'gxaButtonImage', title: 'Click to view plots' },
+	                React.createElement('img', { src: plotsImgSrcURL })
 	            )
 	        );
 	
-	        var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.createElement("span", {style: {position: "absolute", width: "10px", right: "0px", left: "95px", bottom: "-35px", color: "green"}}, "  select") : null;
-	        var showTickWhenSelected = this.props.selected ? React.createElement("span", {className: "rotate_tick", style: {position: "absolute", width: "5px", right: "0px", left: "125px", bottom: "-35px", color: "green"}}, " ✔ "): null;
+	        var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.createElement(
+	            'span',
+	            { style: { position: "absolute", width: "10px", right: "0px", left: "95px", bottom: "-35px", color: "green" } },
+	            '  select'
+	        ) : null;
+	        var showTickWhenSelected = this.props.selected ? React.createElement(
+	            'span',
+	            { className: 'rotate_tick', style: { position: "absolute", width: "5px", right: "0px", left: "125px", bottom: "-35px", color: "green" } },
+	            ' ✔ '
+	        ) : null;
 	        var thClass = "rotated_cell gxaHoverableHeader" + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (this.props.heatmapConfig.enableEnsemblLauncher ? " gxaSelectableHeader " : "");
 	        var divClass = "rotate_text factor-header";
 	        var contrastName = Modernizr.csstransforms ? restrictLabelSize(this.props.contrastName, 17) : this.props.contrastName;
 	
-	        return (
-	            React.createElement("th", {className: thClass, rowSpan: "2", style: thStyle, onMouseEnter: this.props.heatmapConfig.enableEnsemblLauncher ? this.onMouseEnter : undefined, onMouseLeave: this.props.heatmapConfig.enableEnsemblLauncher ? this.onMouseLeave : this._closeTooltip, onClick: this.props.heatmapConfig.enableEnsemblLauncher ? this.onClick : undefined}, 
-	                React.createElement("div", {"data-contrast-id": this.props.contrastId, "data-experiment-accession": this.props.experimentAccession, className: divClass, style: textStyle}, 
-	                    contrastName, 
-	                    showSelectTextOnHover, 
-	                    showTickWhenSelected
-	                ), 
-	                this.showPlotsButton() ? plotsButton : null, 
-	                this.showPlotsButton() ? React.createElement("div", {ref: "plotsToolBarContent", style: {display: "none"}}, "placeholder") : null
-	            )
+	        return React.createElement(
+	            'th',
+	            { className: thClass, rowSpan: '2', style: thStyle, onMouseEnter: this.props.heatmapConfig.enableEnsemblLauncher ? this.onMouseEnter : undefined, onMouseLeave: this.props.heatmapConfig.enableEnsemblLauncher ? this.onMouseLeave : this._closeTooltip, onClick: this.props.heatmapConfig.enableEnsemblLauncher ? this.onClick : undefined },
+	            React.createElement(
+	                'div',
+	                { 'data-contrast-id': this.props.contrastId, 'data-experiment-accession': this.props.experimentAccession, className: divClass, style: textStyle },
+	                contrastName,
+	                showSelectTextOnHover,
+	                showTickWhenSelected
+	            ),
+	            this.showPlotsButton() ? plotsButton : null,
+	            this.showPlotsButton() ? React.createElement(
+	                'div',
+	                { ref: 'plotsToolBarContent', style: { display: "none" } },
+	                'placeholder'
+	            ) : null
 	        );
 	    }
 	
 	});
 	
+	var TopLeftCorner = React.createClass({
 	
-	var TopLeftCorner = React.createClass({displayName: "TopLeftCorner",
-	
-	    displayLevelsBaseline: function() {
+	    displayLevelsBaseline: function () {
 	        if (this.props.hasQuartiles && this.props.isSingleGeneResult) {
-	            return (
-	                React.createElement(LevelsRadioGroup, {radioId: this.props.radioId, 
-	                                  selectedRadioButton: this.props.selectedRadioButton, 
-	                                  toggleRadioButton: this.props.toggleRadioButton})
-	            );
+	            return React.createElement(LevelsRadioGroup, { radioId: this.props.radioId,
+	                selectedRadioButton: this.props.selectedRadioButton,
+	                toggleRadioButton: this.props.toggleRadioButton });
 	        } else if (this.props.type.isBaseline || this.props.type.isMultiExperiment) {
-	            return (
-	                    React.createElement(DisplayLevelsButton, {autoSize: true, 
-	                                         hideText: "Hide levels", 
-	                                         showText: "Display levels", 
-	                                         onClickCallback: this.props.toggleDisplayLevels, 
-	                                         displayLevels: this.props.displayLevels})
-	            );
+	            return React.createElement(DisplayLevelsButton, { autoSize: true,
+	                hideText: 'Hide levels',
+	                showText: 'Display levels',
+	                onClickCallback: this.props.toggleDisplayLevels,
+	                displayLevels: this.props.displayLevels });
 	        } else {
-	            return (
-	                    React.createElement(DisplayLevelsButton, {autoSize: true, 
-	                                         hideText: "Hide log<sub>2</sub>-fold change", 
-	                                         showText: "Display log<sub>2</sub>-fold change", 
-	                                         onClickCallback: this.props.toggleDisplayLevels, 
-	                                         displayLevels: this.props.displayLevels})
-	            );
+	            return React.createElement(DisplayLevelsButton, { autoSize: true,
+	                hideText: 'Hide log<sub>2</sub>-fold change',
+	                showText: 'Display log<sub>2</sub>-fold change',
+	                onClickCallback: this.props.toggleDisplayLevels,
+	                displayLevels: this.props.displayLevels });
 	        }
 	    },
 	
 	    render: function () {
-	        return (
-	            React.createElement("div", {className: "gxaHeatmapMatrixTopLeftCorner"}, 
-	                React.createElement("span", {className: "gxaTooltip", "data-help-loc": this.props.type.heatmapTooltip, ref: "tooltipSpan"}), 
-	                React.createElement("div", {style: {display: "table-cell", verticalAlign: "middle", textAlign: "center"}}, 
-	                    this.displayLevelsBaseline()
-	                )
+	        return React.createElement(
+	            'div',
+	            { className: 'gxaHeatmapMatrixTopLeftCorner' },
+	            React.createElement('span', { className: 'gxaTooltip', 'data-help-loc': this.props.type.heatmapTooltip, ref: 'tooltipSpan' }),
+	            React.createElement(
+	                'div',
+	                { style: { display: "table-cell", verticalAlign: "middle", textAlign: "center" } },
+	                this.displayLevelsBaseline()
 	            )
 	        );
 	    },
@@ -13117,80 +13198,81 @@ webpackJsonp([1],[
 	
 	});
 	
+	var LevelsRadioGroup = React.createClass({
 	
-	var LevelsRadioGroup = React.createClass({displayName: "LevelsRadioGroup",
-	
-	    getInitialState: function() {
-	        return {value: this.props.selectedRadioButton};
+	    getInitialState: function () {
+	        return { value: this.props.selectedRadioButton };
 	    },
 	
-	    render: function() {
-	        return (
-	            React.createElement(RadioGroup, {name: "displayLevelsGroup_" + this.props.radioId, value: this.props.selectedRadioButton, onChange: this.handleChange}, 
-	                React.createElement("div", {style: {"marginLeft": "10px", "marginTop": "8px"}}, 
-	                    React.createElement("input", {type: "radio", value: "gradients"}), "Display gradients", React.createElement("br", null), 
-	                    React.createElement("input", {type: "radio", value: "levels"}), "Display levels", React.createElement("br", null), 
-	                    React.createElement("input", {type: "radio", value: "variance"}), "Display variance"
-	                )
+	    render: function () {
+	        return React.createElement(
+	            RadioGroup,
+	            { name: "displayLevelsGroup_" + this.props.radioId, value: this.props.selectedRadioButton, onChange: this.handleChange },
+	            React.createElement(
+	                'div',
+	                { style: { "marginLeft": "10px", "marginTop": "8px" } },
+	                React.createElement('input', { type: 'radio', value: 'gradients' }),
+	                'Display gradients',
+	                React.createElement('br', null),
+	                React.createElement('input', { type: 'radio', value: 'levels' }),
+	                'Display levels',
+	                React.createElement('br', null),
+	                React.createElement('input', { type: 'radio', value: 'variance' }),
+	                'Display variance'
 	            )
 	        );
 	    },
 	
-	    handleChange: function(event) {
+	    handleChange: function (event) {
 	        this.props.toggleRadioButton(event.target.value);
-	        this.setState({value: this.props.selectedRadioButton});
+	        this.setState({ value: this.props.selectedRadioButton });
 	
 	        // To resize the sticky column/header in case the row height or column width changes
 	        $(window).resize();
 	    }
 	});
 	
-	
-	var HeatmapTableRows = React.createClass({displayName: "HeatmapTableRows",
+	var HeatmapTableRows = React.createClass({
 	    propTypes: {
 	        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string)
 	    },
 	
-	    profileRowType: function (profile)  {
+	    profileRowType: function (profile) {
 	        var geneProfileKey = this.props.heatmapConfig.species + "-" + (this.props.type.isDifferential ? profile.name + "-" + profile.designElement : profile.name);
-	        return (this.props.type.isMultiExperiment ?
-	            React.createElement(GeneProfileRow, {key: geneProfileKey, 
-	                            id: profile.id, 
-	                            name: profile.name, 
-	                            type: this.props.type, 
-	                            experimentType: profile.experimentType, 
-	                            expressions: profile.expressions, 
-	                            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
-	                            serializedFilterFactors: profile.serializedFilterFactors, 
-	                            heatmapConfig: this.props.heatmapConfig, 
-	                            atlasBaseURL: this.props.atlasBaseURL, 
-	                            linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
-	                            displayLevels: this.props.displayLevels, 
-	                            renderExpressionCells: this.props.renderExpressionCells, 
-	                            hoverColumnCallback: this.props.hoverColumnCallback, 
-	                            hoverRowCallback: this.props.hoverRowCallback})
-	            :
-	            React.createElement(GeneProfileRow, {key: geneProfileKey, 
-	                            selected: profile.id === this.props.selectedGeneId, 
-	                            selectGene: this.props.selectGene, 
-	                            designElement: profile.designElement, 
-	                            id: profile.id, 
-	                            name: profile.name, 
-	                            type: this.props.type, 
-	                            expressions: profile.expressions, 
-	                            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders, 
-	                            heatmapConfig: this.props.heatmapConfig, 
-	                            atlasBaseURL: this.props.atlasBaseURL, 
-	                            linksAtlasBaseURL: this.props.linksAtlasBaseURL, 
-	                            displayLevels: this.props.displayLevels, 
-	                            showGeneSetProfiles: this.props.showGeneSetProfiles, 
-	                            selectedRadioButton: this.props.selectedRadioButton, 
-	                            hasQuartiles: this.props.hasQuartiles, 
-	                            isSingleGeneResult: this.props.isSingleGeneResult, 
-	                            renderExpressionCells: this.props.renderExpressionCells, 
-	                            hoverColumnCallback: this.props.hoverColumnCallback, 
-	                            hoverRowCallback: this.props.hoverRowCallback})
-	        );
+	        return this.props.type.isMultiExperiment ? React.createElement(GeneProfileRow, { key: geneProfileKey,
+	            id: profile.id,
+	            name: profile.name,
+	            type: this.props.type,
+	            experimentType: profile.experimentType,
+	            expressions: profile.expressions,
+	            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders,
+	            serializedFilterFactors: profile.serializedFilterFactors,
+	            heatmapConfig: this.props.heatmapConfig,
+	            atlasBaseURL: this.props.atlasBaseURL,
+	            linksAtlasBaseURL: this.props.linksAtlasBaseURL,
+	            displayLevels: this.props.displayLevels,
+	            renderExpressionCells: this.props.renderExpressionCells,
+	            hoverColumnCallback: this.props.hoverColumnCallback,
+	            hoverRowCallback: this.props.hoverRowCallback }) : React.createElement(GeneProfileRow, { key: geneProfileKey,
+	            selected: profile.id === this.props.selectedGeneId,
+	            selectGene: this.props.selectGene,
+	            designElement: profile.designElement,
+	            id: profile.id,
+	            name: profile.name,
+	            type: this.props.type,
+	            expressions: profile.expressions,
+	            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders,
+	            heatmapConfig: this.props.heatmapConfig,
+	            atlasBaseURL: this.props.atlasBaseURL,
+	            linksAtlasBaseURL: this.props.linksAtlasBaseURL,
+	            displayLevels: this.props.displayLevels,
+	            showGeneSetProfiles: this.props.showGeneSetProfiles,
+	            selectedRadioButton: this.props.selectedRadioButton,
+	            hasQuartiles: this.props.hasQuartiles,
+	            isSingleGeneResult: this.props.isSingleGeneResult,
+	            renderExpressionCells: this.props.renderExpressionCells,
+	            hoverColumnCallback: this.props.hoverColumnCallback,
+	            hoverRowCallback: this.props.hoverRowCallback });
 	    },
 	
 	    render: function () {
@@ -13199,16 +13281,15 @@ webpackJsonp([1],[
 	            return this.profileRowType(profile);
 	        }.bind(this));
 	
-	        return (
-	            React.createElement("tbody", null, 
+	        return React.createElement(
+	            'tbody',
+	            null,
 	            geneProfilesRows
-	            )
 	        );
 	    }
 	});
 	
-	
-	var GeneProfileRow = React.createClass({displayName: "GeneProfileRow",
+	var GeneProfileRow = React.createClass({
 	    propTypes: {
 	        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string),
 	        atlasBaseURL: React.PropTypes.string.isRequired,
@@ -13216,12 +13297,12 @@ webpackJsonp([1],[
 	    },
 	
 	    getInitialState: function () {
-	        return ({hover:false, selected:false, levels: this.props.displayLevels});
+	        return { hover: false, selected: false, levels: this.props.displayLevels };
 	    },
 	
 	    onMouseEnter: function () {
 	        if (this.props.heatmapConfig.enableEnsemblLauncher) {
-	            this.setState({hover:true});
+	            this.setState({ hover: true });
 	        }
 	        // We use name instead of id because in multiexperiment the same id can appear under different name (same experiment, different conditions)
 	        this.props.hoverRowCallback(this.props.name);
@@ -13229,7 +13310,7 @@ webpackJsonp([1],[
 	
 	    onMouseLeave: function () {
 	        if (this.props.heatmapConfig.enableEnsemblLauncher) {
-	            this.setState({hover:false});
+	            this.setState({ hover: false });
 	        }
 	        this._closeTooltip();
 	        this.props.hoverRowCallback(null);
@@ -13245,16 +13326,20 @@ webpackJsonp([1],[
 	        var experimentURL = '/experiments/' + this.props.id + '?geneQuery=' + this.props.heatmapConfig.geneQuery + (this.props.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(this.props.serializedFilterFactors) : "");
 	        var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + this.props.heatmapConfig.isExactMatch : '/genes/' + this.props.id;
 	
-	        var titleTooltip = this.props.type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "Protein Expression" : "RNA Expression" ) : "";
+	        var titleTooltip = this.props.type.isMultiExperiment ? this.props.experimentType == "PROTEOMICS_BASELINE" ? "Protein Expression" : "RNA Expression" : "";
 	
 	        var experimentOrGeneURL = this.props.linksAtlasBaseURL + (this.props.type.isMultiExperiment ? experimentURL : geneURL);
 	
 	        // don't render id for gene sets to prevent tooltips
 	        // The vertical align in the <a> element is needed because the kerning in the font used in icon-conceptual is vertically off
-	        return (
-	            React.createElement("span", {title: titleTooltip, style: {"display": "table-cell"}}, 
-	                React.createElement("span", {className: "icon icon-conceptual icon-c2", "data-icon": this.props.type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}), 
-	                React.createElement("a", {ref: "geneName", id: this.props.showGeneSetProfiles ? '' : this.props.id, href: experimentOrGeneURL, onClick: this.geneNameLinkClicked, style: {"verticalAlign": "15%"}}, this.props.name)
+	        return React.createElement(
+	            'span',
+	            { title: titleTooltip, style: { "display": "table-cell" } },
+	            React.createElement('span', { className: 'icon icon-conceptual icon-c2', 'data-icon': this.props.type.isMultiExperiment ? this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd' : '' }),
+	            React.createElement(
+	                'a',
+	                { ref: 'geneName', id: this.props.showGeneSetProfiles ? '' : this.props.id, href: experimentOrGeneURL, onClick: this.geneNameLinkClicked, style: { "verticalAlign": "15%" } },
+	                this.props.name
 	            )
 	        );
 	    },
@@ -13266,66 +13351,56 @@ webpackJsonp([1],[
 	
 	    geneNameNotLinked: function () {
 	        // don't render id for gene sets to prevent tooltips
-	        return (
-	            React.createElement("span", {style: {"float": "left"}, ref: "geneName", title: "", id: this.props.showGeneSetProfiles ? '' : this.props.id}, this.props.name)
+	        return React.createElement(
+	            'span',
+	            { style: { "float": "left" }, ref: 'geneName', title: '', id: this.props.showGeneSetProfiles ? '' : this.props.id },
+	            this.props.name
 	        );
 	    },
 	
-	    displayLevelsRadio: function() {
-	        if(this.props.hasQuartiles && this.props.isSingleGeneResult) {
+	    displayLevelsRadio: function () {
+	        if (this.props.hasQuartiles && this.props.isSingleGeneResult) {
 	            return this.props.selectedRadioButton === "levels";
-	        }
-	        else return (this.props.displayLevels);
+	        } else return this.props.displayLevels;
 	    },
 	
 	    cellType: function (expression) {
 	        if (this.props.type.isBaseline) {
-	            if(this.props.selectedRadioButton === "variance" && expression.quartiles) {
-	                return (
-	                    React.createElement(HeatmapBaselineCellVariance, {key: this.props.id + expression.factorName, 
-	                                                 quartiles: expression.quartiles, 
-	                                                 hoverColumnCallback: this.props.hoverColumnCallback})
-	                );
+	            if (this.props.selectedRadioButton === "variance" && expression.quartiles) {
+	                return React.createElement(HeatmapBaselineCellVariance, { key: this.props.id + expression.factorName,
+	                    quartiles: expression.quartiles,
+	                    hoverColumnCallback: this.props.hoverColumnCallback });
+	            } else {
+	                return React.createElement(CellBaseline, { key: this.props.id + expression.factorName,
+	                    factorName: expression.factorName,
+	                    color: expression.color,
+	                    value: expression.value,
+	                    heatmapConfig: this.props.heatmapConfig,
+	                    displayLevels: this.displayLevelsRadio(),
+	                    svgPathId: expression.svgPathId,
+	                    geneSetProfiles: this.props.showGeneSetProfiles,
+	                    id: this.props.id,
+	                    name: this.props.name,
+	                    hoverColumnCallback: this.props.hoverColumnCallback });
 	            }
-	            else {
-	                return (
-	                    React.createElement(CellBaseline, {key: this.props.id + expression.factorName, 
-	                                  factorName: expression.factorName, 
-	                                  color: expression.color, 
-	                                  value: expression.value, 
-	                                  heatmapConfig: this.props.heatmapConfig, 
-	                                  displayLevels: this.displayLevelsRadio(), 
-	                                  svgPathId: expression.svgPathId, 
-	                                  geneSetProfiles: this.props.showGeneSetProfiles, 
-	                                  id: this.props.id, 
-	                                  name: this.props.name, 
-	                                  hoverColumnCallback: this.props.hoverColumnCallback})
-	                );
-	            }
-	        }
-	        else if (this.props.type.isDifferential) {
-	            return (
-	                React.createElement(CellDifferential, {key: this.props.designElement + this.props.name + expression.contrastName, 
-	                                  colour: expression.color, 
-	                                  foldChange: expression.foldChange, 
-	                                  pValue: expression.pValue, 
-	                                  tStat: expression.tStat, 
-	                                  displayLevels: this.props.displayLevels})
-	            );
-	        }
-	        else if (this.props.type.isMultiExperiment) {
-	            return (
-	                React.createElement(CellMultiExperiment, {key: this.props.id + expression.factorName, 
-	                                     factorName: expression.factorName, 
-	                                     serializedFilterFactors: this.props.serializedFilterFactors, 
-	                                     color: expression.color, 
-	                                     value: expression.value, 
-	                                     displayLevels: this.props.displayLevels, 
-	                                     svgPathId: expression.svgPathId, 
-	                                     id: this.props.id, 
-	                                     name: this.props.name, 
-	                                     hoverColumnCallback: this.props.hoverColumnCallback})
-	            );
+	        } else if (this.props.type.isDifferential) {
+	            return React.createElement(CellDifferential, { key: this.props.designElement + this.props.name + expression.contrastName,
+	                colour: expression.color,
+	                foldChange: expression.foldChange,
+	                pValue: expression.pValue,
+	                tStat: expression.tStat,
+	                displayLevels: this.props.displayLevels });
+	        } else if (this.props.type.isMultiExperiment) {
+	            return React.createElement(CellMultiExperiment, { key: this.props.id + expression.factorName,
+	                factorName: expression.factorName,
+	                serializedFilterFactors: this.props.serializedFilterFactors,
+	                color: expression.color,
+	                value: expression.value,
+	                displayLevels: this.props.displayLevels,
+	                svgPathId: expression.svgPathId,
+	                id: this.props.id,
+	                name: this.props.name,
+	                hoverColumnCallback: this.props.hoverColumnCallback });
 	        }
 	    },
 	
@@ -13344,58 +13419,81 @@ webpackJsonp([1],[
 	    },
 	
 	    render: function () {
-	        var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.createElement("span", {style: {"display": "table-cell", "textAlign": "right", "paddingLeft": "10px", "color": "green", "visibility": "visible"}}, "select") :
-	            React.createElement("span", {style: {"display": "table-cell", "textAlign": "right", "paddingLeft": "10px", "color": "green", "visibility": "hidden"}}, "select");
-	        var showTickWhenSelected = this.props.selected ? React.createElement("span", {style: {"float": "right", "color": "green"}}, " ✔ "): null ;
+	        var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.createElement(
+	            'span',
+	            { style: { "display": "table-cell", "textAlign": "right", "paddingLeft": "10px", "color": "green", "visibility": "visible" } },
+	            'select'
+	        ) : React.createElement(
+	            'span',
+	            { style: { "display": "table-cell", "textAlign": "right", "paddingLeft": "10px", "color": "green", "visibility": "hidden" } },
+	            'select'
+	        );
+	        var showTickWhenSelected = this.props.selected ? React.createElement(
+	            'span',
+	            { style: { "float": "right", "color": "green" } },
+	            ' ✔ '
+	        ) : null;
 	        var className = (this.props.selected ? "gxaHorizontalHeaderCell-selected gxaHoverableHeader" : "gxaHorizontalHeaderCell gxaHoverableHeader") + (this.props.heatmapConfig.enableEnsemblLauncher ? " gxaSelectableHeader" : "");
-	        var rowClassName = this.props.type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "gxaProteomicsExperiment" : "gxaTranscriptomicsExperiment" ) : "";
+	        var rowClassName = this.props.type.isMultiExperiment ? this.props.experimentType == "PROTEOMICS_BASELINE" ? "gxaProteomicsExperiment" : "gxaTranscriptomicsExperiment" : "";
 	
-	        return (
-	            React.createElement("tr", {className: rowClassName}, 
-	                React.createElement("th", {className: className, onMouseEnter: this.onMouseEnter, onMouseLeave: this.onMouseLeave, onClick: this.onClick}, 
-	                    React.createElement("div", {style: {display: "table", width: "100%"}}, 
-	                        React.createElement("div", {style: {display: "table-row"}}, 
-	                             this.props.heatmapConfig.enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked(), 
-	                             this.props.heatmapConfig.enableEnsemblLauncher ? showSelectTextOnHover : null, 
-	                             this.props.heatmapConfig.enableEnsemblLauncher ? showTickWhenSelected : null
-	                        )
+	        return React.createElement(
+	            'tr',
+	            { className: rowClassName },
+	            React.createElement(
+	                'th',
+	                { className: className, onMouseEnter: this.onMouseEnter, onMouseLeave: this.onMouseLeave, onClick: this.onClick },
+	                React.createElement(
+	                    'div',
+	                    { style: { display: "table", width: "100%" } },
+	                    React.createElement(
+	                        'div',
+	                        { style: { display: "table-row" } },
+	                        this.props.heatmapConfig.enableGeneLinks ? this.geneNameLinked() : this.geneNameNotLinked(),
+	                        this.props.heatmapConfig.enableEnsemblLauncher ? showSelectTextOnHover : null,
+	                        this.props.heatmapConfig.enableEnsemblLauncher ? showTickWhenSelected : null
 	                    )
-	                ), 
-	                this.props.designElement ? React.createElement("th", {className: "gxaHeatmapTableDesignElement"}, this.props.designElement) : null, 
-	                this.props.renderExpressionCells ? this.cells(this.props.expressions, this.props.nonExpressedColumnHeaders) : null
-	            )
+	                )
+	            ),
+	            this.props.designElement ? React.createElement(
+	                'th',
+	                { className: 'gxaHeatmapTableDesignElement' },
+	                this.props.designElement
+	            ) : null,
+	            this.props.renderExpressionCells ? this.cells(this.props.expressions, this.props.nonExpressedColumnHeaders) : null
 	        );
 	    },
 	
 	    componentDidMount: function () {
-	        if(!this.props.type.isMultiExperiment) {
+	        if (!this.props.type.isMultiExperiment) {
 	            GenePropertiesTooltipModule.init(this.props.atlasBaseURL, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
 	        }
 	    },
 	
-	    _closeTooltip: function() {
-	        if(!this.props.type.isMultiExperiment) {
+	    _closeTooltip: function () {
+	        if (!this.props.type.isMultiExperiment) {
 	            $(this.refs.geneName.getDOMNode()).tooltip("close");
 	        }
 	    }
 	
 	});
 	
-	var CellBaseline = React.createClass({displayName: "CellBaseline",
+	var CellBaseline = React.createClass({
 	    render: function () {
 	        if (this._noExpression()) {
-	            return (React.createElement("td", null));
+	            return React.createElement('td', null);
 	        }
 	
-	        var style = {"backgroundColor": this._isUnknownExpression() ? "white" : this.props.color};
+	        var style = { "backgroundColor": this._isUnknownExpression() ? "white" : this.props.color };
 	
-	        return (
-	            React.createElement("td", {style: style, onMouseEnter: this._onMouseEnter, onMouseLeave: this._onMouseLeave}, 
-	                React.createElement("div", {
-	                    className: "gxaHeatmapCell", 
-	                    style: {visibility: this._isUnknownExpression() || this.props.displayLevels ? "visible" : "hidden"}}, 
-	                    this._isUnknownExpression() ? this._unknownCell() : NumberFormat.baselineExpression(this.props.value)
-	                )
+	        return React.createElement(
+	            'td',
+	            { style: style, onMouseEnter: this._onMouseEnter, onMouseLeave: this._onMouseLeave },
+	            React.createElement(
+	                'div',
+	                {
+	                    className: 'gxaHeatmapCell',
+	                    style: { visibility: this._isUnknownExpression() || this.props.displayLevels ? "visible" : "hidden" } },
+	                this._isUnknownExpression() ? this._unknownCell() : NumberFormat.baselineExpression(this.props.value)
 	            )
 	        );
 	    },
@@ -13410,7 +13508,7 @@ webpackJsonp([1],[
 	        this.addQuestionMarkTooltip();
 	    },
 	
-	    addQuestionMarkTooltip: function() {
+	    addQuestionMarkTooltip: function () {
 	        function hasQuestionMark(unknownElement) {
 	            return unknownElement.children.length;
 	        }
@@ -13422,11 +13520,11 @@ webpackJsonp([1],[
 	
 	    _hasKnownExpression: function () {
 	        // true if not blank or UNKNOWN, ie: has a expression with a known value
-	        return (this.props.value && !this._isUnknownExpression());
+	        return this.props.value && !this._isUnknownExpression();
 	    },
 	
 	    _isUnknownExpression: function () {
-	        return (this.propsvalue === "UNKNOWN")
+	        return this.propsvalue === "UNKNOWN";
 	    },
 	
 	    _noExpression: function () {
@@ -13434,28 +13532,25 @@ webpackJsonp([1],[
 	    },
 	
 	    _unknownCell: function () {
-	        return (
-	            React.createElement("span", {ref: "unknownCell", "data-help-loc": this.props.geneSetProfiles ? '#heatMapTableGeneSetUnknownCell' : '#heatMapTableUnknownCell'})
-	        );
+	        return React.createElement('span', { ref: 'unknownCell', 'data-help-loc': this.props.geneSetProfiles ? '#heatMapTableGeneSetUnknownCell' : '#heatMapTableUnknownCell' });
 	    },
 	
-	    _onMouseEnter: function() {
+	    _onMouseEnter: function () {
 	        if (this._hasKnownExpression()) {
 	            this.props.hoverColumnCallback(this.props.svgPathId);
 	        }
 	    },
 	
-	    _onMouseLeave: function() {
+	    _onMouseLeave: function () {
 	        if (this._hasKnownExpression()) {
 	            this.props.hoverColumnCallback(null);
 	        }
 	    }
 	});
 	
-	
-	var CellMultiExperiment = React.createClass({displayName: "CellMultiExperiment",
-	    _isNAExpression : function () {
-	        return (this.props.value === "NT");
+	var CellMultiExperiment = React.createClass({
+	    _isNAExpression: function () {
+	        return this.props.value === "NT";
 	    },
 	
 	    _noExpression: function () {
@@ -13463,18 +13558,20 @@ webpackJsonp([1],[
 	    },
 	
 	    _tissueNotStudiedInExperiment: function () {
-	        return (
-	            React.createElement("span", null, "NA")
+	        return React.createElement(
+	            'span',
+	            null,
+	            'NA'
 	        );
 	    },
 	
-	    _onMouseEnter: function() {
+	    _onMouseEnter: function () {
 	        if (!this._noExpression() && !this._isNAExpression()) {
 	            this.props.hoverColumnCallback(this.props.svgPathId);
 	        }
 	    },
 	
-	    _onMouseLeave: function() {
+	    _onMouseLeave: function () {
 	        if (!this._noExpression() && !this._isNAExpression()) {
 	            this.props.hoverColumnCallback(null);
 	        }
@@ -13483,16 +13580,18 @@ webpackJsonp([1],[
 	    render: function () {
 	
 	        if (this._noExpression()) {
-	            return (React.createElement("td", null));
+	            return React.createElement('td', null);
 	        }
 	
-	        var style = {"backgroundColor": this.props.color};
+	        var style = { "backgroundColor": this.props.color };
 	
-	        return (
-	            React.createElement("td", {style: style, onMouseEnter: this._onMouseEnter, onMouseLeave: this._onMouseLeave}, 
-	                React.createElement("div", {className: "gxaHeatmapCell", style: {visibility: this._isNAExpression() || this.props.displayLevels ? "visible" : "hidden"}}, 
-	                    this._isNAExpression(this.props.value) ? this._tissueNotStudiedInExperiment() : NumberFormat.baselineExpression(this.props.value)
-	                )
+	        return React.createElement(
+	            'td',
+	            { style: style, onMouseEnter: this._onMouseEnter, onMouseLeave: this._onMouseLeave },
+	            React.createElement(
+	                'div',
+	                { className: 'gxaHeatmapCell', style: { visibility: this._isNAExpression() || this.props.displayLevels ? "visible" : "hidden" } },
+	                this._isNAExpression(this.props.value) ? this._tissueNotStudiedInExperiment() : NumberFormat.baselineExpression(this.props.value)
 	            )
 	        );
 	    }
@@ -17650,7 +17749,7 @@ webpackJsonp([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	var HeatmapBaselineCellVariance = React.createClass({displayName: "HeatmapBaselineCellVariance",
+	var HeatmapBaselineCellVariance = React.createClass({
 	
 	    propTypes: {
 	        quartiles: React.PropTypes.shape({
@@ -17670,11 +17769,11 @@ webpackJsonp([1],[
 	
 	        var highchartsOptions = {
 	            credits: { enabled: false },
-	            chart:   { type: "boxplot", width: chartWidth, height: chartHeight, margin: chartMargin},
-	            title:   { text: "" },
-	            legend:  { enabled: false },
-	            xAxis:   { title: { text: "Variance" } },
-	            yAxis:   {
+	            chart: { type: "boxplot", width: chartWidth, height: chartHeight, margin: chartMargin },
+	            title: { text: "" },
+	            legend: { enabled: false },
+	            xAxis: { title: { text: "Variance" } },
+	            yAxis: {
 	                title: { text: "Expression level" },
 	                labels: {
 	                    align: "left",
@@ -17698,25 +17797,25 @@ webpackJsonp([1],[
 	            },
 	            series: [{
 	                name: "Expression",
-	                data: [
-	                    [this.props.quartiles.min, this.props.quartiles.lower, this.props.quartiles.median, this.props.quartiles.upper, this.props.quartiles.max]
-	                ]
+	                data: [[this.props.quartiles.min, this.props.quartiles.lower, this.props.quartiles.median, this.props.quartiles.upper, this.props.quartiles.max]]
 	            }],
 	            tooltip: {
 	                headerFormat: "",
-	                style:{
+	                style: {
 	                    fontSize: "10px",
 	                    padding: 5
 	                }
 	            }
 	        };
 	
-	        var boxPlotStyle = {width: chartWidth, height: chartHeight, margin: chartMargin};
-	        return (
-	            React.createElement("td", null, 
-	                React.createElement("div", {id: "container", ref: "container", style: boxPlotStyle}, 
-	                    React.createElement(Highcharts, {config: highchartsOptions})
-	                )
+	        var boxPlotStyle = { width: chartWidth, height: chartHeight, margin: chartMargin };
+	        return React.createElement(
+	            'td',
+	            null,
+	            React.createElement(
+	                'div',
+	                { id: 'container', ref: 'container', style: boxPlotStyle },
+	                React.createElement(Highcharts, { config: highchartsOptions })
 	            )
 	        );
 	    }
@@ -41693,7 +41792,7 @@ webpackJsonp([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	var LegendDifferential = React.createClass({displayName: "LegendDifferential",
+	var LegendDifferential = React.createClass({
 	
 	    propTypes: {
 	        atlasBaseURL: React.PropTypes.string.isRequired,
@@ -41704,26 +41803,22 @@ webpackJsonp([1],[
 	    },
 	
 	    render: function () {
-	        return (
-	            React.createElement("div", {className: "gxaLegend"}, 
-	                React.createElement("div", {style: {display: "inline-table"}}, 
-	                    isNaN(this.props.minDownLevel) && isNaN(this.props.maxDownLevel) ?
-	                        null :
-	                        React.createElement(LegendRow, {lowExpressionLevel: this.props.minDownLevel, 
-	                                   highExpressionLevel: this.props.maxDownLevel, 
-	                                   lowValueColour: "#C0C0C0", 
-	                                   highValueColour: "#0000FF"}), 
-	                    
-	                    isNaN(this.props.minUpLevel) && isNaN(this.props.maxUpLevel) ?
-	                        null :
-	                        React.createElement(LegendRow, {lowExpressionLevel: this.props.minUpLevel, 
-	                                   highExpressionLevel: this.props.maxUpLevel, 
-	                                   lowValueColour: "#FFAFAF", 
-	                                   highValueColour: "#FF0000"})
-	                    
-	                ), 
-	                React.createElement("div", {ref: "legendHelp", "data-help-loc": "#gradient-differential", className: "gxaLegendHelp"})
-	            )
+	        return React.createElement(
+	            'div',
+	            { className: 'gxaLegend' },
+	            React.createElement(
+	                'div',
+	                { style: { display: "inline-table" } },
+	                isNaN(this.props.minDownLevel) && isNaN(this.props.maxDownLevel) ? null : React.createElement(LegendRow, { lowExpressionLevel: this.props.minDownLevel,
+	                    highExpressionLevel: this.props.maxDownLevel,
+	                    lowValueColour: '#C0C0C0',
+	                    highValueColour: '#0000FF' }),
+	                isNaN(this.props.minUpLevel) && isNaN(this.props.maxUpLevel) ? null : React.createElement(LegendRow, { lowExpressionLevel: this.props.minUpLevel,
+	                    highExpressionLevel: this.props.maxUpLevel,
+	                    lowValueColour: '#FFAFAF',
+	                    highValueColour: '#FF0000' })
+	            ),
+	            React.createElement('div', { ref: 'legendHelp', 'data-help-loc': '#gradient-differential', className: 'gxaLegendHelp' })
 	        );
 	    },
 	
@@ -41735,7 +41830,6 @@ webpackJsonp([1],[
 	//*------------------------------------------------------------------*
 	
 	module.exports = LegendDifferential;
-
 
 /***/ },
 /* 405 */
@@ -41756,12 +41850,12 @@ webpackJsonp([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	var LegendRow = React.createClass({displayName: "LegendRow",
+	var LegendRow = React.createClass({
 	
 	    propTypes: {
 	        lowValueColour: React.PropTypes.string.isRequired,
 	        highValueColour: React.PropTypes.string.isRequired,
-	        lowExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired,    // Baseline legend rows can be a React <span> element returned by NumberFormat
+	        lowExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired, // Baseline legend rows can be a React <span> element returned by NumberFormat
 	        highExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired
 	    },
 	
@@ -41773,13 +41867,23 @@ webpackJsonp([1],[
 	        var LT_IE10_FILTER_TEMPLATE = "progid:DXImageTransform.Microsoft.Gradient(GradientType =1,startColorstr=${lowValueColour},endColorstr=${highValueColour})";
 	        var lt_ie10_filter = LT_IE10_FILTER_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
 	
-	        return (
-	            React.createElement("div", {style: {display: "table-row"}}, 
-	                React.createElement("div", {className: "gxaGradientLevel gxaGradientLevelMin"}, this.props.lowExpressionLevel), 
-	                React.createElement("div", {style: {display: "table-cell"}}, 
-	                    React.createElement("span", {className: "gxaGradientColour", style: {backgroundImage: backgroundImage, filter: lt_ie10_filter}})
-	                ), 
-	                React.createElement("div", {className: "gxaGradientLevel gxaGradientLevelMax"}, this.props.highExpressionLevel)
+	        return React.createElement(
+	            'div',
+	            { style: { display: "table-row" } },
+	            React.createElement(
+	                'div',
+	                { className: 'gxaGradientLevel gxaGradientLevelMin' },
+	                this.props.lowExpressionLevel
+	            ),
+	            React.createElement(
+	                'div',
+	                { style: { display: "table-cell" } },
+	                React.createElement('span', { className: 'gxaGradientColour', style: { backgroundImage: backgroundImage, filter: lt_ie10_filter } })
+	            ),
+	            React.createElement(
+	                'div',
+	                { className: 'gxaGradientLevel gxaGradientLevelMax' },
+	                this.props.highExpressionLevel
 	            )
 	        );
 	    }
@@ -41788,7 +41892,6 @@ webpackJsonp([1],[
 	//*------------------------------------------------------------------*
 	
 	module.exports = LegendRow;
-
 
 /***/ },
 /* 406 */
@@ -42064,7 +42167,7 @@ webpackJsonp([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	var LegendBaseline = React.createClass({displayName: "LegendBaseline",
+	var LegendBaseline = React.createClass({
 	
 	    propTypes: {
 	        atlasBaseURL: React.PropTypes.string.isRequired,
@@ -42076,16 +42179,18 @@ webpackJsonp([1],[
 	    render: function () {
 	        var dataHelpLoc = this.props.isMultiExperiment ? "#gradient-base-crossexp" : "#gradient-base";
 	
-	        return (
-	            React.createElement("div", {className: "gxaHeatmapLegendGradient"}, 
-	                React.createElement("div", {style: {display: "inline-table"}}, 
-	                    React.createElement(LegendRow, {lowExpressionLevel: NumberFormat.baselineExpression(this.props.minExpressionLevel), 
-	                               highExpressionLevel: NumberFormat.baselineExpression(this.props.maxExpressionLevel), 
-	                               lowValueColour: "#C0C0C0", 
-	                               highValueColour: "#0000FF"})
-	                ), 
-	                React.createElement("div", {ref: "legendHelp", "data-help-loc": dataHelpLoc, className: "gxaLegendHelp"})
-	            )
+	        return React.createElement(
+	            'div',
+	            { className: 'gxaHeatmapLegendGradient' },
+	            React.createElement(
+	                'div',
+	                { style: { display: "inline-table" } },
+	                React.createElement(LegendRow, { lowExpressionLevel: NumberFormat.baselineExpression(this.props.minExpressionLevel),
+	                    highExpressionLevel: NumberFormat.baselineExpression(this.props.maxExpressionLevel),
+	                    lowValueColour: '#C0C0C0',
+	                    highValueColour: '#0000FF' })
+	            ),
+	            React.createElement('div', { ref: 'legendHelp', 'data-help-loc': dataHelpLoc, className: 'gxaLegendHelp' })
 	        );
 	    },
 	
@@ -42137,7 +42242,7 @@ webpackJsonp([1],[
 	
 	function formatBaselineExpression(expressionLevel) {
 	    var numberExpressionLevel = +expressionLevel;
-	    return (numberExpressionLevel >= 100000 || numberExpressionLevel < 0.1) ? formatScientificNotation(numberExpressionLevel.toExponential(1).replace('+','')) : '' + numberExpressionLevel;
+	    return numberExpressionLevel >= 100000 || numberExpressionLevel < 0.1 ? formatScientificNotation(numberExpressionLevel.toExponential(1).replace('+', '')) : '' + numberExpressionLevel;
 	}
 	
 	// expects number in the format #E# and displays exponent in superscript
@@ -42146,17 +42251,25 @@ webpackJsonp([1],[
 	    var formatParts = scientificNotationString.split(/[Ee]/);
 	
 	    if (formatParts.length == 1) {
-	        return (
-	            React.createElement("span", null, scientificNotationString)
+	        return React.createElement(
+	            'span',
+	            null,
+	            scientificNotationString
 	        );
 	    }
 	
 	    var mantissa = formatParts[0];
 	    var exponent = formatParts[1];
 	
-	    return (
-	        React.createElement("span", null, 
-	            (mantissa !== "1") ? mantissa + " \u00D7 " : '', "10", React.createElement("span", {style: {'verticalAlign': 'super'}}, exponent)
+	    return React.createElement(
+	        'span',
+	        null,
+	        mantissa !== "1" ? mantissa + " \u00D7 " : '',
+	        '10',
+	        React.createElement(
+	            'span',
+	            { style: { 'verticalAlign': 'super' } },
+	            exponent
 	        )
 	    );
 	}
@@ -42217,7 +42330,7 @@ webpackJsonp([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	var CellDifferential = React.createClass({displayName: "CellDifferential",
+	var CellDifferential = React.createClass({
 	
 	    propTypes: {
 	        fontSize: React.PropTypes.number,
@@ -42229,10 +42342,10 @@ webpackJsonp([1],[
 	    },
 	
 	    _hasValue: function () {
-	        return (this.props.foldChange !== undefined);
+	        return this.props.foldChange !== undefined;
 	    },
 	
-	    _getStyle: function() {
+	    _getStyle: function () {
 	        var style = {};
 	        if (this.props.fontSize) {
 	            style.fontSize = this.props.fontSize + "px";
@@ -42243,14 +42356,16 @@ webpackJsonp([1],[
 	
 	    render: function () {
 	        if (!this._hasValue()) {
-	            return (React.createElement("td", null));
+	            return React.createElement('td', null);
 	        }
 	
-	        return (
-	            React.createElement("td", {style: {backgroundColor: this.props.colour, verticalAlign: "middle"}}, 
-	                React.createElement("div", {style: this._getStyle(), className: this.props.displayLevels ? "gxaWebpackShowCell" : "gxaWebpackHideCell"}, 
-	                    this.props.foldChange
-	                )
+	        return React.createElement(
+	            'td',
+	            { style: { backgroundColor: this.props.colour, verticalAlign: "middle" } },
+	            React.createElement(
+	                'div',
+	                { style: this._getStyle(), className: this.props.displayLevels ? "gxaWebpackShowCell" : "gxaWebpackHideCell" },
+	                this.props.foldChange
 	            )
 	        );
 	    },
@@ -42261,29 +42376,12 @@ webpackJsonp([1],[
 	        }
 	    },
 	
-	    _initTooltip: function(element) {
+	    _initTooltip: function (element) {
 	
 	        //TODO - build this from a React component, like we do for FactorTooltip
-	        function buildHeatmapCellTooltip (pValue, tstatistic, foldChange) {
+	        function buildHeatmapCellTooltip(pValue, tstatistic, foldChange) {
 	
-	            return "<table class='gxaWebpackTableGrid' style='margin: 0; padding: 0;'>" +
-	                       "<thead>" +
-	                           (pValue !== undefined ?
-	                               "<th class='gxaWebpackHeaderCell'>Adjusted <i>p</i>-value</th>" : "") +
-	                           (tstatistic !== undefined ?
-	                               "<th class='gxaWebpackHeaderCell'><i>t</i>-statistic</th>" : "") +
-	                           "<th class='gxaWebpackHeaderCell'>Log<sub>2</sub>-fold change</th>" +
-	                       "</thead>" +
-	                       "<tbody>" +
-	                           "<tr>" +
-	                               (pValue !== undefined ?
-	                                   "<td style='padding:6px'>" + React.renderToStaticMarkup(NumberFormat.scientificNotation(pValue)) + "</td>" : "") +
-	                               (tstatistic !== undefined ?
-	                                   "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
-	                               "<td style='padding:6px'>" + foldChange + "</td>" +
-	                           "</tr>" +
-	                       "</tbody>" +
-	                   "</table>";
+	            return "<table class='gxaWebpackTableGrid' style='margin: 0; padding: 0;'>" + "<thead>" + (pValue !== undefined ? "<th class='gxaWebpackHeaderCell'>Adjusted <i>p</i>-value</th>" : "") + (tstatistic !== undefined ? "<th class='gxaWebpackHeaderCell'><i>t</i>-statistic</th>" : "") + "<th class='gxaWebpackHeaderCell'>Log<sub>2</sub>-fold change</th>" + "</thead>" + "<tbody>" + "<tr>" + (pValue !== undefined ? "<td style='padding:6px'>" + React.renderToStaticMarkup(NumberFormat.scientificNotation(pValue)) + "</td>" : "") + (tstatistic !== undefined ? "<td style='padding:6px'>" + tstatistic + "</td>" : "") + "<td style='padding:6px'>" + foldChange + "</td>" + "</tr>" + "</tbody>" + "</table>";
 	        }
 	
 	        var props = this.props;
@@ -42293,9 +42391,9 @@ webpackJsonp([1],[
 	                ui.tooltip.css('background', props.colour);
 	            },
 	
-	            tooltipClass:"gxaWebpackHelpTooltip gxaWebpackPvalueTooltipStyling",
+	            tooltipClass: "gxaWebpackHelpTooltip gxaWebpackPvalueTooltipStyling",
 	
-	            content:function () {
+	            content: function () {
 	                return buildHeatmapCellTooltip(props.pValue, props.tStat, props.foldChange);
 	            }
 	        });
@@ -42524,7 +42622,7 @@ webpackJsonp([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	var DisplayLevelsButton = React.createClass({displayName: "DisplayLevelsButton",
+	var DisplayLevelsButton = React.createClass({
 	
 	    propTypes: {
 	        hideText: React.PropTypes.string.isRequired,
@@ -42543,10 +42641,8 @@ webpackJsonp([1],[
 	    },
 	
 	    render: function () {
-	        var className = (this.props.autoSize) ? "" : "gxaWebpackMediumButton";
-	        return (
-	            React.createElement("button", {className: className, onClick: this.props.onClickCallback})
-	        );
+	        var className = this.props.autoSize ? "" : "gxaWebpackMediumButton";
+	        return React.createElement('button', { className: className, onClick: this.props.onClickCallback });
 	    },
 	
 	    componentDidMount: function () {
@@ -42894,22 +42990,19 @@ webpackJsonp([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	var ContrastTooltip = React.createClass({displayName: "ContrastTooltip",
+	var ContrastTooltip = React.createClass({
 	    propTypes: {
 	        experimentDescription: React.PropTypes.string.isRequired,
 	        contrastDescription: React.PropTypes.string.isRequired,
 	        testReplicates: React.PropTypes.number.isRequired,
 	        referenceReplicates: React.PropTypes.number.isRequired,
-	        properties: React.PropTypes.arrayOf(
-	            React.PropTypes.shape({
-	                contrastPropertyType: React.PropTypes.string,
-	                propertyName: React.PropTypes.string.isRequired,
-	                referenceValue: React.PropTypes.string.isRequired,
-	                testValue: React.PropTypes.string.isRequired
-	            })
-	        )
+	        properties: React.PropTypes.arrayOf(React.PropTypes.shape({
+	            contrastPropertyType: React.PropTypes.string,
+	            propertyName: React.PropTypes.string.isRequired,
+	            referenceValue: React.PropTypes.string.isRequired,
+	            testValue: React.PropTypes.string.isRequired
+	        }))
 	    },
-	
 	
 	    propertyRow: function (property) {
 	        if (!property.testValue && !property.referenceValue) {
@@ -42920,7 +43013,7 @@ webpackJsonp([1],[
 	            return property.contrastPropertyType === "FACTOR";
 	        }
 	
-	        var style = {whiteSpace: "normal"};
+	        var style = { whiteSpace: "normal" };
 	
 	        if (isFactor(property)) {
 	            style.fontWeight = "bold";
@@ -42928,31 +43021,75 @@ webpackJsonp([1],[
 	            style.color = "gray";
 	        }
 	
-	        return (
-	            React.createElement("tr", {key: property.contrastPropertyType + "-" + property.propertyName}, 
-	                React.createElement("td", {style: style}, property.propertyName), 
-	                React.createElement("td", {style: style}, property.testValue), 
-	                React.createElement("td", {style: style}, property.referenceValue)
+	        return React.createElement(
+	            "tr",
+	            { key: property.contrastPropertyType + "-" + property.propertyName },
+	            React.createElement(
+	                "td",
+	                { style: style },
+	                property.propertyName
+	            ),
+	            React.createElement(
+	                "td",
+	                { style: style },
+	                property.testValue
+	            ),
+	            React.createElement(
+	                "td",
+	                { style: style },
+	                property.referenceValue
 	            )
 	        );
 	    },
 	
 	    render: function () {
-	        return (
-	            React.createElement("div", null, 
-	                React.createElement("div", {id: "contrastExperimentDescription", style: {fontWeight: "bold", color: "blue", textAlign: "center"}}, this.props.experimentDescription), 
-	                React.createElement("div", {id: "contrastDescription", style: {textAlign: "center"}}, this.props.contrastDescription), 
-	                React.createElement("table", {className: "gxaTableGrid", style: {padding: "0px", margin: "0px", width: "100%"}}, 
-	                    React.createElement("thead", null, 
-	                        React.createElement("tr", null, 
-	                            React.createElement("th", {className: "gxaHeaderCell"}, "Property"), 
-	                            React.createElement("th", {className: "gxaHeaderCell"}, "Test value (N=", this.props.testReplicates, ")"), 
-	                            React.createElement("th", {className: "gxaHeaderCell"}, "Reference value (N=", this.props.referenceReplicates, ")")
+	        return React.createElement(
+	            "div",
+	            null,
+	            React.createElement(
+	                "div",
+	                { id: "contrastExperimentDescription", style: { fontWeight: "bold", color: "blue", textAlign: "center" } },
+	                this.props.experimentDescription
+	            ),
+	            React.createElement(
+	                "div",
+	                { id: "contrastDescription", style: { textAlign: "center" } },
+	                this.props.contrastDescription
+	            ),
+	            React.createElement(
+	                "table",
+	                { className: "gxaTableGrid", style: { padding: "0px", margin: "0px", width: "100%" } },
+	                React.createElement(
+	                    "thead",
+	                    null,
+	                    React.createElement(
+	                        "tr",
+	                        null,
+	                        React.createElement(
+	                            "th",
+	                            { className: "gxaHeaderCell" },
+	                            "Property"
+	                        ),
+	                        React.createElement(
+	                            "th",
+	                            { className: "gxaHeaderCell" },
+	                            "Test value (N=",
+	                            this.props.testReplicates,
+	                            ")"
+	                        ),
+	                        React.createElement(
+	                            "th",
+	                            { className: "gxaHeaderCell" },
+	                            "Reference value (N=",
+	                            this.props.referenceReplicates,
+	                            ")"
 	                        )
-	                    ), 
-	                    React.createElement("tbody", null, 
-	                        this.props.properties.map(this.propertyRow)
 	                    )
+	                ),
+	                React.createElement(
+	                    "tbody",
+	                    null,
+	                    this.props.properties.map(this.propertyRow)
 	                )
 	            )
 	        );
@@ -43267,7 +43404,7 @@ webpackJsonp([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	var FactorTooltip = React.createClass({displayName: "FactorTooltip",
+	var FactorTooltip = React.createClass({
 	
 	    propertyRow: function (property) {
 	        if (!property.testValue) {
@@ -43278,7 +43415,7 @@ webpackJsonp([1],[
 	            return property.contrastPropertyType === 'FACTOR';
 	        }
 	
-	        var style = {'whiteSpace': 'normal'};
+	        var style = { 'whiteSpace': 'normal' };
 	
 	        if (isFactor(property)) {
 	            style['fontWeight'] = 'bold';
@@ -43286,27 +43423,53 @@ webpackJsonp([1],[
 	            style['color'] = 'gray';
 	        }
 	
-	        return (
-	            React.createElement("tr", {key: property.propertyName}, 
-	                React.createElement("td", {style: style}, property.propertyName), 
-	                React.createElement("td", {style: style}, property.testValue)
+	        return React.createElement(
+	            'tr',
+	            { key: property.propertyName },
+	            React.createElement(
+	                'td',
+	                { style: style },
+	                property.propertyName
+	            ),
+	            React.createElement(
+	                'td',
+	                { style: style },
+	                property.testValue
 	            )
 	        );
 	    },
 	
 	    render: function () {
-	        return (
-	            React.createElement("div", null, 
-	                React.createElement("table", {className: "gxaTableGrid", style: {padding: '0px', margin: '0px'}}, 
-	                    React.createElement("thead", null, 
-	                        React.createElement("tr", null, 
-	                            React.createElement("th", {className: "gxaHeaderCell"}, "Property"), 
-	                            React.createElement("th", {className: "gxaHeaderCell"}, "Value (N=", this.props.replicates, ")")
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	                'table',
+	                { className: 'gxaTableGrid', style: { padding: '0px', margin: '0px' } },
+	                React.createElement(
+	                    'thead',
+	                    null,
+	                    React.createElement(
+	                        'tr',
+	                        null,
+	                        React.createElement(
+	                            'th',
+	                            { className: 'gxaHeaderCell' },
+	                            'Property'
+	                        ),
+	                        React.createElement(
+	                            'th',
+	                            { className: 'gxaHeaderCell' },
+	                            'Value (N=',
+	                            this.props.replicates,
+	                            ')'
 	                        )
-	                    ), 
-	                    React.createElement("tbody", null, 
-	                        this.props.properties.map(this.propertyRow)
 	                    )
+	                ),
+	                React.createElement(
+	                    'tbody',
+	                    null,
+	                    this.props.properties.map(this.propertyRow)
 	                )
 	            )
 	        );
@@ -43578,7 +43741,7 @@ webpackJsonp([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	var ExperimentsList = React.createClass({displayName: "ExperimentsList",
+	var ExperimentsList = React.createClass({
 	    propTypes: {
 	        profiles: React.PropTypes.object.isRequired,
 	        atlasBaseURL: React.PropTypes.string.isRequired,
@@ -43586,7 +43749,7 @@ webpackJsonp([1],[
 	        geneQuery: React.PropTypes.string.isRequired
 	    },
 	
-	    _lexicalSort: function(thisProfile, thatProfile) {
+	    _lexicalSort: function (thisProfile, thatProfile) {
 	        if (thisProfile.name > thatProfile.name) {
 	            return 1;
 	        }
@@ -43597,28 +43760,28 @@ webpackJsonp([1],[
 	        return 0;
 	    },
 	
-	    _renderListItems: function(options) {
-	        return options.profiles.sort(this._lexicalSort).map(function(profile) {
+	    _renderListItems: function (options) {
+	        return options.profiles.sort(this._lexicalSort).map(function (profile) {
 	
-	            var experimentURL =
-	                options.linksAtlasBaseURL +
-	                "/experiments/" + profile.id + "?geneQuery=" + options.geneQuery +
-	                (profile.serializedFilterFactors ?
-	                    "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) : "");
+	            var experimentURL = options.linksAtlasBaseURL + "/experiments/" + profile.id + "?geneQuery=" + options.geneQuery + (profile.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) : "");
 	
-	            return (
-	                React.createElement("li", {key: profile.name}, 
-	                    React.createElement("a", {target: "_blank", href: experimentURL}, profile.name)
+	            return React.createElement(
+	                "li",
+	                { key: profile.name },
+	                React.createElement(
+	                    "a",
+	                    { target: "_blank", href: experimentURL },
+	                    profile.name
 	                )
 	            );
 	        });
 	    },
 	
-	    render: function() {
-	        return (
-	            React.createElement("ul", {style: {listStyleType: "none", paddingLeft: "0"}}, 
-	                this._renderListItems({profiles: this.props.profiles.rows, linksAtlasBaseURL: this.props.linksAtlasBaseURL, geneQuery: this.props.geneQuery})
-	            )
+	    render: function () {
+	        return React.createElement(
+	            "ul",
+	            { style: { listStyleType: "none", paddingLeft: "0" } },
+	            this._renderListItems({ profiles: this.props.profiles.rows, linksAtlasBaseURL: this.props.linksAtlasBaseURL, geneQuery: this.props.geneQuery })
 	        );
 	    }
 	});

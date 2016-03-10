@@ -1286,7 +1286,7 @@ webpackJsonp([0],[
 	
 	__webpack_require__(/*! ../lib/jquery.hc-sticky.js */ 171);
 	
-	var Snap = __webpack_require__( /*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 172 );
+	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 172);
 	var EventEmitter = __webpack_require__(/*! wolfy87-eventemitter */ 149);
 	
 	//*------------------------------------------------------------------*
@@ -1295,7 +1295,7 @@ webpackJsonp([0],[
 	
 	//*------------------------------------------------------------------*
 	
-	var AnatomogramSelectImageButton = React.createClass({displayName: "AnatomogramSelectImageButton",
+	var AnatomogramSelectImageButton = React.createClass({
 	    propTypes: {
 	        anatomogramId: React.PropTypes.string.isRequired,
 	        selected: React.PropTypes.bool.isRequired,
@@ -1303,63 +1303,56 @@ webpackJsonp([0],[
 	        onClick: React.PropTypes.func.isRequired
 	    },
 	
-	    render: function() {
+	    render: function () {
 	        var selectedToggleSrc = this.props.toggleSrcTemplate + "_selected.png",
 	            unselectedToggleSrc = this.props.toggleSrcTemplate + "_unselected.png";
 	
-	        return(
-	            React.createElement("div", null, 
-	                React.createElement("img", {ref: "toggleButton", onClick: this._onClick, src: this.props.selected ? selectedToggleSrc : unselectedToggleSrc, 
-	                     style: {width: "20px", height: "20px", padding: "2px"}})
-	            )
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement('img', { ref: 'toggleButton', onClick: this._onClick, src: this.props.selected ? selectedToggleSrc : unselectedToggleSrc,
+	                style: { width: "20px", height: "20px", padding: "2px" } })
 	        );
 	    },
 	
-	    componentDidMount: function() {
+	    componentDidMount: function () {
 	        $(this.refs.toggleButton.getDOMNode()).button();
 	    },
 	
-	    _onClick: function() {
+	    _onClick: function () {
 	        this.props.onClick(this.props.anatomogramId);
 	    }
 	});
 	
-	
-	var AnatomogramSelectImageButtons = React.createClass({displayName: "AnatomogramSelectImageButtons",
+	var AnatomogramSelectImageButtons = React.createClass({
 	    propTypes: {
 	        selectedId: React.PropTypes.string.isRequired,
 	        availableAnatomograms: React.PropTypes.array.isRequired,
 	        onClick: React.PropTypes.func.isRequired
 	    },
 	
-	    render: function() {
+	    render: function () {
 	        if (this.props.availableAnatomograms.length > 1) {
 	            var selectedId = this.props.selectedId,
 	                onClick = this.props.onClick;
-	            var anatomogramSelectImageButtons = this.props.availableAnatomograms.map(function(availableAnatomogram) {
-	               return(
-	                   React.createElement(AnatomogramSelectImageButton, {key: availableAnatomogram.id + "_toggle", 
-	                    anatomogramId: availableAnatomogram.id, selected: selectedId === availableAnatomogram.id, toggleSrcTemplate: availableAnatomogram.toggleSrcTemplate, onClick: onClick})
-	               )
+	            var anatomogramSelectImageButtons = this.props.availableAnatomograms.map(function (availableAnatomogram) {
+	                return React.createElement(AnatomogramSelectImageButton, { key: availableAnatomogram.id + "_toggle",
+	                    anatomogramId: availableAnatomogram.id, selected: selectedId === availableAnatomogram.id, toggleSrcTemplate: availableAnatomogram.toggleSrcTemplate, onClick: onClick });
 	            });
 	
-	            return (
-	                React.createElement("span", null, 
-	                    anatomogramSelectImageButtons
-	                )
+	            return React.createElement(
+	                'span',
+	                null,
+	                anatomogramSelectImageButtons
 	            );
-	
 	        } else {
-	            return (
-	                null
-	            )
+	            return null;
 	        }
 	    }
 	
 	});
 	
-	
-	var Anatomogram = React.createClass({displayName: "Anatomogram",
+	var Anatomogram = React.createClass({
 	    /*
 	     E.g. of profileRows:
 	     {"id":"ENSMUSG00000029019","name":"Nppb","expressions":[{"factorName":"heart","color":"#C0C0C0","value":"152","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"","value":"","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"","value":"","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},
@@ -1375,54 +1368,43 @@ webpackJsonp([0],[
 	        anatomogramData: React.PropTypes.object.isRequired,
 	        expressedTissueColour: React.PropTypes.string.isRequired,
 	        hoveredTissueColour: React.PropTypes.string.isRequired,
-	        profileRows: React.PropTypes.arrayOf(
-	            React.PropTypes.shape({
-	                id: React.PropTypes.string,
-	                name: React.PropTypes.string.isRequired,
-	                expressions: React.PropTypes.arrayOf(
-	                    React.PropTypes.shape({
-	                        factorName: React.PropTypes.string,
-	                        color: React.PropTypes.string,
-	                        value: React.PropTypes.string.isRequired,
-	                        svgPathId: React.PropTypes.string
-	                    })
-	                ).isRequired
-	            })
-	        ).isRequired,
+	        profileRows: React.PropTypes.arrayOf(React.PropTypes.shape({
+	            id: React.PropTypes.string,
+	            name: React.PropTypes.string.isRequired,
+	            expressions: React.PropTypes.arrayOf(React.PropTypes.shape({
+	                factorName: React.PropTypes.string,
+	                color: React.PropTypes.string,
+	                value: React.PropTypes.string.isRequired,
+	                svgPathId: React.PropTypes.string
+	            })).isRequired
+	        })).isRequired,
 	        eventEmitter: React.PropTypes.instanceOf(EventEmitter),
 	        atlasBaseURL: React.PropTypes.string.isRequired
 	    },
 	
-	    getInitialState: function() {
+	    getInitialState: function () {
 	        var availableAnatomograms = [];
 	        if (this.props.anatomogramData.maleAnatomogramFile) {
-	            availableAnatomograms.push(
-	                {id: "male",
-	                 anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.maleAnatomogramFile,
-	                 toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonMaleImageTemplate}
-	            );
+	            availableAnatomograms.push({ id: "male",
+	                anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.maleAnatomogramFile,
+	                toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonMaleImageTemplate });
 	        }
 	        if (this.props.anatomogramData.femaleAnatomogramFile) {
-	            availableAnatomograms.push(
-	                {id: "female",
-	                 anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.femaleAnatomogramFile,
-	                 toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonFemaleImageTemplate}
-	            );
+	            availableAnatomograms.push({ id: "female",
+	                anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.femaleAnatomogramFile,
+	                toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonFemaleImageTemplate });
 	        }
 	        if (this.props.anatomogramData.brainAnatomogramFile) {
-	            availableAnatomograms.push(
-	                {id: "brain",
-	                 anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.brainAnatomogramFile,
-	                 toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonBrainImageTemplate}
-	            );
+	            availableAnatomograms.push({ id: "brain",
+	                anatomogramFile: this.props.atlasBaseURL + "/resources/svg/" + this.props.anatomogramData.brainAnatomogramFile,
+	                toggleSrcTemplate: this.props.atlasBaseURL + this.props.anatomogramData.toggleButtonBrainImageTemplate });
 	        }
-	
 	
 	        var allExpressedFactors = [],
 	            expressedFactorsPerRow = {};
-	        this.props.profileRows.forEach(function(profileRow) {
+	        this.props.profileRows.forEach(function (profileRow) {
 	            var expressedFactors = [];
-	            profileRow.expressions.forEach(function(expression) {
+	            profileRow.expressions.forEach(function (expression) {
 	                if (expression.value !== "NT" && expression.value !== "") {
 	                    expressedFactors.push(expression.svgPathId);
 	                }
@@ -1442,7 +1424,7 @@ webpackJsonp([0],[
 	            expressedFactorsPerRow: expressedFactorsPerRow,
 	            hoveredPathId: null,
 	            hoveredRowId: null
-	        }
+	        };
 	    },
 	
 	    render: function () {
@@ -1452,58 +1434,59 @@ webpackJsonp([0],[
 	
 	        var height = containsHuman(this.props.anatomogramData.maleAnatomogramFile) ? "360" : "250";
 	
-	        return (
-	            React.createElement("div", {className: "gxaDoubleClickNoSelection gxaAnatomogram", style: {display: "table", paddingTop: "4px"}}, 
-	                React.createElement("div", {style: {display: "table-row"}}, 
-	                    React.createElement("div", {style: {display: "table-cell", verticalAlign: "top"}}, 
-	                        React.createElement(AnatomogramSelectImageButtons, {selectedId: this.state.selectedId, availableAnatomograms: this.state.availableAnatomograms, onClick: this._handleChange})
-	                    ), 
-	
-	                    React.createElement("svg", {ref: "anatomogram", style: {display: "table-cell", width: "230px", height:height + "px"}}
-	                    )
-	                )
+	        return React.createElement(
+	            'div',
+	            { className: 'gxaDoubleClickNoSelection gxaAnatomogram', style: { display: "table", paddingTop: "4px" } },
+	            React.createElement(
+	                'div',
+	                { style: { display: "table-row" } },
+	                React.createElement(
+	                    'div',
+	                    { style: { display: "table-cell", verticalAlign: "top" } },
+	                    React.createElement(AnatomogramSelectImageButtons, { selectedId: this.state.selectedId, availableAnatomograms: this.state.availableAnatomograms, onClick: this._handleChange })
+	                ),
+	                React.createElement('svg', { ref: 'anatomogram', style: { display: "table-cell", width: "230px", height: height + "px" } })
 	            )
 	        );
 	    },
 	
-	    componentDidMount: function() {
+	    componentDidMount: function () {
 	        this.props.eventEmitter.addListener("gxaHeatmapColumnHoverChange", this._highlightPath);
 	        this.props.eventEmitter.addListener("gxaHeatmapRowHoverChange", this._highlightRow);
 	        this._loadAnatomogram(this._getAnatomogramSVGFile(this.state.selectedId));
 	    },
 	
 	    // Only displays/highlights the relevant tissues to avoid loading the anatomogram every time we hover over a tissue or a factor header
-	    componentDidUpdate: function() {
+	    componentDidUpdate: function () {
 	        var svg = Snap(this.refs.anatomogram.getDOMNode()).select("g");
 	        this._displayAllOrganismParts(svg);
 	    },
 	
-	    _handleChange: function(newSelectedId) {
+	    _handleChange: function (newSelectedId) {
 	        if (newSelectedId !== this.state.selectedId) {
 	            this._loadAnatomogram(this._getAnatomogramSVGFile(newSelectedId));
-	            this.setState({selectedId: newSelectedId});
+	            this.setState({ selectedId: newSelectedId });
 	        }
 	    },
 	
 	    // TODO We could manually highlight un-highlight the affected tissues instead of re-displaying all of them, as setState triggers componentDidUpdate
-	    _highlightPath: function(svgPathId) {
-	        this.setState({hoveredPathId: svgPathId});
+	    _highlightPath: function (svgPathId) {
+	        this.setState({ hoveredPathId: svgPathId });
 	    },
 	
-	    _highlightRow: function(rowId) {
-	        this.setState({hoveredRowId: rowId});
-	
+	    _highlightRow: function (rowId) {
+	        this.setState({ hoveredRowId: rowId });
 	    },
 	
-	    _getAnatomogramSVGFile: function(id) {
-	        for (var i = 0 ; i < this.state.availableAnatomograms.length ; i++) {
+	    _getAnatomogramSVGFile: function (id) {
+	        for (var i = 0; i < this.state.availableAnatomograms.length; i++) {
 	            if (id === this.state.availableAnatomograms[i].id) {
 	                return this.state.availableAnatomograms[i].anatomogramFile;
 	            }
 	        }
 	    },
 	
-	    _loadAnatomogram: function(svgFile) {
+	    _loadAnatomogram: function (svgFile) {
 	
 	        var svgCanvas = Snap(this.refs.anatomogram.getDOMNode()),
 	            allElements = svgCanvas.selectAll("*");
@@ -1514,38 +1497,36 @@ webpackJsonp([0],[
 	
 	        var displayAllOrganismPartsCallback = this._displayAllOrganismParts;
 	        var registerHoverEventsCallback = this._registerHoverEvents;
-	        Snap.load(
-	            svgFile,
-	            function (fragment) {
-	                var g = fragment.select("g");
-	                g.transform("S1.6,0,0");
-	                displayAllOrganismPartsCallback(g);
-	                registerHoverEventsCallback(g);
-	                svgCanvas.append(g);
-	            }
-	        );
+	        Snap.load(svgFile, function (fragment) {
+	            var g = fragment.select("g");
+	            g.transform("S1.6,0,0");
+	            displayAllOrganismPartsCallback(g);
+	            registerHoverEventsCallback(g);
+	            svgCanvas.append(g);
+	        });
 	    },
 	
-	    _displayAllOrganismParts: function(svg) {
-	        if (svg) {  // Sometimes svg is null... why?
-	            this.props.anatomogramData.allSvgPathIds.forEach(function(svgPathId) {
+	    _displayAllOrganismParts: function (svg) {
+	        if (svg) {
+	            // Sometimes svg is null... why?
+	            this.props.anatomogramData.allSvgPathIds.forEach(function (svgPathId) {
 	                this._displayOrganismPartsWithDefaultProperties(svg, svgPathId);
 	            }, this);
 	        }
 	    },
 	
-	    _hoveredRowContainsPathId: function(svgPathId) {
+	    _hoveredRowContainsPathId: function (svgPathId) {
 	        if (!this.state.hoveredRowId) {
 	            return false;
 	        }
 	
-	        return (this.state.expressedFactorsPerRow[this.state.hoveredRowId].indexOf(svgPathId) > -1);
+	        return this.state.expressedFactorsPerRow[this.state.hoveredRowId].indexOf(svgPathId) > -1;
 	    },
 	
-	    _displayOrganismPartsWithDefaultProperties: function(svg, svgPathId) {
+	    _displayOrganismPartsWithDefaultProperties: function (svg, svgPathId) {
 	
 	        var colour = this.props.expressedTissueColour;
-	        if (this.state.hoveredPathId === svgPathId || this._hoveredRowContainsPathId(svgPathId))  {
+	        if (this.state.hoveredPathId === svgPathId || this._hoveredRowContainsPathId(svgPathId)) {
 	            colour = this.props.hoveredTissueColour;
 	        }
 	
@@ -1556,53 +1537,58 @@ webpackJsonp([0],[
 	        }
 	    },
 	
-	    _highlightOrganismParts: function(svg, svgPathId, colour, opacity) {
+	    _highlightOrganismParts: function (svg, svgPathId, colour, opacity) {
 	        Anatomogram._recursivelyChangeProperties(svg.select("#" + svgPathId), colour, opacity);
 	    },
 	
-	    _registerHoverEvents: function(svg) {
-	        if (svg) {  // Sometimes svg is null... why?
+	    _registerHoverEvents: function (svg) {
+	        if (svg) {
+	            // Sometimes svg is null... why?
 	
 	            var eventEmitter = this.props.eventEmitter,
 	                hoverColour = this.props.hoveredTissueColour,
 	                highlightOrganismPartsCallback = this._highlightOrganismParts,
 	                displayOrganismPartsWithDefaultPropertiesCallback = this._displayOrganismPartsWithDefaultProperties;
-	            var mouseoverCallback = function(svgPathId) {
+	            var mouseoverCallback = function (svgPathId) {
 	                highlightOrganismPartsCallback(svg, svgPathId, hoverColour, 0.7);
 	                eventEmitter.emitEvent('gxaAnatomogramTissueMouseEnter', [svgPathId]);
 	            };
-	            var mouseoutCallback = function(svgPathId) {
+	            var mouseoutCallback = function (svgPathId) {
 	                displayOrganismPartsWithDefaultPropertiesCallback(svg, svgPathId);
 	                eventEmitter.emitEvent('gxaAnatomogramTissueMouseLeave', [svgPathId]);
 	            };
 	
-	            this.props.anatomogramData.allSvgPathIds.forEach(function(svgPathId) {
+	            this.props.anatomogramData.allSvgPathIds.forEach(function (svgPathId) {
 	                var svgElement = svg.select("#" + svgPathId);
 	                if (svgElement) {
-	                    svgElement.mouseover(function() {mouseoverCallback(svgPathId)});
-	                    svgElement.mouseout(function() {mouseoutCallback(svgPathId)});
+	                    svgElement.mouseover(function () {
+	                        mouseoverCallback(svgPathId);
+	                    });
+	                    svgElement.mouseout(function () {
+	                        mouseoutCallback(svgPathId);
+	                    });
 	                }
 	            }, this);
 	        }
 	    },
 	
 	    statics: {
-	        _recursivelyChangeProperties: function(svgElement, colour, opacity) {
+	        _recursivelyChangeProperties: function (svgElement, colour, opacity) {
 	
 	            if (svgElement) {
 	                var innerElements = svgElement.selectAll("*");
 	
 	                if (innerElements.length > 0) {
-	                    innerElements.forEach(function(innerElement) {
+	                    innerElements.forEach(function (innerElement) {
 	                        Anatomogram._recursivelyChangeProperties(innerElement);
 	                    });
 	                }
 	
-	                svgElement.attr({"fill": colour, "fill-opacity": opacity});
+	                svgElement.attr({ "fill": colour, "fill-opacity": opacity });
 	            }
 	        },
 	
-	        _recursivelySelectElements: function(svgElement) {
+	        _recursivelySelectElements: function (svgElement) {
 	            if (!svgElement) {
 	                return [];
 	            }
@@ -1612,7 +1598,7 @@ webpackJsonp([0],[
 	                return [svgElement];
 	            } else {
 	                var allElements = [];
-	                innerElements.forEach(function(innerElement) {
+	                innerElements.forEach(function (innerElement) {
 	                    allElements = allElements.concat(Anatomogram._recursivelySelectElements(innerElement));
 	                });
 	                return allElements;
@@ -1625,7 +1611,6 @@ webpackJsonp([0],[
 	//*------------------------------------------------------------------*
 	
 	module.exports = Anatomogram;
-
 
 /***/ },
 /* 151 */
