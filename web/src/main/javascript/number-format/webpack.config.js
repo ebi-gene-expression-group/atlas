@@ -33,7 +33,7 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.jsx?$/, loaders: ['react-hot', "jsx?harmony"], include: path.join(__dirname, "src")},
-            {test: /\.jsx$/, loader: 'jsx-loader'},
+            {test: /\.jsx$/, loader: 'babel-loader'},
             {test: /demo.js$/, loader: 'expose?exposed'},
             {test: /index.js$/, loader: 'expose?exposed'}
         ]
