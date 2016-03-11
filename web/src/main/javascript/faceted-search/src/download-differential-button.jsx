@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var ReactDOM = require('react-dom');
+
 //*------------------------------------------------------------------*
 
 var DownloadDifferentialButton = React.createClass({
@@ -65,7 +67,7 @@ var DownloadDifferentialButton = React.createClass({
     },
 
     _downloadDifferentialProfiles: function () {
-        $(this.refs.downloadProfilesLink.getDOMNode()).click();
+        $(ReactDOM.findDOMNode(this.refs.downloadProfilesLink)).click();
     },
 
     render: function () {
@@ -88,7 +90,7 @@ var DownloadDifferentialButton = React.createClass({
     },
 
     componentDidMount: function () {
-        var $downloadProfilesLink = $(this.refs.downloadProfilesLink.getDOMNode());
+        var $downloadProfilesLink = $(ReactDOM.findDOMNode(this.refs.downloadProfilesLink));
         $downloadProfilesLink.tooltip();
         $downloadProfilesLink.button();
     }

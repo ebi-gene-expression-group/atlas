@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var ReactDOM = require('react-dom');
+
 var $ = require('jquery');
 var jQuery = $;
 require('../lib/jquery.hc-sticky.js');
@@ -95,7 +97,7 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
     },
 
     componentDidMount: function() {
-        var $anatomogramEnsemblAside = $(this.refs.anatomogramEnsembl.getDOMNode());
+        var $anatomogramEnsemblAside = $(ReactDOM.findDOMNode(this.refs.anatomogramEnsembl));
         $anatomogramEnsemblAside.hcSticky({responsive: true});
     }
 });

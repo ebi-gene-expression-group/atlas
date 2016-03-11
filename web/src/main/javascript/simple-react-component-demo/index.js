@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var ReactDOM = require('react-dom');
+
 //*------------------------------------------------------------------*
 
 var SimpleComponent = require('./src/SimpleComponent.jsx');
@@ -11,7 +13,7 @@ var SimpleComponent = require('./src/SimpleComponent.jsx');
 //*------------------------------------------------------------------*
 
 exports.render = function(mountNode) {
-    React.render(
+    ReactDOM.render(
         React.createElement(SimpleComponent), mountNode
     );
 };

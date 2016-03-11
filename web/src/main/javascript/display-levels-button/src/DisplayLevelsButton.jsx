@@ -3,6 +3,7 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var $ = require('jquery');
 require('jquery-ui');
 
@@ -28,7 +29,7 @@ var DisplayLevelsButton = React.createClass({
     },
 
     _updateButtonText: function () {
-        $(this.getDOMNode()).button({ label: this._buttonText() });
+        $(ReactDOM.findDOMNode(this)).button({ label: this._buttonText() });
     },
 
     render: function () {

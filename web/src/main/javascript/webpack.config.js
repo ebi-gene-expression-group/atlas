@@ -10,9 +10,9 @@ module.exports = {
         "expression-atlas-heatmap": './heatmap-anatomogram',
         "internal-atlas-heatmap": './heatmap-anatomogram/internal-atlas-index.js',
         "faceted-search": './faceted-search',
-        "vendor": [ 'react', 'jquery', 'jquery-ui', 'jquery.browser', 'urijs' ]
+        "vendor": ['react','react-dom', 'jquery', 'jquery-ui', 'jquery.browser', 'urijs' ]
     },
-
+ 
     output: {
         path: path.resolve(__dirname, "../webapp/resources/js-bundles"),
         filename: "[name].bundle.js" // [name] is substituted for the entry name, eg: search-results-differential-page-bundle.js

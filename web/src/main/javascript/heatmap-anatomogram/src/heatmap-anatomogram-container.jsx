@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var ReactDOM = require('react-dom');
+
 var $ = require('jquery');
 var jQuery = $;
 
@@ -161,6 +163,18 @@ var HeatmapAnatomogramContainer = React.createClass({
         }
     },
 
+    _updateStateAsynchronously: function (data) {
+        this.setState({
+            heatmapConfig: data.config,
+            columnHeaders: data.columnHeaders,
+            nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
+            profiles: data.profiles,
+            geneSetProfiles: data.geneSetProfiles,
+            anatomogramData: data.anatomogram,
+            experimentData: data.experiment
+        })
+    },
+
     componentDidMount: function() {
         var httpRequest = {
             url: this.props.sourceURL,
@@ -169,28 +183,18 @@ var HeatmapAnatomogramContainer = React.createClass({
         };
 
         this.serverRequest = $.ajax(httpRequest).done(
-            function (data) {
-                this.setState({
-                    heatmapConfig: data.config,
-                    columnHeaders: data.columnHeaders,
-                    nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
-                    profiles: data.profiles,
-                    geneSetProfiles: data.geneSetProfiles,
-                    anatomogramData: data.anatomogram,
-                    experimentData: data.experiment
-                });
-            }.bind(this)
+             this._updateStateAsynchronously
         ).fail(
             function (jqXHR, textStatus, errorThrown) {
                 if (this.props.fail) {
                     this.props.fail(jqXHR, textStatus, errorThrown);
                 } else if (textStatus === "parsererror") {
-                    $(this.refs.this.getDOMNode()).html("<div class='gxaError'>Could not parse JSON response</div>");
+                    $(ReactDOM.findDOMNode(this.refs.this)).html("<div class='gxaError'>Could not parse JSON response</div>");
                 } else {
-                    $(this.refs.this.getDOMNode()).html(jqXHR.responseText);
+                    $(ReactDOM.findDOMNode(this.refs.this)).html(jqXHR.responseText);
                 }
             }.bind(this)
-        ).bind(this);
+        );
 
         if (!this.props.disableGoogleAnalytics) {
             var _gaq = _gaq || [];
@@ -210,7 +214,7 @@ var HeatmapAnatomogramContainer = React.createClass({
     componentDidUpdate: function() {
         // This mounted component is only going to be updated when changing this.props.showAnatomogram, so we only take
         // care of the anatomogram, the legend and the sticky header (the last two through an event)
-        var $anatomogram = $(this.refs.anatomogramEnsembl.getDOMNode());
+        var $anatomogram = $(ReactDOM.findDOMNode(this.refs.anatomogramEnsembl));
 
         if (this.props.showAnatomogram) {
             $anatomogram.hcSticky({responsive: true});

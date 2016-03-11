@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var ReactDOM = require('react-dom');
+
 //*------------------------------------------------------------------*
 
 var DisplayLevelsButton = require('display-levels-button');
@@ -226,7 +228,7 @@ var DifferentialResultRow = React.createClass({
     },
 
     componentDidMount: function () {
-        ContrastTooltips.init(this.props.atlasBaseURL, "", this.refs.comparison.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
+        ContrastTooltips.init(this.props.atlasBaseURL, "", ReactDOM.findDOMNode(this.refs.comparison), this.props.experimentAccession, this.props.contrastId);
     }
 });
 

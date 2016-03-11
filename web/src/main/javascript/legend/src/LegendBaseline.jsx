@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var ReactDOM = require('react-dom');
+
 //*------------------------------------------------------------------*
 
 var LegendRow = require('./LegendRow.jsx');
@@ -42,7 +44,7 @@ var LegendBaseline = React.createClass({
     },
 
     componentDidMount: function () {
-        HelpTooltips.init(this.props.atlasBaseURL, "experiment", this.refs.legendHelp.getDOMNode());
+        HelpTooltips.init(this.props.atlasBaseURL, "experiment", ReactDOM.findDOMNode(this.refs.legendHelp));
     }
 });
 

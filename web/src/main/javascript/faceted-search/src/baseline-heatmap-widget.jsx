@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var ReactDOM = require('react-dom');
+
 //*------------------------------------------------------------------*
 
 var AtlasHeatmapBuilder = require('heatmap-anatomogram');
@@ -26,7 +28,7 @@ var BaselineHeatmapWidget = React.createClass({
             params: "geneQuery=" + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
             analyticsSearch: true,
             isMultiExperiment: true,
-            target: this.refs.widgetBody.getDOMNode(),
+            target: ReactDOM.findDOMNode(this.refs.widgetBody),
             isWidget: false,
             showAnatomogram: this.props.showAnatomogram
         });
@@ -38,7 +40,7 @@ var BaselineHeatmapWidget = React.createClass({
             params: "geneQuery=" + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
             analyticsSearch: true,
             isMultiExperiment: true,
-            target: this.refs.widgetBody.getDOMNode(),
+            target: ReactDOM.findDOMNode(this.refs.widgetBody),
             isWidget: false,
             showAnatomogram: this.props.showAnatomogram
         });

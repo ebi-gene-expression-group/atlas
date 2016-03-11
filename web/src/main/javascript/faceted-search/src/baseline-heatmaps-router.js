@@ -3,6 +3,7 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var jQuery = $;
 require('jquery.browser');
@@ -100,7 +101,7 @@ module.exports = function (options) {
     }
 
     function renderQueryPage() {
-        React.render(
+        ReactDOM.render(
             React.createElement(
                 FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked,
                     toggleAnatomograms: toggleAnatomograms, showAnatomograms: showAnatomograms, disableAnatomogramsCheckbox: !organismPartInQuerySelect()}
@@ -108,7 +109,7 @@ module.exports = function (options) {
             facetsElement
         );
 
-        React.render(
+        ReactDOM.render(
             React.createElement(
                 Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms: showAnatomograms, atlasHost: host}
             ),

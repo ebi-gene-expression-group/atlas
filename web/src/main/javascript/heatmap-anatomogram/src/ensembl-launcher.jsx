@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var ReactDOM = require('react-dom');
+
 var $ = require('jquery');
 var jQuery = $;
 
@@ -80,9 +82,9 @@ var EnsemblLauncher = React.createClass({
 
     _updateButton: function() {
         var buttonEnabled = this.state.selectedColumnId && this.state.selectedGeneId ? true : false;
-        $(this.refs.ensemblButton.getDOMNode()).button("option", "disabled", !buttonEnabled);
+        $(ReactDOM.findDOMNode(this.refs.ensemblButton)).button("option", "disabled", !buttonEnabled);
         if (this.props.ensemblDB == "plants") {
-            $(this.refs.grameneButton.getDOMNode()).button("option", "disabled", !buttonEnabled);
+            $(ReactDOM.findDOMNode(this.refs.grameneButton)).button("option", "disabled", !buttonEnabled);
         }
     },
 
@@ -91,9 +93,9 @@ var EnsemblLauncher = React.createClass({
     },
 
     componentDidMount: function () {
-        $(this.refs.ensemblButton.getDOMNode()).button({icons: {primary: "ui-icon-newwin"}});
+        $(ReactDOM.findDOMNode(this.refs.ensemblButton)).button({icons: {primary: "ui-icon-newwin"}});
         if (this.props.ensemblDB == "plants") {
-            $(this.refs.grameneButton.getDOMNode()).button({icons: {primary: "ui-icon-newwin"}});
+            $(ReactDOM.findDOMNode(this.refs.grameneButton)).button({icons: {primary: "ui-icon-newwin"}});
         }
         this._updateButton();
         this.props.eventEmitter.addListener('onColumnSelectionChange', this._onColumnSelectionChange);

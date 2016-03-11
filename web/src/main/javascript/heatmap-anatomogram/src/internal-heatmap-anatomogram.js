@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var ReactDOM = require('react-dom');
+
 var $ = require('jquery');
 var jQuery = $;
 
@@ -38,7 +40,7 @@ function drawHeatmap (options) {
                 options.isProteomicsBaseline ? ExperimentTypes.PROTEOMICS_BASELINE :
                     ExperimentTypes.BASELINE;
 
-    React.render(
+    ReactDOM.render(
         React.createElement(
             HeatmapAnatomogramContainer,
             {

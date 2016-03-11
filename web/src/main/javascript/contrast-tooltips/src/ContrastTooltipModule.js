@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var ReactDOMServer = require('react-dom/server');
+
 var $ = require('jquery');
 var jQuery = $;
 
@@ -45,7 +47,7 @@ function initTooltip(contextRoot, accessKey, element, experimentAccession, contr
                 type:"GET",
                 success:function (data) {
                     var html =
-                        React.renderToString(
+                        ReactDOMServer.renderToString(
                             React.createElement(
                                 ContrastTooltip,
                                 {

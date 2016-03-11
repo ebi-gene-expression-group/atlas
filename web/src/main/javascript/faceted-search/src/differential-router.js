@@ -3,6 +3,7 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var jQuery = $;
 require('jquery.browser');
@@ -286,7 +287,7 @@ module.exports = function (options) {
             }
         }
 
-        React.render(
+        ReactDOM.render(
             React.createElement(
                 DifferentialFacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked,
                     disabledCheckedFacets: disabledCheckedFacets, disabledUncheckedFacets: disabledUncheckedFacets}
@@ -294,7 +295,7 @@ module.exports = function (options) {
             facetsElement
         );
 
-        React.render(
+        ReactDOM.render(
             React.createElement(
                 DifferentialResults,
                 {results: filteredResults.slice(0, 1000), maxDownLevel: resultsData.maxDownLevel,

@@ -3,6 +3,8 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
+var ReactDOM = require('react-dom');
+var ReactDOMServer = require('react-dom/server');
 var RadioGroup = require('react-radio-group');
 
 var $ = require('jquery');
@@ -148,12 +150,12 @@ var Heatmap = React.createClass({
     },
 
     componentDidMount: function() {
-        var table	        = this.refs.heatmapTable.getDOMNode(),
-            stickyIntersect = this.refs.stickyIntersect.getDOMNode(),
-            stickyColumn    = this.refs.stickyColumn.getDOMNode(),
-            stickyHeadRow   = this.refs.stickyHeader.getDOMNode(),
-            stickyWrap      = this.refs.stickyWrap.getDOMNode(),
-            countAndLegend  = this.refs.countAndLegend.getDOMNode();
+        var table	        = ReactDOM.findDOMNode(this.refs.heatmapTable),
+            stickyIntersect = ReactDOM.findDOMNode(this.refs.stickyIntersect),
+            stickyColumn    = ReactDOM.findDOMNode(this.refs.stickyColumn),
+            stickyHeadRow   = ReactDOM.findDOMNode(this.refs.stickyHeader),
+            stickyWrap      = ReactDOM.findDOMNode(this.refs.stickyWrap),
+            countAndLegend  = ReactDOM.findDOMNode(this.refs.countAndLegend);
 
         var stickyHeader = StickyHeaderModule(table, stickyIntersect, stickyColumn, stickyHeadRow, stickyWrap, countAndLegend);
 
@@ -367,7 +369,7 @@ var DownloadProfilesButton = React.createClass({
     },
 
     componentDidMount: function () {
-        var $downloadProfilesLink = $(this.refs.downloadProfilesLink.getDOMNode());
+        var $downloadProfilesLink = $(ReactDOM.findDOMNode(this.refs.downloadProfilesLink));
         $downloadProfilesLink.tooltip();
         $downloadProfilesLink.button();
     }
@@ -508,19 +510,19 @@ var FactorHeader = React.createClass({
 
     _closeTooltip: function() {
         if(!this.props.type.isMultiExperiment) {
-            $(this.getDOMNode()).tooltip("close");
+            $(ReactDOM.findDOMNode(this)).tooltip("close");
         }
     },
 
     _anatomogramTissueMouseEnter: function(svgPathId) {
         if (svgPathId === this.props.svgPathId) {
-            $(this.refs.headerCell.getDOMNode()).addClass("gxaHeaderHover");
+            $(ReactDOM.findDOMNode(this.refs.headerCell)).addClass("gxaHeaderHover");
         }
     },
 
     _anatomogramTissueMouseLeave: function(svgPathId) {
         if (svgPathId === this.props.svgPathId) {
-            $(this.refs.headerCell.getDOMNode()).removeClass("gxaHeaderHover");
+            $(ReactDOM.findDOMNode(this.refs.headerCell)).removeClass("gxaHeaderHover");
         }
     },
 
@@ -532,7 +534,7 @@ var FactorHeader = React.createClass({
 
     componentDidMount: function () {
         if(!this.props.type.isMultiExperiment) {
-            FactorTooltipModule.init(this.props.atlasBaseURL, this.props.heatmapConfig.accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
+            FactorTooltipModule.init(this.props.atlasBaseURL, this.props.heatmapConfig.accessKey, ReactDOM.findDOMNode(this), this.props.experimentAccession, this.props.assayGroupId);
         }
         if (this.props.anatomogramEventEmitter) {
             this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
@@ -605,7 +607,7 @@ var ContrastHeader = React.createClass({
     },
 
     _closeTooltip: function() {
-        $(this.getDOMNode()).tooltip("close");
+        $(ReactDOM.findDOMNode(this)).tooltip("close");
     },
 
     onClick: function () {
@@ -613,15 +615,15 @@ var ContrastHeader = React.createClass({
     },
 
     componentDidMount: function () {
-        ContrastTooltips.init(this.props.atlasBaseURL, this.props.heatmapConfig.accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
+        ContrastTooltips.init(this.props.atlasBaseURL, this.props.heatmapConfig.accessKey, ReactDOM.findDOMNode(this), this.props.experimentAccession, this.props.contrastId);
 
         if (this.showPlotsButton()) {
-            this.renderToolBarContent(this.refs.plotsToolBarContent.getDOMNode());
+            this.renderToolBarContent(ReactDOM.findDOMNode(this.refs.plotsToolBarContent));
 
-            var plotsButton = this.refs.plotsButton.getDOMNode();
+            var plotsButton = ReactDOM.findDOMNode(this.refs.plotsButton);
             $(plotsButton).tooltip({hide: false, show: false}).button();
             $(plotsButton).toolbar({
-                content: this.refs.plotsToolBarContent.getDOMNode(),
+                content: ReactDOM.findDOMNode(this.refs.plotsToolBarContent),
                 position: 'right'
             });
         }
@@ -654,7 +656,7 @@ var ContrastHeader = React.createClass({
         // the tool bar content will be copied around the DOM by the toolbar plugin
         // so we render using static markup because otherwise when copied, we'll end up with
         // duplicate data-reactids
-        $contentNode.html(React.renderToStaticMarkup(content));
+        $contentNode.html(ReactDOMServer.renderToStaticMarkup(content));
 
         $contentNode.find('a').tooltip();
 
@@ -751,7 +753,7 @@ var TopLeftCorner = React.createClass({
     },
 
     componentDidMount: function () {
-        HelpTooltips.init(this.props.atlasBaseURL, 'experiment', this.refs.tooltipSpan.getDOMNode());
+        HelpTooltips.init(this.props.atlasBaseURL, 'experiment', ReactDOM.findDOMNode(this.refs.tooltipSpan));
     }
 
 });
@@ -1008,13 +1010,13 @@ var GeneProfileRow = React.createClass({
 
     componentDidMount: function () {
         if(!this.props.type.isMultiExperiment) {
-            GenePropertiesTooltipModule.init(this.props.atlasBaseURL, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
+            GenePropertiesTooltipModule.init(this.props.atlasBaseURL, ReactDOM.findDOMNode(this.refs.geneName), this.props.id, this.props.name);
         }
     },
 
     _closeTooltip: function() {
         if(!this.props.type.isMultiExperiment) {
-            $(this.refs.geneName.getDOMNode()).tooltip("close");
+            $(ReactDOM.findDOMNode(this.refs.geneName)).tooltip("close");
         }
     }
 
@@ -1054,8 +1056,8 @@ var CellBaseline = React.createClass({
             return unknownElement.children.length;
         }
 
-        if (this._isUnknownExpression() && !hasQuestionMark(this.refs.unknownCell.getDOMNode())) {
-            HelpTooltips.init(this.props.atlasBaseURL, 'experiment', this.refs.unknownCell.getDOMNode());
+        if (this._isUnknownExpression() && !hasQuestionMark(ReactDOM.findDOMNode(this.refs.unknownCell))) {
+            HelpTooltips.init(this.props.atlasBaseURL, 'experiment', ReactDOM.findDOMNode(this.refs.unknownCell));
         }
     },
 

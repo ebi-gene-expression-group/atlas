@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var ReactDOM = require('react-dom');
+
 //*------------------------------------------------------------------*
 
 var Anatomogram = require('../src/Anatomogram.jsx');
@@ -11,7 +13,7 @@ var Anatomogram = require('../src/Anatomogram.jsx');
 //*------------------------------------------------------------------*
 
 exports.render = function(mountNode) {
-    React.render(
+    ReactDOM.render(
         React.createElement(Anatomogram, {message: "So sexy!"}), mountNode
     );
 };

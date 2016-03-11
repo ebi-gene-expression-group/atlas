@@ -3,6 +3,8 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
+var ReactDOM = require('react-dom');
+var ReactDOMServer = require('react-dom/server');
 var $ = require('jquery');
 require('jquery-ui');
 require('../css/jquery-ui.min.css');
@@ -58,7 +60,7 @@ var CellDifferential = React.createClass({
 
     componentDidMount: function () {
         if (this._hasValue()) {
-            this._initTooltip(this.getDOMNode());
+            this._initTooltip(ReactDOM.findDOMNode(this));
         }
     },
 
@@ -78,7 +80,7 @@ var CellDifferential = React.createClass({
                        "<tbody>" +
                            "<tr>" +
                                (pValue !== undefined ?
-                                   "<td style='padding:6px'>" + React.renderToStaticMarkup(NumberFormat.scientificNotation(pValue)) + "</td>" : "") +
+                                   "<td style='padding:6px'>" + ReactDOMServer.renderToStaticMarkup(NumberFormat.scientificNotation(pValue)) + "</td>" : "") +
                                (tstatistic !== undefined ?
                                    "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
                                "<td style='padding:6px'>" + foldChange + "</td>" +

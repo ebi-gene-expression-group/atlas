@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var ReactDOM = require('react-dom');
+
 var $ = require('jquery');
 var jQuery = $;
 
@@ -42,7 +44,7 @@ var AnatomogramSelectImageButton = React.createClass({
     },
 
     componentDidMount: function() {
-        $(this.refs.toggleButton.getDOMNode()).button();
+        $(ReactDOM.findDOMNode(this.refs.toggleButton)).button();
     },
 
     _onClick: function() {
@@ -200,7 +202,7 @@ var Anatomogram = React.createClass({
 
     // Only displays/highlights the relevant tissues to avoid loading the anatomogram every time we hover over a tissue or a factor header
     componentDidUpdate: function() {
-        var svg = Snap(this.refs.anatomogram.getDOMNode()).select("g");
+        var svg = Snap(ReactDOM.findDOMNode(this.refs.anatomogram)).select("g");
         this._displayAllOrganismParts(svg);
     },
 
@@ -231,7 +233,7 @@ var Anatomogram = React.createClass({
 
     _loadAnatomogram: function(svgFile) {
 
-        var svgCanvas = Snap(this.refs.anatomogram.getDOMNode()),
+        var svgCanvas = Snap(ReactDOM.findDOMNode(this.refs.anatomogram)),
             allElements = svgCanvas.selectAll("*");
 
         if (allElements) {

@@ -2,6 +2,8 @@
 
 var React = require('react');
 
+var ReactDOM = require('react-dom');
+
 var $ = require('jquery');
 var jQuery = $;
 require('../lib/jquery.xdomainrequest.js');
@@ -45,7 +47,7 @@ module.exports = function(options) {
     var sourceURL = atlasBaseURL + endpointPath + "?" + options.params;
 
 
-    React.render(
+    ReactDOM.render(
         React.createElement(
             HeatmapAnatomogramContainer,
             {
