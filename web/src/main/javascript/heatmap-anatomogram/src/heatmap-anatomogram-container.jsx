@@ -97,11 +97,11 @@ var HeatmapAnatomogramContainer = React.createClass({
 
                         <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
                             { this.state.anatomogramData ?
-                            <Anatomogram anatomogramData={this.state.anatomogramData}
-                                         expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
-                                         profileRows={this.state.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
+                                <Anatomogram anatomogramData={this.state.anatomogramData}
+                                             expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
+                                             profileRows={this.state.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
                                 : null
-                                }
+                            }
                         </div>
 
                         { !homoSapiensCellLine ?
@@ -168,19 +168,17 @@ var HeatmapAnatomogramContainer = React.createClass({
             method: "GET"
         };
 
-        $.ajax(httpRequest).done(
+        this.serverRequest = $.ajax(httpRequest).done(
             function (data) {
-                if (this.isMounted()) {
-                    this.setState({
-                        heatmapConfig: data.config,
-                        columnHeaders: data.columnHeaders,
-                        nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
-                        profiles: data.profiles,
-                        geneSetProfiles: data.geneSetProfiles,
-                        anatomogramData: data.anatomogram,
-                        experimentData: data.experiment
-                    });
-                }
+                this.setState({
+                    heatmapConfig: data.config,
+                    columnHeaders: data.columnHeaders,
+                    nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
+                    profiles: data.profiles,
+                    geneSetProfiles: data.geneSetProfiles,
+                    anatomogramData: data.anatomogram,
+                    experimentData: data.experiment
+                });
             }.bind(this)
         ).fail(
             function (jqXHR, textStatus, errorThrown) {
@@ -192,7 +190,7 @@ var HeatmapAnatomogramContainer = React.createClass({
                     $(this.refs.this.getDOMNode()).html(jqXHR.responseText);
                 }
             }.bind(this)
-        );
+        ).bind(this);
 
         if (!this.props.disableGoogleAnalytics) {
             var _gaq = _gaq || [];
@@ -219,6 +217,9 @@ var HeatmapAnatomogramContainer = React.createClass({
         }
 
         $(window).trigger("gxaResizeHeatmapAnatomogramHeader");
+    },
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
     }
 });
 
