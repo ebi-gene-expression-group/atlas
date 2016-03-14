@@ -8,14 +8,14 @@ module.exports = {
         "demo": [
             "webpack-dev-server/client?http://localhost:9000", // WebpackDevServer host and port
             "webpack/hot/only-dev-server",
-            "./html/demo.js",
+            "./html/demo.js"
         ],
         "test": [
             "webpack-dev-server/client?http://localhost:9000", // WebpackDevServer host and port
             "webpack/hot/only-dev-server",
             'mocha!./test/test.js'
         ],
-        "vendor": ['react', 'react-highcharts/more'],
+        "vendor": ['react', 'react-highcharts']	
     },
     output: {
         path: __dirname + "/dist",
@@ -30,7 +30,6 @@ module.exports = {
 
     module: {
         loaders: [
-            {test: /\.jsx?$/, loaders: ['react-hot', "jsx?harmony"], include: path.join(__dirname, "src")},
             {test: /\.jsx$/, loader: 'babel-loader'},
             {test: /demo.js$/, loader: 'expose?exposed'}
         ]

@@ -3,8 +3,8 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
-var Highcharts = require('react-highcharts/more');
-
+var Highcharts = require('react-highcharts');
+require('highcharts-more')(Highcharts.Highcharts);
 //*------------------------------------------------------------------*
 
 var HeatmapBaselineCellVariance = React.createClass({
