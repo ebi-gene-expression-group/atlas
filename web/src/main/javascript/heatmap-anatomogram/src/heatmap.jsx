@@ -11,7 +11,7 @@ var $ = require('jquery');
 var jQuery = $;
 
 require('jquery-ui');
-require('../css/jquery-ui.min.css');
+
 
 require('jquery.browser');
 require('fancybox')($);
@@ -38,8 +38,8 @@ var StickyHeaderModule = require('./sticky-header-module.js');
 
 //*------------------------------------------------------------------*
 
-require('../css/table-grid.css');
-require('../css/jquery-ui.min.css');
+
+
 
 //*------------------------------------------------------------------*
 

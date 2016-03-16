@@ -23,8 +23,8 @@ var ExperimentTypes = require('./experiment-types.js');
 
 //*------------------------------------------------------------------*
 
-require('../css/atlas.css');
-require('../css/heatmap-and-anatomogram.css');
+
+
 
 //*------------------------------------------------------------------*
 

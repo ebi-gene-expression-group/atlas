@@ -10,7 +10,7 @@ var $ = require('jquery');
 var jQuery = $;
 
 require('jquery-ui');
-require('../css/jquery-ui.min.css');
+
 
 //*------------------------------------------------------------------*
 

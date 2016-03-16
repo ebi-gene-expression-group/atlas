@@ -10,7 +10,7 @@ var $ = require('jquery');
 var jQuery = $;
 
 require('jquery-ui');
-require('../css/jquery-ui.min.css');
+
 
 //*------------------------------------------------------------------*
 
@@ -18,8 +18,8 @@ var FactorTooltip = require('./factor-tooltip.jsx');
 
 //*------------------------------------------------------------------*
 
-require('../css/atlas.css');
-require('../css/heatmap-and-anatomogram.css');
+
+
 
 //*------------------------------------------------------------------*
 
