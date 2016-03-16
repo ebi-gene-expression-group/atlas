@@ -1,59 +1,13 @@
-/*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-
-.gxaFormGrid, .gxaTableGrid, .gxaAnalysisGrid {
+.gxaTableGrid {
     color: #404040;
     background-color: white;
     border: 1px solid #cdcdcd !important;
     border-spacing: 0;
     empty-cells: show;
     height: 100%;
-    font-size: 93%;
     text-align: left;
-}
-
-.gxaFormGrid {
-    width: 100%;
-    border: 2px solid #cdcdcd !important;
-}
-
-.gxaTableGrid, .gxaAnalysisGrid {
     width: auto;
     border-collapse: collapse;
-}
-
-.gxaFormGrid label, .gxaAnalysisGrid label {
-    font-weight: bold;
-    vertical-align: middle;
-    margin-right: 0 !important;
-}
-
-.gxaAnalysisGrid thead {
-    display: none;
-}
-
-.gxaAnalysisGrid td {
-    border: 1px solid #cdcdcd !important;
-    padding: 5px !important;
 }
 
 .gxaTableGrid>tbody>tr>td, .gxaTableGrid>thead>tr>td {
@@ -68,6 +22,15 @@
 th.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {
     font-weight: normal;
     background-color: rgb(237, 246, 246) !important;
+}
+
+th.gxaEmptyMultipleHeatmapHeaderFactor {
+    background-color: rgb(237, 246, 246) !important;
+    border-right: 1px solid #CEC2C2;
+    border-bottom-color: rgb(237, 246, 246);
+    border-bottom-width: 1px;
+    border-top: 1px solid #CEC2C2;
+    border-left: 1px solid #CEC2C2;
 }
 
 th.gxaHoverableHeader:hover, th.gxaHeaderHover {
@@ -97,16 +60,6 @@ tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell {
 
 tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell:hover {
     background-color: rgb(200, 220, 220) !important;
-}
-
-.gxaTableGrid th.gxaHighlight {
-    background-color: #deebeb;
-}
-
-.gxaTableGrid td.gxaHighlight {
-    background-color: #deebeb;
-    opacity: .75;
-    -moz-opacity: .75;
 }
 
 .gxaHeatmapCell {
@@ -162,36 +115,70 @@ tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomics
     -o-transform: rotate(-270deg);
 }
 
-.gxaRotateTextIE {
+th.gxaHeatmapTableDesignElement {
+    font-weight: normal;
+    text-align: left;
+    border: 1px solid #CDCDCD;
 }
 
-.gxaFormGrid .ui-button.ui-widget {
-    width: 70px
+.gxaHeatmapCountAndLegend {
+    background-color: white;
 }
 
-#gxaExperimentPageHeatmapTableStickyWrapper {
-    overflow-x: scroll;
+.gxaStickyTableWrap {
+    overflow-x: auto;
     overflow-y: hidden;
     position: relative;
+    width: 100%;
 }
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyHead,
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyColumn,
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyIntersect {
-        opacity: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: auto; /* Prevent table from stretching to full size */
-    }
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyColumn,
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyHead {
-        z-index: -50;
-    }
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyIntersect {
-        z-index: 150;
-    }
 
-    #gxaExperimentPageHeatmapTableStickyWrapper td,
-    #gxaExperimentPageHeatmapTableStickyWrapper th {
-        box-sizing: border-box;
+.gxaStickyTableWrap div[class^='gxaSticky'] {
+    overflow: hidden;
+}
+.gxaStickyTableWrap tfoot {
+    display: none;
+}
+.gxaStickyTableWrap div table {
+    margin: 0;
+    position: relative;
+    width: auto; /* Prevent table from stretching to full size */
+    border-collapse: collapse;
+}
+.gxaStickyTableWrap .gxaStickyTableHeader,
+.gxaStickyTableWrap .gxaStickyTableColumn,
+.gxaStickyTableWrap .gxaStickyTableIntersect {
+    visibility: hidden;
+    position: fixed;
+    z-index: 40;
+}
+.gxaStickyTableWrap .gxaStickyTableHeader {
+    z-index: 50;
+    width: 100%; /* Force stretch */
+}
+.gxaStickyTableWrap .gxaStickyTableIntersect {
+    z-index: 60;
+}
+.gxaStickyTableWrap td,
+.gxaStickyTableWrap th {
+    box-sizing: border-box;
+}
+.gxaStickyTableWrap thead th {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.gxaStickyEnabled {
+    margin: 0;
+    width: auto;
+}
+
+.wrapper-sticky {
+    z-index: 45;
+}
+
+/* To hide sticky column and intersect when screen gets too narrow */
+@media only screen and (max-width: 768px) {
+    .gxaStickyTableColumn, .gxaStickyTableIntersect {
+        display: none;
     }
+}

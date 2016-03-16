@@ -13,14 +13,9 @@
     visibility: hidden;
 }
 
-.gxaHeatmapPosition {
+.gxaInnerHeatmap {
     position: relative;
-    margin-left: 270px;
     overflow: hidden;
-}
-
-.gxaHeatmapPositionWidget {
-    margin-left: 270px;
 }
 
 .gxaAside {
@@ -30,12 +25,10 @@
 
 .gxaGradientLevelMin {
     text-align: right;
-    font-size: smaller;
 }
 
 .gxaGradientLevelMax {
     text-align: left;
-    font-size: smaller;
 }
 
 .gxaHeatmapMatrixTopLeftCorner {
@@ -43,7 +36,6 @@
     display: table;
     height: 110px;
     width: 100%;
-    text-align: center;
     min-width: 160px;
 }
 
@@ -60,7 +52,7 @@ span.gxaTooltip {
 
 .gxaPvalueTooltipStyling {
     padding: 2px !important;
-    margin: 0px !important;
+    margin: 0 !important;
 }
 
 #ensembl-launcher-box {
@@ -81,16 +73,15 @@ span.gxaTooltip {
     margin: 0 auto;
 }
 
-#gxaExperimentPageHeatmapCountAndLegend {
-    width: 100%;
-    max-width: 1040px;
-    z-index: 75; /* A high enough number to stay above the table when it becomes hcSticky() but low enough to be below Chosen plugin (100) */
+.gxaAnatomogramSpeciesLabel {
+    width: 245px;   /* Width of gxaHeatmapPosition margin minus anatomogram buttons width */
 }
 
-/* TODO: This class is used in jQuery UI - move out to a separate css file */
-#download-profiles-link .ui-button-text,
-.gxaVerticalHeaderCell .ui-button-text,
-.gxaVerticalHeaderCell-selected .ui-button-text,
-#gene-distribution-button .ui-button-text {
-    padding: 0px !important;
+.gxaAnatomogramSpeciesLabel h5 {
+    text-align: center;
+    /*white-space: nowrap;*/
+}
+
+.gxaAnatomogramSpeciesLabel h5::first-letter {
+    text-transform: uppercase;
 }
