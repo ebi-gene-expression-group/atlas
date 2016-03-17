@@ -52,7 +52,11 @@
         </a>
     </c:if>
 </div>
-<div id="experimentOrganisms">Organism(s): <span style="font-style:italic">${allSpecies}</span></div>
+<div id="experimentOrganisms">Organism(s):
+    <span style="font-style:italic">
+        <spring:eval expression="T(org.apache.commons.lang3.StringUtils).join(allSpecies, \", \")"/>
+     </span>
+</div>
 <c:if test="${allArrayDesigns!=null}">
     <div id="experimentArrayDesigns">Array Design(s):
         <c:forEach items="${allArrayDesigns}" var="arrayDesign">
