@@ -380,11 +380,11 @@ var DownloadProfilesButton = React.createClass({
         return { showModal: false };
     },
 
-    _closeModal() {
+    _closeModal: function () {
         this.setState({ showModal: false });
     },
 
-    _afterDownloadButtonClicked() {
+    _afterDownloadButtonClicked: function () {
         if(!this.props.isFortLauderdale) {
             this._commenceDownload();
         } else {
@@ -392,8 +392,12 @@ var DownloadProfilesButton = React.createClass({
         }
     },
 
-    _commenceDownload() {
+    _commenceDownload: function () {
         window.location.href=this.props.atlasBaseURL + this.props.downloadProfilesURL;
+    },
+
+    _commenceDownloadAndCloseModal: function (){
+        this._commenceDownload();
         this._closeModal();
     },
     
@@ -408,12 +412,12 @@ var DownloadProfilesButton = React.createClass({
                 <Modal id="myModal" show={this.state.showModal} onHide={this._closeModal} bsSize="large">
                     <Modal.Header closeButton>
                     </Modal.Header>
-                    <Modal.Body style={{'max-height' : '360px' }}>
+                    <Modal.Body style={{'maxHeight' : '360px' }}>
                         <BlueprintText/>
                     </Modal.Body>
                     <Modal.Footer>
                         <BootstrapButton onClick={this._closeModal}>Close</BootstrapButton>
-                        <BootstrapButton bsStyle="primary" onClick={this._commenceDownload}>Continue downloading</BootstrapButton>
+                        <BootstrapButton bsStyle="primary" onClick={this._commenceDownloadAndCloseModal}>Continue downloading</BootstrapButton>
                     </Modal.Footer>
                 </Modal>
             </a>
