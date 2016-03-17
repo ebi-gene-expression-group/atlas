@@ -20,3 +20,4 @@ npm-debug.log
 web/src/main/**/node_modules
 web/src/main/javascript/**/dist
 tmp/**
+**/rebel.xml
