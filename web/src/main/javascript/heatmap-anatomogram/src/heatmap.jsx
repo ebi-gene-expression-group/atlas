@@ -7,6 +7,10 @@ var ReactDOM = require('react-dom');
 var ReactDOMServer = require('react-dom/server');
 var RadioGroup = require('react-radio-group');
 
+var Modal = require('react-bootstrap/lib/Modal');
+var BootstrapButton = require('react-bootstrap/lib/Button');
+var BlueprintText = require('./blueprint-text.jsx');
+
 var $ = require('jquery');
 var jQuery = $;
 
@@ -195,14 +199,30 @@ var Heatmap = React.createClass({
 
                 <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{"paddingBottom": paddingMargin, "position": "sticky"}}>
                     <div style={{display: "inline-block", 'verticalAlign': "top"}}>
-                        {this.props.type.isMultiExperiment ? <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} experiments found: </span> :
-                            <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span> }
-                        {this.props.geneSetProfiles && !this.props.type.isMultiExperiment ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
+                        {this.props.type.isMultiExperiment ?
+                            <span id="geneCount">
+                                Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal}
+                                experiments found:
+                            </span>
+                            :
+                            <span id="geneCount">
+                                Showing {this.state.profiles.rows.length}
+                                of {this.state.profiles.searchResultTotal} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' }
+                                found:
+                            </span> }
+                        {this.props.geneSetProfiles && !this.props.type.isMultiExperiment ?
+                            <a href="javascript:void(0)" onClick={this.toggleGeneSets}>
+                                {this.state.showGeneSetProfiles ?
+                                    '(show individual genes)'
+                                    :
+                                    '(show by gene set)'}
+                            </a> : ''}
                     </div>
                     <div style={{display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top"}}>
                         <DownloadProfilesButton ref="downloadProfilesButton"
                                                 downloadProfilesURL={this.props.heatmapConfig.downloadProfilesURL}
-                                                atlasBaseURL={this.props.atlasBaseURL}/>
+                                                atlasBaseURL={this.props.atlasBaseURL}
+                                                isFortLauderdale={this.props.heatmapConfig.isFortLauderdale}/>
                     </div>
                     <div style={{display: "inline-block", "paddingLeft": "20px"}}>
                         {this.legendType()}
@@ -352,18 +372,50 @@ var Heatmap = React.createClass({
 var DownloadProfilesButton = React.createClass({
     propTypes: {
         atlasBaseURL: React.PropTypes.string.isRequired,
-        downloadProfilesURL: React.PropTypes.string.isRequired
+        downloadProfilesURL: React.PropTypes.string.isRequired,
+        isFortLauderdale: React.PropTypes.bool.isRequired,
+        message:React.PropTypes.string
+    },
+    getInitialState: function() {
+        return { showModal: false };
     },
 
+    _closeModal() {
+        this.setState({ showModal: false });
+    },
+
+    _afterDownloadButtonClicked() {
+        if(!this.props.isFortLauderdale) {
+            this._commenceDownload();
+        } else {
+            this.setState({ showModal: true });
+        }
+    },
+
+    _commenceDownload() {
+        window.location.href=this.props.atlasBaseURL + this.props.downloadProfilesURL;
+        this._closeModal();
+    },
+    
     render: function () {
-        var downloadURL = this.props.atlasBaseURL + this.props.downloadProfilesURL;
         var downloadImgSrcURL = this.props.atlasBaseURL + "/resources/images/download_blue_small.png";
 
         return (
             <a id="download-profiles-link" ref="downloadProfilesLink"
                title="Download all results"
-               href={downloadURL} className="gxaButtonImage" target="_blank">
+               href="javascript:void(0)" onClick={this._afterDownloadButtonClicked} className="gxaButtonImage" target="_blank">
                <img id="download-profiles" alt="Download query results" style={{width: "20px"}} src={downloadImgSrcURL}/>
+                <Modal id="myModal" show={this.state.showModal} onHide={this._closeModal} bsSize="large">
+                    <Modal.Header closeButton>
+                    </Modal.Header>
+                    <Modal.Body style={{'max-height' : '360px' }}>
+                        <BlueprintText/>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <BootstrapButton onClick={this._closeModal}>Close</BootstrapButton>
+                        <BootstrapButton bsStyle="primary" onClick={this._commenceDownload}>Continue downloading</BootstrapButton>
+                    </Modal.Footer>
+                </Modal>
             </a>
         );
     },
@@ -1138,6 +1190,7 @@ var CellMultiExperiment = React.createClass({
         );
     }
 });
+
 
 //*------------------------------------------------------------------*
 

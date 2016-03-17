@@ -200,19 +200,21 @@
                     <h4></h4>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body" style="max-height: 360px">
                     <c:import url="/resources/html/blueprint.html" />
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
                         <c:if test="${type.baseline && isFortLauderdale}">
-                            <a class="btn btn-primary" id="continue-download-expressions"
-                               href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=-0.1">Continue downloading</a>
+                            <button class="btn btn-primary" id="continue-download-expressions"
+                               onclick="location.href='${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=-0.1'">
+                                Continue downloading
+                            </button>
                         </c:if>
                         <c:if test="${experiment.hasRData()}">
-                             <a class="btn btn-primary" id="continue-download-R"
-                               href="${rDownloadUrl}${accessKeyQueryString}">Continue downloading</a>
+                             <button class="btn btn-primary" id="continue-download-R"
+                                     onclick="location.href='${rDownloadUrl}${accessKeyQueryString}'">Continue downloading</button>
                         </c:if>
                 </div>
 
