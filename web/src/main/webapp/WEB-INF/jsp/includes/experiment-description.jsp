@@ -54,7 +54,8 @@
 </div>
 <div id="experimentOrganisms">Organism(s):
     <span style="font-style:italic">
-        <spring:eval expression="T(org.apache.commons.lang3.StringUtils).join(allSpecies, \", \")"/>
+        <spring:eval
+                expression="T(org.apache.commons.lang3.StringUtils).removeEnd(T(org.apache.commons.lang3.StringUtils).join(allSpecies, \", \"),\", \")"/>
      </span>
 </div>
 <c:if test="${allArrayDesigns!=null}">
