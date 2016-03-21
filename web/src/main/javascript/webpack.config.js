@@ -9,6 +9,7 @@ module.exports = {
         "anatomogram": './anatomogram/anatomogram-builder-index.js',
         "expression-atlas-heatmap": './heatmap-anatomogram',
         "internal-atlas-heatmap": './heatmap-anatomogram/internal-atlas-index.js',
+        "highcharts-atlas-heatmap":'./heatmap-highcharts',
         "faceted-search": './faceted-search',
         "vendor": ['react','react-dom', 'jquery', 'jquery-ui', 'jquery.browser', 'urijs' ]
     },
