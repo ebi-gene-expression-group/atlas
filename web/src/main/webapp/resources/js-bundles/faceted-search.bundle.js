@@ -11528,6 +11528,13 @@ webpackJsonp([2],[
 	        this.props.setChecked(checked, this.props.facetName, facetItem);
 	    },
 	
+	    _isOrganismPart: function (a) {
+	        return a.props.name === "ORGANISM_PART";
+	    },
+	    _isNotOrganismPart: function (a) {
+	        return !this._isOrganismPart(a);
+	    },
+	
 	    render: function () {
 	        var facetItems = this.props.facetItems.map(function (facetItem) {
 	            return React.createElement(FacetItem, { key: facetItem.name, name: facetItem.name, value: facetItem.value,
@@ -11535,6 +11542,7 @@ webpackJsonp([2],[
 	                setChecked: this._setChecked
 	            });
 	        }.bind(this));
+	        var facetItemsInOrderWeWant = facetItems.filter(this._isOrganismPart).concat(facetItems.filter(this._isNotOrganismPart));
 	
 	        return React.createElement(
 	            "div",
@@ -11547,7 +11555,7 @@ webpackJsonp([2],[
 	            React.createElement(
 	                "ul",
 	                null,
-	                facetItems
+	                facetItemsInOrderWeWant
 	            )
 	        );
 	    }
@@ -11620,11 +11628,19 @@ webpackJsonp([2],[
 	        })).isRequired
 	    },
 	
+	    _isOrganismPart: function (a) {
+	        return a.factor === "ORGANISM_PART";
+	    },
+	    _isNotOrganismPart: function (a) {
+	        return !this._isOrganismPart(a);
+	    },
+	
 	    render: function () {
+	        var heatmapsInOrderWeWant = this.props.heatmaps.filter(this._isOrganismPart).concat(this.props.heatmaps.filter(this._isNotOrganismPart));
 	        return React.createElement(
 	            'div',
 	            null,
-	            this.props.heatmaps.map(function (heatmap) {
+	            heatmapsInOrderWeWant.map(function (heatmap) {
 	                return React.createElement(BaselineHeatmapWidget, { key: heatmap.species + "_" + heatmap.factor,
 	                    showAnatomogram: this.props.showAnatomograms,
 	                    showHeatmapLabel: this._hasMoreThanOneSpecies(), species: heatmap.species, factor: heatmap.factor,
@@ -35270,17 +35286,33 @@ webpackJsonp([2],[
 	//*------------------------------------------------------------------*
 	
 	var React = __webpack_require__(/*! react */ 507);
+	var BootstrapButton = __webpack_require__(/*! react-bootstrap/lib/Button */ 809);
 	
 	//*------------------------------------------------------------------*
 	
 	var ExperimentsList = React.createClass({
-	    displayName: "ExperimentsList",
+	    displayName: 'ExperimentsList',
 	
 	    propTypes: {
-	        profiles: React.PropTypes.object.isRequired,
+	        profiles: React.PropTypes.shape({
+	            rows: React.PropTypes.array.isRequired
+	        }).isRequired,
 	        atlasBaseURL: React.PropTypes.string.isRequired,
 	        linksAtlasBaseURL: React.PropTypes.string.isRequired,
 	        geneQuery: React.PropTypes.string.isRequired
+	    },
+	
+	    getInitialState: function () {
+	        return { "displayAll": this.props.profiles.rows.length < 10 };
+	    },
+	
+	    _getRowsToDisplay: function () {
+	        var rows = this.props.profiles.rows.sort(this._lexicalSort);
+	        return this.state.displayAll ? rows : rows.slice(0, 10);
+	    },
+	
+	    _displayAll: function () {
+	        this.setState({ "displayAll": true });
 	    },
 	
 	    _lexicalSort: function (thisProfile, thatProfile) {
@@ -35290,32 +35322,37 @@ webpackJsonp([2],[
 	        if (thisProfile.name < thatProfile.name) {
 	            return -1;
 	        }
-	        // a must be equal to b
 	        return 0;
 	    },
 	
+	    _renderListItem: function (profile) {
+	        var experimentURL = this.props.linksAtlasBaseURL + "/experiments/" + profile.id + "?geneQuery=" + this.props.geneQuery + (profile.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) : "");
+	
+	        return React.createElement(
+	            'li',
+	            { key: profile.name },
+	            React.createElement(
+	                'a',
+	                { target: '_blank', href: experimentURL },
+	                profile.name
+	            )
+	        );
+	    },
+	
 	    _renderListItems: function (options) {
-	        return options.profiles.sort(this._lexicalSort).map(function (profile) {
-	
-	            var experimentURL = options.linksAtlasBaseURL + "/experiments/" + profile.id + "?geneQuery=" + options.geneQuery + (profile.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) : "");
-	
-	            return React.createElement(
-	                "li",
-	                { key: profile.name },
-	                React.createElement(
-	                    "a",
-	                    { target: "_blank", href: experimentURL },
-	                    profile.name
-	                )
-	            );
-	        });
+	        return this._getRowsToDisplay().map(this._renderListItem);
 	    },
 	
 	    render: function () {
 	        return React.createElement(
-	            "ul",
+	            'ul',
 	            { style: { listStyleType: "none", paddingLeft: "0" } },
-	            this._renderListItems({ profiles: this.props.profiles.rows, linksAtlasBaseURL: this.props.linksAtlasBaseURL, geneQuery: this.props.geneQuery })
+	            this._renderListItems(),
+	            this.state.displayAll ? React.createElement('a', null) : React.createElement(
+	                BootstrapButton,
+	                { bsStyle: 'default', bsSize: 'xsmall', onClick: this._displayAll },
+	                'More'
+	            )
 	        );
 	    }
 	});

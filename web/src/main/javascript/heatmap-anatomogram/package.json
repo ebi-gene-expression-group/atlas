@@ -45,6 +45,7 @@
     "imagemin": "^3.1.0",
     "mocha": "^2.0.1",
     "mocha-loader": "^0.7.1",
+    "react-addons-test-utils": "^0.14.7",
     "react-hot-loader": "^1.2.8",
     "style-loader": "^0.12.3",
     "testdom": "^2.0.0",
