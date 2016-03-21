@@ -3,15 +3,31 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
+var BootstrapButton = require('react-bootstrap/lib/Button');
 
 //*------------------------------------------------------------------*
 
 var ExperimentsList = React.createClass({
     propTypes: {
-        profiles: React.PropTypes.object.isRequired,
+        profiles: React.PropTypes.shape({
+            rows: React.PropTypes.array.isRequired
+        }).isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
         linksAtlasBaseURL: React.PropTypes.string.isRequired,
         geneQuery: React.PropTypes.string.isRequired
+    },
+
+    getInitialState: function() {
+        return {"displayAll": this.props.profiles.rows.length < 10};
+    },
+
+    _getRowsToDisplay: function() {
+        var rows = this.props.profiles.rows.sort(this._lexicalSort);
+        return this.state.displayAll ? rows : rows.slice(0,10);
+    },
+
+    _displayAll :function() {
+      this.setState({"displayAll" : true});
     },
 
     _lexicalSort: function(thisProfile, thatProfile) {
@@ -21,31 +37,32 @@ var ExperimentsList = React.createClass({
         if (thisProfile.name < thatProfile.name) {
             return -1;
         }
-        // a must be equal to b
         return 0;
     },
 
+    _renderListItem: function (profile) {
+        var experimentURL =
+            this.props.linksAtlasBaseURL +
+            "/experiments/" + profile.id + "?geneQuery=" + this.props.geneQuery +
+            (profile.serializedFilterFactors ?
+            "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) : "");
+
+        return (
+            <li key={profile.name}>
+                <a target="_blank" href={experimentURL}>{profile.name}</a>
+            </li>
+        );
+    },
+
     _renderListItems: function(options) {
-        return options.profiles.sort(this._lexicalSort).map(function(profile) {
-
-            var experimentURL =
-                options.linksAtlasBaseURL +
-                "/experiments/" + profile.id + "?geneQuery=" + options.geneQuery +
-                (profile.serializedFilterFactors ?
-                    "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) : "");
-
-            return (
-                <li key={profile.name}>
-                    <a target="_blank" href={experimentURL}>{profile.name}</a>
-                </li>
-            );
-        });
+        return this._getRowsToDisplay().map(this._renderListItem);
     },
 
     render: function() {
         return (
             <ul style={{listStyleType: "none", paddingLeft: "0"}}>
-                {this._renderListItems({profiles: this.props.profiles.rows, linksAtlasBaseURL: this.props.linksAtlasBaseURL, geneQuery: this.props.geneQuery})}
+                {this._renderListItems()}
+                {this.state.displayAll? <a/> : <BootstrapButton bsStyle="default" bsSize="xsmall" onClick={this._displayAll}>More</BootstrapButton> }
             </ul>
         );
     }
