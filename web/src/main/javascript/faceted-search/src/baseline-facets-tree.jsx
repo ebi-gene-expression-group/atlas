@@ -69,6 +69,14 @@ var Facet = React.createClass({
         this.props.setChecked(checked, this.props.facetName, facetItem);
     },
 
+    _isOrganismPart: function(a){
+        return a.props.name==="ORGANISM_PART";
+    },
+    _isNotOrganismPart: function(a){
+        return ! this._isOrganismPart(a);
+    },
+
+
     render: function () {
         var facetItems = this.props.facetItems.map(function (facetItem) {
             return <FacetItem key={facetItem.name} name={facetItem.name} value={facetItem.value}
@@ -77,12 +85,13 @@ var Facet = React.createClass({
             />;
 
         }.bind(this));
+        var facetItemsInOrderWeWant=facetItems.filter(this._isOrganismPart).concat(facetItems.filter(this._isNotOrganismPart));
 
         return (
             <div className="gxaFacetItem">
                 <h4>{this.props.facetName}</h4>
                 <ul>
-                    {facetItems}
+                    {facetItemsInOrderWeWant}
                 </ul>
             </div>
         );

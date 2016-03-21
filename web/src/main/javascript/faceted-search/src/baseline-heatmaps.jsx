@@ -28,10 +28,18 @@ var Heatmaps = React.createClass({
         })).isRequired
     },
 
+    _isOrganismPart: function(a){
+        return a.factor==="ORGANISM_PART";
+    },
+    _isNotOrganismPart: function(a){
+        return ! this._isOrganismPart(a);
+    },
+
     render: function () {
+        var heatmapsInOrderWeWant=this.props.heatmaps.filter(this._isOrganismPart).concat(this.props.heatmaps.filter(this._isNotOrganismPart));
         return (
             <div>
-                {this.props.heatmaps.map(function (heatmap) {
+                {heatmapsInOrderWeWant.map(function (heatmap) {
                     return <BaselineHeatmapWidget key={heatmap.species + "_" + heatmap.factor}
                                                   showAnatomogram={this.props.showAnatomograms}
                                                   showHeatmapLabel={this._hasMoreThanOneSpecies()} species={heatmap.species} factor={heatmap.factor}
