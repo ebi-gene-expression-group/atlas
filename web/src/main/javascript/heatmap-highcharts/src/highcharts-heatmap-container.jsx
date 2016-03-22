@@ -7,16 +7,10 @@ var React = require('react');
 var $ = require('jquery');
 var jQuery = $;
 
-var URI = require('urijs');
-
 //*------------------------------------------------------------------*
 
 var HighchartsHeatmap = require('./highchartsHeatmap.jsx');
 var HighchartsUtils = require('./highcharts-utils.js');
-
-//*------------------------------------------------------------------*
-
-//require('../css/heatmap-highcharts.css');
 
 //*------------------------------------------------------------------*
 

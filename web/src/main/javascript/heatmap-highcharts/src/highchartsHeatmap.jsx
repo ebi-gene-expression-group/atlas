@@ -12,6 +12,7 @@ require('highcharts-heatmap')(Highcharts.Highcharts);
 
 //*------------------------------------------------------------------*
 
+require('../css/heatmap-highcharts.css');
 
 //*------------------------------------------------------------------*
 
@@ -53,9 +54,29 @@ var HighchartsHeatmap = React.createClass({
         })
     },
 
+    handleClick: function (index) {
+        var heatmap = this.refs.chart.getChart();
+
+        //$(".highcharts-legend-item").eq($(this)).trigger("click");
+        $(this).toggleClass("legend-item-off");
+
+        if (heatmap.series[index].visible) {
+            heatmap.series[index].hide();
+        } else {
+            heatmap.series[index].show();
+        }
+
+    },
+
+    componentDidMount: function () {
+        var heatmap = this.refs.chart.getChart();
+        heatmap.series[0].hide();
+    },
+
     render: function () {
         var atlasBaseURL = this.props.atlasBaseURL;
         var yAxisCategoriesLinks = this.props.yAxisCategoriesLinks;
+        var yAxisCategories = this.props.yAxisCategories;
 
         var highchartsOptions = {
             plotOptions: {
@@ -68,40 +89,47 @@ var HighchartsHeatmap = React.createClass({
             },
             chart: {
                 type: 'heatmap',
-                marginTop: 90,
-                marginRight: 80,
+                marginTop: 82,//labels
+                marginRight: 36,//leave space for the export button to appear
                 plotBorderWidth: 1,
-                height: this.props.profiles.rows.length * 4+200,
-//          height: yAxisCategories.length * 46,
+                //height: this.props.profiles.rows.length * 4+200,
+                height: yAxisCategories.length * 12 + 200,
                 zoomType: 'xy'
             },
             legend: {
-                x: 160,
+                useHTML:true,
+                enabled: false,
+                itemDistance: 18,
+                symbolWidth: 12,
+                symbolHeight:12,
+                x: 150,
                 align: 'left',
                 verticalAlign: 'bottom',
                 layout: 'horizontal',
                 itemStyle: {
+                    lineHeight:"10px",
                     fontSize: "10px",
                     color: '#606060',
                     fontWeight: 'normal'
                 }
             },
             title: null,
-            xAxis: {
+            xAxis: { //tissues
                 tickLength: 5,
                 tickColor: "rgb(192, 192, 192)",
                 lineColor: "rgb(192, 192, 192)",
                 labels: {
-                    y: -8,
+                    y: -6,
                     style: {
-                        fontSize: "10px"
+                        fontSize: "9px"
                     },
                     autoRotation: [-45, -90]
                 },
                 opposite: 'true',
                 categories: this.props.xAxisCategories
             },
-            yAxis: {
+            yAxis: { //experiments
+                useHTML: true,
                 reversed: true,
                 labels: {
                     style: {
@@ -128,17 +156,17 @@ var HighchartsHeatmap = React.createClass({
                 }
             },
             series: [{
-                name: this.props.seriesDataBelowCutoffString,
-                color: "#d7d7d7",
-                borderWidth: 1,
-                borderColor: "#fff",
-                data: this.props.seriesDataBelowCutoff
-            }, {
                 name: this.props.seriesDataNAString,
                 color: "#f7f7f7",
                 borderWidth: 1,
                 borderColor: "#fff",
                 data: this.props.seriesDataNA
+            }, {
+                name: this.props.seriesDataBelowCutoffString,
+                color: "#eaeaea",
+                borderWidth: 1,
+                borderColor: "#fff",
+                data: this.props.seriesDataBelowCutoff
             }, {
                 name: this.props.seriesDataRanges[0].label,
                 color: "#dff8ff",
@@ -160,9 +188,37 @@ var HighchartsHeatmap = React.createClass({
             }]
         };
 
+        var barcharts_legend = (
+            <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
+                <span>Click to interact:</span>
+
+                <div id="legend_1" className="legend-item" onClick={this.handleClick.bind(this,1)}>
+                    <div className="legend-rectangle col_below"></div><span>Below cutoff</span>
+                </div>
+                <div id="legend_2" className="legend-item" onClick={this.handleClick.bind(this,2)}>
+                    <div className="legend-rectangle col_low"></div><span>Low</span>
+                </div>
+                <div id="legend_3" className="legend-item" onClick={this.handleClick.bind(this,3)}>
+                    <div className="legend-rectangle col_med"></div><span>Medium</span>
+                </div>
+
+                <div id="legend_4" className="legend-item" onClick={this.handleClick.bind(this,4)}>
+                    <div className="legend-rectangle col_high"></div><span>High</span>
+                </div>
+
+                <div id="legend_5" className="legend-item special" onClick={this.handleClick.bind(this,0)}>
+                    <div className="legend-rectangle col_nd"></div><span>No data available</span>
+                </div>
+            </div>
+        );
+
         return (
-            <div id="highcharts_container" ref="container">
-                <Highcharts config={highchartsOptions}/>
+            <div>
+                <div id="highcharts_container">
+                    <Highcharts config={highchartsOptions} ref="chart"/>
+                    {barcharts_legend}
+                </div>
+
             </div>
         );
     }
