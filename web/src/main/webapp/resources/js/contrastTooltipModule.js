@@ -23,7 +23,7 @@
 /*global $,jQuery,console,React,loadSliderAndPlot: false */
 /*jslint browser:true */
 /*jslint nomen: true*/
-var contrastTooltipModule = (function ($, React, ContrastTooltip) {
+var contrastTooltipModule = (function ($, ReactDOMServer, ContrastTooltip) {
     "use strict";
 
     function initTooltip(contextRoot, accessKey, elements) {
@@ -52,7 +52,7 @@ var contrastTooltipModule = (function ($, React, ContrastTooltip) {
                     },
                     type:"GET",
                     success:function (data) {
-                        var html = React.renderComponentToString(ContrastTooltip({
+                        var html = ReactDOMServer.renderToString(ContrastTooltip({
                                                 experimentDescription: data.experimentDescription,
                                                 contrastDescription: data.contrastDescription,
                                                 testReplicates: data.testReplicates,
@@ -74,4 +74,4 @@ var contrastTooltipModule = (function ($, React, ContrastTooltip) {
             initTooltip(contextRoot, accessKey, elements || ".contrastNameCell");
         }
     };
-}(jQuery, React, ContrastTooltip));
+}(jQuery, ReactDOMServer, ContrastTooltip));

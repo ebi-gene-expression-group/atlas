@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 /*global React */
 var ContrastTooltip = (function(React) {
 
