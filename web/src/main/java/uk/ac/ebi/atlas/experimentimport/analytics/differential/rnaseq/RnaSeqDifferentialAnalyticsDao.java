@@ -17,13 +17,12 @@ public class RnaSeqDifferentialAnalyticsDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(RnaSeqDifferentialAnalyticsDao.class);
 
     private static final String ANALYTICS_INSERT = "INSERT INTO RNASEQ_DIFF_ANALYTICS " +
-            "(identifier, experiment, contrastid, isactive, pval, log2fold) VALUES (?, ?, ?, ?, ?, ?)";
+            "(identifier, experiment, contrastid, pval, log2fold) VALUES (?, ?, ?, ?, ?)";
     private static final int IDENTIFIER = 1;
     private static final int EXPERIMENT = 2;
     private static final int CONTRAST_ID = 3;
-    private static final int IS_ACTIVE = 4;
-    private static final int PVAL = 5;
-    private static final int LOG2FOLD = 6;
+    private static final int PVAL = 4;
+    private static final int LOG2FOLD = 5;
 
     //The database can't handle a small value than 1E-125, so we need to treat it as 0D.
     private static final double SMALL_PVALUE_ALLOWED = 1E-125;
@@ -54,7 +53,6 @@ public class RnaSeqDifferentialAnalyticsDao {
                     ps.setString(IDENTIFIER, analytics.getGeneId());
                     ps.setString(EXPERIMENT, experimentAccession);
                     ps.setString(CONTRAST_ID, analytics.getContrastId());
-                    ps.setString(IS_ACTIVE, "T");
 
                     Double pValue = (analytics.getpValue() <  SMALL_PVALUE_ALLOWED) ? 0D : analytics.getpValue();
 

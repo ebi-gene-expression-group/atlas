@@ -17,12 +17,11 @@ public class BaselineAnalyticsDAO {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineAnalyticsDAO.class);
 
-    private static final String ANALYTICS_INSERT = "INSERT INTO RNASEQ_BSLN_EXPRESSIONS (identifier, experiment, assaygroupid, isactive, expression) VALUES (?, ?, ?, ?, ?)";
+    private static final String ANALYTICS_INSERT = "INSERT INTO RNASEQ_BSLN_EXPRESSIONS (identifier, experiment, assaygroupid, expression) VALUES (?, ?, ?, ?)";
     private static final int IDENTIFIER = 1;
     private static final int EXPERIMENT = 2;
     private static final int ASSAY_GROUP_ID = 3;
-    private static final int IS_ACTIVE = 4;
-    private static final int EXPRESSION = 5;
+    private static final int EXPRESSION = 4;
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -50,7 +49,6 @@ public class BaselineAnalyticsDAO {
                     ps.setString(IDENTIFIER, baselineAnalytics.getGeneId());
                     ps.setString(EXPERIMENT, experimentAccession);
                     ps.setString(ASSAY_GROUP_ID, baselineAnalytics.getAssayGroupId());
-                    ps.setString(IS_ACTIVE, "T");
                     ps.setDouble(EXPRESSION, baselineAnalytics.getExpressionLevel());
 
                     return true;

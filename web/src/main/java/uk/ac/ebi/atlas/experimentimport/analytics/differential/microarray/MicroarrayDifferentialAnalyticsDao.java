@@ -17,15 +17,14 @@ public class MicroarrayDifferentialAnalyticsDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(MicroarrayDifferentialAnalyticsDao.class);
 
     private static final String ANALYTICS_INSERT = "INSERT INTO MICROARRAY_DIFF_ANALYTICS " +
-            "(designelement, experiment, arraydesign, contrastid, isactive, pval, log2fold, tstat) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            "(designelement, experiment, arraydesign, contrastid, pval, log2fold, tstat) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final int DESIGNELEMENT = 1;
     private static final int EXPERIMENT = 2;
     private static final int ARRAYDESIGN = 3;
     private static final int CONTRAST_ID = 4;
-    private static final int IS_ACTIVE = 5;
-    private static final int PVAL = 6;
-    private static final int LOG2FOLD = 7;
-    private static final int TSTAT = 8;
+    private static final int PVAL = 5;
+    private static final int LOG2FOLD = 6;
+    private static final int TSTAT = 7;
 
     //The database can't handle a small value than 1E-125, so we need to treat it as 0D.
     private static final double SMALL_PVALUE_ALLOWED = 1E-125;
@@ -57,7 +56,6 @@ public class MicroarrayDifferentialAnalyticsDao {
                     ps.setString(EXPERIMENT, experimentAccession);
                     ps.setString(ARRAYDESIGN, arrayDesign);
                     ps.setString(CONTRAST_ID, analytics.getContrastId());
-                    ps.setString(IS_ACTIVE, "T");
 
                     Double pValue = (analytics.getpValue() <  SMALL_PVALUE_ALLOWED) ? 0D : analytics.getpValue();
 
