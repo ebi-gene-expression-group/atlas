@@ -50,27 +50,45 @@ var HighchartsHeatmap = React.createClass({
                     to: 1.0,
                     seriesData: []
                 }
-            ]
+            ],
+
+            legend_1: false,
+            legend_2: false,
+            legend_3: false,
+            legend_4: false
+
         })
     },
 
     handleClick: function (index) {
-        var heatmap = this.refs.chart.getChart();
-
-        //$(".highcharts-legend-item").eq($(this)).trigger("click");
-        $(this).toggleClass("legend-item-off");
-
-        if (heatmap.series[index].visible) {
-            heatmap.series[index].hide();
-        } else {
-            heatmap.series[index].show();
+        if (index == 1) {
+            this.setState({legend_1: !this.state.legend_1});
         }
-
+        else if (index == 2) {
+            this.setState({legend_2: !this.state.legend_2});
+        }
+        else if (index == 3) {
+            this.setState({legend_3: !this.state.legend_3});
+        }
+        else if (index == 4) {
+            this.setState({legend_4: !this.state.legend_4});
+        }
     },
 
     componentDidMount: function () {
         var heatmap = this.refs.chart.getChart();
         heatmap.series[0].hide();
+    },
+
+    componentDidUpdate: function () {
+        var heatmap = this.refs.chart.getChart();
+        heatmap.series[0].hide();
+
+        this.state.legend_1 ? heatmap.series[1].hide() : heatmap.series[1].show();
+        this.state.legend_2 ? heatmap.series[2].hide() : heatmap.series[2].show();
+        this.state.legend_3 ? heatmap.series[3].hide() : heatmap.series[3].show();
+        this.state.legend_4 ? heatmap.series[4].hide() : heatmap.series[4].show();
+
     },
 
     render: function () {
@@ -81,7 +99,11 @@ var HighchartsHeatmap = React.createClass({
         var highchartsOptions = {
             plotOptions: {
                 series: {
-                    color: '#3dc3b8' //color cell on mouse over
+                    states: {
+                        hover: {
+                            color: '#eeec38' //#edab12 color cell on mouse over
+                        }
+                    }
                 }
             },
             credits: {
@@ -188,25 +210,29 @@ var HighchartsHeatmap = React.createClass({
             }]
         };
 
+        var clsName_1 = this.state.legend_1 ? 'legend-item legend-item-off' : 'legend-item';
+        var clsName_2 = this.state.legend_2 ? 'legend-item legend-item-off' : 'legend-item';
+        var clsName_3 = this.state.legend_3 ? 'legend-item legend-item-off' : 'legend-item';
+        var clsName_4 = this.state.legend_4 ? 'legend-item legend-item-off' : 'legend-item';
+
         var barcharts_legend = (
             <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
                 <span>Click to interact:</span>
 
-                <div id="legend_1" className="legend-item" onClick={this.handleClick.bind(this,1)}>
+                <div id="legend_1" ref="legend_1" className={clsName_1} onClick={this.handleClick.bind(this,1)} >
                     <div className="legend-rectangle col_below"></div><span>Below cutoff</span>
                 </div>
-                <div id="legend_2" className="legend-item" onClick={this.handleClick.bind(this,2)}>
+                <div id="legend_2" className={clsName_2} onClick={this.handleClick.bind(this,2)}>
                     <div className="legend-rectangle col_low"></div><span>Low</span>
                 </div>
-                <div id="legend_3" className="legend-item" onClick={this.handleClick.bind(this,3)}>
+                <div id="legend_3" className={clsName_3} onClick={this.handleClick.bind(this,3)}>
                     <div className="legend-rectangle col_med"></div><span>Medium</span>
                 </div>
-
-                <div id="legend_4" className="legend-item" onClick={this.handleClick.bind(this,4)}>
+                <div id="legend_4" className={clsName_4} onClick={this.handleClick.bind(this,4)}>
                     <div className="legend-rectangle col_high"></div><span>High</span>
                 </div>
 
-                <div id="legend_5" className="legend-item special" onClick={this.handleClick.bind(this,0)}>
+                <div id="legend_5" className="legend-item special">
                     <div className="legend-rectangle col_nd"></div><span>No data available</span>
                 </div>
             </div>
