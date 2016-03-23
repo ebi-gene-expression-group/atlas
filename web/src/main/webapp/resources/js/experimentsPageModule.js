@@ -144,43 +144,43 @@ var experimentsPageModule = (function ($) {
             "bProcessing":true,
             "sAjaxSource":"json/experiments",
             "aoColumns":[
-                { "sTitle":"Type", "mData":"experimentType", "sClass":"center gxaBB gxaBL", "sSortDataType":"dom-text",
+                { "sTitle":"Type", "mData":"experimentType", "sClass":"center", "sSortDataType":"dom-text",
                     "mRender": function (data, type, full) {
                         return formatExperimentType(data);
                     } },
-                { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center gxaBB nowrap", 'sType': 'date-eu',
+                { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center nowrap", 'sType': 'date-eu',
                     "mRender": function (data, type, full) {
                         return formatLastUpdate(data);
                     } },
-                { "sTitle":"Experiment", "mData":"experimentDescription", "sClass":"center gxaBB padding",
+                { "sTitle":"Experiment", "mData":"experimentDescription", "sClass":"center",
                     "mRender": function (data, type, full) {
                         return formatExperimentDescription(data, full);
                     } },
-                { "sTitle":"Assays", "mData":"numberOfAssays", "sClass":"center gxaBB", "sType":"title-numeric", "sWidth":"5%",
+                { "sTitle":"Assays", "mData":"numberOfAssays", "sClass":"center", "sType":"title-numeric", "sWidth":"5%",
                     "mRender": function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, type, full);
                     } },
-                { "sTitle":"Comparisons", "mData":"numberOfContrasts", "sClass":"center gxaBB", "sType":"title-numeric",
+                { "sTitle":"Comparisons", "mData":"numberOfContrasts", "sClass":"center", "sType":"title-numeric",
                     "mRender": function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, full);
                     } },
-                { "sTitle":"Organisms", "mData":"species", "sClass":"center gxaBB italic", "sWidth":"10%",
+                { "sTitle":"Organisms", "mData":"species", "sClass":"center italic", "sWidth":"10%",
                     "mRender": function (data, type, full) {
                         return withLineBreaks(data);
                     } },
-                { "sTitle":"Experimental Variables", "mData":"experimentalFactors", "sClass":"center gxaBB",
+                { "sTitle":"Experimental Variables", "mData":"experimentalFactors", "sClass":"center",
                     "mRender": function (data, type, full) {
                         return withLineBreaks(data);
                     } },
-                { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center gxaBB", "sWidth":"15%",
+                { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center", "sWidth":"15%",
                     "mRender": function (data, type, full) {
                         return formatArrayDesign(data, full);
                     } },
-                { "sTitle":"ArrayExpress", "mData":"experimentAccession", "sClass":"center gxaBB gxaBR",
+                { "sTitle":"ArrayExpress", "mData":"experimentAccession", "sClass":"center",
                     "mRender": function (data, type, full) {
                         return formatExperimentAccession(data);
                     } },
-                { "sTitle":"Kingdom", "mData":"kingdom", "sClass":"center gxaBB italic", "bVisible": false }
+                { "sTitle":"Kingdom", "mData":"kingdom", "bVisible": false }
             ],
             "aLengthMenu":[
                 [10, 25, 50, 100, -1],
@@ -190,8 +190,6 @@ var experimentsPageModule = (function ($) {
                 "sSearch":"Search all columns:"
             }
         });
-
-        $experimentsTable.find("thead th").addClass("gxaHeaderCell gxaBT");
 
         $experimentsTable.find("tfoot input").keyup(function () {
             /* Filter on the column (the index) of this element */

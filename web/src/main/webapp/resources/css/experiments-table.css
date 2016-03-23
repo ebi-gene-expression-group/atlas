@@ -1,5 +1,9 @@
+#experiments-table {
+    border-width: 1px;
+    border-color: lightgrey;
+}
+
 #experiments-table td.italic {
-    font-family: Verdana, Helvetica, Arial, sans-serif !important;
     font-style: italic;
 }
 
@@ -12,14 +16,34 @@
 }
 
 #experiments-table td {
-    background-color: inherit;
+    vertical-align: middle;
+    text-align: center;
+    border-left: 0;
+    border-right: 0;
+    border-bottom-color: lightgrey;
+    border-top-color: lightgrey;
 }
 
-#experiments-table th.padding {
-    padding-left: 85px !important;
-    padding-right: 85px !important;
+#experiments-table th {
+    padding: 3px 18px 3px 10px;
+    background-color: #EDF6F6;
+    border-style: none; /* Override ebi-visual.css */
+    vertical-align: middle;
+    text-align: center;
+    border-bottom-color: lightgrey;
+    border-top-color: lightgrey;
 }
 
-#experiments-table .nowrap {
-    white-space: nowrap;
+#experiments-table select {
+    height: 26px;
+}
+
+#experiments-table tfoot input {
+    margin: 0.5em 0;
+    width: 100%;
+    /*color: grey;*/
+}
+
+#experiments-table tfoot input.search_init {
+    color: grey;
 }
