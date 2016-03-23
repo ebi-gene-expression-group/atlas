@@ -7,7 +7,7 @@ module.exports = {
         heatmapAnatomogram: './index.js',
         internalHeatmapAnatomogram: './src/internal-heatmap-anatomogram.js',
         heatmapAnatomogramRenderer: './html/heatmapAnatomogramRenderer.js',
-        dependencies: ['react', 'react-dom', 'react-radio-group',
+        dependencies: ['react', 'react-dom', 'react-radio-group', 'react-bootstrap',
                        'jquery', 'jquery-ui-bundle', 'jquery.browser', 'fancybox', 'jquery-hc-sticky', 'jquery-toolbar', 'jQuery-ajaxTransport-XDomainRequest', 'jquery-hc-sticky',
                        'urijs', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js', 'atlas-modernizr',
                        'highcharts-more', 'react-highcharts',

@@ -27,6 +27,7 @@
     "modernizr": "^3.3.1",
     "number-format": "file:../atlas_modules/number-format",
     "react": "^0.14.7",
+    "react-bootstrap": "^0.28.3",
     "react-dom": "^0.14.7",
     "react-highcharts": "^8.0.2",
     "react-radio-group": "^1.1.0",
