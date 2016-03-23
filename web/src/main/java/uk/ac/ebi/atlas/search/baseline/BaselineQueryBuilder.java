@@ -23,7 +23,7 @@ public class BaselineQueryBuilder {
     static final String SELECT_QUERY_RNSEQ = "SELECT rbe.experiment, rbe.assaygroupid, SUM(rbe.expression) as SumOfExpressions, count(distinct IDENTIFIER) as NumberOfGenesExpressed from RNASEQ_BSLN_EXPRESSIONS rbe ";
     static final String SELECT_QUERY_PROTEOMICS = "SELECT rbe.experiment, rbe.assaygroupid, SUM(rbe.expression) as SumOfExpressions, count(distinct IDENTIFIER) as NumberOfGenesExpressed from RNASEQ_BSLN_EXPRESSIONS rbe ";
     static final String FOR_GENES = "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value ";
-    static final String WHERE_PUBLIC_RNASEQ = "WHERE rbe.expression > " + FPKM_CUTOFF + "  rbe.experiment = (SELECT accession FROM experiment WHERE type = 'RNASEQ_MRNA_BASELINE' AND private = 'F' AND accession = rbe.experiment) ";
+    static final String WHERE_PUBLIC_RNASEQ = "WHERE rbe.expression > " + FPKM_CUTOFF + " and rbe.experiment = (SELECT accession FROM experiment WHERE type = 'RNASEQ_MRNA_BASELINE' AND private = 'F' AND accession = rbe.experiment) ";
     static final String WHERE_PUBLIC_PROTEOMICS = "WHERE rbe.experiment = (SELECT accession FROM experiment WHERE type = 'PROTEOMICS_BASELINE' AND private = 'F' AND accession = rbe.experiment) ";
     static final String UNIONALL = "UNION ALL ";
 
