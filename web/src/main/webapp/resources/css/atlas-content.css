@@ -3,63 +3,86 @@
     padding-right: 10px;
 }
 
-#atlas-content ::selection {
-    background: rgb(95, 142, 179) !important;
-    color: white;
-}
+/*#atlas-content table.display {*/
+    /*margin: 0 auto;*/
+    /*clear: both;*/
+    /*width: 100%;*/
+/*}*/
 
-#atlas-content table {
-    border: none;
-    margin: 0;
-}
+/*#atlas-content table.display thead th {*/
+    /*padding: 3px 18px 3px 10px;*/
+/*}*/
 
-#atlas-content th {
-    background-color: transparent;
-    text-align: center;
-}
+/*#atlas-content table.display tfoot th {*/
+    /*padding: 3px 18px 3px 10px;*/
+    /*border-top: 1px solid black;*/
+    /*!*font-weight: bold;*!*/
+/*}*/
 
-#atlas-content td, .rotated-cell {
-    border: none;
-    margin: 0;
-    padding: 2px;
-}
+/*#atlas-content table.display tr.heading2 td {*/
+    /*border-bottom: 1px solid #aaa;*/
+/*}*/
 
-#atlas-content td.count {
-    padding-left: 10px;
-}
+/*#atlas-content table.display td {*/
+    /*padding: 3px 10px;*/
+/*}*/
 
-#atlas-content form {
-    padding: 0;
-    margin: 0;
-}
+/*#atlas-content table.display td.center {*/
+    /*text-align: center;*/
+/*}*/
 
-#atlas-content form fieldset, #dialog-form form fieldset {
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-}
+/*#atlas-content ::selection {*/
+    /*background: rgb(95, 142, 179) !important;*/
+    /*color: white;*/
+/*}*/
 
-#atlas-content input, #dialog-form input {
-    vertical-align: baseline;
-    margin-bottom: inherit !important;
-    margin-left: inherit !important;
-    margin-right: 0.2em;
-    margin-top: inherit !important;
-}
+/*#atlas-content th {*/
+    /*background-color: transparent;*/
+    /*text-align: center;*/
+/*}*/
 
-#atlas-content textarea, #dialog-form textarea {
-    border-color: lightgray;
-}
+/*#atlas-content td, .rotated-cell {*/
+    /*border: none;*/
+    /*margin: 0;*/
+    /*padding: 2px;*/
+/*}*/
 
-#atlas-content textarea, .chzn-container, #dialog-form textarea {
-    font-family: inherit !important;
-    font-size: inherit !important;
-}
+/*#atlas-content td.count {*/
+    /*padding-left: 10px;*/
+/*}*/
 
-#atlas-content img {
-    max-width: none !important;
-}
+/*#atlas-content form {*/
+    /*padding: 0;*/
+    /*margin: 0;*/
+/*}*/
 
-#atlas-content section img {
-    margin: 0;
-}
+/*#atlas-content form fieldset, #dialog-form form fieldset {*/
+    /*background-color: transparent;*/
+    /*padding: 0;*/
+    /*margin: 0;*/
+/*}*/
+
+/*#atlas-content input, #dialog-form input {*/
+    /*vertical-align: baseline;*/
+    /*margin-bottom: inherit !important;*/
+    /*margin-left: inherit !important;*/
+    /*margin-right: 0.2em;*/
+    /*margin-top: inherit !important;*/
+/*}*/
+
+/*#atlas-content textarea, #dialog-form textarea {*/
+    /*border-color: lightgray;*/
+/*}*/
+
+/*#atlas-content textarea, .chzn-container, #dialog-form textarea {*/
+    /*font-family: inherit !important;*/
+    /*font-size: inherit !important;*/
+/*}*/
+
+/*#atlas-content img {*/
+    /*max-width: none !important;*/
+/*}*/
+
+/*#atlas-content section img {*/
+    /*margin: 0;*/
+/*}*/
