@@ -42,16 +42,6 @@ public class ExperimentCRUDMicroArrayDifferentialIT {
     @Mock
     private AnalyticsIndexerManager analyticsIndexerManagerMock;
 
-    @Before
-    public void cleanUpBefore() {
-        deleteInactiveAnalytics();
-    }
-
-    @After
-    public void cleanUpAfter() {
-        deleteInactiveAnalytics();
-    }
-
     @Test
     public void loadAndDeleteNewExperiment() throws IOException {
         MockitoAnnotations.initMocks(this);
@@ -80,12 +70,6 @@ public class ExperimentCRUDMicroArrayDifferentialIT {
     }
 
     private int analyticsCount(String accession) {
-        return jdbcTemplate.queryForObject("select COUNT(*) from MICROARRAY_DIFF_ANALYTICS WHERE EXPERIMENT = ? AND ISACTIVE = 'T'", Integer.class, accession);
+        return jdbcTemplate.queryForObject("select COUNT(*) from MICROARRAY_DIFF_ANALYTICS WHERE EXPERIMENT = ?", Integer.class, accession);
     }
-
-    private void deleteInactiveAnalytics() {
-        int count = jdbcTemplate.update("delete from MICROARRAY_DIFF_ANALYTICS WHERE ISACTIVE = 'F'");
-        LOGGER.info("deleteInactiveAnalytics {} rows deleted", count);
-    }
-
 }

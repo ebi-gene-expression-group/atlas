@@ -12,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.*;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsDAO;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.*;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
@@ -116,9 +115,6 @@ public class ExperimentCRUDBaselineProteomicsIT {
     private ConditionsIndexTraderFactory conditionsIndexTraderFactory;
 
     @Mock
-    private AnalyticsDAO analyticsDAOMock;
-
-    @Mock
     private AnalyticsIndexerManager analyticsIndexerManagerMock;
 
     @Mock
@@ -164,7 +160,6 @@ public class ExperimentCRUDBaselineProteomicsIT {
         experimentMetadataCRUD.setAnalyticsIndexerManager(analyticsIndexerManagerMock);
 
         subject = new ExperimentCRUD();
-        subject.setAnalyticsDAO(analyticsDAOMock);
 
         when(analyticsLoaderFactoryMock.getLoader(ExperimentType.PROTEOMICS_BASELINE)).thenReturn(new ProteomicsBaselineAnalyticsLoader(baselineAnalyticsDAOMock, proteomicsBaselineAnalyticsInputStreamFactory));
 

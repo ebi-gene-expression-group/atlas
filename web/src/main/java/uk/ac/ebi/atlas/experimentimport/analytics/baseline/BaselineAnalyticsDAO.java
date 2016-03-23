@@ -65,12 +65,6 @@ public class BaselineAnalyticsDAO {
 
     public void deleteAnalytics(String experimentAccession) {
         LOGGER.info("deleteAnalytics for experiment {}", experimentAccession);
-        jdbcTemplate.update("UPDATE RNASEQ_BSLN_EXPRESSIONS SET ISACTIVE='F' WHERE experiment = ?", experimentAccession);
+        jdbcTemplate.update("DELETE FROM RNASEQ_BSLN_EXPRESSIONS WHERE experiment = ?", experimentAccession);
     }
-
-    public void deleteInactiveAnalytics() {
-        int count = jdbcTemplate.update("delete from RNASEQ_BSLN_EXPRESSIONS WHERE ISACTIVE = 'F'");
-        LOGGER.info("deleteInactiveBaselineExpressions {} rows deleted", count);
-    }
-
 }

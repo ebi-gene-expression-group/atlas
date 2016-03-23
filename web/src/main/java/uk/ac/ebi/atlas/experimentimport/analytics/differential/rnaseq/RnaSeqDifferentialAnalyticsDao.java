@@ -73,13 +73,7 @@ public class RnaSeqDifferentialAnalyticsDao {
 
     public void deleteAnalytics(String experimentAccession) {
         LOGGER.info("deleteAnalytics for experiment {}");
-        jdbcTemplate.update("UPDATE RNASEQ_DIFF_ANALYTICS SET ISACTIVE='F' WHERE experiment = ?",
+        jdbcTemplate.update("DELETE FROM RNASEQ_DIFF_ANALYTICS WHERE experiment = ?",
                 experimentAccession);
     }
-
-    public void deleteInactiveAnalytics() {
-        int count = jdbcTemplate.update("delete from RNASEQ_DIFF_ANALYTICS WHERE ISACTIVE = 'F'");
-        LOGGER.info("deleteInactiveAnalytics {} rows deleted", count);
-    }
-
 }

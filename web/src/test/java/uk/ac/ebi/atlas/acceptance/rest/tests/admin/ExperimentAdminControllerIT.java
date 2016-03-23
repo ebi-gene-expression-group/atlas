@@ -46,17 +46,12 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     public static void assertDatabaseStateIsInExpectedState(){
         expect().body(containsString(EXISTING_EXPERIMENT_ACCESSION)).when().get("listExperiments?accession=" + EXISTING_EXPERIMENT_ACCESSION);
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(2));
-        deleteInactiveAnalytics();
     }
 
     @Test
     public void listSelectedExperiments() {
         expect().body("experimentAccession", containsInAnyOrder(EXISTING_EXPERIMENT_ACCESSION, "E-MTAB-513")).when()
                 .get("listExperiments?accession=" + EXISTING_EXPERIMENT_ACCESSION + ",E-MTAB-513");
-    }
-
-    public static void deleteInactiveAnalytics() {
-        get("/deleteInactiveAnalytics").then().assertThat().statusCode(200);
     }
 
     @Ignore
@@ -73,9 +68,6 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 .get("deleteExperiment?accession=" + NEW_EXPERIMENT_ACCESSION);
 
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);
-
-        deleteInactiveAnalytics();
-
     }
 
     @Ignore
@@ -92,9 +84,6 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 .get("deleteExperiment?accession=" + NEW_EXPERIMENT_ACCESSION);
 
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);
-
-        deleteInactiveAnalytics();
-
     }
 
     @Test
@@ -145,8 +134,6 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
 
         expect().body(deleted(DIFFERENTIAL_EXPERIMENT_ACCESSION)).when()
                 .get("deleteExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
-
-        get("/deleteInactiveAnalytics").then().assertThat().statusCode(200);
 
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(0));
 

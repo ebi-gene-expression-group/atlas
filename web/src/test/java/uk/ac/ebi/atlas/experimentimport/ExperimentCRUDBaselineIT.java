@@ -44,16 +44,6 @@ public class ExperimentCRUDBaselineIT {
     @Mock
     private AnalyticsIndexerManager analyticsIndexerManagerMock;
 
-    @Before
-    public void cleanUpBefore() {
-        deleteInactiveAnalytics();
-    }
-
-    @After
-    public void cleanUpAfter() {
-        deleteInactiveAnalytics();
-    }
-
     @Test
     public void loadAndDeleteNewExperiment() throws IOException {
         MockitoAnnotations.initMocks(this);
@@ -104,12 +94,6 @@ public class ExperimentCRUDBaselineIT {
     }
 
     private int baselineExpressionsCount(String accession) {
-        return jdbcTemplate.queryForObject("select COUNT(*) from RNASEQ_BSLN_EXPRESSIONS WHERE EXPERIMENT = ? AND ISACTIVE = 'T'", Integer.class, accession);
+        return jdbcTemplate.queryForObject("select COUNT(*) from RNASEQ_BSLN_EXPRESSIONS WHERE EXPERIMENT = ?", Integer.class, accession);
     }
-
-    private void deleteInactiveAnalytics() {
-        int count = jdbcTemplate.update("delete from RNASEQ_BSLN_EXPRESSIONS WHERE ISACTIVE = 'F'");
-        LOGGER.info("RNASEQ_BSLN_EXPRESSIONS {} rows deleted", count);
-    }
-
 }

@@ -42,16 +42,6 @@ public class ExperimentCRUDRnaSeqDifferentialIT {
     @Mock
     private AnalyticsIndexerManager analyticsIndexerManagerMock;
 
-    @Before
-    public void cleanUpBefore() {
-        deleteInactiveAnalytics();
-    }
-
-    @After
-    public void cleanUpAfter() {
-        deleteInactiveAnalytics();
-    }
-
     @Test
     public void loadAndDeleteNewExperiment() throws IOException {
         MockitoAnnotations.initMocks(this);
@@ -80,12 +70,6 @@ public class ExperimentCRUDRnaSeqDifferentialIT {
     }
 
     private int analyticsCount(String accession) {
-        return jdbcTemplate.queryForObject("select COUNT(*) from RNASEQ_DIFF_ANALYTICS WHERE EXPERIMENT = ? AND ISACTIVE = 'T'", Integer.class, accession);
+        return jdbcTemplate.queryForObject("select COUNT(*) from RNASEQ_DIFF_ANALYTICS WHERE EXPERIMENT = ?", Integer.class, accession);
     }
-
-    private void deleteInactiveAnalytics() {
-        int count = jdbcTemplate.update("delete from RNASEQ_DIFF_ANALYTICS WHERE ISACTIVE = 'F'");
-        LOGGER.info("deleteInactiveAnalytics {} rows deleted", count);
-    }
-
 }

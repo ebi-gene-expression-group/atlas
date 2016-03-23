@@ -77,12 +77,6 @@ public class MicroarrayDifferentialAnalyticsDao {
 
     public void deleteAnalytics(String experimentAccession) {
         LOGGER.info("deleteAnalytics for experiment {}", experimentAccession);
-        jdbcTemplate.update("UPDATE MICROARRAY_DIFF_ANALYTICS SET ISACTIVE='F' WHERE experiment = ?", experimentAccession);
+        jdbcTemplate.update("DELETE FROM MICROARRAY_DIFF_ANALYTICS WHERE experiment = ?", experimentAccession);
     }
-
-    public void deleteInactiveAnalytics() {
-        int count = jdbcTemplate.update("delete from MICROARRAY_DIFF_ANALYTICS WHERE ISACTIVE = 'F'");
-        LOGGER.info("deleteInactiveAnalytics {} rows deleted", count);
-    }
-
 }

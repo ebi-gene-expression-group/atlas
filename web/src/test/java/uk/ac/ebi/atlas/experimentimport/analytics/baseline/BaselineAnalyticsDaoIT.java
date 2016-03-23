@@ -59,7 +59,7 @@ public class BaselineAnalyticsDaoIT {
     }
 
     private int getCount() {
-        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM RNASEQ_BSLN_EXPRESSIONS where ISACTIVE='T' AND experiment = ?", Integer.class, EXPERIMENT_ACCESSION);
+        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM RNASEQ_BSLN_EXPRESSIONS where experiment = ?", Integer.class, EXPERIMENT_ACCESSION);
     }
 
 

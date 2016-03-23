@@ -100,13 +100,6 @@ public class ExperimentAdminController {
         return "Experiment " + experimentAccession + " successfully deleted.";
     }
 
-    @RequestMapping(value = "/deleteInactiveAnalytics", produces="text/plain;charset=UTF-8")
-    @ResponseBody
-    public String deleteInactiveExpressions() {
-        experimentCRUD.deleteInactiveAnalytics();
-        return "Deleted all inactive analytics";
-    }
-
     @RequestMapping(value = "/updateStatus", produces="text/plain;charset=UTF-8")
     @ResponseBody
     public String updateExperiment(@RequestParam("accession") String experimentAccession,
