@@ -1434,26 +1434,41 @@ webpackJsonp([3],{
 	                from: 0.75,
 	                to: 1.0,
 	                seriesData: []
-	            }]
+	            }],
+	
+	            legend_1: false,
+	            legend_2: false,
+	            legend_3: false,
+	            legend_4: false
+	
 	        };
 	    },
 	
 	    handleClick: function (index) {
-	        var heatmap = this.refs.chart.getChart();
-	
-	        //$(".highcharts-legend-item").eq($(this)).trigger("click");
-	        $(this).toggleClass("legend-item-off");
-	
-	        if (heatmap.series[index].visible) {
-	            heatmap.series[index].hide();
-	        } else {
-	            heatmap.series[index].show();
+	        if (index == 1) {
+	            this.setState({ legend_1: !this.state.legend_1 });
+	        } else if (index == 2) {
+	            this.setState({ legend_2: !this.state.legend_2 });
+	        } else if (index == 3) {
+	            this.setState({ legend_3: !this.state.legend_3 });
+	        } else if (index == 4) {
+	            this.setState({ legend_4: !this.state.legend_4 });
 	        }
 	    },
 	
 	    componentDidMount: function () {
 	        var heatmap = this.refs.chart.getChart();
 	        heatmap.series[0].hide();
+	    },
+	
+	    componentDidUpdate: function () {
+	        var heatmap = this.refs.chart.getChart();
+	        heatmap.series[0].hide();
+	
+	        this.state.legend_1 ? heatmap.series[1].hide() : heatmap.series[1].show();
+	        this.state.legend_2 ? heatmap.series[2].hide() : heatmap.series[2].show();
+	        this.state.legend_3 ? heatmap.series[3].hide() : heatmap.series[3].show();
+	        this.state.legend_4 ? heatmap.series[4].hide() : heatmap.series[4].show();
 	    },
 	
 	    render: function () {
@@ -1464,7 +1479,11 @@ webpackJsonp([3],{
 	        var highchartsOptions = {
 	            plotOptions: {
 	                series: {
-	                    color: '#3dc3b8' //color cell on mouse over
+	                    states: {
+	                        hover: {
+	                            color: '#eeec38' //#edab12 color cell on mouse over
+	                        }
+	                    }
 	                }
 	            },
 	            credits: {
@@ -1567,6 +1586,11 @@ webpackJsonp([3],{
 	            }]
 	        };
 	
+	        var clsName_1 = this.state.legend_1 ? 'legend-item legend-item-off' : 'legend-item';
+	        var clsName_2 = this.state.legend_2 ? 'legend-item legend-item-off' : 'legend-item';
+	        var clsName_3 = this.state.legend_3 ? 'legend-item legend-item-off' : 'legend-item';
+	        var clsName_4 = this.state.legend_4 ? 'legend-item legend-item-off' : 'legend-item';
+	
 	        var barcharts_legend = React.createElement(
 	            'div',
 	            { id: 'barcharts_legend_list_items', ref: 'barcharts_legend_items' },
@@ -1577,7 +1601,7 @@ webpackJsonp([3],{
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_1', className: 'legend-item', onClick: this.handleClick.bind(this, 1) },
+	                { id: 'legend_1', ref: 'legend_1', className: clsName_1, onClick: this.handleClick.bind(this, 1) },
 	                React.createElement('div', { className: 'legend-rectangle col_below' }),
 	                React.createElement(
 	                    'span',
@@ -1587,7 +1611,7 @@ webpackJsonp([3],{
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_2', className: 'legend-item', onClick: this.handleClick.bind(this, 2) },
+	                { id: 'legend_2', className: clsName_2, onClick: this.handleClick.bind(this, 2) },
 	                React.createElement('div', { className: 'legend-rectangle col_low' }),
 	                React.createElement(
 	                    'span',
@@ -1597,7 +1621,7 @@ webpackJsonp([3],{
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_3', className: 'legend-item', onClick: this.handleClick.bind(this, 3) },
+	                { id: 'legend_3', className: clsName_3, onClick: this.handleClick.bind(this, 3) },
 	                React.createElement('div', { className: 'legend-rectangle col_med' }),
 	                React.createElement(
 	                    'span',
@@ -1607,7 +1631,7 @@ webpackJsonp([3],{
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_4', className: 'legend-item', onClick: this.handleClick.bind(this, 4) },
+	                { id: 'legend_4', className: clsName_4, onClick: this.handleClick.bind(this, 4) },
 	                React.createElement('div', { className: 'legend-rectangle col_high' }),
 	                React.createElement(
 	                    'span',
@@ -1617,7 +1641,7 @@ webpackJsonp([3],{
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_5', className: 'legend-item special', onClick: this.handleClick.bind(this, 0) },
+	                { id: 'legend_5', className: 'legend-item special' },
 	                React.createElement('div', { className: 'legend-rectangle col_nd' }),
 	                React.createElement(
 	                    'span',
