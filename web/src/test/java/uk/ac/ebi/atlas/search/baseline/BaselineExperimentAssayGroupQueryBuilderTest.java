@@ -51,11 +51,11 @@ public class BaselineExperimentAssayGroupQueryBuilderTest {
 
         DatabaseQuery<Object> databaseQuery = subject.withExperimentAssayGroups(assayGroups).build();
 
-        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
+        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS rbe " +
                         "JOIN TABLE(?) assayGroups on rbe.EXPERIMENT = assayGroups.EXPERIMENT and rbe.ASSAYGROUPID = assayGroups.CONTRASTID " +
-                        "WHERE rbe.experiment = (SELECT accession FROM experiment WHERE type = 'RNASEQ_MRNA_BASELINE' AND private = 'F' AND accession = rbe.experiment) " +
+                        "WHERE rbe.expression > 0.5 and rbe.experiment = (SELECT accession FROM experiment WHERE type = 'RNASEQ_MRNA_BASELINE' AND private = 'F' AND accession = rbe.experiment) " +
                         "UNION ALL " +
-                        "SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS partition( BSLN_EXPRESSIONS_ACTIVE ) rbe " +
+                        "SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS rbe " +
                         "JOIN TABLE(?) assayGroups on rbe.EXPERIMENT = assayGroups.EXPERIMENT and rbe.ASSAYGROUPID = assayGroups.CONTRASTID " +
                         "WHERE rbe.experiment = (SELECT accession FROM experiment WHERE type = 'PROTEOMICS_BASELINE' AND private = 'F' AND accession = rbe.experiment) "
         ));
@@ -68,11 +68,11 @@ public class BaselineExperimentAssayGroupQueryBuilderTest {
 
         DatabaseQuery<Object> databaseQuery = subject.withGeneIds(geneIds).build();
 
-        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
+        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS rbe " +
                         "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value " +
-                        "WHERE rbe.experiment = (SELECT accession FROM experiment WHERE type = 'RNASEQ_MRNA_BASELINE' AND private = 'F' AND accession = rbe.experiment) " +
+                        "WHERE rbe.expression > 0.5 and rbe.experiment = (SELECT accession FROM experiment WHERE type = 'RNASEQ_MRNA_BASELINE' AND private = 'F' AND accession = rbe.experiment) " +
                         "UNION ALL " +
-                        "SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS partition( BSLN_EXPRESSIONS_ACTIVE ) rbe " +
+                        "SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS rbe " +
                         "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value " +
                         "WHERE rbe.experiment = (SELECT accession FROM experiment WHERE type = 'PROTEOMICS_BASELINE' AND private = 'F' AND accession = rbe.experiment) "));
         MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains((Object) geneIds, (Object) geneIds));
@@ -89,12 +89,12 @@ public class BaselineExperimentAssayGroupQueryBuilderTest {
                 .build();
 
         MatcherAssert.assertThat(databaseQuery.getQuery(), is(
-                "SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
+                "SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS rbe " +
                         "JOIN TABLE(?) assayGroups on rbe.EXPERIMENT = assayGroups.EXPERIMENT and rbe.ASSAYGROUPID = assayGroups.CONTRASTID " +
                         "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value " +
-                        "WHERE rbe.experiment = (SELECT accession FROM experiment WHERE type = 'RNASEQ_MRNA_BASELINE' AND private = 'F' AND accession = rbe.experiment) " +
+                        "WHERE rbe.expression > 0.5 and rbe.experiment = (SELECT accession FROM experiment WHERE type = 'RNASEQ_MRNA_BASELINE' AND private = 'F' AND accession = rbe.experiment) " +
                         "UNION ALL " +
-                        "SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS partition( BSLN_EXPRESSIONS_ACTIVE ) rbe " +
+                        "SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS rbe " +
                         "JOIN TABLE(?) assayGroups on rbe.EXPERIMENT = assayGroups.EXPERIMENT and rbe.ASSAYGROUPID = assayGroups.CONTRASTID " +
                         "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value " +
                         "WHERE rbe.experiment = (SELECT accession FROM experiment WHERE type = 'PROTEOMICS_BASELINE' AND private = 'F' AND accession = rbe.experiment) "));

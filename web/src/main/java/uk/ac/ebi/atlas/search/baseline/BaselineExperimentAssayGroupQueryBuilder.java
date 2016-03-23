@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.checkState;
 public class BaselineExperimentAssayGroupQueryBuilder {
 
     static final float FPKM_CUTOFF = 0.5f;
-    static final String SELECT_QUERY_RNSEQ = "SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe ";
+    static final String SELECT_QUERY_RNSEQ = "SELECT DISTINCT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS rbe ";
     static final String FOR_ASSAY_GROUPS = "JOIN TABLE(?) assayGroups on rbe.EXPERIMENT = assayGroups.EXPERIMENT and rbe.ASSAYGROUPID = assayGroups.CONTRASTID ";
     static final String FOR_GENES = "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value ";
     static final String WHERE_PUBLIC_RNASEQ = "WHERE rbe.expression > " + FPKM_CUTOFF + " and rbe.experiment = (SELECT accession FROM experiment WHERE type = 'RNASEQ_MRNA_BASELINE' AND private = 'F' AND accession = rbe.experiment) ";

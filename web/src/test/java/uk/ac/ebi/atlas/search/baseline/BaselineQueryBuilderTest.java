@@ -50,9 +50,9 @@ public class BaselineQueryBuilderTest {
 
         DatabaseQuery<Object> databaseQuery = subject.withGeneIds(geneIds).build();
 
-        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT experiment, assaygroupid, SumOfExpressions, NumberOfGenesExpressed from (SELECT rbe.experiment, rbe.assaygroupid, SUM(rbe.expression) as SumOfExpressions, count(distinct IDENTIFIER) as NumberOfGenesExpressed from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
-                "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value WHERE rbe.experiment = (SELECT accession FROM experiment WHERE type = 'RNASEQ_MRNA_BASELINE' AND private = 'F' AND accession = rbe.experiment) GROUP BY GROUPING SETS (rbe.experiment, (rbe.experiment, rbe.assaygroupid)) UNION ALL " +
-                "SELECT rbe.experiment, rbe.assaygroupid, SUM(rbe.expression) as SumOfExpressions, count(distinct IDENTIFIER) as NumberOfGenesExpressed from RNASEQ_BSLN_EXPRESSIONS partition( BSLN_EXPRESSIONS_ACTIVE ) rbe " +
+        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT experiment, assaygroupid, SumOfExpressions, NumberOfGenesExpressed from (SELECT rbe.experiment, rbe.assaygroupid, SUM(rbe.expression) as SumOfExpressions, count(distinct IDENTIFIER) as NumberOfGenesExpressed from RNASEQ_BSLN_EXPRESSIONS rbe " +
+                "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value WHERE rbe.expression > 0.5 and rbe.experiment = (SELECT accession FROM experiment WHERE type = 'RNASEQ_MRNA_BASELINE' AND private = 'F' AND accession = rbe.experiment) GROUP BY GROUPING SETS (rbe.experiment, (rbe.experiment, rbe.assaygroupid)) UNION ALL " +
+                "SELECT rbe.experiment, rbe.assaygroupid, SUM(rbe.expression) as SumOfExpressions, count(distinct IDENTIFIER) as NumberOfGenesExpressed from RNASEQ_BSLN_EXPRESSIONS rbe " +
                 "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value WHERE rbe.experiment = (SELECT accession FROM experiment WHERE type = 'PROTEOMICS_BASELINE' AND private = 'F' AND accession = rbe.experiment) GROUP BY GROUPING SETS (rbe.experiment, (rbe.experiment, rbe.assaygroupid)) " +
                 ") ORDER BY experiment, assaygroupid desc"));
         MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains((Object) geneIds, (Object) geneIds));
