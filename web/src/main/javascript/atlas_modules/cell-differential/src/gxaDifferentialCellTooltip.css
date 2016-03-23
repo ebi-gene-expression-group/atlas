@@ -1,0 +1,27 @@
+.gxaDifferentialCellTooltip {
+    border: solid transparent;
+    color: darkslategray;
+    padding: 2px;
+    font: 10px Verdana, Helvetica, Arial, sans-serif;
+}
+
+.gxaDifferentialCellTooltip table {
+    background-color: white;
+    border: 1px solid lightgrey;
+    border-collapse: collapse;
+}
+
+.gxaDifferentialCellTooltip th {
+    border-bottom: 1px solid lightgrey;
+    background-color: floralwhite;
+}
+
+.gxaDifferentialCellTooltip td {
+    white-space: nowrap;
+}
+
+.gxaDifferentialCellTooltip td, .gxaDifferentialCellTooltip th {
+    vertical-align: middle;
+    padding: 8px;
+    width: 25px;
+}

@@ -1,0 +1,19 @@
+.gxaHeatmapAnatomogramRow {
+    position: relative;
+}
+
+.gxaHeatmapAnatomogramRow:after {
+    clear: both;
+    content: ".";
+    display: block;
+    visibility: hidden;
+}
+
+.gxaInnerHeatmap {
+    position: relative;
+    overflow: hidden;
+}
+
+.gxaAside {
+    float: left;
+}

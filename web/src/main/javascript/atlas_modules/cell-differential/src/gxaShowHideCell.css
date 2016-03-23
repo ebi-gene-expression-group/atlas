@@ -1,0 +1,13 @@
+.gxaShowCell {
+    background-color: white;
+    white-space: nowrap;
+    text-align: center;
+    margin: 4px;
+    padding: 2px;
+    font-size: 9px;
+}
+
+.gxaHideCell {
+    display: none;
+    visibility: hidden;
+}

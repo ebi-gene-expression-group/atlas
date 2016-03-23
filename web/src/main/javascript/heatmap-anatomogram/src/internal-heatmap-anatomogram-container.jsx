@@ -3,14 +3,12 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
-
 var ReactDOM = require('react-dom');
 
 var $ = require('jquery');
-var jQuery = $;
-require('../lib/jquery.hc-sticky.js');
+require('jquery-hc-sticky');
 
-var EventEmitter = require('wolfy87-eventemitter');
+var EventEmitter = require('events');
 
 //*------------------------------------------------------------------*
 
@@ -22,18 +20,34 @@ var ExperimentTypes = require('./experiment-types.js');
 
 //*------------------------------------------------------------------*
 
-
+require('./internal-heatmap-anatomogram-container.css');
 
 //*------------------------------------------------------------------*
 
 var InternalHeatmapAnatomogramContainer = React.createClass({
     propTypes: {
         anatomogram: React.PropTypes.object,
-        columnHeaders: React.PropTypes.arrayOf(React.PropTypes.shape({
-            assayGroupId: React.PropTypes.string.isRequired,
-            factorValue: React.PropTypes.string.isRequired,
-            factorValueOntologyTermId: React.PropTypes.string
-        })).isRequired,
+        columnHeaders: React.PropTypes.oneOfType([
+            React.PropTypes.arrayOf(React.PropTypes.shape({
+                assayGroupId: React.PropTypes.string.isRequired,
+                factorValue: React.PropTypes.string.isRequired,
+                factorValueOntologyTermId: React.PropTypes.string
+            })),
+            React.PropTypes.arrayOf(React.PropTypes.shape({
+                id: React.PropTypes.string.isRequired,
+                referenceAssayGroup: React.PropTypes.shape({
+                    id: React.PropTypes.string.isRequired,
+                    assayAccessions: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+                    replicates: React.PropTypes.number.isRequired
+                }).isRequired,
+                testAssayGroup: React.PropTypes.shape({
+                    id: React.PropTypes.string.isRequired,
+                    assayAccessions: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+                    replicates: React.PropTypes.number.isRequired
+                }).isRequired,
+                displayName: React.PropTypes.string.isRequired
+            }))
+        ]).isRequired,
         nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         multipleColumnHeaders: React.PropTypes.object,
         profiles: React.PropTypes.object.isRequired,

@@ -1,0 +1,24 @@
+{
+  "name": "display-levels-button",
+  "version": "1.0.0",
+  "description": "Display Levels button for Expression Atlas",
+  "main": "index.js",
+  "author": "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "jquery": "^2.2.1",
+    "jquery-ui-bundle": "^1.11.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-react-display-name": "^6.5.0",
+    "babel-plugin-transform-react-jsx": "^6.6.5",
+    "clean-webpack-plugin": "^0.1.8",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  }
+}

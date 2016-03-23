@@ -2,24 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/jquery-ui/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/atlas.css">
 
-    <title>Heatmap demo</title>
-
-    <script src="../../dist/vendor.bundle.js"></script>
-    <script src="../../dist/demo.bundle.js"></script>
+    <script src="../dist/vendor.bundle.js"></script>
+    <script src="../dist/heatmapAnatomogramRenderer.bundle.js"></script>
 </head>
 <body>
     <div>
-        <h2>Bundles loaded from <em>webpack-dev-server</em>, request done to <code>http://www.ebi.ac.uk/gxa</code></h2>
+        <h2>Request done to <code>http://www.ebi.ac.uk/gxa</code></h2>
     </div>
 
     <div id="heatmapContainer"></div>
 </body>
 
 <script language="JavaScript" type="text/javascript">
-    var AtlasHeatmapBuilder = window.exposed;
-    AtlasHeatmapBuilder({
-        //atlasHost: "www.ebi.ac.uk",
+    heatmapAnatomogramRenderer({
+        atlasHost: "https://www.ebi.ac.uk",
         params: "geneQuery=R-HSA-73887",
         isMultiExperiment: true,
         target: "heatmapContainer"

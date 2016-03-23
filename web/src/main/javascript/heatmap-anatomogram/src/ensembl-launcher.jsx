@@ -3,18 +3,18 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
-
 var ReactDOM = require('react-dom');
 
 var $ = require('jquery');
-var jQuery = $;
-
-require('jquery-ui');
-
+require('jquery-ui-bundle');
 
 //*------------------------------------------------------------------*
 
 var ensemblUtils = require('./ensembl-utils.js');
+
+//*------------------------------------------------------------------*
+
+require('./ensembl-launcher.css');
 
 //*------------------------------------------------------------------*
 
@@ -113,14 +113,18 @@ var EnsemblLauncher = React.createClass({
         return (
             <div id="ensembl-launcher-box" style={{width: "245px"}}>
                 <div id="ensembl-launcher-box-ensembl">
-                    <label>Ensembl Genome Browser</label>
-                    <img src="/gxa/resources/images/ensembl.gif" style={{padding: "0px 5px"}}></img>
+                    <div className="gxaEnsemblGrameneLauncherHeader">
+                        <label>Ensembl Genome Browser</label>
+                        <img src={this.props.atlasBaseURL + "/resources/images/ensembl.png"} style={{padding: "0px 5px"}}/>
+                    </div>
                     <button ref="ensemblButton" onClick={this._openEnsemblWindow.bind(this, ensemblHost)}>Open</button>
                 </div>
                 { this.props.ensemblDB == "plants" ?
                     <div id="ensembl-launcher-box-gramene" >
-                        <label>Gramene Genome Browser</label>
-                        <img src="/gxa/resources/images/gramene.png" style={{padding: "0px 5px"}}></img>
+                        <div className="gxaEnsemblGrameneLauncherHeader">
+                            <label>Gramene Genome Browser</label>
+                            <img src={this.props.atlasBaseURL + "/resources/images/gramene.png"} style={{padding: "0px 5px"}}/>
+                        </div>
                         <button ref="grameneButton" onClick={this._openEnsemblWindow.bind(this, grameneHost)}>Open</button>
                     </div>
                     : null

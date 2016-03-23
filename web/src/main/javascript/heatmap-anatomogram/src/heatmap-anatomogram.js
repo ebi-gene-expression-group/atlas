@@ -1,14 +1,7 @@
 "use strict";
 
 var React = require('react');
-
 var ReactDOM = require('react-dom');
-
-var $ = require('jquery');
-var jQuery = $;
-require('../lib/jquery.xdomainrequest.js');
-
-var URI = require('urijs');
 
 //*------------------------------------------------------------------*
 
@@ -37,8 +30,15 @@ module.exports = function(options) {
         atlasHost = options.atlasHost === undefined ? "www.ebi.ac.uk" : options.atlasHost,
         atlasPath = "/gxa";
 
-    var linksAtlasBaseURL = protocol + atlasHost + atlasPath,
-        atlasBaseURL = options.proxyPrefix ? options.proxyPrefix + "/" + atlasHost + atlasPath : linksAtlasBaseURL;
+    if (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://" === 0)) {
+
+    }
+
+    var linksAtlasBaseURL =
+        (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://") === 0) ? atlasHost + atlasPath :
+        protocol + atlasHost + atlasPath;
+
+    var atlasBaseURL = options.proxyPrefix ? options.proxyPrefix + "/" + atlasHost + atlasPath : linksAtlasBaseURL;
 
     var endpointPath =
         options.analyticsSearch ? "/widgets/heatmap/baselineAnalytics" :

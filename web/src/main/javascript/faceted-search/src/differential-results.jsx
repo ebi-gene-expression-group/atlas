@@ -3,7 +3,6 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
-
 var ReactDOM = require('react-dom');
 
 //*------------------------------------------------------------------*
@@ -19,7 +18,7 @@ var ContrastTooltips = require('contrast-tooltips');
 
 //*------------------------------------------------------------------*
 
-
+require('./differential-results.css');
 
 //*------------------------------------------------------------------*
 
@@ -98,19 +97,19 @@ var DifferentialResults = React.createClass({
             return <DifferentialResultRow
                 key={diffResult.id}
                 bioentityIdentifier={diffResult.bioentityIdentifier} colour={diffResult.colour} foldChange={diffResult.foldChange} species={diffResult.species} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
-                factors={diffResult.factors} contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession} displayLevels={this.state.displayLevels} atlasBaseURL={"/gxa"}
+                factors={diffResult.factors} contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession} displayLevels={this.state.displayLevels} atlasBaseURL={this.props.host + "/gxa"}
             />;
         }.bind(this));
 
         return (
             <div>
                 <div style={{display: "inline-block", verticalAlign: "middle"}}>
-                    <DisplayLevelsButton hideText="Hide log<sub>2</sub>-fold change" showText="Display log<sub>2</sub>-fold change" onClickCallback={this._toggleDisplayLevels} displayLevels={this.state.displayLevels} />
+                    <DisplayLevelsButton hideText="Hide log<sub>2</sub>-fold change" showText="Display log<sub>2</sub>-fold change" onClickCallback={this._toggleDisplayLevels} displayLevels={this.state.displayLevels} fontSize="14px" width="200px"/>
                 </div>
 
                 <div style={{display: "inline-block", verticalAlign: "middle"}}>
                     <Legend
-                        atlasBaseURL={"/gxa"} minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
+                        atlasBaseURL={window.location.protocol + "//" + this.props.host + "/gxa"} minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
                     />
                 </div>
                 <div style={{display: "inline-block", paddingLeft: "10px", verticalAlign: "top"}}>
@@ -228,7 +227,7 @@ var DifferentialResultRow = React.createClass({
     },
 
     componentDidMount: function () {
-        ContrastTooltips.init(this.props.atlasBaseURL, "", ReactDOM.findDOMNode(this.refs.comparison), this.props.experimentAccession, this.props.contrastId);
+        ContrastTooltips(window.location.protocol + "//" + this.props.atlasBaseURL, "", ReactDOM.findDOMNode(this.refs.comparison), this.props.experimentAccession, this.props.contrastId);
     }
 });
 

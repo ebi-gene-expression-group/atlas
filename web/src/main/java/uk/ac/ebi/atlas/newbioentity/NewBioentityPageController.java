@@ -20,9 +20,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 22/10/15.
- */
 public abstract class NewBioentityPageController {
 
     private static final String BIOENTITY_PROPERTY_NAME = "symbol";

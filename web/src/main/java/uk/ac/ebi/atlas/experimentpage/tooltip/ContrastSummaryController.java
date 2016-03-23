@@ -59,7 +59,7 @@ public class ContrastSummaryController {
 
         Contrast contrast = differentialExperiment.getContrast(contrastId);
         if (contrast == null) {
-            throw new IllegalStateException("No contract with id " + contrastId + " found.");
+            throw new IllegalStateException("No contrast with ID " + contrastId + " found.");
         }
 
         ExperimentDesign experimentDesign = differentialExperiment.getExperimentDesign();

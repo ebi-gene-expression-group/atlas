@@ -1,0 +1,25 @@
+#experiments-table td.italic {
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    font-style: italic;
+}
+
+#experiments-table tr.odd {
+    background-color: #FAFAFA;
+}
+
+#experiments-table tr.even {
+    background-color: #FFFFFF;
+}
+
+#experiments-table td {
+    background-color: inherit;
+}
+
+#experiments-table th.padding {
+    padding-left: 85px !important;
+    padding-right: 85px !important;
+}
+
+#experiments-table .nowrap {
+    white-space: nowrap;
+}

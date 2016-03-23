@@ -1,0 +1,28 @@
+.gxaFactorTooltip {
+    border: solid transparent;
+    color: darkslategray;
+    padding: 2px;
+    font: 10px Verdana, Helvetica, Arial, sans-serif;
+    max-width: 500px;
+}
+
+.gxaFactorTooltip table {
+    background-color: white;
+    border: 1px solid lightgrey;
+    border-collapse: collapse;
+}
+
+.gxaFactorTooltip th {
+    border-bottom: 1px solid lightgrey;
+    background-color: floralwhite;
+}
+
+.gxaFactorTooltip td {
+    border: 1px solid lightgrey;
+    white-space: nowrap;
+}
+
+.gxaFactorTooltip td, .gxaFactorTooltip th {
+    vertical-align: middle;
+    padding: 8px;
+}

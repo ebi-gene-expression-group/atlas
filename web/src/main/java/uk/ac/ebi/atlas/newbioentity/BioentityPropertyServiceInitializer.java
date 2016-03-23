@@ -21,9 +21,6 @@ import javax.inject.Named;
 import java.util.Set;
 import java.util.SortedSet;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 20/10/15.
- */
 @Named
 @Scope("singleton")
 public class BioentityPropertyServiceInitializer {

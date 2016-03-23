@@ -4,8 +4,6 @@
 
 var React = require('react');
 
-var URI = require('urijs');
-
 //*------------------------------------------------------------------*
 
 var BaselineHeatmapWidget = require('./baseline-heatmap-widget.jsx');

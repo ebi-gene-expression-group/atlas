@@ -1,38 +1,38 @@
 var webpack = require('webpack');
 var path = require('path');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-    context: __dirname,
     entry: {
-        "faceted-search": "./index.js",
-        "demo": [
-            "webpack-dev-server/client?http://localhost:9000", // WebpackDevServer host and port
-            "webpack/hot/only-dev-server",
-            "./html/demo.js"
-        ],
-        "test": [
-            "webpack-dev-server/client?http://localhost:9000", // WebpackDevServer host and port
-            "webpack/hot/only-dev-server",
-            'mocha!./test/test.js'
-        ],
-        "vendor": ['react', 'jquery', 'jquery.browser', 'urijs', 'query-string']
+        facetedSearch: './index.js',
+        dependencies: ['react', 'react-dom', 'react-radio-group',
+                       'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jQuery-ajaxTransport-XDomainRequest', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
+                       'urijs', 'query-string', 'atlas-modernizr',
+                       'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
+                       'highcharts-more', 'react-highcharts']
     },
+
     output: {
-        path: __dirname + "/dist",
-        publicPath: "/dev-server/",
-        filename: "[name].bundle.js"
+        libraryTarget: 'var',
+        library: '[name]',
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].bundle.js',
+        publicPath: '/dist/'
     },
 
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js")
+        new CleanWebpackPlugin(['dist'], {verbose: true, dry: false}),
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'dependencies',
+            filename: 'vendor.bundle.js',
+            minChunks: Infinity     // Explicit definition-based split. Don’t put shared modules between main and demo entries in vendor.bundle.js
+        })
     ],
 
     module: {
         loaders: [
-
-            {test: /\.jsx$/, loader: 'babel-loader'},
-            {test: /demo.js$/, loader: 'expose?exposed'},
+            {test: /\.jsx$/, loader: 'babel'},
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.(jpe?g|png|gif|svg)$/i,
                 loaders: [
@@ -45,7 +45,5 @@ module.exports = {
 
     devServer: {
         port: 9000
-    },
-
-    devtool: "inline-source-map"
+    }
 };

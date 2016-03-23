@@ -3,14 +3,11 @@
 //*------------------------------------------------------------------*
 
 var $ = require('jquery');
-var jQuery = $;
-
-require('jquery-ui');
-
+require('jquery-ui-bundle');
 
 //*------------------------------------------------------------------*
 
-
+require('./gene-properties-tooltip-module.css');
 
 //*------------------------------------------------------------------*
 
@@ -35,7 +32,7 @@ function initTooltip(options){
             $(".gxaGeneNameTooltip").remove();
         },
 
-        position: { my: "left+120 top", at: "left top", collision: "flipfit" },
+        position: { my: "left+10 top", at: "right"},
 
         content: function (callback) {
             if (options.identifier)  {

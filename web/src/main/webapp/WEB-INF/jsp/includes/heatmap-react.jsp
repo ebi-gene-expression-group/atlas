@@ -13,8 +13,8 @@
     <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor.bundle.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js-bundles/internal-atlas-heatmap.bundle.js"></script>
 
-    <script src="${pageContext.request.contextPath}/resources/js/lib/jquery.toolbar.js"></script>
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.toolbars.css" />
+    <%--<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.toolbar.js"></script>--%>
+    <%--<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.toolbars.css" />--%>
 
     <div id="genenametooltip-content" style="display: none"></div>
 

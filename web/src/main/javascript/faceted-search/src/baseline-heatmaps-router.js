@@ -4,8 +4,8 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+
 var $ = require('jquery');
-var jQuery = $;
 require('jquery.browser');
 
 var URI = require('urijs');

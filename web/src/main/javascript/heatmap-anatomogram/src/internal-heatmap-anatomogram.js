@@ -3,11 +3,9 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
-
 var ReactDOM = require('react-dom');
 
 var $ = require('jquery');
-var jQuery = $;
 
 //*------------------------------------------------------------------*
 
@@ -48,7 +46,7 @@ function drawHeatmap (options) {
                 anatomogram: anatomogramData, columnHeaders: columnHeaders, nonExpressedColumnHeaders: nonExpressedColumnHeaders,
                 multipleColumnHeaders: multipleColumnHeaders,
                 profiles: profiles, geneSetProfiles: geneSetProfiles,
-                atlasBaseURL: "/gxa", linksAtlasBaseURL: "/gxa"
+                atlasBaseURL: heatmapConfig.atlasHost + heatmapConfig.contextRoot, linksAtlasBaseURL: heatmapConfig.atlasHost + heatmapConfig.contextRoot
             }
         ),
         document.getElementById("gxaExperimentPageHeatmapAnatomogram")

@@ -3,16 +3,15 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
-
 var ReactDOM = require('react-dom');
 
 var $ = require('jquery');
-var jQuery = $;
+require('jQuery-ajaxTransport-XDomainRequest');
+require('jquery-hc-sticky');
 
-require('../lib/jquery.hc-sticky.js');
-
-var EventEmitter = require('wolfy87-eventemitter');
 var URI = require('urijs');
+
+var EventEmitter = require('events');
 
 //*------------------------------------------------------------------*
 
@@ -23,8 +22,7 @@ var ExperimentTypes = require('./experiment-types.js');
 
 //*------------------------------------------------------------------*
 
-
-
+require('./heatmap-anatomogram-container.css');
 
 //*------------------------------------------------------------------*
 
@@ -70,7 +68,9 @@ var HeatmapAnatomogramContainer = React.createClass({
 
     render: function () {
         var ensemblEventEmitter = new EventEmitter();
+        ensemblEventEmitter.setMaxListeners(0);
         var anatomogramEventEmitter = new EventEmitter();
+        anatomogramEventEmitter.setMaxListeners(0);
 
         var anatomogramExpressedTissueColour = this.props.type.isMultiExperiment ? "red" : "gray";
         var anatomogramHoveredTissueColour = this.props.type.isMultiExperiment ? "indigo" : "red";

@@ -55,7 +55,6 @@
             --%>
             "config": {
                 "atlasHost": "${atlasHost}",
-                <%-- TODO: Maybe this is not needed (?) --%>
                 "contextRoot": "${pageContext.request.contextPath}",
                 "experimentAccession": "${experimentAccession}",
                 "geneQuery": "${geneQuery.asUrlQueryParameter()}",

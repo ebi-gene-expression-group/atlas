@@ -1,3 +1,129 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+.gxaBody {
+    min-width: 975px;
+}
+
+td.gxaSearchFormFullWidthColumn {
+    width: 100%;
+}
+
+td.gxaHomeSearchFluidTableColumn {
+    border: none;
+    vertical-align: top;
+    width: 30%;
+    padding: 5px;
+}
+
+td.gxaHomeSearchFixedSizeTableColumn, td.gxaExperimentRequestPreferencesFixedSizeTableColumn {
+    border: none;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+td.gxaExperimentRequestPreferencesFluidTableColumn {
+    vertical-align: top;
+    width: 25%;
+    padding-right: 10px;
+}
+
+td.gxaExperimentRequestPreferencesFluidWideTableColumn {
+    vertical-align: top;
+    width: 32%;
+    padding-right: 10px;
+}
+
+td.gxaFacetSearchFluidTableColumn {
+    vertical-align: top;
+    width: 80%;
+    padding-right: 10px;
+}
+
+td.gxaExperimentRequestPreferencesFluidNarrowTableColumn {
+    vertical-align: top;
+    width: 12%;
+    padding-right: 10px;
+}
+
+.gxaHomeSearchActionButtons, .gxaExperimentRequestPreferencesActionButtons, .gxaFacetedSearchActionButtons {
+    float: right;
+}
+
+.gxaHomeSearchActionButtons div, .gxaExperimentRequestPreferencesActionButtons div, .gxaFacetedSearchActionButtons div {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.gxaExperimentRequestPreferencesActionButton {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+}
+
+/* ebi css override: start */
+
+#global-footer.grid_24 {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div#local-search form fieldset, form#local-search fieldset {
+    background-color: #E1EEE9;
+}
+
+#global-footer.grid_24 .grid_4 {
+    width: 15%;
+}
+
+ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
+    border-bottom-color: #207A7A !important;
+    border-bottom: 3px solid;
+}
+
+#local-title h1, #content h1 {
+    color: #207A7A;
+}
+
+#local-title a {
+    color: black !important;
+    text-shadow: none !important;
+}
+
+/* ebi css and ebi-visual.css override: end */
+
+.gxaHelpTooltip {
+    background: #fafafa;
+    border: 1px solid #2777A5 !important;
+    padding: 4px;
+    max-width: 400px !important;
+    color: #2777A5;
+    border-radius: 4px;
+    font: 10px Verdana, Helvetica, Arial, sans-serif;
+    box-shadow: 0 0 7px gray;
+}
+
 /* JQuery UI overrides: start */
 .ui-tooltip {
     background: #FAFAFA;
@@ -10,25 +136,117 @@
     box-shadow: 0 0 7px gray;
 }
 
-.ui-button {
-    border-bottom: 1px solid #cccccc !important;
+.ui-autocomplete {
+    z-index: 600;
+    border-radius: 4px;
+    background: #FFF none !important;
 }
 
-#download-profiles-link .ui-button-text {
-    padding: 0;
+.ui-autocomplete .ui-state-focus,
+.ui-autocomplete .ui-state-active {
+    color: #EB8F00;
+    font-weight: normal;
+    background: #E0EAF1 none !important;
+}
+
+.ui-autocomplete li {
+    border-radius: 4px;
+}
+
+.ui-autocomplete li {
+    font-size: 85%;
+}
+
+.ui-autocomplete li a {
+    border: none;
+    color: #46799B;
+}
+
+.ui-button {
+    border-bottom: 1px solid #cccccc !important;
 }
 
 .ui-button:hover, .ui-button:active {
     border: 1px solid #fbd850 !important;
 }
 
+#filterby-menu .ui-menu {
+    width: 150px;
+}
+
+#filterby-menu .ui-menu,
+#filterby-menu .ui-menu,
+.ui-autocomplete {
+    z-index: 600;
+    border-radius: 4px;
+    background: #FFF none !important;
+}
+
+#filterby-menu .ui-state-focus,
+#filterby-menu .ui-state-active,
+.ui-autocomplete .ui-state-focus,
+.ui-autocomplete .ui-state-active {
+    color: #EB8F00;
+    font-weight: normal;
+    background: #E0EAF1 none !important;
+}
+
+#filterby-menu li,
+.ui-autocomplete li {
+    border-radius: 4px;
+}
+
+#filterby-menu .ui-menu-item {
+    text-decoration: none !important;
+}
+
+.ui-autocomplete li {
+    font-size: 85%;
+}
+
+#filterby-menu li a,
+.ui-autocomplete li a {
+    border: none;
+    color: #46799B;
+}
+
 .fancybox-close {
     border: 0 !important;
 }
+
+#gxaExperimentHeader:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 0;
+    font-size:0;
+    line-height:0;
+}
+
+#gxaExperimentHeader .ui-button-text, #download-experiment-design-link .ui-button-text {
+    padding: 0;
+}
+
 /* JQuery UI overrides: end */
+
+.gxaExtraPadding {
+    padding: 10px;
+}
 
 .gxaThickLink {
     font-weight: bold;
+}
+
+div.gxaExperimentRequestPreferencesBarchartTooltip {
+    position: fixed;
+    border: 2px solid rgb(238, 195, 46);
+    border-radius: 4px;
+    padding: 2px;
+    font-family: Verdana, Helvetica, Arial, sans-serif;
+    font-size: smaller;
+    background-color: rgb(249, 232, 176);
+    opacity: 1;
+    display: none;
 }
 
 #download-profiles {
@@ -39,7 +257,6 @@
     background: no-repeat center;
     cursor: pointer;
     padding: 2px !important;
-
 }
 
 /****  STYLING FOR BUTTONS IN GENE SET TYPE ANALYSIS PLOTS *****/
@@ -50,6 +267,29 @@
 
 /**** END ANALYSIS PLOTS STYLING **/
 
+.gxaError {
+    color: red;
+    display: block;
+    padding-bottom: 5px;
+}
+
+.gxaBlockWithoutPaddingBottom {
+    padding-bottom: 0 !important;
+}
+
+div.gxaExperimentRequestPreferencesBlockMaxWidth {
+    clear: both;
+    max-width: 950px;
+}
+
+#reload-form-table {
+    width: 40%;
+}
+
+#reload-form-table td {
+    background: #f5f5f5;
+}
+
 /* selected link */
 
 div.gxaDoubleClickNoSelection {
@@ -57,7 +297,23 @@ div.gxaDoubleClickNoSelection {
     -ms-user-select: none;
 }
 
-/* Sensible minimum heights for small and large screens */
+div.gxaFiltersFrame {
+    display: inline-block;
+    width: 95%;
+    border: 1px solid lightgray;
+    margin-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+div.gxaFilterName {
+    color: #FF9C2A;
+    font-weight: bold;
+}
+
+/*
+Set sensible minimum heights for small and large screens
+*/
 @media screen and (min-height: 600px) {
     div#wrapper {
         min-height: 250px;
@@ -70,6 +326,16 @@ div.gxaDoubleClickNoSelection {
     }
 }
 
+/* help tooltip */
+a.help-icon {
+    color: rgb(255, 82, 0) !important;
+    vertical-align: top;
+    font-size: 10px !important;
+    font-weight: bold !important;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    background: rgba(250, 250, 202, 0.28);
+}
+
 a.ext, a.ext:link {
     padding-left: 13px;
     background: url(../images/ico_ext_link.png) no-repeat 0 2px;
@@ -77,6 +343,10 @@ a.ext, a.ext:link {
 
 a.ext:hover, a.ext:active, a.ext:focus {
     background: url(../images/ico_ext_link_on.png) no-repeat 0 2px;
+}
+
+.gxaHighlight {
+    background-color: yellow
 }
 
 span.gxaGenePropertyLabel {
@@ -92,8 +362,98 @@ span.gxaGenePropertyLabel {
 
 }
 
-.gxaGeneNameTooltip {
-    text-align: justify;
+/* TODO: Is this still needed and used in jquery.flot.pie.js ? */
+.pieLabel {
+    font-size: 12px;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    color: white;
+}
+
+div.gxaBioEntityCard {
+    background: white !important;
+    font-family: Verdana, sans-serif;
+}
+
+ul.gxaBioEntityCardHeader {
+    background: #f1fffa !important;
+    border: 1px solid #CCCCCC !important;
+}
+
+span.gxaBioEntityCardBioentityName {
+    font-size: 16px;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    font-weight: bold;
+    color: gray;
+    padding-left: 14px;
+}
+
+span.gxaBioEntityCardDescription {
+    font-size: 12px;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    color: gray;
+    padding-left: 6px;
+}
+
+span.gxaBioEntityCardSpecies {
+    font-size: 12px;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    font-style: italic;
+    color: gray;
+    padding-left: 6px;
+}
+
+td.gxaBioEntityCardPropertyType {
+    font-size: 14px;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    font-weight: bold;
+    width: 155px;
+    vertical-align: top;
+}
+
+td.gxaBioEntityCardPropertyValue {
+    font-size: 12px;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+}
+
+a.gxaBioEntityCardLink {
+    color: #343094 !important;
+}
+
+.gxaBioEntityCardIconPlus {
+    background-position: -16px -128px;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin-top: 0 !important;
+    float: right;
+}
+
+.gxaBioEntityCardIconMinus {
+    background-position: -48px -128px;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin-top: 0 !important;
+    float: right;
+}
+
+div.gxaBioEntityCardDifferentialSummary {
+    border: 1px solid #FBD850;
+    color: #EB8F00;
+    font-weight: bold;
+    display: block;
+    margin-top: 2px;
+    min-height: 0;
+    padding: 0.5em 0.5em 0.5em 0.7em;
+    position: relative;
+    width: 100%;
+}
+
+div.gxaExperimentsPageHeading {
+    font-size: 14px;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    font-weight: bold;
+    display: block;
 }
 
 

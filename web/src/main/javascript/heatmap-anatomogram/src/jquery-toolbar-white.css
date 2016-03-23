@@ -1,0 +1,42 @@
+/* Custom style for jquery-toolbar */
+
+.tool-container {
+    box-shadow: 0 0 2px grey;
+}
+
+.btn-toolbar-white {
+    background-color: #b2c6cd;
+}
+.btn-toolbar-white.pressed {
+    background-color: #d6e1e5;
+}
+.btn-toolbar-white:hover {
+    background-color: #d6e1e5;
+}
+.btn-toolbar-white > i {
+    color: white;
+}
+
+.toolbar-white {
+    background-color: whitesmoke;
+}
+.toolbar-white.tool-top .arrow {
+    border-color: #b2c6cd transparent transparent;
+}
+.toolbar-white.tool-bottom .arrow {
+    border-color: transparent transparent #b2c6cd;
+}
+.toolbar-white.tool-left .arrow {
+    border-color: transparent transparent transparent #b2c6cd;
+}
+.toolbar-white.tool-right .arrow {
+    border-color: transparent lightgrey transparent transparent;
+}
+.toolbar-white .tool-item > .fa {
+    color: white;
+}
+.toolbar-white .tool-item.selected,
+.toolbar-white .tool-item:hover {
+    background: lightgoldenrodyellow;
+    color: white;
+}

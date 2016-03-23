@@ -4,8 +4,8 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+
 var $ = require('jquery');
-var jQuery = $;
 require('jquery.browser');
 
 var URI = require('urijs');
@@ -24,6 +24,7 @@ var DifferentialResults = require('./differential-results.jsx');
  * @param {string} options.identifier
  * @param {string} options.queryType - "gene", "geneSet"
  * @param {string} options.species
+ * @param {string} options.atlasHost
  */
 module.exports = function (options) {
 
@@ -32,7 +33,7 @@ module.exports = function (options) {
 
     var facetsElement = document.getElementById(options.facetsContainer),
         resultsElement = document.getElementById(options.resultsContainer),
-        host = window.location.host;
+        host = options.atlasHost ? options.atlasHost : window.location.host;
 
     var query = {
         geneQuery : options.identifier,
@@ -44,12 +45,12 @@ module.exports = function (options) {
     var differentialResultsPath = "";
     switch (query.queryType) {
         case "gene":
-            differentialFacetsPath = "gxa/genes/" + query.geneQuery + "/differentialFacets.json";
-            differentialResultsPath = "gxa/genes/" + query.geneQuery + "/differentialResults.json";
+            differentialFacetsPath = "gxa/json/genes/" + query.geneQuery + "/differentialFacets";
+            differentialResultsPath = "gxa/json/genes/" + query.geneQuery + "/differentialResults";
             break;
         case "geneSet":
-            differentialFacetsPath = "gxa/genesets/" + query.geneQuery + "/differentialFacets.json";
-            differentialResultsPath = "gxa/genesets/" + query.geneQuery + "/differentialResults.json";
+            differentialFacetsPath = "gxa/json/genesets/" + query.geneQuery + "/differentialFacets";
+            differentialResultsPath = "gxa/json/genesets/" + query.geneQuery + "/differentialResults";
             break;
         default:
             break;

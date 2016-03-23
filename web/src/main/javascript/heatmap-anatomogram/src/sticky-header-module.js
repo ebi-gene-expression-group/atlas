@@ -142,4 +142,3 @@ function StickyHeaderModule(table, stickyIntersect, stickyColumn, stickyHeadRow,
 //*------------------------------------------------------------------*
 
 module.exports = StickyHeaderModule;
-

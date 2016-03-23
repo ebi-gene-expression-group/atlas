@@ -1,0 +1,21 @@
+{
+  "name": "help-tooltips",
+  "version": "1.0.0",
+  "description": "Help tooltips for Expression Atlas",
+  "main": "index.js",
+  "author": "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "^2.2.1",
+    "jquery-ui-bundle": "^1.11.4",
+    "jQuery-ajaxTransport-XDomainRequest": "git+https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.8",
+    "css-loader": "^0.23.1",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
