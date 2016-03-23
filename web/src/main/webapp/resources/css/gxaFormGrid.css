@@ -11,6 +11,10 @@ table.gxaFormGrid td {
     padding-bottom: 2px;
 }
 
+table.gxaFormGrid #organism {
+    height: 30px;
+}
+
 .gxaHomeSearchActionButtons input.ui-button {
     min-width: 80px;
 }
