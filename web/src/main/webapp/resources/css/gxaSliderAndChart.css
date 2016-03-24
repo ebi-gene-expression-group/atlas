@@ -1,0 +1,39 @@
+#gxaGeneDistributionPanel .gxaExperimentRequestPreferencesBarchartTooltip {
+    position: fixed;
+    border: 2px solid gold;
+    border-radius: 4px;
+    padding: 2px;
+    font-family: Verdana, Helvetica, Arial, sans-serif;
+    font-size: smaller;
+    background-color: blanchedalmond;
+    opacity: 1;
+    display: none;
+}
+
+#gxaGeneDistributionPanel .legend table {
+    border: none;
+    width: auto;
+}
+
+#gxaGeneDistributionPanel .legend table td.legendColorBox {
+    border-right: none;
+}
+
+#gxaGeneDistributionPanel .legend table td.legendLabel {
+    border-left: none;
+}
+
+
+#gxaSliderAndChart .ui-button {
+    border: 1px solid lightgrey;
+}
+
+#gxaSliderAndChart .ui-button-text {
+    padding: 2px;
+    margin: 0;
+}
+
+#gxaSliderAndChart .ui-button-text img {
+    margin: 0; /* overrides ebi-visual.css */
+}
+

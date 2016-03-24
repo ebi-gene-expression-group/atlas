@@ -81,14 +81,14 @@ var geneDistribution = (function ($) {
     function hideGeneDistribution(isFast) {
         "use strict";
 
-        $('#gene-distribution-panel').hide(isFast ? null : 'slow');
+        $("#gxaGeneDistributionPanel").hide(isFast ? null : "slow");
         $("#display-chart").tooltip({content: "Display gene distribution"});
     }
 
     function displayGeneDistribution(isFast) {
         "use strict";
 
-        $('#gene-distribution-panel').show(isFast ? null : 'slow');
+        $("#gxaGeneDistributionPanel").show(isFast ? null : "slow");
         $("#display-chart").tooltip({content: "Hide gene distribution"});
     }
 
@@ -162,6 +162,10 @@ var geneDistribution = (function ($) {
                 borderWidth: 1,
                 hoverable: true,
                 clickable: true
+            },
+            legend: {
+                show: true,
+                position: "ne"
             }
         });
     }
@@ -169,12 +173,12 @@ var geneDistribution = (function ($) {
     function showBarChartTooltip(x, y, contents) {
         "use strict";
 
-        $("#barChartTooltip").text(contents).css({
+        $("#gxaBarChartTooltip").text(contents).css({
             display: 'block',
             position: 'absolute',
             'z-index': 1,
-            top: y - 350,
-            left: x - 26
+            top: y - 280,
+            left: x - 292 - contents.length / 2
         });
     }
 
@@ -237,7 +241,7 @@ var geneDistribution = (function ($) {
                             }
                         }
                         else {
-                            $("#barChartTooltip").css({display: 'none'});
+                            $("#gxaBarChartTooltip").css({display: 'none'});
                         }
 
 

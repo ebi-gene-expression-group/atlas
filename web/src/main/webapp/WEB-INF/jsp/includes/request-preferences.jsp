@@ -8,8 +8,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/gxaFormGrid.css" media="screen">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/gxaSliderAndChart.css" media="screen">
 
-<div id="preferencesFormBlock" class="gxaExperimentRequestPreferencesBlockMaxWidth">
+<div id="preferencesFormBlock">
     <form:form method="get" commandName="preferences" id="prefForm">
         <input type="hidden" name="accessKey" value="${param.accessKey}"/>
         <form:hidden path="serializedFilterFactors"/>
@@ -65,10 +66,10 @@
                 </c:choose>
                 <td rowspan="2" class="gxaExperimentRequestPreferencesFixedSizeTableColumn">
                     <div class="gxaExperimentRequestPreferencesActionButtons">
-                        <div>
+                        <div style="text-align: right;">
                             <input id="submit-button" type="submit" value="Apply"/>
                         </div>
-                        <div>
+                        <div style="text-align: right;">
                             <input id="reset-button" type="button" value="Reset"/>
                         </div>
                     </div>
@@ -134,22 +135,21 @@
         </table>
         <br/>
     </form:form>
-    <div style="min-width: 955px;position:relative" id="gene-distribution-panel">
-        <div class="gxaExperimentRequestPreferencesBarchartTooltip" id="barChartTooltip"></div>
-        <div id="gene-distribution" style="height:100px;width:940px;display:inline-block;">
+    <div id="gxaGeneDistributionPanel" class="gxaExtraPadding">
+        <div class="gxaExperimentRequestPreferencesBarchartTooltip" id="gxaBarChartTooltip"></div>
+        <div id="gene-distribution" style="height: 100px; width: 98%; display: inline-block;">
         </div>
         <span data-help-loc="#gene-distribution" style="vertical-align: top"></span>
     </div>
 
-    <div style="min-width: 955px;display:none;" id="sliderAndChart">
-        <div style="display:inline-block">
-            <div id="gene-distribution-button" style="float:left">
-                <a id="display-chart" title="Display gene distribution" class="gxaButtonImage" href="#">
+    <div id="gxaSliderAndChart" class="gxaExtraPadding">
+        <div>
+            <div id="gene-distribution-button" style="float: left;'">
+                <a id="display-chart" title="Display gene distribution" href="#">
                     <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
                 </a>
             </div>
-            <div id="slider-range-max"
-                 style="font-size:65%;width:910px;margin-left:27px;margin-right:0px; margin-top:10px"></div>
+            <div id="slider-range-max" style="float: left; font-size: 65%; width: 94%; margin: 8px 12px"></div>
         </div>
         <span id="slider-help" data-help-loc="#slider"></span>
     </div>
