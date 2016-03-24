@@ -25,7 +25,11 @@ module.exports = {
     },
 
     plugins: [
-        new CleanWebpackPlugin(['../webapp/resources/js-bundles'], {verbose: true, dry: false}),
+        new CleanWebpackPlugin(['webapp/resources/js-bundles'], {
+	    root: path.resolve(__dirname , '..'),
+            verbose: true,
+            dry: false
+        }),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'dependencies',
