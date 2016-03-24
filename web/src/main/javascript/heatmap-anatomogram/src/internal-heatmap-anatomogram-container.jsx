@@ -63,7 +63,9 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
 
     render: function () {
         var ensemblEventEmitter = new EventEmitter();
+        ensemblEventEmitter.setMaxListeners(0);
         var anatomogramEventEmitter = new EventEmitter();
+        ensemblEventEmitter.setMaxListeners(0);
 
         var anatomogramExpressedTissueColour = this.props.type.isMultiExperiment ? "red" : "gray";
         var anatomogramHoveredTissueColour = this.props.type.isMultiExperiment ? "indigo" : "red";
