@@ -19,10 +19,9 @@
     <c:if test="${hasBaselineResults}">
     var selectedSpecies = "${hasSelectedSpecies ? selectedSpecies : ''}";
 
-    var baselineSearcher = window.exposed.baseline,
-        baselineFacetsData = ${jsonFacets};
+    var baselineFacetsData = ${jsonFacets};
 
-    baselineSearcher({
+    facetedSearch.baseline({
         facetsContainer: "gxaBaselineFacetsContainerDiv",
         resultsContainer: "gxaBaselineResultsContainerDiv",
         showAnatomogramsInput: "showAnatomogramsCheckbox",

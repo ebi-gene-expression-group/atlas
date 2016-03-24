@@ -15,7 +15,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/new-bioentities/bioentities-box.css"/>
 
 <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/faceted-search.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/facetedSearch.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 
 <c:if test="${isSearch}">

@@ -17,9 +17,7 @@
     var selectedSpecies = "${hasSelectedSpecies ? selectedSpecies : ''}";
 
     <c:if test="${hasDifferentialResults}">
-    var differentialSearcher = window.exposed.differential;
-
-    differentialSearcher({
+    facetedSearch.differential({
         facetsContainer: "gxaDifferentialFacetsContainerDiv",
         resultsContainer: "gxaDifferentialResultsContainerDiv",
         identifier: "${identifier}",
