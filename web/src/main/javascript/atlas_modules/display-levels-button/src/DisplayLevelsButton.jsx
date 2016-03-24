@@ -35,7 +35,6 @@ var DisplayLevelsButton = React.createClass({
 
     render: function () {
         var style = {
-            textAlign: "center"
         };
         if (this.props.width) {
             style.width = this.props.width;
