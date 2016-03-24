@@ -16,6 +16,42 @@
     border: none;
 }
 
+a.help-icon {
+    color: darkorange;
+    vertical-align: top;
+    font: 10px Verdana, Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    border: 0;
+}
+
+.gxaHelpTooltip {
+    background: white !important;
+    border: 1px solid cornflowerblue !important;
+    padding: 4px;
+    color: cornflowerblue !important;
+    font: 10px Verdana, Helvetica, Arial, sans-serif;
+}
+
+/*.ui-button-text {*/
+/*text-align: center;*/
+/*}*/
+
+a.gxaNoTextButton, a.gxaButtonImage {
+    padding: 2px !important;
+    border: 1px solid #ccc !important;
+}
+a.gxaButtonImage .ui-button-text {
+    padding: 2px !important;
+}
+
+
+
+
+
+
+
+
+
 /*td.gxaSearchFormFullWidthColumn {*/
     /*width: 100%;*/
 /*}*/
