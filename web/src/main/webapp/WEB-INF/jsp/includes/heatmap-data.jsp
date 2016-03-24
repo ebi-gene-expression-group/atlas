@@ -31,7 +31,8 @@
 
 <c:set var="geneQuery" value="${empty preferences ? geneQuery : preferences.geneQuery}" />
 <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
-<c:set var="atlasHost" value="${pageContext.request.serverName == 'localhost' ? 'wwwdev.ebi.ac.uk' : pageContext.request.serverName.concat(serverPort)}"/>
+<c:set var="protocol" value="${pageContext.request.scheme}://"/>
+<c:set var="atlasHost" value="${pageContext.request.serverName.concat(serverPort)}"/>
 
 <%--TODO Remove when anatomogram without brains are no longer supported https://www.pivotaltracker.com/story/show/101029574--%>
 <c:set var="toggleButtonImage" value="/resources/images/male_selected.png"/>
@@ -54,7 +55,7 @@
             //TODO: break into common params, differential params, and baseline and multiexperiment params (if any)
             --%>
             "config": {
-                "atlasHost": "${atlasHost}",
+                "atlasHost": "${protocol}${atlasHost}",
                 "contextRoot": "${pageContext.request.contextPath}",
                 "experimentAccession": "${experimentAccession}",
                 "geneQuery": "${geneQuery.asUrlQueryParameter()}",
