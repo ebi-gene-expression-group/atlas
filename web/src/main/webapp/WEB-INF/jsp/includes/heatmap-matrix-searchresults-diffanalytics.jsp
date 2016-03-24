@@ -120,11 +120,12 @@
     </tbody>
 </table>
 
+<script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom-server.min.js"></script>
+
 <script language="JavaScript" type="text/javascript" src="${base}/resources/js/heatmapModuleDeprecated.js"></script>
-<script language="JavaScript" type="text/javascript" src="${base}/resources/js/lib/react-0.14.7/react.min.js"></script>
-<script language="JavaScript" type="text/javascript" src="${base}/resources/js/lib/react-0.14.7/react-dom-server.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/contrastTooltip.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/contrastTooltipModule.js"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/contrastTooltip.js"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/contrastTooltipModule.js"></script>
 
 <script type="text/javascript">
     (function ($, heatmapModuleDeprecated, contrastTooltipModule) { //self invoking wrapper function that prevents $ namespace conflicts
