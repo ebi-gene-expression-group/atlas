@@ -7,7 +7,7 @@
     "dev": "webpack --progress --colors --watch --debug --output-pathinfo --display-chunks --display-modules --devtool source-map",
     "dev-min": "webpack --progress --colors --optimize-minimize --output-pathinfo --display-chunks --display-modules",
     "ci": "webpack --debug --output-pathinfo --display-chunks --display-modules --devtool source-map",
-    "prod": "webpack --debug --optimize-minimize --output-pathinfo --display-chunks --display-modules"
+    "prod": "NODE_ENV=production webpack --debug --optimize-minimize --output-pathinfo --display-chunks --display-modules"
   },
   "author": "Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
   "license": "MIT",
