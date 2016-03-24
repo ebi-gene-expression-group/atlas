@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/gxaFormGrid.css" media="screen">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/gxaSliderAndChart.css" media="screen">
 
-<div id="preferencesFormBlock">
+<div>
     <form:form method="get" commandName="preferences" id="prefForm">
         <input type="hidden" name="accessKey" value="${param.accessKey}"/>
         <form:hidden path="serializedFilterFactors"/>
@@ -133,25 +133,28 @@
                 </c:if>
             </tr>
         </table>
-        <br/>
     </form:form>
-    <div id="gxaGeneDistributionPanel" class="gxaExtraPadding">
-        <div class="gxaExperimentRequestPreferencesBarchartTooltip" id="gxaBarChartTooltip"></div>
-        <div id="gene-distribution" style="height: 100px; width: 98%; display: inline-block;">
-        </div>
-        <span data-help-loc="#gene-distribution" style="vertical-align: top"></span>
-    </div>
 
-    <div id="gxaSliderAndChart" class="gxaExtraPadding">
-        <div>
-            <div id="gxaGeneDistributionButton" style="float: left;'">
-                <a id="gxaDisplayChart" title="Display gene distribution" href="#">
-                    <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
-                </a>
+
+    <div style="padding-top: 15px;">
+        <div id="gxaGeneDistributionPanel">
+            <div class="gxaExperimentRequestPreferencesBarchartTooltip" id="gxaBarChartTooltip"></div>
+            <div id="gene-distribution" style="height: 100px; width: 98%; display: inline-block;">
             </div>
-            <div id="slider-range-max" style="float: left; font-size: 65%; width: 94%; margin: 8px 12px"></div>
+            <span data-help-loc="#gene-distribution" style="vertical-align: top"></span>
         </div>
-        <span id="slider-help" data-help-loc="#slider"></span>
+
+        <div id="gxaSliderAndChart">
+            <div>
+                <div id="gxaGeneDistributionButton" style="float: left;'">
+                    <a id="gxaDisplayChart" title="Display gene distribution" href="#">
+                        <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
+                    </a>
+                </div>
+                <div id="slider-range-max" style="float: left; font-size: 65%; width: 94%; margin: 8px 12px"></div>
+            </div>
+            <span id="slider-help" data-help-loc="#slider"></span>
+        </div>
     </div>
 </div>
 

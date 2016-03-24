@@ -18,6 +18,9 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gxaExperimentHeader.css">
 
+<script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customized-bootstrap-3.3.5.css">
 <script src="${pageContext.request.contextPath}/resources/js/lib/bootstrap-3.3.5.min.js"></script>
 

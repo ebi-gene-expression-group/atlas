@@ -3,6 +3,18 @@
     padding-right: 10px;
 }
 
+/*#atlas-content #shadow {*/
+    /*content:'';*/
+    /*display:block;*/
+    /*box-shadow:inset -10px 0 10px white;*/
+    /*position:absolute;*/
+    /*top:0;*/
+    /*left:0;*/
+    /*width:100%;*/
+    /*height:100%;*/
+    /*!*z-index:300;*!*/
+/*}​*/
+
 /*#atlas-content table.display {*/
     /*margin: 0 auto;*/
     /*clear: both;*/

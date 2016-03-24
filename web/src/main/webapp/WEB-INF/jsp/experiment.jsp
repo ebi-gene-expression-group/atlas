@@ -7,11 +7,11 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div class="grid_18 alpha">
+<div class="grid_18 alpha gxaNewSection gxaExtraPadding">
     <c:import url="includes/request-preferences.jsp"/>
 </div>
 
-<div class="grid_18 alpha" id="gxaExperimentPageHeatmapAnatomogram">
+<div class="grid_24 alpha gxaNewSection gxaExtraPadding" id="gxaExperimentPageHeatmapAnatomogram">
     <spring:hasBindErrors name="preferences">
         <c:set var="isPreferenceError" value="true"/>
     </spring:hasBindErrors>
