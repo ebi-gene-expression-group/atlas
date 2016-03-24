@@ -30,10 +30,6 @@ module.exports = function(options) {
         atlasHost = options.atlasHost === undefined ? "www.ebi.ac.uk" : options.atlasHost,
         atlasPath = "/gxa";
 
-    if (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://" === 0)) {
-
-    }
-
     var linksAtlasBaseURL =
         (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://") === 0) ? atlasHost + atlasPath :
         protocol + atlasHost + atlasPath;
