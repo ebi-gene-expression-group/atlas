@@ -80,25 +80,25 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/heatmap-and-anatomogram.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/chosen/chosen.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas-content.css" media="screen">
+    <%--<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/table-grid.css" media="screen">--%>
+    <%--<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/heatmap-and-anatomogram.css" media="screen">--%>
+    <%--<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/chosen/chosen.css" media="screen">--%>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-tageditor-1.0.20/jquery.tag-editor.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/experiment-design-table.css" media="screen">
+    <%--<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/experiment-design-table.css" media="screen">--%>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home.css" media="screen">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ae-autocomplete.css" media="screen">
 
-    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/json2.js"></script>
-    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/he-0.5.0/he.js"></script>
+    <script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/json2/20150503/json2.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/he/0.5.0/he.min.js"></script>
 
     <script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
     <script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.4.0.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+    <script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
 
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-url.min.js"></script>
 
-    <!-- jQuery UI end -->
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-caret/jquery.caret.js"></script>
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-tageditor-1.0.20/jquery.tag-editor.js"></script>
 

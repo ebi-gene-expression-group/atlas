@@ -9,12 +9,17 @@ table.gxaFormGrid label {
 table.gxaFormGrid td {
     padding-top: 2px;
     padding-bottom: 2px;
+    border: none;
 }
 
 table.gxaFormGrid #organism {
     height: 30px;
 }
 
-.gxaHomeSearchActionButtons input.ui-button {
+table.gxaFormGrid .gxaSearchExamples {
+    font-size: 95%;
+}
+
+table.gxaFormGrid .gxaHomeSearchActionButtons input.ui-button {
     min-width: 80px;
 }
