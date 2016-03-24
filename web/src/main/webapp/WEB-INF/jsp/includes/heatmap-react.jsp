@@ -11,7 +11,7 @@
     <c:otherwise>
 
     <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor.bundle.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js-bundles/internalHeatmapAnatomogram.bundle.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js-bundles/internalAtlasHeatmap.bundle.js"></script>
 
     <%--<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.toolbar.js"></script>--%>
     <%--<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.toolbars.css" />--%>
@@ -23,7 +23,7 @@
             var heatmapData = <%@ include file="heatmap-data.jsp" %>;
             var isMultiExperiment = ${isMultiExperiment ? true : false};
 
-            internalHeatmapAnatomogram({
+            internalAtlasHeatmap({
                 heatmapData: heatmapData,
                 isMultiExperiment: isMultiExperiment,
                 isDifferential: ${type.differential},
