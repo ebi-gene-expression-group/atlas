@@ -16,8 +16,12 @@
     <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"/>
 </c:if>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customized-bootstrap-3.3.5.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gxaExperimentHeader.css">
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customized-bootstrap-3.3.5.css">
 <script src="${pageContext.request.contextPath}/resources/js/lib/bootstrap-3.3.5.min.js"></script>
+
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
 
 <script>
     var bootstrapButton = $.fn.button.noConflict(); // return $.fn.button to previously assigned value
@@ -27,41 +31,45 @@
     $.fn.bootstrapTt = bootstrapTooltip;
 </script>
 
-<section class="gxaExtraPadding" id="gxaExperimentHeader" style="text-align: justify;">
+<section class="container_24 gxaExtraPadding" id="gxaExperimentHeader" style="text-align: justify;">
 
-    <div id="helpContentTooltip" style='display:none'></div>
+    <div id="helpContentTooltip" style="display: none;"></div>
 
-    <div style="display: inline-block; max-width: 950px">
+    <div class="grid_18 alpha">
         <%@ include file="experiment-description.jsp" %>
     </div>
 
-    <div style="display: inline-block; vertical-align: top;">
-        <table cellpadding="2" cellspacing="0">
+    <div class="grid_6 omega">
+        <table>
             <tbody>
                 <tr>
                     <td>
-                        <a id="display-ae" class="gxaButtonImage"
-                           title="View experiment in ArrayExpress"
+                        <a id="display-ae" title="View experiment in ArrayExpress"
                            <%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
                            href="${applicationProperties.getArrayExpressURL(experimentAccession)}">
                             <img src="${pageContext.request.contextPath}/resources/images/ae-logo-64.png"/></a>
                     </td>
+
                     <td>
-                        <a id="display-experiment" class="gxaButtonImage"
-                           title="Experiment Page" href="${pageContext.request.contextPath}/experiments/${experimentAccession}${accessKeyQueryString}">
+                        <a id="display-experiment" title="Experiment Page"
+                           href="${pageContext.request.contextPath}/experiments/${experimentAccession}${accessKeyQueryString}">
                             <img src="${pageContext.request.contextPath}/resources/images/experiment_page_small.png"/></a>
                     </td>
+
                     <td>
-                        <a id="display-analysis-methods" class="gxaButtonImage" title="Analysis Methods"
+                        <a id="display-analysis-methods" title="Analysis Methods"
                            href="${pageContext.request.contextPath}/experiments/${experimentAccession}/analysis-methods${accessKeyQueryString}">
                             <img style="width:23px;height:23px"
                                  src="${pageContext.request.contextPath}/resources/images/analysis_icon.png"/></a>
                     </td>
+
                     <td>
-                        <a id="display-experiment-design" class="gxaButtonImage"
-                           title="Experiment Design" href="${pageContext.request.contextPath}/experiments/${experimentAccession}/experiment-design${accessKeyQueryString}">
+                        <a id="display-experiment-design" title="Experiment Design"
+                           href="${pageContext.request.contextPath}/experiments/${experimentAccession}/experiment-design${accessKeyQueryString}">
                             <img src="${pageContext.request.contextPath}/resources/images/experiment_design_icon.png"/></a>
                     </td>
+
+
                     <c:if test="${qcArrayDesigns!=null}">
 
                         <c:forEach items="${qcArrayDesigns}" var="arrayDesign" varStatus="loop">
@@ -72,7 +80,7 @@
 
                                 <c:if test="${hasQcReport}">
                                     <td>
-                                        <a id="display-qc-report" class="gxaButtonImage" title="Quality Metrics Report"
+                                        <a id="display-qc-report" title="Quality Metrics Report"
                                            href="${pageContext.request.contextPath}/experiments/${experimentAccession}/qc/${arrayDesign}/index.html${accessKeyQueryString}">
                                             <img src="${pageContext.request.contextPath}/resources/images/qc_v15.png"/>
                                         </a>
@@ -84,42 +92,43 @@
 
                     </c:if>
 
+
                     <%--@elvariable id="fastQCReportUtil" type="uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil"--%>
                     <c:set var="hasFastQcReport" value="${fastQCReportUtil.hasFastQC(experimentAccession, species)}"/>
                     <c:if test="${hasFastQcReport && qcArrayDesigns==null}" >
                         <td>
-                            <a id="display-fastqc-report" class="gxaButtonImage" title="Quality Metrics Report"
+                            <a id="display-fastqc-report" title="Quality Metrics Report"
                                href="${pageContext.request.contextPath}/experiments/${experimentAccession}/fastqc/${species}/qc.html${accessKeyQueryString}">
                                 <img src="${pageContext.request.contextPath}/resources/images/qc_v15.png"/>
                             </a>
                         </td>
                     </c:if>
 
+
                     <%--@elvariable id="hierarchicalClusteringPdfViewHelper" type="uk.ac.ebi.atlas.experimentpage.HierarchicalClusteringPdfViewHelper"--%>
                     <c:if test="${experiment.multiOrganismExperiment ? hierarchicalClusteringPdfViewHelper.hasPdf(experimentAccession, species) : hierarchicalClusteringPdfViewHelper.hasSingleSpeciesPdf(experimentAccession)}" >
                         <td>
-                            <a id="clustering-pdf" class="gxaButtonImage" title="Explore hierarchical clustering between experimental conditions and the top 100 most variable genes in the experiment"
+                            <a id="clustering-pdf" title="Explore hierarchical clustering between experimental conditions and the top 100 most variable genes in the experiment"
                                href="${pageContext.request.contextPath}${experiment.multiOrganismExperiment ? hierarchicalClusteringPdfViewHelper.generateUrl(experimentAccession, species) : hierarchicalClusteringPdfViewHelper.generateSingleSpeciesUrl(experimentAccession)}${accessKeyQueryString}">
                                 <img src="${pageContext.request.contextPath}/resources/images/cluster_button.png"/>
                             </a>
                         </td>
                     </c:if>
 
-                    <!-- download-r button section -->
+
                     <c:set var="download-expressions" value="${false}"/>
                     <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
                     <c:if test="${experiment.hasRData()}">
                         <td>
                             <c:choose>
                                 <c:when test="${isFortLauderdale}">
-                                    <a id="download-r-modal" class="gxaButtonImage" role="button" data-toggle="modal" data-target="#download-modal"
-                                       title="Download experiment data ready to load into R">
+                                    <a id="download-r-modal" title="Download experiment data ready to load into R"
+                                       role="button" data-toggle="modal" data-target="#download-modal">
                                         <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
                                     </a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a id="download-r" class="gxaButtonImage"
-                                       title="Download experiment data ready to load into R"
+                                    <a id="download-r" title="Download experiment data ready to load into R"
                                        href="${rDownloadUrl}${accessKeyQueryString}">
                                         <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
                                     </a>
@@ -128,10 +137,10 @@
                         </td>
                     </c:if>
 
+
                     <c:if test="${type.rnaSeqDifferential}">
                         <td>
-                            <a id="download-raw" class="gxaButtonImage"
-                               title="Download all raw counts for the experiment"
+                            <a id="download-raw" title="Download all raw counts for the experiment"
                                href="${rawDownloadUrl}${accessKeyQueryString}">
                                 <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_raw.png"/></a>
                         </td>
@@ -141,14 +150,12 @@
                         <td>
                             <c:choose>
                                 <c:when test="${type.twoColour}">
-                                    <a id="download-logFold" class="gxaButtonImage"
-                                       title="Download all log fold expression changes for the experiment"
+                                    <a id="download-logFold" title="Download all log fold expression changes for the experiment"
                                        href="${logFoldUrl}${accessKeyQueryString}">
                                         <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_logfold.png"/></a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a id="download-normalized" class="gxaButtonImage"
-                                       title="Download all normalized expressions for the experiment"
+                                    <a id="download-normalized" title="Download all normalized expressions for the experiment"
                                        href="${normalizedUrl}${accessKeyQueryString}">
                                         <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/></a>
                                 </c:otherwise>
@@ -156,19 +163,19 @@
                         </td>
                     </c:if>
 
+
                     <c:choose>
                         <c:when test="${type.baseline}">
                             <td>
                                 <c:choose>
                                     <c:when test="${isFortLauderdale}">
-                                        <a id="download-expressions-modal" role="button" class="gxaButtonImage" data-toggle="modal" data-target="#download-modal"
-                                           title="Download all expressions for the experiment" >
+                                        <a id="download-expressions-modal" title="Download all expressions for the experiment"
+                                           role="button" ata-toggle="modal" data-target="#download-modal">
                                             <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/>
                                         </a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a id="download-expressions" class="gxaButtonImage"
-                                           title="Download all expressions for the experiment"
+                                        <a id="download-expressions" title="Download all expressions for the experiment"
                                            href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=-0.1">
                                             <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/>
                                         </a>
@@ -178,8 +185,7 @@
                         </c:when>
                         <c:otherwise>
                             <td>
-                                <a id="download-analytics" class="gxaButtonImage"
-                                   title="Download all analytics for the experiment"
+                                <a id="download-analytics" title="Download all analytics for the experiment"
                                    href="${analyticsDownloadUrl}${accessKeyQueryString}">
                                     <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_analytics.png"/></a>
                             </td>
@@ -228,11 +234,9 @@
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
         $(document).ready(function () {
 
+            initExperimentPageButtonsAndTooltips();
+
             $("#extra-info").fancybox({
-                /*
-                 beforeLoad: function(){
-                 this.title = "Look at this marvelous title... yes this is the title";
-                 },*/
                 padding:0,
                 openEffect:'elastic',
                 closeEffect:'elastic'
