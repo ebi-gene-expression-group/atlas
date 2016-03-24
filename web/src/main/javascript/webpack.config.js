@@ -26,7 +26,7 @@ module.exports = {
 
     plugins: [
         new CleanWebpackPlugin(['webapp/resources/js-bundles'], {
-	    root: path.resolve(__dirname , '..'),
+	        root: path.resolve(__dirname , '..'),
             verbose: true,
             dry: false
         }),
