@@ -1,25 +1,3 @@
-<%--
-  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  ~
-  ~
-  ~ For further details of the Gene Expression Atlas project, including source code,
-  ~ downloads and documentation, please see:
-  ~
-  ~ http://gxa.github.com/gxa
-  --%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
@@ -29,15 +7,15 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<section class="gxaExtraPadding">
+<div class="grid_18 alpha">
     <c:import url="includes/request-preferences.jsp"/>
-</section>
+</div>
 
-<section style="overflow: auto;" class="gxaExtraPadding" id="gxaExperimentPageHeatmapAnatomogram">
+<div class="grid_18 alpha" id="gxaExperimentPageHeatmapAnatomogram">
     <spring:hasBindErrors name="preferences">
         <c:set var="isPreferenceError" value="true"/>
     </spring:hasBindErrors>
-</section>
+</div>
 
 <script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css">
@@ -67,7 +45,7 @@
                 $("#heatmap-div").removeClass();
                 $("#heatmap-profilesAsGeneSets").removeClass();
                 $("#gene-distribution-button").hide();//hide the bar chart button
-                $("#gene-distribution-panel").hide();//hide the bar chart
+                $("#gxaGeneDistributionPanel").hide();//hide the bar chart
                 $("#slider-range-max").hide();//hide the cutoff slider
                 $("#slider-help").hide();//hide the slider help
             }
@@ -75,7 +53,7 @@
 
             if (${!type.isBaseline()}) {
                 $("#gene-distribution-button").hide();//hide the bar chart button
-                $("#gene-distribution-panel").hide();//hide the bar chart
+                $("#gxaGeneDistributionPanel").hide();//hide the bar chart
                 $("#slider-range-max").hide();//hide the cutoff slider
                 $("#slider-help").hide();//hide the slider help
             } else {

@@ -102,19 +102,15 @@
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-caret/jquery.caret.js"></script>
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-tageditor-1.0.20/jquery.tag-editor.js"></script>
 
-    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneQueryTagEditorModule.js"></script>
 
     <script>
         (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
             $(document).ready(function () {
-
-                initExperimentPageButtonsAndTooltips();
                 geneQueryTagEditorModule.init("#local-searchbox");
 
                 searchBoxEnterEventHandler("#submit-searchbox");
-
                 function searchBoxEnterEventHandler(element) {
                     $('#local-search .tag-editor').on('submit', function (e) {
                         $(element).click();

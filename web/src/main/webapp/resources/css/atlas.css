@@ -32,17 +32,23 @@ a.help-icon {
     font: 10px Verdana, Helvetica, Arial, sans-serif;
 }
 
+
+
+.gxaExtraPadding {
+    padding: 0 9px;
+}
+
 /*.ui-button-text {*/
 /*text-align: center;*/
 /*}*/
 
-a.gxaNoTextButton, a.gxaButtonImage {
-    padding: 2px !important;
-    border: 1px solid #ccc !important;
-}
-a.gxaButtonImage .ui-button-text {
-    padding: 2px !important;
-}
+/*a.gxaNoTextButton, a.gxaButtonImage {*/
+    /*padding: 2px !important;*/
+    /*border: 1px solid #ccc !important;*/
+/*}*/
+/*a.gxaButtonImage .ui-button-text {*/
+    /*padding: 2px !important;*/
+/*}*/
 
 
 
