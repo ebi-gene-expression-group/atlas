@@ -144,8 +144,8 @@
 
     <div id="gxaSliderAndChart" class="gxaExtraPadding">
         <div>
-            <div id="gene-distribution-button" style="float: left;'">
-                <a id="display-chart" title="Display gene distribution" href="#">
+            <div id="gxaGeneDistributionButton" style="float: left;'">
+                <a id="gxaDisplayChart" title="Display gene distribution" href="#">
                     <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
                 </a>
             </div>

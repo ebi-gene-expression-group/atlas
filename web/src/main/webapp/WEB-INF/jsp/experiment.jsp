@@ -44,7 +44,7 @@
                 $("#anatomogram").remove();
                 $("#heatmap-div").removeClass();
                 $("#heatmap-profilesAsGeneSets").removeClass();
-                $("#gene-distribution-button").hide();//hide the bar chart button
+                $("#gxaGeneDistributionButton").hide();//hide the bar chart button
                 $("#gxaGeneDistributionPanel").hide();//hide the bar chart
                 $("#slider-range-max").hide();//hide the cutoff slider
                 $("#slider-help").hide();//hide the slider help
@@ -52,7 +52,7 @@
 
 
             if (${!type.isBaseline()}) {
-                $("#gene-distribution-button").hide();//hide the bar chart button
+                $("#gxaGeneDistributionButton").hide();//hide the bar chart button
                 $("#gxaGeneDistributionPanel").hide();//hide the bar chart
                 $("#slider-range-max").hide();//hide the cutoff slider
                 $("#slider-help").hide();//hide the slider help
