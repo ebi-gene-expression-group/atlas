@@ -32,7 +32,7 @@ var contrastTooltipModule = (function ($, ReactDOMServer, ContrastTooltip) {
 
             hide:false,
             show:false,
-            tooltipClass:"gxaHelpTooltip gxaPvalueTooltipStyling",
+            tooltipClass: "gxaContrastTooltip",
             content:function (callback) {
 
                 //TODO: get this via parameter instead of from the DOM

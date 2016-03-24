@@ -118,7 +118,7 @@ var heatmapModuleDeprecated = (function ($) {
                     var colour = $(this).find("div").attr("data-color");
                     ui.tooltip.css('background', colour);
                 },
-                tooltipClass:"gxaHelpTooltip pvalue-tooltip-styling",
+                tooltipClass:"gxaContrastTooltip",
 
                 content:function () {
                     var foldChange = $(this).find("div").html(),
