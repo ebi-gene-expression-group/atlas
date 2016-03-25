@@ -1,0 +1,35 @@
+div.gxaFiltersFrame {
+    border: 1px solid lightgray;
+    margin-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+div.gxaFilterName {
+    color: orange;
+    font-weight: bold;
+}
+
+#filterby-menu .ui-menu, #filterby-menu .ui-menu {
+    border-radius: 4px;
+    background: white none;
+}
+
+#filterby-menu .ui-state-focus, #filterby-menu .ui-state-active {
+    color: darkorange;
+    font-weight: normal;
+    /*background: #E0EAF1 none;*/
+    background: floralwhite none;
+}
+
+#filterby-menu li {
+    border-radius: 4px;
+}
+
+#filterby-menu .ui-menu-item {
+    text-decoration: none !important;
+}
+
+#filterby-menu li a {
+    border: none;
+}
