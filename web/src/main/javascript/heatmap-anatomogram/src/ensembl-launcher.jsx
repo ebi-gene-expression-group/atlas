@@ -115,7 +115,7 @@ var EnsemblLauncher = React.createClass({
                 <div id="ensembl-launcher-box-ensembl">
                     <div className="gxaEnsemblGrameneLauncherHeader">
                         <label>Ensembl Genome Browser</label>
-                        <img src={this.props.atlasBaseURL + "/resources/images/ensembl.png"} style={{padding: "0px 5px"}}/>
+                        <img src={this.props.atlasBaseURL + "/resources/images/ensembl.png"} style={{padding: "0px 5px", verticalAlign: "text-bottom"}}/>
                     </div>
                     <button ref="ensemblButton" onClick={this._openEnsemblWindow.bind(this, ensemblHost)}>Open</button>
                 </div>
@@ -123,7 +123,7 @@ var EnsemblLauncher = React.createClass({
                     <div id="ensembl-launcher-box-gramene" >
                         <div className="gxaEnsemblGrameneLauncherHeader">
                             <label>Gramene Genome Browser</label>
-                            <img src={this.props.atlasBaseURL + "/resources/images/gramene.png"} style={{padding: "0px 5px"}}/>
+                            <img src={this.props.atlasBaseURL + "/resources/images/gramene.png"} style={{padding: "0px 5px", verticalAlign: "text-bottom"}}/>
                         </div>
                         <button ref="grameneButton" onClick={this._openEnsemblWindow.bind(this, grameneHost)}>Open</button>
                     </div>

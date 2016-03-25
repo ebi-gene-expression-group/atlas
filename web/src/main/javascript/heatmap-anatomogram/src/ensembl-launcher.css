@@ -8,8 +8,8 @@
 }
 
 #ensembl-launcher-box-ensembl label, #ensembl-launcher-box-gramene label {
-    font-weight: bold;
-    font-family: Helvetica, sans-serif;
+    font-weight: 400;
+    /*font-family: Helvetica, sans-serif;*/
     font-size: 14px;
 }
 
@@ -20,6 +20,6 @@
 }
 
 .gxaEnsemblGrameneLauncherHeader {
-
+    text-align: center;
     padding-bottom: 6px;
 }
