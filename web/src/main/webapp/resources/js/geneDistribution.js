@@ -103,7 +103,7 @@ var geneDistribution = (function ($) {
 
         "use strict";
 
-        var isDisplayEnabled = $("#prefForm #displayGeneDistribution").val();
+        var isDisplayEnabled = $("#prefForm").find("#displayGeneDistribution").val();
 
         if (isDisplayEnabled === "true") {
             displayGeneDistribution(isFast);
@@ -119,11 +119,13 @@ var geneDistribution = (function ($) {
 
         $("#gxaDisplayChart").button().click(function () {
 
-            var isDisplayEnabled = $("#prefForm #displayGeneDistribution").val();
+            var $prefFormDisplayGeneDistribution = $("#prefForm").find("#displayGeneDistribution");
+
+            var isDisplayEnabled = $prefFormDisplayGeneDistribution.val();
             if (isDisplayEnabled === "true") {
-                $("#prefForm #displayGeneDistribution").val("false");
+                $prefFormDisplayGeneDistribution.val("false");
             } else {
-                $("#prefForm #displayGeneDistribution").val("true");
+                $prefFormDisplayGeneDistribution.val("true");
             }
 
             hideOrDisplayGeneDistribution(false);
@@ -177,15 +179,18 @@ var geneDistribution = (function ($) {
     }
 
     function showBarChartTooltip(x, y, contents) {
-        "use strict";
-
-        $("#gxaBarChartTooltip").text(contents).css({
-            display: 'block',
+        $('<div class="gxaBarChartTooltip">' + contents + '</div>').css( {
             position: 'absolute',
-            'z-index': 1,
-            top: y - 280,
-            left: x - 292 - contents.length / 2
-        });
+            display: 'none',
+            top:  y - 30,
+            left: contents.length > 3 ? x - contents.length * 2 : x - contents.length,
+            border: '2px solid gold',
+            "border-radius": 4,
+            padding: 2,
+            "font-family": 'Verdana, Helvetica, Arial, sans-serif',
+            "font-size": 'smaller',
+            "background-color": 'blanchedalmond',
+        }).appendTo("body").fadeIn(200);
     }
 
     function loadSliderAndPlot(cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors, accesskey, buildLegendText) {
@@ -247,7 +252,7 @@ var geneDistribution = (function ($) {
                             }
                         }
                         else {
-                            $("#gxaBarChartTooltip").css({display: 'none'});
+                            $(".gxaBarChartTooltip").remove();
                         }
 
 

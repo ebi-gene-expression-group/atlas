@@ -138,7 +138,6 @@
 
     <div style="padding-top: 15px;">
         <div id="gxaGeneDistributionPanel">
-            <div class="gxaExperimentRequestPreferencesBarchartTooltip" id="gxaBarChartTooltip"></div>
             <div id="gene-distribution" style="height: 100px; width: 98%; display: inline-block;">
             </div>
             <span data-help-loc="#gene-distribution" style="vertical-align: top"></span>
