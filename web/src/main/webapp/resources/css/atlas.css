@@ -11,6 +11,10 @@
     padding: 5px; /* overrides ebi-visual.css */
 }
 
+.gxaBody form label {
+    margin-right: 0;
+}
+
 #local-title a {
     color: black !important;
     text-shadow: none !important;
