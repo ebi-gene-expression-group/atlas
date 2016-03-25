@@ -9,7 +9,7 @@ webpackJsonp_name_([3],[
 
 	exports.baseline = __webpack_require__(861);
 
-	exports.differential = __webpack_require__(1119);
+	exports.differential = __webpack_require__(1150);
 
 
 /***/ },
@@ -1121,163 +1121,163 @@ webpackJsonp_name_([3],[
 
 /***/ },
 /* 862 */
-[1145, 863],
+[1336, 863],
 /* 863 */
-[1146, 864, 1008, 1012, 899, 1017],
+[1337, 864, 1008, 1012, 899, 1017],
 /* 864 */
-[1147, 865, 866, 931, 905, 888, 878, 910, 914, 1006, 951, 1007, 885, 869],
+[1338, 865, 866, 931, 905, 888, 878, 910, 914, 1006, 951, 1007, 885, 869],
 /* 865 */
 170,
 /* 866 */
-[1148, 867, 882, 886, 888, 899, 881, 880, 930],
+[1339, 867, 882, 886, 888, 899, 881, 880, 930],
 /* 867 */
-[1149, 868, 876, 878, 879, 880, 873],
+[1340, 868, 876, 878, 879, 880, 873],
 /* 868 */
-[1150, 869, 870, 875, 874, 873],
+[1341, 869, 870, 875, 874, 873],
 /* 869 */
 174,
 /* 870 */
-[1151, 869, 871, 874, 873],
+[1342, 869, 871, 874, 873],
 /* 871 */
-[1152, 872],
+[1343, 872],
 /* 872 */
-[1153, 873],
+[1344, 873],
 /* 873 */
 178,
 /* 874 */
-[1154, 869, 873],
+[1345, 869, 873],
 /* 875 */
 180,
 /* 876 */
-[1155, 877],
+[1346, 877],
 /* 877 */
-[1156, 873],
+[1347, 873],
 /* 878 */
 183,
 /* 879 */
-[1157, 869],
+[1348, 869],
 /* 880 */
-[1158, 869, 881, 879],
+[1349, 869, 881, 879],
 /* 881 */
 186,
 /* 882 */
-[1159, 883, 878, 884, 885],
+[1350, 883, 878, 884, 885],
 /* 883 */
-[1160, 873],
+[1351, 873],
 /* 884 */
-[1161, 881],
+[1352, 881],
 /* 885 */
-[1162, 875],
+[1353, 875],
 /* 886 */
-[1163, 887, 888],
+[1354, 887, 888],
 /* 887 */
-[1164, 867, 882, 888, 878, 873],
+[1355, 867, 882, 888, 878, 873],
 /* 888 */
-[1165, 883, 889, 865, 901, 902, 904, 905, 907, 908, 878, 910, 913, 914, 899, 918, 919, 922, 873, 879, 927, 930, 885],
+[1356, 883, 889, 865, 901, 902, 904, 905, 907, 908, 878, 910, 913, 914, 899, 918, 919, 922, 873, 879, 927, 930, 885],
 /* 889 */
-[1166, 890, 891, 892, 897, 878, 898, 899, 900],
+[1357, 890, 891, 892, 897, 878, 898, 899, 900],
 /* 890 */
-[1167, 877],
+[1358, 877],
 /* 891 */
-[1168, 892, 893, 894, 895, 896, 873, 885],
+[1359, 892, 893, 894, 895, 896, 873, 885],
 /* 892 */
-[1169, 873],
+[1360, 873],
 /* 893 */
-[1170, 890, 894, 873, 885],
+[1361, 890, 894, 873, 885],
 /* 894 */
 199,
 /* 895 */
-[1171, 873],
+[1362, 873],
 /* 896 */
 201,
 /* 897 */
-[1172, 891],
+[1363, 891],
 /* 898 */
 203,
 /* 899 */
 204,
 /* 900 */
-[1173, 869],
+[1364, 869],
 /* 901 */
 206,
 /* 902 */
-[1174, 865, 899, 903],
+[1365, 865, 899, 903],
 /* 903 */
 208,
 /* 904 */
 209,
 /* 905 */
-[1175, 906, 873],
+[1366, 906, 873],
 /* 906 */
 211,
 /* 907 */
 212,
 /* 908 */
-[1176, 909],
+[1367, 909],
 /* 909 */
 214,
 /* 910 */
-[1177, 911],
+[1368, 911],
 /* 911 */
-[1178, 912],
+[1369, 912],
 /* 912 */
-[1179, 873],
+[1370, 873],
 /* 913 */
-[1180, 865, 902, 907, 914, 899, 873, 885],
+[1371, 865, 902, 907, 914, 899, 873, 885],
 /* 914 */
-[1181, 915, 916, 878, 910, 917, 899, 873],
+[1372, 915, 916, 878, 910, 917, 899, 873],
 /* 915 */
-[1182, 916, 899, 873],
+[1373, 916, 899, 873],
 /* 916 */
-[1183, 873],
+[1374, 873],
 /* 917 */
-[1184, 873],
+[1375, 873],
 /* 918 */
 223,
 /* 919 */
-[1185, 920],
+[1376, 920],
 /* 920 */
-[1186, 921],
+[1377, 921],
 /* 921 */
 226,
 /* 922 */
-[1187, 923, 928, 929, 899, 873, 885],
+[1378, 923, 928, 929, 899, 873, 885],
 /* 923 */
-[1188, 924, 865, 902, 907, 878, 925, 926, 910, 913, 899, 918, 873, 927, 885],
+[1379, 924, 865, 902, 907, 878, 925, 926, 910, 913, 899, 918, 873, 927, 885],
 /* 924 */
-[1189, 873],
+[1380, 873],
 /* 925 */
-[1190, 877],
+[1381, 877],
 /* 926 */
 231,
 /* 927 */
 232,
 /* 928 */
-[1191, 902, 904, 910, 899],
+[1382, 902, 904, 910, 899],
 /* 929 */
-[1192, 899, 873],
+[1383, 899, 873],
 /* 930 */
-[1193, 899, 875, 885],
+[1384, 899, 875, 885],
 /* 931 */
-[1194, 932, 940, 943, 944, 945, 869, 949, 950, 886, 952, 953, 866, 978, 981, 905, 888, 985, 990, 991, 992, 1001, 1002],
+[1385, 932, 940, 943, 944, 945, 869, 949, 950, 886, 952, 953, 866, 978, 981, 905, 888, 985, 990, 991, 992, 1001, 1002],
 /* 932 */
-[1195, 890, 933, 869, 934, 936, 938, 939],
+[1386, 890, 933, 869, 934, 936, 938, 939],
 /* 933 */
-[1196, 890, 891, 885, 895, 896],
+[1387, 890, 891, 885, 895, 896],
 /* 934 */
-[1197, 916, 899, 935],
+[1388, 916, 899, 935],
 /* 935 */
-[1198, 869],
+[1389, 869],
 /* 936 */
-[1199, 937],
+[1390, 937],
 /* 937 */
-[1200, 916, 899, 875, 885],
+[1391, 916, 899, 875, 885],
 /* 938 */
-[1201, 937],
+[1392, 937],
 /* 939 */
 244,
 /* 940 */
-[1202, 890, 891, 933, 869, 914, 937, 941, 900, 942, 939],
+[1393, 890, 891, 933, 869, 914, 937, 941, 900, 942, 939],
 /* 941 */
 246,
 /* 942 */
@@ -1285,41 +1285,41 @@ webpackJsonp_name_([3],[
 /* 943 */
 248,
 /* 944 */
-[1203, 939],
+[1394, 939],
 /* 945 */
-[1204, 890, 933, 946, 888, 939],
+[1395, 890, 933, 946, 888, 939],
 /* 946 */
-[1205, 947, 898, 948],
+[1396, 947, 898, 948],
 /* 947 */
-[1206, 937, 941],
+[1397, 937, 941],
 /* 948 */
 253,
 /* 949 */
-[1207, 883, 869],
+[1398, 883, 869],
 /* 950 */
-[1208, 907, 951, 885],
+[1399, 907, 951, 885],
 /* 951 */
-[1209, 865, 907, 888, 873, 885],
+[1400, 865, 907, 888, 873, 885],
 /* 952 */
-[1210, 914, 917, 899, 875],
+[1401, 914, 917, 899, 875],
 /* 953 */
-[1211, 954, 956, 883, 882, 890, 889, 886, 964, 965, 969, 972, 973, 888, 974, 878, 913, 899, 903, 881, 873, 900, 939, 879, 880, 977, 930, 885],
+[1402, 954, 956, 883, 882, 890, 889, 886, 964, 965, 969, 972, 973, 888, 974, 878, 913, 899, 903, 881, 873, 900, 939, 879, 880, 977, 930, 885],
 /* 954 */
-[1212, 888, 951, 955],
+[1403, 888, 951, 955],
 /* 955 */
 260,
 /* 956 */
-[1213, 957, 869, 878, 958, 960, 961, 963, 885],
+[1404, 957, 869, 878, 958, 960, 961, 963, 885],
 /* 957 */
 262,
 /* 958 */
-[1214, 959],
+[1405, 959],
 /* 959 */
 264,
 /* 960 */
-[1215, 957],
+[1406, 957],
 /* 961 */
-[1216, 962],
+[1407, 962],
 /* 962 */
 267,
 /* 963 */
@@ -1327,119 +1327,119 @@ webpackJsonp_name_([3],[
 /* 964 */
 269,
 /* 965 */
-[1217, 887, 966, 888, 914, 899, 873],
+[1408, 887, 966, 888, 914, 899, 873],
 /* 966 */
-[1218, 967, 925, 873, 885],
+[1409, 967, 925, 873, 885],
 /* 967 */
-[1219, 902, 926, 875, 968],
+[1410, 902, 926, 875, 968],
 /* 968 */
 273,
 /* 969 */
-[1220, 970, 972, 899, 885],
+[1411, 970, 972, 899, 885],
 /* 970 */
-[1221, 916, 902, 875, 971],
+[1412, 916, 902, 875, 971],
 /* 971 */
-[1222, 865, 902, 905, 968, 873, 885],
+[1413, 865, 902, 905, 968, 873, 885],
 /* 972 */
-[1223, 966, 888, 914, 899, 885],
+[1414, 966, 888, 914, 899, 885],
 /* 973 */
-[1224, 966, 887, 914, 899, 873, 885],
+[1415, 966, 887, 914, 899, 873, 885],
 /* 974 */
-[1225, 924, 876, 865, 910, 975, 976],
+[1416, 924, 876, 865, 910, 975, 976],
 /* 975 */
-[1226, 910, 922, 927, 971, 885],
+[1417, 910, 922, 927, 971, 885],
 /* 976 */
-[1227, 971, 885],
+[1418, 971, 885],
 /* 977 */
 282,
 /* 978 */
-[1228, 979, 869, 916, 905, 888, 914, 899, 941, 980],
+[1419, 979, 869, 916, 905, 888, 914, 899, 941, 980],
 /* 979 */
-[1229, 875],
+[1420, 875],
 /* 980 */
 285,
 /* 981 */
-[1230, 883, 891, 924, 982, 928, 889, 929, 878, 906, 914],
+[1421, 883, 891, 924, 982, 928, 889, 929, 878, 906, 914],
 /* 982 */
-[1231, 983, 902, 925, 926, 984, 899, 918, 873, 877, 939, 885],
+[1422, 983, 902, 925, 926, 984, 899, 918, 873, 877, 939, 885],
 /* 983 */
-[1232, 984, 903, 918, 873, 885],
+[1423, 984, 903, 918, 873, 885],
 /* 984 */
-[1233, 885],
+[1424, 885],
 /* 985 */
-[1234, 915, 916, 889, 901, 986, 917, 899],
+[1425, 915, 916, 889, 901, 986, 917, 899],
 /* 986 */
-[1235, 987, 919, 955, 989],
+[1426, 987, 919, 955, 989],
 /* 987 */
-[1236, 869, 988, 935],
+[1427, 869, 988, 935],
 /* 988 */
 293,
 /* 989 */
 294,
 /* 990 */
-[1237, 890, 933, 869, 986, 937, 989, 942, 939, 977],
+[1428, 890, 933, 869, 986, 937, 989, 942, 939, 977],
 /* 991 */
 296,
 /* 992 */
-[1238, 890, 979, 933, 888, 993, 937, 994, 995, 946, 998, 999, 947, 1000, 875, 996, 873, 939],
+[1429, 890, 979, 933, 888, 993, 937, 994, 995, 946, 998, 999, 947, 1000, 875, 996, 873, 939],
 /* 993 */
-[1239, 937],
+[1430, 937],
 /* 994 */
-[1240, 947],
+[1431, 947],
 /* 995 */
-[1241, 947, 996, 997, 948],
+[1432, 947, 996, 997, 948],
 /* 996 */
 301,
 /* 997 */
-[1242, 996],
+[1433, 996],
 /* 998 */
-[1243, 946],
+[1434, 946],
 /* 999 */
-[1244, 947, 948],
+[1435, 947, 948],
 /* 1000 */
-[1245, 946],
+[1436, 946],
 /* 1001 */
-[1246, 883],
+[1437, 883],
 /* 1002 */
-[1247, 883, 1003, 888, 878, 1004],
+[1438, 883, 1003, 888, 878, 1004],
 /* 1003 */
-[1248, 899],
+[1439, 899],
 /* 1004 */
-[1249, 1005],
+[1440, 1005],
 /* 1005 */
-[1250, 869],
+[1441, 869],
 /* 1006 */
 311,
 /* 1007 */
-[1251, 888],
+[1442, 888],
 /* 1008 */
-[1252, 931, 1009, 1006],
+[1443, 931, 1009, 1006],
 /* 1009 */
-[1253, 952, 902, 905, 908, 1010, 1011, 914, 918, 922, 873],
+[1444, 952, 902, 905, 908, 1010, 1011, 914, 918, 922, 873],
 /* 1010 */
 315,
 /* 1011 */
-[1254, 916, 915, 917, 899, 875],
+[1445, 916, 915, 917, 899, 875],
 /* 1012 */
-[1255, 970, 983, 982, 1013, 902, 1014, 967, 1006, 899, 1016],
+[1446, 970, 983, 982, 1013, 902, 1014, 967, 1006, 899, 1016],
 /* 1013 */
-[1256, 902, 1014, 1015],
+[1447, 902, 1014, 1015],
 /* 1014 */
-[1257, 902, 925, 926, 865, 903, 968, 873, 885],
+[1448, 902, 925, 926, 865, 903, 968, 873, 885],
 /* 1015 */
 320,
 /* 1016 */
-[1258, 902, 873],
+[1449, 902, 873],
 /* 1017 */
-[1259, 899, 885],
+[1450, 899, 885],
 /* 1018 */
-[1260, 864],
+[1451, 864],
 /* 1019 */
 569,
 /* 1020 */
-[1282, 1019],
+[1473, 1019],
 /* 1021 */
-[1286, 1022, 1023, 1024],
+[1477, 1022, 1023, 1024],
 /* 1022 */
 577,
 /* 1023 */
@@ -2116,7 +2116,7 @@ webpackJsonp_name_([3],[
 
 	var HeatmapAnatomogramContainer = __webpack_require__(1034);
 
-	var ExperimentTypes = __webpack_require__(1116);
+	var ExperimentTypes = __webpack_require__(1147);
 
 	//*------------------------------------------------------------------*
 
@@ -2138,10 +2138,6 @@ webpackJsonp_name_([3],[
 	    var protocol = window.location.protocol + "//",
 	        atlasHost = options.atlasHost === undefined ? "www.ebi.ac.uk" : options.atlasHost,
 	        atlasPath = "/gxa";
-
-	    if (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://" === 0)) {
-
-	    }
 
 	    var linksAtlasBaseURL =
 	        (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://") === 0) ? atlasHost + atlasPath :
@@ -2199,11 +2195,11 @@ webpackJsonp_name_([3],[
 	var Anatomogram = __webpack_require__(1037);
 	var Heatmap = __webpack_require__(1042);
 	var ExperimentsList = __webpack_require__(1115);
-	var ExperimentTypes = __webpack_require__(1116);
+	var ExperimentTypes = __webpack_require__(1147);
 
 	//*------------------------------------------------------------------*
 
-	__webpack_require__(1117);
+	__webpack_require__(1148);
 
 	//*------------------------------------------------------------------*
 
@@ -2433,9 +2429,9 @@ webpackJsonp_name_([3],[
 
 /***/ },
 /* 1035 */
-[1283, 1019],
+[1474, 1019],
 /* 1036 */
-[1284, 1019],
+[1475, 1019],
 /* 1037 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2792,9 +2788,9 @@ webpackJsonp_name_([3],[
 
 /***/ },
 /* 1039 */
-[1284, 1019],
+[1475, 1019],
 /* 1040 */
-[1281, 1019],
+[1472, 1019],
 /* 1041 */
 584,
 /* 1042 */
@@ -4088,7 +4084,7 @@ webpackJsonp_name_([3],[
 
 /***/ },
 /* 1044 */
-[1261, 862],
+[1452, 862],
 /* 1045 */
 583,
 /* 1046 */
@@ -4170,7 +4166,7 @@ webpackJsonp_name_([3],[
 
 /***/ },
 /* 1055 */
-[1285, 1019],
+[1476, 1019],
 /* 1056 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -4356,7 +4352,7 @@ webpackJsonp_name_([3],[
 
 /***/ },
 /* 1062 */
-[1287, 862, 1063],
+[1478, 862, 1063],
 /* 1063 */
 587,
 /* 1064 */
@@ -4537,13 +4533,13 @@ webpackJsonp_name_([3],[
 
 /***/ },
 /* 1070 */
-[1141, 1071],
+[1332, 1071],
 /* 1071 */
-[1142, 1072, 1073],
+[1333, 1072, 1073],
 /* 1072 */
-[1283, 1019],
+[1474, 1019],
 /* 1073 */
-[1143, 1074],
+[1334, 1074],
 /* 1074 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -4661,7 +4657,7 @@ webpackJsonp_name_([3],[
 
 /***/ },
 /* 1078 */
-[1144, 1079],
+[1335, 1079],
 /* 1079 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -4825,7 +4821,7 @@ webpackJsonp_name_([3],[
 
 /***/ },
 /* 1082 */
-[1144, 1083],
+[1335, 1083],
 /* 1083 */
 1079,
 /* 1084 */
@@ -4958,9 +4954,7 @@ webpackJsonp_name_([3],[
 	    },
 
 	    render: function () {
-	        var style = {
-	            textAlign: "center"
-	        };
+	        var style = {};
 	        if (this.props.width) {
 	            style.width = this.props.width;
 	        }
@@ -4987,17 +4981,17 @@ webpackJsonp_name_([3],[
 
 /***/ },
 /* 1090 */
-[1144, 1091],
+[1335, 1091],
 /* 1091 */
 1079,
 /* 1092 */
-[1141, 1093],
+[1332, 1093],
 /* 1093 */
-[1142, 1094, 1095],
+[1333, 1094, 1095],
 /* 1094 */
-[1283, 1019],
+[1474, 1019],
 /* 1095 */
-[1143, 1096],
+[1334, 1096],
 /* 1096 */
 1074,
 /* 1097 */
@@ -5094,7 +5088,7 @@ webpackJsonp_name_([3],[
 
 /***/ },
 /* 1099 */
-[1283, 1019],
+[1474, 1019],
 /* 1100 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -5811,7 +5805,7 @@ webpackJsonp_name_([3],[
 
 
 	// module
-	exports.push([module.id, ".gxaHeatmapMatrixTopLeftCorner {\n    position: relative;\n    display: table;\n    height: 110px;\n    width: 100%;\n    min-width: 160px;\n}\n\n.gxaTableGrid {\n    color: #404040;\n    background-color: white;\n    border: 1px solid #cdcdcd !important;\n    border-spacing: 0;\n    empty-cells: show;\n    height: 100%;\n    text-align: left;\n    width: auto;\n    border-collapse: collapse;\n}\n\n.gxaTableGrid>tbody>tr>td, .gxaTableGrid>thead>tr>td {\n    color: #3D3D3D;\n    vertical-align: middle;\n    border: 1px solid #cdcdcd !important;\n    height: 25px;\n    width: 25px;\n    white-space: nowrap;\n}\n\nth.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {\n    font-weight: normal;\n    background-color: rgb(237, 246, 246) !important;\n}\n\nth.gxaHoverableHeader:hover, th.gxaHeaderHover {\n    background-color: #deebeb !important;\n}\n\nth.gxaSelectableHeader:hover {\n    cursor: pointer;\n}\n\nth.gxaVerticalHeaderCell-selected, th.gxaVerticalHeaderCell-selected:hover, th.gxaHorizontalHeaderCell-selected, th.gxaHorizontalHeaderCell-selected:hover {\n    background-color: rgb(181, 234, 234) !important;\n    border: 1px solid #cdcdcd;\n    padding:5px;\n}\n\nth.gxaHorizontalHeaderCell {\n    border: 1px solid #cdcdcd;\n    white-space: nowrap;\n    padding:5px;\n    text-align: left !important;\n}\n\ntr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell {\n    background-color: rgb(210, 233, 233) !important;\n}\n\ntr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell:hover {\n    background-color: rgb(200, 220, 220) !important;\n}\n\n.gxaHeatmapCell {\n    font-size: 9px;\n    background-color: white;\n    margin: 4px;\n    padding: 2px;\n    white-space: nowrap;\n    text-align: center;\n}\n\nth.gxaHeatmapTableDesignElement {\n    font-weight: normal;\n    text-align: left;\n    border: 1px solid #CDCDCD;\n}\n\n.gxaHeatmapCountAndLegend {\n    background: white;\n}\n\n.csstransforms .rotated_cell {\n    height: 130px;\n    border: 1px solid #cdcdcd;\n    vertical-align: bottom;\n    padding-bottom: 10px\n}\n\n.csstransforms .rotate_text {\n    position: relative;\n    top: 27px;\n    width: 25px;\n    padding-top: 5px;\n    white-space: nowrap;\n    -moz-transform: rotate(-90deg);\n    -moz-transform-origin: top left;\n    -ms-transform: rotate(-90deg);\n    -ms-transform-origin: top left;\n    -webkit-transform: rotate(-90deg);\n    -webkit-transform-origin: top left;\n    -o-transform: rotate(-90deg);\n    -o-transform-origin: top left;\n}\n\n.csstransforms .rotate_tick {\n    -moz-transform: rotate(-270deg);\n    -webkit-transform: rotate(-270deg);\n    -ms-transform: rotate(-270deg);\n    -o-transform: rotate(-270deg);\n}\n\n.gxaNoTextButton .ui-button-text {\n    padding: 2px;\n}", ""]);
+	exports.push([module.id, ".gxaHeatmapMatrixTopLeftCorner {\n    position: relative;\n    display: table;\n    height: 110px;\n    width: 100%;\n    min-width: 160px;\n}\n\n.gxaTableGrid {\n    color: #404040;\n    background-color: white;\n    border: 1px solid #cdcdcd !important;\n    border-spacing: 0;\n    empty-cells: show;\n    height: 100%;\n    text-align: left;\n    width: auto;\n    border-collapse: collapse;\n}\n\n.gxaTableGrid>tbody>tr>td, .gxaTableGrid>thead>tr>td {\n    color: #3D3D3D;\n    vertical-align: middle;\n    border: 1px solid #cdcdcd !important;\n    height: 25px;\n    width: 25px;\n    white-space: nowrap;\n}\n\nth.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {\n    font-weight: normal;\n    background-color: rgb(237, 246, 246) !important;\n}\n\nth.gxaHoverableHeader:hover, th.gxaHeaderHover {\n    background-color: #deebeb !important;\n}\n\nth.gxaSelectableHeader:hover {\n    cursor: pointer;\n}\n\nth.gxaVerticalHeaderCell-selected, th.gxaVerticalHeaderCell-selected:hover, th.gxaHorizontalHeaderCell-selected, th.gxaHorizontalHeaderCell-selected:hover {\n    background-color: rgb(181, 234, 234) !important;\n    border: 1px solid #cdcdcd;\n    padding:5px;\n}\n\nth.gxaHorizontalHeaderCell {\n    border: 1px solid #cdcdcd;\n    white-space: nowrap;\n    padding:5px;\n    text-align: left !important;\n}\n\ntr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell {\n    background-color: rgb(210, 233, 233) !important;\n}\n\ntr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell:hover {\n    background-color: rgb(200, 220, 220) !important;\n}\n\n.gxaHeatmapCell {\n    font-size: 9px;\n    background-color: white;\n    margin: 4px;\n    padding: 2px;\n    white-space: nowrap;\n    text-align: center;\n}\n\nth.gxaHeatmapTableDesignElement {\n    font-weight: normal;\n    text-align: left;\n    border: 1px solid #CDCDCD;\n}\n\n.gxaHeatmapCountAndLegend {\n    background: white;\n}\n\n.csstransforms .rotated_cell {\n    height: 130px;\n    border: 1px solid #cdcdcd;\n    vertical-align: bottom;\n    padding-bottom: 10px\n}\n\n.csstransforms .rotate_text {\n    position: relative;\n    top: 27px;\n    width: 25px;\n    padding-top: 5px;\n    white-space: nowrap;\n    -moz-transform: rotate(-90deg);\n    -moz-transform-origin: top left;\n    -ms-transform: rotate(-90deg);\n    -ms-transform-origin: top left;\n    -webkit-transform: rotate(-90deg);\n    -webkit-transform-origin: top left;\n    -o-transform: rotate(-90deg);\n    -o-transform-origin: top left;\n}\n\n.csstransforms .rotate_tick {\n    -moz-transform: rotate(-270deg);\n    -webkit-transform: rotate(-270deg);\n    -ms-transform: rotate(-270deg);\n    -o-transform: rotate(-270deg);\n}\n\n.gxaNoTextButton {\n    border: 1px solid #ccc !important; /* overrides ebi-visual.css */\n}\n\n.gxaNoTextButton .ui-button-text {\n    padding: 2px;\n}", ""]);
 
 	// exports
 
@@ -5825,17 +5819,33 @@ webpackJsonp_name_([3],[
 	//*------------------------------------------------------------------*
 
 	var React = __webpack_require__(862);
+	var BootstrapButton = __webpack_require__(1116);
 
 	//*------------------------------------------------------------------*
 
 	var ExperimentsList = React.createClass({
-	    displayName: "ExperimentsList",
+	    displayName: 'ExperimentsList',
 
 	    propTypes: {
-	        profiles: React.PropTypes.object.isRequired,
+	        profiles: React.PropTypes.shape({
+	            rows: React.PropTypes.array.isRequired
+	        }).isRequired,
 	        atlasBaseURL: React.PropTypes.string.isRequired,
 	        linksAtlasBaseURL: React.PropTypes.string.isRequired,
 	        geneQuery: React.PropTypes.string.isRequired
+	    },
+
+	    getInitialState: function () {
+	        return { "displayAll": this.props.profiles.rows.length < 10 };
+	    },
+
+	    _getRowsToDisplay: function () {
+	        var rows = this.props.profiles.rows.sort(this._lexicalSort);
+	        return this.state.displayAll ? rows : rows.slice(0, 10);
+	    },
+
+	    _displayAll: function () {
+	        this.setState({ "displayAll": true });
 	    },
 
 	    _lexicalSort: function (thisProfile, thatProfile) {
@@ -5845,32 +5855,37 @@ webpackJsonp_name_([3],[
 	        if (thisProfile.name < thatProfile.name) {
 	            return -1;
 	        }
-	        // a must be equal to b
 	        return 0;
 	    },
 
+	    _renderListItem: function (profile) {
+	        var experimentURL = this.props.linksAtlasBaseURL + "/experiments/" + profile.id + "?geneQuery=" + this.props.geneQuery + (profile.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) : "");
+
+	        return React.createElement(
+	            'li',
+	            { key: profile.name },
+	            React.createElement(
+	                'a',
+	                { target: '_blank', href: experimentURL },
+	                profile.name
+	            )
+	        );
+	    },
+
 	    _renderListItems: function (options) {
-	        return options.profiles.sort(this._lexicalSort).map(function (profile) {
-
-	            var experimentURL = options.linksAtlasBaseURL + "/experiments/" + profile.id + "?geneQuery=" + options.geneQuery + (profile.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) : "");
-
-	            return React.createElement(
-	                "li",
-	                { key: profile.name },
-	                React.createElement(
-	                    "a",
-	                    { target: "_blank", href: experimentURL },
-	                    profile.name
-	                )
-	            );
-	        });
+	        return this._getRowsToDisplay().map(this._renderListItem);
 	    },
 
 	    render: function () {
 	        return React.createElement(
-	            "ul",
+	            'ul',
 	            { style: { listStyleType: "none", paddingLeft: "0" } },
-	            this._renderListItems({ profiles: this.props.profiles.rows, linksAtlasBaseURL: this.props.linksAtlasBaseURL, geneQuery: this.props.geneQuery })
+	            this._renderListItems(),
+	            this.state.displayAll ? React.createElement('a', null) : React.createElement(
+	                BootstrapButton,
+	                { bsStyle: 'default', bsSize: 'xsmall', onClick: this._displayAll },
+	                'More'
+	            )
 	        );
 	    }
 	});
@@ -5881,6 +5896,68 @@ webpackJsonp_name_([3],[
 
 /***/ },
 /* 1116 */
+[1470, 1117, 1133, 862, 1134, 1135, 1137, 1138],
+/* 1117 */
+[1454, 1118],
+/* 1118 */
+[1455, 1119],
+/* 1119 */
+[1456, 1120, 1123],
+/* 1120 */
+[1457, 1121, 1126],
+/* 1121 */
+[1458, 1122, 1123, 1124],
+/* 1122 */
+338,
+/* 1123 */
+339,
+/* 1124 */
+[1459, 1125],
+/* 1125 */
+341,
+/* 1126 */
+[1460, 1127, 1128, 1130, 1132],
+/* 1127 */
+343,
+/* 1128 */
+[1461, 1129],
+/* 1129 */
+345,
+/* 1130 */
+[1462, 1131],
+/* 1131 */
+347,
+/* 1132 */
+348,
+/* 1133 */
+326,
+/* 1134 */
+361,
+/* 1135 */
+[1471, 862, 1136],
+/* 1136 */
+377,
+/* 1137 */
+[1453, 1117, 1133, 862, 1138, 1145, 1146],
+/* 1138 */
+[1463, 1118, 1139, 1141],
+/* 1139 */
+[1464, 1140],
+/* 1140 */
+[1465, 1127],
+/* 1141 */
+[1466, 1142],
+/* 1142 */
+[1467, 1143, 1123],
+/* 1143 */
+[1468, 1128, 1144],
+/* 1144 */
+[1469, 1121, 1123, 1132],
+/* 1145 */
+356,
+/* 1146 */
+357,
+/* 1147 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5896,13 +5973,13 @@ webpackJsonp_name_([3],[
 
 
 /***/ },
-/* 1117 */
+/* 1148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(1118);
+	var content = __webpack_require__(1149);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(1029)(content, {});
@@ -5922,7 +5999,7 @@ webpackJsonp_name_([3],[
 	}
 
 /***/ },
-/* 1118 */
+/* 1149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1028)();
@@ -5936,7 +6013,7 @@ webpackJsonp_name_([3],[
 
 
 /***/ },
-/* 1119 */
+/* 1150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5953,8 +6030,8 @@ webpackJsonp_name_([3],[
 
 	//*------------------------------------------------------------------*
 
-	var DifferentialFacetsTree = __webpack_require__(1120);
-	var DifferentialResults = __webpack_require__(1121);
+	var DifferentialFacetsTree = __webpack_require__(1151);
+	var DifferentialResults = __webpack_require__(1152);
 
 	//*------------------------------------------------------------------*
 
@@ -6251,7 +6328,7 @@ webpackJsonp_name_([3],[
 
 
 /***/ },
-/* 1120 */
+/* 1151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6428,7 +6505,7 @@ webpackJsonp_name_([3],[
 	module.exports = DifferentialFacetsTree;
 
 /***/ },
-/* 1121 */
+/* 1152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6443,7 +6520,7 @@ webpackJsonp_name_([3],[
 	var DisplayLevelsButton = __webpack_require__(1088);
 	var Legend = __webpack_require__(1065).LegendDifferential;
 	var CellDifferential = __webpack_require__(1080);
-	var DownloadDifferentialButton = __webpack_require__(1122);
+	var DownloadDifferentialButton = __webpack_require__(1153);
 
 	//*------------------------------------------------------------------*
 
@@ -6451,7 +6528,7 @@ webpackJsonp_name_([3],[
 
 	//*------------------------------------------------------------------*
 
-	__webpack_require__(1123);
+	__webpack_require__(1154);
 
 	//*------------------------------------------------------------------*
 
@@ -6735,7 +6812,7 @@ webpackJsonp_name_([3],[
 	module.exports = DifferentialResults;
 
 /***/ },
-/* 1122 */
+/* 1153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6845,13 +6922,13 @@ webpackJsonp_name_([3],[
 	module.exports = DownloadDifferentialButton;
 
 /***/ },
-/* 1123 */
+/* 1154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(1124);
+	var content = __webpack_require__(1155);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(1029)(content, {});
@@ -6871,7 +6948,7 @@ webpackJsonp_name_([3],[
 	}
 
 /***/ },
-/* 1124 */
+/* 1155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1028)();
@@ -6885,23 +6962,183 @@ webpackJsonp_name_([3],[
 
 
 /***/ },
-/* 1125 */,
-/* 1126 */,
-/* 1127 */,
-/* 1128 */,
-/* 1129 */,
-/* 1130 */,
-/* 1131 */,
-/* 1132 */,
-/* 1133 */,
-/* 1134 */,
-/* 1135 */,
-/* 1136 */,
-/* 1137 */,
-/* 1138 */,
-/* 1139 */,
-/* 1140 */,
-/* 1141 */
+/* 1156 */,
+/* 1157 */,
+/* 1158 */,
+/* 1159 */,
+/* 1160 */,
+/* 1161 */,
+/* 1162 */,
+/* 1163 */,
+/* 1164 */,
+/* 1165 */,
+/* 1166 */,
+/* 1167 */,
+/* 1168 */,
+/* 1169 */,
+/* 1170 */,
+/* 1171 */,
+/* 1172 */,
+/* 1173 */,
+/* 1174 */,
+/* 1175 */,
+/* 1176 */,
+/* 1177 */,
+/* 1178 */,
+/* 1179 */,
+/* 1180 */,
+/* 1181 */,
+/* 1182 */,
+/* 1183 */,
+/* 1184 */,
+/* 1185 */,
+/* 1186 */,
+/* 1187 */,
+/* 1188 */,
+/* 1189 */,
+/* 1190 */,
+/* 1191 */,
+/* 1192 */,
+/* 1193 */,
+/* 1194 */,
+/* 1195 */,
+/* 1196 */,
+/* 1197 */,
+/* 1198 */,
+/* 1199 */,
+/* 1200 */,
+/* 1201 */,
+/* 1202 */,
+/* 1203 */,
+/* 1204 */,
+/* 1205 */,
+/* 1206 */,
+/* 1207 */,
+/* 1208 */,
+/* 1209 */,
+/* 1210 */,
+/* 1211 */,
+/* 1212 */,
+/* 1213 */,
+/* 1214 */,
+/* 1215 */,
+/* 1216 */,
+/* 1217 */,
+/* 1218 */,
+/* 1219 */,
+/* 1220 */,
+/* 1221 */,
+/* 1222 */,
+/* 1223 */,
+/* 1224 */,
+/* 1225 */,
+/* 1226 */,
+/* 1227 */,
+/* 1228 */,
+/* 1229 */,
+/* 1230 */,
+/* 1231 */,
+/* 1232 */,
+/* 1233 */,
+/* 1234 */,
+/* 1235 */,
+/* 1236 */,
+/* 1237 */,
+/* 1238 */,
+/* 1239 */,
+/* 1240 */,
+/* 1241 */,
+/* 1242 */,
+/* 1243 */,
+/* 1244 */,
+/* 1245 */,
+/* 1246 */,
+/* 1247 */,
+/* 1248 */,
+/* 1249 */,
+/* 1250 */,
+/* 1251 */,
+/* 1252 */,
+/* 1253 */,
+/* 1254 */,
+/* 1255 */,
+/* 1256 */,
+/* 1257 */,
+/* 1258 */,
+/* 1259 */,
+/* 1260 */,
+/* 1261 */,
+/* 1262 */,
+/* 1263 */,
+/* 1264 */,
+/* 1265 */,
+/* 1266 */,
+/* 1267 */,
+/* 1268 */,
+/* 1269 */,
+/* 1270 */,
+/* 1271 */,
+/* 1272 */,
+/* 1273 */,
+/* 1274 */,
+/* 1275 */,
+/* 1276 */,
+/* 1277 */,
+/* 1278 */,
+/* 1279 */,
+/* 1280 */,
+/* 1281 */,
+/* 1282 */,
+/* 1283 */,
+/* 1284 */,
+/* 1285 */,
+/* 1286 */,
+/* 1287 */,
+/* 1288 */,
+/* 1289 */,
+/* 1290 */,
+/* 1291 */,
+/* 1292 */,
+/* 1293 */,
+/* 1294 */,
+/* 1295 */,
+/* 1296 */,
+/* 1297 */,
+/* 1298 */,
+/* 1299 */,
+/* 1300 */,
+/* 1301 */,
+/* 1302 */,
+/* 1303 */,
+/* 1304 */,
+/* 1305 */,
+/* 1306 */,
+/* 1307 */,
+/* 1308 */,
+/* 1309 */,
+/* 1310 */,
+/* 1311 */,
+/* 1312 */,
+/* 1313 */,
+/* 1314 */,
+/* 1315 */,
+/* 1316 */,
+/* 1317 */,
+/* 1318 */,
+/* 1319 */,
+/* 1320 */,
+/* 1321 */,
+/* 1322 */,
+/* 1323 */,
+/* 1324 */,
+/* 1325 */,
+/* 1326 */,
+/* 1327 */,
+/* 1328 */,
+/* 1329 */,
+/* 1330 */,
+/* 1331 */,
+/* 1332 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	"use strict";
@@ -6912,7 +7149,7 @@ webpackJsonp_name_([3],[
 
 
 /***/ },
-/* 1142 */
+/* 1333 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	"use strict";
@@ -6990,7 +7227,7 @@ webpackJsonp_name_([3],[
 	};
 
 /***/ },
-/* 1143 */
+/* 1334 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -7016,7 +7253,7 @@ webpackJsonp_name_([3],[
 	}
 
 /***/ },
-/* 1144 */
+/* 1335 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	"use strict";

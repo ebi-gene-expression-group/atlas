@@ -8,25 +8,25 @@ webpackJsonp_name_([4],{
 
 	//*------------------------------------------------------------------*
 
-	module.exports = __webpack_require__(1125);
+	module.exports = __webpack_require__(1156);
 
 
 /***/ },
 
-/***/ 1125:
+/***/ 1156:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var React = __webpack_require__(167);
-	var ReactDOM = __webpack_require__(323);
+	var React = __webpack_require__(1157);
+	var ReactDOM = __webpack_require__(1313);
 
-	var $ = __webpack_require__(569);
+	var $ = __webpack_require__(1314);
 	var jQuery = $;
 
 	//*------------------------------------------------------------------*
 
-	var HighchartsHeatmapContainer = __webpack_require__(1126);
+	var HighchartsHeatmapContainer = __webpack_require__(1315);
 
 	//*------------------------------------------------------------------*
 
@@ -75,22 +75,496 @@ webpackJsonp_name_([4],{
 
 /***/ },
 
-/***/ 1126:
+/***/ 1157:
+[1336, 1158],
+
+/***/ 1158:
+[1337, 1159, 1303, 1307, 1194, 1312],
+
+/***/ 1159:
+[1338, 1160, 1161, 1226, 1200, 1183, 1173, 1205, 1209, 1301, 1246, 1302, 1180, 1164],
+
+/***/ 1160:
+170,
+
+/***/ 1161:
+[1339, 1162, 1177, 1181, 1183, 1194, 1176, 1175, 1225],
+
+/***/ 1162:
+[1340, 1163, 1171, 1173, 1174, 1175, 1168],
+
+/***/ 1163:
+[1341, 1164, 1165, 1170, 1169, 1168],
+
+/***/ 1164:
+174,
+
+/***/ 1165:
+[1342, 1164, 1166, 1169, 1168],
+
+/***/ 1166:
+[1343, 1167],
+
+/***/ 1167:
+[1344, 1168],
+
+/***/ 1168:
+178,
+
+/***/ 1169:
+[1345, 1164, 1168],
+
+/***/ 1170:
+180,
+
+/***/ 1171:
+[1346, 1172],
+
+/***/ 1172:
+[1347, 1168],
+
+/***/ 1173:
+183,
+
+/***/ 1174:
+[1348, 1164],
+
+/***/ 1175:
+[1349, 1164, 1176, 1174],
+
+/***/ 1176:
+186,
+
+/***/ 1177:
+[1350, 1178, 1173, 1179, 1180],
+
+/***/ 1178:
+[1351, 1168],
+
+/***/ 1179:
+[1352, 1176],
+
+/***/ 1180:
+[1353, 1170],
+
+/***/ 1181:
+[1354, 1182, 1183],
+
+/***/ 1182:
+[1355, 1162, 1177, 1183, 1173, 1168],
+
+/***/ 1183:
+[1356, 1178, 1184, 1160, 1196, 1197, 1199, 1200, 1202, 1203, 1173, 1205, 1208, 1209, 1194, 1213, 1214, 1217, 1168, 1174, 1222, 1225, 1180],
+
+/***/ 1184:
+[1357, 1185, 1186, 1187, 1192, 1173, 1193, 1194, 1195],
+
+/***/ 1185:
+[1358, 1172],
+
+/***/ 1186:
+[1359, 1187, 1188, 1189, 1190, 1191, 1168, 1180],
+
+/***/ 1187:
+[1360, 1168],
+
+/***/ 1188:
+[1361, 1185, 1189, 1168, 1180],
+
+/***/ 1189:
+199,
+
+/***/ 1190:
+[1362, 1168],
+
+/***/ 1191:
+201,
+
+/***/ 1192:
+[1363, 1186],
+
+/***/ 1193:
+203,
+
+/***/ 1194:
+204,
+
+/***/ 1195:
+[1364, 1164],
+
+/***/ 1196:
+206,
+
+/***/ 1197:
+[1365, 1160, 1194, 1198],
+
+/***/ 1198:
+208,
+
+/***/ 1199:
+209,
+
+/***/ 1200:
+[1366, 1201, 1168],
+
+/***/ 1201:
+211,
+
+/***/ 1202:
+212,
+
+/***/ 1203:
+[1367, 1204],
+
+/***/ 1204:
+214,
+
+/***/ 1205:
+[1368, 1206],
+
+/***/ 1206:
+[1369, 1207],
+
+/***/ 1207:
+[1370, 1168],
+
+/***/ 1208:
+[1371, 1160, 1197, 1202, 1209, 1194, 1168, 1180],
+
+/***/ 1209:
+[1372, 1210, 1211, 1173, 1205, 1212, 1194, 1168],
+
+/***/ 1210:
+[1373, 1211, 1194, 1168],
+
+/***/ 1211:
+[1374, 1168],
+
+/***/ 1212:
+[1375, 1168],
+
+/***/ 1213:
+223,
+
+/***/ 1214:
+[1376, 1215],
+
+/***/ 1215:
+[1377, 1216],
+
+/***/ 1216:
+226,
+
+/***/ 1217:
+[1378, 1218, 1223, 1224, 1194, 1168, 1180],
+
+/***/ 1218:
+[1379, 1219, 1160, 1197, 1202, 1173, 1220, 1221, 1205, 1208, 1194, 1213, 1168, 1222, 1180],
+
+/***/ 1219:
+[1380, 1168],
+
+/***/ 1220:
+[1381, 1172],
+
+/***/ 1221:
+231,
+
+/***/ 1222:
+232,
+
+/***/ 1223:
+[1382, 1197, 1199, 1205, 1194],
+
+/***/ 1224:
+[1383, 1194, 1168],
+
+/***/ 1225:
+[1384, 1194, 1170, 1180],
+
+/***/ 1226:
+[1385, 1227, 1235, 1238, 1239, 1240, 1164, 1244, 1245, 1181, 1247, 1248, 1161, 1273, 1276, 1200, 1183, 1280, 1285, 1286, 1287, 1296, 1297],
+
+/***/ 1227:
+[1386, 1185, 1228, 1164, 1229, 1231, 1233, 1234],
+
+/***/ 1228:
+[1387, 1185, 1186, 1180, 1190, 1191],
+
+/***/ 1229:
+[1388, 1211, 1194, 1230],
+
+/***/ 1230:
+[1389, 1164],
+
+/***/ 1231:
+[1390, 1232],
+
+/***/ 1232:
+[1391, 1211, 1194, 1170, 1180],
+
+/***/ 1233:
+[1392, 1232],
+
+/***/ 1234:
+244,
+
+/***/ 1235:
+[1393, 1185, 1186, 1228, 1164, 1209, 1232, 1236, 1195, 1237, 1234],
+
+/***/ 1236:
+246,
+
+/***/ 1237:
+247,
+
+/***/ 1238:
+248,
+
+/***/ 1239:
+[1394, 1234],
+
+/***/ 1240:
+[1395, 1185, 1228, 1241, 1183, 1234],
+
+/***/ 1241:
+[1396, 1242, 1193, 1243],
+
+/***/ 1242:
+[1397, 1232, 1236],
+
+/***/ 1243:
+253,
+
+/***/ 1244:
+[1398, 1178, 1164],
+
+/***/ 1245:
+[1399, 1202, 1246, 1180],
+
+/***/ 1246:
+[1400, 1160, 1202, 1183, 1168, 1180],
+
+/***/ 1247:
+[1401, 1209, 1212, 1194, 1170],
+
+/***/ 1248:
+[1402, 1249, 1251, 1178, 1177, 1185, 1184, 1181, 1259, 1260, 1264, 1267, 1268, 1183, 1269, 1173, 1208, 1194, 1198, 1176, 1168, 1195, 1234, 1174, 1175, 1272, 1225, 1180],
+
+/***/ 1249:
+[1403, 1183, 1246, 1250],
+
+/***/ 1250:
+260,
+
+/***/ 1251:
+[1404, 1252, 1164, 1173, 1253, 1255, 1256, 1258, 1180],
+
+/***/ 1252:
+262,
+
+/***/ 1253:
+[1405, 1254],
+
+/***/ 1254:
+264,
+
+/***/ 1255:
+[1406, 1252],
+
+/***/ 1256:
+[1407, 1257],
+
+/***/ 1257:
+267,
+
+/***/ 1258:
+268,
+
+/***/ 1259:
+269,
+
+/***/ 1260:
+[1408, 1182, 1261, 1183, 1209, 1194, 1168],
+
+/***/ 1261:
+[1409, 1262, 1220, 1168, 1180],
+
+/***/ 1262:
+[1410, 1197, 1221, 1170, 1263],
+
+/***/ 1263:
+273,
+
+/***/ 1264:
+[1411, 1265, 1267, 1194, 1180],
+
+/***/ 1265:
+[1412, 1211, 1197, 1170, 1266],
+
+/***/ 1266:
+[1413, 1160, 1197, 1200, 1263, 1168, 1180],
+
+/***/ 1267:
+[1414, 1261, 1183, 1209, 1194, 1180],
+
+/***/ 1268:
+[1415, 1261, 1182, 1209, 1194, 1168, 1180],
+
+/***/ 1269:
+[1416, 1219, 1171, 1160, 1205, 1270, 1271],
+
+/***/ 1270:
+[1417, 1205, 1217, 1222, 1266, 1180],
+
+/***/ 1271:
+[1418, 1266, 1180],
+
+/***/ 1272:
+282,
+
+/***/ 1273:
+[1419, 1274, 1164, 1211, 1200, 1183, 1209, 1194, 1236, 1275],
+
+/***/ 1274:
+[1420, 1170],
+
+/***/ 1275:
+285,
+
+/***/ 1276:
+[1421, 1178, 1186, 1219, 1277, 1223, 1184, 1224, 1173, 1201, 1209],
+
+/***/ 1277:
+[1422, 1278, 1197, 1220, 1221, 1279, 1194, 1213, 1168, 1172, 1234, 1180],
+
+/***/ 1278:
+[1423, 1279, 1198, 1213, 1168, 1180],
+
+/***/ 1279:
+[1424, 1180],
+
+/***/ 1280:
+[1425, 1210, 1211, 1184, 1196, 1281, 1212, 1194],
+
+/***/ 1281:
+[1426, 1282, 1214, 1250, 1284],
+
+/***/ 1282:
+[1427, 1164, 1283, 1230],
+
+/***/ 1283:
+293,
+
+/***/ 1284:
+294,
+
+/***/ 1285:
+[1428, 1185, 1228, 1164, 1281, 1232, 1284, 1237, 1234, 1272],
+
+/***/ 1286:
+296,
+
+/***/ 1287:
+[1429, 1185, 1274, 1228, 1183, 1288, 1232, 1289, 1290, 1241, 1293, 1294, 1242, 1295, 1170, 1291, 1168, 1234],
+
+/***/ 1288:
+[1430, 1232],
+
+/***/ 1289:
+[1431, 1242],
+
+/***/ 1290:
+[1432, 1242, 1291, 1292, 1243],
+
+/***/ 1291:
+301,
+
+/***/ 1292:
+[1433, 1291],
+
+/***/ 1293:
+[1434, 1241],
+
+/***/ 1294:
+[1435, 1242, 1243],
+
+/***/ 1295:
+[1436, 1241],
+
+/***/ 1296:
+[1437, 1178],
+
+/***/ 1297:
+[1438, 1178, 1298, 1183, 1173, 1299],
+
+/***/ 1298:
+[1439, 1194],
+
+/***/ 1299:
+[1440, 1300],
+
+/***/ 1300:
+[1441, 1164],
+
+/***/ 1301:
+311,
+
+/***/ 1302:
+[1442, 1183],
+
+/***/ 1303:
+[1443, 1226, 1304, 1301],
+
+/***/ 1304:
+[1444, 1247, 1197, 1200, 1203, 1305, 1306, 1209, 1213, 1217, 1168],
+
+/***/ 1305:
+315,
+
+/***/ 1306:
+[1445, 1211, 1210, 1212, 1194, 1170],
+
+/***/ 1307:
+[1446, 1265, 1278, 1277, 1308, 1197, 1309, 1262, 1301, 1194, 1311],
+
+/***/ 1308:
+[1447, 1197, 1309, 1310],
+
+/***/ 1309:
+[1448, 1197, 1220, 1221, 1160, 1198, 1263, 1168, 1180],
+
+/***/ 1310:
+320,
+
+/***/ 1311:
+[1449, 1197, 1168],
+
+/***/ 1312:
+[1450, 1194, 1180],
+
+/***/ 1313:
+[1451, 1159],
+
+/***/ 1314:
+569,
+
+/***/ 1315:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	//*------------------------------------------------------------------*
 
-	var React = __webpack_require__(167);
+	var React = __webpack_require__(1157);
 
-	var $ = __webpack_require__(569);
+	var $ = __webpack_require__(1314);
 	var jQuery = $;
 
 	//*------------------------------------------------------------------*
 
-	var HighchartsHeatmap = __webpack_require__(1127);
-	var HighchartsUtils = __webpack_require__(1133);
+	var HighchartsHeatmap = __webpack_require__(1316);
+	var HighchartsUtils = __webpack_require__(1324);
 
 	//*------------------------------------------------------------------*
 
@@ -398,24 +872,24 @@ webpackJsonp_name_([4],{
 
 /***/ },
 
-/***/ 1127:
+/***/ 1316:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	//*------------------------------------------------------------------*
 
-	var React = __webpack_require__(167);
+	var React = __webpack_require__(1157);
 
-	var $ = __webpack_require__(569);
+	var $ = __webpack_require__(1314);
 	var jQuery = $;
 
-	var Highcharts = __webpack_require__(586);
-	__webpack_require__(1128)(Highcharts.Highcharts);
+	var Highcharts = __webpack_require__(1317);
+	__webpack_require__(1319)(Highcharts.Highcharts);
 
 	//*------------------------------------------------------------------*
 
-	__webpack_require__(1129);
+	__webpack_require__(1320);
 
 	//*------------------------------------------------------------------*
 
@@ -660,6 +1134,12 @@ webpackJsonp_name_([4],{
 	            ),
 	            React.createElement(
 	                'div',
+	                { className: 'legend-item' },
+	                React.createElement('span', { className: 'icon icon-generic', 'data-icon': 'i', 'data-toggle': 'tooltip', 'data-placement': 'bottom',
+	                    title: 'This range of value indicates gene expression level accross different tissues. It is calculated in different a different way between DNA and RNA experiments' })
+	            ),
+	            React.createElement(
+	                'div',
 	                { id: 'legend_5', className: 'legend-item special' },
 	                React.createElement('div', { className: 'legend-rectangle col_nd' }),
 	                React.createElement(
@@ -690,7 +1170,13 @@ webpackJsonp_name_([4],{
 
 /***/ },
 
-/***/ 1128:
+/***/ 1317:
+[1478, 1157, 1318],
+
+/***/ 1318:
+587,
+
+/***/ 1319:
 /***/ function(module, exports) {
 
 	/*
@@ -720,23 +1206,23 @@ webpackJsonp_name_([4],{
 
 /***/ },
 
-/***/ 1129:
+/***/ 1320:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(1130);
+	var content = __webpack_require__(1321);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(1132)(content, {});
+	var update = __webpack_require__(1323)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./heatmap-highcharts.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./heatmap-highcharts.css");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./heatmap-highcharts.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./heatmap-highcharts.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -747,10 +1233,10 @@ webpackJsonp_name_([4],{
 
 /***/ },
 
-/***/ 1130:
+/***/ 1321:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(1131)();
+	exports = module.exports = __webpack_require__(1322)();
 	// imports
 
 
@@ -762,7 +1248,7 @@ webpackJsonp_name_([4],{
 
 /***/ },
 
-/***/ 1131:
+/***/ 1322:
 /***/ function(module, exports) {
 
 	/*
@@ -819,7 +1305,7 @@ webpackJsonp_name_([4],{
 
 /***/ },
 
-/***/ 1132:
+/***/ 1323:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -841,8 +1327,7 @@ webpackJsonp_name_([4],{
 			return document.head || document.getElementsByTagName("head")[0];
 		}),
 		singletonElement = null,
-		singletonCounter = 0,
-		styleElementsInsertedAtTop = [];
+		singletonCounter = 0;
 
 	module.exports = function(list, options) {
 		if(false) {
@@ -853,9 +1338,6 @@ webpackJsonp_name_([4],{
 		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
 		// tags it will allow on a page
 		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-
-		// By default, add <style> tags to the bottom of <head>.
-		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
 
 		var styles = listToStyles(list);
 		addStylesToDom(styles, options);
@@ -923,44 +1405,19 @@ webpackJsonp_name_([4],{
 		return styles;
 	}
 
-	function insertStyleElement(options, styleElement) {
-		var head = getHeadElement();
-		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
-		if (options.insertAt === "top") {
-			if(!lastStyleElementInsertedAtTop) {
-				head.insertBefore(styleElement, head.firstChild);
-			} else if(lastStyleElementInsertedAtTop.nextSibling) {
-				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
-			} else {
-				head.appendChild(styleElement);
-			}
-			styleElementsInsertedAtTop.push(styleElement);
-		} else if (options.insertAt === "bottom") {
-			head.appendChild(styleElement);
-		} else {
-			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-		}
-	}
-
-	function removeStyleElement(styleElement) {
-		styleElement.parentNode.removeChild(styleElement);
-		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
-		if(idx >= 0) {
-			styleElementsInsertedAtTop.splice(idx, 1);
-		}
-	}
-
-	function createStyleElement(options) {
+	function createStyleElement() {
 		var styleElement = document.createElement("style");
+		var head = getHeadElement();
 		styleElement.type = "text/css";
-		insertStyleElement(options, styleElement);
+		head.appendChild(styleElement);
 		return styleElement;
 	}
 
-	function createLinkElement(options) {
+	function createLinkElement() {
 		var linkElement = document.createElement("link");
+		var head = getHeadElement();
 		linkElement.rel = "stylesheet";
-		insertStyleElement(options, linkElement);
+		head.appendChild(linkElement);
 		return linkElement;
 	}
 
@@ -969,7 +1426,7 @@ webpackJsonp_name_([4],{
 
 		if (options.singleton) {
 			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			styleElement = singletonElement || (singletonElement = createStyleElement());
 			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
 			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
 		} else if(obj.sourceMap &&
@@ -978,18 +1435,18 @@ webpackJsonp_name_([4],{
 			typeof URL.revokeObjectURL === "function" &&
 			typeof Blob === "function" &&
 			typeof btoa === "function") {
-			styleElement = createLinkElement(options);
+			styleElement = createLinkElement();
 			update = updateLink.bind(null, styleElement);
 			remove = function() {
-				removeStyleElement(styleElement);
+				styleElement.parentNode.removeChild(styleElement);
 				if(styleElement.href)
 					URL.revokeObjectURL(styleElement.href);
 			};
 		} else {
-			styleElement = createStyleElement(options);
+			styleElement = createStyleElement();
 			update = applyToTag.bind(null, styleElement);
 			remove = function() {
-				removeStyleElement(styleElement);
+				styleElement.parentNode.removeChild(styleElement);
 			};
 		}
 
@@ -1074,7 +1531,7 @@ webpackJsonp_name_([4],{
 
 /***/ },
 
-/***/ 1133:
+/***/ 1324:
 /***/ function(module, exports) {
 
 	"use strict";
