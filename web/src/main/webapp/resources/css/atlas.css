@@ -2,6 +2,15 @@
     min-width: 975px;
 }
 
+.gxaBody table {
+    margin: 0;    /* overrides ebi-visual.css */
+    width: auto;  /* overrides ebi-visual.css */
+}
+
+.gxaBody td {
+    padding: 5px; /* overrides ebi-visual.css */
+}
+
 #local-title a {
     color: black !important;
     text-shadow: none !important;
