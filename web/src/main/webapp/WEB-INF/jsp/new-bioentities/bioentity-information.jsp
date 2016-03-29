@@ -71,8 +71,8 @@
             <c:set var="propertyLinks" value="${bioEntityPropertyService.fetchPropertyLinks(propertyType)}"/>
             <c:if test="${propertyLinks.size() > 0}">
                 <tr>
-                    <td class="gxaBioEntityCardPropertyType">${propertyNames.get(propertyType)}</td>
-                    <td class="gxaBioEntityCardPropertyValue">
+                    <td class="gxaBioentityInformationCardPropertyType">${propertyNames.get(propertyType)}</td>
+                    <td class="gxaBioentityInformationCardPropertyValue">
                         <c:set var="count" value="0"/>
                         <c:forEach var="propertyLink" items="${propertyLinks}">
                             <c:set var="count" value="${count + 1}"/>

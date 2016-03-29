@@ -1,0 +1,30 @@
+.ui-accordion {
+    font-family: Verdana, sans-serif;
+}
+
+span.gxaBioEntityCardBioentityName {
+    font-size: 16px;
+    font-weight: bold;
+    color: gray;
+}
+
+ul.gxaBioEntityCardHeader {
+    background: #f1fffa;
+}
+
+ul.gxaBioEntityCardHeader img {
+    margin: 0;  /* overrides ebi-visual.css */
+}
+
+#baselineCountsTable {
+    border: none;
+}
+
+#baselineCountsTable td {
+    border: none;
+}
+
+a#gxaMoreBaselineResultsLink {
+    font-size: 12px;
+    color: darkslategray;
+}

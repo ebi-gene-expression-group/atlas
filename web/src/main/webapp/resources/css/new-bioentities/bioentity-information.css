@@ -1,18 +1,19 @@
 .gxaBioentityInformationCard {
-    background: white;
-    font-family: Verdana, sans-serif;
     margin-top: 20px;
 }
 
-.gxaBioentityInformationCardPropertyType {
+.gxaBioentityInformationCard table {
+    border: none;
+}
+
+td.gxaBioentityInformationCardPropertyType {
     font-size: 14px;
-    font-family: Verdana, Helvetica, Arial, sans-serif !important;
     font-weight: bold;
-    width: 155px;
-    vertical-align: top;
+    white-space: nowrap;
+    padding-right: 0.5em;
+    border:none;
 }
 
 .gxaBioentityInformationCardPropertyValue {
-    font-size: 12px;
-    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    border: none;
 }

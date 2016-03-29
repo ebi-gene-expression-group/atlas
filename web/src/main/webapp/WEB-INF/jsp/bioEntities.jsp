@@ -1,30 +1,11 @@
-<%--
-  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  ~
-  ~
-  ~ For further details of the Gene Expression Atlas project, including source code,
-  ~ downloads and documentation, please see:
-  ~
-  ~ http://gxa.github.com/gxa
-  --%>
 <%--@elvariable id="bioEntityPropertyService" type="uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bioEntities.css">
 
 <c:choose>
 <c:when test="${not empty exceptionMessage}">
@@ -171,7 +152,6 @@
 
         <ul id="baselineProfileHeader" class="gxaBioEntityCardHeader">
             <img id="baseline-info-image" title="Baseline Expression"
-                 style="position: absolute; left: 0.5em; "
                  src="/gxa/resources/images/allup2_transparent_bkg.png"/>
             <span class="gxaBioEntityCardBioentityName">Baseline Expression</span>
             <c:choose>
@@ -235,7 +215,6 @@
 
         <ul id="diffProfileHeader" class="gxaBioEntityCardHeader">
             <img id="differential-info-image" title="Differential Expression"
-                 style="position: absolute; left: 0.5em; "
                  src="/gxa/resources/images/updown_transparent_bkg.png"/>
             <span class="gxaBioEntityCardBioentityName">Differential Expression</span>
             <c:choose>
