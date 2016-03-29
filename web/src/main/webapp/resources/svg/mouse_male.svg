@@ -843,4 +843,4 @@
     <!-- LAYER_EFO end -->
   </g>
   <!-- group_all end -->
-<a xlink:href="https://www.ebi.ac.uk/gxa/resources/svg/LICENSE.html"> <image id="ccLogo" xlink:href="https://i.creativecommons.org/l/by/4.0/80x15.png" x="55" y="0" height="15" width="80" /></a></svg>
+<a id="ccLogo" xlink:href="https://www.ebi.ac.uk/gxa/resources/svg/LICENSE.html"> <image  xlink:href="https://i.creativecommons.org/l/by/4.0/80x15.png" x="55" y="0" height="15" width="80" /></a></svg>
