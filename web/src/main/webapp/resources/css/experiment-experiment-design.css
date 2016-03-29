@@ -1,5 +1,11 @@
-th {
-    border-style: none; /* Override ebi-visual.css */
+table#experiment-design-table {
+    width: 100%;
+    border: none;
+}
+
+table#experiment-design-table th, td {
+    border: none; /* Override ebi-visual.css */
+    text-align: center;
 }
 
 .gxaBT {
@@ -25,34 +31,21 @@ th {
     padding-right: 5px;
 }
 
-/* needed for span inside header-cell that is added by React */
-.gxaHeaderCellNoHover, .gxaHeaderCell span {
-    font-weight: bold;
-}
-
 .gxaHeaderCell:hover {
     background-color: #deebeb !important;
     cursor: pointer;
     *cursor: hand;
 }
 
-.gxaClear {
-    clear: both;
+.gxaNoTextButton {
+    border: 1px solid #ccc !important; /* overrides ebi-visual.css */
 }
 
-
-
-#atlas-content tfoot th {
-    background-color: rgb(237, 246, 246) !important;
+.gxaNoTextButton .ui-button-text {
+    padding: 2px;
 }
 
-#atlas-content tfoot input {
-    margin: 0.5em 0;
-    width: 100%;
-    color: #444;
+#download-button {
+    padding-bottom: 15px;
+    padding-left: 15px;
 }
-
-#atlas-content tfoot input.search_init {
-    color: #999;
-}
-

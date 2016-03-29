@@ -4,7 +4,7 @@
 
 .dataTables_wrapper {
     position: relative;
-    clear: both;
+    /*clear: both;*/
     zoom: 1; /* Feeling sorry for IE */
 }
 

@@ -93,9 +93,6 @@ var experimentDesignTableModule = (function ($) {
             "aoColumnDefs":initColumnDefs(),
             "bPaginate":false,
             "bScrollCollapse":true,
-            //"sScrollY":calcDataTableHeight(),
-            //"sScrollX": calcDataTableWidth(),
-            "sDom":'i<"gxaDownload">f<"gxaClear">t',
             "aaSorting": aaSorting
         });
 
