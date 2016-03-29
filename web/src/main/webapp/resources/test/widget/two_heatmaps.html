@@ -6,7 +6,7 @@
     <title>Heatmap demo</title>
 
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendor.bundle.js"></script>
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/expression-atlas-heatmap.bundle.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/expressionAtlasHeatmap.bundle.js"></script>
 </head>
 <body>
     <div>
@@ -19,8 +19,7 @@
 </body>
 
 <script language="JavaScript" type="text/javascript">
-    var AtlasHeatmapBuilder = window.exposed;
-    AtlasHeatmapBuilder({
+    expressionAtlasHeatmap({
         params: "geneQuery=ASPM&species=mus%20musculus",
         isMultiExperiment: true,
         target: "heatmapContainer"
