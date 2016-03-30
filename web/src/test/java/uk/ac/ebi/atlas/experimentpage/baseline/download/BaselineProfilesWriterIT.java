@@ -226,7 +226,7 @@ public class BaselineProfilesWriterIT {
         String[] r_hsa_212436 = geneNameToLine.get("R-HSA-212436");
 
         assertThat(geneNames, containsInAnyOrder(geneSets.split("\t")));
-        assertThat(r_hsa_1430728, is(new String[]{"R-HSA-1430728", "8", "681", "9", "440", "430", "15", "9", "500", "8", "8", "10", "275", "550", "17", "11", "8"}));
+        assertThat(r_hsa_1430728, is(new String[]{"R-HSA-1430728", "8", "576", "9", "373", "365", "15", "11", "423", "7", "9", "11", "239", "467", "18", "10", "9"}));
         assertThat(r_hsa_212436, is(new String[] {"R-HSA-212436", "2", "4", "2", "2", "5", "6", "5", "3", "2", "3", "4", "4", "5", "3", "1", "2"}));
     }
 

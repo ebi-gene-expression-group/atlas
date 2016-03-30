@@ -128,7 +128,7 @@ public class BaselineProfilesHeatMapIT {
 
         assertThat(profiles.getTotalResultCount(), is(15));
         // System.out.println(Joiner.on("\", \"").join(profiles.extractGeneNames()));
-        assertThat(profiles.extractGeneNames(), contains("R-HSA-1430728","R-HSA-168249","R-HSA-388396","R-HSA-162582","R-HSA-109582","R-HSA-372790","R-HSA-382551","R-HSA-168256","R-HSA-1643685","R-HSA-392499","R-HSA-1280218","R-HSA-556833","R-HSA-74160","R-HSA-1640170","R-HSA-212436"));
+        assertThat(profiles.extractGeneNames(), contains("R-HSA-1430728","R-HSA-168249","R-HSA-388396","R-HSA-162582","R-HSA-109582","R-HSA-372790","R-HSA-382551","R-HSA-168256","R-HSA-1643685","R-HSA-392499","R-HSA-556833","R-HSA-1280218","R-HSA-74160","R-HSA-1640170","R-HSA-212436"));
     }
 
     private BaselineProfileStreamOptions asGeneSet(BaselineRequestContext baselineRequestContext) throws GenesNotFoundException {

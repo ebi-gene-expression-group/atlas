@@ -77,13 +77,14 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
+        assertThat(experimentAccessions.size(), is(17));
         assertThat(
                 experimentAccessions,
                 containsInAnyOrder(
-                        "E-MTAB-513", "E-PROT-1", "E-PROT-3", "E-MTAB-2836", "E-MTAB-1733", "E-MTAB-599",
-                        "E-MTAB-3358", "E-MTAB-3358",
-                        "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352",
-                        "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284"));
+                        "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284",
+                        "E-MTAB-513", "E-PROT-3", "E-MTAB-2836", "E-MTAB-1733", "E-MTAB-599",
+                        "E-MTAB-3358", "E-MTAB-3358"
+                        ));
     }
 
     @Test
@@ -97,7 +98,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
-        assertThat(experimentAccessions.size(), is(0));
+        assertThat(experimentAccessions.size(), is(5));
     }
 
     @Test

@@ -140,16 +140,16 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(baselineProfile2.getName(), is("Thirty two tissues"));
         assertThat(baselineProfile2.getFilterFactors(), is(EMPTY_FACTOR_SET));
         assertThat(baselineProfile2.getConditions(), hasSize(100));
-        assertThat(baselineProfile2.getMinExpressionLevel(), is(0.7));
-        assertThat(baselineProfile2.getMaxExpressionLevel(), is(13.0));
+        assertThat(baselineProfile2.getMinExpressionLevel(), is(1.0));
+        assertThat(baselineProfile2.getMaxExpressionLevel(), is(31.0));
 
         BaselineExperimentProfile baselineProfile3 = baselineProfilesList.get(2);
         assertThat(baselineProfile3.getId(), is("E-MTAB-1733"));
         assertThat(baselineProfile3.getName(), is("Twenty seven tissues"));
         assertThat(baselineProfile3.getFilterFactors(), is(EMPTY_FACTOR_SET));
         assertThat(baselineProfile3.getConditions(), hasSize(100));
-        assertThat(baselineProfile3.getMinExpressionLevel(), is(3.0));
-        assertThat(baselineProfile3.getMaxExpressionLevel(), is(30.0));
+        assertThat(baselineProfile3.getMinExpressionLevel(), is(40.0));
+        assertThat(baselineProfile3.getMaxExpressionLevel(), is(204.0));
 
         BaselineExperimentProfile baselineProfile4 = baselineProfilesList.get(3);
         assertThat(baselineProfile4.getId(), is("E-MTAB-3358"));
@@ -172,7 +172,7 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(baselineProfile6.getName(), is("Proteomics - Tissues - Human Protein Atlas"));
         assertThat(baselineProfile6.getFilterFactors(), is(EMPTY_FACTOR_SET));
         assertThat(baselineProfile6.getConditions(), hasSize(96));
-        assertThat(baselineProfile6.getMinExpressionLevel(), is(0.9));
+        assertThat(baselineProfile6.getMinExpressionLevel(), is(1.0));
         assertThat(baselineProfile6.getMaxExpressionLevel(), is(1.0));
 
         BaselineExperimentProfile baselineProfile7 = baselineProfilesList.get(6);
