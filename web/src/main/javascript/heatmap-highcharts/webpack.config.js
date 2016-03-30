@@ -15,7 +15,7 @@ module.exports = {
         //    "webpack/hot/only-dev-server",
         //    'mocha!./test/test.js'
         //],
-        "vendor": ['react', 'react-highcharts', 'jquery', 'jquery-ui']
+        "vendor": ['react', 'react-highcharts', 'jquery']
     },
     output: {
         path: __dirname + "/dist",

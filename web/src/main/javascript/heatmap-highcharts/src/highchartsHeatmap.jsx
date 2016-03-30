@@ -37,17 +37,17 @@ var HighchartsHeatmap = React.createClass({
                 {
                     label: "Low",
                     from: 0,
-                    to: 0.25,
+                    to: 10,
                     seriesData: []
                 }, {
                     label: "Medium",
-                    from: 0.25,
-                    to: 0.75,
+                    from: 10,
+                    to: 1000,
                     seriesData: []
                 }, {
                     label: "High",
-                    from: 0.75,
-                    to: 1.0,
+                    from: 1000,
+                    to: 100000,
                     seriesData: []
                 }
             ],

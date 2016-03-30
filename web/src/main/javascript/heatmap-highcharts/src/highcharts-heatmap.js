@@ -34,7 +34,7 @@ module.exports = function(options) {
     var linksAtlasBaseURL = protocol + atlasHost + atlasPath,
         atlasBaseURL = options.proxyPrefix ? options.proxyPrefix + "/" + atlasHost + atlasPath : linksAtlasBaseURL;
 
-    var endpointPath = "/widgets/heatmap/baselineAnalytics";
+    var endpointPath =  options.isMultiExperiment ? "/widgets/heatmap/baselineAnalytics" : "/widgets/heatmap/referenceExperiment";
 
     var sourceURL = atlasBaseURL + endpointPath + "?" + options.params;
 
