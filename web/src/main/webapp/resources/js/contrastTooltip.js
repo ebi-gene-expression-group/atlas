@@ -12,16 +12,16 @@ var ContrastTooltip = (function(React) {
                 return property.contrastPropertyType === 'FACTOR';
             }
 
-            var style = {'white-space': 'normal'};
+            var style = {whiteSpace: 'normal'};
 
             if (isFactor(property)) {
-                style['font-weight'] = 'bold';
+                style['fontWeight'] = 'bold';
             } else {
                 style['color'] = 'gray';
             }
 
             return (
-                React.DOM.tr(null, 
+                React.DOM.tr({key: property.propertyName},
                     React.DOM.td({style: style}, property.propertyName), 
                     React.DOM.td({style: style}, property.testValue), 
                     React.DOM.td({style: style}, property.referenceValue)
@@ -33,8 +33,8 @@ var ContrastTooltip = (function(React) {
             return (
 
                 React.DOM.div(null, 
-                    React.DOM.div({id: "contrastExperimentDescription", style: {'font-weight':'bold', 'color':'blue', 'text-align': 'center'}}, this.props.experimentDescription), 
-                    React.DOM.div({id: "contrastDescription", style: {'text-align': 'center'}}, this.props.contrastDescription), 
+                    React.DOM.div({id: "contrastExperimentDescription", style: {fontWeight: 'bold', color: 'blue', textAlign: 'center'}}, this.props.experimentDescription),
+                    React.DOM.div({id: "contrastDescription", style: {textAlign: 'center'}}, this.props.contrastDescription),
                     React.DOM.table({className: "gxaTableGrid", style: {padding: '0px', margin: '0px', width: '100%'}}, 
                         React.DOM.thead(null, 
                             React.DOM.tr(null, 
