@@ -83,7 +83,7 @@ var geneQueryTagEditorModule = (function($) {
                         return $( "<li style='width: 300px;'></li>" )
                             .attr( "data-value", item.value )
                             .attr( "data-source", item.source )
-                            .append( "<a>" + "<div style='float:left;text-align: left'>" + item.label + "</div><div style='text-align: right'><small>" + source_des + "</small></div></a>" )
+                            .append( "<a>" + "<div style='float:left; text-align: left'>" + item.label + "</div><div style='float: right; text-align: right'><small>" + source_des + "</small></div></a>" )
                             .appendTo( ul );
                     },
                     select: function(event, ui) {
