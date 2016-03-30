@@ -120,9 +120,8 @@ public class SolrQueryServiceIT {
         Set<String> aspm = subject.expandGeneQueryIntoGeneIds("aspm", "", true).get();
 
         // then
-        assertThat(aspm, hasSize(20));
+        assertThat(aspm, hasSize(22));
         //System.out.println("\"" + Joiner.on("\", \"").join(aspm) + "\"");
-        assertThat(aspm, contains("ENSBTAG00000007860", "ENSPANG00000018539", "ENSG00000066279", "ENSSSCG00000010896", "ENSOCUG00000014733", "ENSPPYG00000000389", "ENSMUSG00000033952", "ENSECAG00000020645", "ENSOARG00000014713", "ENSPTRG00000001807", "ENSDNOG00000001112", "ENSCAFG00000011403", "ENSDARG00000103754", "ENSGALG00000002338", "ENSTNIG00000012330", "ENSMMUG00000000245", "ENSGGOG00000025635", "ENSRNOG00000012318", "ENSMODG00000012671", "ENSAPLG00000007025"));
 
     }
 

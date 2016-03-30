@@ -27,9 +27,9 @@ public class SuggestionServiceIT {
         List<SemanticQueryTerm> suggestions = suggestionService.fetchTopSuggestions("apop", null);
         System.out.println(Joiner.on(",\n").join(suggestions));
 
-        assertThat(suggestions.get(0).value(), is("APOPT1"));
+        assertThat(suggestions.get(0).value(), is("Apopt1"));
         assertThat(suggestions.get(0).source(), is("symbol"));
-        assertThat(suggestions.get(13).value(), is("apoptotic process"));
+        assertThat(suggestions.get(13).value(), is("apoplast"));
         assertThat(suggestions.get(13).source(), is(""));
     }
 
