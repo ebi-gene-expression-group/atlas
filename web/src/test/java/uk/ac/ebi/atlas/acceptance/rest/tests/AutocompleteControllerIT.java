@@ -69,7 +69,7 @@ public class AutocompleteControllerIT {
 
         SemanticQueryTerm firstTerm = query.iterator().next();
 
-        assertThat(firstTerm.value(), is("ASPN"));
+        assertThat(firstTerm.value(), is("ASPA"));
         assertThat(firstTerm.source(), is("symbol"));
         assertEquals(query.size(), 15);
 
@@ -85,9 +85,9 @@ public class AutocompleteControllerIT {
         SemanticQuery query = SemanticQuery.fromJson(jsonString);
         List<SemanticQueryTerm> suggestionList = Lists.newArrayList(query);
 
-        assertThat(suggestionList.get(11).value(), is("ASPG (2 of 3)"));
+        assertThat(suggestionList.get(11).value(), is("ASPDH"));
         assertThat(suggestionList.get(11).source(), is("symbol"));
-        assertThat(suggestionList.get(14).value(), is("asph"));
+        assertThat(suggestionList.get(14).value(), is("ASPRV1"));
         assertThat(suggestionList.get(14).source(), is("symbol"));
 
         assertThat(suggestionList, hasSize(15));
