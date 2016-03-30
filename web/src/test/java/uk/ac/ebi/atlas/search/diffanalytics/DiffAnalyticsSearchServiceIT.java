@@ -144,7 +144,7 @@ public class DiffAnalyticsSearchServiceIT {
         List<String> names = getBioentityNames(bioentityExpressions);
 
         assertThat(bioentityExpressions, hasSize(50));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(1761));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(1747));
         assertThat(names.size(), is(50));
     }
 
@@ -160,7 +160,7 @@ public class DiffAnalyticsSearchServiceIT {
         List<String> names = getBioentityNames(bioentityExpressions);
 
         assertThat(bioentityExpressions, hasSize(50));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(9987));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(9936));
         assertThat(names.size(), is(50));
         //System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
@@ -227,7 +227,7 @@ public class DiffAnalyticsSearchServiceIT {
             }
         });
 
-        assertThat(names, hasSize(9987));
+        assertThat(names, hasSize(9936));
         //System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
     }
 
