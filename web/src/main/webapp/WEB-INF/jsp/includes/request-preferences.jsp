@@ -7,8 +7,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/gxaFormGrid.css" media="screen">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/gxaSliderAndChart.css" media="screen">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home_request-preferences.css" media="screen">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/request-preferences.css" media="screen">
 
 <div>
     <form:form method="get" commandName="preferences" id="prefForm">

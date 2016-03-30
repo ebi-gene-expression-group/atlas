@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiments-table.css" media="screen">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/atlasDataTables.css" media="screen">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/atlas-data-tables.css" media="screen">
 
 <div class="gxaExperimentsPageHeading">Experiments in Expression Atlas</div>
 <input type="hidden" id="hiddenTypeSelected" name="hiddenTypeSelected" value="">

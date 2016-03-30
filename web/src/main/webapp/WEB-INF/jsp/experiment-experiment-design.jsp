@@ -7,7 +7,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiment-experiment-design.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/atlasDataTables.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/atlas-data-tables.css">
 
 <c:if test="${not empty param.accessKey}">
     <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"></c:set>

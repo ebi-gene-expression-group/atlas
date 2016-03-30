@@ -1,7 +1,6 @@
 #gxaExperimentHeader table {
     border: none;
-    width: auto;
-    margin: 0 9px 0 auto;
+    margin-right: 0;
 }
 
 #gxaExperimentHeader table td {

@@ -16,7 +16,7 @@
     <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"/>
 </c:if>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/gxaExperimentHeader.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiment-header.css">
 
 <script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">

@@ -24,7 +24,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/gxaFormGrid.css" media="screen">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home_request-preferences.css" media="screen">
 
 <h2>Expression Atlas: Differential and Baseline Expression</h2>
 
