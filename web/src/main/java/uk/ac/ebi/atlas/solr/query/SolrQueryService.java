@@ -1,25 +1,3 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-
 package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.base.Optional;
@@ -171,10 +149,10 @@ public class SolrQueryService {
 
     /**
      *
-     * @param specie empty string will search across all species, and return orthologs
+     * @param species empty string will search across all species, and return orthologs
      * @return Optional.absent if geneQuery is blank, empty Set if no genes found, otherwise Set of geneids found
      */
-    public Optional<Set<String>> expandGeneQueryIntoGeneIds(String geneQuery, String specie, boolean isExactMatch) {
+    public Optional<Set<String>> expandGeneQueryIntoGeneIds(String geneQuery, String species, boolean isExactMatch) {
         if (StringUtils.isBlank(geneQuery)) {
             return Optional.absent();
         }
@@ -185,7 +163,7 @@ public class SolrQueryService {
         stopWatch.start();
 
         //resolve any gene keywords to identifiers
-        Set<String> geneIds = findGeneIdsOrSets(geneQuery, isExactMatch, specie);
+        Set<String> geneIds = findGeneIdsOrSets(geneQuery, isExactMatch, species);
 
         Set<String> matureRNAIds = findMatureRNAIds(geneQuery);
         geneIds.addAll(matureRNAIds);
