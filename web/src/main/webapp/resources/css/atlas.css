@@ -6,10 +6,6 @@ h1 {
     color: #207A7A; /* overrides embl-petrol-colours.css */
 }
 
-.gxaBody table {
-    width: auto;  /* overrides ebi-visual.css */
-}
-
 .gxaBody td {
     padding: 5px; /* overrides ebi-visual.css */
 }

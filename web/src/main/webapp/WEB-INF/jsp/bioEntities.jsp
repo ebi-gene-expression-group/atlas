@@ -261,7 +261,7 @@
                                 <a id="download-profiles-link"
                                    title="Download all results"
                                    href="${pageContext.request.contextPath}${applicationProperties.buildDownloadURL(pageContext.request)}"
-                                   class="gxaButtonImage" target="_blank">
+                                   class="gxaNoTextButton" target="_blank">
                                     <img id="download-profiles" alt="Download query results" style="width:20px"
                                          src="${pageContext.request.contextPath}/resources/images/download_blue_small.png">
                                 </a>
