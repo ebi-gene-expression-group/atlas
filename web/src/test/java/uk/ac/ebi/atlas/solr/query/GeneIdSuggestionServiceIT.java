@@ -94,19 +94,19 @@ public class GeneIdSuggestionServiceIT {
         List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInIdentifier("GO:0016", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties.get(7).value(), is("GO:0016323"));
+        assertThat(properties.get(7).value(), is("GO:0016023"));
         assertThat(properties.get(7).source(), is("go"));
-        assertThat(properties.get(5).value(), is("GO:0016324"));
+        assertThat(properties.get(5).value(), is("GO:0016020"));
         assertThat(properties.get(5).source(), is("go"));
-        assertThat(properties.get(10).value(), is("GO:0016884"));
+        assertThat(properties.get(10).value(), is("GO:0016491"));
         assertThat(properties.get(10).source(), is("go"));
 
         properties = subject.fetchGeneIdSuggestionsInIdentifier("GO:001602", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(5));
-        assertThat(properties.get(1).value(), is("GO:0016021"));
+        assertThat(properties.get(1).value(), is("GO:0016020"));
         assertThat(properties.get(1).source(), is("go"));
-        assertThat(properties.get(0).value(), is("GO:0016020"));
+        assertThat(properties.get(0).value(), is("GO:0016021"));
         assertThat(properties.get(0).source(), is("go"));
         assertThat(properties.get(4).value(), is("GO:0016028"));
         assertThat(properties.get(4).source(), is("go"));
@@ -118,17 +118,17 @@ public class GeneIdSuggestionServiceIT {
         List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties.get(0).value(), is("Hs2Affx.1.51.S1_3p_at"));
+        assertThat(properties.get(0).value(), is("Hs2Affx.1.6.S1_3p_s_at"));
         assertThat(properties.get(0).source(), is("design_element"));
-        assertThat(properties.get(4).value(), is("Hs2Affx.1.309.S1_3p_at"));
+        assertThat(properties.get(4).value(), is("Hs2Affx.1.212.S1_3p_s_at"));
         assertThat(properties.get(4).source(), is("design_element"));
-        assertThat(properties.get(14).value(), is("Hs2Affx.1.6.S1_3p_s_at"));
+        assertThat(properties.get(14).value(), is("Hs2Affx.1.414.S1_3p_at"));
         assertThat(properties.get(14).source(), is("design_element"));
 
         properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx.1.41", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(7));
-        assertThat(properties.get(0).value(), is("Hs2Affx.1.411.S1_3p_at"));
+        assertThat(properties.get(0).value(), is("Hs2Affx.1.413.S1_3p_at"));
         assertThat(properties.get(0).source(), is("design_element"));
     }
 
@@ -170,9 +170,9 @@ public class GeneIdSuggestionServiceIT {
         List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInName("p", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties.get(0).value(), is("PTRH2"));
+        assertThat(properties.get(0).value(), is("PTH"));
         assertThat(properties.get(0).source(), is("symbol"));
-        assertThat(properties.get(1).value(), is("PSMD8P1"));
+        assertThat(properties.get(1).value(), is("PEBP1P2"));
         assertThat(properties.get(1).source(), is("symbol"));
     }
 
@@ -183,9 +183,9 @@ public class GeneIdSuggestionServiceIT {
 
         assertThat(properties.size(), is(3));
 
-        assertThat(properties.get(0).value(), is("Mustn1"));
+        assertThat(properties.get(0).value(), is("Musk"));
         assertThat(properties.get(0).source(), is("symbol"));
-        assertThat(properties.get(1).value(), is("Musk"));
+        assertThat(properties.get(1).value(), is("Mustn1"));
         assertThat(properties.get(1).source(), is("symbol"));
         assertThat(properties.get(2).value(), is("Mus81"));
         assertThat(properties.get(2).source(), is("symbol"));

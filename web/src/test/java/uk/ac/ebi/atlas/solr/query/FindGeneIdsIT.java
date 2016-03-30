@@ -69,7 +69,7 @@ public class FindGeneIdsIT {
 
         //some genes are found
         assertThat(result, hasItems("ENSG00000131759", "ENSG00000084072"));
-        assertThat(result.size(), is(183));
+        assertThat(result.size(), is(205));
 
     }
 
