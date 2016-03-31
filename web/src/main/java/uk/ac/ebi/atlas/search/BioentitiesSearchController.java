@@ -89,9 +89,9 @@ public class BioentitiesSearchController {
 
         SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQueryString, condition, selectedSpecies.toLowerCase(), requestParameters.isExactMatch());
 
-        boolean showWidget = hasAllSameSpecies(baselineExperimentAssayGroups) && hasAnyTissueExperiment(baselineExperimentAssayGroups) & !requestParameters.hasCondition();
-
-        if (showWidget) {
+        if (hasAllSameSpecies(baselineExperimentAssayGroups)
+                && hasAnyTissueExperiment(baselineExperimentAssayGroups)
+                && !requestParameters.hasCondition()) {
             model.addAttribute("widgetHasBaselineProfiles", true);
             model.addAttribute("species", baselineExperimentAssayGroups.iterator().next().getSpecies());
 

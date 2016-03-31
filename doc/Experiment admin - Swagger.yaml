@@ -1,0 +1,174 @@
+swagger: '2.0'
+info:
+  title: Expression Atlas Experiment import API
+  description: 'Admin API for [Expression Atlas](https://www.ebi.ac.uk/gxa).'
+  version: 2.0.0
+host: localhost:8080
+schemes:
+  - http
+  - https
+basePath: /gxa/admin/experiments
+produces:
+  - application/json
+paths:
+  /{accession}/list:
+    get:
+      description: |
+        List the results.
+      parameters:
+        - name: accession
+          in: path
+          description: Experiment identifier, e.g. "E-MTAB-513". Supports "all", wildcard search e.g. "E-MTAB-*", a few descriptors like "baseline" or "proteomics", and experiments separated by commas e.g. "E-MTAB-513,E-PROT-3
+          required: true
+          type: string
+      responses:
+        '200':
+          description: An array of descriptions
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                accession:
+                  $ref: '#/definitions/Accession'
+                result:
+                  type: object
+                  properties:
+                    accession:
+                      $ref: '#/definitions/Accession'
+                    species:
+                      type: array
+                      items:
+                        type: string
+                    pubMedIds:
+                      type: array
+                      items:
+                        type: string
+                    title:
+                      type: string
+                    isPrivate:
+                      type: boolean
+                    accessKey:
+                      type: string
+                      description: Used to access private experiments
+                    lastUpdate:
+                      type: string
+                      description: Date e.g. "2016-03-31 17:27:40.0"
+  /{accession}/log:
+    get:
+      description: |
+        Show the operation log.
+      parameters:
+        - name: accession
+          in: path
+          description: Experiment identifier, e.g. "E-MTAB-513". Supports "all", wildcard search e.g. "E-MTAB-*", a few descriptors like "baseline" or "proteomics", and experiments separated by commas e.g. "E-MTAB-513,E-PROT-3
+          required: true
+          type: string
+      responses:
+        '200':
+          description: An array of logs
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                accession:
+                  $ref: '#/definitions/Accession'
+                result:
+                  type: array
+                  items:
+                    type: object
+                    properties: 
+                      op:
+                        $ref: '#/definitions/StatefulOp'
+                      started:
+                        $ref: '#/definitions/Timestamp'
+                      finished:
+                        $ref: '#/definitions/Timestamp'
+  /{accession}/status:
+    get:
+      description: |
+        Show the status of last operation.
+      parameters:
+        - name: accession
+          in: path
+          description: Experiment identifier, e.g. "E-MTAB-513". Supports "all", wildcard search e.g. "E-MTAB-*", a few descriptors like "baseline" or "proteomics", and experiments separated by commas e.g. "E-MTAB-513,E-PROT-3
+          required: true
+          type: string
+      responses:
+        '200':
+          description: An array of logs
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                accession:
+                  $ref: '#/definitions/Accession'
+                result:
+                  type: array
+                  items:
+                    type: object
+                    properties: 
+                      op:
+                        $ref: '#/definitions/StatefulOp'
+                      started:
+                        $ref: '#/definitions/Timestamp'
+                      in-progress:
+                        type: boolean
+                      elapsed:
+                        type: string
+                        description: E.g. 3s. Time since start for unfinished operations.
+
+
+              
+  /{accession}/{stateful_operation}:
+    get:
+      summary:
+        The general API
+      description: |
+        Description goes here
+      parameters:
+        - name: accession
+          in: path
+          description: Experiment identifier, e.g. "E-MTAB-513". Supports "all", wildcard search e.g. "E-MTAB-*", a few descriptors like "baseline" or "proteomics", and experiments separated by commas e.g. "E-MTAB-513,E-PROT-3
+          required: true
+          type: string
+        - name: stateful_operation
+          in: path
+          description: 
+            One of LIST, LOG, STATUS, CLEAR_LOG, UPDATE, UPDATE_PUBLIC, UPDATE_DESIGN, IMPORT, IMPORT_PUBLIC, DELETE, SERIALIZE, COEXPRESSION_IMPORT, COEXPRESSION_UPDATE, COEXPRESSION_DELETE, ANALYTICS_IMPORT, ANALYTICS_DELETE 
+          required: true
+          type: string
+      responses:
+        '200':
+          description: What happened
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                accession:
+                  $ref: '#/definitions/Accession'
+                result:
+                  type: string
+                  description: Optional - A success message
+                error:
+                  type: string
+                  description: Optional - Error - usually an exception trace
+  
+definitions:
+  StatefulOp:
+    type: string
+    description: One of LIST, LOG, STATUS, CLEAR_LOG, UPDATE, UPDATE_PUBLIC, UPDATE_DESIGN, IMPORT, IMPORT_PUBLIC, DELETE, SERIALIZE, COEXPRESSION_IMPORT, COEXPRESSION_UPDATE, COEXPRESSION_DELETE, ANALYTICS_IMPORT, ANALYTICS_DELETE
+  Timestamp:
+    type: number
+    description: Unix timestamp. -1 denotes unfinished operation.
+
+  Accession:
+    type: string
+    description: Identifier for an experiment e.g. "E-MTAB-513"
+
+
+
+	

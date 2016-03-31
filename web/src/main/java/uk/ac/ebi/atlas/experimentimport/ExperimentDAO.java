@@ -147,9 +147,7 @@ public class ExperimentDAO {
 
     public ExperimentDTO findExperiment(String experimentAccession, String accessKey) {
 
-        String findExperimentQuery = SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY;
-
-        List<ExperimentDTO> experimentDTOs = jdbcTemplate.query(findExperimentQuery, new ExperimentDTOResultSetExtractor(), experimentAccession, accessKey);
+        List<ExperimentDTO> experimentDTOs = jdbcTemplate.query(SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY, new ExperimentDTOResultSetExtractor(), experimentAccession, accessKey);
 
         return getSingleExperiment(experimentDTOs, experimentAccession);
 

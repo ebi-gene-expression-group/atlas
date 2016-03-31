@@ -41,6 +41,7 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import java.io.IOException;
 
+@Deprecated //moved to ExperimentAdminController
 @Controller
 @Scope("request")
 @RequestMapping("/admin")

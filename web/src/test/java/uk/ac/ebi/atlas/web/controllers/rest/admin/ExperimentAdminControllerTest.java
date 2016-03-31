@@ -70,7 +70,7 @@ public class ExperimentAdminControllerTest {
     @Mock
     private ExperimentCRUD experimentCRUDMock;
 
-    private ExperimentAdminController subject;
+    private ExperimentAdminDeprecatedController subject;
 
     @Mock
     private ExperimentTrader trader;
@@ -78,7 +78,7 @@ public class ExperimentAdminControllerTest {
     @Before
     public void setUp() throws Exception {
 
-        subject = new ExperimentAdminController(experimentCRUDMock, experimentMetadataCRUDMock, trader);
+        subject = new ExperimentAdminDeprecatedController(experimentCRUDMock, experimentMetadataCRUDMock, trader);
 
 
         when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);

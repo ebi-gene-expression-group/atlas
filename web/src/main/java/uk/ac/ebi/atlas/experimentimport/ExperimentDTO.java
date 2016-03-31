@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Objects;
+import com.google.gson.*;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Date;
@@ -109,6 +110,27 @@ public class ExperimentDTO {
                 .add("isPrivate", isPrivate)
                 .add("accessKey", accessKey)
                 .add("lastUpdate", lastUpdate).toString();
+    }
+
+    public JsonObject toJson(){
+        JsonObject result = new JsonObject();
+        result.add("accession", new JsonPrimitive(experimentAccession));
+        result.add("type", new JsonPrimitive(experimentType.name()));
+        JsonArray speciesArray = new JsonArray();
+        for(String specie: species){
+            speciesArray.add(new JsonPrimitive(specie));
+        }
+        result.add("species", speciesArray);
+        JsonArray pubmedIdsArray = new JsonArray();
+        for(String id: pubmedIds){
+            pubmedIdsArray.add(new JsonPrimitive(id));
+        }
+        result.add("pubmedIds", pubmedIdsArray);
+        result.add("title", new JsonPrimitive(title));
+        result.add("isPrivate", new JsonPrimitive(isPrivate));
+        result.add("accessKey", new JsonPrimitive(accessKey));
+        result.add("lastUpdate", new JsonPrimitive(lastUpdate.toString()));
+        return result;
     }
 
     public Date getLastUpdate() {

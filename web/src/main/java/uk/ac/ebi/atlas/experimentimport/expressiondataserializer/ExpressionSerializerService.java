@@ -50,25 +50,4 @@ public class ExpressionSerializerService {
         }
     }
 
-    public void kryoDeserializeExpressionData(String experimentAccession) {
-        LOGGER.info("Starting to read Kryo-serialized file for {}", experimentAccession);
-
-        String serializedBaselineExpressionFileName = "/Users/amunoz/ATLAS3.TEST/integration-test-data/serialized_expression/E-MTAB-2706.ser";
-        try (FileInputStream fis = new FileInputStream(serializedBaselineExpressionFileName)) {
-            UnsafeInput input = new UnsafeInput(fis);
-            Kryo kryo = new Kryo();
-            ImmutableSetKryoSerializer.registerSerializers(kryo);
-            OntologyTermKryoSerializer.registerSerializers(kryo);
-            BaselineExpressionsKryoReader kryoReader = new BaselineExpressionsKryoReader(kryo, input);
-
-            kryoReader.rewindAndReadAssays();
-            while (kryoReader.readLine()) {
-
-            }
-            LOGGER.info("Done reading");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 }

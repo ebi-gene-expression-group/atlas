@@ -21,10 +21,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 @Named
 @Scope("request")
@@ -67,8 +64,9 @@ public class BaselineExperimentAssayGroupSearchService {
         SetMultimap<String, String> assayGroupsWithExpressionByExperiment = baselineExperimentAssayGroupsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, Optional.of(geneIds));
 
         SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups =
-                searchedForConditionButGotNoResults(conditionString, indexedAssayGroups) ? emptySortedSet()
-                : buildResults(assayGroupsWithExpressionByExperiment, !StringUtils.isBlank(conditionString), speciesString);
+                searchedForConditionButGotNoResults(conditionString, indexedAssayGroups)
+                        ? new TreeSet<BaselineExperimentAssayGroup>()
+                        : buildResults(assayGroupsWithExpressionByExperiment, !StringUtils.isBlank(conditionString), speciesString);
 
         stopWatch.stop();
         LOGGER.info("<query> {} results, took {} seconds", baselineExperimentAssayGroups.size(), stopWatch.getTotalTimeSeconds());
@@ -78,10 +76,6 @@ public class BaselineExperimentAssayGroupSearchService {
 
     private boolean searchedForConditionButGotNoResults(String condition, Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups) {
         return (!StringUtils.isBlank(condition) && isEmpty(indexedAssayGroups));
-    }
-
-    public static SortedSet<BaselineExperimentAssayGroup> emptySortedSet() {
-        return Sets.newTreeSet();
     }
 
     // use above query instead, see TODO below

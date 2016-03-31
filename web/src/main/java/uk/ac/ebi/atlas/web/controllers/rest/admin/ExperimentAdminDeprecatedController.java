@@ -45,17 +45,17 @@ import java.util.UUID;
 @Controller
 @Scope("request")
 @RequestMapping("/admin")
-public class ExperimentAdminController {
+public class ExperimentAdminDeprecatedController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentAdminController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentAdminDeprecatedController.class);
 
     private ExperimentCRUD experimentCRUD;
     private ExperimentMetadataCRUD experimentMetadataCRUD;
     private ExperimentTrader trader;
 
     @Inject
-    public ExperimentAdminController(ExperimentCRUD experimentCRUD,
-                                     ExperimentMetadataCRUD experimentMetadataCRUD, ExperimentTrader trader) {
+    public ExperimentAdminDeprecatedController(ExperimentCRUD experimentCRUD,
+                                               ExperimentMetadataCRUD experimentMetadataCRUD, ExperimentTrader trader) {
         this.trader = trader;
         this.experimentCRUD = experimentCRUD;
         this.experimentMetadataCRUD = experimentMetadataCRUD;
@@ -75,13 +75,6 @@ public class ExperimentAdminController {
     public String serializeExpressionData(@RequestParam("accession") String experimentAccession) throws IOException {
         experimentCRUD.serializeExpressionData(experimentAccession);
         return "Expression data successfully serialized for " + experimentAccession;
-    }
-
-    @RequestMapping(value = "/deserializeExpressionData", produces="text/plain;charset=UTF-8")
-    @ResponseBody
-    public String deserializeExpressionData(@RequestParam("accession") String experimentAccession) throws IOException {
-        experimentCRUD.deserializeExpressionData(experimentAccession);
-        return "Expression data successfully deserialized for " + experimentAccession;
     }
 
     @RequestMapping(value = "/serializeAllBaselineExpressionData", produces="text/plain;charset=UTF-8")

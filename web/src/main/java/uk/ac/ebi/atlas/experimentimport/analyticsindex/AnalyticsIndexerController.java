@@ -82,6 +82,7 @@ public class AnalyticsIndexerController {
         return analyticsIndexerMonitor.toString();
     }
 
+    @Deprecated //moved to ExperimentAdminController
     @RequestMapping(value = "/analyticsIndex/indexExperiment", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String indexExperiment(@RequestParam("accession") String experimentAccession) {
@@ -95,6 +96,7 @@ public class AnalyticsIndexerController {
         return String.format("Experiment %s (re)indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
     }
 
+    @Deprecated //moved to ExperimentAdminController
     @RequestMapping(value = "/analyticsIndex/deleteExperiment", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String unindexExperiment(@RequestParam("accession") String experimentAccession) {
