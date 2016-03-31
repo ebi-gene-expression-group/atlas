@@ -16,11 +16,9 @@
     background-color: floralwhite;
 }
 
-.gxaDifferentialCellTooltip td {
-    white-space: nowrap;
-}
-
 .gxaDifferentialCellTooltip td, .gxaDifferentialCellTooltip th {
+    text-align: center;
+    white-space: nowrap;
     vertical-align: middle;
     padding: 8px;
     width: 25px;
