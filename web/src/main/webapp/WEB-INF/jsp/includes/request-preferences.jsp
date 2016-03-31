@@ -26,45 +26,45 @@
         <form:errors path="*" cssClass="gxaError"/>
         <table class="gxaFormGrid">
             <tr>
-                <td class="gxaExperimentRequestPreferencesFluidWideTableColumn">
+                <td class="gxaTableColumn35">
                     <form:label path="geneQuery">Gene query</form:label>
                     <span data-help-loc="#geneSearch"></span>
                 </td>
 
                 <c:if test="${!type.isBaseline()}">
-                    <td class=""> <!-- empty placeholder above Contrasts --> </td>
+                    <td class="gxaTableColumn10"> <!-- empty placeholder above contrast-up-down-menu.jsp --> </td>
                 </c:if>
 
                 <c:if test="${selectedFilterFactorNamesAndValues.size() > 0}">
-                    <td class="gxaExperimentRequestPreferencesFluidTableColumn">
+                    <td class="gxaTableColumn20">
                         <label>Filtered by</label>
                         <span data-help-loc="#filterBy"></span>
                     </td>
                 </c:if>
 
-                <td class="gxaExperimentRequestPreferencesFluidWideTableColumn">
+                <td class="gxaTableColumn17">
                     <form:label path="queryFactorValues">${queryFactorName}</form:label>
                     <span data-help-loc="#factorSearch${type.isBaseline() ? '' : '-differential'}"></span>
                 </td>
                 <c:choose>
                     <c:when test="${type.isBaseline()}">
-                        <td class="gxaExperimentRequestPreferencesFluidTableColumn">
+                        <td class="gxaTableColumn17">
                             <form:label path="cutoff">Expression level cutoff</form:label>
                             <span data-help-loc="#cutoff${type.isProteomicsBaseline() ? '-proteomics' : ''}"></span>
                         </td>
                     </c:when>
                     <c:otherwise>
-                        <td class="gxaExperimentRequestPreferencesFluidNarrowTableColumn">
+                        <td class="gxaTableColumn17">
                             <form:label path="cutoff">Adjusted <i>p</i>-value cutoff</form:label>
                             <span data-help-loc="#cutoff-differential"></span>
                         </td>
-                        <td class="gxaExperimentRequestPreferencesFluidNarrowTableColumn">
+                        <td class="gxaTableColumn17">
                             <form:label path="foldChangeCutOff">Log<sub>2</sub>-fold change cutoff</form:label>
                             <span data-help-loc="#foldChangeCutOff"></span>
                         </td>
                     </c:otherwise>
                 </c:choose>
-                <td rowspan="2" class="gxaExperimentRequestPreferencesFixedSizeTableColumn">
+                <td rowspan="2" class="gxaTableColumn10" style="vertical-align: middle;">
                     <div class="gxaExperimentRequestPreferencesActionButtons">
                         <div style="text-align: right;">
                             <input id="submit-button" type="submit" value="Apply"/>
@@ -77,23 +77,23 @@
             </tr>
 
             <tr>
-                <td class="gxaExperimentRequestPreferencesFluidWideTableColumn">
+                <td>
                     <textarea id="geneQuery" name="geneQuery" rows="2" cols="36" >${preferences.geneQuery.asTags()}</textarea>
                     <form:checkbox style="vertical-align: middle" id="exactMatch" path="exactMatch" label="Exact match"/>
                 </td>
 
                 <c:if test="${selectedFilterFactorNamesAndValues.size() > 0}">
-                    <td class="gxaExperimentRequestPreferencesFluidTableColumn">
+                    <td>
                         <c:import url="includes/filterby-menu.jsp"/>
                     </td>
                 </c:if>
                 <c:if test="${!type.isBaseline()}">
-                    <td class="">
+                    <td>
                         <c:import url="includes/contrast-up-down-menu.jsp"/>
                     </td>
                 </c:if>
 
-                <td class="gxaExperimentRequestPreferencesFluidWideTableColumn">
+                <td>
                     <div>
                         <c:set var="isSingleContrast" value="${(!type.isBaseline()) && allQueryFactors.size() == 1}"/>
                         <c:set var="itemLabel" value="${type.isBaseline() ? 'value' : 'displayName'}"/>
@@ -110,7 +110,7 @@
                           style="display:inline-block"></span>
                 </td>
 
-                <td class="gxaExperimentRequestPreferencesFluidTableColumn">
+                <td>
                     <c:choose>
                         <c:when test="${fn:endsWith('' + preferences.cutoff, '.0')}">
                             <fmt:formatNumber value="${preferences.cutoff}" groupingUsed="false"
@@ -127,7 +127,7 @@
                 </td>
 
                 <c:if test="${!type.isBaseline()}">
-                    <td class="gxaExperimentRequestPreferencesFluidTableColumn">
+                    <td>
                         <form:input style="height:27px; border: 1px solid #AAA; padding: 0px 5px;" size="10" path="foldChangeCutOff" id="foldChangeCutOff"/>
                     </td>
                 </c:if>

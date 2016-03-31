@@ -18,7 +18,7 @@
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneDistribution.js"></script>
 
 
-<div class="grid_18 alpha gxaNewSection gxaExtraPadding">
+<div class="grid_20 alpha gxaNewSection gxaExtraPadding">
     <c:import url="includes/request-preferences.jsp"/>
 </div>
 

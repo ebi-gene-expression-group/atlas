@@ -3,7 +3,7 @@
 <c:choose>
     <c:when test="${empty jsonProfiles}">
         <c:if test="${not isPreferenceError}">
-            <div id="heatmap-message">
+            <div class="grid_24" id="heatmap-message">
                 No expressions found
             </div>
         </c:if>

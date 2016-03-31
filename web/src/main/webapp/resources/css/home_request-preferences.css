@@ -7,6 +7,10 @@ table.gxaFormGrid {
     padding: 0; /* overrides ebi-visual.css */
 }
 
+form input {
+    margin: 0 0.1em 0.2em 0.2em; /* overrides ebi-visual.css */
+}
+
 table.gxaFormGrid label {
     font-weight: bold;
 }
@@ -29,14 +33,25 @@ td.gxaTableColumn10 {
     width: 10%;
 }
 
-td.gxaTableColumn35 {
-    width: 35%;
+td.gxaTableColumn15 {
+    width: 15%;
+}
+
+td.gxaTableColumn17 {
+    width: 17%;
 }
 
 td.gxaTableColumn20 {
     width: 20%;
 }
 
+td.gxaTableColumn30 {
+    width: 30%;
+}
+
+td.gxaTableColumn35 {
+    width: 35%;
+}
 
 table.gxaFormGrid .gxaHomeSearchActionButtons input.ui-button, table.gxaFormGrid .gxaExperimentRequestPreferencesActionButtons input.ui-button {
     min-width: 80px;
