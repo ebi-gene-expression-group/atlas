@@ -80,7 +80,7 @@ var geneQueryTagEditorModule = (function($) {
                             source_des = item.source;
                         }
 
-                        return $( "<li style='width: 300px;'></li>" )
+                        return $( "<li style='width: 280px;'></li>" )
                             .attr( "data-value", item.value )
                             .attr( "data-source", item.source )
                             .append( "<a>" + "<div style='float:left; text-align: left'>" + item.label + "</div><div style='float: right; text-align: right'><small>" + source_des + "</small></div></a>" )
