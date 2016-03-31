@@ -28,18 +28,18 @@
 			<form method="get" action="query" id="searchForm">
 				<table class="gxaFormGrid">
 					<tr>
-						<td>
+						<td class="gxaTableColumn35">
 							<label>Gene query</label>
 							<span data-help-loc="#geneSearch"></span>
 						</td>
-						<td>
+						<td class="gxaTableColumn20">
 							<label>Organism</label>
 						</td>
-						<td>
+						<td class="gxaTableColumn35">
 							<label>Sample properties</label>
 							<span data-help-loc="#experimentalConditions"></span>
 						</td>
-						<td rowspan="2">
+						<td class="gxaTableColumn10" rowspan="2">
 							<div class="gxaHomeSearchActionButtons">
 								<div style="text-align: right;">
 									<input id="submit-button" type="submit" value="Search" tabindex="4">

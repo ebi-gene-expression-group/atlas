@@ -25,6 +25,19 @@ table.gxaFormGrid .gxaSearchExamples {
     font-size: 95%;
 }
 
+td.gxaTableColumn10 {
+    width: 10%;
+}
+
+td.gxaTableColumn35 {
+    width: 35%;
+}
+
+td.gxaTableColumn20 {
+    width: 20%;
+}
+
+
 table.gxaFormGrid .gxaHomeSearchActionButtons input.ui-button, table.gxaFormGrid .gxaExperimentRequestPreferencesActionButtons input.ui-button {
     min-width: 80px;
 }
