@@ -26,7 +26,7 @@
 </section>
 <h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : geneQuery.asString()}"/>
 
-<section class="grid_23 gxaExtraPadding">
+<section class="grid_24 gxaExtraPadding gxaNewSection">
     <div id="accordion">
         <c:if test="${showBioentityPropertiesPane}">
             <ul id="infoHeader" class="gxaBioEntityCardHeader">
