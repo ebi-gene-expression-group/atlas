@@ -97,7 +97,7 @@
                 <li id="gxaLocalNavDownload">
                     <a href="${pageContext.request.contextPath}/download.html" title="Download">Download</a>
                 </li>
-                <li id="gxaLocalNavHelp" class="last">
+                <li id="gxaLocalNavHelp">
                     <a href="${pageContext.request.contextPath}/help/index.html"
                        title="Help pages">Help</a>
                 </li>
