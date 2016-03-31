@@ -7,7 +7,7 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiment-analysis-methods.css">
 
-<div class="gxaBlock grid_24 gxaNewSection">
+<div class="grid_24 alpha gxaNewSection">
     <display:table name="${csvLines}" id="csvLine" htmlId="methods-table" class="gxaAnalysisGrid">
         <display:caption>
             <div style="text-align:left;padding-top:10px; padding-bottom:5px">

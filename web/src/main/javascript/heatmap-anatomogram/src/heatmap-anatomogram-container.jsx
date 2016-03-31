@@ -87,7 +87,7 @@ var HeatmapAnatomogramContainer = React.createClass({
         var homoSapiensCellLine = this.state.heatmapConfig.species === "homo sapiens" && new URI(this.props.sourceURL).search(true).source === "CELL_LINE";
 
         return (
-            <div ref="this" className="gxaBlock">
+            <div ref="this">
 
                 { this.state.experimentData ?
                     <ExperimentDescription experiment={this.state.experimentData} linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>

@@ -59,7 +59,7 @@ var HighchartsHeatmapContainer = React.createClass({
             "&organism=" + this.state.heatmapConfig.species;
 
          return (
-            <div ref="this" className="gxaBlock">
+            <div ref="this">
 
                 { this.state.experimentData ?
                     <ExperimentDescription experiment={this.state.experimentData} linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>

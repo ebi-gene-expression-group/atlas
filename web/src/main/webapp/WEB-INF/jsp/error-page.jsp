@@ -6,7 +6,7 @@
 <c:set value="${requestScope['javax.servlet.error.status_code']}" var="statusCode"/>
 
 
-<div id="error-content" class="gxaBlock">
+<div id="error-content" class="grid_24 alpha">
     <div class="gxaError">
         <c:choose>
             <c:when test="${statusCode == '404'}">
@@ -19,6 +19,6 @@
     </div>
 </div>
 
-<div id="content" class="gxaBlock">
+<div id="content" class="grid_24 alpha">
 <a href="/gxa">Go to Expression Atlas home page</a>
 </div>

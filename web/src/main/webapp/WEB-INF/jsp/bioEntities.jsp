@@ -9,12 +9,12 @@
 
 <c:choose>
 <c:when test="${not empty exceptionMessage}">
-    <div id="error-content" class="gxaBlock">
+    <div id="error-content" class="grid_24 alpha">
         <div class="gxaError">
                 ${exceptionMessage}
         </div>
     </div>
-    <div id="content" class="gxaBlock">
+    <div id="content">
         <a href="/gxa">Go to Expression Atlas home page</a>
     </div>
 </c:when>
