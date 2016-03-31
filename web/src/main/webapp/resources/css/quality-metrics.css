@@ -20,21 +20,36 @@
 .aqm19 { }
 .aqm20 { }
 
+#qc-content h1 {
+    text-align: center;
+}
+
+#arraymetadata-b table {
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+}
+
 table {
+
     border-collapse: collapse;
     background-color: #ffffff;
     border-color: #ffffff;
     font-size: small;
+    width: auto;
 }
 
 table td {
-    padding: 0px 2px;
+    padding: 0 2px;
+    border: none;
 }
 
 li.tocsection {
-   font-weight:bold;
-   font-size:12pt
+   font-weight: bold;
+   font-size: 12pt
 }
 li.tocmodule {
-   font-size:11pt
+   font-size: 11pt
 }
