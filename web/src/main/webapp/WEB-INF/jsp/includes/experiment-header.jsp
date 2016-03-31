@@ -43,7 +43,7 @@
     </div>
 
     <div class="grid_6 omega">
-        <table style="width: auto;">
+        <table style="width: auto; float: right;">
             <tbody>
                 <tr>
                     <td>

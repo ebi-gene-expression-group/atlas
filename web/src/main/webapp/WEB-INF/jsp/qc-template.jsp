@@ -7,6 +7,7 @@
 <%@ page import="java.nio.file.Files" %>
 <%@ page import="java.nio.file.Path" %>
 
+<div class="grid_24 alpha gxaNewSection">
 <div id="arrayDesignsQc" class="gxaExtraPadding">
     <c:if test="${fn:length(qcArrayDesigns) > 1}">
 
@@ -25,6 +26,7 @@
         </form:form>
 
     </c:if>
+</div>
 </div>
 
 <div id="qc-content">
