@@ -283,8 +283,8 @@
 
 <c:if test="${showWidget}">
 
-    <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor.bundle.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasHeatmap.bundle.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js-bundles/experimentPageHeatmap.bundle.js"></script>
 
 </c:if>
 
@@ -310,7 +310,7 @@
 <script>
     <c:if test="${showWidget}">
     var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
-    expressionAtlasHeatmap({
+    experimentPageHeatmap.render({
         atlasHost: window.location.host,
         params: "geneQuery=${geneQuery.asUrlQueryParameter()}" + widgetParameters,
         analyticsSearch: false,

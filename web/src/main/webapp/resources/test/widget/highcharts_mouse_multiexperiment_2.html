@@ -5,8 +5,8 @@
 
     <title>Highcharts Heatmap demo</title>
 
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendor.bundle.js"></script>
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/highchartsAtlasHeatmap.bundle.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendorCommons.bundle.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/expressionAtlasHeatmapHighcharts.bundle.js"></script>
 </head>
 <body>
 <div>
@@ -17,7 +17,7 @@
 </body>
 
 <script language="JavaScript" type="text/javascript">
-    highchartsAtlasHeatmap({
+    expressionAtlasHeatmapHighcharts.render({
         params: "geneQuery=ENSMUSG00000075574&species=mus%20musculus&source=ORGANISM_PART",
         isMultiExperiment: true,
         target: "heatmapContainer"

@@ -10,8 +10,8 @@
     </c:when>
     <c:otherwise>
 
-    <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor.bundle.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js-bundles/internalAtlasHeatmap.bundle.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js-bundles/experimentPageHeatmap.bundle.js"></script>
 
     <div id="genenametooltip-content" style="display: none"></div>
 
@@ -20,7 +20,7 @@
             var heatmapData = <%@ include file="heatmap-data.jsp" %>;
             var isMultiExperiment = ${isMultiExperiment ? true : false};
 
-            internalAtlasHeatmap({
+            experimentPageHeatmap.render({
                 heatmapData: heatmapData,
                 isMultiExperiment: isMultiExperiment,
                 isDifferential: ${type.differential},

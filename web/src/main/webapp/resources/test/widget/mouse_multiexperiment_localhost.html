@@ -5,7 +5,9 @@
 
     <title>Heatmap demo</title>
 
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendor.bundle.js"></script>
+    <link rel="stylesheet" href="http://wwwdev.ebi.ac.uk/gxa/resources/css/jquery-ui-1.11.4.custom/css/jquery-ui.min.css">
+
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendorCommons.bundle.js"></script>
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/expressionAtlasHeatmap.bundle.js"></script>
 </head>
 <body>
@@ -17,7 +19,7 @@
 </body>
 
 <script language="JavaScript" type="text/javascript">
-    expressionAtlasHeatmap({
+    expressionAtlasHeatmap.render({
         atlasHost: "localhost:8080",
         params: "geneQuery=ASPM&species=mus%20musculus",
         isMultiExperiment: true,

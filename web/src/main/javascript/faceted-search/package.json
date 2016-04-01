@@ -17,7 +17,7 @@
     "contrast-tooltips": "file:../atlas_modules/contrast-tooltips",
     "display-levels-button": "file:../atlas_modules/display-levels-button",
     "fancybox": "^3.0.0",
-    "heatmap-anatomogram": "file:../heatmap-anatomogram",
+    "expression-atlas-heatmap": "file:../expression-atlas-heatmap",
     "highcharts-more": "^0.1.2",
     "jQuery-ajaxTransport-XDomainRequest": "git+https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git",
     "jquery": "^2.2.1",

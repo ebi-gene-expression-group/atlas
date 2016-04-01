@@ -5,10 +5,10 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     // define the bundles we want
     entry: {
-        anatomogramModule: './anatomogram-module',
-        expressionAtlasHeatmap: './heatmap-anatomogram',
-        internalAtlasHeatmap: './heatmap-anatomogram/src/internal-heatmap-anatomogram.js',
-        highchartsAtlasHeatmap:'./heatmap-highcharts',
+        expressionAtlasAnatomogram: './expression-atlas-anatomogram',
+        expressionAtlasHeatmap: './expression-atlas-heatmap',
+        expressionAtlasHeatmapHighcharts:'./expression-atlas-heatmap-highcharts',
+        experimentPageHeatmap: './expression-atlas-heatmap/src/experimentPageHeatmapAnatomogramRenderer.js',
         facetedSearch: './faceted-search',
         dependencies: ['react', 'react-dom', 'react-radio-group', 'react-bootstrap',
                        'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jQuery-ajaxTransport-XDomainRequest', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
@@ -16,12 +16,12 @@ module.exports = {
                        'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
                        'highcharts-more', 'react-highcharts']
     },
- 
+
     output: {
         libraryTarget: 'var',
         library: '[name]',
         path: path.resolve(__dirname, '../webapp/resources/js-bundles'),
-        filename: '[name].bundle.js',
+        filename: '[name].bundle.js'
     },
 
     plugins: [
@@ -33,7 +33,7 @@ module.exports = {
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'dependencies',
-            filename: 'vendor.bundle.js',
+            filename: 'vendorCommons.bundle.js',
             minChunks: Infinity     // Explicit definition-based split. Don’t put shared modules between main and demo entries in vendor.bundle.js
         })
     ],

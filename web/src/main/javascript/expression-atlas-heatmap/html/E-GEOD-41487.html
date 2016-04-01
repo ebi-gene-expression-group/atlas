@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/jquery-ui/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/atlas.css">
+
+    <script src="../dist/vendor.bundle.js"></script>
+    <script src="../dist/heatmap.bundle.js"></script>
+</head>
+<body>
+    <div>
+        <h2>Request done to <code>http://www.ebi.ac.uk/gxa</code></h2>
+    </div>
+
+    <div id="gxaExperimentPageHeatmapAnatomogram"></div>
+</body>
+
+<script language="JavaScript" type="text/javascript">
+    var heatmapData =
+        {
+            "config": {
+                "atlasHost": "http://wwwdev.ebi.ac.uk",
+                "contextRoot": "/gxa",
+                "experimentAccession": "E-GEOD-41487",
+                "geneQuery": "",
+                "accessKey": "",
+                "species": "drosophila melanogaster",
+                "ensemblDB": "metazoa",
+                "columnType": "comparison",
+                "isExactMatch": true,
+                "enableGeneLinks": true,
+                "enableEnsemblLauncher": false,
+                "showMaPlotButton": true,
+                "gseaPlots": {"g2_g1": {"go": false, "interpro": false, "reactome": false}},
+                "downloadProfilesURL": "/experiments/E-GEOD-41487.tsv",
+                "isFortLauderdale": ""
+            },
+            "columnHeaders": [{
+                "id": "g2_g1",
+                "referenceAssayGroup": {
+                    "id": "g2",
+                    "assayAccessions": ["SRR585715", "SRR585716", "SRR585717", "SRR585718"],
+                    "replicates": 1
+                },
+                "testAssayGroup": {"id": "g1", "assayAccessions": ["SRR585719", "SRR585721", "SRR585720"], "replicates": 3},
+                "displayName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027"
+            }],
+            "nonExpressedColumnHeaders": [],
+            "multipleColumnHeaders": null,
+            "profiles": {
+                "minUpLevel": 1.5,
+                "maxUpLevel": 3.6,
+                "searchResultTotal": 107,
+                "rows": [{
+                    "id": "FBgn0261989",
+                    "name": "CG42807",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF0000",
+                        "foldChange": "3.6",
+                        "pValue": "\u003c1E-10"
+                    }]
+                }, {
+                    "id": "FBgn0037974",
+                    "name": "CG12224",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF2122",
+                        "foldChange": "3.2",
+                        "pValue": "\u003c1E-10"
+                    }]
+                }, {
+                    "id": "FBgn0034507",
+                    "name": "CG11192",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF4B4B",
+                        "foldChange": "2.7",
+                        "pValue": "4.1E-7"
+                    }]
+                }, {
+                    "id": "FBgn0037895",
+                    "name": "CG6723",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#0000FF",
+                        "foldChange": "-2.6",
+                        "pValue": "2.87E-6"
+                    }]
+                }, {
+                    "id": "FBgn0037930",
+                    "name": "CG14715",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF5B5C",
+                        "foldChange": "2.5",
+                        "pValue": "\u003c1E-10"
+                    }]
+                }, {
+                    "id": "FBgn0026403",
+                    "name": "Ndg",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF5B5C",
+                        "foldChange": "2.5",
+                        "pValue": "7.36E-8"
+                    }]
+                }, {
+                    "id": "FBgn0003435",
+                    "name": "sm",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF5B5C",
+                        "foldChange": "2.5",
+                        "pValue": "7.36E-8"
+                    }]
+                }, {
+                    "id": "FBgn0038681",
+                    "name": "Cyp12a4",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF5B5C",
+                        "foldChange": "2.5",
+                        "pValue": "5.58E-7"
+                    }]
+                }, {
+                    "id": "FBgn0033397",
+                    "name": "Cyp4p3",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#1011EE",
+                        "foldChange": "-2.5",
+                        "pValue": "1.78E-6"
+                    }]
+                }, {
+                    "id": "FBgn0036157",
+                    "name": "CG7560",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#1011EE",
+                        "foldChange": "-2.5",
+                        "pValue": "5.06E-6"
+                    }]
+                }, {
+                    "id": "FBgn0032024",
+                    "name": "CG14273",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#2121DE",
+                        "foldChange": "-2.4",
+                        "pValue": "1.93E-5"
+                    }]
+                }, {
+                    "id": "FBgn0263321",
+                    "name": "CG43402",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF6C6D",
+                        "foldChange": "2.3",
+                        "pValue": "\u003c1E-10"
+                    }]
+                }, {
+                    "id": "FBgn0264490",
+                    "name": "Eip93F",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF6C6D",
+                        "foldChange": "2.3",
+                        "pValue": "1.35E-6"
+                    }]
+                }, {
+                    "id": "FBgn0267236",
+                    "name": "CG45676",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#3132CD",
+                        "foldChange": "-2.3",
+                        "pValue": "1.17E-4"
+                    }]
+                }, {
+                    "id": "FBgn0034128",
+                    "name": "CG4409",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF7475",
+                        "foldChange": "2.2",
+                        "pValue": "1.22E-4"
+                    }]
+                }, {
+                    "id": "FBgn0015399",
+                    "name": "kek1",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF7D7D",
+                        "foldChange": "2.1",
+                        "pValue": "1.03E-8"
+                    }]
+                }, {
+                    "id": "FBgn0043578",
+                    "name": "PGRP-SB1",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF7D7D",
+                        "foldChange": "2.1",
+                        "pValue": "5.19E-5"
+                    }]
+                }, {
+                    "id": "FBgn0014865",
+                    "name": "Mtk",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF7D7D",
+                        "foldChange": "2.1",
+                        "pValue": "3.18E-4"
+                    }]
+                }, {
+                    "id": "FBgn0033448",
+                    "name": "hebe",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF8586",
+                        "foldChange": "2",
+                        "pValue": "1.61E-5"
+                    }]
+                }, {
+                    "id": "FBgn0085261",
+                    "name": "CG34232",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#7576C0",
+                        "foldChange": "-2",
+                        "pValue": "1.4E-4"
+                    }]
+                }, {
+                    "id": "FBgn0050026",
+                    "name": "CG30026",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF8586",
+                        "foldChange": "2",
+                        "pValue": "3.82E-4"
+                    }]
+                }, {
+                    "id": "FBgn0032010",
+                    "name": "CG8086",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF8586",
+                        "foldChange": "2",
+                        "pValue": "6.81E-4"
+                    }]
+                }, {
+                    "id": "FBgn0040733",
+                    "name": "CG15068",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF8586",
+                        "foldChange": "2",
+                        "pValue": "8.27E-4"
+                    }]
+                }, {
+                    "id": "FBgn0020372",
+                    "name": "TM4SF",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF8586",
+                        "foldChange": "2",
+                        "pValue": "8.46E-4"
+                    }]
+                }, {
+                    "id": "FBgn0033874",
+                    "name": "CG6347",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF8586",
+                        "foldChange": "2",
+                        "pValue": "8.63E-4"
+                    }]
+                }, {
+                    "id": "FBgn0040735",
+                    "name": "CG16836",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF8586",
+                        "foldChange": "2",
+                        "pValue": "0.001"
+                    }]
+                }, {
+                    "id": "FBgn0033268",
+                    "name": "Obp44a",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF8586",
+                        "foldChange": "2",
+                        "pValue": "0.001"
+                    }]
+                }, {
+                    "id": "FBgn0031974",
+                    "name": "CG12560",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#8E8FC0",
+                        "foldChange": "-1.9",
+                        "pValue": "1.36E-4"
+                    }]
+                }, {
+                    "id": "FBgn0033820",
+                    "name": "CG4716",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#A7A7C0",
+                        "foldChange": "-1.8",
+                        "pValue": "2.67E-5"
+                    }]
+                }, {
+                    "id": "FBgn0035806",
+                    "name": "PGRP-SD",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF9696",
+                        "foldChange": "1.8",
+                        "pValue": "3.37E-5"
+                    }]
+                }, {
+                    "id": "FBgn0032665",
+                    "name": "CG15152",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF9696",
+                        "foldChange": "1.8",
+                        "pValue": "1.22E-4"
+                    }]
+                }, {
+                    "id": "FBgn0259219",
+                    "name": "CG42319",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF9696",
+                        "foldChange": "1.8",
+                        "pValue": "3.82E-4"
+                    }]
+                }, {
+                    "id": "FBgn0263390",
+                    "name": "Nha2",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#A7A7C0",
+                        "foldChange": "-1.8",
+                        "pValue": "0.002"
+                    }]
+                }, {
+                    "id": "FBgn0052437",
+                    "name": "CG32437",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF9696",
+                        "foldChange": "1.8",
+                        "pValue": "0.005"
+                    }]
+                }, {
+                    "id": "FBgn0033304",
+                    "name": "Cyp6a13",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF9E9F",
+                        "foldChange": "1.7",
+                        "pValue": "5.58E-7"
+                    }]
+                }, {
+                    "id": "FBgn0262964",
+                    "name": "CR43275",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#C0C0C0",
+                        "foldChange": "-1.7",
+                        "pValue": "5.1E-5"
+                    }]
+                }, {
+                    "id": "FBgn0031971",
+                    "name": "Sirup",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#C0C0C0",
+                        "foldChange": "-1.7",
+                        "pValue": "1.85E-4"
+                    }]
+                }, {
+                    "id": "FBgn0037548",
+                    "name": "CG7900",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#C0C0C0",
+                        "foldChange": "-1.7",
+                        "pValue": "0.004"
+                    }]
+                }, {
+                    "id": "FBgn0265577",
+                    "name": "CR44404",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF9E9F",
+                        "foldChange": "1.7",
+                        "pValue": "0.004"
+                    }]
+                }, {
+                    "id": "FBgn0263111",
+                    "name": "cac",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF9E9F",
+                        "foldChange": "1.7",
+                        "pValue": "0.005"
+                    }]
+                }, {
+                    "id": "FBgn0031294",
+                    "name": "IA-2",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF9E9F",
+                        "foldChange": "1.7",
+                        "pValue": "0.01"
+                    }]
+                }, {
+                    "id": "FBgn0033710",
+                    "name": "CG17739",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF9E9F",
+                        "foldChange": "1.7",
+                        "pValue": "0.011"
+                    }]
+                }, {
+                    "id": "FBgn0027584",
+                    "name": "CG4757",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF9E9F",
+                        "foldChange": "1.7",
+                        "pValue": "0.012"
+                    }]
+                }, {
+                    "id": "FBgn0020269",
+                    "name": "mspo",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FF9E9F",
+                        "foldChange": "1.7",
+                        "pValue": "0.012"
+                    }]
+                }, {
+                    "id": "FBgn0010113",
+                    "name": "hdc",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FFA6A7",
+                        "foldChange": "1.6",
+                        "pValue": "0.003"
+                    }]
+                }, {
+                    "id": "FBgn0033926",
+                    "name": "Arc1",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FFA6A7",
+                        "foldChange": "1.6",
+                        "pValue": "0.004"
+                    }]
+                }, {
+                    "id": "FBgn0266579",
+                    "name": "tau",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FFA6A7",
+                        "foldChange": "1.6",
+                        "pValue": "0.01"
+                    }]
+                }, {
+                    "id": "FBgn0050098",
+                    "name": "CG30098",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FFA6A7",
+                        "foldChange": "1.6",
+                        "pValue": "0.024"
+                    }]
+                }, {
+                    "id": "FBgn0034126",
+                    "name": "CG4398",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FFAFAF",
+                        "foldChange": "1.5",
+                        "pValue": "2.06E-5"
+                    }]
+                }, {
+                    "id": "FBgn0033875",
+                    "name": "CG6357",
+                    "expressions": [{
+                        "contrastName": "\u0027Ras-expressing\u0027 vs \u0027control\u0027",
+                        "color": "#FFAFAF",
+                        "foldChange": "1.5",
+                        "pValue": "1.32E-4"
+                    }]
+                }],
+                "minDownLevel": -1.7,
+                "maxDownLevel": -2.6
+            },
+            "geneSetProfiles": null,
+            "anatomogram": null,
+            "experiment": null
+        };
+    var isMultiExperiment = false;
+
+    heatmap.render({
+        heatmapData: heatmapData,
+        isMultiExperiment: isMultiExperiment,
+        isDifferential: true,
+        isProteomicsBaseline: false
+    });
+</script>
+
+</html>
