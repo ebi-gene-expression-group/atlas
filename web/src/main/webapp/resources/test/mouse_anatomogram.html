@@ -5,8 +5,8 @@
 
     <title>Heatmap demo</title>
 
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendor.bundle.js"></script>
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/anatomogram.bundle.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendorCommons.bundle.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/expressionAtlasAnatomogram.bundle.js"></script>
 </head>
 <body>
     <div>
@@ -68,18 +68,16 @@
         }
     ];
 
-    var EventEmitter = window.exposed.EventEmitter;
-    var eventEmitter = new EventEmitter();
+    var eventEmitter = expressionAtlasAnatomogram.eventEmitter;
 
-
-    var AnatomogramBuilder = window.exposed.AnatomogramBuilder;
-    AnatomogramBuilder(
+    expressionAtlasAnatomogram.render(
             document.getElementById("anatomogramContainer"),
             anatomogramData,
             profileRows,
             "red",
             "indigo",
-            eventEmitter);
+            "ui-lightness"
+    );
 </script>
 
 </html>

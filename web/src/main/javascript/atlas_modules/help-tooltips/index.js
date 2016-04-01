@@ -2,4 +2,4 @@
 
 //*------------------------------------------------------------------*
 
-module.exports = require('./src/HelpTooltips.js');
+module.exports = require('./src/helpTooltipsModule.js');

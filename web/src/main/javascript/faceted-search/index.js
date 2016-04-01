@@ -2,6 +2,6 @@
 
 //*------------------------------------------------------------------*
 
-exports.baseline = require('./src/baseline-heatmaps-router.js');
+exports.baseline = require('./src/baselineRouter.js');
 
-exports.differential = require('./src/differential-router.js');
+exports.differential = require('./src/differentialRouter.js');
