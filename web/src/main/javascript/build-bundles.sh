@@ -20,8 +20,8 @@ export https_proxy=$http_proxy
 export NVM_DIR="/nfs/ma/home/ma-svc/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-all_packages=(anatomogram-module anatomogram cell-differential contrast-tooltips display-levels-button faceted-search heatmap-anatomogram heatmap-baseline-cell-variance heatmap-highcharts help-tooltips legend number-format)
-bundled_packages=(anatomogram-module faceted-search heatmap-anatomogram heatmap-highcharts)
+all_packages=(anatomogram cell-differential contrast-tooltips display-levels-button heatmap-baseline-cell-variance help-tooltips legend number-format expression-atlas-anatomogram expression-atlaas-heatmap expression-atlas-heatmap-highcharts faceted-search)
+bundled_packages=(expression-atlas-anatomogram faceted-search expression-atlas-heatmap expression-atlas-heatmap-highcharts)
 
 for dir in ${bundled_packages[*]}
 do
