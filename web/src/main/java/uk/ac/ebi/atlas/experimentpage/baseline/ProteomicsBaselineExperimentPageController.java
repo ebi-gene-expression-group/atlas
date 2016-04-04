@@ -66,11 +66,8 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=PROTEOMICS_BASELINE")
     public String baselineExperiment(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
-        prepareModel(preferences, result, model, request);
-
-        addFactorMenu(model);
-
-        model.addAttribute("isWidget", false);
+        prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model, request, true,
+                false,false, false);
 
         return "experiment";
     }

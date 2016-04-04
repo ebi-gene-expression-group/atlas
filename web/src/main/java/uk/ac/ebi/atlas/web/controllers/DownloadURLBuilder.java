@@ -51,7 +51,7 @@ public class DownloadURLBuilder {
         model.addAttribute("clusteringPdfUrl", buildDownloadClusteringPdfFileUrl(request));
     }
 
-    public void addRDownloadUrlToModel(Model model, HttpServletRequest request) {
+    public static void addRDownloadUrlToModel(Model model, HttpServletRequest request) {
         model.addAttribute("rDownloadUrl", buildDownloadRFileUrl(request));
     }
 
@@ -71,7 +71,7 @@ public class DownloadURLBuilder {
         return extractBaseURL(request) + TSV_LOG_FOLD_FILE_EXTENSION;
     }
 
-    private String buildDownloadRFileUrl(HttpServletRequest request) {
+    private static String buildDownloadRFileUrl(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         String slashExperimentAccession = requestURI.substring(requestURI.lastIndexOf("/"));
         return requestURI + slashExperimentAccession + R_FILE_EXTENSION;

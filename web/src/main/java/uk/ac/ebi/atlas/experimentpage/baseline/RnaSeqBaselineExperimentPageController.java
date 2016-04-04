@@ -74,15 +74,10 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")
-    public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request) {
+    public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
 
-        prepareModel(preferences, result, model, request);
-
-        addFactorMenu(model);
-
-        model.addAttribute("isWidget", false);
-
-        downloadURLBuilder.addRDownloadUrlToModel(model, request);
+        prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model, request, true,
+                true, false, false);
 
         return "experiment";
     }
@@ -92,19 +87,8 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
                                                        @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request,
                                                        HttpServletResponse response) {
 
-        //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
-        // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
-        // instead of the current tab separated syntax for geneQuery
-        preferences.setGeneQuery(GeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
-
-        BaselineProfilesList baselineProfiles = prepareModel(preferences, result, model, request);
-
-        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-
-        model.addAttribute("isWidget", true);
-        model.addAttribute("disableGeneLinks", disableGeneLinks);
-        model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
-        model.addAttribute("enableEnsemblLauncher", false);
+        BaselineProfilesList baselineProfiles = prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model,
+                request, false , false, true, disableGeneLinks);
 
         if (result.hasErrors()) {
             model.addAttribute("errorMessage", result.getGlobalError().getDefaultMessage());

@@ -43,10 +43,10 @@ import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
+import uk.ac.ebi.atlas.web.*;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
+import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -57,8 +57,6 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
     private final BaselineProfilesHeatMap baselineProfilesHeatMap;
     private final ApplicationProperties applicationProperties;
     private final FilterFactorMenuBuilder filterFactorMenuBuilder;
-    private BaselineRequestContext requestContext;
-    private BaselineExperiment experiment;
     private final BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
     private final SpeciesKingdomTrader speciesKingdomTrader;
     private final AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
@@ -91,14 +89,28 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         binder.addValidators(new BaselineRequestPreferencesValidator());
     }
 
-    private BaselineProfilesList fetchGeneProfilesAsGeneSets() {
+    private BaselineProfilesList fetchGeneProfilesAsGeneSets(BaselineRequestContext requestContext) {
         BaselineProfileStreamOptionsWrapperAsGeneSets options = new BaselineProfileStreamOptionsWrapperAsGeneSets(requestContext);
         return baselineProfilesHeatMap.fetch(options);
     }
 
-    BaselineProfilesList prepareModel(BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request) {
+    BaselineProfilesList prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(BaselineRequestPreferences preferences, BindingResult
+            result, Model model, HttpServletRequest request, boolean shouldAddFactorMenu, boolean
+            shouldAddRDownloadUrl, boolean amIAWidget, boolean disableGeneLinks) {
 
-        initializeContext(preferences, request);
+        if(amIAWidget){
+            // possibly we could always do this - investigate if it matters for not-a-widget
+
+            //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
+            // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
+            // instead of the current tab separated syntax for geneQuery
+            preferences.setGeneQuery(GeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
+        }
+
+        BaselineExperiment experiment =(BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        setPreferenceDefaults(preferences, experiment);
+
+        BaselineRequestContext requestContext = buildRequestContext(experiment, preferences);
 
         model.addAttribute("experimentAccession", experiment.getAccession());
 
@@ -148,12 +160,14 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
             model.addAttribute("enableEnsemblLauncher", false);
         }
 
+        BaselineProfilesList toReturn = null;
         if (!result.hasErrors()) {
 
             try {
 
                 BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext);
-                BaselineProfilesList profilesAsGeneSets = requestContext.geneQueryResponseContainsGeneSets() ? fetchGeneProfilesAsGeneSets() : null;
+                BaselineProfilesList profilesAsGeneSets = requestContext.geneQueryResponseContainsGeneSets() ?
+                        fetchGeneProfilesAsGeneSets(requestContext) : null;
 
                 addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, model);
 
@@ -166,23 +180,29 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
                     model.addAttribute("hasAnatomogram", false);
                 }
 
-                return baselineProfiles;
+                toReturn= baselineProfiles;
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
             }
 
         }
+        if(shouldAddFactorMenu) {
+            addFactorMenu(model, experiment, requestContext);
+        }
+        if(shouldAddRDownloadUrl) {
+            DownloadURLBuilder.addRDownloadUrlToModel(model, request);
+        }
+        if(!amIAWidget){
+            model.addAttribute("isWidget", false);
+        } else {
 
-        return null;
-    }
-
-    private void initializeContext(BaselineRequestPreferences preferences, HttpServletRequest request) {
-        experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-
-        setPreferenceDefaults(preferences, experiment);
-
-        requestContext = buildRequestContext(experiment, preferences);
+            model.addAttribute("isWidget", true);
+            model.addAttribute("disableGeneLinks", disableGeneLinks);
+            model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
+            model.addAttribute("enableEnsemblLauncher", false);
+        }
+        return toReturn;
     }
 
     private ImmutableSet<String> extractOntologyTerm(Set<AssayGroupFactor> filteredAssayGroupFactors) {
@@ -250,7 +270,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         }
     }
 
-    void addFactorMenu(Model model) {
+    private void addFactorMenu(Model model, BaselineExperiment experiment,BaselineRequestContext requestContext) {
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
