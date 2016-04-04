@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.AssayGroups;
@@ -88,7 +89,9 @@ public class BaselineExperimentDownloadControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineExperimentDownloadController(requestContextBuilderMock, filterFactorsConverterMock, baselineProfilesWriterMock);
+        subject = new BaselineExperimentDownloadController(
+                new PreferencesForBaselineExperiments(requestContextBuilderMock,
+                filterFactorsConverterMock), baselineProfilesWriterMock);
     }
 
     @Test

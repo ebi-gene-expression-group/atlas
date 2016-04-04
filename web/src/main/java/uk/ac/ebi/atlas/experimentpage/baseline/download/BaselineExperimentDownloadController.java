@@ -29,13 +29,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentController;
+import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
@@ -53,19 +51,19 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
     private static final String PARAMS_TYPE_RNASEQ_BASELINE = "type=RNASEQ_MRNA_BASELINE";
     private BaselineProfilesWriter baselineProfilesWriter;
+    private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
 
     @Inject
-    public BaselineExperimentDownloadController(BaselineRequestContextBuilder requestContextBuilder,
-                                                FilterFactorsConverter filterFactorsConverter,
+    public BaselineExperimentDownloadController(PreferencesForBaselineExperiments preferencesForBaselineExperiments,
                                                 BaselineProfilesWriter baselineProfilesWriter) {
-        super(requestContextBuilder, filterFactorsConverter);
+        this.preferencesForBaselineExperiments = preferencesForBaselineExperiments;
         this.baselineProfilesWriter = baselineProfilesWriter;
     }
 
     protected void geneProfilesHandler(HttpServletRequest request, BaselineRequestPreferences preferences, HttpServletResponse response) throws IOException {
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        setPreferenceDefaults(preferences, experiment);
+        preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: {}", preferences);
 
@@ -73,7 +71,8 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
         response.setContentType("text/plain; charset=utf-8");
 
-        BaselineRequestContext requestContext = buildRequestContext(experiment, preferences);
+        BaselineRequestContext requestContext = preferencesForBaselineExperiments.buildRequestContext(experiment,
+                preferences);
 
         try {
 

@@ -44,29 +44,21 @@ import javax.validation.Valid;
 
 @Controller
 @Scope("request")
-public class ProteomicsBaselineExperimentPageController extends BaselineExperimentPageController {
+public class ProteomicsBaselineExperimentPageController extends BaselineExperimentController {
 
+    BaselineExperimentPageService baselineExperimentPageService;
     @Inject
-    public ProteomicsBaselineExperimentPageController(ProteomicsBaselineProfilesHeatMap baselineProfilesHeatMap,
-                                                      ApplicationProperties applicationProperties,
-                                                      BaselineRequestContextBuilder requestContextBuilder,
-                                                      FilterFactorsConverter filterFactorsConverter,
-                                                      FilterFactorMenuBuilder filterFactorMenuBuilder,
-                                                      BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
-                                                      AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
-                                                      SpeciesKingdomTrader speciesKingdomTrader,
-                                                      TracksUtil tracksUtil,
-                                                      BaselineExperimentUtil bslnUtil) {
+    public ProteomicsBaselineExperimentPageController(BaselineExperimentPageService baselineExperimentPageService) {
 
-        super(baselineProfilesHeatMap, applicationProperties, requestContextBuilder, filterFactorsConverter, filterFactorMenuBuilder,
-                baselineProfilesViewModelBuilder, assayGroupFactorViewModelBuilder, speciesKingdomTrader, tracksUtil, bslnUtil);
+        this.baselineExperimentPageService = baselineExperimentPageService;
     }
 
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=PROTEOMICS_BASELINE")
     public String baselineExperiment(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
-        prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model, request, true,
+        baselineExperimentPageService.prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences,
+                result, model, request, true,
                 false,false, false);
 
         return "experiment";

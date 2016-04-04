@@ -39,52 +39,6 @@ import java.util.Set;
 
 public abstract class BaselineExperimentController {
 
-    private BaselineRequestContextBuilder baselineRequestContextBuilder;
-    private FilterFactorsConverter filterFactorsConverter;
-
-    protected BaselineExperimentController(BaselineRequestContextBuilder baselineRequestContextBuilder,
-                                           FilterFactorsConverter filterFactorsConverter) {
-        this.baselineRequestContextBuilder = baselineRequestContextBuilder;
-        this.filterFactorsConverter = filterFactorsConverter;
-    }
-
-    protected void setPreferenceDefaults(BaselineRequestPreferences preferences, BaselineExperiment baselineExperiment) {
-
-        if (StringUtils.isBlank(preferences.getQueryFactorType())) {
-            preferences.setQueryFactorType(baselineExperiment.getExperimentalFactors().getDefaultQueryFactorType());
-        }
-
-        if (StringUtils.isBlank(preferences.getSerializedFilterFactors())) {
-            preferences.setSerializedFilterFactors(filterFactorsConverter.serialize(baselineExperiment.getExperimentalFactors().getDefaultFilterFactors()));
-        }
-
-        if (allFactorsInSliceSelected(preferences, baselineExperiment)) {
-            preferences.setSpecific(false);
-        }
-
-    }
-
-    private boolean allFactorsInSliceSelected(BaselineRequestPreferences preferences, BaselineExperiment experiment) {
-        Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
-
-        Set<Factor> allFactorsInSlice;
-        if(experiment.getExperimentalFactors().getAllFactorsOrderedByXML() != null &&
-                !experiment.getExperimentalFactors().getAllFactorsOrderedByXML().isEmpty()) {
-            allFactorsInSlice = experiment.getExperimentalFactors().getComplementFactorsByXML(selectedFilterFactors);
-        } else {
-            allFactorsInSlice = experiment.getExperimentalFactors().getComplementFactors(selectedFilterFactors);
-        }
-
-        return (preferences.getQueryFactorValues().size() == allFactorsInSlice.size());
-    }
-
-    protected BaselineRequestContext buildRequestContext(BaselineExperiment experiment, BaselineRequestPreferences preferences) {
-
-        return baselineRequestContextBuilder.forExperiment(experiment)
-                                        .withPreferences(preferences)
-                                        .build();
-    }
-
     @ExceptionHandler(value = {SolrException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView InternalServerHandleException(Exception e) {

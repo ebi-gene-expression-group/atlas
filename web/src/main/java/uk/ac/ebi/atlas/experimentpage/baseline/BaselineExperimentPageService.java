@@ -32,7 +32,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.AnatomogramType;
 import uk.ac.ebi.atlas.model.baseline.*;
@@ -48,10 +47,13 @@ import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-public abstract class BaselineExperimentPageController extends BaselineExperimentController {
+@Named
+public class BaselineExperimentPageService {
 
     private final TracksUtil tracksUtil;
     private final BaselineProfilesHeatMap baselineProfilesHeatMap;
@@ -61,19 +63,18 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
     private final SpeciesKingdomTrader speciesKingdomTrader;
     private final AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
     private BaselineExperimentUtil bslnUtil;
+    private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
 
-    public BaselineExperimentPageController(BaselineProfilesHeatMap baselineProfilesHeatMap,
-                                            ApplicationProperties applicationProperties,
-                                            BaselineRequestContextBuilder requestContextBuilder,
-                                            FilterFactorsConverter filterFactorsConverter,
-                                            FilterFactorMenuBuilder filterFactorMenuBuilder,
-                                            BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
-                                            AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
-                                            SpeciesKingdomTrader speciesKingdomTrader,
-                                            TracksUtil tracksUtil,
-                                            BaselineExperimentUtil bslnUtil) {
+    @Inject
+    public BaselineExperimentPageService(BaselineProfilesHeatMap baselineProfilesHeatMap,
+                                         ApplicationProperties applicationProperties,
+                                         FilterFactorMenuBuilder filterFactorMenuBuilder,
+                                         BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
+                                         AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
+                                         SpeciesKingdomTrader speciesKingdomTrader,
+                                         TracksUtil tracksUtil,
+                                         BaselineExperimentUtil bslnUtil, PreferencesForBaselineExperiments preferencesForBaselineExperiments) {
 
-        super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
         this.baselineProfilesHeatMap = baselineProfilesHeatMap;
         this.filterFactorMenuBuilder = filterFactorMenuBuilder;
@@ -82,6 +83,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
         this.bslnUtil = bslnUtil;
+        this.preferencesForBaselineExperiments = preferencesForBaselineExperiments;
     }
 
     @InitBinder("preferences")
@@ -94,7 +96,8 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         return baselineProfilesHeatMap.fetch(options);
     }
 
-    BaselineProfilesList prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(BaselineRequestPreferences preferences, BindingResult
+    public BaselineProfilesList prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings
+            (BaselineRequestPreferences preferences, BindingResult
             result, Model model, HttpServletRequest request, boolean shouldAddFactorMenu, boolean
             shouldAddRDownloadUrl, boolean amIAWidget, boolean disableGeneLinks) {
 
@@ -108,9 +111,10 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         }
 
         BaselineExperiment experiment =(BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-        setPreferenceDefaults(preferences, experiment);
+        preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
-        BaselineRequestContext requestContext = buildRequestContext(experiment, preferences);
+        BaselineRequestContext requestContext = preferencesForBaselineExperiments.buildRequestContext(experiment,
+                preferences);
 
         model.addAttribute("experimentAccession", experiment.getAccession());
 

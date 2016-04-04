@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -21,13 +22,13 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class BaselineExperimentControllerIT {
+public class PreferencesForBaselineExperimentsIT {
 
     @Inject
     BaselineExperimentsCache baselineExperimentsCache;
 
-    @Resource(name = "rnaSeqBaselineExperimentPageController")
-    BaselineExperimentController subject;
+    @Inject
+    PreferencesForBaselineExperiments subject;
 
     @Test
     public void searchingForAllFactorsSetsSpecificToFalse_singleFactorExperiment() throws ExecutionException {

@@ -30,18 +30,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
-import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.*;
-import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
-import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
-import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -50,33 +46,19 @@ import javax.validation.Valid;
 
 @Controller
 @Scope("request")
-public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPageController {
+public class RnaSeqBaselineExperimentPageController extends BaselineExperimentController {
 
-    private final DownloadURLBuilder downloadURLBuilder;
-    private final ApplicationProperties applicationProperties;
-
+    BaselineExperimentPageService baselineExperimentPageService;
     @Inject
-    public RnaSeqBaselineExperimentPageController(BaselineProfilesHeatMap baselineProfilesHeatMap,
-                                                  ApplicationProperties applicationProperties,
-                                                  BaselineRequestContextBuilder requestContextBuilder,
-                                                  FilterFactorsConverter filterFactorsConverter,
-                                                  FilterFactorMenuBuilder filterFactorMenuBuilder,
-                                                  DownloadURLBuilder downloadURLBuilder,
-                                                  BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
-                                                  AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
-                                                  SpeciesKingdomTrader speciesKingdomTrader,
-                                                  TracksUtil tracksUtil,
-                                                  BaselineExperimentUtil bslnUtil) {
-        super(baselineProfilesHeatMap, applicationProperties, requestContextBuilder, filterFactorsConverter, filterFactorMenuBuilder,
-                baselineProfilesViewModelBuilder, assayGroupFactorViewModelBuilder, speciesKingdomTrader, tracksUtil, bslnUtil);
-        this.downloadURLBuilder = downloadURLBuilder;
-        this.applicationProperties = applicationProperties;
+    public RnaSeqBaselineExperimentPageController(BaselineExperimentPageService baselineExperimentPageService) {
+        this.baselineExperimentPageService = baselineExperimentPageService;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")
     public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
 
-        prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model, request, true,
+        baselineExperimentPageService
+        .prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model, request, true,
                 true, false, false);
 
         return "experiment";
@@ -87,7 +69,8 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
                                                        @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request,
                                                        HttpServletResponse response) {
 
-        BaselineProfilesList baselineProfiles = prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model,
+        BaselineProfilesList baselineProfiles = baselineExperimentPageService
+                .prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model,
                 request, false , false, true, disableGeneLinks);
 
         if (result.hasErrors()) {

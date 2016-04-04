@@ -154,7 +154,7 @@ public final class HeatmapWidgetController {
         //TODO: hacky, fix this, see RnaSeqBaselineExperimentPageController
         request.setAttribute(ORIGINAL_GENEQUERY, bioEntityAccession);
 
-        // forward to /widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE in BaselineExperimentPageController
+        // forward to /widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE in BaselineExperimentPageService
         // eg: forward:/widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE&serializedFilterFactors=ORGANISM:Monodelphis domestica&disableGeneLinks=true
         // existing request parameters to this method (ie: geneQuery, propertyType, rootContext) are also passed along by the forward,
         // plus type and serializedFilterFactors
@@ -236,7 +236,7 @@ public final class HeatmapWidgetController {
         model.addAttribute("geneQuery", geneQuery);
     }
 
-    //TODO: remove duplication with BaselineExperimentPageController
+    //TODO: remove duplication with BaselineExperimentPageService
     private ImmutableSet<String> extractOntologyTerm(SortedSet<AssayGroupFactor> filteredAssayGroupFactors) {
         ImmutableSet.Builder<String> builder = ImmutableSet.builder();
 
@@ -252,7 +252,7 @@ public final class HeatmapWidgetController {
 
     private void addAnatomogram(ImmutableSet<String> allSvgPathIds, Model model, String species) {
         //TODO: check if this can be externalized in the view with a custom EL or tag function
-        //or another code block because it's repeated with BaselineExperimentPageController
+        //or another code block because it's repeated with BaselineExperimentPageService
         String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.MALE);
         model.addAttribute("maleAnatomogramFile", maleAnatomogramFileName);
 

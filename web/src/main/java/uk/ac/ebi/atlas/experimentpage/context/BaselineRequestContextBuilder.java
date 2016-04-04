@@ -42,21 +42,14 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class BaselineRequestContextBuilder {
 
-    private BaselineRequestContext requestContext;
-
     private BaselineExperiment experiment;
 
     private FilterFactorsConverter filterFactorsConverter;
 
     private BaselineRequestPreferences preferences;
 
-    // NB: although we are building a BaselineRequest object here, we get an empty one injected from
-    // the spring container (and populate it) because we want it to come from the request scope.
-    // This allows other request scoped beans (eg: BaselineProfilePreconditionBackedBuilder)
-    // to inject the same instance that we are populating here
     @Inject
-    public BaselineRequestContextBuilder(BaselineRequestContext requestContext, FilterFactorsConverter filterFactorsConverter) {
-        this.requestContext = requestContext;
+    public BaselineRequestContextBuilder(FilterFactorsConverter filterFactorsConverter) {
         this.filterFactorsConverter = filterFactorsConverter;
     }
 
@@ -75,6 +68,8 @@ public class BaselineRequestContextBuilder {
     }
 
     public BaselineRequestContext build() {
+        BaselineRequestContext requestContext = new BaselineRequestContext();
+
         checkState(experiment != null, "Please invoke forExperiment before build");
 
         requestContext.setExperiment(experiment);

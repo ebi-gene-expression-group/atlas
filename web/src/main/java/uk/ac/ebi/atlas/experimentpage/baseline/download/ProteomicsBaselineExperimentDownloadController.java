@@ -4,11 +4,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -16,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.text.MessageFormat;
 
 @Controller
 @Scope("request")
@@ -25,10 +21,9 @@ public class ProteomicsBaselineExperimentDownloadController extends BaselineExpe
     private final String TYPE_PROTEOMICS_BASELINE = "type=PROTEOMICS_BASELINE";
 
     @Inject
-    public ProteomicsBaselineExperimentDownloadController(BaselineRequestContextBuilder requestContextBuilder,
-                                                          FilterFactorsConverter filterFactorsConverter,
+    public ProteomicsBaselineExperimentDownloadController(PreferencesForBaselineExperiments preferencesForBaselineExperiments,
                                                           ProteomicsBaselineProfilesWriter proteomicsBaselineProfilesWriter) {
-        super(requestContextBuilder, filterFactorsConverter, proteomicsBaselineProfilesWriter);
+        super(preferencesForBaselineExperiments, proteomicsBaselineProfilesWriter);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = TYPE_PROTEOMICS_BASELINE)
