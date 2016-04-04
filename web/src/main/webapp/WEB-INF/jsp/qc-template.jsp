@@ -3,9 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<%@ page import="org.apache.commons.io.IOUtils" %>
-<%@ page import="java.nio.file.Files" %>
-<%@ page import="java.nio.file.Path" %>
+<%@ page import="uk.ac.ebi.atlas.experimentpage.qc.QCReportUtil" %>
+
 
 <div class="grid_24 alpha gxaNewSection">
 <div id="arrayDesignsQc" class="gxaExtraPadding">
@@ -33,8 +32,8 @@
     <%
         // manually load file contents instead of using c:import to avoid javax.servlet.jsp.JspTagException: 304 errors
         // see http://stackoverflow.com/questions/17218609/jsp-exception-when-i-try-to-import-static-file
-        Path filePath = (Path)request.getAttribute("contentPath");
-        IOUtils.copy(Files.newInputStream(filePath), pageContext.getOut());
+        QCReportUtil.printContent(request, pageContext.getOut());
+
     %>
 </div>
 
