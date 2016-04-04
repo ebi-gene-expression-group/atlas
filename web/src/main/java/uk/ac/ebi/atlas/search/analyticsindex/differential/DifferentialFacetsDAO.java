@@ -26,25 +26,25 @@ public class DifferentialFacetsDAO extends DifferentialAnalyticsDAO {
 
     public String fetchFacetsAboveDefaultFoldChangeForSearch(GeneQuery geneQuery) {
         String identifierSearch = buildSolrQuery(geneQuery, IDENTIFIER_SEARCH_FIELD);
-        return fetchFacetsAboveFoldChange(identifierSearch, DEFAULT_NEGATIVE_FOLD_CHANGE, DEFAULT_POSITIVE_FOLD_CHANGE, DEFAULT_P_VALUE);
+        return fetchFacetsAboveFoldChange(identifierSearch, DEFAULT_P_VALUE);
     }
 
     public String fetchFacetsAboveDefaultFoldChangeForIdentifier(GeneQuery geneQuery) {
         String identifierSearch = buildSolrQuery(geneQuery, BIOENTITY_IDENTIFIER_FIELD);
-        return fetchFacetsAboveFoldChange(identifierSearch, DEFAULT_NEGATIVE_FOLD_CHANGE, DEFAULT_POSITIVE_FOLD_CHANGE, DEFAULT_P_VALUE);
+        return fetchFacetsAboveFoldChange(identifierSearch, DEFAULT_P_VALUE);
     }
 
-    private String fetchFacetsAboveFoldChange(String q, double negativeFoldChange, double positiveFoldChange, double pValue) {
+    private String fetchFacetsAboveFoldChange(String q, double pValue) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        String result = fetchResponseAsString(buildDifferentialFacetsAboveFoldChangeQueryUrl(q, negativeFoldChange, positiveFoldChange, pValue));
+        String result = fetchResponseAsString(buildDifferentialFacetsAboveFoldChangeQueryUrl(q, pValue));
         stopwatch.stop();
-        LOGGER.debug("q={} foldChange={}/{} took {} seconds", q, negativeFoldChange, positiveFoldChange, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
+        LOGGER.debug("q={} foldChange={}/{} took {} seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
 
         return result;
     }
 
-    private String buildDifferentialFacetsAboveFoldChangeQueryUrl(String q, double negativeFoldChange, double positiveFoldChange, double pValue) {
+    private String buildDifferentialFacetsAboveFoldChangeQueryUrl(String q, double pValue) {
         String query = q.isEmpty() ? DIFFERENTIAL_ONLY : q + " AND " + DIFFERENTIAL_ONLY;
-        return solrBaseUrl + buildQueryParameters(query, ROWS, negativeFoldChange, positiveFoldChange, pValue) + differentialGeneFacetsQuery;
+        return solrBaseUrl + buildQueryParameters(query, ROWS, pValue) + differentialGeneFacetsQuery;
     }
 }

@@ -31,7 +31,7 @@ public class BaselineAnalyticsSearchDaoIT {
 
     @Test
     public void buildQueryUrl() {
-        assertThat(subject.buildQueryUrl(SPECIES_HOMO_SAPIENS, 0.5, 0), Matchers.endsWith("solr/analytics/query?q=species:%22homo%20sapiens%22&rows=0&omitHeader=true&" +
+        assertThat(subject.buildQueryUrl(SPECIES_HOMO_SAPIENS), Matchers.endsWith("solr/analytics/query?q=species:%22homo%20sapiens%22&rows=0&omitHeader=true&" +
                 "fq=(experimentType:rnaseq_mrna_baseline%20AND%20expressionLevel:%5B0.5%20TO%20*%5D)%20OR%20(experimentType:proteomics_baseline%20AND%20expressionLevel" +
                 ":%5B0%20TO%20*%5D)&json.facet=%7B%22experimentType%22:%7B%22terms%22:%7B%22field%22:%22experimentType%22,%22facet%22:%7B%22species%22:%7B%22terms%22:" +
                 "%7B%22field%22:%22species%22,%22facet%22:%7B%22defaultQueryFactorType%22:%7B%22terms%22:%7B%22field%22:%22defaultQueryFactorType%22,%22facet%22:%7B%22" +
@@ -42,7 +42,7 @@ public class BaselineAnalyticsSearchDaoIT {
 
     @Test
     public void fetchFacetsForHomoSapiens() {
-        String json = subject.fetchFacets(SPECIES_HOMO_SAPIENS, 0.5, 0);
+        String json = subject.fetchFacets(SPECIES_HOMO_SAPIENS);
 
         ReadContext jsonCtx = JsonPath.parse(json);
 

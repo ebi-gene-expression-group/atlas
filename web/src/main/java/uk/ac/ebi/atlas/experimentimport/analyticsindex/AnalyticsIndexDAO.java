@@ -59,21 +59,6 @@ public class AnalyticsIndexDAO {
         return count;
     }
 
-    public int addDocuments(List<SolrInputDocument> documents) {
-        int count = 0;
-
-        try {
-            solrClient.add(documents, COMMIT_TIME_IN_MILLISECONDS);
-            solrClient.commit(false, false);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
-            rollBack();
-            throw new AnalyticsIndexerException(e);
-        }
-
-        return count;
-    }
-
     public void deleteDocumentsForExperiment(String accession) {
         try {
             solrClient.deleteByQuery("experimentAccession:" + accession);

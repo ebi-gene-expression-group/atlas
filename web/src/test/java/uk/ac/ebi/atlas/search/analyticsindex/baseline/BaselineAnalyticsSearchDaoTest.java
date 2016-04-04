@@ -39,7 +39,7 @@ public class BaselineAnalyticsSearchDaoTest {
 
     @Test
     public void buildQueryParameters() {
-        assertThat(subject.buildQueryParameters("identifierSearch:ENSG00000126549", 0.5, 0), is("query?q=identifierSearch:ENSG00000126549&rows=0&omitHeader=true&fq=(experimentType:rnaseq_mrna_baseline%20AND%20expressionLevel:%5B0.5%20TO%20*%5D)%20OR%20(experimentType:proteomics_baseline%20AND%20expressionLevel:%5B0%20TO%20*%5D)"));
+        assertThat(subject.buildQueryParameters("identifierSearch:ENSG00000126549"), is("query?q=identifierSearch:ENSG00000126549&rows=0&omitHeader=true&fq=(experimentType:rnaseq_mrna_baseline%20AND%20expressionLevel:%5B0.5%20TO%20*%5D)%20OR%20(experimentType:proteomics_baseline%20AND%20expressionLevel:%5B0%20TO%20*%5D)"));
     }
 
 }

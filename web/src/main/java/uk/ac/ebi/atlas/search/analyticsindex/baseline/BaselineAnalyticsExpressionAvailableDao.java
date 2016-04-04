@@ -23,12 +23,10 @@ public class BaselineAnalyticsExpressionAvailableDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineAnalyticsExpressionAvailableDao.class);
 
-    public static final double DEFAULT_CUT_OFF = 0.5;
     private final RestTemplate restTemplate;
 
     private final String solrBaseUrl;
     private static final String QUERY_TEMPLATE = "query?q={0}&rows=1&omitHeader=true";
-    private static final String FQ_TEMPLATE = "&fq=expressionLevel:[{0} TO *]";
     public static final String BASELINE_ONLY = "experimentType:(rnaseq_mrna_baseline OR proteomics_baseline)";
     public static final String TISSUES_ONLY = "defaultQueryFactorType:ORGANISM_PART";
 
@@ -41,7 +39,7 @@ public class BaselineAnalyticsExpressionAvailableDao {
 
     public String fetchGenesInTissuesAboveCutoff(GeneQuery geneQuery) {
         String identifierSearchQuery = buildGeneIdentifierQuery(geneQuery);
-        return fetchResults(identifierSearchQuery, DEFAULT_CUT_OFF);
+        return fetchResults(identifierSearchQuery);
     }
 
 
@@ -50,28 +48,28 @@ public class BaselineAnalyticsExpressionAvailableDao {
     }
 
 
-    String fetchResults(String q, double cutOff) {
+    String fetchResults(String q) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        String result = fetchResponseAsString(buildQueryUrl(q, cutOff));
+        String result = fetchResponseAsString(buildQueryUrl(q));
 
         stopwatch.stop();
 
-        LOGGER.debug("fetchResults q={} cutOff={} took {} seconds", q, cutOff, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
+        LOGGER.debug("fetchResults q={} took {} seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
 
         return result;
     }
 
 
-    String buildQueryUrl(String q, double cutOff) {
+    String buildQueryUrl(String q) {
         String query = q.isEmpty() ? BASELINE_ONLY : q + " AND " + BASELINE_ONLY + " AND " + TISSUES_ONLY;
-        return solrBaseUrl + buildQueryParameters(query, cutOff);
+        return solrBaseUrl + buildQueryParameters(query);
     }
 
 
-    String buildQueryParameters(String q, double cutOff) {
-        return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q)) + encodeQuery(MessageFormat.format(FQ_TEMPLATE, cutOff));
+    String buildQueryParameters(String q) {
+        return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q));
     }
 
 
@@ -87,16 +85,6 @@ public class BaselineAnalyticsExpressionAvailableDao {
     private static String encodeQueryParam(String param) {
         try {
             return UriUtils.encodeQueryParam(param, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new BaselineAnalyticsSearchDaoException(e);
-        }
-    }
-
-
-    private static String encodeQuery(String s) {
-        // doesn't encode =
-        try {
-            return UriUtils.encodeQuery(s, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new BaselineAnalyticsSearchDaoException(e);
         }

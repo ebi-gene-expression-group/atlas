@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
@@ -30,9 +29,8 @@ public class BaselineAnalyticsSearchDao {
 
     private final String solrBaseUrl;
     private static final String QUERY_TEMPLATE = "query?q={0}&rows=0&omitHeader=true";
-    private static final String FQ_TEMPLATE = "&fq=" +
-            "(experimentType:rnaseq_mrna_baseline AND expressionLevel:[{0} TO *]) " +
-            "OR (experimentType:proteomics_baseline AND expressionLevel:[{1} TO *])";
+    private static final String FQ_TEMPLATE = "&fq=(experimentType:rnaseq_mrna_baseline OR experimentType:proteomics_baseline)";
+
     private final String baselineHeatmapPivotQuery;
 
     @Inject
@@ -51,7 +49,7 @@ public class BaselineAnalyticsSearchDao {
 
     String fetchExpressionLevelFaceted(GeneQuery geneQuery) {
         String identifierSearch = buildGeneIdentifierQuery(geneQuery);
-        return fetchFacets(identifierSearch, DEFAULT_BASELINE_CUT_OFF, DEFAULT_PROTEOMICS_CUT_OFF);
+        return fetchFacets(identifierSearch);
     }
 
 
@@ -62,33 +60,33 @@ public class BaselineAnalyticsSearchDao {
 
     public String fetchExpressionLevelFaceted(GeneQuery geneQuery, String defaultQueryFactorType) {
         String identifierSearch = buildGeneIdentifierQuery(geneQuery);
-        return fetchFacets(String.format("%s AND defaultQueryFactorType:%s", identifierSearch, defaultQueryFactorType), DEFAULT_BASELINE_CUT_OFF, DEFAULT_PROTEOMICS_CUT_OFF);
+        return fetchFacets(String.format("%s AND defaultQueryFactorType:%s", identifierSearch, defaultQueryFactorType));
     }
 
 
-    String fetchFacets(String q, double baselineCutOff, double proteomicsCutOff) {
+    String fetchFacets(String q) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        String result = fetchResponseAsString(buildQueryUrl(q, baselineCutOff, proteomicsCutOff));
+        String result = fetchResponseAsString(buildQueryUrl(q));
 
         stopwatch.stop();
 
-        LOGGER.debug("fetchFacets q={} baselineCutOff={} proteomicsCutOff={} took {} seconds", q, baselineCutOff, proteomicsCutOff, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
+        LOGGER.debug("fetchFacets q={} took {} seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
 
         return result;
 
     }
 
 
-    String buildQueryUrl(String q, double baselineCutOff, double proteomicsCutOff) {
+    String buildQueryUrl(String q) {
         String query = q.isEmpty() ? "*:*" : q;
-        return solrBaseUrl + buildQueryParameters(query, baselineCutOff, proteomicsCutOff) + baselineHeatmapPivotQuery;
+        return solrBaseUrl + buildQueryParameters(query) + baselineHeatmapPivotQuery;
     }
 
 
-    String buildQueryParameters(String q, double baselineCutOff, double proteomicsCutOff) {
-        return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q)) + encodeQuery(MessageFormat.format(FQ_TEMPLATE, baselineCutOff, proteomicsCutOff));
+    String buildQueryParameters(String q) {
+        return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q)) + encodeQuery(FQ_TEMPLATE);
     }
 
 
@@ -125,5 +123,4 @@ public class BaselineAnalyticsSearchDao {
             super(e);
         }
     }
-
 }
