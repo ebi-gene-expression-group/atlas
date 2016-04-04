@@ -147,13 +147,20 @@ public class ApplicationProperties {
                 .join(new String[]{"/experiments/" + experimentAccession + TSV_FILE_EXTENSION, queryString}).toString();
     }
 
-    public String urlParamEncode(String value) throws UnsupportedEncodingException {
-        return URLEncoder.encode(value, "UTF-8");
-    }
-
     // eg: "red,green,blue"
     public <T> String encodeMultiValues(Iterable<T> iterable) {
         return Joiner.on(",").join(iterable);
+    }
+
+    /*
+    <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
+<c:set var="protocol" value="${pageContext.request.scheme}://"/>
+<c:set var="atlasHost" value="${pageContext.request.serverName.concat(serverPort)}"/>
+     */
+    public String buildAtlasHostURL(HttpServletRequest request){
+        String serverPort = request.getServerPort() ==80? "" : ":".concat(new Integer(request.getServerPort()).toString());
+        String atlasHost = request.getServerName().concat(serverPort);
+        return request.getScheme()+"://" + atlasHost;
     }
 
 }
