@@ -76,8 +76,6 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     private final BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder;
 
-    private AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
-
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
     private final BaselineExperimentPageService baselineExperimentPageService;
@@ -86,14 +84,12 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     private HeatmapWidgetController(ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService,
                                     BaselineExperimentProfileSearchService baselineExperimentProfileSearchService,
                                     BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder,
-                                    AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
                                     BaselineAnalyticsSearchService baselineAnalyticsSearchService,
                                     BaselineExperimentPageService baselineExperimentPageService) {
         this.applicationProperties = applicationProperties;
         this.speciesLookupService = speciesLookupService;
         this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
         this.baselineExperimentProfilesViewModelBuilder = baselineExperimentProfilesViewModelBuilder;
-        this.assayGroupFactorViewModelBuilder = assayGroupFactorViewModelBuilder;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.baselineExperimentPageService = baselineExperimentPageService;
     }
@@ -204,7 +200,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = assayGroupFactorViewModelBuilder.build(filteredAssayGroupFactors);
+        ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = AssayGroupFactorViewModel.createList(filteredAssayGroupFactors);
 
         JsonObject jsonObject = new JsonObject();
         Type type = new TypeToken<ImmutableList<AssayGroupFactorViewModel>>() {}.getType();

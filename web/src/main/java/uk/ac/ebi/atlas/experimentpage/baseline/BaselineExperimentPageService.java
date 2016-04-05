@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +35,6 @@ import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
@@ -57,28 +55,22 @@ public class BaselineExperimentPageService {
     private final TracksUtil tracksUtil;
     private final BaselineProfilesHeatMap baselineProfilesHeatMap;
     private final ApplicationProperties applicationProperties;
-    private final FilterFactorMenuBuilder filterFactorMenuBuilder;
     private final BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
     private final SpeciesKingdomTrader speciesKingdomTrader;
-    private final AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
     private BaselineExperimentUtil bslnUtil;
     private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
 
     @Inject
     public BaselineExperimentPageService(BaselineProfilesHeatMap baselineProfilesHeatMap,
                                          ApplicationProperties applicationProperties,
-                                         FilterFactorMenuBuilder filterFactorMenuBuilder,
                                          BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
-                                         AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
                                          SpeciesKingdomTrader speciesKingdomTrader,
                                          TracksUtil tracksUtil,
                                          BaselineExperimentUtil bslnUtil, PreferencesForBaselineExperiments preferencesForBaselineExperiments) {
 
         this.applicationProperties = applicationProperties;
         this.baselineProfilesHeatMap = baselineProfilesHeatMap;
-        this.filterFactorMenuBuilder = filterFactorMenuBuilder;
         this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
-        this.assayGroupFactorViewModelBuilder = assayGroupFactorViewModelBuilder;
         this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
         this.bslnUtil = bslnUtil;
@@ -136,7 +128,6 @@ public class BaselineExperimentPageService {
         }
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
-        // It is in order.
         model.addAttribute("allQueryFactors", filteredAssayGroupFactors);
 
         String species = requestContext.getFilteredBySpecies();
@@ -176,6 +167,7 @@ public class BaselineExperimentPageService {
         }
 
         if(shouldAddRDownloadUrl) {
+            //Currently I am false for proteomics and widgets - is there a harm in adding me?
             DownloadURLBuilder.addRDownloadUrlToModel(model, request);
         }
         if(!amIAWidget){
@@ -199,7 +191,7 @@ public class BaselineExperimentPageService {
         }
         Gson gson = new Gson();
 
-        ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = assayGroupFactorViewModelBuilder.build(filteredAssayGroupFactors);
+        ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = AssayGroupFactorViewModel.createList(filteredAssayGroupFactors);
 
         String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
         model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
@@ -229,7 +221,7 @@ public class BaselineExperimentPageService {
                 menuFactors = experimentalFactors.getAllFactors();
             }
 
-            SortedSet<FilterFactorMenuVoice> filterFactorMenu = filterFactorMenuBuilder
+            SortedSet<FilterFactorMenuVoice> filterFactorMenu = new FilterFactorMenuBuilder()
                     .withExperimentalFactors(experimentalFactors)
                     .forFilterFactors(menuFactors)
                     .build();

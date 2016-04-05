@@ -12,7 +12,7 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class AssayGroupFactorViewModelBuilderTest {
+public class AssayGroupFactorViewModelFactoryTest {
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
     private static final Factor ADIPOSE = new Factor(ORGANISM_PART, "adipose", OntologyTerm.create("ontologyTerm"));
@@ -27,11 +27,9 @@ public class AssayGroupFactorViewModelBuilderTest {
 
     private static final ImmutableSortedSet<AssayGroupFactor> ASSAY_GROUP_FACTORS = ImmutableSortedSet.of(G1_ADIPOSE, G2_ADRENAL, G3_BRAIN, G4_BREAST);
 
-    private AssayGroupFactorViewModelBuilder subject = new AssayGroupFactorViewModelBuilder();
-
     @Test
     public void buildAssayGroupFactorsViewModel() {
-        ImmutableList<AssayGroupFactorViewModel> viewModels = subject.build(ASSAY_GROUP_FACTORS);
+        ImmutableList<AssayGroupFactorViewModel> viewModels = AssayGroupFactorViewModel.createList(ASSAY_GROUP_FACTORS);
 
         Gson gson = new Gson();
         String json = gson.toJson(viewModels);
