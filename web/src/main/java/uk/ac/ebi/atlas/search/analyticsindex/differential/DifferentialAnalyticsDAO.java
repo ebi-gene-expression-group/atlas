@@ -22,7 +22,7 @@ import static uk.ac.ebi.atlas.utils.ResourceUtils.readPlainTextResource;
 @Named
 public abstract class DifferentialAnalyticsDAO {
 
-    protected static final String FQ_TEMPLATE = "&fq=pValue:[* TO {2}]";
+    protected static final String FQ_TEMPLATE = "&fq=pValue:[* TO {0}]";
     protected static final String QUERY_TEMPLATE = "query?q={0}&rows={1,number,#}&omitHeader=true";
     protected static final String DIFFERENTIAL_ONLY = "experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential)";
     protected static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
