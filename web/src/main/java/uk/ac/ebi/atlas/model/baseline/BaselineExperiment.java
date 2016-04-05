@@ -26,6 +26,7 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import java.util.*;
 
@@ -104,4 +105,14 @@ public class BaselineExperiment extends Experiment {
         return getExperimentalFactors().getDefaultQueryFactorType().equals("ORGANISM_PART");
     }
 
+    public Map<String, ?> getBaselineAttributes(){
+        Map<String, Object> result = new HashMap<>();
+        result.putAll(super.getAttributes());
+
+        // required to show link to one or more data providers on baseline page (if they were provided in <expAcc>-factors.xml file)
+        result.put("dataProviderURL", getDataProviderURL());
+        result.put("dataProviderDescription", getDataProviderDescription());
+
+        return result;
+    }
 }

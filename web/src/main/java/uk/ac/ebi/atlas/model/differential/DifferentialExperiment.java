@@ -24,14 +24,12 @@ package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -76,6 +74,16 @@ public class DifferentialExperiment extends Experiment {
         }
 
         return assayAccessions;
+    }
+    
+    public Map<String, ?> getDifferentialAttributes(){
+        Map<String, Object> result = new HashMap<>();
+        result.putAll(super.getAttributes());
+        result.put("queryFactorName", "Comparison");
+        result.put("allQueryFactors", this.getContrasts());
+        result.put("regulationValues", Regulation.values());
+        result.put("isFortLauderdale", false);
+        return result;
     }
 
 }

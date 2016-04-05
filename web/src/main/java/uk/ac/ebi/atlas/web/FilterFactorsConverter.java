@@ -40,7 +40,7 @@ public class FilterFactorsConverter {
 
     private static final String SEPARATOR = ":";
 
-    public String prettyPrint(Iterable<Factor> factors) {
+    public static String prettyPrint(Iterable<Factor> factors) {
         if (!factors.iterator().hasNext()) {
             return "";
         }
@@ -55,7 +55,7 @@ public class FilterFactorsConverter {
         return sb.toString();
     }
 
-    public String serialize(Iterable<Factor> factors) {
+    public static String serialize(Iterable<Factor> factors) {
         List<String> serializedFactors = new ArrayList<>();
         for (Factor factor : factors) {
             serializedFactors.add(factor.getType() + SEPARATOR + factor.getValue());
@@ -63,7 +63,7 @@ public class FilterFactorsConverter {
         return StringUtils.join(serializedFactors, ",");
     }
 
-    public Set<Factor> deserialize(String csvSerializedFactors) {
+    public static Set<Factor> deserialize(String csvSerializedFactors) {
         Set<Factor> factors = Sets.newHashSet();
 
         if (StringUtils.isBlank(csvSerializedFactors)) {

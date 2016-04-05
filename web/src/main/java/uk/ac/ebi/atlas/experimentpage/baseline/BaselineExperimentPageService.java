@@ -115,17 +115,13 @@ public class BaselineExperimentPageService {
         BaselineRequestContext requestContext = preferencesForBaselineExperiments.buildRequestContext(experiment,
                 preferences);
 
-        model.addAttribute("experimentAccession", experiment.getAccession());
+        model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
+        model.addAllAttributes(experiment.getBaselineAttributes());
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
         model.addAttribute("queryFactorName", experimentalFactors.getFactorDisplayName(preferences.getQueryFactorType()));
-
         model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
-
-        model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
-
-        model.addAllAttributes(experiment.getAttributes());
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
@@ -145,15 +141,7 @@ public class BaselineExperimentPageService {
 
         String species = requestContext.getFilteredBySpecies();
 
-        // required to show link to one or more data providers on baseline page (if they were provided in <expAcc>-factors.xml file)
-        model.addAttribute("dataProviderURL", experiment.getDataProviderURL());
-        model.addAttribute("dataProviderDescription", experiment.getDataProviderDescription());
-
-        //required by autocomplete and heatmap
-        model.addAttribute("species", species);
-
-        //required for genome track browser in ensembl
-        model.addAllAttributes(speciesKingdomTrader.getPropertiesFor(species));
+        model.addAllAttributes(speciesKingdomTrader.getAttributesFor(species));
 
         if(!filteredAssayGroupFactors.isEmpty()) {
             model.addAttribute("enableEnsemblLauncher", tracksUtil.hasBaselineTracksPath(experiment.getAccession(), filteredAssayGroupFactors.iterator().next().getAssayGroupId()));
@@ -173,10 +161,7 @@ public class BaselineExperimentPageService {
                 addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, model);
 
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
-                    ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);
-                    model.addAllAttributes(applicationProperties.getAnatomogramProperties(species));
-                    model.addAttribute("allSvgPathIds", new Gson().toJson(allSvgPathIds));
-                    setToggleImageButton(model, species);
+                    model.addAllAttributes(applicationProperties.getAnatomogramProperties(species,filteredAssayGroupFactors));
 
                 } else {
                     model.addAttribute("hasAnatomogram", false);
@@ -205,30 +190,6 @@ public class BaselineExperimentPageService {
             model.addAttribute("enableEnsemblLauncher", false);
         }
         return toReturn;
-    }
-
-    private ImmutableSet<String> extractOntologyTerm(Set<AssayGroupFactor> filteredAssayGroupFactors) {
-        ImmutableSet.Builder<String> builder = ImmutableSet.builder();
-
-        for (AssayGroupFactor assayGroupFactor : filteredAssayGroupFactors) {
-            String valueOntologyTermId = assayGroupFactor.getValueOntologyTermId();
-            if (valueOntologyTermId != null) {
-                builder.add(valueOntologyTermId);
-            }
-        }
-        return builder.build();
-    }
-
-    private void setToggleImageButton(Model model, String species) {
-        if(species.equals("oryza sativa") || species.equals("oryza sativa japonica group")){
-            model.addAttribute("toggleButtonMaleImageTemplate", "/resources/images/whole_plant");
-            model.addAttribute("toggleButtonFemaleImageTemplate", "/resources/images/flower_parts");
-        }
-        else {
-            model.addAttribute("toggleButtonMaleImageTemplate", "/resources/images/male");
-            model.addAttribute("toggleButtonFemaleImageTemplate", "/resources/images/female");
-            model.addAttribute("toggleButtonBrainImageTemplate", "/resources/images/brain");
-        }
     }
 
     private void addJsonForHeatMap(BaselineProfilesList baselineProfiles, BaselineProfilesList geneSetProfiles,

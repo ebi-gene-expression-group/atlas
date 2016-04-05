@@ -81,7 +81,6 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
         if(request.getAttribute(EXPERIMENT_ATTRIBUTE) == null) {
             DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession);
             request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
-            model.addAllAttributes(experiment.getAttributes());
         }
 
         return super.showGeneProfiles(preferences, result, model, request);

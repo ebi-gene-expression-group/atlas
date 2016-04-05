@@ -158,6 +158,7 @@ public class Experiment implements Serializable {
         result.put("experimentDescription", this.getDescription());
         result.put("hasExtraInfo", this.hasExtraInfoFile());
         result.put("pubMedIds", this.getPubMedIds());
+        result.put("experimentAccession", this.getAccession());
         return result;
     }
 }

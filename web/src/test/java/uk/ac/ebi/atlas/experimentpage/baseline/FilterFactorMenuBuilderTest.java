@@ -63,8 +63,6 @@ public class FilterFactorMenuBuilderTest {
     @Mock
     ExperimentalFactors experimentalFactorsMock;
 
-    FilterFactorsConverter factorConverter = new FilterFactorsConverter();
-
     FilterFactorMenuBuilder subject;
 
     private SortedSet<Factor> putIntoSortedSet(Factor... factors) {
@@ -107,7 +105,7 @@ public class FilterFactorMenuBuilderTest {
         when(experimentalFactorsMock.getFactorType(RNA_NAME)).thenReturn(RNA);
         when(experimentalFactorsMock.getFactorType(CELLULAR_COMPONENT_NAME)).thenReturn(CELLULAR_COMPONENT);
 
-        subject = new FilterFactorMenuBuilder(factorConverter);
+        subject = new FilterFactorMenuBuilder();
         subject.withExperimentalFactors(experimentalFactorsMock).forFilterFactors(allFactors);
     }
 

@@ -30,6 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.model.AnatomogramType;
+import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 
 import javax.inject.Inject;
@@ -40,10 +41,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 @Named("applicationProperties")
 @Scope("singleton")
@@ -79,7 +77,7 @@ public class ApplicationProperties {
         return configurationProperties.getProperty(key + ending);
     }
 
-    public Map<String, ?> getAnatomogramProperties(String species) {
+    public Map<String, ?> getAnatomogramProperties(String species, Set<AssayGroupFactor> filteredAssayGroupFactors) {
         Map<String, Object> result = new HashMap<>();
         String maleAnatomogramFileName = getAnatomogramFileName(species, AnatomogramType.MALE);
         result.put("maleAnatomogramFile", getAnatomogramFileName(species, AnatomogramType.MALE));
@@ -92,7 +90,32 @@ public class ApplicationProperties {
 
         result.put("hasAnatomogram", maleAnatomogramFileName != null || femaleAnatomogramFileName != null || brainAnatomogramFileName != null);
 
+        if(species.equals("oryza sativa") || species.equals("oryza sativa japonica group")){
+            result.put("toggleButtonMaleImageTemplate", "/resources/images/whole_plant");
+            result.put("toggleButtonFemaleImageTemplate", "/resources/images/flower_parts");
+        }
+        else {
+            result.put("toggleButtonMaleImageTemplate", "/resources/images/male");
+            result.put("toggleButtonFemaleImageTemplate", "/resources/images/female");
+            result.put("toggleButtonBrainImageTemplate", "/resources/images/brain");
+        }
+
+        result.put("allSvgPathIds", new Gson().toJson(extractOntologyTerm
+                (filteredAssayGroupFactors)));
+
         return result;
+    }
+
+    private ImmutableSet<String> extractOntologyTerm(Set<AssayGroupFactor> filteredAssayGroupFactors) {
+        ImmutableSet.Builder<String> builder = ImmutableSet.builder();
+
+        for (AssayGroupFactor assayGroupFactor : filteredAssayGroupFactors) {
+            String valueOntologyTermId = assayGroupFactor.getValueOntologyTermId();
+            if (valueOntologyTermId != null) {
+                builder.add(valueOntologyTermId);
+            }
+        }
+        return builder.build();
     }
 
     //This is invoked from jsp el

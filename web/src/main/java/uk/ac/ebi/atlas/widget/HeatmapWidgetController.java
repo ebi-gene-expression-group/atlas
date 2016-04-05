@@ -184,12 +184,8 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         SortedSet<Factor> orderedFactors = searchResult.getFactorsAcrossAllExperiments();
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
 
-        ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);
-
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
-            model.addAllAttributes(applicationProperties.getAnatomogramProperties(ensemblSpecies));
-            model.addAttribute("allSvgPathIds", new Gson().toJson(allSvgPathIds));
-            setToggleImageButton(model, ensemblSpecies);
+            model.addAllAttributes(applicationProperties.getAnatomogramProperties(ensemblSpecies,filteredAssayGroupFactors));
         }
 
         BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
@@ -199,31 +195,6 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         model.addAttribute("isWidget", true);
         model.addAttribute("isMultiExperiment", true);
         model.addAttribute("geneQuery", geneQuery);
-    }
-
-    //TODO: remove duplication with BaselineExperimentPageService
-    private ImmutableSet<String> extractOntologyTerm(SortedSet<AssayGroupFactor> filteredAssayGroupFactors) {
-        ImmutableSet.Builder<String> builder = ImmutableSet.builder();
-
-        for (AssayGroupFactor assayGroupFactor : filteredAssayGroupFactors) {
-            String valueOntologyTermId = assayGroupFactor.getValueOntologyTermId();
-            if (valueOntologyTermId != null) {
-                builder.add(valueOntologyTermId);
-            }
-        }
-        return builder.build();
-    }
-
-    private void setToggleImageButton(Model model, String species) {
-        if(species.equals("oryza sativa") || species.equals("oryza sativa japonica group")){
-            model.addAttribute("toggleButtonMaleImageTemplate", "/resources/images/whole_plant");
-            model.addAttribute("toggleButtonFemaleImageTemplate", "/resources/images/flower_parts");
-        }
-        else {
-            model.addAttribute("toggleButtonMaleImageTemplate", "/resources/images/male");
-            model.addAttribute("toggleButtonFemaleImageTemplate", "/resources/images/female");
-            model.addAttribute("toggleButtonBrainImageTemplate", "/resources/images/brain");
-        }
     }
 
     private SortedSet<AssayGroupFactor> convert(SortedSet<Factor> orderedFactors) {

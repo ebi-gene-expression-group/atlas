@@ -45,12 +45,6 @@ public class FilterFactorMenuBuilder {
 
     private ExperimentalFactors experimentalFactors;
     private SortedSet<Factor> factors;
-    private FilterFactorsConverter factorConverter;
-
-    @Inject
-    FilterFactorMenuBuilder(FilterFactorsConverter factorConverter) {
-        this.factorConverter = factorConverter;
-    }
 
     public FilterFactorMenuBuilder withExperimentalFactors(ExperimentalFactors experimentalFactors) {
         this.experimentalFactors = experimentalFactors;
@@ -165,7 +159,7 @@ public class FilterFactorMenuBuilder {
 
         FactorsCombination(String queryFactorType, Factor... factors) {
             this.queryFactorType = queryFactorType;
-            serializedFactors = factorConverter.serialize(Lists.newArrayList(factors));
+            serializedFactors = FilterFactorsConverter.serialize(Lists.newArrayList(factors));
         }
 
         public String getQueryFactorType() {

@@ -57,15 +57,14 @@ public class SpeciesKingdomTrader {
         return "";
     }
 
-    public Map<String, ?> getPropertiesFor(String species){
+    public Map<String, ?> getAttributesFor(String species) {
         Map<String, String> result = new HashMap<>();
+        //required by autocomplete and heatmap
+        result.put("species", species);
         //required for genome track browser in ensembl
         result.put("ensemblDB", getEnsemblDB(species));
         result.put("kingdom", getKingdom(species));
         return result;
-
-
-
     }
 
 }

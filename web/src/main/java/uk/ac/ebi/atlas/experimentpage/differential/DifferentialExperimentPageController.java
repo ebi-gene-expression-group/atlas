@@ -95,13 +95,9 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
         Set<Contrast> contrasts = experiment.getContrasts();
 
-        model.addAttribute("allQueryFactors", contrasts);
+        model.addAllAttributes(experiment.getDifferentialAttributes());
+        model.addAllAttributes(speciesKingdomTrader.getAttributesFor(species));
 
-        //required by autocomplete
-        model.addAttribute("species", species);
-        model.addAttribute("queryFactorName", "Comparison");
-        model.addAttribute("allQueryFactors", contrasts);
-        model.addAttribute("regulationValues", Regulation.values());
         model.addAttribute("enableEnsemblLauncher", tracksUtil.hasDiffTracksPath(experiment.getAccession(), contrasts.iterator().next().getId()));
 
         if (!result.hasErrors()) {
@@ -113,9 +109,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
                 addJsonForHeatMap(differentialProfiles, contrasts, gseaPlots, model);
 
                 downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
-
-                //required for genome track browser in ensembl
-                model.addAllAttributes(speciesKingdomTrader.getPropertiesFor(species));
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery().description() + "'"));
