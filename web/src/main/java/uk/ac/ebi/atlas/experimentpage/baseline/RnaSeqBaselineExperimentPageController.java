@@ -26,8 +26,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.web.*;
 
 import javax.inject.Inject;
@@ -40,6 +42,7 @@ import javax.validation.Valid;
 public class RnaSeqBaselineExperimentPageController extends BaselineExperimentController {
 
     BaselineExperimentPageService baselineExperimentPageService;
+
     @Inject
     public RnaSeqBaselineExperimentPageController(BaselineExperimentPageService baselineExperimentPageService) {
         this.baselineExperimentPageService = baselineExperimentPageService;
@@ -48,9 +51,13 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")
     public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
 
-        baselineExperimentPageService
-        .prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model, request,
-                true, false, false);
+        try {
+            baselineExperimentPageService
+                    .prepareModel(preferences, model, request,
+                            true, false, false);
+        } catch (GenesNotFoundException e) {
+            result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
+        }
         return "experiment";
     }
 

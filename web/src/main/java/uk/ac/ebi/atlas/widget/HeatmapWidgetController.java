@@ -38,6 +38,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
+import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.*;
@@ -101,15 +102,11 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                                        @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request,
                                                        HttpServletResponse response) {
 
-        BaselineProfilesList baselineProfiles = baselineExperimentPageService
-                .prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model,
-                        request, false, true, disableGeneLinks);
-
-        if (result.hasErrors()) {
-            throw new ResourceNotFoundException(result.getGlobalError().getDefaultMessage());
-        }else if (baselineProfiles.isEmpty()) {
-            throw new ResourceNotFoundException("No baseline expression found for " + preferences.getGeneQuery()
-                    .description());
+        try {
+            baselineExperimentPageService
+                    .prepareModel(preferences, model,request, false, true, disableGeneLinks);
+        } catch (GenesNotFoundException e) {
+            throw new ResourceNotFoundException("No genes found matching query: '" + preferences.getGeneQuery() + "'");
         }
 
         // set here instead of in JSP, because the JSP may be included elsewhere

@@ -87,10 +87,9 @@ public class BaselineExperimentPageService {
         return baselineProfilesHeatMap.fetch(options);
     }
 
-    public BaselineProfilesList prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings
-            (BaselineRequestPreferences preferences, BindingResult
-                    result, Model model, HttpServletRequest request, boolean
-                     shouldAddRDownloadUrl, boolean amIAWidget, boolean disableGeneLinks) {
+    public void prepareModel(BaselineRequestPreferences preferences, Model model, HttpServletRequest request, boolean
+                    shouldAddRDownloadUrl, boolean amIAWidget, boolean disableGeneLinks) throws
+            GenesNotFoundException {
 
         if(amIAWidget){
             // possibly we could always do this - investigate if it matters for not-a-widget
@@ -134,36 +133,21 @@ public class BaselineExperimentPageService {
 
         model.addAllAttributes(speciesKingdomTrader.getAttributesFor(species));
 
-        if(!filteredAssayGroupFactors.isEmpty()) {
-            model.addAttribute("enableEnsemblLauncher", tracksUtil.hasBaselineTracksPath(experiment.getAccession(), filteredAssayGroupFactors.iterator().next().getAssayGroupId()));
+        model.addAttribute("enableEnsemblLauncher", ! filteredAssayGroupFactors.isEmpty()
+                && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
+                filteredAssayGroupFactors.iterator().next().getAssayGroupId()));
+
+        BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext);
+        BaselineProfilesList profilesAsGeneSets = requestContext.geneQueryResponseContainsGeneSets() ?
+                fetchGeneProfilesAsGeneSets(requestContext) : null;
+
+        addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, model);
+
+        if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
+            model.addAllAttributes(applicationProperties.getAnatomogramProperties(species, filteredAssayGroupFactors));
+
         } else {
-            model.addAttribute("enableEnsemblLauncher", false);
-        }
-
-        BaselineProfilesList toReturn = null;
-        if (!result.hasErrors()) {
-
-            try {
-
-                BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext);
-                BaselineProfilesList profilesAsGeneSets = requestContext.geneQueryResponseContainsGeneSets() ?
-                        fetchGeneProfilesAsGeneSets(requestContext) : null;
-
-                addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, model);
-
-                if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
-                    model.addAllAttributes(applicationProperties.getAnatomogramProperties(species,filteredAssayGroupFactors));
-
-                } else {
-                    model.addAttribute("hasAnatomogram", false);
-                }
-
-                toReturn= baselineProfiles;
-
-            } catch (GenesNotFoundException e) {
-                result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
-            }
-
+            model.addAttribute("hasAnatomogram", false);
         }
 
         if(shouldAddRDownloadUrl) {
@@ -174,13 +158,11 @@ public class BaselineExperimentPageService {
             model.addAttribute("isWidget", false);
             addFactorMenu(model, experiment, requestContext);
         } else {
-
             model.addAttribute("isWidget", true);
             model.addAttribute("disableGeneLinks", disableGeneLinks);
             model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
             model.addAttribute("enableEnsemblLauncher", false);
         }
-        return toReturn;
     }
 
     private void addJsonForHeatMap(BaselineProfilesList baselineProfiles, BaselineProfilesList geneSetProfiles,
