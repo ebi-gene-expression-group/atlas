@@ -14,9 +14,12 @@
 
         // helper
         function escape(tag) {
-            var trimmedTag = tag.length > o.tagMaxLength ? tag.substring(0, o.tagMaxLength) + "…" : tag;
-            return trimmedTag.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/…/g, "&hellip;");;
+            return tag.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/…/g, "&hellip;");;
         }
+        function trimToMaxTagLength(tag) {
+            return tag.length > o.tagMaxLength ? tag.substring(0, o.tagMaxLength) + "…" : tag;
+        }
+
 
         // build options dictionary with default values
         var blur_result, o = $.extend({}, $.fn.tagEditor.defaults, options), selector = this;
@@ -172,7 +175,7 @@
                     var tag = $(this).text();
                     // guess cursor position in text input
                     var left_percent = Math.abs(($(this).offset().left - e.pageX)/$(this).width()), caret_pos = parseInt(tag.length*left_percent),
-                        input = $(this).html('<input type="text" maxlength="'+o.maxLength+'" value="'+escape(tag)+'">').addClass('active').find('input');
+                        input = $(this).html('<input type="text" maxlength="'+o.maxLength+'" data-value="' + tag + '" value="'+escape(tag)+'">').addClass('active').find('input');
                         input.data('old_tag', tag).tagEditorInput().focus().caret(caret_pos);
                     if (o.autocomplete) {
                         var aco = $.extend({}, o.autocomplete);
@@ -208,7 +211,7 @@
                     if (o.removeDuplicates && ~$.inArray(tag, old_tags))
                         $('.tag-editor-tag', ed).each(function(){ if ($(this).text() == tag) $(this).closest('li').remove(); });
                     old_tags.push(tag);
-                    li.before('<li data-value="' + tag + '" data-source=""><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag">'+escape(tag)+'</div><div class="tag-editor-delete"><i></i></div></li>');
+                    li.before('<li title="' + tag + '" data-value="' + tag + '" data-source=""><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag">'+trimToMaxTagLength(escape(tag))+'</div><div class="tag-editor-delete"><i></i></div></li>');
                     if (o.maxTags && old_tags.length >= o.maxTags) { exceeded = true; break; }
                 }
                 input.attr('maxlength', o.maxLength).removeData('old_tag').val('')
@@ -260,9 +263,10 @@
 
                 if(!isTreeExpansionHit) {
                     input.closest("li")
+                        .attr('title', tag)
                         .attr('data-value', tag)
                         .attr('data-source', window.selectedTagSource && window.selectedTagSource.length > 0 ? window.selectedTagSource.pop() : "");
-                    input.parent().html(tag).removeClass('active');
+                    input.parent().html(trimToMaxTagLength(tag)).removeClass('active');
                 }
                 if (tag != old_tag) update_globals();
                 set_placeholder();
@@ -358,12 +362,13 @@
             // create initial tags
             var tags = o.initialTags.length ? o.initialTags : el.val().split(o.dregex);
             for (var i=0; i<tags.length; i++) {
+                debugger;
                 if (o.maxTags && i >= o.maxTags) break;
                 var tag = $.trim(tags[i].replace(/ +/, ' '));
                 if (tag) {
                     if (o.forceLowercase) tag = tag.toLowerCase();
                     tag_list.push(tag);
-                    ed.append('<li><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag">'+escape(tag)+'</div><div class="tag-editor-delete"><i></i></div></li>');
+                    ed.append('<li title="' + tag + '"><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag">'+trimToMaxTagLength(escape(tag))+'</div><div class="tag-editor-delete"><i></i></div></li>');
                 }
             }
             update_globals(true); // true -> no onChange callback
@@ -385,10 +390,10 @@
         forceLowercase: true,
         removeDuplicates: true,
         clickDelete: false,
-        animateDelete: 175,
+        animateDelete: 100,
         sortable: true, // jQuery UI sortable
         autocomplete: null, // options dict for jQuery UI autocomplete
-        tagMaxLength: 9999,
+        tagMaxLength: 99,
 
         // callbacks
         onChange: function(){},
