@@ -49,7 +49,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
     public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
 
         baselineExperimentPageService
-        .prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model, request, true,
+        .prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model, request,
                 true, false, false);
         return "experiment";
     }

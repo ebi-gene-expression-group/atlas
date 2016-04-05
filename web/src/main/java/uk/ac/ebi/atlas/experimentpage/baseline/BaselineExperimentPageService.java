@@ -97,8 +97,8 @@ public class BaselineExperimentPageService {
 
     public BaselineProfilesList prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings
             (BaselineRequestPreferences preferences, BindingResult
-            result, Model model, HttpServletRequest request, boolean shouldAddFactorMenu, boolean
-            shouldAddRDownloadUrl, boolean amIAWidget, boolean disableGeneLinks) {
+                    result, Model model, HttpServletRequest request, boolean
+                     shouldAddRDownloadUrl, boolean amIAWidget, boolean disableGeneLinks) {
 
         if(amIAWidget){
             // possibly we could always do this - investigate if it matters for not-a-widget
@@ -174,14 +174,13 @@ public class BaselineExperimentPageService {
             }
 
         }
-        if(shouldAddFactorMenu) {
-            addFactorMenu(model, experiment, requestContext);
-        }
+
         if(shouldAddRDownloadUrl) {
             DownloadURLBuilder.addRDownloadUrlToModel(model, request);
         }
         if(!amIAWidget){
             model.addAttribute("isWidget", false);
+            addFactorMenu(model, experiment, requestContext);
         } else {
 
             model.addAttribute("isWidget", true);

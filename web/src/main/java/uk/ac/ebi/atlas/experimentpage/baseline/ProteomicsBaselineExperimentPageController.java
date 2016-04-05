@@ -28,14 +28,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
-import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuilder;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
-import uk.ac.ebi.atlas.tracks.TracksUtil;
-import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 
 import javax.inject.Inject;
@@ -58,7 +50,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
     public String baselineExperiment(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
         baselineExperimentPageService.prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences,
-                result, model, request, true,
+                result, model, request,
                 false,false, false);
 
         return "experiment";

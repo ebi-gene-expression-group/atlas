@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.widget;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
@@ -33,17 +32,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
-import org.springframework.dao.RecoverableDataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
-import uk.ac.ebi.atlas.model.AnatomogramType;
-import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.*;
@@ -55,10 +49,8 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -67,9 +59,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.lang.reflect.Type;
-import java.sql.SQLRecoverableException;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -118,7 +107,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
         BaselineProfilesList baselineProfiles = baselineExperimentPageService
                 .prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model,
-                        request, false , false, true, disableGeneLinks);
+                        request, false, true, disableGeneLinks);
 
         if (result.hasErrors()) {
             throw new ResourceNotFoundException(result.getGlobalError().getDefaultMessage());
