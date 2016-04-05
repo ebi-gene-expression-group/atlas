@@ -8,6 +8,8 @@ import uk.ac.ebi.atlas.model.Species;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -53,6 +55,17 @@ public class SpeciesKingdomTrader {
             }
         }
         return "";
+    }
+
+    public Map<String, ?> getPropertiesFor(String species){
+        Map<String, String> result = new HashMap<>();
+        //required for genome track browser in ensembl
+        result.put("ensemblDB", getEnsemblDB(species));
+        result.put("kingdom", getKingdom(species));
+        return result;
+
+
+
     }
 
 }

@@ -91,12 +91,14 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
         DifferentialRequestContext requestContext = initRequestContext(experiment, requestPreferences);
 
+        String species = requestContext.getFilteredBySpecies();
+
         Set<Contrast> contrasts = experiment.getContrasts();
 
         model.addAttribute("allQueryFactors", contrasts);
 
         //required by autocomplete
-        model.addAttribute("species", requestContext.getFilteredBySpecies());
+        model.addAttribute("species", species);
         model.addAttribute("queryFactorName", "Comparison");
         model.addAttribute("allQueryFactors", contrasts);
         model.addAttribute("regulationValues", Regulation.values());
@@ -113,11 +115,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
                 downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
 
                 //required for genome track browser in ensembl
-                String ensemblDB = speciesKingdomTrader.getEnsemblDB(requestContext.getFilteredBySpecies());
-                model.addAttribute("ensemblDB", ensemblDB);
-
-                String kingdom = speciesKingdomTrader.getKingdom(requestContext.getFilteredBySpecies());
-                model.addAttribute("kingdom", kingdom);
+                model.addAllAttributes(speciesKingdomTrader.getPropertiesFor(species));
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery().description() + "'"));
