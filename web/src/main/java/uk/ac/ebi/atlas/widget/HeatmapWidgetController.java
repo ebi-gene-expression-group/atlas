@@ -75,7 +75,7 @@ import java.util.SortedSet;
 
 @Controller
 @Scope("request")
-public final class HeatmapWidgetController {
+public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     public static final String ORIGINAL_GENEQUERY = "geneQuery";
 
@@ -83,30 +83,23 @@ public final class HeatmapWidgetController {
 
     private SpeciesLookupService speciesLookupService;
 
-    private ExperimentTrader experimentTrader;
-
     private final BaselineExperimentProfileSearchService baselineExperimentProfileSearchService;
 
     private final BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder;
 
     private AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
 
-    FilterFactorsConverter filterFactorsConverter = new FilterFactorsConverter();
-
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
     private final BaselineExperimentPageService baselineExperimentPageService;
 
-    //TODO: refactor, too many collaborators
     @Inject
-    private HeatmapWidgetController(ExperimentTrader experimentTrader,
-                                    ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService,
+    private HeatmapWidgetController(ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService,
                                     BaselineExperimentProfileSearchService baselineExperimentProfileSearchService,
                                     BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder,
                                     AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
                                     BaselineAnalyticsSearchService baselineAnalyticsSearchService,
                                     BaselineExperimentPageService baselineExperimentPageService) {
-        this.experimentTrader = experimentTrader;
         this.applicationProperties = applicationProperties;
         this.speciesLookupService = speciesLookupService;
         this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
@@ -116,47 +109,7 @@ public final class HeatmapWidgetController {
         this.baselineExperimentPageService = baselineExperimentPageService;
     }
 
-    @RequestMapping(value = {"/widgets/heatmap/referenceExperiment"})
-    public String dispatchWidget(HttpServletRequest request,
-                                 @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
-                                 @RequestParam(value = "propertyType", required = false) String propertyType,
-                                 @RequestParam(value = "species", required = false) String species,
-                                 @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks,
-                                 @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
-                                 Model model, HttpServletResponse response) {
 
-        try {
-            if (StringUtils.isBlank(species)) {
-                species = speciesLookupService.fetchFirstSpeciesByField(propertyType, bioEntityAccession);
-            }
-        } catch (ResourceNotFoundException e) {
-            throw new ResourceNotFoundException( "No genes found matching query: " + bioEntityAccession);
-        }
-
-        String experimentAccession = applicationProperties.getBaselineReferenceExperimentAccession(species);
-
-        if (StringUtils.isEmpty(experimentAccession)) {
-            throw new ResourceNotFoundException("No baseline experiment for species " + species);
-        }
-
-        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-
-        request.setAttribute("experiment", experiment);
-
-        prepareModelForTranscripts(model, species, experiment);
-
-        //TODO: hacky, fix this, see RnaSeqBaselineExperimentPageController
-        request.setAttribute(ORIGINAL_GENEQUERY, bioEntityAccession);
-
-        // forward to /widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE in BaselineExperimentPageService
-        // eg: forward:/widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE&serializedFilterFactors=ORGANISM:Monodelphis domestica&disableGeneLinks=true
-        // existing request parameters to this method (ie: geneQuery, propertyType, rootContext) are also passed along by the forward,
-        // plus type and serializedFilterFactors
-        // the model attributes are also preserved by a forward TODO wrong I think this means
-        // BaselineRequestPreferences
-        // preferences only I think so why do we populate model still
-        return "forward:" + getRequestURL(request) + buildQueryString(species, experiment, disableGeneLinks);
-    }
 
     @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE")
     public String fetchReferenceExperimentProfilesJson(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
@@ -214,7 +167,8 @@ public final class HeatmapWidgetController {
             Model model, HttpServletResponse response) {
 
         String ensemblSpecies = StringUtils.isBlank(species) ?
-                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString()) : Species.convertToEnsemblSpecies(species);
+                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString())
+                : Species.convertToEnsemblSpecies(species);
 
         String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source;
         BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, ensemblSpecies, defaultFactorQueryType);
@@ -233,7 +187,8 @@ public final class HeatmapWidgetController {
         ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);
 
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
-            addAnatomogram(allSvgPathIds, model, ensemblSpecies);
+            model.addAllAttributes(applicationProperties.getAnatomogramProperties(ensemblSpecies));
+            model.addAttribute("allSvgPathIds", new Gson().toJson(allSvgPathIds));
             setToggleImageButton(model, ensemblSpecies);
         }
 
@@ -257,25 +212,6 @@ public final class HeatmapWidgetController {
             }
         }
         return builder.build();
-    }
-
-
-    private void addAnatomogram(ImmutableSet<String> allSvgPathIds, Model model, String species) {
-        //TODO: check if this can be externalized in the view with a custom EL or tag function
-        //or another code block because it's repeated with BaselineExperimentPageService
-        String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.MALE);
-        model.addAttribute("maleAnatomogramFile", maleAnatomogramFileName);
-
-        String femaleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.FEMALE);
-        model.addAttribute("femaleAnatomogramFile", femaleAnatomogramFileName);
-
-        String brainAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.BRAIN);
-        model.addAttribute("brainAnatomogramFile", brainAnatomogramFileName);
-
-        model.addAttribute("hasAnatomogram", maleAnatomogramFileName != null || femaleAnatomogramFileName != null || brainAnatomogramFileName != null);
-
-        String jsonAllSvgPathIds = new Gson().toJson(allSvgPathIds);
-        model.addAttribute("allSvgPathIds", jsonAllSvgPathIds);
     }
 
     private void setToggleImageButton(Model model, String species) {
@@ -347,56 +283,6 @@ public final class HeatmapWidgetController {
         model.addAttribute("jsonNonExpressedColumnHeaders", gson.toJson(nonExpressedColumnHeaders));
     }
 
-    //TODO: is this needed anymore, now that we don't have transcripts
-    private void prepareModelForTranscripts(Model model, String species, Experiment experiment) {
-        ExperimentalFactors experimentalFactors = ((BaselineExperiment) experiment).getExperimentalFactors();
 
-        model.addAttribute("queryFactorType", experimentalFactors.getDefaultQueryFactorType());
-
-        addFilterFactors(species, experiment, model);
-    }
-
-    private String getRequestURL(HttpServletRequest request) {
-        String contextPath = request.getContextPath();
-        String requestURI = request.getRequestURI();
-
-        return StringUtils.substringAfter(requestURI, contextPath);
-    }
-
-    private String buildQueryString(String species, Experiment experiment, boolean disableGeneLinks) {
-        String mappedSpecies = experiment.getRequestSpeciesName(species);
-        String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
-        return "?type=" + experiment.getType().getParent() + organismParameters + (disableGeneLinks ? "&disableGeneLinks=true" : "");
-    }
-
-    private void addFilterFactors(String species, Experiment experiment, Model model) {
-        String mappedSpecies = experiment.getRequestSpeciesName(species);
-        Set<Factor> factors = new HashSet<>();
-
-        if(StringUtils.isNotEmpty(mappedSpecies)){
-            Factor factor = new Factor("ORGANISM", mappedSpecies);
-            factors.add(factor);
-        }
-
-        model.addAttribute("serializedFilterFactors", filterFactorsConverter.serialize(factors));
-    }
-
-    @ExceptionHandler(value = {ResourceNotFoundException.class})
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ModelAndView widgetSpecific404(Exception e) {
-        ModelAndView mav = new ModelAndView("widget-error");
-        mav.addObject("errorMessage", e.getMessage());
-
-        return mav;
-    }
-
-    @ExceptionHandler(value = {RecoverableDataAccessException.class})
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ModelAndView blah(Exception e) {
-        ModelAndView mav = new ModelAndView("widget-error");
-        mav.addObject("errorMessage", e.getMessage());
-
-        return mav;
-    }
 
 }

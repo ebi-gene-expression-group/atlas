@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.experimentpage.differential;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -44,7 +43,6 @@ import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Set;
 
 @Controller
 @Scope("request")

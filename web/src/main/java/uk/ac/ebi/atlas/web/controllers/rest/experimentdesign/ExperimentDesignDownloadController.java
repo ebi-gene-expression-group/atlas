@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
+import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;

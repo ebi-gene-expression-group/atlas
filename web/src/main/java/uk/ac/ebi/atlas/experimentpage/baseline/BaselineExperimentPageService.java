@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.AnatomogramType;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
@@ -44,7 +43,7 @@ import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.*;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
-import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
+import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
 import javax.inject.Inject;
@@ -126,6 +125,8 @@ public class BaselineExperimentPageService {
 
         model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
 
+        model.addAllAttributes(experiment.getAttributes());
+
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
         Set<Factor> orderedFactors;
@@ -177,7 +178,8 @@ public class BaselineExperimentPageService {
 
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
                     ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);
-                    addAnatomogram(allSvgPathIds, model, species);
+                    model.addAllAttributes(applicationProperties.getAnatomogramProperties(species));
+                    model.addAttribute("allSvgPathIds", new Gson().toJson(allSvgPathIds));
                     setToggleImageButton(model, species);
 
                 } else {
@@ -219,23 +221,6 @@ public class BaselineExperimentPageService {
             }
         }
         return builder.build();
-    }
-
-    private void addAnatomogram(ImmutableSet<String> allSvgPathIds, Model model, String species) {
-        //ToDo: check if this can be externalized in the view with a custom EL or tag function
-        String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.MALE);
-        model.addAttribute("maleAnatomogramFile", maleAnatomogramFileName);
-
-        String femaleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.FEMALE);
-        model.addAttribute("femaleAnatomogramFile", femaleAnatomogramFileName);
-
-        String brainAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.BRAIN);
-        model.addAttribute("brainAnatomogramFile", brainAnatomogramFileName);
-
-        model.addAttribute("hasAnatomogram", maleAnatomogramFileName != null || femaleAnatomogramFileName != null || brainAnatomogramFileName != null);
-
-        String jsonAllSvgPathIds = new Gson().toJson(allSvgPathIds);
-        model.addAttribute("allSvgPathIds", jsonAllSvgPathIds);
     }
 
     private void setToggleImageButton(Model model, String species) {

@@ -23,9 +23,12 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
+import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.model.AnatomogramType;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 
@@ -37,6 +40,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -72,6 +77,22 @@ public class ApplicationProperties {
         }
 
         return configurationProperties.getProperty(key + ending);
+    }
+
+    public Map<String, ?> getAnatomogramProperties(String species) {
+        Map<String, Object> result = new HashMap<>();
+        String maleAnatomogramFileName = getAnatomogramFileName(species, AnatomogramType.MALE);
+        result.put("maleAnatomogramFile", getAnatomogramFileName(species, AnatomogramType.MALE));
+
+        String femaleAnatomogramFileName = getAnatomogramFileName(species, AnatomogramType.FEMALE);
+        result.put("femaleAnatomogramFile", femaleAnatomogramFileName);
+
+        String brainAnatomogramFileName = getAnatomogramFileName(species, AnatomogramType.BRAIN);
+        result.put("brainAnatomogramFile", brainAnatomogramFileName);
+
+        result.put("hasAnatomogram", maleAnatomogramFileName != null || femaleAnatomogramFileName != null || brainAnatomogramFileName != null);
+
+        return result;
     }
 
     //This is invoked from jsp el
