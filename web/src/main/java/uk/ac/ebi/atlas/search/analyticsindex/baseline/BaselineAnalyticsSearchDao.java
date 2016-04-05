@@ -29,7 +29,7 @@ public class BaselineAnalyticsSearchDao {
 
     private final String solrBaseUrl;
     private static final String QUERY_TEMPLATE = "query?q={0}&rows=0&omitHeader=true";
-    private static final String FQ_TEMPLATE = "&fq=(experimentType:rnaseq_mrna_baseline OR experimentType:proteomics_baseline)";
+    private static final String FQ_TEMPLATE = "&fq=experimentType:(rnaseq_mrna_baseline OR proteomics_baseline)";
 
     private final String baselineHeatmapPivotQuery;
 
