@@ -151,4 +151,13 @@ public class Experiment implements Serializable {
     }
 
 
+    public Map<String, ?> getAttributes(){
+        Map<String, Object> result = new HashMap<>();
+        result.put("type", this.getType());
+        result.put("allSpecies", StringUtils.join(this.getOrganisms(), ", "));
+        result.put("experimentDescription", this.getDescription());
+        result.put("hasExtraInfo", this.hasExtraInfoFile());
+        result.put("pubMedIds", this.getPubMedIds());
+        return result;
+    }
 }

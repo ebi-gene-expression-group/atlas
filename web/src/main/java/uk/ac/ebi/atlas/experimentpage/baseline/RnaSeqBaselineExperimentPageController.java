@@ -51,7 +51,6 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
         baselineExperimentPageService
         .prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model, request, true,
                 true, false, false);
-
         return "experiment";
     }
 

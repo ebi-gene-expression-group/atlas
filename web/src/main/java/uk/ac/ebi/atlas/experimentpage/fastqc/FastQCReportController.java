@@ -25,23 +25,12 @@ import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.Set;
 
-/**
- * Created with IntelliJ IDEA.
- * User: barrera
- */
 
 @Controller
 @Scope("singleton")
 public class FastQCReportController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FastQCReportController.class);
-
-    public static final String EXPERIMENT_ATTRIBUTE = "experiment";
-    private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
-    private static final String PUBMED_IDS_ATTRIBUTE = "pubMedIds";
-    private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
-    private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
-    private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
 
     private final FastQCReportUtil fastQCReportUtil;
     private ExperimentTrader experimentTrader;
@@ -286,19 +275,9 @@ public class FastQCReportController {
     }
 
     private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) {
-        request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
+        request.setAttribute("experiment", experiment);
 
-        Set<String> allSpecies = experiment.getOrganisms();
-
-        model.addAttribute(EXPERIMENT_TYPE_ATTRIBUTE, experiment.getType());
-
-        model.addAttribute(ALL_SPECIES_ATTRIBUTE, StringUtils.join(allSpecies, ", "));
-
-        model.addAttribute(EXPERIMENT_DESCRIPTION_ATTRIBUTE, experiment.getDescription());
-
-        model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
-
-        model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
+        model.addAllAttributes(experiment.getAttributes());
     }
 
     private String splitSpecies(String species) {

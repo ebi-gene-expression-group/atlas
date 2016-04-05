@@ -77,13 +77,6 @@ import java.util.SortedSet;
 @Scope("request")
 public final class HeatmapWidgetController {
 
-    public static final String EXPERIMENT_ATTRIBUTE = "experiment";
-
-    private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
-    private static final String PUBMED_IDS_ATTRIBUTE = "pubMedIds";
-    private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
-    private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
-    private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
     public static final String ORIGINAL_GENEQUERY = "geneQuery";
 
     private ApplicationProperties applicationProperties;
@@ -148,7 +141,7 @@ public final class HeatmapWidgetController {
 
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
 
-        prepareModel(request, model, experiment);
+        request.setAttribute("experiment", experiment);
 
         prepareModelForTranscripts(model, species, experiment);
 
@@ -361,22 +354,6 @@ public final class HeatmapWidgetController {
         model.addAttribute("queryFactorType", experimentalFactors.getDefaultQueryFactorType());
 
         addFilterFactors(species, experiment, model);
-    }
-
-    private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) {
-        request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
-
-        Set<String> allSpecies = experiment.getOrganisms();
-
-        model.addAttribute(EXPERIMENT_TYPE_ATTRIBUTE, experiment.getType());
-
-        model.addAttribute(ALL_SPECIES_ATTRIBUTE, StringUtils.join(allSpecies, ", "));
-
-        model.addAttribute(EXPERIMENT_DESCRIPTION_ATTRIBUTE, experiment.getDescription());
-
-        model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
-
-        model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
     }
 
     private String getRequestURL(HttpServletRequest request) {

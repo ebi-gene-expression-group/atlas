@@ -37,47 +37,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Set;
 
 /**
- * Overview:
- * this is a proxy router / interceptor controller that makes up for the lack of workflow handling mechanisms in Spring MVC (HandlerInterceptors are a very poor thing).
- * It intercepts requests for any resource or sub-resource related to any experiment
- * and implements the following responsibilities:
- * <p/>
- * experiment lookup / experiment resolver
- * - lookup the experiment across different caches
- * -- if there is no experiment for the given accession then http response is routed to 404 - resource not fount
- * view decorator (to keep delegated controllers DRY)
- * - add the experiment to the HttpServletRequest, for any delegated controller to use it
- * - add model attributes that are required by all experiment related views
- * (i.e. required by layout elements that are shared by all experiment views)
- * proxy router for specialized controllers
- * - resolve experiment type (baseline or differential)
- * - forward to the original request URI,
- * but adding a "type = baseline" | "type=differential" http parameter.
- * This last step enables routing to different delegated controllers depending on the type of the requested experiment.
- * Each controller will have to specify params="type=baseline" or params="type=differential" or params="type" in order
- * to handle baseline experiments, differential experiments, or both.
- * <p/>
- * Note: the original query string - request.getQueryString() - is not re-appended to the forwarded request URI
- * because Spring MVC processes and transforms it into ModelAttribute(s) that will be
- * automatically / transparently available to delegated controller,
- * without any need for controller to access the query string.
- * <p/>
- * If more complex request mappings are required (i.e. url exclusions) this post may help:
- * http://stackoverflow.com/questions/8998419/requestmapping-annotation-in-spring-mvc
- * For a Spring MVC reference:
- * http://static.springsource.org/spring/docs/3.2.x/spring-framework-reference/html/mvc.html
+ * This is a global router for the experiment page.
+ * It looks up the kind of experiment and sends the request to the right controller.
+ *
  */
 
 @Controller
 public final class ExperimentDispatcher {
 
     public static final String EXPERIMENT_ATTRIBUTE = "experiment";
-
-    private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
-    private static final String PUBMED_IDS_ATTRIBUTE = "pubMedIds";
-    private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
-    private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
-    private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
 
     private ExperimentTrader experimentTrader;
 
@@ -98,9 +66,7 @@ public final class ExperimentDispatcher {
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        model.addAttribute("accessKey", accessKey);
-
-        prepareModel(request, model, experiment);
+        request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
 
         return "forward:" + buildForwardURL(request, experiment, accessKey);
     }
@@ -123,22 +89,6 @@ public final class ExperimentDispatcher {
         String requestURI = request.getRequestURI();
 
         return StringUtils.substringAfter(requestURI, contextPath);
-    }
-
-    private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) {
-        request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
-
-        Set<String> allSpecies = experiment.getOrganisms();
-
-        model.addAttribute(EXPERIMENT_TYPE_ATTRIBUTE, experiment.getType());
-
-        model.addAttribute(ALL_SPECIES_ATTRIBUTE, StringUtils.join(allSpecies, ", "));
-
-        model.addAttribute(EXPERIMENT_DESCRIPTION_ATTRIBUTE, experiment.getDescription());
-
-        model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
-
-        model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
     }
 
     @ExceptionHandler(value = {ResourceNotFoundException.class})
