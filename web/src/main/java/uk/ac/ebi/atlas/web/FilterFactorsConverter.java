@@ -63,7 +63,7 @@ public class FilterFactorsConverter {
         return StringUtils.join(serializedFactors, ",");
     }
 
-    public static Set<Factor> deserialize(String csvSerializedFactors) {
+    public Set<Factor> deserialize(String csvSerializedFactors) {
         Set<Factor> factors = Sets.newHashSet();
 
         if (StringUtils.isBlank(csvSerializedFactors)) {
