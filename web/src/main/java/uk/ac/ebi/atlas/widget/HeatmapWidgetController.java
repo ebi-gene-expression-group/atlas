@@ -38,8 +38,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.model.AnatomogramType;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -100,6 +102,8 @@ public final class HeatmapWidgetController {
 
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
+    private final BaselineExperimentPageService baselineExperimentPageService;
+
     //TODO: refactor, too many collaborators
     @Inject
     private HeatmapWidgetController(ExperimentTrader experimentTrader,
@@ -107,7 +111,8 @@ public final class HeatmapWidgetController {
                                     BaselineExperimentProfileSearchService baselineExperimentProfileSearchService,
                                     BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder,
                                     AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
-                                    BaselineAnalyticsSearchService baselineAnalyticsSearchService) {
+                                    BaselineAnalyticsSearchService baselineAnalyticsSearchService,
+                                    BaselineExperimentPageService baselineExperimentPageService) {
         this.experimentTrader = experimentTrader;
         this.applicationProperties = applicationProperties;
         this.speciesLookupService = speciesLookupService;
@@ -115,6 +120,7 @@ public final class HeatmapWidgetController {
         this.baselineExperimentProfilesViewModelBuilder = baselineExperimentProfilesViewModelBuilder;
         this.assayGroupFactorViewModelBuilder = assayGroupFactorViewModelBuilder;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
+        this.baselineExperimentPageService = baselineExperimentPageService;
     }
 
     @RequestMapping(value = {"/widgets/heatmap/referenceExperiment"})
@@ -131,18 +137,13 @@ public final class HeatmapWidgetController {
                 species = speciesLookupService.fetchFirstSpeciesByField(propertyType, bioEntityAccession);
             }
         } catch (ResourceNotFoundException e) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            model.addAttribute("errorMessage", "No genes found matching query: " + bioEntityAccession);
-            return "widget-error";
+            throw new ResourceNotFoundException( "No genes found matching query: " + bioEntityAccession);
         }
 
         String experimentAccession = applicationProperties.getBaselineReferenceExperimentAccession(species);
 
         if (StringUtils.isEmpty(experimentAccession)) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            model.addAttribute("errorMessage", "No baseline experiment for species " + species);
-            model.addAttribute("identifier", bioEntityAccession);
-            return "widget-error";
+            throw new ResourceNotFoundException("No baseline experiment for species " + species);
         }
 
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
@@ -158,8 +159,31 @@ public final class HeatmapWidgetController {
         // eg: forward:/widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE&serializedFilterFactors=ORGANISM:Monodelphis domestica&disableGeneLinks=true
         // existing request parameters to this method (ie: geneQuery, propertyType, rootContext) are also passed along by the forward,
         // plus type and serializedFilterFactors
-        // the model attributes are also preserved by a forward
+        // the model attributes are also preserved by a forward TODO wrong I think this means
+        // BaselineRequestPreferences
+        // preferences only I think so why do we populate model still
         return "forward:" + getRequestURL(request) + buildQueryString(species, experiment, disableGeneLinks);
+    }
+
+    @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE")
+    public String fetchReferenceExperimentProfilesJson(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
+                                                       @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request,
+                                                       HttpServletResponse response) {
+
+        BaselineProfilesList baselineProfiles = baselineExperimentPageService
+                .prepareModelAndPossiblyAddFactorMenuAndMaybeRUrlAndWidgetThings(preferences, result, model,
+                        request, false , false, true, disableGeneLinks);
+
+        if (result.hasErrors()) {
+            throw new ResourceNotFoundException(result.getGlobalError().getDefaultMessage());
+        }else if (baselineProfiles.isEmpty()) {
+            throw new ResourceNotFoundException("No baseline expression found for " + preferences.getGeneQuery()
+                    .description());
+        }
+
+        // set here instead of in JSP, because the JSP may be included elsewhere
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        return "heatmap-data";
     }
 
     @RequestMapping(value = "/widgets/heatmap/multiExperiment")
@@ -169,23 +193,16 @@ public final class HeatmapWidgetController {
             @RequestParam(value = "propertyType", required = false) String propertyType,
             Model model, HttpServletResponse response) {
 
-        String ensemblSpecies;
-        try {
-            ensemblSpecies = StringUtils.isBlank(species) ?
-                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString()) : Species.convertToEnsemblSpecies(species);
+        String ensemblSpecies= StringUtils.isBlank(species)
+                ?speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString())
+                : Species.convertToEnsemblSpecies(species);
 
-        } catch (ResourceNotFoundException e) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            model.addAttribute("errorMessage", "No genes found matching query: " + geneQuery.description());
-            return "widget-error";
-        }
 
         BaselineExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(geneQuery.asString(), ensemblSpecies, true);
 
         if (searchResult.isEmpty()) {
-            model.addAttribute("errorMessage", "No baseline expression in tissues found for " + geneQuery.description());
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return "widget-error";
+            throw new ResourceNotFoundException("No baseline expression in tissues found for "
+                    + geneQuery.description());
         }
 
         populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
