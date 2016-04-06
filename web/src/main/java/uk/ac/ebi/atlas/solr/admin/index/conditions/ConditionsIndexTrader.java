@@ -35,7 +35,4 @@ public class ConditionsIndexTrader {
         }
         return differentialConditionIndex;
     }
-
-
-
 }

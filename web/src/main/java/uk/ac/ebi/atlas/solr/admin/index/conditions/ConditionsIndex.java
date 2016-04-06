@@ -32,10 +32,6 @@ public abstract class ConditionsIndex<T extends Experiment> {
         removeConditions(experiment.getAccession());
 
         addConditions(experiment, ontologyTerms);
-
-        //ToDO: (NK) Do we need to optimise after every experiment?
-        optimize();
-
     }
 
     public void addConditions(T experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
@@ -62,14 +58,4 @@ public abstract class ConditionsIndex<T extends Experiment> {
         }
     }
 
-    void optimize() {
-        try {
-            solrClient.optimize();
-
-        } catch (SolrServerException | IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
-        }
-
-    }
 }
