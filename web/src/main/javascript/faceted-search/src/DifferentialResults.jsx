@@ -219,7 +219,7 @@ var DifferentialResultRow = React.createClass({
             <tr>
                 <CellDifferential colour={this.props.colour} infinity={this.props.infinity} foldChange={this.props.foldChange} displayLevels={this.props.displayLevels}/>
                 <td className="col_species"><span className={"icon icon-species " + classColor} data-icon={classIcon} style={{color: 'red'}} title={this.props.species}/></td>
-                <td ref="comparison"><a href={"experiments/" + this.props.experimentAccession + "?geneQuery=" + this.props.bioentityIdentifier + "&queryFactorValues=" + this.props.contrastId + "&_specific=on"}>{this.props.comparison}</a></td>
+                <td ref="comparison"><a href={"experiments/" + this.props.experimentAccession + "?geneQuery=" + this.props.bioentityIdentifier + "&queryFactorValues=" + this.props.contrastId + "&specific=false"}>{this.props.comparison}</a></td>
                 <td className="gxaExperimentalVariable">{factors}</td>
                 <td><a href={"experiments/" + this.props.experimentAccession}>{this.props.experimentName}</a></td>
             </tr>
