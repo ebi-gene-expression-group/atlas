@@ -3,9 +3,11 @@ package uk.ac.ebi.atlas.profiles.baseline;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Iterables;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFilters;
+import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamPipelineBuilder;
 
 import javax.inject.Inject;
@@ -14,7 +16,8 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class BaselineProfileStreamPipelineBuilder implements ProfileStreamPipelineBuilder<BaselineProfile, BaselineProfileStreamOptions> {
+public class BaselineProfileStreamPipelineBuilder <T extends BaselineProfileStreamOptions>
+        implements ProfileStreamPipelineBuilder<BaselineProfile,T> {
 
     private final GeneSetBaselineProfilesBuilder geneSetBaselineProfilesBuilder;
 
@@ -24,7 +27,7 @@ public class BaselineProfileStreamPipelineBuilder implements ProfileStreamPipeli
     }
 
     @Override
-    public Iterable<BaselineProfile> build(Iterable<BaselineProfile> profiles, BaselineProfileStreamOptions options) {
+    public Iterable<BaselineProfile> build(Iterable<BaselineProfile> profiles, T options) {
         boolean isSpecific = options.isSpecific();
         Set<Factor> queryFactors = options.getSelectedQueryFactors();
         Set<String> uppercaseGeneIDs = options.getSelectedGeneIDs();

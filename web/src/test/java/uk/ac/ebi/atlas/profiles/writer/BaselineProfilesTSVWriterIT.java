@@ -62,13 +62,13 @@ public class BaselineProfilesTSVWriterIT {
     @Inject
     private BaselineRequestContextBuilder baselineRequestContextBuilder;
 
-    private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
+    private BaselineRequestPreferences requestPreferences;
 
     private BaselineRequestContext requestContext;
 
     @Before
     public void setUp() throws Exception {
-
+        requestPreferences = new BaselineRequestPreferences();
         requestPreferences.setQueryFactorType("ORGANISM_PART");
         BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
         requestContext = baselineRequestContextBuilder.forExperiment(baselineExperiment)
@@ -144,7 +144,7 @@ public class BaselineProfilesTSVWriterIT {
         requestPreferences.setQueryFactorType("CELL_LINE");
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("HPC-PL cell line", "Mickey Mouse")));
 
-        baselineRequestContextBuilder.forExperiment(multidimensionalExperiment)
+        BaselineRequestContext requestContext = baselineRequestContextBuilder.forExperiment(multidimensionalExperiment)
                                                               .withPreferences(requestPreferences).build();
 
         String[] headerRows = subject.getTsvFileMasthead(requestContext).split("\n");
@@ -164,7 +164,7 @@ public class BaselineProfilesTSVWriterIT {
         requestPreferences.setQueryFactorType("ORGANISM_PART");
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("brain")));
 
-        baselineRequestContextBuilder.forExperiment(experiment)
+        BaselineRequestContext requestContext = baselineRequestContextBuilder.forExperiment(experiment)
                                                               .withPreferences(requestPreferences).build();
 
         String[] headerRows = subject.getTsvFileMasthead(requestContext).split("\n");

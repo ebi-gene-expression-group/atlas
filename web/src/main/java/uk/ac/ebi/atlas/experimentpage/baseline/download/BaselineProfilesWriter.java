@@ -22,7 +22,7 @@ import java.io.PrintWriter;
 
 @Named
 @Scope("prototype")
-public class BaselineProfilesWriter extends ProfilesWriter<BaselineProfile, Factor, BaselineProfileStreamOptions> {
+public class BaselineProfilesWriter extends ProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> {
 
     private BaselineProfileInputStreamFactory inputStreamFactory;
     private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
@@ -46,10 +46,8 @@ public class BaselineProfilesWriter extends ProfilesWriter<BaselineProfile, Fact
     public long writeAsGeneSets(PrintWriter outputWriter, BaselineRequestContext requestContext) throws GenesNotFoundException {
         loadGeneIdsIntoRequestContext.load(requestContext, requestContext.getFilteredBySpecies());
 
-        BaselineProfileStreamOptionsWrapperAsGeneSets options = new BaselineProfileStreamOptionsWrapperAsGeneSets(requestContext);
-
-        ExpressionProfileInputStream<BaselineProfile, BaselineExpression> inputStream = inputStreamFactory.create(options);
-        return super.write(outputWriter, inputStream, options, options.getAllQueryFactors());
+        ExpressionProfileInputStream<BaselineProfile, BaselineExpression> inputStream = inputStreamFactory.create(requestContext);
+        return super.write(outputWriter, inputStream, requestContext, requestContext.getAllQueryFactors());
     }
 
 }

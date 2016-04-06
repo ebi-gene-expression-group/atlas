@@ -89,7 +89,6 @@ public class BaselineProfilesWriterIT {
                 .build();
 
         BaselineProfilesTSVWriter baselineProfilesTSVWriter = new BaselineProfilesTSVWriter(csvWriterFactoryMock);
-        baselineProfilesTSVWriter.setRequestContext(baselineRequestContext);
         baselineProfilesTSVWriter.setTsvFileMastheadTemplateResource(tsvFileMastheadTemplateResource);
 
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);

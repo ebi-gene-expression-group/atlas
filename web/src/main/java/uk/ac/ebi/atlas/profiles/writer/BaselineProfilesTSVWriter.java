@@ -50,12 +50,10 @@ import java.util.Set;
 
 @Named("geneProfileWriter")
 @Scope("prototype")
-public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselineProfile, Factor, BaselineProfileStreamOptions> {
+public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselineProfile, Factor, BaselineRequestContext> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesTSVWriter.class);
     private static final String GENE_SET_COLUMN_NAME = "Gene set";
-
-    private BaselineRequestContext requestContext;
 
     private Resource tsvFileMastheadTemplateResource;
 
@@ -72,11 +70,6 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
         initTsvFileMastheadTemplate();
     }
 
-    @Inject
-    public void setRequestContext(BaselineRequestContext requestContext) {
-        this.requestContext = requestContext;
-    }
-
     void initTsvFileMastheadTemplate() {
         try (InputStream inputStream = tsvFileMastheadTemplateResource.getInputStream()) {
             tsvFileMastheadTemplate = IOUtils.toString(inputStream);
@@ -87,7 +80,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     }
 
     @Override
-    protected String[] getProfileIdColumnHeaders(BaselineProfileStreamOptions options) {
+    protected String[] getProfileIdColumnHeaders(BaselineRequestContext options) {
         if (options.asGeneSets()) {
             return new String[]{GENE_SET_COLUMN_NAME};
         }
@@ -121,22 +114,22 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     }
 
     @Override
-    protected String getTsvFileMasthead(BaselineProfileStreamOptions options) {
+    protected String getTsvFileMasthead(BaselineRequestContext requestContext) {
         String responseType = requestContext.asGeneSets() ? "Gene sets" : "Genes";
         String geneQuery = requestContext.getGeneQuery();
         String specific = requestContext.isSpecific() ? "specifically " : "";
         String exactMatch = requestContext.isExactMatch() ? " exactly" : "";
-        String selectedQueryFactors = formatSelectedQueryFactors();
+        String selectedQueryFactors = formatSelectedQueryFactors(requestContext);
         double cutoff = requestContext.getCutoff();
         String experimentAccession = requestContext.getExperiment().getAccession();
-        String selectedFilterFactors = formatSelectedFilterFactors();
+        String selectedFilterFactors = formatSelectedFilterFactors(requestContext);
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
         return MessageFormat.format(tsvFileMastheadTemplate, responseType, geneQuery, exactMatch, specific, selectedQueryFactors, cutoff,
                 experimentAccession, selectedFilterFactors, timeStamp);
 
     }
 
-    private String formatSelectedFilterFactors() {
+    private String formatSelectedFilterFactors(final BaselineRequestContext requestContext) {
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
         if (CollectionUtils.isEmpty(selectedFilterFactors)) {
             return "";
@@ -151,7 +144,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
         return ", filtered by " + Joiner.on(" and ").join(transformedSelectedFilterFactors);
     }
 
-    protected String formatSelectedQueryFactors() {
+    protected String formatSelectedQueryFactors(BaselineRequestContext requestContext) {
         String queryFactorName = requestContext.getExperiment().getExperimentalFactors().getFactorDisplayName(requestContext.getQueryFactorType());
         Set<Factor> selectedQueryFactors = requestContext.getSelectedQueryFactors();
         if (CollectionUtils.isEmpty(selectedQueryFactors)) {

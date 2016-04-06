@@ -126,7 +126,6 @@ public class BaselineProfilesTSVWriterTest {
     public void initSubject() throws Exception {
         subject = new BaselineProfilesTSVWriter(new CsvWriterFactory());
         subject.setResponseWriter(printWriterMock);
-        subject.setRequestContext(requestContextMock);
 
         InputStream inputStream = new ByteArrayInputStream("{0} {1} {2} {3} {4} {5}".getBytes());
         when(tsvFileMastheadTemplateResourceMock.getInputStream()).thenReturn(inputStream);
