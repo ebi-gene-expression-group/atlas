@@ -7,12 +7,12 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiment.css">
 
 <script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css">
-
-<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 
 <script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneDistribution.js"></script>
@@ -87,11 +87,11 @@
             helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', $('[data-help-loc]').not('#heatmap-react [data-help-loc]'));
 
             window.onload = function() {
-                var geneQueryStr = $.url('?geneQuery');
+                var geneQueryStr = new URI(window.location).search(true)["geneQuery"];
                 if(geneQueryStr) {
-                    var geneTerms = geneQueryStr.split("%09");
+                    var geneTerms = geneQueryStr.split("\t");
                     geneTerms.forEach(function(geneTerm) {
-                        $('#geneQuery').tagEditor('addTag', decodeURIComponent(geneTerm.replace(/\+/g, "%20")));
+                        $('#geneQuery').tagEditor('addTag', geneTerm);
                     });
                 }
             };
