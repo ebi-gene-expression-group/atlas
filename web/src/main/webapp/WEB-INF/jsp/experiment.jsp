@@ -36,7 +36,7 @@
 
 <script type="text/javascript">
 
-    (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+    (function ($, URI) { //self invoking wrapper function that prevents $ namespace conflicts
 
         $(document).ready(function () {
 
@@ -86,16 +86,15 @@
             geneQueryTagEditorModule.init('#geneQuery', '${species}');
             helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', $('[data-help-loc]').not('#heatmap-react [data-help-loc]'));
 
-            window.onload = function() {
-                var geneQueryStr = new URI(window.location).search(true)["geneQuery"];
-                if(geneQueryStr) {
-                    var geneTerms = geneQueryStr.split("\t");
-                    geneTerms.forEach(function(geneTerm) {
-                        $('#geneQuery').tagEditor('addTag', geneTerm);
-                    });
-                }
-            };
+            // Populate gene query tag-editor
+            var geneQueryStr = new URI(window.location).search(true)["geneQuery"];
+            if(geneQueryStr) {
+                var geneTerms = geneQueryStr.split("\t");
+                geneTerms.forEach(function(geneTerm) {
+                    $('#geneQuery').tagEditor('addTag', geneTerm);
+                });
+            }
         });
-    })(jQuery);
+    })(jQuery, URI);
 
 </script>
