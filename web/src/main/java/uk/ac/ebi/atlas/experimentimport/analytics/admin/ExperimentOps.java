@@ -182,11 +182,14 @@ public class ExperimentOps {
                 }
                 opRecords.add(Pair.of(newOpRecord.getLeft(), Pair.of(newOpRecord.getRight().getLeft(),
                         System.currentTimeMillis())));
-                experimentOpLogWriter.persistOpLog(accession, opRecords);
             } catch (Exception e) {
                 String text = e.getMessage();
                 LOGGER.error(text);
                 result.add("error", new JsonPrimitive(text));
+                opRecords.add(Pair.of("FAILED: "+newOpRecord.getLeft(), Pair.of(newOpRecord.getRight().getLeft(),
+                        System.currentTimeMillis())));
+            } finally {
+                experimentOpLogWriter.persistOpLog(accession, opRecords);
             }
         }
         return result;
