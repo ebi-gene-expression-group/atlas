@@ -1,7 +1,6 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.admin;
+package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.tuple.Pair;

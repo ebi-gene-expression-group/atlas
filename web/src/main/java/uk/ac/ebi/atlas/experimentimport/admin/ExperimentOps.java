@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.admin;
+package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.gson.*;
 import org.apache.commons.lang3.tuple.Pair;

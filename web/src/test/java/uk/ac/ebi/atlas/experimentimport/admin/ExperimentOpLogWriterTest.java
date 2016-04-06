@@ -1,17 +1,13 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.admin;
+package uk.ac.ebi.atlas.experimentimport.admin;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.writers.FileTsvWriterBuilder;
-import uk.ac.ebi.atlas.experimentimport.analytics.admin.ExperimentOpLogWriter;
 
 import java.io.File;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
