@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home_request-preferences.css" media="screen">
 
@@ -39,7 +40,7 @@
 							<label>Sample properties</label>
 							<span data-help-loc="#experimentalConditions"></span>
 						</td>
-						<td class="gxaTableColumn10" rowspan="2">
+						<td class="gxaTableColumn10" rowspan="2" style="vertical-align: middle;">
 							<div class="gxaHomeSearchActionButtons">
 								<div style="text-align: right;">
 									<input id="submit-button" type="submit" value="Search" tabindex="4">

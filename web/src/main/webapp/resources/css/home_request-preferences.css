@@ -7,10 +7,6 @@ table.gxaFormGrid {
     padding: 0; /* overrides ebi-visual.css */
 }
 
-form input {
-    margin: 0 0.1em 0.2em 0.2em; /* overrides ebi-visual.css */
-}
-
 table.gxaFormGrid label {
     font-weight: bold;
 }
