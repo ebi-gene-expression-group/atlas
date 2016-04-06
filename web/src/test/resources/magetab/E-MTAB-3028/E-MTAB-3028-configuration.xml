@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="Mo17">
+                <assay technical_replicate_id="t2">SRR521000</assay>
+                <assay technical_replicate_id="t2">SRR521001</assay>
+                <assay technical_replicate_id="t2">SRR521002</assay>
+                <assay>SRR521004</assay>
+                <assay>SRR521005</assay>
+            </assay_group>
+            <assay_group id="g2" label="B73">
+                <assay technical_replicate_id="t1">SRR520998</assay>
+                <assay technical_replicate_id="t1">SRR520999</assay>
+                <assay>SRR521006</assay>
+                <assay>SRR521003</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>
