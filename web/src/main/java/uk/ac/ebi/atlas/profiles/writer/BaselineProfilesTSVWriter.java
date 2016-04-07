@@ -47,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Named("geneProfileWriter")
 @Scope("prototype")
@@ -130,7 +131,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     }
 
     private String formatSelectedFilterFactors(final BaselineRequestContext requestContext) {
-        Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
+        SortedSet<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
         if (CollectionUtils.isEmpty(selectedFilterFactors)) {
             return "";
         }

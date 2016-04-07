@@ -151,7 +151,7 @@ public class BaselineProfilesTSVWriterIT {
 
         assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, specifically expressed " +
                 "in Cell lines: 'HPC-PL cell line, Mickey Mouse' above the expression level cutoff: 0.5 " +
-                "in experiment E-GEOD-26284, filtered by RNA: total RNA and Cellular component: whole cell"));
+                "in experiment E-GEOD-26284, filtered by Cellular component: whole cell and RNA: total RNA"));
 
     }
 
