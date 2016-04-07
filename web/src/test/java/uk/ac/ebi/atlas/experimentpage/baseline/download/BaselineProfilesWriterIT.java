@@ -2,10 +2,15 @@ package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Iterables;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -17,13 +22,21 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.LoadGeneIdsIntoRequestContext;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
+import uk.ac.ebi.atlas.profiles.IsGeneIdMatch;
+import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
+import uk.ac.ebi.atlas.profiles.ProfileStreamFilters;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
@@ -55,7 +68,7 @@ public class BaselineProfilesWriterIT {
     private BaselineExperimentsCache baselineExperimentsCache;
 
     @Inject
-    BaselineRequestContextBuilder baselineRequestContextBuilder;
+    FilterFactorsConverter filterFactorsConverter;
 
     @Mock
     PrintWriter printWriterMock;
@@ -66,7 +79,7 @@ public class BaselineProfilesWriterIT {
     @Mock
     private CsvWriterFactory csvWriterFactoryMock;
 
-    private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
+    private BaselineRequestPreferences requestPreferences;
 
     @Inject
     private BaselineProfileInputStreamFactory baselineProfileInputStreamFactory;
@@ -76,15 +89,29 @@ public class BaselineProfilesWriterIT {
     @Inject
     private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
 
+    BaselineRequestContext requestContext;
+
     @Value("classpath:/file-templates/download-headers-baseline.txt")
     public Resource tsvFileMastheadTemplateResource;
 
-    private BaselineRequestContext populateRequestContext(String experimentAccession) throws ExecutionException {
+//    BaselineRequestContext makeRequestContext(){
+//        BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();=
+//    }
+
+    BaselineRequestContextBuilder builderForExperiment() throws ExecutionException {
+        return new BaselineRequestContextBuilder(filterFactorsConverter).forExperiment(baselineExperimentsCache
+                .getExperiment(E_MTAB_513));
+    }
+
+    @Before
+    public void setUp() throws ExecutionException {
         MockitoAnnotations.initMocks(this);
-        BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(experimentAccession);
+        requestPreferences = new BaselineRequestPreferences();
+
+        BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(E_MTAB_513);
 
         requestPreferences.setQueryFactorType("ORGANISM_PART");
-        BaselineRequestContext baselineRequestContext = baselineRequestContextBuilder.forExperiment(baselineExperiment)
+        requestContext = builderForExperiment()
                 .withPreferences(requestPreferences)
                 .build();
 
@@ -94,14 +121,12 @@ public class BaselineProfilesWriterIT {
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
         subject = new BaselineProfilesWriter(baselineProfileStreamPipelineBuilder, baselineProfilesTSVWriter, baselineProfileInputStreamFactory, loadGeneIdsIntoRequestContext);
-
-        return baselineRequestContext;
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true
     @Test
     public void eMTab513_Specific() throws GenesNotFoundException, ExecutionException {
-        BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
+
         long genesCount = subject.write(printWriterMock, requestContext);
 
         int expectedCount = 147;
@@ -138,10 +163,15 @@ public class BaselineProfilesWriterIT {
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true&queryFactorValues=leukocyte
     @Test
     public void eMTab513_Specific_QueryFactorLeukocyte() throws GenesNotFoundException, ExecutionException {
-        setQueryFactor(FACTOR_LEUKOCYTE);
+        BaselineRequestPreferences rp = new BaselineRequestPreferences();
+        rp.setQueryFactorType(FACTOR_LEUKOCYTE.getType());
+        rp.setQueryFactorValues(Collections.singleton(FACTOR_LEUKOCYTE.getValue()));
+        BaselineRequestContext rq = builderForExperiment()
+                .withPreferences(rp)
+                .build();
 
-        BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
-        long genesCount = subject.write(printWriterMock, requestContext);
+
+        long genesCount = subject.write(printWriterMock, rq);
         int expectedCount = 10;
 
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
@@ -167,11 +197,16 @@ public class BaselineProfilesWriterIT {
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&_specific=on&queryFactorValues=leukocyte
     @Test
     public void eMTab513_NotSpecific_QueryFactorLeukocyte() throws GenesNotFoundException, ExecutionException {
-        setNotSpecific();
-        setQueryFactor(FACTOR_LEUKOCYTE);
+        BaselineRequestPreferences rp = new BaselineRequestPreferences();
+        rp.setQueryFactorType(FACTOR_LEUKOCYTE.getType());
+        rp.setQueryFactorValues(Collections.singleton(FACTOR_LEUKOCYTE.getValue()));
+        rp.setSpecific(false);
+        BaselineRequestContext rq = builderForExperiment()
+                .withPreferences(rp)
+                .build();
 
-        BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
-        long genesCount = subject.write(printWriterMock, requestContext);
+
+        long genesCount = subject.write(printWriterMock, rq);
         int expectedCount = 101;
 
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
@@ -200,18 +235,43 @@ public class BaselineProfilesWriterIT {
         eMTab513_Specific_MultipleGeneSets();
     }
 
+    @Test
+    public void thisFailsWhenYouDebugTheCodeAndPutTheBreakpointInBecauseSomethingClosesTheStream() throws Exception {
+        String geneSets = "R-HSA-372790\tR-HSA-388396\tR-HSA-109582\tR-HSA-162582\tR-HSA-1430728\tR-HSA-168256\tR-HSA-74160\tR-HSA-1643685\tR-HSA-1280218\tR-HSA-168249\tR-HSA-392499\tR-HSA-556833\tR-HSA-382551\tR-HSA-1640170\tR-HSA-212436";
+        requestPreferences.setGeneQuery(GeneQuery.create(geneSets));
+
+        loadGeneIdsIntoRequestContext.load(requestContext, requestContext.getFilteredBySpecies());
+
+        ExpressionProfileInputStream<BaselineProfile, BaselineExpression> inputStream = baselineProfileInputStreamFactory.create(requestContext);
+
+        Iterable<BaselineProfile> profilesPipeline = new IterableObjectInputStream<>(inputStream);
+
+        if (!requestContext.getSelectedGeneIDs().isEmpty()) {
+            profilesPipeline = Iterables.filter(profilesPipeline, new IsGeneIdMatch(requestContext.getSelectedGeneIDs()));
+        }
+
+        Assert.assertTrue(profilesPipeline.iterator().hasNext());
+        //Assert.assertFalse(profilesPipeline.iterator().hasNext());
+    }
+
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true&geneQuery=R-HSA-372790%09R-HSA-388396%09R-HSA-109582%09R-HSA-162582%09R-HSA-1430728%09R-HSA-168256%09R-HSA-74160%09R-HSA-1643685%09R-HSA-1280218%09R-HSA-168249%09R-HSA-392499%09R-HSA-556833%09R-HSA-382551%09R-HSA-1640170%09R-HSA-212436&geneSetMatch=true
     @Test
     public void eMTab513_Specific_MultipleGeneSets() throws GenesNotFoundException, ExecutionException {
         String geneSets = "R-HSA-372790\tR-HSA-388396\tR-HSA-109582\tR-HSA-162582\tR-HSA-1430728\tR-HSA-168256\tR-HSA-74160\tR-HSA-1643685\tR-HSA-1280218\tR-HSA-168249\tR-HSA-392499\tR-HSA-556833\tR-HSA-382551\tR-HSA-1640170\tR-HSA-212436";
-        setGeneQuery(geneSets);
+        BaselineRequestPreferences rp = new BaselineRequestPreferences();
+        rp.setQueryFactorType("ORGANISM_PART");
+        rp.setGeneQuery(GeneQuery.create(geneSets));
+        BaselineRequestContext rq = builderForExperiment()
+                .withPreferences(rp)
+                .build();
 
-        BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
-        long genesCount = subject.writeAsGeneSets(printWriterMock, requestContext);
-        int expectedCount = 15;
+
+
+        long genesCount = subject.writeAsGeneSets(printWriterMock, rq);
+        int expectedCount = geneSets.split("\t").length;
 
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
-        verify(csvWriterMock, times(expectedCount + 1)).writeNext(lineCaptor.capture());
+        verify(csvWriterMock ,times(expectedCount + 1)).writeNext(lineCaptor.capture());
 
         List<String[]> lines = lineCaptor.getAllValues();
 
@@ -233,11 +293,16 @@ public class BaselineProfilesWriterIT {
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=R-HSA-74160&specific=true&queryFactorValues=leukocyte&geneSetMatch=true
     @Test
     public void eMTab513r_hsa_74160_Specific_GeneSet_QueryFactorLeukocyteGeneSet_NoResults() throws GenesNotFoundException, ExecutionException {
-        setQueryFactor(FACTOR_LEUKOCYTE);
-        setGeneQuery("R-HSA-74160");
+        BaselineRequestPreferences rp = new BaselineRequestPreferences();
+        rp.setQueryFactorType(FACTOR_LEUKOCYTE.getType());
+        rp.setQueryFactorValues(Collections.singleton(FACTOR_LEUKOCYTE.getValue()));
+        rp.setGeneQuery(GeneQuery.create("R-HSA-74160"));
+        BaselineRequestContext rq = builderForExperiment()
+                .withPreferences(rp)
+                .build();
 
-        BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
-        long genesCount = subject.writeAsGeneSets(printWriterMock, requestContext);
+        long genesCount = subject.writeAsGeneSets(printWriterMock, rq);
+
         int expectedCount = 0;
 
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
@@ -282,17 +347,8 @@ public class BaselineProfilesWriterIT {
         return builder.build();
     }
 
-    private void setGeneQuery(String geneQuery) {
-        requestPreferences.setGeneQuery(GeneQuery.create(geneQuery));
-    }
-
     private void setNotSpecific() {
         requestPreferences.setSpecific(false);
-    }
-
-    private void setQueryFactor(Factor factor) {
-        requestPreferences.setQueryFactorType(factor.getType());
-        requestPreferences.setQueryFactorValues(Collections.singleton(factor.getValue()));
     }
 
 }
