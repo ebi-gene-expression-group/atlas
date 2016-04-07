@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Named;
 import java.util.Set;
+import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -42,12 +43,12 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
 
     private BaselineExperiment experiment;
 
-    private Set<Factor> selectedFilterFactors;
+    private SortedSet<Factor> selectedFilterFactors;
 
     public BaselineRequestContext() {
     }
 
-    public Set<Factor> getSelectedFilterFactors() {
+    public SortedSet<Factor> getSelectedFilterFactors() {
         return selectedFilterFactors;
     }
 
@@ -66,7 +67,7 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
         return getRequestPreferences().getQueryFactorType();
     }
 
-    void setSelectedFilterFactors(Set<Factor> selectedFilterFactors) {
+    void setSelectedFilterFactors(SortedSet<Factor> selectedFilterFactors) {
         this.selectedFilterFactors = selectedFilterFactors;
     }
 

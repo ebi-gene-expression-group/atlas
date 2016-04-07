@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Named
 @Scope("prototype")
@@ -26,12 +27,12 @@ public class BaselineProfilesViewModelBuilder {
         this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
     }
 
-    public BaselineProfilesViewModel build(BaselineProfilesList profiles, Set<Factor> orderedFactors) {
+    public BaselineProfilesViewModel build(BaselineProfilesList profiles, SortedSet<Factor> orderedFactors) {
         BaselineProfileRowViewModel[] genes = buildGenes(profiles, orderedFactors, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel());
         return new BaselineProfilesViewModel<>(baselineExpressionLevelRounder, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel(), profiles.getTotalResultCount(), genes);
     }
 
-    public BaselineProfileRowViewModel[] buildGenes(List<BaselineProfile> baselineProfiles, Set<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+    public BaselineProfileRowViewModel[] buildGenes(List<BaselineProfile> baselineProfiles, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
         BaselineProfileRowViewModel[] viewModels = new BaselineProfileRowViewModel[baselineProfiles.size()];
 
         int i = 0;
@@ -43,7 +44,7 @@ public class BaselineProfilesViewModelBuilder {
         return viewModels;
     }
 
-    public BaselineProfileRowViewModel build(Profile<Factor, BaselineExpression> profile, Set<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+    public BaselineProfileRowViewModel build(Profile<Factor, BaselineExpression> profile, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
         String geneId = profile.getId();
         String geneName = profile.getName();
         BaselineExpressionViewModel[] expressions = baselineExpressionViewModelBuilder.buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);

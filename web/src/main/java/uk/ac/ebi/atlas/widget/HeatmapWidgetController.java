@@ -81,6 +81,8 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     private final BaselineExperimentPageService baselineExperimentPageService;
 
+    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
     @Inject
     private HeatmapWidgetController(ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService,
                                     BaselineExperimentProfileSearchService baselineExperimentProfileSearchService,
@@ -194,8 +196,6 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         if (baselineProfiles.isEmpty()) {
             return;
         }
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = AssayGroupFactorViewModel.createList(filteredAssayGroupFactors);
 

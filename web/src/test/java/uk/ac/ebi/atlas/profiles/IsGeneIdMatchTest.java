@@ -36,7 +36,10 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.Set;
+import java.util.SortedSet;
 
+import static com.google.common.collect.Sets.newHashSet;
+import static com.google.common.collect.Sets.newTreeSet;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
@@ -55,15 +58,15 @@ public class IsGeneIdMatchTest {
     @Mock
     private BaselineProfile gene3ProfileMock;
 
-    private Set<String> geneIDs = Sets.newHashSet("GENE1", "GENE2");
+    private Set<String> geneIDs = newHashSet("GENE1", "GENE2");
 
     private Factor factor1 = new Factor("ORG", "heart");
     private Factor factor2 = new Factor("ORG", "hair");
 
 
-    private Set<Factor> factors = Sets.newHashSet(factor1, factor2);
+    private SortedSet<Factor> factors = newTreeSet(newHashSet(factor1, factor2));
 
-    private final Set<Factor> EMPTY_FILTER_FACTOR_VALUES = Sets.newHashSet();
+    private final SortedSet<Factor> EMPTY_FILTER_FACTOR_VALUES = newTreeSet();
 
     @Mock
     private BaselineRequestContext requestContextMock;

@@ -30,7 +30,7 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -51,7 +51,7 @@ public class FilterFactorsConverter {
             sb.append(factor.getValue()).append(", ");
         }
 
-        sb.delete(sb.length()-2, sb.length());
+        sb.delete(sb.length() - 2, sb.length());
         return sb.toString();
     }
 
@@ -63,8 +63,8 @@ public class FilterFactorsConverter {
         return StringUtils.join(serializedFactors, ",");
     }
 
-    public Set<Factor> deserialize(String csvSerializedFactors) {
-        Set<Factor> factors = Sets.newHashSet();
+    public SortedSet<Factor> deserialize(String csvSerializedFactors) {
+        SortedSet<Factor> factors = Sets.newTreeSet();
 
         if (StringUtils.isBlank(csvSerializedFactors)) {
             return factors;

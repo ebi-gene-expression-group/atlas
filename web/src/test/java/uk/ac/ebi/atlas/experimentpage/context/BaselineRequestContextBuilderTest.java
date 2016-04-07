@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentpage.context;
 
+import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,7 +75,7 @@ public class BaselineRequestContextBuilderTest {
 
         when(factorMock.getType()).thenReturn(FACTOR_TYPE);
         when(factorMock.getValue()).thenReturn(FACTOR_VALUE);
-        when(filterFactorsConverterMock.deserialize(SERIALIZED_FACTORS)).thenReturn(Sets.newHashSet(factorMock));
+        when(filterFactorsConverterMock.deserialize(SERIALIZED_FACTORS)).thenReturn(ImmutableSortedSet.of(factorMock));
         when(preferencesMock.getSerializedFilterFactors()).thenReturn(SERIALIZED_FACTORS);
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet(QUERY_FACTOR1, QUERY_FACTOR2, QUERY_FACTOR3)));
         when(preferencesMock.getQueryFactorType()).thenReturn(FACTOR_TYPE);

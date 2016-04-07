@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.utils.ColourGradient;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Named
 @Scope("singleton")
@@ -26,7 +27,9 @@ public class BaselineExpressionViewModelBuilder {
         this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
     }
 
-    public BaselineExpressionViewModel[] buildExpressions(Profile<Factor, BaselineExpression> profile, Set<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+    public BaselineExpressionViewModel[] buildExpressions(Profile<Factor, BaselineExpression> profile,
+                                                          SortedSet<Factor> orderedFactors, double
+                                                                  minExpressionLevel, double maxExpressionLevel) {
         BaselineExpressionViewModel[] expressionViewModels = new BaselineExpressionViewModel[orderedFactors.size()];
 
         int i = 0;
@@ -45,7 +48,7 @@ public class BaselineExpressionViewModelBuilder {
 
         String value = (expression == null) ? "" : (expression.getLevelAsString().equals("NT")) ? "NT" : (!expression.isKnown() ? "UNKNOWN" : baselineExpressionLevelRounder.format(expression.getLevel()));
         String color = (expression == null) ? "" : (expression.isKnown() && !expression.getLevelAsString().equals("NT") ?
-                colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel) : (expression.getLevelAsString().equals("NT")  ? "" : "UNKNOWN"));
+                colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel) : (expression.getLevelAsString().equals("NT") ? "" : "UNKNOWN"));
 
         // We are assuming that the only relevant ontology term for tissues is the first one
         String svgPathId = factor.getValueOntologyTerms().isEmpty() ? null : factor.getValueOntologyTerms().iterator().next().id();

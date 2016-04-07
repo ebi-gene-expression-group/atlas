@@ -76,7 +76,8 @@ public class BaselineRequestContextBuilder {
 
         requestContext.setRequestPreferences(preferences);
 
-        Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
+        SortedSet<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences
+                .getSerializedFilterFactors());
         requestContext.setSelectedFilterFactors(selectedFilterFactors);
 
         String filteredBySpecie = getFilteredBySpecie(selectedFilterFactors);

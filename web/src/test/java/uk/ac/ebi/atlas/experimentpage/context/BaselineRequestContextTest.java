@@ -67,7 +67,7 @@ public class BaselineRequestContextTest {
     @Test
     public void testSetSelectedFilterFactors() throws Exception {
         Factor factor = new Factor("type", "value");
-        subject.setSelectedFilterFactors(Sets.newHashSet(factor));
+        subject.setSelectedFilterFactors(Sets.newTreeSet(Sets.newHashSet(factor)));
         assertThat(subject.getSelectedFilterFactors(), hasItem(factor));
     }
 

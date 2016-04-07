@@ -176,12 +176,12 @@ public class ExperimentalFactors implements Serializable {
         return getComplementFactorsByXML(factors);
     }
 
-    public Set<Factor> getComplementFactorsByXML(final Set<Factor> filterFactors) {
+    public SortedSet<Factor> getComplementFactorsByXML(final Set<Factor> filterFactors) {
         if (CollectionUtils.isEmpty(filterFactors)) {
             return getAllFactorsOrderedByXML();
         }
 
-        LinkedHashSet<Factor> filteredFactors = Sets.newLinkedHashSet();
+        SortedSet<Factor> filteredFactors = Sets.newTreeSet();
 
         for (FactorGroup factorGroup : orderedFactorGroups) {
 
@@ -280,8 +280,8 @@ public class ExperimentalFactors implements Serializable {
         }
     }
 
-    public ImmutableSet<Factor> getAllFactorsOrderedByXML() {
-        return ImmutableSet.copyOf(xmlFactorsByType.values());
+    public SortedSet<Factor> getAllFactorsOrderedByXML() {
+        return ImmutableSortedSet.copyOf(xmlFactorsByType.values());
     }
 
     // ordered the same as the assay group ids in the expression levels .tsv

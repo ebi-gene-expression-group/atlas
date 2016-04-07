@@ -73,6 +73,7 @@
             "multipleColumnHeaders": ${not empty jsonMultipleColumnHeaders ? jsonMultipleColumnHeaders : "null"},
             "profiles": ${not empty jsonProfiles ? jsonProfiles : "null"},
             "geneSetProfiles": ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : "null"},
+            "jsonCoexpressions" :${not empty jsonCoexpressions? jsonCoexpressions : "[]"},
             "anatomogram" :
             <c:choose>
                 <c:when test="${hasAnatomogram}">

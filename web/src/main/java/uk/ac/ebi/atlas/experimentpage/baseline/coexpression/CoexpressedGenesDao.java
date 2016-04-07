@@ -3,10 +3,16 @@ package uk.ac.ebi.atlas.experimentpage.baseline.coexpression;
 import com.google.common.collect.ImmutableSet;
 import org.apache.velocity.util.StringUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.Profile;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Named
 public class CoexpressedGenesDao {
@@ -28,5 +34,15 @@ public class CoexpressedGenesDao {
             }
         }
         return builder.build();
+    }
+
+    public <T extends Profile> Map<String, ImmutableSet<String>> coexpressedGenesForResults(Experiment experiment,
+                                                                                             GeneProfilesList<T> baselineProfiles){
+        Map<String, ImmutableSet<String>> result = new HashMap<>();
+        for(String geneName: baselineProfiles.extractGeneNames()){
+            result.put(geneName, coexpressedGenesFor(experiment.getAccession(), geneName));
+        }
+
+        return result;
     }
 }

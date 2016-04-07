@@ -62,6 +62,10 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     private ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap;
     private TracksUtil tracksUtil;
 
+    private Gson gson = new GsonBuilder()
+            .serializeSpecialFloatingPointValues()
+            .create();
+
     @SuppressWarnings("unchecked")
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
                                                    ProfilesHeatMap<P, ? extends DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap,
@@ -123,10 +127,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         if (diffProfiles.isEmpty()) {
             return;
         }
-
-        Gson gson = new GsonBuilder()
-                .serializeSpecialFloatingPointValues()
-                .create();
 
         String jsonContrasts = gson.toJson(contrasts);
         model.addAttribute("jsonColumnHeaders", jsonContrasts);

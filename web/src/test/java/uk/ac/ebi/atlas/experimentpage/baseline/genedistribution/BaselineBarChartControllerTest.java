@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import java.util.HashSet;
 import java.util.NavigableMap;
+import java.util.TreeSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -74,7 +75,7 @@ public class BaselineBarChartControllerTest {
         chartData.put(0.3D, 3);
 
         when(barChartTradersCacheMock.getBarchartTrader(EXPERIMENT_ACCESSION)).thenReturn(barChartTraderMock);
-        when(filterFactorsConverterMock.deserialize(SERIALIZED_FILTER_FACTORS)).thenReturn(new HashSet<Factor>());
+        when(filterFactorsConverterMock.deserialize(SERIALIZED_FILTER_FACTORS)).thenReturn(new TreeSet<Factor>());
         when(barChartTraderMock.getChart(anySet(), anySet())).thenReturn(chartData);
 
         String json = subject.getMap(EXPERIMENT_ACCESSION, null, "queryFactorType", SERIALIZED_FILTER_FACTORS, EXPERIMENT_ACCESSKEY);
