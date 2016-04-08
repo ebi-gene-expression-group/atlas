@@ -5,8 +5,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.SequenceObjectInputStream;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
@@ -17,7 +21,8 @@ import java.util.Vector;
 
 @Named
 @Scope("prototype")
-public class MicroarrayProfileStreamFactory {
+public class MicroarrayProfileStreamFactory implements
+        DifferentialProfileStreamFactory<MicroarrayProfileStreamOptions, MicroarrayProfile>{
 
     @Value("#{configuration['microarray.experiment.data.path.template']}")
     private String experimentDataFileUrlTemplate;
@@ -34,7 +39,7 @@ public class MicroarrayProfileStreamFactory {
     }
 
 
-    public ObjectInputStream<MicroarrayProfile> createForAllArrayDesigns(MicroarrayProfileStreamOptions options) {
+    public ObjectInputStream<MicroarrayProfile> create(MicroarrayProfileStreamOptions options) {
         String experimentAccession = options.getExperimentAccession();
         double pValueCutOff = options.getPValueCutOff();
         double foldChangeCutOff = options.getFoldChangeCutOff();

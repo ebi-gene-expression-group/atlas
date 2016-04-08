@@ -52,15 +52,15 @@ import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
-public abstract class DifferentialExperimentPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences, P extends DifferentialProfile> {
+public abstract class DifferentialExperimentPageController<T extends DifferentialExperiment, K extends
+        DifferentialRequestPreferences, P extends DifferentialProfile> {
 
     private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
     private final SpeciesKingdomTrader speciesKingdomTrader;
     private final GseaPlotsBuilder gseaPlotsBuilder;
     private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
-    private ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>,
-            DifferentialProfileStreamOptions, Contrast > profilesHeatMap;
+    private DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap;
     private TracksUtil tracksUtil;
 
     private Gson gson = new GsonBuilder()
@@ -68,16 +68,13 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
             .create();
 
     @SuppressWarnings("unchecked")
-    protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
-                                                   ProfilesHeatMap<P, ? extends DifferentialRequestContext,
-                                                           DifferentialProfilesList<P>,
-                                                           DifferentialProfileStreamOptions, Contrast> profilesHeatMap,
+    protected DifferentialExperimentPageController(DifferentialRequestContextBuilder
+            differentialRequestContextBuilder,
+                                                   DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap,
                                                    DownloadURLBuilder downloadURLBuilder, DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                                    SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
-        // cast here to avoid having to make a type parameter for DifferentialRequestContext
-        this.profilesHeatMap = (ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>,
-                DifferentialProfileStreamOptions, Contrast>) profilesHeatMap;
+        this.profilesHeatMap = profilesHeatMap;
         this.downloadURLBuilder = downloadURLBuilder;
         this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
         this.speciesKingdomTrader = speciesKingdomTrader;

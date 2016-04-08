@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -18,11 +17,9 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.naming.OperationNotSupportedException;
 import java.util.concurrent.TimeUnit;
 
 @Named
@@ -40,12 +37,6 @@ public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, Ba
                                    @Qualifier("baselineProfileInputStreamFactory") BaselineProfileInputStreamFactory inputStreamFactory) {
         super(pipelineBuilder, rankProfilesFactory);
         this.inputStreamFactory = inputStreamFactory;
-    }
-
-
-    @Override
-    public BaselineProfilesList fetch(BaselineRequestContext options) {
-        return fetch(options, Optional.<GeneQueryResponse>absent());
     }
 
     public BaselineProfilesList fetch(BaselineProfileStreamOptions options,

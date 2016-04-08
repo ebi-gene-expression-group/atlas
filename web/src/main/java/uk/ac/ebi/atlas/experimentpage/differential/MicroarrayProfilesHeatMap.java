@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.differential;
 import com.google.common.base.Optional;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -21,28 +22,15 @@ import javax.inject.Named;
 
 @Named
 @Scope("prototype")
-public class MicroarrayProfilesHeatMap extends ProfilesHeatMap<MicroarrayProfile, MicroarrayRequestContext,
-        DifferentialProfilesList<MicroarrayProfile>, DifferentialProfileStreamOptions, Contrast> {
-
-    private MicroarrayProfileStreamFactory inputStreamFactory;
-    private SolrQueryService solrQueryService;
+public class MicroarrayProfilesHeatMap extends DifferentialProfilesHeatMap<MicroarrayProfile,
+        DifferentialRequestContext<?>> {
 
     @Inject
     public MicroarrayProfilesHeatMap(DifferentialProfileStreamPipelineBuilder<MicroarrayProfile> pipelineBuilder,
                                      RankMicroarrayProfilesFactory rankProfilesFactory,
                                      MicroarrayProfileStreamFactory inputStreamFactory,
                                      SolrQueryService solrQueryService) {
-        super(pipelineBuilder, rankProfilesFactory);
-        this.inputStreamFactory = inputStreamFactory;
-        this.solrQueryService = solrQueryService;
-    }
-
-    @Override
-    public DifferentialProfilesList<MicroarrayProfile> fetch(MicroarrayRequestContext requestContext) throws GenesNotFoundException {
-        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
-                (requestContext, "");
-        ObjectInputStream<MicroarrayProfile> inputStream = inputStreamFactory.createForAllArrayDesigns(requestContext);
-        return super.fetch(inputStream, requestContext,geneQueryResponse);
+        super(pipelineBuilder, rankProfilesFactory,inputStreamFactory,solrQueryService,false);
     }
 
 }

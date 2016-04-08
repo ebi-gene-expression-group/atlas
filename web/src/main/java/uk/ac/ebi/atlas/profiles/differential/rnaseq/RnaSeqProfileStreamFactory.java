@@ -3,9 +3,12 @@ package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
+import uk.ac.ebi.atlas.profiles.differential.microarray.DifferentialProfileStreamFactory;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
@@ -14,7 +17,8 @@ import java.text.MessageFormat;
 
 @Named
 @Scope("prototype")
-public class RnaSeqProfileStreamFactory {
+public class RnaSeqProfileStreamFactory implements DifferentialProfileStreamFactory<DifferentialProfileStreamOptions,
+        RnaSeqProfile> {
 
     @Value("#{configuration['diff.experiment.data.path.template']}")
     private String experimentDataFileUrlTemplate;
@@ -30,7 +34,7 @@ public class RnaSeqProfileStreamFactory {
         this.csvReaderFactory = csvReaderFactory;
     }
 
-    public RnaSeqProfilesTsvInputStream create(DifferentialProfileStreamOptions options) {
+    public ObjectInputStream<RnaSeqProfile> create(DifferentialProfileStreamOptions options) {
         String experimentAccession = options.getExperimentAccession();
         double pValueCutOff = options.getPValueCutOff();
         double foldChangeCutOff = options.getFoldChangeCutOff();

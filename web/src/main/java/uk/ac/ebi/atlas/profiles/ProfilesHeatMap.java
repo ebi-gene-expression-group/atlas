@@ -29,8 +29,6 @@ public abstract class ProfilesHeatMap<P extends Profile, C extends RequestContex
         this.rankProfilesFactory = rankProfilesFactory;
     }
 
-    public abstract L fetch(C requestContext) throws GenesNotFoundException;
-
     protected L fetch(ObjectInputStream<P> inputStream, O options, Optional<GeneQueryResponse> geneQueryResponse)  {
         int maxSize = options.getHeatmapMatrixSize();
 
