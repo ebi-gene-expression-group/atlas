@@ -1,16 +1,15 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -20,7 +19,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.experimentpage.context.LoadGeneIdsIntoRequestContext;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
@@ -28,12 +26,12 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.atlas.profiles.IsGeneIdMatch;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
-import uk.ac.ebi.atlas.profiles.ProfileStreamFilters;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
@@ -87,16 +85,12 @@ public class BaselineProfilesWriterIT {
     private BaselineProfileStreamPipelineBuilder baselineProfileStreamPipelineBuilder;
 
     @Inject
-    private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
+    private SolrQueryService solrQueryService;
 
     BaselineRequestContext requestContext;
 
     @Value("classpath:/file-templates/download-headers-baseline.txt")
     public Resource tsvFileMastheadTemplateResource;
-
-//    BaselineRequestContext makeRequestContext(){
-//        BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();=
-//    }
 
     BaselineRequestContextBuilder builderForExperiment() throws ExecutionException {
         return new BaselineRequestContextBuilder(filterFactorsConverter).forExperiment(baselineExperimentsCache
@@ -108,8 +102,6 @@ public class BaselineProfilesWriterIT {
         MockitoAnnotations.initMocks(this);
         requestPreferences = new BaselineRequestPreferences();
 
-        BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(E_MTAB_513);
-
         requestPreferences.setQueryFactorType("ORGANISM_PART");
         requestContext = builderForExperiment()
                 .withPreferences(requestPreferences)
@@ -120,7 +112,7 @@ public class BaselineProfilesWriterIT {
 
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
-        subject = new BaselineProfilesWriter(baselineProfileStreamPipelineBuilder, baselineProfilesTSVWriter, baselineProfileInputStreamFactory, loadGeneIdsIntoRequestContext);
+        subject = new BaselineProfilesWriter(baselineProfileStreamPipelineBuilder, baselineProfilesTSVWriter, baselineProfileInputStreamFactory, solrQueryService);
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true
@@ -233,25 +225,6 @@ public class BaselineProfilesWriterIT {
     public void eMTab513_NotSpecific_MultipleGeneSets() throws GenesNotFoundException, ExecutionException {
         setNotSpecific();
         eMTab513_Specific_MultipleGeneSets();
-    }
-
-    @Test
-    public void thisFailsWhenYouDebugTheCodeAndPutTheBreakpointInBecauseSomethingClosesTheStream() throws Exception {
-        String geneSets = "R-HSA-372790\tR-HSA-388396\tR-HSA-109582\tR-HSA-162582\tR-HSA-1430728\tR-HSA-168256\tR-HSA-74160\tR-HSA-1643685\tR-HSA-1280218\tR-HSA-168249\tR-HSA-392499\tR-HSA-556833\tR-HSA-382551\tR-HSA-1640170\tR-HSA-212436";
-        requestPreferences.setGeneQuery(GeneQuery.create(geneSets));
-
-        loadGeneIdsIntoRequestContext.load(requestContext, requestContext.getFilteredBySpecies());
-
-        ExpressionProfileInputStream<BaselineProfile, BaselineExpression> inputStream = baselineProfileInputStreamFactory.create(requestContext);
-
-        Iterable<BaselineProfile> profilesPipeline = new IterableObjectInputStream<>(inputStream);
-
-        if (!requestContext.getSelectedGeneIDs().isEmpty()) {
-            profilesPipeline = Iterables.filter(profilesPipeline, new IsGeneIdMatch(requestContext.getSelectedGeneIDs()));
-        }
-
-        Assert.assertTrue(profilesPipeline.iterator().hasNext());
-        //Assert.assertFalse(profilesPipeline.iterator().hasNext());
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true&geneQuery=R-HSA-372790%09R-HSA-388396%09R-HSA-109582%09R-HSA-162582%09R-HSA-1430728%09R-HSA-168256%09R-HSA-74160%09R-HSA-1643685%09R-HSA-1280218%09R-HSA-168249%09R-HSA-392499%09R-HSA-556833%09R-HSA-382551%09R-HSA-1640170%09R-HSA-212436&geneSetMatch=true

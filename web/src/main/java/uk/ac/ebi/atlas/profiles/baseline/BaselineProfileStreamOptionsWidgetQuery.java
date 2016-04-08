@@ -21,18 +21,11 @@ public class BaselineProfileStreamOptionsWidgetQuery implements BaselineProfileS
 
     private final BaselineExperiment baselineExperiment;
     private final Set<Factor> selectedFilterFactors;
-    private final Set<String> geneIDs;
 
-    public BaselineProfileStreamOptionsWidgetQuery(BaselineExperiment baselineExperiment, String species, Set<String> geneIDs) {
+    public BaselineProfileStreamOptionsWidgetQuery(BaselineExperiment baselineExperiment, String species) {
         this.baselineExperiment = baselineExperiment;
-        this.geneIDs = geneIDs;
         String mappedSpecies = baselineExperiment.getRequestSpeciesName(species);
         this.selectedFilterFactors = StringUtils.isBlank(mappedSpecies) ? Collections.<Factor>emptySet() : ImmutableSet.of(new Factor("ORGANISM", mappedSpecies));
-    }
-
-    @Override
-    public Set<String> getSelectedGeneIDs() {
-        return geneIDs;
     }
 
     @Override
@@ -48,11 +41,6 @@ public class BaselineProfileStreamOptionsWidgetQuery implements BaselineProfileS
     @Override
     public Set<Factor> getAllQueryFactors() {
         return baselineExperiment.getExperimentalFactors().getComplementFactors(selectedFilterFactors);
-    }
-
-    @Override
-    public ImmutableSetMultimap<String, String> getGeneSetIdsToGeneIds() {
-        return null;
     }
 
     @Override
@@ -73,11 +61,6 @@ public class BaselineProfileStreamOptionsWidgetQuery implements BaselineProfileS
     @Override
     public Set<Factor> getSelectedFilterFactors() {
         return selectedFilterFactors;
-    }
-
-    @Override
-    public boolean asGeneSets() {
-        return false;
     }
 
     @Override

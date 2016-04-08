@@ -135,7 +135,7 @@ public class BaselineProfilesTSVWriterTest {
 
     @Test
     public void expressionLevels() throws Exception {
-        long count = subject.write(inputStreamMock, organismParts, requestContextMock);
+        long count = subject.write(inputStreamMock, organismParts, requestContextMock, false);
 
         verify(printWriterMock).write("Gene ID\tGene Name\tadipose\tbrain\tbreast\tliver\tlung\n", 0, 50);
         verify(printWriterMock).write("GI1\tGN1\t0\t0.11\t0\t0\t9\n", 0, 21);
@@ -146,7 +146,7 @@ public class BaselineProfilesTSVWriterTest {
 
     @Test
     public void buildCsvHeadersTest() {
-        String[] headers = subject.buildCsvColumnHeaders(organismParts, requestContextMock);
+        String[] headers = subject.buildCsvColumnHeaders(organismParts, requestContextMock, false);
         assertThat(headers, is(new String[]{"Gene ID", "Gene Name", "adipose", "brain", "breast", "liver", "lung"}));
     }
 

@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -94,7 +95,8 @@ public class MicroarrayExperimentDownloadControllerTest {
         when(requestContextBuilderMock.withPreferences(preferencesMock)).thenReturn(requestContextBuilderMock);
         when(requestContextBuilderMock.build()).thenReturn(requestContextMock);
         when(responseMock.getWriter()).thenReturn(printWriterMock);
-        when(profilesWriter.write(any(PrintWriter.class), any(ObjectInputStream.class), any(DifferentialProfileStreamOptions.class), anySet())).thenReturn(0L);
+        when(profilesWriter.write(any(PrintWriter.class), any(ObjectInputStream.class), any
+                (DifferentialProfileStreamOptions.class), anySet(), any(Optional.class))).thenReturn(0L);
         when(preferencesMock.getArrayDesignAccession()).thenReturn(ARRAY_DESIGN);
 
     }

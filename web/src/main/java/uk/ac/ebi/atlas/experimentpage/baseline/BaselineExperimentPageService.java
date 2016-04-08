@@ -22,12 +22,11 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.*;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
@@ -35,10 +34,11 @@ import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.*;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.*;
@@ -62,6 +62,7 @@ public class BaselineExperimentPageService {
     private BaselineExperimentUtil bslnUtil;
     private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
     private final CoexpressedGenesDao coexpressedGenesDao;
+    private final SolrQueryService solrQueryService;
     private Gson gson = new Gson();
 
     @Inject
@@ -71,7 +72,7 @@ public class BaselineExperimentPageService {
                                          SpeciesKingdomTrader speciesKingdomTrader,
                                          TracksUtil tracksUtil,
                                          BaselineExperimentUtil bslnUtil, PreferencesForBaselineExperiments preferencesForBaselineExperiments
-            , CoexpressedGenesDao coexpressedGenesDao) {
+            , CoexpressedGenesDao coexpressedGenesDao,SolrQueryService solrQueryService) {
 
         this.applicationProperties = applicationProperties;
         this.baselineProfilesHeatMap = baselineProfilesHeatMap;
@@ -81,17 +82,13 @@ public class BaselineExperimentPageService {
         this.bslnUtil = bslnUtil;
         this.preferencesForBaselineExperiments = preferencesForBaselineExperiments;
         this.coexpressedGenesDao = coexpressedGenesDao;
+        this.solrQueryService = solrQueryService;
     }
 
     //TODO I got misplaced when refactoring, I belong in a controller, not here
     @InitBinder("preferences")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(new BaselineRequestPreferencesValidator());
-    }
-
-    private BaselineProfilesList fetchGeneProfilesAsGeneSets(BaselineRequestContext requestContext) {
-        BaselineProfileStreamOptionsWrapperAsGeneSets options = new BaselineProfileStreamOptionsWrapperAsGeneSets(requestContext);
-        return baselineProfilesHeatMap.fetch(options);
     }
 
     public void prepareModel(BaselineRequestPreferences preferences, Model model, HttpServletRequest request, boolean
@@ -144,9 +141,14 @@ public class BaselineExperimentPageService {
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
                 filteredAssayGroupFactors.iterator().next().getAssayGroupId()));
 
-        BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext);
-        BaselineProfilesList profilesAsGeneSets = requestContext.geneQueryResponseContainsGeneSets() ?
-                fetchGeneProfilesAsGeneSets(requestContext) : null;
+
+        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext,
+                requestContext
+                .getFilteredBySpecies());
+        BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext, Optional.<GeneQueryResponse>absent());
+        BaselineProfilesList profilesAsGeneSets = geneQueryResponse.isPresent() &&
+                geneQueryResponse.get().containsGeneSets() ?
+                baselineProfilesHeatMap.fetch(requestContext, geneQueryResponse) : null;
 
         model.addAttribute("jsonCoexpressions", fetchCoexpressionsForObtainedResults(preferences,experiment,baselineProfiles));
         addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, model);
@@ -187,8 +189,10 @@ public class BaselineExperimentPageService {
                 preferences.setGeneQuery(GeneQuery.create(e.getValue()));
                 BaselineRequestContext context = preferencesForBaselineExperiments.buildRequestContext(experiment,
                         preferences);
+                Optional<GeneQueryResponse> geneQueryResponse =
+                        solrQueryService.fetchResponseBasedOnRequestContext(context,context.getFilteredBySpecies());
                 BaselineProfilesViewModel fetched = baselineProfilesViewModelBuilder.build
-                        (baselineProfilesHeatMap.fetch(context),
+                        (baselineProfilesHeatMap.fetch(context,geneQueryResponse),
                                 context.getSelectedFilterFactors());
                 resultForThisGene.addProperty("jsonProfiles", gson.toJson(fetched));
                 result.add(resultForThisGene);

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import com.google.common.base.Optional;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,13 +11,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.experimentpage.context.LoadGeneIdsIntoRequestContext;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuery;
@@ -76,12 +76,12 @@ public class BaselineProfilesHeatMapEMTab1733IT {
     @Inject
     BaselineRequestContextBuilder baselineRequestContextBuilder;
 
+    @Inject
+    SolrQueryService solrQueryService;
+
     private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
 
     private BaselineRequestContext baselineRequestContext;
-
-    @Inject
-    private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
 
     @Before
     public void initRequestContext() throws ExecutionException {
@@ -103,7 +103,10 @@ public class BaselineProfilesHeatMapEMTab1733IT {
         setNotSpecific();
         setGeneQuery("R-HSA-73887");
 
-        BaselineProfilesList profiles = subject.fetch(asGeneSet(baselineRequestContext));
+        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
+                (baselineRequestContext,baselineRequestContext.getFilteredBySpecies());
+
+        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse);
 
         assertThat(profiles.getTotalResultCount(), is(1));
         assertThat(profiles.extractGeneNames(), contains("R-HSA-73887"));
@@ -141,11 +144,6 @@ public class BaselineProfilesHeatMapEMTab1733IT {
         assertThat(baselineProfile0.getKnownExpressionLevel(STOMACH), CoreMatchers.is(80.0));
         assertThat(baselineProfile0.getKnownExpressionLevel(TESTIS), CoreMatchers.is(84.0));
         assertThat(baselineProfile0.getKnownExpressionLevel(THYROID), CoreMatchers.is(114.0));
-    }
-
-    private BaselineProfileStreamOptions asGeneSet(BaselineRequestContext baselineRequestContext) throws GenesNotFoundException {
-        loadGeneIdsIntoRequestContext.load(baselineRequestContext, baselineRequestContext.getFilteredBySpecies());
-        return new BaselineProfileStreamOptionsWrapperAsGeneSets(baselineRequestContext);
     }
 
     private void setGeneQuery(String geneQuery) {

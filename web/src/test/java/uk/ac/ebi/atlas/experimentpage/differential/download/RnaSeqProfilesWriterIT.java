@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.experimentpage.context.LoadGeneIdsIntoRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -25,6 +24,7 @@ import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBu
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.RnaSeqProfilesTSVWriter;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuery;
@@ -79,7 +79,7 @@ public class RnaSeqProfilesWriterIT {
     private RnaSeqProfileStreamFactory inputStreamFactory;
 
     @Inject
-    private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
+    private SolrQueryService solrQueryService;
 
     @Inject
     private DifferentialProfileStreamPipelineBuilder<RnaSeqProfile> pipelineBuilder;
@@ -99,7 +99,7 @@ public class RnaSeqProfilesWriterIT {
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
 
-        subject = new RnaSeqProfilesWriter(pipelineBuilder, geneProfileTsvWriter, inputStreamFactory, loadGeneIdsIntoRequestContext);
+        subject = new RnaSeqProfilesWriter(pipelineBuilder, geneProfileTsvWriter, inputStreamFactory, solrQueryService);
 
         return requestContext;
     }

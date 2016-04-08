@@ -1,11 +1,14 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
+import com.google.common.base.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuery;
@@ -16,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -23,7 +27,7 @@ import static org.junit.Assert.assertThat;
 public class LoadGeneIdsIntoRequestContextIT {
 
     @Inject
-    private LoadGeneIdsIntoRequestContext subject;
+    private SolrQueryService subject;
 
     @Inject
     BaselineRequestContextBuilder baselineRequestContextBuilder;
@@ -49,10 +53,11 @@ public class LoadGeneIdsIntoRequestContextIT {
     public void mirbaseGeneIdsAreExpanded() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setGeneQuery(GeneQuery.create("hsa-mir-636"));
         populateRequestContext("E-MTAB-1733");
-        subject.load(baselineRequestContext, "homo sapiens");
+        Optional<GeneQueryResponse> geneQueryResponse = subject.fetchResponseBasedOnRequestContext
+                (baselineRequestContext, "homo sapiens");
 
-        //System.out.println("\"" + Joiner.on("\", \"").join(baselineRequestContext.getSelectedGeneIDs()) + "\"" );
-        assertThat(baselineRequestContext.getSelectedGeneIDs(), contains("ENSG00000207556", "MIMAT0003306"));
+        assertTrue(geneQueryResponse.isPresent());
+        assertThat(geneQueryResponse.get().getAllGeneIds(), contains("ENSG00000207556", "MIMAT0003306"));
     }
 
 

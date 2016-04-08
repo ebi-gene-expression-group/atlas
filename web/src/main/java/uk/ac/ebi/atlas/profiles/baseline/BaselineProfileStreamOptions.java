@@ -6,17 +6,7 @@ import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 
 import java.util.Set;
 
-public interface BaselineProfileStreamOptions extends ProfileStreamOptions {
-
-    Set<String> getSelectedGeneIDs();
-
-    boolean isSpecific();
-
-    Set<Factor> getSelectedQueryFactors();
-
-    Set<Factor> getAllQueryFactors();
-
-    ImmutableSetMultimap<String, String> getGeneSetIdsToGeneIds();
+public interface BaselineProfileStreamOptions extends ProfileStreamOptions<Factor> {
 
     String getExperimentAccession();
 
@@ -26,5 +16,4 @@ public interface BaselineProfileStreamOptions extends ProfileStreamOptions {
 
     Set<Factor> getSelectedFilterFactors();
 
-    boolean asGeneSets();
 }

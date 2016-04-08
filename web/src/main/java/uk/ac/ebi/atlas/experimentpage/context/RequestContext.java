@@ -38,24 +38,6 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
     private Set<T> selectedQueryFactors;
     private String filteredBySpecies;
     private Set<T> allQueryFactors;
-    protected GeneQueryResponse geneQueryResponse;
-
-    public void setGeneQueryResponse(GeneQueryResponse geneQueryResponse) {
-        this.geneQueryResponse = geneQueryResponse;
-    }
-
-    public boolean geneQueryResponseContainsGeneSets() {
-        return geneQueryResponse != null && geneQueryResponse.containsGeneSets();
-    }
-
-    // called by DifferentialProfileStreamPipelineBuilder
-    public Set<String> getSelectedGeneIDs() {
-        if (StringUtils.isBlank(getGeneQuery())) {
-            return Collections.emptySet();
-        }
-        checkNotNull(geneQueryResponse, "geneQueryResponse not set");
-        return geneQueryResponse.getAllGeneIds();
-    }
 
     public String getGeneQuery() {
         return getRequestPreferences().getGeneQuery().asString();
@@ -116,7 +98,6 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         return Objects.toStringHelper(getClass())
                 .add("requestPreferences", getRequestPreferences())
                 .add("filteredBySpecies", filteredBySpecies)
-                .add("geneQueryResponse", geneQueryResponse)
                 .toString();
     }
 

@@ -59,7 +59,8 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     private final GseaPlotsBuilder gseaPlotsBuilder;
     private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
-    private ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap;
+    private ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>,
+            DifferentialProfileStreamOptions, Contrast > profilesHeatMap;
     private TracksUtil tracksUtil;
 
     private Gson gson = new GsonBuilder()
@@ -68,12 +69,15 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
     @SuppressWarnings("unchecked")
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
-                                                   ProfilesHeatMap<P, ? extends DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap,
+                                                   ProfilesHeatMap<P, ? extends DifferentialRequestContext,
+                                                           DifferentialProfilesList<P>,
+                                                           DifferentialProfileStreamOptions, Contrast> profilesHeatMap,
                                                    DownloadURLBuilder downloadURLBuilder, DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                                    SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         // cast here to avoid having to make a type parameter for DifferentialRequestContext
-        this.profilesHeatMap = (ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions>) profilesHeatMap;
+        this.profilesHeatMap = (ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>,
+                DifferentialProfileStreamOptions, Contrast>) profilesHeatMap;
         this.downloadURLBuilder = downloadURLBuilder;
         this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
         this.speciesKingdomTrader = speciesKingdomTrader;

@@ -90,7 +90,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     protected abstract List<String> getExpressionColumnsHeaders();
 
     @Override
-    protected String getTsvFileMasthead(DifferentialProfileStreamOptions options) {
+    protected String getTsvFileMasthead(DifferentialProfileStreamOptions options, boolean isGeneSet) {
         //TODO: this class should be decoupled from requestContext
         DifferentialRequestContext requestContext = getRequestContext();
         String geneQuery = requestContext.getGeneQuery();

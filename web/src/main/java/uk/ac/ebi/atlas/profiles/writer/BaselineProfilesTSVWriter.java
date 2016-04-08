@@ -36,7 +36,6 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -81,8 +80,8 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     }
 
     @Override
-    protected String[] getProfileIdColumnHeaders(BaselineRequestContext options) {
-        if (options.asGeneSets()) {
+    protected String[] getProfileIdColumnHeaders(BaselineRequestContext options, boolean isGeneSet) {
+        if (isGeneSet) {
             return new String[]{GENE_SET_COLUMN_NAME};
         }
         return new String[]{"Gene ID", "Gene Name"};
@@ -115,8 +114,8 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     }
 
     @Override
-    protected String getTsvFileMasthead(BaselineRequestContext requestContext) {
-        String responseType = requestContext.asGeneSets() ? "Gene sets" : "Genes";
+    protected String getTsvFileMasthead(BaselineRequestContext requestContext, boolean isGeneSet) {
+        String responseType = isGeneSet ? "Gene sets" : "Genes";
         String geneQuery = requestContext.getGeneQuery();
         String specific = requestContext.isSpecific() ? "specifically " : "";
         String exactMatch = requestContext.isExactMatch() ? " exactly" : "";

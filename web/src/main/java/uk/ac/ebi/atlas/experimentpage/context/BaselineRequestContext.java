@@ -52,11 +52,6 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
         return selectedFilterFactors;
     }
 
-    @Override
-    public ImmutableSetMultimap<String, String> getGeneSetIdsToGeneIds() {
-        checkNotNull(geneQueryResponse, "geneQueryResponse not set");
-        return geneQueryResponse.getQueryTermsToIds();
-    }
 
     @Override
     public String getExperimentAccession() {
@@ -78,12 +73,6 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
     public BaselineExperiment getExperiment() {
         return experiment;
     }
-
-    @Override
-    public boolean asGeneSets() {
-        return false;
-    }
-
 
     @Override
     public String toString() {

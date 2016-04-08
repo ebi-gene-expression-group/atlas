@@ -31,12 +31,12 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class IsDifferentialProfileSpecific implements Predicate<DifferentialProfile> {
+public class IsDifferentialProfileSpecific<P extends DifferentialProfile> implements Predicate<P> {
 
-    private final Set<Contrast> selectedQueryContrasts;
-    private final Sets.SetView<Contrast> nonSelectedQueryContrasts;
+    private final Set<?> selectedQueryContrasts;
+    private final Sets.SetView<?> nonSelectedQueryContrasts;
 
-    public IsDifferentialProfileSpecific(Set<Contrast> selectedQueryContrasts, Set<Contrast> allQueryFactors) {
+    public IsDifferentialProfileSpecific(Set<?> selectedQueryContrasts, Set<?> allQueryFactors) {
         checkArgument(!selectedQueryContrasts.isEmpty(),"selectedQueryContrasts is empty");
         checkArgument(!allQueryFactors.isEmpty(), "allQueryFactors is empty");
 
@@ -45,7 +45,7 @@ public class IsDifferentialProfileSpecific implements Predicate<DifferentialProf
     }
 
     @Override
-    public boolean apply(DifferentialProfile differentialProfile) {
+    public boolean apply(P differentialProfile) {
         return differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts) > differentialProfile.getStrongestExpressionLevelOn(nonSelectedQueryContrasts);
     }
 

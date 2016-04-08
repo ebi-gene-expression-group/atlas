@@ -74,7 +74,7 @@ public class RnaSeqProfilesTSVWriterIT {
     @Test
     public void headerTextShouldContainThreeRows(){
 
-        String[] headerRows = subject.getTsvFileMasthead(requestContext).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows.length, is(3));
 
@@ -83,7 +83,7 @@ public class RnaSeqProfilesTSVWriterIT {
     @Test
     public void thirdHeaderLineShouldDescribeTimestamp(){
 
-        String[] headerRows = subject.getTsvFileMasthead(requestContext).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows[2], startsWith("# Timestamp: "));
         assertThat(headerRows[2].length(), greaterThan("# Timestamp: ".length()));
@@ -93,7 +93,7 @@ public class RnaSeqProfilesTSVWriterIT {
     @Test
     public void firstHeaderLineShouldDescribeAtlasVersion(){
 
-        String[] headerRows = subject.getTsvFileMasthead(requestContext).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows[0], startsWith("# Expression Atlas version: "));
         assertThat(headerRows[0].length(), greaterThan("# Expression Atlas version: ".length()));
@@ -105,7 +105,7 @@ public class RnaSeqProfilesTSVWriterIT {
 
         requestPreferences.setExactMatch(false);
 
-        String[] headerRows = subject.getTsvFileMasthead(requestContext).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: '', specifically up/down differentially expressed in any contrast given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment E-GEOD-38400"));
 
@@ -117,7 +117,7 @@ public class RnaSeqProfilesTSVWriterIT {
         requestPreferences.setExactMatch(true);
         requestPreferences.setSpecific(false);
 
-        String[] headerRows = subject.getTsvFileMasthead(requestContext).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: '' exactly, up/down differentially expressed in any contrast given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment E-GEOD-38400"));
         assertThat(headerRows[2], startsWith("# Timestamp: "));
@@ -132,7 +132,7 @@ public class RnaSeqProfilesTSVWriterIT {
         rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
                 .withPreferences(requestPreferences).build();
 
-        String[] headerRows = subject.getTsvFileMasthead(requestContext).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: '' exactly, specifically up/down differentially expressed in contrasts: idn2 mutant vs wild type, swi3b mutant vs wild type given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment E-GEOD-38400"));
         assertThat(headerRows[2], startsWith("# Timestamp: "));

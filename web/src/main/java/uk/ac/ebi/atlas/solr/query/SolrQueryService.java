@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
+import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
+import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
@@ -202,5 +204,29 @@ public class SolrQueryService {
 
         return geneIds;
     }
+
+    public Optional<GeneQueryResponse> fetchResponseBasedOnRequestContext(RequestContext requestContext, String species) throws
+            GenesNotFoundException {
+        return fetchResponseBasedOnRequestContext(requestContext.getGeneQuery(),requestContext.isExactMatch(), species);
+    }
+    public Optional<GeneQueryResponse> fetchResponseBasedOnRequestContext(String geneQuery, boolean isExactMatch, String
+            species) throws
+            GenesNotFoundException {
+
+        if (StringUtils.isBlank(geneQuery)) {
+            return Optional.absent();
+        }
+
+        GeneQueryResponse geneQueryResponse = fetchGeneIdsOrSetsGroupedByGeneQueryToken(geneQuery,
+                isExactMatch,
+                species);
+
+        if (geneQueryResponse.isEmpty()) {
+            throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + species);
+        }
+
+        return Optional.of(geneQueryResponse);
+    }
+
 
 }

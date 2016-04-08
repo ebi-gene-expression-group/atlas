@@ -49,10 +49,11 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K, O extends Prof
         this.csvWriterFactory = csvWriterFactory;
     }
 
-    public long write(GeneProfilesList<T> geneProfilesList, Set<K> conditions, O options) throws IOException {
+    public long write(GeneProfilesList<T> geneProfilesList, Set<K> conditions, O options, boolean isGeneSet) throws
+            IOException {
 
-        responseWriter.write(getTsvFileMasthead(options) + "\n");
-        csvWriter.writeNext(buildCsvColumnHeaders(conditions, options));
+        responseWriter.write(getTsvFileMasthead(options, isGeneSet) + "\n");
+        csvWriter.writeNext(buildCsvColumnHeaders(conditions, options,isGeneSet));
 
         for (T profile : geneProfilesList) {
             String[] csvRow = buildCsvRow(profile, conditions);
@@ -64,10 +65,10 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K, O extends Prof
         return (long) geneProfilesList.size();
     }
 
-    public long write(ObjectInputStream<T> inputStream, Set<K> conditions, O options) throws IOException {
+    public long write(ObjectInputStream<T> inputStream, Set<K> conditions, O options, boolean isGeneSet) throws IOException {
 
-        responseWriter.write(getTsvFileMasthead(options) + "\n");
-        csvWriter.writeNext(buildCsvColumnHeaders(conditions, options));
+        responseWriter.write(getTsvFileMasthead(options, isGeneSet) + "\n");
+        csvWriter.writeNext(buildCsvColumnHeaders(conditions, options, isGeneSet));
 
         long count = 0;
         T geneProfile;
@@ -82,10 +83,10 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K, O extends Prof
         return count;
     }
 
-    public long write(Iterable<T> inputStream, Set<K> conditions, O options) throws IOException {
+    public long write(Iterable<T> inputStream, Set<K> conditions, O options, boolean isGeneSet) throws IOException {
 
-        responseWriter.write(getTsvFileMasthead(options) + "\n");
-        csvWriter.writeNext(buildCsvColumnHeaders(conditions, options));
+        responseWriter.write(getTsvFileMasthead(options, isGeneSet) + "\n");
+        csvWriter.writeNext(buildCsvColumnHeaders(conditions, options, isGeneSet));
 
         long count = 0;
         for (T geneProfile : inputStream) {
@@ -106,14 +107,14 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K, O extends Prof
 
     protected abstract String[] getConditionColumnHeaders(Set<K> conditions);
 
-    protected abstract String getTsvFileMasthead(O options);
+    protected abstract String getTsvFileMasthead(O options, boolean isGeneSet);
 
-    protected String[] getProfileIdColumnHeaders(O options){
+    protected String[] getProfileIdColumnHeaders(O options, boolean isGeneSet){
         return new String[]{GENE_ID_COLUMN_NAME, GENE_NAME_COLUMN_NAME};
     }
 
-    protected String[] buildCsvColumnHeaders(Set<K> conditionValues, O options) {
-        String[] profileIdColumnHeaders = getProfileIdColumnHeaders(options);
+    protected String[] buildCsvColumnHeaders(Set<K> conditionValues, O options, boolean isGeneSet) {
+        String[] profileIdColumnHeaders = getProfileIdColumnHeaders(options, isGeneSet);
         String[] conditionColumnHeaders = getConditionColumnHeaders(conditionValues);
         return buildCsvRow(profileIdColumnHeaders, conditionColumnHeaders);
     }

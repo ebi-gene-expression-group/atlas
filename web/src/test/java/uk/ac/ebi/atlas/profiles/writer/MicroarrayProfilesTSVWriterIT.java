@@ -76,7 +76,7 @@ public class MicroarrayProfilesTSVWriterIT {
         MicroarrayRequestContext requestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
                 .withPreferences(requestPreferences).build();
 
-        String[] headerRows = subject.getTsvFileMasthead(requestContext).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: '' exactly, specifically up/down differentially expressed in contrast: 'cdk8 mutant' vs 'wild type' given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment E-MTAB-1066"));
         assertThat(headerRows[2], startsWith("# Timestamp: "));

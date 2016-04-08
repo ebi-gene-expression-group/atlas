@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
+import com.google.common.base.Optional;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.experimentpage.context.LoadGeneIdsIntoRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
@@ -12,6 +12,8 @@ import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfilesTsvInputStream;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.profiles.writer.RnaSeqProfilesTSVWriter;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,22 +24,23 @@ import java.io.PrintWriter;
 public class RnaSeqProfilesWriter extends ProfilesWriter<RnaSeqProfile, Contrast, DifferentialProfileStreamOptions> {
 
     private RnaSeqProfileStreamFactory inputStreamFactory;
-    private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
+    private SolrQueryService solrQueryService;
 
     @Inject
     public RnaSeqProfilesWriter(DifferentialProfileStreamPipelineBuilder<RnaSeqProfile> pipelineBuilder,
                                 RnaSeqProfilesTSVWriter tsvWriter,
                                 RnaSeqProfileStreamFactory inputStreamFactory,
-                                LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext) {
+                                SolrQueryService solrQueryService) {
         super(pipelineBuilder, tsvWriter);
         this.inputStreamFactory = inputStreamFactory;
-        this.loadGeneIdsIntoRequestContext = loadGeneIdsIntoRequestContext;
+        this.solrQueryService = solrQueryService;
     }
 
     public long write(PrintWriter outputWriter, RnaSeqRequestContext requestContext) throws GenesNotFoundException {
-        loadGeneIdsIntoRequestContext.load(requestContext, requestContext.getFilteredBySpecies());
+        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
         RnaSeqProfilesTsvInputStream inputStream = inputStreamFactory.create(requestContext);
-        return super.write(outputWriter, inputStream, requestContext, requestContext.getExperiment().getContrasts());
+        return super.write(outputWriter, inputStream, requestContext, requestContext.getExperiment().getContrasts(),
+                geneQueryResponse);
     }
 
 }

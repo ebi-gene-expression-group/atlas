@@ -68,8 +68,8 @@ public class MicroarrayProfilesTSVWriter extends DifferentialProfilesTSVWriter<M
     }
 
     @Override
-    protected String[] getProfileIdColumnHeaders(DifferentialProfileStreamOptions options) {
-        return (String[]) ArrayUtils.addAll(super.getProfileIdColumnHeaders(options), new String[]{DESIGN_ELEMENT});
+    protected String[] getProfileIdColumnHeaders(DifferentialProfileStreamOptions options, boolean isGeneSet) {
+        return (String[]) ArrayUtils.addAll(super.getProfileIdColumnHeaders(options, isGeneSet), new String[]{DESIGN_ELEMENT});
     }
 
     @Override

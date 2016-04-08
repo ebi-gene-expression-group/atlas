@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.profiles;
 
+import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -10,24 +11,27 @@ import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import java.io.IOException;
 
-public abstract class ProfilesHeatMap<P extends Profile, C extends RequestContext, L extends GeneProfilesList<P>, O extends ProfileStreamOptions> {
+public abstract class ProfilesHeatMap<P extends Profile, C extends RequestContext, L extends GeneProfilesList<P>, O
+        extends ProfileStreamOptions<T>, T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfilesHeatMap.class);
 
-    private ProfileStreamPipelineBuilder<P, O> pipelineBuilder;
+    private ProfileStreamPipelineBuilder<P, O, T> pipelineBuilder;
     private RankProfilesFactory<P, L, O> rankProfilesFactory;
 
-    protected ProfilesHeatMap(ProfileStreamPipelineBuilder<P, O> pipelineBuilder, RankProfilesFactory<P, L, O> rankProfilesFactory) {
+    protected ProfilesHeatMap(ProfileStreamPipelineBuilder<P, O, T> pipelineBuilder, RankProfilesFactory<P, L, O>
+            rankProfilesFactory) {
         this.pipelineBuilder = pipelineBuilder;
         this.rankProfilesFactory = rankProfilesFactory;
     }
 
     public abstract L fetch(C requestContext) throws GenesNotFoundException;
 
-    protected L fetch(ObjectInputStream<P> inputStream, O options)  {
+    protected L fetch(ObjectInputStream<P> inputStream, O options, Optional<GeneQueryResponse> geneQueryResponse)  {
         int maxSize = options.getHeatmapMatrixSize();
 
         RankProfiles<P, L> rankProfiles = rankProfilesFactory.create(options);
@@ -36,7 +40,7 @@ public abstract class ProfilesHeatMap<P extends Profile, C extends RequestContex
 
             Iterable<P> profiles = new IterableObjectInputStream<>(source);
 
-            Iterable<P> profilesPipeline = pipelineBuilder.build(profiles, options);
+            Iterable<P> profilesPipeline = pipelineBuilder.build(profiles, options,geneQueryResponse);
 
             return rankProfiles.rank(profilesPipeline, maxSize);
 
