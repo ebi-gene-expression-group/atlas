@@ -1,7 +1,0 @@
-Analysis	Software	Version	Citation
-QC	FASTQC	0.10.1	http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
-Filtering and trimming	FASTX	0.0.13	http://hannonlab.cshl.edu/fastx_toolkit/
-Pipeline	IRAP	0.4.3d3	IRAP - http://code.google.com/p/irap/
-Reads alignment	bowtie1	1.0.1	Langmead, Ben, Cole Trapnell, Mihai Pop, and Steven L. Salzberg. Ultrafast and memory-efficient alignment of short DNA sequences to the human genome. Genome Biol 10, no. 3 (2009): R25.
-Gene and transcript quantification	cufflinks2	2.2.1	Trapnell, Cole, et al. Differential gene and transcript expression analysis of RNA-seq experiments with TopHat and Cufflinks. Nature protocols 7.3 (2012): 562-578.
-Reads alignment	tophat2	2.0.12	Kim, Daehwan, et al. TopHat2: accurate alignment of transcriptomes in the presence of insertions, deletions and gene fusions. Genome Biol 14.4 (2013): R36.

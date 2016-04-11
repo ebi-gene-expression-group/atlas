@@ -1,7 +1,0 @@
-Analysis	Software	Version	Citation
-QC	FASTQC	0.10.1	http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
-Filtering and trimming	FASTX	0.0.13	http://hannonlab.cshl.edu/fastx_toolkit/
-Pipeline	IRAP	0.5.2d2	Nuno A. Fonseca, Robert Petryszak, John Marioni, Alvis Brazma. iRAP - an integrated RNA-seq Analysis Pipeline. bioRxiv 2014. doi: http://dx.doi.org/10.1101/005991
-Reads alignment	bowtie1	1.0.1	Langmead, Ben, Cole Trapnell, Mihai Pop, and Steven L. Salzberg. Ultrafast and memory-efficient alignment of short DNA sequences to the human genome. Genome Biol 10, no. 3 (2009): R25.
-Gene, transcript and exon quantification	htseq	0.6.1p1	Simon Anders, Paul Theodor Pyl, Wolfgang Huber: HTSeq – A Python framework to work with high-throughput sequencing data. bioRxiv, 20 Feb 2014, http://doi.org/10.1101/002824.
-Reads alignment	tophat2	2.0.12	Kim, Daehwan, et al. TopHat2: accurate alignment of transcriptomes in the presence of insertions, deletions and gene fusions. Genome Biol 14.4 (2013): R36.
