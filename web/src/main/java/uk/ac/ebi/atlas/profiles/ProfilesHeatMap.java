@@ -4,12 +4,10 @@ import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.differential.ProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 

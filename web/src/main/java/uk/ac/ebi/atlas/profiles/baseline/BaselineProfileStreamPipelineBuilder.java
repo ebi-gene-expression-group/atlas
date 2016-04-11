@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.GeneSet;
-import uk.ac.ebi.atlas.profiles.differential.ProfileStreamPipelineBuilder;
+import uk.ac.ebi.atlas.profiles.ProfileStreamPipelineBuilder;
 
 import javax.inject.Named;
 import java.util.Set;

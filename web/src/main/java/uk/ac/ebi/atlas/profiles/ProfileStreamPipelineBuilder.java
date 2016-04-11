@@ -1,11 +1,11 @@
-package uk.ac.ebi.atlas.profiles.differential;
+package uk.ac.ebi.atlas.profiles;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.profiles.ProfileStreamFilters;
+import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import java.util.HashSet;

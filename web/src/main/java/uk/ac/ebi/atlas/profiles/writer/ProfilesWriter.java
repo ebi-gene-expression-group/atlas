@@ -7,7 +7,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.differential.ProfileStreamPipelineBuilder;
+import uk.ac.ebi.atlas.profiles.ProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import java.io.IOException;

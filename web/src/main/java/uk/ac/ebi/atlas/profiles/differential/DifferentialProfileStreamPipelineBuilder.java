@@ -1,12 +1,11 @@
 package uk.ac.ebi.atlas.profiles.differential;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableSetMultimap;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.profiles.ProfileStreamPipelineBuilder;
 
 import javax.inject.Named;
 import java.util.Set;
