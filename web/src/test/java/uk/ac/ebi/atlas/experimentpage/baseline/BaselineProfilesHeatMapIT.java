@@ -72,9 +72,9 @@ public class BaselineProfilesHeatMapIT {
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true
     @Test
     public void eMTAB513_Specific() throws GenesNotFoundException {
-        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
                 (baselineRequestContext,baselineRequestContext.getFilteredBySpecies());
-        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse);
+        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse, false);
 
         assertThat(profiles.getTotalResultCount(), is(147));
         // System.out.println(Joiner.on("\", \"").join(profiles.extractGeneNames()));
@@ -88,9 +88,9 @@ public class BaselineProfilesHeatMapIT {
         setNotSpecific();
         //requestPreferences.setHeatmapMatrixSize(170);
         //populateRequestContext();
-        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
                 (baselineRequestContext,baselineRequestContext.getFilteredBySpecies());
-        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse);
+        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse, false);
 
         assertThat(profiles.getTotalResultCount(), is(147));
         System.out.println(Joiner.on("\", \"").join(profiles.extractGeneNames()));
@@ -101,10 +101,9 @@ public class BaselineProfilesHeatMapIT {
     @Test
     public void eMTAB513_Specific_QueryFactorLeukocyte() throws GenesNotFoundException, ExecutionException  {
         setQueryFactor(FACTOR_LEUKOCYTE);
-
-        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
                 (baselineRequestContext,baselineRequestContext.getFilteredBySpecies());
-        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse);
+        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse, false);
         //System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
         assertThat(profiles.getTotalResultCount(), is(10));
         assertThat(profiles.extractGeneNames(), contains("MYOD1", "DVL1", "IL12RB2", "VPS4A", "DEPTOR", "CC2D1B", "CRY2", "GPD2", "RPRD2", "TERF2"));
@@ -117,9 +116,9 @@ public class BaselineProfilesHeatMapIT {
         setNotSpecific();
         setQueryFactor(FACTOR_LEUKOCYTE);
 
-        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
                 (baselineRequestContext,baselineRequestContext.getFilteredBySpecies());
-        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse);
+        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse, false);
 
         assertThat(profiles.getTotalResultCount(), is(101));
         //System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
@@ -132,9 +131,9 @@ public class BaselineProfilesHeatMapIT {
         setNotSpecific();
         setGeneQuery("R-HSA-372790\tR-HSA-388396\tR-HSA-109582\tR-HSA-162582\tR-HSA-1430728\tR-HSA-168256\tR-HSA-74160\tR-HSA-1643685\tR-HSA-1280218\tR-HSA-168249\tR-HSA-392499\tR-HSA-556833\tR-HSA-382551\tR-HSA-1640170\tR-HSA-212436");
 
-        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
                 (baselineRequestContext,baselineRequestContext.getFilteredBySpecies());
-        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse);
+        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse, true);
 
         assertThat(profiles.getTotalResultCount(), is(15));
         // System.out.println(Joiner.on("\", \"").join(profiles.extractGeneNames()));
@@ -146,9 +145,9 @@ public class BaselineProfilesHeatMapIT {
     public void eMTAB513_Specific_MultipleGeneSets() throws GenesNotFoundException {
         setGeneQuery("R-HSA-372790\tR-HSA-388396\tR-HSA-109582\tR-HSA-162582\tR-HSA-1430728\tR-HSA-168256\tR-HSA-74160\tR-HSA-1643685\tR-HSA-1280218\tR-HSA-168249\tR-HSA-392499\tR-HSA-556833\tR-HSA-382551\tR-HSA-1640170\tR-HSA-212436");
 
-        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
                 (baselineRequestContext,baselineRequestContext.getFilteredBySpecies());
-        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse);
+        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse, true);
 
         assertThat(profiles.getTotalResultCount(), is(15));
         // System.out.println(Joiner.on("\", \"").join(profiles.extractGeneNames()));

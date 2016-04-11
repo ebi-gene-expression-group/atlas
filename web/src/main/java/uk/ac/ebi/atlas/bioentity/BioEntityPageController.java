@@ -44,7 +44,6 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -293,7 +292,7 @@ public abstract class BioEntityPageController {
         BaselineProfileStreamOptionsWidgetQuery options = new BaselineProfileStreamOptionsWidgetQuery(experiment,
                 species);
 
-        BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(options,solrQueryService.fetchResponseBasedOnRequestContext(Joiner.on(" ").join(identifiers), true, species));
+        BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(options,solrQueryService.fetchResponseBasedOnRequestContext(Joiner.on(" ").join(identifiers), true, species), false);
 
         return (baselineProfiles.size() > 0);
     }

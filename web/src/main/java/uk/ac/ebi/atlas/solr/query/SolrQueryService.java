@@ -205,16 +205,16 @@ public class SolrQueryService {
         return geneIds;
     }
 
-    public Optional<GeneQueryResponse> fetchResponseBasedOnRequestContext(RequestContext requestContext, String species) throws
+    public GeneQueryResponse fetchResponseBasedOnRequestContext(RequestContext requestContext, String species) throws
             GenesNotFoundException {
         return fetchResponseBasedOnRequestContext(requestContext.getGeneQuery(),requestContext.isExactMatch(), species);
     }
-    public Optional<GeneQueryResponse> fetchResponseBasedOnRequestContext(String geneQuery, boolean isExactMatch, String
+    public GeneQueryResponse fetchResponseBasedOnRequestContext(String geneQuery, boolean isExactMatch, String
             species) throws
             GenesNotFoundException {
 
         if (StringUtils.isBlank(geneQuery)) {
-            return Optional.absent();
+            return new GeneQueryResponse();
         }
 
         GeneQueryResponse geneQueryResponse = fetchGeneIdsOrSetsGroupedByGeneQueryToken(geneQuery,
@@ -225,7 +225,7 @@ public class SolrQueryService {
             throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + species);
         }
 
-        return Optional.of(geneQueryResponse);
+        return geneQueryResponse;
     }
 
 

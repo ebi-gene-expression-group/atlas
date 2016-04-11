@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
-import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -29,7 +28,7 @@ public class ProfilesWriter<P extends Profile, K, O extends ProfileStreamOptions
     }
 
     public long write(PrintWriter outputWriter, ObjectInputStream<P> inputStream, O options, Set<K> conditions,
-                      Optional<GeneQueryResponse> geneQueryResponse)  {
+                      GeneQueryResponse geneQueryResponse, boolean shouldAverageIntoGeneSets)  {
 
         tsvWriter.setResponseWriter(outputWriter);
 
@@ -37,9 +36,9 @@ public class ProfilesWriter<P extends Profile, K, O extends ProfileStreamOptions
 
             Iterable<P> profiles = new IterableObjectInputStream<>(source);
 
-            Iterable<P> profilesPipeline = pipelineBuilder.build(profiles, options,geneQueryResponse);
+            Iterable<P> profilesPipeline = pipelineBuilder.build(profiles, options,geneQueryResponse, shouldAverageIntoGeneSets);
 
-            return tsvWriter.write(profilesPipeline, conditions, options, geneQueryResponse.isPresent());
+            return tsvWriter.write(profilesPipeline, conditions, options, shouldAverageIntoGeneSets);
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);

@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.profiles;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.Iterables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -30,7 +28,7 @@ public class ProfilesHeatMapSource<P extends Profile<T, ? extends Expression>, L
         this.profileStreamPipelineBuilder = new ProfileStreamPipelineBuilder<>(profileStreamFilters);
     }
 
-    public L fetch(O options, Optional<GeneQueryResponse> geneQueryResponse)  {
+    public L fetch(O options, GeneQueryResponse geneQueryResponse, boolean shouldAverageIntoGeneSets)  {
         int maxSize = options.getHeatmapMatrixSize();
 
         RankProfiles<P, L> rankProfiles = rankProfilesFactory.create(options);
@@ -39,7 +37,8 @@ public class ProfilesHeatMapSource<P extends Profile<T, ? extends Expression>, L
 
             Iterable<P> profiles = new IterableObjectInputStream<>(source);
 
-            Iterable<P> profilesPipeline = profileStreamPipelineBuilder.build(profiles, options,geneQueryResponse);
+            Iterable<P> profilesPipeline = profileStreamPipelineBuilder.build(profiles, options,
+                     geneQueryResponse, shouldAverageIntoGeneSets);
 
             return rankProfiles.rank(profilesPipeline, maxSize);
 

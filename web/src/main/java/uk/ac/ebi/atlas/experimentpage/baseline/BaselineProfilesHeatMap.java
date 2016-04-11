@@ -9,11 +9,8 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.profiles.ProfilesHeatMapSource;
 import uk.ac.ebi.atlas.profiles.baseline.*;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import javax.inject.Inject;
@@ -36,17 +33,17 @@ public class BaselineProfilesHeatMap {
     }
 
     public BaselineProfilesList fetch(BaselineProfileStreamOptions options,
-                                      Optional<GeneQueryResponse> geneQueryResponse) {
+                                      GeneQueryResponse geneQueryResponse, boolean asGeneSets) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        BaselineProfilesList profiles = profilesHeatmapSource.fetch(options,geneQueryResponse);
+        BaselineProfilesList profiles = profilesHeatmapSource.fetch(options,geneQueryResponse, asGeneSets);
 
         stopwatch.stop();
 
         LOGGER.debug(
                 "<fetch> for [{}] (asGeneSets={}) took {} secs",
-                geneQueryResponse.isPresent()? geneQueryResponse.get().getAllGeneIds().size() :0, geneQueryResponse.isPresent(),
+                 geneQueryResponse.getAllGeneIds().size(), asGeneSets,
                 stopwatch
                 .elapsed(TimeUnit
                 .MILLISECONDS) /

@@ -70,7 +70,7 @@ public class BaselineProfilesHeatMapTest {
     @Test
     public void eMTab513react71_Specific() {
         isSpecific();
-        BaselineProfilesList profiles = subject.fetch(options, Optional.<GeneQueryResponse>absent());
+        BaselineProfilesList profiles = subject.fetch(options, geneQueryResponse, false);
 
         assertThat(profiles.extractGeneNames(), contains("SRSF2", "ZNF713", "ZFP2", "POLR2B", "SNRPA", "CCNT2", "ZKSCAN5"));
 
@@ -107,7 +107,7 @@ public class BaselineProfilesHeatMapTest {
     //http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&_specific=on
     @Test
     public void eMTab513react71_NotSpecific() {
-        BaselineProfilesList profiles = subject.fetch(options, Optional.<GeneQueryResponse>absent());
+        BaselineProfilesList profiles = subject.fetch(options, geneQueryResponse, false);
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B", "SNRPA", "CCNT2", "ZKSCAN5", "ZFP2", "ZNF713", "SRSF2"));
 
@@ -142,7 +142,7 @@ public class BaselineProfilesHeatMapTest {
     public void eMTab513react71_Specific_GeneSet() {
         isSpecific();
 
-        BaselineProfilesList profiles = subject.fetch(options, Optional.of(geneQueryResponse));
+        BaselineProfilesList profiles = subject.fetch(options, geneQueryResponse, true);
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
@@ -156,7 +156,7 @@ public class BaselineProfilesHeatMapTest {
     @Test
     public void eMTab513react71_NotSpecific_GeneSet() {
 
-        BaselineProfilesList profiles = subject.fetch(options, Optional.of(geneQueryResponse));
+        BaselineProfilesList profiles = subject.fetch(options, geneQueryResponse, true);
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
@@ -171,7 +171,7 @@ public class BaselineProfilesHeatMapTest {
         isSpecific();
         queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
-        BaselineProfilesList profiles = subject.fetch(options, Optional.<GeneQueryResponse>absent());
+        BaselineProfilesList profiles = subject.fetch(options, geneQueryResponse, false);
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B"));
 
@@ -189,7 +189,7 @@ public class BaselineProfilesHeatMapTest {
     public void eMTab513react71_NotSpecific_QueryFactorLeukocyte() throws GenesNotFoundException {
         queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
-        BaselineProfilesList profiles = subject.fetch(options, Optional.<GeneQueryResponse>absent());
+        BaselineProfilesList profiles = subject.fetch(options, geneQueryResponse, false);
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B", "SNRPA", "CCNT2", "ZKSCAN5"));
 
@@ -216,7 +216,7 @@ public class BaselineProfilesHeatMapTest {
         isSpecific();
         queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
-        BaselineProfilesList profiles = subject.fetch(options, Optional.of(geneQueryResponse));
+        BaselineProfilesList profiles = subject.fetch(options, geneQueryResponse, true);
 
         // no results because Leukoctye is not specific to react_71
         assertThat(profiles, is(empty()));
@@ -228,7 +228,7 @@ public class BaselineProfilesHeatMapTest {
         isSpecific();
         queryFactors(Collections.singleton(factor("prostate")));
 
-        BaselineProfilesList profiles = subject.fetch(options, Optional.of(geneQueryResponse));
+        BaselineProfilesList profiles = subject.fetch(options, geneQueryResponse, true);
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
@@ -242,7 +242,7 @@ public class BaselineProfilesHeatMapTest {
     public void eMTab513react71_NotSpecific_GeneSet_QueryFactorLeukocyteGeneSet_NoResults() throws GenesNotFoundException {
         queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
-        BaselineProfilesList profiles = subject.fetch(options, Optional.of(geneQueryResponse));
+        BaselineProfilesList profiles = subject.fetch(options, geneQueryResponse, true);
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import com.google.common.base.Optional;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
@@ -36,10 +35,10 @@ public class RnaSeqProfilesWriter extends ProfilesWriter<RnaSeqProfile, Contrast
     }
 
     public long write(PrintWriter outputWriter, RnaSeqRequestContext requestContext) throws GenesNotFoundException {
-        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
         ObjectInputStream<RnaSeqProfile> inputStream = inputStreamFactory.create(requestContext);
         return super.write(outputWriter, inputStream, requestContext, requestContext.getExperiment().getContrasts(),
-                geneQueryResponse);
+                geneQueryResponse, false);
     }
 
 }

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
-import com.google.common.base.Optional;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
@@ -35,15 +34,18 @@ public class BaselineProfilesWriter extends ProfilesWriter<BaselineProfile, Fact
     }
 
     public long write(PrintWriter outputWriter, BaselineRequestContext requestContext) throws GenesNotFoundException {
-        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext,
-                requestContext.getFilteredBySpecies());
-        return super.write(outputWriter, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(),geneQueryResponse);
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
+        return super.write(outputWriter, inputStreamFactory.create(requestContext), requestContext, requestContext
+                .getAllQueryFactors(),geneQueryResponse, false);
     }
 
+    /* Unused, Alfonso says there was once an idea for having the download button give you exactly what's on the page
+    . Didn't happen. You can consider deleting this path of the code.*/
     public long writeAsGeneSets(PrintWriter outputWriter, BaselineRequestContext requestContext) throws GenesNotFoundException {
-        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
 
-        return super.write(outputWriter, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(),geneQueryResponse);
+        return super.write(outputWriter, inputStreamFactory.create(requestContext), requestContext, requestContext
+                .getAllQueryFactors(),geneQueryResponse, true);
     }
 
 }

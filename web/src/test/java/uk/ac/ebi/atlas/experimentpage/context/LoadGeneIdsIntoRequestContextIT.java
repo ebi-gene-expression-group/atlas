@@ -53,11 +53,10 @@ public class LoadGeneIdsIntoRequestContextIT {
     public void mirbaseGeneIdsAreExpanded() throws GenesNotFoundException, ExecutionException {
         requestPreferences.setGeneQuery(GeneQuery.create("hsa-mir-636"));
         populateRequestContext("E-MTAB-1733");
-        Optional<GeneQueryResponse> geneQueryResponse = subject.fetchResponseBasedOnRequestContext
+        GeneQueryResponse geneQueryResponse = subject.fetchResponseBasedOnRequestContext
                 (baselineRequestContext, "homo sapiens");
 
-        assertTrue(geneQueryResponse.isPresent());
-        assertThat(geneQueryResponse.get().getAllGeneIds(), contains("ENSG00000207556", "MIMAT0003306"));
+        assertThat(geneQueryResponse.getAllGeneIds(), contains("ENSG00000207556", "MIMAT0003306"));
     }
 
 

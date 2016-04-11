@@ -142,13 +142,12 @@ public class BaselineExperimentPageService {
                 filteredAssayGroupFactors.iterator().next().getAssayGroupId()));
 
 
-        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext,
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext,
                 requestContext
                 .getFilteredBySpecies());
-        BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext, Optional.<GeneQueryResponse>absent());
-        BaselineProfilesList profilesAsGeneSets = geneQueryResponse.isPresent() &&
-                geneQueryResponse.get().containsGeneSets() ?
-                baselineProfilesHeatMap.fetch(requestContext, geneQueryResponse) : null;
+        BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext, geneQueryResponse, false);
+        BaselineProfilesList profilesAsGeneSets = geneQueryResponse.containsGeneSets() ?
+                baselineProfilesHeatMap.fetch(requestContext, geneQueryResponse, true) : null;
 
         model.addAttribute("jsonCoexpressions", fetchCoexpressionsForObtainedResults(preferences,experiment,baselineProfiles));
         addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, model);
@@ -189,10 +188,10 @@ public class BaselineExperimentPageService {
                 preferences.setGeneQuery(GeneQuery.create(e.getValue()));
                 BaselineRequestContext context = preferencesForBaselineExperiments.buildRequestContext(experiment,
                         preferences);
-                Optional<GeneQueryResponse> geneQueryResponse =
+                GeneQueryResponse geneQueryResponse =
                         solrQueryService.fetchResponseBasedOnRequestContext(context,context.getFilteredBySpecies());
                 BaselineProfilesViewModel fetched = baselineProfilesViewModelBuilder.build
-                        (baselineProfilesHeatMap.fetch(context,geneQueryResponse),
+                        (baselineProfilesHeatMap.fetch(context,geneQueryResponse, false),
                                 context.getSelectedFilterFactors());
                 resultForThisGene.addProperty("jsonProfiles", gson.toJson(fetched));
                 result.add(resultForThisGene);

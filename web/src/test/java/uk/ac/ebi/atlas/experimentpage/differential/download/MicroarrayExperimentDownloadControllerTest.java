@@ -34,6 +34,7 @@ import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 
@@ -42,6 +43,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anySet;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -96,7 +98,8 @@ public class MicroarrayExperimentDownloadControllerTest {
         when(requestContextBuilderMock.build()).thenReturn(requestContextMock);
         when(responseMock.getWriter()).thenReturn(printWriterMock);
         when(profilesWriter.write(any(PrintWriter.class), any(ObjectInputStream.class), any
-                (DifferentialProfileStreamOptions.class), anySet(), any(Optional.class))).thenReturn(0L);
+                (DifferentialProfileStreamOptions.class), anySet(), any(GeneQueryResponse.class), anyBoolean()))
+                .thenReturn(0L);
         when(preferencesMock.getArrayDesignAccession()).thenReturn(ARRAY_DESIGN);
 
     }

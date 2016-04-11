@@ -36,8 +36,8 @@ public class DifferentialProfilesHeatMap<P extends DifferentialProfile<?>, R ext
     }
 
     public DifferentialProfilesList<P> fetch(R requestContext) throws GenesNotFoundException {
-        Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
                 (requestContext, queryBySpecies ? requestContext.getFilteredBySpecies(): "");
-        return profilesHeatmapSource.fetch(requestContext,geneQueryResponse);
+        return profilesHeatmapSource.fetch(requestContext,geneQueryResponse, false);
     }
 }
