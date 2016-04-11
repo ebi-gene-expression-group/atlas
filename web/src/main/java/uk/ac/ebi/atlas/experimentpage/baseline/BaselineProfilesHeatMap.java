@@ -6,15 +6,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.ProfilesHeatMap;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.profiles.ProfilesHeatMapSource;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import javax.inject.Inject;
@@ -23,15 +25,17 @@ import java.util.concurrent.TimeUnit;
 
 @Named
 @Scope("prototype")
-public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, BaselineProfilesList, BaselineProfileStreamOptions, Factor> {
+public class BaselineProfilesHeatMap {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesHeatMap.class);
 
+    private ProfilesHeatMapSource<BaselineProfile, BaselineProfilesList, BaselineProfileStreamOptions, Factor>
+            profilesHeatmapSource;
     @Inject
     public BaselineProfilesHeatMap(BaselineProfileStreamPipelineBuilder pipelineBuilder,
                                    RankBaselineProfilesFactory rankProfilesFactory,
                                    @Qualifier("baselineProfileInputStreamFactory") BaselineProfileInputStreamFactory inputStreamFactory) {
-        super(pipelineBuilder, rankProfilesFactory, inputStreamFactory);
+        profilesHeatmapSource = new ProfilesHeatMapSource<>(pipelineBuilder, rankProfilesFactory, inputStreamFactory);
     }
 
     public BaselineProfilesList fetch(BaselineProfileStreamOptions options,
@@ -39,7 +43,7 @@ public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, Ba
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        BaselineProfilesList profiles = super.fetch(options,geneQueryResponse);
+        BaselineProfilesList profiles = profilesHeatmapSource.fetch(options,geneQueryResponse);
 
         stopwatch.stop();
 
