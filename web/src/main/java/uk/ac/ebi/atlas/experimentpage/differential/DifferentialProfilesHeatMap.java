@@ -22,7 +22,6 @@ public class DifferentialProfilesHeatMap<P extends DifferentialProfile<?>, R ext
         extends
         ProfilesHeatMap<P, DifferentialProfilesList<P>, DifferentialProfileStreamOptions, Contrast> {
 
-    ProfileStreamFactory<DifferentialProfileStreamOptions, P, Contrast> inputStreamFactory;
     SolrQueryService solrQueryService;
     private final boolean queryBySpecies;
 
@@ -32,8 +31,7 @@ public class DifferentialProfilesHeatMap<P extends DifferentialProfile<?>, R ext
                                              rankProfilesFactory,
                                        ProfileStreamFactory inputStreamFactory,
                                      SolrQueryService solrQueryService,boolean queryBySpecies) {
-        super(pipelineBuilder, rankProfilesFactory);
-        this.inputStreamFactory = inputStreamFactory;
+        super(pipelineBuilder, rankProfilesFactory, inputStreamFactory);
         this.solrQueryService = solrQueryService;
         this.queryBySpecies = queryBySpecies;
     }
@@ -41,7 +39,6 @@ public class DifferentialProfilesHeatMap<P extends DifferentialProfile<?>, R ext
     public DifferentialProfilesList<P> fetch(R requestContext) throws GenesNotFoundException {
         Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
                 (requestContext, queryBySpecies ? requestContext.getFilteredBySpecies(): "");
-        ObjectInputStream<P> inputStream = inputStreamFactory.create(requestContext);
-        return super.fetch(inputStream, requestContext,geneQueryResponse);
+        return super.fetch(requestContext,geneQueryResponse);
     }
 }

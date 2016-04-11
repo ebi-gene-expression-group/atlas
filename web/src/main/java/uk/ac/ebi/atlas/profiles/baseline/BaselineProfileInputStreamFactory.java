@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.profiles.baseline;
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -67,7 +68,7 @@ public class BaselineProfileInputStreamFactory implements ProfileStreamFactory<B
         }
     }
 
-    public ExpressionProfileInputStream<BaselineProfile, BaselineExpression> create(BaselineProfileStreamOptions options) {
+    public ObjectInputStream<BaselineProfile> create(BaselineProfileStreamOptions options) {
         String experimentAccession = options.getExperimentAccession();
 
         double cutOff = options.getCutoff();

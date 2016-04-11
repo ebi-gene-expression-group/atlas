@@ -6,6 +6,7 @@ import org.apache.commons.math.util.MathUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesEMTab513React71;
@@ -38,8 +39,7 @@ public class BaselineProfilesHeatMapTest {
     private BaselineProfileComparatorFactory baselineProfileComparatorFactory = new BaselineProfileComparatorFactory();
     private BaselineProfilesListBuilder geneProfilesListBuilder = new BaselineProfilesListBuilder();
     private RankBaselineProfilesFactory rankProfilesFactory = new RankBaselineProfilesFactory(baselineProfileComparatorFactory, geneProfilesListBuilder);
-    private BaselineProfilesHeatMap subject = new BaselineProfilesHeatMap(baselineProfileStreamPipelineBuilder, rankProfilesFactory, null);
-
+    private BaselineProfilesHeatMap subject;
     private BaselineProfilesEMTab513React71 eMTab513react71InputStream = new BaselineProfilesEMTab513React71(0.5);
 
     private ImmutableSetMultimap<String, String> react71GeneIds = ImmutableSetMultimap.<String, String>builder().putAll("react_71", "ENSG00000196652", "ENSG00000082258", "ENSG00000047315", "ENSG00000077312", "ENSG00000198939", "ENSG00000178665", "ENSG00000161547").build();
@@ -50,19 +50,28 @@ public class BaselineProfilesHeatMapTest {
     @Mock
     BaselineProfileStreamOptions options;
 
+    @Mock
+    BaselineProfileInputStreamFactory inputStreamFactory;
+
     @Before
     public void before() {
+        when(inputStreamFactory.create(Matchers.any(BaselineProfileStreamOptions.class)))
+                .thenReturn( eMTab513react71InputStream);
+
+
         when(options.getHeatmapMatrixSize()).thenReturn(50);
 
         when(options.getAllQueryFactors()).thenReturn(eMTab513react71InputStream.getOrderedFactorGroups().extractFactors());
         when(geneQueryResponse.getQueryTermsToIds()).thenReturn(react71GeneIds);
+
+        subject = new BaselineProfilesHeatMap(baselineProfileStreamPipelineBuilder, rankProfilesFactory, inputStreamFactory);
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true
     @Test
     public void eMTab513react71_Specific() {
         isSpecific();
-        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options, Optional.<GeneQueryResponse>absent());
+        BaselineProfilesList profiles = subject.fetch(options, Optional.<GeneQueryResponse>absent());
 
         assertThat(profiles.extractGeneNames(), contains("SRSF2", "ZNF713", "ZFP2", "POLR2B", "SNRPA", "CCNT2", "ZKSCAN5"));
 
@@ -99,7 +108,7 @@ public class BaselineProfilesHeatMapTest {
     //http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&_specific=on
     @Test
     public void eMTab513react71_NotSpecific() {
-        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options, Optional.<GeneQueryResponse>absent());
+        BaselineProfilesList profiles = subject.fetch(options, Optional.<GeneQueryResponse>absent());
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B", "SNRPA", "CCNT2", "ZKSCAN5", "ZFP2", "ZNF713", "SRSF2"));
 
@@ -134,7 +143,7 @@ public class BaselineProfilesHeatMapTest {
     public void eMTab513react71_Specific_GeneSet() {
         isSpecific();
 
-        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options, Optional.of(geneQueryResponse));
+        BaselineProfilesList profiles = subject.fetch(options, Optional.of(geneQueryResponse));
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
@@ -148,7 +157,7 @@ public class BaselineProfilesHeatMapTest {
     @Test
     public void eMTab513react71_NotSpecific_GeneSet() {
 
-        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options, Optional.of(geneQueryResponse));
+        BaselineProfilesList profiles = subject.fetch(options, Optional.of(geneQueryResponse));
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
@@ -163,7 +172,7 @@ public class BaselineProfilesHeatMapTest {
         isSpecific();
         queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
-        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options, Optional.<GeneQueryResponse>absent());
+        BaselineProfilesList profiles = subject.fetch(options, Optional.<GeneQueryResponse>absent());
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B"));
 
@@ -181,7 +190,7 @@ public class BaselineProfilesHeatMapTest {
     public void eMTab513react71_NotSpecific_QueryFactorLeukocyte() throws GenesNotFoundException {
         queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
-        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options, Optional.<GeneQueryResponse>absent());
+        BaselineProfilesList profiles = subject.fetch(options, Optional.<GeneQueryResponse>absent());
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B", "SNRPA", "CCNT2", "ZKSCAN5"));
 
@@ -208,7 +217,7 @@ public class BaselineProfilesHeatMapTest {
         isSpecific();
         queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
-        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options, Optional.of(geneQueryResponse));
+        BaselineProfilesList profiles = subject.fetch(options, Optional.of(geneQueryResponse));
 
         // no results because Leukoctye is not specific to react_71
         assertThat(profiles, is(empty()));
@@ -220,7 +229,7 @@ public class BaselineProfilesHeatMapTest {
         isSpecific();
         queryFactors(Collections.singleton(factor("prostate")));
 
-        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options, Optional.of(geneQueryResponse));
+        BaselineProfilesList profiles = subject.fetch(options, Optional.of(geneQueryResponse));
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
@@ -234,7 +243,7 @@ public class BaselineProfilesHeatMapTest {
     public void eMTab513react71_NotSpecific_GeneSet_QueryFactorLeukocyteGeneSet_NoResults() throws GenesNotFoundException {
         queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
-        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options, Optional.of(geneQueryResponse));
+        BaselineProfilesList profiles = subject.fetch(options, Optional.of(geneQueryResponse));
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 

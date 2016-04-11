@@ -40,15 +40,13 @@ public class BaselineProfilesWriter extends ProfilesWriter<BaselineProfile, Fact
     public long write(PrintWriter outputWriter, BaselineRequestContext requestContext) throws GenesNotFoundException {
         Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext,
                 requestContext.getFilteredBySpecies());
-        ExpressionProfileInputStream<BaselineProfile, BaselineExpression> inputStream = inputStreamFactory.create(requestContext);
-        return super.write(outputWriter, inputStream, requestContext, requestContext.getAllQueryFactors(),geneQueryResponse);
+        return super.write(outputWriter, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(),geneQueryResponse);
     }
 
     public long writeAsGeneSets(PrintWriter outputWriter, BaselineRequestContext requestContext) throws GenesNotFoundException {
         Optional<GeneQueryResponse> geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
 
-        ExpressionProfileInputStream<BaselineProfile, BaselineExpression> inputStream = inputStreamFactory.create(requestContext);
-        return super.write(outputWriter, inputStream, requestContext, requestContext.getAllQueryFactors(),geneQueryResponse);
+        return super.write(outputWriter, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(),geneQueryResponse);
     }
 
 }

@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -28,14 +27,11 @@ public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, Ba
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesHeatMap.class);
 
-    private BaselineProfileInputStreamFactory inputStreamFactory;
-
     @Inject
     public BaselineProfilesHeatMap(BaselineProfileStreamPipelineBuilder pipelineBuilder,
                                    RankBaselineProfilesFactory rankProfilesFactory,
                                    @Qualifier("baselineProfileInputStreamFactory") BaselineProfileInputStreamFactory inputStreamFactory) {
-        super(pipelineBuilder, rankProfilesFactory);
-        this.inputStreamFactory = inputStreamFactory;
+        super(pipelineBuilder, rankProfilesFactory, inputStreamFactory);
     }
 
     public BaselineProfilesList fetch(BaselineProfileStreamOptions options,
@@ -43,8 +39,7 @@ public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, Ba
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        ObjectInputStream<BaselineProfile> inputStream = inputStreamFactory.create(options);
-        BaselineProfilesList profiles = super.fetch(inputStream, options,geneQueryResponse);
+        BaselineProfilesList profiles = super.fetch(options,geneQueryResponse);
 
         stopwatch.stop();
 
