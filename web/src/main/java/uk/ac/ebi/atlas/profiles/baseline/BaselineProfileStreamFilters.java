@@ -1,32 +1,26 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
-import org.springframework.context.annotation.Scope;
+import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.GeneSet;
-import uk.ac.ebi.atlas.profiles.ProfileStreamPipelineBuilder;
+import uk.ac.ebi.atlas.profiles.ProfileStreamFilters;
 
-import javax.inject.Named;
 import java.util.Set;
 
-@Named
-@Scope("prototype")
-public class BaselineProfileStreamPipelineBuilder<T extends BaselineProfileStreamOptions>
-        extends ProfileStreamPipelineBuilder<BaselineProfile, T, Factor> {
+public class BaselineProfileStreamFilters extends ProfileStreamFilters<BaselineProfile, Factor> {
 
     @Override
-    protected Predicate<BaselineProfile> queryFactorSpecificityPredicate(Set<Factor> queryFactors, Set<Factor>
-            allQueryFactors) {
-        return new IsBaselineProfileSpecific(queryFactors, allQueryFactors);
+    public Iterable<BaselineProfile> filterBySpecificQueryFactors(Iterable<BaselineProfile> profiles, Set<Factor> queryFactors, Set<Factor> allQueryFactors) {
+        return Iterables.filter(profiles, new IsBaselineProfileSpecific(queryFactors, allQueryFactors));
     }
 
     @Override
-    protected Iterable<BaselineProfile> averageIntoGeneSets(Iterable<BaselineProfile> profiles,
-                                                            ImmutableSetMultimap<String, String> geneSetIdsToGeneIds) {
+    public Iterable<BaselineProfile> averageIntoGeneSets(Iterable<BaselineProfile> profiles,
+                                                         ImmutableSetMultimap<String, String> geneSetIdsToGeneIds) {
         ImmutableList.Builder<BaselineProfile> builder = ImmutableList.builder();
 
         ImmutableMap<String, GeneSet> geneSets = createGeneSetsById(geneSetIdsToGeneIds.keySet());
@@ -59,5 +53,4 @@ public class BaselineProfileStreamPipelineBuilder<T extends BaselineProfileStrea
         }
         return geneSetsBuilder.build();
     }
-
 }

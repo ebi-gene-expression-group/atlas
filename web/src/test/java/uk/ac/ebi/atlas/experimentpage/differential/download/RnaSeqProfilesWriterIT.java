@@ -19,8 +19,6 @@ import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.RnaSeqProfilesTSVWriter;
@@ -81,9 +79,6 @@ public class RnaSeqProfilesWriterIT {
     @Inject
     private SolrQueryService solrQueryService;
 
-    @Inject
-    private DifferentialProfileStreamPipelineBuilder<RnaSeqProfile> pipelineBuilder;
-
     private RnaSeqRequestContext populateRequestContext(String experimentAccession) throws ExecutionException {
         MockitoAnnotations.initMocks(this);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
@@ -99,7 +94,7 @@ public class RnaSeqProfilesWriterIT {
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
 
-        subject = new RnaSeqProfilesWriter(pipelineBuilder, geneProfileTsvWriter, inputStreamFactory, solrQueryService);
+        subject = new RnaSeqProfilesWriter(geneProfileTsvWriter, inputStreamFactory, solrQueryService);
 
         return requestContext;
     }

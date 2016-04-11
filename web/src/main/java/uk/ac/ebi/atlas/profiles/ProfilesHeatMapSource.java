@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.profiles;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.Iterables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -18,15 +19,15 @@ public class ProfilesHeatMapSource<P extends Profile<T, ? extends Expression>, L
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfilesHeatMapSource.class);
 
-    private ProfileStreamPipelineBuilder<P, O, T> pipelineBuilder;
     private RankProfilesFactory<P, L, O> rankProfilesFactory;
     private ProfileStreamFactory<O, P, T> profileStreamFactory;
+    private ProfileStreamPipelineBuilder<P, O, T> profileStreamPipelineBuilder;
 
-    public ProfilesHeatMapSource(ProfileStreamPipelineBuilder<P, O, T> pipelineBuilder, RankProfilesFactory<P, L, O>
-            rankProfilesFactory, ProfileStreamFactory<O, P, T> profileStreamFactory) {
-        this.pipelineBuilder = pipelineBuilder;
+    public ProfilesHeatMapSource(RankProfilesFactory<P, L, O> rankProfilesFactory, ProfileStreamFactory<O, P, T>
+            profileStreamFactory,ProfileStreamFilters<P,T> profileStreamFilters) {
         this.rankProfilesFactory = rankProfilesFactory;
         this.profileStreamFactory = profileStreamFactory;
+        this.profileStreamPipelineBuilder = new ProfileStreamPipelineBuilder<>(profileStreamFilters);
     }
 
     public L fetch(O options, Optional<GeneQueryResponse> geneQueryResponse)  {
@@ -38,7 +39,7 @@ public class ProfilesHeatMapSource<P extends Profile<T, ? extends Expression>, L
 
             Iterable<P> profiles = new IterableObjectInputStream<>(source);
 
-            Iterable<P> profilesPipeline = pipelineBuilder.build(profiles, options,geneQueryResponse);
+            Iterable<P> profilesPipeline = profileStreamPipelineBuilder.build(profiles, options,geneQueryResponse);
 
             return rankProfiles.rank(profilesPipeline, maxSize);
 

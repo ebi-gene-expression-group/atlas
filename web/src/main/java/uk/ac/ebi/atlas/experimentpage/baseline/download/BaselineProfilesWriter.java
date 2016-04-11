@@ -5,12 +5,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamPipelineBuilder;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFilters;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
@@ -28,11 +26,10 @@ public class BaselineProfilesWriter extends ProfilesWriter<BaselineProfile, Fact
     private SolrQueryService solrQueryService;
 
     @Inject
-    public BaselineProfilesWriter(BaselineProfileStreamPipelineBuilder pipelineBuilder,
-                                  BaselineProfilesTSVWriter tsvWriter,
+    public BaselineProfilesWriter(BaselineProfilesTSVWriter tsvWriter,
                                   @Qualifier("baselineProfileInputStreamFactory") BaselineProfileInputStreamFactory inputStreamFactory,
                                   SolrQueryService solrQueryService) {
-        super(pipelineBuilder, tsvWriter);
+        super(new BaselineProfileStreamFilters(), tsvWriter);
         this.inputStreamFactory = inputStreamFactory;
         this.solrQueryService = solrQueryService;
     }

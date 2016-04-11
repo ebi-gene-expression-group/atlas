@@ -19,8 +19,6 @@ import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesTSVWriter;
@@ -81,9 +79,6 @@ public class MicroarrayProfilesWriterIT {
     @Inject
     private SolrQueryService solrQueryService;
 
-    @Inject
-    private DifferentialProfileStreamPipelineBuilder<MicroarrayProfile> pipelineBuilder;
-
     private MicroarrayRequestContext populateRequestContext(String experimentAccession) throws ExecutionException {
         MockitoAnnotations.initMocks(this);
         MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
@@ -98,7 +93,7 @@ public class MicroarrayProfilesWriterIT {
 
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
-        subject = new MicroarrayProfilesWriter(pipelineBuilder, geneProfileTsvWriter, inputStreamFactory, solrQueryService);
+        subject = new MicroarrayProfilesWriter(geneProfileTsvWriter, inputStreamFactory, solrQueryService);
 
         return requestContext;
 

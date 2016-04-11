@@ -35,7 +35,6 @@ public class BaselineProfilesHeatMapTest {
     private static final int NUMBER_OF_FRACTIONAL_DIGITS = 0;
     private static final Factor FACTOR_LEUKOCYTE = new Factor("ORGANISM_PART", "leukocyte");
 
-    private BaselineProfileStreamPipelineBuilder baselineProfileStreamPipelineBuilder = new BaselineProfileStreamPipelineBuilder();
     private BaselineProfileComparatorFactory baselineProfileComparatorFactory = new BaselineProfileComparatorFactory();
     private BaselineProfilesListBuilder geneProfilesListBuilder = new BaselineProfilesListBuilder();
     private RankBaselineProfilesFactory rankProfilesFactory = new RankBaselineProfilesFactory(baselineProfileComparatorFactory, geneProfilesListBuilder);
@@ -64,7 +63,7 @@ public class BaselineProfilesHeatMapTest {
         when(options.getAllQueryFactors()).thenReturn(eMTab513react71InputStream.getOrderedFactorGroups().extractFactors());
         when(geneQueryResponse.getQueryTermsToIds()).thenReturn(react71GeneIds);
 
-        subject = new BaselineProfilesHeatMap(baselineProfileStreamPipelineBuilder, rankProfilesFactory, inputStreamFactory);
+        subject = new BaselineProfilesHeatMap(rankProfilesFactory, inputStreamFactory);
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true

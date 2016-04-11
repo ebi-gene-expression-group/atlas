@@ -1,10 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Iterables;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,18 +16,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
-import uk.ac.ebi.atlas.profiles.IsGeneIdMatch;
-import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -81,8 +70,6 @@ public class BaselineProfilesWriterIT {
 
     @Inject
     private BaselineProfileInputStreamFactory baselineProfileInputStreamFactory;
-    @Inject
-    private BaselineProfileStreamPipelineBuilder baselineProfileStreamPipelineBuilder;
 
     @Inject
     private SolrQueryService solrQueryService;
@@ -112,7 +99,7 @@ public class BaselineProfilesWriterIT {
 
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
-        subject = new BaselineProfilesWriter(baselineProfileStreamPipelineBuilder, baselineProfilesTSVWriter, baselineProfileInputStreamFactory, solrQueryService);
+        subject = new BaselineProfilesWriter(baselineProfilesTSVWriter, baselineProfileInputStreamFactory, solrQueryService);
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true

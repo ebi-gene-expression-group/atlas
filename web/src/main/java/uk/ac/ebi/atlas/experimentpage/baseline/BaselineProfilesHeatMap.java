@@ -12,10 +12,7 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.profiles.ProfilesHeatMapSource;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamPipelineBuilder;
-import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
+import uk.ac.ebi.atlas.profiles.baseline.*;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
@@ -32,10 +29,10 @@ public class BaselineProfilesHeatMap {
     private ProfilesHeatMapSource<BaselineProfile, BaselineProfilesList, BaselineProfileStreamOptions, Factor>
             profilesHeatmapSource;
     @Inject
-    public BaselineProfilesHeatMap(BaselineProfileStreamPipelineBuilder pipelineBuilder,
-                                   RankBaselineProfilesFactory rankProfilesFactory,
+    public BaselineProfilesHeatMap(RankBaselineProfilesFactory rankProfilesFactory,
                                    @Qualifier("baselineProfileInputStreamFactory") BaselineProfileInputStreamFactory inputStreamFactory) {
-        profilesHeatmapSource = new ProfilesHeatMapSource<>(pipelineBuilder, rankProfilesFactory, inputStreamFactory);
+        profilesHeatmapSource = new ProfilesHeatMapSource<>( rankProfilesFactory,
+                inputStreamFactory,new BaselineProfileStreamFilters());
     }
 
     public BaselineProfilesList fetch(BaselineProfileStreamOptions options,

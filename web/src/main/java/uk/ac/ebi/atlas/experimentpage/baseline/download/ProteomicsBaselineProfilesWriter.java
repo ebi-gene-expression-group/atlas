@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -14,10 +13,9 @@ import javax.inject.Named;
 public class ProteomicsBaselineProfilesWriter extends BaselineProfilesWriter {
 
     @Inject
-    public ProteomicsBaselineProfilesWriter(BaselineProfileStreamPipelineBuilder pipelineBuilder,
-                                            BaselineProfilesTSVWriter tsvWriter,
+    public ProteomicsBaselineProfilesWriter(BaselineProfilesTSVWriter tsvWriter,
                                             ProteomicsBaselineProfileInputStreamFactory proteomicsInputStreamFactory,
                                             SolrQueryService solrQueryService) {
-        super(pipelineBuilder, tsvWriter, proteomicsInputStreamFactory, solrQueryService);
+        super(tsvWriter, proteomicsInputStreamFactory, solrQueryService);
     }
 }

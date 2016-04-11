@@ -8,9 +8,8 @@ import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFilters;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfilesTsvInputStream;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.profiles.writer.RnaSeqProfilesTSVWriter;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
@@ -28,11 +27,10 @@ public class RnaSeqProfilesWriter extends ProfilesWriter<RnaSeqProfile, Contrast
     private SolrQueryService solrQueryService;
 
     @Inject
-    public RnaSeqProfilesWriter(DifferentialProfileStreamPipelineBuilder<RnaSeqProfile> pipelineBuilder,
-                                RnaSeqProfilesTSVWriter tsvWriter,
+    public RnaSeqProfilesWriter(RnaSeqProfilesTSVWriter tsvWriter,
                                 RnaSeqProfileStreamFactory inputStreamFactory,
                                 SolrQueryService solrQueryService) {
-        super(pipelineBuilder, tsvWriter);
+        super(new DifferentialProfileStreamFilters<RnaSeqProfile>(), tsvWriter);
         this.inputStreamFactory = inputStreamFactory;
         this.solrQueryService = solrQueryService;
     }

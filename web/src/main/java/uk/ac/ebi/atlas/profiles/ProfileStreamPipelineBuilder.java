@@ -11,7 +11,13 @@ import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class ProfileStreamPipelineBuilder<P extends Profile, O extends ProfileStreamOptions<T>, T> {
+public class ProfileStreamPipelineBuilder<P extends Profile, O extends ProfileStreamOptions<T>, T> {
+
+    private ProfileStreamFilters<P,T> profileStreamFilters;
+
+    public ProfileStreamPipelineBuilder(ProfileStreamFilters<P,T> profileStreamFilters){
+        this.profileStreamFilters = profileStreamFilters;
+    }
 
     public Iterable<P> build(Iterable<P> profiles, O options, Optional<GeneQueryResponse>
             geneQueryResponse) {
@@ -23,25 +29,20 @@ public abstract class ProfileStreamPipelineBuilder<P extends Profile, O extends 
         Iterable<P> profilesPipeline = profiles;
 
         if (!uppercaseGeneIDs.isEmpty()) {
-            profilesPipeline = ProfileStreamFilters.filterByGeneIds(profilesPipeline, uppercaseGeneIDs);
+            profilesPipeline = profileStreamFilters.filterByGeneIds(profilesPipeline, uppercaseGeneIDs);
         }
 
         if (geneQueryResponse.isPresent()) {
-            profilesPipeline = averageIntoGeneSets(profilesPipeline, geneQueryResponse.get().getQueryTermsToIds());
+            profilesPipeline = profileStreamFilters.averageIntoGeneSets(profilesPipeline, geneQueryResponse.get()
+                    .getQueryTermsToIds());
         }
 
         if (!queryFactors.isEmpty()) {
-            profilesPipeline = options.isSpecific() ?
-                    Iterables.filter(profiles, queryFactorSpecificityPredicate(queryFactors, allQueryFactors)) :
-                    ProfileStreamFilters.filterByQueryFactors(profilesPipeline, queryFactors);
+            profilesPipeline = options.isSpecific()
+                    ? profileStreamFilters.filterBySpecificQueryFactors(profiles, queryFactors,allQueryFactors)
+                    : profileStreamFilters.filterByQueryFactors(profilesPipeline, queryFactors);
         }
 
         return profilesPipeline;
     }
-
-    protected abstract Predicate<P> queryFactorSpecificityPredicate(Set<T> queryFactors, Set<T> allQueryFactors);
-
-    protected abstract Iterable<P> averageIntoGeneSets(Iterable<P> profiles,
-                                                       ImmutableSetMultimap<String, String>
-                                                               geneSetIdsToGeneIds);
 }

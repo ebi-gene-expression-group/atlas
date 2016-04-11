@@ -8,7 +8,7 @@ import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFilters;
 import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfilesTsvInputStream;
 import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesTSVWriter;
@@ -29,11 +29,10 @@ public class MicroarrayProfilesWriter extends ProfilesWriter<MicroarrayProfile, 
     private SolrQueryService solrQueryService;
 
     @Inject
-    public MicroarrayProfilesWriter(DifferentialProfileStreamPipelineBuilder<MicroarrayProfile> pipelineBuilder,
-                                    MicroarrayProfilesTSVWriter tsvWriter,
+    public MicroarrayProfilesWriter(MicroarrayProfilesTSVWriter tsvWriter,
                                     MicroarrayProfileStreamFactory inputStreamFactory,
                                     SolrQueryService solrQueryService) {
-        super(pipelineBuilder, tsvWriter);
+        super(new DifferentialProfileStreamFilters<MicroarrayProfile>(), tsvWriter);
         this.inputStreamFactory = inputStreamFactory;
         this.solrQueryService = solrQueryService;
     }
