@@ -4,11 +4,12 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
-import uk.ac.ebi.atlas.profiles.differential.microarray.DifferentialProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
@@ -17,8 +18,8 @@ import java.text.MessageFormat;
 
 @Named
 @Scope("prototype")
-public class RnaSeqProfileStreamFactory implements DifferentialProfileStreamFactory<DifferentialProfileStreamOptions,
-        RnaSeqProfile> {
+public class RnaSeqProfileStreamFactory implements ProfileStreamFactory<DifferentialProfileStreamOptions,
+        RnaSeqProfile, Contrast> {
 
     @Value("#{configuration['diff.experiment.data.path.template']}")
     private String experimentDataFileUrlTemplate;

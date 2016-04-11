@@ -11,17 +11,18 @@ import uk.ac.ebi.atlas.profiles.ProfilesHeatMap;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
-import uk.ac.ebi.atlas.profiles.differential.microarray.DifferentialProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
 import javax.inject.Inject;
 
-public class DifferentialProfilesHeatMap<P extends DifferentialProfile, R extends DifferentialRequestContext<?>>
+public class DifferentialProfilesHeatMap<P extends DifferentialProfile<?>, R extends
+        DifferentialRequestContext<?>>
         extends
         ProfilesHeatMap<P, DifferentialProfilesList<P>, DifferentialProfileStreamOptions, Contrast> {
 
-    DifferentialProfileStreamFactory inputStreamFactory;
+    ProfileStreamFactory<DifferentialProfileStreamOptions, P, Contrast> inputStreamFactory;
     SolrQueryService solrQueryService;
     private final boolean queryBySpecies;
 
@@ -29,7 +30,7 @@ public class DifferentialProfilesHeatMap<P extends DifferentialProfile, R extend
     public DifferentialProfilesHeatMap(DifferentialProfileStreamPipelineBuilder<P> pipelineBuilder,
                                      RankProfilesFactory<P, DifferentialProfilesList<P>, DifferentialProfileStreamOptions>
                                              rankProfilesFactory,
-                                       DifferentialProfileStreamFactory inputStreamFactory,
+                                       ProfileStreamFactory inputStreamFactory,
                                      SolrQueryService solrQueryService,boolean queryBySpecies) {
         super(pipelineBuilder, rankProfilesFactory);
         this.inputStreamFactory = inputStreamFactory;

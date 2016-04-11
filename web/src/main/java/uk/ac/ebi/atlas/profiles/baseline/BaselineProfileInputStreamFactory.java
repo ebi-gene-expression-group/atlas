@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
+import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 
@@ -18,7 +19,8 @@ import java.util.Set;
 
 @Named("baselineProfileInputStreamFactory")
 @Scope("prototype")
-public class BaselineProfileInputStreamFactory {
+public class BaselineProfileInputStreamFactory implements ProfileStreamFactory<BaselineProfileStreamOptions,
+        BaselineProfile, Factor> {
 
     @Value("#{configuration['experiment.magetab.path.template']}")
     protected String baselineExperimentDataFileUrlTemplate;

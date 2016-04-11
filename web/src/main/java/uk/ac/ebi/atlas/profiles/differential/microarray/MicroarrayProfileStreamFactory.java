@@ -5,12 +5,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.SequenceObjectInputStream;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
@@ -22,7 +20,7 @@ import java.util.Vector;
 @Named
 @Scope("prototype")
 public class MicroarrayProfileStreamFactory implements
-        DifferentialProfileStreamFactory<MicroarrayProfileStreamOptions, MicroarrayProfile>{
+        ProfileStreamFactory<MicroarrayProfileStreamOptions, MicroarrayProfile, Contrast> {
 
     @Value("#{configuration['microarray.experiment.data.path.template']}")
     private String experimentDataFileUrlTemplate;

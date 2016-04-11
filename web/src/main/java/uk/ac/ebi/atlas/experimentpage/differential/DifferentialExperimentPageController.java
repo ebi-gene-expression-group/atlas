@@ -53,7 +53,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 public abstract class DifferentialExperimentPageController<T extends DifferentialExperiment, K extends
-        DifferentialRequestPreferences, P extends DifferentialProfile> {
+        DifferentialRequestPreferences, P extends DifferentialProfile<?>> {
 
     private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
     private final SpeciesKingdomTrader speciesKingdomTrader;
