@@ -19,8 +19,7 @@ import javax.inject.Inject;
 
 public class DifferentialProfilesHeatMap<P extends DifferentialProfile, R extends DifferentialRequestContext<?>>
         extends
-        ProfilesHeatMap<P, R,
-        DifferentialProfilesList<P>, DifferentialProfileStreamOptions, Contrast> {
+        ProfilesHeatMap<P, DifferentialProfilesList<P>, DifferentialProfileStreamOptions, Contrast> {
 
     DifferentialProfileStreamFactory inputStreamFactory;
     SolrQueryService solrQueryService;

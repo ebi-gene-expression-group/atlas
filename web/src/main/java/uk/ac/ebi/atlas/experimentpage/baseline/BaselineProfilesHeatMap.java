@@ -24,8 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 @Named
 @Scope("prototype")
-public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, BaselineRequestContext,
-        BaselineProfilesList, BaselineProfileStreamOptions, Factor> {
+public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, BaselineProfilesList, BaselineProfileStreamOptions, Factor> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesHeatMap.class);
 

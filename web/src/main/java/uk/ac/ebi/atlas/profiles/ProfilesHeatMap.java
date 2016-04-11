@@ -13,8 +13,8 @@ import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import java.io.IOException;
 
-public abstract class ProfilesHeatMap<P extends Profile, C extends RequestContext, L extends GeneProfilesList<P>, O
-        extends ProfileStreamOptions<T>, T> {
+public abstract class ProfilesHeatMap<P extends Profile, L extends GeneProfilesList<P>, O extends
+        ProfileStreamOptions<T>, T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfilesHeatMap.class);
 
