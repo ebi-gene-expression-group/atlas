@@ -28,12 +28,10 @@ public class AssayDesignController {
 
         Map<String,String> arrayDesigns = arrayDesignDAO.getArrayDesignMapNames();
 
-        String keysAndValuesJoined = Joiner
+        return Joiner
                 .on("\n")
                 .withKeyValueSeparator("\t")
                 .join(arrayDesigns.entrySet());
-
-        return  keysAndValuesJoined;
 
     }
 
