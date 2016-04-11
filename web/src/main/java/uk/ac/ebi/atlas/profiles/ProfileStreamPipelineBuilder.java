@@ -39,7 +39,7 @@ public class ProfileStreamPipelineBuilder<P extends Profile, O extends ProfileSt
 
         if (!queryFactors.isEmpty()) {
             profilesPipeline = options.isSpecific()
-                    ? profileStreamFilters.filterBySpecificQueryFactors(profiles, queryFactors,allQueryFactors)
+                    ? profileStreamFilters.filterBySpecificQueryFactors(profilesPipeline, queryFactors,allQueryFactors)
                     : profileStreamFilters.filterByQueryFactors(profilesPipeline, queryFactors);
         }
 
