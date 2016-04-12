@@ -1,0 +1,20 @@
+E-MTAB-3727		SRR579556	characteristic	age	adult
+E-MTAB-3727		SRR579556	characteristic	organism	Anolis carolinensis	http://purl.obolibrary.org/obo/NCBITaxon_28377
+E-MTAB-3727		SRR579556	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3727		SRR579556	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-MTAB-3727		SRR579556	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3727		SRR579557	characteristic	age	adult
+E-MTAB-3727		SRR579557	characteristic	organism	Anolis carolinensis	http://purl.obolibrary.org/obo/NCBITaxon_28377
+E-MTAB-3727		SRR579557	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3727		SRR579557	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-MTAB-3727		SRR579557	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3727		SRR579558	characteristic	age	adult
+E-MTAB-3727		SRR579558	characteristic	organism	Anolis carolinensis	http://purl.obolibrary.org/obo/NCBITaxon_28377
+E-MTAB-3727		SRR579558	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3727		SRR579558	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-MTAB-3727		SRR579558	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3727		SRR579559	characteristic	age	adult
+E-MTAB-3727		SRR579559	characteristic	organism	Anolis carolinensis	http://purl.obolibrary.org/obo/NCBITaxon_28377
+E-MTAB-3727		SRR579559	characteristic	organism part	skeletal muscle	http://purl.obolibrary.org/obo/UBERON_0014892
+E-MTAB-3727		SRR579559	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-MTAB-3727		SRR579559	factor	organism part	skeletal muscle	http://purl.obolibrary.org/obo/UBERON_0014892
