@@ -1,0 +1,58 @@
+Comment[ArrayExpressAccession]	E-MTAB-3717
+Public Release Date	2011-10-12
+Investigation Title	RNA-seq of 6 tissues from Macaca mulatta to investigate the evolution of gene expression levels in mammalian organs
+Comment[Submitted Name]	RNA-seq of 6 tissues from Macaca mulatta to investigate the evolution of gene expression levels in mammalian organs
+Experiment Description	This experiment contains the subset of data corresponding to rhesus macaque RNA-Seq data from experiment E-GEOD-30352 (http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-30352/), which goal is to understand the dynamics of mammalian transcriptome evolution. To study mammalian transcriptome evolution at high resolution, we generated RNA-Seq data (∼3.2 billion Illumina Genome Analyser IIx reads of 76 base pairs) for the polyadenylated RNA fraction of brain (cerebral cortex or whole brain without cerebellum), cerebellum, heart, kidney, liver and testis (usually from one male and one female per somatic tissue and two males for testis) from nine mammalian species: placental mammals (great apes, including humans; rhesus macaque; mouse), marsupials (gray short-tailed opossum) and monotremes (platypus). Corresponding data (∼0.3 billion reads) were generated for a bird (red jungle fowl, a non-domesticated chicken) and used as an evolutionary outgroup.
+Date of Experiment
+Term Source Name	EFO
+Term Source Version
+Term Source File	http://www.ebi.ac.uk/efo/efo.owl
+Person Last Name	Kaessmann	Brawand	Soumillon	Necsulea	Julien	Csardi	Harrigan	Weier	Liechti	Aximu-Petri	Kircher	Albert	Zeller	Khaitovich	Grutzner	Bergmann	Nielsen	Paabo	Kaessmann
+Person First Name	Henrik	David	Magali	Anamaria	Philippe	Gabor	Patrick	Manuela	Angelica	Ayinuer	Martin	Frank	Ulrich	Philipp	Frank	Sven	Rasmus	Svante	Henrik
+Person Mid Initials												W
+Person Email	geo@ncbi.nlm.nih.gov
+Person Affiliation	University of Lausanne
+Person Phone
+Person Fax
+Person Address	Center For Integrative Genomics, University of Lausanne, Génopode, Lausanne, Switzerland
+Person Roles	submitter
+Person Roles Term Source REF
+Person Roles Term Accession Number
+Normalization Type
+Normalization Term Accession Number
+Normalization Term Source REF
+Replicate Type
+Replicate Term Accession Number
+Replicate Term Source REF
+Experimental Design
+Experimental Design Term Accession Number
+Experimental Design Term Source REF
+Quality Control Type
+Quality Control Term Accession Number
+Quality Control Term Source REF
+Protocol Name	P-GSE30352-1	P-GSE30352-2
+Protocol Description	Total RNA was extracted using the Trizol (Invitrogen) procedure or RNAeasy/RNAeasy Lipid/miRNeasy (Qiagen) column purification kits as indicated. RNA quality was assessed using an Agilent 2100 Bioanalyzer. Sequencing libraries were prepared using the mRNA-Seq Sample Prep Kit (Illumina) according to the manufacturer's instructions. Briefly, polyadenylated RNA was isolated using a poly-dT bead procedure and then chemically fragmented and randomly primed for reverse transcription. After second-strand synthesis, the ends of the double-stranded cDNA were repaired. After 3'-end adenylation of these products, Illumina Paired-End Sequencing adapters were ligated to the blunt ends of the cDNA fragments. Ligated products were run on gels; 250-300 bp fragments were excised and then PCR-amplified (15 cycles). After column-purification, qualities of the resulting libraries were assessed using Agilent 2100 Bioanalyzers. Potential influences on RNA sequencing results due to different experimenters preparing the libraries were ruled out on the basis of RNA- Seq data comparisons of replicate libraries prepared by the different experimenters (i.e., expression levels derived from replicate libraries were highly correlated: rho > 0.99). The RNA-Seq libraries were each sequenced with 76 (101) cycles in at least one lane of the Illumina Genome Analyzer IIx platform according to the manufacturer's specifications. Technical replicates (i.e., sequencing the same library on different machines) were performed to rule out potential biases during the sequencing step (i.e., expression levels between technical replicates were highly correlated: rho > 0.98). After sequencing, we processed the fluorophore intensity files with the Ibis base caller (version 1.11), in addition to applying the standard Illumina base calling algorithms. As illustrated in Supplementary Note Table 1 and Supplementary Note Figure 1 for a small subset of samples, we found that Ibis significantly increased the number of usable reads and drastically reduced the error rate. This improvement was more pronounced for the sequencing runs processed with early versions of the Illumina pipeline, but remained noticeable even for the latest Illumina release (GA pipeline 1.60). All subsequent analyses were performed on the Ibis-called reads.	for processed data, please refer to the original publication
+Protocol Software
+Protocol Hardware
+Protocol Contact
+Protocol Type	nucleic_acid_extraction	feature_extraction
+Protocol Term Source REF
+Protocol Term Accession Number
+Experimental Factor Name	organism part
+Experimental Factor Type	organism part
+Experimental Factor Term Source REF
+Experimental Factor Term Accession Number
+Publication Title	The evolution of gene expression levels in mammalian organs.
+Publication Author List	Brawand D, Soumillon M, Necsulea A, Julien P, Csárdi G, Harrigan P, Weier M, Liechti A, Aximu-Petri A, Kircher M, Albert FW, Zeller U, Khaitovich P, Grützner F, Bergmann S, Nielsen R, Pääbo S, Kaessmann H
+PubMed ID	22012392
+Publication DOI	10.1038/nature10532
+Publication Status
+Publication Status Term Source REF
+Publication Status Term Accession Number
+Comment[SecondaryAccession]	GSE30352	SRP007412
+Comment[GEOLastUpdateDate]	2012-05-20
+Comment[AEExperimentType]	RNA-seq of coding RNA
+Comment[GEOReleaseDate]	2011-10-11
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/SRR306710-SRR306858
+Comment[ArrayExpressSubmissionDate]	2011-06-30
+SDRF File	E-MTAB-3717.sdrf.txt

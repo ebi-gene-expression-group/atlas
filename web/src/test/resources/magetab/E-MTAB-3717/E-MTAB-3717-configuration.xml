@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="brain">
+                <assay>SRR306777</assay>
+                <assay>SRR306778</assay>
+            </assay_group>
+            <assay_group id="g2" label="cerebellum">
+                <assay>SRR306781</assay>
+                <assay>SRR306780</assay>
+            </assay_group>
+            <assay_group id="g3" label="heart">
+                <assay>SRR306783</assay>
+                <assay>SRR306782</assay>
+            </assay_group>
+            <assay_group id="g4" label="kidney">
+                <assay>SRR306784</assay>
+                <assay>SRR306785</assay>
+            </assay_group>
+            <assay_group id="g5" label="liver">
+                <assay>SRR306786</assay>
+                <assay technical_replicate_id="t13">SRR306788</assay>
+                <assay technical_replicate_id="t13">SRR306787</assay>
+            </assay_group>
+            <assay_group id="g6" label="testis">
+                <assay>SRR306790</assay>
+                <assay>SRR306789</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

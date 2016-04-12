@@ -1,0 +1,84 @@
+E-MTAB-3717		SRR306777	characteristic	age	8 year
+E-MTAB-3717		SRR306777	characteristic	biosource provider	Macaque facility in Souzhou, China
+E-MTAB-3717		SRR306777	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306777	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3717		SRR306777	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3717		SRR306777	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3717		SRR306778	characteristic	age	8 year
+E-MTAB-3717		SRR306778	characteristic	biosource provider	Macaque facility in Souzhou, China
+E-MTAB-3717		SRR306778	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306778	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3717		SRR306778	characteristic	sex	male
+E-MTAB-3717		SRR306778	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3717		SRR306779	characteristic	age	7 year
+E-MTAB-3717		SRR306779	characteristic	biosource provider	Deutsches Primatenzentrum, Germany
+E-MTAB-3717		SRR306779	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306779	characteristic	organism part	prefrontal cortex	http://purl.obolibrary.org/obo/UBERON_0000451
+E-MTAB-3717		SRR306779	characteristic	sex	male
+E-MTAB-3717		SRR306779	factor	organism part	prefrontal cortex	http://purl.obolibrary.org/obo/UBERON_0000451
+E-MTAB-3717		SRR306780	characteristic	age	8 year
+E-MTAB-3717		SRR306780	characteristic	biosource provider	Macaque facility in Souzhou, China
+E-MTAB-3717		SRR306780	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306780	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3717		SRR306780	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3717		SRR306780	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3717		SRR306781	characteristic	age	8 year
+E-MTAB-3717		SRR306781	characteristic	biosource provider	Macaque facility in Souzhou, China
+E-MTAB-3717		SRR306781	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306781	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3717		SRR306781	characteristic	sex	male
+E-MTAB-3717		SRR306781	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3717		SRR306782	characteristic	age	8 year
+E-MTAB-3717		SRR306782	characteristic	biosource provider	Macaque facility in Souzhou, China
+E-MTAB-3717		SRR306782	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306782	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3717		SRR306782	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3717		SRR306782	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3717		SRR306783	characteristic	age	8 year
+E-MTAB-3717		SRR306783	characteristic	biosource provider	Macaque facility in Souzhou, China
+E-MTAB-3717		SRR306783	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306783	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3717		SRR306783	characteristic	sex	male
+E-MTAB-3717		SRR306783	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3717		SRR306784	characteristic	age	8 year
+E-MTAB-3717		SRR306784	characteristic	biosource provider	Macaque facility in Souzhou, China
+E-MTAB-3717		SRR306784	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306784	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3717		SRR306784	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3717		SRR306784	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3717		SRR306785	characteristic	age	8 year
+E-MTAB-3717		SRR306785	characteristic	biosource provider	Macaque facility in Souzhou, China
+E-MTAB-3717		SRR306785	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306785	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3717		SRR306785	characteristic	sex	male
+E-MTAB-3717		SRR306785	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3717		SRR306786	characteristic	age	8 year
+E-MTAB-3717		SRR306786	characteristic	biosource provider	Macaque facility in Souzhou, China
+E-MTAB-3717		SRR306786	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306786	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3717		SRR306786	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3717		SRR306786	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3717		SRR306787	characteristic	age	8 year
+E-MTAB-3717		SRR306787	characteristic	biosource provider	Macaque facility in Souzhou, China
+E-MTAB-3717		SRR306787	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306787	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3717		SRR306787	characteristic	sex	male
+E-MTAB-3717		SRR306787	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3717		SRR306788	characteristic	age	8 year
+E-MTAB-3717		SRR306788	characteristic	biosource provider	Macaque facility in Souzhou, China
+E-MTAB-3717		SRR306788	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306788	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3717		SRR306788	characteristic	sex	male
+E-MTAB-3717		SRR306788	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3717		SRR306789	characteristic	age	8 year
+E-MTAB-3717		SRR306789	characteristic	biosource provider	Macaque facility in Souzhou, China
+E-MTAB-3717		SRR306789	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306789	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3717		SRR306789	characteristic	sex	male
+E-MTAB-3717		SRR306789	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3717		SRR306790	characteristic	age	9 year
+E-MTAB-3717		SRR306790	characteristic	biosource provider	Deutsches Primatenzentrum, Germany
+E-MTAB-3717		SRR306790	characteristic	organism	Macaca mulatta	http://purl.obolibrary.org/obo/NCBITaxon_9544
+E-MTAB-3717		SRR306790	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3717		SRR306790	characteristic	sex	male
+E-MTAB-3717		SRR306790	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
