@@ -16,7 +16,3 @@
     padding: 2px;
     margin: 0;
 }
-
-#gxaExperimentHeader .ui-button-text img {
-    margin: 0; /* overrides ebi-visual.css */
-}

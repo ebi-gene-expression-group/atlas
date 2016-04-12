@@ -2,6 +2,10 @@
     min-width: 975px;
 }
 
+img {
+    margin: 0 !important; /* overrides ebi-visual.css */
+}
+
 h1 {
     color: #207A7A; /* overrides embl-petrol-colours.css */
 }
@@ -50,4 +54,9 @@ a.help-icon {
 
 .ui-button-text {
     text-align: center;
+}
+
+#atlas-content {
+    padding-left: 10px;
+    padding-right: 10px;
 }

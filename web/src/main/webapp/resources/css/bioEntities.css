@@ -20,10 +20,6 @@ ul.gxaBioEntityCardHeader {
     background: #f1fffa;
 }
 
-ul.gxaBioEntityCardHeader img {
-    margin: 0;  /* overrides ebi-visual.css */
-}
-
 #baselineCountsTable {
     border: none;
 }

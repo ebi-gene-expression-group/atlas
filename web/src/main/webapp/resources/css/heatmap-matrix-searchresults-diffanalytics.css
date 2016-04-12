@@ -20,10 +20,6 @@
     font-size: smaller;
 }
 
-.gxaNoTextButton img {
-    margin: 0;
-}
-
 .gxaNoTextButton {
     border: 1px solid #ccc !important; /* overrides ebi-visual.css */
 }
