@@ -1,0 +1,68 @@
+E-MTAB-3839		SRR959765	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959765	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959765	characteristic	organism part	plant embryo	http://www.ebi.ac.uk/efo/EFO_0000436
+E-MTAB-3839		SRR959765	factor	organism part	plant embryo	http://www.ebi.ac.uk/efo/EFO_0000436
+E-MTAB-3839		SRR959766	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959766	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959766	characteristic	organism part	floral meristem	http://purl.obolibrary.org/obo/PO_0000229
+E-MTAB-3839		SRR959766	factor	organism part	floral meristem	http://purl.obolibrary.org/obo/PO_0000229
+E-MTAB-3839		SRR959767	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959767	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959767	characteristic	organism part	floral meristem	http://purl.obolibrary.org/obo/PO_0000229
+E-MTAB-3839		SRR959767	factor	organism part	floral meristem	http://purl.obolibrary.org/obo/PO_0000229
+E-MTAB-3839		SRR959768	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959768	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959768	characteristic	organism part	flower	http://www.ebi.ac.uk/efo/EFO_0001024
+E-MTAB-3839		SRR959768	factor	organism part	flower	http://www.ebi.ac.uk/efo/EFO_0001024
+E-MTAB-3839		SRR959769	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959769	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959769	characteristic	organism part	flower	http://www.ebi.ac.uk/efo/EFO_0001024
+E-MTAB-3839		SRR959769	factor	organism part	flower	http://www.ebi.ac.uk/efo/EFO_0001024
+E-MTAB-3839		SRR959770	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959770	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959770	characteristic	organism part	flower	http://www.ebi.ac.uk/efo/EFO_0001024
+E-MTAB-3839		SRR959770	factor	organism part	flower	http://www.ebi.ac.uk/efo/EFO_0001024
+E-MTAB-3839		SRR959771	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959771	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959771	characteristic	organism part	flower	http://www.ebi.ac.uk/efo/EFO_0001024
+E-MTAB-3839		SRR959771	factor	organism part	flower	http://www.ebi.ac.uk/efo/EFO_0001024
+E-MTAB-3839		SRR959772	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959772	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959772	characteristic	organism part	vegetative meristem
+E-MTAB-3839		SRR959772	factor	organism part	vegetative meristem
+E-MTAB-3839		SRR959773	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959773	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959773	characteristic	organism part	vegetative meristem
+E-MTAB-3839		SRR959773	factor	organism part	vegetative meristem
+E-MTAB-3839		SRR959782	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959782	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959782	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-MTAB-3839		SRR959782	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-MTAB-3839		SRR959783	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959783	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959783	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-MTAB-3839		SRR959783	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-MTAB-3839		SRR959784	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959784	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959784	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-MTAB-3839		SRR959784	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-MTAB-3839		SRR959785	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959785	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959785	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-MTAB-3839		SRR959785	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-MTAB-3839		SRR959786	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959786	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959786	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-MTAB-3839		SRR959786	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-MTAB-3839		SRR959796	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959796	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959796	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-MTAB-3839		SRR959796	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-MTAB-3839		SRR959797	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959797	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959797	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-MTAB-3839		SRR959797	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-MTAB-3839		SRR959798	characteristic	cultivar	BTx623
+E-MTAB-3839		SRR959798	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-MTAB-3839		SRR959798	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-MTAB-3839		SRR959798	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992

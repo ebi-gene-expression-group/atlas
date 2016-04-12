@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="embryo">
+                <assay>SRR959765</assay>
+            </assay_group>
+            <assay_group id="g2" label="floral meristem">
+                <assay technical_replicate_id="t1">SRR959767</assay>
+                <assay technical_replicate_id="t1">SRR959766</assay>
+            </assay_group>
+            <assay_group id="g3" label="flower">
+                <assay technical_replicate_id="t2">SRR959770</assay>
+                <assay technical_replicate_id="t2">SRR959768</assay>
+                <assay technical_replicate_id="t2">SRR959769</assay>
+                <assay technical_replicate_id="t2">SRR959771</assay>
+            </assay_group>
+            <assay_group id="g6" label="vegetative meristem">
+                <assay technical_replicate_id="t5">SRR959772</assay>
+                <assay technical_replicate_id="t5">SRR959773</assay>
+            </assay_group>
+            <assay_group id="g5" label="shoot">
+                <assay technical_replicate_id="t4">SRR959796</assay>
+                <assay technical_replicate_id="t4">SRR959798</assay>
+                <assay technical_replicate_id="t4">SRR959797</assay>
+            </assay_group>
+            <assay_group id="g4" label="root">
+                <assay technical_replicate_id="t3">SRR959786</assay>
+                <assay technical_replicate_id="t3">SRR959785</assay>
+                <assay technical_replicate_id="t3">SRR959782</assay>
+                <assay technical_replicate_id="t3">SRR959783</assay>
+                <assay technical_replicate_id="t3">SRR959784</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

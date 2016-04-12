@@ -1,0 +1,34 @@
+Comment[ArrayExpressAccession]	E-MTAB-3839
+MAGE-TAB Version	1.1																															
+Public Release Date	2014-08-29																															
+Investigation Title	RNA-Seq and BS-Seq of Sorghum bicolor tissues																															
+Comment[Submitted Name]	RNA-Seq and BS-Seq of Sorghum bicolor tissues
+Comment[Submitted Name]	RNA-Seq and BS-Seq of Sorghum bicolor tissues																															
+Comment[AEExperimentDisplayName]	RNA-seq of various Sorghum bicolor (BTx623) tissues: flowers, vegetative and floral meristems, embryos, roots and shoots																															
+Experiment Description	This experiment contains the subset of data corresponding to sorghum RNA-Seq data from experiment E-GEOD-50464 (http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-50464/), which goal is to examine the transcriptome of various Sorghum bicolor (BTx623) tissues: flowers, vegetative and floral meristems, embryos, roots and shoots. Thus, we expanded the existing transcriptome atlas for sorghum by conducting RNA-Seq analysis on meristematic tissues, florets, and embryos, and these data sets have been used to improve on the existing community structural annotations. 																															
+Term Source Name	ArrayExpress	EFO
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl																														
+Person Last Name	Olson	Dugas	Olson	Klein	Ware	Lu	Regulski	Klein																								
+Person First Name	Andrew	Diana	Andrew	Robert	Doreen	Zhenyuan	Michael	Patricia																								
+Person Mid Initials	J	V	J	R				E																								
+Person Email	olson@cshl.edu																															
+Person Affiliation	Cold Spring Harbor Laboratory																															
+Person Address	Cold Spring Harbor Laboratory, 1 Bungtown Road, Cold Spring Harbor, NY, USA																															
+Person Roles	submitter																															
+Protocol Name	P-GSE50464-4	P-GSE50464-1	P-GSE50464-12	P-GSE50464-8	P-GSE50464-3	P-GSE50464-6	P-GSE50464-2
+Protocol Description	Sequences were processed using Illumina's CASAVA v1.5/1.6 software. Sequences were aligned to the sorghum genome (sbi1.4 downloaded from ftp://ftp.jgi-psf.org/pub/JGI_data/phytozome/v6.0/Sbicolor/assembly/) using Bowtie/Tophat (default settings; version 0.12.7 and 1.0.13, respectively) . Cufflinks (version 0.8.1) was run on merged alignments using all default settings except -F/--min-isoform-fraction 0.0 and returned genes and FPKMs in GTF format. Cufflinks transcript fragments were processed by the Gramene/EnsEMBL evidence based gene builder Cufflinks was rerun on each sample to quantify gene expression of Sbi1.4 and GeneBuilder models genome_build:Sbi1.4 supplementary_files_format_and_content: GTF; assembled via Cufflinks using the standard GTF format. The 'ref' GTF files give expression levels of reference annotations (Sbi1.4) while the 'GB2' files give expression levels of GeneBuilder gene models.	None	At 8 days, the plants were treated with H2O. Three groups of 10 plant shoots each were harvested post-treatment.	At 8 days, the plants were treated with H2O. Three groups of 10 plant roots each were harvested post-treatment.	Following grinding of tissues in a mortar and pestle under liquid nitrogen, total RNA was extracted using miRNEasy kits (Qiagen, Valencia, CA). Each RNAseq library was prepared according to the manufacturer's instructions (mRNA-Seq sample preparation kit, Illumina Inc., San Diego, CA) and quality control was conducted as previously described (Dugas et al., 2011 GSE30249). The libraries were run on the Illumina GAIIx Sequencer using version 4 reagents for single-end non-strand-specific read sequences of 51 bp in length.	Seeds of Sorghum bicolor genotype BTx623 were germinated by soaking in distilled, aerated water overnight and then transferred to moist germination paper for 3 days. The seedlings were then transferred to 0.5x Hoagland's solution and allowed to grow for an additional 5 days in a controlled environment chamber with a day length of 12 hrs, 50% humidity, and day and night temperatures of 31 degreeC and 22 degreeC, respectively.	Seeds of Sorghum bicolor genotype BTx623 were surface sterilized and treated with Captan before being planted into pots filled with Sunshine MVP potting mix and transferred into the greenhouse. Plants were grown in 14-hours of daylight and the temperatures were kept as close to 31-35 degreeC as possible.																									
+Protocol Type	normalization data transformation protocol	sample treatment protocol	sample treatment protocol	sample treatment protocol	nucleic acid library construction protocol	growth protocol	growth protocol																									
+Experimental Factor Name	organism part																															
+Experimental Factor Type	organism part																															
+Comment[SecondaryAccession]	GSE50464																															
+Comment[GEOReleaseDate]	2014-08-29																															
+Comment[ArrayExpressSubmissionDate]	2013-08-29																															
+Comment[GEOLastUpdateDate]	2014-12-11																															
+Comment[AEExperimentType]	RNA-seq of coding RNA																															
+Comment[SecondaryAccession]	SRP029353																															
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/SRR959765-SRR959803																															
+Pubmed ID																																
+Publication DOI	10.3835/plantgenome2013.08.0025																															
+Publication Title	Expanding and Vetting Sorghum bicolor Gene Annotations through Transcriptome and Methylome Sequencing																															
+Publication Author List	Olson A, Klein RR, Dugas DV, Lu Z, Regulski M, Klein PE, Ware D																															
+SDRF File	E-MTAB-3839.sdrf.txt
