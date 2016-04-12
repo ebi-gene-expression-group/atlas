@@ -4,7 +4,7 @@
 
 function getXAxisCategories (columnHeaders) {
     return columnHeaders.map(function (columnHeader) {
-        return columnHeader.factorValue;
+        return {"label": columnHeader.factorValue, "id" : columnHeader.factorValueOntologyTermId};
     });
 }
 

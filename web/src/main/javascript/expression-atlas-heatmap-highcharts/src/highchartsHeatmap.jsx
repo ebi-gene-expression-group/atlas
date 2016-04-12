@@ -96,6 +96,21 @@ var HighchartsHeatmap = React.createClass({
         var highchartsOptions = {
             plotOptions: {
                 series: {
+                    point: {
+                        events: {
+                            mouseOver: function() {
+                                this.series.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', this.series.xAxis.categories[this.x].id)
+                                this.series.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', this.series.yAxis.categories[this.y])
+                            }
+                        }
+                    },
+                    events: {
+                        mouseOut: function () {
+                            this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', null)
+                            this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', null)
+                        }
+                    },
+
                     states: {
                         hover: {
                             color: '#eeec38' //#edab12 color cell on mouse over
@@ -142,7 +157,10 @@ var HighchartsHeatmap = React.createClass({
                     style: {
                         fontSize: "9px"
                     },
-                    autoRotation: [-45, -90]
+                    autoRotation: [-45, -90],
+                    formatter: function() {
+                        return this.value.label
+                    }
                 },
                 opposite: 'true',
                 categories: this.props.xAxisCategories
@@ -167,13 +185,15 @@ var HighchartsHeatmap = React.createClass({
             tooltip: {
                 useHTML: true,
                 formatter: function() {
-                    return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y] + '</b>  <br> Tissue: <b>' + this.series.xAxis.categories[this.point.x] + '</b><br><b>' +
+                    return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y] + '</b>  <br> Tissue: <b>' + this.series.xAxis.categories[this.point.x].label + '</b><br><b>' +
                         '</b>' +
                         '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';">' +
                         '</span> Expression level: <b></span>' +
                         'Expression level: <b>' + this.point.value + '</b>';
                 }
             },
+            anatomogramEventEmitter: {IAmA: "dummy0", emit:function(eventName, whatToEmit){console.log(eventName + whatToEmit)}},
+            ensemblEventEmitter: {IAmA: "dummy1", emit:function(eventName, whatToEmit){console.log(eventName + whatToEmit)}},
             series: [{
                 name: this.props.seriesDataNAString,
                 color: "#f7f7f7",
