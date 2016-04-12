@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="skeletal muscle">
+                <assay>SRR594524</assay>
+                <assay>SRR594515</assay>
+                <assay>SRR594506</assay>
+            </assay_group>
+            <assay_group id="g2" label="heart">
+                <assay>SRR594511</assay>
+                <assay>SRR594502</assay>
+                <assay>SRR594520</assay>
+            </assay_group>
+            <assay_group id="g3" label="brain">
+                <assay>SRR594509</assay>
+                <assay>SRR594518</assay>
+                <assay>SRR594500</assay>
+            </assay_group>
+            <assay_group id="g4" label="lung">
+                <assay>SRR594523</assay>
+                <assay>SRR594505</assay>
+                <assay>SRR594514</assay>
+            </assay_group>
+            <assay_group id="g5" label="kidney">
+                <assay>SRR594512</assay>
+                <assay>SRR594521</assay>
+                <assay>SRR594503</assay>
+            </assay_group>
+            <assay_group id="g6" label="colon">
+                <assay>SRR594519</assay>
+                <assay>SRR594510</assay>
+                <assay>SRR594501</assay>
+            </assay_group>
+            <assay_group id="g7" label="testis">
+                <assay>SRR594508</assay>
+                <assay>SRR594526</assay>
+                <assay>SRR594517</assay>
+            </assay_group>
+            <assay_group id="g8" label="liver">
+                <assay>SRR594504</assay>
+                <!-- <assay>SRR594522</assay> removed as there were gross differences between numbers of reads in the first and second mate of this library --> 
+                <assay>SRR594513</assay>
+            </assay_group>
+            <assay_group id="g9" label="spleen">
+                <assay>SRR594507</assay>
+                <assay>SRR594516</assay>
+                <assay>SRR594525</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>
