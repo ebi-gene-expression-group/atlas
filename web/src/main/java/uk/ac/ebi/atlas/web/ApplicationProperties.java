@@ -196,10 +196,15 @@ public class ApplicationProperties {
         return Joiner.on(",").join(iterable);
     }
 
+    /* Used in bioEntities.jsp */
+    public String urlParamEncode(String value) throws UnsupportedEncodingException {
+        return URLEncoder.encode(value, "UTF-8");
+    }
+
     /*
     <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
-<c:set var="protocol" value="${pageContext.request.scheme}://"/>
-<c:set var="atlasHost" value="${pageContext.request.serverName.concat(serverPort)}"/>
+    <c:set var="protocol" value="${pageContext.request.scheme}://"/>
+    <c:set var="atlasHost" value="${pageContext.request.serverName.concat(serverPort)}"/>
      */
     public String buildAtlasHostURL(HttpServletRequest request){
         String serverPort = request.getServerPort() ==80? "" : ":".concat(new Integer(request.getServerPort()).toString());
