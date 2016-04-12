@@ -1,0 +1,90 @@
+E-MTAB-3719		SRR306742	characteristic	age	20 month
+E-MTAB-3719		SRR306742	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306742	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306742	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3719		SRR306742	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3719		SRR306742	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3719		SRR306743	characteristic	age	20 month
+E-MTAB-3719		SRR306743	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306743	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306743	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3719		SRR306743	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3719		SRR306743	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3719		SRR306744	characteristic	age	6 month
+E-MTAB-3719		SRR306744	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306744	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306744	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3719		SRR306744	characteristic	sex	male
+E-MTAB-3719		SRR306744	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3719		SRR306745	characteristic	age	20 month
+E-MTAB-3719		SRR306745	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306745	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306745	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3719		SRR306745	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3719		SRR306745	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3719		SRR306746	characteristic	age	6 month
+E-MTAB-3719		SRR306746	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306746	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306746	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3719		SRR306746	characteristic	sex	male
+E-MTAB-3719		SRR306746	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3719		SRR306747	characteristic	age	25 month
+E-MTAB-3719		SRR306747	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306747	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306747	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3719		SRR306747	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3719		SRR306747	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3719		SRR306748	characteristic	age	25 month
+E-MTAB-3719		SRR306748	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306748	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306748	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3719		SRR306748	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3719		SRR306748	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3719		SRR306749	characteristic	age	6 month
+E-MTAB-3719		SRR306749	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306749	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306749	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3719		SRR306749	characteristic	sex	male
+E-MTAB-3719		SRR306749	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3719		SRR306750	characteristic	age	6 month
+E-MTAB-3719		SRR306750	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306750	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306750	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3719		SRR306750	characteristic	sex	male
+E-MTAB-3719		SRR306750	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3719		SRR306751	characteristic	age	25 month
+E-MTAB-3719		SRR306751	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306751	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306751	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3719		SRR306751	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3719		SRR306751	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3719		SRR306752	characteristic	age	6 month
+E-MTAB-3719		SRR306752	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306752	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306752	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3719		SRR306752	characteristic	sex	male
+E-MTAB-3719		SRR306752	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3719		SRR306753	characteristic	age	25 month
+E-MTAB-3719		SRR306753	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306753	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306753	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3719		SRR306753	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3719		SRR306753	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3719		SRR306754	characteristic	age	6 month
+E-MTAB-3719		SRR306754	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306754	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306754	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3719		SRR306754	characteristic	sex	male
+E-MTAB-3719		SRR306754	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3719		SRR306755	characteristic	age	6 month
+E-MTAB-3719		SRR306755	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306755	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306755	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3719		SRR306755	characteristic	sex	male
+E-MTAB-3719		SRR306755	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3719		SRR306756	characteristic	age	4 month
+E-MTAB-3719		SRR306756	characteristic	biosource provider	Opossum colonies from the Museum of Natural History, Berlin, Germany
+E-MTAB-3719		SRR306756	characteristic	organism	Monodelphis domestica	http://purl.obolibrary.org/obo/NCBITaxon_13616
+E-MTAB-3719		SRR306756	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3719		SRR306756	characteristic	sex	male
+E-MTAB-3719		SRR306756	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473

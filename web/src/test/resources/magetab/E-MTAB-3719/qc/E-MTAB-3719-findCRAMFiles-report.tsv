@@ -1,0 +1,17 @@
+study_id	run_id	cram_location	organism	processing_status
+SRP007412	SRR306755	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306755/SRR306755.cram	monodelphis_domestica	11-JUL-2015 07:11:52	completed	66
+SRP007412	SRR306746	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306746/SRR306746.cram	monodelphis_domestica	11-JUL-2015 07:20:28	completed	65
+SRP007412	SRR306745	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306745/SRR306745.cram	monodelphis_domestica	11-JUL-2015 10:04:15	completed	64
+SRP007412	SRR306753	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306753/SRR306753.cram	monodelphis_domestica	11-JUL-2015 07:21:53	completed	60
+SRP007412	SRR306747	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306747/SRR306747.cram	monodelphis_domestica	11-JUL-2015 10:05:14	completed	27
+SRP007412	SRR306744	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306744/SRR306744.cram	monodelphis_domestica	11-JUL-2015 10:08:58	completed	58
+SRP007412	SRR306754	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306754/SRR306754.cram	monodelphis_domestica	11-JUL-2015 10:09:21	completed	48
+SRP007412	SRR306742	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306742/SRR306742.cram	monodelphis_domestica	11-JUL-2015 10:07:48	completed	63
+SRP007412	SRR306749	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306749/SRR306749.cram	monodelphis_domestica	11-JUL-2015 10:09:59	completed	63
+SRP007412	SRR306756	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306756/SRR306756.cram	monodelphis_domestica	11-JUL-2015 10:15:20	completed	68
+SRP007412	SRR306748	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306748/SRR306748.cram	monodelphis_domestica	11-JUL-2015 10:17:31	completed	67
+SRP007412	SRR306751	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306751/SRR306751.cram	monodelphis_domestica	11-JUL-2015 10:16:32	completed	63
+SRP007412	SRR306750	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306750/SRR306750.cram	monodelphis_domestica	11-JUL-2015 16:29:16	completed	81
+SRP007412	SRR306743	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306743/SRR306743.cram	monodelphis_domestica	11-JUL-2015 16:28:41	completed	66
+SRP007412	SRR306752	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR306/SRR306752/SRR306752.cram	monodelphis_domestica	11-JUL-2015 07:26:48	completed	64
+
