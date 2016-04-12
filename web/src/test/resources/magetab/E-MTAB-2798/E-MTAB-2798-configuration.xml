@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="skeletal muscle">
+                <assay>SRR594479</assay>
+                <assay>SRR594488</assay>
+                <assay>SRR594497</assay>
+            </assay_group>
+            <assay_group id="g2" label="heart">
+                <assay>SRR594475</assay>
+                <assay>SRR594484</assay>
+                <assay>SRR594493</assay>
+            </assay_group>
+            <assay_group id="g3" label="brain">
+                <assay>SRR594482</assay>
+                <assay>SRR594473</assay>
+                <assay>SRR594491</assay>
+            </assay_group>
+            <assay_group id="g4" label="lung">
+                <assay>SRR594496</assay>
+                <assay>SRR594487</assay>
+                <assay>SRR594478</assay>
+            </assay_group>
+            <assay_group id="g5" label="kidney">
+                <assay>SRR594476</assay>
+                <assay>SRR594494</assay>
+                <assay>SRR594485</assay>
+            </assay_group>
+            <assay_group id="g6" label="colon">
+                <assay>SRR594492</assay>
+                <assay>SRR594483</assay>
+                <assay>SRR594474</assay>
+            </assay_group>
+            <assay_group id="g7" label="liver">
+                <assay>SRR594486</assay>
+                <assay>SRR594477</assay>
+                <assay>SRR594495</assay>
+            </assay_group>
+            <assay_group id="g8" label="testis">
+                <assay>SRR594490</assay>
+                <assay>SRR594499</assay>
+                <assay>SRR594481</assay>
+            </assay_group>
+            <assay_group id="g9" label="spleen">
+                <assay>SRR594489</assay>
+                <assay>SRR594498</assay>
+                <assay>SRR594480</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

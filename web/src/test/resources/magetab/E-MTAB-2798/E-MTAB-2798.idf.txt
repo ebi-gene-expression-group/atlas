@@ -1,0 +1,28 @@
+Comment[ArrayExpressAccession]	E-MTAB-2798
+MAGE-TAB Version	1.1			
+Public Release Date	2012-12-21			
+Investigation Title	Strand-specific RNA-seq of nine cow tissues			
+Comment[Submitted Name]	Strand-specific RNA-seq of nine cow tissues
+Experiment Description	This experiment is contains cow organism part samples and strand-specific RNA-seq data from experiment E-GEOD-41637 (https://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-41637/), which aimed at assessing tissue-specific transcriptome variation across mammals, with chicken used as an outgroup in evolutionary analyses. Each organism part was sourced from three different animals as biological replicates. This data set was originally submitted to NCBI Gene Expression Omnibus under accession number GSE41637 (http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE41637) and later imported to ArrayExpress as E-GEOD-41637.			
+Term Source Name	ArrayExpress	EFO
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl		
+Person Last Name	Merkin	Merkin	Burge	
+Person First Name	Jason	Jason	Christopher	
+Person Mid Initials		J	B	
+Person Email	jmerkin@mit.edu			
+Person Affiliation	MIT			
+Person Address	Biology, MIT, 31 Ames St, Cambridge, MA, USA			
+Person Roles	submitter			
+Protocol Name	P-GSE41637-1	P-GSE41637-3	P-GSE41637-2	P-GSE41637-4
+Protocol Description	RNALater	Animals were sacrificed with no input from the authors (i.e. each group/facility utilized their standard method). Tissues samples were isolated from each organ, placed into an appropriate volume of RNALater, and incubated at 4C overnight. Each sample was then homogenized in a bead-mill in a phenol/chlorofom solution and RNA was isolated by and treated with DNAse on a Qiagen miRNEasy column. Strand-specific libraries were generated using the standard RNA-Seq protocol / dUTP method, with the 'second-day' done on the Beckman-Coulter SPRIworks machine. Briefly, before second-strand synthesis, samples are precipitated first and the second strand is made using a dNTP solution that replaces dTTP with dUTP. Before the final PCR step, libraries are treated with an enzyme that removes dUTP from dsDNA.	standard lab/farm conditions	Base-calling: Illumina Real Time Analysis, scoring metric v1.5 Long-read (76-108bp libraries) were mapped with TopHat v1.1.4 with the following additional parameters: --no-novel-indels, -r [inner length], --segment-length 20, --solexa-1.3-quals, --coverage-search -g [species.gtf] junctions from all long read (76-108bp libraries) were combined and all libraries were mapped by TopHat v1.1.4 with the following parameters: --no-novel-indels, -r [inner length], --segment-length 20, --solexa-1.3-quals, --coverage-search, -j [species_junction_file.bed] -g [species.gtf] Cufflinks v1.0.2 was run on the long read libraries with the following parameters: --min-isoform-fraction 0.00, --pre-mrna-fraction 0.00, -g [species.gtf], --max-intron-length 100000, -u, -b [genome.fa], --library-type ff-firststrand Transcripts from libraries within a species were combined with CuffCompare v1.0.2 with the following parameters: -r [species.gtf] Cufflinks v1.0.2 was run on all libraries with the following parameters: --min-isoform-fraction 0.05, --pre-mrna-fraction 0.10, -G [combined_species.gtf from above], --max-intron-length 100000, -u, -b [genome.fa], --library-type ff-firststrand Transcripts from libraries from each individual were combined with CuffCompare v1.0.2 with the following parameters: -r [combined_species.gtf] Genome_build: mouse: mm9, rat: rn4, cow: bt4, chicken: gg3, rhesus: rhemac2, human: hg19 Supplementary_files_format_and_content: mapped reads
+Protocol Type	treatment protocol	nucleic acid library construction protocol	growth protocol	feature extraction
+Experimental Factor Name	organism part			
+Experimental Factor Type	organism part			
+Comment[SecondaryAccession]	GSE41637			
+Comment[GEOReleaseDate]	2012-12-21			
+Comment[ArrayExpressSubmissionDate]	2012-10-17			
+Comment[GEOLastUpdateDate]	2013-01-30			
+Comment[AEExperimentType]	RNA-seq of coding RNA			
+Comment[SecondaryAccession]	SRP016501			
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/SRR594473-SRR594499			
+SDRF File	E-MTAB-2798.sdrf.txt
