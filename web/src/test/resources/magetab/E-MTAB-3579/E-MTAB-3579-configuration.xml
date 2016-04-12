@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="0">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="accessory axillary lymph node; adult">
+                <assay>DRR009800</assay>
+            </assay_group>
+            <assay_group id="g2" label="adrenal gland; adult">
+                <assay>DRR009801</assay>
+            </assay_group>
+            <assay_group id="g3" label="adrenal gland; embryonic day 14">
+                <assay>DRR009802</assay>
+            </assay_group>
+            <assay_group id="g4" label="adrenal gland; embryonic day 16">
+                <assay>DRR009803</assay>
+            </assay_group>
+            <assay_group id="g5" label="adrenal gland; embryonic day 17">
+                <assay>DRR009804</assay>
+            </assay_group>
+            <assay_group id="g6" label="adrenal gland; embryonic day 18">
+                <assay>DRR009805</assay>
+            </assay_group>
+            <assay_group id="g7" label="adrenal gland; juvenile">
+                <assay>DRR009807</assay>
+            </assay_group>
+            <assay_group id="g8" label="adrenal gland; neonate">
+                <assay>DRR009806</assay>
+            </assay_group>
+            <assay_group id="g9" label="adult; aorta">
+                <assay>DRR009809</assay>
+            </assay_group>
+            <assay_group id="g10" label="adult; bone (os femoris)">
+                <assay>DRR009810</assay>
+            </assay_group>
+            <assay_group id="g11" label="adult; cecum">
+                <assay>DRR009814</assay>
+            </assay_group>
+            <assay_group id="g12" label="adult; cerebellum">
+                <assay>DRR009815</assay>
+            </assay_group>
+            <assay_group id="g13" label="adult; colon">
+                <assay>DRR009817</assay>
+            </assay_group>
+            <assay_group id="g14" label="adult; corpora quadrigemina">
+                <assay>DRR009818</assay>
+            </assay_group>
+            <assay_group id="g15" label="adult; corpus striatum">
+                <assay>DRR009819</assay>
+            </assay_group>
+            <assay_group id="g16" label="adult; cortex">
+                <assay>DRR009821</assay>
+            </assay_group>
+            <assay_group id="g17" label="adult; diencephalon">
+                <assay>DRR009823</assay>
+            </assay_group>
+            <assay_group id="g18" label="adult; epididymis">
+                <assay>DRR009827</assay>
+            </assay_group>
+            <assay_group id="g19" label="adult; eyeball">
+                <assay>DRR009828</assay>
+            </assay_group>
+            <assay_group id="g20" label="adult; hippocampus">
+                <assay>DRR009860</assay>
+            </assay_group>
+            <assay_group id="g21" label="adult; intestinal mucosa">
+                <assay>DRR009862</assay>
+            </assay_group>
+            <assay_group id="g22" label="adult; intestine">
+                <assay>DRR009863</assay>
+            </assay_group>
+            <assay_group id="g23" label="adult; lung">
+                <assay>DRR009904</assay>
+            </assay_group>
+            <assay_group id="g24" label="adult; medulla oblongata">
+                <assay>DRR009920</assay>
+            </assay_group>
+            <assay_group id="g25" label="adult; olfactory brain">
+                <assay>DRR009923</assay>
+            </assay_group>
+            <assay_group id="g26" label="adult; ovary">
+                <assay>DRR009924</assay>
+            </assay_group>
+            <assay_group id="g27" label="adult; pancreas">
+                <assay>DRR009928</assay>
+            </assay_group>
+            <assay_group id="g28" label="adult; pituitary gland">
+                <assay>DRR009940</assay>
+            </assay_group>
+            <assay_group id="g29" label="adult; prostate">
+                <assay>DRR009950</assay>
+            </assay_group>
+            <assay_group id="g30" label="adult; skin">
+                <assay>DRR009951</assay>
+            </assay_group>
+            <assay_group id="g31" label="adult; spinal cord">
+                <assay>DRR009957</assay>
+            </assay_group>
+            <assay_group id="g32" label="adult; spleen">
+                <assay>DRR009958</assay>
+            </assay_group>
+            <assay_group id="g33" label="adult; stomach">
+                <assay>DRR009964</assay>
+            </assay_group>
+            <assay_group id="g34" label="adult; submandibular gland">
+                <assay>DRR009974</assay>
+            </assay_group>
+            <assay_group id="g35" label="adult; testis">
+                <assay>DRR009975</assay>
+            </assay_group>
+            <assay_group id="g36" label="adult; thymus">
+                <assay>DRR009986</assay>
+            </assay_group>
+            <assay_group id="g37" label="adult; tongue">
+                <assay>DRR010000</assay>
+            </assay_group>
+            <assay_group id="g38" label="adult; urinary bladder">
+                <assay>DRR010001</assay>
+            </assay_group>
+            <assay_group id="g39" label="adult; uterus">
+                <assay>DRR010003</assay>
+            </assay_group>
+            <assay_group id="g40" label="adult; vagina">
+                <assay>DRR010004</assay>
+            </assay_group>
+            <assay_group id="g41" label="adult; vesicular gland">
+                <assay>DRR010005</assay>
+            </assay_group>
+            <assay_group id="g42" label="amnion; pregnant adult day 17.5">
+                <assay>DRR009808</assay>
+            </assay_group>
+            <assay_group id="g43" label="bone (os femoris); embryonic day 16">
+                <assay>DRR009812</assay>
+            </assay_group>
+            <assay_group id="g44" label="bone (os femoris); juvenile">
+                <assay>DRR009813</assay>
+            </assay_group>
+            <assay_group id="g45" label="bone (os femoris); neonate">
+                <assay>DRR009811</assay>
+            </assay_group>
+            <assay_group id="g46" label="cerebellum; juvenile">
+                <assay>DRR009816</assay>
+            </assay_group>
+            <assay_group id="g47" label="corpus striatum; neonate">
+                <assay>DRR009820</assay>
+            </assay_group>
+            <assay_group id="g48" label="cortex; juvenile">
+                <assay>DRR009822</assay>
+            </assay_group>
+            <assay_group id="g49" label="diencephalon; juvenile">
+                <assay>DRR009824</assay>
+            </assay_group>
+            <assay_group id="g50" label="embryo; whole body">
+                <assay>DRR009632</assay>
+            </assay_group>
+            <assay_group id="g51" label="embryonic day 11; forelimb">
+                <assay>DRR009837</assay>
+            </assay_group>
+            <assay_group id="g52" label="embryonic day 11; heart">
+                <assay>DRR009845</assay>
+            </assay_group>
+            <assay_group id="g53" label="embryonic day 11; whole organism">
+                <assay>DRR010016</assay>
+            </assay_group>
+            <assay_group id="g54" label="embryonic day 12; eyeball">
+                <assay>DRR009829</assay>
+            </assay_group>
+            <assay_group id="g55" label="embryonic day 12; forelimb">
+                <assay>DRR009838</assay>
+            </assay_group>
+            <assay_group id="g56" label="embryonic day 12; heart">
+                <assay>DRR009846</assay>
+            </assay_group>
+            <assay_group id="g57" label="embryonic day 12; intestine">
+                <assay>DRR009864</assay>
+            </assay_group>
+            <assay_group id="g58" label="embryonic day 12; liver">
+                <assay>DRR009889</assay>
+            </assay_group>
+            <assay_group id="g59" label="embryonic day 12; lung">
+                <assay>DRR009905</assay>
+            </assay_group>
+            <assay_group id="g60" label="embryonic day 12; pituitary gland">
+                <assay>DRR009941</assay>
+            </assay_group>
+            <assay_group id="g61" label="embryonic day 12; stomach">
+                <assay>DRR009965</assay>
+            </assay_group>
+            <assay_group id="g62" label="embryonic day 12; whole organism">
+                <assay>DRR010017</assay>
+            </assay_group>
+            <assay_group id="g63" label="embryonic day 13; forelimb">
+                <assay>DRR009839</assay>
+            </assay_group>
+            <assay_group id="g64" label="embryonic day 13; heart">
+                <assay>DRR009847</assay>
+            </assay_group>
+            <assay_group id="g65" label="embryonic day 13; intestine">
+                <assay>DRR009865</assay>
+            </assay_group>
+            <assay_group id="g66" label="embryonic day 13; liver">
+                <assay>DRR009890</assay>
+            </assay_group>
+            <assay_group id="g67" label="embryonic day 13; pituitary gland">
+                <assay>DRR009942</assay>
+            </assay_group>
+            <assay_group id="g68" label="embryonic day 13; testis">
+                <assay>DRR009976</assay>
+            </assay_group>
+            <assay_group id="g69" label="embryonic day 13; whole organism">
+                <assay>DRR010018</assay>
+            </assay_group>
+            <assay_group id="g70" label="embryonic day 14.5; whole organism">
+                <assay>DRR010019</assay>
+            </assay_group>
+            <assay_group id="g71" label="embryonic day 14; eyeball">
+                <assay>DRR009830</assay>
+            </assay_group>
+            <assay_group id="g72" label="embryonic day 14; forelimb">
+                <assay>DRR009840</assay>
+            </assay_group>
+            <assay_group id="g73" label="embryonic day 14; heart">
+                <assay>DRR009848</assay>
+            </assay_group>
+            <assay_group id="g74" label="embryonic day 14; kidney">
+                <assay>DRR009878</assay>
+            </assay_group>
+            <assay_group id="g75" label="embryonic day 14; liver">
+                <assay>DRR009891</assay>
+            </assay_group>
+            <assay_group id="g76" label="embryonic day 14; lung">
+                <assay>DRR009906</assay>
+            </assay_group>
+            <assay_group id="g77" label="embryonic day 14; pancreas">
+                <assay>DRR009929</assay>
+            </assay_group>
+            <assay_group id="g78" label="embryonic day 14; pituitary gland">
+                <assay>DRR009943</assay>
+            </assay_group>
+            <assay_group id="g79" label="embryonic day 14; thymus">
+                <assay>DRR009987</assay>
+            </assay_group>
+            <assay_group id="g80" label="embryonic day 14; whole organism">
+                <assay>DRR010020</assay>
+            </assay_group>
+            <assay_group id="g81" label="embryonic day 15; eyeball">
+                <assay>DRR009831</assay>
+            </assay_group>
+            <assay_group id="g82" label="embryonic day 15; forelimb">
+                <assay>DRR009841</assay>
+            </assay_group>
+            <assay_group id="g83" label="embryonic day 15; gonad">
+                <assay>DRR009844</assay>
+            </assay_group>
+            <assay_group id="g84" label="embryonic day 15; heart">
+                <assay>DRR009849</assay>
+            </assay_group>
+            <assay_group id="g85" label="embryonic day 15; intestine">
+                <assay>DRR009866</assay>
+            </assay_group>
+            <assay_group id="g86" label="embryonic day 15; kidney">
+                <assay>DRR009879</assay>
+            </assay_group>
+            <assay_group id="g87" label="embryonic day 15; liver">
+                <assay>DRR009892</assay>
+            </assay_group>
+            <assay_group id="g88" label="embryonic day 15; lung">
+                <assay>DRR009907</assay>
+            </assay_group>
+            <assay_group id="g89" label="embryonic day 15; pancreas">
+                <assay>DRR009930</assay>
+            </assay_group>
+            <assay_group id="g90" label="embryonic day 15; pituitary gland">
+                <assay>DRR009944</assay>
+            </assay_group>
+            <assay_group id="g91" label="embryonic day 15; stomach">
+                <assay>DRR009966</assay>
+            </assay_group>
+            <assay_group id="g92" label="embryonic day 15; testis">
+                <assay>DRR009977</assay>
+            </assay_group>
+            <assay_group id="g93" label="embryonic day 15; thymus">
+                <assay>DRR009988</assay>
+            </assay_group>
+            <assay_group id="g94" label="embryonic day 16; heart">
+                <assay>DRR009850</assay>
+            </assay_group>
+            <assay_group id="g95" label="embryonic day 16; intestine">
+                <assay>DRR009867</assay>
+            </assay_group>
+            <assay_group id="g96" label="embryonic day 16; kidney">
+                <assay>DRR009880</assay>
+            </assay_group>
+            <assay_group id="g97" label="embryonic day 16; liver">
+                <assay>DRR009893</assay>
+            </assay_group>
+            <assay_group id="g98" label="embryonic day 16; lung">
+                <assay>DRR009908</assay>
+            </assay_group>
+            <assay_group id="g99" label="embryonic day 16; pancreas">
+                <assay>DRR009931</assay>
+            </assay_group>
+            <assay_group id="g100" label="embryonic day 16; pituitary gland">
+                <assay>DRR009945</assay>
+            </assay_group>
+            <assay_group id="g101" label="embryonic day 16; spleen">
+                <assay>DRR009959</assay>
+            </assay_group>
+            <assay_group id="g102" label="embryonic day 16; stomach">
+                <assay>DRR009967</assay>
+            </assay_group>
+            <assay_group id="g103" label="embryonic day 16; testis">
+                <assay>DRR009978</assay>
+            </assay_group>
+            <assay_group id="g104" label="embryonic day 16; thymus">
+                <assay>DRR009989</assay>
+            </assay_group>
+            <assay_group id="g105" label="embryonic day 16; whole organism">
+                <assay>DRR010021</assay>
+            </assay_group>
+            <assay_group id="g106" label="embryonic day 17.5; whole organism">
+                <assay>DRR010022</assay>
+                <assay technical_replicate_id="t1">DRR009770</assay>
+                <assay technical_replicate_id="t1">DRR009746</assay>
+                <assay technical_replicate_id="t1">DRR009755</assay>
+                <assay technical_replicate_id="t1">DRR009761</assay>
+                <assay technical_replicate_id="t1">DRR009760</assay>
+                <assay technical_replicate_id="t1">DRR009747</assay>
+                <assay technical_replicate_id="t1">DRR009765</assay>
+                <assay technical_replicate_id="t1">DRR009748</assay>
+                <assay technical_replicate_id="t1">DRR009767</assay>
+                <assay technical_replicate_id="t1">DRR009758</assay>
+                <assay technical_replicate_id="t1">DRR009754</assay>
+                <assay technical_replicate_id="t1">DRR009745</assay>
+                <assay technical_replicate_id="t1">DRR009769</assay>
+                <assay technical_replicate_id="t1">DRR009757</assay>
+                <assay technical_replicate_id="t1">DRR009756</assay>
+                <assay technical_replicate_id="t1">DRR009764</assay>
+                <assay technical_replicate_id="t1">DRR009752</assay>
+                <assay technical_replicate_id="t1">DRR009744</assay>
+                <assay technical_replicate_id="t1">DRR009759</assay>
+                <assay technical_replicate_id="t1">DRR009763</assay>
+                <assay technical_replicate_id="t1">DRR009743</assay>
+                <assay technical_replicate_id="t1">DRR009768</assay>
+                <assay technical_replicate_id="t1">DRR009762</assay>
+                <assay technical_replicate_id="t1">DRR009749</assay>
+                <assay technical_replicate_id="t1">DRR009751</assay>
+                <assay technical_replicate_id="t1">DRR009750</assay>
+                <assay technical_replicate_id="t1">DRR009753</assay>
+                <assay technical_replicate_id="t1">DRR009766</assay>
+            </assay_group>
+            <assay_group id="g107" label="embryonic day 17; eyeball">
+                <assay>DRR009832</assay>
+            </assay_group>
+            <assay_group id="g108" label="embryonic day 17; forelimb">
+                <assay>DRR009842</assay>
+            </assay_group>
+            <assay_group id="g109" label="embryonic day 17; heart">
+                <assay>DRR009851</assay>
+            </assay_group>
+            <assay_group id="g110" label="embryonic day 17; intestine">
+                <assay>DRR009868</assay>
+            </assay_group>
+            <assay_group id="g111" label="embryonic day 17; kidney">
+                <assay>DRR009881</assay>
+            </assay_group>
+            <assay_group id="g112" label="embryonic day 17; liver">
+                <assay>DRR009894</assay>
+            </assay_group>
+            <assay_group id="g113" label="embryonic day 17; lung">
+                <assay>DRR009909</assay>
+            </assay_group>
+            <assay_group id="g114" label="embryonic day 17; pancreas">
+                <assay>DRR009932</assay>
+            </assay_group>
+            <assay_group id="g115" label="embryonic day 17; pituitary gland">
+                <assay>DRR009946</assay>
+            </assay_group>
+            <assay_group id="g116" label="embryonic day 17; stomach">
+                <assay>DRR009968</assay>
+            </assay_group>
+            <assay_group id="g117" label="embryonic day 17; testis">
+                <assay>DRR009979</assay>
+            </assay_group>
+            <assay_group id="g118" label="embryonic day 17; thymus">
+                <assay>DRR009990</assay>
+            </assay_group>
+            <assay_group id="g119" label="embryonic day 17; whole organism">
+                <assay>DRR010023</assay>
+            </assay_group>
+            <assay_group id="g120" label="embryonic day 18; forelimb">
+                <assay>DRR009843</assay>
+            </assay_group>
+            <assay_group id="g121" label="embryonic day 18; heart">
+                <assay>DRR009852</assay>
+            </assay_group>
+            <assay_group id="g122" label="embryonic day 18; intestine">
+                <assay>DRR009869</assay>
+            </assay_group>
+            <assay_group id="g123" label="embryonic day 18; kidney">
+                <assay>DRR009882</assay>
+            </assay_group>
+            <assay_group id="g124" label="embryonic day 18; liver">
+                <assay>DRR009895</assay>
+            </assay_group>
+            <assay_group id="g125" label="embryonic day 18; lung">
+                <assay>DRR009910</assay>
+            </assay_group>
+            <assay_group id="g126" label="embryonic day 18; ovary">
+                <assay>DRR009925</assay>
+            </assay_group>
+            <assay_group id="g127" label="embryonic day 18; pancreas">
+                <assay>DRR009933</assay>
+            </assay_group>
+            <assay_group id="g128" label="embryonic day 18; spleen">
+                <assay>DRR009960</assay>
+            </assay_group>
+            <assay_group id="g129" label="embryonic day 18; stomach">
+                <assay>DRR009969</assay>
+            </assay_group>
+            <assay_group id="g130" label="embryonic day 18; testis">
+                <assay>DRR009980</assay>
+            </assay_group>
+            <assay_group id="g131" label="embryonic day 18; thymus">
+                <assay>DRR009991</assay>
+            </assay_group>
+            <assay_group id="g132" label="embryonic day 18; whole organism">
+                <assay>DRR010024</assay>
+            </assay_group>
+            <assay_group id="g133" label="epididymis and seminiferous tubule; juvenile">
+                <assay>DRR009826</assay>
+            </assay_group>
+            <assay_group id="g134" label="epididymis and seminiferous tubule; neonate">
+                <assay>DRR009825</assay>
+            </assay_group>
+            <assay_group id="g135" label="eyeball; neonate">
+                <assay>DRR009835</assay>
+                <assay>DRR009834</assay>
+                <assay>DRR009836</assay>
+                <assay>DRR009833</assay>
+            </assay_group>
+            <assay_group id="g136" label="heart; juvenile">
+                <assay>DRR009858</assay>
+                <assay>DRR009859</assay>
+            </assay_group>
+            <assay_group id="g137" label="heart; neonate">
+                <assay>DRR009855</assay>
+                <assay>DRR009857</assay>
+                <assay>DRR009853</assay>
+                <assay>DRR009854</assay>
+                <assay>DRR009856</assay>
+            </assay_group>
+            <assay_group id="g138" label="hippocampus; neonate">
+                <assay>DRR009861</assay>
+            </assay_group>
+            <assay_group id="g139" label="intestine; juvenile">
+                <assay>DRR009876</assay>
+                <assay>DRR009877</assay>
+            </assay_group>
+            <assay_group id="g140" label="intestine; neonate">
+                <assay>DRR009870</assay>
+                <assay>DRR009873</assay>
+                <assay>DRR009871</assay>
+                <assay>DRR009872</assay>
+                <assay>DRR009874</assay>
+                <assay>DRR009875</assay>
+            </assay_group>
+            <assay_group id="g141" label="juvenile; kidney">
+                <assay>DRR009886</assay>
+                <assay>DRR009887</assay>
+            </assay_group>
+            <assay_group id="g142" label="juvenile; liver">
+                <assay>DRR009903</assay>
+                <assay>DRR009902</assay>
+            </assay_group>
+            <assay_group id="g143" label="juvenile; lung">
+                <assay>DRR009916</assay>
+                <assay>DRR009917</assay>
+            </assay_group>
+            <assay_group id="g144" label="juvenile; medulla oblongata">
+                <assay>DRR009921</assay>
+            </assay_group>
+            <assay_group id="g145" label="juvenile; muscle (biceps femoris)">
+                <assay>DRR009922</assay>
+            </assay_group>
+            <assay_group id="g146" label="juvenile; pancreas">
+                <assay>DRR009939</assay>
+                <assay>DRR009938</assay>
+            </assay_group>
+            <assay_group id="g147" label="juvenile; spleen">
+                <assay>DRR009963</assay>
+            </assay_group>
+            <assay_group id="g148" label="juvenile; stomach">
+                <assay>DRR009972</assay>
+                <assay>DRR009973</assay>
+            </assay_group>
+            <assay_group id="g149" label="juvenile; testis">
+                <assay>DRR009985</assay>
+            </assay_group>
+            <assay_group id="g150" label="juvenile; thymus">
+                <assay>DRR009999</assay>
+                <assay>DRR009998</assay>
+            </assay_group>
+            <assay_group id="g151" label="kidney; neonate">
+                <assay>DRR009883</assay>
+                <assay>DRR009885</assay>
+                <assay>DRR009884</assay>
+            </assay_group>
+            <assay_group id="g152" label="lactating adult day 2; mammary gland">
+                <assay>DRR009918</assay>
+            </assay_group>
+            <assay_group id="g153" label="liver; neonate">
+                <assay>DRR009900</assay>
+                <assay>DRR009896</assay>
+                <assay>DRR009897</assay>
+                <assay>DRR009898</assay>
+                <assay>DRR009899</assay>
+                <assay>DRR009901</assay>
+            </assay_group>
+            <assay_group id="g154" label="liver; pregnant adult day 1">
+                <assay>DRR009888</assay>
+            </assay_group>
+            <assay_group id="g155" label="lung; neonate">
+                <assay>DRR009913</assay>
+                <assay>DRR009912</assay>
+                <assay>DRR009915</assay>
+                <assay>DRR009911</assay>
+                <assay>DRR009914</assay>
+            </assay_group>
+            <assay_group id="g156" label="mammary gland; pregnant adult day 19">
+                <assay>DRR009919</assay>
+            </assay_group>
+            <assay_group id="g157" label="neonate; ovary">
+                <assay>DRR009926</assay>
+            </assay_group>
+            <assay_group id="g158" label="neonate; pancreas">
+                <assay>DRR009935</assay>
+                <assay>DRR009936</assay>
+                <assay>DRR009934</assay>
+                <assay>DRR009937</assay>
+            </assay_group>
+            <assay_group id="g159" label="neonate; pituitary gland">
+                <assay>DRR009947</assay>
+            </assay_group>
+            <assay_group id="g160" label="neonate; skin">
+                <assay>DRR009952</assay>
+                <assay>DRR009955</assay>
+                <assay>DRR009954</assay>
+                <assay>DRR009953</assay>
+            </assay_group>
+            <assay_group id="g161" label="neonate; small intestine">
+                <assay>DRR009956</assay>
+            </assay_group>
+            <assay_group id="g162" label="neonate; spleen">
+                <assay>DRR009962</assay>
+                <assay>DRR009961</assay>
+            </assay_group>
+            <assay_group id="g163" label="neonate; stomach">
+                <assay>DRR009971</assay>
+                <assay>DRR009970</assay>
+            </assay_group>
+            <assay_group id="g164" label="neonate; testis">
+                <assay>DRR009984</assay>
+                <assay>DRR009981</assay>
+                <assay>DRR009982</assay>
+                <assay>DRR009983</assay>
+            </assay_group>
+            <assay_group id="g165" label="neonate; thymus">
+                <assay>DRR009997</assay>
+                <assay>DRR009995</assay>
+                <assay>DRR009996</assay>
+                <assay>DRR009992</assay>
+                <assay>DRR009993</assay>
+                <assay>DRR009994</assay>
+            </assay_group>
+            <assay_group id="g166" label="neonate; whole organism">
+                <assay>DRR010025</assay>
+                <assay>DRR010027</assay>
+                <assay>DRR010026</assay>
+                <assay>DRR010028</assay>
+            </assay_group>
+            <assay_group id="g167" label="oviduct; pregnant adult day 1">
+                <assay>DRR009927</assay>
+            </assay_group>
+            <assay_group id="g168" label="placenta; pregnant adult day 10">
+                <assay>DRR009948</assay>
+            </assay_group>
+            <assay_group id="g169" label="placenta; pregnant adult day 17">
+                <assay>DRR009949</assay>
+            </assay_group>
+            <assay_group id="g170" label="pregnant adult day 19; uterus">
+                <assay>DRR010002</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

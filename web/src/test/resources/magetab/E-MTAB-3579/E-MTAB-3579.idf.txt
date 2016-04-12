@@ -1,0 +1,35 @@
+Comment[ArrayExpressAccession]	E-MTAB-3579
+MAGE-TAB Version	1.1																																	
+Investigation Title	RNA-Seq CAGE (Cap Analysis of Gene Expression) analysis of mice tissue in RIKEN FANTOM5 project																																	
+Comment[Submitted Name]	RNA-Seq CAGE (Cap Analysis of Gene Expression) analysis of mice tissue in RIKEN FANTOM5 project
+Experiment Description	This experiment captures the expression data reported by the RIKEN FANTOM5 project ( http://fantom.gsc.riken.jp/5/ ), focusing on mice tissue data which was deposited in the sequence read archive (SRA) under study accession DRP001032 (https://www.ebi.ac.uk/ena/data/view/DRP001031 ) .  The samples in this experiment can also be found on a dedicated page of the FANTOM website: http://fantom.gsc.riken.jp/5/sstar/Browse_samples. Since this is CAGE analysis, gene expression data is reported by FANTOM5 in TPMs (tags per milliion) for gene promoters. This is in conjunction with  E-MTAB-3578 (http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-3578/)																																	
+Experimental Design	organism part comparison design																																	
+Experimental Design Term Source REF	EFO																																	
+Experimental Design Term Accession Number	EFO_0001750																																	
+Experimental Factor Name	organism part	developmental stage																																
+Experimental Factor Type	organism part	developmental stage																																
+Experimental Factor Term Source REF	EFO																																	
+Experimental Factor Term Accession Number	EFO_0000324																																	
+Person Last Name	ArrayExpress	RIKEN FANTOM5 consortium																																
+Person First Name																																		
+Person Mid Initials																																		
+Person Email	arrayexpress@ebi.ac.uk	fantom-help@gsc.riken.jp																																
+Person Phone																																		
+Person Fax																																		
+Person Address																																		
+Person Affiliation	EMBL European Bioinformatics Institute																																	
+Person Roles	submitter	data analyst;experiment performer																																
+Public Release Date	2015-05-14																																	
+Protocol Name	P-MTAB-44723	P-MTAB-44724	P-MTAB-44725	P-MTAB-44726	P-MTAB-44727	P-MTAB-44728
+Protocol Type	sample collection protocol	nucleic acid extraction protocol	nucleic acid library construction protocol	nucleic acid library construction protocol	nucleic acid library construction protocol	nucleic acid sequencing protocol																												
+Protocol Term Source REF	EFO	EFO	EFO	EFO	EFO	EFO																												
+Protocol Term Accession Number	EFO_0005518	EFO_0002944	EFO_0004184	EFO_0004184	EFO_0004184	EFO_0004170																												
+Protocol Description	Samples were either commerically sourced or provided by research groups.  Details are provided in the \Provider\ field of the sample descriptions.	A number of extraction protcols were used see http://fantom.gsc.riken.jp/5/sstar/File:Trizol_isopropanol_ver1.pdf, h, ttp://fantom.gsc.riken.jp/5/sstar/images/0/0a/Totally_RNA_ver1.pdf,  http://fantom.gsc.riken.jp/5/sstar/images/7/7f/RNeasy_MinElute_Cleanup_Handbook.pdf and http://fantom.gsc.riken.jp/5/sstar/images/c/c9/Cms_059303.pdf	Manual library construction: http://fantom.gsc.riken.jp/5/sstar/OP-HELISCOPE-CAGE-v3.12	See automated library preparation procedure here: http://fantom.gsc.riken.jp/5/sstar/OP-HELISCOPE-CAGE-v4.0	See automated library preparation procedure here: http://fantom.gsc.riken.jp/5/sstar/OP-HELISCOPE-CAGE-v5.0	See http://fantom.gsc.riken.jp/5/sstar/OP-HELISCOPE-sequencing-v1.0																												
+Protocol Hardware						Helicos HeliScope																												
+Protocol Software																																		
+Term Source Name	EFO
+Term Source File	http://www.ebi.ac.uk/efo/																																	
+Term Source Version																																		
+Comment[AEExperimentType]	RNA-seq of coding RNA																																	
+Comment[SecondaryAccession]	DRP001032																																	
+SDRF File	E-MTAB-3579.sdrf.txt

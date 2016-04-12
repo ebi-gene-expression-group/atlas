@@ -1,0 +1,2 @@
+Pipeline 	Please see <a href="http://fantom.gsc.riken.jp/protocols/">FANTOM5 Protocols</a> for more information. 
+Post-processing	In the source data file, mm9.cage_peak_phase1and2combined_tpm_ann.osc.txt, transcripts were mapped to genes using Ensembl 80/GENCODE 23 (GRCh38). A median of all expressions reported for a gene/sample in the original file is taken as the the expression for that gene/sample. 

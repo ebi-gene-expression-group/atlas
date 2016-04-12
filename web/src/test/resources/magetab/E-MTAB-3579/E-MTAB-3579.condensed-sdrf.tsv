@@ -1,0 +1,1825 @@
+E-MTAB-3579		DRR009632	characteristic	developmental stage	embryo	http://purl.obolibrary.org/obo/UBERON_0000922
+E-MTAB-3579		DRR009632	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009632	characteristic	organism part	whole body
+E-MTAB-3579		DRR009632	characteristic	sex	not available
+E-MTAB-3579		DRR009632	characteristic	strain	NIH/Swiss
+E-MTAB-3579		DRR009632	factor	developmental stage	embryo	http://purl.obolibrary.org/obo/UBERON_0000922
+E-MTAB-3579		DRR009632	factor	organism part	whole body
+E-MTAB-3579		DRR009743	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009743	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009743	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009743	characteristic	sex	not available
+E-MTAB-3579		DRR009743	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009743	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009743	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009744	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009744	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009744	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009744	characteristic	sex	not available
+E-MTAB-3579		DRR009744	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009744	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009744	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009745	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009745	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009745	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009745	characteristic	sex	not available
+E-MTAB-3579		DRR009745	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009745	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009745	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009746	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009746	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009746	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009746	characteristic	sex	not available
+E-MTAB-3579		DRR009746	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009746	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009746	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009747	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009747	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009747	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009747	characteristic	sex	not available
+E-MTAB-3579		DRR009747	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009747	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009747	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009748	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009748	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009748	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009748	characteristic	sex	not available
+E-MTAB-3579		DRR009748	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009748	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009748	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009749	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009749	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009749	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009749	characteristic	sex	not available
+E-MTAB-3579		DRR009749	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009749	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009749	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009750	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009750	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009750	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009750	characteristic	sex	not available
+E-MTAB-3579		DRR009750	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009750	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009750	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009751	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009751	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009751	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009751	characteristic	sex	not available
+E-MTAB-3579		DRR009751	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009751	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009751	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009752	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009752	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009752	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009752	characteristic	sex	not available
+E-MTAB-3579		DRR009752	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009752	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009752	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009753	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009753	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009753	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009753	characteristic	sex	not available
+E-MTAB-3579		DRR009753	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009753	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009753	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009754	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009754	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009754	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009754	characteristic	sex	not available
+E-MTAB-3579		DRR009754	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009754	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009754	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009755	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009755	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009755	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009755	characteristic	sex	not available
+E-MTAB-3579		DRR009755	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009755	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009755	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009756	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009756	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009756	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009756	characteristic	sex	not available
+E-MTAB-3579		DRR009756	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009756	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009756	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009757	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009757	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009757	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009757	characteristic	sex	not available
+E-MTAB-3579		DRR009757	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009757	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009757	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009758	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009758	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009758	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009758	characteristic	sex	not available
+E-MTAB-3579		DRR009758	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009758	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009758	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009759	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009759	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009759	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009759	characteristic	sex	not available
+E-MTAB-3579		DRR009759	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009759	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009759	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009760	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009760	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009760	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009760	characteristic	sex	not available
+E-MTAB-3579		DRR009760	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009760	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009760	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009761	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009761	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009761	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009761	characteristic	sex	not available
+E-MTAB-3579		DRR009761	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009761	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009761	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009762	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009762	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009762	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009762	characteristic	sex	not available
+E-MTAB-3579		DRR009762	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009762	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009762	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009763	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009763	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009763	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009763	characteristic	sex	not available
+E-MTAB-3579		DRR009763	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009763	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009763	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009764	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009764	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009764	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009764	characteristic	sex	not available
+E-MTAB-3579		DRR009764	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009764	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009764	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009765	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009765	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009765	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009765	characteristic	sex	not available
+E-MTAB-3579		DRR009765	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009765	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009765	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009766	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009766	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009766	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009766	characteristic	sex	not available
+E-MTAB-3579		DRR009766	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009766	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009766	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009767	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009767	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009767	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009767	characteristic	sex	not available
+E-MTAB-3579		DRR009767	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009767	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009767	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009768	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009768	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009768	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009768	characteristic	sex	not available
+E-MTAB-3579		DRR009768	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009768	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009768	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009769	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009769	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009769	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009769	characteristic	sex	not available
+E-MTAB-3579		DRR009769	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009769	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009769	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009770	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009770	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009770	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009770	characteristic	sex	not available
+E-MTAB-3579		DRR009770	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009770	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR009770	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR009800	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009800	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009800	characteristic	organism part	accessory axillary lymph node
+E-MTAB-3579		DRR009800	characteristic	sex	male
+E-MTAB-3579		DRR009800	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009800	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009800	factor	organism part	accessory axillary lymph node
+E-MTAB-3579		DRR009801	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009801	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009801	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009801	characteristic	sex	male
+E-MTAB-3579		DRR009801	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009801	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009801	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009802	characteristic	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009802	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009802	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009802	characteristic	sex	male and female
+E-MTAB-3579		DRR009802	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009802	factor	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009802	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009803	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009803	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009803	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009803	characteristic	sex	male and female
+E-MTAB-3579		DRR009803	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009803	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009803	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009804	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009804	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009804	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009804	characteristic	sex	male and female
+E-MTAB-3579		DRR009804	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009804	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009804	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009805	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009805	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009805	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009805	characteristic	sex	male and female
+E-MTAB-3579		DRR009805	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009805	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009805	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009806	characteristic	age	0 day
+E-MTAB-3579		DRR009806	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009806	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009806	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009806	characteristic	sex	male and female
+E-MTAB-3579		DRR009806	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009806	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009806	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009807	characteristic	age	25 day
+E-MTAB-3579		DRR009807	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009807	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009807	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009807	characteristic	sex	male and female
+E-MTAB-3579		DRR009807	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009807	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009807	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3579		DRR009808	characteristic	developmental stage	pregnant adult day 17.5
+E-MTAB-3579		DRR009808	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009808	characteristic	organism part	amnion
+E-MTAB-3579		DRR009808	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR009808	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009808	factor	developmental stage	pregnant adult day 17.5
+E-MTAB-3579		DRR009808	factor	organism part	amnion
+E-MTAB-3579		DRR009809	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009809	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009809	characteristic	organism part	aorta	http://purl.obolibrary.org/obo/UBERON_0000947
+E-MTAB-3579		DRR009809	characteristic	sex	male
+E-MTAB-3579		DRR009809	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009809	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009809	factor	organism part	aorta	http://purl.obolibrary.org/obo/UBERON_0000947
+E-MTAB-3579		DRR009810	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009810	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009810	characteristic	organism part	bone (os femoris)
+E-MTAB-3579		DRR009810	characteristic	sex	male
+E-MTAB-3579		DRR009810	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009810	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009810	factor	organism part	bone (os femoris)
+E-MTAB-3579		DRR009811	characteristic	age	2 day
+E-MTAB-3579		DRR009811	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009811	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009811	characteristic	organism part	bone (os femoris)
+E-MTAB-3579		DRR009811	characteristic	sex	male and female
+E-MTAB-3579		DRR009811	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009811	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009811	factor	organism part	bone (os femoris)
+E-MTAB-3579		DRR009812	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009812	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009812	characteristic	organism part	bone (os femoris)
+E-MTAB-3579		DRR009812	characteristic	sex	male and female
+E-MTAB-3579		DRR009812	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009812	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009812	factor	organism part	bone (os femoris)
+E-MTAB-3579		DRR009813	characteristic	age	20 day
+E-MTAB-3579		DRR009813	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009813	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009813	characteristic	organism part	bone (os femoris)
+E-MTAB-3579		DRR009813	characteristic	sex	male and female
+E-MTAB-3579		DRR009813	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009813	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009813	factor	organism part	bone (os femoris)
+E-MTAB-3579		DRR009814	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009814	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009814	characteristic	organism part	cecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3579		DRR009814	characteristic	sex	male
+E-MTAB-3579		DRR009814	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009814	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009814	factor	organism part	cecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3579		DRR009815	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009815	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009815	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3579		DRR009815	characteristic	sex	male
+E-MTAB-3579		DRR009815	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009815	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009815	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3579		DRR009816	characteristic	age	30 day
+E-MTAB-3579		DRR009816	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009816	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009816	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3579		DRR009816	characteristic	sex	male and female
+E-MTAB-3579		DRR009816	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009816	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009816	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3579		DRR009817	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009817	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009817	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3579		DRR009817	characteristic	sex	male
+E-MTAB-3579		DRR009817	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009817	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009817	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3579		DRR009818	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009818	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009818	characteristic	organism part	corpora quadrigemina
+E-MTAB-3579		DRR009818	characteristic	sex	male
+E-MTAB-3579		DRR009818	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009818	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009818	factor	organism part	corpora quadrigemina
+E-MTAB-3579		DRR009819	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009819	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009819	characteristic	organism part	corpus striatum	http://purl.obolibrary.org/obo/UBERON_0000369
+E-MTAB-3579		DRR009819	characteristic	sex	male
+E-MTAB-3579		DRR009819	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009819	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009819	factor	organism part	corpus striatum	http://purl.obolibrary.org/obo/UBERON_0000369
+E-MTAB-3579		DRR009820	characteristic	age	0 day
+E-MTAB-3579		DRR009820	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009820	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009820	characteristic	organism part	corpus striatum	http://purl.obolibrary.org/obo/UBERON_0000369
+E-MTAB-3579		DRR009820	characteristic	sex	male and female
+E-MTAB-3579		DRR009820	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009820	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009820	factor	organism part	corpus striatum	http://purl.obolibrary.org/obo/UBERON_0000369
+E-MTAB-3579		DRR009821	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009821	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009821	characteristic	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-MTAB-3579		DRR009821	characteristic	sex	male
+E-MTAB-3579		DRR009821	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009821	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009821	factor	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-MTAB-3579		DRR009822	characteristic	age	30 day
+E-MTAB-3579		DRR009822	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009822	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009822	characteristic	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-MTAB-3579		DRR009822	characteristic	sex	male and female
+E-MTAB-3579		DRR009822	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009822	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009822	factor	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-MTAB-3579		DRR009823	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009823	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009823	characteristic	organism part	diencephalon	http://purl.obolibrary.org/obo/UBERON_0001894
+E-MTAB-3579		DRR009823	characteristic	sex	male
+E-MTAB-3579		DRR009823	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009823	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009823	factor	organism part	diencephalon	http://purl.obolibrary.org/obo/UBERON_0001894
+E-MTAB-3579		DRR009824	characteristic	age	30 day
+E-MTAB-3579		DRR009824	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009824	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009824	characteristic	organism part	diencephalon	http://purl.obolibrary.org/obo/UBERON_0001894
+E-MTAB-3579		DRR009824	characteristic	sex	male and female
+E-MTAB-3579		DRR009824	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009824	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009824	factor	organism part	diencephalon	http://purl.obolibrary.org/obo/UBERON_0001894
+E-MTAB-3579		DRR009825	characteristic	age	0 day
+E-MTAB-3579		DRR009825	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009825	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009825	characteristic	organism part	epididymis and seminiferous tubule
+E-MTAB-3579		DRR009825	characteristic	sex	male
+E-MTAB-3579		DRR009825	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009825	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009825	factor	organism part	epididymis and seminiferous tubule
+E-MTAB-3579		DRR009826	characteristic	age	30 day
+E-MTAB-3579		DRR009826	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009826	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009826	characteristic	organism part	epididymis and seminiferous tubule
+E-MTAB-3579		DRR009826	characteristic	sex	male
+E-MTAB-3579		DRR009826	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009826	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009826	factor	organism part	epididymis and seminiferous tubule
+E-MTAB-3579		DRR009827	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009827	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009827	characteristic	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-MTAB-3579		DRR009827	characteristic	sex	male
+E-MTAB-3579		DRR009827	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009827	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009827	factor	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-MTAB-3579		DRR009828	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009828	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009828	characteristic	organism part	eyeball
+E-MTAB-3579		DRR009828	characteristic	sex	male
+E-MTAB-3579		DRR009828	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009828	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009828	factor	organism part	eyeball
+E-MTAB-3579		DRR009829	characteristic	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009829	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009829	characteristic	organism part	eyeball
+E-MTAB-3579		DRR009829	characteristic	sex	male and female
+E-MTAB-3579		DRR009829	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009829	factor	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009829	factor	organism part	eyeball
+E-MTAB-3579		DRR009830	characteristic	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009830	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009830	characteristic	organism part	eyeball
+E-MTAB-3579		DRR009830	characteristic	sex	male and female
+E-MTAB-3579		DRR009830	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009830	factor	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009830	factor	organism part	eyeball
+E-MTAB-3579		DRR009831	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009831	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009831	characteristic	organism part	eyeball
+E-MTAB-3579		DRR009831	characteristic	sex	male and female
+E-MTAB-3579		DRR009831	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009831	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009831	factor	organism part	eyeball
+E-MTAB-3579		DRR009832	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009832	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009832	characteristic	organism part	eyeball
+E-MTAB-3579		DRR009832	characteristic	sex	male and female
+E-MTAB-3579		DRR009832	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009832	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009832	factor	organism part	eyeball
+E-MTAB-3579		DRR009833	characteristic	age	0 day
+E-MTAB-3579		DRR009833	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009833	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009833	characteristic	organism part	eyeball
+E-MTAB-3579		DRR009833	characteristic	sex	male and female
+E-MTAB-3579		DRR009833	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009833	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009833	factor	organism part	eyeball
+E-MTAB-3579		DRR009834	characteristic	age	1 day
+E-MTAB-3579		DRR009834	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009834	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009834	characteristic	organism part	eyeball
+E-MTAB-3579		DRR009834	characteristic	sex	male and female
+E-MTAB-3579		DRR009834	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009834	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009834	factor	organism part	eyeball
+E-MTAB-3579		DRR009835	characteristic	age	2 day
+E-MTAB-3579		DRR009835	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009835	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009835	characteristic	organism part	eyeball
+E-MTAB-3579		DRR009835	characteristic	sex	male and female
+E-MTAB-3579		DRR009835	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009835	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009835	factor	organism part	eyeball
+E-MTAB-3579		DRR009836	characteristic	age	16 day
+E-MTAB-3579		DRR009836	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009836	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009836	characteristic	organism part	eyeball
+E-MTAB-3579		DRR009836	characteristic	sex	male and female
+E-MTAB-3579		DRR009836	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009836	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009836	factor	organism part	eyeball
+E-MTAB-3579		DRR009837	characteristic	developmental stage	embryonic day 11
+E-MTAB-3579		DRR009837	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009837	characteristic	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009837	characteristic	sex	male and female
+E-MTAB-3579		DRR009837	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009837	factor	developmental stage	embryonic day 11
+E-MTAB-3579		DRR009837	factor	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009838	characteristic	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009838	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009838	characteristic	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009838	characteristic	sex	male and female
+E-MTAB-3579		DRR009838	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009838	factor	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009838	factor	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009839	characteristic	developmental stage	embryonic day 13
+E-MTAB-3579		DRR009839	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009839	characteristic	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009839	characteristic	sex	male and female
+E-MTAB-3579		DRR009839	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009839	factor	developmental stage	embryonic day 13
+E-MTAB-3579		DRR009839	factor	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009840	characteristic	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009840	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009840	characteristic	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009840	characteristic	sex	male and female
+E-MTAB-3579		DRR009840	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009840	factor	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009840	factor	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009841	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009841	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009841	characteristic	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009841	characteristic	sex	male and female
+E-MTAB-3579		DRR009841	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009841	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009841	factor	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009842	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009842	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009842	characteristic	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009842	characteristic	sex	male and female
+E-MTAB-3579		DRR009842	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009842	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009842	factor	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009843	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009843	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009843	characteristic	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009843	characteristic	sex	male and female
+E-MTAB-3579		DRR009843	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009843	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009843	factor	organism part	forelimb	http://purl.obolibrary.org/obo/UBERON_0002102
+E-MTAB-3579		DRR009844	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009844	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009844	characteristic	organism part	gonad	http://www.ebi.ac.uk/efo/EFO_0005494
+E-MTAB-3579		DRR009844	characteristic	sex	male and female
+E-MTAB-3579		DRR009844	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009844	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009844	factor	organism part	gonad	http://www.ebi.ac.uk/efo/EFO_0005494
+E-MTAB-3579		DRR009845	characteristic	developmental stage	embryonic day 11
+E-MTAB-3579		DRR009845	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009845	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009845	characteristic	sex	male and female
+E-MTAB-3579		DRR009845	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009845	factor	developmental stage	embryonic day 11
+E-MTAB-3579		DRR009845	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009846	characteristic	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009846	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009846	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009846	characteristic	sex	male and female
+E-MTAB-3579		DRR009846	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009846	factor	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009846	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009847	characteristic	developmental stage	embryonic day 13
+E-MTAB-3579		DRR009847	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009847	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009847	characteristic	sex	male and female
+E-MTAB-3579		DRR009847	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009847	factor	developmental stage	embryonic day 13
+E-MTAB-3579		DRR009847	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009848	characteristic	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009848	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009848	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009848	characteristic	sex	male and female
+E-MTAB-3579		DRR009848	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009848	factor	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009848	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009849	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009849	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009849	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009849	characteristic	sex	male and female
+E-MTAB-3579		DRR009849	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009849	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009849	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009850	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009850	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009850	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009850	characteristic	sex	male and female
+E-MTAB-3579		DRR009850	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009850	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009850	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009851	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009851	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009851	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009851	characteristic	sex	male and female
+E-MTAB-3579		DRR009851	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009851	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009851	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009852	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009852	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009852	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009852	characteristic	sex	male and female
+E-MTAB-3579		DRR009852	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009852	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009852	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009853	characteristic	age	0 day
+E-MTAB-3579		DRR009853	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009853	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009853	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009853	characteristic	sex	male and female
+E-MTAB-3579		DRR009853	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009853	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009853	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009854	characteristic	age	3 day
+E-MTAB-3579		DRR009854	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009854	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009854	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009854	characteristic	sex	male and female
+E-MTAB-3579		DRR009854	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009854	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009854	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009855	characteristic	age	10 day
+E-MTAB-3579		DRR009855	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009855	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009855	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009855	characteristic	sex	male and female
+E-MTAB-3579		DRR009855	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009855	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009855	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009856	characteristic	age	16 day
+E-MTAB-3579		DRR009856	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009856	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009856	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009856	characteristic	sex	male and female
+E-MTAB-3579		DRR009856	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009856	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009856	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009857	characteristic	age	20 day
+E-MTAB-3579		DRR009857	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009857	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009857	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009857	characteristic	sex	male and female
+E-MTAB-3579		DRR009857	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009857	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009857	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009858	characteristic	age	25 day
+E-MTAB-3579		DRR009858	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009858	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009858	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009858	characteristic	sex	male and female
+E-MTAB-3579		DRR009858	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009858	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009858	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009859	characteristic	age	30 day
+E-MTAB-3579		DRR009859	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009859	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009859	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009859	characteristic	sex	male and female
+E-MTAB-3579		DRR009859	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009859	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009859	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3579		DRR009860	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009860	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009860	characteristic	organism part	hippocampus	http://www.ebi.ac.uk/efo/EFO_0000530
+E-MTAB-3579		DRR009860	characteristic	sex	male
+E-MTAB-3579		DRR009860	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009860	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009860	factor	organism part	hippocampus	http://www.ebi.ac.uk/efo/EFO_0000530
+E-MTAB-3579		DRR009861	characteristic	age	0 day
+E-MTAB-3579		DRR009861	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009861	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009861	characteristic	organism part	hippocampus	http://www.ebi.ac.uk/efo/EFO_0000530
+E-MTAB-3579		DRR009861	characteristic	sex	male and female
+E-MTAB-3579		DRR009861	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009861	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009861	factor	organism part	hippocampus	http://www.ebi.ac.uk/efo/EFO_0000530
+E-MTAB-3579		DRR009862	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009862	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009862	characteristic	organism part	intestinal mucosa
+E-MTAB-3579		DRR009862	characteristic	sex	male
+E-MTAB-3579		DRR009862	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009862	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009862	factor	organism part	intestinal mucosa
+E-MTAB-3579		DRR009863	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009863	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009863	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009863	characteristic	sex	male and female
+E-MTAB-3579		DRR009863	characteristic	strain	not available
+E-MTAB-3579		DRR009863	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009863	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009864	characteristic	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009864	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009864	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009864	characteristic	sex	male and female
+E-MTAB-3579		DRR009864	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009864	factor	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009864	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009865	characteristic	developmental stage	embryonic day 13
+E-MTAB-3579		DRR009865	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009865	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009865	characteristic	sex	male and female
+E-MTAB-3579		DRR009865	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009865	factor	developmental stage	embryonic day 13
+E-MTAB-3579		DRR009865	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009866	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009866	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009866	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009866	characteristic	sex	male and female
+E-MTAB-3579		DRR009866	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009866	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009866	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009867	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009867	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009867	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009867	characteristic	sex	male and female
+E-MTAB-3579		DRR009867	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009867	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009867	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009868	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009868	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009868	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009868	characteristic	sex	male and female
+E-MTAB-3579		DRR009868	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009868	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009868	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009869	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009869	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009869	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009869	characteristic	sex	male and female
+E-MTAB-3579		DRR009869	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009869	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009869	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009870	characteristic	age	0 day
+E-MTAB-3579		DRR009870	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009870	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009870	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009870	characteristic	sex	male and female
+E-MTAB-3579		DRR009870	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009870	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009870	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009871	characteristic	age	1 day
+E-MTAB-3579		DRR009871	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009871	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009871	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009871	characteristic	sex	male and female
+E-MTAB-3579		DRR009871	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009871	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009871	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009872	characteristic	age	6 day
+E-MTAB-3579		DRR009872	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009872	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009872	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009872	characteristic	sex	male and female
+E-MTAB-3579		DRR009872	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009872	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009872	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009873	characteristic	age	7 day
+E-MTAB-3579		DRR009873	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009873	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009873	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009873	characteristic	sex	male and female
+E-MTAB-3579		DRR009873	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009873	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009873	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009874	characteristic	age	10 day
+E-MTAB-3579		DRR009874	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009874	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009874	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009874	characteristic	sex	male and female
+E-MTAB-3579		DRR009874	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009874	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009874	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009875	characteristic	age	20 day
+E-MTAB-3579		DRR009875	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009875	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009875	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009875	characteristic	sex	male and female
+E-MTAB-3579		DRR009875	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009875	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009875	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009876	characteristic	age	25 day
+E-MTAB-3579		DRR009876	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009876	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009876	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009876	characteristic	sex	male and female
+E-MTAB-3579		DRR009876	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009876	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009876	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009877	characteristic	age	30 day
+E-MTAB-3579		DRR009877	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009877	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009877	characteristic	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009877	characteristic	sex	male and female
+E-MTAB-3579		DRR009877	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009877	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009877	factor	organism part	intestine	http://purl.obolibrary.org/obo/UBERON_0000160
+E-MTAB-3579		DRR009878	characteristic	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009878	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009878	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009878	characteristic	sex	male and female
+E-MTAB-3579		DRR009878	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009878	factor	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009878	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009879	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009879	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009879	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009879	characteristic	sex	male and female
+E-MTAB-3579		DRR009879	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009879	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009879	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009880	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009880	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009880	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009880	characteristic	sex	male and female
+E-MTAB-3579		DRR009880	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009880	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009880	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009881	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009881	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009881	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009881	characteristic	sex	male and female
+E-MTAB-3579		DRR009881	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009881	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009881	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009882	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009882	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009882	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009882	characteristic	sex	male and female
+E-MTAB-3579		DRR009882	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009882	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009882	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009883	characteristic	age	0 day
+E-MTAB-3579		DRR009883	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009883	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009883	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009883	characteristic	sex	male and female
+E-MTAB-3579		DRR009883	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009883	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009883	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009884	characteristic	age	10 day
+E-MTAB-3579		DRR009884	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009884	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009884	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009884	characteristic	sex	male and female
+E-MTAB-3579		DRR009884	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009884	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009884	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009885	characteristic	age	20 day
+E-MTAB-3579		DRR009885	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009885	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009885	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009885	characteristic	sex	male and female
+E-MTAB-3579		DRR009885	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009885	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009885	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009886	characteristic	age	25 day
+E-MTAB-3579		DRR009886	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009886	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009886	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009886	characteristic	sex	male and female
+E-MTAB-3579		DRR009886	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009886	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009886	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009887	characteristic	age	30 day
+E-MTAB-3579		DRR009887	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009887	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009887	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009887	characteristic	sex	male and female
+E-MTAB-3579		DRR009887	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009887	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009887	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3579		DRR009888	characteristic	developmental stage	pregnant adult day 1
+E-MTAB-3579		DRR009888	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009888	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009888	characteristic	sex	male and female
+E-MTAB-3579		DRR009888	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009888	factor	developmental stage	pregnant adult day 1
+E-MTAB-3579		DRR009888	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009889	characteristic	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009889	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009889	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009889	characteristic	sex	male and female
+E-MTAB-3579		DRR009889	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009889	factor	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009889	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009890	characteristic	developmental stage	embryonic day 13
+E-MTAB-3579		DRR009890	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009890	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009890	characteristic	sex	male and female
+E-MTAB-3579		DRR009890	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009890	factor	developmental stage	embryonic day 13
+E-MTAB-3579		DRR009890	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009891	characteristic	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009891	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009891	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009891	characteristic	sex	male and female
+E-MTAB-3579		DRR009891	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009891	factor	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009891	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009892	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009892	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009892	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009892	characteristic	sex	male and female
+E-MTAB-3579		DRR009892	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009892	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009892	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009893	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009893	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009893	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009893	characteristic	sex	male and female
+E-MTAB-3579		DRR009893	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009893	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009893	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009894	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009894	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009894	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009894	characteristic	sex	male and female
+E-MTAB-3579		DRR009894	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009894	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009894	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009895	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009895	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009895	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009895	characteristic	sex	male and female
+E-MTAB-3579		DRR009895	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009895	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009895	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009896	characteristic	age	0 day
+E-MTAB-3579		DRR009896	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009896	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009896	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009896	characteristic	sex	male and female
+E-MTAB-3579		DRR009896	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009896	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009896	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009897	characteristic	age	3 day
+E-MTAB-3579		DRR009897	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009897	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009897	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009897	characteristic	sex	male and female
+E-MTAB-3579		DRR009897	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009897	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009897	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009898	characteristic	age	6 day
+E-MTAB-3579		DRR009898	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009898	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009898	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009898	characteristic	sex	male and female
+E-MTAB-3579		DRR009898	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009898	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009898	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009899	characteristic	age	7 day
+E-MTAB-3579		DRR009899	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009899	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009899	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009899	characteristic	sex	male and female
+E-MTAB-3579		DRR009899	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009899	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009899	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009900	characteristic	age	10 day
+E-MTAB-3579		DRR009900	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009900	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009900	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009900	characteristic	sex	male and female
+E-MTAB-3579		DRR009900	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009900	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009900	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009901	characteristic	age	20 day
+E-MTAB-3579		DRR009901	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009901	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009901	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009901	characteristic	sex	male and female
+E-MTAB-3579		DRR009901	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009901	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009901	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009902	characteristic	age	25 day
+E-MTAB-3579		DRR009902	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009902	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009902	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009902	characteristic	sex	male and female
+E-MTAB-3579		DRR009902	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009902	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009902	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009903	characteristic	age	30 day
+E-MTAB-3579		DRR009903	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009903	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009903	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009903	characteristic	sex	male and female
+E-MTAB-3579		DRR009903	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009903	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009903	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3579		DRR009904	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009904	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009904	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009904	characteristic	sex	male
+E-MTAB-3579		DRR009904	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009904	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009904	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009905	characteristic	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009905	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009905	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009905	characteristic	sex	male and female
+E-MTAB-3579		DRR009905	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009905	factor	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009905	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009906	characteristic	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009906	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009906	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009906	characteristic	sex	male and female
+E-MTAB-3579		DRR009906	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009906	factor	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009906	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009907	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009907	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009907	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009907	characteristic	sex	male and female
+E-MTAB-3579		DRR009907	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009907	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009907	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009908	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009908	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009908	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009908	characteristic	sex	male and female
+E-MTAB-3579		DRR009908	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009908	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009908	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009909	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009909	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009909	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009909	characteristic	sex	male and female
+E-MTAB-3579		DRR009909	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009909	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009909	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009910	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009910	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009910	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009910	characteristic	sex	male and female
+E-MTAB-3579		DRR009910	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009910	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009910	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009911	characteristic	age	0 day
+E-MTAB-3579		DRR009911	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009911	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009911	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009911	characteristic	sex	male and female
+E-MTAB-3579		DRR009911	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009911	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009911	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009912	characteristic	age	6 day
+E-MTAB-3579		DRR009912	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009912	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009912	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009912	characteristic	sex	male and female
+E-MTAB-3579		DRR009912	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009912	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009912	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009913	characteristic	age	7 day
+E-MTAB-3579		DRR009913	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009913	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009913	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009913	characteristic	sex	male and female
+E-MTAB-3579		DRR009913	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009913	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009913	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009914	characteristic	age	10 day
+E-MTAB-3579		DRR009914	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009914	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009914	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009914	characteristic	sex	male and female
+E-MTAB-3579		DRR009914	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009914	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009914	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009915	characteristic	age	20 day
+E-MTAB-3579		DRR009915	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009915	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009915	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009915	characteristic	sex	male and female
+E-MTAB-3579		DRR009915	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009915	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009915	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009916	characteristic	age	25 day
+E-MTAB-3579		DRR009916	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009916	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009916	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009916	characteristic	sex	male and female
+E-MTAB-3579		DRR009916	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009916	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009916	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009917	characteristic	age	30 day
+E-MTAB-3579		DRR009917	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009917	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009917	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009917	characteristic	sex	male and female
+E-MTAB-3579		DRR009917	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009917	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009917	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3579		DRR009918	characteristic	developmental stage	lactating adult day 2
+E-MTAB-3579		DRR009918	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009918	characteristic	organism part	mammary gland	http://purl.obolibrary.org/obo/UBERON_0001911
+E-MTAB-3579		DRR009918	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR009918	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009918	factor	developmental stage	lactating adult day 2
+E-MTAB-3579		DRR009918	factor	organism part	mammary gland	http://purl.obolibrary.org/obo/UBERON_0001911
+E-MTAB-3579		DRR009919	characteristic	developmental stage	pregnant adult day 19
+E-MTAB-3579		DRR009919	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009919	characteristic	organism part	mammary gland	http://purl.obolibrary.org/obo/UBERON_0001911
+E-MTAB-3579		DRR009919	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR009919	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009919	factor	developmental stage	pregnant adult day 19
+E-MTAB-3579		DRR009919	factor	organism part	mammary gland	http://purl.obolibrary.org/obo/UBERON_0001911
+E-MTAB-3579		DRR009920	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009920	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009920	characteristic	organism part	medulla oblongata	http://purl.obolibrary.org/obo/UBERON_0001896
+E-MTAB-3579		DRR009920	characteristic	sex	male
+E-MTAB-3579		DRR009920	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009920	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009920	factor	organism part	medulla oblongata	http://purl.obolibrary.org/obo/UBERON_0001896
+E-MTAB-3579		DRR009921	characteristic	age	30 day
+E-MTAB-3579		DRR009921	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009921	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009921	characteristic	organism part	medulla oblongata	http://purl.obolibrary.org/obo/UBERON_0001896
+E-MTAB-3579		DRR009921	characteristic	sex	male and female
+E-MTAB-3579		DRR009921	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009921	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009921	factor	organism part	medulla oblongata	http://purl.obolibrary.org/obo/UBERON_0001896
+E-MTAB-3579		DRR009922	characteristic	age	30 day
+E-MTAB-3579		DRR009922	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009922	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009922	characteristic	organism part	muscle (biceps femoris)	http://purl.obolibrary.org/obo/UBERON_0001374
+E-MTAB-3579		DRR009922	characteristic	sex	male and female
+E-MTAB-3579		DRR009922	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009922	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009922	factor	organism part	muscle (biceps femoris)	http://purl.obolibrary.org/obo/UBERON_0001374
+E-MTAB-3579		DRR009923	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009923	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009923	characteristic	organism part	olfactory brain
+E-MTAB-3579		DRR009923	characteristic	sex	male
+E-MTAB-3579		DRR009923	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009923	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009923	factor	organism part	olfactory brain
+E-MTAB-3579		DRR009924	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009924	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009924	characteristic	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3579		DRR009924	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR009924	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009924	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009924	factor	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3579		DRR009925	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009925	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009925	characteristic	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3579		DRR009925	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR009925	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009925	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009925	factor	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3579		DRR009926	characteristic	age	0 day
+E-MTAB-3579		DRR009926	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009926	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009926	characteristic	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3579		DRR009926	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR009926	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009926	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009926	factor	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3579		DRR009927	characteristic	developmental stage	pregnant adult day 1
+E-MTAB-3579		DRR009927	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009927	characteristic	organism part	oviduct	http://purl.obolibrary.org/obo/UBERON_0000993
+E-MTAB-3579		DRR009927	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR009927	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009927	factor	developmental stage	pregnant adult day 1
+E-MTAB-3579		DRR009927	factor	organism part	oviduct	http://purl.obolibrary.org/obo/UBERON_0000993
+E-MTAB-3579		DRR009928	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009928	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009928	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009928	characteristic	sex	male
+E-MTAB-3579		DRR009928	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009928	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009928	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009929	characteristic	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009929	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009929	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009929	characteristic	sex	male and female
+E-MTAB-3579		DRR009929	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009929	factor	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009929	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009930	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009930	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009930	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009930	characteristic	sex	male and female
+E-MTAB-3579		DRR009930	characteristic	strain	DBA/2
+E-MTAB-3579		DRR009930	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009930	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009931	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009931	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009931	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009931	characteristic	sex	male and female
+E-MTAB-3579		DRR009931	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009931	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009931	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009932	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009932	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009932	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009932	characteristic	sex	male and female
+E-MTAB-3579		DRR009932	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009932	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009932	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009933	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009933	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009933	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009933	characteristic	sex	male and female
+E-MTAB-3579		DRR009933	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009933	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009933	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009934	characteristic	age	0 day
+E-MTAB-3579		DRR009934	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009934	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009934	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009934	characteristic	sex	male and female
+E-MTAB-3579		DRR009934	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009934	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009934	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009935	characteristic	age	1 day
+E-MTAB-3579		DRR009935	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009935	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009935	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009935	characteristic	sex	male and female
+E-MTAB-3579		DRR009935	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009935	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009935	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009936	characteristic	age	2 day
+E-MTAB-3579		DRR009936	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009936	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009936	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009936	characteristic	sex	male and female
+E-MTAB-3579		DRR009936	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009936	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009936	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009937	characteristic	age	16 day
+E-MTAB-3579		DRR009937	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009937	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009937	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009937	characteristic	sex	male and female
+E-MTAB-3579		DRR009937	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009937	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009937	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009938	characteristic	age	25 day
+E-MTAB-3579		DRR009938	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009938	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009938	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009938	characteristic	sex	male and female
+E-MTAB-3579		DRR009938	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009938	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009938	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009939	characteristic	age	30 day
+E-MTAB-3579		DRR009939	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009939	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009939	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009939	characteristic	sex	male and female
+E-MTAB-3579		DRR009939	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009939	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009939	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-3579		DRR009940	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009940	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009940	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009940	characteristic	sex	male
+E-MTAB-3579		DRR009940	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009940	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009940	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009941	characteristic	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009941	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009941	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009941	characteristic	sex	male and female
+E-MTAB-3579		DRR009941	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009941	factor	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009941	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009942	characteristic	developmental stage	embryonic day 13
+E-MTAB-3579		DRR009942	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009942	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009942	characteristic	sex	male and female
+E-MTAB-3579		DRR009942	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009942	factor	developmental stage	embryonic day 13
+E-MTAB-3579		DRR009942	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009943	characteristic	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009943	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009943	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009943	characteristic	sex	male and female
+E-MTAB-3579		DRR009943	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009943	factor	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009943	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009944	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009944	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009944	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009944	characteristic	sex	male and female
+E-MTAB-3579		DRR009944	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009944	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009944	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009945	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009945	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009945	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009945	characteristic	sex	male and female
+E-MTAB-3579		DRR009945	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009945	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009945	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009946	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009946	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009946	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009946	characteristic	sex	male and female
+E-MTAB-3579		DRR009946	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009946	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009946	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009947	characteristic	age	0 day
+E-MTAB-3579		DRR009947	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009947	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009947	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009947	characteristic	sex	male and female
+E-MTAB-3579		DRR009947	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009947	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009947	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3579		DRR009948	characteristic	developmental stage	pregnant adult day 10
+E-MTAB-3579		DRR009948	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009948	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3579		DRR009948	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR009948	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009948	factor	developmental stage	pregnant adult day 10
+E-MTAB-3579		DRR009948	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3579		DRR009949	characteristic	developmental stage	pregnant adult day 17
+E-MTAB-3579		DRR009949	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009949	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3579		DRR009949	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR009949	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009949	factor	developmental stage	pregnant adult day 17
+E-MTAB-3579		DRR009949	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3579		DRR009950	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009950	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009950	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-3579		DRR009950	characteristic	sex	male
+E-MTAB-3579		DRR009950	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009950	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009950	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-3579		DRR009951	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009951	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009951	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3579		DRR009951	characteristic	sex	male
+E-MTAB-3579		DRR009951	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009951	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009951	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3579		DRR009952	characteristic	age	0 day
+E-MTAB-3579		DRR009952	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009952	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009952	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3579		DRR009952	characteristic	sex	male and female
+E-MTAB-3579		DRR009952	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009952	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009952	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3579		DRR009953	characteristic	age	3 day
+E-MTAB-3579		DRR009953	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009953	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009953	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3579		DRR009953	characteristic	sex	male and female
+E-MTAB-3579		DRR009953	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009953	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009953	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3579		DRR009954	characteristic	age	6 day
+E-MTAB-3579		DRR009954	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009954	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009954	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3579		DRR009954	characteristic	sex	male and female
+E-MTAB-3579		DRR009954	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009954	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009954	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3579		DRR009955	characteristic	age	10 day
+E-MTAB-3579		DRR009955	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009955	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009955	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3579		DRR009955	characteristic	sex	male and female
+E-MTAB-3579		DRR009955	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009955	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009955	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-3579		DRR009956	characteristic	age	16 day
+E-MTAB-3579		DRR009956	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009956	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009956	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3579		DRR009956	characteristic	sex	male and female
+E-MTAB-3579		DRR009956	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009956	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009956	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3579		DRR009957	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009957	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009957	characteristic	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3579		DRR009957	characteristic	sex	male
+E-MTAB-3579		DRR009957	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009957	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009957	factor	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3579		DRR009958	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009958	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009958	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3579		DRR009958	characteristic	sex	male
+E-MTAB-3579		DRR009958	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009958	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009958	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3579		DRR009959	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009959	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009959	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3579		DRR009959	characteristic	sex	male and female
+E-MTAB-3579		DRR009959	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009959	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009959	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3579		DRR009960	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009960	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009960	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3579		DRR009960	characteristic	sex	male and female
+E-MTAB-3579		DRR009960	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009960	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009960	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3579		DRR009961	characteristic	age	10 day
+E-MTAB-3579		DRR009961	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009961	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009961	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3579		DRR009961	characteristic	sex	male and female
+E-MTAB-3579		DRR009961	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009961	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009961	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3579		DRR009962	characteristic	age	20 day
+E-MTAB-3579		DRR009962	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009962	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009962	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3579		DRR009962	characteristic	sex	male and female
+E-MTAB-3579		DRR009962	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009962	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009962	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3579		DRR009963	characteristic	age	25 day
+E-MTAB-3579		DRR009963	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009963	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009963	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3579		DRR009963	characteristic	sex	male and female
+E-MTAB-3579		DRR009963	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009963	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009963	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3579		DRR009964	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009964	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009964	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009964	characteristic	sex	male
+E-MTAB-3579		DRR009964	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009964	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009964	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009965	characteristic	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009965	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009965	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009965	characteristic	sex	male and female
+E-MTAB-3579		DRR009965	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009965	factor	developmental stage	embryonic day 12
+E-MTAB-3579		DRR009965	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009966	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009966	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009966	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009966	characteristic	sex	male and female
+E-MTAB-3579		DRR009966	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009966	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009966	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009967	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009967	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009967	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009967	characteristic	sex	male and female
+E-MTAB-3579		DRR009967	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009967	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009967	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009968	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009968	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009968	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009968	characteristic	sex	male and female
+E-MTAB-3579		DRR009968	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009968	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009968	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009969	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009969	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009969	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009969	characteristic	sex	male and female
+E-MTAB-3579		DRR009969	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009969	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009969	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009970	characteristic	age	3 day
+E-MTAB-3579		DRR009970	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009970	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009970	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009970	characteristic	sex	male and female
+E-MTAB-3579		DRR009970	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009970	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009970	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009971	characteristic	age	7 day
+E-MTAB-3579		DRR009971	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009971	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009971	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009971	characteristic	sex	male and female
+E-MTAB-3579		DRR009971	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009971	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009971	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009972	characteristic	age	25 day
+E-MTAB-3579		DRR009972	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009972	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009972	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009972	characteristic	sex	male and female
+E-MTAB-3579		DRR009972	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009972	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009972	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009973	characteristic	age	30 day
+E-MTAB-3579		DRR009973	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009973	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009973	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009973	characteristic	sex	male and female
+E-MTAB-3579		DRR009973	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009973	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009973	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3579		DRR009974	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009974	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009974	characteristic	organism part	submandibular gland	http://purl.obolibrary.org/obo/UBERON_0001736
+E-MTAB-3579		DRR009974	characteristic	sex	male
+E-MTAB-3579		DRR009974	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009974	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009974	factor	organism part	submandibular gland	http://purl.obolibrary.org/obo/UBERON_0001736
+E-MTAB-3579		DRR009975	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009975	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009975	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009975	characteristic	sex	male
+E-MTAB-3579		DRR009975	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009975	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009975	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009976	characteristic	developmental stage	embryonic day 13
+E-MTAB-3579		DRR009976	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009976	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009976	characteristic	sex	male
+E-MTAB-3579		DRR009976	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009976	factor	developmental stage	embryonic day 13
+E-MTAB-3579		DRR009976	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009977	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009977	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009977	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009977	characteristic	sex	male
+E-MTAB-3579		DRR009977	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009977	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009977	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009978	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009978	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009978	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009978	characteristic	sex	male
+E-MTAB-3579		DRR009978	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009978	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009978	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009979	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009979	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009979	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009979	characteristic	sex	male
+E-MTAB-3579		DRR009979	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009979	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009979	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009980	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009980	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009980	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009980	characteristic	sex	male
+E-MTAB-3579		DRR009980	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009980	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009980	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009981	characteristic	age	0 day
+E-MTAB-3579		DRR009981	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009981	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009981	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009981	characteristic	sex	male
+E-MTAB-3579		DRR009981	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009981	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009981	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009982	characteristic	age	7 day
+E-MTAB-3579		DRR009982	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009982	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009982	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009982	characteristic	sex	male
+E-MTAB-3579		DRR009982	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009982	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009982	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009983	characteristic	age	10 day
+E-MTAB-3579		DRR009983	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009983	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009983	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009983	characteristic	sex	male
+E-MTAB-3579		DRR009983	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009983	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009983	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009984	characteristic	age	20 day
+E-MTAB-3579		DRR009984	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009984	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009984	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009984	characteristic	sex	male
+E-MTAB-3579		DRR009984	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009984	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009984	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009985	characteristic	age	30 day
+E-MTAB-3579		DRR009985	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009985	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009985	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009985	characteristic	sex	male
+E-MTAB-3579		DRR009985	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009985	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009985	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3579		DRR009986	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009986	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009986	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009986	characteristic	sex	male
+E-MTAB-3579		DRR009986	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009986	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR009986	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009987	characteristic	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009987	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009987	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009987	characteristic	sex	male and female
+E-MTAB-3579		DRR009987	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009987	factor	developmental stage	embryonic day 14
+E-MTAB-3579		DRR009987	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009988	characteristic	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009988	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009988	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009988	characteristic	sex	male and female
+E-MTAB-3579		DRR009988	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009988	factor	developmental stage	embryonic day 15
+E-MTAB-3579		DRR009988	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009989	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009989	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009989	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009989	characteristic	sex	male and female
+E-MTAB-3579		DRR009989	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009989	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR009989	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009990	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009990	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009990	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009990	characteristic	sex	male and female
+E-MTAB-3579		DRR009990	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009990	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR009990	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009991	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009991	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009991	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009991	characteristic	sex	male and female
+E-MTAB-3579		DRR009991	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009991	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR009991	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009992	characteristic	age	2 day
+E-MTAB-3579		DRR009992	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009992	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009992	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009992	characteristic	sex	male and female
+E-MTAB-3579		DRR009992	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009992	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009992	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009993	characteristic	age	3 day
+E-MTAB-3579		DRR009993	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009993	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009993	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009993	characteristic	sex	male and female
+E-MTAB-3579		DRR009993	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009993	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009993	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009994	characteristic	age	6 day
+E-MTAB-3579		DRR009994	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009994	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009994	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009994	characteristic	sex	male and female
+E-MTAB-3579		DRR009994	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009994	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009994	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009995	characteristic	age	7 day
+E-MTAB-3579		DRR009995	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009995	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009995	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009995	characteristic	sex	male and female
+E-MTAB-3579		DRR009995	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009995	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009995	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009996	characteristic	age	10 day
+E-MTAB-3579		DRR009996	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009996	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009996	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009996	characteristic	sex	male and female
+E-MTAB-3579		DRR009996	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009996	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009996	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009997	characteristic	age	20 day
+E-MTAB-3579		DRR009997	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009997	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009997	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009997	characteristic	sex	male and female
+E-MTAB-3579		DRR009997	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009997	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR009997	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009998	characteristic	age	25 day
+E-MTAB-3579		DRR009998	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009998	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009998	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009998	characteristic	sex	male and female
+E-MTAB-3579		DRR009998	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009998	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009998	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009999	characteristic	age	30 day
+E-MTAB-3579		DRR009999	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009999	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR009999	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR009999	characteristic	sex	male and female
+E-MTAB-3579		DRR009999	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR009999	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3579		DRR009999	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3579		DRR010000	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR010000	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010000	characteristic	organism part	tongue	http://purl.obolibrary.org/obo/UBERON_0001723
+E-MTAB-3579		DRR010000	characteristic	sex	male
+E-MTAB-3579		DRR010000	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010000	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR010000	factor	organism part	tongue	http://purl.obolibrary.org/obo/UBERON_0001723
+E-MTAB-3579		DRR010001	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR010001	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010001	characteristic	organism part	urinary bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-3579		DRR010001	characteristic	sex	male
+E-MTAB-3579		DRR010001	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010001	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR010001	factor	organism part	urinary bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-3579		DRR010002	characteristic	developmental stage	pregnant adult day 19
+E-MTAB-3579		DRR010002	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010002	characteristic	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3579		DRR010002	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR010002	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010002	factor	developmental stage	pregnant adult day 19
+E-MTAB-3579		DRR010002	factor	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3579		DRR010003	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR010003	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010003	characteristic	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3579		DRR010003	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR010003	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010003	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR010003	factor	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3579		DRR010004	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR010004	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010004	characteristic	organism part	vagina	http://purl.obolibrary.org/obo/UBERON_0000996
+E-MTAB-3579		DRR010004	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR010004	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010004	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR010004	factor	organism part	vagina	http://purl.obolibrary.org/obo/UBERON_0000996
+E-MTAB-3579		DRR010005	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR010005	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010005	characteristic	organism part	vesicular gland	http://purl.obolibrary.org/obo/UBERON_0000998
+E-MTAB-3579		DRR010005	characteristic	sex	male
+E-MTAB-3579		DRR010005	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010005	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3579		DRR010005	factor	organism part	vesicular gland	http://purl.obolibrary.org/obo/UBERON_0000998
+E-MTAB-3579		DRR010016	characteristic	developmental stage	embryonic day 11
+E-MTAB-3579		DRR010016	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010016	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010016	characteristic	sex	male and female
+E-MTAB-3579		DRR010016	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010016	factor	developmental stage	embryonic day 11
+E-MTAB-3579		DRR010016	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010017	characteristic	developmental stage	embryonic day 12
+E-MTAB-3579		DRR010017	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010017	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010017	characteristic	sex	male and female
+E-MTAB-3579		DRR010017	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010017	factor	developmental stage	embryonic day 12
+E-MTAB-3579		DRR010017	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010018	characteristic	developmental stage	embryonic day 13
+E-MTAB-3579		DRR010018	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010018	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010018	characteristic	sex	male and female
+E-MTAB-3579		DRR010018	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010018	factor	developmental stage	embryonic day 13
+E-MTAB-3579		DRR010018	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010019	characteristic	developmental stage	embryonic day 14.5
+E-MTAB-3579		DRR010019	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010019	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010019	characteristic	sex	male and female
+E-MTAB-3579		DRR010019	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010019	factor	developmental stage	embryonic day 14.5
+E-MTAB-3579		DRR010019	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010020	characteristic	developmental stage	embryonic day 14
+E-MTAB-3579		DRR010020	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010020	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010020	characteristic	sex	male and female
+E-MTAB-3579		DRR010020	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010020	factor	developmental stage	embryonic day 14
+E-MTAB-3579		DRR010020	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010021	characteristic	developmental stage	embryonic day 16
+E-MTAB-3579		DRR010021	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010021	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010021	characteristic	sex	male and female
+E-MTAB-3579		DRR010021	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010021	factor	developmental stage	embryonic day 16
+E-MTAB-3579		DRR010021	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010022	characteristic	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR010022	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010022	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010022	characteristic	sex	male
+E-MTAB-3579		DRR010022	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010022	factor	developmental stage	embryonic day 17.5
+E-MTAB-3579		DRR010022	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010023	characteristic	developmental stage	embryonic day 17
+E-MTAB-3579		DRR010023	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010023	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010023	characteristic	sex	male and female
+E-MTAB-3579		DRR010023	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010023	factor	developmental stage	embryonic day 17
+E-MTAB-3579		DRR010023	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010024	characteristic	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR010024	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010024	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010024	characteristic	sex	male and female
+E-MTAB-3579		DRR010024	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010024	factor	developmental stage	embryonic day 18	http://www.ebi.ac.uk/efo/EFO_0002569
+E-MTAB-3579		DRR010024	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010025	characteristic	age	0 day
+E-MTAB-3579		DRR010025	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR010025	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010025	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010025	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3579		DRR010025	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010025	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR010025	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010026	characteristic	age	1 day
+E-MTAB-3579		DRR010026	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR010026	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010026	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010026	characteristic	sex	male and female
+E-MTAB-3579		DRR010026	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010026	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR010026	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010027	characteristic	age	6 day
+E-MTAB-3579		DRR010027	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR010027	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010027	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010027	characteristic	sex	male and female
+E-MTAB-3579		DRR010027	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010027	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR010027	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010028	characteristic	age	10 day
+E-MTAB-3579		DRR010028	characteristic	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR010028	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-3579		DRR010028	characteristic	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
+E-MTAB-3579		DRR010028	characteristic	sex	male and female
+E-MTAB-3579		DRR010028	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-3579		DRR010028	factor	developmental stage	neonate	http://www.ebi.ac.uk/efo/EFO_0001372
+E-MTAB-3579		DRR010028	factor	organism part	whole organism	http://www.ebi.ac.uk/efo/EFO_0002906
