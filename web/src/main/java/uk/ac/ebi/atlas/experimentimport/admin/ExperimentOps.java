@@ -157,7 +157,7 @@ public class ExperimentOps {
                                 "coexpression profiles", deleteCount, loadCount));
                         break;
                     case COEXPRESSION_IMPORT:
-                        loadCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(accession);
+                        loadCount = baselineCoexpressionProfileLoader.loadBaselineCoexpressionsProfile(accession);
                         resultOfTheOp = new JsonPrimitive(String.format(" loaded %,d " +
                                 "coexpression profiles", loadCount));
                         break;
