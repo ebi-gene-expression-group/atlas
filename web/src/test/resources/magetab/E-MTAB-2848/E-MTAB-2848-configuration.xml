@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="brain pituitary">
+                <assay>SRR1045084</assay>
+            </assay_group>
+            <assay_group id="g2" label="skeletal muscle">
+                <assay>SRR1045088</assay>
+                <assay>SRR1045087</assay>
+            </assay_group>
+            <assay_group id="g3" label="lymph node">
+                <assay>SRR1041116</assay>
+            </assay_group>
+            <assay_group id="g4" label="heart">
+                <assay>SRR1041113</assay>
+            </assay_group>
+            <assay_group id="g5" label="brain temporal lobe">
+                <assay>SRR1045085</assay>
+            </assay_group>
+            <assay_group id="g6" label="brain frontal cortex">
+                <assay>SRR1041111</assay>
+            </assay_group>
+            <assay_group id="g7" label="lung">
+                <assay>SRR1045086</assay>
+            </assay_group>
+            <assay_group id="g8" label="bone marrow">
+                <assay>SRR1041109</assay>
+            </assay_group>
+            <assay_group id="g9" label="kidney">
+                <assay>SRR1041114</assay>
+            </assay_group>
+            <assay_group id="g10" label="colon">
+                <assay>SRR1041112</assay>
+            </assay_group>
+            <assay_group id="g11" label="brain cerebellum">
+                <assay>SRR1041110</assay>
+            </assay_group>
+            <assay_group id="g12" label="liver">
+                <assay>SRR1041115</assay>
+            </assay_group>
+            <!-- This assay group not included as run failed QC -->
+	    <!-- <assay_group id="g13" label="thymus"> -->
+                <!-- <assay>SRR1045089</assay> -->
+            <!-- </assay_group> -->
+            <assay_group id="g14" label="spleen">
+                <assay>SRR1041117</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

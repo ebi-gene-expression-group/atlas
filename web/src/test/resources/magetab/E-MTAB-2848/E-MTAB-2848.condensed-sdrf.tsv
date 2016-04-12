@@ -1,0 +1,75 @@
+E-MTAB-2848		SRR1041109	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1041109	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1041109	characteristic	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-2848		SRR1041109	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1041109	factor	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-2848		SRR1041110	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1041110	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1041110	characteristic	organism part	brain cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-2848		SRR1041110	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1041110	factor	organism part	brain cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-2848		SRR1041111	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1041111	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1041111	characteristic	organism part	brain frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-MTAB-2848		SRR1041111	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1041111	factor	organism part	brain frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-MTAB-2848		SRR1041112	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1041112	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1041112	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-2848		SRR1041112	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1041112	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-2848		SRR1041113	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1041113	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1041113	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-2848		SRR1041113	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1041113	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-2848		SRR1041114	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1041114	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1041114	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-2848		SRR1041114	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1041114	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-2848		SRR1041115	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1041115	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1041115	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-2848		SRR1041115	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1041115	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-2848		SRR1041116	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1041116	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1041116	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-2848		SRR1041116	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1041116	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-2848		SRR1041117	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1041117	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1041117	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-2848		SRR1041117	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1041117	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-2848		SRR1045084	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1045084	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1045084	characteristic	organism part	brain pituitary	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-2848		SRR1045084	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1045084	factor	organism part	brain pituitary	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-2848		SRR1045085	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1045085	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1045085	characteristic	organism part	brain temporal lobe	http://purl.obolibrary.org/obo/UBERON_0001871
+E-MTAB-2848		SRR1045085	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1045085	factor	organism part	brain temporal lobe	http://purl.obolibrary.org/obo/UBERON_0001871
+E-MTAB-2848		SRR1045086	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1045086	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1045086	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2848		SRR1045086	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1045086	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2848		SRR1045087	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1045087	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1045087	characteristic	organism part	skeletal muscle	http://purl.obolibrary.org/obo/UBERON_0014892
+E-MTAB-2848		SRR1045087	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1045087	factor	organism part	skeletal muscle	http://purl.obolibrary.org/obo/UBERON_0014892
+E-MTAB-2848		SRR1045088	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1045088	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1045088	characteristic	organism part	skeletal muscle	http://purl.obolibrary.org/obo/UBERON_0014892
+E-MTAB-2848		SRR1045088	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1045088	factor	organism part	skeletal muscle	http://purl.obolibrary.org/obo/UBERON_0014892
+E-MTAB-2848		SRR1045089	characteristic	age	6 years 2 months
+E-MTAB-2848		SRR1045089	characteristic	organism	Papio anubis	http://purl.obolibrary.org/obo/NCBITaxon_9555
+E-MTAB-2848		SRR1045089	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-2848		SRR1045089	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-2848		SRR1045089	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
