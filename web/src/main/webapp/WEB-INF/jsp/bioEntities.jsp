@@ -284,7 +284,7 @@
 <c:if test="${showWidget}">
 
     <script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js-bundles/experimentPageHeatmap.bundle.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasHeatmap.bundle.js"></script>
 
 </c:if>
 
@@ -309,15 +309,15 @@
 <%--@elvariable id="isGeneSet" type="boolean"--%>
 <script>
     <c:if test="${showWidget}">
-    var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
-    experimentPageHeatmap.render({
-        atlasHost: window.location.host,
-        params: "geneQuery=${geneQuery.asUrlQueryParameter()}" + widgetParameters,
-        analyticsSearch: false,
-        isMultiExperiment: true,
-        target: "widgetBody",
-        isWidget: false
-    });
+        var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
+        expressionAtlasHeatmap.render({
+            atlasHost: window.location.host,
+            params: "geneQuery=${geneQuery.asUrlQueryParameter()}" + widgetParameters,
+            analyticsSearch: false,
+            isMultiExperiment: true,
+            target: "widgetBody",
+            isWidget: false
+        });
     </c:if>
 
     $(document).ready(function() {
