@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="Bur-0 x Col-0">
+                <assay technical_replicate_id="t1">SRR1179957</assay>
+                <assay technical_replicate_id="t1">SRR1179956</assay>
+                <assay technical_replicate_id="t2">SRR1179959</assay>
+                <assay technical_replicate_id="t2">SRR1179958</assay>
+                <assay technical_replicate_id="t3">SRR1179961</assay>
+                <assay technical_replicate_id="t3">SRR1179960</assay>
+            </assay_group>
+            <assay_group id="g2" label="Hi-0 x Ct-1">
+                <assay technical_replicate_id="t4">SRR1179963</assay>
+                <assay technical_replicate_id="t4">SRR1179962</assay>
+                <assay technical_replicate_id="t5">SRR1179965</assay>
+                <assay technical_replicate_id="t5">SRR1179964</assay>
+                <assay technical_replicate_id="t6">SRR1179966</assay>
+                <assay technical_replicate_id="t6">SRR1179967</assay>
+            </assay_group>
+            <assay_group id="g3" label="Ler-0 x Kn-0">
+                <assay technical_replicate_id="t7">SRR1179968</assay>
+                <assay technical_replicate_id="t7">SRR1179969</assay>
+                <assay technical_replicate_id="t8">SRR1179971</assay>
+                <assay technical_replicate_id="t8">SRR1179970</assay>
+                <assay technical_replicate_id="t9">SRR1179972</assay>
+                <assay technical_replicate_id="t9">SRR1179973</assay>
+            </assay_group>
+            <assay_group id="g4" label="Mt-0 x Tsu-0">
+                <assay technical_replicate_id="t10">SRR1179974</assay>
+                <assay technical_replicate_id="t10">SRR1179975</assay>
+                <assay technical_replicate_id="t11">SRR1179976</assay>
+                <assay technical_replicate_id="t11">SRR1179977</assay>
+                <assay technical_replicate_id="t12">SRR1179978</assay>
+                <assay technical_replicate_id="t12">SRR1179979</assay>
+            </assay_group>
+            <assay_group id="g5" label="Sf-2 x Can-0">
+                <assay technical_replicate_id="t13">SRR1179980</assay>
+                <assay technical_replicate_id="t13">SRR1179981</assay>
+                <assay technical_replicate_id="t14">SRR1179983</assay>
+                <assay technical_replicate_id="t14">SRR1179982</assay>
+                <assay technical_replicate_id="t15">SRR1179985</assay>
+                <assay technical_replicate_id="t15">SRR1179984</assay>
+            </assay_group>
+            <assay_group id="g6" label="Wil-2 x No-0">
+                <assay technical_replicate_id="t16">SRR1179986</assay>
+                <assay technical_replicate_id="t16">SRR1179987</assay>
+                <assay technical_replicate_id="t17">SRR1179988</assay>
+                <assay technical_replicate_id="t17">SRR1179989</assay>
+                <assay technical_replicate_id="t18">SRR1179990</assay>
+                <assay technical_replicate_id="t18">SRR1179991</assay>
+            </assay_group>
+            <assay_group id="g7" label="Ws-0 x Oy-0">
+                <assay technical_replicate_id="t19">SRR1179993</assay>
+                <assay technical_replicate_id="t19">SRR1179992</assay>
+                <assay technical_replicate_id="t20">SRR1179995</assay>
+                <assay technical_replicate_id="t20">SRR1179994</assay>
+                <assay technical_replicate_id="t21">SRR1179996</assay>
+                <assay technical_replicate_id="t21">SRR1179997</assay>
+            </assay_group>
+            <assay_group id="g8" label="Wu-0 x Rsch-4">
+                <assay technical_replicate_id="t22">SRR1179998</assay>
+                <assay technical_replicate_id="t22">SRR1179999</assay>
+                <assay technical_replicate_id="t23">SRR1180001</assay>
+                <assay technical_replicate_id="t23">SRR1180000</assay>
+                <assay technical_replicate_id="t24">SRR1180002</assay>
+                <assay technical_replicate_id="t24">SRR1180003</assay>
+            </assay_group>
+            <assay_group id="g9" label="Zu-0 x Edi-0">
+                <assay technical_replicate_id="t25">SRR1180005</assay>
+                <assay technical_replicate_id="t25">SRR1180004</assay>
+                <assay technical_replicate_id="t26">SRR1180006</assay>
+                <assay technical_replicate_id="t26">SRR1180007</assay>
+                <assay technical_replicate_id="t27">SRR1180009</assay>
+                <assay technical_replicate_id="t27">SRR1180008</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>
