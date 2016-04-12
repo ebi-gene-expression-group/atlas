@@ -1,0 +1,30 @@
+study_id	run_id	cram_location	organism	processing_status
+DRP000391	DRR001048	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001048/DRR001048.cram	oryza_sativa_japonica_group	26-JUL-2015 17:41:37	completed	13
+DRP000391	DRR001034	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001034/DRR001034.cram	oryza_sativa_japonica_group	26-JUL-2015 15:39:59	completed	66
+DRP000391	DRR001029	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001029/DRR001029.cram	oryza_sativa_japonica_group	26-JUL-2015 15:40:07	completed	59
+DRP000391	DRR001035	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001035/DRR001035.cram	oryza_sativa_japonica_group	26-JUL-2015 15:40:14	completed	78
+DRP000391	DRR001032	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001032/DRR001032.cram	oryza_sativa_japonica_group	26-JUL-2015 15:40:25	completed	56
+DRP000391	DRR001038	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001038/DRR001038.cram	oryza_sativa_japonica_group	26-JUL-2015 15:38:57	completed	66
+DRP000391	DRR001039	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001039/DRR001039.cram	oryza_sativa_japonica_group	26-JUL-2015 15:38:59	completed	59
+DRP000391	DRR001037	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001037/DRR001037.cram	oryza_sativa_japonica_group	26-JUL-2015 17:41:06	completed	81
+DRP000391	DRR001040	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001040/DRR001040.cram	oryza_sativa_japonica_group	26-JUL-2015 15:39:03	completed	71
+DRP000391	DRR001031	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001031/DRR001031.cram	oryza_sativa_japonica_group	26-JUL-2015 15:40:28	completed	63
+DRP000391	DRR001045	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001045/DRR001045.cram	oryza_sativa_japonica_group	26-JUL-2015 17:42:03	completed	13
+DRP000391	DRR001044	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001044/DRR001044.cram	oryza_sativa_japonica_group	26-JUL-2015 15:39:12	completed	82
+DRP000391	DRR001049	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001049/DRR001049.cram	oryza_sativa_japonica_group	26-JUL-2015 17:41:20	completed	29
+DRP000391	DRR001033	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001033/DRR001033.cram	oryza_sativa_japonica_group	26-JUL-2015 15:39:24	completed	71
+DRP000391	DRR001041	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001041/DRR001041.cram	oryza_sativa_japonica_group	26-JUL-2015 15:40:51	completed	68
+DRP000391	DRR001043	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001043/DRR001043.cram	oryza_sativa_japonica_group	26-JUL-2015 15:40:54	completed	65
+DRP000391	DRR001026	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001026/DRR001026.cram	oryza_sativa_japonica_group	26-JUL-2015 15:41:00	completed	71
+DRP000391	DRR001046	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001046/DRR001046.cram	oryza_sativa_japonica_group	26-JUL-2015 17:42:24	completed	10
+DRP000391	DRR001024	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001024/DRR001024.cram	oryza_sativa_japonica_group	26-JUL-2015 15:41:05	completed	61
+DRP000391	DRR001050	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001050/DRR001050.cram	oryza_sativa_japonica_group	26-JUL-2015 17:42:33	completed	12
+DRP000391	DRR001042	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001042/DRR001042.cram	oryza_sativa_japonica_group	26-JUL-2015 15:41:08	completed	80
+DRP000391	DRR001030	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001030/DRR001030.cram	oryza_sativa_japonica_group	26-JUL-2015 17:42:10	completed	80
+DRP000391	DRR001025	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001025/DRR001025.cram	oryza_sativa_japonica_group	26-JUL-2015 15:41:16	completed	56
+DRP000391	DRR001028	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001028/DRR001028.cram	oryza_sativa_japonica_group	26-JUL-2015 15:41:26	completed	78
+DRP000391	DRR001047	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001047/DRR001047.cram	oryza_sativa_japonica_group	26-JUL-2015 17:42:56	completed	18
+DRP000391	DRR001027	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001027/DRR001027.cram	oryza_sativa_japonica_group	26-JUL-2015 15:40:34	completed	64
+DRP000391	DRR001051	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001051/DRR001051.cram	oryza_sativa_japonica_group	26-JUL-2015 17:42:17	completed	34
+DRP000391	DRR001036	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/DRR001/DRR001036/DRR001036.cram	oryza_sativa_japonica_group	26-JUL-2015 15:41:35	completed	60
+

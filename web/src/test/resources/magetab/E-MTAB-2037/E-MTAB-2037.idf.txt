@@ -1,0 +1,59 @@
+Comment[ArrayExpressAccession]	E-MTAB-2037
+MAGE-TAB Version	1.1																										
+Investigation Title	Retrogenes in rice (Oryza sativa L. ssp. japonica) exhibit correlated expression with their source genes.																										
+Comment[Submitted Name]	Retrogenes in rice (Oryza sativa L. ssp. japonica) exhibit correlated expression with their source genes.
+Experiment Description	Expression in seven tissues from Oryza sativa L. ssp japonica Nipponbare was profiled using RNA-sequencing: callus, leaf, root, seed, shoot, panicle before flowering, and panicle after flowering. The original experiment examined gene expression in the seven tissues, and utilized the data both to compare gene expression patterns between retrogenes and their parents and to compare patterns of expression divergence between RNA-based duplicates and DNA-based duplicates Note: All samples in SRA were assigned the same sample accession (DRS000668). This is incorrect as there are different samples, hence “Source Name” was replaced with new values. Comment[ENA_SAMPLE] contains the original SRA sample accessions.																										
+Experimental Design	organism part comparison design																										
+Experimental Design Term Source REF	EFO																										
+Experimental Design Term Accession Number																											
+Experimental Factor Name	organism part																										
+Experimental Factor Type	organism part																										
+Experimental Factor Term Source REF	EFO																										
+Experimental Factor Term Accession Number																											
+Person Last Name	National Institute of Agrobiological Sciences	Gaut	Keays																								
+Person First Name		Brandon	Maria																								
+Person Mid Initials		S	C																								
+Person Email		bgaut@uci.edu 	mkeays@ebi.ac.uk																								
+Person Phone																											
+Person Fax																											
+Person Address	Agrogenomics Research Center, National Institute of Agrobiological Sciences, Tsukuba, Ibaraki, Japan																										
+Person Affiliation	National Institute of Agrobiological Sciences	University of California, Irvine	EMBL-EBI																								
+Person Roles	investigator	investigator	submitter																								
+Person Roles Term Source REF																											
+Person Roles Term Accession Number																											
+Quality Control Type																											
+Quality Control Term Source REF																											
+Quality Control Term Accession Number																											
+Replicate Type																											
+Replicate Term Source REF																											
+Replicate Term Accession Number																											
+Normalization Type																											
+Normalization Term Source REF																											
+Normalization Term Accession Number																											
+Date of Experiment																											
+Public Release Date	2011-12-21																										
+PubMed ID	22042334																										
+Publication DOI	10.1093/gbe/evr111																										
+Publication Author List	Sakai H, Mizuno H, Kawahara Y, Wakimoto H, Ikawa H, Kawahigashi H, Kanamori H, Matsumoto T, Itoh T, Gaut BS.																										
+Publication Title	Retrogenes in rice (Oryza sativa L. ssp. japonica) exhibit correlated expression with their source genes.																										
+Publication Status	published																										
+Publication Status Term Source REF	EFO																										
+Publication Status Term Accession Number																											
+Protocol Name	P-MTAB-35714	P-MTAB-35715	P-MTAB-35716	P-MTAB-35717
+Protocol Type	growth protocol	nucleic acid extraction protocol	nucleic acid library construction protocol	nucleic acid sequencing protocol																							
+Protocol Term Source REF	EFO	EFO	EFO	EFO																							
+Protocol Term Accession Number	EFO_0003789		EFO_0004184	EFO_0004170																							
+Protocol Description	We obtained seeds (accession number ‘‘JP229579’’) from the GENE bank in the National Institute of Agrobiological Sciences, Japan (http://www.gene.affrc.go.jp/about_en.php). The seeds were germinated in a growth chamber at 28degreesC under a 16-h light/8-h dark regime. Seven days after germination, shoots and roots were collected. In the meantime, plants were grown in paddy fields, where leaves (7 days before heading to 7 days after flowering) and panicles (7 days before and 0–7 days after heading to flowering) were collected. Callus was induced on N6D medium according to a previous protocol (Ozawa 2009).	For RNA extraction from each plant tissue, at least 10 plants were collected, immediately frozen in liquid nitrogen, and mixed, to minimize the effect of transcriptome unevenness among plants. Total RNA was extracted from each tissue with the RNeasy Plantmini kit (Qiagen).	cDNA was synthesized with mRNAseq 8-sample prep kit (Illumina) (Mizuno et al. 2010). We constructed cDNA libraries for the seven tissues individually.	Illumina Genome Analyzer IIx. We sequenced single ends of each library on the Illumina GAIIx platform for four separate runs (three at 36 cycles and one at 76 cycles).																							
+Protocol Parameters																											
+Protocol Hardware				Illumina Genome Analyzer IIx																							
+Protocol Software																											
+Protocol Contact																											
+Term Source Name	NCBI Taxonomy	EFO
+Term Source File	http://www.ncbi.nlm.nih.gov/Taxonomy/	http://www.ebi.ac.uk/efo																									
+Term Source Version		2.34																									
+Comment[SecondaryAccession]	DRP000391																										
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/DRR001024-DRR001051																										
+Comment[AEExperimentType]	RNA-seq of coding RNA																										
+Comment[SRASubmissionDate]	2011-12-21																										
+Comment[AEExperimentDisplayName]	Transcription profiling by RNA-seq of seven tissues from Oryza sativa japonica Nipponbare																										
+SDRF File	E-MTAB-2037.sdrf.txt

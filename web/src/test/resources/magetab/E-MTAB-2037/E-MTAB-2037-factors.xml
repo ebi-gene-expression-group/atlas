@@ -1,0 +1,8 @@
+<factors-definition>
+    <defaultFilterFactors/>
+    <defaultQueryFactorType>ORGANISM_PART</defaultQueryFactorType>
+    <menuFilterFactorTypes/>
+    <landingPageDisplayName>Tissues - 7 Sakai</landingPageDisplayName>
+    <speciesMapping/>
+    <orderFactor>curated</orderFactor> 
+</factors-definition>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="callus">
+                <assay technical_replicate_id="t1">DRR001029</assay>
+                <assay technical_replicate_id="t1">DRR001036</assay>
+                <assay technical_replicate_id="t1">DRR001043</assay>
+                <assay technical_replicate_id="t1">DRR001050</assay>
+            </assay_group>
+            <assay_group id="g2" label="leaf">
+                <assay technical_replicate_id="t2">DRR001038</assay>
+                <assay technical_replicate_id="t2">DRR001024</assay>
+                <assay technical_replicate_id="t2">DRR001031</assay>
+                <assay technical_replicate_id="t2">DRR001045</assay>
+            </assay_group>
+            <assay_group id="g3" label="post-flowering panicle">
+                <assay technical_replicate_id="t4">DRR001042</assay>
+                <assay technical_replicate_id="t4">DRR001028</assay>
+                <assay technical_replicate_id="t4">DRR001035</assay>
+                <assay technical_replicate_id="t4">DRR001049</assay>
+            </assay_group>
+            <assay_group id="g4" label="pre-flowering panicle">
+                <assay technical_replicate_id="t3">DRR001027</assay>
+                <assay technical_replicate_id="t3">DRR001034</assay>
+                <assay technical_replicate_id="t3">DRR001041</assay>
+                <assay technical_replicate_id="t3">DRR001048</assay>
+            </assay_group>
+            <assay_group id="g5" label="root">
+                <assay technical_replicate_id="t5">DRR001046</assay>
+                <assay technical_replicate_id="t5">DRR001039</assay>
+                <assay technical_replicate_id="t5">DRR001025</assay>
+                <assay technical_replicate_id="t5">DRR001032</assay>
+            </assay_group>
+            <assay_group id="g6" label="seed">
+                <assay technical_replicate_id="t6">DRR001030</assay>
+                <assay technical_replicate_id="t6">DRR001037</assay>
+                <assay technical_replicate_id="t6">DRR001044</assay>
+                <assay technical_replicate_id="t6">DRR001051</assay>
+            </assay_group>
+            <assay_group id="g7" label="shoot">
+                <assay technical_replicate_id="t7">DRR001026</assay>
+                <assay technical_replicate_id="t7">DRR001040</assay>
+                <assay technical_replicate_id="t7">DRR001033</assay>
+                <assay technical_replicate_id="t7">DRR001047</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>
