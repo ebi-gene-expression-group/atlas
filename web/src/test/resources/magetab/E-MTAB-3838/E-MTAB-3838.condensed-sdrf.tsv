@@ -1,0 +1,2216 @@
+E-MTAB-3838		ERR489048	characteristic	breed	Texel
+E-MTAB-3838		ERR489048	characteristic	developmental stage	embryo
+E-MTAB-3838		ERR489048	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489048	characteristic	organism part	whole embryo
+E-MTAB-3838		ERR489048	characteristic	sex	not available
+E-MTAB-3838		ERR489048	characteristic	technical replicate	group1
+E-MTAB-3838		ERR489048	factor	developmental stage	embryo
+E-MTAB-3838		ERR489048	factor	organism part	whole embryo
+E-MTAB-3838		ERR489048	factor	sex	unknown sex
+E-MTAB-3838		ERR489049	characteristic	breed	Texel
+E-MTAB-3838		ERR489049	characteristic	developmental stage	embryo
+E-MTAB-3838		ERR489049	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489049	characteristic	organism part	whole embryo
+E-MTAB-3838		ERR489049	characteristic	sex	not available
+E-MTAB-3838		ERR489049	characteristic	technical replicate	group1
+E-MTAB-3838		ERR489049	factor	developmental stage	embryo
+E-MTAB-3838		ERR489049	factor	organism part	whole embryo
+E-MTAB-3838		ERR489049	factor	sex	unknown sex
+E-MTAB-3838		ERR489050	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489050	characteristic	breed	Texel
+E-MTAB-3838		ERR489050	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489050	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489050	characteristic	organism part	hypothalamus	http://purl.obolibrary.org/obo/UBERON_0001898
+E-MTAB-3838		ERR489050	characteristic	sex	female
+E-MTAB-3838		ERR489050	characteristic	technical replicate	group2
+E-MTAB-3838		ERR489050	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489050	factor	organism part	hypothalamus	http://purl.obolibrary.org/obo/UBERON_0001898
+E-MTAB-3838		ERR489050	factor	sex	female
+E-MTAB-3838		ERR489051	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489051	characteristic	breed	Texel
+E-MTAB-3838		ERR489051	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489051	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489051	characteristic	organism part	hypothalamus	http://purl.obolibrary.org/obo/UBERON_0001898
+E-MTAB-3838		ERR489051	characteristic	sex	female
+E-MTAB-3838		ERR489051	characteristic	technical replicate	group2
+E-MTAB-3838		ERR489051	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489051	factor	organism part	hypothalamus	http://purl.obolibrary.org/obo/UBERON_0001898
+E-MTAB-3838		ERR489051	factor	sex	female
+E-MTAB-3838		ERR489052	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489052	characteristic	breed	Texel
+E-MTAB-3838		ERR489052	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489052	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489052	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489052	characteristic	sex	female
+E-MTAB-3838		ERR489052	characteristic	technical replicate	group3
+E-MTAB-3838		ERR489052	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489052	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489052	factor	sex	female
+E-MTAB-3838		ERR489053	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489053	characteristic	breed	Texel
+E-MTAB-3838		ERR489053	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489053	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489053	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489053	characteristic	sex	female
+E-MTAB-3838		ERR489053	characteristic	technical replicate	group3
+E-MTAB-3838		ERR489053	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489053	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489053	factor	sex	female
+E-MTAB-3838		ERR489054	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489054	characteristic	breed	Texel
+E-MTAB-3838		ERR489054	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489054	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489054	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489054	characteristic	sex	female
+E-MTAB-3838		ERR489054	characteristic	technical replicate	group3
+E-MTAB-3838		ERR489054	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489054	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489054	factor	sex	female
+E-MTAB-3838		ERR489055	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489055	characteristic	breed	Texel
+E-MTAB-3838		ERR489055	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489055	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489055	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489055	characteristic	sex	female
+E-MTAB-3838		ERR489055	characteristic	technical replicate	group3
+E-MTAB-3838		ERR489055	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489055	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489055	factor	sex	female
+E-MTAB-3838		ERR489056	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489056	characteristic	breed	Texel
+E-MTAB-3838		ERR489056	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489056	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489056	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489056	characteristic	sex	female
+E-MTAB-3838		ERR489056	characteristic	technical replicate	group3
+E-MTAB-3838		ERR489056	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489056	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489056	factor	sex	female
+E-MTAB-3838		ERR489057	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489057	characteristic	breed	Texel
+E-MTAB-3838		ERR489057	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489057	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489057	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489057	characteristic	sex	female
+E-MTAB-3838		ERR489057	characteristic	technical replicate	group3
+E-MTAB-3838		ERR489057	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489057	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489057	factor	sex	female
+E-MTAB-3838		ERR489058	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489058	characteristic	breed	Texel
+E-MTAB-3838		ERR489058	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489058	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489058	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489058	characteristic	sex	female
+E-MTAB-3838		ERR489058	characteristic	technical replicate	group4
+E-MTAB-3838		ERR489058	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489058	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489058	factor	sex	female
+E-MTAB-3838		ERR489059	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489059	characteristic	breed	Texel
+E-MTAB-3838		ERR489059	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489059	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489059	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489059	characteristic	sex	female
+E-MTAB-3838		ERR489059	characteristic	technical replicate	group4
+E-MTAB-3838		ERR489059	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489059	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489059	factor	sex	female
+E-MTAB-3838		ERR489060	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489060	characteristic	breed	Texel
+E-MTAB-3838		ERR489060	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489060	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489060	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489060	characteristic	sex	female
+E-MTAB-3838		ERR489060	characteristic	technical replicate	group4
+E-MTAB-3838		ERR489060	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489060	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489060	factor	sex	female
+E-MTAB-3838		ERR489061	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489061	characteristic	breed	Texel
+E-MTAB-3838		ERR489061	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489061	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489061	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489061	characteristic	sex	female
+E-MTAB-3838		ERR489061	characteristic	technical replicate	group4
+E-MTAB-3838		ERR489061	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489061	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489061	factor	sex	female
+E-MTAB-3838		ERR489062	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489062	characteristic	breed	Texel
+E-MTAB-3838		ERR489062	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489062	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489062	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489062	characteristic	sex	female
+E-MTAB-3838		ERR489062	characteristic	technical replicate	group4
+E-MTAB-3838		ERR489062	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489062	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489062	factor	sex	female
+E-MTAB-3838		ERR489063	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489063	characteristic	breed	Texel
+E-MTAB-3838		ERR489063	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489063	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489063	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489063	characteristic	sex	female
+E-MTAB-3838		ERR489063	characteristic	technical replicate	group4
+E-MTAB-3838		ERR489063	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489063	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489063	factor	sex	female
+E-MTAB-3838		ERR489064	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489064	characteristic	breed	Texel
+E-MTAB-3838		ERR489064	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489064	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489064	characteristic	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489064	characteristic	sex	female
+E-MTAB-3838		ERR489064	characteristic	technical replicate	group5
+E-MTAB-3838		ERR489064	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489064	factor	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489064	factor	sex	female
+E-MTAB-3838		ERR489065	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489065	characteristic	breed	Texel
+E-MTAB-3838		ERR489065	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489065	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489065	characteristic	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489065	characteristic	sex	female
+E-MTAB-3838		ERR489065	characteristic	technical replicate	group5
+E-MTAB-3838		ERR489065	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489065	factor	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489065	factor	sex	female
+E-MTAB-3838		ERR489066	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489066	characteristic	breed	Texel
+E-MTAB-3838		ERR489066	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489066	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489066	characteristic	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489066	characteristic	sex	female
+E-MTAB-3838		ERR489066	characteristic	technical replicate	group5
+E-MTAB-3838		ERR489066	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489066	factor	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489066	factor	sex	female
+E-MTAB-3838		ERR489067	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489067	characteristic	breed	Texel
+E-MTAB-3838		ERR489067	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489067	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489067	characteristic	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489067	characteristic	sex	female
+E-MTAB-3838		ERR489067	characteristic	technical replicate	group5
+E-MTAB-3838		ERR489067	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489067	factor	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489067	factor	sex	female
+E-MTAB-3838		ERR489068	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489068	characteristic	breed	Texel
+E-MTAB-3838		ERR489068	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489068	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489068	characteristic	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489068	characteristic	sex	female
+E-MTAB-3838		ERR489068	characteristic	technical replicate	group5
+E-MTAB-3838		ERR489068	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489068	factor	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489068	factor	sex	female
+E-MTAB-3838		ERR489069	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489069	characteristic	breed	Texel
+E-MTAB-3838		ERR489069	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489069	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489069	characteristic	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489069	characteristic	sex	female
+E-MTAB-3838		ERR489069	characteristic	technical replicate	group5
+E-MTAB-3838		ERR489069	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489069	factor	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489069	factor	sex	female
+E-MTAB-3838		ERR489070	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489070	characteristic	breed	Texel
+E-MTAB-3838		ERR489070	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489070	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489070	characteristic	organism part	mammary gland	http://purl.obolibrary.org/obo/UBERON_0001911
+E-MTAB-3838		ERR489070	characteristic	sex	female
+E-MTAB-3838		ERR489070	characteristic	technical replicate	group6
+E-MTAB-3838		ERR489070	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489070	factor	organism part	mammary gland	http://purl.obolibrary.org/obo/UBERON_0001911
+E-MTAB-3838		ERR489070	factor	sex	female
+E-MTAB-3838		ERR489071	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489071	characteristic	breed	Texel
+E-MTAB-3838		ERR489071	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489071	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489071	characteristic	organism part	mammary gland	http://purl.obolibrary.org/obo/UBERON_0001911
+E-MTAB-3838		ERR489071	characteristic	sex	female
+E-MTAB-3838		ERR489071	characteristic	technical replicate	group6
+E-MTAB-3838		ERR489071	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489071	factor	organism part	mammary gland	http://purl.obolibrary.org/obo/UBERON_0001911
+E-MTAB-3838		ERR489071	factor	sex	female
+E-MTAB-3838		ERR489072	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489072	characteristic	breed	Texel
+E-MTAB-3838		ERR489072	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489072	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489072	characteristic	organism part	ovarian follicles
+E-MTAB-3838		ERR489072	characteristic	sex	female
+E-MTAB-3838		ERR489072	characteristic	technical replicate	group7
+E-MTAB-3838		ERR489072	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489072	factor	organism part	ovarian follicles
+E-MTAB-3838		ERR489072	factor	sex	female
+E-MTAB-3838		ERR489073	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489073	characteristic	breed	Texel
+E-MTAB-3838		ERR489073	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489073	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489073	characteristic	organism part	ovarian follicles
+E-MTAB-3838		ERR489073	characteristic	sex	female
+E-MTAB-3838		ERR489073	characteristic	technical replicate	group7
+E-MTAB-3838		ERR489073	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489073	factor	organism part	ovarian follicles
+E-MTAB-3838		ERR489073	factor	sex	female
+E-MTAB-3838		ERR489074	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489074	characteristic	breed	Texel
+E-MTAB-3838		ERR489074	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489074	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489074	characteristic	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3838		ERR489074	characteristic	sex	female
+E-MTAB-3838		ERR489074	characteristic	technical replicate	group8
+E-MTAB-3838		ERR489074	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489074	factor	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3838		ERR489074	factor	sex	female
+E-MTAB-3838		ERR489075	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489075	characteristic	breed	Texel
+E-MTAB-3838		ERR489075	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489075	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489075	characteristic	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3838		ERR489075	characteristic	sex	female
+E-MTAB-3838		ERR489075	characteristic	technical replicate	group8
+E-MTAB-3838		ERR489075	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489075	factor	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3838		ERR489075	factor	sex	female
+E-MTAB-3838		ERR489076	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489076	characteristic	breed	Texel
+E-MTAB-3838		ERR489076	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489076	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489076	characteristic	organism part	Peyer's patch	http://purl.obolibrary.org/obo/UBERON_0001211
+E-MTAB-3838		ERR489076	characteristic	sex	female
+E-MTAB-3838		ERR489076	characteristic	technical replicate	group9
+E-MTAB-3838		ERR489076	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489076	factor	organism part	Peyer's patch	http://purl.obolibrary.org/obo/UBERON_0001211
+E-MTAB-3838		ERR489076	factor	sex	female
+E-MTAB-3838		ERR489077	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489077	characteristic	breed	Texel
+E-MTAB-3838		ERR489077	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489077	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489077	characteristic	organism part	Peyer's patch	http://purl.obolibrary.org/obo/UBERON_0001211
+E-MTAB-3838		ERR489077	characteristic	sex	female
+E-MTAB-3838		ERR489077	characteristic	technical replicate	group9
+E-MTAB-3838		ERR489077	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489077	factor	organism part	Peyer's patch	http://purl.obolibrary.org/obo/UBERON_0001211
+E-MTAB-3838		ERR489077	factor	sex	female
+E-MTAB-3838		ERR489078	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489078	characteristic	breed	Texel
+E-MTAB-3838		ERR489078	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489078	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489078	characteristic	organism part	abomasum
+E-MTAB-3838		ERR489078	characteristic	sex	female
+E-MTAB-3838		ERR489078	characteristic	technical replicate	group10
+E-MTAB-3838		ERR489078	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489078	factor	organism part	abomasum
+E-MTAB-3838		ERR489078	factor	sex	female
+E-MTAB-3838		ERR489079	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489079	characteristic	breed	Texel
+E-MTAB-3838		ERR489079	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489079	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489079	characteristic	organism part	abomasum
+E-MTAB-3838		ERR489079	characteristic	sex	female
+E-MTAB-3838		ERR489079	characteristic	technical replicate	group10
+E-MTAB-3838		ERR489079	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489079	factor	organism part	abomasum
+E-MTAB-3838		ERR489079	factor	sex	female
+E-MTAB-3838		ERR489080	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489080	characteristic	breed	Texel
+E-MTAB-3838		ERR489080	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489080	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489080	characteristic	organism part	abomasum
+E-MTAB-3838		ERR489080	characteristic	sex	female
+E-MTAB-3838		ERR489080	characteristic	technical replicate	group10
+E-MTAB-3838		ERR489080	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489080	factor	organism part	abomasum
+E-MTAB-3838		ERR489080	factor	sex	female
+E-MTAB-3838		ERR489081	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489081	characteristic	breed	Texel
+E-MTAB-3838		ERR489081	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489081	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489081	characteristic	organism part	abomasum
+E-MTAB-3838		ERR489081	characteristic	sex	female
+E-MTAB-3838		ERR489081	characteristic	technical replicate	group10
+E-MTAB-3838		ERR489081	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489081	factor	organism part	abomasum
+E-MTAB-3838		ERR489081	factor	sex	female
+E-MTAB-3838		ERR489082	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489082	characteristic	breed	Texel
+E-MTAB-3838		ERR489082	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489082	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489082	characteristic	organism part	abomasum
+E-MTAB-3838		ERR489082	characteristic	sex	female
+E-MTAB-3838		ERR489082	characteristic	technical replicate	group10
+E-MTAB-3838		ERR489082	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489082	factor	organism part	abomasum
+E-MTAB-3838		ERR489082	factor	sex	female
+E-MTAB-3838		ERR489083	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489083	characteristic	breed	Texel
+E-MTAB-3838		ERR489083	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489083	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489083	characteristic	organism part	abomasum
+E-MTAB-3838		ERR489083	characteristic	sex	female
+E-MTAB-3838		ERR489083	characteristic	technical replicate	group10
+E-MTAB-3838		ERR489083	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489083	factor	organism part	abomasum
+E-MTAB-3838		ERR489083	factor	sex	female
+E-MTAB-3838		ERR489084	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489084	characteristic	breed	Texel
+E-MTAB-3838		ERR489084	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489084	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489084	characteristic	organism part	rumen
+E-MTAB-3838		ERR489084	characteristic	sex	female
+E-MTAB-3838		ERR489084	characteristic	technical replicate	group11
+E-MTAB-3838		ERR489084	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489084	factor	organism part	rumen
+E-MTAB-3838		ERR489084	factor	sex	female
+E-MTAB-3838		ERR489085	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489085	characteristic	breed	Texel
+E-MTAB-3838		ERR489085	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489085	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489085	characteristic	organism part	rumen
+E-MTAB-3838		ERR489085	characteristic	sex	female
+E-MTAB-3838		ERR489085	characteristic	technical replicate	group11
+E-MTAB-3838		ERR489085	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489085	factor	organism part	rumen
+E-MTAB-3838		ERR489085	factor	sex	female
+E-MTAB-3838		ERR489086	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489086	characteristic	breed	Texel
+E-MTAB-3838		ERR489086	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489086	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489086	characteristic	organism part	omentum
+E-MTAB-3838		ERR489086	characteristic	sex	female
+E-MTAB-3838		ERR489086	characteristic	technical replicate	group12
+E-MTAB-3838		ERR489086	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489086	factor	organism part	omentum
+E-MTAB-3838		ERR489086	factor	sex	female
+E-MTAB-3838		ERR489087	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489087	characteristic	breed	Texel
+E-MTAB-3838		ERR489087	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489087	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489087	characteristic	organism part	omentum
+E-MTAB-3838		ERR489087	characteristic	sex	female
+E-MTAB-3838		ERR489087	characteristic	technical replicate	group12
+E-MTAB-3838		ERR489087	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489087	factor	organism part	omentum
+E-MTAB-3838		ERR489087	factor	sex	female
+E-MTAB-3838		ERR489088	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489088	characteristic	breed	Texel
+E-MTAB-3838		ERR489088	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489088	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489088	characteristic	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3838		ERR489088	characteristic	sex	female
+E-MTAB-3838		ERR489088	characteristic	technical replicate	group13
+E-MTAB-3838		ERR489088	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489088	factor	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3838		ERR489088	factor	sex	female
+E-MTAB-3838		ERR489089	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489089	characteristic	breed	Texel
+E-MTAB-3838		ERR489089	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489089	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489089	characteristic	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3838		ERR489089	characteristic	sex	female
+E-MTAB-3838		ERR489089	characteristic	technical replicate	group13
+E-MTAB-3838		ERR489089	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489089	factor	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3838		ERR489089	factor	sex	female
+E-MTAB-3838		ERR489090	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489090	characteristic	breed	Texel
+E-MTAB-3838		ERR489090	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489090	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489090	characteristic	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3838		ERR489090	characteristic	sex	female
+E-MTAB-3838		ERR489090	characteristic	technical replicate	group13
+E-MTAB-3838		ERR489090	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489090	factor	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3838		ERR489090	factor	sex	female
+E-MTAB-3838		ERR489091	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489091	characteristic	breed	Texel
+E-MTAB-3838		ERR489091	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489091	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489091	characteristic	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3838		ERR489091	characteristic	sex	female
+E-MTAB-3838		ERR489091	characteristic	technical replicate	group13
+E-MTAB-3838		ERR489091	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489091	factor	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3838		ERR489091	factor	sex	female
+E-MTAB-3838		ERR489092	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489092	characteristic	breed	Texel
+E-MTAB-3838		ERR489092	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489092	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489092	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489092	characteristic	sex	female
+E-MTAB-3838		ERR489092	characteristic	technical replicate	group14
+E-MTAB-3838		ERR489092	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489092	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489092	factor	sex	female
+E-MTAB-3838		ERR489093	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489093	characteristic	breed	Texel
+E-MTAB-3838		ERR489093	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489093	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489093	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489093	characteristic	sex	female
+E-MTAB-3838		ERR489093	characteristic	technical replicate	group14
+E-MTAB-3838		ERR489093	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489093	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489093	factor	sex	female
+E-MTAB-3838		ERR489094	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489094	characteristic	breed	Texel
+E-MTAB-3838		ERR489094	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489094	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489094	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489094	characteristic	sex	female
+E-MTAB-3838		ERR489094	characteristic	technical replicate	group14
+E-MTAB-3838		ERR489094	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489094	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489094	factor	sex	female
+E-MTAB-3838		ERR489095	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489095	characteristic	breed	Texel
+E-MTAB-3838		ERR489095	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489095	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489095	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489095	characteristic	sex	female
+E-MTAB-3838		ERR489095	characteristic	technical replicate	group14
+E-MTAB-3838		ERR489095	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489095	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489095	factor	sex	female
+E-MTAB-3838		ERR489096	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489096	characteristic	breed	Texel
+E-MTAB-3838		ERR489096	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489096	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489096	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489096	characteristic	sex	female
+E-MTAB-3838		ERR489096	characteristic	technical replicate	group15
+E-MTAB-3838		ERR489096	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489096	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489096	factor	sex	female
+E-MTAB-3838		ERR489097	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489097	characteristic	breed	Texel
+E-MTAB-3838		ERR489097	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489097	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489097	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489097	characteristic	sex	female
+E-MTAB-3838		ERR489097	characteristic	technical replicate	group15
+E-MTAB-3838		ERR489097	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489097	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489097	factor	sex	female
+E-MTAB-3838		ERR489098	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489098	characteristic	breed	Texel
+E-MTAB-3838		ERR489098	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489098	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489098	characteristic	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3838		ERR489098	characteristic	sex	female
+E-MTAB-3838		ERR489098	characteristic	technical replicate	group16
+E-MTAB-3838		ERR489098	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489098	factor	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3838		ERR489098	factor	sex	female
+E-MTAB-3838		ERR489099	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489099	characteristic	breed	Texel
+E-MTAB-3838		ERR489099	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489099	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489099	characteristic	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3838		ERR489099	characteristic	sex	female
+E-MTAB-3838		ERR489099	characteristic	technical replicate	group16
+E-MTAB-3838		ERR489099	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489099	factor	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3838		ERR489099	factor	sex	female
+E-MTAB-3838		ERR489100	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489100	characteristic	breed	Texel
+E-MTAB-3838		ERR489100	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489100	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489100	characteristic	organism part	cervix
+E-MTAB-3838		ERR489100	characteristic	sex	female
+E-MTAB-3838		ERR489100	characteristic	technical replicate	group17
+E-MTAB-3838		ERR489100	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489100	factor	organism part	cervix
+E-MTAB-3838		ERR489100	factor	sex	female
+E-MTAB-3838		ERR489101	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489101	characteristic	breed	Texel
+E-MTAB-3838		ERR489101	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489101	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489101	characteristic	organism part	cervix
+E-MTAB-3838		ERR489101	characteristic	sex	female
+E-MTAB-3838		ERR489101	characteristic	technical replicate	group17
+E-MTAB-3838		ERR489101	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489101	factor	organism part	cervix
+E-MTAB-3838		ERR489101	factor	sex	female
+E-MTAB-3838		ERR489102	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489102	characteristic	breed	Texel
+E-MTAB-3838		ERR489102	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489102	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489102	characteristic	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489102	characteristic	sex	female
+E-MTAB-3838		ERR489102	characteristic	technical replicate	group18
+E-MTAB-3838		ERR489102	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489102	factor	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489102	factor	sex	female
+E-MTAB-3838		ERR489103	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489103	characteristic	breed	Texel
+E-MTAB-3838		ERR489103	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489103	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489103	characteristic	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489103	characteristic	sex	female
+E-MTAB-3838		ERR489103	characteristic	technical replicate	group18
+E-MTAB-3838		ERR489103	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489103	factor	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489103	factor	sex	female
+E-MTAB-3838		ERR489104	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489104	characteristic	breed	Texel
+E-MTAB-3838		ERR489104	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489104	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489104	characteristic	organism part	lymph node mesenteric
+E-MTAB-3838		ERR489104	characteristic	sex	female
+E-MTAB-3838		ERR489104	characteristic	technical replicate	group19
+E-MTAB-3838		ERR489104	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489104	factor	organism part	lymph node mesenteric
+E-MTAB-3838		ERR489104	factor	sex	female
+E-MTAB-3838		ERR489105	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489105	characteristic	breed	Texel
+E-MTAB-3838		ERR489105	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489105	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489105	characteristic	organism part	lymph node mesenteric
+E-MTAB-3838		ERR489105	characteristic	sex	female
+E-MTAB-3838		ERR489105	characteristic	technical replicate	group19
+E-MTAB-3838		ERR489105	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489105	factor	organism part	lymph node mesenteric
+E-MTAB-3838		ERR489105	factor	sex	female
+E-MTAB-3838		ERR489106	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489106	characteristic	breed	Texel
+E-MTAB-3838		ERR489106	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489106	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489106	characteristic	organism part	lymph node mesenteric
+E-MTAB-3838		ERR489106	characteristic	sex	female
+E-MTAB-3838		ERR489106	characteristic	technical replicate	group19
+E-MTAB-3838		ERR489106	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489106	factor	organism part	lymph node mesenteric
+E-MTAB-3838		ERR489106	factor	sex	female
+E-MTAB-3838		ERR489107	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489107	characteristic	breed	Texel
+E-MTAB-3838		ERR489107	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489107	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489107	characteristic	organism part	lymph node mesenteric
+E-MTAB-3838		ERR489107	characteristic	sex	female
+E-MTAB-3838		ERR489107	characteristic	technical replicate	group19
+E-MTAB-3838		ERR489107	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489107	factor	organism part	lymph node mesenteric
+E-MTAB-3838		ERR489107	factor	sex	female
+E-MTAB-3838		ERR489108	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489108	characteristic	breed	Texel
+E-MTAB-3838		ERR489108	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489108	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489108	characteristic	organism part	lymph node mesenteric
+E-MTAB-3838		ERR489108	characteristic	sex	female
+E-MTAB-3838		ERR489108	characteristic	technical replicate	group19
+E-MTAB-3838		ERR489108	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489108	factor	organism part	lymph node mesenteric
+E-MTAB-3838		ERR489108	factor	sex	female
+E-MTAB-3838		ERR489109	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489109	characteristic	breed	Texel
+E-MTAB-3838		ERR489109	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489109	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489109	characteristic	organism part	lymph node mesenteric
+E-MTAB-3838		ERR489109	characteristic	sex	female
+E-MTAB-3838		ERR489109	characteristic	technical replicate	group19
+E-MTAB-3838		ERR489109	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489109	factor	organism part	lymph node mesenteric
+E-MTAB-3838		ERR489109	factor	sex	female
+E-MTAB-3838		ERR489110	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489110	characteristic	breed	Texel
+E-MTAB-3838		ERR489110	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489110	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489110	characteristic	organism part	lymph node prescapular
+E-MTAB-3838		ERR489110	characteristic	sex	female
+E-MTAB-3838		ERR489110	characteristic	technical replicate	group20
+E-MTAB-3838		ERR489110	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489110	factor	organism part	lymph node prescapular
+E-MTAB-3838		ERR489110	factor	sex	female
+E-MTAB-3838		ERR489111	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489111	characteristic	breed	Texel
+E-MTAB-3838		ERR489111	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489111	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489111	characteristic	organism part	lymph node prescapular
+E-MTAB-3838		ERR489111	characteristic	sex	female
+E-MTAB-3838		ERR489111	characteristic	technical replicate	group20
+E-MTAB-3838		ERR489111	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489111	factor	organism part	lymph node prescapular
+E-MTAB-3838		ERR489111	factor	sex	female
+E-MTAB-3838		ERR489112	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489112	characteristic	breed	Texel
+E-MTAB-3838		ERR489112	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489112	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489112	characteristic	organism part	lymph node prescapular
+E-MTAB-3838		ERR489112	characteristic	sex	female
+E-MTAB-3838		ERR489112	characteristic	technical replicate	group20
+E-MTAB-3838		ERR489112	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489112	factor	organism part	lymph node prescapular
+E-MTAB-3838		ERR489112	factor	sex	female
+E-MTAB-3838		ERR489113	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489113	characteristic	breed	Texel
+E-MTAB-3838		ERR489113	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489113	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489113	characteristic	organism part	lymph node prescapular
+E-MTAB-3838		ERR489113	characteristic	sex	female
+E-MTAB-3838		ERR489113	characteristic	technical replicate	group20
+E-MTAB-3838		ERR489113	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489113	factor	organism part	lymph node prescapular
+E-MTAB-3838		ERR489113	factor	sex	female
+E-MTAB-3838		ERR489114	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489114	characteristic	breed	Texel
+E-MTAB-3838		ERR489114	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489114	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489114	characteristic	organism part	lymph node prescapular
+E-MTAB-3838		ERR489114	characteristic	sex	female
+E-MTAB-3838		ERR489114	characteristic	technical replicate	group20
+E-MTAB-3838		ERR489114	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489114	factor	organism part	lymph node prescapular
+E-MTAB-3838		ERR489114	factor	sex	female
+E-MTAB-3838		ERR489115	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489115	characteristic	breed	Texel
+E-MTAB-3838		ERR489115	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489115	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489115	characteristic	organism part	lymph node prescapular
+E-MTAB-3838		ERR489115	characteristic	sex	female
+E-MTAB-3838		ERR489115	characteristic	technical replicate	group20
+E-MTAB-3838		ERR489115	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489115	factor	organism part	lymph node prescapular
+E-MTAB-3838		ERR489115	factor	sex	female
+E-MTAB-3838		ERR489116	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489116	characteristic	breed	Texel
+E-MTAB-3838		ERR489116	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489116	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489116	characteristic	organism part	muscle long dorsal
+E-MTAB-3838		ERR489116	characteristic	sex	female
+E-MTAB-3838		ERR489116	characteristic	technical replicate	group21
+E-MTAB-3838		ERR489116	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489116	factor	organism part	muscle long dorsal
+E-MTAB-3838		ERR489116	factor	sex	female
+E-MTAB-3838		ERR489117	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489117	characteristic	breed	Texel
+E-MTAB-3838		ERR489117	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489117	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489117	characteristic	organism part	muscle long dorsal
+E-MTAB-3838		ERR489117	characteristic	sex	female
+E-MTAB-3838		ERR489117	characteristic	technical replicate	group21
+E-MTAB-3838		ERR489117	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489117	factor	organism part	muscle long dorsal
+E-MTAB-3838		ERR489117	factor	sex	female
+E-MTAB-3838		ERR489118	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489118	characteristic	breed	Texel
+E-MTAB-3838		ERR489118	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489118	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489118	characteristic	organism part	muscle long dorsal
+E-MTAB-3838		ERR489118	characteristic	sex	female
+E-MTAB-3838		ERR489118	characteristic	technical replicate	group21
+E-MTAB-3838		ERR489118	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489118	factor	organism part	muscle long dorsal
+E-MTAB-3838		ERR489118	factor	sex	female
+E-MTAB-3838		ERR489119	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489119	characteristic	breed	Texel
+E-MTAB-3838		ERR489119	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489119	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489119	characteristic	organism part	muscle long dorsal
+E-MTAB-3838		ERR489119	characteristic	sex	female
+E-MTAB-3838		ERR489119	characteristic	technical replicate	group21
+E-MTAB-3838		ERR489119	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489119	factor	organism part	muscle long dorsal
+E-MTAB-3838		ERR489119	factor	sex	female
+E-MTAB-3838		ERR489120	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489120	characteristic	breed	Texel
+E-MTAB-3838		ERR489120	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489120	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489120	characteristic	organism part	muscle long dorsal
+E-MTAB-3838		ERR489120	characteristic	sex	female
+E-MTAB-3838		ERR489120	characteristic	technical replicate	group21
+E-MTAB-3838		ERR489120	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489120	factor	organism part	muscle long dorsal
+E-MTAB-3838		ERR489120	factor	sex	female
+E-MTAB-3838		ERR489121	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489121	characteristic	breed	Texel
+E-MTAB-3838		ERR489121	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489121	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489121	characteristic	organism part	muscle long dorsal
+E-MTAB-3838		ERR489121	characteristic	sex	female
+E-MTAB-3838		ERR489121	characteristic	technical replicate	group21
+E-MTAB-3838		ERR489121	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489121	factor	organism part	muscle long dorsal
+E-MTAB-3838		ERR489121	factor	sex	female
+E-MTAB-3838		ERR489122	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489122	characteristic	breed	Texel
+E-MTAB-3838		ERR489122	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489122	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489122	characteristic	organism part	muscle biceps
+E-MTAB-3838		ERR489122	characteristic	sex	female
+E-MTAB-3838		ERR489122	characteristic	technical replicate	group22
+E-MTAB-3838		ERR489122	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489122	factor	organism part	muscle biceps
+E-MTAB-3838		ERR489122	factor	sex	female
+E-MTAB-3838		ERR489123	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489123	characteristic	breed	Texel
+E-MTAB-3838		ERR489123	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489123	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489123	characteristic	organism part	muscle biceps
+E-MTAB-3838		ERR489123	characteristic	sex	female
+E-MTAB-3838		ERR489123	characteristic	technical replicate	group22
+E-MTAB-3838		ERR489123	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489123	factor	organism part	muscle biceps
+E-MTAB-3838		ERR489123	factor	sex	female
+E-MTAB-3838		ERR489124	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489124	characteristic	breed	Texel
+E-MTAB-3838		ERR489124	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489124	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489124	characteristic	organism part	muscle biceps
+E-MTAB-3838		ERR489124	characteristic	sex	female
+E-MTAB-3838		ERR489124	characteristic	technical replicate	group22
+E-MTAB-3838		ERR489124	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489124	factor	organism part	muscle biceps
+E-MTAB-3838		ERR489124	factor	sex	female
+E-MTAB-3838		ERR489125	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489125	characteristic	breed	Texel
+E-MTAB-3838		ERR489125	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489125	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489125	characteristic	organism part	muscle biceps
+E-MTAB-3838		ERR489125	characteristic	sex	female
+E-MTAB-3838		ERR489125	characteristic	technical replicate	group22
+E-MTAB-3838		ERR489125	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489125	factor	organism part	muscle biceps
+E-MTAB-3838		ERR489125	factor	sex	female
+E-MTAB-3838		ERR489126	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489126	characteristic	breed	Texel
+E-MTAB-3838		ERR489126	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489126	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489126	characteristic	organism part	muscle biceps
+E-MTAB-3838		ERR489126	characteristic	sex	female
+E-MTAB-3838		ERR489126	characteristic	technical replicate	group22
+E-MTAB-3838		ERR489126	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489126	factor	organism part	muscle biceps
+E-MTAB-3838		ERR489126	factor	sex	female
+E-MTAB-3838		ERR489127	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489127	characteristic	breed	Texel
+E-MTAB-3838		ERR489127	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489127	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489127	characteristic	organism part	muscle biceps
+E-MTAB-3838		ERR489127	characteristic	sex	female
+E-MTAB-3838		ERR489127	characteristic	technical replicate	group22
+E-MTAB-3838		ERR489127	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489127	factor	organism part	muscle biceps
+E-MTAB-3838		ERR489127	factor	sex	female
+E-MTAB-3838		ERR489128	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489128	characteristic	breed	Texel
+E-MTAB-3838		ERR489128	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489128	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489128	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489128	characteristic	sex	female
+E-MTAB-3838		ERR489128	characteristic	technical replicate	group23
+E-MTAB-3838		ERR489128	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489128	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489128	factor	sex	female
+E-MTAB-3838		ERR489129	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489129	characteristic	breed	Texel
+E-MTAB-3838		ERR489129	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489129	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489129	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489129	characteristic	sex	female
+E-MTAB-3838		ERR489129	characteristic	technical replicate	group23
+E-MTAB-3838		ERR489129	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489129	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489129	factor	sex	female
+E-MTAB-3838		ERR489130	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489130	characteristic	breed	Texel
+E-MTAB-3838		ERR489130	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489130	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489130	characteristic	organism part	skin back
+E-MTAB-3838		ERR489130	characteristic	sex	female
+E-MTAB-3838		ERR489130	characteristic	technical replicate	group24
+E-MTAB-3838		ERR489130	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489130	factor	organism part	skin back
+E-MTAB-3838		ERR489130	factor	sex	female
+E-MTAB-3838		ERR489131	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489131	characteristic	breed	Texel
+E-MTAB-3838		ERR489131	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489131	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489131	characteristic	organism part	skin back
+E-MTAB-3838		ERR489131	characteristic	sex	female
+E-MTAB-3838		ERR489131	characteristic	technical replicate	group24
+E-MTAB-3838		ERR489131	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489131	factor	organism part	skin back
+E-MTAB-3838		ERR489131	factor	sex	female
+E-MTAB-3838		ERR489132	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489132	characteristic	breed	Texel
+E-MTAB-3838		ERR489132	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489132	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489132	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3838		ERR489132	characteristic	sex	female
+E-MTAB-3838		ERR489132	characteristic	technical replicate	group25
+E-MTAB-3838		ERR489132	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489132	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3838		ERR489132	factor	sex	female
+E-MTAB-3838		ERR489133	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489133	characteristic	breed	Texel
+E-MTAB-3838		ERR489133	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489133	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489133	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3838		ERR489133	characteristic	sex	female
+E-MTAB-3838		ERR489133	characteristic	technical replicate	group25
+E-MTAB-3838		ERR489133	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489133	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3838		ERR489133	factor	sex	female
+E-MTAB-3838		ERR489134	characteristic	breed	Texel
+E-MTAB-3838		ERR489134	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489134	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489134	characteristic	organism part	mammary gland	http://purl.obolibrary.org/obo/UBERON_0001911
+E-MTAB-3838		ERR489134	characteristic	sex	female
+E-MTAB-3838		ERR489134	characteristic	technical replicate	group26
+E-MTAB-3838		ERR489134	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489134	factor	organism part	mammary gland	http://purl.obolibrary.org/obo/UBERON_0001911
+E-MTAB-3838		ERR489134	factor	sex	female
+E-MTAB-3838		ERR489135	characteristic	breed	Texel
+E-MTAB-3838		ERR489135	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489135	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489135	characteristic	organism part	mammary gland	http://purl.obolibrary.org/obo/UBERON_0001911
+E-MTAB-3838		ERR489135	characteristic	sex	female
+E-MTAB-3838		ERR489135	characteristic	technical replicate	group26
+E-MTAB-3838		ERR489135	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489135	factor	organism part	mammary gland	http://purl.obolibrary.org/obo/UBERON_0001911
+E-MTAB-3838		ERR489135	factor	sex	female
+E-MTAB-3838		ERR489136	characteristic	breed	Texel
+E-MTAB-3838		ERR489136	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489136	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489136	characteristic	organism part	corpus luteum
+E-MTAB-3838		ERR489136	characteristic	sex	female
+E-MTAB-3838		ERR489136	characteristic	technical replicate	group27
+E-MTAB-3838		ERR489136	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489136	factor	organism part	corpus luteum
+E-MTAB-3838		ERR489136	factor	sex	female
+E-MTAB-3838		ERR489137	characteristic	breed	Texel
+E-MTAB-3838		ERR489137	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489137	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489137	characteristic	organism part	corpus luteum
+E-MTAB-3838		ERR489137	characteristic	sex	female
+E-MTAB-3838		ERR489137	characteristic	technical replicate	group27
+E-MTAB-3838		ERR489137	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489137	factor	organism part	corpus luteum
+E-MTAB-3838		ERR489137	factor	sex	female
+E-MTAB-3838		ERR489138	characteristic	breed	Texel
+E-MTAB-3838		ERR489138	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489138	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489138	characteristic	organism part	corpus luteum
+E-MTAB-3838		ERR489138	characteristic	sex	female
+E-MTAB-3838		ERR489138	characteristic	technical replicate	group27
+E-MTAB-3838		ERR489138	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489138	factor	organism part	corpus luteum
+E-MTAB-3838		ERR489138	factor	sex	female
+E-MTAB-3838		ERR489139	characteristic	breed	Texel
+E-MTAB-3838		ERR489139	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489139	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489139	characteristic	organism part	corpus luteum
+E-MTAB-3838		ERR489139	characteristic	sex	female
+E-MTAB-3838		ERR489139	characteristic	technical replicate	group27
+E-MTAB-3838		ERR489139	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489139	factor	organism part	corpus luteum
+E-MTAB-3838		ERR489139	factor	sex	female
+E-MTAB-3838		ERR489140	characteristic	breed	Texel
+E-MTAB-3838		ERR489140	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489140	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489140	characteristic	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3838		ERR489140	characteristic	sex	female
+E-MTAB-3838		ERR489140	characteristic	technical replicate	group28
+E-MTAB-3838		ERR489140	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489140	factor	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3838		ERR489140	factor	sex	female
+E-MTAB-3838		ERR489141	characteristic	breed	Texel
+E-MTAB-3838		ERR489141	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489141	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489141	characteristic	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3838		ERR489141	characteristic	sex	female
+E-MTAB-3838		ERR489141	characteristic	technical replicate	group28
+E-MTAB-3838		ERR489141	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489141	factor	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-3838		ERR489141	factor	sex	female
+E-MTAB-3838		ERR489142	characteristic	breed	Texel
+E-MTAB-3838		ERR489142	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489142	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489142	characteristic	organism part	pituitary	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489142	characteristic	sex	female
+E-MTAB-3838		ERR489142	characteristic	technical replicate	group29
+E-MTAB-3838		ERR489142	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489142	factor	organism part	pituitary	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489142	factor	sex	female
+E-MTAB-3838		ERR489143	characteristic	breed	Texel
+E-MTAB-3838		ERR489143	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489143	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489143	characteristic	organism part	pituitary	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489143	characteristic	sex	female
+E-MTAB-3838		ERR489143	characteristic	technical replicate	group29
+E-MTAB-3838		ERR489143	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489143	factor	organism part	pituitary	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489143	factor	sex	female
+E-MTAB-3838		ERR489144	characteristic	breed	Texel
+E-MTAB-3838		ERR489144	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489144	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489144	characteristic	organism part	placenta (including membranes)	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3838		ERR489144	characteristic	sex	female
+E-MTAB-3838		ERR489144	characteristic	technical replicate	group30
+E-MTAB-3838		ERR489144	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489144	factor	organism part	placenta (including membranes)	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3838		ERR489144	factor	sex	female
+E-MTAB-3838		ERR489145	characteristic	breed	Texel
+E-MTAB-3838		ERR489145	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489145	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489145	characteristic	organism part	placenta (including membranes)	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3838		ERR489145	characteristic	sex	female
+E-MTAB-3838		ERR489145	characteristic	technical replicate	group30
+E-MTAB-3838		ERR489145	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489145	factor	organism part	placenta (including membranes)	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3838		ERR489145	factor	sex	female
+E-MTAB-3838		ERR489146	characteristic	breed	Texel
+E-MTAB-3838		ERR489146	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489146	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489146	characteristic	organism part	cervix
+E-MTAB-3838		ERR489146	characteristic	sex	female
+E-MTAB-3838		ERR489146	characteristic	technical replicate	group31
+E-MTAB-3838		ERR489146	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489146	factor	organism part	cervix
+E-MTAB-3838		ERR489146	factor	sex	female
+E-MTAB-3838		ERR489147	characteristic	breed	Texel
+E-MTAB-3838		ERR489147	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489147	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489147	characteristic	organism part	cervix
+E-MTAB-3838		ERR489147	characteristic	sex	female
+E-MTAB-3838		ERR489147	characteristic	technical replicate	group31
+E-MTAB-3838		ERR489147	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489147	factor	organism part	cervix
+E-MTAB-3838		ERR489147	factor	sex	female
+E-MTAB-3838		ERR489148	characteristic	breed	Texel
+E-MTAB-3838		ERR489148	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489148	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489148	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489148	characteristic	sex	female
+E-MTAB-3838		ERR489148	characteristic	technical replicate	group32
+E-MTAB-3838		ERR489148	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489148	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489148	factor	sex	female
+E-MTAB-3838		ERR489149	characteristic	breed	Texel
+E-MTAB-3838		ERR489149	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489149	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489149	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489149	characteristic	sex	female
+E-MTAB-3838		ERR489149	characteristic	technical replicate	group32
+E-MTAB-3838		ERR489149	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489149	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489149	factor	sex	female
+E-MTAB-3838		ERR489150	characteristic	breed	Texel
+E-MTAB-3838		ERR489150	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489150	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489150	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489150	characteristic	sex	female
+E-MTAB-3838		ERR489150	characteristic	technical replicate	group32
+E-MTAB-3838		ERR489150	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489150	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489150	factor	sex	female
+E-MTAB-3838		ERR489151	characteristic	breed	Texel
+E-MTAB-3838		ERR489151	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489151	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489151	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489151	characteristic	sex	female
+E-MTAB-3838		ERR489151	characteristic	technical replicate	group32
+E-MTAB-3838		ERR489151	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489151	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489151	factor	sex	female
+E-MTAB-3838		ERR489152	characteristic	breed	Texel
+E-MTAB-3838		ERR489152	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489152	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489152	characteristic	organism part	Peyer's patch	http://purl.obolibrary.org/obo/UBERON_0001211
+E-MTAB-3838		ERR489152	characteristic	sex	female
+E-MTAB-3838		ERR489152	characteristic	technical replicate	group33
+E-MTAB-3838		ERR489152	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489152	factor	organism part	Peyer's patch	http://purl.obolibrary.org/obo/UBERON_0001211
+E-MTAB-3838		ERR489152	factor	sex	female
+E-MTAB-3838		ERR489153	characteristic	breed	Texel
+E-MTAB-3838		ERR489153	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489153	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489153	characteristic	organism part	Peyer's patch	http://purl.obolibrary.org/obo/UBERON_0001211
+E-MTAB-3838		ERR489153	characteristic	sex	female
+E-MTAB-3838		ERR489153	characteristic	technical replicate	group33
+E-MTAB-3838		ERR489153	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489153	factor	organism part	Peyer's patch	http://purl.obolibrary.org/obo/UBERON_0001211
+E-MTAB-3838		ERR489153	factor	sex	female
+E-MTAB-3838		ERR489154	characteristic	breed	Texel
+E-MTAB-3838		ERR489154	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489154	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489154	characteristic	organism part	abomasum
+E-MTAB-3838		ERR489154	characteristic	sex	female
+E-MTAB-3838		ERR489154	characteristic	technical replicate	group34
+E-MTAB-3838		ERR489154	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489154	factor	organism part	abomasum
+E-MTAB-3838		ERR489154	factor	sex	female
+E-MTAB-3838		ERR489155	characteristic	breed	Texel
+E-MTAB-3838		ERR489155	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489155	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489155	characteristic	organism part	abomasum
+E-MTAB-3838		ERR489155	characteristic	sex	female
+E-MTAB-3838		ERR489155	characteristic	technical replicate	group34
+E-MTAB-3838		ERR489155	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489155	factor	organism part	abomasum
+E-MTAB-3838		ERR489155	factor	sex	female
+E-MTAB-3838		ERR489156	characteristic	breed	Texel
+E-MTAB-3838		ERR489156	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489156	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489156	characteristic	organism part	abomasum
+E-MTAB-3838		ERR489156	characteristic	sex	female
+E-MTAB-3838		ERR489156	characteristic	technical replicate	group34
+E-MTAB-3838		ERR489156	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489156	factor	organism part	abomasum
+E-MTAB-3838		ERR489156	factor	sex	female
+E-MTAB-3838		ERR489157	characteristic	breed	Texel
+E-MTAB-3838		ERR489157	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489157	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489157	characteristic	organism part	abomasum
+E-MTAB-3838		ERR489157	characteristic	sex	female
+E-MTAB-3838		ERR489157	characteristic	technical replicate	group34
+E-MTAB-3838		ERR489157	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489157	factor	organism part	abomasum
+E-MTAB-3838		ERR489157	factor	sex	female
+E-MTAB-3838		ERR489158	characteristic	breed	Texel
+E-MTAB-3838		ERR489158	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489158	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489158	characteristic	organism part	abomasum
+E-MTAB-3838		ERR489158	characteristic	sex	female
+E-MTAB-3838		ERR489158	characteristic	technical replicate	group34
+E-MTAB-3838		ERR489158	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489158	factor	organism part	abomasum
+E-MTAB-3838		ERR489158	factor	sex	female
+E-MTAB-3838		ERR489159	characteristic	breed	Texel
+E-MTAB-3838		ERR489159	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489159	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489159	characteristic	organism part	abomasum
+E-MTAB-3838		ERR489159	characteristic	sex	female
+E-MTAB-3838		ERR489159	characteristic	technical replicate	group34
+E-MTAB-3838		ERR489159	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489159	factor	organism part	abomasum
+E-MTAB-3838		ERR489159	factor	sex	female
+E-MTAB-3838		ERR489160	characteristic	breed	Texel
+E-MTAB-3838		ERR489160	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489160	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489160	characteristic	organism part	rumen
+E-MTAB-3838		ERR489160	characteristic	sex	female
+E-MTAB-3838		ERR489160	characteristic	technical replicate	group35
+E-MTAB-3838		ERR489160	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489160	factor	organism part	rumen
+E-MTAB-3838		ERR489160	factor	sex	female
+E-MTAB-3838		ERR489161	characteristic	breed	Texel
+E-MTAB-3838		ERR489161	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489161	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489161	characteristic	organism part	rumen
+E-MTAB-3838		ERR489161	characteristic	sex	female
+E-MTAB-3838		ERR489161	characteristic	technical replicate	group35
+E-MTAB-3838		ERR489161	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489161	factor	organism part	rumen
+E-MTAB-3838		ERR489161	factor	sex	female
+E-MTAB-3838		ERR489162	characteristic	breed	Texel
+E-MTAB-3838		ERR489162	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489162	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489162	characteristic	organism part	rumen
+E-MTAB-3838		ERR489162	characteristic	sex	female
+E-MTAB-3838		ERR489162	characteristic	technical replicate	group35
+E-MTAB-3838		ERR489162	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489162	factor	organism part	rumen
+E-MTAB-3838		ERR489162	factor	sex	female
+E-MTAB-3838		ERR489163	characteristic	breed	Texel
+E-MTAB-3838		ERR489163	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489163	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489163	characteristic	organism part	rumen
+E-MTAB-3838		ERR489163	characteristic	sex	female
+E-MTAB-3838		ERR489163	characteristic	technical replicate	group35
+E-MTAB-3838		ERR489163	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489163	factor	organism part	rumen
+E-MTAB-3838		ERR489163	factor	sex	female
+E-MTAB-3838		ERR489164	characteristic	breed	Texel
+E-MTAB-3838		ERR489164	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489164	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489164	characteristic	organism part	rumen
+E-MTAB-3838		ERR489164	characteristic	sex	female
+E-MTAB-3838		ERR489164	characteristic	technical replicate	group35
+E-MTAB-3838		ERR489164	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489164	factor	organism part	rumen
+E-MTAB-3838		ERR489164	factor	sex	female
+E-MTAB-3838		ERR489165	characteristic	breed	Texel
+E-MTAB-3838		ERR489165	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489165	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489165	characteristic	organism part	rumen
+E-MTAB-3838		ERR489165	characteristic	sex	female
+E-MTAB-3838		ERR489165	characteristic	technical replicate	group35
+E-MTAB-3838		ERR489165	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489165	factor	organism part	rumen
+E-MTAB-3838		ERR489165	factor	sex	female
+E-MTAB-3838		ERR489166	characteristic	breed	Texel
+E-MTAB-3838		ERR489166	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489166	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489166	characteristic	organism part	omentum
+E-MTAB-3838		ERR489166	characteristic	sex	female
+E-MTAB-3838		ERR489166	characteristic	technical replicate	group36
+E-MTAB-3838		ERR489166	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489166	factor	organism part	omentum
+E-MTAB-3838		ERR489166	factor	sex	female
+E-MTAB-3838		ERR489167	characteristic	breed	Texel
+E-MTAB-3838		ERR489167	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489167	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489167	characteristic	organism part	omentum
+E-MTAB-3838		ERR489167	characteristic	sex	female
+E-MTAB-3838		ERR489167	characteristic	technical replicate	group36
+E-MTAB-3838		ERR489167	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489167	factor	organism part	omentum
+E-MTAB-3838		ERR489167	factor	sex	female
+E-MTAB-3838		ERR489168	characteristic	breed	Texel
+E-MTAB-3838		ERR489168	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489168	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489168	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489168	characteristic	sex	female
+E-MTAB-3838		ERR489168	characteristic	technical replicate	group37
+E-MTAB-3838		ERR489168	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489168	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489168	factor	sex	female
+E-MTAB-3838		ERR489169	characteristic	breed	Texel
+E-MTAB-3838		ERR489169	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489169	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489169	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489169	characteristic	sex	female
+E-MTAB-3838		ERR489169	characteristic	technical replicate	group37
+E-MTAB-3838		ERR489169	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489169	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489169	factor	sex	female
+E-MTAB-3838		ERR489170	characteristic	breed	Texel
+E-MTAB-3838		ERR489170	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489170	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489170	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489170	characteristic	sex	female
+E-MTAB-3838		ERR489170	characteristic	technical replicate	group37
+E-MTAB-3838		ERR489170	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489170	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489170	factor	sex	female
+E-MTAB-3838		ERR489171	characteristic	breed	Texel
+E-MTAB-3838		ERR489171	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489171	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489171	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489171	characteristic	sex	female
+E-MTAB-3838		ERR489171	characteristic	technical replicate	group37
+E-MTAB-3838		ERR489171	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489171	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489171	factor	sex	female
+E-MTAB-3838		ERR489172	characteristic	breed	Texel
+E-MTAB-3838		ERR489172	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489172	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489172	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489172	characteristic	sex	female
+E-MTAB-3838		ERR489172	characteristic	technical replicate	group37
+E-MTAB-3838		ERR489172	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489172	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489172	factor	sex	female
+E-MTAB-3838		ERR489173	characteristic	breed	Texel
+E-MTAB-3838		ERR489173	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489173	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489173	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489173	characteristic	sex	female
+E-MTAB-3838		ERR489173	characteristic	technical replicate	group37
+E-MTAB-3838		ERR489173	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489173	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489173	factor	sex	female
+E-MTAB-3838		ERR489174	characteristic	breed	Texel
+E-MTAB-3838		ERR489174	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489174	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489174	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489174	characteristic	sex	female
+E-MTAB-3838		ERR489174	characteristic	technical replicate	group38
+E-MTAB-3838		ERR489174	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489174	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489174	factor	sex	female
+E-MTAB-3838		ERR489175	characteristic	breed	Texel
+E-MTAB-3838		ERR489175	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489175	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489175	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489175	characteristic	sex	female
+E-MTAB-3838		ERR489175	characteristic	technical replicate	group38
+E-MTAB-3838		ERR489175	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489175	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489175	factor	sex	female
+E-MTAB-3838		ERR489176	characteristic	breed	Texel
+E-MTAB-3838		ERR489176	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489176	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489176	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489176	characteristic	sex	female
+E-MTAB-3838		ERR489176	characteristic	technical replicate	group38
+E-MTAB-3838		ERR489176	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489176	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489176	factor	sex	female
+E-MTAB-3838		ERR489177	characteristic	breed	Texel
+E-MTAB-3838		ERR489177	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489177	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489177	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489177	characteristic	sex	female
+E-MTAB-3838		ERR489177	characteristic	technical replicate	group38
+E-MTAB-3838		ERR489177	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489177	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489177	factor	sex	female
+E-MTAB-3838		ERR489178	characteristic	breed	Texel
+E-MTAB-3838		ERR489178	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489178	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489178	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489178	characteristic	sex	female
+E-MTAB-3838		ERR489178	characteristic	technical replicate	group38
+E-MTAB-3838		ERR489178	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489178	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489178	factor	sex	female
+E-MTAB-3838		ERR489179	characteristic	breed	Texel
+E-MTAB-3838		ERR489179	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489179	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489179	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489179	characteristic	sex	female
+E-MTAB-3838		ERR489179	characteristic	technical replicate	group38
+E-MTAB-3838		ERR489179	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489179	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489179	factor	sex	female
+E-MTAB-3838		ERR489180	characteristic	breed	Texel
+E-MTAB-3838		ERR489180	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489180	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489180	characteristic	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3838		ERR489180	characteristic	sex	female
+E-MTAB-3838		ERR489180	characteristic	technical replicate	group39
+E-MTAB-3838		ERR489180	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489180	factor	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3838		ERR489180	factor	sex	female
+E-MTAB-3838		ERR489181	characteristic	breed	Texel
+E-MTAB-3838		ERR489181	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489181	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489181	characteristic	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3838		ERR489181	characteristic	sex	female
+E-MTAB-3838		ERR489181	characteristic	technical replicate	group39
+E-MTAB-3838		ERR489181	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489181	factor	organism part	uterus	http://purl.obolibrary.org/obo/UBERON_0000995
+E-MTAB-3838		ERR489181	factor	sex	female
+E-MTAB-3838		ERR489182	characteristic	breed	Texel
+E-MTAB-3838		ERR489182	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489182	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489182	characteristic	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489182	characteristic	sex	female
+E-MTAB-3838		ERR489182	characteristic	technical replicate	group39
+E-MTAB-3838		ERR489182	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489182	factor	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489182	factor	sex	female
+E-MTAB-3838		ERR489183	characteristic	breed	Texel
+E-MTAB-3838		ERR489183	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489183	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489183	characteristic	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489183	characteristic	sex	female
+E-MTAB-3838		ERR489183	characteristic	technical replicate	group39
+E-MTAB-3838		ERR489183	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489183	factor	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489183	factor	sex	female
+E-MTAB-3838		ERR489184	characteristic	breed	Texel
+E-MTAB-3838		ERR489184	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489184	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489184	characteristic	organism part	mesenteric lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3838		ERR489184	characteristic	sex	female
+E-MTAB-3838		ERR489184	characteristic	technical replicate	group40
+E-MTAB-3838		ERR489184	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489184	factor	organism part	mesenteric lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3838		ERR489184	factor	sex	female
+E-MTAB-3838		ERR489185	characteristic	breed	Texel
+E-MTAB-3838		ERR489185	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489185	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489185	characteristic	organism part	mesenteric lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3838		ERR489185	characteristic	sex	female
+E-MTAB-3838		ERR489185	characteristic	technical replicate	group40
+E-MTAB-3838		ERR489185	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489185	factor	organism part	mesenteric lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3838		ERR489185	factor	sex	female
+E-MTAB-3838		ERR489186	characteristic	breed	Texel
+E-MTAB-3838		ERR489186	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489186	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489186	characteristic	organism part	mesenteric lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3838		ERR489186	characteristic	sex	female
+E-MTAB-3838		ERR489186	characteristic	technical replicate	group40
+E-MTAB-3838		ERR489186	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489186	factor	organism part	mesenteric lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3838		ERR489186	factor	sex	female
+E-MTAB-3838		ERR489187	characteristic	breed	Texel
+E-MTAB-3838		ERR489187	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489187	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489187	characteristic	organism part	mesenteric lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3838		ERR489187	characteristic	sex	female
+E-MTAB-3838		ERR489187	characteristic	technical replicate	group40
+E-MTAB-3838		ERR489187	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489187	factor	organism part	mesenteric lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3838		ERR489187	factor	sex	female
+E-MTAB-3838		ERR489188	characteristic	breed	Texel
+E-MTAB-3838		ERR489188	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489188	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489188	characteristic	organism part	longissimus dorsi	http://www.ebi.ac.uk/efo/EFO_0006863
+E-MTAB-3838		ERR489188	characteristic	sex	female
+E-MTAB-3838		ERR489188	characteristic	technical replicate	group41
+E-MTAB-3838		ERR489188	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489188	factor	organism part	longissimus dorsi	http://www.ebi.ac.uk/efo/EFO_0006863
+E-MTAB-3838		ERR489188	factor	sex	female
+E-MTAB-3838		ERR489189	characteristic	breed	Texel
+E-MTAB-3838		ERR489189	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489189	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489189	characteristic	organism part	longissimus dorsi	http://www.ebi.ac.uk/efo/EFO_0006863
+E-MTAB-3838		ERR489189	characteristic	sex	female
+E-MTAB-3838		ERR489189	characteristic	technical replicate	group41
+E-MTAB-3838		ERR489189	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489189	factor	organism part	longissimus dorsi	http://www.ebi.ac.uk/efo/EFO_0006863
+E-MTAB-3838		ERR489189	factor	sex	female
+E-MTAB-3838		ERR489190	characteristic	breed	Texel
+E-MTAB-3838		ERR489190	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489190	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489190	characteristic	organism part	biceps
+E-MTAB-3838		ERR489190	characteristic	sex	female
+E-MTAB-3838		ERR489190	characteristic	technical replicate	group42
+E-MTAB-3838		ERR489190	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489190	factor	organism part	biceps
+E-MTAB-3838		ERR489190	factor	sex	female
+E-MTAB-3838		ERR489191	characteristic	breed	Texel
+E-MTAB-3838		ERR489191	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489191	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489191	characteristic	organism part	biceps
+E-MTAB-3838		ERR489191	characteristic	sex	female
+E-MTAB-3838		ERR489191	characteristic	technical replicate	group42
+E-MTAB-3838		ERR489191	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489191	factor	organism part	biceps
+E-MTAB-3838		ERR489191	factor	sex	female
+E-MTAB-3838		ERR489192	characteristic	breed	Texel
+E-MTAB-3838		ERR489192	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489192	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489192	characteristic	organism part	skin from side
+E-MTAB-3838		ERR489192	characteristic	sex	female
+E-MTAB-3838		ERR489192	characteristic	technical replicate	group43
+E-MTAB-3838		ERR489192	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489192	factor	organism part	skin from side
+E-MTAB-3838		ERR489192	factor	sex	female
+E-MTAB-3838		ERR489193	characteristic	breed	Texel
+E-MTAB-3838		ERR489193	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489193	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489193	characteristic	organism part	skin from side
+E-MTAB-3838		ERR489193	characteristic	sex	female
+E-MTAB-3838		ERR489193	characteristic	technical replicate	group43
+E-MTAB-3838		ERR489193	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489193	factor	organism part	skin from side
+E-MTAB-3838		ERR489193	factor	sex	female
+E-MTAB-3838		ERR489194	characteristic	breed	Texel
+E-MTAB-3838		ERR489194	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489194	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489194	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489194	characteristic	sex	female
+E-MTAB-3838		ERR489194	characteristic	technical replicate	group44
+E-MTAB-3838		ERR489194	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489194	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489194	factor	sex	female
+E-MTAB-3838		ERR489195	characteristic	breed	Texel
+E-MTAB-3838		ERR489195	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489195	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489195	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489195	characteristic	sex	female
+E-MTAB-3838		ERR489195	characteristic	technical replicate	group44
+E-MTAB-3838		ERR489195	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489195	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489195	factor	sex	female
+E-MTAB-3838		ERR489196	characteristic	breed	Texel
+E-MTAB-3838		ERR489196	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489196	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489196	characteristic	organism part	alveolar macrophages	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3838		ERR489196	characteristic	sex	female
+E-MTAB-3838		ERR489196	characteristic	technical replicate	group45
+E-MTAB-3838		ERR489196	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489196	factor	organism part	alveolar macrophages	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3838		ERR489196	factor	sex	female
+E-MTAB-3838		ERR489197	characteristic	breed	Texel
+E-MTAB-3838		ERR489197	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489197	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489197	characteristic	organism part	alveolar macrophages	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3838		ERR489197	characteristic	sex	female
+E-MTAB-3838		ERR489197	characteristic	technical replicate	group45
+E-MTAB-3838		ERR489197	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489197	factor	organism part	alveolar macrophages	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3838		ERR489197	factor	sex	female
+E-MTAB-3838		ERR489198	characteristic	breed	Texel
+E-MTAB-3838		ERR489198	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489198	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489198	characteristic	organism part	hypothalamus	http://purl.obolibrary.org/obo/UBERON_0001898
+E-MTAB-3838		ERR489198	characteristic	sex	male
+E-MTAB-3838		ERR489198	characteristic	technical replicate	group46
+E-MTAB-3838		ERR489198	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489198	factor	organism part	hypothalamus	http://purl.obolibrary.org/obo/UBERON_0001898
+E-MTAB-3838		ERR489198	factor	sex	male
+E-MTAB-3838		ERR489199	characteristic	breed	Texel
+E-MTAB-3838		ERR489199	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489199	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489199	characteristic	organism part	hypothalamus	http://purl.obolibrary.org/obo/UBERON_0001898
+E-MTAB-3838		ERR489199	characteristic	sex	male
+E-MTAB-3838		ERR489199	characteristic	technical replicate	group46
+E-MTAB-3838		ERR489199	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489199	factor	organism part	hypothalamus	http://purl.obolibrary.org/obo/UBERON_0001898
+E-MTAB-3838		ERR489199	factor	sex	male
+E-MTAB-3838		ERR489200	characteristic	breed	Texel
+E-MTAB-3838		ERR489200	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489200	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489200	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489200	characteristic	sex	male
+E-MTAB-3838		ERR489200	characteristic	technical replicate	group47
+E-MTAB-3838		ERR489200	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489200	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489200	factor	sex	male
+E-MTAB-3838		ERR489201	characteristic	breed	Texel
+E-MTAB-3838		ERR489201	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489201	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489201	characteristic	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489201	characteristic	sex	male
+E-MTAB-3838		ERR489201	characteristic	technical replicate	group47
+E-MTAB-3838		ERR489201	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489201	factor	organism part	pituitary gland	http://purl.obolibrary.org/obo/UBERON_0000007
+E-MTAB-3838		ERR489201	factor	sex	male
+E-MTAB-3838		ERR489202	characteristic	breed	Texel
+E-MTAB-3838		ERR489202	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489202	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489202	characteristic	organism part	abomasum mucosa
+E-MTAB-3838		ERR489202	characteristic	sex	male
+E-MTAB-3838		ERR489202	characteristic	technical replicate	group48
+E-MTAB-3838		ERR489202	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489202	factor	organism part	abomasum mucosa
+E-MTAB-3838		ERR489202	factor	sex	male
+E-MTAB-3838		ERR489203	characteristic	breed	Texel
+E-MTAB-3838		ERR489203	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489203	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489203	characteristic	organism part	abomasum mucosa
+E-MTAB-3838		ERR489203	characteristic	sex	male
+E-MTAB-3838		ERR489203	characteristic	technical replicate	group48
+E-MTAB-3838		ERR489203	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489203	factor	organism part	abomasum mucosa
+E-MTAB-3838		ERR489203	factor	sex	male
+E-MTAB-3838		ERR489204	characteristic	breed	Texel
+E-MTAB-3838		ERR489204	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489204	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489204	characteristic	organism part	rumen
+E-MTAB-3838		ERR489204	characteristic	sex	male
+E-MTAB-3838		ERR489204	characteristic	technical replicate	group49
+E-MTAB-3838		ERR489204	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489204	factor	organism part	rumen
+E-MTAB-3838		ERR489204	factor	sex	male
+E-MTAB-3838		ERR489205	characteristic	breed	Texel
+E-MTAB-3838		ERR489205	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489205	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489205	characteristic	organism part	rumen
+E-MTAB-3838		ERR489205	characteristic	sex	male
+E-MTAB-3838		ERR489205	characteristic	technical replicate	group49
+E-MTAB-3838		ERR489205	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489205	factor	organism part	rumen
+E-MTAB-3838		ERR489205	factor	sex	male
+E-MTAB-3838		ERR489206	characteristic	breed	Texel
+E-MTAB-3838		ERR489206	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489206	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489206	characteristic	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-3838		ERR489206	characteristic	sex	male
+E-MTAB-3838		ERR489206	characteristic	technical replicate	group50
+E-MTAB-3838		ERR489206	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489206	factor	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-3838		ERR489206	factor	sex	male
+E-MTAB-3838		ERR489207	characteristic	breed	Texel
+E-MTAB-3838		ERR489207	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489207	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489207	characteristic	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-3838		ERR489207	characteristic	sex	male
+E-MTAB-3838		ERR489207	characteristic	technical replicate	group50
+E-MTAB-3838		ERR489207	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489207	factor	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-3838		ERR489207	factor	sex	male
+E-MTAB-3838		ERR489208	characteristic	breed	Texel
+E-MTAB-3838		ERR489208	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489208	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489208	characteristic	organism part	omentum
+E-MTAB-3838		ERR489208	characteristic	sex	male
+E-MTAB-3838		ERR489208	characteristic	technical replicate	group51
+E-MTAB-3838		ERR489208	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489208	factor	organism part	omentum
+E-MTAB-3838		ERR489208	factor	sex	male
+E-MTAB-3838		ERR489209	characteristic	breed	Texel
+E-MTAB-3838		ERR489209	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489209	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489209	characteristic	organism part	omentum
+E-MTAB-3838		ERR489209	characteristic	sex	male
+E-MTAB-3838		ERR489209	characteristic	technical replicate	group51
+E-MTAB-3838		ERR489209	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489209	factor	organism part	omentum
+E-MTAB-3838		ERR489209	factor	sex	male
+E-MTAB-3838		ERR489210	characteristic	breed	Texel
+E-MTAB-3838		ERR489210	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489210	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489210	characteristic	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3838		ERR489210	characteristic	sex	male
+E-MTAB-3838		ERR489210	characteristic	technical replicate	group52
+E-MTAB-3838		ERR489210	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489210	factor	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3838		ERR489210	factor	sex	male
+E-MTAB-3838		ERR489211	characteristic	breed	Texel
+E-MTAB-3838		ERR489211	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489211	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489211	characteristic	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3838		ERR489211	characteristic	sex	male
+E-MTAB-3838		ERR489211	characteristic	technical replicate	group52
+E-MTAB-3838		ERR489211	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489211	factor	organism part	caecum	http://purl.obolibrary.org/obo/UBERON_0001153
+E-MTAB-3838		ERR489211	factor	sex	male
+E-MTAB-3838		ERR489212	characteristic	breed	Texel
+E-MTAB-3838		ERR489212	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489212	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489212	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489212	characteristic	sex	male
+E-MTAB-3838		ERR489212	characteristic	technical replicate	group53
+E-MTAB-3838		ERR489212	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489212	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489212	factor	sex	male
+E-MTAB-3838		ERR489213	characteristic	breed	Texel
+E-MTAB-3838		ERR489213	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489213	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489213	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489213	characteristic	sex	male
+E-MTAB-3838		ERR489213	characteristic	technical replicate	group53
+E-MTAB-3838		ERR489213	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489213	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-3838		ERR489213	factor	sex	male
+E-MTAB-3838		ERR489214	characteristic	breed	Texel
+E-MTAB-3838		ERR489214	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489214	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489214	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489214	characteristic	sex	male
+E-MTAB-3838		ERR489214	characteristic	technical replicate	group54
+E-MTAB-3838		ERR489214	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489214	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489214	factor	sex	male
+E-MTAB-3838		ERR489215	characteristic	breed	Texel
+E-MTAB-3838		ERR489215	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489215	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489215	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489215	characteristic	sex	male
+E-MTAB-3838		ERR489215	characteristic	technical replicate	group54
+E-MTAB-3838		ERR489215	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489215	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-MTAB-3838		ERR489215	factor	sex	male
+E-MTAB-3838		ERR489216	characteristic	breed	Texel
+E-MTAB-3838		ERR489216	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489216	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489216	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489216	characteristic	sex	male
+E-MTAB-3838		ERR489216	characteristic	technical replicate	group55
+E-MTAB-3838		ERR489216	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489216	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489216	factor	sex	male
+E-MTAB-3838		ERR489217	characteristic	breed	Texel
+E-MTAB-3838		ERR489217	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489217	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489217	characteristic	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489217	characteristic	sex	male
+E-MTAB-3838		ERR489217	characteristic	technical replicate	group55
+E-MTAB-3838		ERR489217	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489217	factor	organism part	cerebellum	http://purl.obolibrary.org/obo/UBERON_0002037
+E-MTAB-3838		ERR489217	factor	sex	male
+E-MTAB-3838		ERR489218	characteristic	breed	Texel
+E-MTAB-3838		ERR489218	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489218	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489218	characteristic	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489218	characteristic	sex	male
+E-MTAB-3838		ERR489218	characteristic	technical replicate	group56
+E-MTAB-3838		ERR489218	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489218	factor	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489218	factor	sex	male
+E-MTAB-3838		ERR489219	characteristic	breed	Texel
+E-MTAB-3838		ERR489219	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489219	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489219	characteristic	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489219	characteristic	sex	male
+E-MTAB-3838		ERR489219	characteristic	technical replicate	group56
+E-MTAB-3838		ERR489219	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489219	factor	organism part	cerebrum	http://purl.obolibrary.org/obo/UBERON_0001893
+E-MTAB-3838		ERR489219	factor	sex	male
+E-MTAB-3838		ERR489220	characteristic	breed	Texel
+E-MTAB-3838		ERR489220	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489220	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489220	characteristic	organism part	brain stem	http://purl.obolibrary.org/obo/UBERON_0002298
+E-MTAB-3838		ERR489220	characteristic	sex	male
+E-MTAB-3838		ERR489220	characteristic	technical replicate	group57
+E-MTAB-3838		ERR489220	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489220	factor	organism part	brain stem	http://purl.obolibrary.org/obo/UBERON_0002298
+E-MTAB-3838		ERR489220	factor	sex	male
+E-MTAB-3838		ERR489221	characteristic	breed	Texel
+E-MTAB-3838		ERR489221	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489221	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489221	characteristic	organism part	brain stem	http://purl.obolibrary.org/obo/UBERON_0002298
+E-MTAB-3838		ERR489221	characteristic	sex	male
+E-MTAB-3838		ERR489221	characteristic	technical replicate	group57
+E-MTAB-3838		ERR489221	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489221	factor	organism part	brain stem	http://purl.obolibrary.org/obo/UBERON_0002298
+E-MTAB-3838		ERR489221	factor	sex	male
+E-MTAB-3838		ERR489222	characteristic	breed	Texel
+E-MTAB-3838		ERR489222	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489222	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489222	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3838		ERR489222	characteristic	sex	male
+E-MTAB-3838		ERR489222	characteristic	technical replicate	group58
+E-MTAB-3838		ERR489222	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489222	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3838		ERR489222	factor	sex	male
+E-MTAB-3838		ERR489223	characteristic	breed	Texel
+E-MTAB-3838		ERR489223	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489223	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489223	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3838		ERR489223	characteristic	sex	male
+E-MTAB-3838		ERR489223	characteristic	technical replicate	group58
+E-MTAB-3838		ERR489223	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489223	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-3838		ERR489223	factor	sex	male
+E-MTAB-3838		ERR489224	characteristic	breed	Texel
+E-MTAB-3838		ERR489224	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489224	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489224	characteristic	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-MTAB-3838		ERR489224	characteristic	sex	male
+E-MTAB-3838		ERR489224	characteristic	technical replicate	group59
+E-MTAB-3838		ERR489224	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489224	factor	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-MTAB-3838		ERR489224	factor	sex	male
+E-MTAB-3838		ERR489225	characteristic	breed	Texel
+E-MTAB-3838		ERR489225	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489225	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489225	characteristic	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-MTAB-3838		ERR489225	characteristic	sex	male
+E-MTAB-3838		ERR489225	characteristic	technical replicate	group59
+E-MTAB-3838		ERR489225	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489225	factor	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-MTAB-3838		ERR489225	factor	sex	male
+E-MTAB-3838		ERR489226	characteristic	breed	Texel
+E-MTAB-3838		ERR489226	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489226	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489226	characteristic	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-MTAB-3838		ERR489226	characteristic	sex	male
+E-MTAB-3838		ERR489226	characteristic	technical replicate	group59
+E-MTAB-3838		ERR489226	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489226	factor	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-MTAB-3838		ERR489226	factor	sex	male
+E-MTAB-3838		ERR489227	characteristic	breed	Texel
+E-MTAB-3838		ERR489227	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489227	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489227	characteristic	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-MTAB-3838		ERR489227	characteristic	sex	male
+E-MTAB-3838		ERR489227	characteristic	technical replicate	group59
+E-MTAB-3838		ERR489227	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489227	factor	organism part	epididymis	http://purl.obolibrary.org/obo/UBERON_0001301
+E-MTAB-3838		ERR489227	factor	sex	male
+E-MTAB-3838		ERR489228	characteristic	breed	Texel
+E-MTAB-3838		ERR489228	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489228	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489228	characteristic	organism part	mesenteric lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3838		ERR489228	characteristic	sex	male
+E-MTAB-3838		ERR489228	characteristic	technical replicate	group60
+E-MTAB-3838		ERR489228	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489228	factor	organism part	mesenteric lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3838		ERR489228	factor	sex	male
+E-MTAB-3838		ERR489229	characteristic	breed	Texel
+E-MTAB-3838		ERR489229	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489229	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489229	characteristic	organism part	mesenteric lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3838		ERR489229	characteristic	sex	male
+E-MTAB-3838		ERR489229	characteristic	technical replicate	group60
+E-MTAB-3838		ERR489229	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489229	factor	organism part	mesenteric lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-3838		ERR489229	factor	sex	male
+E-MTAB-3838		ERR489230	characteristic	breed	Texel
+E-MTAB-3838		ERR489230	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489230	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489230	characteristic	organism part	prescapular lymph node
+E-MTAB-3838		ERR489230	characteristic	sex	male
+E-MTAB-3838		ERR489230	characteristic	technical replicate	group61
+E-MTAB-3838		ERR489230	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489230	factor	organism part	prescapular lymph node
+E-MTAB-3838		ERR489230	factor	sex	male
+E-MTAB-3838		ERR489231	characteristic	breed	Texel
+E-MTAB-3838		ERR489231	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489231	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489231	characteristic	organism part	prescapular lymph node
+E-MTAB-3838		ERR489231	characteristic	sex	male
+E-MTAB-3838		ERR489231	characteristic	technical replicate	group61
+E-MTAB-3838		ERR489231	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489231	factor	organism part	prescapular lymph node
+E-MTAB-3838		ERR489231	factor	sex	male
+E-MTAB-3838		ERR489232	characteristic	breed	Texel
+E-MTAB-3838		ERR489232	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489232	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489232	characteristic	organism part	prescapular lymph node
+E-MTAB-3838		ERR489232	characteristic	sex	male
+E-MTAB-3838		ERR489232	characteristic	technical replicate	group61
+E-MTAB-3838		ERR489232	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489232	factor	organism part	prescapular lymph node
+E-MTAB-3838		ERR489232	factor	sex	male
+E-MTAB-3838		ERR489233	characteristic	breed	Texel
+E-MTAB-3838		ERR489233	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489233	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489233	characteristic	organism part	prescapular lymph node
+E-MTAB-3838		ERR489233	characteristic	sex	male
+E-MTAB-3838		ERR489233	characteristic	technical replicate	group61
+E-MTAB-3838		ERR489233	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489233	factor	organism part	prescapular lymph node
+E-MTAB-3838		ERR489233	factor	sex	male
+E-MTAB-3838		ERR489234	characteristic	breed	Texel
+E-MTAB-3838		ERR489234	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489234	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489234	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489234	characteristic	sex	male
+E-MTAB-3838		ERR489234	characteristic	technical replicate	group62
+E-MTAB-3838		ERR489234	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489234	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489234	factor	sex	male
+E-MTAB-3838		ERR489235	characteristic	breed	Texel
+E-MTAB-3838		ERR489235	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489235	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489235	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489235	characteristic	sex	male
+E-MTAB-3838		ERR489235	characteristic	technical replicate	group62
+E-MTAB-3838		ERR489235	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489235	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489235	factor	sex	male
+E-MTAB-3838		ERR489236	characteristic	breed	Texel
+E-MTAB-3838		ERR489236	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489236	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489236	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489236	characteristic	sex	male
+E-MTAB-3838		ERR489236	characteristic	technical replicate	group62
+E-MTAB-3838		ERR489236	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489236	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489236	factor	sex	male
+E-MTAB-3838		ERR489237	characteristic	breed	Texel
+E-MTAB-3838		ERR489237	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489237	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489237	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489237	characteristic	sex	male
+E-MTAB-3838		ERR489237	characteristic	technical replicate	group62
+E-MTAB-3838		ERR489237	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489237	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3838		ERR489237	factor	sex	male
+E-MTAB-3838		ERR489238	characteristic	breed	Texel
+E-MTAB-3838		ERR489238	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489238	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489238	characteristic	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489238	characteristic	sex	male
+E-MTAB-3838		ERR489238	characteristic	technical replicate	group63
+E-MTAB-3838		ERR489238	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489238	factor	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489238	factor	sex	male
+E-MTAB-3838		ERR489239	characteristic	breed	Texel
+E-MTAB-3838		ERR489239	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489239	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489239	characteristic	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489239	characteristic	sex	male
+E-MTAB-3838		ERR489239	characteristic	technical replicate	group63
+E-MTAB-3838		ERR489239	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489239	factor	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489239	factor	sex	male
+E-MTAB-3838		ERR489240	characteristic	breed	Texel
+E-MTAB-3838		ERR489240	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489240	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489240	characteristic	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489240	characteristic	sex	male
+E-MTAB-3838		ERR489240	characteristic	technical replicate	group63
+E-MTAB-3838		ERR489240	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489240	factor	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489240	factor	sex	male
+E-MTAB-3838		ERR489241	characteristic	breed	Texel
+E-MTAB-3838		ERR489241	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489241	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489241	characteristic	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489241	characteristic	sex	male
+E-MTAB-3838		ERR489241	characteristic	technical replicate	group63
+E-MTAB-3838		ERR489241	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489241	factor	organism part	thyroid gland	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-3838		ERR489241	factor	sex	male
+E-MTAB-3838		ERR489242	characteristic	breed	Texel
+E-MTAB-3838		ERR489242	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489242	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489242	characteristic	organism part	longissimus dorsi	http://www.ebi.ac.uk/efo/EFO_0006863
+E-MTAB-3838		ERR489242	characteristic	sex	male
+E-MTAB-3838		ERR489242	characteristic	technical replicate	group64
+E-MTAB-3838		ERR489242	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489242	factor	organism part	longissimus dorsi	http://www.ebi.ac.uk/efo/EFO_0006863
+E-MTAB-3838		ERR489242	factor	sex	male
+E-MTAB-3838		ERR489243	characteristic	breed	Texel
+E-MTAB-3838		ERR489243	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489243	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489243	characteristic	organism part	longissimus dorsi	http://www.ebi.ac.uk/efo/EFO_0006863
+E-MTAB-3838		ERR489243	characteristic	sex	male
+E-MTAB-3838		ERR489243	characteristic	technical replicate	group64
+E-MTAB-3838		ERR489243	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489243	factor	organism part	longissimus dorsi	http://www.ebi.ac.uk/efo/EFO_0006863
+E-MTAB-3838		ERR489243	factor	sex	male
+E-MTAB-3838		ERR489244	characteristic	breed	Texel
+E-MTAB-3838		ERR489244	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489244	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489244	characteristic	organism part	longissimus dorsi	http://www.ebi.ac.uk/efo/EFO_0006863
+E-MTAB-3838		ERR489244	characteristic	sex	male
+E-MTAB-3838		ERR489244	characteristic	technical replicate	group64
+E-MTAB-3838		ERR489244	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489244	factor	organism part	longissimus dorsi	http://www.ebi.ac.uk/efo/EFO_0006863
+E-MTAB-3838		ERR489244	factor	sex	male
+E-MTAB-3838		ERR489245	characteristic	breed	Texel
+E-MTAB-3838		ERR489245	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489245	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489245	characteristic	organism part	longissimus dorsi	http://www.ebi.ac.uk/efo/EFO_0006863
+E-MTAB-3838		ERR489245	characteristic	sex	male
+E-MTAB-3838		ERR489245	characteristic	technical replicate	group64
+E-MTAB-3838		ERR489245	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489245	factor	organism part	longissimus dorsi	http://www.ebi.ac.uk/efo/EFO_0006863
+E-MTAB-3838		ERR489245	factor	sex	male
+E-MTAB-3838		ERR489246	characteristic	breed	Texel
+E-MTAB-3838		ERR489246	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489246	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489246	characteristic	organism part	biceps
+E-MTAB-3838		ERR489246	characteristic	sex	male
+E-MTAB-3838		ERR489246	characteristic	technical replicate	group65
+E-MTAB-3838		ERR489246	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489246	factor	organism part	biceps
+E-MTAB-3838		ERR489246	factor	sex	male
+E-MTAB-3838		ERR489247	characteristic	breed	Texel
+E-MTAB-3838		ERR489247	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489247	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489247	characteristic	organism part	biceps
+E-MTAB-3838		ERR489247	characteristic	sex	male
+E-MTAB-3838		ERR489247	characteristic	technical replicate	group65
+E-MTAB-3838		ERR489247	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489247	factor	organism part	biceps
+E-MTAB-3838		ERR489247	factor	sex	male
+E-MTAB-3838		ERR489248	characteristic	breed	Texel
+E-MTAB-3838		ERR489248	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489248	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489248	characteristic	organism part	skin from back
+E-MTAB-3838		ERR489248	characteristic	sex	male
+E-MTAB-3838		ERR489248	characteristic	technical replicate	group66
+E-MTAB-3838		ERR489248	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489248	factor	organism part	skin from back
+E-MTAB-3838		ERR489248	factor	sex	male
+E-MTAB-3838		ERR489249	characteristic	breed	Texel
+E-MTAB-3838		ERR489249	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489249	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489249	characteristic	organism part	skin from back
+E-MTAB-3838		ERR489249	characteristic	sex	male
+E-MTAB-3838		ERR489249	characteristic	technical replicate	group66
+E-MTAB-3838		ERR489249	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489249	factor	organism part	skin from back
+E-MTAB-3838		ERR489249	factor	sex	male
+E-MTAB-3838		ERR489250	characteristic	breed	Texel
+E-MTAB-3838		ERR489250	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489250	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489250	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3838		ERR489250	characteristic	sex	male
+E-MTAB-3838		ERR489250	characteristic	technical replicate	group67
+E-MTAB-3838		ERR489250	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489250	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3838		ERR489250	factor	sex	male
+E-MTAB-3838		ERR489251	characteristic	breed	Texel
+E-MTAB-3838		ERR489251	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489251	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489251	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3838		ERR489251	characteristic	sex	male
+E-MTAB-3838		ERR489251	characteristic	technical replicate	group67
+E-MTAB-3838		ERR489251	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489251	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-3838		ERR489251	factor	sex	male
+E-MTAB-3838		ERR489252	characteristic	breed	Texel
+E-MTAB-3838		ERR489252	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489252	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489252	characteristic	organism part	alveolar macrophage	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3838		ERR489252	characteristic	sex	male
+E-MTAB-3838		ERR489252	characteristic	technical replicate	group68
+E-MTAB-3838		ERR489252	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489252	factor	organism part	alveolar macrophage	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3838		ERR489252	factor	sex	male
+E-MTAB-3838		ERR489253	characteristic	breed	Texel
+E-MTAB-3838		ERR489253	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489253	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489253	characteristic	organism part	alveolar macrophage	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3838		ERR489253	characteristic	sex	male
+E-MTAB-3838		ERR489253	characteristic	technical replicate	group68
+E-MTAB-3838		ERR489253	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489253	factor	organism part	alveolar macrophage	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3838		ERR489253	factor	sex	male
+E-MTAB-3838		ERR489254	characteristic	breed	Texel
+E-MTAB-3838		ERR489254	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489254	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489254	characteristic	organism part	alveolar macrophage	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3838		ERR489254	characteristic	sex	male
+E-MTAB-3838		ERR489254	characteristic	technical replicate	group68
+E-MTAB-3838		ERR489254	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489254	factor	organism part	alveolar macrophage	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3838		ERR489254	factor	sex	male
+E-MTAB-3838		ERR489255	characteristic	breed	Texel
+E-MTAB-3838		ERR489255	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489255	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489255	characteristic	organism part	alveolar macrophage	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3838		ERR489255	characteristic	sex	male
+E-MTAB-3838		ERR489255	characteristic	technical replicate	group68
+E-MTAB-3838		ERR489255	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489255	factor	organism part	alveolar macrophage	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3838		ERR489255	factor	sex	male
+E-MTAB-3838		ERR489256	characteristic	breed	Texel
+E-MTAB-3838		ERR489256	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489256	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489256	characteristic	organism part	tonsil	http://purl.obolibrary.org/obo/UBERON_0002372
+E-MTAB-3838		ERR489256	characteristic	sex	male
+E-MTAB-3838		ERR489256	characteristic	technical replicate	group69
+E-MTAB-3838		ERR489256	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489256	factor	organism part	tonsil	http://purl.obolibrary.org/obo/UBERON_0002372
+E-MTAB-3838		ERR489256	factor	sex	male
+E-MTAB-3838		ERR489257	characteristic	breed	Texel
+E-MTAB-3838		ERR489257	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489257	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489257	characteristic	organism part	tonsil	http://purl.obolibrary.org/obo/UBERON_0002372
+E-MTAB-3838		ERR489257	characteristic	sex	male
+E-MTAB-3838		ERR489257	characteristic	technical replicate	group69
+E-MTAB-3838		ERR489257	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489257	factor	organism part	tonsil	http://purl.obolibrary.org/obo/UBERON_0002372
+E-MTAB-3838		ERR489257	factor	sex	male
+E-MTAB-3838		ERR489258	characteristic	breed	Texel
+E-MTAB-3838		ERR489258	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489258	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489258	characteristic	organism part	ventricle	http://purl.obolibrary.org/obo/UBERON_0002082
+E-MTAB-3838		ERR489258	characteristic	sex	male
+E-MTAB-3838		ERR489258	characteristic	technical replicate	group70
+E-MTAB-3838		ERR489258	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489258	factor	organism part	ventricle	http://purl.obolibrary.org/obo/UBERON_0002082
+E-MTAB-3838		ERR489258	factor	sex	male
+E-MTAB-3838		ERR489259	characteristic	breed	Texel
+E-MTAB-3838		ERR489259	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489259	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489259	characteristic	organism part	ventricle	http://purl.obolibrary.org/obo/UBERON_0002082
+E-MTAB-3838		ERR489259	characteristic	sex	male
+E-MTAB-3838		ERR489259	characteristic	technical replicate	group70
+E-MTAB-3838		ERR489259	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489259	factor	organism part	ventricle	http://purl.obolibrary.org/obo/UBERON_0002082
+E-MTAB-3838		ERR489259	factor	sex	male
+E-MTAB-3838		ERR489260	characteristic	breed	Texel
+E-MTAB-3838		ERR489260	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489260	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489260	characteristic	organism part	renal cortex
+E-MTAB-3838		ERR489260	characteristic	sex	male
+E-MTAB-3838		ERR489260	characteristic	technical replicate	group71
+E-MTAB-3838		ERR489260	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489260	factor	organism part	renal cortex
+E-MTAB-3838		ERR489260	factor	sex	male
+E-MTAB-3838		ERR489261	characteristic	breed	Texel
+E-MTAB-3838		ERR489261	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489261	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489261	characteristic	organism part	renal cortex
+E-MTAB-3838		ERR489261	characteristic	sex	male
+E-MTAB-3838		ERR489261	characteristic	technical replicate	group71
+E-MTAB-3838		ERR489261	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489261	factor	organism part	renal cortex
+E-MTAB-3838		ERR489261	factor	sex	male
+E-MTAB-3838		ERR489262	characteristic	breed	Texel
+E-MTAB-3838		ERR489262	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489262	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489262	characteristic	organism part	renal medulla	http://purl.obolibrary.org/obo/UBERON_0000362
+E-MTAB-3838		ERR489262	characteristic	sex	male
+E-MTAB-3838		ERR489262	characteristic	technical replicate	group72
+E-MTAB-3838		ERR489262	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489262	factor	organism part	renal medulla	http://purl.obolibrary.org/obo/UBERON_0000362
+E-MTAB-3838		ERR489262	factor	sex	male
+E-MTAB-3838		ERR489263	characteristic	breed	Texel
+E-MTAB-3838		ERR489263	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489263	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489263	characteristic	organism part	renal medulla	http://purl.obolibrary.org/obo/UBERON_0000362
+E-MTAB-3838		ERR489263	characteristic	sex	male
+E-MTAB-3838		ERR489263	characteristic	technical replicate	group72
+E-MTAB-3838		ERR489263	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489263	factor	organism part	renal medulla	http://purl.obolibrary.org/obo/UBERON_0000362
+E-MTAB-3838		ERR489263	factor	sex	male
+E-MTAB-3838		ERR489264	characteristic	breed	Texel
+E-MTAB-3838		ERR489264	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489264	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489264	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3838		ERR489264	characteristic	sex	male
+E-MTAB-3838		ERR489264	characteristic	technical replicate	group73
+E-MTAB-3838		ERR489264	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489264	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3838		ERR489264	factor	sex	male
+E-MTAB-3838		ERR489265	characteristic	breed	Texel
+E-MTAB-3838		ERR489265	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489265	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489265	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3838		ERR489265	characteristic	sex	male
+E-MTAB-3838		ERR489265	characteristic	technical replicate	group73
+E-MTAB-3838		ERR489265	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489265	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3838		ERR489265	factor	sex	male
+E-MTAB-3838		ERR489266	characteristic	breed	Texel
+E-MTAB-3838		ERR489266	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489266	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489266	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3838		ERR489266	characteristic	sex	male
+E-MTAB-3838		ERR489266	characteristic	technical replicate	group74
+E-MTAB-3838		ERR489266	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489266	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3838		ERR489266	factor	sex	male
+E-MTAB-3838		ERR489267	characteristic	breed	Texel
+E-MTAB-3838		ERR489267	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489267	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489267	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3838		ERR489267	characteristic	sex	male
+E-MTAB-3838		ERR489267	characteristic	technical replicate	group74
+E-MTAB-3838		ERR489267	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489267	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3838		ERR489267	factor	sex	male
+E-MTAB-3838		ERR489268	characteristic	breed	Texel
+E-MTAB-3838		ERR489268	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489268	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489268	characteristic	organism part	cardiac ventricle	http://purl.obolibrary.org/obo/UBERON_0002082
+E-MTAB-3838		ERR489268	characteristic	sex	female
+E-MTAB-3838		ERR489268	characteristic	technical replicate	group75
+E-MTAB-3838		ERR489268	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489268	factor	organism part	cardiac ventricle	http://purl.obolibrary.org/obo/UBERON_0002082
+E-MTAB-3838		ERR489268	factor	sex	female
+E-MTAB-3838		ERR489269	characteristic	breed	Texel
+E-MTAB-3838		ERR489269	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489269	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489269	characteristic	organism part	cardiac ventricle	http://purl.obolibrary.org/obo/UBERON_0002082
+E-MTAB-3838		ERR489269	characteristic	sex	female
+E-MTAB-3838		ERR489269	characteristic	technical replicate	group75
+E-MTAB-3838		ERR489269	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489269	factor	organism part	cardiac ventricle	http://purl.obolibrary.org/obo/UBERON_0002082
+E-MTAB-3838		ERR489269	factor	sex	female
+E-MTAB-3838		ERR489270	characteristic	breed	Texel
+E-MTAB-3838		ERR489270	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489270	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489270	characteristic	organism part	renal medulla	http://purl.obolibrary.org/obo/UBERON_0000362
+E-MTAB-3838		ERR489270	characteristic	sex	female
+E-MTAB-3838		ERR489270	characteristic	technical replicate	group76
+E-MTAB-3838		ERR489270	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489270	factor	organism part	renal medulla	http://purl.obolibrary.org/obo/UBERON_0000362
+E-MTAB-3838		ERR489270	factor	sex	female
+E-MTAB-3838		ERR489271	characteristic	breed	Texel
+E-MTAB-3838		ERR489271	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489271	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489271	characteristic	organism part	renal medulla	http://purl.obolibrary.org/obo/UBERON_0000362
+E-MTAB-3838		ERR489271	characteristic	sex	female
+E-MTAB-3838		ERR489271	characteristic	technical replicate	group76
+E-MTAB-3838		ERR489271	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489271	factor	organism part	renal medulla	http://purl.obolibrary.org/obo/UBERON_0000362
+E-MTAB-3838		ERR489271	factor	sex	female
+E-MTAB-3838		ERR489272	characteristic	breed	Texel
+E-MTAB-3838		ERR489272	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489272	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489272	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3838		ERR489272	characteristic	sex	female
+E-MTAB-3838		ERR489272	characteristic	technical replicate	group77
+E-MTAB-3838		ERR489272	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489272	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3838		ERR489272	factor	sex	female
+E-MTAB-3838		ERR489273	characteristic	breed	Texel
+E-MTAB-3838		ERR489273	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489273	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489273	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3838		ERR489273	characteristic	sex	female
+E-MTAB-3838		ERR489273	characteristic	technical replicate	group77
+E-MTAB-3838		ERR489273	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489273	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3838		ERR489273	factor	sex	female
+E-MTAB-3838		ERR489274	characteristic	breed	Texel
+E-MTAB-3838		ERR489274	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489274	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489274	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3838		ERR489274	characteristic	sex	female
+E-MTAB-3838		ERR489274	characteristic	technical replicate	group78
+E-MTAB-3838		ERR489274	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489274	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3838		ERR489274	factor	sex	female
+E-MTAB-3838		ERR489275	characteristic	breed	Texel
+E-MTAB-3838		ERR489275	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489275	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489275	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3838		ERR489275	characteristic	sex	female
+E-MTAB-3838		ERR489275	characteristic	technical replicate	group78
+E-MTAB-3838		ERR489275	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-3838		ERR489275	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3838		ERR489275	factor	sex	female
+E-MTAB-3838		ERR489276	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489276	characteristic	breed	Texel
+E-MTAB-3838		ERR489276	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489276	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489276	characteristic	organism part	cardiac ventricle	http://purl.obolibrary.org/obo/UBERON_0002082
+E-MTAB-3838		ERR489276	characteristic	sex	female
+E-MTAB-3838		ERR489276	characteristic	technical replicate	group79
+E-MTAB-3838		ERR489276	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489276	factor	organism part	cardiac ventricle	http://purl.obolibrary.org/obo/UBERON_0002082
+E-MTAB-3838		ERR489276	factor	sex	female
+E-MTAB-3838		ERR489277	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489277	characteristic	breed	Texel
+E-MTAB-3838		ERR489277	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489277	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489277	characteristic	organism part	cardiac ventricle	http://purl.obolibrary.org/obo/UBERON_0002082
+E-MTAB-3838		ERR489277	characteristic	sex	female
+E-MTAB-3838		ERR489277	characteristic	technical replicate	group79
+E-MTAB-3838		ERR489277	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489277	factor	organism part	cardiac ventricle	http://purl.obolibrary.org/obo/UBERON_0002082
+E-MTAB-3838		ERR489277	factor	sex	female
+E-MTAB-3838		ERR489278	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489278	characteristic	breed	Texel
+E-MTAB-3838		ERR489278	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489278	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489278	characteristic	organism part	renal cortex
+E-MTAB-3838		ERR489278	characteristic	sex	female
+E-MTAB-3838		ERR489278	characteristic	technical replicate	group80
+E-MTAB-3838		ERR489278	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489278	factor	organism part	renal cortex
+E-MTAB-3838		ERR489278	factor	sex	female
+E-MTAB-3838		ERR489279	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489279	characteristic	breed	Texel
+E-MTAB-3838		ERR489279	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489279	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489279	characteristic	organism part	renal cortex
+E-MTAB-3838		ERR489279	characteristic	sex	female
+E-MTAB-3838		ERR489279	characteristic	technical replicate	group80
+E-MTAB-3838		ERR489279	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489279	factor	organism part	renal cortex
+E-MTAB-3838		ERR489279	factor	sex	female
+E-MTAB-3838		ERR489280	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489280	characteristic	breed	Texel
+E-MTAB-3838		ERR489280	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489280	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489280	characteristic	organism part	renal medulla	http://purl.obolibrary.org/obo/UBERON_0000362
+E-MTAB-3838		ERR489280	characteristic	sex	female
+E-MTAB-3838		ERR489280	characteristic	technical replicate	group81
+E-MTAB-3838		ERR489280	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489280	factor	organism part	renal medulla	http://purl.obolibrary.org/obo/UBERON_0000362
+E-MTAB-3838		ERR489280	factor	sex	female
+E-MTAB-3838		ERR489281	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489281	characteristic	breed	Texel
+E-MTAB-3838		ERR489281	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489281	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489281	characteristic	organism part	renal medulla	http://purl.obolibrary.org/obo/UBERON_0000362
+E-MTAB-3838		ERR489281	characteristic	sex	female
+E-MTAB-3838		ERR489281	characteristic	technical replicate	group81
+E-MTAB-3838		ERR489281	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489281	factor	organism part	renal medulla	http://purl.obolibrary.org/obo/UBERON_0000362
+E-MTAB-3838		ERR489281	factor	sex	female
+E-MTAB-3838		ERR489282	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489282	characteristic	breed	Texel
+E-MTAB-3838		ERR489282	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489282	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489282	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3838		ERR489282	characteristic	sex	female
+E-MTAB-3838		ERR489282	characteristic	technical replicate	group82
+E-MTAB-3838		ERR489282	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489282	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3838		ERR489282	factor	sex	female
+E-MTAB-3838		ERR489283	characteristic	age	6 to 10 month
+E-MTAB-3838		ERR489283	characteristic	breed	Texel
+E-MTAB-3838		ERR489283	characteristic	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489283	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-3838		ERR489283	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3838		ERR489283	characteristic	sex	female
+E-MTAB-3838		ERR489283	characteristic	technical replicate	group82
+E-MTAB-3838		ERR489283	factor	developmental stage	juvenile	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-3838		ERR489283	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-3838		ERR489283	factor	sex	female

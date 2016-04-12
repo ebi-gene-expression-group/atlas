@@ -1,0 +1,33 @@
+Comment[ArrayExpressAccession]	E-MTAB-3838
+MAGE-TAB Version	1.1		
+Comment[AEExperimentDisplayName]	Sheep Tissue Atlas		
+Investigation Title	Sheep Tissue Atlas		
+Comment[Submitted Name]	Sheep Tissue Atlas
+Experiment Description	Sheep total RNA was extracted from embryonic and adult tissues. Sequencing libraries were prepared from the RNA using the Illumina TruSeq stranded total RNA with the Ribo Zero gold option for the rRNA removal. The fragmentation in the standard protocol was modified to increase the average insert size in the library. Sequencing with 151 base paired end reads was performed on an Illumina HiSeq 2500 in rapid mode.		
+Experimental Factor Name	sex	organism part	developmental stage
+Experimental Factor Type	sex	organism part	developmental stage
+Person Last Name	Turner		
+Person First Name	Frances 		
+Person Email	frances.turner@roslin.ed.ac.uk		
+Person Address	The Roslin Institute and Royal (Dick) School of Veterinary Studies University of Edinburgh , Easter Bush , Midlothian , EH25 9RG		
+Person Affiliation	ROSLIN, Edinburgh Genomics		
+Person Roles	submitter		
+Public Release Date	2014-12-04		
+Protocol Name	SEQUENCING_PROTOCOL_1	LIBRARY_CONSTRUCTION_PROTOCOL_1
+Protocol Type	nucleic acid sequencing protocol	nucleic acid library construction protocol	
+Protocol Term Source REF	EFO	EFO	
+Protocol Term Accession Number	EFO_0004170	EFO_0004184	
+Protocol Description	Sequencing with 151 base paired end reads was performed on an Illumina HiSeq 2500 in rapid mode.	Sheep total RNA was extracted from embryonic and adult tissues. Sequencing libraries were prepared from the RNA using the Illumina TruSeq stranded total RNA with the Ribo Zero gold option for the rRNA removal. The fragmentation in the standard protocol was modified to increase the average insert size in the library.	
+Protocol Hardware	Illumina HiSeq 2500		
+Publication Author List	Jiang Y, Xie M, Chen W, Talbot R, Maddox JF, Faraut T, Wu C, Muzny DM, Li Y, Zhang W, Stanton JA, Brauning R, Barris WC, Hourlier T, Aken BL, Searle SM, Adelson DL, Bian C, Cam GR, Chen Y, Cheng S, DeSilva U, Dixen K, Dong Y, Fan G, Franklin IR, Fu S, Fuentes-Utrilla P, Guan R, Highland MA, Holder ME, Huang G, Ingham AB, Jhangiani SN, Kalra D, Kovar CL, Lee SL, Liu W, Liu X, Lu C, Lv T, Mathew T, McWilliam S, Menzies M, Pan S, Robelin D, Servin B, Townley D, Wang W, Wei B, White SN, Yang X, Ye C, Yue Y, Zeng P, Zhou Q, Hansen JB, Kristiansen K, Gibbs RA, Flicek P, Warkup CC, Jones HE, Oddy VH, Nicholas FW, McEwan JC, Kijas JW, Wang J, Worley KC, Archibald AL, Cockett N, Xu X, Wang W, Dalrymple BP		
+Publication DOI	10.1126/science.1252806		
+Publication Title	The sheep genome illuminates biology of the rumen and lipid metabolism.		
+PubMed ID	24904168		
+Term Source Name	NCBI Taxonomy	EFO
+Term Source File	http://www.ncbi.nlm.nih.gov/Taxonomy/	http://www.ebi.ac.uk/efo	
+Term Source Version		2.38	
+Comment[SecondaryAccession]	ERP005642		
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERP005642		
+Comment[AEExperimentType]	RNA-seq of coding RNA		
+Comment[SRASubmissionDate]	2014-04-24		
+SDRF File	E-MTAB-3838.sdrf.txt

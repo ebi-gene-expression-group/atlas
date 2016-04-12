@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="adult; Peyer's patch; female">
+                <assay technical_replicate_id="t33">ERR489153</assay>
+                <assay technical_replicate_id="t33">ERR489152</assay>
+            </assay_group>
+            <assay_group id="g2" label="adult; abomasum mucosa; male">
+                <assay technical_replicate_id="t48">ERR489202</assay>
+                <assay technical_replicate_id="t48">ERR489203</assay>
+            </assay_group>
+            <assay_group id="g3" label="adult; abomasum; female">
+                <assay technical_replicate_id="t34">ERR489155</assay>
+                <assay technical_replicate_id="t34">ERR489154</assay>
+                <assay technical_replicate_id="t34">ERR489158</assay>
+                <assay technical_replicate_id="t34">ERR489156</assay>
+                <assay technical_replicate_id="t34">ERR489159</assay>
+                <assay technical_replicate_id="t34">ERR489157</assay>
+            </assay_group>
+            <assay_group id="g4" label="adult; adrenal gland; female">
+                <assay technical_replicate_id="t44">ERR489194</assay>
+                <assay technical_replicate_id="t44">ERR489195</assay>
+            </assay_group>
+            <assay_group id="g5" label="adult; adrenal gland; male">
+                <assay technical_replicate_id="t62">ERR489234</assay>
+                <assay technical_replicate_id="t62">ERR489235</assay>
+                <assay technical_replicate_id="t62">ERR489237</assay>
+                <assay technical_replicate_id="t62">ERR489236</assay>
+            </assay_group>
+            <assay_group id="g6" label="adult; alveolar macrophage; male">
+                <assay technical_replicate_id="t68">ERR489254</assay>
+                <assay technical_replicate_id="t68">ERR489252</assay>
+                <assay technical_replicate_id="t68">ERR489253</assay>
+                <assay technical_replicate_id="t68">ERR489255</assay>
+            </assay_group>
+            <assay_group id="g7" label="adult; alveolar macrophages; female">
+                <assay technical_replicate_id="t45">ERR489196</assay>
+                <assay technical_replicate_id="t45">ERR489197</assay>
+            </assay_group>
+            <assay_group id="g8" label="adult; biceps; female">
+                <assay technical_replicate_id="t42">ERR489190</assay>
+                <assay technical_replicate_id="t42">ERR489191</assay>
+            </assay_group>
+            <assay_group id="g9" label="adult; biceps; male">
+                <assay technical_replicate_id="t65">ERR489246</assay>
+                <assay technical_replicate_id="t65">ERR489247</assay>
+            </assay_group>
+            <assay_group id="g10" label="adult; brain stem; male">
+                <assay technical_replicate_id="t57">ERR489221</assay>
+                <assay technical_replicate_id="t57">ERR489220</assay>
+            </assay_group>
+            <assay_group id="g11" label="adult; caecum; male">
+                <assay technical_replicate_id="t52">ERR489210</assay>
+                <assay technical_replicate_id="t52">ERR489211</assay>
+            </assay_group>
+            <assay_group id="g12" label="adult; cardiac ventricle; female">
+                <assay technical_replicate_id="t75">ERR489268</assay>
+                <assay technical_replicate_id="t75">ERR489269</assay>
+            </assay_group>
+            <assay_group id="g13" label="adult; cerebellum; female">
+                <assay technical_replicate_id="t32">ERR489149</assay>
+                <assay technical_replicate_id="t32">ERR489148</assay>
+                <assay technical_replicate_id="t32">ERR489151</assay>
+                <assay technical_replicate_id="t32">ERR489150</assay>
+            </assay_group>
+            <assay_group id="g14" label="adult; cerebellum; male">
+                <assay technical_replicate_id="t55">ERR489216</assay>
+                <assay technical_replicate_id="t55">ERR489217</assay>
+            </assay_group>
+            <assay_group id="g15" label="adult; cerebrum; male">
+                <assay technical_replicate_id="t56">ERR489218</assay>
+                <assay technical_replicate_id="t56">ERR489219</assay>
+            </assay_group>
+            <assay_group id="g16" label="adult; cervix; female">
+                <assay technical_replicate_id="t31">ERR489146</assay>
+                <assay technical_replicate_id="t31">ERR489147</assay>
+            </assay_group>
+            <assay_group id="g17" label="adult; colon; female">
+                <assay technical_replicate_id="t37">ERR489170</assay>
+                <assay technical_replicate_id="t37">ERR489168</assay>
+                <assay technical_replicate_id="t37">ERR489171</assay>
+                <assay technical_replicate_id="t37">ERR489173</assay>
+                <assay technical_replicate_id="t37">ERR489169</assay>
+                <assay technical_replicate_id="t37">ERR489172</assay>
+            </assay_group>
+            <assay_group id="g18" label="adult; colon; male">
+                <assay technical_replicate_id="t53">ERR489213</assay>
+                <assay technical_replicate_id="t53">ERR489212</assay>
+            </assay_group>
+            <assay_group id="g19" label="adult; corpus luteum; female">
+                <assay technical_replicate_id="t27">ERR489137</assay>
+                <assay technical_replicate_id="t27">ERR489139</assay>
+                <assay technical_replicate_id="t27">ERR489138</assay>
+                <assay technical_replicate_id="t27">ERR489136</assay>
+            </assay_group>
+            <assay_group id="g20" label="adult; duodenum; male">
+                <assay technical_replicate_id="t50">ERR489206</assay>
+                <assay technical_replicate_id="t50">ERR489207</assay>
+            </assay_group>
+            <assay_group id="g21" label="adult; epididymis; male">
+                <assay technical_replicate_id="t59">ERR489225</assay>
+                <assay technical_replicate_id="t59">ERR489226</assay>
+                <assay technical_replicate_id="t59">ERR489224</assay>
+                <assay technical_replicate_id="t59">ERR489227</assay>
+            </assay_group>
+            <assay_group id="g22" label="adult; hypothalamus; male">
+                <assay technical_replicate_id="t46">ERR489199</assay>
+                <assay technical_replicate_id="t46">ERR489198</assay>
+            </assay_group>
+            <assay_group id="g23" label="adult; liver; female">
+                <assay technical_replicate_id="t77">ERR489273</assay>
+                <assay technical_replicate_id="t77">ERR489272</assay>
+            </assay_group>
+            <assay_group id="g24" label="adult; liver; male">
+                <assay technical_replicate_id="t73">ERR489264</assay>
+                <assay technical_replicate_id="t73">ERR489265</assay>
+            </assay_group>
+            <assay_group id="g25" label="adult; longissimus dorsi; female">
+                <assay technical_replicate_id="t41">ERR489188</assay>
+                <assay technical_replicate_id="t41">ERR489189</assay>
+            </assay_group>
+            <assay_group id="g26" label="adult; longissimus dorsi; male">
+                <assay technical_replicate_id="t64">ERR489243</assay>
+                <assay technical_replicate_id="t64">ERR489242</assay>
+                <assay technical_replicate_id="t64">ERR489244</assay>
+                <assay technical_replicate_id="t64">ERR489245</assay>
+            </assay_group>
+            <assay_group id="g27" label="adult; lung; female">
+                <assay technical_replicate_id="t78">ERR489274</assay>
+                <assay technical_replicate_id="t78">ERR489275</assay>
+            </assay_group>
+            <assay_group id="g28" label="adult; lung; male">
+                <assay technical_replicate_id="t74">ERR489267</assay>
+                <assay technical_replicate_id="t74">ERR489266</assay>
+            </assay_group>
+            <assay_group id="g29" label="adult; mammary gland; female">
+                <assay technical_replicate_id="t26">ERR489134</assay>
+                <assay technical_replicate_id="t26">ERR489135</assay>
+            </assay_group>
+            <assay_group id="g30" label="adult; mesenteric lymph node; female">
+                <assay technical_replicate_id="t40">ERR489185</assay>
+                <assay technical_replicate_id="t40">ERR489187</assay>
+                <assay technical_replicate_id="t40">ERR489184</assay>
+                <assay technical_replicate_id="t40">ERR489186</assay>
+            </assay_group>
+            <assay_group id="g31" label="adult; mesenteric lymph node; male">
+                <assay technical_replicate_id="t60">ERR489229</assay>
+                <assay technical_replicate_id="t60">ERR489228</assay>
+            </assay_group>
+            <assay_group id="g32" label="adult; omentum; female">
+                <assay technical_replicate_id="t36">ERR489167</assay>
+                <assay technical_replicate_id="t36">ERR489166</assay>
+            </assay_group>
+            <assay_group id="g33" label="adult; omentum; male">
+                <assay technical_replicate_id="t51">ERR489209</assay>
+                <assay technical_replicate_id="t51">ERR489208</assay>
+            </assay_group>
+            <assay_group id="g34" label="adult; ovary; female">
+                <assay technical_replicate_id="t28">ERR489140</assay>
+                <assay technical_replicate_id="t28">ERR489141</assay>
+            </assay_group>
+            <assay_group id="g35" label="adult; pituitary gland; male">
+                <assay technical_replicate_id="t47">ERR489201</assay>
+                <assay technical_replicate_id="t47">ERR489200</assay>
+            </assay_group>
+            <assay_group id="g36" label="adult; pituitary; female">
+                <assay technical_replicate_id="t29">ERR489143</assay>
+                <assay technical_replicate_id="t29">ERR489142</assay>
+            </assay_group>
+            <assay_group id="g37" label="adult; placenta (including membranes); female">
+                <assay technical_replicate_id="t30">ERR489145</assay>
+                <assay technical_replicate_id="t30">ERR489144</assay>
+            </assay_group>
+            <assay_group id="g38" label="adult; prescapular lymph node; male">
+                <assay technical_replicate_id="t61">ERR489230</assay>
+                <assay technical_replicate_id="t61">ERR489232</assay>
+                <assay technical_replicate_id="t61">ERR489231</assay>
+                <assay technical_replicate_id="t61">ERR489233</assay>
+            </assay_group>
+            <assay_group id="g39" label="adult; rectum; female">
+                <assay technical_replicate_id="t38">ERR489179</assay>
+                <assay technical_replicate_id="t38">ERR489178</assay>
+                <assay technical_replicate_id="t38">ERR489176</assay>
+                <assay technical_replicate_id="t38">ERR489174</assay>
+                <assay technical_replicate_id="t38">ERR489177</assay>
+                <assay technical_replicate_id="t38">ERR489175</assay>
+            </assay_group>
+            <assay_group id="g40" label="adult; rectum; male">
+                <assay technical_replicate_id="t54">ERR489215</assay>
+                <assay technical_replicate_id="t54">ERR489214</assay>
+            </assay_group>
+            <assay_group id="g41" label="adult; renal cortex; male">
+                <assay technical_replicate_id="t71">ERR489260</assay>
+                <assay technical_replicate_id="t71">ERR489261</assay>
+            </assay_group>
+            <assay_group id="g42" label="adult; renal medulla; female">
+                <assay technical_replicate_id="t76">ERR489270</assay>
+                <assay technical_replicate_id="t76">ERR489271</assay>
+            </assay_group>
+            <assay_group id="g43" label="adult; renal medulla; male">
+                <assay technical_replicate_id="t72">ERR489263</assay>
+                <assay technical_replicate_id="t72">ERR489262</assay>
+            </assay_group>
+            <assay_group id="g44" label="adult; rumen; female">
+                <assay technical_replicate_id="t35">ERR489165</assay>
+                <assay technical_replicate_id="t35">ERR489160</assay>
+                <assay technical_replicate_id="t35">ERR489164</assay>
+                <assay technical_replicate_id="t35">ERR489163</assay>
+                <assay technical_replicate_id="t35">ERR489162</assay>
+                <assay technical_replicate_id="t35">ERR489161</assay>
+            </assay_group>
+            <assay_group id="g45" label="adult; rumen; male">
+                <assay technical_replicate_id="t49">ERR489204</assay>
+                <assay technical_replicate_id="t49">ERR489205</assay>
+            </assay_group>
+            <assay_group id="g46" label="adult; skin from back; male">
+                <assay technical_replicate_id="t66">ERR489248</assay>
+                <assay technical_replicate_id="t66">ERR489249</assay>
+            </assay_group>
+            <assay_group id="g47" label="adult; skin from side; female">
+                <assay technical_replicate_id="t43">ERR489193</assay>
+                <assay technical_replicate_id="t43">ERR489192</assay>
+            </assay_group>
+            <assay_group id="g48" label="adult; spleen; male">
+                <assay technical_replicate_id="t67">ERR489250</assay>
+                <assay technical_replicate_id="t67">ERR489251</assay>
+            </assay_group>
+            <assay_group id="g49" label="adult; testis; male">
+                <assay technical_replicate_id="t58">ERR489223</assay>
+                <assay technical_replicate_id="t58">ERR489222</assay>
+            </assay_group>
+            <assay_group id="g50" label="adult; thyroid gland; female">
+                <assay technical_replicate_id="t39">ERR489183</assay>
+                <assay technical_replicate_id="t39">ERR489182</assay>
+            </assay_group>
+            <assay_group id="g51" label="adult; thyroid gland; male">
+                <assay technical_replicate_id="t63">ERR489239</assay>
+                <assay technical_replicate_id="t63">ERR489240</assay>
+                <assay technical_replicate_id="t63">ERR489241</assay>
+                <assay technical_replicate_id="t63">ERR489238</assay>
+            </assay_group>
+            <assay_group id="g52" label="adult; tonsil; male">
+                <assay technical_replicate_id="t69">ERR489256</assay>
+                <assay technical_replicate_id="t69">ERR489257</assay>
+            </assay_group>
+            <assay_group id="g53" label="adult; uterus; female">
+                <assay technical_replicate_id="t39">ERR489181</assay>
+                <assay technical_replicate_id="t39">ERR489180</assay>
+            </assay_group>
+            <assay_group id="g54" label="adult; ventricle; male">
+                <assay technical_replicate_id="t70">ERR489258</assay>
+                <assay technical_replicate_id="t70">ERR489259</assay>
+            </assay_group>
+            <assay_group id="g55" label="embryo; whole embryo; unknown sex">
+                <assay technical_replicate_id="t1">ERR489048</assay>
+                <assay technical_replicate_id="t1">ERR489049</assay>
+            </assay_group>
+            <assay_group id="g56" label="juvenile; Peyer's patch; female">
+                <assay technical_replicate_id="t9">ERR489077</assay>
+                <assay technical_replicate_id="t9">ERR489076</assay>
+            </assay_group>
+            <assay_group id="g57" label="juvenile; abomasum; female">
+                <assay technical_replicate_id="t10">ERR489079</assay>
+                <assay technical_replicate_id="t10">ERR489082</assay>
+                <assay technical_replicate_id="t10">ERR489080</assay>
+                <assay technical_replicate_id="t10">ERR489078</assay>
+                <assay technical_replicate_id="t10">ERR489083</assay>
+                <assay technical_replicate_id="t10">ERR489081</assay>
+            </assay_group>
+            <assay_group id="g58" label="juvenile; adrenal gland; female">
+                <assay technical_replicate_id="t23">ERR489129</assay>
+                <assay technical_replicate_id="t23">ERR489128</assay>
+            </assay_group>
+            <assay_group id="g59" label="juvenile; caecum; female">
+                <assay technical_replicate_id="t13">ERR489088</assay>
+                <assay technical_replicate_id="t13">ERR489089</assay>
+                <assay technical_replicate_id="t13">ERR489091</assay>
+                <assay technical_replicate_id="t13">ERR489090</assay>
+            </assay_group>
+            <assay_group id="g60" label="juvenile; cardiac ventricle; female">
+                <assay technical_replicate_id="t79">ERR489277</assay>
+                <assay technical_replicate_id="t79">ERR489276</assay>
+            </assay_group>
+            <assay_group id="g61" label="juvenile; cerebellum; female">
+                <assay technical_replicate_id="t4">ERR489060</assay>
+                <assay technical_replicate_id="t4">ERR489061</assay>
+                <assay technical_replicate_id="t4">ERR489059</assay>
+                <assay technical_replicate_id="t4">ERR489058</assay>
+                <assay technical_replicate_id="t4">ERR489062</assay>
+                <assay technical_replicate_id="t4">ERR489063</assay>
+            </assay_group>
+            <assay_group id="g62" label="juvenile; cerebrum; female">
+                <assay technical_replicate_id="t5">ERR489068</assay>
+                <assay technical_replicate_id="t5">ERR489066</assay>
+                <assay technical_replicate_id="t5">ERR489067</assay>
+                <assay technical_replicate_id="t5">ERR489065</assay>
+                <assay technical_replicate_id="t5">ERR489064</assay>
+                <assay technical_replicate_id="t5">ERR489069</assay>
+            </assay_group>
+            <assay_group id="g63" label="juvenile; cervix; female">
+                <assay technical_replicate_id="t17">ERR489101</assay>
+                <assay technical_replicate_id="t17">ERR489100</assay>
+            </assay_group>
+            <assay_group id="g64" label="juvenile; colon; female">
+                <assay technical_replicate_id="t14">ERR489094</assay>
+                <assay technical_replicate_id="t14">ERR489095</assay>
+                <assay technical_replicate_id="t14">ERR489092</assay>
+                <assay technical_replicate_id="t14">ERR489093</assay>
+            </assay_group>
+            <assay_group id="g65" label="juvenile; hypothalamus; female">
+                <assay technical_replicate_id="t2">ERR489051</assay>
+                <assay technical_replicate_id="t2">ERR489050</assay>
+            </assay_group>
+            <assay_group id="g66" label="juvenile; lung; female">
+                <assay technical_replicate_id="t82">ERR489282</assay>
+                <assay technical_replicate_id="t82">ERR489283</assay>
+            </assay_group>
+            <assay_group id="g67" label="juvenile; lymph node mesenteric; female">
+                <assay technical_replicate_id="t19">ERR489108</assay>
+                <assay technical_replicate_id="t19">ERR489106</assay>
+                <assay technical_replicate_id="t19">ERR489109</assay>
+                <assay technical_replicate_id="t19">ERR489105</assay>
+                <assay technical_replicate_id="t19">ERR489104</assay>
+                <assay technical_replicate_id="t19">ERR489107</assay>
+            </assay_group>
+            <assay_group id="g68" label="juvenile; lymph node prescapular; female">
+                <assay technical_replicate_id="t20">ERR489113</assay>
+                <assay technical_replicate_id="t20">ERR489114</assay>
+                <assay technical_replicate_id="t20">ERR489115</assay>
+                <assay technical_replicate_id="t20">ERR489111</assay>
+                <assay technical_replicate_id="t20">ERR489112</assay>
+                <assay technical_replicate_id="t20">ERR489110</assay>
+            </assay_group>
+            <assay_group id="g69" label="juvenile; mammary gland; female">
+                <assay technical_replicate_id="t6">ERR489070</assay>
+                <assay technical_replicate_id="t6">ERR489071</assay>
+            </assay_group>
+            <assay_group id="g70" label="juvenile; muscle biceps; female">
+                <assay technical_replicate_id="t22">ERR489122</assay>
+                <assay technical_replicate_id="t22">ERR489125</assay>
+                <assay technical_replicate_id="t22">ERR489127</assay>
+                <assay technical_replicate_id="t22">ERR489126</assay>
+                <assay technical_replicate_id="t22">ERR489123</assay>
+                <assay technical_replicate_id="t22">ERR489124</assay>
+            </assay_group>
+            <assay_group id="g71" label="juvenile; muscle long dorsal; female">
+                <assay technical_replicate_id="t21">ERR489119</assay>
+                <assay technical_replicate_id="t21">ERR489117</assay>
+                <assay technical_replicate_id="t21">ERR489118</assay>
+                <assay technical_replicate_id="t21">ERR489121</assay>
+                <assay technical_replicate_id="t21">ERR489120</assay>
+                <assay technical_replicate_id="t21">ERR489116</assay>
+            </assay_group>
+            <assay_group id="g72" label="juvenile; omentum; female">
+                <assay technical_replicate_id="t12">ERR489087</assay>
+                <assay technical_replicate_id="t12">ERR489086</assay>
+            </assay_group>
+            <assay_group id="g73" label="juvenile; ovarian follicles; female">
+                <assay technical_replicate_id="t7">ERR489072</assay>
+                <assay technical_replicate_id="t7">ERR489073</assay>
+            </assay_group>
+            <assay_group id="g74" label="juvenile; ovary; female">
+                <assay technical_replicate_id="t8">ERR489074</assay>
+                <assay technical_replicate_id="t8">ERR489075</assay>
+            </assay_group>
+            <assay_group id="g75" label="juvenile; pituitary gland; female">
+                <assay technical_replicate_id="t3">ERR489056</assay>
+                <assay technical_replicate_id="t3">ERR489055</assay>
+                <assay technical_replicate_id="t3">ERR489052</assay>
+                <assay technical_replicate_id="t3">ERR489057</assay>
+                <assay technical_replicate_id="t3">ERR489054</assay>
+                <assay technical_replicate_id="t3">ERR489053</assay>
+            </assay_group>
+            <assay_group id="g76" label="juvenile; rectum; female">
+                <assay technical_replicate_id="t15">ERR489097</assay>
+                <assay technical_replicate_id="t15">ERR489096</assay>
+            </assay_group>
+            <assay_group id="g77" label="juvenile; renal cortex; female">
+                <assay technical_replicate_id="t80">ERR489278</assay>
+                <assay technical_replicate_id="t80">ERR489279</assay>
+            </assay_group>
+            <assay_group id="g78" label="juvenile; renal medulla; female">
+                <assay technical_replicate_id="t81">ERR489281</assay>
+                <assay technical_replicate_id="t81">ERR489280</assay>
+            </assay_group>
+            <assay_group id="g79" label="juvenile; rumen; female">
+                <assay technical_replicate_id="t11">ERR489085</assay>
+                <assay technical_replicate_id="t11">ERR489084</assay>
+            </assay_group>
+            <assay_group id="g80" label="juvenile; skin back; female">
+                <assay technical_replicate_id="t24">ERR489130</assay>
+                <assay technical_replicate_id="t24">ERR489131</assay>
+            </assay_group>
+            <assay_group id="g81" label="juvenile; spleen; female">
+                <assay technical_replicate_id="t25">ERR489132</assay>
+                <assay technical_replicate_id="t25">ERR489133</assay>
+            </assay_group>
+            <assay_group id="g82" label="juvenile; thyroid gland; female">
+                <assay technical_replicate_id="t18">ERR489102</assay>
+                <assay technical_replicate_id="t18">ERR489103</assay>
+            </assay_group>
+            <assay_group id="g83" label="juvenile; uterus; female">
+                <assay technical_replicate_id="t16">ERR489099</assay>
+                <assay technical_replicate_id="t16">ERR489098</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>
