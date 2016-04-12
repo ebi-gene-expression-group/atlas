@@ -106,7 +106,7 @@ public class BaselineProfilesHeatMapEMTab1733IT {
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
                 (baselineRequestContext,baselineRequestContext.getFilteredBySpecies());
 
-        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse, false);
+        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse, true);
 
         assertThat(profiles.getTotalResultCount(), is(1));
         assertThat(profiles.extractGeneNames(), contains("R-HSA-73887"));
