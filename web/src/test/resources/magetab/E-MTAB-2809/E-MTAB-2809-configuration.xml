@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="caryopsis (15 dpa)">
+                <assay technical_replicate_id="t21">ERR233254</assay>
+                <assay technical_replicate_id="t21">ERR233231</assay>
+                <assay technical_replicate_id="t23">ERR233269</assay>
+                <assay technical_replicate_id="t23">ERR233246</assay>
+                <assay technical_replicate_id="t24">ERR233262</assay>
+                <assay technical_replicate_id="t24">ERR233239</assay>
+            </assay_group>
+            <assay_group id="g2" label="caryopsis (5 dpa)">
+                <assay technical_replicate_id="t10">ERR233228</assay>
+                <assay technical_replicate_id="t10">ERR233251</assay>
+                <assay technical_replicate_id="t11">ERR233259</assay>
+                <assay technical_replicate_id="t11">ERR233236</assay>
+                <assay technical_replicate_id="t22">ERR233243</assay>
+                <assay technical_replicate_id="t22">ERR233266</assay>
+            </assay_group>
+            <assay_group id="g3" label="germinating embryo">
+                <assay technical_replicate_id="t4">ERR233267</assay>
+                <assay technical_replicate_id="t4">ERR233244</assay>
+                <assay technical_replicate_id="t5">ERR233260</assay>
+                <assay technical_replicate_id="t5">ERR233237</assay>
+                <assay technical_replicate_id="t6">ERR233252</assay>
+                <assay technical_replicate_id="t6">ERR233229</assay>
+            </assay_group>
+            <assay_group id="g4" label="inflorescence (1 cm)">
+                <assay technical_replicate_id="t12">ERR233241</assay>
+                <assay technical_replicate_id="t12">ERR233264</assay>
+                <assay technical_replicate_id="t13">ERR233248</assay>
+                <assay technical_replicate_id="t13">ERR233271</assay>
+                <assay technical_replicate_id="t15">ERR233233</assay>
+                <assay technical_replicate_id="t15">ERR233256</assay>
+            </assay_group>
+            <assay_group id="g5" label="inflorescence (5 mm)">
+                <assay technical_replicate_id="t1">ERR233250</assay>
+                <assay technical_replicate_id="t1">ERR233273</assay>
+                <assay technical_replicate_id="t2">ERR233265</assay>
+                <assay technical_replicate_id="t2">ERR233242</assay>
+                <assay technical_replicate_id="t3">ERR233235</assay>
+                <assay technical_replicate_id="t3">ERR233258</assay>
+            </assay_group>
+            <assay_group id="g6" label="internode">
+                <assay technical_replicate_id="t14">ERR233272</assay>
+                <assay technical_replicate_id="t14">ERR233249</assay>
+                <assay technical_replicate_id="t16">ERR233257</assay>
+                <assay technical_replicate_id="t16">ERR233234</assay>
+                <assay technical_replicate_id="t17">ERR233274</assay>
+            </assay_group>
+            <assay_group id="g7" label="root (seedling)">
+                <assay technical_replicate_id="t18">ERR233238</assay>
+                <assay technical_replicate_id="t18">ERR233261</assay>
+                <assay technical_replicate_id="t19">ERR233245</assay>
+                <assay technical_replicate_id="t19">ERR233268</assay>
+                <assay technical_replicate_id="t20">ERR233230</assay>
+                <assay technical_replicate_id="t20">ERR233253</assay>
+            </assay_group>
+            <assay_group id="g8" label="shoot (seedling)">
+                <assay technical_replicate_id="t7">ERR233270</assay>
+                <assay technical_replicate_id="t7">ERR233247</assay>
+                <assay technical_replicate_id="t8">ERR233240</assay>
+                <assay technical_replicate_id="t8">ERR233263</assay>
+                <assay technical_replicate_id="t9">ERR233255</assay>
+                <assay technical_replicate_id="t9">ERR233232</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>
