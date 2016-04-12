@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="F344/Cr1; liver">
+                <assay>SRR594423</assay>
+            </assay_group>
+            <assay_group id="g2" label="BN/SsNHsd; heart">
+                <assay>SRR594430</assay>
+            </assay_group>
+            <assay_group id="g3" label="F344/Cr1; heart">
+                <assay>SRR594421</assay>
+            </assay_group>
+            <assay_group id="g4" label="BN/SsNHsd; colon">
+                <assay>SRR594429</assay>
+            </assay_group>
+            <assay_group id="g5" label="Sprague-Dawley; colon">
+                <assay>SRR594438</assay>
+            </assay_group>
+            <assay_group id="g6" label="BN/SsNHsd; spleen">
+                <assay>SRR594435</assay>
+            </assay_group>
+            <assay_group id="g7" label="Sprague-Dawley; kidney">
+                <assay>SRR594440</assay>
+            </assay_group>
+            <assay_group id="g8" label="Sprague-Dawley; lung">
+                <assay>SRR594442</assay>
+            </assay_group>
+            <assay_group id="g9" label="F344/Cr1; colon">
+                <assay>SRR594420</assay>
+            </assay_group>
+            <assay_group id="g10" label="BN/SsNHsd; lung">
+                <assay>SRR594433</assay>
+            </assay_group>
+            <assay_group id="g11" label="BN/SsNHsd; testis">
+                <assay>SRR594436</assay>
+            </assay_group>
+            <assay_group id="g12" label="Sprague-Dawley; heart">
+                <assay>SRR594439</assay>
+            </assay_group>
+            <assay_group id="g13" label="F344/Cr1; spleen">
+                <assay>SRR594426</assay>
+            </assay_group>
+            <assay_group id="g14" label="Sprague-Dawley; liver">
+                <assay>SRR594441</assay>
+            </assay_group>
+            <assay_group id="g15" label="Sprague-Dawley; skeletal muscle">
+                <assay>SRR594443</assay>
+            </assay_group>
+            <assay_group id="g16" label="Sprague-Dawley; spleen">
+                <assay>SRR594444</assay>
+            </assay_group>
+            <assay_group id="g17" label="Sprague-Dawley; testis">
+                <assay>SRR594445</assay>
+            </assay_group>
+            <assay_group id="g18" label="F344/Cr1; testes">
+                <assay>SRR594427</assay>
+            </assay_group>
+            <assay_group id="g19" label="F344/Cr1; lung">
+                <assay>SRR594424</assay>
+            </assay_group>
+            <assay_group id="g20" label="F344/Cr1; kidney">
+                <assay>SRR594422</assay>
+            </assay_group>
+            <assay_group id="g21" label="BN/SsNHsd; kidney">
+                <assay>SRR594431</assay>
+            </assay_group>
+            <assay_group id="g22" label="Sprague-Dawley; brain">
+                <assay>SRR594437</assay>
+            </assay_group>
+            <assay_group id="g23" label="BN/SsNHsd; liver">
+                <assay>SRR594432</assay>
+            </assay_group>
+            <assay_group id="g24" label="F344/Cr1; skeletal muscle">
+                <assay>SRR594425</assay>
+            </assay_group>
+            <assay_group id="g25" label="BN/SsNHsd; skeletal muscle">
+                <assay>SRR594434</assay>
+            </assay_group>
+            <assay_group id="g26" label="F344/Cr1; brain">
+                <assay>SRR594419</assay>
+            </assay_group>
+            <assay_group id="g27" label="BN/SsNHsd; brain">
+                <assay>SRR594428</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>
