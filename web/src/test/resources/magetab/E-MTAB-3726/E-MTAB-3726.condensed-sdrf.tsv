@@ -1,0 +1,25 @@
+E-MTAB-3726		SRR579560	characteristic	age	adult
+E-MTAB-3726		SRR579560	characteristic	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-MTAB-3726		SRR579560	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3726		SRR579560	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-MTAB-3726		SRR579560	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-3726		SRR579561	characteristic	age	adult
+E-MTAB-3726		SRR579561	characteristic	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-MTAB-3726		SRR579561	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3726		SRR579561	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-MTAB-3726		SRR579561	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-3726		SRR579562	characteristic	age	adult
+E-MTAB-3726		SRR579562	characteristic	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-MTAB-3726		SRR579562	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3726		SRR579562	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-MTAB-3726		SRR579562	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3726		SRR579563	characteristic	age	adult
+E-MTAB-3726		SRR579563	characteristic	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-MTAB-3726		SRR579563	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3726		SRR579563	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-MTAB-3726		SRR579563	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3726		SRR579564	characteristic	age	adult
+E-MTAB-3726		SRR579564	characteristic	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-MTAB-3726		SRR579564	characteristic	organism part	skeletal muscle	http://purl.obolibrary.org/obo/UBERON_0014892
+E-MTAB-3726		SRR579564	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-MTAB-3726		SRR579564	factor	organism part	skeletal muscle	http://purl.obolibrary.org/obo/UBERON_0014892
