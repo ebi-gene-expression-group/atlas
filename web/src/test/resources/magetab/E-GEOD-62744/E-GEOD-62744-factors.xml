@@ -1,0 +1,12 @@
+<factors-definition>
+    <defaultFilterFactors>
+        <filterFactor>
+            <type>CULTIVAR</type>
+            <value>Sangiovese</value>
+        </filterFactor>
+    </defaultFilterFactors>
+    <defaultQueryFactorType>DEVELOPMENTAL_STAGE</defaultQueryFactorType>
+    <menuFilterFactorTypes>CULTIVAR, DEVELOPMENTAL_STAGE</menuFilterFactorTypes>
+    <landingPageDisplayName>Cultivars - 5 Palumbo et al.</landingPageDisplayName>
+    <speciesMapping/>
+</factors-definition>

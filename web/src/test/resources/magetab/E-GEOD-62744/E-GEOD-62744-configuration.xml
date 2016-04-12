@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="Barbera; berries beginning to touch">
+                <assay>SRR1631835</assay>
+                <assay>SRR1631834</assay>
+                <assay>SRR1631836</assay>
+            </assay_group>
+            <assay_group id="g2" label="Barbera; berries ripe for harvest">
+                <assay>SRR1631842</assay>
+                <assay>SRR1631840</assay>
+                <assay>SRR1631841</assay>
+            </assay_group>
+            <assay_group id="g3" label="Barbera; pea-sized berries">
+                <assay>SRR1631832</assay>
+                <assay>SRR1631833</assay>
+                <assay>SRR1631831</assay>
+            </assay_group>
+            <assay_group id="g4" label="Barbera; soft berries">
+                <assay>SRR1631838</assay>
+                <assay>SRR1631839</assay>
+                <assay>SRR1631837</assay>
+            </assay_group>
+            <assay_group id="g5" label="Negro amaro; berries beginning to touch">
+                <assay>SRR1631848</assay>
+                <assay>SRR1631846</assay>
+                <assay>SRR1631847</assay>
+            </assay_group>
+            <assay_group id="g6" label="Negro amaro; berries ripe for harvest">
+                <assay>SRR1631854</assay>
+                <assay>SRR1631852</assay>
+                <assay>SRR1631853</assay>
+            </assay_group>
+            <assay_group id="g7" label="Negro amaro; pea-sized berries">
+                <assay>SRR1631845</assay>
+                <assay>SRR1631843</assay>
+                <assay>SRR1631844</assay>
+            </assay_group>
+            <assay_group id="g8" label="Negro amaro; soft berries">
+                <assay>SRR1631850</assay>
+                <assay>SRR1631849</assay>
+                <assay>SRR1631851</assay>
+            </assay_group>
+            <assay_group id="g9" label="Primitivo; berries beginning to touch">
+                <assay>SRR1631872</assay>
+                <assay>SRR1631870</assay>
+                <assay>SRR1631871</assay>
+            </assay_group>
+            <assay_group id="g10" label="Primitivo; berries ripe for harvest">
+                <assay>SRR1631877</assay>
+                <assay>SRR1631878</assay>
+                <assay>SRR1631876</assay>
+            </assay_group>
+            <assay_group id="g11" label="Primitivo; pea-sized berries">
+                <assay>SRR1631867</assay>
+                <assay>SRR1631869</assay>
+                <assay>SRR1631868</assay>
+            </assay_group>
+            <assay_group id="g12" label="Primitivo; soft berries">
+                <assay>SRR1631875</assay>
+                <assay>SRR1631873</assay>
+                <assay>SRR1631874</assay>
+            </assay_group>
+            <assay_group id="g13" label="Refosco; berries beginning to touch">
+                <assay>SRR1631860</assay>
+                <assay>SRR1631858</assay>
+                <assay>SRR1631859</assay>
+            </assay_group>
+            <assay_group id="g14" label="Refosco; berries ripe for harvest">
+                <assay>SRR1631866</assay>
+                <assay>SRR1631864</assay>
+                <assay>SRR1631865</assay>
+            </assay_group>
+            <assay_group id="g15" label="Refosco; pea-sized berries">
+                <assay>SRR1631855</assay>
+                <assay>SRR1631856</assay>
+                <assay>SRR1631857</assay>
+            </assay_group>
+            <assay_group id="g16" label="Refosco; soft berries">
+                <assay>SRR1631862</assay>
+                <assay>SRR1631861</assay>
+                <assay>SRR1631863</assay>
+            </assay_group>
+            <assay_group id="g17" label="Sangiovese; berries beginning to touch">
+                <assay>SRR1631822</assay>
+                <assay>SRR1631823</assay>
+                <assay>SRR1631824</assay>
+            </assay_group>
+            <assay_group id="g18" label="Sangiovese; berries ripe for harvest">
+                <assay>SRR1631828</assay>
+                <assay>SRR1631829</assay>
+                <assay>SRR1631830</assay>
+            </assay_group>
+            <assay_group id="g19" label="Sangiovese; pea-sized berries">
+                <assay>SRR1631819</assay>
+                <assay>SRR1631820</assay>
+                <assay>SRR1631821</assay>
+            </assay_group>
+            <assay_group id="g20" label="Sangiovese; soft berries">
+                <assay>SRR1631825</assay>
+                <assay>SRR1631826</assay>
+                <assay>SRR1631827</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>
