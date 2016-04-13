@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-126</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="ammonium; 0.5 millimolar; transgenic_AlaAT-ox 1/7; root">
+                <!-- This assay group is not involved in any contrasts -->
+                <assay>GSM1180659</assay>
+                <assay>GSM1180658</assay>
+                <assay>GSM1180666</assay>
+            </assay_group>
+            <assay_group id="g2" label="ammonium; 0.5 millimolar; transgenic_AlaAT-ox 1/7; shoot">
+                <!-- This assay group is not involved in any contrasts -->
+                <assay>GSM1180665</assay>
+                <assay>GSM1180662</assay>
+                <assay>GSM1180657</assay>
+            </assay_group>
+            <assay_group id="g3" label="ammonium; 0.5 millimolar; transgenic_AlaAT-ox 3/8; shoot">
+                <!-- This assay group is not involved in any contrasts -->
+                <assay>GSM1180690</assay>
+                <assay>GSM1180644</assay>
+                <assay>GSM1180677</assay>
+            </assay_group>
+            <assay_group id="g4" label="ammonium; 2 millimolar; transgenic_AlaAT-ox 1/7; root">
+                <assay>GSM1180680</assay>
+                <assay>GSM1180692</assay>
+                <assay>GSM1180653</assay>
+            </assay_group>
+            <assay_group id="g5" label="ammonium; 2 millimolar; transgenic_AlaAT-ox 1/7; shoot">
+                <assay>GSM1180648</assay>
+                <assay>GSM1180676</assay>
+                <assay>GSM1180654</assay>
+            </assay_group>
+            <assay_group id="g6" label="ammonium; 2 millimolar; transgenic_AlaAT-ox 3/8; shoot">
+                <assay>GSM1180686</assay>
+                <assay>GSM1180664</assay>
+                <assay>GSM1180651</assay>
+            </assay_group>
+            <assay_group id="g7" label="ammonium; 2 millimolar; wild type; root">
+                <assay>GSM1180682</assay>
+                <assay>GSM1180670</assay>
+                <assay>GSM1180656</assay>
+            </assay_group>
+            <assay_group id="g8" label="ammonium; 2 millimolar; wild type; shoot">
+                <assay>GSM1180661</assay>
+                <assay>GSM1180675</assay>
+                <assay>GSM1180678</assay>
+                <assay>GSM1180668</assay>
+            </assay_group>
+            <assay_group id="g9" label="ammonium; 5 millimolar; transgenic_AlaAT-ox 1/7; root">
+                <!-- This assay group is not involved in any contrasts -->
+                <assay>GSM1180650</assay>
+                <assay>GSM1180689</assay>
+                <assay>GSM1180673</assay>
+            </assay_group>
+            <assay_group id="g10" label="ammonium; 5 millimolar; transgenic_AlaAT-ox 1/7; shoot">
+                <assay>GSM1180649</assay>
+                <assay>GSM1180684</assay>
+                <assay>GSM1180674</assay>
+            </assay_group>
+            <assay_group id="g11" label="ammonium; 5 millimolar; transgenic_AlaAT-ox 3/8; root">
+                <!-- This assay group is not involved in any contrasts -->
+                <assay>GSM1180667</assay>
+                <assay>GSM1180652</assay>
+                <assay>GSM1180685</assay>
+            </assay_group>
+            <assay_group id="g12" label="ammonium; 5 millimolar; transgenic_AlaAT-ox 3/8; shoot">
+                <assay>GSM1180655</assay>
+                <assay>GSM1180646</assay>
+                <assay>GSM1180687</assay>
+            </assay_group>
+            <assay_group id="g13" label="ammonium; 5 millimolar; wild type; shoot">
+                <assay>GSM1180663</assay>
+                <assay>GSM1180679</assay>
+                <assay>GSM1180669</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g7_g4">
+                <name>'ammonium; 2 millimolar; transgenic_AlaAT-ox 1/7; root' vs 'ammonium; 2 millimolar; wild type; root'</name>
+                <reference_assay_group>g7</reference_assay_group>
+                <test_assay_group>g4</test_assay_group>
+            </contrast>
+            <contrast id="g8_g5">
+                <name>'ammonium; 2 millimolar; transgenic_AlaAT-ox 1/7; shoot' vs 'ammonium; 2 millimolar; wild type; shoot'</name>
+                <reference_assay_group>g8</reference_assay_group>
+                <test_assay_group>g5</test_assay_group>
+            </contrast>
+            <contrast id="g13_g10">
+                <name>'ammonium; 5 millimolar; transgenic_AlaAT-ox 1/7; shoot' vs 'ammonium; 5 millimolar; wild type; shoot'</name>
+                <reference_assay_group>g13</reference_assay_group>
+                <test_assay_group>g10</test_assay_group>
+            </contrast>
+            <contrast id="g8_g6">
+                <name>'ammonium; 2 millimolar; transgenic_AlaAT-ox 3/8; shoot' vs 'ammonium; 2 millimolar; wild type; shoot'</name>
+                <reference_assay_group>g8</reference_assay_group>
+                <test_assay_group>g6</test_assay_group>
+            </contrast>
+            <contrast id="g13_g12">
+                <name>'ammonium; 5 millimolar; transgenic_AlaAT-ox 3/8; shoot' vs 'ammonium; 5 millimolar; wild type; shoot'</name>
+                <reference_assay_group>g13</reference_assay_group>
+                <test_assay_group>g12</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

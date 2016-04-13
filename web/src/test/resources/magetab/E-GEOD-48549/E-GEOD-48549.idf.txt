@@ -1,0 +1,31 @@
+Comment[ArrayExpressAccession]	E-GEOD-48549						
+MAGE-TAB Version	1.1						
+Public Release Date	2013-10-25						
+Investigation Title	Nitrogen-efficient rice over-expressing alanine aminotransferase at three different N concentrations						
+Comment[Submitted Name]	Nitrogen-efficient rice over-expressing alanine aminotransferase at three different N concentrations						
+Experiment Description	Oryza sativa cv. Nipponbare was engineered to over-express a barley alanine aminotransferase (alaAT) gene using the promoter (OsANT1) from a rice aldehyde dehydrogenase gene that expresses in roots. We use biotechnology to improve the nitrogen use efficiency of rice by over-expressing alaAT in a tissue specific (root) manner. The AlaAT enzyme is a reversible aminotransferase that is linked to both C and N metabolism since it uses pyruvate plus glutamate to produce alanine and 2-oxoglutarate, and visa versa. Transcriptome data from the roots and shoots of rice plants at maximum tillering, grown hydroponically on either 0.5, 2 or 5 mM NH4+ as the nitrogen source. Wildtype rice (Nipponbare) and two independent OsANT1:HvAlaAT rice transgenic lines (AGR1/7, and AGR3/8) were grown hydroponically with either 0.5, 2 or 5mM NH4+ as the nitrogen source, to the reproductive stage. Tissue samples were taken at active and maximum tillering from root and shoot, at mid-day of the plants' day/night cycle. The RNA from root and shoot at maxiumum tillering was used for mcroarray analysis. Please read Beatty et al., 2009, PLant Biotechnology Journal 7, pp562-576 for detailed about these transgenic lines. The results from this variable N study were reported in a manuscript submitted to Botany, July 2013						
+Term Source Name	ArrayExpress	EFO					
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl					
+Person Last Name	Beatty	Beatty	Good				
+Person First Name	Perrin	Perrin	Allen				
+Person Mid Initials	Hudson	H	G				
+Person Email	pbeatty@ualberta.ca						
+Person Affiliation	University of Alberta						
+Person Phone	780 492 1108						
+Person Address	Biological Sciences, University of Alberta, G425 Biological Sciences, Edmonton, Alberta, Canada						
+Person Roles	submitter						
+Protocol Name	P-GSE48549-1	P-GSE48549-5	P-GSE48549-6	P-GSE48549-2	P-GSE48549-3	P-GSE48549-4	P-GSE48549-7
+Protocol Description	dCHIP was used to normalize and model the data. The raw microarray signals were normailized using the invarient set normailization method. The model-based expression values were calculated using the fifth percentile, perfect match only model with outlier detection. ID_REF =  VALUE = dCHIP Signal intensity expression values for each replicate CALL =  SE = 	All biologically replicated RNA samples were labelled and hybridized in parallel using the protocol suggested by the manufacturer (Syngenta Biotechnology).	All biologically replicated RNA samples were labelled and hybridized in parallel using the protocol suggested by the manufacturer (Syngenta Biotechnology).	Tissue samples were taken, weighed and flash frozen in liquid nitrogen until groundwith liquid nitrogen in a mortar and pestle and the RNA extracted.	Either 0.5, 2 or 5mM NH4+ as the nitrogen source, hydroponic growth, 28 degrees C, 70% relative humidity, 14 hr day length/10 hr night length, light intensity 750 uE.	Total RNA was extracted using the TRI reagent protocol according to manufacturers instructions (Applied Biosystems). RNA samples were cleaned of phenol contamination using Rneasy plant mini kit	cDNA target synthesis quality was assessed by examination of the 3' and 5' probesets of the reference gene controls on the Affymetrix genechip and scanned using GCOS software.
+Protocol Type	normalization data transformation protocol	labelling protocol	hybridization protocol	sample treatment protocol	growth protocol	nucleic acid extraction protocol	array scanning protocol
+Experimental Factor Name	compound	genotype	organism part	dose			
+Experimental Factor Type	compound	genotype	organism part	dose			
+Comment[SecondaryAccession]	GSE48549						
+Comment[GEOReleaseDate]	2013-10-25						
+Comment[ArrayExpressSubmissionDate]	2013-07-04						
+Comment[GEOLastUpdateDate]	2013-10-27						
+Comment[AEExperimentType]	transcription profiling by array						
+SDRF File	E-GEOD-48549.sdrf.txt						
+Publication Title	Physiological analysis of nitrogen-efficient rice overexpressing alanine aminotransferase under different N regimes						
+Publication Author List	Perrin H. Beatty, Rebecka T. Carroll, Ashok K. Shrawat, David Guevara, Allen G. Good						
+PubMed ID							
+Publication DOI	10.1139/cjb-2013-0171						

@@ -1,0 +1,209 @@
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv --pvalue-col=4 --foldchange-col=6 --title="
+Top 10 GO terms enriched in 
+'ammonium; 5 millimolar; transgenic_AlaAT-ox 1/7; shoot' vs 'ammonium; 5 millimolar; wild type; shoot' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.oryza_sativa.g13_g10.ensgene.go.tsv.aux1 --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/oryza_sativa.ensgene.go.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.g13_g10.go.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv
+pval.col = 4
+fold.col = 6
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/oryza_sativa.ensgene.go.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.oryza_sativa.g13_g10.ensgene.go.tsv.aux1
+title = 
+Top 10 GO terms enriched in 
+'ammonium; 5 millimolar; transgenic_AlaAT-ox 1/7; shoot' vs 'ammonium; 5 millimolar; wild type; shoot' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.g13_g10.go.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 32597 entries
+[INFO] No more duplicates
+[INFO] 26067 unique entries
+[INFO] NAs removed: 22872
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv loaded: 3195 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/oryza_sativa.ensgene.go.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/oryza_sativa.ensgene.go.tsv loaded: 136928 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.oryza_sativa.g13_g10.ensgene.go.tsv.aux1
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.oryza_sativa.g13_g10.ensgene.go.tsv.aux1 loaded: 5274 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.45+-0.58
+[INFO] p-value mean 0.58+-0.21
+[INFO] Excluded 41 genes with no annotation
+[INFO] #Genes=2233 #genes (pvalue<=0.05)=49
+[INFO] Loading GSC...
+[INFO] Gene sets:2092 genes:2182
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 49 genes of interest in 393 gene sets, using a background of 2184 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.g13_g10.go.gsea.tsv
+[WARNING] Insufficient gene sets () to draw a plot - plot not generated.
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv --pvalue-col=4 --foldchange-col=6 --title="
+Top 10 InterPro domains enriched in 
+'ammonium; 5 millimolar; transgenic_AlaAT-ox 1/7; shoot' vs 'ammonium; 5 millimolar; wild type; shoot' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/oryza_sativa.ensgene.interpro.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.g13_g10.interpro.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv
+pval.col = 4
+fold.col = 6
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/oryza_sativa.ensgene.interpro.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+title = 
+Top 10 InterPro domains enriched in 
+'ammonium; 5 millimolar; transgenic_AlaAT-ox 1/7; shoot' vs 'ammonium; 5 millimolar; wild type; shoot' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.g13_g10.interpro.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 32597 entries
+[INFO] No more duplicates
+[INFO] 26067 unique entries
+[INFO] NAs removed: 22872
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv loaded: 3195 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/oryza_sativa.ensgene.interpro.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/oryza_sativa.ensgene.interpro.tsv loaded: 76803 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux loaded: 26238 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.45+-0.58
+[INFO] p-value mean 0.58+-0.21
+[INFO] Excluded 31 genes with no annotation
+[INFO] #Genes=2429 #genes (pvalue<=0.05)=59
+[INFO] Loading GSC...
+[INFO] Gene sets:2043 genes:2378
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 59 genes of interest in 274 gene sets, using a background of 2370 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.g13_g10.interpro.gsea.tsv
+[WARNING] Insufficient gene sets () to draw a plot - plot not generated.
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv --pvalue-col=4 --foldchange-col=6 --title="
+Top 10 Reactome pathways enriched in 
+'ammonium; 5 millimolar; transgenic_AlaAT-ox 1/7; shoot' vs 'ammonium; 5 millimolar; wild type; shoot' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/oryza_sativa.reactome.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/oryza_sativa.reactome.tsv.gsea.aux --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.g13_g10.reactome.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv
+pval.col = 4
+fold.col = 6
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/oryza_sativa.reactome.tsv.gsea.aux
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/oryza_sativa.reactome.tsv.decorate.aux
+title = 
+Top 10 Reactome pathways enriched in 
+'ammonium; 5 millimolar; transgenic_AlaAT-ox 1/7; shoot' vs 'ammonium; 5 millimolar; wild type; shoot' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.g13_g10.reactome.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 32597 entries
+[INFO] No more duplicates
+[INFO] 26067 unique entries
+[INFO] NAs removed: 22872
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549_A-AFFY-126-analytics.tsv loaded: 3195 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/oryza_sativa.reactome.tsv.gsea.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/oryza_sativa.reactome.tsv.gsea.aux loaded: 39114 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/oryza_sativa.reactome.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/oryza_sativa.reactome.tsv.decorate.aux loaded: 988 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.45+-0.58
+[INFO] p-value mean 0.58+-0.21
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=3195 #genes (pvalue<=0.05)=90
+[WARNING] No gene annotation found...giving up. Please check if you have GO/Pathway information in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/oryza_sativa.reactome.tsv.gsea.aux.
+[WARNING] No significant entries found for p-value of 0.05
+[INFO] Created empty /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549/E-GEOD-48549.g13_g10.reactome.gsea.tsv
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-258>
+Subject: Job 1039111: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549 g13_g10 > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549 g13_g10 > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi5-258>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549> was used as the working directory.
+Started at Tue Apr 12 17:50:24 2016
+Results reported at Tue Apr 12 18:02:21 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-48549 g13_g10 
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               684.80 sec.
+    Max Memory :             82 MB
+    Average Memory :         76.42 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           4014.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               791 MB
+
+    Max Processes :          8
+    Max Threads :            9
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <gseag13_g10.err> for stderr output of this job.
+

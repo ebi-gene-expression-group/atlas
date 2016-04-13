@@ -1,0 +1,392 @@
+E-GEOD-48549	A-AFFY-126	GSM1180644	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180644	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180644	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180644	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180644	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180644	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180644	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180644	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180645	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180645	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180645	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180645	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180645	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180645	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180645	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180645	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180646	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180646	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180646	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180646	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180646	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180646	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180646	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180646	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180647	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180647	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180647	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180647	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180647	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180647	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180647	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180647	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180648	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180648	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180648	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180648	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180648	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180648	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180648	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180648	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180649	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180649	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180649	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180649	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180649	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180649	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180649	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180649	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180650	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180650	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180650	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180650	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180650	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180650	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180650	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180650	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180651	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180651	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180651	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180651	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180651	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180651	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180651	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180651	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180652	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180652	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180652	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180652	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180652	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180652	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180652	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180652	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180653	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180653	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180653	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180653	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180653	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180653	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180653	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180653	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180654	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180654	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180654	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180654	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180654	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180654	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180654	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180654	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180655	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180655	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180655	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180655	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180655	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180655	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180655	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180655	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180656	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180656	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180656	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180656	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180656	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180656	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180656	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180656	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180657	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180657	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180657	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180657	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180657	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180657	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180657	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180657	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180658	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180658	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180658	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180658	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180658	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180658	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180658	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180658	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180659	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180659	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180659	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180659	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180659	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180659	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180659	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180659	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180660	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180660	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180660	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180660	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180660	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180660	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180660	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180660	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180661	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180661	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180661	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180661	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180661	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180661	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180661	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180661	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180662	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180662	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180662	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180662	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180662	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180662	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180662	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180662	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180663	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180663	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180663	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180663	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180663	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180663	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180663	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180663	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180664	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180664	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180664	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180664	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180664	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180664	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180664	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180664	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180665	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180665	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180665	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180665	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180665	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180665	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180665	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180665	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180666	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180666	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180666	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180666	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180666	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180666	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180666	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180666	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180667	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180667	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180667	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180667	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180667	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180667	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180667	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180667	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180668	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180668	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180668	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180668	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180668	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180668	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180668	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180668	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180669	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180669	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180669	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180669	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180669	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180669	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180669	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180669	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180670	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180670	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180670	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180670	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180670	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180670	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180670	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180670	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180671	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180671	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180671	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180671	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180671	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180671	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180671	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180671	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180672	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180672	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180672	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180672	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180672	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180672	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180672	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180672	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180673	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180673	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180673	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180673	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180673	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180673	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180673	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180673	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180674	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180674	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180674	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180674	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180674	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180674	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180674	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180674	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180675	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180675	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180675	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180675	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180675	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180675	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180675	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180675	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180676	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180676	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180676	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180676	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180676	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180676	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180676	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180676	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180677	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180677	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180677	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180677	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180677	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180677	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180677	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180677	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180678	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180678	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180678	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180678	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180678	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180678	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180678	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180678	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180679	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180679	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180679	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180679	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180679	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180679	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180679	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180679	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180680	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180680	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180680	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180680	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180680	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180680	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180680	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180680	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180681	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180681	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180681	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180681	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180681	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180681	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180681	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180681	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180682	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180682	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180682	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180682	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180682	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180682	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180682	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180682	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180683	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180683	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180683	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180683	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180683	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180683	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180683	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180683	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180684	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180684	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180684	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180684	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180684	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180684	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180684	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180684	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180685	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180685	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180685	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180685	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180685	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180685	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180685	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180685	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180686	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180686	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180686	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180686	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180686	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180686	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180686	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180686	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180687	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180687	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180687	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180687	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180687	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180687	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180687	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180687	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180688	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180688	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180688	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180688	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180688	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180688	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180688	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180688	factor	dose	2 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180689	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180689	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180689	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180689	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180689	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180689	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180689	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180689	factor	dose	5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180690	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180690	characteristic	genotype	Transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180690	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180690	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180690	factor	genotype	transgenic_AlaAT-ox 3/8
+E-GEOD-48549	A-AFFY-126	GSM1180690	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180690	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180690	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180691	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180691	characteristic	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180691	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180691	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180691	factor	genotype	wild type genotype
+E-GEOD-48549	A-AFFY-126	GSM1180691	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-48549	A-AFFY-126	GSM1180691	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180691	factor	dose	0.5 millimolar
+E-GEOD-48549	A-AFFY-126	GSM1180692	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
+E-GEOD-48549	A-AFFY-126	GSM1180692	characteristic	genotype	Transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180692	characteristic	organism	Oryza sativa	http://purl.obolibrary.org/obo/NCBITaxon_4530
+E-GEOD-48549	A-AFFY-126	GSM1180692	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180692	factor	genotype	transgenic_AlaAT-ox 1/7
+E-GEOD-48549	A-AFFY-126	GSM1180692	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-48549	A-AFFY-126	GSM1180692	factor	compound	ammonium	http://purl.obolibrary.org/obo/CHEBI_28938
+E-GEOD-48549	A-AFFY-126	GSM1180692	factor	dose	2 millimolar
