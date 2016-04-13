@@ -1,0 +1,457 @@
+E-MTAB-3827		ERR186002	characteristic	age	50 to 55 year
+E-MTAB-3827		ERR186002	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186002	characteristic	cell type	memory B cell	http://purl.obolibrary.org/obo/CL_0000787
+E-MTAB-3827		ERR186002	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186002	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186002	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186002	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186002	characteristic	organism part	venous blood
+E-MTAB-3827		ERR186002	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR186002	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186002	factor	organism part	venous blood
+E-MTAB-3827		ERR186003	characteristic	age	40 to 45 year
+E-MTAB-3827		ERR186003	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186003	characteristic	cell type	cytotoxic CD56-dim natural killer cell
+E-MTAB-3827		ERR186003	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186003	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186003	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186003	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186003	characteristic	organism part	venous blood
+E-MTAB-3827		ERR186003	characteristic	sex	male
+E-MTAB-3827		ERR186003	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186003	factor	organism part	venous blood
+E-MTAB-3827		ERR186004	characteristic	age	50 to 55 year
+E-MTAB-3827		ERR186004	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186004	characteristic	cell type	class switched memory B cell
+E-MTAB-3827		ERR186004	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186004	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186004	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186004	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186004	characteristic	organism part	venous blood
+E-MTAB-3827		ERR186004	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR186004	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186004	factor	organism part	venous blood
+E-MTAB-3827		ERR186005	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186005	characteristic	cell type	CD14-positive, CD16-negative classical monocyte
+E-MTAB-3827		ERR186005	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186005	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186005	characteristic	ethnic group	not available
+E-MTAB-3827		ERR186005	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186005	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR186005	characteristic	sex	male
+E-MTAB-3827		ERR186005	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186005	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR186006	characteristic	age	30 to 35 year
+E-MTAB-3827		ERR186006	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186006	characteristic	cell type	cytotoxic CD56-dim natural killer cell
+E-MTAB-3827		ERR186006	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186006	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186006	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186006	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186006	characteristic	organism part	venous blood
+E-MTAB-3827		ERR186006	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR186006	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186006	factor	organism part	venous blood
+E-MTAB-3827		ERR186007	characteristic	age	50 to 55 year
+E-MTAB-3827		ERR186007	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186007	characteristic	cell type	CD38-negative naive B cell
+E-MTAB-3827		ERR186007	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186007	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186007	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186007	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186007	characteristic	organism part	venous blood
+E-MTAB-3827		ERR186007	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR186007	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186007	factor	organism part	venous blood
+E-MTAB-3827		ERR186008	characteristic	age	60 to 65 year
+E-MTAB-3827		ERR186008	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186008	characteristic	cell type	central memory CD4-positive, alpha-beta T cell
+E-MTAB-3827		ERR186008	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186008	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186008	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186008	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186008	characteristic	organism part	venous blood
+E-MTAB-3827		ERR186008	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR186008	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186008	factor	organism part	venous blood
+E-MTAB-3827		ERR186009	characteristic	age	60 to 65 year
+E-MTAB-3827		ERR186009	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186009	characteristic	cell type	CD4-positive, alpha-beta T cell
+E-MTAB-3827		ERR186009	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186009	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186009	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186009	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186009	characteristic	organism part	venous blood
+E-MTAB-3827		ERR186009	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR186009	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186009	factor	organism part	venous blood
+E-MTAB-3827		ERR186010	characteristic	age	60 to 65 year
+E-MTAB-3827		ERR186010	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186010	characteristic	cell type	effector memory CD4-positive, alpha-beta T cell
+E-MTAB-3827		ERR186010	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186010	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186010	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186010	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186010	characteristic	organism part	venous blood
+E-MTAB-3827		ERR186010	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR186010	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186010	factor	organism part	venous blood
+E-MTAB-3827		ERR186011	characteristic	age	60 to 65 year
+E-MTAB-3827		ERR186011	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186011	characteristic	cell type	regulatory T cell	http://purl.obolibrary.org/obo/CL_0000815
+E-MTAB-3827		ERR186011	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186011	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186011	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186011	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186011	characteristic	organism part	venous blood
+E-MTAB-3827		ERR186011	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR186011	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186011	factor	organism part	venous blood
+E-MTAB-3827		ERR186012	characteristic	age	50 to 55 year
+E-MTAB-3827		ERR186012	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186012	characteristic	cell type	effector memory CD8-positive, alpha-beta T cell
+E-MTAB-3827		ERR186012	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186012	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186012	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186012	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186012	characteristic	organism part	venous blood
+E-MTAB-3827		ERR186012	characteristic	sex	male
+E-MTAB-3827		ERR186012	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186012	factor	organism part	venous blood
+E-MTAB-3827		ERR186013	characteristic	age	50 to 55 year
+E-MTAB-3827		ERR186013	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186013	characteristic	cell type	central memory CD8-positive, alpha-beta T cell	http://purl.obolibrary.org/obo/CL_0000907
+E-MTAB-3827		ERR186013	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186013	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186013	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186013	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186013	characteristic	organism part	venous blood
+E-MTAB-3827		ERR186013	characteristic	sex	male
+E-MTAB-3827		ERR186013	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186013	factor	organism part	venous blood
+E-MTAB-3827		ERR186014	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186014	characteristic	cell type	mature neutrophil
+E-MTAB-3827		ERR186014	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186014	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186014	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186014	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186014	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR186014	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR186014	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186014	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR186015	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR186015	characteristic	cell type	mature neutrophil
+E-MTAB-3827		ERR186015	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR186015	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR186015	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR186015	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR186015	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR186015	characteristic	sex	male
+E-MTAB-3827		ERR186015	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR186015	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR230581	characteristic	age	60 to 65 year
+E-MTAB-3827		ERR230581	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR230581	characteristic	cell type	CD14-positive, CD16-negative classical monocyte
+E-MTAB-3827		ERR230581	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR230581	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR230581	characteristic	ethnic group	not available
+E-MTAB-3827		ERR230581	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR230581	characteristic	organism part	venous blood
+E-MTAB-3827		ERR230581	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR230581	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR230581	factor	organism part	venous blood
+E-MTAB-3827		ERR232280	characteristic	age	55 to 60 year
+E-MTAB-3827		ERR232280	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR232280	characteristic	cell type	mature neutrophil
+E-MTAB-3827		ERR232280	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR232280	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR232280	characteristic	ethnic group	not available
+E-MTAB-3827		ERR232280	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR232280	characteristic	organism part	venous blood
+E-MTAB-3827		ERR232280	characteristic	sex	male
+E-MTAB-3827		ERR232280	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR232280	factor	organism part	venous blood
+E-MTAB-3827		ERR232403	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR232403	characteristic	cell type	mature neutrophil
+E-MTAB-3827		ERR232403	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR232403	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR232403	characteristic	ethnic group	not available
+E-MTAB-3827		ERR232403	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR232403	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR232403	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR232403	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR232403	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR232404	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR232404	characteristic	cell type	CD14-positive, CD16-negative classical monocyte
+E-MTAB-3827		ERR232404	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR232404	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR232404	characteristic	ethnic group	not available
+E-MTAB-3827		ERR232404	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR232404	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR232404	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR232404	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR232404	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR244134	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR244134	characteristic	cell type	cytotoxic CD56-dim natural killer cell
+E-MTAB-3827		ERR244134	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR244134	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR244134	characteristic	ethnic group	not available
+E-MTAB-3827		ERR244134	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR244134	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR244134	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR244134	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR244134	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR244135	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR244135	characteristic	cell type	CD14-positive, CD16-negative classical monocyte
+E-MTAB-3827		ERR244135	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR244135	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR244135	characteristic	ethnic group	not available
+E-MTAB-3827		ERR244135	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR244135	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR244135	characteristic	sex	male
+E-MTAB-3827		ERR244135	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR244135	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR244136	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR244136	characteristic	cell type	CD38-negative naive B cell
+E-MTAB-3827		ERR244136	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR244136	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR244136	characteristic	ethnic group	not available
+E-MTAB-3827		ERR244136	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR244136	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR244136	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR244136	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR244136	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR567612	characteristic	age	60 to 65 year
+E-MTAB-3827		ERR567612	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR567612	characteristic	cell type	CD4-positive, alpha-beta T cell
+E-MTAB-3827		ERR567612	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR567612	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR567612	characteristic	ethnic group	not available
+E-MTAB-3827		ERR567612	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR567612	characteristic	organism part	venous blood
+E-MTAB-3827		ERR567612	characteristic	sex	male
+E-MTAB-3827		ERR567612	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR567612	factor	organism part	venous blood
+E-MTAB-3827		ERR567613	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR567613	characteristic	cell type	endothelial cell of umbilical vein (resting)
+E-MTAB-3827		ERR567613	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR567613	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR567613	characteristic	ethnic group	not available
+E-MTAB-3827		ERR567613	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR567613	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR567613	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR567613	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR567613	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR567614	characteristic	age	50 to 55 year
+E-MTAB-3827		ERR567614	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR567614	characteristic	cell type	CD4-positive, alpha-beta T cell
+E-MTAB-3827		ERR567614	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR567614	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR567614	characteristic	ethnic group	Northern European
+E-MTAB-3827		ERR567614	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR567614	characteristic	organism part	venous blood
+E-MTAB-3827		ERR567614	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR567614	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR567614	factor	organism part	venous blood
+E-MTAB-3827		ERR567615	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR567615	characteristic	cell type	endothelial cell of umbilical vein (proliferating)
+E-MTAB-3827		ERR567615	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR567615	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR567615	characteristic	ethnic group	not available
+E-MTAB-3827		ERR567615	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR567615	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR567615	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR567615	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR567615	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR567616	characteristic	age	50 to 55 year
+E-MTAB-3827		ERR567616	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR567616	characteristic	cell type	CD4-positive, alpha-beta T cell
+E-MTAB-3827		ERR567616	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR567616	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR567616	characteristic	ethnic group	not available
+E-MTAB-3827		ERR567616	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR567616	characteristic	organism part	venous blood
+E-MTAB-3827		ERR567616	characteristic	sex	male
+E-MTAB-3827		ERR567616	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR567616	factor	organism part	venous blood
+E-MTAB-3827		ERR567618	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR567618	characteristic	cell type	CD8-positive, alpha-beta T cell
+E-MTAB-3827		ERR567618	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR567618	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR567618	characteristic	ethnic group	not available
+E-MTAB-3827		ERR567618	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR567618	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR567618	characteristic	sex	male
+E-MTAB-3827		ERR567618	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR567618	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR567619	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR567619	characteristic	cell type	erythroblast	http://purl.obolibrary.org/obo/CL_0000765
+E-MTAB-3827		ERR567619	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR567619	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR567619	characteristic	ethnic group	not available
+E-MTAB-3827		ERR567619	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR567619	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR567619	characteristic	sex	male
+E-MTAB-3827		ERR567619	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR567619	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR567620	characteristic	age	45 to 50 year
+E-MTAB-3827		ERR567620	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR567620	characteristic	cell type	CD4-positive, alpha-beta T cell
+E-MTAB-3827		ERR567620	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR567620	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR567620	characteristic	ethnic group	not available
+E-MTAB-3827		ERR567620	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR567620	characteristic	organism part	venous blood
+E-MTAB-3827		ERR567620	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR567620	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR567620	factor	organism part	venous blood
+E-MTAB-3827		ERR650548	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR650548	characteristic	cell type	alternatively activated macrophage
+E-MTAB-3827		ERR650548	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650548	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650548	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650548	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650548	characteristic	organism part	venous blood
+E-MTAB-3827		ERR650548	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR650548	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650548	characteristic	technical replicate	group1
+E-MTAB-3827		ERR650548	factor	organism part	venous blood
+E-MTAB-3827		ERR650549	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR650549	characteristic	cell type	macrophage	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3827		ERR650549	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650549	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650549	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650549	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650549	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650549	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR650549	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650549	characteristic	technical replicate	group2
+E-MTAB-3827		ERR650549	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650550	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR650550	characteristic	cell type	alternatively activated macrophage
+E-MTAB-3827		ERR650550	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650550	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650550	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650550	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650550	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650550	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR650550	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650550	characteristic	technical replicate	group3
+E-MTAB-3827		ERR650550	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650551	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR650551	characteristic	cell type	alternatively activated macrophage
+E-MTAB-3827		ERR650551	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650551	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650551	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650551	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650551	characteristic	organism part	venous blood
+E-MTAB-3827		ERR650551	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR650551	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650551	characteristic	technical replicate	group1
+E-MTAB-3827		ERR650551	factor	organism part	venous blood
+E-MTAB-3827		ERR650552	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR650552	characteristic	cell type	macrophage	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3827		ERR650552	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650552	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650552	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650552	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650552	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650552	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR650552	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650552	characteristic	technical replicate	group2
+E-MTAB-3827		ERR650552	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650553	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR650553	characteristic	cell type	alternatively activated macrophage
+E-MTAB-3827		ERR650553	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650553	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650553	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650553	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650553	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650553	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR650553	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650553	characteristic	technical replicate	group3
+E-MTAB-3827		ERR650553	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650554	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR650554	characteristic	cell type	macrophage	http://purl.obolibrary.org/obo/CL_0000235
+E-MTAB-3827		ERR650554	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650554	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650554	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650554	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650554	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650554	characteristic	sex	male
+E-MTAB-3827		ERR650554	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650554	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650555	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR650555	characteristic	cell type	conventional dendritic cell	http://purl.obolibrary.org/obo/CL_0000451
+E-MTAB-3827		ERR650555	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650555	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650555	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650555	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650555	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650555	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR650555	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650555	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650556	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR650556	characteristic	cell type	CD4-positive, alpha-beta T cell
+E-MTAB-3827		ERR650556	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650556	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650556	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650556	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650556	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650556	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR650556	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650556	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650557	characteristic	age	45 to 50 year
+E-MTAB-3827		ERR650557	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR650557	characteristic	cell type	CD4-positive, alpha-beta T cell
+E-MTAB-3827		ERR650557	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650557	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650557	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650557	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650557	characteristic	organism part	venous blood
+E-MTAB-3827		ERR650557	characteristic	sex	male
+E-MTAB-3827		ERR650557	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650557	factor	organism part	venous blood
+E-MTAB-3827		ERR650558	characteristic	age	60 to 65 year
+E-MTAB-3827		ERR650558	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR650558	characteristic	cell type	CD4-positive, alpha-beta T cell
+E-MTAB-3827		ERR650558	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650558	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650558	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650558	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650558	characteristic	organism part	venous blood
+E-MTAB-3827		ERR650558	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR650558	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650558	factor	organism part	venous blood
+E-MTAB-3827		ERR650559	characteristic	age	60 to 65 year
+E-MTAB-3827		ERR650559	characteristic	biosource type	primary cell	http://www.ebi.ac.uk/efo/EFO_0002660
+E-MTAB-3827		ERR650559	characteristic	cell type	CD4-positive, alpha-beta T cell
+E-MTAB-3827		ERR650559	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650559	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650559	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650559	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650559	characteristic	organism part	venous blood
+E-MTAB-3827		ERR650559	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR650559	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650559	factor	organism part	venous blood
+E-MTAB-3827		ERR650560	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR650560	characteristic	cell type	CD34-negative, CD41-positive, CD42-positive megakaryocyte cell
+E-MTAB-3827		ERR650560	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650560	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650560	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650560	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650560	characteristic	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650560	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3827		ERR650560	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650560	factor	organism part	cord blood	http://purl.obolibrary.org/obo/UBERON_0012168
+E-MTAB-3827		ERR650561	characteristic	age	70 to 75 year
+E-MTAB-3827		ERR650561	characteristic	biosource type	primary cell culture
+E-MTAB-3827		ERR650561	characteristic	cell type	alternatively activated macrophage
+E-MTAB-3827		ERR650561	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-MTAB-3827		ERR650561	characteristic	donor geographic location of residence	East Anglia, United Kingdom
+E-MTAB-3827		ERR650561	characteristic	ethnic group	not available
+E-MTAB-3827		ERR650561	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3827		ERR650561	characteristic	organism part	venous blood
+E-MTAB-3827		ERR650561	characteristic	sex	male
+E-MTAB-3827		ERR650561	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-3827		ERR650561	factor	organism part	venous blood

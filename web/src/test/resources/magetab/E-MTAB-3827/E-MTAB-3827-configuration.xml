@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="cord blood">
+                <assay>ERR186014</assay>
+                <assay>ERR650554</assay>
+                <assay>ERR232403</assay>
+                <assay>ERR244135</assay>
+                <assay>ERR650560</assay>
+                <assay>ERR186015</assay>
+                <assay>ERR650555</assay>
+                <assay>ERR567613</assay>
+                <assay>ERR244134</assay>
+                <assay>ERR232404</assay>
+                <assay>ERR567615</assay>
+                <assay>ERR650556</assay>
+                <assay>ERR244136</assay>
+                <assay>ERR186005</assay>
+                <assay>ERR567619</assay>
+                <assay>ERR567618</assay>
+                <assay technical_replicate_id="t2">ERR650552</assay>
+                <assay technical_replicate_id="t2">ERR650549</assay>
+                <assay technical_replicate_id="t3">ERR650550</assay>
+                <assay technical_replicate_id="t3">ERR650553</assay>
+            </assay_group>
+            <assay_group id="g2" label="venous blood">
+                <assay>ERR186011</assay>
+                <assay>ERR650557</assay>
+                <assay>ERR567612</assay>
+                <assay>ERR186006</assay>
+                <assay>ERR230581</assay>
+                <assay>ERR186012</assay>
+                <assay>ERR650559</assay>
+                <assay>ERR650561</assay>
+                <assay>ERR567614</assay>
+                <assay>ERR567620</assay>
+                <assay>ERR186008</assay>
+                <assay>ERR186002</assay>
+                <assay>ERR186003</assay>
+                <assay>ERR186007</assay>
+                <assay>ERR567616</assay>
+                <assay>ERR186013</assay>
+                <assay>ERR232280</assay>
+                <assay>ERR650558</assay>
+                <assay>ERR186010</assay>
+                <assay>ERR186009</assay>
+                <assay>ERR186004</assay>
+                <assay technical_replicate_id="t1">ERR650551</assay>
+                <assay technical_replicate_id="t1">ERR650548</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

@@ -1,0 +1,30 @@
+Comment[ArrayExpressAccession]	E-MTAB-3827		
+MAGE-TAB Version	1.1		
+Investigation Title	Strand-specific RNA-Seq of rRNA-depleted total RNA from common types of cultured or uncultured primary cells of different haemopoetic lineages from healthy individuals in the BLUEPRINT epigenome project		
+Comment[Submitted Name]	Strand-specific RNA-Seq of rRNA-depleted total RNA from common types of cultured or uncultured primary cells of different haemopoetic lineages from healthy individuals in the BLUEPRINT epigenome project		
+Experiment Description	This experiment contains a subset of data from the BLUEPRINT Epigenome project ( http://www.blueprint-epigenome.eu ), which aims at producing a reference haemopoetic epigenomes for the research community.   40 samples of primary cells or cultured primary cells of different haemopoeitc lineages from cord blood are included in this experiment. This ArrayExpress record contains only meta-data.  Raw data files have been archived at the European Genome-Phenome Archive (EGA, www.ebi.ac.uk/ega) by the consortium, with restricted access to protect sample donors' identity.  The relevant accessions of EGA data sets is EGAD00001001202. Details on how to apply for data access via the BLUEPRINT data access committee are on the EGA data set pages.  The mapping of samples to these EGA accessions can be found in the 'Sample Data Relationship Format' file of this ArrayExpress record. Information on individual samples and sequencing libraries can also be found on the BLUEPRINT data coordination centre (DCC) website: http://dcc.blueprint-epigenome.eu		
+Experimental Design	cell type comparison design		
+Experimental Design Term Source REF	EFO		
+Experimental Design Term Accession Number	EFO_0001745		
+Experimental Factor Name	cell type	biosource type	organism part
+Experimental Factor Type	cell type	biosource type	organism part
+Experimental Factor Term Source REF	EFO		
+Experimental Factor Term Accession Number	EFO_0000324 		
+Person Last Name	ArrayExpress	BLUEPRINT consortium	
+Person First Name			
+Person Mid Initials			
+Person Email	arrayexpress@ebi.ac.uk	blueprint-dcc@ebi.ac.uk	
+Person Affiliation	EMBL European Bioinformatics Institute		
+Person Roles	submitter	data analyst;data coder	
+Date of Experiment	2015-08-12		
+Public Release Date	2015-09-30		
+Protocol Name	P-MTAB-46134	P-MTAB-46135	P-MTAB-46136
+Protocol Type	sample collection protocol	nucleic acid extraction protocol	nucleic acid library construction protocol
+Protocol Term Source REF	EFO	EFO	EFO
+Protocol Term Accession Number	EFO_0005518	EFO_0002944	EFO_0004184
+Protocol Description	All sample preparation and collection protocols can be found on the BLUEPRINT website: http://www.blueprint-epigenome.eu/index.cfm?p=7BF8A4B6-F4FE-861A-2AD57A08D63D0B58	A standardised RNA extraction protocol is provided by the BLUEPRINT consortium : http://www.blueprint-epigenome.eu/UserFiles/file/Protocols/UCAM_BluePrint_RNAextraction.pdf	The Ribo Zero Gold Kit (Epicentre) was used to remove ribosomal RNA from the total RNA extract.  Library preparation was done according to the Illumina TruSeq RNA Sample Preparation v2 Guide. The exact library preparation conditions can be retrieved from the BLUEPRINT data coordination centre's website by inserting the ERX* accession in this URL: http://dcc.blueprint-epigenome.eu/#/experiments/{accession}. E.g. http://dcc.blueprint-epigenome.eu/#/experiments/ERX295058 . Please refer to the Sample Data Relationship Format file of this ArrayExpress record for a mapping between samples and ERX* accessions.
+Term Source Name	EFO		
+Term Source File	http://www.ebi.ac.uk/efo/		
+Comment[AEExperimentType]	RNA-seq of coding RNA	RNA-seq of non coding RNA	
+Comment[SecondaryAccession]	EGAD00001001202		
+SDRF File	E-MTAB-3827.sdrf.txt		
