@@ -1,0 +1,33 @@
+Comment[ArrayExpressAccession]	E-MTAB-4260	
+MAGE-TAB Version	1.1	
+Investigation Title	Characterization of development wheat grain in morphological stage by RNA-seq	
+Comment[Submitted Name]	Characterization of development wheat grain in morphological stage by RNA-seq	
+Experiment Description	Wheat yield is correlated significantly with grain size which is established during morphological stage. In present study, morphological stage of developing wheat grain were analyzed by RNA-seq.This research will help us to understand the mechnism underlying of grain development. This is the first study on gene expression profiling of morphological stage of developing wheat grain and the results may aid the identification of pathways and genes associated with seed development in wheat.	
+Experimental Factor Name	organism part	sampling time point
+Experimental Factor Type	organism part	sampling time point
+Person Last Name	Li	
+Person First Name	Xiao-Yan	
+Person Email	xiaoyanli@nwsuaf.edu.cn	
+Person Address	Department of Seed Science, College of Agronomy, Northwest A&F University, Yangling, Shaanxi Province, People's Republic of China	
+Person Affiliation	BioProject	
+Person Roles	submitter	
+Public Release Date	2014-01-15	
+Protocol Name	SEQUENCING_PROTOCOL_1	LIBRARY_CONSTRUCTION_PROTOCOL_1
+Protocol Type	nucleic acid sequencing protocol	nucleic acid library construction protocol
+Protocol Term Source REF	EFO	EFO
+Protocol Term Accession Number	EFO_0004170	EFO_0004184
+Protocol Description	ILLUMINA sequencing using Illumina Genome Analyzer II. http://www.illumina.com/technology/sequencing_technology.ilmn	
+Protocol Hardware	Illumina Genome Analyzer II	
+Term Source Name	NCBI Taxonomy	EFO
+Term Source File	http://www.ncbi.nlm.nih.gov/Taxonomy/	http://www.ebi.ac.uk/efo
+Term Source Version		2.38
+Comment[SecondaryAccession]	SRP029372	
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/SRP029372	
+Comment[AEExperimentType]	RNA-seq of coding RNA	
+Comment[SRASubmissionDate]	2014-01-15	
+Comment[AEExperimentDisplayName]	Transcription profiling by high throughput sequencing of wheat developing grains at 4, 8 and 12 days after pollination	
+Pubmed ID	24349528	
+Publication DOI	10.1371/journal.pone.0083530	
+Publication Title	Evaluation of assembly strategies using RNA-seq data associated with grain development of wheat (Triticum aestivum L.)	
+Publication Author List	Li HZ, Gao X, Li XY, Chen QJ, Dong J, Zhao WC	
+SDRF File	E-MTAB-4260.sdrf.txt	

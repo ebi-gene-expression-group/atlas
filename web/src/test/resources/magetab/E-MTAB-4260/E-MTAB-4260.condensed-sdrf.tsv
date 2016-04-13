@@ -1,0 +1,56 @@
+E-MTAB-4260		SRR960179	characteristic	age	4 to 12 day
+E-MTAB-4260		SRR960179	characteristic	cultivar	P271
+E-MTAB-4260		SRR960179	characteristic	growth condition	field study	http://purl.obolibrary.org/obo/EO_0007256
+E-MTAB-4260		SRR960179	characteristic	initial time point	pollination
+E-MTAB-4260		SRR960179	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4260		SRR960179	characteristic	organism part	endosperm and seed coat
+E-MTAB-4260		SRR960179	factor	organism part	endosperm and seed coat
+E-MTAB-4260		SRR960179	factor	sampling time point	4 to 12 days after pollination
+E-MTAB-4260		SRR960183	characteristic	age	4 day
+E-MTAB-4260		SRR960183	characteristic	cultivar	P271
+E-MTAB-4260		SRR960183	characteristic	growth condition	field study	http://purl.obolibrary.org/obo/EO_0007256
+E-MTAB-4260		SRR960183	characteristic	initial time point	pollination
+E-MTAB-4260		SRR960183	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4260		SRR960183	characteristic	organism part	endosperm and seed coat
+E-MTAB-4260		SRR960183	factor	organism part	endosperm and seed coat
+E-MTAB-4260		SRR960183	factor	sampling time point	4 days after pollination
+E-MTAB-4260		SRR960212	characteristic	age	8 day
+E-MTAB-4260		SRR960212	characteristic	cultivar	P271
+E-MTAB-4260		SRR960212	characteristic	growth condition	field study	http://purl.obolibrary.org/obo/EO_0007256
+E-MTAB-4260		SRR960212	characteristic	initial time point	pollination
+E-MTAB-4260		SRR960212	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4260		SRR960212	characteristic	organism part	endosperm and seed coat
+E-MTAB-4260		SRR960212	factor	organism part	endosperm and seed coat
+E-MTAB-4260		SRR960212	factor	sampling time point	8 days after pollination
+E-MTAB-4260		SRR960213	characteristic	age	12 day
+E-MTAB-4260		SRR960213	characteristic	cultivar	P271
+E-MTAB-4260		SRR960213	characteristic	growth condition	field study	http://purl.obolibrary.org/obo/EO_0007256
+E-MTAB-4260		SRR960213	characteristic	initial time point	pollination
+E-MTAB-4260		SRR960213	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4260		SRR960213	characteristic	organism part	endosperm and seed coat
+E-MTAB-4260		SRR960213	factor	organism part	endosperm and seed coat
+E-MTAB-4260		SRR960213	factor	sampling time point	12 days after pollination
+E-MTAB-4260		SRR960247	characteristic	age	4 day
+E-MTAB-4260		SRR960247	characteristic	cultivar	P271
+E-MTAB-4260		SRR960247	characteristic	growth condition	field study	http://purl.obolibrary.org/obo/EO_0007256
+E-MTAB-4260		SRR960247	characteristic	initial time point	pollination
+E-MTAB-4260		SRR960247	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4260		SRR960247	characteristic	organism part	pericarp	http://purl.obolibrary.org/obo/PO_0009084
+E-MTAB-4260		SRR960247	factor	organism part	pericarp	http://purl.obolibrary.org/obo/PO_0009084
+E-MTAB-4260		SRR960247	factor	sampling time point	4 days after pollination
+E-MTAB-4260		SRR960248	characteristic	age	8 day
+E-MTAB-4260		SRR960248	characteristic	cultivar	P271
+E-MTAB-4260		SRR960248	characteristic	growth condition	field study	http://purl.obolibrary.org/obo/EO_0007256
+E-MTAB-4260		SRR960248	characteristic	initial time point	pollination
+E-MTAB-4260		SRR960248	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4260		SRR960248	characteristic	organism part	pericarp	http://purl.obolibrary.org/obo/PO_0009084
+E-MTAB-4260		SRR960248	factor	organism part	pericarp	http://purl.obolibrary.org/obo/PO_0009084
+E-MTAB-4260		SRR960248	factor	sampling time point	8 days after pollination
+E-MTAB-4260		SRR960255	characteristic	age	12 day
+E-MTAB-4260		SRR960255	characteristic	cultivar	P271
+E-MTAB-4260		SRR960255	characteristic	growth condition	field study	http://purl.obolibrary.org/obo/EO_0007256
+E-MTAB-4260		SRR960255	characteristic	initial time point	pollination
+E-MTAB-4260		SRR960255	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4260		SRR960255	characteristic	organism part	pericarp	http://purl.obolibrary.org/obo/PO_0009084
+E-MTAB-4260		SRR960255	factor	organism part	pericarp	http://purl.obolibrary.org/obo/PO_0009084
+E-MTAB-4260		SRR960255	factor	sampling time point	12 days after pollination

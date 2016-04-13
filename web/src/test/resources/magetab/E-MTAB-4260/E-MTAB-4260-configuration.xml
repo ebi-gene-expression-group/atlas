@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <!-- This assay group is excluded because it is a mix of developmental stages
+            <assay_group id="g3" label="endosperm and seed coat; 4 to 12 days after pollination">
+                <assay>SRR960179</assay>
+            </assay_group>
+            -->
+            <assay_group id="g2" label="endosperm and seed coat; 4 days after pollination">
+                <assay>SRR960183</assay>
+            </assay_group>
+            <assay_group id="g4" label="endosperm and seed coat; 8 days after pollination">
+                <assay>SRR960212</assay>
+            </assay_group>
+            <assay_group id="g1" label="endosperm and seed coat; 12 days after pollination">
+                <assay>SRR960213</assay>
+            </assay_group>
+            <assay_group id="g6" label="pericarp; 4 days after pollination">
+                <assay>SRR960247</assay>
+            </assay_group>
+            <assay_group id="g7" label="pericarp; 8 days after pollination">
+                <assay>SRR960248</assay>
+            </assay_group>
+            <assay_group id="g5" label="pericarp; 12 days after pollination">
+                <assay>SRR960255</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>
