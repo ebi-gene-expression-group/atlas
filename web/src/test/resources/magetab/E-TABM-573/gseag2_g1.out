@@ -1,0 +1,223 @@
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv --pvalue-col=7 --foldchange-col=9 --title="
+Top 10 GO terms enriched in 
+'sba1 knockout' vs 'wild type' in 'none; 0 micromolar' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.saccharomyces_cerevisiae.g2_g1.ensgene.go.tsv.aux1 --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/saccharomyces_cerevisiae.ensgene.go.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.g2_g1.go.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+pval.col = 7
+fold.col = 9
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/saccharomyces_cerevisiae.ensgene.go.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.saccharomyces_cerevisiae.g2_g1.ensgene.go.tsv.aux1
+title = 
+Top 10 GO terms enriched in 
+'sba1 knockout' vs 'wild type' in 'none; 0 micromolar' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.g2_g1.go.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 6779 entries
+[INFO] No more duplicates
+[INFO] 6150 unique entries
+[INFO] NAs removed: 5081
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv loaded: 1069 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/saccharomyces_cerevisiae.ensgene.go.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/saccharomyces_cerevisiae.ensgene.go.tsv loaded: 58913 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.saccharomyces_cerevisiae.g2_g1.ensgene.go.tsv.aux1
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.saccharomyces_cerevisiae.g2_g1.ensgene.go.tsv.aux1 loaded: 5292 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.33+-0.49
+[INFO] p-value mean 0.3+-0.29
+[INFO] Excluded 10 genes with no annotation
+[INFO] #Genes=990 #genes (pvalue<=0.05)=243
+[INFO] Loading GSC...
+[INFO] Gene sets:2249 genes:958
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 243 genes of interest in 300 gene sets, using a background of 747 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.g2_g1.go.gsea.tsv
+Loading required package: methods
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Loading required package: limma
+[INFO] Generating plot /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.g2_g1.go.gsea_class_non_dir_both.png
+There were 50 or more warnings (use warnings() to see the first 50)
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv --pvalue-col=7 --foldchange-col=9 --title="
+Top 10 InterPro domains enriched in 
+'sba1 knockout' vs 'wild type' in 'none; 0 micromolar' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/saccharomyces_cerevisiae.ensgene.interpro.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.g2_g1.interpro.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+pval.col = 7
+fold.col = 9
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/saccharomyces_cerevisiae.ensgene.interpro.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+title = 
+Top 10 InterPro domains enriched in 
+'sba1 knockout' vs 'wild type' in 'none; 0 micromolar' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.g2_g1.interpro.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 6779 entries
+[INFO] No more duplicates
+[INFO] 6150 unique entries
+[INFO] NAs removed: 5081
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv loaded: 1069 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/saccharomyces_cerevisiae.ensgene.interpro.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/saccharomyces_cerevisiae.ensgene.interpro.tsv loaded: 16944 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux loaded: 26238 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.33+-0.49
+[INFO] p-value mean 0.3+-0.29
+[INFO] Excluded 39 genes with no annotation
+[INFO] #Genes=813 #genes (pvalue<=0.05)=214
+[INFO] Loading GSC...
+[INFO] Gene sets:1359 genes:781
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 214 genes of interest in 84 gene sets, using a background of 599 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.g2_g1.interpro.gsea.tsv
+[WARNING] Insufficient gene sets () to draw a plot - plot not generated.
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv --pvalue-col=7 --foldchange-col=9 --title="
+Top 10 Reactome pathways enriched in 
+'sba1 knockout' vs 'wild type' in 'none; 0 micromolar' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/saccharomyces_cerevisiae.reactome.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/saccharomyces_cerevisiae.reactome.tsv.gsea.aux --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.g2_g1.reactome.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+pval.col = 7
+fold.col = 9
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/saccharomyces_cerevisiae.reactome.tsv.gsea.aux
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/saccharomyces_cerevisiae.reactome.tsv.decorate.aux
+title = 
+Top 10 Reactome pathways enriched in 
+'sba1 knockout' vs 'wild type' in 'none; 0 micromolar' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.g2_g1.reactome.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 6779 entries
+[INFO] No more duplicates
+[INFO] 6150 unique entries
+[INFO] NAs removed: 5081
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv loaded: 1069 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/saccharomyces_cerevisiae.reactome.tsv.gsea.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/saccharomyces_cerevisiae.reactome.tsv.gsea.aux loaded: 14330 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/saccharomyces_cerevisiae.reactome.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/saccharomyces_cerevisiae.reactome.tsv.decorate.aux loaded: 822 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.33+-0.49
+[INFO] p-value mean 0.3+-0.29
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=1069 #genes (pvalue<=0.05)=253
+[WARNING] No gene annotation found...giving up. Please check if you have GO/Pathway information in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/saccharomyces_cerevisiae.reactome.tsv.gsea.aux.
+[WARNING] No significant entries found for p-value of 0.05
+[INFO] Created empty /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573.g2_g1.reactome.gsea.tsv
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi6-239>
+Subject: Job 1040205: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573 g2_g1 > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573 g2_g1 > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi6-239>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573> was used as the working directory.
+Started at Tue Apr 12 17:59:29 2016
+Results reported at Tue Apr 12 17:59:56 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573 g2_g1 
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               18.34 sec.
+    Max Memory :             14 MB
+    Average Memory :         7.50 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           4082.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               784 MB
+
+    Max Processes :          8
+    Max Threads :            9
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <gseag2_g1.err> for stderr output of this job.
+

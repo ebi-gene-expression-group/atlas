@@ -1,0 +1,54 @@
+/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573 /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573
+Processing A-AFFY-27...
+Processing E-TABM-573_A-AFFY-27-analytics.tsv.undecorated...
+Processing E-TABM-573_A-AFFY-27-normalized-expressions.tsv.undecorated...
+Processing E-TABM-573_A-AFFY-27-analytics.tsv.undecorated.unrounded...
+Calculate percentile ranks for (each contrast in) the experiment
+INFO  - Removing previous percentile ranks files...
+INFO  - Done
+INFO  - Calculating percentile ranks for E-TABM-573_A-AFFY-27-analytics.tsv.unrounded ...
+INFO  - Percentile ranks calculation successful.
+INFO  - Successfully calculated percentile ranks for E-TABM-573.
+/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-047>
+Subject: Job 1030620: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/bioentity_annotations/decorate_microarray_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573  > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/bioentity_annotations/decorate_microarray_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573  > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi5-047>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573> was used as the working directory.
+Started at Tue Apr 12 17:24:02 2016
+Results reported at Tue Apr 12 17:26:48 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/bioentity_annotations/decorate_microarray_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               129.38 sec.
+    Max Memory :             154 MB
+    Average Memory :         3.44 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3942.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               725 MB
+
+    Max Processes :          7
+    Max Threads :            8
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <genenames.err> for stderr output of this job.
+

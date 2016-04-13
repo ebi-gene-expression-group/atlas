@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-27</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="none; 0 micromolar; sba1 knockout">
+                <assay>Picard_Fedor_280404_1c</assay>
+                <assay>Picard_Fedor_280404_3c</assay>
+                <assay>Picard_Fedor_280404_2c</assay>
+            </assay_group>
+            <assay_group id="g2" label="none; 0 micromolar; wild type">
+                <assay>Picard_Fedor_280404_1a</assay>
+                <assay>Picard_Fedor_280404_3a</assay>
+                <assay>Picard_Fedor_280404_2a</assay>
+            </assay_group>
+            <assay_group id="g3" label="radicicol; 10 micromolar; sba1 knockout">
+                <assay>Picard_Fedor_280404_2d</assay>
+                <assay>Picard_Fedor_280404_1d</assay>
+                <assay>Picard_Fedor_280404_3d</assay>
+            </assay_group>
+            <assay_group id="g4" label="radicicol; 10 micromolar; wild type">
+                <assay>Picard_Fedor_280404_3b</assay>
+                <assay>Picard_Fedor_280404_2b</assay>
+                <assay>Picard_Fedor_280404_1b</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g1_g3">
+                <name>'radicicol; 10 micromolar' vs 'none' in 'sba1 knockout'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+            <contrast id="g2_g4">
+                <name>'radicicol; 10 micromolar' vs 'none' in 'wild type'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g4</test_assay_group>
+            </contrast>
+            <contrast id="g4_g3">
+                <name>'sba1 knockout' vs 'wild type' in 'radicicol; 10 micromolar'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+            <contrast id="g2_g1">
+                <name>'sba1 knockout' vs 'wild type' in 'none; 0 micromolar'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

@@ -1,0 +1,50 @@
+Investigation Title	Transcription profiling of wild type and delta-sba1 yeast treated with radicicol to study gene regulation by sba1							
+Comment[Submitted Name]	Role of Hsp90 inhibitor Radicicol in yeast on function pf p23/sba1							
+Experimental Design	genetic_modification_design	compound_treatment_design	transcription profiling by array					
+Experimental Design Term Source REF	The MGED Ontology	The MGED Ontology	EFO					
+Comment[AEMIAMESCORE]	4							
+Comment[ArrayExpressReleaseDate]	2009-10-14							
+Comment[AEExperimentType]	transcription profiling by array							
+Comment[SecondaryAccession]								
+Comment[ArrayExpressAccession]	E-TABM-573							
+Comment[MAGETAB TimeStamp_Version]	2010-08-12 19:44:52 Last Changed Rev: 13058							
+Experimental Factor Name	genotype	compound	dose					
+Experimental Factor Type	genotype	compound	dose					
+Experimental Factor Term Source REF								
+Person Last Name	Picard							
+Person First Name	Didier							
+Person Mid Initials								
+Person Email	Didier.Picard@unige.ch							
+Person Phone								
+Person Fax								
+Person Address	Sciences 3<br>Boulevard d'Yvoy 4, 1211 Geneve Ge, Switzerland							
+Person Affiliation	Universite de Geneve							
+Person Roles	investigator;submitter							
+Person Roles Term Source REF	The MGED Ontology							
+Quality Control Type	biological_replicate	spike_quality_control						
+Quality Control Term Source REF	The MGED Ontology	The MGED Ontology						
+Replicate Type								
+Replicate Term Source REF								
+Normalization Type								
+Normalization Term Source REF								
+Date of Experiment								
+Public Release Date	2009-10-14							
+PubMed ID	21672238							
+Publication DOI	10.1186/1756-0381-4-15							
+Publication Author List	Echeverria PC, Forafonov F, Pandey DP, Muhlebach G, Picard D.							
+Publication Title	Detection of changes in gene regulatory patterns, elicited by perturbations of the Hsp90 molecular chaperone complex, by visualizing multiple experiments with an animation.							
+Publication Status								
+Publication Status Term Source REF								
+Experiment Description	We wanted to study regulation of gene regulation by sba1 (ortholog of mammalian p23) in yeast. sba1/p23 binds to Hsp90 and acts as a co-chaperone. We have a small molecule, radicicol, an analog of geldanamycin to inhibit the binding of p23 to Hsp90. Consequently, we have analyzed the gene expression profile in 4 conditions, wt, delta-sba1; and when Hsp90 function is impaired, that is, wt and delta-sba1 treated with radicicol.							
+Protocol Name	P-TABM-3149	P-TABM-3142	P-TABM-3141	P-TABM-3143	P-TABM-3144	P-TABM-3145	P-AFFY-6	P-TABM-3148
+Protocol Type	specified_biomaterial_action	specified_biomaterial_action	grow	nucleic_acid_extraction	labeling	hybridization	feature_extraction	bioassay_data_transformation
+Protocol Description	Treatment Type: drug compound/small molecule ; Drug Compound/Small Molecule: radicicol ; Treatment Delivery Method: in medium	Treatment Delivery Method: in medium	Growth Conditions: 14h until OD600 0.6-1	Nucleic Acid Extraction Method: phenol-based method ; Nucleic Acid Type: polyA_RNA ; Nucleic Acid Cleanup: Qiagen RNeasy Micro Kit ; Amplification Method: No amplification	cDNA Synthesis: Affymetrix GeneChip One-Cycle cDNA Synthesis Kit ; cRNA Synthesis: Affymetrix GeneChip Expression 3'-Amplification Kit for IVT Labeling ; cRNA Cleanup: Affymetrix GeneChip Sample Cleanup Module ; Spike Target Element: mRNA ; Spiking Control: Affymetrix standard	Washing/Staining Procedure: EukGE-WS2v4 ; Washing/Staining Instrumentation: Fluidics Station 450	Title: Affymetrix CEL analysis. Description: 	Data Processing/Normalization: Affymetrix GCOS/MAS algorithm used to generate probeset-level intensities in TXT metrics file.<br>GeneSpring RMA preprocessor and algorithm used to generate probeset-level intensities in RMA file.<br>GeneSpring GC-RMA preprocessor and algorithm to generate probeset-level intensities in GMA file.
+Protocol Parameters				Nucleic Acid Starting Amount;		Hybridization Time;Hybridization Concentration;Hybridization Volume;Hybridization Temperature;Labeled Nucleic Acid Amount;		
+Protocol Hardware								
+Protocol Software							MicroArraySuite 5.0	
+Protocol Contact								
+Protocol Term Source REF								
+SDRF File	E-TABM-573.sdrf.txt							
+Term Source Name	mo		The MGED Ontology	ArrayExpress	NCI_thesaurus	The MGED Ontology	EFO	
+Term Source File	http://mged.sourceforge.net/ontologies/MGEDontology.php		http://mged.sourceforge.net/ontologies/MGEDontology.php	http://www.ebi.ac.uk/arrayexpress	ncithesaurus.obo.alt	http://mged.sourceforge.net/ontologies/MGEDontology.php	http://www.ebi.ac.uk/efo/	
+Term Source Version								

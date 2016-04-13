@@ -1,0 +1,68 @@
+
+Reading and writing files in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573 
+
+Reading experiment config from /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573-configuration.xml ...
+Finished reading experiment config
+Reading SDRF from /nfs/ma/home/arrayexpress/ae2_production/data/EXPERIMENT/TABM/E-TABM-573/E-TABM-573.sdrf.txt ...
+Getting characteristic and factor column indices
+Checking for technical replicates
+Locating assay names...
+Found assay names. Subsetting SDRF...
+Finished subsetting SDRF.
+Merging unit columns...
+Finished merging unit columns.
+Fixing column headings...
+Finished fixing column headings.
+Removing duplicated columns...
+Finished removing duplicated columns.
+Applying new column headings...
+Finished applying new column headings.
+Removing duplicated rows...
+Finished removing duplicated rows.
+Finished reading SDRF
+Creating experiment summary...
+Experiment summary created.
+Experiment summary written to /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573-atlasExperimentSummary.Rdata 
+
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-142>
+Subject: Job 1035624: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/analysis/atlasExperimentInR/createAtlasExperimentSummary.R E-TABM-573 /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573  > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/analysis/atlasExperimentInR/createAtlasExperimentSummary.R E-TABM-573 /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573  > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi5-142>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573> was used as the working directory.
+Started at Tue Apr 12 17:41:57 2016
+Results reported at Tue Apr 12 17:42:02 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/analysis/atlasExperimentInR/createAtlasExperimentSummary.R E-TABM-573 /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               3.88 sec.
+    Max Memory :             178 MB
+    Average Memory :         56.00 MB
+    Total Requested Memory : 32768.00 MB
+    Delta Memory :           32590.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               506 MB
+
+    Max Processes :          3
+    Max Threads :            4
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <R.err> for stderr output of this job.
+

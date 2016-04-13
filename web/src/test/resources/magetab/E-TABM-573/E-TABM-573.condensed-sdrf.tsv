@@ -1,0 +1,120 @@
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1a	characteristic	biosource type	fresh sample	http://purl.obolibrary.org/obo/OBI_0000971
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1a	characteristic	developmental stage	exponential growth
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1a	characteristic	genetic modification	gene knock out	http://www.ebi.ac.uk/efo/EFO_0000506
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1a	characteristic	genotype	his3delta1 leu2delta0 lys2delta0 ura3delta0
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1a	characteristic	organism	Saccharomyces cerevisiae	http://purl.obolibrary.org/obo/NCBITaxon_4932
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1a	characteristic	sex	mating type alpha	http://www.ebi.ac.uk/efo/EFO_0001270
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1a	characteristic	strain	BY4742
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1a	factor	genotype	wild type genotype
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1a	factor	compound	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1a	factor	dose	0 micromolar
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1b	characteristic	biosource type	fresh sample	http://purl.obolibrary.org/obo/OBI_0000971
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1b	characteristic	developmental stage	exponential growth
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1b	characteristic	genetic modification	gene knock out	http://www.ebi.ac.uk/efo/EFO_0000506
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1b	characteristic	genotype	his3delta1 leu2delta0 lys2delta0 ura3delta0
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1b	characteristic	organism	Saccharomyces cerevisiae	http://purl.obolibrary.org/obo/NCBITaxon_4932
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1b	characteristic	sex	mating type alpha	http://www.ebi.ac.uk/efo/EFO_0001270
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1b	characteristic	strain	BY4742
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1b	factor	genotype	wild type genotype
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1b	factor	compound	radicicol	http://purl.obolibrary.org/obo/CHEBI_556075
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1b	factor	dose	10 micromolar
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1c	characteristic	biosource type	fresh sample	http://purl.obolibrary.org/obo/OBI_0000971
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1c	characteristic	developmental stage	exponential growth
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1c	characteristic	genetic modification	gene knock out	http://www.ebi.ac.uk/efo/EFO_0000506
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1c	characteristic	genotype	his3delta1 leu2delta0 lys2delta0 ura3delta0 delta-sba1::G418 delta-pdr5::HIS3
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1c	characteristic	organism	Saccharomyces cerevisiae	http://purl.obolibrary.org/obo/NCBITaxon_4932
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1c	characteristic	sex	mating type alpha	http://www.ebi.ac.uk/efo/EFO_0001270
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1c	characteristic	strain	BYP2
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1c	factor	genotype	sba1 knockout
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1c	factor	compound	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1c	factor	dose	0 micromolar
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1d	characteristic	biosource type	fresh sample	http://purl.obolibrary.org/obo/OBI_0000971
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1d	characteristic	developmental stage	exponential growth
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1d	characteristic	genetic modification	gene knock out	http://www.ebi.ac.uk/efo/EFO_0000506
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1d	characteristic	genotype	his3delta1 leu2delta0 lys2delta0 ura3delta0 delta-sba1::G418 delta-pdr5::HIS3
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1d	characteristic	organism	Saccharomyces cerevisiae	http://purl.obolibrary.org/obo/NCBITaxon_4932
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1d	characteristic	sex	mating type alpha	http://www.ebi.ac.uk/efo/EFO_0001270
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1d	characteristic	strain	BYP2
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1d	factor	genotype	sba1 knockout
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1d	factor	compound	radicicol	http://purl.obolibrary.org/obo/CHEBI_556075
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_1d	factor	dose	10 micromolar
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2a	characteristic	biosource type	fresh sample	http://purl.obolibrary.org/obo/OBI_0000971
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2a	characteristic	developmental stage	exponential growth
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2a	characteristic	genetic modification	gene knock out	http://www.ebi.ac.uk/efo/EFO_0000506
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2a	characteristic	genotype	his3delta1 leu2delta0 lys2delta0 ura3delta0
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2a	characteristic	organism	Saccharomyces cerevisiae	http://purl.obolibrary.org/obo/NCBITaxon_4932
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2a	characteristic	sex	mating type alpha	http://www.ebi.ac.uk/efo/EFO_0001270
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2a	characteristic	strain	BY4742
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2a	factor	genotype	wild type genotype
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2a	factor	compound	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2a	factor	dose	0 micromolar
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2b	characteristic	biosource type	fresh sample	http://purl.obolibrary.org/obo/OBI_0000971
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2b	characteristic	developmental stage	exponential growth
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2b	characteristic	genetic modification	gene knock out	http://www.ebi.ac.uk/efo/EFO_0000506
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2b	characteristic	genotype	his3delta1 leu2delta0 lys2delta0 ura3delta0
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2b	characteristic	organism	Saccharomyces cerevisiae	http://purl.obolibrary.org/obo/NCBITaxon_4932
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2b	characteristic	sex	mating type alpha	http://www.ebi.ac.uk/efo/EFO_0001270
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2b	characteristic	strain	BY4742
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2b	factor	genotype	wild type genotype
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2b	factor	compound	radicicol	http://purl.obolibrary.org/obo/CHEBI_556075
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2b	factor	dose	10 micromolar
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2c	characteristic	biosource type	fresh sample	http://purl.obolibrary.org/obo/OBI_0000971
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2c	characteristic	developmental stage	exponential growth
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2c	characteristic	genetic modification	gene knock out	http://www.ebi.ac.uk/efo/EFO_0000506
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2c	characteristic	genotype	his3delta1 leu2delta0 lys2delta0 ura3delta0 delta-sba1::G418 delta-pdr5::HIS3
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2c	characteristic	organism	Saccharomyces cerevisiae	http://purl.obolibrary.org/obo/NCBITaxon_4932
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2c	characteristic	sex	mating type alpha	http://www.ebi.ac.uk/efo/EFO_0001270
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2c	characteristic	strain	BYP2
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2c	factor	genotype	sba1 knockout
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2c	factor	compound	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2c	factor	dose	0 micromolar
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2d	characteristic	biosource type	fresh sample	http://purl.obolibrary.org/obo/OBI_0000971
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2d	characteristic	developmental stage	exponential growth
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2d	characteristic	genetic modification	gene knock out	http://www.ebi.ac.uk/efo/EFO_0000506
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2d	characteristic	genotype	his3delta1 leu2delta0 lys2delta0 ura3delta0 delta-sba1::G418 delta-pdr5::HIS3
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2d	characteristic	organism	Saccharomyces cerevisiae	http://purl.obolibrary.org/obo/NCBITaxon_4932
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2d	characteristic	sex	mating type alpha	http://www.ebi.ac.uk/efo/EFO_0001270
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2d	characteristic	strain	BYP2
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2d	factor	genotype	sba1 knockout
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2d	factor	compound	radicicol	http://purl.obolibrary.org/obo/CHEBI_556075
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_2d	factor	dose	10 micromolar
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3a	characteristic	biosource type	fresh sample	http://purl.obolibrary.org/obo/OBI_0000971
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3a	characteristic	developmental stage	exponential growth
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3a	characteristic	genetic modification	gene knock out	http://www.ebi.ac.uk/efo/EFO_0000506
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3a	characteristic	genotype	his3delta1 leu2delta0 lys2delta0 ura3delta0
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3a	characteristic	organism	Saccharomyces cerevisiae	http://purl.obolibrary.org/obo/NCBITaxon_4932
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3a	characteristic	sex	mating type alpha	http://www.ebi.ac.uk/efo/EFO_0001270
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3a	characteristic	strain	BY4742
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3a	factor	genotype	wild type genotype
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3a	factor	compound	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3a	factor	dose	0 micromolar
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3b	characteristic	biosource type	fresh sample	http://purl.obolibrary.org/obo/OBI_0000971
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3b	characteristic	developmental stage	exponential growth
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3b	characteristic	genetic modification	gene knock out	http://www.ebi.ac.uk/efo/EFO_0000506
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3b	characteristic	genotype	his3delta1 leu2delta0 lys2delta0 ura3delta0
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3b	characteristic	organism	Saccharomyces cerevisiae	http://purl.obolibrary.org/obo/NCBITaxon_4932
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3b	characteristic	sex	mating type alpha	http://www.ebi.ac.uk/efo/EFO_0001270
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3b	characteristic	strain	BY4742
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3b	factor	genotype	wild type genotype
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3b	factor	compound	radicicol	http://purl.obolibrary.org/obo/CHEBI_556075
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3b	factor	dose	10 micromolar
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3c	characteristic	biosource type	fresh sample	http://purl.obolibrary.org/obo/OBI_0000971
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3c	characteristic	developmental stage	exponential growth
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3c	characteristic	genetic modification	gene knock out	http://www.ebi.ac.uk/efo/EFO_0000506
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3c	characteristic	genotype	his3delta1 leu2delta0 lys2delta0 ura3delta0 delta-sba1::G418 delta-pdr5::HIS3
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3c	characteristic	organism	Saccharomyces cerevisiae	http://purl.obolibrary.org/obo/NCBITaxon_4932
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3c	characteristic	sex	mating type alpha	http://www.ebi.ac.uk/efo/EFO_0001270
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3c	characteristic	strain	BYP2
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3c	factor	genotype	sba1 knockout
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3c	factor	compound	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3c	factor	dose	0 micromolar
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3d	characteristic	biosource type	fresh sample	http://purl.obolibrary.org/obo/OBI_0000971
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3d	characteristic	developmental stage	exponential growth
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3d	characteristic	genetic modification	gene knock out	http://www.ebi.ac.uk/efo/EFO_0000506
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3d	characteristic	genotype	his3delta1 leu2delta0 lys2delta0 ura3delta0 delta-sba1::G418 delta-pdr5::HIS3
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3d	characteristic	organism	Saccharomyces cerevisiae	http://purl.obolibrary.org/obo/NCBITaxon_4932
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3d	characteristic	sex	mating type alpha	http://www.ebi.ac.uk/efo/EFO_0001270
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3d	characteristic	strain	BYP2
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3d	factor	genotype	sba1 knockout
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3d	factor	compound	radicicol	http://purl.obolibrary.org/obo/CHEBI_556075
+E-TABM-573	A-AFFY-27	Picard_Fedor_280404_3d	factor	dose	10 micromolar

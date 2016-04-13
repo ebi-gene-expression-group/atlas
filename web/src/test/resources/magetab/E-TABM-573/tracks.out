@@ -1,0 +1,242 @@
+[INFO] GFF file loaded: 7126 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g1_g3.p-value
+ [INFO] Columns:g1_g3.t-statistic
+ [INFO] Columns:g1_g3.log2foldchange
+ [INFO] Columns:g2_g1.p-value
+ [INFO] Columns:g2_g1.t-statistic
+ [INFO] Columns:g2_g1.log2foldchange
+ [INFO] Columns:g2_g4.p-value
+ [INFO] Columns:g2_g4.t-statistic
+ [INFO] Columns:g2_g4.log2foldchange
+ [INFO] Columns:g4_g3.p-value
+ [INFO] Columns:g4_g3.t-statistic
+ [INFO] Columns:g4_g3.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:6150
+[INFO] # values:6150
+[INFO] Found 4710 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 7126 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g1_g3.p-value
+ [INFO] Columns:g1_g3.t-statistic
+ [INFO] Columns:g1_g3.log2foldchange
+ [INFO] Columns:g2_g1.p-value
+ [INFO] Columns:g2_g1.t-statistic
+ [INFO] Columns:g2_g1.log2foldchange
+ [INFO] Columns:g2_g4.p-value
+ [INFO] Columns:g2_g4.t-statistic
+ [INFO] Columns:g2_g4.log2foldchange
+ [INFO] Columns:g4_g3.p-value
+ [INFO] Columns:g4_g3.t-statistic
+ [INFO] Columns:g4_g3.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:6150
+[INFO] # values:6150
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 7126 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g1_g3.p-value
+ [INFO] Columns:g1_g3.t-statistic
+ [INFO] Columns:g1_g3.log2foldchange
+ [INFO] Columns:g2_g1.p-value
+ [INFO] Columns:g2_g1.t-statistic
+ [INFO] Columns:g2_g1.log2foldchange
+ [INFO] Columns:g2_g4.p-value
+ [INFO] Columns:g2_g4.t-statistic
+ [INFO] Columns:g2_g4.log2foldchange
+ [INFO] Columns:g4_g3.p-value
+ [INFO] Columns:g4_g3.t-statistic
+ [INFO] Columns:g4_g3.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:6150
+[INFO] # values:6150
+[INFO] Found 5436 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 7126 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g1_g3.p-value
+ [INFO] Columns:g1_g3.t-statistic
+ [INFO] Columns:g1_g3.log2foldchange
+ [INFO] Columns:g2_g1.p-value
+ [INFO] Columns:g2_g1.t-statistic
+ [INFO] Columns:g2_g1.log2foldchange
+ [INFO] Columns:g2_g4.p-value
+ [INFO] Columns:g2_g4.t-statistic
+ [INFO] Columns:g2_g4.log2foldchange
+ [INFO] Columns:g4_g3.p-value
+ [INFO] Columns:g4_g3.t-statistic
+ [INFO] Columns:g4_g3.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:6150
+[INFO] # values:6150
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 7126 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g1_g3.p-value
+ [INFO] Columns:g1_g3.t-statistic
+ [INFO] Columns:g1_g3.log2foldchange
+ [INFO] Columns:g2_g1.p-value
+ [INFO] Columns:g2_g1.t-statistic
+ [INFO] Columns:g2_g1.log2foldchange
+ [INFO] Columns:g2_g4.p-value
+ [INFO] Columns:g2_g4.t-statistic
+ [INFO] Columns:g2_g4.log2foldchange
+ [INFO] Columns:g4_g3.p-value
+ [INFO] Columns:g4_g3.t-statistic
+ [INFO] Columns:g4_g3.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:6150
+[INFO] # values:6150
+[INFO] Found 4628 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 7126 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g1_g3.p-value
+ [INFO] Columns:g1_g3.t-statistic
+ [INFO] Columns:g1_g3.log2foldchange
+ [INFO] Columns:g2_g1.p-value
+ [INFO] Columns:g2_g1.t-statistic
+ [INFO] Columns:g2_g1.log2foldchange
+ [INFO] Columns:g2_g4.p-value
+ [INFO] Columns:g2_g4.t-statistic
+ [INFO] Columns:g2_g4.log2foldchange
+ [INFO] Columns:g4_g3.p-value
+ [INFO] Columns:g4_g3.t-statistic
+ [INFO] Columns:g4_g3.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:6150
+[INFO] # values:6150
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 7126 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g1_g3.p-value
+ [INFO] Columns:g1_g3.t-statistic
+ [INFO] Columns:g1_g3.log2foldchange
+ [INFO] Columns:g2_g1.p-value
+ [INFO] Columns:g2_g1.t-statistic
+ [INFO] Columns:g2_g1.log2foldchange
+ [INFO] Columns:g2_g4.p-value
+ [INFO] Columns:g2_g4.t-statistic
+ [INFO] Columns:g2_g4.log2foldchange
+ [INFO] Columns:g4_g3.p-value
+ [INFO] Columns:g4_g3.t-statistic
+ [INFO] Columns:g4_g3.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:6150
+[INFO] # values:6150
+[INFO] Found 5081 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 7126 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573/E-TABM-573_A-AFFY-27-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g1_g3.p-value
+ [INFO] Columns:g1_g3.t-statistic
+ [INFO] Columns:g1_g3.log2foldchange
+ [INFO] Columns:g2_g1.p-value
+ [INFO] Columns:g2_g1.t-statistic
+ [INFO] Columns:g2_g1.log2foldchange
+ [INFO] Columns:g2_g4.p-value
+ [INFO] Columns:g2_g4.t-statistic
+ [INFO] Columns:g2_g4.log2foldchange
+ [INFO] Columns:g4_g3.p-value
+ [INFO] Columns:g4_g3.t-statistic
+ [INFO] Columns:g4_g3.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:6150
+[INFO] # values:6150
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi6-040>
+Subject: Job 1032801: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573  > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573  > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi6-040>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573> was used as the working directory.
+Started at Tue Apr 12 17:33:18 2016
+Results reported at Tue Apr 12 17:34:17 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-TABM-573  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               56.42 sec.
+    Max Memory :             456 MB
+    Average Memory :         133.00 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3640.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               955 MB
+
+    Max Processes :          5
+    Max Threads :            6
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <tracks.err> for stderr output of this job.
+
