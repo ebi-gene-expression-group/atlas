@@ -1,0 +1,23 @@
+study_id	run_id	cram_location	organism	processing_status
+SRP041622	SRR1268086	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/006/SRR1268086/SRR1268086.cram	glycine_max	21-OCT-2015 06:26:30	completed	95
+SRP041622	SRR1268095	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/005/SRR1268095/SRR1268095.cram	glycine_max	21-OCT-2015 06:23:08	completed	97
+SRP041622	SRR1268084	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/004/SRR1268084/SRR1268084.cram	glycine_max	21-OCT-2015 06:41:08	completed	97
+SRP041622	SRR1268092	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/002/SRR1268092/SRR1268092.cram	glycine_max	21-OCT-2015 06:44:37	completed	97
+SRP041622	SRR1268085	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/005/SRR1268085/SRR1268085.cram	glycine_max	21-OCT-2015 06:42:11	completed	96
+SRP041622	SRR1268102	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/002/SRR1268102/SRR1268102.cram	glycine_max	21-OCT-2015 06:46:42	completed	95
+SRP041622	SRR1268098	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/008/SRR1268098/SRR1268098.cram	glycine_max	21-OCT-2015 06:42:49	completed	91
+SRP041622	SRR1268083	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/003/SRR1268083/SRR1268083.cram	glycine_max	21-OCT-2015 06:47:37	completed	97
+SRP041622	SRR1268096	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/006/SRR1268096/SRR1268096.cram	glycine_max	21-OCT-2015 06:53:58	completed	94
+SRP041622	SRR1268097	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/007/SRR1268097/SRR1268097.cram	glycine_max	21-OCT-2015 06:52:00	completed	93
+SRP041622	SRR1268088	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/008/SRR1268088/SRR1268088.cram	glycine_max	21-OCT-2015 06:48:16	completed	97
+SRP041622	SRR1268093	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/003/SRR1268093/SRR1268093.cram	glycine_max	21-OCT-2015 06:59:26	completed	96
+SRP041622	SRR1268099	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/009/SRR1268099/SRR1268099.cram	glycine_max	21-OCT-2015 08:48:19	completed	89
+SRP041622	SRR1268089	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/009/SRR1268089/SRR1268089.cram	glycine_max	21-OCT-2015 07:06:54	completed	96
+SRP041622	SRR1268082	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/002/SRR1268082/SRR1268082.cram	glycine_max	21-OCT-2015 06:58:33	completed	96
+SRP041622	SRR1268100	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/000/SRR1268100/SRR1268100.cram	glycine_max	21-OCT-2015 07:11:40	completed	95
+SRP041622	SRR1268091	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/001/SRR1268091/SRR1268091.cram	glycine_max	21-OCT-2015 07:11:57	completed	97
+SRP041622	SRR1268090	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/000/SRR1268090/SRR1268090.cram	glycine_max	21-OCT-2015 07:08:59	completed	97
+SRP041622	SRR1268101	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/001/SRR1268101/SRR1268101.cram	glycine_max	21-OCT-2015 07:09:23	completed	95
+SRP041622	SRR1268094	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/004/SRR1268094/SRR1268094.cram	glycine_max	21-OCT-2015 11:08:27	completed	96
+SRP041622	SRR1268087	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR126/007/SRR1268087/SRR1268087.cram	glycine_max	21-OCT-2015 07:15:07	completed	94
+

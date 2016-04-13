@@ -1,0 +1,126 @@
+E-GEOD-57252		SRR1268082	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268082	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268082	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268082	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268082	factor	environmental stress	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-GEOD-57252		SRR1268082	factor	time	0 hour
+E-GEOD-57252		SRR1268083	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268083	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268083	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268083	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268083	factor	environmental stress	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-GEOD-57252		SRR1268083	factor	time	0 hour
+E-GEOD-57252		SRR1268084	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268084	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268084	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268084	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268084	factor	environmental stress	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-GEOD-57252		SRR1268084	factor	time	0 hour
+E-GEOD-57252		SRR1268085	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268085	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268085	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268085	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268085	factor	environmental stress	dehydration stress
+E-GEOD-57252		SRR1268085	factor	time	1 hour
+E-GEOD-57252		SRR1268086	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268086	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268086	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268086	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268086	factor	environmental stress	dehydration stress
+E-GEOD-57252		SRR1268086	factor	time	1 hour
+E-GEOD-57252		SRR1268087	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268087	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268087	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268087	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268087	factor	environmental stress	dehydration stress
+E-GEOD-57252		SRR1268087	factor	time	1 hour
+E-GEOD-57252		SRR1268088	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268088	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268088	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268088	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268088	factor	environmental stress	dehydration stress
+E-GEOD-57252		SRR1268088	factor	time	6 hour
+E-GEOD-57252		SRR1268089	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268089	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268089	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268089	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268089	factor	environmental stress	dehydration stress
+E-GEOD-57252		SRR1268089	factor	time	6 hour
+E-GEOD-57252		SRR1268090	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268090	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268090	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268090	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268090	factor	environmental stress	dehydration stress
+E-GEOD-57252		SRR1268090	factor	time	6 hour
+E-GEOD-57252		SRR1268091	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268091	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268091	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268091	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268091	factor	environmental stress	dehydration stress
+E-GEOD-57252		SRR1268091	factor	time	12 hour
+E-GEOD-57252		SRR1268092	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268092	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268092	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268092	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268092	factor	environmental stress	dehydration stress
+E-GEOD-57252		SRR1268092	factor	time	12 hour
+E-GEOD-57252		SRR1268093	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268093	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268093	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268093	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268093	factor	environmental stress	dehydration stress
+E-GEOD-57252		SRR1268093	factor	time	12 hour
+E-GEOD-57252		SRR1268094	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268094	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268094	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268094	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268094	factor	environmental stress	salt stress
+E-GEOD-57252		SRR1268094	factor	time	1 hour
+E-GEOD-57252		SRR1268095	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268095	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268095	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268095	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268095	factor	environmental stress	salt stress
+E-GEOD-57252		SRR1268095	factor	time	1 hour
+E-GEOD-57252		SRR1268096	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268096	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268096	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268096	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268096	factor	environmental stress	salt stress
+E-GEOD-57252		SRR1268096	factor	time	1 hour
+E-GEOD-57252		SRR1268097	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268097	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268097	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268097	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268097	factor	environmental stress	salt stress
+E-GEOD-57252		SRR1268097	factor	time	6 hour
+E-GEOD-57252		SRR1268098	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268098	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268098	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268098	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268098	factor	environmental stress	salt stress
+E-GEOD-57252		SRR1268098	factor	time	6 hour
+E-GEOD-57252		SRR1268099	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268099	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268099	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268099	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268099	factor	environmental stress	salt stress
+E-GEOD-57252		SRR1268099	factor	time	6 hour
+E-GEOD-57252		SRR1268100	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268100	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268100	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268100	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268100	factor	environmental stress	salt stress
+E-GEOD-57252		SRR1268100	factor	time	12 hour
+E-GEOD-57252		SRR1268101	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268101	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268101	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268101	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268101	factor	environmental stress	salt stress
+E-GEOD-57252		SRR1268101	factor	time	12 hour
+E-GEOD-57252		SRR1268102	characteristic	cultivar	Williams 82	http://www.ebi.ac.uk/efo/EFO_0007023
+E-GEOD-57252		SRR1268102	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-GEOD-57252		SRR1268102	characteristic	organism	Glycine max	http://purl.obolibrary.org/obo/NCBITaxon_3847
+E-GEOD-57252		SRR1268102	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-57252		SRR1268102	factor	environmental stress	salt stress
+E-GEOD-57252		SRR1268102	factor	time	12 hour

@@ -1,0 +1,35 @@
+Comment[ArrayExpressAccession]	E-GEOD-57252						
+MAGE-TAB Version	1.1						
+Public Release Date	2014-11-01						
+Investigation Title	Comprehensive characterization and RNA-Seq profiling of the HD-Zip transcription factor family in soybean (Glycine max) during dehydration and salt stress						
+Comment[Submitted Name]	Comprehensive characterization and RNA-Seq profiling of the HD-Zip transcription factor family in soybean (Glycine max) during dehydration and salt stress						
+Comment[AEExperimentDisplayName]	Transcription profiling by high throughput sequencing of soybean root during dehydration and salt stress						
+Experiment Description	Background  The homeodomain leucine zipper (HD-Zip) transcription factor family is one of the largest plant specific superfamilies, and includes genes with roles in modulation of plant growth and response to environmental stresses. Many HD-Zip genes are characterized in Arabidopsis (Arabidopsis thaliana), and members of the family are being investigated for abiotic stress responses in rice (Oryza sativa), maize (Zea mays), poplar (Populus trichocarpa) and cucumber (Cucmis sativus). Findings in these species suggest HD-Zip genes as high priority candidates for crop improvement.  Results  In this study we have identified members of the HD-Zip gene family in soybean cv. 'Williams 82', and characterized their expression under dehydration and salt stress. Homology searches with BLASTP and Hidden Markov Model guided sequence alignments identified 101 HD-Zip genes in the soybean genome. Phylogeny reconstruction coupled with domain and gene structure analyses using soybean, Arabidopsis, rice, grape (Vitis vinifera), and Medicago truncatula homologues enabled placement of these sequences into four previously described subfamilies. Of the 101 HD-Zip genes identified in soybean, 88 exist as whole-genome duplication-derived gene pairs, indicating high retention of these genes following polyploidy in Glycine ~10 Mya. The HD-Zip genes exhibit ubiquitous expression patterns across 24 conditions that include 17 tissues of soybean. An RNA-Seq experiment performed to study differential gene expression at 0, 1, 6 and 12 hr soybean roots under dehydration and salt stress identified 20 differentially expressed (DE) genes. Several of these DE genes are orthologs of genes previously reported to play a role under abiotic stress, implying conservation of HD-Zip gene functions across species. Screening of HD-Zip promoters identified transcription factor binding sites that are overrepresented in the DE genes under both dehydration and salt stress, providing further support for the role of HD-Zip genes in abiotic stress responses.  Conclusions  We provide a thorough description of soybean HD-Zip genes, and identify potential candidates with probable roles in dehydration and salt stress. Expression profiles generated for all soybean genes, under dehydration and salt stress, at four time points, will serve as an important resource for the soybean research community, and will aid in understanding plant responses to abiotic stress.  We sequenced mRNA from soybean cv. &quot;Williams 82&quot; root samples that includes three control samples (0 hr), and three biological replicates for each of the three time points 1, 6 and 12 hr under dehydration and salt stress						
+Experimental Factor Name	environmental stress	time					
+Experimental Factor Type	environmental stress	time					
+Term Source Name	ArrayExpress	EFO					
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl					
+Person Last Name	Cannon	Belamkar	Weeks	Bharti	Farmer	Graham	Cannon
+Person First Name	Steven	Vikas	Nathan	Arvind	Andrew	Michelle	Steven
+Person Mid Initials	B		T	K	D	A	B
+Person Email	steven.cannon@ars.usda.gov						
+Person Affiliation	United States Department of Agriculture - Agricultural Research Service, Corn Insects and Crop Genetics Research Unit						
+Person Address	United States Department of Agriculture - Agricultural Research Service, Corn Insects and Crop Genetics Research Unit, Crop Genome Informatics Laboratory #1017, Iowa State University, Ames, IA, USA						
+Person Roles	submitter						
+Protocol Name	P-GSE57252-4	P-GSE57252-1	P-GSE57252-3	P-GSE57252-2			
+Protocol Description	The reads were aligned with GSNAP (Wu TD and Nacu S, Bioinformatics, 2010) using default settings with a maximum of 4 mis-matches allowed. The uniquely mapped reads that mapped to a single location in the genome were analyzed for differential gene expression between the control and treatment samples using the R package DESeq v1.7.10 (Anders S and Huber W, Genome Biology, 2010). Genome_build: Glycine max genome assembly and annotation v1.01 from Phytozome (JGI Glyma1.0 gene calls). Supplementary_files_format_and_content: tab-delimited text file includes raw read counts for each gene Supplementary_files_format_and_content: tab-delimited text file includes DESeq normalized counts for each gene	The salt treatment was applied by transferring the seedlings into 100 mM NaCl solution. For the dehydration treatment, plants were removed from the germination paper and left in air under water-limiting conditions to impose dehydration stress.	Root tissue was harvested, flash frozen in liquid nitrogen, and total RNA was isolated using Qiagen RNeasy Plant mini kit per the manufacturer’s protocol. The RNA samples were treated with Ambion TURBO DNA-free™ DNase to get rid of any DNA contamination in the RNA samples. RNA libraries were prepared for sequencing using standard Illumina protocols	The seeds of G. max cv. Williams 82 were germinated on moist germination paper and were allowed to grow until the v1 stage (first trifoliolate stage) in a growth chamber maintained at 77 F and 60% humidity throughout the experiment.			
+Protocol Type	normalization data transformation protocol	sample treatment protocol	nucleic acid library construction protocol	growth protocol			
+Comment[SecondaryAccession]	GSE57252						
+Comment[GEOReleaseDate]	2014-11-01						
+Comment[ArrayExpressSubmissionDate]	2014-05-02						
+Comment[GEOLastUpdateDate]	2014-11-04						
+Comment[AEExperimentType]	RNA-seq of coding RNA						
+Comment[AdditionalFile:Data1]	GSE57252_DESeq_normalized_counts.txt						
+Comment[AdditionalFile:Data2]	GSE57252_RawRead_counts.txt						
+Comment[SecondaryAccession]	SRP041622						
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/SRR1268082-SRR1268102						
+Pubmed ID	25362847						
+Publication DOI	10.1186/1471-2164-15-950						
+Publication Title	Comprehensive characterization and RNA-Seq profiling of the HD-Zip transcription factor family in soybean (Glycine max) during dehydration and salt stress						
+Publication Author List	Belamkar V, Weeks NT, Bharti AK, Farmer AD, Graham MA, Cannon SB						
+SDRF File	E-GEOD-57252.sdrf.txt						

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_differential" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="control; 0 hour">
+                <assay>SRR1268083</assay>
+                <assay>SRR1268084</assay>
+                <assay>SRR1268082</assay>
+            </assay_group>
+            <assay_group id="g2" label="dehydration stress; 1 hour">
+                <assay>SRR1268085</assay>
+                <assay>SRR1268086</assay>
+                <assay>SRR1268087</assay>
+            </assay_group>
+            <assay_group id="g3" label="dehydration stress; 12 hour">
+                <assay>SRR1268093</assay>
+                <assay>SRR1268092</assay>
+                <assay>SRR1268091</assay>
+            </assay_group>
+            <assay_group id="g4" label="dehydration stress; 6 hour">
+                <assay>SRR1268088</assay>
+                <assay>SRR1268090</assay>
+                <assay>SRR1268089</assay>
+            </assay_group>
+            <assay_group id="g5" label="salt stress; 1 hour">
+                <assay>SRR1268095</assay>
+                <assay>SRR1268094</assay>
+                <assay>SRR1268096</assay>
+            </assay_group>
+            <assay_group id="g6" label="salt stress; 12 hour">
+                <assay>SRR1268102</assay>
+                <assay>SRR1268100</assay>
+                <assay>SRR1268101</assay>
+            </assay_group>
+            <assay_group id="g7" label="salt stress; 6 hour">
+                <assay>SRR1268097</assay>
+                <assay>SRR1268099</assay>
+                <assay>SRR1268098</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g1_g5">
+                <name>'salt stress' at '1 hour' vs 'control' at '0 hour'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g5</test_assay_group>
+            </contrast>
+            <contrast id="g1_g7">
+                <name>'salt stress' at '6 hour' vs 'control' at '0 hour'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g7</test_assay_group>
+            </contrast>
+            <contrast id="g1_g6">
+                <name>'salt stress' at '12 hour' vs 'control' at '0 hour'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g6</test_assay_group>
+            </contrast>
+            <contrast id="g1_g2">
+                <name>'dehydration stress' at '1 hour' vs 'control' at '0 hour'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+            <contrast id="g1_g4">
+                <name>'dehydration stress' at '6 hour' vs 'control' at '0 hour'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g4</test_assay_group>
+            </contrast>
+            <contrast id="g1_g3">
+                <name>'dehydration stress' at '12 hour' vs 'control' at '0 hour'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>
