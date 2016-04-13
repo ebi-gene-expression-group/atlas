@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_differential" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="Ras-expressing">
+                <assay>SRR585720</assay>
+                <assay>SRR585719</assay>
+                <assay>SRR585721</assay>
+            </assay_group>
+            <assay_group id="g2" label="control">
+                <assay>SRR585716</assay>
+                <assay>SRR585715</assay>
+                <assay technical_replicate_id="t1">SRR585718</assay>
+                <assay technical_replicate_id="t1">SRR585717</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g2_g1">
+                <name>'Ras-expressing' vs 'control'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

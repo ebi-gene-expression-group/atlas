@@ -1,0 +1,8 @@
+PROPERTY_TYPE	PROPERTY_VALUE	ONTOLOGY_LABEL|ZOOMA_VALUE	PROP_VALUE_MATCH	SEMANTIC_TAG	STUDY	BIOENTITY	Category of Zooma Mapping	Basis for Exclusion
+genotype	Ras-expressing	null	null	null	E-GEOD-41487	SRR585719	EXCLUDED	Type=genotype
+genotype	control	null	null	null	E-GEOD-41487	SRR585717	EXCLUDED	Type=genotype
+organism	Drosophila melanogaster	Drosophila melanogaster	MATCHES_ONTOLOGY_LABEL	http://purl.obolibrary.org/obo/NCBITaxon_7227	E-GEOD-41487	SRR585717	AUTOMATIC	null
+organism part	fat body	fat body sensu invertebrata|fat body	MATCHES_ZOOMA_INPUT	http://www.ebi.ac.uk/efo/EFO_0000810	E-GEOD-41487	SRR585719	AUTOMATIC	null
+phenotype	wandering larva	null	null	null	E-GEOD-41487	SRR585718	NO_RESULTS	null
+strain	Bx Gal4 x UAS-RAS V12	null	null	null	E-GEOD-41487	SRR585721	NO_RESULTS	null
+strain	Bx Gal4 x W1118	null	null	null	E-GEOD-41487	SRR585718	NO_RESULTS	null

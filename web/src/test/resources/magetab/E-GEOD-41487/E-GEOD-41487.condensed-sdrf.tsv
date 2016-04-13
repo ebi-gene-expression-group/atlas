@@ -1,0 +1,42 @@
+E-GEOD-41487		SRR585715	characteristic	genotype	control
+E-GEOD-41487		SRR585715	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-GEOD-41487		SRR585715	characteristic	organism part	fat body	http://www.ebi.ac.uk/efo/EFO_0000810
+E-GEOD-41487		SRR585715	characteristic	phenotype	wandering larva
+E-GEOD-41487		SRR585715	characteristic	strain	Bx Gal4 x W1118
+E-GEOD-41487		SRR585715	factor	genotype	control
+E-GEOD-41487		SRR585716	characteristic	genotype	control
+E-GEOD-41487		SRR585716	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-GEOD-41487		SRR585716	characteristic	organism part	fat body	http://www.ebi.ac.uk/efo/EFO_0000810
+E-GEOD-41487		SRR585716	characteristic	phenotype	wandering larva
+E-GEOD-41487		SRR585716	characteristic	strain	Bx Gal4 x W1118
+E-GEOD-41487		SRR585716	factor	genotype	control
+E-GEOD-41487		SRR585717	characteristic	genotype	control
+E-GEOD-41487		SRR585717	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-GEOD-41487		SRR585717	characteristic	organism part	fat body	http://www.ebi.ac.uk/efo/EFO_0000810
+E-GEOD-41487		SRR585717	characteristic	phenotype	wandering larva
+E-GEOD-41487		SRR585717	characteristic	strain	Bx Gal4 x W1118
+E-GEOD-41487		SRR585717	factor	genotype	control
+E-GEOD-41487		SRR585718	characteristic	genotype	control
+E-GEOD-41487		SRR585718	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-GEOD-41487		SRR585718	characteristic	organism part	fat body	http://www.ebi.ac.uk/efo/EFO_0000810
+E-GEOD-41487		SRR585718	characteristic	phenotype	wandering larva
+E-GEOD-41487		SRR585718	characteristic	strain	Bx Gal4 x W1118
+E-GEOD-41487		SRR585718	factor	genotype	control
+E-GEOD-41487		SRR585719	characteristic	genotype	Ras-expressing
+E-GEOD-41487		SRR585719	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-GEOD-41487		SRR585719	characteristic	organism part	fat body	http://www.ebi.ac.uk/efo/EFO_0000810
+E-GEOD-41487		SRR585719	characteristic	phenotype	wandering larva
+E-GEOD-41487		SRR585719	characteristic	strain	Bx Gal4 x UAS-RAS V12
+E-GEOD-41487		SRR585719	factor	genotype	Ras-expressing
+E-GEOD-41487		SRR585720	characteristic	genotype	Ras-expressing
+E-GEOD-41487		SRR585720	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-GEOD-41487		SRR585720	characteristic	organism part	fat body	http://www.ebi.ac.uk/efo/EFO_0000810
+E-GEOD-41487		SRR585720	characteristic	phenotype	wandering larva
+E-GEOD-41487		SRR585720	characteristic	strain	Bx Gal4 x UAS-RAS V12
+E-GEOD-41487		SRR585720	factor	genotype	Ras-expressing
+E-GEOD-41487		SRR585721	characteristic	genotype	Ras-expressing
+E-GEOD-41487		SRR585721	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-GEOD-41487		SRR585721	characteristic	organism part	fat body	http://www.ebi.ac.uk/efo/EFO_0000810
+E-GEOD-41487		SRR585721	characteristic	phenotype	wandering larva
+E-GEOD-41487		SRR585721	characteristic	strain	Bx Gal4 x UAS-RAS V12
+E-GEOD-41487		SRR585721	factor	genotype	Ras-expressing
