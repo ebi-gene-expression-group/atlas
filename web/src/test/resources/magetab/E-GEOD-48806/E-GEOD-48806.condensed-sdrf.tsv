@@ -1,0 +1,84 @@
+E-GEOD-48806	A-AFFY-38	GSM1184956	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184956	characteristic	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184956	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184956	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184956	factor	diet	regular
+E-GEOD-48806	A-AFFY-38	GSM1184956	factor	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184957	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184957	characteristic	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184957	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184957	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184957	factor	diet	regular
+E-GEOD-48806	A-AFFY-38	GSM1184957	factor	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184958	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184958	characteristic	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184958	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184958	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184958	factor	diet	regular
+E-GEOD-48806	A-AFFY-38	GSM1184958	factor	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184959	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184959	characteristic	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184959	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184959	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184959	factor	diet	regular
+E-GEOD-48806	A-AFFY-38	GSM1184959	factor	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184960	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184960	characteristic	genotype	ahcy heterozygous mutant
+E-GEOD-48806	A-AFFY-38	GSM1184960	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184960	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184960	factor	diet	regular
+E-GEOD-48806	A-AFFY-38	GSM1184960	factor	genotype	ahcy heterozygous mutant
+E-GEOD-48806	A-AFFY-38	GSM1184961	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184961	characteristic	genotype	ahcy heterozygous mutant
+E-GEOD-48806	A-AFFY-38	GSM1184961	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184961	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184961	factor	diet	regular
+E-GEOD-48806	A-AFFY-38	GSM1184961	factor	genotype	ahcy heterozygous mutant
+E-GEOD-48806	A-AFFY-38	GSM1184962	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184962	characteristic	genotype	ahcy heterozygous mutant
+E-GEOD-48806	A-AFFY-38	GSM1184962	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184962	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184962	factor	diet	regular
+E-GEOD-48806	A-AFFY-38	GSM1184962	factor	genotype	ahcy heterozygous mutant
+E-GEOD-48806	A-AFFY-38	GSM1184963	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184963	characteristic	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184963	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184963	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184963	factor	diet	overfed
+E-GEOD-48806	A-AFFY-38	GSM1184963	factor	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184964	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184964	characteristic	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184964	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184964	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184964	factor	diet	overfed
+E-GEOD-48806	A-AFFY-38	GSM1184964	factor	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184965	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184965	characteristic	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184965	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184965	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184965	factor	diet	overfed
+E-GEOD-48806	A-AFFY-38	GSM1184965	factor	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184966	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184966	characteristic	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184966	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184966	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184966	factor	diet	overfed
+E-GEOD-48806	A-AFFY-38	GSM1184966	factor	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184967	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184967	characteristic	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184967	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184967	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184967	factor	diet	overfed
+E-GEOD-48806	A-AFFY-38	GSM1184967	factor	genotype	wild type
+E-GEOD-48806	A-AFFY-38	GSM1184968	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184968	characteristic	genotype	ahcy heterozygous mutant
+E-GEOD-48806	A-AFFY-38	GSM1184968	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184968	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184968	factor	diet	overfed
+E-GEOD-48806	A-AFFY-38	GSM1184968	factor	genotype	ahcy heterozygous mutant
+E-GEOD-48806	A-AFFY-38	GSM1184969	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-48806	A-AFFY-38	GSM1184969	characteristic	genotype	ahcy heterozygous mutant
+E-GEOD-48806	A-AFFY-38	GSM1184969	characteristic	organism	Danio rerio	http://purl.obolibrary.org/obo/NCBITaxon_7955
+E-GEOD-48806	A-AFFY-38	GSM1184969	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-48806	A-AFFY-38	GSM1184969	factor	diet	overfed
+E-GEOD-48806	A-AFFY-38	GSM1184969	factor	genotype	ahcy heterozygous mutant

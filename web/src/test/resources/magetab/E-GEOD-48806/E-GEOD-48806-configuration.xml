@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-38</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="ahcy heterozygous mutant; regular">
+                <assay>GSM1184961</assay>
+                <assay>GSM1184962</assay>
+                <assay>GSM1184960</assay>
+            </assay_group>
+            <assay_group id="g2" label="overfed; wild type">
+                <assay>GSM1184963</assay>
+                <assay>GSM1184964</assay>
+                <assay>GSM1184967</assay>
+                <assay>GSM1184965</assay>
+                <assay>GSM1184966</assay>
+            </assay_group>
+            <assay_group id="g3" label="regular; wild type">
+                <assay>GSM1184956</assay>
+                <assay>GSM1184959</assay>
+                <assay>GSM1184957</assay>
+                <assay>GSM1184958</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g3_g1">
+                <name>'ahcy heterozygous mutant' vs 'wild type' in 'regular'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g3_g2">
+                <name>'overfed; wild type' vs 'regular; wild type'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

@@ -1,0 +1,8 @@
+PROPERTY_TYPE	PROPERTY_VALUE	ONTOLOGY_LABEL|ZOOMA_VALUE	PROP_VALUE_MATCH	SEMANTIC_TAG	STUDY	BIOENTITY	Category of Zooma Mapping	Basis for Exclusion
+developmental stage	adult	adult	MATCHES_ONTOLOGY_LABEL	http://www.ebi.ac.uk/efo/EFO_0001272	E-GEOD-48806	GSM1184968	AUTOMATIC	null
+diet	overfed	null	null	null	E-GEOD-48806	GSM1184967	NO_RESULTS	null
+diet	regular	null	null	null	E-GEOD-48806	GSM1184957	NO_RESULTS	null
+genotype	ahcy heterozygous mutant	null	null	null	E-GEOD-48806	GSM1184961	EXCLUDED	Type=genotype
+genotype	wild type	null	null	null	E-GEOD-48806	GSM1184966	EXCLUDED	Type=genotype
+organism	Danio rerio	Danio rerio	MATCHES_ONTOLOGY_LABEL	http://purl.obolibrary.org/obo/NCBITaxon_7955	E-GEOD-48806	GSM1184959	AUTOMATIC	null
+organism part	liver	liver	MATCHES_ONTOLOGY_LABEL	http://purl.obolibrary.org/obo/UBERON_0002107	E-GEOD-48806	GSM1184963	AUTOMATIC	null

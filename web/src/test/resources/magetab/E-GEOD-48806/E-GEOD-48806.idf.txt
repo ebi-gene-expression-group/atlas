@@ -1,0 +1,27 @@
+Comment[ArrayExpressAccession]	E-GEOD-48806						
+MAGE-TAB Version	1.1						
+Public Release Date	2013-10-01						
+Investigation Title	Differentially expressed genes associated with hepatic steatosis in zebrafish						
+Comment[Submitted Name]	Differentially expressed genes associated with hepatic steatosis in zebrafish						
+Experiment Description	Expression microarray of livers from adult zebrafish: control, overfed, and ahcy+/- Comparison of expression from livers obtained from ahcy+/+, overfed ahcy+/+, ahcy+/- control and ahcy+/- overfed. Adult zebrafish, ahcy+/+ and +/-, were given a regular diet or were overfed for a month. Livers were removed, RNA isolated, and expression microarray was performed.						
+Term Source Name	ArrayExpress	EFO					
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl					
+Person Last Name	Matthews	Matthews					
+Person First Name	Randolph	Randolph					
+Person Mid Initials		P					
+Person Email	matthews@email.chop.edu						
+Person Affiliation	The Children's Hospital of Philadelphia Research Institute						
+Person Phone	267-426-7223						
+Person Address	Pediatrics/GI, The Children's Hospital of Philadelphia Research Institute, 3615 Civic Center Blvd, Philadelphia, PA, USA						
+Person Roles	submitter						
+Protocol Name	P-GSE48806-1	P-GSE48806-5	P-GSE48806-6	P-GSE48806-2	P-GSE48806-3	P-GSE48806-4	P-GSE48806-7
+Protocol Description	Probe-level data in CEL files was normalized using GCRMA method implemented in Partek Genomics Suite to get gene-level expression measurements ID_REF =  VALUE = Normalized, log2-transformed intensity measurements	RNA was labeled with Cy3 in accordance with Affymetrix standard protocol	Following fragmentation, 10 ug of cRNA was hybridized for 16 hr at 45 °C on GeneChip Zebrafish Genome arrays. GeneChips were washed and stained in the Affymetrix Fludics Station 450	One tank of ahcy+/+ and +/- adults fed the typical amount, one tank given excess food ad lib	Adult zebrafish were maintained at 28 °C in water as per standard practice	After a month, animals were sacrificed and livers were removed and then placed into RNAlater	GeneChips were scanned using the Affymetrix GeneChip Scanner 3000, 7G
+Protocol Type	normalization data transformation protocol	labelling protocol	hybridization protocol	sample treatment protocol	growth protocol	nucleic acid extraction protocol	array scanning protocol
+Experimental Factor Name	diet	genotype					
+Experimental Factor Type	diet	genotype					
+Comment[SecondaryAccession]	GSE48806						
+Comment[GEOReleaseDate]	2013-10-01						
+Comment[ArrayExpressSubmissionDate]	2013-07-11						
+Comment[GEOLastUpdateDate]	2013-10-02						
+Comment[AEExperimentType]	transcription profiling by array						
+SDRF File	E-GEOD-48806.sdrf.txt						
