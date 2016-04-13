@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-130</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="Kras G12D">
+                <assay>GSM1313626</assay>
+                <assay>GSM1313627</assay>
+                <assay>GSM1313625</assay>
+            </assay_group>
+            <assay_group id="g2" label="Lkb1 -/- Pten-/-">
+                <assay>GSM1313621</assay>
+                <assay>GSM1313619</assay>
+                <assay>GSM1313620</assay>
+            </assay_group>
+            <assay_group id="g3" label="wild type">
+                <assay>GSM1313624</assay>
+                <assay>GSM1313622</assay>
+                <assay>GSM1313623</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g3_g1">
+                <name>'Kras G12D' vs 'wild type'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g3_g2">
+                <name>'Lkb1 -/- Pten-/-' vs 'wild type'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

@@ -1,0 +1,72 @@
+E-GEOD-54351	A-AFFY-130	GSM1313619	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-GEOD-54351	A-AFFY-130	GSM1313619	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-54351	A-AFFY-130	GSM1313619	characteristic	disease	lung cancer
+E-GEOD-54351	A-AFFY-130	GSM1313619	characteristic	genotype	Lkb1 -/- Pten-/-
+E-GEOD-54351	A-AFFY-130	GSM1313619	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-54351	A-AFFY-130	GSM1313619	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-GEOD-54351	A-AFFY-130	GSM1313619	characteristic	strain	mixed 129/FVB
+E-GEOD-54351	A-AFFY-130	GSM1313619	factor	genotype	Lkb1 -/- Pten-/-
+E-GEOD-54351	A-AFFY-130	GSM1313620	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-GEOD-54351	A-AFFY-130	GSM1313620	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-54351	A-AFFY-130	GSM1313620	characteristic	disease	lung cancer
+E-GEOD-54351	A-AFFY-130	GSM1313620	characteristic	genotype	Lkb1 -/- Pten-/-
+E-GEOD-54351	A-AFFY-130	GSM1313620	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-54351	A-AFFY-130	GSM1313620	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-GEOD-54351	A-AFFY-130	GSM1313620	characteristic	strain	mixed 129/FVB
+E-GEOD-54351	A-AFFY-130	GSM1313620	factor	genotype	Lkb1 -/- Pten-/-
+E-GEOD-54351	A-AFFY-130	GSM1313621	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-GEOD-54351	A-AFFY-130	GSM1313621	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-54351	A-AFFY-130	GSM1313621	characteristic	disease	lung cancer
+E-GEOD-54351	A-AFFY-130	GSM1313621	characteristic	genotype	Lkb1 -/- Pten-/-
+E-GEOD-54351	A-AFFY-130	GSM1313621	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-54351	A-AFFY-130	GSM1313621	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-GEOD-54351	A-AFFY-130	GSM1313621	characteristic	strain	mixed 129/FVB
+E-GEOD-54351	A-AFFY-130	GSM1313621	factor	genotype	Lkb1 -/- Pten-/-
+E-GEOD-54351	A-AFFY-130	GSM1313622	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-GEOD-54351	A-AFFY-130	GSM1313622	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-54351	A-AFFY-130	GSM1313622	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-54351	A-AFFY-130	GSM1313622	characteristic	genotype	wild type genotype
+E-GEOD-54351	A-AFFY-130	GSM1313622	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-54351	A-AFFY-130	GSM1313622	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-GEOD-54351	A-AFFY-130	GSM1313622	characteristic	strain	mixed 129/FVB
+E-GEOD-54351	A-AFFY-130	GSM1313622	factor	genotype	wild type genotype
+E-GEOD-54351	A-AFFY-130	GSM1313623	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-GEOD-54351	A-AFFY-130	GSM1313623	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-54351	A-AFFY-130	GSM1313623	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-54351	A-AFFY-130	GSM1313623	characteristic	genotype	wild type genotype
+E-GEOD-54351	A-AFFY-130	GSM1313623	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-54351	A-AFFY-130	GSM1313623	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-GEOD-54351	A-AFFY-130	GSM1313623	characteristic	strain	mixed 129/FVB
+E-GEOD-54351	A-AFFY-130	GSM1313623	factor	genotype	wild type genotype
+E-GEOD-54351	A-AFFY-130	GSM1313624	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-GEOD-54351	A-AFFY-130	GSM1313624	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-54351	A-AFFY-130	GSM1313624	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-54351	A-AFFY-130	GSM1313624	characteristic	genotype	wild type genotype
+E-GEOD-54351	A-AFFY-130	GSM1313624	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-54351	A-AFFY-130	GSM1313624	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-GEOD-54351	A-AFFY-130	GSM1313624	characteristic	strain	mixed 129/FVB
+E-GEOD-54351	A-AFFY-130	GSM1313624	factor	genotype	wild type genotype
+E-GEOD-54351	A-AFFY-130	GSM1313625	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-GEOD-54351	A-AFFY-130	GSM1313625	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-54351	A-AFFY-130	GSM1313625	characteristic	disease	lung cancer
+E-GEOD-54351	A-AFFY-130	GSM1313625	characteristic	genotype	Kras G12D
+E-GEOD-54351	A-AFFY-130	GSM1313625	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-54351	A-AFFY-130	GSM1313625	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-GEOD-54351	A-AFFY-130	GSM1313625	characteristic	strain	mixed 129/FVB
+E-GEOD-54351	A-AFFY-130	GSM1313625	factor	genotype	Kras G12D
+E-GEOD-54351	A-AFFY-130	GSM1313626	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-GEOD-54351	A-AFFY-130	GSM1313626	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-54351	A-AFFY-130	GSM1313626	characteristic	disease	lung cancer
+E-GEOD-54351	A-AFFY-130	GSM1313626	characteristic	genotype	Kras G12D
+E-GEOD-54351	A-AFFY-130	GSM1313626	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-54351	A-AFFY-130	GSM1313626	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-GEOD-54351	A-AFFY-130	GSM1313626	characteristic	strain	mixed 129/FVB
+E-GEOD-54351	A-AFFY-130	GSM1313626	factor	genotype	Kras G12D
+E-GEOD-54351	A-AFFY-130	GSM1313627	characteristic	cell type	epithelial	http://purl.obolibrary.org/obo/CL_0000066
+E-GEOD-54351	A-AFFY-130	GSM1313627	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-GEOD-54351	A-AFFY-130	GSM1313627	characteristic	disease	lung cancer
+E-GEOD-54351	A-AFFY-130	GSM1313627	characteristic	genotype	Kras G12D
+E-GEOD-54351	A-AFFY-130	GSM1313627	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-54351	A-AFFY-130	GSM1313627	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-GEOD-54351	A-AFFY-130	GSM1313627	characteristic	strain	mixed 129/FVB
+E-GEOD-54351	A-AFFY-130	GSM1313627	factor	genotype	Kras G12D

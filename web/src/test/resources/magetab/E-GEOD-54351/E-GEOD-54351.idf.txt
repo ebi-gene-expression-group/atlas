@@ -1,0 +1,30 @@
+Comment[ArrayExpressAccession]	E-GEOD-54351						
+MAGE-TAB Version	1.1						
+Public Release Date	2014-01-24						
+Investigation Title	Loss of Lkb1 and Pten Leads to Lung Squamous Cell Carcinoma with Elevated Pdl1 Expression: Epithelial Cells						
+Comment[Submitted Name]	Loss of Lkb1 and Pten Leads to Lung Squamous Cell Carcinoma with Elevated Pdl1 Expression: Epithelial Cells						
+Experiment Description	Lung squamous cell carcinoma (SCC) is a deadly disease for which current treatments are inadequate. We demonstrate that bi-allelic inactivation of Lkb1 and Pten in the mouse lung led to SCC that recapitulated the histology, gene expression and microenvironment found in human disease. Lkb1/Pten-null (LP) tumors expressed the squamous markers Krt5, p63 and Sox2, and transcriptionally resembled the basal subtype of human SCC. In contrast to mouse adenocarcinomas, the LP tumors contained immune populations enriched for tumor-associated neutrophils. Sca1+/Ngfr+ fractions were enriched for tumor propagating cells (TPCs) that could serially transplant the disease in orthotopic assays. TPCs in the LP model and Ngfr+ cells in human SCCs highly expressed Pdl1, suggesting a novel mechanism of immune escape for TPCs. We used microarrays to detail the gene expression profles among lung SCC tumor epitheial cell, lung ADC tumor epithelia cell and normal epithelial cells. Normal EpCAM+, Kras tumor EpCAM+ and LP tumor EpCAM+ were sorted by FACS, the cells were gating as EpCAM+/CD45-/CD31-						
+Term Source Name	ArrayExpress	EFO					
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl					
+Person Last Name	Xu	Xu	Fillmore				
+Person First Name	Chunxiao	Chunxiao	Christine				
+Person Mid Initials			M				
+Person Email	chunxiao_xu@dfci.harvard.edu						
+Person Affiliation	Dana Farber Cancer Institute						
+Person Address	Medical Oncology, Dana Farber Cancer Institute, 450 Brookline Ave, Boston, MA, USA						
+Person Roles	submitter						
+Protocol Name	P-GSE54351-1	P-GSE54351-5	P-GSE54351-6	P-GSE54351-2	P-GSE54351-3	P-GSE54351-4	P-GSE54351-7
+Protocol Description	The data were analyzed in R (v 3.0.1) using the oligo package in which RMA normalization was applied. ID_REF =  VALUE = RMA signal intensity	Biotinylated cRNA were prepared according to the standard Affymetrix protocol from 6 ug total RNA (Expression Analysis Technical Manual, 2001, Affymetrix).	1. The biotinylated complementary RNA (cRNA) is purified from the IVT reaction mixture using magnetic particles. The cRNA is quantified spectrophotometrically and purity of the cRNA is also assessed by spectrophometric measurements. 2. The purified cRNA is fragmented in order to facilitate the subsequent hybridization step. 3. The fragmented cRNA is added to a hybridization solution containing several biotinylated control oligonucleotides (for quality control), and hybridized to a microarray chip overnight at 45°C. The hybridization solution is then removed. 4. The chips are transferred to a fluidics instrument that performs washes to remove cRNA that has not hybridized to its complementary oligonucleotide probe. The bound cRNA is then fluorescently labeled using phycoerythrin-conjugated streptavidin (SAPE); additional fluors are then added using biotinylated anti-streptavidin antibody and additional SAPE.	Tumors were dissected from the lungs of primary mice and tumor tissue was prepared as description below: Briefly, tumors were isolated, minced, digested rotating for 1h at 37°C with 2mg/ml Dispase (Roche) and then filtered twice (100 Î¼m, then 40 Î¼m) after a 5 minute incubation with 0.025 mg/mL DNase (SIGMA). Cell lines were trypsinized and then filtered (40 Î¼m). For analyzing immune cell populations, cells were isolated with Collagenase type IV and DNase as described. Single cell suspensions were stained using rat-anti-mouse-Antibodies. Epithelial cells were gated as EpCAM+/CD45-/CD31-; stroma cells were cells were gated as EpCAM-/CD45+/CD31+.	Mouse cohorts of Lkb1fl/fl/Ptenfl/fl, LSL:KrasG12D and wild type mice were all maintained in virus-free conditions on a mixed 129/FVB background.	Trizol reagent followed by additional purification using RNeasy from Qiagen	Each cRNA bound at its complementary oligonucleotide is excited using a confocal laser scanner, and the positions and intensities of the fluorescent emissions are captured.
+Protocol Type	normalization data transformation protocol	labelling protocol	hybridization protocol	sample treatment protocol	growth protocol	nucleic acid extraction protocol	array scanning protocol
+Experimental Factor Name	genotype						
+Experimental Factor Type	genotype						
+Comment[SecondaryAccession]	GSE54351						
+Comment[GEOReleaseDate]	2014-01-24						
+Comment[ArrayExpressSubmissionDate]	2014-01-23						
+Comment[GEOLastUpdateDate]	2014-01-27						
+Comment[AEExperimentType]	transcription profiling by array						
+SDRF File	E-GEOD-54351.sdrf.txt						
+Publication Title	Loss of Lkb1 and Pten leads to lung squamous cell carcinoma with elevated PD-L1 expression.						
+Publication Author List	Xu C, Fillmore CM, Koyama S, Wu H, Zhao Y, Chen Z, Herter-Sprie GS, Akbay EA, Tchaicha JH, Altabef A1, Reibel JB, Walton Z, Ji H, Watanabe H, Jänne PA, Castrillon DH, Rustgi AK, Bass AJ, Freeman GJ, Padera RF, Dranoff G, Hammerman PS, Kim CF, Wong KK						
+PubMed ID	24794706						
+Publication DOI	10.1016/j.ccr.2014.03.033						
