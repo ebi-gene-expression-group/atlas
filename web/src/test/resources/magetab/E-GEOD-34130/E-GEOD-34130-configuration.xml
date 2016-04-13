@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-2</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="Col0; KNO3 nitrogen for 2 hours">
+                <assay>GSM842207</assay>
+                <assay>GSM842205</assay>
+                <assay>GSM842206</assay>
+            </assay_group>
+            <assay_group id="g2" label="Col0; control">
+                <assay>GSM842204</assay>
+                <assay>GSM842203</assay>
+                <assay>GSM842202</assay>
+            </assay_group>
+            <assay_group id="g3" label="KNO3 nitrogen for 2 hours; Kas2">
+                <assay>GSM842211</assay>
+                <assay>GSM842212</assay>
+                <assay>GSM842213</assay>
+            </assay_group>
+            <assay_group id="g4" label="KNO3 nitrogen for 2 hours; NFA8">
+                <assay>GSM842217</assay>
+                <assay>GSM842219</assay>
+                <assay>GSM842218</assay>
+            </assay_group>
+            <assay_group id="g5" label="KNO3 nitrogen for 2 hours; SQ8">
+                <assay>GSM842225</assay>
+                <assay>GSM842224</assay>
+                <assay>GSM842223</assay>
+            </assay_group>
+            <assay_group id="g6" label="KNO3 nitrogen for 2 hours; TAMM27">
+                <assay>GSM842229</assay>
+                <assay>GSM842230</assay>
+                <assay>GSM842231</assay>
+            </assay_group>
+            <assay_group id="g7" label="KNO3 nitrogen for 2 hours; Ts5">
+                <assay>GSM842236</assay>
+                <assay>GSM842235</assay>
+                <assay>GSM842237</assay>
+            </assay_group>
+            <assay_group id="g8" label="KNO3 nitrogen for 2 hours; Var2-1">
+                <assay>GSM842243</assay>
+                <assay>GSM842241</assay>
+                <assay>GSM842242</assay>
+            </assay_group>
+            <assay_group id="g9" label="Kas2; control">
+                <assay>GSM842208</assay>
+                <assay>GSM842210</assay>
+                <assay>GSM842209</assay>
+            </assay_group>
+            <assay_group id="g10" label="NFA8; control">
+                <assay>GSM842216</assay>
+                <assay>GSM842214</assay>
+                <assay>GSM842215</assay>
+            </assay_group>
+            <assay_group id="g11" label="SQ8; control">
+                <assay>GSM842221</assay>
+                <assay>GSM842222</assay>
+                <assay>GSM842220</assay>
+            </assay_group>
+            <assay_group id="g12" label="TAMM27; control">
+                <assay>GSM842226</assay>
+                <assay>GSM842228</assay>
+                <assay>GSM842227</assay>
+            </assay_group>
+            <assay_group id="g13" label="Ts5; control">
+                <assay>GSM842232</assay>
+                <assay>GSM842234</assay>
+                <assay>GSM842233</assay>
+            </assay_group>
+            <assay_group id="g14" label="Var2-1; control">
+                <assay>GSM842239</assay>
+                <assay>GSM842238</assay>
+                <assay>GSM842240</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g2_g1">
+                <name>'KNO3 nitrogen for 2 hours' vs 'control' in 'Col0'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g9_g3">
+                <name>'KNO3 nitrogen for 2 hours' vs 'control' in 'Kas2'</name>
+                <reference_assay_group>g9</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+            <contrast id="g10_g4">
+                <name>'KNO3 nitrogen for 2 hours' vs 'control' in 'NFA8'</name>
+                <reference_assay_group>g10</reference_assay_group>
+                <test_assay_group>g4</test_assay_group>
+            </contrast>
+            <contrast id="g11_g5">
+                <name>'KNO3 nitrogen for 2 hours' vs 'control' in 'SQ8'</name>
+                <reference_assay_group>g11</reference_assay_group>
+                <test_assay_group>g5</test_assay_group>
+            </contrast>
+            <contrast id="g12_g6">
+                <name>'KNO3 nitrogen for 2 hours' vs 'control' in 'TAMM27'</name>
+                <reference_assay_group>g12</reference_assay_group>
+                <test_assay_group>g6</test_assay_group>
+            </contrast>
+            <contrast id="g13_g7">
+                <name>'KNO3 nitrogen for 2 hours' vs 'control' in 'Ts5'</name>
+                <reference_assay_group>g13</reference_assay_group>
+                <test_assay_group>g7</test_assay_group>
+            </contrast>
+            <contrast id="g14_g8">
+                <name>'KNO3 nitrogen for 2 hours' vs 'control' in 'Var2-1'</name>
+                <reference_assay_group>g14</reference_assay_group>
+                <test_assay_group>g8</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

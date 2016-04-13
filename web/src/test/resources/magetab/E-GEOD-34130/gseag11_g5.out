@@ -1,0 +1,195 @@
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv --pvalue-col=7 --foldchange-col=9 --title="
+Top 10 GO terms enriched in 
+'KNO3 nitrogen for 2 hours' vs 'control' in 'SQ8' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130.arabidopsis_thaliana.g11_g5.ensgene.go.tsv.aux1 --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/arabidopsis_thaliana.ensgene.go.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130.g11_g5.go.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv
+pval.col = 7
+fold.col = 9
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/arabidopsis_thaliana.ensgene.go.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130.arabidopsis_thaliana.g11_g5.ensgene.go.tsv.aux1
+title = 
+Top 10 GO terms enriched in 
+'KNO3 nitrogen for 2 hours' vs 'control' in 'SQ8' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130.g11_g5.go.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 21365 entries
+[INFO] No more duplicates
+[INFO] 21122 unique entries
+[INFO] NAs removed: 0
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv loaded: 21122 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/arabidopsis_thaliana.ensgene.go.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/arabidopsis_thaliana.ensgene.go.tsv loaded: 157305 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130.arabidopsis_thaliana.g11_g5.ensgene.go.tsv.aux1
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130.arabidopsis_thaliana.g11_g5.ensgene.go.tsv.aux1 loaded: 6159 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.28+-0.36
+[INFO] p-value mean 1+-0
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=19637 #genes (pvalue<=0.05)=0
+[WARNING] Insufficient number of genes with a p-value <= 0.05
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv --pvalue-col=7 --foldchange-col=9 --title="
+Top 10 InterPro domains enriched in 
+'KNO3 nitrogen for 2 hours' vs 'control' in 'SQ8' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/arabidopsis_thaliana.ensgene.interpro.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130.g11_g5.interpro.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv
+pval.col = 7
+fold.col = 9
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/arabidopsis_thaliana.ensgene.interpro.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+title = 
+Top 10 InterPro domains enriched in 
+'KNO3 nitrogen for 2 hours' vs 'control' in 'SQ8' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130.g11_g5.interpro.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 21365 entries
+[INFO] No more duplicates
+[INFO] 21122 unique entries
+[INFO] NAs removed: 0
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv loaded: 21122 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/arabidopsis_thaliana.ensgene.interpro.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/arabidopsis_thaliana.ensgene.interpro.tsv loaded: 70122 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux loaded: 26238 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.28+-0.36
+[INFO] p-value mean 1+-0
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=18602 #genes (pvalue<=0.05)=0
+[WARNING] Insufficient number of genes with a p-value <= 0.05
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv --pvalue-col=7 --foldchange-col=9 --title="
+Top 10 Reactome pathways enriched in 
+'KNO3 nitrogen for 2 hours' vs 'control' in 'SQ8' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/arabidopsis_thaliana.reactome.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/arabidopsis_thaliana.reactome.tsv.gsea.aux --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130.g11_g5.reactome.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv
+pval.col = 7
+fold.col = 9
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/arabidopsis_thaliana.reactome.tsv.gsea.aux
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/arabidopsis_thaliana.reactome.tsv.decorate.aux
+title = 
+Top 10 Reactome pathways enriched in 
+'KNO3 nitrogen for 2 hours' vs 'control' in 'SQ8' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130.g11_g5.reactome.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 21365 entries
+[INFO] No more duplicates
+[INFO] 21122 unique entries
+[INFO] NAs removed: 0
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130/E-GEOD-34130_A-AFFY-2-analytics.tsv loaded: 21122 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/arabidopsis_thaliana.reactome.tsv.gsea.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/arabidopsis_thaliana.reactome.tsv.gsea.aux loaded: 34623 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/arabidopsis_thaliana.reactome.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/arabidopsis_thaliana.reactome.tsv.decorate.aux loaded: 938 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.28+-0.36
+[INFO] p-value mean 1+-0
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=21122 #genes (pvalue<=0.05)=0
+[WARNING] Insufficient number of genes with a p-value <= 0.05
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi6-178>
+Subject: Job 1038764: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130 g11_g5 > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130 g11_g5 > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi6-178>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130> was used as the working directory.
+Started at Tue Apr 12 17:46:06 2016
+Results reported at Tue Apr 12 17:46:59 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-34130 g11_g5 
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               48.82 sec.
+    Max Memory :             76 MB
+    Average Memory :         62.00 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           4020.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               804 MB
+
+    Max Processes :          8
+    Max Threads :            9
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <gseag11_g5.err> for stderr output of this job.
+

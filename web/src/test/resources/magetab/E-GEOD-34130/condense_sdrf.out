@@ -1,0 +1,74 @@
+INFO  - Detected -z option. Will attempt to map terms to ontology using Zooma.
+INFO  - Detected -i option. Will import IDF file from ArrayExpress load directory.
+INFO  - Copying IDF from /nfs/ma/home/arrayexpress/ae2_production/data/EXPERIMENT/GEOD/E-GEOD-34130/E-GEOD-34130.idf.txt ...
+INFO  - Successfully copied IDF.
+INFO  - Reading MAGETAB from /nfs/ma/home/arrayexpress/ae2_production/data/EXPERIMENT/GEOD/E-GEOD-34130/E-GEOD-34130.idf.txt ...
+INFO  - Successfully read MAGETAB.
+INFO  - Collecting all properties and their values from MAGE-TAB...
+INFO  - Successfully collected all properties and values.
+INFO  - Mapping terms using Zooma...
+INFO  - Type "age" with value "12 day" was excluded from Zooma mapping.
+INFO  - Type "developmental stage" with value "seedling" automatically mapped to http://purl.obolibrary.org/obo/PO_0007131
+INFO  - Type "ecotype" with value "Col0" automatically mapped to http://www.ebi.ac.uk/efo/EFO_0005148
+WARN  - No results found for ecotype : Kas2
+WARN  - Zooma mapping failed for type "ecotype" and value "Kas2": No results found for ecotype : Kas2
+WARN  - No results found for ecotype : NFA8
+WARN  - Zooma mapping failed for type "ecotype" and value "NFA8": No results found for ecotype : NFA8
+INFO  - Type "ecotype" with value "SQ8" mapping requires curation. Potential mapping: http://www.ebi.ac.uk/efo/EFO_0002861
+INFO  - Type "ecotype" with value "TAMM27" mapping requires curation. Potential mapping: http://www.ebi.ac.uk/efo/EFO_0005663
+INFO  - Type "ecotype" with value "Ts5" mapping requires curation. Potential mapping: http://www.ebi.ac.uk/efo/EFO_0006963
+INFO  - Type "ecotype" with value "Var2-1" mapping requires curation. Potential mapping: http://purl.obolibrary.org/obo/NCBITaxon_3714
+WARN  - No results found for growth condition : KCl control for 2 hours
+WARN  - Zooma mapping failed for type "growth condition" and value "KCl control for 2 hours": No results found for growth condition : KCl control for 2 hours
+WARN  - No results found for growth condition : KNO3 nitrogen for 2 hours
+WARN  - Zooma mapping failed for type "growth condition" and value "KNO3 nitrogen for 2 hours": No results found for growth condition : KNO3 nitrogen for 2 hours
+INFO  - Type "growth condition" with value "control" automatically mapped to http://www.ebi.ac.uk/efo/EFO_0001461
+INFO  - Type "organism" with value "Arabidopsis thaliana" automatically mapped to http://purl.obolibrary.org/obo/NCBITaxon_3702
+INFO  - Type "organism part" with value "root" automatically mapped to http://www.ebi.ac.uk/efo/EFO_0000989
+INFO  - Writing zoomification info to E-GEOD-34130/E-GEOD-34130-zoomifications-log.tsv ...
+INFO  - Successfully written zoomification info.
+INFO  - Zooma mapping finished successfully.
+INFO  - Condensing SDRF to E-GEOD-34130/E-GEOD-34130.condensed-sdrf.tsv ...
+INFO  - Successfully condensed SDRF.
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi1-123>
+Subject: Job 1129248: <condense_sdrf.pl -e E-GEOD-34130 -z -i -o E-GEOD-34130> in cluster <EBI> Done
+
+Job <condense_sdrf.pl -e E-GEOD-34130 -z -i -o E-GEOD-34130> was submitted from host <ebi1-133> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi1-123>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/public/ro/fg/atlas/experiments> was used as the working directory.
+Started at Wed Apr 13 10:57:41 2016
+Results reported at Wed Apr 13 10:57:47 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+condense_sdrf.pl -e E-GEOD-34130 -z -i -o E-GEOD-34130
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               3.24 sec.
+    Max Memory :             103 MB
+    Average Memory :         41.00 MB
+    Total Requested Memory : -
+    Delta Memory :           -
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               458 MB
+
+    Max Processes :          3
+    Max Threads :            4
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <E-GEOD-34130/condense_sdrf.err> for stderr output of this job.
+

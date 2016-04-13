@@ -1,0 +1,15 @@
+PROPERTY_TYPE	PROPERTY_VALUE	ONTOLOGY_LABEL|ZOOMA_VALUE	PROP_VALUE_MATCH	SEMANTIC_TAG	STUDY	BIOENTITY	Category of Zooma Mapping	Basis for Exclusion
+age	12 day	null	null	null	E-GEOD-34130	GSM842243	EXCLUDED	Type=age
+developmental stage	seedling	seedling development stage|seedling	MATCHES_ZOOMA_INPUT	http://purl.obolibrary.org/obo/PO_0007131	E-GEOD-34130	GSM842232	AUTOMATIC	null
+ecotype	Col0	Col-0|Col0	MATCHES_ZOOMA_INPUT	http://www.ebi.ac.uk/efo/EFO_0005148	E-GEOD-34130	GSM842202	AUTOMATIC	null
+ecotype	Kas2	null	null	null	E-GEOD-34130	GSM842209	NO_RESULTS	null
+ecotype	NFA8	null	null	null	E-GEOD-34130	GSM842216	NO_RESULTS	null
+ecotype	SQ8	SQ-5	mismatch	http://www.ebi.ac.uk/efo/EFO_0002861	E-GEOD-34130	GSM842223	REQUIRES_CURATION	null
+ecotype	TAMM27	urinary uromodulin measurement|urinary Tamm-Horsfall glycoprotein measurement	mismatch	http://www.ebi.ac.uk/efo/EFO_0005663	E-GEOD-34130	GSM842227	REQUIRES_CURATION	null
+ecotype	Ts5	Ts-1	mismatch	http://www.ebi.ac.uk/efo/EFO_0006963	E-GEOD-34130	GSM842234	REQUIRES_CURATION	null
+ecotype	Var2-1	Brassica oleracea var. alboglabra	mismatch	http://purl.obolibrary.org/obo/NCBITaxon_3714	E-GEOD-34130	GSM842239	REQUIRES_CURATION	null
+growth condition	KCl control for 2 hours	null	null	null	E-GEOD-34130	GSM842215	NO_RESULTS	null
+growth condition	KNO3 nitrogen for 2 hours	null	null	null	E-GEOD-34130	GSM842206	NO_RESULTS	null
+growth condition	control	control	MATCHES_ONTOLOGY_LABEL	http://www.ebi.ac.uk/efo/EFO_0001461	E-GEOD-34130	GSM842210	AUTOMATIC	null
+organism	Arabidopsis thaliana	Arabidopsis thaliana	MATCHES_ONTOLOGY_LABEL	http://purl.obolibrary.org/obo/NCBITaxon_3702	E-GEOD-34130	GSM842222	AUTOMATIC	null
+organism part	root	root structure|root	MATCHES_ZOOMA_INPUT	http://www.ebi.ac.uk/efo/EFO_0000989	E-GEOD-34130	GSM842236	AUTOMATIC	null
