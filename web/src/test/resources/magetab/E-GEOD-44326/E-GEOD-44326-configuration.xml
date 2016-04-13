@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-75</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="high protein">
+                <assay>GSM1083276</assay>
+                <assay>GSM1083273</assay>
+                <assay>GSM1083271</assay>
+                <assay>GSM1083275</assay>
+                <assay>GSM1083274</assay>
+                <assay>GSM1083272</assay>
+            </assay_group>
+            <assay_group id="g2" label="low protein">
+                <assay>GSM1083281</assay>
+                <assay>GSM1083277</assay>
+                <assay>GSM1083278</assay>
+                <assay>GSM1083279</assay>
+                <assay>GSM1083280</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g1_g2">
+                <name>'low protein diet' vs 'high protein diet'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

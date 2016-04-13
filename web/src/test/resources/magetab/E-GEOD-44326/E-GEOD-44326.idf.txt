@@ -1,0 +1,26 @@
+Comment[ArrayExpressAccession]	E-GEOD-44326						
+MAGE-TAB Version	1.1						
+Public Release Date	2014-01-31						
+Investigation Title	Expression data from muscle transcriptome of pigs on low protein and control diets						
+Comment[Submitted Name]	Expression data from muscle transcriptome of pigs on low protein and control diets						
+Experiment Description	The ratio of energy to protein in the finishing diet of growing pigs can impact on IMF content with consequences for pork quality. The objective of this study was to compare gene expression profiles of Musculus semimembranosus (SM) of animals divergent for IMF as a consequence of protein dietary restriction in an isocaloric diet. The animal model was derived through the imposition of low or high protein diets during the finisher stage in Duroc gilts. RNA was extracted from post mortem SM tissue, processed and hybridised to Affymetrix porcine GeneChipÂ® arrays. Eleven purebred Duroc gilts were blocked on the basis of initial body weight and assigned to one of two dietary treatments. High (HP) and low protein (LP) diets were formulated to contain 217 and 128 g/kg crude protein (CP) respectively. The HP and LP diets contained 13.0 and 7 g/kg of total lysine, respectively. Downward adjustment of CP was achieved by increasing the wheat:soyabean meal ratio. Diets were isocaloric, formulated to an estimated digestible energy (DE) density of 14 MJ/kg.						
+Term Source Name	ArrayExpress	EFO					
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl					
+Person Last Name	Hamill	Hamill					
+Person First Name	Ruth	Ruth					
+Person Mid Initials	Marie	M					
+Person Email	ruth.hamill@teagasc.ie						
+Person Affiliation	Teagasc						
+Person Address	Food Chemistry and Technology, Teagasc, Teagasc Food Research Centre, Ashtown, Dublin 15, Ireland						
+Person Roles	submitter						
+Protocol Name	P-GSE44326-1	P-GSE44326-5	P-GSE44326-6	P-GSE44326-2	P-GSE44326-3	P-GSE44326-4	P-GSE44326-7
+Protocol Description	Microarray analysis including, pre-processing, normalisation and statistical analysis were performed using R (R, 2007) version 2.6 and Bioconductor version 2.1.The mmgMOS method was used for normalisation and the PPLR method was used for differential gene expression all within the  Propagating Uncertainty in Microarray Analysis (puma) method (Pearson et al., 2009 BMC Bioinformatics  10:211 doi:10.1186/1471-2105-10-211 ID_REF =  VALUE = log2 mmgMOS normalised data	The appropriate amount of amplified single-stranded cDNA was used as a template for biotin labelling using the FL-Ovationâ¢ cDNA Biotin Module V2	Hybridisation was carried out by Almac Diagnostics according to their standard protocols. Fragmented and labelled cDNA was added to the hybridisation mix in accordance with the NuGENâ¢ guidelines for hybridisation onto Affymetrix GeneChip® arrays. Post hybridisation washing and staining were carried out using GeneChip® Fluidics Station 450 (Affymetrix) followed by scanning according to standard Affymetrix protocols	Two isoenergetic diets contrasting in protein content were fed for 63 days during the finisher stage.	Standard protocol used in UCD Lyons Estate Farm	RNA was extracted during standard phenol/guanidine isothiocyanate-based organic extraction method (TRIZOL) according to manufacturers instructions	Gels were scanned commercially by Almac diagnostics (UK) according to standard Affymetrix protocols
+Protocol Type	normalization data transformation protocol	labelling protocol	hybridization protocol	sample treatment protocol	growth protocol	nucleic acid extraction protocol	array scanning protocol
+Experimental Factor Name	diet						
+Experimental Factor Type	diet						
+Comment[SecondaryAccession]	GSE44326						
+Comment[GEOReleaseDate]	2014-01-31						
+Comment[ArrayExpressSubmissionDate]	2013-02-14						
+Comment[GEOLastUpdateDate]	2014-01-31						
+Comment[AEExperimentType]	transcription profiling by array						
+SDRF File	E-GEOD-44326.sdrf.txt						
