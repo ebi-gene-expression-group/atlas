@@ -1,0 +1,57 @@
+Comment[ArrayExpressAccession]	E-GEOD-25185							
+Public Release Date	2011-11-05							
+Investigation Title	Influence of Deoxynivalenol-contaminated diet on the liver gene expression of chicken.							
+Comment[Submitted Name]	Influence of Deoxynivalenol-contaminated diet on the liver gene expression of chicken.							
+Experiment Description	The mycotoxin deoxynivalenol (DON) is a secondary metabolite from Fusarium species and is frequently present on wheat and other cereals. The main effects of DON are a reduction of the feed intake and reduced weight gain of broilers. At the molecular level DON binds to the 60S ribosomal subunit and inhibits subsequently protein synthesis at the translational level. It has been suggested that cells and tissues with high protein turnover rate, like the liver and small intestine, are most affected by DON. However, little is known about other effects of DON e.g. at the transcriptional level. Therefore we decided to perform a microarray analysis, which allows us the investigation of thousands of transcripts in one experiment. The one-day old broiler chicks were separated into four groups. The diets consisted of a control diet and of three diets with moderate concentrations of 1.0, 2.5 and 5.0 mg DON/kg feed, which was attained by exchanging uncontaminated wheat with naturally DON-contaminated wheat up to the intended concentration. The chicken were held at standard conditions for 23 days and received their diet ad libitum. After slaughter the gene expression was determined in the liver of three samples per group.							
+Date of Experiment								
+Term Source Name	EFO							
+Term Source Version								
+Term Source File	http://www.ebi.ac.uk/efo/efo.owl							
+Person Last Name	Dietrich	Dietrich	Wenk					
+Person First Name	Bruno	Bruno	Caspar					
+Person Mid Initials								
+Person Email	brunod@student.ethz.ch							
+Person Affiliation	ETH Zurich							
+Person Phone								
+Person Fax								
+Person Address	Department of Agricultural and Food Sciences, ETH Zurich, Tannenstrasse 1, Zurich, Switzerland							
+Person Roles	submitter							
+Person Roles Term Source REF								
+Person Roles Term Accession Number								
+Normalization Type								
+Normalization Term Accession Number								
+Normalization Term Source REF								
+Replicate Type								
+Replicate Term Accession Number								
+Replicate Term Source REF								
+Experimental Design								
+Experimental Design Term Accession Number								
+Experimental Design Term Source REF								
+Quality Control Type								
+Quality Control Term Accession Number								
+Quality Control Term Source REF								
+Protocol Name	P-GSE25185-1	P-GSE25185-6	P-GSE25185-3	P-GSE25185-8	P-GSE25185-7	P-GSE25185-2	P-GSE25185-4	P-GSE25185-5
+Protocol Description	ID_REF = <br>VALUE = MAS 5.0 signal<br>ABS_CALL = indicating whether the transcript was present (P), absent (A), or marginal (M)<br>DETECTION P-VALUE = 	Following fragmentation, 15 ug of cRNA were hybridized for 16 hr at 45C on GeneChip Chicken Genome Array. GeneChips were washed and stained in the Affymetrix Fluidics Station 450.	Chickens were held for 23 days and were fed ad libitium. The animal experiment was performed according to the regulations of the cantonal veterinary office in Zurich (Switzerland).	The data were analyzed with Microarray Suite version 5.0 (MAS 5.0) using Affymetrix default analysis settings and global scaling as normalization method. The image data on each individual chip was scaled to target intensity 500.	GeneChips were scanned using the Affymetrix GeneChip Scanner 3000.	The standard diet was formulated according to the National Research Council (1994) and basic diet was prepared for all groups. The control group received the basic diet plus the remaining uncontaminated wheat and in the DON groups uncontaminated wheat was exchanged with DON contaminated wheat up to the intended concentration. The livers were removed immediatly after slaughter and frozen in liquid nitrogen.	Trizol extraction of total RNA was performed according to the manufacturer's instructions. Then the total RNA was cleaned up with the Rneasy Mini Kit according  to the manufacturer's protocol.	Biotinylated cRNA were prepared according to the standard Affymetrix protocol from 7 ug total RNA (Affymetrix One-Cycle Target Labeling - Expression Arrays, Expression Analysis Technical Manual, 2001, Affymetrix).
+Protocol Software								
+Protocol Hardware								
+Protocol Contact								
+Protocol Type	bioassay_data_transformation	hybridization	grow	feature_extraction	image_aquisition	specified_biomaterial_action	nucleic_acid_extraction	labeling
+Protocol Term Source REF								
+Protocol Term Accession Number								
+Experimental Factor Name	diet							
+Experimental Factor Type	diet							
+Experimental Factor Term Source REF								
+Experimental Factor Term Accession Number								
+Publication Title	Fusarium mycotoxin-contaminated wheat containing deoxynivalenol alters the gene expression in the liver and the jejunum of broilers.							
+Publication Author List	Dietrich B, Neuenschwander S, Bucher B, Wenk C							
+PubMed ID	22436186							
+Publication DOI	10.1017/S1751731111001601							
+Publication Status								
+Publication Status Term Source REF								
+Publication Status Term Accession Number								
+Comment[SecondaryAccession]	GSE25185							
+Comment[GEOLastUpdateDate]	2011-11-06							
+Comment[AEExperimentType]	transcription profiling by array							
+Comment[GEOReleaseDate]	2011-11-05							
+Comment[ArrayExpressSubmissionDate]	2010-11-08							
+SDRF File	E-GEOD-25185.sdrf.txt							

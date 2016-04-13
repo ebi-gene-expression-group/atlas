@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-103</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="1 milligram DON per kilogram feed for 23 days ad libitum">
+                <assay>GSM618671</assay>
+                <assay>GSM618672</assay>
+                <assay>GSM618670</assay>
+            </assay_group>
+            <assay_group id="g2" label="2.5 milligram DON per kilogram feed for 23 days ad libitum">
+                <assay>GSM618674</assay>
+                <assay>GSM618675</assay>
+                <assay>GSM618673</assay>
+            </assay_group>
+            <assay_group id="g3" label="5 milligram DON per kilogram feed for 23 days ad libitum">
+                <assay>GSM618677</assay>
+                <assay>GSM618676</assay>
+                <assay>GSM618678</assay>
+            </assay_group>
+            <assay_group id="g4" label="control">
+                <assay>GSM618669</assay>
+                <assay>GSM618668</assay>
+                <assay>GSM618667</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g4_g1">
+                <name>'1 milligram DON per kilogram feed for 23 days ad libitum' vs 'control'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g4_g2">
+                <name>'2.5 milligram DON per kilogram feed for 23 days ad libitum' vs 'control'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+            <contrast id="g4_g3">
+                <name>'5 milligram DON per kilogram feed for 23 days ad libitum' vs 'control'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

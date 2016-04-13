@@ -1,0 +1,72 @@
+E-GEOD-25185	A-AFFY-103	GSM618667	characteristic	age	23 day
+E-GEOD-25185	A-AFFY-103	GSM618667	characteristic	breed	ROSS308, commercial broilers for meat production
+E-GEOD-25185	A-AFFY-103	GSM618667	characteristic	diet	control diet (uncontaminated) for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618667	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-25185	A-AFFY-103	GSM618667	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-25185	A-AFFY-103	GSM618667	factor	diet	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-GEOD-25185	A-AFFY-103	GSM618668	characteristic	age	23 day
+E-GEOD-25185	A-AFFY-103	GSM618668	characteristic	breed	ROSS308, commercial broilers for meat production
+E-GEOD-25185	A-AFFY-103	GSM618668	characteristic	diet	control diet (uncontaminated) for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618668	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-25185	A-AFFY-103	GSM618668	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-25185	A-AFFY-103	GSM618668	factor	diet	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-GEOD-25185	A-AFFY-103	GSM618669	characteristic	age	23 day
+E-GEOD-25185	A-AFFY-103	GSM618669	characteristic	breed	ROSS308, commercial broilers for meat production
+E-GEOD-25185	A-AFFY-103	GSM618669	characteristic	diet	control diet (uncontaminated) for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618669	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-25185	A-AFFY-103	GSM618669	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-25185	A-AFFY-103	GSM618669	factor	diet	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-GEOD-25185	A-AFFY-103	GSM618670	characteristic	age	23 day
+E-GEOD-25185	A-AFFY-103	GSM618670	characteristic	breed	ROSS308, commercial broilers for meat production
+E-GEOD-25185	A-AFFY-103	GSM618670	characteristic	diet	1 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618670	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-25185	A-AFFY-103	GSM618670	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-25185	A-AFFY-103	GSM618670	factor	diet	1 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618671	characteristic	age	23 day
+E-GEOD-25185	A-AFFY-103	GSM618671	characteristic	breed	ROSS308, commercial broilers for meat production
+E-GEOD-25185	A-AFFY-103	GSM618671	characteristic	diet	1 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618671	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-25185	A-AFFY-103	GSM618671	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-25185	A-AFFY-103	GSM618671	factor	diet	1 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618672	characteristic	age	23 day
+E-GEOD-25185	A-AFFY-103	GSM618672	characteristic	breed	ROSS308, commercial broilers for meat production
+E-GEOD-25185	A-AFFY-103	GSM618672	characteristic	diet	1 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618672	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-25185	A-AFFY-103	GSM618672	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-25185	A-AFFY-103	GSM618672	factor	diet	1 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618673	characteristic	age	23 day
+E-GEOD-25185	A-AFFY-103	GSM618673	characteristic	breed	ROSS308, commercial broilers for meat production
+E-GEOD-25185	A-AFFY-103	GSM618673	characteristic	diet	2.5 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618673	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-25185	A-AFFY-103	GSM618673	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-25185	A-AFFY-103	GSM618673	factor	diet	2.5 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618674	characteristic	age	23 day
+E-GEOD-25185	A-AFFY-103	GSM618674	characteristic	breed	ROSS308, commercial broilers for meat production
+E-GEOD-25185	A-AFFY-103	GSM618674	characteristic	diet	2.5 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618674	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-25185	A-AFFY-103	GSM618674	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-25185	A-AFFY-103	GSM618674	factor	diet	2.5 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618675	characteristic	age	23 day
+E-GEOD-25185	A-AFFY-103	GSM618675	characteristic	breed	ROSS308, commercial broilers for meat production
+E-GEOD-25185	A-AFFY-103	GSM618675	characteristic	diet	2.5 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618675	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-25185	A-AFFY-103	GSM618675	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-25185	A-AFFY-103	GSM618675	factor	diet	2.5 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618676	characteristic	age	23 day
+E-GEOD-25185	A-AFFY-103	GSM618676	characteristic	breed	ROSS308, commercial broilers for meat production
+E-GEOD-25185	A-AFFY-103	GSM618676	characteristic	diet	5 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618676	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-25185	A-AFFY-103	GSM618676	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-25185	A-AFFY-103	GSM618676	factor	diet	5 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618677	characteristic	age	23 day
+E-GEOD-25185	A-AFFY-103	GSM618677	characteristic	breed	ROSS308, commercial broilers for meat production
+E-GEOD-25185	A-AFFY-103	GSM618677	characteristic	diet	5 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618677	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-25185	A-AFFY-103	GSM618677	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-25185	A-AFFY-103	GSM618677	factor	diet	5 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618678	characteristic	age	23 day
+E-GEOD-25185	A-AFFY-103	GSM618678	characteristic	breed	ROSS308, commercial broilers for meat production
+E-GEOD-25185	A-AFFY-103	GSM618678	characteristic	diet	5 milligram DON per kilogram feed for 23 days ad libitum
+E-GEOD-25185	A-AFFY-103	GSM618678	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-25185	A-AFFY-103	GSM618678	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-25185	A-AFFY-103	GSM618678	factor	diet	5 milligram DON per kilogram feed for 23 days ad libitum
