@@ -1,0 +1,68 @@
+
+Reading and writing files in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588 
+
+Reading experiment config from /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-configuration.xml ...
+Finished reading experiment config
+Reading SDRF from /nfs/ma/home/arrayexpress/ae2_production/data/EXPERIMENT/MTAB/E-MTAB-2588/E-MTAB-2588.sdrf.txt ...
+Getting characteristic and factor column indices
+Checking for technical replicates
+Locating assay names...
+Found assay names. Subsetting SDRF...
+Finished subsetting SDRF.
+Merging unit columns...
+Finished merging unit columns.
+Fixing column headings...
+Finished fixing column headings.
+Removing duplicated columns...
+Finished removing duplicated columns.
+Applying new column headings...
+Finished applying new column headings.
+Removing duplicated rows...
+Finished removing duplicated rows.
+Finished reading SDRF
+Creating experiment summary...
+Experiment summary created.
+Experiment summary written to /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-atlasExperimentSummary.Rdata 
+
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi6-036>
+Subject: Job 1035683: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/analysis/atlasExperimentInR/createAtlasExperimentSummary.R E-MTAB-2588 /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588  > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/analysis/atlasExperimentInR/createAtlasExperimentSummary.R E-MTAB-2588 /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588  > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi6-036>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588> was used as the working directory.
+Started at Tue Apr 12 17:42:32 2016
+Results reported at Tue Apr 12 17:42:40 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/analysis/atlasExperimentInR/createAtlasExperimentSummary.R E-MTAB-2588 /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               6.93 sec.
+    Max Memory :             55 MB
+    Average Memory :         55.00 MB
+    Total Requested Memory : 32768.00 MB
+    Delta Memory :           32713.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               362 MB
+
+    Max Processes :          3
+    Max Threads :            4
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <R.err> for stderr output of this job.
+

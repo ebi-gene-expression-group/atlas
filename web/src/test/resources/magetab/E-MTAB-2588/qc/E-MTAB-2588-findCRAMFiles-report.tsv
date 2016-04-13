@@ -1,0 +1,14 @@
+study_id	run_id	cram_location	organism	processing_status
+ERP005862	ERR506752	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR506/ERR506752/ERR506752.cram	physcomitrella_patens	16-JUL-2015 05:39:49	completed	96
+ERP005862	ERR506754	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR506/ERR506754/ERR506754.cram	physcomitrella_patens	16-JUL-2015 05:40:35	completed	96
+ERP005862	ERR506758	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR506/ERR506758/ERR506758.cram	physcomitrella_patens	15-JUL-2015 13:55:17	completed	94
+ERP005862	ERR506753	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR506/ERR506753/ERR506753.cram	physcomitrella_patens	06-JUL-2015 13:44:56	completed	95
+ERP005862	ERR506760	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR506/ERR506760/ERR506760.cram	physcomitrella_patens	15-JUL-2015 19:29:21	completed	94
+ERP005862	ERR506759	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR506/ERR506759/ERR506759.cram	physcomitrella_patens	16-JUL-2015 20:32:30	completed	95
+ERP005862	ERR506757	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR506/ERR506757/ERR506757.cram	physcomitrella_patens	06-JUL-2015 08:18:40	completed	95
+ERP005862	ERR506756	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR506/ERR506756/ERR506756.cram	physcomitrella_patens	05-JUL-2015 19:37:52	completed	95
+ERP005862	ERR506762	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR506/ERR506762/ERR506762.cram	physcomitrella_patens	16-JUL-2015 14:40:15	completed	95
+ERP005862	ERR506755	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR506/ERR506755/ERR506755.cram	physcomitrella_patens	07-JUL-2015 17:40:57	completed	96
+ERP005862	ERR506761	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR506/ERR506761/ERR506761.cram	physcomitrella_patens	07-JUL-2015 20:35:10	completed	95
+ERP005862	ERR506763	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR506/ERR506763/ERR506763.cram	physcomitrella_patens	09-JUL-2015 03:30:53	completed	96
+

@@ -1,0 +1,11 @@
+Pipeline version	<a href="http://nunofonseca.github.io/irap/">iRAP</a> 0.6.3d6 
+Analyzed Libraries	See <a href="experiments/E-MTAB-2588/experiment-design">experiment design</a>
+Filtering Step 1	Discard reads below minimum quality threshold
+Filtering Step 2	Check of bacterial contamination; discard offending reads
+Filtering Step 3	Discard reads with common uncalled characters (e.g. N)
+Filtering Step 4	Remove reads from pair-end libraries that were orphaned by filtering steps 1-3
+Read Mapping	Against genome reference (Ensembl Plants release: 26) tophat2 version: 2.0.12
+Quantification	htseq2 version: 0.6.1p1
+Differential Expression	DESeq2 version: 1.6.3
+Gene Set Overlap	Fisher (non-directional), FDR &lt; 0.1 using <a href="http://www.bioconductor.org/packages/release/bioc/html/piano.html">piano</a> version 1.6.2
+

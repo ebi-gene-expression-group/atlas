@@ -1,0 +1,40 @@
+Comment[ArrayExpressAccession]	E-MTAB-2588
+MAGE-TAB Version	1.1
+Investigation Title	DEK1 deletion effect on Physcomitrella patens transcriptome
+Comment[Submitted Name]	DEK1 deletion effect on Physcomitrella patens transcriptome
+Experiment Description	The main phenotype observed in DEK1 deletion (deltadek1) in P. patens  is an absence of gametophore (leafy shoot) development. But, bud initiation the first step in gametophore development occurs. This experiments aims to compare transcriptome of wild-type and deltadek1 strains before budding onset, in 6 day old culture, and after budding onset, in 14 days old cultures. At the first time point both culture are morphologically similar as after 14 days wild-type displays young gametophores and deltadek1 has only arrested buds.
+Experimental Design	strain or line design	development or differentiation design
+Experimental Design Term Source REF	EFO	EFO
+Experimental Design Term Accession Number	EFO_0001754	EFO_0001746
+Experimental Factor Name	genotype	age	organism part
+Experimental Factor Type	genotype	age	organism part
+Experimental Factor Term Source REF	EFO	EFO	EFO
+Experimental Factor Term Accession Number	EFO_0005135	EFO_0000246	EFO_0000635
+Person Last Name	Olsen	Perroud	Demko	Kugler
+Person First Name	Odd-Arne	Pierre-Francois	Viktor	Karl
+Person Mid Initials
+Person Email	odd-arne.olsen@nmbu.no	perroud@biology2.wustl.edu	viktor.demko@nmbu.no	karl.kugler@helmholtz-muenchen.de
+Person Phone
+Person Fax
+Person Address	The Norwegian University of Life Sciences (NMBU), 1432 Aas, Norway	Washington University in St. Louis, Campus Box 1137, One Brookings Drive, St. Louis, MO 63130-4899	The Norwegian University of Life Sciences (NMBU), 1432 Aas, Norway	Helmholtz Zentrum München, German Research Center for Environmental Health, Ingolstädter Landstrasse 1, 85764 Neuherberg, Germany
+Person Affiliation	The Norwegian University of Life Sciences (NMBU)	Washington University in St Louis	The Norwegian University of Life Sciences (NMBU)	German Research Center for Environmental Health
+Person Roles	investigator	data analyst	experiment performer	data analyst;submitter
+Public Release Date	2014-10-22
+Protocol Name	P-MTAB-39260	P-MTAB-39261	P-MTAB-39262	P-MTAB-39263	P-MTAB-39264	P-MTAB-39265	P-MTAB-39266
+Protocol Type	growth protocol	treatment protocol	nucleic acid extraction protocol	nucleic acid library construction protocol	nucleic acid sequencing protocol	high throughput sequence alignment protocol	normalization data transformation protocol
+Protocol Term Source REF	EFO	EFO	EFO	EFO	EFO	EFO	EFO
+Protocol Term Accession Number	EFO_0003789	EFO_0003969	EFO_0002944	EFO_0004184	EFO_0004170	EFO_0004917	EFO_0003816
+Protocol Description	Cultures were performed on solid BCD medium overlaid with cellophane. Incubator light conditions were set as long day regime (16 hours light [70 to 80 µmolm-2s-1]/8 hours dark) with a constant temperature of 25C. 	Wild type and deltadek1 entrained protonemal tissue cultures were collected, homogenized in sterile water and inoculated on BCD medium overlaid with cellophane disc (2 ml of homogenized tissue per plate). Samples for each strain were collected after 6 and 14 days of growth, snap frozen in liquid nitrogen and stored at -80C. The procedure was repeated independently three times.	Total RNA was extracted from frozen material using  the RNeasy lipid tissue mini kit (Qiagen) with few modifications. Briefly, the frozen tissue was thoroughly homogenized in liquid nitrogen using a mortar and pistil. Approximately 120 mg of powdered tissue was lysed in 1ml QIAzol lysis reagent. Two hundred microliters of chloroform was added and the mixture was centrifuged at 4C. The aqueous phase was collected, 1.5 volume of 100% ethanol was added and the mixture was vortexed. After binding of the RNA to the RNeasy mini spin column, on-column DNaseI treatment was performed to remove genomic DNA. The column was washed with the RPE buffer, dried and RNA eluted in 45µl of RNase-free water. The concentration of RNA was measured and RNA integrity was further assessed using an Agilent 2100 Bioanalyzer (DE54704553, Agilent Technologies, Inc.) with a RNA 6000 LabChip kit. The RNA samples were stored at -80C until sent for sequencing.	Library preparation was preformed according to TruSeq RNA Sample Preparation Guide (Illumina, Part # 15008136 REV. A). Succinctly, the total RNA samples were first treated with DNase I to degrade any possible DNA contamination. Then, mRNA was enriched using the oligo(dT) magnetic beads. Finally, mRNA was fragmented into short fragments (about 200 bp). cDNA first strand was synthesized by using random hexamer-primer and cDNA second strand was subsequently synthesized using DNA polymerase I in presence of RNase H. End reparation and 3’-end single nucleotide A (adenine) addition was performed. Finally, sequencing adaptors were ligated to the fragments. The fragments were enriched by PCR amplification. During the QC step, Agilent 2100 Bioanaylzer and ABI StepOnePlus Real-Time PCR System were used to qualify and quantify of the sample library.	The library products were sequenced using an Illumina HiSeqTM 2000	Reads were aligned against the genomic assembly of Physcomitrella (Ppatens_152_gene.fa) using Bowtie and Tophat.	Gene abundance was estimated and normalized using Cufflinks.
+Protocol Hardware					Illumina HiSeq 2000
+Protocol Software						Bowtie (2.1.0), Tophat (2.0.10)	Cufflinks (2.1.1)
+Publication Title	Genetic analysis of DEK1 Loop function in three-dimensional body patterning in Physcomitrella patens.
+Publication Author List	Demko V, Perroud PF, Johansen W, Delwiche CF, Cooper ED, Remme P, Ako AE, Kugler KG, Mayer KF, Quatrano R, Olsen OA.
+Publication DOI	10.1104/pp.114.243758
+PubMed ID	25185121
+Term Source Name	EFO
+Term Source File	http://www.ebi.ac.uk/efo/
+Term Source Version
+Comment[AEExperimentType]	RNA-seq of coding RNA
+Comment[SecondaryAccession]	ERP005862
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERR506752-ERR506763
+SDRF File	E-MTAB-2588.sdrf.txt

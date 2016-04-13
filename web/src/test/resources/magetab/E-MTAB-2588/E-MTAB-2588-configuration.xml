@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_differential" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="wild type; 6 day; protonemata">
+                <assay>ERR506755</assay>
+                <assay>ERR506752</assay>
+                <assay>ERR506759</assay>
+            </assay_group>
+            <assay_group id="g2" label="wild type; 14 day; protonemata and young gametophore">
+                <assay>ERR506760</assay>
+                <assay>ERR506758</assay>
+                <assay>ERR506753</assay>
+            </assay_group>
+            <assay_group id="g3" label="deltadek1; 6 day; protonemata">
+                <assay>ERR506763</assay>
+                <assay>ERR506762</assay>
+                <assay>ERR506757</assay>
+            </assay_group>
+            <assay_group id="g4" label="deltadek1; 14 day; protonemata and young gametophore">
+                <assay>ERR506756</assay>
+                <assay>ERR506754</assay>
+                <assay>ERR506761</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g1_g3">
+                <name>'deltadek1' vs 'wild type' in 'protonemata; 6 day'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+            <contrast id="g2_g4">
+                <name>'deltadek1' vs 'wild type' in 'protonemata and young gametophore; 14 day'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g4</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

@@ -1,0 +1,235 @@
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-analytics.tsv --pvalue-col=3 --foldchange-col=4 --title="
+Top 10 GO terms enriched in 
+'deltadek1' vs 'wild type' in 'protonemata; 6 day' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.physcomitrella_patens.g1_g3.ensgene.go.tsv.aux1 --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/physcomitrella_patens.ensgene.go.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.g1_g3.go.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-analytics.tsv
+pval.col = 3
+fold.col = 4
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/physcomitrella_patens.ensgene.go.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.physcomitrella_patens.g1_g3.ensgene.go.tsv.aux1
+title = 
+Top 10 GO terms enriched in 
+'deltadek1' vs 'wild type' in 'protonemata; 6 day' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.g1_g3.go.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-analytics.tsv
+Warning message:
+In fread(input = f, sep = "\t", header = "auto", check.names = FALSE,  :
+  Bumped column 2 to type character on data row 1129, field contains 'THI1-3'. Coercing previously read values in this column from logical, integer or numeric back to character which may not be lossless; e.g., if '00' and '000' occurred before they will now be just '0', and there may be inconsistencies with treatment of ',,' and ',NA,' too (if they occurred in this column before the bump). If this matters please rerun and set 'colClasses' to 'character' for this column. Please note that column type detection uses the first 5 rows, the middle 5 rows and the last 5 rows, so hopefully this message should be very rare. If reporting to datatable-help, please rerun and include the output from verbose=TRUE.
+[INFO] NAs removed: 14456
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-analytics.tsv loaded: 17817 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/physcomitrella_patens.ensgene.go.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/physcomitrella_patens.ensgene.go.tsv loaded: 81362 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.physcomitrella_patens.g1_g3.ensgene.go.tsv.aux1
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.physcomitrella_patens.g1_g3.ensgene.go.tsv.aux1 loaded: 3410 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.24+-0.35
+[INFO] p-value mean 0.62+-0.3
+[INFO] Excluded 407 genes with no annotation
+[INFO] #Genes=12100 #genes (pvalue<=0.05)=794
+[INFO] Loading GSC...
+[INFO] Gene sets:3286 genes:12100
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 794 genes of interest in 1070 gene sets, using a background of 11306 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.g1_g3.go.gsea.tsv
+Loading required package: methods
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Loading required package: limma
+[INFO] Generating plot /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.g1_g3.go.gsea_class_non_dir_both.png
+There were 50 or more warnings (use warnings() to see the first 50)
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-analytics.tsv --pvalue-col=3 --foldchange-col=4 --title="
+Top 10 InterPro domains enriched in 
+'deltadek1' vs 'wild type' in 'protonemata; 6 day' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/physcomitrella_patens.ensgene.interpro.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.g1_g3.interpro.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-analytics.tsv
+pval.col = 3
+fold.col = 4
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/physcomitrella_patens.ensgene.interpro.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+title = 
+Top 10 InterPro domains enriched in 
+'deltadek1' vs 'wild type' in 'protonemata; 6 day' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.g1_g3.interpro.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-analytics.tsv
+Warning message:
+In fread(input = f, sep = "\t", header = "auto", check.names = FALSE,  :
+  Bumped column 2 to type character on data row 1129, field contains 'THI1-3'. Coercing previously read values in this column from logical, integer or numeric back to character which may not be lossless; e.g., if '00' and '000' occurred before they will now be just '0', and there may be inconsistencies with treatment of ',,' and ',NA,' too (if they occurred in this column before the bump). If this matters please rerun and set 'colClasses' to 'character' for this column. Please note that column type detection uses the first 5 rows, the middle 5 rows and the last 5 rows, so hopefully this message should be very rare. If reporting to datatable-help, please rerun and include the output from verbose=TRUE.
+[INFO] NAs removed: 14456
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-analytics.tsv loaded: 17817 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/physcomitrella_patens.ensgene.interpro.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/physcomitrella_patens.ensgene.interpro.tsv loaded: 69091 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux loaded: 26238 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.24+-0.35
+[INFO] p-value mean 0.62+-0.3
+[INFO] Excluded 248 genes with no annotation
+[INFO] #Genes=14490 #genes (pvalue<=0.05)=953
+[INFO] Loading GSC...
+[INFO] Gene sets:6480 genes:14490
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 953 genes of interest in 1809 gene sets, using a background of 13537 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.g1_g3.interpro.gsea.tsv
+Loading required package: methods
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Loading required package: limma
+[INFO] Generating plot /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.g1_g3.interpro.gsea_class_non_dir_both.png
+There were 48 warnings (use warnings() to see them)
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-analytics.tsv --pvalue-col=3 --foldchange-col=4 --title="
+Top 10 Reactome pathways enriched in 
+'deltadek1' vs 'wild type' in 'protonemata; 6 day' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/physcomitrella_patens.reactome.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/physcomitrella_patens.reactome.tsv.gsea.aux --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.g1_g3.reactome.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-analytics.tsv
+pval.col = 3
+fold.col = 4
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/physcomitrella_patens.reactome.tsv.gsea.aux
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/physcomitrella_patens.reactome.tsv.decorate.aux
+title = 
+Top 10 Reactome pathways enriched in 
+'deltadek1' vs 'wild type' in 'protonemata; 6 day' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.g1_g3.reactome.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-analytics.tsv
+Warning message:
+In fread(input = f, sep = "\t", header = "auto", check.names = FALSE,  :
+  Bumped column 2 to type character on data row 1129, field contains 'THI1-3'. Coercing previously read values in this column from logical, integer or numeric back to character which may not be lossless; e.g., if '00' and '000' occurred before they will now be just '0', and there may be inconsistencies with treatment of ',,' and ',NA,' too (if they occurred in this column before the bump). If this matters please rerun and set 'colClasses' to 'character' for this column. Please note that column type detection uses the first 5 rows, the middle 5 rows and the last 5 rows, so hopefully this message should be very rare. If reporting to datatable-help, please rerun and include the output from verbose=TRUE.
+[INFO] NAs removed: 14456
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588-analytics.tsv loaded: 17817 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/physcomitrella_patens.reactome.tsv.gsea.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/physcomitrella_patens.reactome.tsv.gsea.aux loaded: 4283 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/physcomitrella_patens.reactome.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/physcomitrella_patens.reactome.tsv.decorate.aux loaded: 176 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.24+-0.35
+[INFO] p-value mean 0.62+-0.3
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=17817 #genes (pvalue<=0.05)=1201
+[INFO] Loading GSC...
+[INFO] Gene sets:169 genes:758
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 1201 genes of interest in 96 gene sets, using a background of 16616 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588/E-MTAB-2588.g1_g3.reactome.gsea.tsv
+[WARNING] Insufficient gene sets () to draw a plot - plot not generated.
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-097>
+Subject: Job 1040442: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588 g1_g3 > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588 g1_g3 > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi5-097>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588> was used as the working directory.
+Started at Tue Apr 12 18:01:48 2016
+Results reported at Tue Apr 12 18:03:58 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-2588 g1_g3 
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               93.55 sec.
+    Max Memory :             216 MB
+    Average Memory :         92.57 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3880.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               1257 MB
+
+    Max Processes :          8
+    Max Threads :            9
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <gseag1_g3.err> for stderr output of this job.
+

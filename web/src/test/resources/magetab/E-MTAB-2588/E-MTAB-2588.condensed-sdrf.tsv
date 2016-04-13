@@ -1,0 +1,84 @@
+E-MTAB-2588		ERR506752	characteristic	age	6 day
+E-MTAB-2588		ERR506752	characteristic	genotype	wild type genotype
+E-MTAB-2588		ERR506752	characteristic	organism	Physcomitrella patens	http://purl.obolibrary.org/obo/NCBITaxon_3218
+E-MTAB-2588		ERR506752	characteristic	organism part	protonemata	http://purl.obolibrary.org/obo/PO_0030003
+E-MTAB-2588		ERR506752	factor	age	6 day
+E-MTAB-2588		ERR506752	factor	genotype	wild type genotype
+E-MTAB-2588		ERR506752	factor	organism part	protonemata	http://purl.obolibrary.org/obo/PO_0030003
+E-MTAB-2588		ERR506753	characteristic	age	14 day
+E-MTAB-2588		ERR506753	characteristic	genotype	wild type genotype
+E-MTAB-2588		ERR506753	characteristic	organism	Physcomitrella patens	http://purl.obolibrary.org/obo/NCBITaxon_3218
+E-MTAB-2588		ERR506753	characteristic	organism part	protonemata and young gametophore
+E-MTAB-2588		ERR506753	factor	age	14 day
+E-MTAB-2588		ERR506753	factor	genotype	wild type genotype
+E-MTAB-2588		ERR506753	factor	organism part	protonemata and young gametophore
+E-MTAB-2588		ERR506754	characteristic	age	14 day
+E-MTAB-2588		ERR506754	characteristic	genotype	deltadek1
+E-MTAB-2588		ERR506754	characteristic	organism	Physcomitrella patens	http://purl.obolibrary.org/obo/NCBITaxon_3218
+E-MTAB-2588		ERR506754	characteristic	organism part	protonemata and young gametophore
+E-MTAB-2588		ERR506754	factor	age	14 day
+E-MTAB-2588		ERR506754	factor	genotype	deltadek1
+E-MTAB-2588		ERR506754	factor	organism part	protonemata and young gametophore
+E-MTAB-2588		ERR506755	characteristic	age	6 day
+E-MTAB-2588		ERR506755	characteristic	genotype	wild type genotype
+E-MTAB-2588		ERR506755	characteristic	organism	Physcomitrella patens	http://purl.obolibrary.org/obo/NCBITaxon_3218
+E-MTAB-2588		ERR506755	characteristic	organism part	protonemata	http://purl.obolibrary.org/obo/PO_0030003
+E-MTAB-2588		ERR506755	factor	age	6 day
+E-MTAB-2588		ERR506755	factor	genotype	wild type genotype
+E-MTAB-2588		ERR506755	factor	organism part	protonemata	http://purl.obolibrary.org/obo/PO_0030003
+E-MTAB-2588		ERR506756	characteristic	age	14 day
+E-MTAB-2588		ERR506756	characteristic	genotype	deltadek1
+E-MTAB-2588		ERR506756	characteristic	organism	Physcomitrella patens	http://purl.obolibrary.org/obo/NCBITaxon_3218
+E-MTAB-2588		ERR506756	characteristic	organism part	protonemata and young gametophore
+E-MTAB-2588		ERR506756	factor	age	14 day
+E-MTAB-2588		ERR506756	factor	genotype	deltadek1
+E-MTAB-2588		ERR506756	factor	organism part	protonemata and young gametophore
+E-MTAB-2588		ERR506757	characteristic	age	6 day
+E-MTAB-2588		ERR506757	characteristic	genotype	deltadek1
+E-MTAB-2588		ERR506757	characteristic	organism	Physcomitrella patens	http://purl.obolibrary.org/obo/NCBITaxon_3218
+E-MTAB-2588		ERR506757	characteristic	organism part	protonemata	http://purl.obolibrary.org/obo/PO_0030003
+E-MTAB-2588		ERR506757	factor	age	6 day
+E-MTAB-2588		ERR506757	factor	genotype	deltadek1
+E-MTAB-2588		ERR506757	factor	organism part	protonemata	http://purl.obolibrary.org/obo/PO_0030003
+E-MTAB-2588		ERR506758	characteristic	age	14 day
+E-MTAB-2588		ERR506758	characteristic	genotype	wild type genotype
+E-MTAB-2588		ERR506758	characteristic	organism	Physcomitrella patens	http://purl.obolibrary.org/obo/NCBITaxon_3218
+E-MTAB-2588		ERR506758	characteristic	organism part	protonemata and young gametophore
+E-MTAB-2588		ERR506758	factor	age	14 day
+E-MTAB-2588		ERR506758	factor	genotype	wild type genotype
+E-MTAB-2588		ERR506758	factor	organism part	protonemata and young gametophore
+E-MTAB-2588		ERR506759	characteristic	age	6 day
+E-MTAB-2588		ERR506759	characteristic	genotype	wild type genotype
+E-MTAB-2588		ERR506759	characteristic	organism	Physcomitrella patens	http://purl.obolibrary.org/obo/NCBITaxon_3218
+E-MTAB-2588		ERR506759	characteristic	organism part	protonemata	http://purl.obolibrary.org/obo/PO_0030003
+E-MTAB-2588		ERR506759	factor	age	6 day
+E-MTAB-2588		ERR506759	factor	genotype	wild type genotype
+E-MTAB-2588		ERR506759	factor	organism part	protonemata	http://purl.obolibrary.org/obo/PO_0030003
+E-MTAB-2588		ERR506760	characteristic	age	14 day
+E-MTAB-2588		ERR506760	characteristic	genotype	wild type genotype
+E-MTAB-2588		ERR506760	characteristic	organism	Physcomitrella patens	http://purl.obolibrary.org/obo/NCBITaxon_3218
+E-MTAB-2588		ERR506760	characteristic	organism part	protonemata and young gametophore
+E-MTAB-2588		ERR506760	factor	age	14 day
+E-MTAB-2588		ERR506760	factor	genotype	wild type genotype
+E-MTAB-2588		ERR506760	factor	organism part	protonemata and young gametophore
+E-MTAB-2588		ERR506761	characteristic	age	14 day
+E-MTAB-2588		ERR506761	characteristic	genotype	deltadek1
+E-MTAB-2588		ERR506761	characteristic	organism	Physcomitrella patens	http://purl.obolibrary.org/obo/NCBITaxon_3218
+E-MTAB-2588		ERR506761	characteristic	organism part	protonemata and young gametophore
+E-MTAB-2588		ERR506761	factor	age	14 day
+E-MTAB-2588		ERR506761	factor	genotype	deltadek1
+E-MTAB-2588		ERR506761	factor	organism part	protonemata and young gametophore
+E-MTAB-2588		ERR506762	characteristic	age	6 day
+E-MTAB-2588		ERR506762	characteristic	genotype	deltadek1
+E-MTAB-2588		ERR506762	characteristic	organism	Physcomitrella patens	http://purl.obolibrary.org/obo/NCBITaxon_3218
+E-MTAB-2588		ERR506762	characteristic	organism part	protonemata	http://purl.obolibrary.org/obo/PO_0030003
+E-MTAB-2588		ERR506762	factor	age	6 day
+E-MTAB-2588		ERR506762	factor	genotype	deltadek1
+E-MTAB-2588		ERR506762	factor	organism part	protonemata	http://purl.obolibrary.org/obo/PO_0030003
+E-MTAB-2588		ERR506763	characteristic	age	6 day
+E-MTAB-2588		ERR506763	characteristic	genotype	deltadek1
+E-MTAB-2588		ERR506763	characteristic	organism	Physcomitrella patens	http://purl.obolibrary.org/obo/NCBITaxon_3218
+E-MTAB-2588		ERR506763	characteristic	organism part	protonemata	http://purl.obolibrary.org/obo/PO_0030003
+E-MTAB-2588		ERR506763	factor	age	6 day
+E-MTAB-2588		ERR506763	factor	genotype	deltadek1
+E-MTAB-2588		ERR506763	factor	organism part	protonemata	http://purl.obolibrary.org/obo/PO_0030003
