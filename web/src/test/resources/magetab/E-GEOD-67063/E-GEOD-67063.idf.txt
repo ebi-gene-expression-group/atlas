@@ -1,0 +1,35 @@
+Comment[ArrayExpressAccession]	E-GEOD-67063				
+MAGE-TAB Version	1.1				
+Public Release Date	2016-01-15				
+Investigation Title	Understanding the role of Shoc2 protein in spatio-temporal regulation of extracellular signal-regulated kinase (ERK1/2) cascade				
+Comment[Submitted Name]	Understanding the role of Shoc2 protein in spatio-temporal regulation of extracellular signal-regulated kinase (ERK1/2) cascade				
+Experiment Description	This study was designed to understanding changes in RNA transcription in cells depleted of Shoc2 scaffold. 2 samples were analyzed (3 replicates for each sample were included). Cos1 is a control sample.				
+Term Source Name	ArrayExpress	EFO			
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl			
+Person Last Name	Rouchka	Galperin	Jeoung	Rouchka	Li
+Person First Name	Eric	Emilia	Myoungkun	Eric	Xiaohong
+Person Mid Initials	Christian			C	
+Person Email	eric.rouchka@louisville.edu				
+Person Affiliation	University of Louisville				
+Person Address	Computer Engineering and Computer Science, University of Louisville, Duthie Center Room 208 -- SPEED CECS, Louisville, Kentucky, USA				
+Person Roles	submitter				
+Protocol Name	P-GSE67063-4	P-GSE67063-1	P-GSE67063-3	P-GSE67063-2	
+Protocol Description	Illumina Casava software used for basecalling. Reads were mapped to the Chlorocebus sabaeus genome version ChiSab1.0 using Tophat2 v2.0.10 with the multithreading option -p 5 and the remaining parameters as the default allowing for two mismatches. Tophat2 was using bowtie2 v2.1.0.0 as the underlying mapper. Mapped reads were assembled into transcripts with cufflinks v2.1.1 using the multithreading option -p 5 and the remaining options as the defaults. The gtf used for transcript construction was the Chlorocebus.sabaeus.Chlsabe.0.pre.gtf downloaded from the Ensembl pre release site ftp://ftp.ensembl.org/pub/pre/gtf/chlorocebus_sabaeus/ Aligned reads were used as inputs for cuffdiff2 to determine gene expression levels (FPKM) and differential expression between conditions using the multithreading option -p 8 and the minimum alignment count of 7 (--min-alignment-count 7). All other parameters were set to the defaults. Differential expression was tested for LV treatment by comparing the combined alignments of samples 4, 5 and 6 (LV) to the combined alignments of samples 1,2 and 3 using cuffdiff2. Genome_build: ChiSab1.0 GCA 000409795.1 Supplementary_files_format_and_content: Genes_FPKMValues.txt is a tab-delimited text file containing the gene ID, locus, and FPKM values for each gene assembled using cufflinks. gene_exp.diff is the resulting differential expression results for Lentivirus treated vs. NT. This file is output by cuffdiff. A q-value cutoff of 0.05 was used to determine differentially expressed genes.	Cells were serum-starved for 14 h, and then treated with 2ng/ml of epidermal growth factor (EGF) for 90 min.	Total RNA was extracted using BioRad Total RNA isolation Kits and PureZOL according to the manufacturerâs instruction. The RNA quality was examined using Agilent Bioanalyzer. Library was constructed in UT Southwestern genomics core using illuminaâs mRNA-Seq sample preparation kits to generate full sequence from any poly-A tailed RNA to generate library with single-read, paired-end or multiplexing sequencing on all illumina sequencing systems (Genome Analyzer or HiSeq). The service included mRNA isolation, cDNA synthesize, fragmentation, adding adaptors, size selection, amplification and QC.	Cells were grown in DMEM with 10% FBS at 37oC, 5% CO2.	
+Protocol Type	normalization data transformation protocol	sample treatment protocol	nucleic acid library construction protocol	growth protocol	
+Experimental Factor Name	phenotype				
+Experimental Factor Type	phenotype				
+Comment[SecondaryAccession]	GSE67063				
+Comment[GEOReleaseDate]	2016-01-15				
+Comment[ArrayExpressSubmissionDate]	2015-03-19				
+Comment[GEOLastUpdateDate]	2016-01-15				
+Comment[AEExperimentType]	RNA-seq of coding RNA				
+Comment[AdditionalFile:Data1]	GSE67063_Genes_FPKMValues.txt				
+Comment[AdditionalFile:Data2]	GSE67063_gene_exp.diff				
+Comment[SecondaryAccession]	SRP056324				
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/SRR1919325-SRR1919330				
+SDRF File	E-GEOD-67063.sdrf.txt				
+Comment[AEExperimentDisplayName]	Transcription profiling by high throughput sequencing of African green monkey in COS-1 cells depleted of Shoc2 scaffold				
+Publication Title	Shoc2-tranduced ERK1/2 motility signals - Novel insights from functional genomics.				
+Publication Author List	Jeoung M, Jang ER, Liu J, Wang C, Rouchka EC, Li X, Galperin E				
+PubMed ID	26876614				
+Publication DOI	10.1016/j.cellsig.2016.02.005				

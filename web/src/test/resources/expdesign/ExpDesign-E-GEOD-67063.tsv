@@ -1,0 +1,7 @@
+"Run"	"Sample Characteristic[cell line]"	"Sample Characteristic Ontology Term[cell line]"	"Sample Characteristic[organism]"	"Sample Characteristic Ontology Term[organism]"	"Sample Characteristic[phenotype]"	"Sample Characteristic Ontology Term[phenotype]"	"Factor Value[phenotype]"	"Factor Value Ontology Term[phenotype]"
+"SRR1919325"	"COS-1"		"Chlorocebus sabaeus"		"control"	"http://www.ebi.ac.uk/efo/EFO_0001461"	"control"	"http://www.ebi.ac.uk/efo/EFO_0001461"
+"SRR1919326"	"COS-1"		"Chlorocebus sabaeus"		"control"	"http://www.ebi.ac.uk/efo/EFO_0001461"	"control"	"http://www.ebi.ac.uk/efo/EFO_0001461"
+"SRR1919327"	"COS-1"		"Chlorocebus sabaeus"		"control"	"http://www.ebi.ac.uk/efo/EFO_0001461"	"control"	"http://www.ebi.ac.uk/efo/EFO_0001461"
+"SRR1919328"	"COS-1"		"Chlorocebus sabaeus"		"Shoc2 knockdown"		"Shoc2 knockdown"	
+"SRR1919329"	"COS-1"		"Chlorocebus sabaeus"		"Shoc2 knockdown"		"Shoc2 knockdown"	
+"SRR1919330"	"COS-1"		"Chlorocebus sabaeus"		"Shoc2 knockdown"		"Shoc2 knockdown"	

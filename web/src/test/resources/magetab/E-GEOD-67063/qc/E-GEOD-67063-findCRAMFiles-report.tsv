@@ -1,0 +1,8 @@
+study_id	run_id	cram_location	organism	date_last_processed	processing_status	mapping_quality
+SRP056324	SRR1919326	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR191/006/SRR1919326/SRR1919326.cram	chlorocebus_sabaeus	02-FEB-2016 00:36:36	completed	73
+SRP056324	SRR1919327	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR191/007/SRR1919327/SRR1919327.cram	chlorocebus_sabaeus	02-FEB-2016 00:35:42	completed	73
+SRP056324	SRR1919330	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR191/000/SRR1919330/SRR1919330.cram	chlorocebus_sabaeus	02-FEB-2016 00:36:11	completed	73
+SRP056324	SRR1919325	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR191/005/SRR1919325/SRR1919325.cram	chlorocebus_sabaeus	02-FEB-2016 00:35:16	completed	74
+SRP056324	SRR1919329	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR191/009/SRR1919329/SRR1919329.cram	chlorocebus_sabaeus	02-FEB-2016 02:04:00	completed	73
+SRP056324	SRR1919328	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR191/008/SRR1919328/SRR1919328.cram	chlorocebus_sabaeus	02-FEB-2016 00:37:03	completed	74
+
