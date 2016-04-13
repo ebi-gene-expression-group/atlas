@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-126</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="IRBB5; 6 hour">
+                <assay>GSM826518</assay>
+                <assay>GSM826520</assay>
+                <assay>GSM826519</assay>
+            </assay_group>
+            <assay_group id="g2" label="IRBB5; 12 hour">
+                <assay>GSM826523</assay>
+                <assay>GSM826522</assay>
+                <assay>GSM826521</assay>
+            </assay_group>
+            <assay_group id="g3" label="IRBB5; 3 hour">
+                <assay>GSM826515</assay>
+                <assay>GSM826516</assay>
+                <assay>GSM826517</assay>
+            </assay_group>
+            <assay_group id="g4" label="IRBB7; 3 hour">
+                <assay>GSM826531</assay>
+                <assay>GSM826532</assay>
+                <assay>GSM826530</assay>
+            </assay_group>
+            <assay_group id="g5" label="IR24; 0 hour">
+                <assay>GSM826498</assay>
+                <assay>GSM826499</assay>
+                <assay>GSM826497</assay>
+            </assay_group>
+            <assay_group id="g6" label="IRBB7; 0 hour">
+                <assay>GSM826529</assay>
+                <assay>GSM826527</assay>
+                <assay>GSM826528</assay>
+            </assay_group>
+            <assay_group id="g7" label="IR24; 3 hour">
+                <assay>GSM826501</assay>
+                <assay>GSM826500</assay>
+                <assay>GSM826502</assay>
+            </assay_group>
+            <assay_group id="g8" label="IR24; 6 hour">
+                <assay>GSM826505</assay>
+                <assay>GSM826504</assay>
+                <assay>GSM826503</assay>
+            </assay_group>
+            <assay_group id="g9" label="IRBB5; 0 hour">
+                <assay>GSM826513</assay>
+                <assay>GSM826512</assay>
+                <assay>GSM826514</assay>
+            </assay_group>
+            <assay_group id="g10" label="IRBB7; 6 hour">
+                <assay>GSM826534</assay>
+                <assay>GSM826535</assay>
+                <assay>GSM826533</assay>
+            </assay_group>
+            <assay_group id="g11" label="IR24; 24 hour">
+                <assay>GSM826510</assay>
+                <assay>GSM826509</assay>
+                <assay>GSM826511</assay>
+            </assay_group>
+            <assay_group id="g12" label="IR24; 12 hour">
+                <assay>GSM826507</assay>
+                <assay>GSM826506</assay>
+                <assay>GSM826508</assay>
+            </assay_group>
+            <assay_group id="g13" label="IRBB5; 24 hour">
+                <assay>GSM826525</assay>
+                <assay>GSM826524</assay>
+                <assay>GSM826526</assay>
+            </assay_group>
+            <assay_group id="g14" label="IRBB7; 24 hour">
+                <assay>GSM826540</assay>
+                <assay>GSM826539</assay>
+                <assay>GSM826541</assay>
+            </assay_group>
+            <assay_group id="g15" label="IRBB7; 12 hour">
+                <assay>GSM826538</assay>
+                <assay>GSM826537</assay>
+                <assay>GSM826536</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g5_g6">
+                <name>'IRBB7' vs 'IR24' at '0 hour'</name>
+                <reference_assay_group>g5</reference_assay_group>
+                <test_assay_group>g6</test_assay_group>
+            </contrast>
+            <contrast id="g5_g9">
+                <name>'IRBB5' vs 'IR24' at '0 hour'</name>
+                <reference_assay_group>g5</reference_assay_group>
+                <test_assay_group>g9</test_assay_group>
+            </contrast>
+            <contrast id="g7_g3">
+                <name>'IRBB5' vs 'IR24' at '3 hour'</name>
+                <reference_assay_group>g7</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+            <contrast id="g7_g4">
+                <name>'IRBB7' vs 'IR24' at '3 hour'</name>
+                <reference_assay_group>g7</reference_assay_group>
+                <test_assay_group>g4</test_assay_group>
+            </contrast>
+            <contrast id="g8_g1">
+                <name>'IRBB5' vs 'IR24' at '6 hour'</name>
+                <reference_assay_group>g8</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g8_g10">
+                <name>'IRBB7' vs 'IR24' at '6 hour'</name>
+                <reference_assay_group>g8</reference_assay_group>
+                <test_assay_group>g10</test_assay_group>
+            </contrast>
+            <contrast id="g12_g2">
+                <name>'IRBB5' vs 'IR24' at '12 hour'</name>
+                <reference_assay_group>g12</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+            <contrast id="g12_g15">
+                <name>'IRBB7' vs 'IR24' at '12 hour'</name>
+                <reference_assay_group>g12</reference_assay_group>
+                <test_assay_group>g15</test_assay_group>
+            </contrast>
+            <contrast id="g11_g13">
+                <name>'IRBB5' vs 'IR24' at '24 hour'</name>
+                <reference_assay_group>g11</reference_assay_group>
+                <test_assay_group>g13</test_assay_group>
+            </contrast>
+            <contrast id="g11_g14">
+                <name>'IRBB7' vs 'IR24' at '24 hour'</name>
+                <reference_assay_group>g11</reference_assay_group>
+                <test_assay_group>g14</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

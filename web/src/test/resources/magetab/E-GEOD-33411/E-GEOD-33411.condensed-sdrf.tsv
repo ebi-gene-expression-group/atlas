@@ -1,0 +1,315 @@
+E-GEOD-33411	A-AFFY-126	GSM826497	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826497	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826497	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826497	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826497	characteristic	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826497	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826497	factor	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826498	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826498	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826498	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826498	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826498	characteristic	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826498	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826498	factor	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826499	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826499	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826499	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826499	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826499	characteristic	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826499	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826499	factor	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826500	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826500	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826500	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826500	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826500	characteristic	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826500	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826500	factor	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826501	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826501	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826501	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826501	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826501	characteristic	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826501	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826501	factor	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826502	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826502	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826502	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826502	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826502	characteristic	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826502	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826502	factor	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826503	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826503	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826503	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826503	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826503	characteristic	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826503	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826503	factor	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826504	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826504	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826504	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826504	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826504	characteristic	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826504	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826504	factor	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826505	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826505	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826505	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826505	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826505	characteristic	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826505	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826505	factor	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826506	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826506	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826506	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826506	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826506	characteristic	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826506	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826506	factor	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826507	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826507	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826507	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826507	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826507	characteristic	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826507	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826507	factor	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826508	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826508	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826508	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826508	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826508	characteristic	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826508	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826508	factor	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826509	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826509	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826509	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826509	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826509	characteristic	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826509	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826509	factor	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826510	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826510	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826510	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826510	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826510	characteristic	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826510	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826510	factor	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826511	characteristic	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826511	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826511	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826511	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826511	characteristic	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826511	factor	cultivar	IR24
+E-GEOD-33411	A-AFFY-126	GSM826511	factor	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826512	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826512	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826512	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826512	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826512	characteristic	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826512	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826512	factor	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826513	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826513	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826513	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826513	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826513	characteristic	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826513	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826513	factor	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826514	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826514	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826514	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826514	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826514	characteristic	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826514	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826514	factor	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826515	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826515	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826515	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826515	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826515	characteristic	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826515	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826515	factor	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826516	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826516	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826516	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826516	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826516	characteristic	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826516	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826516	factor	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826517	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826517	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826517	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826517	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826517	characteristic	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826517	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826517	factor	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826518	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826518	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826518	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826518	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826518	characteristic	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826518	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826518	factor	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826519	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826519	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826519	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826519	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826519	characteristic	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826519	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826519	factor	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826520	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826520	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826520	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826520	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826520	characteristic	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826520	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826520	factor	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826521	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826521	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826521	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826521	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826521	characteristic	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826521	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826521	factor	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826522	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826522	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826522	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826522	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826522	characteristic	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826522	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826522	factor	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826523	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826523	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826523	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826523	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826523	characteristic	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826523	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826523	factor	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826524	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826524	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826524	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826524	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826524	characteristic	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826524	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826524	factor	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826525	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826525	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826525	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826525	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826525	characteristic	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826525	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826525	factor	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826526	characteristic	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826526	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826526	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826526	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826526	characteristic	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826526	factor	cultivar	IRBB5
+E-GEOD-33411	A-AFFY-126	GSM826526	factor	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826527	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826527	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826527	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826527	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826527	characteristic	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826527	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826527	factor	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826528	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826528	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826528	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826528	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826528	characteristic	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826528	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826528	factor	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826529	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826529	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826529	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826529	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826529	characteristic	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826529	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826529	factor	time	0 hour
+E-GEOD-33411	A-AFFY-126	GSM826530	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826530	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826530	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826530	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826530	characteristic	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826530	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826530	factor	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826531	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826531	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826531	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826531	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826531	characteristic	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826531	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826531	factor	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826532	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826532	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826532	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826532	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826532	characteristic	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826532	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826532	factor	time	3 hour
+E-GEOD-33411	A-AFFY-126	GSM826533	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826533	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826533	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826533	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826533	characteristic	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826533	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826533	factor	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826534	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826534	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826534	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826534	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826534	characteristic	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826534	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826534	factor	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826535	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826535	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826535	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826535	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826535	characteristic	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826535	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826535	factor	time	6 hour
+E-GEOD-33411	A-AFFY-126	GSM826536	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826536	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826536	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826536	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826536	characteristic	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826536	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826536	factor	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826537	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826537	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826537	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826537	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826537	characteristic	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826537	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826537	factor	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826538	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826538	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826538	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826538	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826538	characteristic	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826538	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826538	factor	time	12 hour
+E-GEOD-33411	A-AFFY-126	GSM826539	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826539	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826539	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826539	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826539	characteristic	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826539	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826539	factor	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826540	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826540	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826540	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826540	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826540	characteristic	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826540	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826540	factor	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826541	characteristic	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826541	characteristic	infect	Xanthomonas oryzae pv. oryzae	http://purl.obolibrary.org/obo/NCBITaxon_64187
+E-GEOD-33411	A-AFFY-126	GSM826541	characteristic	organism	Oryza sativa Indica Group	http://purl.obolibrary.org/obo/NCBITaxon_39946
+E-GEOD-33411	A-AFFY-126	GSM826541	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-33411	A-AFFY-126	GSM826541	characteristic	time	24 hour
+E-GEOD-33411	A-AFFY-126	GSM826541	factor	cultivar	IRBB7
+E-GEOD-33411	A-AFFY-126	GSM826541	factor	time	24 hour

@@ -1,0 +1,902 @@
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 22928 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 22946 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 22097 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 24384 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 22974 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 23774 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 22914 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 21561 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 22993 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 23713 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 91080 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411/E-GEOD-33411_A-AFFY-126-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g11_g13.p-value
+ [INFO] Columns:g11_g13.t-statistic
+ [INFO] Columns:g11_g13.log2foldchange
+ [INFO] Columns:g11_g14.p-value
+ [INFO] Columns:g11_g14.t-statistic
+ [INFO] Columns:g11_g14.log2foldchange
+ [INFO] Columns:g12_g15.p-value
+ [INFO] Columns:g12_g15.t-statistic
+ [INFO] Columns:g12_g15.log2foldchange
+ [INFO] Columns:g12_g2.p-value
+ [INFO] Columns:g12_g2.t-statistic
+ [INFO] Columns:g12_g2.log2foldchange
+ [INFO] Columns:g5_g6.p-value
+ [INFO] Columns:g5_g6.t-statistic
+ [INFO] Columns:g5_g6.log2foldchange
+ [INFO] Columns:g5_g9.p-value
+ [INFO] Columns:g5_g9.t-statistic
+ [INFO] Columns:g5_g9.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.t-statistic
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.t-statistic
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g8_g1.p-value
+ [INFO] Columns:g8_g1.t-statistic
+ [INFO] Columns:g8_g1.log2foldchange
+ [INFO] Columns:g8_g10.p-value
+ [INFO] Columns:g8_g10.t-statistic
+ [INFO] Columns:g8_g10.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:26067
+[INFO] # values:26067
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-264>
+Subject: Job 1032371: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411  > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411  > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi5-264>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411> was used as the working directory.
+Started at Tue Apr 12 17:28:24 2016
+Results reported at Tue Apr 12 17:55:33 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-33411  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               1614.57 sec.
+    Max Memory :             537 MB
+    Average Memory :         217.27 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3559.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               1034 MB
+
+    Max Processes :          5
+    Max Threads :            6
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <tracks.err> for stderr output of this job.
+

@@ -1,0 +1,48 @@
+Comment[ArrayExpressAccession]	E-GEOD-33411						
+Public Release Date	2011-11-22						
+Investigation Title	Resistance gene-dependent responses in rice to the bacterial blight pathogen Xanthomonas oryzae pv. oryzae						
+Comment[Submitted Name]	Resistance gene-dependent responses in rice to the bacterial blight pathogen Xanthomonas oryzae pv. oryzae						
+Experiment Description	"TITLE: Transcriptional profiling of Rgene-mediated responses in rice    PROJECT DESCRIPTION: The dominant gene Xa7 and the recessive gene xa5 of  rice confer resistance to several races of the bacterial blight pathogen  Xanthomonas oryzae pv. oryzae (Xoo). To reveal the modes of action and  the defense responses these genes initiate, we decided to obtain the  global transcriptional profiles of the rice cultivars IRBB7, IRBB5  (which harbor Xa7 and xa5, respectively) and IR24 undergoing early  infection by the Xoo Race 2 strain PXO86. Both IRBB7 and IRBB5 are  resistant to PXO86 (which carry the corresponding avirulence genes  avrXa7 and avrxa5), whereas IR24 is susceptible. We inoculated by vacuum  infiltration the three rice cultivars ten days after seed germination  (or 2 weeks after sowing) and collected inoculated tissue at 5 different  timepoints within the first day after inoculation. The transcriptional  profiles obtained will provide valuable insight into the similarities  and differences between incompatible interactions mediated by a dominant  and a recessive Rgene, in comparison to a compatible interaction.   ****[PLEXdb(http://www.plexdb.org) has submitted this series at GEO on behalf of the original contributor,  David O Nino-Liu.  The equivalent experiment is OS4 at PLEXdb.] genotype: IR24 - time: 0 hai(3-replications);  genotype: IR24 - time: 3 hai(3-replications);  genotype: IR24 - time: 6 hai(3-replications);  genotype: IR24 - time: 12 hai(3-replications);  genotype: IR24 - time: 24 hai(3-replications);  genotype: IRBB5 - time: 0 hai(3-replications);  genotype: IRBB5 - time: 3 hai(3-replications);  genotype: IRBB5 - time: 6 hai(3-replications);  genotype: IRBB5 - time: 12 hai(3-replications);  genotype: IRBB5 - time: 24 hai(3-replications);  genotype: IRBB7 - time: 0 hai(3-replications);  genotype: IRBB7 - time: 3 hai(3-replications);  genotype: IRBB7 - time: 6 hai(3-replications);  genotype: IRBB7 - time: 12 hai(3-replications);  genotype: IRBB7 - time: 24 hai(3-replications)"						
+Date of Experiment							
+Term Source Name	EFO						
+Term Source Version							
+Term Source File	http://www.ebi.ac.uk/efo/efo.owl						
+Person Last Name	PLEXdb Curator	Nino-Liu	Bogdanove				
+Person First Name	Sudhansu	David	Adam				
+Person Mid Initials		O	J				
+Person Email	geo@ncbi.nlm.nih.gov						
+Person Affiliation	Iowa State University						
+Person Phone							
+Person Fax							
+Person Address	"Virtual Reality Application Center, Iowa State University, 1023  Crop Genomes Informatics Lab (Iowa State University), Ames, IA, USA"						
+Person Roles	submitter						
+Person Roles Term Source REF							
+Person Roles Term Accession Number							
+Normalization Type							
+Normalization Term Accession Number							
+Normalization Term Source REF							
+Replicate Type							
+Replicate Term Accession Number							
+Replicate Term Source REF							
+Experimental Design							
+Experimental Design Term Accession Number							
+Experimental Design Term Source REF							
+Quality Control Type							
+Quality Control Term Accession Number							
+Quality Control Term Source REF							
+Protocol Name	P-GSE33411-1	P-GSE33411-6	P-GSE33411-5	P-GSE33411-3	P-GSE33411-2	P-GSE33411-4	P-GSE33411-7
+Protocol Description	"ID_REF = Affymetrix probe set id<br>VALUE = MAS5-calculated Signal intensity<br>ABS_CALL = the call in an absolute analysis that indicates if the transcript was present (P), absent (A), marginal (M), or no call (NC)<br>DETECTION P-VALUE = 'detection p-value', p-value that indicates the significance level of the detection call"	Affy- Array Scanning	Affy- Eukaryotic Target Hybridization	Hot Phenol/Guanidine Thiocyanate and RNeasy Clean up	"Growth Description:  Rice plants were grown for a total of 15 days in growth chambers under a 12-h light and a 12-h dark cycle. Fertilizer and iron chelate micronutrient were applied with watering every two days at rates of 0.25 and 4.5 g/l, respectively.  Environmental Conditions:  Growth chamber 28ºC day/light, 25ºC night/dark cycle; relative humidity: 80-90%"	Affy-Eukaryotic Target Preparation	"The MAS5.0 Normalization is performed using the justMAS function in the simpleaffy package of Bioconductor (www.bioconductor.org). The target value is 500 for all cases. The code was developed using R2.4.1, Bioconductor 1.9, and simpleaffy 2.8.0. The CDF files were downloaded from the Bioconductor website at http://www.bioconductor.org/packages/release/AffymetrixChip.html. The normalization scripts are available from the PLEXdb team by request."
+Protocol Software							
+Protocol Hardware							
+Protocol Contact							
+Protocol Type	bioassay_data_transformation	image_aquisition	hybridization	nucleic_acid_extraction	grow	labeling	feature_extraction
+Protocol Term Source REF							
+Protocol Term Accession Number							
+Experimental Factor Name	time	cultivar					
+Experimental Factor Type	time	cultivar					
+Comment[SecondaryAccession]	GSE33411						
+Comment[GEOLastUpdateDate]	2011-11-23						
+Comment[AEExperimentType]	transcription profiling by array						
+Comment[GEOReleaseDate]	2011-11-22						
+Comment[ArrayExpressSubmissionDate]	2011-11-02						
+SDRF File	E-GEOD-33411.sdrf.txt						
