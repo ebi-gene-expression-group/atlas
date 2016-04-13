@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_microrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-GEOD-6955</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="idiopathic pulmonary fibrosis">
+                <assay>GSM336064</assay>
+                <assay>GSM336070</assay>
+                <assay>GSM336073</assay>
+                <assay>GSM336072</assay>
+                <assay>GSM336068</assay>
+                <assay>GSM336069</assay>
+                <assay>GSM336066</assay>
+                <assay>GSM336071</assay>
+                <assay>GSM336065</assay>
+                <assay>GSM336067</assay>
+            </assay_group>
+            <assay_group id="g2" label="normal">
+                <assay>GSM336079</assay>
+                <assay>GSM336077</assay>
+                <assay>GSM336078</assay>
+                <assay>GSM336080</assay>
+                <assay>GSM336075</assay>
+                <assay>GSM336083</assay>
+                <assay>GSM336074</assay>
+                <assay>GSM336081</assay>
+                <assay>GSM336082</assay>
+                <assay>GSM336076</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g2_g1">
+                <name>'idiopathic pulmonary fibrosis' vs 'normal'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

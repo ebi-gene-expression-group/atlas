@@ -1,0 +1,57 @@
+Comment[ArrayExpressAccession]	E-GEOD-13316					
+Public Release Date	2010-04-23					
+Investigation Title	miRNA expression data in idiopathic pulmonary fibrosis					
+Comment[Submitted Name]	miRNA expression data in idiopathic pulmonary fibrosis					
+Experiment Description	Idiopathic pulmonary fibrosis (IPF) is an untreatable fibrotic lung disease characterized by fibroblast proliferation and epithelial mesenchymal transition. The expression and role of microRNAs (miRNA) has not been studied in IPF. Using miRNA expression microarrays we identified 46 differentially expressed miRNA in IPF lungs which included let-7d and the miR-30 family.  Keywords: miRNA expression Lung tissue samples for microarray analysis were obtained through the University of Pittsburgh Health Sciences Tissue Bank. Ten samples were obtained from surgical remnants of biopsies or lungs explanted from patients with IPF who underwent pulmonary transplant, and ten control normal lung tissues obtained from the disease free margins with normal histology of lung cancer resection specimens. The morphologic diagnosis of IPF was based on typical microscopic findings consistent with usual interstitial pneumonia. Total RNA was labeled with Cy3 and hybridized on Agilent 8X15K microRNA array (Agilent Technologies, Santa Clara, CA). After 20 hours hybridization, arrays were washed and scanned according to the manufacturerâs protocol.					
+Date of Experiment						
+Term Source Name	EFO					
+Term Source Version						
+Term Source File	http://efo.svn.sourceforge.net/viewvc/efo/trunk/src/efoinowl/efo.owl					
+Person Last Name	Pandit	Pandit	Corcoran	Benos	Kaminski	
+Person First Name	Kusum	Kusum	David	Panayiotis	Naftali	
+Person Mid Initials	Vijay	V		V		
+Person Email	panditkv@upmc.edu					
+Person Affiliation	University of Pittsburgh					
+Person Phone	412-624-9046					
+Person Fax	412-383-8864					
+Person Address	Medicine-PACCM, University of Pittsburgh, 3500, Terrace street, S765 BST South, Pittsburgh, PA, USA					
+Person Roles	submitter					
+Person Roles Term Source REF						
+Person Roles Term Accession Number						
+Normalization Type						
+Normalization Term Accession Number						
+Normalization Term Source REF						
+Replicate Type						
+Replicate Term Accession Number						
+Replicate Term Source REF						
+Experimental Design						
+Experimental Design Term Accession Number						
+Experimental Design Term Source REF						
+Quality Control Type						
+Quality Control Term Accession Number						
+Quality Control Term Source REF						
+Protocol Name	P-GSE13316-1	P-GSE13316-5	P-GSE13316-4	P-GSE13316-2	P-GSE13316-3	P-GSE13316-6
+Protocol Description	ID_REF = FeatureNum<br>VALUE = gProcessedSignal	Scanned on an Agilent G2505A Scanner	Labeled RNA was hybridized for 20 hr at 55C on Agilent 8X15K microRNA array. Arrays were washed according to the manufacturer's protocol.	Total RNA extracted using miRNeasy mini kit according to the manufacturer's instructions.	Cy3 labeled RNA was prepared according to the standard Agilent protocol from 100ng total RNA	Agilent Feature Extraction v9.5.3, default miRNA parameters
+Protocol Software						
+Protocol Hardware						
+Protocol Contact						
+Protocol Type	bioassay_data_transformation	image_aquisition	hybridization	nucleic_acid_extraction	labeling	feature_extraction
+Protocol Term Source REF						
+Protocol Term Accession Number						
+Experimental Factor Name	disease					
+Experimental Factor Type	disease					
+Experimental Factor Term Source REF						
+Experimental Factor Term Accession Number						
+Publication Title	Inhibition and role of let-7d in idiopathic pulmonary fibrosis.					
+Publication Author List	Pandit KV, Corcoran D, Yousef H, Yarlagadda M, Tzouvelekis A, Gibson KF, Konishi K, Yousem SA, Singh M, Handley D, Richards T, Selman M, Watkins SC, Pardo A, Ben-Yehudah A, Bouros D, Eickelberg O, Ray P, Benos PV, Kaminski N					
+PubMed ID	20395557					
+Publication DOI	10.1164/rccm.200911-1698OC					
+Publication Status						
+Publication Status Term Source REF						
+Publication Status Term Accession Number						
+Comment[SecondaryAccession]	GSE13316					
+Comment[GEOLastUpdateDate]	2010-04-22					
+Comment[AEExperimentType]	transcription profiling by array					
+Comment[GEOReleaseDate]	2010-04-22					
+Comment[ArrayExpressSubmissionDate]	2008-10-22					
+SDRF File	E-GEOD-13316.sdrf.txt					
