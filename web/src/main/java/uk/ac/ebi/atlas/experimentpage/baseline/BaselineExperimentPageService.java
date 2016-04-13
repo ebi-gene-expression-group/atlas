@@ -22,13 +22,15 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
@@ -41,17 +43,19 @@ import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
-import uk.ac.ebi.atlas.web.*;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.TagEditorConverter;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 
-@Named
 public class BaselineExperimentPageService {
 
     private final TracksUtil tracksUtil;
@@ -65,7 +69,6 @@ public class BaselineExperimentPageService {
     private final SolrQueryService solrQueryService;
     private Gson gson = new Gson();
 
-    @Inject
     public BaselineExperimentPageService(BaselineProfilesHeatMap baselineProfilesHeatMap,
                                          ApplicationProperties applicationProperties,
                                          BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,

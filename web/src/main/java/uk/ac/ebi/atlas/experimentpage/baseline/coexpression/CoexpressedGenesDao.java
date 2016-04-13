@@ -6,19 +6,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Named
 public class CoexpressedGenesDao {
 
-    @Inject
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+
+    public CoexpressedGenesDao(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public ImmutableSet<String> coexpressedGenesFor(String experiment, String identifier){
         List<String> res = jdbcTemplate.queryForList(

@@ -1,27 +1,6 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +8,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BaselineExpressionsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.web.*;
 
 import javax.inject.Inject;
@@ -44,8 +25,10 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
     BaselineExperimentPageService baselineExperimentPageService;
 
     @Inject
-    public RnaSeqBaselineExperimentPageController(BaselineExperimentPageService baselineExperimentPageService) {
-        this.baselineExperimentPageService = baselineExperimentPageService;
+    public RnaSeqBaselineExperimentPageController(BaselineExperimentPageServiceFactory
+                                                              baselineExperimentPageServiceFactory, @Qualifier
+            ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory baselineProfileInputStreamFactory) {
+        this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileInputStreamFactory);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")

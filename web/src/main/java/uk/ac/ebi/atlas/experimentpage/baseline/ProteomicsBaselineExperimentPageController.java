@@ -30,6 +30,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
+import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 
 import javax.inject.Inject;
@@ -43,9 +44,12 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
     BaselineExperimentPageService baselineExperimentPageService;
 
     @Inject
-    public ProteomicsBaselineExperimentPageController(BaselineExperimentPageService baselineExperimentPageService) {
+    public ProteomicsBaselineExperimentPageController(BaselineExperimentPageServiceFactory
+                                                                  baselineExperimentPageServiceFactory,
+                                                                  ProteomicsBaselineProfileInputStreamFactory
+                                                                  proteomicsBaselineProfileInputStreamFactory) {
 
-        this.baselineExperimentPageService = baselineExperimentPageService;
+        this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(proteomicsBaselineProfileInputStreamFactory);
     }
 
 

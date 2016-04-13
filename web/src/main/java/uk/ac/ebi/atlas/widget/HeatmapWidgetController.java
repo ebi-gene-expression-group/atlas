@@ -1,24 +1,3 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
 
 package uk.ac.ebi.atlas.widget;
 
@@ -31,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -38,10 +18,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.*;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchDao;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
@@ -88,13 +70,15 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                     BaselineExperimentProfileSearchService baselineExperimentProfileSearchService,
                                     BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder,
                                     BaselineAnalyticsSearchService baselineAnalyticsSearchService,
-                                    BaselineExperimentPageService baselineExperimentPageService) {
+                                    BaselineExperimentPageServiceFactory
+                                                baselineExperimentPageServiceFactory, @Qualifier
+                                                ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory baselineProfileInputStreamFactory) {
         this.applicationProperties = applicationProperties;
         this.speciesLookupService = speciesLookupService;
         this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
         this.baselineExperimentProfilesViewModelBuilder = baselineExperimentProfilesViewModelBuilder;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
-        this.baselineExperimentPageService = baselineExperimentPageService;
+        this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileInputStreamFactory);
     }
 
 
