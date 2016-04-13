@@ -1,0 +1,30 @@
+Comment[ArrayExpressAccession]	E-GEOD-62894						
+MAGE-TAB Version	1.1						
+Public Release Date	2015-04-01						
+Investigation Title	Gene expression in rice leaves (Pish) in response to inoculation with rice blast fungus						
+Comment[Submitted Name]	Gene expression in rice leaves (Pish) in response to inoculation with rice blast fungus						
+Experiment Description	Fourth leaves of rice seedlings (4.5 leaf stage) grown in hydroponic culture were inoculated with rice blast fungus and gene expression profiles were analyzed by microarray. Fourth leaves of the two isogenic lines of rice cv Nipponbare (blast-resistance gene: Pish or its mutant, pish) were inoculated with rice blast fungus, Kyu77-07A, carrying avirulence gene, AvrPish.  Total RNA was isolated, labeled with cy3, and probed with agilent rice oligoarray (4x44).						
+Term Source Name	ArrayExpress	EFO					
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl					
+Person Last Name	Minami	Minami	Shigeru				
+Person First Name	Eiichi	Eiichi	Tanabe				
+Person Email	eiminami@affrc.go.jp						
+Person Affiliation	National Institute of Agrobiological Sciences						
+Person Phone	1-81-29-838-7912						
+Person Address	National Institute of Agrobiological Sciences, 2-1-2 Kannondai, Tsukuba, Japan						
+Person Roles	submitter						
+Protocol Name	P-GSE62894-1	P-GSE62894-5	P-GSE62894-6	P-GSE62894-2	P-GSE62894-3	P-GSE62894-4	P-GSE62894-7
+Protocol Description	The scanned images were analyzed with Feature Extraction Software 10.5.1.1 (Agilent) using default parameters to obtain background subtracted. ID_REF =  VALUE = Normalized signal intensity	Total RNA (400 ng) was labeled with cy3 using Quick Amp Labeling Kit, One-Color (Agilent).	Cy3-labeled cRNA (1650 ng) was fragmented and hybridized at 65°C for 17 haccording to the manufacture's protocol.	Conidia suspension of rice blast fungus (1 × 106/mL) was sprayed on the fourth leaves of rice plants, which was harvested at 1, 2, 3, and 5 days after inoculation.	Rice seedlings at 4.5 leaf stage were grown in a chamber under 14 h light (28C) and 10 h dark (24C).	RNeasy Plant Mini kit (Quiagen, #74904) was used.	Slides were scanned on an Agilent G2505B DNA microarray scanner.
+Protocol Type	normalization data transformation protocol	labelling protocol	hybridization protocol	sample treatment protocol	growth protocol	nucleic acid extraction protocol	array scanning protocol
+Experimental Factor Name	genotype	phenotype	infect	sampling time point			
+Experimental Factor Type	genotype	phenotype	infect	sampling time point			
+Comment[SecondaryAccession]	GSE62894						
+Comment[GEOReleaseDate]	2015-04-01						
+Comment[ArrayExpressSubmissionDate]	2014-10-31						
+Comment[GEOLastUpdateDate]	2015-04-01						
+Comment[AEExperimentType]	transcription profiling by array						
+SDRF File	E-GEOD-62894.sdrf.txt						
+Publication Title	Spatial Regulation of Defense-Related Genes Revealed by Expression Analysis using Dissected Tissues of Rice Leaves Inoculated with Magnaporthe oryzae						
+Publication Author List	Tanabe S, Yokotani N, Nagata T, Fujisawa Y, Jiang CJ, et al						
+PubMed ID							
+Publication DOI	10.4172/2329-955X.1000135						

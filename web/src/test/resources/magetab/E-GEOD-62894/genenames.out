@@ -1,0 +1,54 @@
+/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-62894 /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-62894
+Processing A-GEOD-6864...
+Processing E-GEOD-62894_A-GEOD-6864-analytics.tsv.undecorated...
+Processing E-GEOD-62894_A-GEOD-6864-normalized-expressions.tsv.undecorated...
+Processing E-GEOD-62894_A-GEOD-6864-analytics.tsv.undecorated.unrounded...
+Calculate percentile ranks for (each contrast in) the experiment
+INFO  - Removing previous percentile ranks files...
+INFO  - Done
+INFO  - Calculating percentile ranks for E-GEOD-62894_A-GEOD-6864-analytics.tsv.unrounded ...
+INFO  - Percentile ranks calculation successful.
+INFO  - Successfully calculated percentile ranks for E-GEOD-62894.
+/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-62894
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi6-118>
+Subject: Job 1029375: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/bioentity_annotations/decorate_microarray_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-62894  > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/bioentity_annotations/decorate_microarray_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-62894  > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi6-118>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-62894> was used as the working directory.
+Started at Tue Apr 12 17:17:25 2016
+Results reported at Tue Apr 12 17:20:50 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/bioentity_annotations/decorate_microarray_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-62894  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               166.19 sec.
+    Max Memory :             11 MB
+    Average Memory :         6.57 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           4085.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               544 MB
+
+    Max Processes :          6
+    Max Threads :            7
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <genenames.err> for stderr output of this job.
+

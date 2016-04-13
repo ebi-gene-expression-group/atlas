@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-GEOD-6864</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="Pish; avirulent line of rice blast fungus; resistant; 1 day">
+                <assay>GSM1535759</assay>
+                <assay>GSM1535775</assay>
+                <assay>GSM1535791</assay>
+            </assay_group>
+            <assay_group id="g2" label="Pish; avirulent line of rice blast fungus; resistant; 2 day">
+                <assay>GSM1535776</assay>
+                <assay>GSM1535760</assay>
+                <assay>GSM1535792</assay>
+            </assay_group>
+            <assay_group id="g3" label="Pish; avirulent line of rice blast fungus; resistant; 3 day">
+                <assay>GSM1535761</assay>
+                <assay>GSM1535777</assay>
+                <assay>GSM1535793</assay>
+            </assay_group>
+            <assay_group id="g4" label="Pish; avirulent line of rice blast fungus; resistant; 5 day">
+                <assay>GSM1535762</assay>
+                <assay>GSM1535778</assay>
+                <assay>GSM1535794</assay>
+            </assay_group>
+            <assay_group id="g5" label="Pish; water; resistant; 1 day">
+                <assay>GSM1535795</assay>
+                <assay>GSM1535763</assay>
+                <assay>GSM1535779</assay>
+            </assay_group>
+            <assay_group id="g6" label="Pish; water; resistant; 2 day">
+                <assay>GSM1535780</assay>
+                <assay>GSM1535796</assay>
+                <assay>GSM1535764</assay>
+            </assay_group>
+            <assay_group id="g7" label="Pish; water; resistant; 3 day">
+                <assay>GSM1535765</assay>
+                <assay>GSM1535781</assay>
+                <assay>GSM1535797</assay>
+            </assay_group>
+            <assay_group id="g8" label="Pish; water; resistant; 5 day">
+                <assay>GSM1535798</assay>
+                <assay>GSM1535766</assay>
+                <assay>GSM1535782</assay>
+            </assay_group>
+            <assay_group id="g9" label="pish; virulent line of rice blast fungus; susceptible; 1 day">
+                <assay>GSM1535783</assay>
+                <assay>GSM1535799</assay>
+                <assay>GSM1535767</assay>
+            </assay_group>
+            <assay_group id="g10" label="pish; virulent line of rice blast fungus; susceptible; 2 day">
+                <assay>GSM1535784</assay>
+                <assay>GSM1535768</assay>
+                <assay>GSM1535800</assay>
+            </assay_group>
+            <assay_group id="g11" label="pish; virulent line of rice blast fungus; susceptible; 3 day">
+                <assay>GSM1535801</assay>
+                <assay>GSM1535785</assay>
+                <assay>GSM1535769</assay>
+            </assay_group>
+            <assay_group id="g12" label="pish; virulent line of rice blast fungus; susceptible; 5 day">
+                <assay>GSM1535802</assay>
+                <assay>GSM1535786</assay>
+                <assay>GSM1535770</assay>
+            </assay_group>
+            <assay_group id="g13" label="pish; water; susceptible; 1 day">
+                <assay>GSM1535771</assay>
+                <assay>GSM1535787</assay>
+                <assay>GSM1535803</assay>
+            </assay_group>
+            <assay_group id="g14" label="pish; water; susceptible; 2 day">
+                <assay>GSM1535788</assay>
+                <assay>GSM1535804</assay>
+                <assay>GSM1535772</assay>
+            </assay_group>
+            <assay_group id="g15" label="pish; water; susceptible; 3 day">
+                <assay>GSM1535773</assay>
+                <assay>GSM1535789</assay>
+                <assay>GSM1535805</assay>
+            </assay_group>
+            <assay_group id="g16" label="pish; water; susceptible; 5 day">
+                <assay>GSM1535790</assay>
+                <assay>GSM1535806</assay>
+                <assay>GSM1535774</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g5_g1">
+                <name>'Pish; avirulent line of rice blast fungus; resistant' at '1 day' vs 'Pish; water; resistant' at '1 day'</name>
+                <reference_assay_group>g5</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g6_g2">
+                <name>'Pish; avirulent line of rice blast fungus; resistant' at '2 day' vs 'Pish; water; resistant' at '2 day'</name>
+                <reference_assay_group>g6</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+            <contrast id="g7_g3">
+                <name>'Pish; avirulent line of rice blast fungus; resistant' at '3 day' vs 'Pish; water; resistant' at '3 day'</name>
+                <reference_assay_group>g7</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+            <contrast id="g8_g4">
+                <name>'Pish; avirulent line of rice blast fungus; resistant' at '5 day' vs 'Pish; water; resistant' at '5 day'</name>
+                <reference_assay_group>g8</reference_assay_group>
+                <test_assay_group>g4</test_assay_group>
+            </contrast>
+            <contrast id="g13_g9">
+                <name>'pish; virulent line of rice blast fungus; susceptible' at '1 day' vs 'pish; water; susceptible' at '1 day'</name>
+                <reference_assay_group>g13</reference_assay_group>
+                <test_assay_group>g9</test_assay_group>
+            </contrast>
+            <contrast id="g14_g10">
+                <name>'pish; virulent line of rice blast fungus; susceptible' at '2 day' vs 'pish; water; susceptible' at '2 day'</name>
+                <reference_assay_group>g14</reference_assay_group>
+                <test_assay_group>g10</test_assay_group>
+            </contrast>
+            <contrast id="g15_g11">
+                <name>'pish; virulent line of rice blast fungus; susceptible' at '3 day' vs 'pish; water; susceptible' at '3 day'</name>
+                <reference_assay_group>g15</reference_assay_group>
+                <test_assay_group>g11</test_assay_group>
+            </contrast>
+            <contrast id="g16_g12">
+                <name>'pish; virulent line of rice blast fungus; susceptible' at '5 day' vs 'pish; water; susceptible' at '5 day'</name>
+                <reference_assay_group>g16</reference_assay_group>
+                <test_assay_group>g12</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>
