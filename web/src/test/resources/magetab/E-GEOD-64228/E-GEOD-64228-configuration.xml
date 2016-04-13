@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-31</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="2 week; transgenic line BG8">
+                <assay>GSM1566646</assay>
+                <assay>GSM1566644</assay>
+                <assay>GSM1566645</assay>
+            </assay_group>
+            <assay_group id="g2" label="2 week; transgenic line BG9">
+                <assay>GSM1566647</assay>
+                <assay>GSM1566649</assay>
+                <assay>GSM1566648</assay>
+            </assay_group>
+            <assay_group id="g3" label="2 week; wild type">
+                <assay>GSM1566643</assay>
+                <assay>GSM1566642</assay>
+                <assay>GSM1566641</assay>
+            </assay_group>
+            <assay_group id="g4" label="6 week; transgenic line BG8">
+                <assay>GSM1566654</assay>
+                <assay>GSM1566653</assay>
+                <assay>GSM1566655</assay>
+            </assay_group>
+            <assay_group id="g5" label="6 week; transgenic line BG9">
+                <assay>GSM1566658</assay>
+                <assay>GSM1566657</assay>
+                <assay>GSM1566656</assay>
+            </assay_group>
+            <assay_group id="g6" label="6 week; wild type">
+                <assay>GSM1566651</assay>
+                <assay>GSM1566652</assay>
+                <assay>GSM1566650</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g3_g1">
+                <name>'transgenic line BG8' vs 'wild type' at '2 week'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g3_g2">
+                <name>'transgenic line BG9' vs 'wild type' at '2 week'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+            <contrast id="g6_g4">
+                <name>'transgenic line BG8' vs 'wild type' at '2 week'</name>
+                <reference_assay_group>g6</reference_assay_group>
+                <test_assay_group>g4</test_assay_group>
+            </contrast>
+            <contrast id="g6_g5">
+                <name>'transgenic line BG9' vs 'wild type' at '6 week'</name>
+                <reference_assay_group>g6</reference_assay_group>
+                <test_assay_group>g5</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

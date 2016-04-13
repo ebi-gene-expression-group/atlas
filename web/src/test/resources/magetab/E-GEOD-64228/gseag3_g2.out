@@ -1,0 +1,213 @@
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv --pvalue-col=7 --foldchange-col=9 --title="
+Top 10 GO terms enriched in 
+'transgenic line BG9' vs 'wild type' at '2 week' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.hordeum_vulgare.g3_g2.ensgene.go.tsv.aux1 --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/hordeum_vulgare.ensgene.go.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.g3_g2.go.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv
+pval.col = 7
+fold.col = 9
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/hordeum_vulgare.ensgene.go.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.hordeum_vulgare.g3_g2.ensgene.go.tsv.aux1
+title = 
+Top 10 GO terms enriched in 
+'transgenic line BG9' vs 'wild type' at '2 week' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.g3_g2.go.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 12914 entries
+[INFO] No more duplicates
+[INFO] 10621 unique entries
+[INFO] NAs removed: 3098
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv loaded: 7523 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/hordeum_vulgare.ensgene.go.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/hordeum_vulgare.ensgene.go.tsv loaded: 91645 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.hordeum_vulgare.g3_g2.ensgene.go.tsv.aux1
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.hordeum_vulgare.g3_g2.ensgene.go.tsv.aux1 loaded: 4140 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.46+-0.66
+[INFO] p-value mean 0.11+-0.22
+[INFO] Excluded 2010 genes with no annotation
+[INFO] #Genes=4670 #genes (pvalue<=0.05)=3322
+[INFO] Loading GSC...
+[INFO] Gene sets:2691 genes:4668
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 3322 genes of interest in 694 gene sets, using a background of 1348 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.g3_g2.go.gsea.tsv
+[WARNING] Insufficient gene sets () to draw a plot - plot not generated.
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv --pvalue-col=7 --foldchange-col=9 --title="
+Top 10 InterPro domains enriched in 
+'transgenic line BG9' vs 'wild type' at '2 week' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/hordeum_vulgare.ensgene.interpro.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.g3_g2.interpro.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv
+pval.col = 7
+fold.col = 9
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/hordeum_vulgare.ensgene.interpro.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+title = 
+Top 10 InterPro domains enriched in 
+'transgenic line BG9' vs 'wild type' at '2 week' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.g3_g2.interpro.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 12914 entries
+[INFO] No more duplicates
+[INFO] 10621 unique entries
+[INFO] NAs removed: 3098
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv loaded: 7523 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/hordeum_vulgare.ensgene.interpro.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/hordeum_vulgare.ensgene.interpro.tsv loaded: 60993 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux loaded: 26238 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.46+-0.66
+[INFO] p-value mean 0.11+-0.22
+[INFO] Excluded 1400 genes with no annotation
+[INFO] #Genes=5566 #genes (pvalue<=0.05)=3932
+[INFO] Loading GSC...
+[INFO] Gene sets:4083 genes:5564
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 3932 genes of interest in 703 gene sets, using a background of 1634 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.g3_g2.interpro.gsea.tsv
+[WARNING] Insufficient gene sets () to draw a plot - plot not generated.
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv --pvalue-col=7 --foldchange-col=9 --title="
+Top 10 Reactome pathways enriched in 
+'transgenic line BG9' vs 'wild type' at '2 week' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/hordeum_vulgare.reactome.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/hordeum_vulgare.reactome.tsv.gsea.aux --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.g3_g2.reactome.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv
+pval.col = 7
+fold.col = 9
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/hordeum_vulgare.reactome.tsv.gsea.aux
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/hordeum_vulgare.reactome.tsv.decorate.aux
+title = 
+Top 10 Reactome pathways enriched in 
+'transgenic line BG9' vs 'wild type' at '2 week' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.g3_g2.reactome.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 12914 entries
+[INFO] No more duplicates
+[INFO] 10621 unique entries
+[INFO] NAs removed: 3098
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228_A-AFFY-31-analytics.tsv loaded: 7523 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/hordeum_vulgare.reactome.tsv.gsea.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/hordeum_vulgare.reactome.tsv.gsea.aux loaded: 3471 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/hordeum_vulgare.reactome.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/hordeum_vulgare.reactome.tsv.decorate.aux loaded: 184 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.46+-0.66
+[INFO] p-value mean 0.11+-0.22
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=7523 #genes (pvalue<=0.05)=5332
+[INFO] Loading GSC...
+[INFO] Gene sets:165 genes:359
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 5332 genes of interest in 48 gene sets, using a background of 2191 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228/E-GEOD-64228.g3_g2.reactome.gsea.tsv
+[WARNING] Insufficient gene sets () to draw a plot - plot not generated.
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-165>
+Subject: Job 1039465: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228 g3_g2 > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228 g3_g2 > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi5-165>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228> was used as the working directory.
+Started at Tue Apr 12 17:53:59 2016
+Results reported at Tue Apr 12 17:56:32 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-GEOD-64228 g3_g2 
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               142.05 sec.
+    Max Memory :             111 MB
+    Average Memory :         61.62 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3985.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               1239 MB
+
+    Max Processes :          8
+    Max Threads :            9
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <gseag3_g2.err> for stderr output of this job.
+

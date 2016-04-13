@@ -1,0 +1,126 @@
+E-GEOD-64228	A-AFFY-31	GSM1566641	characteristic	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566641	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566641	characteristic	genotype	wild type genotype
+E-GEOD-64228	A-AFFY-31	GSM1566641	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566641	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566641	factor	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566641	factor	genotype	wild type genotype
+E-GEOD-64228	A-AFFY-31	GSM1566642	characteristic	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566642	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566642	characteristic	genotype	wild type genotype
+E-GEOD-64228	A-AFFY-31	GSM1566642	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566642	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566642	factor	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566642	factor	genotype	wild type genotype
+E-GEOD-64228	A-AFFY-31	GSM1566643	characteristic	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566643	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566643	characteristic	genotype	wild type genotype
+E-GEOD-64228	A-AFFY-31	GSM1566643	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566643	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566643	factor	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566643	factor	genotype	wild type genotype
+E-GEOD-64228	A-AFFY-31	GSM1566644	characteristic	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566644	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566644	characteristic	genotype	transgenic line BG8
+E-GEOD-64228	A-AFFY-31	GSM1566644	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566644	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566644	factor	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566644	factor	genotype	transgenic line BG8
+E-GEOD-64228	A-AFFY-31	GSM1566645	characteristic	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566645	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566645	characteristic	genotype	transgenic line BG8
+E-GEOD-64228	A-AFFY-31	GSM1566645	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566645	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566645	factor	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566645	factor	genotype	transgenic line BG8
+E-GEOD-64228	A-AFFY-31	GSM1566646	characteristic	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566646	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566646	characteristic	genotype	transgenic line BG8
+E-GEOD-64228	A-AFFY-31	GSM1566646	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566646	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566646	factor	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566646	factor	genotype	transgenic line BG8
+E-GEOD-64228	A-AFFY-31	GSM1566647	characteristic	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566647	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566647	characteristic	genotype	transgenic line BG9
+E-GEOD-64228	A-AFFY-31	GSM1566647	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566647	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566647	factor	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566647	factor	genotype	transgenic line BG9
+E-GEOD-64228	A-AFFY-31	GSM1566648	characteristic	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566648	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566648	characteristic	genotype	transgenic line BG9
+E-GEOD-64228	A-AFFY-31	GSM1566648	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566648	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566648	factor	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566648	factor	genotype	transgenic line BG9
+E-GEOD-64228	A-AFFY-31	GSM1566649	characteristic	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566649	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566649	characteristic	genotype	transgenic line BG9
+E-GEOD-64228	A-AFFY-31	GSM1566649	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566649	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566649	factor	age	2 week
+E-GEOD-64228	A-AFFY-31	GSM1566649	factor	genotype	transgenic line BG9
+E-GEOD-64228	A-AFFY-31	GSM1566650	characteristic	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566650	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566650	characteristic	genotype	wild type genotype
+E-GEOD-64228	A-AFFY-31	GSM1566650	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566650	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566650	factor	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566650	factor	genotype	wild type genotype
+E-GEOD-64228	A-AFFY-31	GSM1566651	characteristic	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566651	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566651	characteristic	genotype	wild type genotype
+E-GEOD-64228	A-AFFY-31	GSM1566651	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566651	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566651	factor	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566651	factor	genotype	wild type genotype
+E-GEOD-64228	A-AFFY-31	GSM1566652	characteristic	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566652	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566652	characteristic	genotype	wild type genotype
+E-GEOD-64228	A-AFFY-31	GSM1566652	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566652	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566652	factor	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566652	factor	genotype	wild type genotype
+E-GEOD-64228	A-AFFY-31	GSM1566653	characteristic	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566653	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566653	characteristic	genotype	transgenic line BG8
+E-GEOD-64228	A-AFFY-31	GSM1566653	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566653	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566653	factor	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566653	factor	genotype	transgenic line BG8
+E-GEOD-64228	A-AFFY-31	GSM1566654	characteristic	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566654	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566654	characteristic	genotype	transgenic line BG8
+E-GEOD-64228	A-AFFY-31	GSM1566654	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566654	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566654	factor	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566654	factor	genotype	transgenic line BG8
+E-GEOD-64228	A-AFFY-31	GSM1566655	characteristic	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566655	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566655	characteristic	genotype	transgenic line BG8
+E-GEOD-64228	A-AFFY-31	GSM1566655	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566655	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566655	factor	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566655	factor	genotype	transgenic line BG8
+E-GEOD-64228	A-AFFY-31	GSM1566656	characteristic	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566656	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566656	characteristic	genotype	transgenic line BG9
+E-GEOD-64228	A-AFFY-31	GSM1566656	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566656	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566656	factor	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566656	factor	genotype	transgenic line BG9
+E-GEOD-64228	A-AFFY-31	GSM1566657	characteristic	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566657	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566657	characteristic	genotype	transgenic line BG9
+E-GEOD-64228	A-AFFY-31	GSM1566657	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566657	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566657	factor	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566657	factor	genotype	transgenic line BG9
+E-GEOD-64228	A-AFFY-31	GSM1566658	characteristic	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566658	characteristic	cultivar	Golden Promise
+E-GEOD-64228	A-AFFY-31	GSM1566658	characteristic	genotype	transgenic line BG9
+E-GEOD-64228	A-AFFY-31	GSM1566658	characteristic	organism	Hordeum vulgare	http://purl.obolibrary.org/obo/NCBITaxon_4513
+E-GEOD-64228	A-AFFY-31	GSM1566658	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-GEOD-64228	A-AFFY-31	GSM1566658	factor	age	6 week
+E-GEOD-64228	A-AFFY-31	GSM1566658	factor	genotype	transgenic line BG9

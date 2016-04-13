@@ -1,0 +1,29 @@
+Comment[ArrayExpressAccession]	E-GEOD-64228						
+MAGE-TAB Version	1.1						
+Public Release Date	2015-07-01						
+Investigation Title	Expression data of  leaves from transgenic barley expressing wheat Lr34 gene						
+Comment[Submitted Name]	Expression data of  leaves from transgenic barley expressing wheat Lr34 gene						
+Experiment Description	The wheat gene Lr34 (Yr18/Pm38/Sr57/Ltn1) encodes a putative ABCG-type of transporter and is a unique source of disease resistance providing durable and partial resistance against multiple fungal pathogens. Lr34 has been found to be functional as a transgene in barley. We used microarrays to decipher the changes in global gene expression governed by Lr34 expression in barley. Leaves from two independent lines of transgenic barley plants were selected at seedling (two weeks old plants) and mature (six weeks old plants) stages of  development for RNA extraction and hybridization on Affymetrix microarrays. We used three biological replicates for expression profiles. Wild type plants served as controls.						
+Term Source Name	ArrayExpress	EFO					
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl					
+Person Last Name	Chauhan	Beat	Harsh				
+Person First Name	Harsh	Keller	Chauhan				
+Person Email	geo@ncbi.nlm.nih.gov						
+Person Affiliation	University of Zurich						
+Person Address	Institute of Plant Biology, University of Zurich, Zollikerstrasse 107, Zurich, Zurich, Switzerland						
+Person Roles	submitter						
+Protocol Name	P-GSE64228-1	P-GSE64228-5	P-GSE64228-6	P-GSE64228-2	P-GSE64228-3	P-GSE64228-4	P-GSE64228-7
+Protocol Description	The data was analyzed by R software. The normalization of data was performed by the Gene Chip Robust Multiarray Analysis (GCRMA) algorithm ID_REF =  VALUE = Normalized expression values of gene level experiment, GCRMA normalized	biotin-labeled single-stranded cRNA targets were mixed in the 250ul of the Hybridization Mix (Affymetrix Inc., P/N 900720) containing a Hybridization Controls and Control Oligonucleotide B2 (Affymetrix Inc., P/N 900454).	Hybridization was done as described in the manual: biotin-labeled single-stranded aRNA targets were mixed in the 250ul of the Hybridization Mix (Affymetrix Inc., P/N 900720) containing a Hybridization Controls and Control Oligonucleotide B2 (Affymetrix Inc., P/N 900454). Samples were hybridized to GeneChip Barley Genome Array (Affymetrix Inc., P/N 900515) for 16h at 45°C.	Second leaf from two weeks old seedling and mature leaf from six weeks old plants of wild type and two transgenic lines were sampled for RNA isolation.	Barley plants were grown in potted soil under green house conditions with 20oC temperature and 16:8 nours day night regimn	Promega SV Total RNA isolation kit, including on-column DNAse digestion	Affymetrix GeneChip Scanner 3000 (Affymetrix Inc.) was used to measure the fluorescent intensity emitted by the labeled target
+Protocol Type	normalization data transformation protocol	labelling protocol	hybridization protocol	sample treatment protocol	growth protocol	nucleic acid extraction protocol	array scanning protocol
+Experimental Factor Name	genotype	age					
+Experimental Factor Type	genotype	age					
+Comment[SecondaryAccession]	GSE64228						
+Comment[GEOReleaseDate]	2015-07-01						
+Comment[ArrayExpressSubmissionDate]	2014-12-16						
+Comment[GEOLastUpdateDate]	2015-07-02						
+Comment[AEExperimentType]	transcription profiling by array						
+Publication Title	The wheat resistance gene Lr34 results in the constitutive induction of multiple defense pathways in transgenic barley						
+Publication Author List	Chauhan H, Boni R, Bucher R, Kuhn B, Buchmann G, Sucher J, Selter LL, Hensel G, Kumlehn J, Bigler L, Glauser G, Wicker T, Krattinger SG, Keller B						
+Publication DOI	10.1111/tpj.13001						
+Pubmed ID	26315512						
+SDRF File	E-GEOD-64228.sdrf.txt						
