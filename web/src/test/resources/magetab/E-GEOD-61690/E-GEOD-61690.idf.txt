@@ -1,0 +1,33 @@
+Comment[ArrayExpressAccession]	E-GEOD-61690		
+MAGE-TAB Version	1.1		
+Public Release Date	2014-09-24		
+Investigation Title	Transcriptional changes in dormant and non_dormant potato meristems		
+Comment[Submitted Name]	Transcriptional changes in dormant and non_dormant potato meristems		
+Experiment Description	RNA was sequenced from meristems excised from dormant and non-dormant potato tubers harvested from four different harvest years. Expression based on mapped RNA-sequences was accomplished from excised meristems from fall harvested (dormant tubers) and the same harvested tubers were stored under standard commercial conditions until sprouting was present (non-dormant). The experiment was replicated for four different harvest years.		
+Term Source Name	ArrayExpress	EFO	
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl	
+Person Last Name	Campbell	Campbell	
+Person First Name	Michael	Michael	
+Person Mid Initials	A	A	
+Person Email	mac17@psu.edu		
+Person Affiliation	Penn State Erie		
+Person Phone	814-898-6474		
+Person Address	School of Science, Penn State Erie, 4205 College Drive, Erie, PA, USA		
+Person Roles	submitter		
+Protocol Name	P-GSE61690-1	P-GSE61690-3	P-GSE61690-2
+Protocol Description	Dormant tubers mersitems were harvested approximately two weeks after harvest. Nondormant tubers mmeristesm were harvested from tubers stored at 4 C until peeping.	Meristems were excised with a micro curette, frozen in liquid N2. RNA was isolated using an Ambion RNA extraction kit. RNA libraries were prepared for sequencing using standard Illumina protocols	Plants were field grown in the Red River Valley in North Dakota. Tubers were mechanically harvested.
+Protocol Type	sample treatment protocol	nucleic acid library construction protocol	growth protocol
+Experimental Factor Name	phenotype		
+Experimental Factor Type	phenotype		
+Comment[SecondaryAccession]	GSE61690		
+Comment[GEOReleaseDate]	2014-09-24		
+Comment[ArrayExpressSubmissionDate]	2014-09-23		
+Comment[GEOLastUpdateDate]	2014-09-24		
+Comment[AEExperimentType]	RNA-seq of coding RNA		
+Comment[AdditionalFile:Data1]	GSE61690_DormantvsNondormant_meristems.txt		
+Comment[SecondaryAccession]	SRP047434		
+SDRF File	E-GEOD-61690.sdrf.txt		
+Publication Title	Treatment of potato tubers with the synthetic cytokinin 1-(α-ethylbenzyl)-3-nitroguanidine results in rapid termination of endodormancy and induction of transcripts associated with cell proliferation and growth.		
+Publication Author List	Campbell M, Suttle J, Douches DS, Buell CR.		
+PubMed ID	25270889		
+Publication DOI	10.1007/s10142-014-0404-1		

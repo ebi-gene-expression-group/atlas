@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_differential" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="dormant meristem">
+                <assay>SRR1584265</assay>
+                <assay>SRR1584266</assay>
+                <assay>SRR1584264</assay>
+                <assay>SRR1584263</assay>
+            </assay_group>
+            <assay_group id="g2" label="non-dormant meristem">
+                <assay>SRR1584270</assay>
+                <assay>SRR1584268</assay>
+                <assay>SRR1584267</assay>
+                <assay>SRR1584269</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g1_g2">
+                <name>'non-dormant meristem' vs 'dormant meristem'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

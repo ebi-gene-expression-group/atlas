@@ -1,0 +1,10 @@
+study_id	run_id	cram_location	organism	date_last_processed	processing_status	mapping_quality
+SRP047434	SRR1584268	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR158/008/SRR1584268/SRR1584268.cram	solanum_tuberosum	12-MAR-2016 17:20:48	completed	91
+SRP047434	SRR1584266	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR158/006/SRR1584266/SRR1584266.cram	solanum_tuberosum	12-MAR-2016 19:51:38	completed	79
+SRP047434	SRR1584263	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR158/003/SRR1584263/SRR1584263.cram	solanum_tuberosum	12-MAR-2016 17:21:37	completed	90
+SRP047434	SRR1584267	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR158/007/SRR1584267/SRR1584267.cram	solanum_tuberosum	12-MAR-2016 17:22:07	completed	91
+SRP047434	SRR1584265	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR158/005/SRR1584265/SRR1584265.cram	solanum_tuberosum	12-MAR-2016 19:55:04	completed	76
+SRP047434	SRR1584264	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR158/004/SRR1584264/SRR1584264.cram	solanum_tuberosum	12-MAR-2016 17:23:33	completed	91
+SRP047434	SRR1584269	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR158/009/SRR1584269/SRR1584269.cram	solanum_tuberosum	12-MAR-2016 19:55:35	completed	82
+SRP047434	SRR1584270	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR158/000/SRR1584270/SRR1584270.cram	solanum_tuberosum	12-MAR-2016 20:00:11	completed	87
+
