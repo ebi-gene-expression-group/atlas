@@ -1,0 +1,168 @@
+E-GEOD-54705		SRR1161660	characteristic	age	3 week
+E-GEOD-54705		SRR1161660	characteristic	cultivar	CK60
+E-GEOD-54705		SRR1161660	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161660	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161660	factor	cultivar	CK60
+E-GEOD-54705		SRR1161660	factor	environmental stress	low-nitrogen sensitive
+E-GEOD-54705		SRR1161661	characteristic	age	3 week
+E-GEOD-54705		SRR1161661	characteristic	cultivar	CK60
+E-GEOD-54705		SRR1161661	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161661	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161661	factor	cultivar	CK60
+E-GEOD-54705		SRR1161661	factor	environmental stress	low-nitrogen sensitive
+E-GEOD-54705		SRR1161662	characteristic	age	3 week
+E-GEOD-54705		SRR1161662	characteristic	cultivar	CK60
+E-GEOD-54705		SRR1161662	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161662	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161662	factor	cultivar	CK60
+E-GEOD-54705		SRR1161662	factor	environmental stress	low-nitrogen sensitive
+E-GEOD-54705		SRR1161663	characteristic	age	3 week
+E-GEOD-54705		SRR1161663	characteristic	cultivar	CK60
+E-GEOD-54705		SRR1161663	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161663	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161663	factor	cultivar	CK60
+E-GEOD-54705		SRR1161663	factor	environmental stress	low-nitrogen sensitive
+E-GEOD-54705		SRR1161664	characteristic	age	3 week
+E-GEOD-54705		SRR1161664	characteristic	cultivar	TX623
+E-GEOD-54705		SRR1161664	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161664	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161664	factor	cultivar	BTx623
+E-GEOD-54705		SRR1161664	factor	environmental stress	low-nitrogen sensitive
+E-GEOD-54705		SRR1161665	characteristic	age	3 week
+E-GEOD-54705		SRR1161665	characteristic	cultivar	TX623
+E-GEOD-54705		SRR1161665	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161665	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161665	factor	cultivar	BTx623
+E-GEOD-54705		SRR1161665	factor	environmental stress	low-nitrogen sensitive
+E-GEOD-54705		SRR1161666	characteristic	age	3 week
+E-GEOD-54705		SRR1161666	characteristic	cultivar	TX623
+E-GEOD-54705		SRR1161666	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161666	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161666	factor	cultivar	BTx623
+E-GEOD-54705		SRR1161666	factor	environmental stress	low-nitrogen sensitive
+E-GEOD-54705		SRR1161667	characteristic	age	3 week
+E-GEOD-54705		SRR1161667	characteristic	cultivar	TX623
+E-GEOD-54705		SRR1161667	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161667	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161667	factor	cultivar	BTx623
+E-GEOD-54705		SRR1161667	factor	environmental stress	low-nitrogen sensitive
+E-GEOD-54705		SRR1161668	characteristic	age	3 week
+E-GEOD-54705		SRR1161668	characteristic	cultivar	SCS
+E-GEOD-54705		SRR1161668	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161668	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161668	factor	cultivar	San Chi San
+E-GEOD-54705		SRR1161668	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161669	characteristic	age	3 week
+E-GEOD-54705		SRR1161669	characteristic	cultivar	SCS
+E-GEOD-54705		SRR1161669	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161669	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161669	factor	cultivar	San Chi San
+E-GEOD-54705		SRR1161669	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161670	characteristic	age	3 week
+E-GEOD-54705		SRR1161670	characteristic	cultivar	SCS
+E-GEOD-54705		SRR1161670	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161670	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161670	factor	cultivar	San Chi San
+E-GEOD-54705		SRR1161670	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161671	characteristic	age	3 week
+E-GEOD-54705		SRR1161671	characteristic	cultivar	SCS
+E-GEOD-54705		SRR1161671	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161671	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161671	factor	cultivar	San Chi San
+E-GEOD-54705		SRR1161671	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161672	characteristic	age	3 week
+E-GEOD-54705		SRR1161672	characteristic	cultivar	Ch17
+E-GEOD-54705		SRR1161672	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161672	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161672	factor	cultivar	China17
+E-GEOD-54705		SRR1161672	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161673	characteristic	age	3 week
+E-GEOD-54705		SRR1161673	characteristic	cultivar	Ch17
+E-GEOD-54705		SRR1161673	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161673	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161673	factor	cultivar	China17
+E-GEOD-54705		SRR1161673	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161674	characteristic	age	3 week
+E-GEOD-54705		SRR1161674	characteristic	cultivar	Ch17
+E-GEOD-54705		SRR1161674	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161674	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161674	factor	cultivar	China17
+E-GEOD-54705		SRR1161674	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161675	characteristic	age	3 week
+E-GEOD-54705		SRR1161675	characteristic	cultivar	Ch17
+E-GEOD-54705		SRR1161675	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161675	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161675	factor	cultivar	China17
+E-GEOD-54705		SRR1161675	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161676	characteristic	age	3 week
+E-GEOD-54705		SRR1161676	characteristic	cultivar	KS78
+E-GEOD-54705		SRR1161676	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161676	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161676	factor	cultivar	KS78
+E-GEOD-54705		SRR1161676	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161677	characteristic	age	3 week
+E-GEOD-54705		SRR1161677	characteristic	cultivar	KS78
+E-GEOD-54705		SRR1161677	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161677	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161677	factor	cultivar	KS78
+E-GEOD-54705		SRR1161677	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161678	characteristic	age	3 week
+E-GEOD-54705		SRR1161678	characteristic	cultivar	KS78
+E-GEOD-54705		SRR1161678	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161678	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161678	factor	cultivar	KS78
+E-GEOD-54705		SRR1161678	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161679	characteristic	age	3 week
+E-GEOD-54705		SRR1161679	characteristic	cultivar	KS78
+E-GEOD-54705		SRR1161679	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161679	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161679	factor	cultivar	KS78
+E-GEOD-54705		SRR1161679	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161680	characteristic	age	3 week
+E-GEOD-54705		SRR1161680	characteristic	cultivar	High Bulk
+E-GEOD-54705		SRR1161680	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161680	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161680	factor	cultivar	high-NUE bulk
+E-GEOD-54705		SRR1161680	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161681	characteristic	age	3 week
+E-GEOD-54705		SRR1161681	characteristic	cultivar	High Bulk
+E-GEOD-54705		SRR1161681	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161681	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161681	factor	cultivar	high-NUE bulk
+E-GEOD-54705		SRR1161681	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161682	characteristic	age	3 week
+E-GEOD-54705		SRR1161682	characteristic	cultivar	High Bulk
+E-GEOD-54705		SRR1161682	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161682	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161682	factor	cultivar	high-NUE bulk
+E-GEOD-54705		SRR1161682	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161683	characteristic	age	3 week
+E-GEOD-54705		SRR1161683	characteristic	cultivar	High Bulk
+E-GEOD-54705		SRR1161683	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161683	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161683	factor	cultivar	high-NUE bulk
+E-GEOD-54705		SRR1161683	factor	environmental stress	low-nitrogen tolerant
+E-GEOD-54705		SRR1161684	characteristic	age	3 week
+E-GEOD-54705		SRR1161684	characteristic	cultivar	Low Bulk
+E-GEOD-54705		SRR1161684	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161684	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161684	factor	cultivar	low-NUE bulk
+E-GEOD-54705		SRR1161684	factor	environmental stress	low-nitrogen sensitive
+E-GEOD-54705		SRR1161685	characteristic	age	3 week
+E-GEOD-54705		SRR1161685	characteristic	cultivar	Low Bulk
+E-GEOD-54705		SRR1161685	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161685	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161685	factor	cultivar	low-NUE bulk
+E-GEOD-54705		SRR1161685	factor	environmental stress	low-nitrogen sensitive
+E-GEOD-54705		SRR1161686	characteristic	age	3 week
+E-GEOD-54705		SRR1161686	characteristic	cultivar	Low Bulk
+E-GEOD-54705		SRR1161686	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161686	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161686	factor	cultivar	low-NUE bulk
+E-GEOD-54705		SRR1161686	factor	environmental stress	low-nitrogen sensitive
+E-GEOD-54705		SRR1161687	characteristic	age	3 week
+E-GEOD-54705		SRR1161687	characteristic	cultivar	Low Bulk
+E-GEOD-54705		SRR1161687	characteristic	organism	Sorghum bicolor	http://purl.obolibrary.org/obo/NCBITaxon_4558
+E-GEOD-54705		SRR1161687	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-54705		SRR1161687	factor	cultivar	low-NUE bulk
+E-GEOD-54705		SRR1161687	factor	environmental stress	low-nitrogen sensitive

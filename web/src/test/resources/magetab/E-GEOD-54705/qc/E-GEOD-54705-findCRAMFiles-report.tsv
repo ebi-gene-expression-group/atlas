@@ -1,0 +1,30 @@
+study_id	run_id	cram_location	organism	processing_status
+SRP036640	SRR1161674	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/004/SRR1161674/SRR1161674.cram	sorghum_bicolor	17-JUN-2015 21:42:43	completed	94
+SRP036640	SRR1161660	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/000/SRR1161660/SRR1161660.cram	sorghum_bicolor	17-JUN-2015 21:43:45	completed	95
+SRP036640	SRR1161676	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/006/SRR1161676/SRR1161676.cram	sorghum_bicolor	17-JUN-2015 21:45:23	completed	95
+SRP036640	SRR1161682	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/002/SRR1161682/SRR1161682.cram	sorghum_bicolor	17-JUN-2015 20:08:26	completed	85
+SRP036640	SRR1161673	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/003/SRR1161673/SRR1161673.cram	sorghum_bicolor	17-JUN-2015 20:10:06	completed	83
+SRP036640	SRR1161672	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/002/SRR1161672/SRR1161672.cram	sorghum_bicolor	17-JUN-2015 20:13:33	completed	87
+SRP036640	SRR1161670	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/000/SRR1161670/SRR1161670.cram	sorghum_bicolor	17-JUN-2015 22:29:29	completed	83
+SRP036640	SRR1161669	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/009/SRR1161669/SRR1161669.cram	sorghum_bicolor	18-JUN-2015 06:23:42	completed	89
+SRP036640	SRR1161662	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/002/SRR1161662/SRR1161662.cram	sorghum_bicolor	18-JUN-2015 01:42:17	completed	83
+SRP036640	SRR1161667	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/007/SRR1161667/SRR1161667.cram	sorghum_bicolor	18-JUN-2015 00:08:05	completed	92
+SRP036640	SRR1161680	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/000/SRR1161680/SRR1161680.cram	sorghum_bicolor	18-JUN-2015 03:01:17	completed	93
+SRP036640	SRR1161664	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/004/SRR1161664/SRR1161664.cram	sorghum_bicolor	18-JUN-2015 04:22:36	completed	93
+SRP036640	SRR1161677	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/007/SRR1161677/SRR1161677.cram	sorghum_bicolor	18-JUN-2015 04:22:58	completed	93
+SRP036640	SRR1161679	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/009/SRR1161679/SRR1161679.cram	sorghum_bicolor	18-JUN-2015 06:24:49	completed	94
+SRP036640	SRR1161663	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/003/SRR1161663/SRR1161663.cram	sorghum_bicolor	18-JUN-2015 05:54:30	completed	94
+SRP036640	SRR1161683	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/003/SRR1161683/SRR1161683.cram	sorghum_bicolor	18-JUN-2015 05:55:22	completed	92
+SRP036640	SRR1161665	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/005/SRR1161665/SRR1161665.cram	sorghum_bicolor	18-JUN-2015 03:45:16	completed	96
+SRP036640	SRR1161684	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/004/SRR1161684/SRR1161684.cram	sorghum_bicolor	18-JUN-2015 00:30:08	completed	94
+SRP036640	SRR1161678	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/008/SRR1161678/SRR1161678.cram	sorghum_bicolor	18-JUN-2015 00:36:19	completed	94
+SRP036640	SRR1161681	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/001/SRR1161681/SRR1161681.cram	sorghum_bicolor	18-JUN-2015 01:37:21	completed	90
+SRP036640	SRR1161671	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/001/SRR1161671/SRR1161671.cram	sorghum_bicolor	18-JUN-2015 05:07:20	completed	93
+SRP036640	SRR1161668	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/008/SRR1161668/SRR1161668.cram	sorghum_bicolor	18-JUN-2015 08:30:17	completed	93
+SRP036640	SRR1161661	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/001/SRR1161661/SRR1161661.cram	sorghum_bicolor	18-JUN-2015 08:30:23	completed	92
+SRP036640	SRR1161686	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/006/SRR1161686/SRR1161686.cram	sorghum_bicolor	18-JUN-2015 08:30:40	completed	94
+SRP036640	SRR1161666	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/006/SRR1161666/SRR1161666.cram	sorghum_bicolor	18-JUN-2015 08:34:05	completed	91
+SRP036640	SRR1161675	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/005/SRR1161675/SRR1161675.cram	sorghum_bicolor	18-JUN-2015 07:03:12	completed	95
+SRP036640	SRR1161687	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/007/SRR1161687/SRR1161687.cram	sorghum_bicolor	18-JUN-2015 07:05:16	completed	94
+SRP036640	SRR1161685	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR116/005/SRR1161685/SRR1161685.cram	sorghum_bicolor	18-JUN-2015 07:48:16	completed	93
+

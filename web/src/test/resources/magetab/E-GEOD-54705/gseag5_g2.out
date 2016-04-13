@@ -1,0 +1,223 @@
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv --pvalue-col=17 --foldchange-col=18 --title="
+Top 10 GO terms enriched in 
+'CK60; low-nitrogen sensitive' vs 'San Chi San; low-nitrogen tolerant' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.sorghum_bicolor.g5_g2.ensgene.go.tsv.aux1 --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/sorghum_bicolor.ensgene.go.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.g5_g2.go.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+pval.col = 17
+fold.col = 18
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/sorghum_bicolor.ensgene.go.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.sorghum_bicolor.g5_g2.ensgene.go.tsv.aux1
+title = 
+Top 10 GO terms enriched in 
+'CK60; low-nitrogen sensitive' vs 'San Chi San; low-nitrogen tolerant' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.g5_g2.go.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+Warning message:
+In fread(input = f, sep = "\t", header = "auto", check.names = FALSE,  :
+  Bumped column 2 to type character on data row 121, field contains 'CYP79A1'. Coercing previously read values in this column from logical, integer or numeric back to character which may not be lossless; e.g., if '00' and '000' occurred before they will now be just '0', and there may be inconsistencies with treatment of ',,' and ',NA,' too (if they occurred in this column before the bump). If this matters please rerun and set 'colClasses' to 'character' for this column. Please note that column type detection uses the first 5 rows, the middle 5 rows and the last 5 rows, so hopefully this message should be very rare. If reporting to datatable-help, please rerun and include the output from verbose=TRUE.
+[INFO] NAs removed: 12197
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv loaded: 21882 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/sorghum_bicolor.ensgene.go.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/sorghum_bicolor.ensgene.go.tsv loaded: 125798 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.sorghum_bicolor.g5_g2.ensgene.go.tsv.aux1
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.sorghum_bicolor.g5_g2.ensgene.go.tsv.aux1 loaded: 4779 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.45+-0.75
+[INFO] p-value mean 0.87+-0.28
+[INFO] Excluded 266 genes with no annotation
+[INFO] #Genes=16927 #genes (pvalue<=0.05)=683
+[INFO] Loading GSC...
+[INFO] Gene sets:4673 genes:16915
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 683 genes of interest in 1533 gene sets, using a background of 16244 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.g5_g2.go.gsea.tsv
+[WARNING] Insufficient gene sets () to draw a plot - plot not generated.
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv --pvalue-col=17 --foldchange-col=18 --title="
+Top 10 InterPro domains enriched in 
+'CK60; low-nitrogen sensitive' vs 'San Chi San; low-nitrogen tolerant' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/sorghum_bicolor.ensgene.interpro.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.g5_g2.interpro.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+pval.col = 17
+fold.col = 18
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/sorghum_bicolor.ensgene.interpro.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+title = 
+Top 10 InterPro domains enriched in 
+'CK60; low-nitrogen sensitive' vs 'San Chi San; low-nitrogen tolerant' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.g5_g2.interpro.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+Warning message:
+In fread(input = f, sep = "\t", header = "auto", check.names = FALSE,  :
+  Bumped column 2 to type character on data row 121, field contains 'CYP79A1'. Coercing previously read values in this column from logical, integer or numeric back to character which may not be lossless; e.g., if '00' and '000' occurred before they will now be just '0', and there may be inconsistencies with treatment of ',,' and ',NA,' too (if they occurred in this column before the bump). If this matters please rerun and set 'colClasses' to 'character' for this column. Please note that column type detection uses the first 5 rows, the middle 5 rows and the last 5 rows, so hopefully this message should be very rare. If reporting to datatable-help, please rerun and include the output from verbose=TRUE.
+[INFO] NAs removed: 12197
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv loaded: 21882 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/sorghum_bicolor.ensgene.interpro.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/sorghum_bicolor.ensgene.interpro.tsv loaded: 78372 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux loaded: 26238 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.45+-0.75
+[INFO] p-value mean 0.87+-0.28
+[INFO] Excluded 144 genes with no annotation
+[INFO] #Genes=18894 #genes (pvalue<=0.05)=805
+[INFO] Loading GSC...
+[INFO] Gene sets:6444 genes:18882
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 805 genes of interest in 1740 gene sets, using a background of 18089 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.g5_g2.interpro.gsea.tsv
+Loading required package: methods
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Loading required package: limma
+[WARNING] Skipping plot generation
+Warning message:
+In fisherNetworkPlot(fisherRes, edgeWidth = c(2, 20), adjusted = T,  :
+  no overlap between gene sets found, try to decrease argument overlap or increase argument significance...fixing it for now
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv --pvalue-col=17 --foldchange-col=18 --title="
+Top 10 Reactome pathways enriched in 
+'CK60; low-nitrogen sensitive' vs 'San Chi San; low-nitrogen tolerant' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/sorghum_bicolor.reactome.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/sorghum_bicolor.reactome.tsv.gsea.aux --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.g5_g2.reactome.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+pval.col = 17
+fold.col = 18
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/sorghum_bicolor.reactome.tsv.gsea.aux
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/sorghum_bicolor.reactome.tsv.decorate.aux
+title = 
+Top 10 Reactome pathways enriched in 
+'CK60; low-nitrogen sensitive' vs 'San Chi San; low-nitrogen tolerant' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.g5_g2.reactome.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+Warning message:
+In fread(input = f, sep = "\t", header = "auto", check.names = FALSE,  :
+  Bumped column 2 to type character on data row 121, field contains 'CYP79A1'. Coercing previously read values in this column from logical, integer or numeric back to character which may not be lossless; e.g., if '00' and '000' occurred before they will now be just '0', and there may be inconsistencies with treatment of ',,' and ',NA,' too (if they occurred in this column before the bump). If this matters please rerun and set 'colClasses' to 'character' for this column. Please note that column type detection uses the first 5 rows, the middle 5 rows and the last 5 rows, so hopefully this message should be very rare. If reporting to datatable-help, please rerun and include the output from verbose=TRUE.
+[INFO] NAs removed: 12197
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv loaded: 21882 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/sorghum_bicolor.reactome.tsv.gsea.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/sorghum_bicolor.reactome.tsv.gsea.aux loaded: 4339 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/sorghum_bicolor.reactome.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/sorghum_bicolor.reactome.tsv.decorate.aux loaded: 192 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.45+-0.75
+[INFO] p-value mean 0.87+-0.28
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=21882 #genes (pvalue<=0.05)=949
+[INFO] Loading GSC...
+[INFO] Gene sets:192 genes:818
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 949 genes of interest in 91 gene sets, using a background of 20933 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705.g5_g2.reactome.gsea.tsv
+[WARNING] Insufficient gene sets () to draw a plot - plot not generated.
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-217>
+Subject: Job 1040281: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705 g5_g2 > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705 g5_g2 > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi5-217>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705> was used as the working directory.
+Started at Tue Apr 12 18:00:08 2016
+Results reported at Tue Apr 12 18:01:59 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705 g5_g2 
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               91.28 sec.
+    Max Memory :             241 MB
+    Average Memory :         120.00 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3855.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               1289 MB
+
+    Max Processes :          7
+    Max Threads :            8
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <gseag5_g2.err> for stderr output of this job.
+

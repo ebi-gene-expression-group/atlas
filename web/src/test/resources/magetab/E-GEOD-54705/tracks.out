@@ -1,0 +1,882 @@
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 12197 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 12216 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 12327 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 12033 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 12320 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 12150 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 12207 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 11981 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 12037 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 13140 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 13182 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 13025 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 34567 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705/E-GEOD-54705-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g3_g1.p-value
+ [INFO] Columns:g3_g1.log2foldchange
+ [INFO] Columns:g3_g2.p-value
+ [INFO] Columns:g3_g2.log2foldchange
+ [INFO] Columns:g3_g7.p-value
+ [INFO] Columns:g3_g7.log2foldchange
+ [INFO] Columns:g4_g1.p-value
+ [INFO] Columns:g4_g1.log2foldchange
+ [INFO] Columns:g4_g2.p-value
+ [INFO] Columns:g4_g2.log2foldchange
+ [INFO] Columns:g4_g7.p-value
+ [INFO] Columns:g4_g7.log2foldchange
+ [INFO] Columns:g5_g1.p-value
+ [INFO] Columns:g5_g1.log2foldchange
+ [INFO] Columns:g5_g2.p-value
+ [INFO] Columns:g5_g2.log2foldchange
+ [INFO] Columns:g5_g7.p-value
+ [INFO] Columns:g5_g7.log2foldchange
+ [INFO] Columns:g6_g1.p-value
+ [INFO] Columns:g6_g1.log2foldchange
+ [INFO] Columns:g6_g2.p-value
+ [INFO] Columns:g6_g2.log2foldchange
+ [INFO] Columns:g6_g7.p-value
+ [INFO] Columns:g6_g7.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:34079
+[INFO] # values:34079
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-132>
+Subject: Job 1032823: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705  > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705  > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi5-132>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705> was used as the working directory.
+Started at Tue Apr 12 17:33:34 2016
+Results reported at Tue Apr 12 17:40:15 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54705  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               388.00 sec.
+    Max Memory :             509 MB
+    Average Memory :         189.29 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3587.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               1005 MB
+
+    Max Processes :          7
+    Max Threads :            8
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <tracks.err> for stderr output of this job.
+

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_differential" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="BTx623; low-nitrogen sensitive">
+                <assay>SRR1161665</assay>
+                <assay>SRR1161664</assay>
+                <assay>SRR1161667</assay>
+                <assay>SRR1161666</assay>
+            </assay_group>
+            <assay_group id="g2" label="CK60; low-nitrogen sensitive">
+                <assay>SRR1161660</assay>
+                <assay>SRR1161661</assay>
+                <assay>SRR1161663</assay>
+                <assay>SRR1161662</assay>
+            </assay_group>
+            <assay_group id="g3" label="China17; low-nitrogen tolerant">
+                <assay>SRR1161674</assay>
+                <assay>SRR1161675</assay>
+                <assay>SRR1161673</assay>
+                <assay>SRR1161672</assay>
+            </assay_group>
+            <assay_group id="g4" label="KS78; low-nitrogen tolerant">
+                <assay>SRR1161676</assay>
+                <assay>SRR1161678</assay>
+                <assay>SRR1161679</assay>
+                <assay>SRR1161677</assay>
+            </assay_group>
+            <assay_group id="g5" label="San Chi San; low-nitrogen tolerant">
+                <assay>SRR1161669</assay>
+                <assay>SRR1161668</assay>
+                <assay>SRR1161671</assay>
+                <assay>SRR1161670</assay>
+            </assay_group>
+            <assay_group id="g6" label="high-NUE bulk; low-nitrogen tolerant">
+                <assay>SRR1161683</assay>
+                <assay>SRR1161682</assay>
+                <assay>SRR1161680</assay>
+                <assay>SRR1161681</assay>
+            </assay_group>
+            <assay_group id="g7" label="low-NUE bulk; low-nitrogen sensitive">
+                <assay>SRR1161687</assay>
+                <assay>SRR1161686</assay>
+                <assay>SRR1161685</assay>
+                <assay>SRR1161684</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g5_g2">
+                <name>'CK60; low-nitrogen sensitive' vs 'San Chi San; low-nitrogen tolerant'</name>
+                <reference_assay_group>g5</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+            <contrast id="g3_g2">
+                <name>'CK60; low-nitrogen sensitive' vs 'China17; low-nitrogen tolerant'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+            <contrast id="g4_g2">
+                <name>'CK60; low-nitrogen sensitive' vs 'KS78; low-nitrogen tolerant'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+            <contrast id="g6_g2">
+                <name>'CK60; low-nitrogen sensitive' vs 'high-NUE bulk; low-nitrogen tolerant'</name>
+                <reference_assay_group>g6</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+            <contrast id="g5_g1">
+                <name>'BTx623; low-nitrogen sensitive' vs 'San Chi San; low-nitrogen tolerant'</name>
+                <reference_assay_group>g5</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g3_g1">
+                <name>'BTx623; low-nitrogen sensitive' vs 'China17; low-nitrogen tolerant'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g4_g1">
+                <name>'BTx623; low-nitrogen sensitive' vs 'KS78; low-nitrogen tolerant'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g6_g1">
+                <name>'BTx623; low-nitrogen sensitive' vs 'high-NUE bulk; low-nitrogen tolerant'</name>
+                <reference_assay_group>g6</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g5_g7">
+                <name>'low-NUE bulk; low-nitrogen sensitive' vs 'San Chi San; low-nitrogen tolerant'</name>
+                <reference_assay_group>g5</reference_assay_group>
+                <test_assay_group>g7</test_assay_group>
+            </contrast>
+            <contrast id="g3_g7">
+                <name>'low-NUE bulk; low-nitrogen sensitive' vs 'China17; low-nitrogen tolerant'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g7</test_assay_group>
+            </contrast>
+            <contrast id="g4_g7">
+                <name>'low-NUE bulk; low-nitrogen sensitive' vs 'KS78; low-nitrogen tolerant'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g7</test_assay_group>
+            </contrast>
+            <contrast id="g6_g7">
+                <name>'low-NUE bulk; low-nitrogen sensitive' vs 'high-NUE bulk; low-nitrogen tolerant'</name>
+                <reference_assay_group>g6</reference_assay_group>
+                <test_assay_group>g7</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>
