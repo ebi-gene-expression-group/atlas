@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-128</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="resistant; 0 hour">
+
+                <assay>GSM1397294</assay>
+                <assay>GSM1397293</assay>
+                <assay>GSM1397290</assay>
+                <assay>GSM1397292</assay>
+                <assay>GSM1397291</assay>
+            </assay_group>
+            <assay_group id="g2" label="resistant; 24 hour">
+
+                <assay>GSM1397301</assay>
+                <assay>GSM1397299</assay>
+                <assay>GSM1397300</assay>
+                <assay>GSM1397303</assay>
+                <assay>GSM1397298</assay>
+                <assay>GSM1397302</assay>
+            </assay_group>
+            <assay_group id="g3" label="resistant; 48 hour">
+
+                <assay>GSM1397310</assay>
+                <assay>GSM1397314</assay>
+                <assay>GSM1397311</assay>
+                <assay>GSM1397313</assay>
+                <assay>GSM1397312</assay>
+            </assay_group>
+            <assay_group id="g4" label="susceptible; 0 hour">
+
+                <assay>GSM1397295</assay>
+                <assay>GSM1397297</assay>
+                <assay>GSM1397296</assay>
+            </assay_group>
+            <assay_group id="g5" label="susceptible; 24 hour">
+
+                <assay>GSM1397307</assay>
+                <assay>GSM1397304</assay>
+                <assay>GSM1397306</assay>
+                <assay>GSM1397309</assay>
+                <assay>GSM1397308</assay>
+                <assay>GSM1397305</assay>
+            </assay_group>
+            <assay_group id="g6" label="susceptible; 48 hour">
+
+                <assay>GSM1397317</assay>
+                <assay>GSM1397318</assay>
+                <assay>GSM1397316</assay>
+                <assay>GSM1397319</assay>
+                <assay>GSM1397315</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g4_g1">
+                <name>'resistant' vs 'susceptible' at '0 hour'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g5_g2">
+                <name>'resistant' vs 'susceptible' at '24 hour'</name>
+                <reference_assay_group>g5</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+            <contrast id="g6_g3">
+                <name>'resistant' vs 'susceptible' at '48 hour'</name>
+                <reference_assay_group>g6</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

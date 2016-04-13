@@ -1,0 +1,65 @@
+INFO  - Detected -z option. Will attempt to map terms to ontology using Zooma.
+INFO  - Detected -i option. Will import IDF file from ArrayExpress load directory.
+INFO  - Copying IDF from /nfs/ma/home/arrayexpress/ae2_production/data/EXPERIMENT/GEOD/E-GEOD-57907/E-GEOD-57907.idf.txt ...
+INFO  - Successfully copied IDF.
+INFO  - Reading MAGETAB from /nfs/ma/home/arrayexpress/ae2_production/data/EXPERIMENT/GEOD/E-GEOD-57907/E-GEOD-57907.idf.txt ...
+INFO  - Successfully read MAGETAB.
+INFO  - Collecting all properties and their values from MAGE-TAB...
+INFO  - Successfully collected all properties and values.
+INFO  - Mapping terms using Zooma...
+INFO  - Type "organism" with value "Bos taurus" automatically mapped to http://purl.obolibrary.org/obo/NCBITaxon_9913
+INFO  - Type "organism part" with value "skin" automatically mapped to http://www.ebi.ac.uk/efo/EFO_0000962
+INFO  - Type "phenotype" with value "resistant" was excluded from Zooma mapping.
+INFO  - Type "phenotype" with value "susceptible" was excluded from Zooma mapping.
+WARN  - No results found for strain : F2 population of Gyr (Bos indicus) X Holstein (Bos taurus)
+WARN  - Zooma mapping failed for type "strain" and value "F2 population of Gyr (Bos indicus) X Holstein (Bos taurus)": No results found for strain : F2 population of Gyr (Bos indicus) X Holstein (Bos taurus)
+INFO  - Type "time" with value "0 hour" was excluded from Zooma mapping.
+INFO  - Type "time" with value "24 hour" was excluded from Zooma mapping.
+INFO  - Type "time" with value "48 hour" was excluded from Zooma mapping.
+INFO  - Writing zoomification info to E-GEOD-57907/E-GEOD-57907-zoomifications-log.tsv ...
+INFO  - Successfully written zoomification info.
+INFO  - Zooma mapping finished successfully.
+INFO  - Condensing SDRF to E-GEOD-57907/E-GEOD-57907.condensed-sdrf.tsv ...
+INFO  - Successfully condensed SDRF.
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi6-016>
+Subject: Job 1184538: <condense_sdrf.pl -e E-GEOD-57907 -z -i -o E-GEOD-57907> in cluster <EBI> Done
+
+Job <condense_sdrf.pl -e E-GEOD-57907 -z -i -o E-GEOD-57907> was submitted from host <ebi1-133> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi6-016>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/public/ro/fg/atlas/experiments> was used as the working directory.
+Started at Wed Apr 13 12:49:08 2016
+Results reported at Wed Apr 13 12:49:17 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+condense_sdrf.pl -e E-GEOD-57907 -z -i -o E-GEOD-57907
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               2.79 sec.
+    Max Memory :             102 MB
+    Average Memory :         12.00 MB
+    Total Requested Memory : -
+    Delta Memory :           -
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               444 MB
+
+    Max Processes :          3
+    Max Threads :            4
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <E-GEOD-57907/condense_sdrf.err> for stderr output of this job.
+

@@ -1,0 +1,31 @@
+Comment[ArrayExpressAccession]	E-GEOD-57907							
+MAGE-TAB Version	1.1							
+Public Release Date	2014-05-23							
+Investigation Title	Expression data from skin of bovines infested with ticks							
+Comment[Submitted Name]	Expression data from skin of bovines infested with ticks							
+Experiment Description	The aim of this work was to access the early immune response triggered by R. microplus larvae attachment in previously selected resistant and susceptible animals in a bovine F2 population derived from Gyr (Bos indicus) x Holstein (Bos taurus) crosses. We used microarray data both to access the changes in gene expression over the course of the first 48 hours after tick infestation as constrasting the phenotypically diferent groups. From a bovine F2 population, six tick-resistant (R) and seven tick-susceptible (S) animals were used in this experiment.  Skin biopses were taken at the feeding sites before infestation (0 hour), 24 and 48 hours after tick infestation in each animal.							
+Term Source Name	ArrayExpress	EFO						
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl						
+Person Last Name	Domingues	Carvalho	Domingues	Prata	Silva	Oliveira	Guimar√£es	Machado
+Person First Name	Robert	Wanessa	Robert	Marcia	Marcos	Guilherme	Simone	Marco
+Person Mid Initials		A		C	V	C	E	A
+Person Email	robert.domingues@embrapa.br							
+Person Affiliation	Embrapa							
+Person Phone	53 3240 4650							
+Person Address	Animal health, Embrapa, Av. General Osorio 1737/302, Bage, Rio Grande do Sul, Brazil							
+Person Roles	submitter							
+Protocol Name	P-GSE57907-1	P-GSE57907-4	P-GSE57907-5	P-GSE57907-2	P-GSE57907-3	P-GSE57907-6		
+Protocol Description	The data were analyzed with Microarray Suite version 5.0 (MAS 5.0) using Affymetrix default analysis settings and global scaling as normalization method. ID_REF =  VALUE = log2 MAS5.0 signal intensity	3' IVT Express kit (Affymetrix) was used to the amplification and labeling from 50 ng of total RNA.	About 12.5ug of purified and fragmented aRNA were hybridized in Genechip Bovine Genome Array (Affymetrix) using GeneChip Hybridization Oven.	Skin biopsies were kept in RNAlater (Ambion) until the RNA extraction.	Trizol extraction of total RNA was performed according to the manufacturer's instructions. After, the total RNA was purified using RNeasy mini kit (Qiagen) according to the manufacterer's instructions.	After washed in GeneChip Fluidics Station 450 according to the manufactere's instructions, the GeneChips were scanned using the GeneChip Scanner 3000 7G.		
+Protocol Type	normalization data transformation protocol	labelling protocol	hybridization protocol	sample treatment protocol	nucleic acid extraction protocol	array scanning protocol		
+Experimental Factor Name	time	phenotype						
+Experimental Factor Type	time	phenotype						
+Comment[SecondaryAccession]	GSE57907							
+Comment[GEOReleaseDate]	2014-05-23							
+Comment[ArrayExpressSubmissionDate]	2014-05-22							
+Comment[GEOLastUpdateDate]	2014-05-24							
+Comment[AEExperimentType]	transcription profiling by array							
+Pubmed ID	25108850							
+Publication DOI	10.1016/j.vetpar.2014.07.018							
+Publication Title	Microarray analysis of tick-infested skin in resistant and susceptible cattle confirms the role of inflammatory pathways in immune activation and larval rejection							
+Publication Author List	Carvalho WA, Domingues R, de Azevedo Prata MC, da Silva MV, de Oliveira GC, Guimaraes SE, Machado MA							
+SDRF File	E-GEOD-57907.sdrf.txt							
