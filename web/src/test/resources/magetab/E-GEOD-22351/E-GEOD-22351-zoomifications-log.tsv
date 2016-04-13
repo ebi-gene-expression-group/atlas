@@ -1,0 +1,7 @@
+PROPERTY_TYPE	PROPERTY_VALUE	ONTOLOGY_LABEL|ZOOMA_VALUE	PROP_VALUE_MATCH	SEMANTIC_TAG	STUDY	BIOENTITY	Category of Zooma Mapping	Basis for Exclusion
+age	21 day	null	null	null	E-GEOD-22351	SRR057599	EXCLUDED	Type=age
+genotype	expressing human TDP-43	null	null	null	E-GEOD-22351	SRR057601	EXCLUDED	Type=genotype
+genotype	non transgenic	null	null	null	E-GEOD-22351	SRR057596	EXCLUDED	Type=genotype
+organism	Mus musculus	Mus musculus	MATCHES_ONTOLOGY_LABEL	http://purl.obolibrary.org/obo/NCBITaxon_10090	E-GEOD-22351	SRR057596	AUTOMATIC	null
+organism part	spinal cord	spinal cord	MATCHES_ONTOLOGY_LABEL	http://purl.obolibrary.org/obo/UBERON_0002240	E-GEOD-22351	SRR057596	AUTOMATIC	null
+strain	C57BL/6;SJL	null	null	null	E-GEOD-22351	SRR057596	NO_RESULTS	null

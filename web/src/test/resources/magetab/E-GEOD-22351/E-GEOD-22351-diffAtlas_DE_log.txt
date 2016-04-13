@@ -1,0 +1,16 @@
+Experiment accession: E-GEOD-22351
+Technology type: rnaseq
+
+Reading Atlas XML config from E-GEOD-22351-contrasts.xml...done
+1 contrasts found in Atlas contrasts XML file:
+genotype:'expressing human TDP-43' vs 'non transgenic'
+
+Reading eREAP config: /nfs/ma/home/rpetry/workspace/ereap/processing/E-GEOD-22351_mus_musculus/E-GEOD-22351_mus_musculus.conf...done
+1 found in eREAP config:
+TDP-43_transgenic_vs_transgenic
+
+Collecting DESeq results...
+Reading DESeq results from /nfs/ma/home/rpetry/workspace/ereap/processing/E-GEOD-22351_mus_musculus/E-GEOD-22351/tophat1/htseq2/deseq/TDP-43_transgenic_vs_transgenic.genes_de.tsv...done
+Making MvA plot...done.
+
+Writing results to E-GEOD-22351-analytics.tsv
