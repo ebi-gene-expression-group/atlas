@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-160</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="bisphenol A; 10^-9 molar; 1 day">
+                <assay>1G_3</assay>
+                <assay>1G_2</assay>
+                <assay>1G_1</assay>
+            </assay_group>
+            <assay_group id="g2" label="bisphenol A; 10^-9 molar; 3 day">
+                <!-- This assay group is not involved in any contrasts -->
+                <assay>3G_1</assay>
+                <assay>3G_3</assay>
+                <assay>3G_2</assay>
+            </assay_group>
+            <assay_group id="g3" label="bisphenol A; 10^-9 molar; 7 day">
+                <assay>7G_2</assay>
+                <assay>7G_3</assay>
+                <assay>7G_1</assay>
+            </assay_group>
+            <assay_group id="g4" label="control; 10^-9 molar; 1 day">
+                <assay>CTRL1_1</assay>
+                <assay>CTRL1_3</assay>
+                <assay>CTRL1_2</assay>
+            </assay_group>
+            <assay_group id="g5" label="control; 10^-9 molar; 7 day">
+                <assay>CNTR2_1</assay>
+                <assay>CNTR2_2</assay>
+                <assay>CNTR2_3</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g4_g1" cttv_primary="0">
+                <name>'bisphenol A; 10^-9 molar' at '1 day' vs 'control; 10^-9 molar' at '1 day'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g5_g3" cttv_primary="0">
+                <name>'bisphenol A; 10^-9 molar' at '7 day' vs 'control; 10^-9 molar' at '7 day'</name>
+                <reference_assay_group>g5</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

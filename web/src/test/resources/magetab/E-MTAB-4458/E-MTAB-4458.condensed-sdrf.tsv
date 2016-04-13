@@ -1,0 +1,105 @@
+E-MTAB-4458	A-AFFY-160	1G_1	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	1G_1	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	1G_1	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	1G_1	characteristic	time	1 day
+E-MTAB-4458	A-AFFY-160	1G_1	factor	time	1 day
+E-MTAB-4458	A-AFFY-160	1G_1	factor	compound	bisphenol A	http://purl.obolibrary.org/obo/CHEBI_33216
+E-MTAB-4458	A-AFFY-160	1G_1	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	1G_2	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	1G_2	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	1G_2	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	1G_2	characteristic	time	1 day
+E-MTAB-4458	A-AFFY-160	1G_2	factor	time	1 day
+E-MTAB-4458	A-AFFY-160	1G_2	factor	compound	bisphenol A	http://purl.obolibrary.org/obo/CHEBI_33216
+E-MTAB-4458	A-AFFY-160	1G_2	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	1G_3	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	1G_3	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	1G_3	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	1G_3	characteristic	time	1 day
+E-MTAB-4458	A-AFFY-160	1G_3	factor	time	1 day
+E-MTAB-4458	A-AFFY-160	1G_3	factor	compound	bisphenol A	http://purl.obolibrary.org/obo/CHEBI_33216
+E-MTAB-4458	A-AFFY-160	1G_3	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	3G_1	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	3G_1	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	3G_1	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	3G_1	characteristic	time	3 day
+E-MTAB-4458	A-AFFY-160	3G_1	factor	time	3 day
+E-MTAB-4458	A-AFFY-160	3G_1	factor	compound	bisphenol A	http://purl.obolibrary.org/obo/CHEBI_33216
+E-MTAB-4458	A-AFFY-160	3G_1	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	3G_2	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	3G_2	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	3G_2	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	3G_2	characteristic	time	3 day
+E-MTAB-4458	A-AFFY-160	3G_2	factor	time	3 day
+E-MTAB-4458	A-AFFY-160	3G_2	factor	compound	bisphenol A	http://purl.obolibrary.org/obo/CHEBI_33216
+E-MTAB-4458	A-AFFY-160	3G_2	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	3G_3	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	3G_3	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	3G_3	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	3G_3	characteristic	time	3 day
+E-MTAB-4458	A-AFFY-160	3G_3	factor	time	3 day
+E-MTAB-4458	A-AFFY-160	3G_3	factor	compound	bisphenol A	http://purl.obolibrary.org/obo/CHEBI_33216
+E-MTAB-4458	A-AFFY-160	3G_3	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	7G_1	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	7G_1	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	7G_1	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	7G_1	characteristic	time	7 day
+E-MTAB-4458	A-AFFY-160	7G_1	factor	time	7 day
+E-MTAB-4458	A-AFFY-160	7G_1	factor	compound	bisphenol A	http://purl.obolibrary.org/obo/CHEBI_33216
+E-MTAB-4458	A-AFFY-160	7G_1	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	7G_2	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	7G_2	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	7G_2	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	7G_2	characteristic	time	7 day
+E-MTAB-4458	A-AFFY-160	7G_2	factor	time	7 day
+E-MTAB-4458	A-AFFY-160	7G_2	factor	compound	bisphenol A	http://purl.obolibrary.org/obo/CHEBI_33216
+E-MTAB-4458	A-AFFY-160	7G_2	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	7G_3	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	7G_3	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	7G_3	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	7G_3	characteristic	time	7 day
+E-MTAB-4458	A-AFFY-160	7G_3	factor	time	7 day
+E-MTAB-4458	A-AFFY-160	7G_3	factor	compound	bisphenol A	http://purl.obolibrary.org/obo/CHEBI_33216
+E-MTAB-4458	A-AFFY-160	7G_3	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	CNTR2_1	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	CNTR2_1	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	CNTR2_1	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	CNTR2_1	characteristic	time	7 day
+E-MTAB-4458	A-AFFY-160	CNTR2_1	factor	time	7 day
+E-MTAB-4458	A-AFFY-160	CNTR2_1	factor	compound	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4458	A-AFFY-160	CNTR2_1	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	CNTR2_2	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	CNTR2_2	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	CNTR2_2	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	CNTR2_2	characteristic	time	7 day
+E-MTAB-4458	A-AFFY-160	CNTR2_2	factor	time	7 day
+E-MTAB-4458	A-AFFY-160	CNTR2_2	factor	compound	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4458	A-AFFY-160	CNTR2_2	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	CNTR2_3	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	CNTR2_3	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	CNTR2_3	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	CNTR2_3	characteristic	time	7 day
+E-MTAB-4458	A-AFFY-160	CNTR2_3	factor	time	7 day
+E-MTAB-4458	A-AFFY-160	CNTR2_3	factor	compound	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4458	A-AFFY-160	CNTR2_3	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	CTRL1_1	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	CTRL1_1	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	CTRL1_1	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	CTRL1_1	characteristic	time	1 day
+E-MTAB-4458	A-AFFY-160	CTRL1_1	factor	time	1 day
+E-MTAB-4458	A-AFFY-160	CTRL1_1	factor	compound	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4458	A-AFFY-160	CTRL1_1	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	CTRL1_2	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	CTRL1_2	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	CTRL1_2	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	CTRL1_2	characteristic	time	1 day
+E-MTAB-4458	A-AFFY-160	CTRL1_2	factor	time	1 day
+E-MTAB-4458	A-AFFY-160	CTRL1_2	factor	compound	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4458	A-AFFY-160	CTRL1_2	factor	dose	10^-9 molar
+E-MTAB-4458	A-AFFY-160	CTRL1_3	characteristic	cell line	FRTL-5
+E-MTAB-4458	A-AFFY-160	CTRL1_3	characteristic	cell type	thyrocyte	http://www.ebi.ac.uk/efo/EFO_0003076
+E-MTAB-4458	A-AFFY-160	CTRL1_3	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-4458	A-AFFY-160	CTRL1_3	characteristic	time	1 day
+E-MTAB-4458	A-AFFY-160	CTRL1_3	factor	time	1 day
+E-MTAB-4458	A-AFFY-160	CTRL1_3	factor	compound	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4458	A-AFFY-160	CTRL1_3	factor	dose	10^-9 molar
