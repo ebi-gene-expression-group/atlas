@@ -1,0 +1,5 @@
+PROPERTY_TYPE	PROPERTY_VALUE	ONTOLOGY_LABEL|ZOOMA_VALUE	PROP_VALUE_MATCH	SEMANTIC_TAG	STUDY	BIOENTITY	Category of Zooma Mapping	Basis for Exclusion
+cell line	Caco-2	Caco-2	MATCHES_ONTOLOGY_LABEL	http://www.ebi.ac.uk/efo/EFO_0001099	E-GEOD-43049	GSM1055616.Cy5	AUTOMATIC	null
+growth condition	Apical anaerobic	null	null	null	E-GEOD-43049	GSM1055614.Cy5	NO_RESULTS	null
+growth condition	Conventional	dendritic cell|conventional dendritic cell	mismatch	http://purl.obolibrary.org/obo/CL_0000451	E-GEOD-43049	GSM1055615.Cy5	REQUIRES_CURATION	null
+organism	Homo sapiens	Homo sapiens	MATCHES_ONTOLOGY_LABEL	http://purl.obolibrary.org/obo/NCBITaxon_9606	E-GEOD-43049	GSM1055614.Cy5	AUTOMATIC	null
