@@ -1,0 +1,12 @@
+study_id	run_id	cram_location	organism	processing_status
+ERP005125	ERR440779	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR440/ERR440779/ERR440779.cram	ovis_aries	26-JUL-2015 08:09:32	completed	0
+ERP005125	ERR440782	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR440/ERR440782/ERR440782.cram	ovis_aries	26-JUL-2015 08:09:34	completed	0
+ERP005125	ERR440783	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR440/ERR440783/ERR440783.cram	ovis_aries	26-JUL-2015 08:09:38	completed	0
+ERP005125	ERR440775	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR440/ERR440775/ERR440775.cram	ovis_aries	26-JUL-2015 08:09:40	completed	2
+ERP005125	ERR440774	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR440/ERR440774/ERR440774.cram	ovis_aries	26-JUL-2015 08:17:39	completed	0
+ERP005125	ERR440778	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR440/ERR440778/ERR440778.cram	ovis_aries	26-JUL-2015 08:17:42	completed	0
+ERP005125	ERR440780	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR440/ERR440780/ERR440780.cram	ovis_aries	26-JUL-2015 08:17:45	completed	1
+ERP005125	ERR440777	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR440/ERR440777/ERR440777.cram	ovis_aries	26-JUL-2015 08:17:48	completed	1
+ERP005125	ERR440776	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR440/ERR440776/ERR440776.cram	ovis_aries	26-JUL-2015 08:17:50	completed	1
+ERP005125	ERR440781	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR440/ERR440781/ERR440781.cram	ovis_aries	26-JUL-2015 08:17:53	completed	1
+

@@ -1,0 +1,35 @@
+Comment[ArrayExpressAccession]	E-MTAB-2330
+MAGE-TAB Version	1.1
+Investigation Title	Transcriptome analysis of peripheral lymphoid tissue immediately before and after the detection of PrPSc in sheep scrapie 2
+Comment[Submitted Name]	Transcriptome analysis of peripheral lymphoid tissue immediately before and after the detection of PrPSc in sheep scrapie 2
+Experiment Description	Sheep scrapie is a transmissible spongiform encephalopathy (TSE), which are invariably fatal  neurodegenerative diseases of the central nervous system (CNS). Accumulation of the misfolded prion protein, PrPSc in the CNS results in progressive neurodegenerative disease. For many transmissible spongiform encephalopathies (TSEs), peripheral lymphoid tissue is an important site of PrPSc amplification but without obvious immunological consequence. Susceptible VRQ homozygous New Zealand Cheviot sheep were infected with SSBP/1 scrapie by inoculation in the drainage area of the prescapular lymph nodes. PrPSc was consistently detected by immunohistology in these nodes at 50 days post infection (dpi). This study compares the genes and physiological pathways that are affected by the progression of TSE disease in the prescapular lymph nodes, focussing on time points immediately before (10 dpi) and after (50 dpi) the detection of disease-associated PrPSc.
+Experimental Design	disease state design	in_vitro_design	co-expression_design
+Comment[AEExperimentType]	RNA-seq of coding RNA
+Comment[AEExperimentDisplayName]	RNA-seq of coding RNA of peripheral lymphoid tissue immediately before and after the detection of PrPSc in sheep scrapie
+Experimental Factor Name	disease
+Experimental Factor Type	disease
+Quality Control Type	biological replicate
+Quality Control Term Source REF	EFO
+Public Release Date	2014-04-06
+Person Last Name	Gossner
+Person First Name	Anton
+Person Mid Initials	G
+Person Email	a.gossner@ed.ac.uk
+Person Phone
+Person Address	The Roslin Institute & R(D)SVS, University of Edinburgh , Easter Bush, Midlothian. EH25 9RG.
+Person Affiliation	University of Edinburgh
+Person Roles	submitter
+PubMed ID
+Publication Author List	Anton Gossner and John Hopkins.
+Publication Title	Transcriptome analysis of peripheral lymphoid tissue immediately before and after the detection of PrPSc in sheep scrapie
+Publication Status	in preparation
+Protocol Name	P-MTAB-37730	P-MTAB-37731	P-MTAB-37732
+Protocol Type	growth protocol	nucleic acid library construction protocol	nucleic acid sequencing protocol
+Protocol Description	New Zealand Cheviot sheep of PRNP genotypes VRQ/VRQ, from the DEFRA breeding flock were inoculated subcutaneously with 2 ml of 10% w/v brain homogenate into sites on either side of the neck roughly 10cm anterior to the prescapular lymph node (PSLN).	In all experiments frozen lymph node was converted to a frozen tissue powder. Briefly a 100 mg of tissue per sample was placed into a Teflon flask along with steel ball and placed in liquid Nitrogen for 1 min. Homogenised for 60 seconds at 2000 rpm in a Mikro-Dismembrator U (B.Braun Biotech International GmbH). Total RNA was extracted from the frozen tissue powder using the RiboPure Kit (Ambion) including a DNase I digestion. To the frozen tissue powder 1 ml of Tri Reagent was added and then homogenise for a further 15 seconds at 1500rpm. A 200 ul aliquot of chloroform was added to lysate and mixed vigorously by vortexing. The protocol was then followed as per the manufactures instructions. The RNA was eluted in a final volume of 50 ul. Each RNA sample was DNase I (Ambion) treated as per the manufacturers instructions. The quality and quantity of the isolated total RNA was assessed using a RNA LabChip on the Agilent 2100 bioanalyser and a NanoDrop ND-1000 Spectrophotometer (Nanodrop Technologies Inc.). (	Illumina Solexa standard protocols for preparing samples for digital gene expression-tag profiling with NlaIII ( http://arrayconsortium.tgen.org/np2/docs/PreparingSamplesforDigitalGeneExpression-TagProfilingwithNlaIII.pdf )
+Protocol Term Source REF	EFO	EFO	EFO
+Protocol Hardware			Illumina Genome Analyzer II
+Term Source Name	EFO
+Term Source File	http://www.ebi.ac.uk/efo
+Comment[SecondaryAccession]	ERP005125
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERR440774-ERR440783
+SDRF File	E-MTAB-2330.sdrf.txt

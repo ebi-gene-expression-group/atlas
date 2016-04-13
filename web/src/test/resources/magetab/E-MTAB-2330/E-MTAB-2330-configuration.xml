@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_differential" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="mock infected">
+                <assay>ERR440775</assay>
+                <assay>ERR440780</assay>
+                <assay>ERR440777</assay>
+                <assay>ERR440781</assay>
+            </assay_group>
+            <assay_group id="g2" label="SSBP/1 infected">
+                <assay>ERR440778</assay>
+                <assay>ERR440782</assay>
+                <assay>ERR440779</assay>
+                <assay>ERR440776</assay>
+                <assay>ERR440774</assay>
+                <assay>ERR440783</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g1_g2">
+                <name>'SSBP/1 infected' vs 'mock infected'</name>
+                <reference_assay_group>g1</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

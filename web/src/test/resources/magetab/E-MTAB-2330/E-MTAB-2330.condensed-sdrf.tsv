@@ -1,0 +1,70 @@
+E-MTAB-2330		ERR440774	characteristic	developmental stage	lamb	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-2330		ERR440774	characteristic	disease	SSBP/1 infected
+E-MTAB-2330		ERR440774	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-2330		ERR440774	characteristic	organism part	prescapular lymph node
+E-MTAB-2330		ERR440774	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-2330		ERR440774	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-2330		ERR440774	factor	disease	SSBP/1 infected
+E-MTAB-2330		ERR440775	characteristic	developmental stage	lamb	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-2330		ERR440775	characteristic	disease	mock infected	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2330		ERR440775	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-2330		ERR440775	characteristic	organism part	prescapular lymph node
+E-MTAB-2330		ERR440775	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-2330		ERR440775	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-2330		ERR440775	factor	disease	mock infected	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2330		ERR440776	characteristic	developmental stage	lamb	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-2330		ERR440776	characteristic	disease	SSBP/1 infected
+E-MTAB-2330		ERR440776	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-2330		ERR440776	characteristic	organism part	prescapular lymph node
+E-MTAB-2330		ERR440776	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-2330		ERR440776	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-2330		ERR440776	factor	disease	SSBP/1 infected
+E-MTAB-2330		ERR440777	characteristic	developmental stage	lamb	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-2330		ERR440777	characteristic	disease	mock infected	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2330		ERR440777	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-2330		ERR440777	characteristic	organism part	prescapular lymph node
+E-MTAB-2330		ERR440777	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-2330		ERR440777	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-2330		ERR440777	factor	disease	mock infected	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2330		ERR440778	characteristic	developmental stage	lamb	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-2330		ERR440778	characteristic	disease	SSBP/1 infected
+E-MTAB-2330		ERR440778	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-2330		ERR440778	characteristic	organism part	prescapular lymph node
+E-MTAB-2330		ERR440778	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-2330		ERR440778	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-2330		ERR440778	factor	disease	SSBP/1 infected
+E-MTAB-2330		ERR440779	characteristic	developmental stage	lamb	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-2330		ERR440779	characteristic	disease	SSBP/1 infected
+E-MTAB-2330		ERR440779	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-2330		ERR440779	characteristic	organism part	prescapular lymph node
+E-MTAB-2330		ERR440779	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-2330		ERR440779	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-2330		ERR440779	factor	disease	SSBP/1 infected
+E-MTAB-2330		ERR440780	characteristic	developmental stage	lamb	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-2330		ERR440780	characteristic	disease	mock infected	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2330		ERR440780	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-2330		ERR440780	characteristic	organism part	prescapular lymph node
+E-MTAB-2330		ERR440780	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-2330		ERR440780	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-2330		ERR440780	factor	disease	mock infected	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2330		ERR440781	characteristic	developmental stage	lamb	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-2330		ERR440781	characteristic	disease	mock infected	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2330		ERR440781	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-2330		ERR440781	characteristic	organism part	prescapular lymph node
+E-MTAB-2330		ERR440781	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-2330		ERR440781	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-2330		ERR440781	factor	disease	mock infected	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2330		ERR440782	characteristic	developmental stage	lamb	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-2330		ERR440782	characteristic	disease	SSBP/1 infected
+E-MTAB-2330		ERR440782	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-2330		ERR440782	characteristic	organism part	prescapular lymph node
+E-MTAB-2330		ERR440782	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-2330		ERR440782	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-2330		ERR440782	factor	disease	SSBP/1 infected
+E-MTAB-2330		ERR440783	characteristic	developmental stage	lamb	http://purl.obolibrary.org/obo/UBERON_0000112
+E-MTAB-2330		ERR440783	characteristic	disease	SSBP/1 infected
+E-MTAB-2330		ERR440783	characteristic	organism	Ovis aries	http://purl.obolibrary.org/obo/NCBITaxon_9940
+E-MTAB-2330		ERR440783	characteristic	organism part	prescapular lymph node
+E-MTAB-2330		ERR440783	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-2330		ERR440783	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-2330		ERR440783	factor	disease	SSBP/1 infected
