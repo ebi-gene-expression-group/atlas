@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>
+             A-AFFY-2
+        </array_design>
+              <assay_groups>
+                 <assay_group id="g1">
+                      <assay>Broadley_1-3_A3-Bo-P2-phosphate-starved_Rep2_ATH1</assay>
+                      <assay>Broadley_1-2_A2-Bo-P-phosphate-starved_Rep1_ATH1</assay>
+                      <assay>Broadley_1-4_A4-Bo-P3-phosphate-starved_Rep3_ATH1</assay>
+                 </assay_group>
+                 <assay_group id="g2">
+                      <assay>Broadley_1-5_A5-Bo+P2-nutrient-replete_Rep2_ATH1</assay>
+                      <assay>Broadley_1-6_A6-Bo+P3-nutrient-replete_Rep3_ATH1</assay>
+                      <assay>Broadley_1-1_A1-Bo+P-nutrient-replete_Rep1_ATH1</assay>
+                 </assay_group>
+              </assay_groups>
+              <contrasts>
+                 <contrast id="g2_g1">
+                      <name>'phosphate starvation' vs 'control'</name>
+                      <reference_assay_group>g2</reference_assay_group>
+                      <test_assay_group>g1</test_assay_group>
+                 </contrast>
+              </contrasts>
+     </analytics>
+</configuration>

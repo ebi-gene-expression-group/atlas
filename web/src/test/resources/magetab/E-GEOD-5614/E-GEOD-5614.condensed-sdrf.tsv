@@ -1,0 +1,24 @@
+E-GEOD-5614	A-AFFY-2	Broadley_1-1_A1-Bo+P-nutrient-replete_Rep1_ATH1	characteristic	germplasm	alboglabra
+E-GEOD-5614	A-AFFY-2	Broadley_1-1_A1-Bo+P-nutrient-replete_Rep1_ATH1	characteristic	organism	Brassica oleracea	http://purl.obolibrary.org/obo/NCBITaxon_3712
+E-GEOD-5614	A-AFFY-2	Broadley_1-1_A1-Bo+P-nutrient-replete_Rep1_ATH1	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-5614	A-AFFY-2	Broadley_1-1_A1-Bo+P-nutrient-replete_Rep1_ATH1	factor	growth condition	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-GEOD-5614	A-AFFY-2	Broadley_1-2_A2-Bo-P-phosphate-starved_Rep1_ATH1	characteristic	germplasm	alboglabra
+E-GEOD-5614	A-AFFY-2	Broadley_1-2_A2-Bo-P-phosphate-starved_Rep1_ATH1	characteristic	organism	Brassica oleracea	http://purl.obolibrary.org/obo/NCBITaxon_3712
+E-GEOD-5614	A-AFFY-2	Broadley_1-2_A2-Bo-P-phosphate-starved_Rep1_ATH1	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-5614	A-AFFY-2	Broadley_1-2_A2-Bo-P-phosphate-starved_Rep1_ATH1	factor	growth condition	phosphate starvation
+E-GEOD-5614	A-AFFY-2	Broadley_1-3_A3-Bo-P2-phosphate-starved_Rep2_ATH1	characteristic	germplasm	alboglabra
+E-GEOD-5614	A-AFFY-2	Broadley_1-3_A3-Bo-P2-phosphate-starved_Rep2_ATH1	characteristic	organism	Brassica oleracea	http://purl.obolibrary.org/obo/NCBITaxon_3712
+E-GEOD-5614	A-AFFY-2	Broadley_1-3_A3-Bo-P2-phosphate-starved_Rep2_ATH1	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-5614	A-AFFY-2	Broadley_1-3_A3-Bo-P2-phosphate-starved_Rep2_ATH1	factor	growth condition	phosphate starvation
+E-GEOD-5614	A-AFFY-2	Broadley_1-4_A4-Bo-P3-phosphate-starved_Rep3_ATH1	characteristic	germplasm	alboglabra
+E-GEOD-5614	A-AFFY-2	Broadley_1-4_A4-Bo-P3-phosphate-starved_Rep3_ATH1	characteristic	organism	Brassica oleracea	http://purl.obolibrary.org/obo/NCBITaxon_3712
+E-GEOD-5614	A-AFFY-2	Broadley_1-4_A4-Bo-P3-phosphate-starved_Rep3_ATH1	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-5614	A-AFFY-2	Broadley_1-4_A4-Bo-P3-phosphate-starved_Rep3_ATH1	factor	growth condition	phosphate starvation
+E-GEOD-5614	A-AFFY-2	Broadley_1-5_A5-Bo+P2-nutrient-replete_Rep2_ATH1	characteristic	germplasm	alboglabra
+E-GEOD-5614	A-AFFY-2	Broadley_1-5_A5-Bo+P2-nutrient-replete_Rep2_ATH1	characteristic	organism	Brassica oleracea	http://purl.obolibrary.org/obo/NCBITaxon_3712
+E-GEOD-5614	A-AFFY-2	Broadley_1-5_A5-Bo+P2-nutrient-replete_Rep2_ATH1	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-5614	A-AFFY-2	Broadley_1-5_A5-Bo+P2-nutrient-replete_Rep2_ATH1	factor	growth condition	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-GEOD-5614	A-AFFY-2	Broadley_1-6_A6-Bo+P3-nutrient-replete_Rep3_ATH1	characteristic	germplasm	alboglabra
+E-GEOD-5614	A-AFFY-2	Broadley_1-6_A6-Bo+P3-nutrient-replete_Rep3_ATH1	characteristic	organism	Brassica oleracea	http://purl.obolibrary.org/obo/NCBITaxon_3712
+E-GEOD-5614	A-AFFY-2	Broadley_1-6_A6-Bo+P3-nutrient-replete_Rep3_ATH1	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
+E-GEOD-5614	A-AFFY-2	Broadley_1-6_A6-Bo+P3-nutrient-replete_Rep3_ATH1	factor	growth condition	control	http://www.ebi.ac.uk/efo/EFO_0001461

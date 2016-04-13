@@ -1,0 +1,51 @@
+Investigation Title	Transcription profiling of Brassica oleracea Shoots during phosphate starvation (cross-species study)	
+Comment[Submitted Name]	Changes in Gene Expression in Brassica oleracea Shoots during Phosphate Starvation (Cross-species study)	
+Experimental Design	growth condition design	
+Experimental Design Term Source REF	EFO	
+Comment[AEExperimentType]	transcription profiling by array	
+Comment[AEExperimentDisplayName]	Transcription profiling by array of Brassica oleracea after phosphate starvation	
+Comment[ArrayExpressReleaseDate]	2008-06-13	
+Comment[SecondaryAccession]	GSE5614	
+Comment[AEMIAMESCORE]	4	
+Comment[ArrayExpressAccession]	E-GEOD-5614	
+Comment[MAGETAB TimeStamp_Version]	2011-01-22 21:12:34 Last Changed Rev: 14857	
+Experimental Factor Name	growth condition	
+Experimental Factor Type	growth condition	
+Experimental Factor Term Source REF		
+Person Last Name	(NASC)	
+Person First Name	Nottingham Arabidopsis Stock Centre	
+Person Mid Initials		
+Person Email	affy@arabidopsis.info	
+Person Phone		
+Person Fax		
+Person Address	School of Biosciences, University of Nottingham, Nottingham Arabidopsis Stock Centre (NASC), Sutton Bonington Campus, Loughborough, LE12 5RD, United Kingdom	
+Person Affiliation	Nottingham Arabidopsis Stock Centre (NASC)	
+Person Roles	submitter	
+Person Roles Term Source REF		
+Quality Control Type		
+Quality Control Term Source REF		
+Replicate Type		
+Replicate Term Source REF		
+Normalization Type		
+Normalization Term Source REF		
+Date of Experiment		
+Public Release Date	2008-06-13	
+PubMed ID		
+Publication DOI		
+Publication Author List		
+Publication Title		
+Publication Status		
+Publication Status Term Source REF		
+Experiment Description	The aim of this study is to study gene expression in Brassica oleracea in shoot tissues of plants grown under contrasting P supplies (see Hammond JP et al., 2003, Plant Physiology, 132, 578-596 for background). Seeds of B. oleracea (var. alboglabra, A12dH) were first washed in 70% (v/v) ethanol/water, rinsed in distilled water and surface sterilised using 50% (v/v) domestic bleach/water. Seeds were rinsed and imbibed for 3 to 5 days in sterile distilled water at 4Â°C to break dormancy. Following imbibition, B. oleracea seeds were sown in un-vented, polycarbonate culture boxes (Sigma-Aldrich Company Ltd., Dorset UK). Seedlings were grown for 21 days on perforated polycarbonate discs (diameter 91 mm by 5 mm) placed on 75 ml of 0.8% (w/v) agar containing 1% (w/v) sucrose and a basal salt mix. Roots grew into the agar, but shoots remained on the opposite side of the disc. After 21 days, seedlings were transferred, still on polycarbonate discs, to a hydroponics system situated in a Saxcil growth cabinet (16 h daylength, set to 22Â°C and 80% humidity). Each polycarbonate disc was placed on a light-proof 500 ml beaker over 450 ml of nutrient solution. After 7 days, half the plants were transferred to nutrient solution containing no phosphate and the other half remained on full nutrient solution (control plants). Shoots were harvested 100 h after the withdrawal of P. !Samples were snap frozen in liquid nitrogen. RNA was extracted using the TRIzol extraction method and cleaned through a Qiagen RNeasy column. Experimenter name = Martin Broadley; Experimenter phone = 0115 951 6382; Experimenter fax = 0115 951 6334; Experimenter institute = University of Nottingham; Experimenter address = Plant Sciences Division; Experimenter address = School of Biosciences; Experimenter address = University of Nottingham; Experimenter address = Sutton Bonington; Experimenter address = Loughborough; Experimenter zip/postal_code = LE12 5RD; Experimenter country = UK Experiment Overall Design: 6 samples were used in this experiment	
+Protocol Name	Affymetrix:Protocol:Hybridization-Unknown	P-AFFY-6
+Protocol Type	hybridization	feature_extraction
+Protocol Description	Title: Affymetrix Generic Hybridization. Description: 	Title: Affymetrix CEL analysis. Description: 
+Protocol Parameters		
+Protocol Hardware		
+Protocol Software	MicroArraySuite 5.0	MicroArraySuite 5.0
+Protocol Contact		
+Protocol Term Source REF		
+SDRF File	E-GEOD-5614.sdrf.txt	
+Term Source Name	EFO	
+Term Source File	http://www.ebi.ac.uk/efo/	
+Term Source Version		
