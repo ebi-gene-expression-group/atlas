@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_differential" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="3 day; H5N2; ileum">
+                <assay>ERR597459</assay>
+                <assay>ERR597454</assay>
+                <assay>ERR597450</assay>
+            </assay_group>
+            <assay_group id="g2" label="1 day; none; ileum">
+                <assay>ERR597463</assay>
+                <assay>ERR597432</assay>
+                <assay>ERR597434</assay>
+            </assay_group>
+            <assay_group id="g3" label="3 day; none; lung">
+                <assay>ERR597464</assay>
+                <assay>ERR597441</assay>
+                <assay>ERR597448</assay>
+            </assay_group>
+            <assay_group id="g4" label="3 day; none; ileum">
+                <assay>ERR597447</assay>
+                <assay>ERR597442</assay>
+                <assay>ERR597445</assay>
+            </assay_group>
+            <assay_group id="g5" label="1 day; H5N2; ileum">
+                <assay>ERR597431</assay>
+                <assay>ERR597446</assay>
+                <assay>ERR597461</assay>
+            </assay_group>
+            <assay_group id="g6" label="3 day; H5N2; lung">
+                <assay>ERR597456</assay>
+                <assay>ERR597460</assay>
+                <assay>ERR597435</assay>
+            </assay_group>
+            <assay_group id="g7" label="1 day; H5N1; ileum">
+                <assay>ERR597457</assay>
+                <assay>ERR597462</assay>
+                <assay>ERR597455</assay>
+            </assay_group>
+            <assay_group id="g8" label="3 day; H5N1; lung">
+                <assay>ERR597458</assay>
+                <assay>ERR597452</assay>
+                <assay>ERR597429</assay>
+            </assay_group>
+            <assay_group id="g9" label="1 day; none; lung">
+                <assay>ERR597453</assay>
+                <assay>ERR597430</assay>
+                <assay>ERR597440</assay>
+            </assay_group>
+            <assay_group id="g10" label="3 day; H5N1; ileum">
+                <assay>ERR597451</assay>
+                <assay>ERR597437</assay>
+                <assay>ERR597436</assay>
+            </assay_group>
+            <assay_group id="g11" label="1 day; H5N1; lung">
+                <assay>ERR597438</assay>
+                <assay>ERR597449</assay>
+                <assay>ERR597439</assay>
+            </assay_group>
+            <assay_group id="g12" label="1 day; H5N2; lung">
+                <assay>ERR597444</assay>
+                <assay>ERR597433</assay>
+                <assay>ERR597443</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g2_g5">
+                <name>'H5N2' vs 'none' in 'ileum' at '1 day'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g5</test_assay_group>
+            </contrast>
+            <contrast id="g2_g7">
+                <name>'H5N1' vs 'none' in 'ileum' at '1 day'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g7</test_assay_group>
+            </contrast>
+            <contrast id="g9_g11">
+                <name>'H5N1' vs 'none' in 'lung' at '1 day'</name>
+                <reference_assay_group>g9</reference_assay_group>
+                <test_assay_group>g11</test_assay_group>
+            </contrast>
+            <contrast id="g9_g12">
+                <name>'H5N2' vs 'none' in 'lung' at '1 day'</name>
+                <reference_assay_group>g9</reference_assay_group>
+                <test_assay_group>g12</test_assay_group>
+            </contrast>
+            <contrast id="g4_g1">
+                <name>'H5N2' vs 'none' in 'ileum' at '3 day'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g3_g6">
+                <name>'H5N2' vs 'none' in 'lung' at '3 day'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g6</test_assay_group>
+            </contrast>
+            <contrast id="g3_g8">
+                <name>'H5N1' vs 'none' in 'lung' at '3 day'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g8</test_assay_group>
+            </contrast>
+            <contrast id="g4_g10">
+                <name>'H5N1' vs 'none' in 'ileum' at '3 day'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g10</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

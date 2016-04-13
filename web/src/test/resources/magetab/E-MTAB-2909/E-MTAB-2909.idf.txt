@@ -1,0 +1,45 @@
+Comment[ArrayExpressAccession]	E-MTAB-2909
+MAGE-TAB Version	1.1						
+Investigation Title	Infection of duck with avian influenza H5N1 and H5N2 viruses						
+Comment[Submitted Name]	Infection of duck with avian influenza H5N1 and H5N2 viruses
+Experiment Description	Transcriptional profiling was carried out on lung and ileum samples at 1dpi and 3dpi from ducks infected with either low pathogenic (H5N2) or highly pathogenic (H5N1) avian influenza. Infected birds were compared to control birds at each time point.						
+Comment[AEExperimentDisplayName]	RNA-seq of lung and ileum samples at 1 and 3 days post infection (dpi) from ducks infected with either low pathogenic (H5N2) or highly pathogenic (H5N1) avian influenza						
+Experimental Design	disease state design						
+Experimental Design Term Source REF	EFO						
+Experimental Design Term Accession Number	EFO_0001756						
+Experimental Factor Name	organism part	infect	time				
+Experimental Factor Type	organism part	infect	time				
+Experimental Factor Term Source REF	EFO	EFO					
+Experimental Factor Term Accession Number	EFO_0000635	EFO_0000408					
+Person Last Name	Smith						
+Person First Name	Jacqueline						
+Person Mid Initials							
+Person Email	Jacqueline.smith@roslin.ed.ac.uk						
+Person Phone	+44 (0) 131 651 9469						
+Person Fax							
+Person Address	Easter Bush Midlothian EH25 9RG Scotland UK						
+Person Affiliation	The Roslin Institute						
+Person Roles	submitter						
+Date of Experiment	2011-08-01						
+Public Release Date	2015-01-19						
+PubMed ID							
+Publication DOI							
+Publication Author List	Jacqueline Smith, Le Yu, Ian R. Paton, Maria Weronika Gutowska, Heather L. Forrest, Angela F. Danner, J. Patrick Seiler, Robert G. Webster, David W. Burt	Smith et al.					
+Publication Title	A comparative analysis of host responses to avian influenza infection in ducks and chickens highlights a role for the interferon-induced transmembrane proteins in viral resistance	The Avian RNAseq Consortium: a community effort to annotate the chicken genome					
+Publication Status	submitted	in preparation					
+Publication Status Term Source REF	EFO	EFO					
+Publication Status Term Accession Number	EFO_0001794	EFO_0001795					
+Protocol Name	P-MTAB-41017	P-MTAB-41018	P-MTAB-41019	P-MTAB-41020	P-MTAB-41021	P-MTAB-41022	P-MTAB-41023
+Protocol Type	growth protocol	treatment protocol	nucleic acid extraction protocol	nucleic acid library construction protocol	nucleic acid sequencing protocol	high throughput sequence alignment protocol	normalization data transformation protocol
+Protocol Term Source REF	EFO	EFO	EFO	EFO	EFO	EFO	EFO
+Protocol Term Accession Number	EFO_0003789	EFO_0003969	EFO_0002944	EFO_0004184	EFO_0004170	EFO_0004917	EFO_0003816
+Protocol Description	Virus Strains. A/Mallard/British Columbia/500/2005 (H5N2) was used for LPAI challenge. A/Vietnam/1203/2004 (H5N1) was used for HPAI challenge. The viruses were grown in the allantoic cavities of 10-day-old embryonated chicken eggs for 48 hours at 35 degrees C. Allantoic fluid containing virus was harvested and stored at -80 degrees C until use. Virus yield was determined as 50% egg infectious dose (EID50) per millilitre of virus stock by the method of Reed and Muench .Experimental Animals. Domestic Gray Mallards were purchased from Ideal Poultry (Cameron, TX). All experiments involving animals were approved by the Animal Care and Use Committee of St. Jude Children’s Research Hospital and performed in compliance with relevant policies of the National Institutes of Health and the Animal Welfare Act. All animal challenge experiments were performed in an animal biosafety level 2 containment facilities for the LPAI challenges and in biosafety level 3 enhanced containment laboratories for the HPAI challenges.	Ducks, except the mock infection control group, were challenged with 106 EID50 intranasally, intratracheally, and intraocularly of LPAI A/Mallard/British Columbia/500/2005 (H5N2) in phosphate buffered saline (PBS).  Ducks, except the mock infection control group, were challenged with 106 EID50 intranasally, intratracheally, and intraocularly of HPAI A/Vietnam/1203/2004 (H5N1) in PBS. During LPAI and HPAI infections in ducks, mock infection control groups were also inoculated. Mock infection control birds received an equivalent volume and route of administration with PBS. Animals were monitored daily for clinical signs. 	:  For each ileum and lung tissue, the tissue sample was homogenized in Trizol (Invitrogen Life Technologies), 0.1g tissue/1.0ml Trizol with handheld homogenizer Power Gen125 (Thermo Fisher Scientific).  After homogenates were prepared, the samples were centrifuged to separate the liquid phases of Trizol homogenates.  0.5ml of the aqueous phase was passed through a QIagen RNeasy (Qiagen, Valencia, CA) spin column according to manufacturer's instructions for RNA extraction.  Samples were frozen and stored at -80 degrees C until all samples were collected for analysis.	Samples were prepared for mRNA sequencing using 5ug of total RNA starting material following the Illumina mRNA sequencing 8 sample preparation kit protocol. 	Resulting libraries were quality checked on an Agilent DNA 1000 bioanalyzer (Agilent Technologies, South Queensferry, UK) and then clustered onto a Single Read flowcell using the Illumina v2 cluster generation kit at a 4.75pM concentration. Thirty-six cycle single-ended sequencing was carried out on the Genome Analyser IIx using Illumina v3 Sequencing by Synthesis kits (Illumina, Little Chesterford, UK).	The Illumina Genome Analyzer-IIx platform generated millions of RNAseq tags per sample (286 million for duck), each 36 nucleotides in length. RNAseq tags were processed in several steps: (1) tags were filtered using quality scores, (2) tags were assigned to a region of the reference genomes (BGI_duck_1.0) by parallel computing using SOAP2, (3) tags were cross referenced to Ensembl (Genebuild72) gene annotations and (4) counts of tags were calculated for each gene. Based on this pipeline, 239 million duck sequence tags could be mapped to the duck genome, 133 million of which were annotated to known genes in the duck (56%). 	Statistical analysis was then used to identify differentially expressed genes using the edgeR package within Bioconductor
+Protocol Hardware					Illumina Genome Analyzer IIx		
+Protocol Software							
+Term Source Name	EFO
+Term Source File	http://www.ebi.ac.uk/efo/						
+Term Source Version							
+Comment[AEExperimentType]	RNA-seq of coding RNA						
+Comment[SecondaryAccession]	ERP006917
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERR597429-ERR597464
+SDRF File	E-MTAB-2909.sdrf.txt

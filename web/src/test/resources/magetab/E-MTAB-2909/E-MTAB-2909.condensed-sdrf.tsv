@@ -1,0 +1,252 @@
+E-MTAB-2909		ERR597429	characteristic	infect	H5N1
+E-MTAB-2909		ERR597429	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597429	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597429	characteristic	time	3 day
+E-MTAB-2909		ERR597429	factor	infect	H5N1
+E-MTAB-2909		ERR597429	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597429	factor	time	3 day
+E-MTAB-2909		ERR597430	characteristic	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597430	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597430	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597430	characteristic	time	1 day
+E-MTAB-2909		ERR597430	factor	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597430	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597430	factor	time	1 day
+E-MTAB-2909		ERR597431	characteristic	infect	H5N2
+E-MTAB-2909		ERR597431	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597431	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597431	characteristic	time	1 day
+E-MTAB-2909		ERR597431	factor	infect	H5N2
+E-MTAB-2909		ERR597431	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597431	factor	time	1 day
+E-MTAB-2909		ERR597432	characteristic	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597432	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597432	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597432	characteristic	time	1 day
+E-MTAB-2909		ERR597432	factor	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597432	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597432	factor	time	1 day
+E-MTAB-2909		ERR597433	characteristic	infect	H5N2
+E-MTAB-2909		ERR597433	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597433	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597433	characteristic	time	1 day
+E-MTAB-2909		ERR597433	factor	infect	H5N2
+E-MTAB-2909		ERR597433	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597433	factor	time	1 day
+E-MTAB-2909		ERR597434	characteristic	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597434	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597434	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597434	characteristic	time	1 day
+E-MTAB-2909		ERR597434	factor	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597434	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597434	factor	time	1 day
+E-MTAB-2909		ERR597435	characteristic	infect	H5N2
+E-MTAB-2909		ERR597435	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597435	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597435	characteristic	time	3 day
+E-MTAB-2909		ERR597435	factor	infect	H5N2
+E-MTAB-2909		ERR597435	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597435	factor	time	3 day
+E-MTAB-2909		ERR597436	characteristic	infect	H5N1
+E-MTAB-2909		ERR597436	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597436	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597436	characteristic	time	3 day
+E-MTAB-2909		ERR597436	factor	infect	H5N1
+E-MTAB-2909		ERR597436	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597436	factor	time	3 day
+E-MTAB-2909		ERR597437	characteristic	infect	H5N1
+E-MTAB-2909		ERR597437	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597437	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597437	characteristic	time	3 day
+E-MTAB-2909		ERR597437	factor	infect	H5N1
+E-MTAB-2909		ERR597437	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597437	factor	time	3 day
+E-MTAB-2909		ERR597438	characteristic	infect	H5N1
+E-MTAB-2909		ERR597438	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597438	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597438	characteristic	time	1 day
+E-MTAB-2909		ERR597438	factor	infect	H5N1
+E-MTAB-2909		ERR597438	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597438	factor	time	1 day
+E-MTAB-2909		ERR597439	characteristic	infect	H5N1
+E-MTAB-2909		ERR597439	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597439	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597439	characteristic	time	1 day
+E-MTAB-2909		ERR597439	factor	infect	H5N1
+E-MTAB-2909		ERR597439	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597439	factor	time	1 day
+E-MTAB-2909		ERR597440	characteristic	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597440	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597440	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597440	characteristic	time	1 day
+E-MTAB-2909		ERR597440	factor	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597440	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597440	factor	time	1 day
+E-MTAB-2909		ERR597441	characteristic	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597441	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597441	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597441	characteristic	time	3 day
+E-MTAB-2909		ERR597441	factor	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597441	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597441	factor	time	3 day
+E-MTAB-2909		ERR597442	characteristic	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597442	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597442	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597442	characteristic	time	3 day
+E-MTAB-2909		ERR597442	factor	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597442	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597442	factor	time	3 day
+E-MTAB-2909		ERR597443	characteristic	infect	H5N2
+E-MTAB-2909		ERR597443	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597443	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597443	characteristic	time	1 day
+E-MTAB-2909		ERR597443	factor	infect	H5N2
+E-MTAB-2909		ERR597443	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597443	factor	time	1 day
+E-MTAB-2909		ERR597444	characteristic	infect	H5N2
+E-MTAB-2909		ERR597444	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597444	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597444	characteristic	time	1 day
+E-MTAB-2909		ERR597444	factor	infect	H5N2
+E-MTAB-2909		ERR597444	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597444	factor	time	1 day
+E-MTAB-2909		ERR597445	characteristic	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597445	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597445	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597445	characteristic	time	3 day
+E-MTAB-2909		ERR597445	factor	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597445	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597445	factor	time	3 day
+E-MTAB-2909		ERR597446	characteristic	infect	H5N2
+E-MTAB-2909		ERR597446	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597446	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597446	characteristic	time	1 day
+E-MTAB-2909		ERR597446	factor	infect	H5N2
+E-MTAB-2909		ERR597446	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597446	factor	time	1 day
+E-MTAB-2909		ERR597447	characteristic	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597447	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597447	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597447	characteristic	time	3 day
+E-MTAB-2909		ERR597447	factor	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597447	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597447	factor	time	3 day
+E-MTAB-2909		ERR597448	characteristic	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597448	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597448	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597448	characteristic	time	3 day
+E-MTAB-2909		ERR597448	factor	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597448	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597448	factor	time	3 day
+E-MTAB-2909		ERR597449	characteristic	infect	H5N1
+E-MTAB-2909		ERR597449	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597449	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597449	characteristic	time	1 day
+E-MTAB-2909		ERR597449	factor	infect	H5N1
+E-MTAB-2909		ERR597449	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597449	factor	time	1 day
+E-MTAB-2909		ERR597450	characteristic	infect	H5N2
+E-MTAB-2909		ERR597450	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597450	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597450	characteristic	time	3 day
+E-MTAB-2909		ERR597450	factor	infect	H5N2
+E-MTAB-2909		ERR597450	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597450	factor	time	3 day
+E-MTAB-2909		ERR597451	characteristic	infect	H5N1
+E-MTAB-2909		ERR597451	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597451	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597451	characteristic	time	3 day
+E-MTAB-2909		ERR597451	factor	infect	H5N1
+E-MTAB-2909		ERR597451	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597451	factor	time	3 day
+E-MTAB-2909		ERR597452	characteristic	infect	H5N1
+E-MTAB-2909		ERR597452	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597452	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597452	characteristic	time	3 day
+E-MTAB-2909		ERR597452	factor	infect	H5N1
+E-MTAB-2909		ERR597452	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597452	factor	time	3 day
+E-MTAB-2909		ERR597453	characteristic	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597453	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597453	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597453	characteristic	time	1 day
+E-MTAB-2909		ERR597453	factor	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597453	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597453	factor	time	1 day
+E-MTAB-2909		ERR597454	characteristic	infect	H5N2
+E-MTAB-2909		ERR597454	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597454	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597454	characteristic	time	3 day
+E-MTAB-2909		ERR597454	factor	infect	H5N2
+E-MTAB-2909		ERR597454	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597454	factor	time	3 day
+E-MTAB-2909		ERR597455	characteristic	infect	H5N1
+E-MTAB-2909		ERR597455	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597455	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597455	characteristic	time	1 day
+E-MTAB-2909		ERR597455	factor	infect	H5N1
+E-MTAB-2909		ERR597455	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597455	factor	time	1 day
+E-MTAB-2909		ERR597456	characteristic	infect	H5N2
+E-MTAB-2909		ERR597456	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597456	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597456	characteristic	time	3 day
+E-MTAB-2909		ERR597456	factor	infect	H5N2
+E-MTAB-2909		ERR597456	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597456	factor	time	3 day
+E-MTAB-2909		ERR597457	characteristic	infect	H5N1
+E-MTAB-2909		ERR597457	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597457	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597457	characteristic	time	1 day
+E-MTAB-2909		ERR597457	factor	infect	H5N1
+E-MTAB-2909		ERR597457	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597457	factor	time	1 day
+E-MTAB-2909		ERR597458	characteristic	infect	H5N1
+E-MTAB-2909		ERR597458	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597458	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597458	characteristic	time	3 day
+E-MTAB-2909		ERR597458	factor	infect	H5N1
+E-MTAB-2909		ERR597458	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597458	factor	time	3 day
+E-MTAB-2909		ERR597459	characteristic	infect	H5N2
+E-MTAB-2909		ERR597459	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597459	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597459	characteristic	time	3 day
+E-MTAB-2909		ERR597459	factor	infect	H5N2
+E-MTAB-2909		ERR597459	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597459	factor	time	3 day
+E-MTAB-2909		ERR597460	characteristic	infect	H5N2
+E-MTAB-2909		ERR597460	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597460	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597460	characteristic	time	3 day
+E-MTAB-2909		ERR597460	factor	infect	H5N2
+E-MTAB-2909		ERR597460	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597460	factor	time	3 day
+E-MTAB-2909		ERR597461	characteristic	infect	H5N2
+E-MTAB-2909		ERR597461	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597461	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597461	characteristic	time	1 day
+E-MTAB-2909		ERR597461	factor	infect	H5N2
+E-MTAB-2909		ERR597461	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597461	factor	time	1 day
+E-MTAB-2909		ERR597462	characteristic	infect	H5N1
+E-MTAB-2909		ERR597462	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597462	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597462	characteristic	time	1 day
+E-MTAB-2909		ERR597462	factor	infect	H5N1
+E-MTAB-2909		ERR597462	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597462	factor	time	1 day
+E-MTAB-2909		ERR597463	characteristic	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597463	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597463	characteristic	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597463	characteristic	time	1 day
+E-MTAB-2909		ERR597463	factor	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597463	factor	organism part	ileum	http://purl.obolibrary.org/obo/UBERON_0002116
+E-MTAB-2909		ERR597463	factor	time	1 day
+E-MTAB-2909		ERR597464	characteristic	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597464	characteristic	organism	Anas platyrhynchos	http://purl.obolibrary.org/obo/NCBITaxon_8839
+E-MTAB-2909		ERR597464	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597464	characteristic	time	3 day
+E-MTAB-2909		ERR597464	factor	infect	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-2909		ERR597464	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2909		ERR597464	factor	time	3 day
