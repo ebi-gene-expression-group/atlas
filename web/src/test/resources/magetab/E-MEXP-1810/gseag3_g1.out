@@ -1,0 +1,209 @@
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv --pvalue-col=4 --foldchange-col=6 --title="
+Top 10 GO terms enriched in 
+'dauer pheromone; 450 microliter' vs 'none' in 'RIL-14' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.caenorhabditis_elegans.g3_g1.ensgene.go.tsv.aux1 --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/caenorhabditis_elegans.ensgene.go.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.g3_g1.go.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv
+pval.col = 4
+fold.col = 6
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/caenorhabditis_elegans.ensgene.go.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.caenorhabditis_elegans.g3_g1.ensgene.go.tsv.aux1
+title = 
+Top 10 GO terms enriched in 
+'dauer pheromone; 450 microliter' vs 'none' in 'RIL-14' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.g3_g1.go.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 4615 entries
+[INFO] No more duplicates
+[INFO] 3779 unique entries
+[INFO] NAs removed: 3647
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv loaded: 132 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/caenorhabditis_elegans.ensgene.go.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/caenorhabditis_elegans.ensgene.go.tsv loaded: 88349 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.caenorhabditis_elegans.g3_g1.ensgene.go.tsv.aux1
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.caenorhabditis_elegans.g3_g1.ensgene.go.tsv.aux1 loaded: 5336 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.49+-0.59
+[INFO] p-value mean 0.92+-0.24
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=99 #genes (pvalue<=0.05)=4
+[INFO] Loading GSC...
+[INFO] Gene sets:302 genes:96
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 4 genes of interest in 22 gene sets, using a background of 95 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.g3_g1.go.gsea.tsv
+[WARNING] Insufficient gene sets () to draw a plot - plot not generated.
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv --pvalue-col=4 --foldchange-col=6 --title="
+Top 10 InterPro domains enriched in 
+'dauer pheromone; 450 microliter' vs 'none' in 'RIL-14' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/caenorhabditis_elegans.ensgene.interpro.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.g3_g1.interpro.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv
+pval.col = 4
+fold.col = 6
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/caenorhabditis_elegans.ensgene.interpro.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+title = 
+Top 10 InterPro domains enriched in 
+'dauer pheromone; 450 microliter' vs 'none' in 'RIL-14' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.g3_g1.interpro.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 4615 entries
+[INFO] No more duplicates
+[INFO] 3779 unique entries
+[INFO] NAs removed: 3647
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv loaded: 132 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/caenorhabditis_elegans.ensgene.interpro.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/caenorhabditis_elegans.ensgene.interpro.tsv loaded: 44508 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux loaded: 26238 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.49+-0.59
+[INFO] p-value mean 0.92+-0.24
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=95 #genes (pvalue<=0.05)=4
+[INFO] Loading GSC...
+[INFO] Gene sets:194 genes:92
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 4 genes of interest in 7 gene sets, using a background of 91 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.g3_g1.interpro.gsea.tsv
+[WARNING] Insufficient gene sets () to draw a plot - plot not generated.
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv --pvalue-col=4 --foldchange-col=6 --title="
+Top 10 Reactome pathways enriched in 
+'dauer pheromone; 450 microliter' vs 'none' in 'RIL-14' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/caenorhabditis_elegans.reactome.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/caenorhabditis_elegans.reactome.tsv.gsea.aux --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.g3_g1.reactome.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv
+pval.col = 4
+fold.col = 6
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/caenorhabditis_elegans.reactome.tsv.gsea.aux
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/caenorhabditis_elegans.reactome.tsv.decorate.aux
+title = 
+Top 10 Reactome pathways enriched in 
+'dauer pheromone; 450 microliter' vs 'none' in 'RIL-14' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.g3_g1.reactome.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 4615 entries
+[INFO] No more duplicates
+[INFO] 3779 unique entries
+[INFO] NAs removed: 3647
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810_A-AFFY-60-analytics.tsv loaded: 132 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/caenorhabditis_elegans.reactome.tsv.gsea.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/caenorhabditis_elegans.reactome.tsv.gsea.aux loaded: 37139 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/caenorhabditis_elegans.reactome.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/caenorhabditis_elegans.reactome.tsv.decorate.aux loaded: 1024 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.49+-0.59
+[INFO] p-value mean 0.92+-0.24
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=132 #genes (pvalue<=0.05)=4
+[WARNING] No gene annotation found...giving up. Please check if you have GO/Pathway information in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/caenorhabditis_elegans.reactome.tsv.gsea.aux.
+[WARNING] No significant entries found for p-value of 0.05
+[INFO] Created empty /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810/E-MEXP-1810.g3_g1.reactome.gsea.tsv
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-031>
+Subject: Job 1039694: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810 g3_g1 > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810 g3_g1 > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi5-031>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810> was used as the working directory.
+Started at Tue Apr 12 17:55:38 2016
+Results reported at Tue Apr 12 17:55:58 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810 g3_g1 
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               17.49 sec.
+    Max Memory :             64 MB
+    Average Memory :         39.50 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           4032.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               835 MB
+
+    Max Processes :          8
+    Max Threads :            9
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <gseag3_g1.err> for stderr output of this job.
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-60</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="dauer pheromone; 450 microliter; RIL-14">
+                <assay>H_RIL-14 dauer 3</assay>
+                <assay>H_RIL-14 dauer 2</assay>
+                <assay>H_RIL-14 dauer 1</assay>
+            </assay_group>
+            <assay_group id="g2" label="dauer pheromone; 450 microliter; RIL-17">
+                <assay>H_RIL-17 dauer 1</assay>
+                <assay>H_RIL-17 dauer 3</assay>
+                <assay>H_RIL-17 dauer 2</assay>
+            </assay_group>
+            <assay_group id="g3" label="none; 0 microliter; RIL-14">
+                <assay>H_RIL-14 non-dauer 2</assay>
+                <assay>H_RIL-14 non-dauer 1</assay>
+                <assay>H_RIL-14 non-dauer 3</assay>
+            </assay_group>
+            <assay_group id="g4" label="none; 0 microliter; RIL-17">
+                <assay>H_RIL-17 non-dauer 3</assay>
+                <assay>H_RIL-17 non-dauer 2</assay>
+                <assay>H_RIL-17 non-dauer 1</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g3_g1">
+                <name>'dauer pheromone; 450 microliter' vs 'none' in 'RIL-14'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g4_g2">
+                <name>'dauer pheromone; 450 microliter' vs 'none' in 'RIL-17'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

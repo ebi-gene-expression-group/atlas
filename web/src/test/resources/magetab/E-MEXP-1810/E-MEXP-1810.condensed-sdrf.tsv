@@ -1,0 +1,72 @@
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 1	characteristic	developmental stage	L2 larva	http://www.ebi.ac.uk/efo/EFO_0002719
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 1	characteristic	organism	Caenorhabditis elegans	http://purl.obolibrary.org/obo/NCBITaxon_6239
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 1	characteristic	strain	RIL-14
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 1	factor	strain	RIL-14
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 1	factor	compound	dauer pheromone
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 1	factor	dose	450 microliter
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 2	characteristic	developmental stage	L2 larva	http://www.ebi.ac.uk/efo/EFO_0002719
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 2	characteristic	organism	Caenorhabditis elegans	http://purl.obolibrary.org/obo/NCBITaxon_6239
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 2	characteristic	strain	RIL-14
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 2	factor	strain	RIL-14
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 2	factor	compound	dauer pheromone
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 2	factor	dose	450 microliter
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 3	characteristic	developmental stage	L2 larva	http://www.ebi.ac.uk/efo/EFO_0002719
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 3	characteristic	organism	Caenorhabditis elegans	http://purl.obolibrary.org/obo/NCBITaxon_6239
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 3	characteristic	strain	RIL-14
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 3	factor	strain	RIL-14
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 3	factor	compound	dauer pheromone
+E-MEXP-1810	A-AFFY-60	H_RIL-14 dauer 3	factor	dose	450 microliter
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 1	characteristic	developmental stage	L2 larva	http://www.ebi.ac.uk/efo/EFO_0002719
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 1	characteristic	organism	Caenorhabditis elegans	http://purl.obolibrary.org/obo/NCBITaxon_6239
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 1	characteristic	strain	RIL-14
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 1	factor	strain	RIL-14
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 1	factor	compound	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 1	factor	dose	0 microliter
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 2	characteristic	developmental stage	L2 larva	http://www.ebi.ac.uk/efo/EFO_0002719
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 2	characteristic	organism	Caenorhabditis elegans	http://purl.obolibrary.org/obo/NCBITaxon_6239
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 2	characteristic	strain	RIL-14
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 2	factor	strain	RIL-14
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 2	factor	compound	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 2	factor	dose	0 microliter
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 3	characteristic	developmental stage	L2 larva	http://www.ebi.ac.uk/efo/EFO_0002719
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 3	characteristic	organism	Caenorhabditis elegans	http://purl.obolibrary.org/obo/NCBITaxon_6239
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 3	characteristic	strain	RIL-14
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 3	factor	strain	RIL-14
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 3	factor	compound	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MEXP-1810	A-AFFY-60	H_RIL-14 non-dauer 3	factor	dose	0 microliter
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 1	characteristic	developmental stage	L2 larva	http://www.ebi.ac.uk/efo/EFO_0002719
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 1	characteristic	organism	Caenorhabditis elegans	http://purl.obolibrary.org/obo/NCBITaxon_6239
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 1	characteristic	strain	RIL-17
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 1	factor	strain	RIL-17
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 1	factor	compound	dauer pheromone
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 1	factor	dose	450 microliter
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 2	characteristic	developmental stage	L2 larva	http://www.ebi.ac.uk/efo/EFO_0002719
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 2	characteristic	organism	Caenorhabditis elegans	http://purl.obolibrary.org/obo/NCBITaxon_6239
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 2	characteristic	strain	RIL-17
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 2	factor	strain	RIL-17
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 2	factor	compound	dauer pheromone
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 2	factor	dose	450 microliter
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 3	characteristic	developmental stage	L2 larva	http://www.ebi.ac.uk/efo/EFO_0002719
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 3	characteristic	organism	Caenorhabditis elegans	http://purl.obolibrary.org/obo/NCBITaxon_6239
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 3	characteristic	strain	RIL-17
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 3	factor	strain	RIL-17
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 3	factor	compound	dauer pheromone
+E-MEXP-1810	A-AFFY-60	H_RIL-17 dauer 3	factor	dose	450 microliter
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 1	characteristic	developmental stage	L2 larva	http://www.ebi.ac.uk/efo/EFO_0002719
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 1	characteristic	organism	Caenorhabditis elegans	http://purl.obolibrary.org/obo/NCBITaxon_6239
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 1	characteristic	strain	RIL-17
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 1	factor	strain	RIL-17
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 1	factor	compound	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 1	factor	dose	0 microliter
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 2	characteristic	developmental stage	L2 larva	http://www.ebi.ac.uk/efo/EFO_0002719
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 2	characteristic	organism	Caenorhabditis elegans	http://purl.obolibrary.org/obo/NCBITaxon_6239
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 2	characteristic	strain	RIL-17
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 2	factor	strain	RIL-17
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 2	factor	compound	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 2	factor	dose	0 microliter
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 3	characteristic	developmental stage	L2 larva	http://www.ebi.ac.uk/efo/EFO_0002719
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 3	characteristic	organism	Caenorhabditis elegans	http://purl.obolibrary.org/obo/NCBITaxon_6239
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 3	characteristic	strain	RIL-17
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 3	factor	strain	RIL-17
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 3	factor	compound	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MEXP-1810	A-AFFY-60	H_RIL-17 non-dauer 3	factor	dose	0 microliter

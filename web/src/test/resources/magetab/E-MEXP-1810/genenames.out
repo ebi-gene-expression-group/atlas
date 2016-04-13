@@ -1,0 +1,54 @@
+/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810 /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810
+Processing A-AFFY-60...
+Processing E-MEXP-1810_A-AFFY-60-analytics.tsv.undecorated...
+Processing E-MEXP-1810_A-AFFY-60-normalized-expressions.tsv.undecorated...
+Processing E-MEXP-1810_A-AFFY-60-analytics.tsv.undecorated.unrounded...
+Calculate percentile ranks for (each contrast in) the experiment
+INFO  - Removing previous percentile ranks files...
+INFO  - Done
+INFO  - Calculating percentile ranks for E-MEXP-1810_A-AFFY-60-analytics.tsv.unrounded ...
+INFO  - Percentile ranks calculation successful.
+INFO  - Successfully calculated percentile ranks for E-MEXP-1810.
+/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi1-020>
+Subject: Job 1030077: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/bioentity_annotations/decorate_microarray_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810  > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/bioentity_annotations/decorate_microarray_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810  > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi1-020>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810> was used as the working directory.
+Started at Tue Apr 12 17:19:59 2016
+Results reported at Tue Apr 12 17:21:30 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/bioentity_annotations/decorate_microarray_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1810  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               59.90 sec.
+    Max Memory :             4 MB
+    Average Memory :         2.40 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           4092.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               551 MB
+
+    Max Processes :          6
+    Max Threads :            7
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <genenames.err> for stderr output of this job.
+

@@ -1,0 +1,65 @@
+INFO  - Detected -z option. Will attempt to map terms to ontology using Zooma.
+INFO  - Detected -i option. Will import IDF file from ArrayExpress load directory.
+INFO  - Copying IDF from /nfs/ma/home/arrayexpress/ae2_production/data/EXPERIMENT/MEXP/E-MEXP-1810/E-MEXP-1810.idf.txt ...
+INFO  - Successfully copied IDF.
+INFO  - Reading MAGETAB from /nfs/ma/home/arrayexpress/ae2_production/data/EXPERIMENT/MEXP/E-MEXP-1810/E-MEXP-1810.idf.txt ...
+INFO  - Successfully read MAGETAB.
+INFO  - Collecting all properties and their values from MAGE-TAB...
+INFO  - Successfully collected all properties and values.
+INFO  - Mapping terms using Zooma...
+WARN  - No results found for compound : dauer pheromone
+WARN  - Zooma mapping failed for type "compound" and value "dauer pheromone": No results found for compound : dauer pheromone
+INFO  - Type "compound" with value "none" automatically mapped to http://www.ebi.ac.uk/efo/EFO_0001461
+INFO  - Type "developmental stage" with value "L2 larva" automatically mapped to http://www.ebi.ac.uk/efo/EFO_0002719
+INFO  - Type "dose" with value "0 microliter" was excluded from Zooma mapping.
+INFO  - Type "dose" with value "450 microliter" was excluded from Zooma mapping.
+INFO  - Type "organism" with value "Caenorhabditis elegans" automatically mapped to http://purl.obolibrary.org/obo/NCBITaxon_6239
+INFO  - Type "strain" with value "RIL-14" mapping requires curation. Potential mapping: http://www.ebi.ac.uk/efo/EFO_0003796
+INFO  - Type "strain" with value "RIL-17" mapping requires curation. Potential mapping: http://www.ebi.ac.uk/efo/EFO_0003796
+INFO  - Writing zoomification info to E-MEXP-1810/E-MEXP-1810-zoomifications-log.tsv ...
+INFO  - Successfully written zoomification info.
+INFO  - Zooma mapping finished successfully.
+INFO  - Condensing SDRF to E-MEXP-1810/E-MEXP-1810.condensed-sdrf.tsv ...
+INFO  - Successfully condensed SDRF.
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-042>
+Subject: Job 1200883: <condense_sdrf.pl -e E-MEXP-1810 -z -i -o E-MEXP-1810> in cluster <EBI> Done
+
+Job <condense_sdrf.pl -e E-MEXP-1810 -z -i -o E-MEXP-1810> was submitted from host <ebi1-133> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi5-042>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/public/ro/fg/atlas/experiments> was used as the working directory.
+Started at Wed Apr 13 13:51:42 2016
+Results reported at Wed Apr 13 13:51:47 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+condense_sdrf.pl -e E-MEXP-1810 -z -i -o E-MEXP-1810
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               2.44 sec.
+    Max Memory :             27 MB
+    Average Memory :         27.00 MB
+    Total Requested Memory : -
+    Delta Memory :           -
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               300 MB
+
+    Max Processes :          3
+    Max Threads :            4
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <E-MEXP-1810/condense_sdrf.err> for stderr output of this job.
+

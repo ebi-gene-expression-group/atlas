@@ -1,0 +1,50 @@
+Investigation Title	Transcription profiling by array of C. elegans isolates treated with dauer larva-inducing pheromone						
+Comment[Submitted Name]	Early dauer development in C. elegans RIL-14 vs RIL-17						
+Experimental Design	growth_condition_design	co-expression_design	replicate_design	transcription profiling by array			
+Experimental Design Term Source REF	The MGED Ontology	The MGED Ontology	The MGED Ontology	EFO			
+Comment[AEExperimentType]	transcription profiling by array						
+Comment[SecondaryAccession]							
+Comment[ArrayExpressReleaseDate]	2008-10-01						
+Comment[AEMIAMESCORE]	4						
+Comment[ArrayExpressAccession]	E-MEXP-1810						
+Comment[MAGETAB TimeStamp_Version]	2010-08-09 23:56:42 Last Changed Rev: 13058						
+Experimental Factor Name	dose	compound	strain				
+Experimental Factor Type	dose	compound	strain				
+Experimental Factor Term Source REF							
+Person Last Name	Harvey						
+Person First Name	Simon						
+Person Mid Initials							
+Person Email	simon.harvey@bristol.ac.uk						
+Person Phone	7972248027						
+Person Fax							
+Person Address	Woodland Road, Bristol, Avon, BS* 1UG, United Kingdom						
+Person Affiliation	University of Bristol						
+Person Roles	submitter						
+Person Roles Term Source REF	The MGED Ontology						
+Quality Control Type							
+Quality Control Term Source REF							
+Replicate Type							
+Replicate Term Source REF							
+Normalization Type							
+Normalization Term Source REF							
+Date of Experiment							
+Public Release Date	2008-10-01						
+PubMed ID	19615088						
+Publication DOI	10.1186/1471-2164-10-325						
+Publication Author List	Harvey SC, Barker GL, Shorto A, Viney ME.						
+Publication Title	Natural variation in gene expression in the early development of dauer larvae of Caenorhabditis elegans.						
+Publication Status							
+Publication Status Term Source REF							
+Experiment Description	Microarray analyses were used to compare changes in gene expression between two sets of environmental conditions ('normal' and 'dauer larva-inducing') and between isolates (N2, DR1350, RIL-14, RIL-17). These comparisons were made in two experimental blocks: block one N2 and DR1350; block two RIL-14 and RIL-17. For each isolate there were three biological replicates for both set environmental conditions.						
+Protocol Name	P-MTAB-1788	P-MTAB-1787	P-MTAB-1790	P-AFFY-2	Affymetrix:Protocol:Hybridization-Unknown	P-AFFY-6	P-MTAB-1789
+Protocol Type	specified_biomaterial_action	nucleic_acid_extraction	grow	labeling	hybridization	feature_extraction	bioassay_data_transformation
+Protocol Description	Sample were centrifuged for 2 minutes at 850g, the supernatant removed and the worms resuspended in M9; this was repeated three times. Finally worms were then centrifuged at 850g for 6 minutes at 4'C on a 60% v/v:40% v/v Percoll gradient in M9 to remove residual OP50, and worms removed from the interface,  washed three further times in M9 by sedimentation and resuspension in M9, before being finally resuspended in a small volume of  M9 to which an equal volume of Tri reagent (Sigma-Aldrich) was added. Samples were then frozen in liquid nitrogen, stored at -80C.	RNA was extracted from the frozen worms following the manufacturers instructions for Tri reagent.<br><br><br><br>cDNA for each sample was generated from 5µg of total RNA using a reverse transcription kit (Roche).<br>(Parameters: Extracted product = total_RNA, Amplification = none)	For each sample, 30,000 age synchronous eggs were liberated from hypochlorite treated gravid hermaphrodites (Stiernagle, 1999), and maintained overnight in 5mL S medium in tubes (50mL volume) stoppered with cotton wool, at 25C whilst being shaken at 200 rpm. Under these conditions the eggs hatch into L1s, but do not develop further in the absence of food. An E. coli OP50 food source was then added to achieve a final concentration of 20mg/mL; this was the normal environmental conditions. The dauer larva-inducing condition was the same, but with the addition of 450 microlitres of dauer pheromone to each tube. All cultures were maintained for a further 8.5 hours, at 25C while being shaken at 200 rpm. After this time, when worms would o be just under half-way through the L2 stage, a 0.5 ml sample of each culture was removed and maintained at the same conditions for a further two days to confirm the phenotype of the worms grown under normal (i.e. non dauer larva-inducing) conditions. The remaining volume of each sample was centrifuged for 2 minutes at 850g, the supernatant removed and the worms resuspended in M9; this was repeated three times. Finally worms were centrifuged at 850g for 6 minutes at 4C on a 60% v/v:40% v/v Percoll gradient in M9 to remove residual OP50, and worms removed from the interface,  washed three further times in M9 by sedimentation and resuspension in M9, before being finally resuspended in a small volume of  M9 to which an equal volume of Tri reagent (Sigma-Aldrich) was added. Samples were then frozen in liquid nitrogen, stored at -80C.<br><br><br><br>- Dauer pheromone was prepared as described by (Golden & Riddle 1984) from liquid cultures of N2 worms. All the pheromone used for these studies was from the same batch of pheromone. <br><br>- E. coli OP50 food source was prepared from shaken liquid cultures grown overnight at 37C, after which the bacterial suspension was centrifuged for 15 minutes at 5530g, and the supernatant removed, with the pellet of bacteria resuspended in M9 at a concentration of 0.2 g/mL.<br>(Parameters: start time = 8.5, time unit = hours, min temperature = 25, temperature unit = C, media = S medium)	Title: Affymetrix in vitro transcription. Description: 	Title: Affymetrix Generic Hybridization. Description: 	Title: Affymetrix CEL analysis. Description: 	Data were analysed using a series of custom PERL scripts. For within-chip normalisation, the log2 transformed intensities for individual features were scaled by subtracting the mean chip log2 intensity value, and centred by dividing by the chip standard deviation. Between-chip normalisation and distribution normalisation applied across all chip data within that experiment as described by Stekel (2003). The normalised data were analysed using a two-way ANOVA, testing for each gene the effects of LINE (N2, DR1350, RIL-14, RIL-17), TREATMENT (non-dauer vs dauer larva-inducing) and the LINE x TREATMENT interaction, using a published PERL script (Pavlidis & Noble 2001). Therefore, for each gene there is an F ratio with 5 degrees of freedom.
+Protocol Parameters							
+Protocol Hardware							
+Protocol Software					MicroArraySuite 5.0	MicroArraySuite 5.0	
+Protocol Contact							
+Protocol Term Source REF					mo		The MGED Ontology
+SDRF File	E-MEXP-1810.sdrf.txt						
+Term Source Name	The MGED Ontology	ncbitax	ArrayExpress	The MGED Ontology	EFO	mo	
+Term Source File	http://mged.sourceforge.net/ontologies/MGEDontology.php	http://www.ncbi.nlm.nih.gov/Taxonomy/taxonomyhome.html	http://www.ebi.ac.uk/arrayexpress	http://mged.sourceforge.net/ontologies/MGEDontology.php	http://www.ebi.ac.uk/efo/	http://mged.sourceforge.net/ontologies/MGEDontology.php	
+Term Source Version							

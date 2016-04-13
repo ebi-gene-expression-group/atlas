@@ -1,0 +1,9 @@
+PROPERTY_TYPE	PROPERTY_VALUE	ONTOLOGY_LABEL|ZOOMA_VALUE	PROP_VALUE_MATCH	SEMANTIC_TAG	STUDY	BIOENTITY	Category of Zooma Mapping	Basis for Exclusion
+compound	dauer pheromone	null	null	null	E-MEXP-1810	H_RIL-14 dauer 3	NO_RESULTS	null
+compound	none	control|none	MATCHES_ZOOMA_INPUT	http://www.ebi.ac.uk/efo/EFO_0001461	E-MEXP-1810	H_RIL-14 non-dauer 1	AUTOMATIC	null
+developmental stage	L2 larva	L2 larva	MATCHES_ONTOLOGY_LABEL	http://www.ebi.ac.uk/efo/EFO_0002719	E-MEXP-1810	H_RIL-17 dauer 3	AUTOMATIC	null
+dose	0 microliter	null	null	null	E-MEXP-1810	H_RIL-14 non-dauer 3	EXCLUDED	Type=dose
+dose	450 microliter	null	null	null	E-MEXP-1810	H_RIL-14 dauer 3	EXCLUDED	Type=dose
+organism	Caenorhabditis elegans	Caenorhabditis elegans	MATCHES_ONTOLOGY_LABEL	http://purl.obolibrary.org/obo/NCBITaxon_6239	E-MEXP-1810	H_RIL-17 dauer 3	AUTOMATIC	null
+strain	RIL-14	interleukin-1 beta (Rattus norvegicus)|rIL-1b	mismatch	http://www.ebi.ac.uk/efo/EFO_0003796	E-MEXP-1810	H_RIL-14 non-dauer 1	REQUIRES_CURATION	null
+strain	RIL-17	interleukin-1 beta (Rattus norvegicus)|rIL-1b	mismatch	http://www.ebi.ac.uk/efo/EFO_0003796	E-MEXP-1810	H_RIL-17 non-dauer 3	REQUIRES_CURATION	null

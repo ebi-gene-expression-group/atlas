@@ -1,0 +1,824 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+<title>Microarray quality metrics report for E-MEXP-1810 on array design A-AFFY-60</title>
+
+<script language="JavaScript" src="arrayQualityMetrics.js"></script>
+<link rel="stylesheet" type="text/css" href="/gxa/resources/css/quality-metrics.css"></link>
+</head>
+<body onload="reportinit()"><hr><h1>Microarray quality metrics report for E-MEXP-1810 on array design A-AFFY-60</h1><hr><UL><a href="#S1"><br><li class='tocsection'>Section 1: Between array comparison</li><UL></a><li class='tocmodule'>Distances between arrays</li><li class='tocmodule'>Principal Component Analysis</li></UL><a href="#S2"><br><li class='tocsection'>Section 2: Array intensity distributions</li><UL></a><li class='tocmodule'>Boxplots</li><li class='tocmodule'>Density plots</li></UL><a href="#S3"><br><li class='tocsection'>Section 3: Variance mean dependence</li><UL></a><li class='tocmodule'>Standard deviation versus rank of the mean</li></UL><a href="#S4"><br><li class='tocsection'>Section 4: Individual array quality</li><UL></a><li class='tocmodule'>MA plots</li></UL></UL><hr><a name="arraymetadata" id="arraymetadata-h" href="javascript: toggle('arraymetadata')" style="text-decoration:none;font-weight:bold;font-size:larger">- Array metadata and outlier detection overview</a><br>
+
+<div id="arraymetadata-b" style="display:block">
+<table style="margin-left:auto;text-align:right;" border="1">
+<tr>
+<td style="font-weight:bold"> </td><td style="font-weight:bold">array</td><td style="font-weight:bold">sampleNames</td><td style="font-weight:bold"><a href="#hm">*1</a></td><td style="font-weight:bold"><a href="#box">*2</a></td><td style="font-weight:bold"><a href="#ma">*3</a></td><td style="font-weight:bold">AssayName</td><td style="font-weight:bold">FactorValue</td><td style="font-weight:bold">FileName</td></tr>
+<tr>
+<td bgcolor="#ffffff"><input type='checkbox' name='ReportObjectCheckBoxes' value='' onchange='checkboxEvent(1)'></td><td bgcolor="#ffffff">1</td><td bgcolor="#ffffff">H_RIL-17 dauer 3</td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff">H_RIL-17 dauer 3</td><td bgcolor="#ffffff">RIL-17, dauer pheromone, 450 microliter</td><td bgcolor="#ffffff">17B3.CEL</td></tr>
+<tr>
+<td bgcolor="#d0d0ff"><input type='checkbox' name='ReportObjectCheckBoxes' value='' onchange='checkboxEvent(2)'></td><td bgcolor="#e0e0f0">2</td><td bgcolor="#d0d0ff">H_RIL-14 non-dauer 1</td><td bgcolor="#e0e0f0"></td><td bgcolor="#d0d0ff"></td><td bgcolor="#e0e0f0"></td><td bgcolor="#d0d0ff">H_RIL-14 non-dauer 1</td><td bgcolor="#e0e0f0">none, 0 microliter, RIL-14</td><td bgcolor="#d0d0ff">14A1.CEL</td></tr>
+<tr>
+<td bgcolor="#ffffff"><input type='checkbox' name='ReportObjectCheckBoxes' value='' onchange='checkboxEvent(3)'></td><td bgcolor="#ffffff">3</td><td bgcolor="#ffffff">H_RIL-17 non-dauer 2</td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff">H_RIL-17 non-dauer 2</td><td bgcolor="#ffffff">none, 0 microliter, RIL-17</td><td bgcolor="#ffffff">17A2.CEL</td></tr>
+<tr>
+<td bgcolor="#d0d0ff"><input type='checkbox' name='ReportObjectCheckBoxes' value='' onchange='checkboxEvent(4)'></td><td bgcolor="#e0e0f0">4</td><td bgcolor="#d0d0ff">H_RIL-14 dauer 2</td><td bgcolor="#e0e0f0"></td><td bgcolor="#d0d0ff"></td><td bgcolor="#e0e0f0"></td><td bgcolor="#d0d0ff">H_RIL-14 dauer 2</td><td bgcolor="#e0e0f0">RIL-14, 450 microliter, dauer pheromone</td><td bgcolor="#d0d0ff">14B2.CEL</td></tr>
+<tr>
+<td bgcolor="#ffffff"><input type='checkbox' name='ReportObjectCheckBoxes' value='' onchange='checkboxEvent(5)'></td><td bgcolor="#ffffff">5</td><td bgcolor="#ffffff">H_RIL-14 dauer 3</td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff">H_RIL-14 dauer 3</td><td bgcolor="#ffffff">RIL-14, 450 microliter, dauer pheromone</td><td bgcolor="#ffffff">14B3.CEL</td></tr>
+<tr>
+<td bgcolor="#d0d0ff"><input type='checkbox' name='ReportObjectCheckBoxes' value='' onchange='checkboxEvent(6)'></td><td bgcolor="#e0e0f0">6</td><td bgcolor="#d0d0ff">H_RIL-14 dauer 1</td><td bgcolor="#e0e0f0"></td><td bgcolor="#d0d0ff"></td><td bgcolor="#e0e0f0"></td><td bgcolor="#d0d0ff">H_RIL-14 dauer 1</td><td bgcolor="#e0e0f0">RIL-14, 450 microliter, dauer pheromone</td><td bgcolor="#d0d0ff">14B1.CEL</td></tr>
+<tr>
+<td bgcolor="#ffffff"><input type='checkbox' name='ReportObjectCheckBoxes' value='' onchange='checkboxEvent(7)'></td><td bgcolor="#ffffff">7</td><td bgcolor="#ffffff">H_RIL-17 dauer 1</td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff">H_RIL-17 dauer 1</td><td bgcolor="#ffffff">RIL-17, 450 microliter, dauer pheromone</td><td bgcolor="#ffffff">17B1.CEL</td></tr>
+<tr>
+<td bgcolor="#d0d0ff"><input type='checkbox' name='ReportObjectCheckBoxes' value='' onchange='checkboxEvent(8)'></td><td bgcolor="#e0e0f0">8</td><td bgcolor="#d0d0ff">H_RIL-17 dauer 2</td><td bgcolor="#e0e0f0"></td><td bgcolor="#d0d0ff"></td><td bgcolor="#e0e0f0"></td><td bgcolor="#d0d0ff">H_RIL-17 dauer 2</td><td bgcolor="#e0e0f0">RIL-17, 450 microliter, dauer pheromone</td><td bgcolor="#d0d0ff">17B2.CEL</td></tr>
+<tr>
+<td bgcolor="#ffffff"><input type='checkbox' name='ReportObjectCheckBoxes' value='' onchange='checkboxEvent(9)'></td><td bgcolor="#ffffff">9</td><td bgcolor="#ffffff">H_RIL-17 non-dauer 1</td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff">H_RIL-17 non-dauer 1</td><td bgcolor="#ffffff">RIL-17, none, 0 microliter</td><td bgcolor="#ffffff">17A1.CEL</td></tr>
+<tr>
+<td bgcolor="#d0d0ff"><input type='checkbox' name='ReportObjectCheckBoxes' value='' onchange='checkboxEvent(10)'></td><td bgcolor="#e0e0f0">10</td><td bgcolor="#d0d0ff">H_RIL-17 non-dauer 3</td><td bgcolor="#e0e0f0"></td><td bgcolor="#d0d0ff"></td><td bgcolor="#e0e0f0"></td><td bgcolor="#d0d0ff">H_RIL-17 non-dauer 3</td><td bgcolor="#e0e0f0">RIL-17, none, 0 microliter</td><td bgcolor="#d0d0ff">17A3.CEL</td></tr>
+<tr>
+<td bgcolor="#ffffff"><input type='checkbox' name='ReportObjectCheckBoxes' value='' onchange='checkboxEvent(11)'></td><td bgcolor="#ffffff">11</td><td bgcolor="#ffffff">H_RIL-14 non-dauer 2</td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff"></td><td bgcolor="#ffffff">H_RIL-14 non-dauer 2</td><td bgcolor="#ffffff">RIL-14, none, 0 microliter</td><td bgcolor="#ffffff">14A2.CEL</td></tr>
+<tr>
+<td bgcolor="#d0d0ff"><input type='checkbox' name='ReportObjectCheckBoxes' value='' onchange='checkboxEvent(12)'></td><td bgcolor="#e0e0f0">12</td><td bgcolor="#d0d0ff">H_RIL-14 non-dauer 3</td><td bgcolor="#e0e0f0"></td><td bgcolor="#d0d0ff"></td><td bgcolor="#e0e0f0"></td><td bgcolor="#d0d0ff">H_RIL-14 non-dauer 3</td><td bgcolor="#e0e0f0">RIL-14, none, 0 microliter</td><td bgcolor="#d0d0ff">14A3.CEL</td></tr>
+</table>
+<br>The columns named *1, *2, ... indicate the calls from the different outlier detection methods:<OL><LI> outlier detection by <a href="#hm">Distances between arrays</a></LI><LI> outlier detection by <a href="#box">Boxplots</a></LI><LI> outlier detection by <a href="#ma">MA plots</a></LI></OL>The outlier detection criteria are explained below in the respective sections. Arrays that were called outliers by at least one criterion are marked by checkbox selection in this table, and are indicated by highlighted lines or points in some of the plots below. By clicking the checkboxes in the table, or on the corresponding points/lines in the plots, you can modify the selection. To reset the selection, reload the HTML page in your browser.<br><br>At the scope covered by this software, outlier detection is a poorly defined question, and there is no 'right' or 'wrong' answer. These are hints which are intended to be followed up manually. If you want to automate outlier detection, you need to limit the scope to a particular platform and experimental design, and then choose and calibrate the metrics used.<br></div><hr><h2><a name= 'S1'>Section 1: Between array comparison</a></h2>
+
+<a name="hm" id="hm-h" href="javascript: toggle('hm')" style="text-decoration:none;font-weight:bold;font-size:larger">- Figure 1: Distances between arrays.</a><br>
+
+<div id="hm-b" style="display:block">
+<img src="hm.png" border="0" alt="hm.png" id="Figls:hm"></img><br>
+<b>Figure 1</b><a href="hm.pdf"> (PDF file)</a> shows a false color heatmap of the distances between arrays. The color scale is chosen to cover the range of distances encountered in the dataset. Patterns in this plot can indicate clustering of the arrays either because of intended biological or unintended experimental factors (batch effects). The distance <i>d<sub>ab</sub></i> between two arrays <i>a</i> and <i>b</i> is computed as the mean absolute difference (L<sub>1</sub>-distance) between the data of the arrays (using the data from all probes without filtering). In formula, <i>d<sub>ab</sub></i> = mean | <i>M<sub>ai</sub> - M<sub>bi</sub></i> |, where <i>M<sub>ai</sub></i> is the value of the <i>i</i>-th probe on the <i>a</i>-th array. Outlier detection was performed by looking for arrays for which the sum of the distances to all other arrays, <i>S<sub>a</sub></i> = &Sigma;<sub><i>b</i></sub> <i>d<sub>ab</sub></i> was exceptionally large. No such arrays were detected.<br><br><br>
+</div>
+
+<a name="out hm" id="out hm-h" href="javascript: toggle('out hm')" style="text-decoration:none;font-weight:bold;font-size:larger">+ Figure 2: Outlier detection for Distances between arrays.</a><br>
+
+<div id="out hm-b" style="display:none">
+<img src="out hm.png" border="0" alt="out hm.png" id="Figls:out hm"></img><br>
+<b>Figure 2</b><a href="out hm.pdf"> (PDF file)</a> shows a bar chart of the sum of distances to other arrays <i>S<sub>a</sub></i>, the outlier detection criterion from the previous figure. The bars are shown in the original order of the arrays. Based on the distribution of the values across all arrays, a threshold of 5.82 was determined, which is indicated by the vertical line. None of the arrays exceeded the threshold and was considered an outlier.<br><br><br>
+</div>
+
+<a name="pca" id="pca-h" href="javascript: toggle('pca')" style="text-decoration:none;font-weight:bold;font-size:larger">- Figure 3: Principal Component Analysis.</a><br>
+
+<div id="pca-b" style="display:block">
+<table border="1">
+<tr>
+<td><?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Fig:pca" width="337.88px" height="438.68px" viewBox="0 0 337.88 438.68" version="1.1">
+  <metadata xmlns:gridsvg="http://www.stat.auckland.ac.nz/~paul/R/gridSVG/">
+    <gridsvg:generator name="gridSVG" version="1.4-3" time="2015-10-22 11:16:51"/>
+    <gridsvg:argument name="name" value="E-MEXP-1810_A-AFFY-60_QM/pca.svg"/>
+    <gridsvg:argument name="exportCoords" value="none"/>
+    <gridsvg:argument name="exportMappings" value="none"/>
+    <gridsvg:argument name="exportJS" value="none"/>
+    <gridsvg:argument name="res" value="72"/>
+    <gridsvg:argument name="prefix" value="Fig:pca"/>
+    <gridsvg:argument name="addClasses" value="FALSE"/>
+    <gridsvg:argument name="indent" value="TRUE"/>
+    <gridsvg:argument name="htmlWrapper" value="FALSE"/>
+    <gridsvg:argument name="usePaths" value="none"/>
+    <gridsvg:argument name="uniqueNames" value="TRUE"/>
+    <gridsvg:separator name="id.sep" value="."/>
+    <gridsvg:separator name="gPath.sep" value="::"/>
+    <gridsvg:separator name="vpPath.sep" value="::"/>
+  </metadata>
+  <g transform="translate(0, 438.68) scale(1, -1)">
+    <g id="Fig:pcagridSVG" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="none" stroke-width="0.75" font-size="12" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" opacity="1" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0" font-weight="normal" font-style="normal">
+      <defs>
+        <symbol id="Fig:pcagridSVG.pch19" viewBox="-5 -5 10 10" overflow="visible">
+          <circle cx="0" cy="0" r="3.75"/>
+        </symbol>
+      </defs>
+      <g id="Fig:pcaplot_01.background.1">
+        <rect id="Fig:pcaplot_01.background.1.1" x="0" y="0" width="337.88" height="438.68" fill="none" stroke="none" stroke-opacity="0" fill-opacity="0"/>
+      </g>
+      <g id="Fig:pcaplot_01.toplevel.vp.1" font-size="12">
+        <g id="Fig:pcaplot_01.main.vp.1">
+          <g id="Fig:pcaGRID.VP.17.1">
+            <g id="Fig:pca.key.frame.1">
+              <g id="Fig:pcaGRID.VP.18.1">
+                <g id="Fig:pcaGRID.cellGrob.26.1">
+                  <g id="Fig:pca.key.background.1">
+                    <rect id="Fig:pca.key.background.1.1" x="29.46" y="273.07" width="278.96" height="80.47" fill="none" opacity="1" stroke="none" stroke-opacity="0" fill-opacity="0"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.19.1">
+                <g id="Fig:pcaGRID.cellGrob.27.1">
+                  <g id="Fig:pca.key.rect.1.1.1">
+                    <rect id="Fig:pca.key.rect.1.1.1.1" x="36.13" y="342.05" width="33.36" height="11.5" opacity="1" fill="rgb(228,26,28)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.20.1">
+                <g id="Fig:pcaGRID.cellGrob.28.1">
+                  <g id="Fig:pca.key.rect.1.2.1">
+                    <rect id="Fig:pca.key.rect.1.2.1.1" x="36.13" y="330.55" width="33.36" height="11.5" opacity="1" fill="rgb(55,126,184)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.21.1">
+                <g id="Fig:pcaGRID.cellGrob.29.1">
+                  <g id="Fig:pca.key.rect.1.3.1">
+                    <rect id="Fig:pca.key.rect.1.3.1.1" x="36.13" y="319.06" width="33.36" height="11.5" opacity="1" fill="rgb(77,175,74)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.22.1">
+                <g id="Fig:pcaGRID.cellGrob.30.1">
+                  <g id="Fig:pca.key.rect.1.4.1">
+                    <rect id="Fig:pca.key.rect.1.4.1.1" x="36.13" y="307.56" width="33.36" height="11.5" opacity="1" fill="rgb(152,78,163)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.23.1">
+                <g id="Fig:pcaGRID.cellGrob.31.1">
+                  <g id="Fig:pca.key.rect.1.5.1">
+                    <rect id="Fig:pca.key.rect.1.5.1.1" x="36.13" y="296.06" width="33.36" height="11.5" opacity="1" fill="rgb(255,127,0)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.24.1">
+                <g id="Fig:pcaGRID.cellGrob.32.1">
+                  <g id="Fig:pca.key.rect.1.6.1">
+                    <rect id="Fig:pca.key.rect.1.6.1.1" x="36.13" y="284.57" width="33.36" height="11.5" opacity="1" fill="rgb(255,255,51)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.25.1">
+                <g id="Fig:pcaGRID.cellGrob.33.1">
+                  <g id="Fig:pca.key.rect.1.7.1">
+                    <rect id="Fig:pca.key.rect.1.7.1.1" x="36.13" y="273.07" width="33.36" height="11.5" opacity="1" fill="rgb(166,86,40)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.26.1">
+                <g id="Fig:pcaGRID.cellGrob.34.1">
+                  <g id="Fig:pca.key.text.2.1.1">
+                    <g id="Fig:pca.key.text.2.1.1.1" transform="translate(82.84, 347.8)" stroke-width="0.1">
+                      <g id="Fig:pca.key.text.2.1.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:pca.key.text.2.1.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:pca.key.text.2.1.1.1.tspan.1" dy="4.31" x="0">none, 0 microliter, RIL-14</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.27.1">
+                <g id="Fig:pcaGRID.cellGrob.35.1">
+                  <g id="Fig:pca.key.text.2.2.1">
+                    <g id="Fig:pca.key.text.2.2.1.1" transform="translate(82.84, 336.3)" stroke-width="0.1">
+                      <g id="Fig:pca.key.text.2.2.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:pca.key.text.2.2.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:pca.key.text.2.2.1.1.tspan.1" dy="4.31" x="0">none, 0 microliter, RIL-17</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.28.1">
+                <g id="Fig:pcaGRID.cellGrob.36.1">
+                  <g id="Fig:pca.key.text.2.3.1">
+                    <g id="Fig:pca.key.text.2.3.1.1" transform="translate(82.84, 324.8)" stroke-width="0.1">
+                      <g id="Fig:pca.key.text.2.3.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:pca.key.text.2.3.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:pca.key.text.2.3.1.1.tspan.1" dy="4.31" x="0">RIL-14, 450 microliter, dauer pheromone</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.29.1">
+                <g id="Fig:pcaGRID.cellGrob.37.1">
+                  <g id="Fig:pca.key.text.2.4.1">
+                    <g id="Fig:pca.key.text.2.4.1.1" transform="translate(82.84, 313.31)" stroke-width="0.1">
+                      <g id="Fig:pca.key.text.2.4.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:pca.key.text.2.4.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:pca.key.text.2.4.1.1.tspan.1" dy="4.31" x="0">RIL-14, none, 0 microliter</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.30.1">
+                <g id="Fig:pcaGRID.cellGrob.38.1">
+                  <g id="Fig:pca.key.text.2.5.1">
+                    <g id="Fig:pca.key.text.2.5.1.1" transform="translate(82.84, 301.81)" stroke-width="0.1">
+                      <g id="Fig:pca.key.text.2.5.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:pca.key.text.2.5.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:pca.key.text.2.5.1.1.tspan.1" dy="4.31" x="0">RIL-17, 450 microliter, dauer pheromone</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.31.1">
+                <g id="Fig:pcaGRID.cellGrob.39.1">
+                  <g id="Fig:pca.key.text.2.6.1">
+                    <g id="Fig:pca.key.text.2.6.1.1" transform="translate(82.84, 290.32)" stroke-width="0.1">
+                      <g id="Fig:pca.key.text.2.6.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:pca.key.text.2.6.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:pca.key.text.2.6.1.1.tspan.1" dy="4.31" x="0">RIL-17, dauer pheromone, 450 microliter</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:pcaGRID.VP.32.1">
+                <g id="Fig:pcaGRID.cellGrob.40.1">
+                  <g id="Fig:pca.key.text.2.7.1">
+                    <g id="Fig:pca.key.text.2.7.1.1" transform="translate(82.84, 278.82)" stroke-width="0.1">
+                      <g id="Fig:pca.key.text.2.7.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:pca.key.text.2.7.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:pca.key.text.2.7.1.1.tspan.1" dy="4.31" x="0">RIL-17, none, 0 microliter</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Fig:pcaplot_01.xlab.vp.1">
+          <g id="Fig:pcaplot_01.xlab.1">
+            <g id="Fig:pcaplot_01.xlab.1.1" transform="translate(184.51, 95.45)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.xlab.1.1.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.xlab.1.1.text" text-anchor="middle" opacity="1" stroke="rgb(0,0,0)" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.xlab.1.1.tspan.1" dy="4.31" x="0">PC1</tspan>
+                </text>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Fig:pcaplot_01.ylab.vp.1">
+          <g id="Fig:pcaplot_01.ylab.1">
+            <g id="Fig:pcaplot_01.ylab.1.1" transform="translate(10.31, 187)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ylab.1.1.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ylab.1.1.text" transform="rotate(-90)" text-anchor="middle" opacity="1" stroke="rgb(0,0,0)" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ylab.1.1.tspan.1" dy="4.31" x="0">PC2</tspan>
+                </text>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Fig:pcaplot_01.figure.vp.1"/>
+        <defs>
+          <clipPath id="Fig:pcaplot_01.panel.1.1.vp.1.clipPath">
+            <rect x="60.14" y="129.94" width="248.73" height="114.12" fill="none" stroke="none"/>
+          </clipPath>
+        </defs>
+        <g id="Fig:pcaplot_01.panel.1.1.vp.1" clip-path="url(#Fig:pcaplot_01.panel.1.1.vp.1.clipPath)"/>
+        <g id="Fig:pcaplot_01.strip.1.1.off.vp.1">
+          <g id="Fig:pcaplot_01.ticks.top.panel.1.1.1">
+            <polyline id="Fig:pcaplot_01.ticks.top.panel.1.1.1.1" points="93.54,244.07 93.54,249.73" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.top.panel.1.1.1.2" points="134.28,244.07 134.28,249.73" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.top.panel.1.1.1.3" points="175.03,244.07 175.03,249.73" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.top.panel.1.1.1.4" points="215.77,244.07 215.77,249.73" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.top.panel.1.1.1.5" points="256.52,244.07 256.52,249.73" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.top.panel.1.1.1.6" points="297.26,244.07 297.26,249.73" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+          </g>
+        </g>
+        <g id="Fig:pcaplot_01.strip.left.1.1.off.vp.1">
+          <g id="Fig:pcaplot_01.ticks.left.panel.1.1.1">
+            <polyline id="Fig:pcaplot_01.ticks.left.panel.1.1.1.1" points="60.14,134.62 54.47,134.62" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.left.panel.1.1.1.2" points="60.14,154.99 54.47,154.99" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.left.panel.1.1.1.3" points="60.14,175.36 54.47,175.36" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.left.panel.1.1.1.4" points="60.14,195.74 54.47,195.74" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.left.panel.1.1.1.5" points="60.14,216.11 54.47,216.11" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.left.panel.1.1.1.6" points="60.14,236.48 54.47,236.48" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+          </g>
+          <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1">
+            <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.1" transform="translate(48.81, 134.62)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.1.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.1.text" text-anchor="end" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.1.tspan.1" dy="3.59" x="0">-100</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.2" transform="translate(48.81, 154.99)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.2.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.2.text" text-anchor="end" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.2.tspan.1" dy="3.59" x="0">-50</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.3" transform="translate(48.81, 175.36)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.3.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.3.text" text-anchor="end" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.3.tspan.1" dy="3.59" x="0">0</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.4" transform="translate(48.81, 195.74)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.4.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.4.text" text-anchor="end" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.4.tspan.1" dy="3.59" x="0">50</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.5" transform="translate(48.81, 216.11)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.5.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.5.text" text-anchor="end" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.5.tspan.1" dy="3.59" x="0">100</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.6" transform="translate(48.81, 236.48)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.6.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.6.text" text-anchor="end" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ticklabels.left.panel.1.1.1.6.tspan.1" dy="3.59" x="0">150</tspan>
+                </text>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Fig:pcaplot_01.panel.1.1.off.vp.1">
+          <g id="Fig:pcaplot_01.ticks.bottom.panel.1.1.1">
+            <polyline id="Fig:pcaplot_01.ticks.bottom.panel.1.1.1.1" points="93.54,129.94 93.54,124.27" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.bottom.panel.1.1.1.2" points="134.28,129.94 134.28,124.27" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.bottom.panel.1.1.1.3" points="175.03,129.94 175.03,124.27" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.bottom.panel.1.1.1.4" points="215.77,129.94 215.77,124.27" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.bottom.panel.1.1.1.5" points="256.52,129.94 256.52,124.27" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.bottom.panel.1.1.1.6" points="297.26,129.94 297.26,124.27" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+          </g>
+          <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1">
+            <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.1" transform="translate(93.54, 118.6)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.1.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.1.text" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.1.tspan.1" dy="7.18" x="0">-200</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.2" transform="translate(134.28, 118.6)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.2.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.2.text" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.2.tspan.1" dy="7.18" x="0">-100</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.3" transform="translate(175.03, 118.6)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.3.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.3.text" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.3.tspan.1" dy="7.18" x="0">0</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.4" transform="translate(215.77, 118.6)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.4.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.4.text" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.4.tspan.1" dy="7.18" x="0">100</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.5" transform="translate(256.52, 118.6)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.5.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.5.text" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.5.tspan.1" dy="7.18" x="0">200</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.6" transform="translate(297.26, 118.6)" stroke-width="0.1">
+              <g id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.6.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.6.text" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:pcaplot_01.ticklabels.bottom.panel.1.1.1.6.tspan.1" dy="7.18" x="0">300</tspan>
+                </text>
+              </g>
+            </g>
+          </g>
+          <g id="Fig:pcaplot_01.ticks.right.panel.1.1.1">
+            <polyline id="Fig:pcaplot_01.ticks.right.panel.1.1.1.1" points="308.88,134.62 314.54,134.62" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.right.panel.1.1.1.2" points="308.88,154.99 314.54,154.99" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.right.panel.1.1.1.3" points="308.88,175.36 314.54,175.36" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.right.panel.1.1.1.4" points="308.88,195.74 314.54,195.74" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.right.panel.1.1.1.5" points="308.88,216.11 314.54,216.11" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:pcaplot_01.ticks.right.panel.1.1.1.6" points="308.88,236.48 314.54,236.48" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+          </g>
+        </g>
+        <defs>
+          <clipPath id="Fig:pcaplot_01.panel.1.1.vp.2.clipPath">
+            <rect x="60.14" y="129.94" width="248.73" height="114.12" fill="none" stroke="none"/>
+          </clipPath>
+        </defs>
+        <g id="Fig:pcaplot_01.panel.1.1.vp.2" clip-path="url(#Fig:pcaplot_01.panel.1.1.vp.2.clipPath)">
+          <g id="Fig:pcaplot_01.xyplot.points.panel.1.1.1">
+            <use id="Fig:pcaplot_01.xyplot.points.panel.1.1.1.1" xlink:href="#Fig:pcagridSVG.pch19" x="163.99" y="184.1" width="8" height="8" transform="translate(-4,-4)" stroke="rgb(255,255,51)" stroke-width="0.94" opacity="1" fill="rgb(255,255,51)" font-size="8" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal" class="aqm1" onclick="plotObjRespond('click', 1, 'pca')" onmouseover="plotObjRespond('show', 1, 'pca')" onmouseout="plotObjRespond('hide', 1, 'pca')"/>
+            <use id="Fig:pcaplot_01.xyplot.points.panel.1.1.1.2" xlink:href="#Fig:pcagridSVG.pch19" x="77.82" y="174.35" width="8" height="8" transform="translate(-4,-4)" stroke="rgb(228,26,28)" stroke-width="0.94" opacity="1" fill="rgb(228,26,28)" font-size="8" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal" class="aqm2" onclick="plotObjRespond('click', 2, 'pca')" onmouseover="plotObjRespond('show', 2, 'pca')" onmouseout="plotObjRespond('hide', 2, 'pca')"/>
+            <use id="Fig:pcaplot_01.xyplot.points.panel.1.1.1.3" xlink:href="#Fig:pcagridSVG.pch19" x="75.42" y="147.15" width="8" height="8" transform="translate(-4,-4)" stroke="rgb(55,126,184)" stroke-width="0.94" opacity="1" fill="rgb(55,126,184)" font-size="8" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal" class="aqm3" onclick="plotObjRespond('click', 3, 'pca')" onmouseover="plotObjRespond('show', 3, 'pca')" onmouseout="plotObjRespond('hide', 3, 'pca')"/>
+            <use id="Fig:pcaplot_01.xyplot.points.panel.1.1.1.4" xlink:href="#Fig:pcagridSVG.pch19" x="293.6" y="162.62" width="8" height="8" transform="translate(-4,-4)" stroke="rgb(77,175,74)" stroke-width="0.94" opacity="1" fill="rgb(77,175,74)" font-size="8" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal" class="aqm4" onclick="plotObjRespond('click', 4, 'pca')" onmouseover="plotObjRespond('show', 4, 'pca')" onmouseout="plotObjRespond('hide', 4, 'pca')"/>
+            <use id="Fig:pcaplot_01.xyplot.points.panel.1.1.1.5" xlink:href="#Fig:pcagridSVG.pch19" x="173.77" y="237.06" width="8" height="8" transform="translate(-4,-4)" stroke="rgb(77,175,74)" stroke-width="0.94" opacity="1" fill="rgb(77,175,74)" font-size="8" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal" class="aqm5" onclick="plotObjRespond('click', 5, 'pca')" onmouseover="plotObjRespond('show', 5, 'pca')" onmouseout="plotObjRespond('hide', 5, 'pca')"/>
+            <use id="Fig:pcaplot_01.xyplot.points.panel.1.1.1.6" xlink:href="#Fig:pcagridSVG.pch19" x="78.52" y="190.3" width="8" height="8" transform="translate(-4,-4)" stroke="rgb(77,175,74)" stroke-width="0.94" opacity="1" fill="rgb(77,175,74)" font-size="8" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal" class="aqm6" onclick="plotObjRespond('click', 6, 'pca')" onmouseover="plotObjRespond('show', 6, 'pca')" onmouseout="plotObjRespond('hide', 6, 'pca')"/>
+            <use id="Fig:pcaplot_01.xyplot.points.panel.1.1.1.7" xlink:href="#Fig:pcagridSVG.pch19" x="159.76" y="197.88" width="8" height="8" transform="translate(-4,-4)" stroke="rgb(255,127,0)" stroke-width="0.94" opacity="1" fill="rgb(255,127,0)" font-size="8" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal" class="aqm7" onclick="plotObjRespond('click', 7, 'pca')" onmouseover="plotObjRespond('show', 7, 'pca')" onmouseout="plotObjRespond('hide', 7, 'pca')"/>
+            <use id="Fig:pcaplot_01.xyplot.points.panel.1.1.1.8" xlink:href="#Fig:pcagridSVG.pch19" x="180.81" y="145.14" width="8" height="8" transform="translate(-4,-4)" stroke="rgb(255,127,0)" stroke-width="0.94" opacity="1" fill="rgb(255,127,0)" font-size="8" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal" class="aqm8" onclick="plotObjRespond('click', 8, 'pca')" onmouseover="plotObjRespond('show', 8, 'pca')" onmouseout="plotObjRespond('hide', 8, 'pca')"/>
+            <use id="Fig:pcaplot_01.xyplot.points.panel.1.1.1.9" xlink:href="#Fig:pcagridSVG.pch19" x="154.14" y="136.95" width="8" height="8" transform="translate(-4,-4)" stroke="rgb(166,86,40)" stroke-width="0.94" opacity="1" fill="rgb(166,86,40)" font-size="8" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal" class="aqm9" onclick="plotObjRespond('click', 9, 'pca')" onmouseover="plotObjRespond('show', 9, 'pca')" onmouseout="plotObjRespond('hide', 9, 'pca')"/>
+            <use id="Fig:pcaplot_01.xyplot.points.panel.1.1.1.10" xlink:href="#Fig:pcagridSVG.pch19" x="278.9" y="154.47" width="8" height="8" transform="translate(-4,-4)" stroke="rgb(166,86,40)" stroke-width="0.94" opacity="1" fill="rgb(166,86,40)" font-size="8" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal" class="aqm10" onclick="plotObjRespond('click', 10, 'pca')" onmouseover="plotObjRespond('show', 10, 'pca')" onmouseout="plotObjRespond('hide', 10, 'pca')"/>
+            <use id="Fig:pcaplot_01.xyplot.points.panel.1.1.1.11" xlink:href="#Fig:pcagridSVG.pch19" x="217.16" y="161.13" width="8" height="8" transform="translate(-4,-4)" stroke="rgb(152,78,163)" stroke-width="0.94" opacity="1" fill="rgb(152,78,163)" font-size="8" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal" class="aqm11" onclick="plotObjRespond('click', 11, 'pca')" onmouseover="plotObjRespond('show', 11, 'pca')" onmouseout="plotObjRespond('hide', 11, 'pca')"/>
+            <use id="Fig:pcaplot_01.xyplot.points.panel.1.1.1.12" xlink:href="#Fig:pcagridSVG.pch19" x="246.47" y="213.2" width="8" height="8" transform="translate(-4,-4)" stroke="rgb(152,78,163)" stroke-width="0.94" opacity="1" fill="rgb(152,78,163)" font-size="8" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal" class="aqm12" onclick="plotObjRespond('click', 12, 'pca')" onmouseover="plotObjRespond('show', 12, 'pca')" onmouseout="plotObjRespond('hide', 12, 'pca')"/>
+          </g>
+        </g>
+        <g id="Fig:pcaplot_01.panel.1.1.off.vp.2">
+          <g id="Fig:pcaplot_01.border.panel.1.1.1">
+            <rect id="Fig:pcaplot_01.border.panel.1.1.1.1" x="60.14" y="129.94" width="248.73" height="114.12" stroke="rgb(0,0,0)" stroke-dasharray="none" stroke-width="0.75" opacity="1" fill="none" stroke-opacity="1" fill-opacity="0"/>
+          </g>
+        </g>
+        <g id="Fig:pcaplot_01..1"/>
+      </g>
+    </g>
+  </g>
+</svg></td><td><table id='Tab:pca'><tr bgcolor='#d0d0ff'><td>array</td><td style='font-weight:bold'></td></tr>
+
+<tr bgcolor='#e0e0f0'><td>sampleNames</td><td style='font-weight:bold'></td></tr>
+
+<tr bgcolor='#d0d0ff'><td>AssayName</td><td style='font-weight:bold'></td></tr>
+
+<tr bgcolor='#e0e0f0'><td>FactorValue</td><td style='font-weight:bold'></td></tr>
+
+<tr bgcolor='#d0d0ff'><td>FileName</td><td style='font-weight:bold'></td></tr>
+</table></td></tr>
+</table>
+<br>
+<b>Figure 3</b><a href="pca.pdf"> (PDF file)</a> shows a scatterplot of the arrays along the first two principal components. You can use this plot to explore if the arrays cluster, and whether this is according to an intended experimental factor, or according to unintended causes such as batch effects. Move the mouse over the points to see the sample names.<BR>Principal component analysis is a dimension reduction and visualisation technique that is here used to project the multivariate data vector of each array into a two-dimensional plot, such that the spatial arrangement of the points in the plot reflects the overall data (dis)similarity between the arrays.<br><br><br>
+</div><hr><h2><a name= 'S2'>Section 2: Array intensity distributions</a></h2>
+
+<a name="box" id="box-h" href="javascript: toggle('box')" style="text-decoration:none;font-weight:bold;font-size:larger">- Figure 4: Boxplots.</a><br>
+
+<div id="box-b" style="display:block">
+<img src="box.png" border="0" alt="box.png" id="Figls:box"></img><br>
+<b>Figure 4</b><a href="box.pdf"> (PDF file)</a> shows boxplots representing summaries of the signal intensity distributions of the arrays. Each box corresponds to one array. Typically, one expects the boxes to have similar positions and widths. If the distribution of an array is very different from the others, this may indicate an experimental problem. Outlier detection was performed by computing the Kolmogorov-Smirnov statistic <i>K<sub>a</sub></i> between each array's distribution and the distribution of the pooled data.<br><br><br>
+</div>
+
+<a name="out box" id="out box-h" href="javascript: toggle('out box')" style="text-decoration:none;font-weight:bold;font-size:larger">+ Figure 5: Outlier detection for Boxplots.</a><br>
+
+<div id="out box-b" style="display:none">
+<img src="out box.png" border="0" alt="out box.png" id="Figls:out box"></img><br>
+<b>Figure 5</b><a href="out box.pdf"> (PDF file)</a> shows a bar chart of the Kolmogorov-Smirnov statistic <i>K<sub>a</sub></i>, the outlier detection criterion from the previous figure. The bars are shown in the original order of the arrays. Based on the distribution of the values across all arrays, a threshold of 0.333 was determined, which is indicated by the vertical line. None of the arrays exceeded the threshold and was considered an outlier.<br><br><br>
+</div>
+
+<a name="dens" id="dens-h" href="javascript: toggle('dens')" style="text-decoration:none;font-weight:bold;font-size:larger">- Figure 6: Density plots.</a><br>
+
+<div id="dens-b" style="display:block">
+<table border="1">
+<tr>
+<td><?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Fig:dens" width="288px" height="352.8px" viewBox="0 0 288 352.8" version="1.1">
+  <metadata xmlns:gridsvg="http://www.stat.auckland.ac.nz/~paul/R/gridSVG/">
+    <gridsvg:generator name="gridSVG" version="1.4-3" time="2015-10-22 11:16:54"/>
+    <gridsvg:argument name="name" value="E-MEXP-1810_A-AFFY-60_QM/dens.svg"/>
+    <gridsvg:argument name="exportCoords" value="none"/>
+    <gridsvg:argument name="exportMappings" value="none"/>
+    <gridsvg:argument name="exportJS" value="none"/>
+    <gridsvg:argument name="res" value="72"/>
+    <gridsvg:argument name="prefix" value="Fig:dens"/>
+    <gridsvg:argument name="addClasses" value="FALSE"/>
+    <gridsvg:argument name="indent" value="TRUE"/>
+    <gridsvg:argument name="htmlWrapper" value="FALSE"/>
+    <gridsvg:argument name="usePaths" value="none"/>
+    <gridsvg:argument name="uniqueNames" value="TRUE"/>
+    <gridsvg:separator name="id.sep" value="."/>
+    <gridsvg:separator name="gPath.sep" value="::"/>
+    <gridsvg:separator name="vpPath.sep" value="::"/>
+  </metadata>
+  <g transform="translate(0, 352.8) scale(1, -1)">
+    <g id="Fig:densgridSVG" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="none" stroke-width="0.75" font-size="12" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" opacity="1" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-opacity="1" fill-opacity="0" font-weight="normal" font-style="normal">
+      <g id="Fig:densplot_01.background.1">
+        <rect id="Fig:densplot_01.background.1.1" x="0" y="0" width="288" height="352.8" fill="none" stroke="none" stroke-opacity="0" fill-opacity="0"/>
+      </g>
+      <g id="Fig:densplot_01.toplevel.vp.1" font-size="12">
+        <g id="Fig:densplot_01.main.vp.1">
+          <g id="Fig:densGRID.VP.49.1">
+            <g id="Fig:dens.key.frame.1">
+              <g id="Fig:densGRID.VP.50.1">
+                <g id="Fig:densGRID.cellGrob.56.1">
+                  <g id="Fig:dens.key.background.1">
+                    <rect id="Fig:dens.key.background.1.1" x="4.52" y="266.33" width="278.96" height="80.47" fill="none" opacity="1" stroke="none" stroke-opacity="0" fill-opacity="0"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.51.1">
+                <g id="Fig:densGRID.cellGrob.57.1">
+                  <g id="Fig:dens.key.rect.1.1.1">
+                    <rect id="Fig:dens.key.rect.1.1.1.1" x="11.19" y="335.3" width="33.36" height="11.5" opacity="1" fill="rgb(228,26,28)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.52.1">
+                <g id="Fig:densGRID.cellGrob.58.1">
+                  <g id="Fig:dens.key.rect.1.2.1">
+                    <rect id="Fig:dens.key.rect.1.2.1.1" x="11.19" y="323.81" width="33.36" height="11.5" opacity="1" fill="rgb(55,126,184)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.53.1">
+                <g id="Fig:densGRID.cellGrob.59.1">
+                  <g id="Fig:dens.key.rect.1.3.1">
+                    <rect id="Fig:dens.key.rect.1.3.1.1" x="11.19" y="312.31" width="33.36" height="11.5" opacity="1" fill="rgb(77,175,74)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.54.1">
+                <g id="Fig:densGRID.cellGrob.60.1">
+                  <g id="Fig:dens.key.rect.1.4.1">
+                    <rect id="Fig:dens.key.rect.1.4.1.1" x="11.19" y="300.82" width="33.36" height="11.5" opacity="1" fill="rgb(152,78,163)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.55.1">
+                <g id="Fig:densGRID.cellGrob.61.1">
+                  <g id="Fig:dens.key.rect.1.5.1">
+                    <rect id="Fig:dens.key.rect.1.5.1.1" x="11.19" y="289.32" width="33.36" height="11.5" opacity="1" fill="rgb(255,127,0)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.56.1">
+                <g id="Fig:densGRID.cellGrob.62.1">
+                  <g id="Fig:dens.key.rect.1.6.1">
+                    <rect id="Fig:dens.key.rect.1.6.1.1" x="11.19" y="277.82" width="33.36" height="11.5" opacity="1" fill="rgb(255,255,51)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.57.1">
+                <g id="Fig:densGRID.cellGrob.63.1">
+                  <g id="Fig:dens.key.rect.1.7.1">
+                    <rect id="Fig:dens.key.rect.1.7.1.1" x="11.19" y="266.33" width="33.36" height="11.5" opacity="1" fill="rgb(166,86,40)" stroke="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.58.1">
+                <g id="Fig:densGRID.cellGrob.64.1">
+                  <g id="Fig:dens.key.text.2.1.1">
+                    <g id="Fig:dens.key.text.2.1.1.1" transform="translate(57.89, 341.05)" stroke-width="0.1">
+                      <g id="Fig:dens.key.text.2.1.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:dens.key.text.2.1.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:dens.key.text.2.1.1.1.tspan.1" dy="4.31" x="0">none, 0 microliter, RIL-14</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.59.1">
+                <g id="Fig:densGRID.cellGrob.65.1">
+                  <g id="Fig:dens.key.text.2.2.1">
+                    <g id="Fig:dens.key.text.2.2.1.1" transform="translate(57.89, 329.56)" stroke-width="0.1">
+                      <g id="Fig:dens.key.text.2.2.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:dens.key.text.2.2.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:dens.key.text.2.2.1.1.tspan.1" dy="4.31" x="0">none, 0 microliter, RIL-17</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.60.1">
+                <g id="Fig:densGRID.cellGrob.66.1">
+                  <g id="Fig:dens.key.text.2.3.1">
+                    <g id="Fig:dens.key.text.2.3.1.1" transform="translate(57.89, 318.06)" stroke-width="0.1">
+                      <g id="Fig:dens.key.text.2.3.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:dens.key.text.2.3.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:dens.key.text.2.3.1.1.tspan.1" dy="4.31" x="0">RIL-14, 450 microliter, dauer pheromone</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.61.1">
+                <g id="Fig:densGRID.cellGrob.67.1">
+                  <g id="Fig:dens.key.text.2.4.1">
+                    <g id="Fig:dens.key.text.2.4.1.1" transform="translate(57.89, 306.56)" stroke-width="0.1">
+                      <g id="Fig:dens.key.text.2.4.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:dens.key.text.2.4.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:dens.key.text.2.4.1.1.tspan.1" dy="4.31" x="0">RIL-14, none, 0 microliter</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.62.1">
+                <g id="Fig:densGRID.cellGrob.68.1">
+                  <g id="Fig:dens.key.text.2.5.1">
+                    <g id="Fig:dens.key.text.2.5.1.1" transform="translate(57.89, 295.07)" stroke-width="0.1">
+                      <g id="Fig:dens.key.text.2.5.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:dens.key.text.2.5.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:dens.key.text.2.5.1.1.tspan.1" dy="4.31" x="0">RIL-17, 450 microliter, dauer pheromone</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.63.1">
+                <g id="Fig:densGRID.cellGrob.69.1">
+                  <g id="Fig:dens.key.text.2.6.1">
+                    <g id="Fig:dens.key.text.2.6.1.1" transform="translate(57.89, 283.57)" stroke-width="0.1">
+                      <g id="Fig:dens.key.text.2.6.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:dens.key.text.2.6.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:dens.key.text.2.6.1.1.tspan.1" dy="4.31" x="0">RIL-17, dauer pheromone, 450 microliter</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="Fig:densGRID.VP.64.1">
+                <g id="Fig:densGRID.cellGrob.70.1">
+                  <g id="Fig:dens.key.text.2.7.1">
+                    <g id="Fig:dens.key.text.2.7.1.1" transform="translate(57.89, 272.08)" stroke-width="0.1">
+                      <g id="Fig:dens.key.text.2.7.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="Fig:dens.key.text.2.7.1.1.text" text-anchor="start" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                          <tspan id="Fig:dens.key.text.2.7.1.1.tspan.1" dy="4.31" x="0">RIL-17, none, 0 microliter</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Fig:densplot_01.ylab.vp.1">
+          <g id="Fig:densplot_01.ylab.1">
+            <g id="Fig:densplot_01.ylab.1.1" transform="translate(10.31, 148.26)" stroke-width="0.1">
+              <g id="Fig:densplot_01.ylab.1.1.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:densplot_01.ylab.1.1.text" transform="rotate(-90)" text-anchor="middle" opacity="1" stroke="rgb(0,0,0)" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="12" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:densplot_01.ylab.1.1.tspan.1" dy="4.31" x="0">Density</tspan>
+                </text>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Fig:densplot_01.figure.vp.1"/>
+        <defs>
+          <clipPath id="Fig:densplot_01.panel.1.1.vp.1.clipPath">
+            <rect x="44.8" y="42.19" width="231.2" height="212.14" fill="none" stroke="none"/>
+          </clipPath>
+        </defs>
+        <g id="Fig:densplot_01.panel.1.1.vp.1" clip-path="url(#Fig:densplot_01.panel.1.1.vp.1.clipPath)"/>
+        <g id="Fig:densplot_01.strip.1.1.off.vp.1"/>
+        <g id="Fig:densplot_01.strip.left.1.1.off.vp.1">
+          <g id="Fig:densplot_01.ticks.left.panel.1.1.1">
+            <polyline id="Fig:densplot_01.ticks.left.panel.1.1.1.1" points="44.8,55.21 39.13,55.21" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:densplot_01.ticks.left.panel.1.1.1.2" points="44.8,107.04 39.13,107.04" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:densplot_01.ticks.left.panel.1.1.1.3" points="44.8,158.87 39.13,158.87" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:densplot_01.ticks.left.panel.1.1.1.4" points="44.8,210.69 39.13,210.69" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+          </g>
+          <g id="Fig:densplot_01.ticklabels.left.panel.1.1.1">
+            <g id="Fig:densplot_01.ticklabels.left.panel.1.1.1.1" transform="translate(33.47, 55.21)" stroke-width="0.1">
+              <g id="Fig:densplot_01.ticklabels.left.panel.1.1.1.1.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:densplot_01.ticklabels.left.panel.1.1.1.1.text" transform="rotate(-90)" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:densplot_01.ticklabels.left.panel.1.1.1.1.tspan.1" dy="0" x="0">0.0</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:densplot_01.ticklabels.left.panel.1.1.1.2" transform="translate(33.47, 107.04)" stroke-width="0.1">
+              <g id="Fig:densplot_01.ticklabels.left.panel.1.1.1.2.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:densplot_01.ticklabels.left.panel.1.1.1.2.text" transform="rotate(-90)" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:densplot_01.ticklabels.left.panel.1.1.1.2.tspan.1" dy="0" x="0">0.2</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:densplot_01.ticklabels.left.panel.1.1.1.3" transform="translate(33.47, 158.87)" stroke-width="0.1">
+              <g id="Fig:densplot_01.ticklabels.left.panel.1.1.1.3.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:densplot_01.ticklabels.left.panel.1.1.1.3.text" transform="rotate(-90)" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:densplot_01.ticklabels.left.panel.1.1.1.3.tspan.1" dy="0" x="0">0.4</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:densplot_01.ticklabels.left.panel.1.1.1.4" transform="translate(33.47, 210.69)" stroke-width="0.1">
+              <g id="Fig:densplot_01.ticklabels.left.panel.1.1.1.4.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:densplot_01.ticklabels.left.panel.1.1.1.4.text" transform="rotate(-90)" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:densplot_01.ticklabels.left.panel.1.1.1.4.tspan.1" dy="0" x="0">0.6</tspan>
+                </text>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Fig:densplot_01.panel.1.1.off.vp.1">
+          <g id="Fig:densplot_01.ticks.bottom.panel.1.1.1">
+            <polyline id="Fig:densplot_01.ticks.bottom.panel.1.1.1.1" points="65.78,42.19 65.78,36.52" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:densplot_01.ticks.bottom.panel.1.1.1.2" points="127.5,42.19 127.5,36.52" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:densplot_01.ticks.bottom.panel.1.1.1.3" points="189.22,42.19 189.22,36.52" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+            <polyline id="Fig:densplot_01.ticks.bottom.panel.1.1.1.4" points="250.94,42.19 250.94,36.52" stroke="rgb(0,0,0)" opacity="1" stroke-dasharray="none" stroke-width="0.75" stroke-opacity="1" fill="none"/>
+          </g>
+          <g id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1">
+            <g id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.1" transform="translate(65.78, 30.85)" stroke-width="0.1">
+              <g id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.1.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.1.text" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.1.tspan.1" dy="7.18" x="0">6</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.2" transform="translate(127.5, 30.85)" stroke-width="0.1">
+              <g id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.2.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.2.text" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.2.tspan.1" dy="7.18" x="0">8</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.3" transform="translate(189.22, 30.85)" stroke-width="0.1">
+              <g id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.3.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.3.text" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.3.tspan.1" dy="7.18" x="0">10</tspan>
+                </text>
+              </g>
+            </g>
+            <g id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.4" transform="translate(250.94, 30.85)" stroke-width="0.1">
+              <g id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.4.scale" transform="scale(1, -1)">
+                <text x="0" y="0" id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.4.text" text-anchor="middle" stroke="rgb(0,0,0)" opacity="1" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-size="9.6" font-weight="normal" font-style="normal">
+                  <tspan id="Fig:densplot_01.ticklabels.bottom.panel.1.1.1.4.tspan.1" dy="7.18" x="0">12</tspan>
+                </text>
+              </g>
+            </g>
+          </g>
+        </g>
+        <defs>
+          <clipPath id="Fig:densplot_01.panel.1.1.vp.2.clipPath">
+            <rect x="44.8" y="42.19" width="231.2" height="212.14" fill="none" stroke="none"/>
+          </clipPath>
+        </defs>
+        <g id="Fig:densplot_01.panel.1.1.vp.2" clip-path="url(#Fig:densplot_01.panel.1.1.vp.2.clipPath)">
+          <g id="Fig:densplot_01.xyplot.lines.group.1.panel.1.1.1">
+            <polyline id="Fig:densplot_01.xyplot.lines.group.1.panel.1.1.1.1" points="59.57,55.21 59.97,55.21 60.36,55.22 60.76,55.22 61.15,55.22 61.54,55.22 61.94,55.23 62.33,55.23 62.72,55.24 63.12,55.26 63.51,55.29 63.91,55.32 64.3,55.38 64.69,55.45 65.09,55.55 65.48,55.68 65.87,55.86 66.27,56.09 66.66,56.37 67.06,56.73 67.45,57.17 67.84,57.71 68.24,58.36 68.63,59.14 69.02,60.07 69.42,61.17 69.81,62.47 70.21,63.99 70.6,65.76 70.99,67.82 71.39,70.19 71.78,72.89 72.17,75.92 72.57,79.3 72.96,83.04 73.36,87.14 73.75,91.58 74.14,96.38 74.54,101.51 74.93,106.96 75.32,112.72 75.72,118.76 76.11,125.05 76.51,131.57 76.9,138.24 77.29,145.02 77.69,151.82 78.08,158.59 78.47,165.26 78.87,171.77 79.26,178.05 79.66,184.08 80.05,189.8 80.44,195.2 80.84,200.26 81.23,204.95 81.62,209.27 82.02,213.18 82.41,216.66 82.81,219.73 83.2,222.38 83.59,224.62 83.99,226.46 84.38,227.91 84.77,229 85.17,229.75 85.56,230.2 85.96,230.37 86.35,230.28 86.74,229.95 87.14,229.43 87.53,228.71 87.92,227.82 88.32,226.79 88.71,225.64 89.11,224.4 89.5,223.11 89.89,221.77 90.29,220.42 90.68,219.06 91.07,217.71 91.47,216.35 91.86,214.98 92.26,213.58 92.65,212.13 93.04,210.61 93.44,209.01 93.83,207.33 94.22,205.58 94.62,203.77 95.01,201.92 95.41,200.03 95.8,198.13 96.19,196.22 96.59,194.32 96.98,192.44 97.37,190.58 97.77,188.73 98.16,186.91 98.56,185.11 98.95,183.34 99.34,181.59 99.74,179.87 100.13,178.19 100.52,176.54 100.92,174.94 101.31,173.38 101.71,171.88 102.1,170.43 102.49,169.02 102.89,167.66 103.28,166.33 103.67,165.02 104.07,163.73 104.46,162.46 104.86,161.18 105.25,159.92 105.64,158.65 106.04,157.4 106.43,156.16 106.82,154.93 107.22,153.72 107.61,152.52 108.01,151.33 108.4,150.16 108.79,148.98 109.19,147.81 109.58,146.63 109.97,145.44 110.37,144.26 110.76,143.08 111.16,141.9 111.55,140.74 111.94,139.59 112.34,138.46 112.73,137.34 113.12,136.25 113.52,135.18 113.91,134.14 114.31,133.12 114.7,132.13 115.09,131.18 115.49,130.26 115.88,129.39 116.27,128.55 116.67,127.75 117.06,126.98 117.46,126.24 117.85,125.51 118.24,124.8 118.64,124.1 119.03,123.39 119.42,122.69 119.82,121.98 120.21,121.28 120.61,120.57 121,119.87 121.39,119.18 121.79,118.49 122.18,117.8 122.57,117.11 122.97,116.41 123.36,115.71 123.76,115 124.15,114.27 124.54,113.53 124.94,112.78 125.33,112.03 125.72,111.27 126.12,110.52 126.51,109.78 126.91,109.07 127.3,108.38 127.69,107.73 128.09,107.12 128.48,106.54 128.87,106.01 129.27,105.51 129.66,105.04 130.06,104.58 130.45,104.13 130.84,103.68 131.24,103.21 131.63,102.72 132.02,102.2 132.42,101.67 132.81,101.12 133.21,100.57 133.6,100.02 133.99,99.48 134.39,98.95 134.78,98.45 135.17,97.95 135.57,97.48 135.96,97.01 136.36,96.56 136.75,96.11 137.14,95.67 137.54,95.23 137.93,94.8 138.32,94.37 138.72,93.95 139.11,93.52 139.51,93.1 139.9,92.68 140.29,92.27 140.69,91.86 141.08,91.45 141.47,91.05 141.87,90.67 142.26,90.29 142.66,89.93 143.05,89.58 143.44,89.23 143.84,88.9 144.23,88.57 144.62,88.25 145.02,87.95 145.41,87.65 145.81,87.35 146.2,87.07 146.59,86.78 146.99,86.5 147.38,86.21 147.77,85.92 148.17,85.62 148.56,85.32 148.96,85.01 149.35,84.7 149.74,84.4 150.14,84.1 150.53,83.8 150.92,83.52 151.32,83.24 151.71,82.97 152.11,82.72 152.5,82.47 152.89,82.24 153.29,82.01 153.68,81.79 154.07,81.56 154.47,81.34 154.86,81.11 155.26,80.87 155.65,80.62 156.04,80.37 156.44,80.11 156.83,79.85 157.22,79.6 157.62,79.35 158.01,79.11 158.41,78.89 158.8,78.67 159.19,78.46 159.59,78.26 159.98,78.06 160.37,77.86 160.77,77.65 161.16,77.44 161.56,77.21 161.95,76.98 162.34,76.74 162.74,76.49 163.13,76.23 163.52,75.98 163.92,75.73 164.31,75.49 164.71,75.26 165.1,75.04 165.49,74.84 165.89,74.65 166.28,74.47 166.67,74.31 167.07,74.15 167.46,73.99 167.86,73.83 168.25,73.67 168.64,73.51 169.04,73.33 169.43,73.15 169.82,72.96 170.22,72.77 170.61,72.56 171.01,72.36 171.4,72.15 171.79,71.94 172.19,71.74 172.58,71.55 172.97,71.36 173.37,71.19 173.76,71.02 174.16,70.86 174.55,70.71 174.94,70.56 175.34,70.41 175.73,70.27 176.12,70.12 176.52,69.97 176.91,69.83 177.31,69.68 177.7,69.54 178.09,69.4 178.49,69.26 178.88,69.14 179.27,69.01 179.67,68.9 180.06,68.79 180.46,68.68 180.85,68.59 181.24,68.5 181.64,68.42 182.03,68.34 182.43,68.26 182.82,68.19 183.21,68.11 183.61,68.02 184,67.92 184.39,67.81 184.79,67.69 185.18,67.56 185.58,67.42 185.97,67.29 186.36,67.15 186.76,67.01 187.15,66.88 187.54,66.75 187.94,66.64 188.33,66.53 188.73,66.43 189.12,66.34 189.51,66.24 189.91,66.15 190.3,66.06 190.69,65.96 191.09,65.86 191.48,65.75 191.88,65.65 192.27,65.54 192.66,65.44 193.06,65.34 193.45,65.24 193.84,65.15 194.24,65.05 194.63,64.97 195.03,64.88 195.42,64.8 195.81,64.73 196.21,64.65 196.6,64.58 196.99,64.5 197.39,64.43 197.78,64.35 198.18,64.28 198.57,64.2 198.96,64.12 199.36,64.04 199.75,63.95 200.14,63.87 200.54,63.78 200.93,63.69 201.33,63.61 201.72,63.52 202.11,63.42 202.51,63.33 202.9,63.23 203.29,63.13 203.69,63.03 204.08,62.93 204.48,62.84 204.87,62.75 205.26,62.66 205.66,62.58 206.05,62.52 206.44,62.46 206.84,62.41 207.23,62.36 207.63,62.32 208.02,62.28 208.41,62.24 208.81,62.2 209.2,62.16 209.59,62.12 209.99,62.07 210.38,62.03 210.78,61.98 211.17,61.93 211.56,61.88 211.96,61.83 212.35,61.79 212.74,61.74 213.14,61.69 213.53,61.64 213.93,61.59 214.32,61.54 214.71,61.48 215.11,61.43 215.5,61.37 215.89,61.32 216.29,61.27 216.68,61.23 217.08,61.18 217.47,61.14 217.86,61.09 218.26,61.04 218.65,61 219.04,60.95 219.44,60.9 219.83,60.85 220.23,60.8 220.62,60.75 221.01,60.7 221.41,60.64 221.8,60.59 222.19,60.54 222.59,60.48 222.98,60.43 223.38,60.39 223.77,60.34 224.16,60.3 224.56,60.27 224.95,60.23 225.34,60.2 225.74,60.17 226.13,60.13 226.53,60.09 226.92,60.05 227.31,60.01 227.71,59.96 228.1,59.91 228.49,59.87 228.89,59.82 229.28,59.77 229.68,59.72 230.07,59.67 230.46,59.62 230.86,59.58 231.25,59.53 231.64,59.49 232.04,59.44 232.43,59.4 232.83,59.37 233.22,59.34 233.61,59.32 234.01,59.3 234.4,59.29 234.79,59.28 235.19,59.27 235.58,59.27 235.98,59.26 236.37,59.25 236.76,59.24 237.16,59.22 237.55,59.19 237.94,59.16 238.34,59.12 238.73,59.08 239.13,59.04 239.52,59 239.91,58.97 240.31,58.94 240.7,58.91 241.09,58.88 241.49,58.85 241.88,58.82 242.28,58.78 242.67,58.74 243.06,58.7 243.46,58.65 243.85,58.6 244.24,58.56 244.64,58.51 245.03,58.48 245.43,58.45 245.82,58.42 246.21,58.41 246.61,58.39 247,58.39 247.39,58.38 247.79,58.38 248.18,58.37 248.58,58.36 248.97,58.34 249.36,58.31 249.76,58.28 250.15,58.24 250.54,58.19 250.94,58.13 251.33,58.06 251.73,57.98 252.12,57.89 252.51,57.78 252.91,57.65 253.3,57.5 253.69,57.33 254.09,57.13 254.48,56.92 254.88,56.69 255.27,56.47 255.66,56.24 256.06,56.04 256.45,55.86 256.84,55.7 257.24,55.57 257.63,55.46 258.03,55.38 258.42,55.32 258.81,55.28 259.21,55.26 259.6,55.24 259.99,55.23 260.39,55.22 260.78,55.22" stroke-dasharray="none" stroke="rgb(255,255,51)" stroke-width="0.75" opacity="1" stroke-opacity="1" fill="none" class="aqm1" onclick="plotObjRespond('click', 1, 'dens')" onmouseover="plotObjRespond('show', 1, 'dens')" onmouseout="plotObjRespond('hide', 1, 'dens')"/>
+          </g>
+          <g id="Fig:densplot_01.xyplot.lines.group.2.panel.1.1.1">
+            <polyline id="Fig:densplot_01.xyplot.lines.group.2.panel.1.1.1.1" points="59.68,55.24 60.08,55.26 60.47,55.3 60.86,55.37 61.26,55.49 61.65,55.69 62.04,56 62.44,56.46 62.83,57.13 63.22,58.06 63.62,59.31 64.01,60.97 64.4,63.07 64.8,65.64 65.19,68.69 65.58,72.22 65.98,76.23 66.37,80.69 66.76,85.57 67.16,90.85 67.55,96.5 67.94,102.5 68.34,108.8 68.73,115.39 69.12,122.23 69.52,129.29 69.91,136.53 70.3,143.89 70.7,151.32 71.09,158.75 71.48,166.12 71.88,173.39 72.27,180.48 72.66,187.35 73.06,193.93 73.45,200.19 73.84,206.08 74.24,211.57 74.63,216.63 75.02,221.23 75.42,225.33 75.81,228.93 76.2,232.02 76.6,234.61 76.99,236.7 77.38,238.31 77.78,239.45 78.17,240.17 78.56,240.49 78.96,240.48 79.35,240.16 79.74,239.6 80.14,238.82 80.53,237.85 80.92,236.73 81.32,235.48 81.71,234.13 82.1,232.7 82.5,231.19 82.89,229.62 83.28,227.98 83.68,226.28 84.07,224.5 84.46,222.63 84.86,220.69 85.25,218.67 85.65,216.58 86.04,214.46 86.43,212.32 86.83,210.2 87.22,208.11 87.61,206.06 88.01,204.06 88.4,202.11 88.79,200.18 89.19,198.27 89.58,196.37 89.97,194.47 90.37,192.56 90.76,190.66 91.15,188.76 91.55,186.88 91.94,185.03 92.33,183.21 92.73,181.44 93.12,179.7 93.51,178.01 93.91,176.34 94.3,174.69 94.69,173.07 95.09,171.46 95.48,169.87 95.87,168.29 96.27,166.74 96.66,165.21 97.05,163.71 97.45,162.24 97.84,160.81 98.23,159.41 98.63,158.04 99.02,156.7 99.41,155.38 99.81,154.08 100.2,152.79 100.59,151.52 100.99,150.25 101.38,149 101.77,147.75 102.17,146.52 102.56,145.3 102.95,144.1 103.35,142.91 103.74,141.74 104.13,140.59 104.53,139.45 104.92,138.34 105.31,137.23 105.71,136.15 106.1,135.08 106.49,134.03 106.89,133.01 107.28,132 107.67,131.02 108.07,130.06 108.46,129.12 108.85,128.19 109.25,127.29 109.64,126.4 110.03,125.52 110.43,124.65 110.82,123.8 111.21,122.95 111.61,122.11 112,121.28 112.39,120.46 112.79,119.65 113.18,118.85 113.57,118.06 113.97,117.28 114.36,116.51 114.75,115.76 115.15,115.03 115.54,114.31 115.93,113.61 116.33,112.93 116.72,112.27 117.11,111.62 117.51,110.99 117.9,110.38 118.29,109.79 118.69,109.2 119.08,108.63 119.47,108.07 119.87,107.51 120.26,106.96 120.65,106.41 121.05,105.87 121.44,105.33 121.83,104.8 122.23,104.27 122.62,103.74 123.01,103.21 123.41,102.69 123.8,102.16 124.19,101.64 124.59,101.12 124.98,100.6 125.37,100.09 125.77,99.58 126.16,99.07 126.55,98.58 126.95,98.09 127.34,97.6 127.73,97.13 128.13,96.66 128.52,96.19 128.91,95.73 129.31,95.27 129.7,94.8 130.09,94.34 130.49,93.86 130.88,93.39 131.27,92.91 131.67,92.44 132.06,91.98 132.46,91.53 132.85,91.1 133.24,90.69 133.64,90.31 134.03,89.96 134.42,89.63 134.82,89.32 135.21,89.03 135.6,88.75 136,88.5 136.39,88.25 136.78,88.01 137.18,87.77 137.57,87.53 137.96,87.28 138.36,87.02 138.75,86.75 139.14,86.45 139.54,86.13 139.93,85.78 140.32,85.42 140.72,85.03 141.11,84.64 141.5,84.23 141.9,83.82 142.29,83.42 142.68,83.03 143.08,82.66 143.47,82.3 143.86,81.97 144.26,81.66 144.65,81.38 145.04,81.11 145.44,80.85 145.83,80.61 146.22,80.38 146.62,80.16 147.01,79.93 147.4,79.72 147.8,79.5 148.19,79.28 148.58,79.07 148.98,78.85 149.37,78.63 149.76,78.42 150.16,78.2 150.55,77.98 150.94,77.76 151.34,77.54 151.73,77.32 152.12,77.1 152.52,76.88 152.91,76.66 153.3,76.44 153.7,76.22 154.09,76.01 154.48,75.79 154.88,75.57 155.27,75.36 155.66,75.15 156.06,74.95 156.45,74.75 156.84,74.57 157.24,74.4 157.63,74.23 158.02,74.07 158.42,73.91 158.81,73.74 159.2,73.57 159.6,73.39 159.99,73.19 160.38,72.99 160.78,72.78 161.17,72.58 161.56,72.38 161.96,72.18 162.35,72.01 162.74,71.85 163.14,71.7 163.53,71.57 163.92,71.46 164.32,71.35 164.71,71.25 165.1,71.14 165.5,71.04 165.89,70.93 166.28,70.8 166.68,70.67 167.07,70.53 167.46,70.38 167.86,70.23 168.25,70.08 168.64,69.93 169.04,69.78 169.43,69.64 169.82,69.51 170.22,69.38 170.61,69.25 171,69.12 171.4,69 171.79,68.87 172.18,68.75 172.58,68.63 172.97,68.51 173.36,68.39 173.76,68.28 174.15,68.18 174.54,68.08 174.94,67.98 175.33,67.89 175.72,67.8 176.12,67.71 176.51,67.62 176.9,67.52 177.3,67.42 177.69,67.31 178.08,67.18 178.48,67.06 178.87,66.92 179.27,66.79 179.66,66.65 180.05,66.52 180.45,66.39 180.84,66.27 181.23,66.15 181.63,66.04 182.02,65.94 182.41,65.85 182.81,65.78 183.2,65.71 183.59,65.65 183.99,65.6 184.38,65.54 184.77,65.49 185.17,65.43 185.56,65.36 185.95,65.29 186.35,65.21 186.74,65.12 187.13,65.03 187.53,64.94 187.92,64.84 188.31,64.74 188.71,64.64 189.1,64.55 189.49,64.46 189.89,64.37 190.28,64.3 190.67,64.23 191.07,64.18 191.46,64.13 191.85,64.09 192.25,64.05 192.64,64.01 193.03,63.98 193.43,63.94 193.82,63.9 194.21,63.85 194.61,63.79 195,63.72 195.39,63.65 195.79,63.56 196.18,63.47 196.57,63.38 196.97,63.28 197.36,63.18 197.75,63.08 198.15,62.99 198.54,62.9 198.93,62.82 199.33,62.75 199.72,62.69 200.11,62.63 200.51,62.58 200.9,62.54 201.29,62.49 201.69,62.45 202.08,62.41 202.47,62.36 202.87,62.31 203.26,62.26 203.65,62.2 204.05,62.14 204.44,62.07 204.83,62 205.23,61.94 205.62,61.88 206.01,61.82 206.41,61.77 206.8,61.73 207.19,61.69 207.59,61.66 207.98,61.62 208.37,61.58 208.77,61.53 209.16,61.48 209.55,61.42 209.95,61.35 210.34,61.28 210.73,61.21 211.13,61.14 211.52,61.07 211.91,61.01 212.31,60.96 212.7,60.91 213.09,60.87 213.49,60.83 213.88,60.79 214.27,60.76 214.67,60.73 215.06,60.69 215.45,60.66 215.85,60.63 216.24,60.6 216.63,60.57 217.03,60.53 217.42,60.5 217.81,60.47 218.21,60.43 218.6,60.4 218.99,60.37 219.39,60.34 219.78,60.3 220.17,60.27 220.57,60.24 220.96,60.2 221.35,60.16 221.75,60.12 222.14,60.08 222.53,60.05 222.93,60.01 223.32,59.98 223.71,59.95 224.11,59.93 224.5,59.91 224.89,59.88 225.29,59.86 225.68,59.83 226.07,59.8 226.47,59.76 226.86,59.72 227.26,59.67 227.65,59.62 228.04,59.56 228.44,59.5 228.83,59.44 229.22,59.39 229.62,59.33 230.01,59.28 230.4,59.23 230.8,59.18 231.19,59.13 231.58,59.08 231.98,59.04 232.37,59 232.76,58.95 233.16,58.91 233.55,58.87 233.94,58.83 234.34,58.8 234.73,58.77 235.12,58.75 235.52,58.73 235.91,58.71 236.3,58.7 236.7,58.68 237.09,58.67 237.48,58.66 237.88,58.65 238.27,58.64 238.66,58.62 239.06,58.61 239.45,58.59 239.84,58.58 240.24,58.56 240.63,58.54 241.02,58.51 241.42,58.49 241.81,58.46 242.2,58.43 242.6,58.39 242.99,58.36 243.38,58.33 243.78,58.31 244.17,58.29 244.56,58.29 244.96,58.28 245.35,58.29 245.74,58.3 246.14,58.31 246.53,58.32 246.92,58.32 247.32,58.32 247.71,58.31 248.1,58.29 248.5,58.27 248.89,58.23 249.28,58.19 249.68,58.15 250.07,58.1 250.46,58.05 250.86,58 251.25,57.94 251.64,57.87 252.04,57.79 252.43,57.69 252.82,57.58 253.22,57.44 253.61,57.27 254,57.09 254.4,56.88 254.79,56.67 255.18,56.45 255.58,56.24 255.97,56.03 256.36,55.85 256.76,55.69 257.15,55.56 257.54,55.46 257.94,55.38 258.33,55.32 258.72,55.28 259.12,55.26 259.51,55.24 259.9,55.23 260.3,55.22 260.69,55.22" stroke-dasharray="none" stroke="rgb(228,26,28)" stroke-width="0.75" opacity="1" stroke-opacity="1" fill="none" class="aqm2" onclick="plotObjRespond('click', 2, 'dens')" onmouseover="plotObjRespond('show', 2, 'dens')" onmouseout="plotObjRespond('hide', 2, 'dens')"/>
+          </g>
+          <g id="Fig:densplot_01.xyplot.lines.group.3.panel.1.1.1">
+            <polyline id="Fig:densplot_01.xyplot.lines.group.3.panel.1.1.1.1" points="60.01,55.22 60.4,55.23 60.8,55.25 61.19,55.27 61.58,55.32 61.97,55.41 62.36,55.54 62.76,55.74 63.15,56.03 63.54,56.44 63.93,57.01 64.33,57.76 64.72,58.72 65.11,59.94 65.5,61.42 65.89,63.19 66.29,65.24 66.68,67.61 67.07,70.3 67.46,73.33 67.85,76.71 68.25,80.47 68.64,84.61 69.03,89.15 69.42,94.09 69.81,99.42 70.21,105.14 70.6,111.22 70.99,117.65 71.38,124.34 71.77,131.26 72.17,138.34 72.56,145.51 72.95,152.73 73.34,159.93 73.73,167.05 74.13,174.02 74.52,180.81 74.91,187.35 75.3,193.61 75.7,199.54 76.09,205.11 76.48,210.3 76.87,215.08 77.26,219.45 77.66,223.41 78.05,226.96 78.44,230.09 78.83,232.82 79.22,235.13 79.62,237.06 80.01,238.59 80.4,239.77 80.79,240.6 81.18,241.1 81.58,241.3 81.97,241.21 82.36,240.85 82.75,240.23 83.14,239.4 83.54,238.4 83.93,237.26 84.32,236.02 84.71,234.7 85.1,233.31 85.5,231.86 85.89,230.35 86.28,228.76 86.67,227.09 87.07,225.34 87.46,223.5 87.85,221.57 88.24,219.57 88.63,217.51 89.03,215.39 89.42,213.26 89.81,211.11 90.2,208.97 90.59,206.86 90.99,204.78 91.38,202.75 91.77,200.77 92.16,198.84 92.55,196.94 92.95,195.06 93.34,193.2 93.73,191.36 94.12,189.52 94.51,187.69 94.91,185.86 95.3,184.05 95.69,182.23 96.08,180.43 96.47,178.64 96.87,176.85 97.26,175.09 97.65,173.35 98.04,171.65 98.44,169.99 98.83,168.38 99.22,166.83 99.61,165.32 100,163.85 100.4,162.42 100.79,161.01 101.18,159.61 101.57,158.22 101.96,156.84 102.36,155.46 102.75,154.09 103.14,152.75 103.53,151.43 103.92,150.15 104.32,148.92 104.71,147.72 105.1,146.57 105.49,145.47 105.88,144.4 106.28,143.35 106.67,142.33 107.06,141.31 107.45,140.28 107.84,139.25 108.24,138.2 108.63,137.15 109.02,136.1 109.41,135.06 109.81,134.04 110.2,133.04 110.59,132.07 110.98,131.11 111.37,130.17 111.77,129.23 112.16,128.27 112.55,127.31 112.94,126.33 113.33,125.35 113.73,124.37 114.12,123.43 114.51,122.52 114.9,121.66 115.29,120.84 115.69,120.06 116.08,119.32 116.47,118.6 116.86,117.9 117.25,117.2 117.65,116.52 118.04,115.84 118.43,115.16 118.82,114.49 119.21,113.83 119.61,113.17 120,112.51 120.39,111.85 120.78,111.19 121.17,110.52 121.57,109.85 121.96,109.18 122.35,108.52 122.74,107.86 123.14,107.22 123.53,106.59 123.92,105.98 124.31,105.37 124.7,104.76 125.1,104.16 125.49,103.56 125.88,102.96 126.27,102.37 126.66,101.79 127.06,101.23 127.45,100.69 127.84,100.17 128.23,99.67 128.62,99.18 129.02,98.7 129.41,98.22 129.8,97.72 130.19,97.21 130.58,96.68 130.98,96.13 131.37,95.56 131.76,95 132.15,94.44 132.54,93.9 132.94,93.38 133.33,92.88 133.72,92.4 134.11,91.93 134.51,91.47 134.9,91.02 135.29,90.56 135.68,90.1 136.07,89.64 136.47,89.19 136.86,88.75 137.25,88.32 137.64,87.89 138.03,87.47 138.43,87.06 138.82,86.66 139.21,86.26 139.6,85.87 139.99,85.49 140.39,85.12 140.78,84.76 141.17,84.42 141.56,84.09 141.95,83.77 142.35,83.46 142.74,83.17 143.13,82.88 143.52,82.6 143.91,82.33 144.31,82.05 144.7,81.78 145.09,81.5 145.48,81.22 145.88,80.94 146.27,80.66 146.66,80.37 147.05,80.09 147.44,79.82 147.84,79.57 148.23,79.33 148.62,79.11 149.01,78.9 149.4,78.71 149.8,78.53 150.19,78.34 150.58,78.13 150.97,77.91 151.36,77.67 151.76,77.4 152.15,77.1 152.54,76.8 152.93,76.48 153.32,76.18 153.72,75.89 154.11,75.63 154.5,75.4 154.89,75.2 155.28,75.04 155.68,74.89 156.07,74.75 156.46,74.62 156.85,74.48 157.25,74.33 157.64,74.16 158.03,73.96 158.42,73.75 158.81,73.52 159.21,73.28 159.6,73.04 159.99,72.8 160.38,72.57 160.77,72.35 161.17,72.15 161.56,71.96 161.95,71.78 162.34,71.6 162.73,71.43 163.13,71.25 163.52,71.08 163.91,70.89 164.3,70.7 164.69,70.5 165.09,70.31 165.48,70.11 165.87,69.91 166.26,69.72 166.65,69.54 167.05,69.37 167.44,69.22 167.83,69.07 168.22,68.93 168.61,68.8 169.01,68.68 169.4,68.55 169.79,68.42 170.18,68.28 170.58,68.13 170.97,67.98 171.36,67.83 171.75,67.69 172.14,67.56 172.54,67.45 172.93,67.35 173.32,67.27 173.71,67.21 174.1,67.15 174.5,67.1 174.89,67.05 175.28,67.01 175.67,66.96 176.06,66.92 176.46,66.86 176.85,66.81 177.24,66.74 177.63,66.66 178.02,66.58 178.42,66.48 178.81,66.38 179.2,66.26 179.59,66.14 179.98,66.01 180.38,65.88 180.77,65.74 181.16,65.61 181.55,65.48 181.95,65.35 182.34,65.23 182.73,65.12 183.12,65.02 183.51,64.93 183.91,64.85 184.3,64.78 184.69,64.71 185.08,64.63 185.47,64.55 185.87,64.46 186.26,64.37 186.65,64.26 187.04,64.15 187.43,64.04 187.83,63.92 188.22,63.81 188.61,63.69 189,63.58 189.39,63.47 189.79,63.36 190.18,63.26 190.57,63.16 190.96,63.07 191.35,62.99 191.75,62.92 192.14,62.85 192.53,62.79 192.92,62.74 193.32,62.69 193.71,62.64 194.1,62.6 194.49,62.56 194.88,62.51 195.28,62.47 195.67,62.43 196.06,62.39 196.45,62.34 196.84,62.29 197.24,62.24 197.63,62.18 198.02,62.12 198.41,62.06 198.8,62 199.2,61.94 199.59,61.88 199.98,61.83 200.37,61.77 200.76,61.73 201.16,61.68 201.55,61.63 201.94,61.57 202.33,61.52 202.72,61.46 203.12,61.4 203.51,61.34 203.9,61.27 204.29,61.21 204.69,61.15 205.08,61.09 205.47,61.03 205.86,60.97 206.25,60.93 206.65,60.89 207.04,60.85 207.43,60.83 207.82,60.81 208.21,60.8 208.61,60.8 209,60.8 209.39,60.8 209.78,60.8 210.17,60.78 210.57,60.76 210.96,60.73 211.35,60.68 211.74,60.63 212.13,60.56 212.53,60.49 212.92,60.42 213.31,60.35 213.7,60.28 214.09,60.21 214.49,60.16 214.88,60.1 215.27,60.05 215.66,60 216.05,59.95 216.45,59.9 216.84,59.84 217.23,59.79 217.62,59.72 218.02,59.66 218.41,59.6 218.8,59.54 219.19,59.49 219.58,59.44 219.98,59.4 220.37,59.36 220.76,59.32 221.15,59.29 221.54,59.25 221.94,59.22 222.33,59.2 222.72,59.17 223.11,59.15 223.5,59.13 223.9,59.12 224.29,59.11 224.68,59.1 225.07,59.09 225.46,59.08 225.86,59.07 226.25,59.04 226.64,59.01 227.03,58.97 227.42,58.93 227.82,58.88 228.21,58.84 228.6,58.8 228.99,58.76 229.39,58.74 229.78,58.72 230.17,58.7 230.56,58.68 230.95,58.67 231.35,58.66 231.74,58.64 232.13,58.61 232.52,58.58 232.91,58.54 233.31,58.5 233.7,58.45 234.09,58.39 234.48,58.33 234.87,58.28 235.27,58.23 235.66,58.19 236.05,58.17 236.44,58.15 236.83,58.15 237.23,58.16 237.62,58.17 238.01,58.18 238.4,58.18 238.79,58.18 239.19,58.17 239.58,58.16 239.97,58.14 240.36,58.11 240.76,58.09 241.15,58.07 241.54,58.05 241.93,58.03 242.32,58.01 242.72,58 243.11,57.98 243.5,57.96 243.89,57.93 244.28,57.91 244.68,57.88 245.07,57.85 245.46,57.82 245.85,57.79 246.24,57.75 246.64,57.72 247.03,57.68 247.42,57.65 247.81,57.61 248.2,57.58 248.6,57.54 248.99,57.51 249.38,57.48 249.77,57.45 250.16,57.43 250.56,57.41 250.95,57.4 251.34,57.38 251.73,57.36 252.13,57.32 252.52,57.27 252.91,57.2 253.3,57.11 253.69,56.98 254.09,56.83 254.48,56.65 254.87,56.46 255.26,56.26 255.65,56.06 256.05,55.88 256.44,55.72 256.83,55.58 257.22,55.47 257.61,55.39 258.01,55.33 258.4,55.28 258.79,55.26 259.18,55.24 259.57,55.23 259.97,55.22 260.36,55.22" stroke-dasharray="none" stroke="rgb(55,126,184)" stroke-width="0.75" opacity="1" stroke-opacity="1" fill="none" class="aqm3" onclick="plotObjRespond('click', 3, 'dens')" onmouseover="plotObjRespond('show', 3, 'dens')" onmouseout="plotObjRespond('hide', 3, 'dens')"/>
+          </g>
+          <g id="Fig:densplot_01.xyplot.lines.group.4.panel.1.1.1">
+            <polyline id="Fig:densplot_01.xyplot.lines.group.4.panel.1.1.1.1" points="66.03,55.21 66.42,55.21 66.8,55.21 67.18,55.21 67.56,55.21 67.94,55.21 68.33,55.22 68.71,55.22 69.09,55.22 69.47,55.22 69.86,55.22 70.24,55.22 70.62,55.22 71,55.23 71.38,55.23 71.77,55.24 72.15,55.25 72.53,55.26 72.91,55.27 73.29,55.29 73.68,55.32 74.06,55.35 74.44,55.4 74.82,55.46 75.2,55.54 75.59,55.64 75.97,55.78 76.35,55.95 76.73,56.17 77.12,56.45 77.5,56.79 77.88,57.2 78.26,57.71 78.64,58.31 79.03,59.02 79.41,59.87 79.79,60.85 80.17,62 80.55,63.31 80.94,64.84 81.32,66.57 81.7,68.53 82.08,70.72 82.47,73.15 82.85,75.84 83.23,78.8 83.61,82.01 83.99,85.49 84.38,89.22 84.76,93.21 85.14,97.44 85.52,101.89 85.9,106.57 86.29,111.43 86.67,116.44 87.05,121.57 87.43,126.78 87.81,132.04 88.2,137.31 88.58,142.56 88.96,147.74 89.34,152.83 89.73,157.8 90.11,162.62 90.49,167.28 90.87,171.74 91.25,176 91.64,180.06 92.02,183.91 92.4,187.52 92.78,190.89 93.16,194.01 93.55,196.88 93.93,199.49 94.31,201.83 94.69,203.91 95.07,205.72 95.46,207.28 95.84,208.58 96.22,209.64 96.6,210.49 96.99,211.12 97.37,211.55 97.75,211.79 98.13,211.85 98.51,211.76 98.9,211.51 99.28,211.14 99.66,210.65 100.04,210.06 100.42,209.38 100.81,208.63 101.19,207.8 101.57,206.91 101.95,205.96 102.34,204.95 102.72,203.88 103.1,202.76 103.48,201.58 103.86,200.37 104.25,199.12 104.63,197.83 105.01,196.53 105.39,195.21 105.77,193.88 106.16,192.54 106.54,191.19 106.92,189.84 107.3,188.47 107.68,187.1 108.07,185.71 108.45,184.32 108.83,182.92 109.21,181.53 109.6,180.14 109.98,178.76 110.36,177.41 110.74,176.09 111.12,174.8 111.51,173.53 111.89,172.3 112.27,171.09 112.65,169.9 113.03,168.72 113.42,167.55 113.8,166.37 114.18,165.19 114.56,164 114.94,162.8 115.33,161.6 115.71,160.38 116.09,159.17 116.47,157.96 116.86,156.77 117.24,155.59 117.62,154.43 118,153.3 118.38,152.19 118.77,151.11 119.15,150.06 119.53,149.03 119.91,148.03 120.29,147.05 120.68,146.09 121.06,145.15 121.44,144.23 121.82,143.32 122.21,142.43 122.59,141.54 122.97,140.65 123.35,139.77 123.73,138.89 124.12,138.02 124.5,137.16 124.88,136.31 125.26,135.48 125.64,134.66 126.03,133.87 126.41,133.09 126.79,132.34 127.17,131.61 127.55,130.89 127.94,130.2 128.32,129.52 128.7,128.86 129.08,128.22 129.47,127.58 129.85,126.96 130.23,126.35 130.61,125.74 130.99,125.14 131.38,124.54 131.76,123.93 132.14,123.32 132.52,122.7 132.9,122.07 133.29,121.42 133.67,120.76 134.05,120.09 134.43,119.41 134.81,118.73 135.2,118.04 135.58,117.35 135.96,116.66 136.34,115.99 136.73,115.34 137.11,114.71 137.49,114.11 137.87,113.53 138.25,112.98 138.64,112.46 139.02,111.96 139.4,111.48 139.78,111.02 140.16,110.56 140.55,110.11 140.93,109.66 141.31,109.2 141.69,108.73 142.08,108.26 142.46,107.78 142.84,107.29 143.22,106.79 143.6,106.29 143.99,105.78 144.37,105.26 144.75,104.73 145.13,104.2 145.51,103.66 145.9,103.12 146.28,102.59 146.66,102.05 147.04,101.53 147.42,101.02 147.81,100.52 148.19,100.04 148.57,99.58 148.95,99.14 149.34,98.71 149.72,98.3 150.1,97.9 150.48,97.51 150.86,97.12 151.25,96.74 151.63,96.37 152.01,96 152.39,95.63 152.77,95.28 153.16,94.93 153.54,94.58 153.92,94.25 154.3,93.91 154.68,93.58 155.07,93.25 155.45,92.91 155.83,92.58 156.21,92.24 156.6,91.9 156.98,91.56 157.36,91.22 157.74,90.87 158.12,90.52 158.51,90.17 158.89,89.82 159.27,89.46 159.65,89.11 160.03,88.77 160.42,88.43 160.8,88.11 161.18,87.8 161.56,87.5 161.95,87.21 162.33,86.94 162.71,86.68 163.09,86.43 163.47,86.18 163.86,85.94 164.24,85.71 164.62,85.47 165,85.22 165.38,84.98 165.77,84.73 166.15,84.48 166.53,84.23 166.91,83.97 167.29,83.72 167.68,83.47 168.06,83.23 168.44,83 168.82,82.77 169.21,82.56 169.59,82.35 169.97,82.15 170.35,81.96 170.73,81.78 171.12,81.59 171.5,81.4 171.88,81.21 172.26,81.01 172.64,80.8 173.03,80.58 173.41,80.35 173.79,80.11 174.17,79.87 174.55,79.63 174.94,79.39 175.32,79.15 175.7,78.92 176.08,78.68 176.47,78.46 176.85,78.23 177.23,78 177.61,77.78 177.99,77.56 178.38,77.34 178.76,77.12 179.14,76.9 179.52,76.69 179.9,76.48 180.29,76.27 180.67,76.07 181.05,75.87 181.43,75.67 181.82,75.47 182.2,75.28 182.58,75.08 182.96,74.88 183.34,74.69 183.73,74.49 184.11,74.3 184.49,74.11 184.87,73.92 185.25,73.75 185.64,73.58 186.02,73.41 186.4,73.25 186.78,73.09 187.16,72.94 187.55,72.78 187.93,72.62 188.31,72.46 188.69,72.28 189.08,72.11 189.46,71.93 189.84,71.76 190.22,71.59 190.6,71.42 190.99,71.26 191.37,71.1 191.75,70.96 192.13,70.82 192.51,70.69 192.9,70.57 193.28,70.45 193.66,70.33 194.04,70.21 194.42,70.09 194.81,69.97 195.19,69.86 195.57,69.75 195.95,69.64 196.34,69.54 196.72,69.44 197.1,69.34 197.48,69.25 197.86,69.16 198.25,69.07 198.63,68.98 199.01,68.89 199.39,68.79 199.77,68.69 200.16,68.59 200.54,68.49 200.92,68.4 201.3,68.3 201.69,68.2 202.07,68.11 202.45,68.02 202.83,67.93 203.21,67.85 203.6,67.77 203.98,67.69 204.36,67.61 204.74,67.53 205.12,67.44 205.51,67.35 205.89,67.26 206.27,67.16 206.65,67.05 207.03,66.95 207.42,66.83 207.8,66.72 208.18,66.6 208.56,66.48 208.95,66.36 209.33,66.23 209.71,66.11 210.09,65.99 210.47,65.87 210.86,65.76 211.24,65.64 211.62,65.54 212,65.43 212.38,65.33 212.77,65.22 213.15,65.12 213.53,65.02 213.91,64.91 214.29,64.81 214.68,64.7 215.06,64.59 215.44,64.48 215.82,64.37 216.21,64.27 216.59,64.18 216.97,64.09 217.35,64 217.73,63.93 218.12,63.86 218.5,63.79 218.88,63.73 219.26,63.67 219.64,63.62 220.03,63.56 220.41,63.5 220.79,63.44 221.17,63.37 221.56,63.31 221.94,63.25 222.32,63.18 222.7,63.11 223.08,63.04 223.47,62.97 223.85,62.9 224.23,62.83 224.61,62.76 224.99,62.69 225.38,62.62 225.76,62.55 226.14,62.49 226.52,62.42 226.9,62.35 227.29,62.28 227.67,62.21 228.05,62.14 228.43,62.07 228.82,62 229.2,61.93 229.58,61.86 229.96,61.8 230.34,61.73 230.73,61.67 231.11,61.61 231.49,61.55 231.87,61.5 232.25,61.44 232.64,61.39 233.02,61.35 233.4,61.3 233.78,61.26 234.16,61.22 234.55,61.18 234.93,61.14 235.31,61.1 235.69,61.06 236.08,61.02 236.46,60.99 236.84,60.96 237.22,60.93 237.6,60.9 237.99,60.88 238.37,60.86 238.75,60.83 239.13,60.81 239.51,60.79 239.9,60.76 240.28,60.73 240.66,60.69 241.04,60.65 241.43,60.6 241.81,60.55 242.19,60.5 242.57,60.45 242.95,60.39 243.34,60.33 243.72,60.28 244.1,60.22 244.48,60.16 244.86,60.1 245.25,60.05 245.63,59.99 246.01,59.94 246.39,59.89 246.77,59.84 247.16,59.79 247.54,59.75 247.92,59.71 248.3,59.67 248.69,59.64 249.07,59.6 249.45,59.56 249.83,59.52 250.21,59.47 250.6,59.41 250.98,59.35 251.36,59.26 251.74,59.16 252.12,59.04 252.51,58.89 252.89,58.71 253.27,58.5 253.65,58.26 254.03,58 254.42,57.72 254.8,57.42 255.18,57.13 255.56,56.83 255.95,56.55 256.33,56.3 256.71,56.07 257.09,55.87 257.47,55.71 257.86,55.57 258.24,55.47 258.62,55.39 259,55.33 259.38,55.29 259.77,55.26 260.15,55.24 260.53,55.23 260.91,55.22 261.3,55.22" stroke-dasharray="none" stroke="rgb(77,175,74)" stroke-width="0.75" opacity="1" stroke-opacity="1" fill="none" class="aqm4" onclick="plotObjRespond('click', 4, 'dens')" onmouseover="plotObjRespond('show', 4, 'dens')" onmouseout="plotObjRespond('hide', 4, 'dens')"/>
+          </g>
+          <g id="Fig:densplot_01.xyplot.lines.group.5.panel.1.1.1">
+            <polyline id="Fig:densplot_01.xyplot.lines.group.5.panel.1.1.1.1" points="59,55.22 59.4,55.22 59.79,55.22 60.19,55.23 60.58,55.25 60.98,55.27 61.38,55.3 61.77,55.35 62.17,55.42 62.56,55.53 62.96,55.67 63.36,55.87 63.75,56.14 64.15,56.48 64.54,56.92 64.94,57.47 65.34,58.14 65.73,58.96 66.13,59.94 66.52,61.11 66.92,62.48 67.32,64.1 67.71,65.99 68.11,68.17 68.5,70.65 68.9,73.46 69.3,76.61 69.69,80.11 70.09,83.97 70.48,88.19 70.88,92.75 71.28,97.64 71.67,102.83 72.07,108.31 72.47,114.04 72.86,119.98 73.26,126.09 73.65,132.33 74.05,138.64 74.45,144.99 74.84,151.35 75.24,157.66 75.63,163.9 76.03,170.02 76.43,176 76.82,181.78 77.22,187.33 77.61,192.59 78.01,197.54 78.41,202.13 78.8,206.34 79.2,210.15 79.59,213.53 79.99,216.47 80.39,218.97 80.78,221.02 81.18,222.65 81.57,223.87 81.97,224.7 82.37,225.18 82.76,225.33 83.16,225.19 83.55,224.81 83.95,224.22 84.35,223.45 84.74,222.52 85.14,221.46 85.53,220.28 85.93,219 86.33,217.64 86.72,216.19 87.12,214.68 87.51,213.12 87.91,211.52 88.31,209.88 88.7,208.23 89.1,206.56 89.49,204.89 89.89,203.21 90.29,201.55 90.68,199.89 91.08,198.25 91.47,196.61 91.87,194.99 92.27,193.39 92.66,191.79 93.06,190.2 93.45,188.61 93.85,187.02 94.25,185.44 94.64,183.86 95.04,182.27 95.43,180.67 95.83,179.08 96.23,177.47 96.62,175.87 97.02,174.26 97.41,172.65 97.81,171.04 98.21,169.45 98.6,167.87 99,166.32 99.4,164.79 99.79,163.29 100.19,161.82 100.58,160.39 100.98,158.99 101.38,157.63 101.77,156.29 102.17,154.98 102.56,153.69 102.96,152.43 103.36,151.2 103.75,149.99 104.15,148.81 104.54,147.66 104.94,146.54 105.34,145.45 105.73,144.4 106.13,143.37 106.52,142.37 106.92,141.37 107.32,140.39 107.71,139.4 108.11,138.4 108.5,137.39 108.9,136.37 109.3,135.34 109.69,134.31 110.09,133.3 110.48,132.3 110.88,131.34 111.28,130.42 111.67,129.55 112.07,128.72 112.46,127.94 112.86,127.2 113.26,126.5 113.65,125.81 114.05,125.15 114.44,124.49 114.84,123.83 115.24,123.17 115.63,122.51 116.03,121.83 116.42,121.15 116.82,120.47 117.22,119.78 117.61,119.08 118.01,118.39 118.4,117.69 118.8,116.99 119.2,116.29 119.59,115.59 119.99,114.88 120.38,114.18 120.78,113.47 121.18,112.77 121.57,112.07 121.97,111.39 122.36,110.73 122.76,110.1 123.16,109.5 123.55,108.94 123.95,108.41 124.34,107.93 124.74,107.49 125.14,107.07 125.53,106.67 125.93,106.29 126.33,105.91 126.72,105.53 127.12,105.14 127.51,104.74 127.91,104.32 128.31,103.88 128.7,103.43 129.1,102.95 129.49,102.46 129.89,101.94 130.29,101.42 130.68,100.88 131.08,100.35 131.47,99.81 131.87,99.29 132.27,98.78 132.66,98.3 133.06,97.84 133.45,97.41 133.85,97.01 134.25,96.64 134.64,96.29 135.04,95.96 135.43,95.64 135.83,95.32 136.23,95 136.62,94.67 137.02,94.33 137.41,93.96 137.81,93.58 138.21,93.18 138.6,92.76 139,92.33 139.39,91.9 139.79,91.46 140.19,91.04 140.58,90.64 140.98,90.25 141.37,89.89 141.77,89.55 142.17,89.24 142.56,88.95 142.96,88.67 143.35,88.41 143.75,88.15 144.15,87.9 144.54,87.65 144.94,87.39 145.33,87.14 145.73,86.88 146.13,86.63 146.52,86.37 146.92,86.12 147.31,85.87 147.71,85.63 148.11,85.39 148.5,85.15 148.9,84.91 149.29,84.67 149.69,84.43 150.09,84.19 150.48,83.96 150.88,83.72 151.27,83.47 151.67,83.23 152.07,82.99 152.46,82.74 152.86,82.49 153.26,82.24 153.65,81.99 154.05,81.75 154.44,81.5 154.84,81.26 155.24,81.03 155.63,80.8 156.03,80.57 156.42,80.35 156.82,80.13 157.22,79.91 157.61,79.7 158.01,79.5 158.4,79.3 158.8,79.12 159.2,78.94 159.59,78.76 159.99,78.6 160.38,78.44 160.78,78.29 161.18,78.13 161.57,77.97 161.97,77.81 162.36,77.63 162.76,77.45 163.16,77.25 163.55,77.04 163.95,76.82 164.34,76.59 164.74,76.35 165.14,76.12 165.53,75.88 165.93,75.64 166.32,75.41 166.72,75.19 167.12,74.97 167.51,74.76 167.91,74.57 168.3,74.38 168.7,74.21 169.1,74.04 169.49,73.89 169.89,73.75 170.28,73.61 170.68,73.48 171.08,73.36 171.47,73.24 171.87,73.12 172.26,73 172.66,72.88 173.06,72.75 173.45,72.63 173.85,72.51 174.24,72.38 174.64,72.26 175.04,72.13 175.43,72 175.83,71.86 176.22,71.73 176.62,71.59 177.02,71.44 177.41,71.3 177.81,71.16 178.2,71.02 178.6,70.89 179,70.76 179.39,70.64 179.79,70.52 180.18,70.41 180.58,70.31 180.98,70.21 181.37,70.11 181.77,70.01 182.17,69.9 182.56,69.79 182.96,69.68 183.35,69.56 183.75,69.43 184.15,69.29 184.54,69.15 184.94,69.01 185.33,68.87 185.73,68.73 186.13,68.59 186.52,68.45 186.92,68.31 187.31,68.18 187.71,68.05 188.11,67.92 188.5,67.79 188.9,67.67 189.29,67.55 189.69,67.43 190.09,67.33 190.48,67.23 190.88,67.15 191.27,67.07 191.67,67 192.07,66.94 192.46,66.88 192.86,66.82 193.25,66.76 193.65,66.69 194.05,66.62 194.44,66.54 194.84,66.45 195.23,66.36 195.63,66.27 196.03,66.17 196.42,66.07 196.82,65.97 197.21,65.87 197.61,65.77 198.01,65.68 198.4,65.59 198.8,65.5 199.19,65.41 199.59,65.32 199.99,65.23 200.38,65.15 200.78,65.06 201.17,64.98 201.57,64.89 201.97,64.81 202.36,64.72 202.76,64.64 203.15,64.56 203.55,64.47 203.95,64.39 204.34,64.31 204.74,64.24 205.13,64.16 205.53,64.09 205.93,64.01 206.32,63.93 206.72,63.85 207.11,63.76 207.51,63.67 207.91,63.57 208.3,63.46 208.7,63.36 209.1,63.25 209.49,63.15 209.89,63.06 210.28,62.98 210.68,62.91 211.08,62.85 211.47,62.79 211.87,62.75 212.26,62.71 212.66,62.67 213.06,62.63 213.45,62.59 213.85,62.55 214.24,62.49 214.64,62.44 215.04,62.37 215.43,62.3 215.83,62.23 216.22,62.15 216.62,62.08 217.02,62 217.41,61.92 217.81,61.85 218.2,61.79 218.6,61.73 219,61.67 219.39,61.62 219.79,61.57 220.18,61.53 220.58,61.49 220.98,61.45 221.37,61.41 221.77,61.37 222.16,61.33 222.56,61.29 222.96,61.24 223.35,61.19 223.75,61.15 224.14,61.1 224.54,61.05 224.94,61 225.33,60.95 225.73,60.91 226.12,60.86 226.52,60.81 226.92,60.77 227.31,60.73 227.71,60.68 228.1,60.64 228.5,60.6 228.9,60.56 229.29,60.52 229.69,60.49 230.08,60.47 230.48,60.44 230.88,60.42 231.27,60.41 231.67,60.4 232.06,60.38 232.46,60.37 232.86,60.35 233.25,60.33 233.65,60.3 234.04,60.27 234.44,60.23 234.84,60.19 235.23,60.14 235.63,60.09 236.03,60.04 236.42,59.98 236.82,59.92 237.21,59.87 237.61,59.81 238.01,59.76 238.4,59.71 238.8,59.66 239.19,59.61 239.59,59.57 239.99,59.52 240.38,59.47 240.78,59.43 241.17,59.39 241.57,59.35 241.97,59.32 242.36,59.29 242.76,59.26 243.15,59.24 243.55,59.21 243.95,59.19 244.34,59.16 244.74,59.14 245.13,59.11 245.53,59.08 245.93,59.04 246.32,59.01 246.72,58.97 247.11,58.94 247.51,58.9 247.91,58.87 248.3,58.84 248.7,58.82 249.09,58.79 249.49,58.77 249.89,58.74 250.28,58.71 250.68,58.67 251.07,58.62 251.47,58.56 251.87,58.47 252.26,58.37 252.66,58.23 253.05,58.08 253.45,57.89 253.85,57.68 254.24,57.45 254.64,57.2 255.03,56.95 255.43,56.69 255.83,56.45 256.22,56.22 256.62,56.01 257.01,55.83 257.41,55.68 257.81,55.55 258.2,55.45 258.6,55.38 258.99,55.32 259.39,55.28 259.79,55.26 260.18,55.24 260.58,55.23 260.97,55.22 261.37,55.22" stroke-dasharray="none" stroke="rgb(77,175,74)" stroke-width="0.75" opacity="1" stroke-opacity="1" fill="none" class="aqm5" onclick="plotObjRespond('click', 5, 'dens')" onmouseover="plotObjRespond('show', 5, 'dens')" onmouseout="plotObjRespond('hide', 5, 'dens')"/>
+          </g>
+          <g id="Fig:densplot_01.xyplot.lines.group.6.panel.1.1.1">
+            <polyline id="Fig:densplot_01.xyplot.lines.group.6.panel.1.1.1.1" points="59.39,55.28 59.79,55.33 60.18,55.43 60.58,55.59 60.97,55.86 61.37,56.29 61.76,56.93 62.16,57.87 62.55,59.24 62.94,61.11 63.34,63.56 63.73,66.67 64.13,70.49 64.52,75.02 64.92,80.25 65.31,86.09 65.71,92.46 66.1,99.24 66.5,106.3 66.89,113.5 67.28,120.75 67.68,127.93 68.07,134.96 68.47,141.81 68.86,148.45 69.26,154.84 69.65,160.99 70.05,166.88 70.44,172.49 70.83,177.82 71.23,182.85 71.62,187.59 72.02,192.01 72.41,196.12 72.81,199.92 73.2,203.39 73.6,206.56 73.99,209.42 74.39,212 74.78,214.29 75.17,216.29 75.57,218.01 75.96,219.45 76.36,220.62 76.75,221.53 77.15,222.18 77.54,222.6 77.94,222.8 78.33,222.8 78.72,222.62 79.12,222.27 79.51,221.77 79.91,221.14 80.3,220.39 80.7,219.53 81.09,218.58 81.49,217.53 81.88,216.42 82.28,215.24 82.67,214.01 83.06,212.74 83.46,211.42 83.85,210.07 84.25,208.66 84.64,207.21 85.04,205.72 85.43,204.18 85.83,202.61 86.22,200.99 86.62,199.35 87.01,197.68 87.4,195.99 87.8,194.29 88.19,192.58 88.59,190.87 88.98,189.17 89.38,187.48 89.77,185.8 90.17,184.15 90.56,182.52 90.95,180.92 91.35,179.34 91.74,177.79 92.14,176.27 92.53,174.78 92.93,173.33 93.32,171.9 93.72,170.51 94.11,169.14 94.51,167.79 94.9,166.46 95.29,165.15 95.69,163.86 96.08,162.58 96.48,161.32 96.87,160.07 97.27,158.84 97.66,157.63 98.06,156.43 98.45,155.26 98.84,154.1 99.24,152.96 99.63,151.84 100.03,150.75 100.42,149.67 100.82,148.62 101.21,147.59 101.61,146.58 102,145.58 102.4,144.59 102.79,143.61 103.18,142.62 103.58,141.63 103.97,140.63 104.37,139.62 104.76,138.6 105.16,137.57 105.55,136.53 105.95,135.49 106.34,134.45 106.73,133.43 107.13,132.41 107.52,131.41 107.92,130.43 108.31,129.46 108.71,128.52 109.1,127.6 109.5,126.71 109.89,125.84 110.29,125.01 110.68,124.2 111.07,123.42 111.47,122.68 111.86,121.96 112.26,121.27 112.65,120.6 113.05,119.94 113.44,119.3 113.84,118.66 114.23,118.03 114.62,117.4 115.02,116.76 115.41,116.13 115.81,115.5 116.2,114.87 116.6,114.24 116.99,113.62 117.39,113 117.78,112.38 118.18,111.77 118.57,111.16 118.96,110.55 119.36,109.95 119.75,109.35 120.15,108.76 120.54,108.16 120.94,107.57 121.33,106.96 121.73,106.36 122.12,105.74 122.51,105.12 122.91,104.5 123.3,103.88 123.7,103.27 124.09,102.66 124.49,102.05 124.88,101.46 125.28,100.87 125.67,100.29 126.07,99.73 126.46,99.18 126.85,98.64 127.25,98.12 127.64,97.62 128.04,97.13 128.43,96.66 128.83,96.2 129.22,95.76 129.62,95.32 130.01,94.89 130.4,94.46 130.8,94.03 131.19,93.62 131.59,93.21 131.98,92.8 132.38,92.41 132.77,92.03 133.17,91.67 133.56,91.33 133.96,91 134.35,90.68 134.74,90.38 135.14,90.08 135.53,89.79 135.93,89.5 136.32,89.21 136.72,88.9 137.11,88.58 137.51,88.25 137.9,87.89 138.29,87.52 138.69,87.14 139.08,86.75 139.48,86.37 139.87,85.99 140.27,85.63 140.66,85.28 141.06,84.96 141.45,84.65 141.85,84.37 142.24,84.1 142.63,83.85 143.03,83.6 143.42,83.36 143.82,83.13 144.21,82.89 144.61,82.66 145,82.43 145.4,82.21 145.79,81.99 146.18,81.79 146.58,81.59 146.97,81.39 147.37,81.2 147.76,81 148.16,80.79 148.55,80.57 148.95,80.33 149.34,80.08 149.74,79.81 150.13,79.53 150.52,79.26 150.92,78.99 151.31,78.72 151.71,78.47 152.1,78.23 152.5,78 152.89,77.78 153.29,77.55 153.68,77.32 154.07,77.09 154.47,76.86 154.86,76.61 155.26,76.37 155.65,76.12 156.05,75.88 156.44,75.65 156.84,75.42 157.23,75.19 157.63,74.98 158.02,74.77 158.41,74.57 158.81,74.37 159.2,74.18 159.6,73.99 159.99,73.8 160.39,73.61 160.78,73.43 161.18,73.25 161.57,73.07 161.96,72.9 162.36,72.73 162.75,72.57 163.15,72.4 163.54,72.24 163.94,72.08 164.33,71.92 164.73,71.75 165.12,71.58 165.52,71.41 165.91,71.24 166.3,71.07 166.7,70.91 167.09,70.75 167.49,70.61 167.88,70.48 168.28,70.36 168.67,70.25 169.07,70.14 169.46,70.03 169.85,69.93 170.25,69.83 170.64,69.73 171.04,69.63 171.43,69.53 171.83,69.44 172.22,69.35 172.62,69.28 173.01,69.21 173.41,69.14 173.8,69.08 174.19,69.01 174.59,68.93 174.98,68.84 175.38,68.74 175.77,68.62 176.17,68.49 176.56,68.35 176.96,68.21 177.35,68.06 177.74,67.92 178.14,67.78 178.53,67.66 178.93,67.55 179.32,67.44 179.72,67.34 180.11,67.25 180.51,67.16 180.9,67.06 181.3,66.95 181.69,66.83 182.08,66.71 182.48,66.57 182.87,66.43 183.27,66.29 183.66,66.15 184.06,66.02 184.45,65.89 184.85,65.76 185.24,65.65 185.63,65.54 186.03,65.43 186.42,65.32 186.82,65.22 187.21,65.12 187.61,65.03 188,64.95 188.4,64.87 188.79,64.8 189.19,64.74 189.58,64.69 189.97,64.64 190.37,64.59 190.76,64.54 191.16,64.48 191.55,64.43 191.95,64.37 192.34,64.31 192.74,64.24 193.13,64.17 193.52,64.1 193.92,64.03 194.31,63.95 194.71,63.88 195.1,63.8 195.5,63.72 195.89,63.64 196.29,63.56 196.68,63.48 197.08,63.4 197.47,63.33 197.86,63.27 198.26,63.22 198.65,63.17 199.05,63.12 199.44,63.08 199.84,63.04 200.23,62.99 200.63,62.93 201.02,62.86 201.41,62.79 201.81,62.7 202.2,62.61 202.6,62.52 202.99,62.42 203.39,62.32 203.78,62.22 204.18,62.13 204.57,62.04 204.97,61.96 205.36,61.88 205.75,61.8 206.15,61.72 206.54,61.65 206.94,61.59 207.33,61.52 207.73,61.47 208.12,61.41 208.52,61.36 208.91,61.31 209.3,61.27 209.7,61.23 210.09,61.2 210.49,61.16 210.88,61.13 211.28,61.11 211.67,61.09 212.07,61.07 212.46,61.05 212.86,61.03 213.25,61 213.64,60.98 214.04,60.95 214.43,60.91 214.83,60.87 215.22,60.82 215.62,60.76 216.01,60.71 216.41,60.65 216.8,60.59 217.19,60.53 217.59,60.47 217.98,60.41 218.38,60.36 218.77,60.31 219.17,60.26 219.56,60.22 219.96,60.19 220.35,60.16 220.75,60.13 221.14,60.11 221.53,60.09 221.93,60.07 222.32,60.05 222.72,60.03 223.11,60.02 223.51,60 223.9,59.97 224.3,59.95 224.69,59.92 225.08,59.89 225.48,59.85 225.87,59.82 226.27,59.77 226.66,59.73 227.06,59.68 227.45,59.64 227.85,59.58 228.24,59.53 228.64,59.47 229.03,59.41 229.42,59.35 229.82,59.29 230.21,59.24 230.61,59.18 231,59.13 231.4,59.08 231.79,59.04 232.19,59 232.58,58.98 232.97,58.95 233.37,58.93 233.76,58.92 234.16,58.91 234.55,58.9 234.95,58.89 235.34,58.87 235.74,58.85 236.13,58.83 236.53,58.8 236.92,58.77 237.31,58.73 237.71,58.69 238.1,58.65 238.5,58.61 238.89,58.57 239.29,58.54 239.68,58.51 240.08,58.48 240.47,58.46 240.86,58.43 241.26,58.41 241.65,58.39 242.05,58.37 242.44,58.35 242.84,58.33 243.23,58.3 243.63,58.28 244.02,58.25 244.42,58.23 244.81,58.21 245.2,58.19 245.6,58.17 245.99,58.15 246.39,58.13 246.78,58.11 247.18,58.1 247.57,58.08 247.97,58.06 248.36,58.05 248.75,58.03 249.15,58 249.54,57.98 249.94,57.95 250.33,57.92 250.73,57.87 251.12,57.82 251.52,57.76 251.91,57.69 252.31,57.6 252.7,57.49 253.09,57.36 253.49,57.21 253.88,57.04 254.28,56.86 254.67,56.67 255.07,56.47 255.46,56.27 255.86,56.08 256.25,55.91 256.65,55.75 257.04,55.62 257.43,55.51 257.83,55.42 258.22,55.35 258.62,55.31 259.01,55.27 259.41,55.25 259.8,55.24 260.2,55.23 260.59,55.22 260.98,55.22" stroke-dasharray="none" stroke="rgb(77,175,74)" stroke-width="0.75" opacity="1" stroke-opacity="1" fill="none" class="aqm6" onclick="plotObjRespond('click', 6, 'dens')" onmouseover="plotObjRespond('show', 6, 'dens')" onmouseout="plotObjRespond('hide', 6, 'dens')"/>
+          </g>
+          <g id="Fig:densplot_01.xyplot.lines.group.7.panel.1.1.1">
+            <polyline id="Fig:densplot_01.xyplot.lines.group.7.panel.1.1.1.1" points="59.12,55.22 59.51,55.22 59.91,55.23 60.3,55.25 60.7,55.27 61.09,55.31 61.49,55.37 61.89,55.46 62.28,55.59 62.68,55.77 63.07,56.03 63.47,56.37 63.86,56.82 64.26,57.39 64.65,58.11 65.05,58.98 65.45,60.04 65.84,61.31 66.24,62.8 66.63,64.52 67.03,66.49 67.42,68.71 67.82,71.19 68.21,73.95 68.61,77 69.01,80.34 69.4,83.97 69.8,87.89 70.19,92.11 70.59,96.61 70.98,101.38 71.38,106.42 71.77,111.67 72.17,117.1 72.57,122.69 72.96,128.38 73.36,134.15 73.75,139.94 74.15,145.72 74.54,151.43 74.94,157.05 75.34,162.51 75.73,167.8 76.13,172.85 76.52,177.62 76.92,182.09 77.31,186.24 77.71,190.04 78.1,193.5 78.5,196.6 78.9,199.34 79.29,201.76 79.69,203.84 80.08,205.63 80.48,207.14 80.87,208.39 81.27,209.41 81.66,210.2 82.06,210.8 82.46,211.22 82.85,211.46 83.25,211.54 83.64,211.46 84.04,211.23 84.43,210.84 84.83,210.33 85.22,209.69 85.62,208.94 86.02,208.1 86.41,207.19 86.81,206.22 87.2,205.21 87.6,204.17 87.99,203.11 88.39,202.03 88.78,200.92 89.18,199.78 89.58,198.61 89.97,197.39 90.37,196.13 90.76,194.82 91.16,193.47 91.55,192.09 91.95,190.69 92.34,189.3 92.74,187.91 93.14,186.55 93.53,185.22 93.93,183.91 94.32,182.63 94.72,181.36 95.11,180.11 95.51,178.87 95.9,177.62 96.3,176.38 96.7,175.14 97.09,173.9 97.49,172.67 97.88,171.44 98.28,170.22 98.67,169.01 99.07,167.8 99.47,166.6 99.86,165.41 100.26,164.23 100.65,163.06 101.05,161.89 101.44,160.73 101.84,159.59 102.23,158.45 102.63,157.32 103.03,156.2 103.42,155.08 103.82,153.97 104.21,152.87 104.61,151.77 105,150.67 105.4,149.57 105.79,148.48 106.19,147.39 106.59,146.31 106.98,145.25 107.38,144.19 107.77,143.15 108.17,142.12 108.56,141.1 108.96,140.1 109.35,139.11 109.75,138.13 110.15,137.17 110.54,136.24 110.94,135.33 111.33,134.44 111.73,133.58 112.12,132.74 112.52,131.92 112.91,131.12 113.31,130.32 113.71,129.53 114.1,128.73 114.5,127.93 114.89,127.13 115.29,126.33 115.68,125.53 116.08,124.75 116.47,123.98 116.87,123.23 117.27,122.51 117.66,121.81 118.06,121.12 118.45,120.45 118.85,119.79 119.24,119.14 119.64,118.5 120.03,117.86 120.43,117.23 120.83,116.6 121.22,115.98 121.62,115.38 122.01,114.79 122.41,114.22 122.8,113.67 123.2,113.13 123.59,112.6 123.99,112.08 124.39,111.57 124.78,111.05 125.18,110.53 125.57,110.01 125.97,109.48 126.36,108.94 126.76,108.39 127.16,107.83 127.55,107.26 127.95,106.69 128.34,106.11 128.74,105.53 129.13,104.96 129.53,104.38 129.92,103.81 130.32,103.24 130.72,102.68 131.11,102.14 131.51,101.6 131.9,101.08 132.3,100.57 132.69,100.08 133.09,99.6 133.48,99.13 133.88,98.66 134.28,98.21 134.67,97.75 135.07,97.29 135.46,96.84 135.86,96.38 136.25,95.93 136.65,95.49 137.04,95.05 137.44,94.63 137.84,94.22 138.23,93.83 138.63,93.46 139.02,93.11 139.42,92.77 139.81,92.44 140.21,92.12 140.6,91.81 141,91.5 141.4,91.19 141.79,90.87 142.19,90.56 142.58,90.24 142.98,89.92 143.37,89.59 143.77,89.27 144.16,88.95 144.56,88.64 144.96,88.34 145.35,88.05 145.75,87.76 146.14,87.49 146.54,87.22 146.93,86.95 147.33,86.69 147.72,86.44 148.12,86.18 148.52,85.92 148.91,85.66 149.31,85.4 149.7,85.14 150.1,84.87 150.49,84.61 150.89,84.35 151.29,84.09 151.68,83.84 152.08,83.58 152.47,83.34 152.87,83.1 153.26,82.86 153.66,82.63 154.05,82.4 154.45,82.18 154.85,81.97 155.24,81.76 155.64,81.56 156.03,81.36 156.43,81.16 156.82,80.96 157.22,80.76 157.61,80.55 158.01,80.33 158.41,80.11 158.8,79.88 159.2,79.64 159.59,79.4 159.99,79.15 160.38,78.89 160.78,78.62 161.17,78.35 161.57,78.08 161.97,77.81 162.36,77.53 162.76,77.27 163.15,77.01 163.55,76.76 163.94,76.53 164.34,76.31 164.73,76.1 165.13,75.91 165.53,75.73 165.92,75.55 166.32,75.37 166.71,75.18 167.11,74.98 167.5,74.77 167.9,74.55 168.29,74.31 168.69,74.06 169.09,73.8 169.48,73.54 169.88,73.28 170.27,73.03 170.67,72.8 171.06,72.59 171.46,72.41 171.85,72.25 172.25,72.12 172.65,72 173.04,71.91 173.44,71.82 173.83,71.74 174.23,71.66 174.62,71.58 175.02,71.48 175.42,71.38 175.81,71.27 176.21,71.15 176.6,71.01 177,70.88 177.39,70.73 177.79,70.58 178.18,70.43 178.58,70.29 178.98,70.14 179.37,70.01 179.77,69.88 180.16,69.76 180.56,69.65 180.95,69.55 181.35,69.46 181.74,69.37 182.14,69.28 182.54,69.18 182.93,69.08 183.33,68.96 183.72,68.83 184.12,68.69 184.51,68.54 184.91,68.37 185.3,68.19 185.7,68.01 186.1,67.82 186.49,67.63 186.89,67.45 187.28,67.28 187.68,67.12 188.07,66.98 188.47,66.85 188.86,66.74 189.26,66.64 189.66,66.56 190.05,66.49 190.45,66.44 190.84,66.38 191.24,66.33 191.63,66.28 192.03,66.23 192.42,66.17 192.82,66.11 193.22,66.04 193.61,65.97 194.01,65.89 194.4,65.81 194.8,65.73 195.19,65.64 195.59,65.54 195.98,65.45 196.38,65.35 196.78,65.25 197.17,65.15 197.57,65.06 197.96,64.96 198.36,64.88 198.75,64.79 199.15,64.71 199.55,64.64 199.94,64.57 200.34,64.5 200.73,64.44 201.13,64.37 201.52,64.31 201.92,64.25 202.31,64.19 202.71,64.12 203.11,64.05 203.5,63.98 203.9,63.91 204.29,63.83 204.69,63.76 205.08,63.68 205.48,63.59 205.87,63.51 206.27,63.43 206.67,63.35 207.06,63.27 207.46,63.19 207.85,63.11 208.25,63.03 208.64,62.95 209.04,62.88 209.43,62.8 209.83,62.73 210.23,62.66 210.62,62.59 211.02,62.52 211.41,62.45 211.81,62.38 212.2,62.31 212.6,62.24 212.99,62.18 213.39,62.11 213.79,62.05 214.18,61.98 214.58,61.92 214.97,61.85 215.37,61.78 215.76,61.7 216.16,61.63 216.55,61.55 216.95,61.47 217.35,61.39 217.74,61.32 218.14,61.25 218.53,61.2 218.93,61.15 219.32,61.11 219.72,61.08 220.11,61.04 220.51,61.02 220.91,60.99 221.3,60.96 221.7,60.93 222.09,60.9 222.49,60.87 222.88,60.83 223.28,60.8 223.68,60.77 224.07,60.74 224.47,60.71 224.86,60.68 225.26,60.65 225.65,60.62 226.05,60.58 226.44,60.55 226.84,60.51 227.24,60.46 227.63,60.42 228.03,60.38 228.42,60.33 228.82,60.29 229.21,60.25 229.61,60.21 230,60.17 230.4,60.13 230.8,60.09 231.19,60.04 231.59,60 231.98,59.94 232.38,59.88 232.77,59.82 233.17,59.75 233.56,59.68 233.96,59.61 234.36,59.54 234.75,59.48 235.15,59.43 235.54,59.39 235.94,59.36 236.33,59.33 236.73,59.31 237.12,59.3 237.52,59.28 237.92,59.27 238.31,59.25 238.71,59.23 239.1,59.2 239.5,59.18 239.89,59.14 240.29,59.11 240.68,59.08 241.08,59.05 241.48,59.02 241.87,58.99 242.27,58.96 242.66,58.94 243.06,58.92 243.45,58.89 243.85,58.87 244.24,58.84 244.64,58.81 245.04,58.77 245.43,58.74 245.83,58.7 246.22,58.67 246.62,58.63 247.01,58.6 247.41,58.57 247.8,58.54 248.2,58.51 248.6,58.48 248.99,58.45 249.39,58.42 249.78,58.39 250.18,58.35 250.57,58.3 250.97,58.24 251.37,58.17 251.76,58.08 252.16,57.97 252.55,57.84 252.95,57.69 253.34,57.52 253.74,57.33 254.13,57.12 254.53,56.9 254.93,56.68 255.32,56.46 255.72,56.25 256.11,56.05 256.51,55.87 256.9,55.72 257.3,55.59 257.69,55.49 258.09,55.41 258.49,55.35 258.88,55.3 259.28,55.27 259.67,55.25 260.07,55.23 260.46,55.23 260.86,55.22 261.25,55.22" stroke-dasharray="none" stroke="rgb(255,127,0)" stroke-width="0.75" opacity="1" stroke-opacity="1" fill="none" class="aqm7" onclick="plotObjRespond('click', 7, 'dens')" onmouseover="plotObjRespond('show', 7, 'dens')" onmouseout="plotObjRespond('hide', 7, 'dens')"/>
+          </g>
+          <g id="Fig:densplot_01.xyplot.lines.group.8.panel.1.1.1">
+            <polyline id="Fig:densplot_01.xyplot.lines.group.8.panel.1.1.1.1" points="59.05,55.22 59.44,55.22 59.84,55.22 60.24,55.22 60.63,55.23 61.03,55.24 61.42,55.25 61.82,55.28 62.22,55.31 62.61,55.36 63.01,55.42 63.4,55.52 63.8,55.64 64.2,55.81 64.59,56.02 64.99,56.29 65.39,56.63 65.78,57.04 66.18,57.54 66.57,58.14 66.97,58.85 67.37,59.69 67.76,60.67 68.16,61.81 68.55,63.14 68.95,64.67 69.35,66.43 69.74,68.42 70.14,70.66 70.53,73.17 70.93,75.95 71.33,79 71.72,82.34 72.12,85.95 72.51,89.83 72.91,93.96 73.31,98.34 73.7,102.96 74.1,107.78 74.5,112.77 74.89,117.91 75.29,123.15 75.68,128.47 76.08,133.82 76.48,139.17 76.87,144.47 77.27,149.68 77.66,154.76 78.06,159.68 78.46,164.42 78.85,168.92 79.25,173.17 79.64,177.17 80.04,180.9 80.44,184.35 80.83,187.53 81.23,190.43 81.62,193.05 82.02,195.4 82.42,197.47 82.81,199.28 83.21,200.83 83.6,202.13 84,203.18 84.4,203.99 84.79,204.6 85.19,205.02 85.59,205.26 85.98,205.33 86.38,205.26 86.77,205.06 87.17,204.74 87.57,204.32 87.96,203.82 88.36,203.24 88.75,202.59 89.15,201.88 89.55,201.13 89.94,200.34 90.34,199.52 90.73,198.67 91.13,197.8 91.53,196.9 91.92,195.97 92.32,195.01 92.71,194.03 93.11,193.01 93.51,191.95 93.9,190.86 94.3,189.72 94.69,188.55 95.09,187.34 95.49,186.1 95.88,184.84 96.28,183.55 96.68,182.25 97.07,180.93 97.47,179.62 97.86,178.3 98.26,176.99 98.66,175.69 99.05,174.4 99.45,173.12 99.84,171.86 100.24,170.62 100.64,169.4 101.03,168.21 101.43,167.04 101.82,165.89 102.22,164.76 102.62,163.65 103.01,162.55 103.41,161.47 103.8,160.4 104.2,159.33 104.6,158.26 104.99,157.19 105.39,156.12 105.79,155.04 106.18,153.97 106.58,152.9 106.97,151.83 107.37,150.77 107.77,149.72 108.16,148.69 108.56,147.67 108.95,146.67 109.35,145.69 109.75,144.73 110.14,143.78 110.54,142.85 110.93,141.94 111.33,141.03 111.73,140.13 112.12,139.24 112.52,138.36 112.91,137.48 113.31,136.61 113.71,135.75 114.1,134.9 114.5,134.06 114.89,133.24 115.29,132.44 115.69,131.65 116.08,130.87 116.48,130.09 116.88,129.31 117.27,128.53 117.67,127.74 118.06,126.94 118.46,126.13 118.86,125.32 119.25,124.51 119.65,123.71 120.04,122.95 120.44,122.21 120.84,121.51 121.23,120.85 121.63,120.22 122.02,119.64 122.42,119.08 122.82,118.54 123.21,118.02 123.61,117.49 124,116.97 124.4,116.44 124.8,115.9 125.19,115.34 125.59,114.78 125.99,114.2 126.38,113.62 126.78,113.03 127.17,112.43 127.57,111.83 127.97,111.23 128.36,110.63 128.76,110.03 129.15,109.44 129.55,108.86 129.95,108.28 130.34,107.72 130.74,107.17 131.13,106.64 131.53,106.12 131.93,105.61 132.32,105.12 132.72,104.63 133.11,104.15 133.51,103.68 133.91,103.22 134.3,102.75 134.7,102.28 135.09,101.82 135.49,101.35 135.89,100.88 136.28,100.42 136.68,99.95 137.08,99.48 137.47,99.01 137.87,98.55 138.26,98.09 138.66,97.64 139.06,97.2 139.45,96.77 139.85,96.35 140.24,95.94 140.64,95.55 141.04,95.17 141.43,94.8 141.83,94.43 142.22,94.07 142.62,93.69 143.02,93.32 143.41,92.94 143.81,92.56 144.2,92.18 144.6,91.81 145,91.44 145.39,91.09 145.79,90.76 146.19,90.45 146.58,90.15 146.98,89.87 147.37,89.59 147.77,89.32 148.17,89.04 148.56,88.76 148.96,88.48 149.35,88.18 149.75,87.88 150.15,87.57 150.54,87.25 150.94,86.93 151.33,86.61 151.73,86.29 152.13,85.97 152.52,85.66 152.92,85.36 153.31,85.06 153.71,84.77 154.11,84.5 154.5,84.23 154.9,83.97 155.29,83.72 155.69,83.47 156.09,83.23 156.48,82.99 156.88,82.76 157.28,82.54 157.67,82.32 158.07,82.1 158.46,81.9 158.86,81.69 159.26,81.5 159.65,81.3 160.05,81.1 160.44,80.9 160.84,80.7 161.24,80.49 161.63,80.26 162.03,80.03 162.42,79.79 162.82,79.55 163.22,79.3 163.61,79.05 164.01,78.8 164.4,78.55 164.8,78.31 165.2,78.07 165.59,77.84 165.99,77.62 166.39,77.4 166.78,77.18 167.18,76.96 167.57,76.75 167.97,76.53 168.37,76.31 168.76,76.08 169.16,75.86 169.55,75.64 169.95,75.42 170.35,75.2 170.74,75 171.14,74.8 171.53,74.61 171.93,74.42 172.33,74.25 172.72,74.1 173.12,73.95 173.51,73.81 173.91,73.69 174.31,73.57 174.7,73.46 175.1,73.35 175.49,73.24 175.89,73.14 176.29,73.02 176.68,72.9 177.08,72.77 177.48,72.62 177.87,72.47 178.27,72.3 178.66,72.13 179.06,71.95 179.46,71.77 179.85,71.59 180.25,71.4 180.64,71.23 181.04,71.05 181.44,70.88 181.83,70.71 182.23,70.54 182.62,70.38 183.02,70.21 183.42,70.05 183.81,69.89 184.21,69.74 184.6,69.59 185,69.45 185.4,69.31 185.79,69.18 186.19,69.05 186.58,68.93 186.98,68.82 187.38,68.71 187.77,68.6 188.17,68.5 188.57,68.41 188.96,68.32 189.36,68.23 189.75,68.15 190.15,68.08 190.55,68.01 190.94,67.94 191.34,67.88 191.73,67.82 192.13,67.76 192.53,67.7 192.92,67.64 193.32,67.57 193.71,67.5 194.11,67.43 194.51,67.34 194.9,67.25 195.3,67.15 195.69,67.05 196.09,66.94 196.49,66.82 196.88,66.7 197.28,66.57 197.68,66.44 198.07,66.31 198.47,66.17 198.86,66.03 199.26,65.89 199.66,65.76 200.05,65.63 200.45,65.51 200.84,65.41 201.24,65.31 201.64,65.23 202.03,65.16 202.43,65.1 202.82,65.05 203.22,65 203.62,64.96 204.01,64.91 204.41,64.86 204.8,64.8 205.2,64.74 205.6,64.67 205.99,64.6 206.39,64.52 206.78,64.43 207.18,64.34 207.58,64.25 207.97,64.15 208.37,64.06 208.77,63.96 209.16,63.87 209.56,63.77 209.95,63.68 210.35,63.6 210.75,63.52 211.14,63.44 211.54,63.37 211.93,63.31 212.33,63.25 212.73,63.19 213.12,63.14 213.52,63.09 213.91,63.04 214.31,62.99 214.71,62.95 215.1,62.9 215.5,62.84 215.89,62.79 216.29,62.72 216.69,62.66 217.08,62.58 217.48,62.51 217.88,62.43 218.27,62.36 218.67,62.28 219.06,62.21 219.46,62.15 219.86,62.1 220.25,62.05 220.65,62.01 221.04,61.98 221.44,61.95 221.84,61.93 222.23,61.91 222.63,61.89 223.02,61.86 223.42,61.83 223.82,61.79 224.21,61.75 224.61,61.71 225,61.66 225.4,61.61 225.8,61.55 226.19,61.5 226.59,61.45 226.98,61.4 227.38,61.35 227.78,61.3 228.17,61.25 228.57,61.2 228.97,61.14 229.36,61.08 229.76,61.02 230.15,60.95 230.55,60.89 230.95,60.82 231.34,60.76 231.74,60.69 232.13,60.63 232.53,60.57 232.93,60.52 233.32,60.47 233.72,60.42 234.11,60.37 234.51,60.33 234.91,60.28 235.3,60.24 235.7,60.2 236.09,60.16 236.49,60.13 236.89,60.09 237.28,60.05 237.68,60.02 238.08,59.98 238.47,59.95 238.87,59.92 239.26,59.89 239.66,59.86 240.06,59.84 240.45,59.81 240.85,59.78 241.24,59.76 241.64,59.72 242.04,59.69 242.43,59.65 242.83,59.62 243.22,59.58 243.62,59.54 244.02,59.5 244.41,59.47 244.81,59.44 245.2,59.42 245.6,59.39 246,59.37 246.39,59.35 246.79,59.34 247.18,59.32 247.58,59.29 247.98,59.27 248.37,59.24 248.77,59.2 249.17,59.15 249.56,59.1 249.96,59.04 250.35,58.98 250.75,58.9 251.15,58.81 251.54,58.71 251.94,58.59 252.33,58.45 252.73,58.29 253.13,58.1 253.52,57.89 253.92,57.66 254.31,57.42 254.71,57.16 255.11,56.9 255.5,56.64 255.9,56.4 256.29,56.17 256.69,55.97 257.09,55.79 257.48,55.64 257.88,55.53 258.28,55.44 258.67,55.37 259.07,55.32 259.46,55.28 259.86,55.26 260.26,55.24 260.65,55.23 261.05,55.22 261.44,55.22" stroke-dasharray="none" stroke="rgb(255,127,0)" stroke-width="0.75" opacity="1" stroke-opacity="1" fill="none" class="aqm8" onclick="plotObjRespond('click', 8, 'dens')" onmouseover="plotObjRespond('show', 8, 'dens')" onmouseout="plotObjRespond('hide', 8, 'dens')"/>
+          </g>
+          <g id="Fig:densplot_01.xyplot.lines.group.9.panel.1.1.1">
+            <polyline id="Fig:densplot_01.xyplot.lines.group.9.panel.1.1.1.1" points="59.73,55.22 60.12,55.22 60.52,55.22 60.91,55.22 61.31,55.23 61.7,55.23 62.09,55.25 62.49,55.27 62.88,55.29 63.27,55.34 63.67,55.39 64.06,55.48 64.46,55.58 64.85,55.73 65.24,55.91 65.64,56.15 66.03,56.45 66.43,56.82 66.82,57.29 67.21,57.85 67.61,58.54 68,59.37 68.39,60.36 68.79,61.55 69.18,62.95 69.58,64.58 69.97,66.46 70.36,68.63 70.76,71.08 71.15,73.85 71.55,76.94 71.94,80.35 72.33,84.11 72.73,88.19 73.12,92.6 73.52,97.32 73.91,102.35 74.3,107.66 74.7,113.2 75.09,118.95 75.48,124.87 75.88,130.91 76.27,137.04 76.67,143.2 77.06,149.36 77.45,155.46 77.85,161.46 78.24,167.32 78.64,173.01 79.03,178.48 79.42,183.67 79.82,188.57 80.21,193.15 80.6,197.39 81,201.26 81.39,204.73 81.79,207.8 82.18,210.47 82.57,212.73 82.97,214.6 83.36,216.12 83.76,217.31 84.15,218.22 84.54,218.87 84.94,219.29 85.33,219.54 85.72,219.62 86.12,219.56 86.51,219.36 86.91,219.03 87.3,218.59 87.69,218.03 88.09,217.38 88.48,216.63 88.88,215.8 89.27,214.89 89.66,213.92 90.06,212.89 90.45,211.8 90.85,210.66 91.24,209.46 91.63,208.2 92.03,206.89 92.42,205.52 92.81,204.1 93.21,202.64 93.6,201.14 94,199.61 94.39,198.06 94.78,196.51 95.18,194.94 95.57,193.38 95.97,191.81 96.36,190.24 96.75,188.67 97.15,187.09 97.54,185.52 97.93,183.95 98.33,182.39 98.72,180.84 99.12,179.32 99.51,177.83 99.9,176.38 100.3,174.96 100.69,173.57 101.09,172.21 101.48,170.88 101.87,169.55 102.27,168.23 102.66,166.91 103.06,165.59 103.45,164.26 103.84,162.93 104.24,161.6 104.63,160.29 105.02,159 105.42,157.72 105.81,156.48 106.21,155.27 106.6,154.09 106.99,152.93 107.39,151.8 107.78,150.68 108.18,149.58 108.57,148.48 108.96,147.4 109.36,146.32 109.75,145.25 110.14,144.18 110.54,143.13 110.93,142.08 111.33,141.05 111.72,140.04 112.11,139.04 112.51,138.05 112.9,137.09 113.3,136.14 113.69,135.21 114.08,134.31 114.48,133.42 114.87,132.55 115.27,131.7 115.66,130.87 116.05,130.05 116.45,129.25 116.84,128.46 117.23,127.68 117.63,126.9 118.02,126.13 118.42,125.35 118.81,124.57 119.2,123.78 119.6,122.98 119.99,122.18 120.39,121.36 120.78,120.54 121.17,119.72 121.57,118.9 121.96,118.08 122.35,117.28 122.75,116.5 123.14,115.74 123.54,115 123.93,114.3 124.32,113.62 124.72,112.99 125.11,112.38 125.51,111.82 125.9,111.3 126.29,110.8 126.69,110.33 127.08,109.89 127.48,109.45 127.87,109 128.26,108.55 128.66,108.08 129.05,107.59 129.44,107.08 129.84,106.55 130.23,106.01 130.63,105.47 131.02,104.92 131.41,104.39 131.81,103.86 132.2,103.35 132.6,102.85 132.99,102.37 133.38,101.89 133.78,101.42 134.17,100.94 134.56,100.46 134.96,99.96 135.35,99.46 135.75,98.94 136.14,98.41 136.53,97.88 136.93,97.33 137.32,96.79 137.72,96.24 138.11,95.7 138.5,95.17 138.9,94.65 139.29,94.14 139.69,93.65 140.08,93.18 140.47,92.74 140.87,92.32 141.26,91.93 141.65,91.57 142.05,91.22 142.44,90.9 142.84,90.59 143.23,90.29 143.62,89.99 144.02,89.69 144.41,89.39 144.81,89.07 145.2,88.75 145.59,88.41 145.99,88.07 146.38,87.72 146.77,87.36 147.17,87.01 147.56,86.66 147.96,86.32 148.35,85.99 148.74,85.67 149.14,85.36 149.53,85.07 149.93,84.79 150.32,84.52 150.71,84.26 151.11,84 151.5,83.75 151.89,83.5 152.29,83.25 152.68,83 153.08,82.76 153.47,82.51 153.86,82.27 154.26,82.03 154.65,81.78 155.05,81.54 155.44,81.29 155.83,81.03 156.23,80.77 156.62,80.5 157.02,80.23 157.41,79.94 157.8,79.66 158.2,79.37 158.59,79.08 158.98,78.8 159.38,78.53 159.77,78.27 160.17,78.03 160.56,77.79 160.95,77.57 161.35,77.36 161.74,77.15 162.14,76.94 162.53,76.74 162.92,76.53 163.32,76.33 163.71,76.12 164.1,75.92 164.5,75.72 164.89,75.53 165.29,75.33 165.68,75.14 166.07,74.95 166.47,74.76 166.86,74.57 167.26,74.38 167.65,74.2 168.04,74.01 168.44,73.82 168.83,73.64 169.23,73.47 169.62,73.29 170.01,73.13 170.41,72.97 170.8,72.82 171.19,72.67 171.59,72.52 171.98,72.37 172.38,72.22 172.77,72.07 173.16,71.91 173.56,71.75 173.95,71.59 174.35,71.42 174.74,71.25 175.13,71.06 175.53,70.88 175.92,70.69 176.31,70.49 176.71,70.3 177.1,70.11 177.5,69.93 177.89,69.77 178.28,69.61 178.68,69.47 179.07,69.34 179.47,69.23 179.86,69.13 180.25,69.04 180.65,68.96 181.04,68.88 181.44,68.8 181.83,68.71 182.22,68.62 182.62,68.53 183.01,68.43 183.4,68.33 183.8,68.22 184.19,68.12 184.59,68.01 184.98,67.91 185.37,67.81 185.77,67.7 186.16,67.6 186.56,67.5 186.95,67.39 187.34,67.29 187.74,67.19 188.13,67.09 188.52,66.99 188.92,66.9 189.31,66.8 189.71,66.7 190.1,66.6 190.49,66.5 190.89,66.39 191.28,66.28 191.68,66.17 192.07,66.06 192.46,65.95 192.86,65.85 193.25,65.76 193.65,65.67 194.04,65.6 194.43,65.53 194.83,65.47 195.22,65.41 195.61,65.35 196.01,65.29 196.4,65.22 196.8,65.15 197.19,65.07 197.58,64.99 197.98,64.9 198.37,64.81 198.77,64.72 199.16,64.62 199.55,64.52 199.95,64.41 200.34,64.31 200.73,64.2 201.13,64.1 201.52,64 201.92,63.91 202.31,63.83 202.7,63.75 203.1,63.67 203.49,63.6 203.89,63.53 204.28,63.46 204.67,63.38 205.07,63.31 205.46,63.23 205.85,63.16 206.25,63.08 206.64,63.02 207.04,62.95 207.43,62.89 207.82,62.84 208.22,62.78 208.61,62.72 209.01,62.65 209.4,62.59 209.79,62.51 210.19,62.44 210.58,62.36 210.98,62.29 211.37,62.22 211.76,62.15 212.16,62.08 212.55,62.02 212.94,61.96 213.34,61.9 213.73,61.85 214.13,61.8 214.52,61.76 214.91,61.72 215.31,61.68 215.7,61.65 216.1,61.62 216.49,61.59 216.88,61.57 217.28,61.55 217.67,61.53 218.06,61.5 218.46,61.48 218.85,61.46 219.25,61.44 219.64,61.41 220.03,61.38 220.43,61.35 220.82,61.31 221.22,61.27 221.61,61.23 222,61.18 222.4,61.12 222.79,61.06 223.19,61 223.58,60.93 223.97,60.85 224.37,60.78 224.76,60.7 225.15,60.63 225.55,60.56 225.94,60.49 226.34,60.43 226.73,60.38 227.12,60.33 227.52,60.28 227.91,60.24 228.31,60.2 228.7,60.16 229.09,60.12 229.49,60.09 229.88,60.05 230.27,60.02 230.67,59.99 231.06,59.95 231.46,59.92 231.85,59.89 232.24,59.85 232.64,59.82 233.03,59.79 233.43,59.75 233.82,59.72 234.21,59.68 234.61,59.65 235,59.61 235.4,59.57 235.79,59.54 236.18,59.5 236.58,59.46 236.97,59.42 237.36,59.39 237.76,59.35 238.15,59.31 238.55,59.27 238.94,59.23 239.33,59.19 239.73,59.16 240.12,59.12 240.52,59.08 240.91,59.05 241.3,59.02 241.7,58.99 242.09,58.96 242.48,58.94 242.88,58.91 243.27,58.89 243.67,58.87 244.06,58.85 244.45,58.83 244.85,58.81 245.24,58.79 245.64,58.77 246.03,58.75 246.42,58.72 246.82,58.69 247.21,58.66 247.61,58.63 248,58.6 248.39,58.57 248.79,58.54 249.18,58.51 249.57,58.48 249.97,58.45 250.36,58.42 250.76,58.39 251.15,58.35 251.54,58.3 251.94,58.23 252.33,58.14 252.73,58.03 253.12,57.89 253.51,57.72 253.91,57.52 254.3,57.29 254.69,57.05 255.09,56.8 255.48,56.56 255.88,56.32 256.27,56.09 256.66,55.9 257.06,55.73 257.45,55.59 257.85,55.48 258.24,55.39 258.63,55.33 259.03,55.29 259.42,55.26 259.82,55.24 260.21,55.23 260.6,55.22 261,55.22" stroke-dasharray="none" stroke="rgb(166,86,40)" stroke-width="0.75" opacity="1" stroke-opacity="1" fill="none" class="aqm9" onclick="plotObjRespond('click', 9, 'dens')" onmouseover="plotObjRespond('show', 9, 'dens')" onmouseout="plotObjRespond('hide', 9, 'dens')"/>
+          </g>
+          <g id="Fig:densplot_01.xyplot.lines.group.10.panel.1.1.1">
+            <polyline id="Fig:densplot_01.xyplot.lines.group.10.panel.1.1.1.1" points="62.38,55.21 62.77,55.21 63.16,55.21 63.55,55.21 63.94,55.21 64.32,55.21 64.71,55.22 65.1,55.22 65.49,55.22 65.88,55.22 66.27,55.22 66.66,55.22 67.05,55.22 67.44,55.22 67.83,55.22 68.22,55.23 68.6,55.23 68.99,55.23 69.38,55.23 69.77,55.23 70.16,55.24 70.55,55.24 70.94,55.25 71.33,55.26 71.72,55.27 72.11,55.29 72.49,55.32 72.88,55.36 73.27,55.41 73.66,55.48 74.05,55.56 74.44,55.68 74.83,55.82 75.22,56.01 75.61,56.25 76,56.55 76.39,56.91 76.77,57.36 77.16,57.91 77.55,58.57 77.94,59.36 78.33,60.3 78.72,61.41 79.11,62.7 79.5,64.2 79.89,65.94 80.28,67.92 80.66,70.16 81.05,72.67 81.44,75.46 81.83,78.54 82.22,81.9 82.61,85.56 83,89.49 83.39,93.69 83.78,98.15 84.17,102.85 84.55,107.75 84.94,112.84 85.33,118.08 85.72,123.43 86.11,128.84 86.5,134.28 86.89,139.71 87.28,145.09 87.67,150.37 88.06,155.53 88.45,160.53 88.83,165.35 89.22,169.95 89.61,174.33 90,178.45 90.39,182.32 90.78,185.94 91.17,189.31 91.56,192.43 91.95,195.3 92.34,197.92 92.72,200.29 93.11,202.41 93.5,204.28 93.89,205.9 94.28,207.28 94.67,208.42 95.06,209.32 95.45,209.98 95.84,210.43 96.23,210.69 96.62,210.78 97,210.7 97.39,210.48 97.78,210.13 98.17,209.67 98.56,209.11 98.95,208.48 99.34,207.77 99.73,206.99 100.12,206.17 100.51,205.28 100.89,204.36 101.28,203.39 101.67,202.38 102.06,201.33 102.45,200.26 102.84,199.16 103.23,198.04 103.62,196.9 104.01,195.75 104.4,194.59 104.79,193.4 105.17,192.2 105.56,190.97 105.95,189.71 106.34,188.41 106.73,187.08 107.12,185.72 107.51,184.34 107.9,182.95 108.29,181.56 108.68,180.17 109.06,178.79 109.45,177.44 109.84,176.1 110.23,174.78 110.62,173.47 111.01,172.18 111.4,170.88 111.79,169.58 112.18,168.28 112.57,166.99 112.96,165.7 113.34,164.44 113.73,163.2 114.12,161.99 114.51,160.82 114.9,159.69 115.29,158.59 115.68,157.51 116.07,156.46 116.46,155.41 116.85,154.36 117.23,153.31 117.62,152.26 118.01,151.21 118.4,150.16 118.79,149.13 119.18,148.1 119.57,147.08 119.96,146.09 120.35,145.11 120.74,144.15 121.12,143.22 121.51,142.29 121.9,141.38 122.29,140.49 122.68,139.61 123.07,138.74 123.46,137.88 123.85,137.04 124.24,136.21 124.63,135.39 125.02,134.58 125.4,133.78 125.79,132.99 126.18,132.21 126.57,131.44 126.96,130.67 127.35,129.91 127.74,129.15 128.13,128.41 128.52,127.66 128.91,126.93 129.29,126.21 129.68,125.49 130.07,124.78 130.46,124.08 130.85,123.38 131.24,122.69 131.63,122.01 132.02,121.34 132.41,120.67 132.8,120.01 133.19,119.37 133.57,118.73 133.96,118.11 134.35,117.5 134.74,116.91 135.13,116.34 135.52,115.78 135.91,115.24 136.3,114.72 136.69,114.2 137.08,113.7 137.46,113.2 137.85,112.71 138.24,112.21 138.63,111.71 139.02,111.2 139.41,110.68 139.8,110.16 140.19,109.64 140.58,109.11 140.97,108.59 141.36,108.08 141.74,107.58 142.13,107.09 142.52,106.61 142.91,106.13 143.3,105.64 143.69,105.15 144.08,104.64 144.47,104.12 144.86,103.58 145.25,103.03 145.63,102.47 146.02,101.9 146.41,101.33 146.8,100.76 147.19,100.2 147.58,99.66 147.97,99.14 148.36,98.63 148.75,98.14 149.14,97.68 149.53,97.23 149.91,96.81 150.3,96.39 150.69,95.99 151.08,95.61 151.47,95.23 151.86,94.86 152.25,94.5 152.64,94.14 153.03,93.8 153.42,93.46 153.8,93.13 154.19,92.8 154.58,92.48 154.97,92.15 155.36,91.82 155.75,91.49 156.14,91.15 156.53,90.79 156.92,90.42 157.31,90.05 157.69,89.67 158.08,89.3 158.47,88.93 158.86,88.57 159.25,88.23 159.64,87.91 160.03,87.61 160.42,87.31 160.81,87.03 161.2,86.76 161.59,86.48 161.97,86.2 162.36,85.9 162.75,85.59 163.14,85.28 163.53,84.95 163.92,84.61 164.31,84.28 164.7,83.94 165.09,83.62 165.48,83.31 165.86,83.02 166.25,82.74 166.64,82.49 167.03,82.24 167.42,82.01 167.81,81.79 168.2,81.57 168.59,81.35 168.98,81.13 169.37,80.91 169.76,80.68 170.14,80.46 170.53,80.23 170.92,80 171.31,79.76 171.7,79.53 172.09,79.29 172.48,79.06 172.87,78.82 173.26,78.58 173.65,78.34 174.03,78.11 174.42,77.87 174.81,77.65 175.2,77.43 175.59,77.21 175.98,77.01 176.37,76.81 176.76,76.62 177.15,76.43 177.54,76.25 177.93,76.06 178.31,75.87 178.7,75.68 179.09,75.48 179.48,75.28 179.87,75.07 180.26,74.85 180.65,74.64 181.04,74.44 181.43,74.24 181.82,74.04 182.2,73.86 182.59,73.69 182.98,73.53 183.37,73.37 183.76,73.21 184.15,73.05 184.54,72.89 184.93,72.73 185.32,72.56 185.71,72.39 186.1,72.22 186.48,72.06 186.87,71.89 187.26,71.74 187.65,71.59 188.04,71.44 188.43,71.3 188.82,71.16 189.21,71.03 189.6,70.89 189.99,70.76 190.37,70.62 190.76,70.48 191.15,70.34 191.54,70.19 191.93,70.05 192.32,69.91 192.71,69.76 193.1,69.63 193.49,69.49 193.88,69.36 194.26,69.23 194.65,69.1 195.04,68.98 195.43,68.86 195.82,68.75 196.21,68.63 196.6,68.52 196.99,68.41 197.38,68.3 197.77,68.19 198.16,68.07 198.54,67.95 198.93,67.83 199.32,67.7 199.71,67.57 200.1,67.44 200.49,67.32 200.88,67.2 201.27,67.08 201.66,66.98 202.05,66.88 202.43,66.78 202.82,66.69 203.21,66.61 203.6,66.52 203.99,66.43 204.38,66.34 204.77,66.24 205.16,66.13 205.55,66.01 205.94,65.89 206.33,65.77 206.71,65.64 207.1,65.5 207.49,65.37 207.88,65.24 208.27,65.11 208.66,65 209.05,64.89 209.44,64.78 209.83,64.69 210.22,64.61 210.6,64.54 210.99,64.48 211.38,64.43 211.77,64.38 212.16,64.33 212.55,64.29 212.94,64.24 213.33,64.19 213.72,64.14 214.11,64.08 214.5,64.01 214.88,63.94 215.27,63.85 215.66,63.77 216.05,63.68 216.44,63.59 216.83,63.51 217.22,63.43 217.61,63.36 218,63.3 218.39,63.24 218.77,63.19 219.16,63.14 219.55,63.09 219.94,63.04 220.33,62.99 220.72,62.93 221.11,62.86 221.5,62.78 221.89,62.7 222.28,62.61 222.67,62.51 223.05,62.41 223.44,62.3 223.83,62.2 224.22,62.1 224.61,62 225,61.91 225.39,61.83 225.78,61.76 226.17,61.69 226.56,61.64 226.94,61.59 227.33,61.55 227.72,61.52 228.11,61.49 228.5,61.45 228.89,61.42 229.28,61.38 229.67,61.34 230.06,61.29 230.45,61.23 230.83,61.17 231.22,61.11 231.61,61.04 232,60.98 232.39,60.91 232.78,60.85 233.17,60.79 233.56,60.73 233.95,60.68 234.34,60.64 234.73,60.59 235.11,60.56 235.5,60.52 235.89,60.49 236.28,60.45 236.67,60.42 237.06,60.39 237.45,60.36 237.84,60.33 238.23,60.3 238.62,60.27 239,60.24 239.39,60.21 239.78,60.18 240.17,60.14 240.56,60.11 240.95,60.06 241.34,60.01 241.73,59.96 242.12,59.91 242.51,59.85 242.9,59.8 243.28,59.75 243.67,59.7 244.06,59.66 244.45,59.62 244.84,59.58 245.23,59.55 245.62,59.52 246.01,59.49 246.4,59.46 246.79,59.43 247.17,59.39 247.56,59.36 247.95,59.32 248.34,59.28 248.73,59.25 249.12,59.21 249.51,59.18 249.9,59.14 250.29,59.1 250.68,59.06 251.07,59.01 251.45,58.94 251.84,58.85 252.23,58.74 252.62,58.6 253.01,58.43 253.4,58.22 253.79,57.99 254.18,57.73 254.57,57.45 254.96,57.16 255.34,56.87 255.73,56.59 256.12,56.33 256.51,56.09 256.9,55.89 257.29,55.72 257.68,55.58 258.07,55.47 258.46,55.39 258.85,55.33 259.24,55.29 259.62,55.26 260.01,55.24 260.4,55.23 260.79,55.22 261.18,55.22" stroke-dasharray="none" stroke="rgb(166,86,40)" stroke-width="0.75" opacity="1" stroke-opacity="1" fill="none" class="aqm10" onclick="plotObjRespond('click', 10, 'dens')" onmouseover="plotObjRespond('show', 10, 'dens')" onmouseout="plotObjRespond('hide', 10, 'dens')"/>
+          </g>
+          <g id="Fig:densplot_01.xyplot.lines.group.11.panel.1.1.1">
+            <polyline id="Fig:densplot_01.xyplot.lines.group.11.panel.1.1.1.1" points="60.65,55.21 61.04,55.21 61.43,55.21 61.82,55.21 62.22,55.21 62.61,55.21 63,55.21 63.39,55.22 63.78,55.22 64.18,55.22 64.57,55.22 64.96,55.22 65.35,55.22 65.74,55.22 66.13,55.22 66.53,55.22 66.92,55.23 67.31,55.23 67.7,55.24 68.09,55.25 68.49,55.26 68.88,55.28 69.27,55.31 69.66,55.35 70.05,55.4 70.45,55.46 70.84,55.55 71.23,55.66 71.62,55.79 72.01,55.97 72.4,56.18 72.8,56.45 73.19,56.79 73.58,57.2 73.97,57.72 74.36,58.35 74.76,59.12 75.15,60.05 75.54,61.16 75.93,62.48 76.32,64.03 76.72,65.84 77.11,67.95 77.5,70.37 77.89,73.13 78.28,76.25 78.67,79.76 79.07,83.66 79.46,88 79.85,92.73 80.24,97.85 80.63,103.32 81.03,109.13 81.42,115.23 81.81,121.59 82.2,128.16 82.59,134.89 82.99,141.74 83.38,148.66 83.77,155.61 84.16,162.53 84.55,169.39 84.94,176.11 85.34,182.64 85.73,188.93 86.12,194.92 86.51,200.56 86.9,205.8 87.3,210.6 87.69,214.95 88.08,218.82 88.47,222.21 88.86,225.15 89.26,227.65 89.65,229.74 90.04,231.45 90.43,232.8 90.82,233.83 91.21,234.57 91.61,235.05 92,235.28 92.39,235.28 92.78,235.04 93.17,234.59 93.57,233.92 93.96,233.07 94.35,232.02 94.74,230.82 95.13,229.46 95.53,227.98 95.92,226.38 96.31,224.7 96.7,222.96 97.09,221.16 97.48,219.32 97.88,217.44 98.27,215.51 98.66,213.55 99.05,211.55 99.44,209.51 99.84,207.45 100.23,205.37 100.62,203.28 101.01,201.2 101.4,199.12 101.8,197.06 102.19,195.01 102.58,192.99 102.97,190.98 103.36,188.99 103.75,187.01 104.15,185.07 104.54,183.14 104.93,181.25 105.32,179.39 105.71,177.56 106.11,175.76 106.5,173.99 106.89,172.26 107.28,170.55 107.67,168.88 108.07,167.24 108.46,165.64 108.85,164.08 109.24,162.58 109.63,161.12 110.02,159.71 110.42,158.35 110.81,157.02 111.2,155.72 111.59,154.45 111.98,153.2 112.38,151.96 112.77,150.73 113.16,149.53 113.55,148.35 113.94,147.19 114.34,146.06 114.73,144.95 115.12,143.88 115.51,142.83 115.9,141.8 116.29,140.8 116.69,139.81 117.08,138.84 117.47,137.88 117.86,136.94 118.25,135.99 118.65,135.05 119.04,134.11 119.43,133.16 119.82,132.2 120.21,131.23 120.61,130.25 121,129.27 121.39,128.29 121.78,127.31 122.17,126.36 122.56,125.43 122.96,124.53 123.35,123.66 123.74,122.82 124.13,122.01 124.52,121.23 124.92,120.46 125.31,119.71 125.7,118.97 126.09,118.25 126.48,117.54 126.88,116.84 127.27,116.17 127.66,115.52 128.05,114.88 128.44,114.26 128.84,113.65 129.23,113.05 129.62,112.46 130.01,111.86 130.4,111.26 130.79,110.66 131.19,110.06 131.58,109.47 131.97,108.87 132.36,108.28 132.75,107.7 133.15,107.12 133.54,106.56 133.93,106 134.32,105.46 134.71,104.93 135.11,104.41 135.5,103.9 135.89,103.4 136.28,102.91 136.67,102.44 137.06,101.97 137.46,101.5 137.85,101.04 138.24,100.58 138.63,100.13 139.02,99.67 139.42,99.21 139.81,98.75 140.2,98.3 140.59,97.84 140.98,97.4 141.38,96.96 141.77,96.54 142.16,96.12 142.55,95.73 142.94,95.34 143.33,94.97 143.73,94.6 144.12,94.24 144.51,93.89 144.9,93.54 145.29,93.18 145.69,92.82 146.08,92.45 146.47,92.08 146.86,91.7 147.25,91.32 147.65,90.94 148.04,90.56 148.43,90.18 148.82,89.82 149.21,89.45 149.6,89.11 150,88.77 150.39,88.44 150.78,88.12 151.17,87.8 151.56,87.49 151.96,87.19 152.35,86.88 152.74,86.58 153.13,86.27 153.52,85.96 153.92,85.65 154.31,85.34 154.7,85.02 155.09,84.71 155.48,84.4 155.87,84.1 156.27,83.81 156.66,83.54 157.05,83.28 157.44,83.03 157.83,82.8 158.23,82.57 158.62,82.35 159.01,82.14 159.4,81.93 159.79,81.72 160.19,81.5 160.58,81.29 160.97,81.07 161.36,80.84 161.75,80.62 162.14,80.38 162.54,80.15 162.93,79.9 163.32,79.66 163.71,79.41 164.1,79.17 164.5,78.92 164.89,78.67 165.28,78.43 165.67,78.2 166.06,77.97 166.46,77.76 166.85,77.55 167.24,77.36 167.63,77.18 168.02,77.01 168.41,76.85 168.81,76.69 169.2,76.54 169.59,76.39 169.98,76.23 170.37,76.07 170.77,75.91 171.16,75.74 171.55,75.56 171.94,75.37 172.33,75.18 172.73,74.98 173.12,74.77 173.51,74.56 173.9,74.35 174.29,74.15 174.68,73.94 175.08,73.75 175.47,73.57 175.86,73.39 176.25,73.22 176.64,73.06 177.04,72.9 177.43,72.73 177.82,72.57 178.21,72.41 178.6,72.24 179,72.08 179.39,71.91 179.78,71.74 180.17,71.57 180.56,71.41 180.95,71.25 181.35,71.1 181.74,70.95 182.13,70.81 182.52,70.67 182.91,70.55 183.31,70.43 183.7,70.32 184.09,70.21 184.48,70.11 184.87,70.01 185.27,69.91 185.66,69.8 186.05,69.69 186.44,69.57 186.83,69.43 187.22,69.29 187.62,69.14 188.01,68.98 188.4,68.81 188.79,68.64 189.18,68.48 189.58,68.32 189.97,68.16 190.36,68.02 190.75,67.89 191.14,67.77 191.54,67.66 191.93,67.57 192.32,67.48 192.71,67.4 193.1,67.33 193.49,67.25 193.89,67.18 194.28,67.1 194.67,67.03 195.06,66.96 195.45,66.89 195.85,66.83 196.24,66.76 196.63,66.71 197.02,66.65 197.41,66.6 197.81,66.55 198.2,66.5 198.59,66.45 198.98,66.39 199.37,66.32 199.76,66.25 200.16,66.16 200.55,66.07 200.94,65.96 201.33,65.86 201.72,65.74 202.12,65.63 202.51,65.52 202.9,65.42 203.29,65.32 203.68,65.22 204.08,65.14 204.47,65.06 204.86,64.98 205.25,64.91 205.64,64.83 206.03,64.75 206.43,64.67 206.82,64.58 207.21,64.49 207.6,64.39 207.99,64.3 208.39,64.2 208.78,64.11 209.17,64.03 209.56,63.94 209.95,63.87 210.35,63.8 210.74,63.74 211.13,63.68 211.52,63.62 211.91,63.57 212.3,63.52 212.7,63.47 213.09,63.41 213.48,63.36 213.87,63.3 214.26,63.24 214.66,63.17 215.05,63.1 215.44,63.02 215.83,62.94 216.22,62.86 216.62,62.77 217.01,62.68 217.4,62.6 217.79,62.51 218.18,62.43 218.57,62.36 218.97,62.3 219.36,62.25 219.75,62.2 220.14,62.16 220.53,62.12 220.93,62.09 221.32,62.05 221.71,62.01 222.1,61.97 222.49,61.93 222.89,61.88 223.28,61.83 223.67,61.77 224.06,61.72 224.45,61.67 224.84,61.63 225.24,61.59 225.63,61.55 226.02,61.51 226.41,61.47 226.8,61.43 227.2,61.39 227.59,61.35 227.98,61.3 228.37,61.25 228.76,61.2 229.16,61.14 229.55,61.09 229.94,61.04 230.33,60.99 230.72,60.94 231.11,60.9 231.51,60.86 231.9,60.82 232.29,60.78 232.68,60.74 233.07,60.7 233.47,60.66 233.86,60.62 234.25,60.57 234.64,60.52 235.03,60.48 235.43,60.43 235.82,60.38 236.21,60.33 236.6,60.28 236.99,60.23 237.38,60.18 237.78,60.13 238.17,60.08 238.56,60.02 238.95,59.97 239.34,59.91 239.74,59.86 240.13,59.81 240.52,59.76 240.91,59.71 241.3,59.66 241.7,59.62 242.09,59.57 242.48,59.54 242.87,59.5 243.26,59.46 243.65,59.43 244.05,59.39 244.44,59.36 244.83,59.32 245.22,59.28 245.61,59.25 246.01,59.21 246.4,59.18 246.79,59.14 247.18,59.11 247.57,59.08 247.97,59.06 248.36,59.03 248.75,59.01 249.14,58.98 249.53,58.96 249.93,58.93 250.32,58.9 250.71,58.86 251.1,58.8 251.49,58.74 251.88,58.65 252.28,58.54 252.67,58.4 253.06,58.23 253.45,58.02 253.84,57.79 254.24,57.53 254.63,57.26 255.02,56.97 255.41,56.69 255.8,56.43 256.2,56.18 256.59,55.96 256.98,55.77 257.37,55.62 257.76,55.5 258.15,55.41 258.55,55.34 258.94,55.29 259.33,55.26 259.72,55.24 260.11,55.23 260.51,55.22 260.9,55.22" stroke-dasharray="none" stroke="rgb(152,78,163)" stroke-width="0.75" opacity="1" stroke-opacity="1" fill="none" class="aqm11" onclick="plotObjRespond('click', 11, 'dens')" onmouseover="plotObjRespond('show', 11, 'dens')" onmouseout="plotObjRespond('hide', 11, 'dens')"/>
+          </g>
+          <g id="Fig:densplot_01.xyplot.lines.group.12.panel.1.1.1">
+            <polyline id="Fig:densplot_01.xyplot.lines.group.12.panel.1.1.1.1" points="59.06,55.21 59.45,55.21 59.85,55.21 60.25,55.22 60.64,55.22 61.04,55.22 61.44,55.22 61.83,55.22 62.23,55.23 62.63,55.23 63.02,55.24 63.42,55.25 63.82,55.27 64.21,55.29 64.61,55.32 65.01,55.35 65.41,55.4 65.8,55.47 66.2,55.56 66.6,55.67 66.99,55.81 67.39,55.98 67.79,56.21 68.18,56.49 68.58,56.84 68.98,57.27 69.37,57.79 69.77,58.43 70.17,59.18 70.56,60.07 70.96,61.13 71.36,62.36 71.75,63.79 72.15,65.43 72.55,67.31 72.94,69.47 73.34,71.9 73.74,74.62 74.13,77.63 74.53,80.94 74.93,84.54 75.32,88.45 75.72,92.63 76.12,97.09 76.51,101.79 76.91,106.72 77.31,111.84 77.7,117.12 78.1,122.52 78.5,127.98 78.9,133.48 79.29,138.95 79.69,144.37 80.09,149.7 80.48,154.9 80.88,159.93 81.28,164.77 81.67,169.4 82.07,173.78 82.47,177.9 82.86,181.73 83.26,185.27 83.66,188.52 84.05,191.46 84.45,194.11 84.85,196.45 85.24,198.49 85.64,200.24 86.04,201.72 86.43,202.94 86.83,203.91 87.23,204.65 87.62,205.17 88.02,205.51 88.42,205.68 88.81,205.7 89.21,205.58 89.61,205.33 90,204.96 90.4,204.5 90.8,203.93 91.19,203.28 91.59,202.55 91.99,201.75 92.39,200.89 92.78,199.98 93.18,199.02 93.58,198.02 93.97,196.98 94.37,195.91 94.77,194.79 95.16,193.65 95.56,192.46 95.96,191.24 96.35,189.99 96.75,188.7 97.15,187.38 97.54,186.03 97.94,184.66 98.34,183.27 98.73,181.87 99.13,180.46 99.53,179.05 99.92,177.65 100.32,176.26 100.72,174.88 101.11,173.51 101.51,172.17 101.91,170.85 102.3,169.55 102.7,168.27 103.1,167.01 103.49,165.77 103.89,164.55 104.29,163.34 104.68,162.15 105.08,160.96 105.48,159.78 105.88,158.61 106.27,157.45 106.67,156.3 107.07,155.17 107.46,154.04 107.86,152.94 108.26,151.85 108.65,150.79 109.05,149.75 109.45,148.73 109.84,147.73 110.24,146.75 110.64,145.79 111.03,144.84 111.43,143.9 111.83,142.96 112.22,142.03 112.62,141.1 113.02,140.18 113.41,139.25 113.81,138.33 114.21,137.43 114.6,136.53 115,135.65 115.4,134.79 115.79,133.95 116.19,133.12 116.59,132.32 116.98,131.54 117.38,130.78 117.78,130.04 118.17,129.3 118.57,128.59 118.97,127.88 119.37,127.19 119.76,126.5 120.16,125.82 120.56,125.15 120.95,124.49 121.35,123.83 121.75,123.17 122.14,122.51 122.54,121.85 122.94,121.19 123.33,120.52 123.73,119.86 124.13,119.21 124.52,118.55 124.92,117.9 125.32,117.25 125.71,116.62 126.11,115.99 126.51,115.37 126.9,114.76 127.3,114.17 127.7,113.59 128.09,113.02 128.49,112.48 128.89,111.95 129.28,111.43 129.68,110.93 130.08,110.44 130.47,109.96 130.87,109.49 131.27,109.02 131.66,108.55 132.06,108.08 132.46,107.62 132.86,107.16 133.25,106.71 133.65,106.27 134.05,105.83 134.44,105.4 134.84,104.97 135.24,104.55 135.63,104.12 136.03,103.7 136.43,103.27 136.82,102.84 137.22,102.4 137.62,101.95 138.01,101.51 138.41,101.06 138.81,100.62 139.2,100.18 139.6,99.74 140,99.32 140.39,98.9 140.79,98.49 141.19,98.09 141.58,97.69 141.98,97.29 142.38,96.89 142.77,96.49 143.17,96.1 143.57,95.71 143.96,95.32 144.36,94.95 144.76,94.58 145.15,94.23 145.55,93.9 145.95,93.58 146.35,93.28 146.74,93 147.14,92.73 147.54,92.47 147.93,92.21 148.33,91.95 148.73,91.69 149.12,91.42 149.52,91.14 149.92,90.86 150.31,90.57 150.71,90.27 151.11,89.97 151.5,89.66 151.9,89.36 152.3,89.06 152.69,88.76 153.09,88.47 153.49,88.18 153.88,87.89 154.28,87.61 154.68,87.34 155.07,87.06 155.47,86.79 155.87,86.53 156.26,86.27 156.66,86.01 157.06,85.76 157.45,85.52 157.85,85.28 158.25,85.04 158.64,84.82 159.04,84.61 159.44,84.4 159.84,84.2 160.23,84.01 160.63,83.83 161.03,83.65 161.42,83.47 161.82,83.29 162.22,83.11 162.61,82.92 163.01,82.72 163.41,82.52 163.8,82.3 164.2,82.07 164.6,81.83 164.99,81.59 165.39,81.33 165.79,81.08 166.18,80.83 166.58,80.57 166.98,80.33 167.37,80.09 167.77,79.85 168.17,79.62 168.56,79.4 168.96,79.18 169.36,78.96 169.75,78.74 170.15,78.52 170.55,78.31 170.94,78.09 171.34,77.88 171.74,77.68 172.13,77.48 172.53,77.29 172.93,77.11 173.33,76.94 173.72,76.78 174.12,76.62 174.52,76.47 174.91,76.31 175.31,76.16 175.71,76 176.1,75.83 176.5,75.65 176.9,75.47 177.29,75.28 177.69,75.08 178.09,74.88 178.48,74.68 178.88,74.48 179.28,74.28 179.67,74.1 180.07,73.93 180.47,73.77 180.86,73.63 181.26,73.5 181.66,73.38 182.05,73.27 182.45,73.17 182.85,73.06 183.24,72.96 183.64,72.85 184.04,72.73 184.43,72.61 184.83,72.48 185.23,72.34 185.62,72.19 186.02,72.05 186.42,71.9 186.82,71.75 187.21,71.6 187.61,71.45 188.01,71.31 188.4,71.16 188.8,71.02 189.2,70.88 189.59,70.73 189.99,70.59 190.39,70.44 190.78,70.3 191.18,70.16 191.58,70.02 191.97,69.89 192.37,69.77 192.77,69.65 193.16,69.54 193.56,69.44 193.96,69.34 194.35,69.24 194.75,69.14 195.15,69.04 195.54,68.94 195.94,68.84 196.34,68.74 196.73,68.63 197.13,68.53 197.53,68.43 197.92,68.33 198.32,68.23 198.72,68.14 199.11,68.04 199.51,67.95 199.91,67.86 200.31,67.77 200.7,67.67 201.1,67.57 201.5,67.47 201.89,67.36 202.29,67.25 202.69,67.14 203.08,67.03 203.48,66.92 203.88,66.81 204.27,66.7 204.67,66.59 205.07,66.48 205.46,66.38 205.86,66.27 206.26,66.17 206.65,66.07 207.05,65.97 207.45,65.87 207.84,65.77 208.24,65.68 208.64,65.59 209.03,65.5 209.43,65.42 209.83,65.34 210.22,65.26 210.62,65.19 211.02,65.12 211.41,65.05 211.81,64.99 212.21,64.92 212.6,64.86 213,64.79 213.4,64.72 213.8,64.65 214.19,64.57 214.59,64.49 214.99,64.4 215.38,64.31 215.78,64.22 216.18,64.13 216.57,64.03 216.97,63.94 217.37,63.85 217.76,63.76 218.16,63.68 218.56,63.61 218.95,63.54 219.35,63.48 219.75,63.42 220.14,63.36 220.54,63.31 220.94,63.25 221.33,63.19 221.73,63.14 222.13,63.08 222.52,63.01 222.92,62.95 223.32,62.88 223.71,62.82 224.11,62.75 224.51,62.67 224.9,62.6 225.3,62.53 225.7,62.45 226.09,62.37 226.49,62.29 226.89,62.22 227.29,62.14 227.68,62.07 228.08,62 228.48,61.93 228.87,61.88 229.27,61.82 229.67,61.78 230.06,61.74 230.46,61.71 230.86,61.67 231.25,61.64 231.65,61.61 232.05,61.58 232.44,61.55 232.84,61.51 233.24,61.47 233.63,61.43 234.03,61.37 234.43,61.32 234.82,61.26 235.22,61.2 235.62,61.14 236.01,61.07 236.41,61.01 236.81,60.95 237.2,60.89 237.6,60.83 238,60.78 238.39,60.73 238.79,60.69 239.19,60.65 239.58,60.62 239.98,60.59 240.38,60.57 240.78,60.55 241.17,60.53 241.57,60.51 241.97,60.49 242.36,60.47 242.76,60.44 243.16,60.42 243.55,60.38 243.95,60.35 244.35,60.31 244.74,60.27 245.14,60.23 245.54,60.19 245.93,60.16 246.33,60.13 246.73,60.09 247.12,60.06 247.52,60.03 247.92,60 248.31,59.96 248.71,59.92 249.11,59.87 249.5,59.82 249.9,59.75 250.3,59.68 250.69,59.59 251.09,59.49 251.49,59.36 251.88,59.22 252.28,59.06 252.68,58.87 253.07,58.65 253.47,58.41 253.87,58.15 254.27,57.86 254.66,57.57 255.06,57.27 255.46,56.98 255.85,56.69 256.25,56.43 256.65,56.19 257.04,55.98 257.44,55.8 257.84,55.65 258.23,55.53 258.63,55.44 259.03,55.37 259.42,55.32 259.82,55.28 260.22,55.26 260.61,55.24 261.01,55.23 261.41,55.22 261.8,55.22" stroke-dasharray="none" stroke="rgb(152,78,163)" stroke-width="0.75" opacity="1" stroke-opacity="1" fill="none" class="aqm12" onclick="plotObjRespond('click', 12, 'dens')" onmouseover="plotObjRespond('show', 12, 'dens')" onmouseout="plotObjRespond('hide', 12, 'dens')"/>
+          </g>
+        </g>
+        <g id="Fig:densplot_01.panel.1.1.off.vp.2">
+          <g id="Fig:densplot_01.border.panel.1.1.1">
+            <rect id="Fig:densplot_01.border.panel.1.1.1.1" x="44.8" y="42.19" width="231.2" height="212.14" stroke="rgb(0,0,0)" stroke-dasharray="none" stroke-width="0.75" opacity="1" fill="none" stroke-opacity="1" fill-opacity="0"/>
+          </g>
+        </g>
+        <g id="Fig:densplot_01..1"/>
+      </g>
+    </g>
+  </g>
+</svg></td><td><table id='Tab:dens'><tr bgcolor='#d0d0ff'><td>array</td><td style='font-weight:bold'></td></tr>
+
+<tr bgcolor='#e0e0f0'><td>sampleNames</td><td style='font-weight:bold'></td></tr>
+
+<tr bgcolor='#d0d0ff'><td>AssayName</td><td style='font-weight:bold'></td></tr>
+
+<tr bgcolor='#e0e0f0'><td>FactorValue</td><td style='font-weight:bold'></td></tr>
+
+<tr bgcolor='#d0d0ff'><td>FileName</td><td style='font-weight:bold'></td></tr>
+</table></td></tr>
+</table>
+<br>
+<b>Figure 6</b><a href="dens.pdf"> (PDF file)</a> shows density estimates (smoothed histograms) of the data. Typically, the distributions of the arrays should have similar shapes and ranges. Arrays whose distributions are very different from the others should be considered for possible problems. Various features of the distributions can be indicative of quality related phenomena. For instance, high levels of background will shift an array's distribution to the right. Lack of signal diminishes its right right tail. A bulge at the upper end of the intensity range often indicates signal saturation.<br><br><br>
+</div><hr><h2><a name= 'S3'>Section 3: Variance mean dependence</a></h2>
+
+<a name="msd" id="msd-h" href="javascript: toggle('msd')" style="text-decoration:none;font-weight:bold;font-size:larger">- Figure 7: Standard deviation versus rank of the mean.</a><br>
+
+<div id="msd-b" style="display:block">
+<img src="msd.png" border="0" alt="msd.png" id="Figls:msd"></img><br>
+<b>Figure 7</b><a href="msd.pdf"> (PDF file)</a> shows a density plot of the standard deviation of the intensities across arrays on the <i>y</i>-axis versus the rank of their mean on the <i>x</i>-axis. The red dots, connected by lines, show the running median of the standard deviation. After normalisation and transformation to a logarithm(-like) scale, one typically expects the red line to be approximately horizontal, that is, show no substantial trend. In some cases, a hump on the right hand of the x-axis can be observed and is symptomatic of a saturation of the intensities.<br><br><br>
+</div><hr><h2><a name= 'S4'>Section 4: Individual array quality</a></h2>
+
+<a name="ma" id="ma-h" href="javascript: toggle('ma')" style="text-decoration:none;font-weight:bold;font-size:larger">- Figure 8: MA plots.</a><br>
+
+<div id="ma-b" style="display:block">
+<img src="ma.png" border="0" alt="ma.png" id="Figls:ma"></img><br>
+<b>Figure 8</b><a href="ma.pdf"> (PDF file)</a> shows MA plots. M and A are defined as:<br> M = log<sub>2</sub>(I<sub>1</sub>) - log<sub>2</sub>(I<sub>2</sub>)<br> A = 1/2 (log<sub>2</sub>(I<sub>1</sub>)+log<sub>2</sub>(I<sub>2</sub>)),<br> where I<sub>1</sub> is the intensity of the array studied,and I<sub>2</sub> is the intensity of a "pseudo"-array that consists of the median across arrays.  Typically, we expect the mass of the distribution in an MA plot to be concentrated along the M = 0 axis,  and there should be no trend in M as a function of A. If there is a trend in the lower range of A, this often  indicates that the arrays have different background intensities; this may be addressed by background correction.  A trend in the upper range of A can indicate saturation of the measurements; in mild cases, this may be addressed  by non-linear normalisation (e.g. quantile normalisation).<br> Outlier detection was performed by computing Hoeffding's statistic <i>D<sub>a</sub></i> on the joint distribution of A and M for each array.  Shown are first the 4 arrays with the highest values of <i>D<sub>a</sub></i>, then the 4 arrays with the lowest values.  The value of <i>D<sub>a</sub></i> is shown in the panel headings.  0 arrays had <i>D<sub>a</sub></i>&gt;0.15 and were marked as outliers.  For more information on Hoeffing's <i>D</i>-statistic, please see the manual page of the function  <tt>hoeffd</tt> in the <tt>Hmisc</tt> package.<br><br><br>
+</div>
+
+<a name="out ma" id="out ma-h" href="javascript: toggle('out ma')" style="text-decoration:none;font-weight:bold;font-size:larger">+ Figure 9: Outlier detection for MA plots.</a><br>
+
+<div id="out ma-b" style="display:none">
+<img src="out ma.png" border="0" alt="out ma.png" id="Figls:out ma"></img><br>
+<b>Figure 9</b><a href="out ma.pdf"> (PDF file)</a> shows a bar chart of the <i>D<sub>a</sub></i>, the outlier detection criterion from the previous figure. The bars are shown in the original order of the arrays. A threshold of 0.15 was used, which is indicated by the vertical line. None of the arrays exceeded the threshold and was considered an outlier.<br><br><br>
+</div><hr><span style="font-size:9pt">This report has been created with arrayQualityMetrics 3.22.1 under R version 3.1.2 (2014-10-31).</span><hr>
+<br/><br/><font size="-2">(Page generated on Thu Oct 22 11:17:08 2015 by <a href="https://cran.r-project.org/web/packages/hwriter/index.html">hwriter</a> )</font><br/>
+</body></html>
