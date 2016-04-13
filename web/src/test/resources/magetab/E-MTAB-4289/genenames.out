@@ -1,0 +1,53 @@
+/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289 /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289
+Processing E-MTAB-4289-analytics.tsv.undecorated...
+Processing E-MTAB-4289-analytics.tsv.undecorated.unrounded...
+Processing E-MTAB-4289-raw-counts.tsv.undecorated...
+Calculate percentile ranks for (each contrast in) the experiment
+INFO  - Removing previous percentile ranks files...
+INFO  - Done
+INFO  - Calculating percentile ranks for E-MTAB-4289-analytics.tsv.unrounded ...
+INFO  - Percentile ranks calculation successful.
+INFO  - Successfully calculated percentile ranks for E-MTAB-4289.
+/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi1-022>
+Subject: Job 1030953: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/bioentity_annotations/decorate_differential_rnaseq_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289  > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/bioentity_annotations/decorate_differential_rnaseq_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289  > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi1-022>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289> was used as the working directory.
+Started at Tue Apr 12 17:24:57 2016
+Results reported at Tue Apr 12 17:25:30 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/bioentity_annotations/decorate_differential_rnaseq_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               25.27 sec.
+    Max Memory :             277 MB
+    Average Memory :         101.00 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3819.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               857 MB
+
+    Max Processes :          8
+    Max Threads :            9
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <genenames.err> for stderr output of this job.
+

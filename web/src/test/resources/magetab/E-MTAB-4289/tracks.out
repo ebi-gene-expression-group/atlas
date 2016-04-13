@@ -1,0 +1,318 @@
+[INFO] GFF file loaded: 112496 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g2.p-value
+ [INFO] Columns:g7_g2.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g7_g5.p-value
+ [INFO] Columns:g7_g5.log2foldchange
+ [INFO] Columns:g7_g6.p-value
+ [INFO] Columns:g7_g6.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:112496
+[INFO] # values:112496
+[INFO] Found 54808 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 112496 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g2.p-value
+ [INFO] Columns:g7_g2.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g7_g5.p-value
+ [INFO] Columns:g7_g5.log2foldchange
+ [INFO] Columns:g7_g6.p-value
+ [INFO] Columns:g7_g6.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:112496
+[INFO] # values:112496
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 112496 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g2.p-value
+ [INFO] Columns:g7_g2.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g7_g5.p-value
+ [INFO] Columns:g7_g5.log2foldchange
+ [INFO] Columns:g7_g6.p-value
+ [INFO] Columns:g7_g6.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:112496
+[INFO] # values:112496
+[INFO] Found 54665 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 112496 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g2.p-value
+ [INFO] Columns:g7_g2.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g7_g5.p-value
+ [INFO] Columns:g7_g5.log2foldchange
+ [INFO] Columns:g7_g6.p-value
+ [INFO] Columns:g7_g6.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:112496
+[INFO] # values:112496
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 112496 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g2.p-value
+ [INFO] Columns:g7_g2.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g7_g5.p-value
+ [INFO] Columns:g7_g5.log2foldchange
+ [INFO] Columns:g7_g6.p-value
+ [INFO] Columns:g7_g6.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:112496
+[INFO] # values:112496
+[INFO] Found 61606 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 112496 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g2.p-value
+ [INFO] Columns:g7_g2.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g7_g5.p-value
+ [INFO] Columns:g7_g5.log2foldchange
+ [INFO] Columns:g7_g6.p-value
+ [INFO] Columns:g7_g6.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:112496
+[INFO] # values:112496
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 112496 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g2.p-value
+ [INFO] Columns:g7_g2.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g7_g5.p-value
+ [INFO] Columns:g7_g5.log2foldchange
+ [INFO] Columns:g7_g6.p-value
+ [INFO] Columns:g7_g6.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:112496
+[INFO] # values:112496
+[INFO] Found 59143 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 112496 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g2.p-value
+ [INFO] Columns:g7_g2.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g7_g5.p-value
+ [INFO] Columns:g7_g5.log2foldchange
+ [INFO] Columns:g7_g6.p-value
+ [INFO] Columns:g7_g6.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:112496
+[INFO] # values:112496
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 112496 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g2.p-value
+ [INFO] Columns:g7_g2.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g7_g5.p-value
+ [INFO] Columns:g7_g5.log2foldchange
+ [INFO] Columns:g7_g6.p-value
+ [INFO] Columns:g7_g6.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:112496
+[INFO] # values:112496
+[INFO] Found 75920 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 112496 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g2.p-value
+ [INFO] Columns:g7_g2.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g7_g5.p-value
+ [INFO] Columns:g7_g5.log2foldchange
+ [INFO] Columns:g7_g6.p-value
+ [INFO] Columns:g7_g6.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:112496
+[INFO] # values:112496
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 112496 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g2.p-value
+ [INFO] Columns:g7_g2.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g7_g5.p-value
+ [INFO] Columns:g7_g5.log2foldchange
+ [INFO] Columns:g7_g6.p-value
+ [INFO] Columns:g7_g6.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:112496
+[INFO] # values:112496
+[INFO] Found 67929 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 112496 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289/E-MTAB-4289-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g2.p-value
+ [INFO] Columns:g7_g2.log2foldchange
+ [INFO] Columns:g7_g3.p-value
+ [INFO] Columns:g7_g3.log2foldchange
+ [INFO] Columns:g7_g4.p-value
+ [INFO] Columns:g7_g4.log2foldchange
+ [INFO] Columns:g7_g5.p-value
+ [INFO] Columns:g7_g5.log2foldchange
+ [INFO] Columns:g7_g6.p-value
+ [INFO] Columns:g7_g6.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:112496
+[INFO] # values:112496
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-034>
+Subject: Job 1032871: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289  > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289  > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi5-034>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289> was used as the working directory.
+Started at Tue Apr 12 17:33:57 2016
+Results reported at Tue Apr 12 17:46:56 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4289  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               744.99 sec.
+    Max Memory :             681 MB
+    Average Memory :         309.27 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3415.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               1176 MB
+
+    Max Processes :          7
+    Max Threads :            8
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <tracks.err> for stderr output of this job.
+

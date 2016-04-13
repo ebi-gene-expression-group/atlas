@@ -1,0 +1,33 @@
+Comment[ArrayExpressAccession]	E-MTAB-4289	
+MAGE-TAB Version	1.1	
+Investigation Title	Wheat Transcriptome	
+Comment[Submitted Name]	Wheat Transcriptome	
+Experimental Factor Name	infect	time
+Experimental Factor Type	infect	time
+Experiment Description	Stripe rust (Puccinia striiformis f. sp. tritici; Pst) and powdery mildew (Blumeria graminis f. sp. tritici; Bgt) are important diseases of wheat (Triticum aestivum) worldwide. Similar mechanisms and gene transcripts are assumed to be involved in the host defense response because both pathogens are biotrophic fungi. The main objective of our study was to identify co-regulated mRNAs that show a change in expression pattern after inoculation with Pst or Bgt, and to identify mRNAs specific to the fungal stress response. In the present study, cDNA libraries were constructed from leaves inoculated with Pst or Bgt at 0, 1, 2 and 3 days post-inoculation (dpi) with three biological replicates, and then sequenced using the Illumina HiSeq™ 2000 platform. Note: Samples in SRA were assigned the same sample accession. This is incorrect as there are different samples, hence “Source Name” was replaced with new values. Comment[ENA_SAMPLE] contains the original SRA sample accessions.	
+Person Last Name	Zhang	
+Person First Name	Hong	
+Person Email	zhangh1129@nwafu.edu.cn	
+Person Address	State Key Laboratory of Crop Stress Biology for Arid Areas, College of Agronomy (Northwest A&F University), Yangling, Shaanxi 712100 China	
+Person Affiliation	BioProject	
+Person Roles	submitter	
+Public Release Date	2015-02-13	
+Protocol Name	SEQUENCING_PROTOCOL_1	LIBRARY_CONSTRUCTION_PROTOCOL_1
+Protocol Type	nucleic acid sequencing protocol	nucleic acid library construction protocol
+Protocol Term Source REF	EFO	EFO
+Protocol Term Accession Number	EFO_0004170	EFO_0004184
+Protocol Description	Illumina HiSeq 2000 software. Illumina HiSeq2000 flow cell preparation: PE-401-3001: TruSeq PE Cluster Kit v3 - cBot - HS; GD-401-3001: TruSeq SR Cluster Kit v3 - cBot - HS; FC-401-3001: TruSeq SBS Kit v3 - HS (200-cycles). http://www.illumina.com/technology/sequencing_technology.ilmn	
+Protocol Hardware	Illumina HiSeq 2000	
+Term Source Name	NCBI Taxonomy	EFO
+Term Source File	http://www.ncbi.nlm.nih.gov/Taxonomy/	http://www.ebi.ac.uk/efo
+Term Source Version		2.38
+Comment[SecondaryAccession]	SRP041017	
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/SRP041017	
+Comment[AEExperimentType]	RNA-seq of coding RNA	
+Comment[SRASubmissionDate]	2015-02-13	
+Comment[AEExperimentDisplayName]	Transcription profiling by high throughput sequencing of the hexaploid wheat line N9134 inoculated with Stripe rust and powdery mildew	
+Pubmed ID	25318379	
+Publication DOI	10.1186/1471-2164-15-898	
+Publication Title	Large-scale transcriptome comparison reveals distinct gene activations in wheat responding to stripe rust and powdery mildew	
+Publication Author List	Zhang H, Yang Y, Wang C, Liu M, Li H, Fu Y, Wang Y, Nie Y, Liu X, Ji W	
+SDRF File	E-MTAB-4289.sdrf.txt	

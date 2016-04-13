@@ -1,0 +1,126 @@
+E-MTAB-4289		SRR1228245	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228245	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228245	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228245	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228245	factor	infect	Puccinia striiformis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_168172
+E-MTAB-4289		SRR1228245	factor	time	24 hour
+E-MTAB-4289		SRR1228246	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228246	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228246	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228246	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228246	factor	infect	Puccinia striiformis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_168172
+E-MTAB-4289		SRR1228246	factor	time	24 hour
+E-MTAB-4289		SRR1228247	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228247	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228247	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228247	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228247	factor	infect	Puccinia striiformis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_168172
+E-MTAB-4289		SRR1228247	factor	time	24 hour
+E-MTAB-4289		SRR1228248	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228248	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228248	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228248	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228248	factor	infect	Puccinia striiformis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_168172
+E-MTAB-4289		SRR1228248	factor	time	48 hour
+E-MTAB-4289		SRR1228249	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228249	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228249	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228249	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228249	factor	infect	Puccinia striiformis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_168172
+E-MTAB-4289		SRR1228249	factor	time	48 hour
+E-MTAB-4289		SRR1228250	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228250	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228250	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228250	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228250	factor	infect	Puccinia striiformis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_168172
+E-MTAB-4289		SRR1228250	factor	time	48 hour
+E-MTAB-4289		SRR1228251	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228251	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228251	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228251	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228251	factor	infect	Puccinia striiformis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_168172
+E-MTAB-4289		SRR1228251	factor	time	72 hour
+E-MTAB-4289		SRR1228252	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228252	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228252	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228252	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228252	factor	infect	Puccinia striiformis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_168172
+E-MTAB-4289		SRR1228252	factor	time	72 hour
+E-MTAB-4289		SRR1228253	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228253	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228253	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228253	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228253	factor	infect	Puccinia striiformis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_168172
+E-MTAB-4289		SRR1228253	factor	time	72 hour
+E-MTAB-4289		SRR1228254	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228254	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228254	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228254	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228254	factor	infect	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4289		SRR1228254	factor	time	0 hour
+E-MTAB-4289		SRR1228255	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228255	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228255	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228255	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228255	factor	infect	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4289		SRR1228255	factor	time	0 hour
+E-MTAB-4289		SRR1228256	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228256	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228256	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228256	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228256	factor	infect	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4289		SRR1228256	factor	time	0 hour
+E-MTAB-4289		SRR1228257	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228257	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228257	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228257	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228257	factor	infect	Blumeria graminis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_62690
+E-MTAB-4289		SRR1228257	factor	time	24 hour
+E-MTAB-4289		SRR1228258	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228258	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228258	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228258	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228258	factor	infect	Blumeria graminis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_62690
+E-MTAB-4289		SRR1228258	factor	time	24 hour
+E-MTAB-4289		SRR1228259	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228259	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228259	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228259	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228259	factor	infect	Blumeria graminis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_62690
+E-MTAB-4289		SRR1228259	factor	time	24 hour
+E-MTAB-4289		SRR1228260	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228260	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228260	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228260	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228260	factor	infect	Blumeria graminis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_62690
+E-MTAB-4289		SRR1228260	factor	time	48 hour
+E-MTAB-4289		SRR1228261	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228261	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228261	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228261	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228261	factor	infect	Blumeria graminis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_62690
+E-MTAB-4289		SRR1228261	factor	time	48 hour
+E-MTAB-4289		SRR1228262	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228262	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228262	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228262	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228262	factor	infect	Blumeria graminis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_62690
+E-MTAB-4289		SRR1228262	factor	time	48 hour
+E-MTAB-4289		SRR1228263	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228263	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228263	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228263	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228263	factor	infect	Blumeria graminis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_62690
+E-MTAB-4289		SRR1228263	factor	time	72 hour
+E-MTAB-4289		SRR1228264	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228264	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228264	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228264	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228264	factor	infect	Blumeria graminis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_62690
+E-MTAB-4289		SRR1228264	factor	time	72 hour
+E-MTAB-4289		SRR1228265	characteristic	cultivar	N9134
+E-MTAB-4289		SRR1228265	characteristic	developmental stage	LP.02 two leaves visible stage	http://purl.obolibrary.org/obo/PO_0007098
+E-MTAB-4289		SRR1228265	characteristic	organism	Triticum aestivum	http://purl.obolibrary.org/obo/NCBITaxon_4565
+E-MTAB-4289		SRR1228265	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-4289		SRR1228265	factor	infect	Blumeria graminis f. sp. tritici	http://purl.obolibrary.org/obo/NCBITaxon_62690
+E-MTAB-4289		SRR1228265	factor	time	72 hour

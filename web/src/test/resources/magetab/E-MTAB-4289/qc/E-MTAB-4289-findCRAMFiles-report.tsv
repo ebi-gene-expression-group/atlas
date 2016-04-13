@@ -1,0 +1,23 @@
+study_id	run_id	cram_location	organism	date_last_processed	processing_status	mapping_quality
+SRP041017	SRR1228263	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/003/SRR1228263/SRR1228263.cram	triticum_aestivum	02-AUG-2015 09:15:52	completed	100
+SRP041017	SRR1228247	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/007/SRR1228247/SRR1228247.cram	triticum_aestivum	29-JUL-2015 16:33:00	completed	100
+SRP041017	SRR1228252	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/002/SRR1228252/SRR1228252.cram	triticum_aestivum	29-JUL-2015 14:34:32	completed	100
+SRP041017	SRR1228260	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/000/SRR1228260/SRR1228260.cram	triticum_aestivum	29-JUL-2015 10:31:22	completed	100
+SRP041017	SRR1228249	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/009/SRR1228249/SRR1228249.cram	triticum_aestivum	09-AUG-2015 22:44:11	completed	100
+SRP041017	SRR1228255	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/005/SRR1228255/SRR1228255.cram	triticum_aestivum	31-JUL-2015 11:31:03	completed	100
+SRP041017	SRR1228248	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/008/SRR1228248/SRR1228248.cram	triticum_aestivum	31-JUL-2015 04:30:55	completed	100
+SRP041017	SRR1228258	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/008/SRR1228258/SRR1228258.cram	triticum_aestivum	31-JUL-2015 00:30:32	completed	100
+SRP041017	SRR1228265	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/005/SRR1228265/SRR1228265.cram	triticum_aestivum	29-JUL-2015 06:35:50	completed	100
+SRP041017	SRR1228261	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/001/SRR1228261/SRR1228261.cram	triticum_aestivum	29-JUL-2015 16:33:50	completed	100
+SRP041017	SRR1228251	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/001/SRR1228251/SRR1228251.cram	triticum_aestivum	31-JUL-2015 08:30:37	completed	100
+SRP041017	SRR1228262	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/002/SRR1228262/SRR1228262.cram	triticum_aestivum	31-JUL-2015 15:32:03	completed	100
+SRP041017	SRR1228250	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/000/SRR1228250/SRR1228250.cram	triticum_aestivum	29-JUL-2015 16:34:45	completed	100
+SRP041017	SRR1228259	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/009/SRR1228259/SRR1228259.cram	triticum_aestivum	31-JUL-2015 02:30:43	completed	100
+SRP041017	SRR1228245	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/005/SRR1228245/SRR1228245.cram	triticum_aestivum	31-JUL-2015 17:31:01	completed	100
+SRP041017	SRR1228256	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/006/SRR1228256/SRR1228256.cram	triticum_aestivum	31-JUL-2015 09:42:08	completed	100
+SRP041017	SRR1228257	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/007/SRR1228257/SRR1228257.cram	triticum_aestivum	02-AUG-2015 09:36:26	completed	100
+SRP041017	SRR1228254	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/004/SRR1228254/SRR1228254.cram	triticum_aestivum	01-AUG-2015 03:36:28	completed	100
+SRP041017	SRR1228264	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/004/SRR1228264/SRR1228264.cram	triticum_aestivum	02-AUG-2015 09:39:55	completed	100
+SRP041017	SRR1228253	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/003/SRR1228253/SRR1228253.cram	triticum_aestivum	02-AUG-2015 09:40:17	completed	100
+SRP041017	SRR1228246	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR122/006/SRR1228246/SRR1228246.cram	triticum_aestivum	02-AUG-2015 09:40:37	completed	100
+

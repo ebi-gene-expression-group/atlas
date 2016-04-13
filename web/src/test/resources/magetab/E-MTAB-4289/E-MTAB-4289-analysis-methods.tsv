@@ -1,0 +1,11 @@
+Pipeline version	<a href="http://nunofonseca.github.io/irap/">iRAP</a> 0.7.0p1 
+Analyzed Libraries	See <a href="experiments/E-MTAB-4289/experiment-design">experiment design</a>
+Filtering Step 1	Discard reads below minimum quality threshold
+Filtering Step 2	Check of bacterial contamination; discard offending reads
+Filtering Step 3	Discard reads with common uncalled characters (e.g. N)
+Filtering Step 4	Remove reads from pair-end libraries that were orphaned by filtering steps 1-3
+Read Mapping	Against genome reference (Ensembl Ensemblgenomes.org/pub/DOTrelease-RELNO/plants/gtf/triticum_aestivum/Triticum_aestivum.IWGSC1.0+popseq.RELNO.gtf.gz release: 28) star version: 2.4.0i
+Quantification	htseq2 version: 0.6.1p1
+Differential Expression	DESeq2 version: 1.10.1
+Gene Set Overlap	Fisher (non-directional), FDR &lt; 0.1 using <a href="http://www.bioconductor.org/packages/release/bioc/html/piano.html">piano</a> version 1.10.2
+

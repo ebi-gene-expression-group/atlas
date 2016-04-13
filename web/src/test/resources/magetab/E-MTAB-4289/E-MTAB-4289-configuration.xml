@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_differential" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="Blumeria graminis f. sp. tritici; 24 hour">
+                <assay>SRR1228259</assay>
+                <assay>SRR1228257</assay>
+                <assay>SRR1228258</assay>
+            </assay_group>
+            <assay_group id="g2" label="Blumeria graminis f. sp. tritici; 48 hour">
+                <assay>SRR1228260</assay>
+                <assay>SRR1228262</assay>
+                <assay>SRR1228261</assay>
+            </assay_group>
+            <assay_group id="g3" label="Blumeria graminis f. sp. tritici; 72 hour">
+                <assay>SRR1228264</assay>
+                <assay>SRR1228263</assay>
+                <assay>SRR1228265</assay>
+            </assay_group>
+            <assay_group id="g4" label="Puccinia striiformis f. sp. tritici; 24 hour">
+                <assay>SRR1228246</assay>
+                <assay>SRR1228247</assay>
+                <assay>SRR1228245</assay>
+            </assay_group>
+            <assay_group id="g5" label="Puccinia striiformis f. sp. tritici; 48 hour">
+                <assay>SRR1228250</assay>
+                <assay>SRR1228249</assay>
+                <assay>SRR1228248</assay>
+            </assay_group>
+            <assay_group id="g6" label="Puccinia striiformis f. sp. tritici; 72 hour">
+                <assay>SRR1228253</assay>
+                <assay>SRR1228252</assay>
+                <assay>SRR1228251</assay>
+            </assay_group>
+            <assay_group id="g7" label="control; 0 hour">
+                <assay>SRR1228256</assay>
+                <assay>SRR1228254</assay>
+                <assay>SRR1228255</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g7_g1">
+                <name>'Blumeria graminis; 24 hour' vs 'control'</name>
+                <reference_assay_group>g7</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g7_g2">
+                <name>'Blumeria graminis; 48 hour' vs 'control'</name>
+                <reference_assay_group>g7</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+            <contrast id="g7_g3">
+                <name>'Blumeria graminis; 72 hour' vs 'control'</name>
+                <reference_assay_group>g7</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+            <contrast id="g7_g4">
+                <name>'Puccinia striiformis; 24 hour' vs 'control'</name>
+                <reference_assay_group>g7</reference_assay_group>
+                <test_assay_group>g4</test_assay_group>
+            </contrast>
+            <contrast id="g7_g5">
+                <name>'Puccinia striiformis; 48 hour' vs 'control'</name>
+                <reference_assay_group>g7</reference_assay_group>
+                <test_assay_group>g5</test_assay_group>
+            </contrast>
+            <contrast id="g7_g6">
+                <name>'Puccinia striiformis; 72 hour' vs 'control'</name>
+                <reference_assay_group>g7</reference_assay_group>
+                <test_assay_group>g6</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>
