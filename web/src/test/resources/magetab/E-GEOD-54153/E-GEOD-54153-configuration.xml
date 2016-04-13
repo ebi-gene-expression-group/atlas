@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_differential" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="Ptr-MIR397a overexpression">
+                <assay>SRR1121294</assay>
+                <assay>SRR1121295</assay>
+                <assay>SRR1121296</assay>
+                <assay>SRR1121297</assay>
+                <assay>SRR1121300</assay>
+                <assay>SRR1121299</assay>
+                <assay>SRR1121292</assay>
+                <assay>SRR1121293</assay>
+                <assay>SRR1121298</assay>
+            </assay_group>
+            <assay_group id="g2" label="wild type">
+                <assay>SRR1121302</assay>
+                <assay>SRR1121301</assay>
+                <assay>SRR1121303</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g2_g1">
+                <name>'Ptr-MIR397a overexpression' vs 'wild type'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

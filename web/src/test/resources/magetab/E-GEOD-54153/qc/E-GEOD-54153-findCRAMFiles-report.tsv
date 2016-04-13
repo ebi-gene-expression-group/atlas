@@ -1,0 +1,14 @@
+study_id	run_id	cram_location	organism	processing_status
+SRP035471	SRR1121294	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR112/004/SRR1121294/SRR1121294.cram	populus_trichocarpa	16-JUN-2015 14:44:45	completed	97
+SRP035471	SRR1121293	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR112/003/SRR1121293/SRR1121293.cram	populus_trichocarpa	16-JUN-2015 15:36:38	completed	97
+SRP035471	SRR1121299	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR112/009/SRR1121299/SRR1121299.cram	populus_trichocarpa	16-JUN-2015 17:25:05	completed	97
+SRP035471	SRR1121302	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR112/002/SRR1121302/SRR1121302.cram	populus_trichocarpa	16-JUN-2015 21:33:51	completed	97
+SRP035471	SRR1121297	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR112/007/SRR1121297/SRR1121297.cram	populus_trichocarpa	16-JUN-2015 23:41:08	completed	97
+SRP035471	SRR1121292	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR112/002/SRR1121292/SRR1121292.cram	populus_trichocarpa	16-JUN-2015 23:41:22	completed	97
+SRP035471	SRR1121295	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR112/005/SRR1121295/SRR1121295.cram	populus_trichocarpa	16-JUN-2015 22:54:24	completed	97
+SRP035471	SRR1121296	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR112/006/SRR1121296/SRR1121296.cram	populus_trichocarpa	17-JUN-2015 00:34:34	completed	97
+SRP035471	SRR1121298	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR112/008/SRR1121298/SRR1121298.cram	populus_trichocarpa	17-JUN-2015 01:10:45	completed	97
+SRP035471	SRR1121303	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR112/003/SRR1121303/SRR1121303.cram	populus_trichocarpa	17-JUN-2015 00:48:48	completed	97
+SRP035471	SRR1121300	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR112/000/SRR1121300/SRR1121300.cram	populus_trichocarpa	17-JUN-2015 02:31:48	completed	97
+SRP035471	SRR1121301	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR112/001/SRR1121301/SRR1121301.cram	populus_trichocarpa	17-JUN-2015 04:58:57	completed	97
+

@@ -1,0 +1,68 @@
+[INFO] GFF file loaded: 41377 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54153/E-GEOD-54153-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54153/E-GEOD-54153-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g2_g1.p-value
+ [INFO] Columns:g2_g1.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] #Features with data:39009
+[INFO] # values:39009
+[INFO] Found 17587 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 41377 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54153/E-GEOD-54153-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54153/E-GEOD-54153-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:g2_g1.p-value
+ [INFO] Columns:g2_g1.log2foldchange
+[INFO] numeric
+[INFO] #Features with data:39009
+[INFO] # values:39009
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-145>
+Subject: Job 1032822: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54153  > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54153  > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi5-145>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54153> was used as the working directory.
+Started at Tue Apr 12 17:33:30 2016
+Results reported at Tue Apr 12 17:34:14 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-GEOD-54153  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               40.18 sec.
+    Max Memory :             167 MB
+    Average Memory :         106.33 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3929.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               699 MB
+
+    Max Processes :          7
+    Max Threads :            8
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <tracks.err> for stderr output of this job.
+

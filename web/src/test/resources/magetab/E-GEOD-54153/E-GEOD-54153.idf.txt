@@ -1,0 +1,35 @@
+Comment[ArrayExpressAccession]	E-GEOD-54153															
+MAGE-TAB Version	1.1															
+Public Release Date	2014-01-17															
+Investigation Title	Ptr-miR397a is a negative regulator of laccase genes affecting lignin content in Populus trichocarpa															
+Comment[Submitted Name]	Ptr-miR397a is a negative regulator of laccase genes affecting lignin content in Populus trichocarpa															
+Comment[AEExperimentDisplayName]	Transcription profiling by high throughput sequencing of stem differentiating xylem from Populus trichocarpa transgenics overexpressing PtrMIR397a  															
+Experiment Description	Laccases were proposed to catalyze the oxidative polymerization of monolignols. We identified 49 laccase gene models in Populus trichocarpa, of which 29 were predicted to be targets of ptr-miR397a. We overexpressed Ptr-MIR397a in transgenic P. trichocarpa. In each of all 9 transgenic lines tested, 17 PtrLACs were down-regulated as analyzed by RNA-seq. Transgenic lines with severe reduction in the expression of these laccase genes resulted in an approximately 40% decrease in the total laccase activity. Overexpression of Ptr-MIR397a in these transgenic lines also reduced lignin content, whereas levels of all monolignol biosynthetic gene transcripts remained unchanged. A hierarchical genetic regulatory network (GRN) built by a bottom-up Graphic Gaussian Model algorithm provides additional support for a role of ptr-miR397a as a negative regulator of laccases for lignin biosynthesis. Full transcriptome based differential gene expression in the overexpressed transgenics and protein domain analyses implicate previously unidentified transcription factors and their targets in an extended hierarchical GRN including ptr-miR397a and laccases that coregulate lignin biosynthesis in wood formation. Ptr-miR397a, laccases and other regulatory components of this network may provide additional strategies for genetic manipulation of lignin content. Total twelve trees were used. Those include nine individual transgenic trees for overexpressing Ptr-miR397a, as nine biological replicates, and three wild-type trees.															
+Term Source Name	ArrayExpress	EFO														
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl														
+Person Last Name	Tunlaya-anukit	Lu	Li	Wei	Chang	Tunlaya-Anukit	Kim	Liu	Song	Sun	Yuan	Yeh	Peszlen	Ralph	Sederoff	Chiang
+Person First Name	Sermsawat	Shanfa	Quanzi	Hairong	Mao-Ju	Sermsawat	Hoon	Jie	Jingyuan	Ying-Hsuan	Lichai	Ting-Feng	Ilona	John	Ronald	Vincent
+Person Mid Initials															R	L
+Person Email	stunlay@ncsu.edu															
+Person Affiliation	North Carolina State University															
+Person Phone	+1 919-802-8712															
+Person Address	Department of Forestry and Environmental Resources, North Carolina State University, 840 Main campus drive  room2500, Raleigh, NC, USA															
+Person Roles	submitter															
+Protocol Name	P-GSE54153-4	P-GSE54153-1	P-GSE54153-3	P-GSE54153-2												
+Protocol Description	Illumina Casava1.7 software used for basecalling. mapped to Populus trichocarpa v3 using TopHat v2.0.3 and bowtie b0.12.7 with command tophat -p 7 -G /genomes/ptrichocarpa/sequences/Ptrichocarpa_210_gene_exons.gff3 /genomes/ptrichocarpa/index/Ptrichocarpa_210.fa *.fq convert mapped file to depth file by coverageBed v2.14.2 with parameter coverageBed -abam */accepted_hits.bam -b genomes/ptrichocarpa/sequences/Ptrichocarpa_210_gene_exons.gff3 > *.rawcount compile rawcount file from all libraries into tab-delimited text file using perl script Genome_build: Populus trichocarpa version 3.0 (www.phytozyme.com) Supplementary_files_format_and_content: tab-delimited text files raw count values of transcript for each sample	transgenic overexpression PtrMIR397a with CaMV 35s promoter	Total RNA was isolated using the CTAB method (Chang et al. 1993. Plant Mol Biol Rep 11: 113-116). TruSeq RNA Sample Prep v2 LS protocol (Illumina)	P. trichocarpa plants were grown in pots containing half Miracle- Gro Soil (Scotts Miracle-Gro, Maysville, OH) and half Metro-Mix 200 (Sun Gro, Bellevue, WA) in a greenhouse at 17–26 C, 16 h light/8 h dark cycle (with supplemental light of ~300 μE/m2/s). Miracle-Gro Plant Food (Scotts Miracle-Gro) was applied once a week												
+Protocol Type	normalization data transformation protocol	sample treatment protocol	nucleic acid library construction protocol	growth protocol												
+Experimental Factor Name	genotype															
+Experimental Factor Type	genotype															
+Publication Title	Ptr-miR397a is a negative regulator of laccase genes affecting lignin content in Populus trichocarpa.															
+Publication Author List	Lu S, Li Q, Wei H, Chang MJ, Tunlaya-Anukit S, Kim H, Liu J, Song J, Sun YH, Yuan L, Yeh TF, Peszlen I, Ralph J, Sederoff RR, Chiang VL															
+PubMed ID	23754401															
+Publication DOI	10.1073/pnas.1308936110															
+Comment[SecondaryAccession]	GSE54153															
+Comment[GEOReleaseDate]	2014-01-17															
+Comment[ArrayExpressSubmissionDate]	2014-01-16															
+Comment[GEOLastUpdateDate]	2014-01-17															
+Comment[AEExperimentType]	RNA-seq of coding RNA															
+Comment[AdditionalFile:Data1]	GSE54153_mRNA_v3_miR397.txt															
+Comment[SecondaryAccession]	SRP035471															
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/SRR1121292-SRR1121303															
+SDRF File	E-GEOD-54153.sdrf.txt															
