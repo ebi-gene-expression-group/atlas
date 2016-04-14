@@ -1,0 +1,72 @@
+E-MTAB-4219		SRR1186847	characteristic	genotype	CO441
+E-MTAB-4219		SRR1186847	characteristic	organism	Zea mays	http://purl.obolibrary.org/obo/NCBITaxon_4577
+E-MTAB-4219		SRR1186847	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-4219		SRR1186847	characteristic	phenotype	resistant to Fusarium verticillioides
+E-MTAB-4219		SRR1186847	factor	infect	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4219		SRR1186847	factor	phenotype	resistant to Fusarium verticillioides
+E-MTAB-4219		SRR1186858	characteristic	genotype	CO441
+E-MTAB-4219		SRR1186858	characteristic	organism	Zea mays	http://purl.obolibrary.org/obo/NCBITaxon_4577
+E-MTAB-4219		SRR1186858	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-4219		SRR1186858	characteristic	phenotype	resistant to Fusarium verticillioides
+E-MTAB-4219		SRR1186858	factor	infect	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4219		SRR1186858	factor	phenotype	resistant to Fusarium verticillioides
+E-MTAB-4219		SRR1186859	characteristic	genotype	CO441
+E-MTAB-4219		SRR1186859	characteristic	organism	Zea mays	http://purl.obolibrary.org/obo/NCBITaxon_4577
+E-MTAB-4219		SRR1186859	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-4219		SRR1186859	characteristic	phenotype	resistant to Fusarium verticillioides
+E-MTAB-4219		SRR1186859	factor	infect	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4219		SRR1186859	factor	phenotype	resistant to Fusarium verticillioides
+E-MTAB-4219		SRR1186861	characteristic	genotype	CO441
+E-MTAB-4219		SRR1186861	characteristic	organism	Zea mays	http://purl.obolibrary.org/obo/NCBITaxon_4577
+E-MTAB-4219		SRR1186861	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-4219		SRR1186861	characteristic	phenotype	resistant to Fusarium verticillioides
+E-MTAB-4219		SRR1186861	factor	infect	Fusarium verticillioides	http://purl.obolibrary.org/obo/NCBITaxon_117187
+E-MTAB-4219		SRR1186861	factor	phenotype	resistant to Fusarium verticillioides
+E-MTAB-4219		SRR1186862	characteristic	genotype	CO441
+E-MTAB-4219		SRR1186862	characteristic	organism	Zea mays	http://purl.obolibrary.org/obo/NCBITaxon_4577
+E-MTAB-4219		SRR1186862	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-4219		SRR1186862	characteristic	phenotype	resistant to Fusarium verticillioides
+E-MTAB-4219		SRR1186862	factor	infect	Fusarium verticillioides	http://purl.obolibrary.org/obo/NCBITaxon_117187
+E-MTAB-4219		SRR1186862	factor	phenotype	resistant to Fusarium verticillioides
+E-MTAB-4219		SRR1186863	characteristic	genotype	CO441
+E-MTAB-4219		SRR1186863	characteristic	organism	Zea mays	http://purl.obolibrary.org/obo/NCBITaxon_4577
+E-MTAB-4219		SRR1186863	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-4219		SRR1186863	characteristic	phenotype	resistant to Fusarium verticillioides
+E-MTAB-4219		SRR1186863	factor	infect	Fusarium verticillioides	http://purl.obolibrary.org/obo/NCBITaxon_117187
+E-MTAB-4219		SRR1186863	factor	phenotype	resistant to Fusarium verticillioides
+E-MTAB-4219		SRR1186864	characteristic	genotype	CO354
+E-MTAB-4219		SRR1186864	characteristic	organism	Zea mays	http://purl.obolibrary.org/obo/NCBITaxon_4577
+E-MTAB-4219		SRR1186864	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-4219		SRR1186864	characteristic	phenotype	susceptible to Fusarium verticillioides
+E-MTAB-4219		SRR1186864	factor	infect	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4219		SRR1186864	factor	phenotype	susceptible to Fusarium verticillioides
+E-MTAB-4219		SRR1186866	characteristic	genotype	CO354
+E-MTAB-4219		SRR1186866	characteristic	organism	Zea mays	http://purl.obolibrary.org/obo/NCBITaxon_4577
+E-MTAB-4219		SRR1186866	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-4219		SRR1186866	characteristic	phenotype	susceptible to Fusarium verticillioides
+E-MTAB-4219		SRR1186866	factor	infect	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4219		SRR1186866	factor	phenotype	susceptible to Fusarium verticillioides
+E-MTAB-4219		SRR1186867	characteristic	genotype	CO354
+E-MTAB-4219		SRR1186867	characteristic	organism	Zea mays	http://purl.obolibrary.org/obo/NCBITaxon_4577
+E-MTAB-4219		SRR1186867	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-4219		SRR1186867	characteristic	phenotype	susceptible to Fusarium verticillioides
+E-MTAB-4219		SRR1186867	factor	infect	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MTAB-4219		SRR1186867	factor	phenotype	susceptible to Fusarium verticillioides
+E-MTAB-4219		SRR1186869	characteristic	genotype	CO354
+E-MTAB-4219		SRR1186869	characteristic	organism	Zea mays	http://purl.obolibrary.org/obo/NCBITaxon_4577
+E-MTAB-4219		SRR1186869	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-4219		SRR1186869	characteristic	phenotype	susceptible to Fusarium verticillioides
+E-MTAB-4219		SRR1186869	factor	infect	Fusarium verticillioides	http://purl.obolibrary.org/obo/NCBITaxon_117187
+E-MTAB-4219		SRR1186869	factor	phenotype	susceptible to Fusarium verticillioides
+E-MTAB-4219		SRR1186870	characteristic	genotype	CO354
+E-MTAB-4219		SRR1186870	characteristic	organism	Zea mays	http://purl.obolibrary.org/obo/NCBITaxon_4577
+E-MTAB-4219		SRR1186870	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-4219		SRR1186870	characteristic	phenotype	susceptible to Fusarium verticillioides
+E-MTAB-4219		SRR1186870	factor	infect	Fusarium verticillioides	http://purl.obolibrary.org/obo/NCBITaxon_117187
+E-MTAB-4219		SRR1186870	factor	phenotype	susceptible to Fusarium verticillioides
+E-MTAB-4219		SRR1186871	characteristic	genotype	CO354
+E-MTAB-4219		SRR1186871	characteristic	organism	Zea mays	http://purl.obolibrary.org/obo/NCBITaxon_4577
+E-MTAB-4219		SRR1186871	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-4219		SRR1186871	characteristic	phenotype	susceptible to Fusarium verticillioides
+E-MTAB-4219		SRR1186871	factor	infect	Fusarium verticillioides	http://purl.obolibrary.org/obo/NCBITaxon_117187
+E-MTAB-4219		SRR1186871	factor	phenotype	susceptible to Fusarium verticillioides

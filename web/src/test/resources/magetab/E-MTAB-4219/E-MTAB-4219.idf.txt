@@ -1,0 +1,33 @@
+Comment[ArrayExpressAccession]	E-MTAB-4219	
+MAGE-TAB Version	1.1	
+Investigation Title	Zea mays Transcriptome or Gene expression	
+Comment[Submitted Name]	Zea mays Transcriptome or Gene expression	
+Experiment Description	A next-generation RNA-sequencing approach was used for the first time to study transcriptional changes associated with Fusarium verticillioides inoculation in resistant CO441 and susceptible CO354 maize genotypes at 72 hours post inoculation. 	
+Experimental Factor Name	phenotype	infect
+Experimental Factor Type	phenotype	infect
+Person Last Name	Lanubile	
+Person First Name	Alessandra	
+Person Email	alessandra.lanubile@unicatt.it	
+Person Address	Istituto di Agronomia, Genetica e Coltivazioni erbacee, Universita  Cattolica del Sacro Cuore, Via Emilia Parmense 84, 29122 Piacenza, Italy	
+Person Affiliation	BioProject	
+Person Roles	submitter	
+Public Release Date	2014-10-06	
+Protocol Name	SEQUENCING_PROTOCOL_1	LIBRARY_CONSTRUCTION_PROTOCOL_1
+Protocol Type	nucleic acid sequencing protocol	nucleic acid library construction protocol
+Protocol Term Source REF	EFO	EFO
+Protocol Term Accession Number	EFO_0004170	EFO_0004184
+Protocol Description	Illumina HiSeq 1000	
+Protocol Hardware	Illumina HiSeq 1000	
+Term Source Name	NCBI Taxonomy	EFO
+Term Source File	http://www.ncbi.nlm.nih.gov/Taxonomy/	http://www.ebi.ac.uk/efo
+Term Source Version		2.38
+Comment[SecondaryAccession]	SRP039594	
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/SRP039594	
+Comment[AEExperimentType]	RNA-seq of coding RNA	
+Comment[SRASubmissionDate]	2014-10-06	
+Comment[AEExperimentDisplayName]	Transcription profiling by high throughput sequencing of resistant and susceptible maize genotypes after inoculation with Fusarium verticillioides	
+Pubmed ID	25155950	
+Publication DOI	10.1186/1471-2164-15-710	
+Publication Title	Functional genomic analysis of constitutive and inducible defense responses to Fusarium verticillioides infection in maize genotypes with contrasting ear rot resistance	
+Publication Author List	Lanubile A, Ferrarini A, Maschietto V, Delledonne M, Marocco A, Bellin D	
+SDRF File	E-MTAB-4219.sdrf.txt	

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_differential" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="Fusarium verticillioides; resistant to Fusarium verticillioides">
+                <assay>SRR1186863</assay>
+                <assay>SRR1186861</assay>
+                <assay>SRR1186862</assay>
+            </assay_group>
+            <assay_group id="g2" label="Fusarium verticillioides; susceptible to Fusarium verticillioides">
+                <assay>SRR1186871</assay>
+                <assay>SRR1186869</assay>
+                <assay>SRR1186870</assay>
+            </assay_group>
+            <assay_group id="g3" label="control; resistant to Fusarium verticillioides">
+                <assay>SRR1186847</assay>
+                <assay>SRR1186859</assay>
+                <assay>SRR1186858</assay>
+            </assay_group>
+            <assay_group id="g4" label="control; susceptible to Fusarium verticillioides">
+                <assay>SRR1186867</assay>
+                <assay>SRR1186866</assay>
+                <assay>SRR1186864</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g3_g1">
+                <name>'Fusarium verticillioides' vs 'control' in 'resistant to Fusarium verticillioides'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g4_g2">
+                <name>'Fusarium verticillioides' vs 'control' in 'susceptible to Fusarium verticillioides'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

@@ -1,0 +1,249 @@
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219-analytics.tsv --pvalue-col=5 --foldchange-col=6 --title="
+Top 10 GO terms enriched in 
+'Fusarium verticillioides' vs 'control' in 'susceptible to Fusarium verticillioides' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.zea_mays.g4_g2.ensgene.go.tsv.aux1 --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/zea_mays.ensgene.go.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.g4_g2.go.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219-analytics.tsv
+pval.col = 5
+fold.col = 6
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/zea_mays.ensgene.go.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.zea_mays.g4_g2.ensgene.go.tsv.aux1
+title = 
+Top 10 GO terms enriched in 
+'Fusarium verticillioides' vs 'control' in 'susceptible to Fusarium verticillioides' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.g4_g2.go.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219-analytics.tsv
+Warning message:
+In fread(input = f, sep = "\t", header = "auto", check.names = FALSE,  :
+  Bumped column 2 to type character on data row 794, field contains 'TUBA3'. Coercing previously read values in this column from logical, integer or numeric back to character which may not be lossless; e.g., if '00' and '000' occurred before they will now be just '0', and there may be inconsistencies with treatment of ',,' and ',NA,' too (if they occurred in this column before the bump). If this matters please rerun and set 'colClasses' to 'character' for this column. Please note that column type detection uses the first 5 rows, the middle 5 rows and the last 5 rows, so hopefully this message should be very rare. If reporting to datatable-help, please rerun and include the output from verbose=TRUE.
+[INFO] NAs removed: 10563
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219-analytics.tsv loaded: 28912 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/zea_mays.ensgene.go.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/zea_mays.ensgene.go.tsv loaded: 132268 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.zea_mays.g4_g2.ensgene.go.tsv.aux1
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.zea_mays.g4_g2.ensgene.go.tsv.aux1 loaded: 4449 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.46+-0.75
+[INFO] p-value mean 0.35+-0.34
+[INFO] Excluded 3439 genes with no annotation
+[INFO] #Genes=16780 #genes (pvalue<=0.05)=6189
+[INFO] Loading GSC...
+[INFO] Gene sets:4161 genes:16762
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 6189 genes of interest in 1424 gene sets, using a background of 10591 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.g4_g2.go.gsea.tsv
+Loading required package: methods
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Loading required package: limma
+[INFO] Generating plot /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.g4_g2.go.gsea_class_non_dir_both.png
+There were 42 warnings (use warnings() to see them)
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219-analytics.tsv --pvalue-col=5 --foldchange-col=6 --title="
+Top 10 InterPro domains enriched in 
+'Fusarium verticillioides' vs 'control' in 'susceptible to Fusarium verticillioides' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/zea_mays.ensgene.interpro.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.g4_g2.interpro.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219-analytics.tsv
+pval.col = 5
+fold.col = 6
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/zea_mays.ensgene.interpro.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+title = 
+Top 10 InterPro domains enriched in 
+'Fusarium verticillioides' vs 'control' in 'susceptible to Fusarium verticillioides' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.g4_g2.interpro.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219-analytics.tsv
+Warning message:
+In fread(input = f, sep = "\t", header = "auto", check.names = FALSE,  :
+  Bumped column 2 to type character on data row 794, field contains 'TUBA3'. Coercing previously read values in this column from logical, integer or numeric back to character which may not be lossless; e.g., if '00' and '000' occurred before they will now be just '0', and there may be inconsistencies with treatment of ',,' and ',NA,' too (if they occurred in this column before the bump). If this matters please rerun and set 'colClasses' to 'character' for this column. Please note that column type detection uses the first 5 rows, the middle 5 rows and the last 5 rows, so hopefully this message should be very rare. If reporting to datatable-help, please rerun and include the output from verbose=TRUE.
+[INFO] NAs removed: 10563
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219-analytics.tsv loaded: 28912 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/zea_mays.ensgene.interpro.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/zea_mays.ensgene.interpro.tsv loaded: 91762 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux loaded: 26238 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.46+-0.75
+[INFO] p-value mean 0.35+-0.34
+[INFO] Excluded 2340 genes with no annotation
+[INFO] #Genes=20261 #genes (pvalue<=0.05)=7288
+[INFO] Loading GSC...
+[INFO] Gene sets:6269 genes:20243
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 7288 genes of interest in 1985 gene sets, using a background of 12973 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.g4_g2.interpro.gsea.tsv
+Loading required package: methods
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Loading required package: limma
+[INFO] Generating plot /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.g4_g2.interpro.gsea_class_non_dir_both.png
+There were 48 warnings (use warnings() to see them)
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219-analytics.tsv --pvalue-col=5 --foldchange-col=6 --title="
+Top 10 Reactome pathways enriched in 
+'Fusarium verticillioides' vs 'control' in 'susceptible to Fusarium verticillioides' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/zea_mays.reactome.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/zea_mays.reactome.tsv.gsea.aux --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.g4_g2.reactome.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219-analytics.tsv
+pval.col = 5
+fold.col = 6
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/zea_mays.reactome.tsv.gsea.aux
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/zea_mays.reactome.tsv.decorate.aux
+title = 
+Top 10 Reactome pathways enriched in 
+'Fusarium verticillioides' vs 'control' in 'susceptible to Fusarium verticillioides' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.g4_g2.reactome.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219-analytics.tsv
+Warning message:
+In fread(input = f, sep = "\t", header = "auto", check.names = FALSE,  :
+  Bumped column 2 to type character on data row 794, field contains 'TUBA3'. Coercing previously read values in this column from logical, integer or numeric back to character which may not be lossless; e.g., if '00' and '000' occurred before they will now be just '0', and there may be inconsistencies with treatment of ',,' and ',NA,' too (if they occurred in this column before the bump). If this matters please rerun and set 'colClasses' to 'character' for this column. Please note that column type detection uses the first 5 rows, the middle 5 rows and the last 5 rows, so hopefully this message should be very rare. If reporting to datatable-help, please rerun and include the output from verbose=TRUE.
+[INFO] NAs removed: 10563
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219-analytics.tsv loaded: 28912 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/zea_mays.reactome.tsv.gsea.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/zea_mays.reactome.tsv.gsea.aux loaded: 5173 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/zea_mays.reactome.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/zea_mays.reactome.tsv.decorate.aux loaded: 191 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.46+-0.75
+[INFO] p-value mean 0.35+-0.34
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=28912 #genes (pvalue<=0.05)=9628
+[INFO] Loading GSC...
+[INFO] Gene sets:191 genes:1003
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 9628 genes of interest in 101 gene sets, using a background of 19284 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.g4_g2.reactome.gsea.tsv
+Loading required package: methods
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Loading required package: limma
+[INFO] Generating plot /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219/E-MTAB-4219.g4_g2.reactome.gsea_class_non_dir_both.png
+There were 36 warnings (use warnings() to see them)
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi1-127>
+Subject: Job 1040464: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219 g4_g2 > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219 g4_g2 > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi1-127>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219> was used as the working directory.
+Started at Tue Apr 12 18:02:03 2016
+Results reported at Tue Apr 12 18:04:52 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/rna-seq/experiments/E-MTAB-4219 g4_g2 
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               152.08 sec.
+    Max Memory :             234 MB
+    Average Memory :         137.80 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3862.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               1281 MB
+
+    Max Processes :          8
+    Max Threads :            9
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <gseag4_g2.err> for stderr output of this job.
+
