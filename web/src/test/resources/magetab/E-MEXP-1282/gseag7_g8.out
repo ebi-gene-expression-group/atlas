@@ -1,0 +1,243 @@
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv --pvalue-col=13 --foldchange-col=15 --title="
+Top 10 GO terms enriched in 
+'berry ripening stage 34 E-L' vs 'berry formation stage 33 E-L' in '2003' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.vitis_vinifera.g7_g8.ensgene.go.tsv.aux1 --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/vitis_vinifera.ensgene.go.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.g7_g8.go.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+pval.col = 13
+fold.col = 15
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/vitis_vinifera.ensgene.go.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.vitis_vinifera.g7_g8.ensgene.go.tsv.aux1
+title = 
+Top 10 GO terms enriched in 
+'berry ripening stage 34 E-L' vs 'berry formation stage 33 E-L' in '2003' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.g7_g8.go.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 9117 entries
+[INFO] No more duplicates
+[INFO] 7680 unique entries
+[INFO] NAs removed: 3722
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv loaded: 3958 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/vitis_vinifera.ensgene.go.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/vitis_vinifera.ensgene.go.tsv loaded: 110756 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.vitis_vinifera.g7_g8.ensgene.go.tsv.aux1
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.vitis_vinifera.g7_g8.ensgene.go.tsv.aux1 loaded: 4690 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.65+-0.84
+[INFO] p-value mean 0.18+-0.25
+[INFO] Excluded 288 genes with no annotation
+[INFO] #Genes=3360 #genes (pvalue<=0.05)=1578
+[INFO] Loading GSC...
+[INFO] Gene sets:2661 genes:3358
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 1578 genes of interest in 630 gene sets, using a background of 1782 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.g7_g8.go.gsea.tsv
+Loading required package: methods
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Loading required package: limma
+[WARNING] Skipping plot generation
+Warning message:
+In fisherNetworkPlot(fisherRes, edgeWidth = c(2, 20), adjusted = T,  :
+  no overlap between gene sets found, try to decrease argument overlap or increase argument significance...fixing it for now
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv --pvalue-col=13 --foldchange-col=15 --title="
+Top 10 InterPro domains enriched in 
+'berry ripening stage 34 E-L' vs 'berry formation stage 33 E-L' in '2003' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/vitis_vinifera.ensgene.interpro.tsv --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.g7_g8.interpro.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+pval.col = 13
+fold.col = 15
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/vitis_vinifera.ensgene.interpro.tsv
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+title = 
+Top 10 InterPro domains enriched in 
+'berry ripening stage 34 E-L' vs 'berry formation stage 33 E-L' in '2003' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.g7_g8.interpro.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 9117 entries
+[INFO] No more duplicates
+[INFO] 7680 unique entries
+[INFO] NAs removed: 3722
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv loaded: 3958 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/vitis_vinifera.ensgene.interpro.tsv
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/ensembl/vitis_vinifera.ensgene.interpro.tsv loaded: 65353 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/interpro/interproIDToTypeTerm.tsv.decorate.aux loaded: 26238 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.65+-0.84
+[INFO] p-value mean 0.18+-0.25
+[INFO] Excluded 200 genes with no annotation
+[INFO] #Genes=3523 #genes (pvalue<=0.05)=1666
+[INFO] Loading GSC...
+[INFO] Gene sets:2996 genes:3521
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 1666 genes of interest in 467 gene sets, using a background of 1857 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.g7_g8.interpro.gsea.tsv
+[WARNING] Insufficient gene sets () to draw a plot - plot not generated.
+Calling command: 'irap_GSE_piano --tsv=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv --pvalue-col=13 --foldchange-col=15 --title="
+Top 10 Reactome pathways enriched in 
+'berry ripening stage 34 E-L' vs 'berry formation stage 33 E-L' in '2003' 
+(Fisher-exact, FDR < 0.1)" --pvalue=0.05 --gs_fdr=0.1 --method=fisher-exact --dup-use-best --plot-annot-only --top=10 --minsize 5 --maxsize 100 --descr /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/vitis_vinifera.reactome.tsv.decorate.aux --go=/nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/vitis_vinifera.reactome.tsv.gsea.aux --out=/nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.g7_g8.reactome.gsea'
+Warning messages:
+1: replacing previous import by ‘igraph::union’ when loading ‘piano’ 
+2: replacing previous import by ‘igraph::normalize’ when loading ‘piano’ 
+[INFO] Parameters parsed.
+annotation_col = GOterm
+tsv.file = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+pval.col = 13
+fold.col = 15
+pvalue = 0.05
+gs_fdr = 0.1
+min.size = 5
+max.size = 100
+method = fisher-exact
+num_cores = 2
+minedge = 3
+top = 10
+annot.only = TRUE
+plot.annot.only = TRUE
+dup.use.best = TRUE
+dup.best.stat = fold-change
+debug = FALSE
+go.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/vitis_vinifera.reactome.tsv.gsea.aux
+descr.file = /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/vitis_vinifera.reactome.tsv.decorate.aux
+title = 
+Top 10 Reactome pathways enriched in 
+'berry ripening stage 34 E-L' vs 'berry formation stage 33 E-L' in '2003' 
+(Fisher-exact, FDR < 0.1)
+out = /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.g7_g8.reactome.gsea
+help = FALSE
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Found duplicated gene entries in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv.
+[INFO] Picking the best statistic for each set of entries related to a gene
+[INFO] Starting with 9117 entries
+[INFO] No more duplicates
+[INFO] 7680 unique entries
+[INFO] NAs removed: 3722
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv loaded: 3958 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/vitis_vinifera.reactome.tsv.gsea.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/vitis_vinifera.reactome.tsv.gsea.aux loaded: 3958 entries
+[INFO] Reading /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/vitis_vinifera.reactome.tsv.decorate.aux
+[INFO] Data in /nfs/production3/ma/home/atlas3-production/bioentity_properties/reactome/vitis_vinifera.reactome.tsv.decorate.aux loaded: 184 entries
+[INFO] Starting to play piano...
+[INFO] FC mean 0.65+-0.84
+[INFO] p-value mean 0.18+-0.25
+[INFO] Excluded 0 genes with no annotation
+[INFO] #Genes=3958 #genes (pvalue<=0.05)=1866
+[INFO] Loading GSC...
+[INFO] Gene sets:140 genes:224
+[INFO] Running Fisher-exact test...
+Using all genes in argument genes as universe.
+Analyzing the overrepresentation of 1866 genes of interest in 30 gene sets, using a background of 2092 non-interesting genes.
+[INFO] Created /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.g7_g8.reactome.gsea.tsv
+Loading required package: methods
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Loading required package: limma
+[INFO] Generating plot /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282.g7_g8.reactome.gsea_class_non_dir_both.png
+There were 24 warnings (use warnings() to see them)
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi6-162>
+Subject: Job 1039645: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282 g7_g8 > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282 g7_g8 > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi6-162>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282> was used as the working directory.
+Started at Tue Apr 12 17:55:19 2016
+Results reported at Tue Apr 12 17:57:11 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_gsea_for_differential_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282 g7_g8 
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               95.35 sec.
+    Max Memory :             183 MB
+    Average Memory :         59.50 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3913.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               1236 MB
+
+    Max Processes :          8
+    Max Threads :            9
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <gseag7_g8.err> for stderr output of this job.
+

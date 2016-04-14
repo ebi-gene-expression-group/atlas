@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-78</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="berry ripening stage 36 E-L; 2003">
+                <assay>36EL03_8</assay>
+                <assay>36EL03_7</assay>
+                <assay>36EL03_9</assay>
+            </assay_group>
+            <assay_group id="g2" label="berry ripening stage 36 E-L; 2006">
+                <assay>36EL06_27</assay>
+                <assay>36EL06_26</assay>
+                <assay>36EL06_25</assay>
+            </assay_group>
+            <assay_group id="g3" label="berry ripening stage 36 E-L; 2005">
+                <assay>36EL05_18</assay>
+                <assay>36EL05_17</assay>
+                <assay>36EL05_16</assay>
+            </assay_group>
+            <assay_group id="g4" label="berry ripening stage 34 E-L; 2005">
+                <assay>34EL05_15</assay>
+                <assay>34EL05_13</assay>
+                <assay>34EL05_14</assay>
+            </assay_group>
+            <assay_group id="g5" label="berry ripening stage 34 E-L; 2006">
+                <assay>34EL06_22</assay>
+                <assay>34EL06_24</assay>
+                <assay>34EL06_23</assay>
+            </assay_group>
+            <assay_group id="g6" label="berry formation stage 33 E-L; 2005">
+                <assay>33EL05_12</assay>
+                <assay>33EL05_10</assay>
+                <assay>33EL05_11</assay>
+            </assay_group>
+            <assay_group id="g7" label="berry formation stage 33 E-L; 2003">
+                <assay>33EL03_3</assay>
+                <assay>33EL03_2</assay>
+                <assay>33EL03_1</assay>
+            </assay_group>
+            <assay_group id="g8" label="berry ripening stage 34 E-L; 2003">
+                <assay>34EL03_5</assay>
+                <assay>34EL03_6</assay>
+                <assay>34EL03_4</assay>
+            </assay_group>
+            <assay_group id="g9" label="berry formation stage 33 E-L; 2006">
+                <assay>33EL06_21</assay>
+                <assay>33EL06_19</assay>
+                <assay>33EL06_20</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g7_g8">
+                <name>'berry ripening stage 34 E-L' vs 'berry formation stage 33 E-L' in '2003'</name>
+                <reference_assay_group>g7</reference_assay_group>
+                <test_assay_group>g8</test_assay_group>
+            </contrast>
+            <contrast id="g7_g1">
+                <name>'berry ripening stage 36 E-L' vs 'berry formation stage 33 E-L' in '2003'</name>
+                <reference_assay_group>g7</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g6_g4">
+                <name>'berry ripening stage 34 E-L' vs 'berry formation stage 33 E-L' in '2005'</name>
+                <reference_assay_group>g6</reference_assay_group>
+                <test_assay_group>g4</test_assay_group>
+            </contrast>
+            <contrast id="g6_g3">
+                <name>'berry ripening stage 36 E-L' vs 'berry formation stage 33 E-L' in '2005'</name>
+                <reference_assay_group>g6</reference_assay_group>
+                <test_assay_group>g3</test_assay_group>
+            </contrast>
+            <contrast id="g9_g5">
+                <name>'berry ripening stage 34 E-L' vs 'berry formation stage 33 E-L' in '2006'</name>
+                <reference_assay_group>g9</reference_assay_group>
+                <test_assay_group>g5</test_assay_group>
+            </contrast>
+            <contrast id="g9_g2">
+                <name>'berry ripening stage 36 E-L' vs 'berry formation stage 33 E-L' in '2006'</name>
+                <reference_assay_group>g9</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

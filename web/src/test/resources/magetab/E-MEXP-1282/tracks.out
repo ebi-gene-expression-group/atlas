@@ -1,0 +1,414 @@
+[INFO] GFF file loaded: 29971 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g6_g3.p-value
+ [INFO] Columns:g6_g3.t-statistic
+ [INFO] Columns:g6_g3.log2foldchange
+ [INFO] Columns:g6_g4.p-value
+ [INFO] Columns:g6_g4.t-statistic
+ [INFO] Columns:g6_g4.log2foldchange
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.t-statistic
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g8.p-value
+ [INFO] Columns:g7_g8.t-statistic
+ [INFO] Columns:g7_g8.log2foldchange
+ [INFO] Columns:g9_g2.p-value
+ [INFO] Columns:g9_g2.t-statistic
+ [INFO] Columns:g9_g2.log2foldchange
+ [INFO] Columns:g9_g5.p-value
+ [INFO] Columns:g9_g5.t-statistic
+ [INFO] Columns:g9_g5.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:7680
+[INFO] # values:7680
+[INFO] Found 3722 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 29971 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g6_g3.p-value
+ [INFO] Columns:g6_g3.t-statistic
+ [INFO] Columns:g6_g3.log2foldchange
+ [INFO] Columns:g6_g4.p-value
+ [INFO] Columns:g6_g4.t-statistic
+ [INFO] Columns:g6_g4.log2foldchange
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.t-statistic
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g8.p-value
+ [INFO] Columns:g7_g8.t-statistic
+ [INFO] Columns:g7_g8.log2foldchange
+ [INFO] Columns:g9_g2.p-value
+ [INFO] Columns:g9_g2.t-statistic
+ [INFO] Columns:g9_g2.log2foldchange
+ [INFO] Columns:g9_g5.p-value
+ [INFO] Columns:g9_g5.t-statistic
+ [INFO] Columns:g9_g5.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:7680
+[INFO] # values:7680
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 29971 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g6_g3.p-value
+ [INFO] Columns:g6_g3.t-statistic
+ [INFO] Columns:g6_g3.log2foldchange
+ [INFO] Columns:g6_g4.p-value
+ [INFO] Columns:g6_g4.t-statistic
+ [INFO] Columns:g6_g4.log2foldchange
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.t-statistic
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g8.p-value
+ [INFO] Columns:g7_g8.t-statistic
+ [INFO] Columns:g7_g8.log2foldchange
+ [INFO] Columns:g9_g2.p-value
+ [INFO] Columns:g9_g2.t-statistic
+ [INFO] Columns:g9_g2.log2foldchange
+ [INFO] Columns:g9_g5.p-value
+ [INFO] Columns:g9_g5.t-statistic
+ [INFO] Columns:g9_g5.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:7680
+[INFO] # values:7680
+[INFO] Found 1994 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 29971 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g6_g3.p-value
+ [INFO] Columns:g6_g3.t-statistic
+ [INFO] Columns:g6_g3.log2foldchange
+ [INFO] Columns:g6_g4.p-value
+ [INFO] Columns:g6_g4.t-statistic
+ [INFO] Columns:g6_g4.log2foldchange
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.t-statistic
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g8.p-value
+ [INFO] Columns:g7_g8.t-statistic
+ [INFO] Columns:g7_g8.log2foldchange
+ [INFO] Columns:g9_g2.p-value
+ [INFO] Columns:g9_g2.t-statistic
+ [INFO] Columns:g9_g2.log2foldchange
+ [INFO] Columns:g9_g5.p-value
+ [INFO] Columns:g9_g5.t-statistic
+ [INFO] Columns:g9_g5.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:7680
+[INFO] # values:7680
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 29971 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g6_g3.p-value
+ [INFO] Columns:g6_g3.t-statistic
+ [INFO] Columns:g6_g3.log2foldchange
+ [INFO] Columns:g6_g4.p-value
+ [INFO] Columns:g6_g4.t-statistic
+ [INFO] Columns:g6_g4.log2foldchange
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.t-statistic
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g8.p-value
+ [INFO] Columns:g7_g8.t-statistic
+ [INFO] Columns:g7_g8.log2foldchange
+ [INFO] Columns:g9_g2.p-value
+ [INFO] Columns:g9_g2.t-statistic
+ [INFO] Columns:g9_g2.log2foldchange
+ [INFO] Columns:g9_g5.p-value
+ [INFO] Columns:g9_g5.t-statistic
+ [INFO] Columns:g9_g5.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:7680
+[INFO] # values:7680
+[INFO] Found 2303 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 29971 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g6_g3.p-value
+ [INFO] Columns:g6_g3.t-statistic
+ [INFO] Columns:g6_g3.log2foldchange
+ [INFO] Columns:g6_g4.p-value
+ [INFO] Columns:g6_g4.t-statistic
+ [INFO] Columns:g6_g4.log2foldchange
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.t-statistic
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g8.p-value
+ [INFO] Columns:g7_g8.t-statistic
+ [INFO] Columns:g7_g8.log2foldchange
+ [INFO] Columns:g9_g2.p-value
+ [INFO] Columns:g9_g2.t-statistic
+ [INFO] Columns:g9_g2.log2foldchange
+ [INFO] Columns:g9_g5.p-value
+ [INFO] Columns:g9_g5.t-statistic
+ [INFO] Columns:g9_g5.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:7680
+[INFO] # values:7680
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 29971 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g6_g3.p-value
+ [INFO] Columns:g6_g3.t-statistic
+ [INFO] Columns:g6_g3.log2foldchange
+ [INFO] Columns:g6_g4.p-value
+ [INFO] Columns:g6_g4.t-statistic
+ [INFO] Columns:g6_g4.log2foldchange
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.t-statistic
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g8.p-value
+ [INFO] Columns:g7_g8.t-statistic
+ [INFO] Columns:g7_g8.log2foldchange
+ [INFO] Columns:g9_g2.p-value
+ [INFO] Columns:g9_g2.t-statistic
+ [INFO] Columns:g9_g2.log2foldchange
+ [INFO] Columns:g9_g5.p-value
+ [INFO] Columns:g9_g5.t-statistic
+ [INFO] Columns:g9_g5.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:7680
+[INFO] # values:7680
+[INFO] Found 659 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 29971 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g6_g3.p-value
+ [INFO] Columns:g6_g3.t-statistic
+ [INFO] Columns:g6_g3.log2foldchange
+ [INFO] Columns:g6_g4.p-value
+ [INFO] Columns:g6_g4.t-statistic
+ [INFO] Columns:g6_g4.log2foldchange
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.t-statistic
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g8.p-value
+ [INFO] Columns:g7_g8.t-statistic
+ [INFO] Columns:g7_g8.log2foldchange
+ [INFO] Columns:g9_g2.p-value
+ [INFO] Columns:g9_g2.t-statistic
+ [INFO] Columns:g9_g2.log2foldchange
+ [INFO] Columns:g9_g5.p-value
+ [INFO] Columns:g9_g5.t-statistic
+ [INFO] Columns:g9_g5.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:7680
+[INFO] # values:7680
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 29971 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g6_g3.p-value
+ [INFO] Columns:g6_g3.t-statistic
+ [INFO] Columns:g6_g3.log2foldchange
+ [INFO] Columns:g6_g4.p-value
+ [INFO] Columns:g6_g4.t-statistic
+ [INFO] Columns:g6_g4.log2foldchange
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.t-statistic
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g8.p-value
+ [INFO] Columns:g7_g8.t-statistic
+ [INFO] Columns:g7_g8.log2foldchange
+ [INFO] Columns:g9_g2.p-value
+ [INFO] Columns:g9_g2.t-statistic
+ [INFO] Columns:g9_g2.log2foldchange
+ [INFO] Columns:g9_g5.p-value
+ [INFO] Columns:g9_g5.t-statistic
+ [INFO] Columns:g9_g5.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:7680
+[INFO] # values:7680
+[INFO] Found 3420 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 29971 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g6_g3.p-value
+ [INFO] Columns:g6_g3.t-statistic
+ [INFO] Columns:g6_g3.log2foldchange
+ [INFO] Columns:g6_g4.p-value
+ [INFO] Columns:g6_g4.t-statistic
+ [INFO] Columns:g6_g4.log2foldchange
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.t-statistic
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g8.p-value
+ [INFO] Columns:g7_g8.t-statistic
+ [INFO] Columns:g7_g8.log2foldchange
+ [INFO] Columns:g9_g2.p-value
+ [INFO] Columns:g9_g2.t-statistic
+ [INFO] Columns:g9_g2.log2foldchange
+ [INFO] Columns:g9_g5.p-value
+ [INFO] Columns:g9_g5.t-statistic
+ [INFO] Columns:g9_g5.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:7680
+[INFO] # values:7680
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+[INFO] GFF file loaded: 29971 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g6_g3.p-value
+ [INFO] Columns:g6_g3.t-statistic
+ [INFO] Columns:g6_g3.log2foldchange
+ [INFO] Columns:g6_g4.p-value
+ [INFO] Columns:g6_g4.t-statistic
+ [INFO] Columns:g6_g4.log2foldchange
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.t-statistic
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g8.p-value
+ [INFO] Columns:g7_g8.t-statistic
+ [INFO] Columns:g7_g8.log2foldchange
+ [INFO] Columns:g9_g2.p-value
+ [INFO] Columns:g9_g2.t-statistic
+ [INFO] Columns:g9_g2.log2foldchange
+ [INFO] Columns:g9_g5.p-value
+ [INFO] Columns:g9_g5.t-statistic
+ [INFO] Columns:g9_g5.log2foldchange
+[INFO] numeric
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:7680
+[INFO] # values:7680
+[INFO] Found 1388 NA values and 0 +-Inf
+[INFO] Entries with NAs removed
+[INFO] All done!
+[INFO] GFF file loaded: 29971 entries.
+[INFO] Loading /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Loaded /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282/E-MEXP-1282_A-AFFY-78-analytics.tsv
+[INFO] Columns:Gene ID
+ [INFO] Columns:Gene Name
+ [INFO] Columns:Design Element
+ [INFO] Columns:g6_g3.p-value
+ [INFO] Columns:g6_g3.t-statistic
+ [INFO] Columns:g6_g3.log2foldchange
+ [INFO] Columns:g6_g4.p-value
+ [INFO] Columns:g6_g4.t-statistic
+ [INFO] Columns:g6_g4.log2foldchange
+ [INFO] Columns:g7_g1.p-value
+ [INFO] Columns:g7_g1.t-statistic
+ [INFO] Columns:g7_g1.log2foldchange
+ [INFO] Columns:g7_g8.p-value
+ [INFO] Columns:g7_g8.t-statistic
+ [INFO] Columns:g7_g8.log2foldchange
+ [INFO] Columns:g9_g2.p-value
+ [INFO] Columns:g9_g2.t-statistic
+ [INFO] Columns:g9_g2.log2foldchange
+ [INFO] Columns:g9_g5.p-value
+ [INFO] Columns:g9_g5.t-statistic
+ [INFO] Columns:g9_g5.log2foldchange
+[INFO] numeric
+[INFO] Excluding duplicates
+[INFO] #Features with data:7680
+[INFO] # values:7680
+[INFO] Found 0 NA values and 0 +-Inf
+[INFO] All done!
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi6-179>
+Subject: Job 1032640: </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282  > in cluster <EBI> Done
+
+Job </nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282  > was submitted from host <ebi1-121> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <ebi6-179>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282> was used as the working directory.
+Started at Tue Apr 12 17:31:33 2016
+Results reported at Tue Apr 12 17:34:44 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/production3/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/irap/gxa_generate_tracks_for_experiment.sh  /nfs/production3/ma/home/atlas3-production/analysis/differential/microarray/experiments/E-MEXP-1282  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               186.66 sec.
+    Max Memory :             457 MB
+    Average Memory :         181.70 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           3639.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               953 MB
+
+    Max Processes :          5
+    Max Threads :            6
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <tracks.err> for stderr output of this job.
+
