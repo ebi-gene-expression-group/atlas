@@ -39,7 +39,7 @@ ENABLE;
 CREATE INDEX RNASEQ_DIFF_ANALYTICS_IDX ON RNASEQ_DIFF_ANALYTICS (EXPERIMENT, CONTRASTID) TABLESPACE ATLASPRD3_INDX;
 
 
--- Differential analitics across all types of experiments, with additional gene name and organism information, restricted to FDR<0.05 and log2fold>=1
+-- Differential analytics across all types of experiments, with additional gene name and organism information, restricted to FDR<0.05 and log2fold>=1
 -- Used by the UI
 DROP MATERIALIZED VIEW VW_DIFFANALYTICS;
 CREATE MATERIALIZED VIEW VW_DIFFANALYTICS
@@ -69,7 +69,7 @@ and rda.PVAL < 0.05;
 
 exec dbms_mview.refresh( 'VW_DIFFANALYTICS', 'C' );
 
--- Differential analitics across all types of experiments, with additional gene name and organism information, restricted to FDR<0.05 only
+-- Differential analytics across all types of experiments, with additional gene name and organism information, restricted to FDR<0.05 only
 -- Used to generate a data dump at Atlas release time
 DROP MATERIALIZED VIEW VW_DIFFANALYTICS_DUMP;
 CREATE MATERIALIZED VIEW VW_DIFFANALYTICS_DUMP
