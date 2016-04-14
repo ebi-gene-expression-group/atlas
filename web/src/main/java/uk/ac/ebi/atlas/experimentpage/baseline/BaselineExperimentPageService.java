@@ -26,6 +26,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -193,10 +194,10 @@ public class BaselineExperimentPageService {
                         preferences);
                 GeneQueryResponse geneQueryResponse =
                         solrQueryService.fetchResponseBasedOnRequestContext(context,context.getFilteredBySpecies());
-                BaselineProfilesViewModel fetched = baselineProfilesViewModelBuilder.build
+                JsonElement fetched = gson.toJsonTree(baselineProfilesViewModelBuilder.build
                         (baselineProfilesHeatMap.fetch(context,geneQueryResponse, false),
-                                context.getSelectedFilterFactors());
-                resultForThisGene.addProperty("jsonProfiles", gson.toJson(fetched));
+                                context.getSelectedFilterFactors()));
+                resultForThisGene.add("jsonProfiles", fetched.getAsJsonObject());
                 result.add(resultForThisGene);
             }
 
