@@ -153,7 +153,8 @@ public class BaselineExperimentPageService {
         BaselineProfilesList profilesAsGeneSets = geneQueryResponse.containsGeneSets() ?
                 baselineProfilesHeatMap.fetch(requestContext, geneQueryResponse, true) : null;
 
-        model.addAttribute("jsonCoexpressions", fetchCoexpressionsForObtainedResults(preferences,experiment,baselineProfiles));
+        model.addAttribute("jsonCoexpressions", fetchCoexpressionsForObtainedResults(preferences,experiment,
+                orderedFactors, baselineProfiles));
         addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, model);
 
         if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
@@ -179,7 +180,8 @@ public class BaselineExperimentPageService {
     }
 
     private String fetchCoexpressionsForObtainedResults(BaselineRequestPreferences preferences, BaselineExperiment
-            experiment,BaselineProfilesList baselineProfiles) throws GenesNotFoundException {
+            experiment,SortedSet<Factor> orderedFactors, BaselineProfilesList baselineProfiles) throws
+            GenesNotFoundException {
         if (baselineProfiles.size() == 1) {
             JsonArray result = new JsonArray();
             GeneQuery originalGeneQuery = preferences.getGeneQuery();
@@ -194,10 +196,10 @@ public class BaselineExperimentPageService {
                         preferences);
                 GeneQueryResponse geneQueryResponse =
                         solrQueryService.fetchResponseBasedOnRequestContext(context,context.getFilteredBySpecies());
-                JsonElement fetched = gson.toJsonTree(baselineProfilesViewModelBuilder.build
+                BaselineProfilesViewModel fetched = baselineProfilesViewModelBuilder.build
                         (baselineProfilesHeatMap.fetch(context,geneQueryResponse, false),
-                                context.getSelectedFilterFactors()));
-                resultForThisGene.add("jsonProfiles", fetched.getAsJsonObject());
+                                orderedFactors);
+                resultForThisGene.add("jsonProfiles", gson.toJsonTree(fetched).getAsJsonObject());
                 result.add(resultForThisGene);
             }
 
