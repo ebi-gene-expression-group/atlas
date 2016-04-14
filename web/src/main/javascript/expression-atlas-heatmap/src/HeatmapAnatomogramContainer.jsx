@@ -157,6 +157,7 @@ var HeatmapAnatomogramContainer = React.createClass({
                 minExpressionLevel: 0,
                 maxExpressionLevel: 0
             },
+            jsonCoexpressions:[],
             geneSetProfiles: {},
             anatomogramData: {},
             experimentData: ''
@@ -169,6 +170,7 @@ var HeatmapAnatomogramContainer = React.createClass({
             columnHeaders: data.columnHeaders,
             nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
             profiles: data.profiles,
+            jsonCoexpressions : data.jsonCoexpressions,
             geneSetProfiles: data.geneSetProfiles,
             anatomogramData: data.anatomogram,
             experimentData: data.experiment

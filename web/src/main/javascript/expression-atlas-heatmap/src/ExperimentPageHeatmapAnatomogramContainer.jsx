@@ -51,6 +51,10 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
         nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         multipleColumnHeaders: React.PropTypes.object,
         profiles: React.PropTypes.object.isRequired,
+        jsonCoexpressions: React.PropTypes.arrayOf(React.PropTypes.shape({
+          geneName: React.PropTypes.string.isRequired,
+          jsonProfiles: React.PropTypes.object.isRequired
+        })),
         geneSetProfiles: React.PropTypes.object,
         heatmapConfig: React.PropTypes.object.isRequired,
         type: React.PropTypes.oneOf([
@@ -99,6 +103,7 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                              nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                              multipleColumnHeaders={this.props.multipleColumnHeaders}
                              profiles={this.props.profiles}
+                             jsonCoexpressions={this.props.jsonCoexpressions}
                              geneSetProfiles={this.props.geneSetProfiles}
                              isWidget={false}
                              prefFormDisplayLevels={prefFormDisplayLevels}

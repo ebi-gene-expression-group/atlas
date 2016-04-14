@@ -20,6 +20,7 @@ require('fancybox/dist/css/jquery.fancybox.css');
 require('jquery-toolbar');
 require('jquery-toolbar/jquery.toolbar.css');
 
+
 //*------------------------------------------------------------------*
 
 var HeatmapBaselineCellVariance = require('heatmap-baseline-cell-variance');
@@ -78,6 +79,10 @@ var Heatmap = React.createClass({
         ]).isRequired,
         nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         profiles: React.PropTypes.object.isRequired,
+        jsonCoexpressions: React.PropTypes.arrayOf(React.PropTypes.shape({
+          geneName: React.PropTypes.string.isRequired,
+          jsonProfiles: React.PropTypes.object.isRequired
+        })),
         geneSetProfiles: React.PropTypes.object,
         prefFormDisplayLevels: React.PropTypes.object,
         ensemblEventEmitter: React.PropTypes.object,
@@ -89,17 +94,46 @@ var Heatmap = React.createClass({
 
     getInitialState: function () {
         var displayLevels = this.props.prefFormDisplayLevels ? (this.props.prefFormDisplayLevels.val() === "true") : false;
-
+        var coexpressionsDisplayed = {};
+        if(this.props.jsonCoexpressions ) {
+          for (var i = 0; i< this.props.jsonCoexpressions.length; i++){
+            coexpressionsDisplayed[this.props.jsonCoexpressions[i].geneName]=false;
+          }
+        }
         return {
             showGeneSetProfiles: false,
             displayLevels: displayLevels,
-            profiles: this.props.profiles,
             selectedColumnId: null,
             selectedGeneId: null,
             hoveredColumnId: null,
             hoveredGeneId: null,
-            selectedRadioButton: "gradients"
+            selectedRadioButton: "gradients",
+            coexpressionsDisplayed:coexpressionsDisplayed
         };
+    },
+
+    _getProfiles: function() {
+      if(this.state.showGeneSetProfiles){
+        return this.props.geneSetProfiles;
+      } else if (! this.props.jsonCoexpressions){
+        return this.props.profiles;
+      } else {
+        var newRows = [] ;
+        for(var i = 0; i< this.props.profiles.rows.length ; i++){
+            var thisRow = this.props.profiles.rows[i];
+            newRows.push(thisRow);
+            var coexpressionsForThisRow =
+                this.props.jsonCoexpressions
+                  .filter(function(o){
+                    return o.geneName=== thisRow.name && this.state.coexpressionsDisplayed[o.geneName]
+                  }.bind(this))
+            for(var j = 0 ; j < coexpressionsForThisRow.length ; j++ ){
+              [].push.apply(newRows,coexpressionsForThisRow[j].jsonProfiles.rows);
+            }
+
+        }
+        return Object.create(this.props.profiles, {rows: {value: newRows}});
+      }
     },
 
     _hoverColumn: function(columnId) {
@@ -129,8 +163,7 @@ var Heatmap = React.createClass({
     },
 
     toggleGeneSets: function () {
-        var newProfiles = this.state.showGeneSetProfiles ? this.props.profiles : this.props.geneSetProfiles;
-        this.setState({showGeneSetProfiles: !this.state.showGeneSetProfiles, profiles: newProfiles});
+        this.setState({showGeneSetProfiles: !this.state.showGeneSetProfiles});
     },
 
     toggleDisplayLevels: function () {
@@ -194,14 +227,27 @@ var Heatmap = React.createClass({
     legendType: function () {
         return (this.props.type.isBaseline || this.props.type.isMultiExperiment ?
             <LegendBaseline atlasBaseURL={this.props.atlasBaseURL}
-                                   minExpressionLevel={this.state.profiles.minExpressionLevel.toString()}
-                                   maxExpressionLevel={this.state.profiles.maxExpressionLevel.toString()}
+                                   minExpressionLevel={this._getProfiles().minExpressionLevel.toString()}
+                                   maxExpressionLevel={this._getProfiles().maxExpressionLevel.toString()}
                                    isMultiExperiment={this.props.type.isMultiExperiment ? true : false}/> :
             <LegendDifferential atlasBaseURL={this.props.atlasBaseURL}
-                                       minDownLevel={this.state.profiles.minDownLevel.toString()}
-                                       maxDownLevel={this.state.profiles.maxDownLevel.toString()}
-                                       minUpLevel={this.state.profiles.minUpLevel.toString()}
-                                       maxUpLevel={this.state.profiles.maxUpLevel.toString()}/>);
+                                       minDownLevel={this._getProfiles().minDownLevel.toString()}
+                                       maxDownLevel={this._getProfiles().maxDownLevel.toString()}
+                                       minUpLevel={this._getProfiles().minUpLevel.toString()}
+                                       maxUpLevel={this._getProfiles().maxUpLevel.toString()}/>);
+    },
+
+    _getCoexpressionsAvailable: function() {
+      return Object.keys(this.state.coexpressionsDisplayed);
+    },
+
+    _toggleCoexpression : function(geneName) {
+      this.setState(function(previousState) {
+        if(previousState.coexpressionsDisplayed.hasOwnProperty(geneName)){
+          previousState.coexpressionsDisplayed[geneName] = ! previousState.coexpressionsDisplayed[geneName];
+        }
+        return {coexpressionsDisplayed: previousState.coexpressionsDisplayed};
+      });
     },
 
     render: function () {
@@ -209,11 +255,11 @@ var Heatmap = React.createClass({
 
         return (
             <div>
-
                 <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{"paddingBottom": paddingMargin, "position": "sticky"}}>
                     <div style={{display: "inline-block", 'verticalAlign': "top"}}>
-                        {this.props.type.isMultiExperiment ? <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} experiments found: </span> :
-                            <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span> }
+                        {this.props.type.isMultiExperiment
+                          ? <span id="geneCount">Showing {this.props.profiles.rows.length} of {this.props.profiles.searchResultTotal} experiments found: </span>
+                          : <span id="geneCount">Showing {this.props.profiles.rows.length} of {this.props.profiles.searchResultTotal} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span> }
                         {this.props.geneSetProfiles && !this.props.type.isMultiExperiment ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
                     </div>
                     <div style={{display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top"}}>
@@ -249,7 +295,7 @@ var Heatmap = React.createClass({
                                             toggleRadioButton={this.toggleRadioButton}
                                             renderContrastFactorHeaders={true}
                                             anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>
-                        <HeatmapTableRows profiles={this.state.profiles.rows}
+                        <HeatmapTableRows profiles={this._getProfiles().rows}
                                           nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                           selectedGeneId={this.state.selectedGeneId}
                                           selectGene={this.selectGene}
@@ -312,7 +358,7 @@ var Heatmap = React.createClass({
                                                 selectedRadioButton={this.state.selectedRadioButton}
                                                 toggleRadioButton={this.toggleRadioButton}
                                                 renderContrastFactorHeaders={false}/>
-                            <HeatmapTableRows profiles={this.state.profiles.rows}
+                            <HeatmapTableRows profiles={this._getProfiles().rows}
                                               nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                               selectedGeneId={this.state.selectedGeneId}
                                               selectGene={this.selectGene}
@@ -357,6 +403,8 @@ var Heatmap = React.createClass({
 
                         </table>
                     </div>
+                    <HeatmapBottomOptions coexpressionsAvailable={this._getCoexpressionsAvailable()}
+                                          toggleCoexpression={this._toggleCoexpression} />
                 </div>
 
             </div>
@@ -800,7 +848,8 @@ var LevelsRadioGroup = React.createClass({
 
 var HeatmapTableRows = React.createClass({
     propTypes: {
-        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string)
+        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string),
+        profiles: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
     },
 
     profileRowType: function (profile)  {
@@ -1148,6 +1197,58 @@ var CellMultiExperiment = React.createClass({
             </td>
         );
     }
+});
+
+var HeatmapBottomOptions = React.createClass({
+  propTypes: {
+      coexpressionsAvailable:React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+      toggleCoexpression: React.PropTypes.func.isRequired
+  },
+
+  render: function() {
+    var options = [];
+    for(var i = 0; i< this.props.coexpressionsAvailable.length ; i++){
+      var geneName = this.props.coexpressionsAvailable[i];
+      options.push(<CoexpressionOption
+                key={i}
+                geneName={geneName}
+                toggleCallback={ function(){this.props.toggleCoexpression(geneName)}.bind(this) }
+                />);
+    };
+    return (
+      <div>
+      {options}
+      </div>
+    );
+  }
+
+
+});
+
+var CoexpressionOption = React.createClass({
+  propTypes: {
+    geneName: React.PropTypes.string.isRequired,
+    toggleCallback: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {visible: false};
+  },
+  _toggle: function() {
+    this.setState(function(previousState) {return {visible: ! previousState.visible}});
+    this.props.toggleCallback();
+  },
+  render: function() {
+    return this.state.visible
+            ? <span onClick={this._toggle}>
+                  {"Hide coexpressed genes for "+this.props.geneName}
+              </span>
+            : <span onClick={this._toggle}>
+                  {"Show coexpressed genes for "+this.props.geneName}
+              </span>;
+  }
+
+
+
 });
 
 //*------------------------------------------------------------------*

@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/jquery-ui/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/atlas.css">
+
+    <script src="../dist/vendor.bundle.js"></script>
+    <script src="../dist/heatmap.bundle.js"></script>
+</head>
+
+<body>
+    <div>
+        <h2>Request done to <code>http://www.ebi.ac.uk/gxa</code></h2>
+    </div>
+
+    <div id="gxaExperimentPageHeatmapAnatomogram"></div>
+</body>
+
+<script language="JavaScript" type="text/javascript">
+    var heatmapData = {
+        "config": {
+            "atlasHost": "http://localhost:8080",
+            "contextRoot": "/gxa",
+            "experimentAccession": "E-MTAB-3028",
+            "geneQuery": "AC190623.3_FG001",
+            "accessKey": "",
+            "species": "zea mays",
+            "ensemblDB": "plants",
+            "columnType": "strain",
+            "isExactMatch": true,
+            "enableGeneLinks": true,
+            "enableEnsemblLauncher": false,
+            "showMaPlotButton": true,
+            "gseaPlots": null,
+            "downloadProfilesURL": "/experiments/E-MTAB-3028.tsv?geneQuery=AC190623.3_FG001",
+            "isFortLauderdale": false
+        },
+        "columnHeaders": [{
+            "assayGroupId": "g2",
+            "factorValue": "B73"
+        }, {
+            "assayGroupId": "g1",
+            "factorValue": "Mo17"
+        }],
+        "nonExpressedColumnHeaders": [],
+        "multipleColumnHeaders": null,
+        "profiles": {
+            "minExpressionLevel": 147,
+            "maxExpressionLevel": 508,
+            "searchResultTotal": 1,
+            "rows": [{
+                "id": "AC190623.3_FG001",
+                "name": "AC190623.3_FG001",
+                "expressions": [{
+                    "factorName": "B73",
+                    "color": "#0000FF",
+                    "value": "508",
+                    "quartiles": {
+                        "min": 498,
+                        "lower": 503,
+                        "median": 508,
+                        "upper": 514,
+                        "max": 519
+                    }
+                }, {
+                    "factorName": "Mo17",
+                    "color": "#C0C0C0",
+                    "value": "147",
+                    "quartiles": {
+                        "min": 146,
+                        "lower": 147,
+                        "median": 147,
+                        "upper": 171,
+                        "max": 195
+                    }
+                }]
+            }]
+        },
+        "geneSetProfiles": null,
+        "jsonCoexpressions": [{
+            "geneName": "AC190623.3_FG001",
+            "jsonProfiles": {
+                "minExpressionLevel": 4,
+                "maxExpressionLevel": 508,
+                "searchResultTotal": 67,
+                "rows": [{
+                    "id": "AC190623.3_FG001",
+                    "name": "AC190623.3_FG001",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#0000FF",
+                        "value": "508",
+                        "quartiles": {
+                            "min": 498,
+                            "lower": 503,
+                            "median": 508,
+                            "upper": 514,
+                            "max": 519
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#8081C0",
+                        "value": "147",
+                        "quartiles": {
+                            "min": 146,
+                            "lower": 147,
+                            "median": 147,
+                            "upper": 171,
+                            "max": 195
+                        }
+                    }]
+                }, {
+                    "id": "AC199526.5_FG002",
+                    "name": "AC199526.5_FG002",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#5E5FC0",
+                        "value": "224",
+                        "quartiles": {
+                            "min": 187,
+                            "lower": 205,
+                            "median": 224,
+                            "upper": 251,
+                            "max": 279
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#3333CC",
+                        "value": "335",
+                        "quartiles": {
+                            "min": 308,
+                            "lower": 321,
+                            "median": 335,
+                            "upper": 336,
+                            "max": 337
+                        }
+                    }]
+                }, {
+                    "id": "AC190609.3_FG002",
+                    "name": "AC190609.3_FG002",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#5555C0",
+                        "value": "245",
+                        "quartiles": {
+                            "min": 242,
+                            "lower": 243,
+                            "median": 245,
+                            "upper": 257,
+                            "max": 269
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#5A5BC0",
+                        "value": "233",
+                        "quartiles": {
+                            "min": 201,
+                            "lower": 217,
+                            "median": 233,
+                            "upper": 252,
+                            "max": 270
+                        }
+                    }]
+                }, {
+                    "id": "AC195340.3_FG002",
+                    "name": "AC195340.3_FG002",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#8282C0",
+                        "value": "144",
+                        "quartiles": {
+                            "min": 136,
+                            "lower": 140,
+                            "median": 144,
+                            "upper": 145,
+                            "max": 146
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#6F70C0",
+                        "value": "186",
+                        "quartiles": {
+                            "min": 154,
+                            "lower": 170,
+                            "median": 186,
+                            "upper": 188,
+                            "max": 191
+                        }
+                    }]
+                }, {
+                    "id": "AC196489.3_FG002",
+                    "name": "AC196489.3_FG002",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#8B8BC0",
+                        "value": "123",
+                        "quartiles": {
+                            "min": 104,
+                            "lower": 113,
+                            "median": 123,
+                            "upper": 132,
+                            "max": 142
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#9899C0",
+                        "value": "93",
+                        "quartiles": {
+                            "min": 88,
+                            "lower": 91,
+                            "median": 93,
+                            "upper": 100,
+                            "max": 107
+                        }
+                    }]
+                }, {
+                    "id": "AC149475.2_FG002",
+                    "name": "AC149475.2_FG002",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#9E9FC0",
+                        "value": "80",
+                        "quartiles": {
+                            "min": 73,
+                            "lower": 77,
+                            "median": 80,
+                            "upper": 83,
+                            "max": 86
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#9E9FC0",
+                        "value": "79",
+                        "quartiles": {
+                            "min": 69,
+                            "lower": 74,
+                            "median": 79,
+                            "upper": 89,
+                            "max": 100
+                        }
+                    }]
+                }, {
+                    "id": "AC198169.4_FG004",
+                    "name": "AC198169.4_FG004",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#9E9FC0",
+                        "value": "80",
+                        "quartiles": {
+                            "min": 69,
+                            "lower": 74,
+                            "median": 80,
+                            "upper": 85,
+                            "max": 90
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#A2A2C0",
+                        "value": "72",
+                        "quartiles": {
+                            "min": 60,
+                            "lower": 66,
+                            "median": 72,
+                            "upper": 75,
+                            "max": 79
+                        }
+                    }]
+                }, {
+                    "id": "AC195874.2_FG002",
+                    "name": "AP-17",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#A4A4C0",
+                        "value": "67",
+                        "quartiles": {
+                            "min": 56,
+                            "lower": 62,
+                            "median": 67,
+                            "upper": 70,
+                            "max": 73
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#9D9EC0",
+                        "value": "82",
+                        "quartiles": {
+                            "min": 68,
+                            "lower": 75,
+                            "median": 82,
+                            "upper": 87,
+                            "max": 91
+                        }
+                    }]
+                }, {
+                    "id": "AC191771.3_FG008",
+                    "name": "AC191771.3_FG008",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#AAABC0",
+                        "value": "52",
+                        "quartiles": {
+                            "min": 50,
+                            "lower": 51,
+                            "median": 52,
+                            "upper": 53,
+                            "max": 53
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#A1A2C0",
+                        "value": "73",
+                        "quartiles": {
+                            "min": 58,
+                            "lower": 66,
+                            "median": 73,
+                            "upper": 74,
+                            "max": 74
+                        }
+                    }]
+                }, {
+                    "id": "AC149475.2_FG003",
+                    "name": "AC149475.2_FG003",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#A8A8C0",
+                        "value": "58",
+                        "quartiles": {
+                            "min": 54,
+                            "lower": 56,
+                            "median": 58,
+                            "upper": 59,
+                            "max": 61
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#ABABC0",
+                        "value": "51",
+                        "quartiles": {
+                            "min": 46,
+                            "lower": 49,
+                            "median": 51,
+                            "upper": 57,
+                            "max": 62
+                        }
+                    }]
+                }, {
+                    "id": "AC197246.3_FG001",
+                    "name": "AC197246.3_FG001",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#AFB0C0",
+                        "value": "41",
+                        "quartiles": {
+                            "min": 40,
+                            "lower": 41,
+                            "median": 41,
+                            "upper": 42,
+                            "max": 42
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#ABABC0",
+                        "value": "51",
+                        "quartiles": {
+                            "min": 48,
+                            "lower": 50,
+                            "median": 51,
+                            "upper": 54,
+                            "max": 56
+                        }
+                    }]
+                }, {
+                    "id": "AC196475.3_FG005",
+                    "name": "AC196475.3_FG005",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#AEAEC0",
+                        "value": "45",
+                        "quartiles": {
+                            "min": 36,
+                            "lower": 41,
+                            "median": 45,
+                            "upper": 48,
+                            "max": 51
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#AFB0C0",
+                        "value": "41",
+                        "quartiles": {
+                            "min": 37,
+                            "lower": 39,
+                            "median": 41,
+                            "upper": 42,
+                            "max": 42
+                        }
+                    }]
+                }, {
+                    "id": "AC205376.4_FG008",
+                    "name": "AC205376.4_FG008",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B4B4C0",
+                        "value": "31",
+                        "quartiles": {
+                            "min": 29,
+                            "lower": 30,
+                            "median": 31,
+                            "upper": 34,
+                            "max": 36
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#AEAFC0",
+                        "value": "43",
+                        "quartiles": {
+                            "min": 42,
+                            "lower": 42,
+                            "median": 43,
+                            "upper": 44,
+                            "max": 45
+                        }
+                    }]
+                }, {
+                    "id": "AC197672.3_FG002",
+                    "name": "AC197672.3_FG002",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B2B3C0",
+                        "value": "35",
+                        "quartiles": {
+                            "min": 13,
+                            "lower": 24,
+                            "median": 35,
+                            "upper": 35,
+                            "max": 35
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#B2B3C0",
+                        "value": "34",
+                        "quartiles": {
+                            "min": 13,
+                            "lower": 24,
+                            "median": 34,
+                            "upper": 35,
+                            "max": 36
+                        }
+                    }]
+                }, {
+                    "id": "AC197705.4_FG007",
+                    "name": "AC197705.4_FG007",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B6B6C0",
+                        "value": "26",
+                        "quartiles": {
+                            "min": 26,
+                            "lower": 26,
+                            "median": 26,
+                            "upper": 28,
+                            "max": 30
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#B2B3C0",
+                        "value": "34",
+                        "quartiles": {
+                            "min": 33,
+                            "lower": 33,
+                            "median": 34,
+                            "upper": 36,
+                            "max": 39
+                        }
+                    }]
+                }, {
+                    "id": "AC189879.3_FG003",
+                    "name": "AC189879.3_FG003",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B5B6C0",
+                        "value": "28",
+                        "quartiles": {
+                            "min": 20,
+                            "lower": 24,
+                            "median": 28,
+                            "upper": 28,
+                            "max": 29
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#B6B6C0",
+                        "value": "27",
+                        "quartiles": {
+                            "min": 20,
+                            "lower": 24,
+                            "median": 27,
+                            "upper": 27,
+                            "max": 27
+                        }
+                    }]
+                }, {
+                    "id": "AC199765.4_FG008",
+                    "name": "AC199765.4_FG008",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B5B5C0",
+                        "value": "29",
+                        "quartiles": {
+                            "min": 24,
+                            "lower": 26,
+                            "median": 29,
+                            "upper": 30,
+                            "max": 30
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#B6B7C0",
+                        "value": "25",
+                        "quartiles": {
+                            "min": 24,
+                            "lower": 24,
+                            "median": 25,
+                            "upper": 29,
+                            "max": 33
+                        }
+                    }]
+                }, {
+                    "id": "AC203424.3_FG001",
+                    "name": "AC203424.3_FG001",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B5B6C0",
+                        "value": "28",
+                        "quartiles": {
+                            "min": 24,
+                            "lower": 26,
+                            "median": 28,
+                            "upper": 30,
+                            "max": 31
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#B6B7C0",
+                        "value": "25",
+                        "quartiles": {
+                            "min": 23,
+                            "lower": 24,
+                            "median": 25,
+                            "upper": 27,
+                            "max": 29
+                        }
+                    }]
+                }, {
+                    "id": "AC148167.6_FG001",
+                    "name": "AC148167.6_FG001",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B6B6C0",
+                        "value": "27",
+                        "quartiles": {
+                            "min": 25,
+                            "lower": 26,
+                            "median": 27,
+                            "upper": 27,
+                            "max": 27
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#B6B7C0",
+                        "value": "25",
+                        "quartiles": {
+                            "min": 23,
+                            "lower": 24,
+                            "median": 25,
+                            "upper": 25,
+                            "max": 26
+                        }
+                    }]
+                }, {
+                    "id": "AC187262.4_FG007",
+                    "name": "AC187262.4_FG007",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B6B7C0",
+                        "value": "25",
+                        "quartiles": {
+                            "min": 23,
+                            "lower": 24,
+                            "median": 25,
+                            "upper": 37,
+                            "max": 49
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#B7B8C0",
+                        "value": "23",
+                        "quartiles": {
+                            "min": 18,
+                            "lower": 20,
+                            "median": 23,
+                            "upper": 25,
+                            "max": 27
+                        }
+                    }]
+                }, {
+                    "id": "AC203753.4_FG006",
+                    "name": "AC203753.4_FG006",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B8B8C0",
+                        "value": "22",
+                        "quartiles": {
+                            "min": 10,
+                            "lower": 16,
+                            "median": 22,
+                            "upper": 22,
+                            "max": 22
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#B8B8C0",
+                        "value": "22",
+                        "quartiles": {
+                            "min": 12,
+                            "lower": 17,
+                            "median": 22,
+                            "upper": 24,
+                            "max": 25
+                        }
+                    }]
+                }, {
+                    "id": "AC198982.3_FG006",
+                    "name": "AC198982.3_FG006",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B6B6C0",
+                        "value": "27",
+                        "quartiles": {
+                            "min": 25,
+                            "lower": 26,
+                            "median": 27,
+                            "upper": 27,
+                            "max": 27
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BABBC0",
+                        "value": "16",
+                        "quartiles": {
+                            "min": 15,
+                            "lower": 16,
+                            "median": 16,
+                            "upper": 18,
+                            "max": 20
+                        }
+                    }]
+                }, {
+                    "id": "AC199705.3_FG008",
+                    "name": "AC199705.3_FG008",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B8B8C0",
+                        "value": "22",
+                        "quartiles": {
+                            "min": 22,
+                            "lower": 22,
+                            "median": 22,
+                            "upper": 22,
+                            "max": 22
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#B9B9C0",
+                        "value": "20",
+                        "quartiles": {
+                            "min": 19,
+                            "lower": 19,
+                            "median": 20,
+                            "upper": 21,
+                            "max": 22
+                        }
+                    }]
+                }, {
+                    "id": "AC197387.3_FG004",
+                    "name": "AC197387.3_FG004",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B9BAC0",
+                        "value": "19",
+                        "quartiles": {
+                            "min": 17,
+                            "lower": 18,
+                            "median": 19,
+                            "upper": 21,
+                            "max": 24
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#B9B9C0",
+                        "value": "20",
+                        "quartiles": {
+                            "min": 19,
+                            "lower": 19,
+                            "median": 20,
+                            "upper": 21,
+                            "max": 22
+                        }
+                    }]
+                }, {
+                    "id": "AC149829.2_FG003",
+                    "name": "AC149829.2_FG003",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B9B9C0",
+                        "value": "20",
+                        "quartiles": {
+                            "min": 14,
+                            "lower": 17,
+                            "median": 20,
+                            "upper": 20,
+                            "max": 21
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BABBC0",
+                        "value": "16",
+                        "quartiles": {
+                            "min": 12,
+                            "lower": 14,
+                            "median": 16,
+                            "upper": 16,
+                            "max": 17
+                        }
+                    }]
+                }, {
+                    "id": "AC155496.2_FG009",
+                    "name": "AC155496.2_FG009",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B9BAC0",
+                        "value": "19",
+                        "quartiles": {
+                            "min": 13,
+                            "lower": 16,
+                            "median": 19,
+                            "upper": 20,
+                            "max": 21
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BABBC0",
+                        "value": "16",
+                        "quartiles": {
+                            "min": 14,
+                            "lower": 15,
+                            "median": 16,
+                            "upper": 17,
+                            "max": 17
+                        }
+                    }]
+                }, {
+                    "id": "AC149818.2_FG006",
+                    "name": "AC149818.2_FG006",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BABBC0",
+                        "value": "16",
+                        "quartiles": {
+                            "min": 16,
+                            "lower": 16,
+                            "median": 16,
+                            "upper": 17,
+                            "max": 18
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BBBBC0",
+                        "value": "15",
+                        "quartiles": {
+                            "min": 15,
+                            "lower": 15,
+                            "median": 15,
+                            "upper": 16,
+                            "max": 17
+                        }
+                    }]
+                }, {
+                    "id": "AC155610.2_FG007",
+                    "name": "AC155610.2_FG007",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BABAC0",
+                        "value": "18",
+                        "quartiles": {
+                            "min": 18,
+                            "lower": 18,
+                            "median": 18,
+                            "upper": 19,
+                            "max": 20
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BDBDC0",
+                        "value": "11",
+                        "quartiles": {
+                            "min": 11,
+                            "lower": 11,
+                            "median": 11,
+                            "upper": 12,
+                            "max": 13
+                        }
+                    }]
+                }, {
+                    "id": "AC194425.3_FG005",
+                    "name": "AC194425.3_FG005",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BCBCC0",
+                        "value": "13",
+                        "quartiles": {
+                            "min": 11,
+                            "lower": 12,
+                            "median": 13,
+                            "upper": 13,
+                            "max": 13
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BBBCC0",
+                        "value": "14",
+                        "quartiles": {
+                            "min": 12,
+                            "lower": 13,
+                            "median": 14,
+                            "upper": 14,
+                            "max": 14
+                        }
+                    }]
+                }, {
+                    "id": "AC199701.4_FG001",
+                    "name": "AC199701.4_FG001",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#B8B8C0",
+                        "value": "22",
+                        "quartiles": {
+                            "min": 20,
+                            "lower": 21,
+                            "median": 22,
+                            "upper": 24,
+                            "max": 26
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BFC0C0",
+                        "value": "5",
+                        "quartiles": {
+                            "min": 5,
+                            "lower": 5,
+                            "median": 5,
+                            "upper": 5,
+                            "max": 5
+                        }
+                    }]
+                }, {
+                    "id": "AC155624.2_FG011",
+                    "name": "AC155624.2_FG011",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BBBCC0",
+                        "value": "14",
+                        "quartiles": {
+                            "min": 14,
+                            "lower": 14,
+                            "median": 14,
+                            "upper": 15,
+                            "max": 16
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BCBDC0",
+                        "value": "12",
+                        "quartiles": {
+                            "min": 10,
+                            "lower": 11,
+                            "median": 12,
+                            "upper": 12,
+                            "max": 13
+                        }
+                    }]
+                }, {
+                    "id": "AC198403.3_FG001",
+                    "name": "AC198403.3_FG001",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BDBDC0",
+                        "value": "11",
+                        "quartiles": {
+                            "min": 10,
+                            "lower": 10,
+                            "median": 11,
+                            "upper": 11,
+                            "max": 11
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BBBCC0",
+                        "value": "14",
+                        "quartiles": {
+                            "min": 13,
+                            "lower": 13,
+                            "median": 14,
+                            "upper": 15,
+                            "max": 17
+                        }
+                    }]
+                }, {
+                    "id": "AC195154.3_FG004",
+                    "name": "AC195154.3_FG004",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BCBDC0",
+                        "value": "12",
+                        "quartiles": {
+                            "min": 5,
+                            "lower": 9,
+                            "median": 12,
+                            "upper": 12,
+                            "max": 12
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BCBCC0",
+                        "value": "13",
+                        "quartiles": {
+                            "min": 6,
+                            "lower": 9,
+                            "median": 13,
+                            "upper": 13,
+                            "max": 14
+                        }
+                    }]
+                }, {
+                    "id": "AC149818.2_FG001",
+                    "name": "AC149818.2_FG001",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BCBCC0",
+                        "value": "13",
+                        "quartiles": {
+                            "min": 12,
+                            "lower": 13,
+                            "median": 13,
+                            "upper": 14,
+                            "max": 15
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BCBDC0",
+                        "value": "12",
+                        "quartiles": {
+                            "min": 11,
+                            "lower": 12,
+                            "median": 12,
+                            "upper": 12,
+                            "max": 12
+                        }
+                    }]
+                }, {
+                    "id": "AC203535.4_FG002",
+                    "name": "AC203535.4_FG002",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BDBDC0",
+                        "value": "11",
+                        "quartiles": {
+                            "min": 10,
+                            "lower": 11,
+                            "median": 11,
+                            "upper": 13,
+                            "max": 16
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BCBCC0",
+                        "value": "13",
+                        "quartiles": {
+                            "min": 13,
+                            "lower": 13,
+                            "median": 13,
+                            "upper": 16,
+                            "max": 20
+                        }
+                    }]
+                }, {
+                    "id": "AC155377.1_FG001",
+                    "name": "AC155377.1_FG001",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BCBCC0",
+                        "value": "13",
+                        "quartiles": {
+                            "min": 5,
+                            "lower": 9,
+                            "median": 13,
+                            "upper": 13,
+                            "max": 13
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BDBEC0",
+                        "value": "10",
+                        "quartiles": {
+                            "min": 5,
+                            "lower": 7,
+                            "median": 10,
+                            "upper": 10,
+                            "max": 10
+                        }
+                    }]
+                }, {
+                    "id": "AC187551.3_FG002",
+                    "name": "AC187551.3_FG002",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BABBC0",
+                        "value": "16",
+                        "quartiles": {
+                            "min": 15,
+                            "lower": 15,
+                            "median": 16,
+                            "upper": 16,
+                            "max": 16
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BEBFC0",
+                        "value": "7",
+                        "quartiles": {
+                            "min": 6,
+                            "lower": 7,
+                            "median": 7,
+                            "upper": 7,
+                            "max": 8
+                        }
+                    }]
+                }, {
+                    "id": "AC204712.3_FG002",
+                    "name": "AC204712.3_FG002",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BDBEC0",
+                        "value": "10",
+                        "quartiles": {
+                            "min": 10,
+                            "lower": 10,
+                            "median": 10,
+                            "upper": 10,
+                            "max": 11
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BCBDC0",
+                        "value": "12",
+                        "quartiles": {
+                            "min": 10,
+                            "lower": 11,
+                            "median": 12,
+                            "upper": 15,
+                            "max": 17
+                        }
+                    }]
+                }, {
+                    "id": "AC205362.4_FG002",
+                    "name": "AC205362.4_FG002",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BEBEC0",
+                        "value": "9",
+                        "quartiles": {
+                            "min": 7,
+                            "lower": 8,
+                            "median": 9,
+                            "upper": 12,
+                            "max": 14
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BCBDC0",
+                        "value": "12",
+                        "quartiles": {
+                            "min": 10,
+                            "lower": 11,
+                            "median": 12,
+                            "upper": 16,
+                            "max": 21
+                        }
+                    }]
+                }, {
+                    "id": "AC199541.4_FG001",
+                    "name": "AC199541.4_FG001",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BFBFC0",
+                        "value": "6",
+                        "quartiles": {
+                            "min": 6,
+                            "lower": 6,
+                            "median": 6,
+                            "upper": 7,
+                            "max": 9
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BBBBC0",
+                        "value": "15",
+                        "quartiles": {
+                            "min": 6,
+                            "lower": 10,
+                            "median": 15,
+                            "upper": 19,
+                            "max": 22
+                        }
+                    }]
+                }, {
+                    "id": "AC187157.4_FG002",
+                    "name": "AC187157.4_FG002",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BEBEC0",
+                        "value": "9",
+                        "quartiles": {
+                            "min": 8,
+                            "lower": 9,
+                            "median": 9,
+                            "upper": 9,
+                            "max": 9
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BEBEC0",
+                        "value": "8",
+                        "quartiles": {
+                            "min": 8,
+                            "lower": 8,
+                            "median": 8,
+                            "upper": 9,
+                            "max": 10
+                        }
+                    }]
+                }, {
+                    "id": "AC148152.3_FG008",
+                    "name": "AC148152.3_FG008",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BDBEC0",
+                        "value": "10",
+                        "quartiles": {
+                            "min": 9,
+                            "lower": 9,
+                            "median": 10,
+                            "upper": 10,
+                            "max": 11
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BFC0C0",
+                        "value": "5",
+                        "quartiles": {
+                            "min": 5,
+                            "lower": 5,
+                            "median": 5,
+                            "upper": 5,
+                            "max": 5
+                        }
+                    }]
+                }, {
+                    "id": "AC202073.4_FG001",
+                    "name": "AC202073.4_FG001",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BEBFC0",
+                        "value": "7",
+                        "quartiles": {
+                            "min": 4,
+                            "lower": 5,
+                            "median": 7,
+                            "upper": 8,
+                            "max": 8
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BEBEC0",
+                        "value": "8",
+                        "quartiles": {
+                            "min": 4,
+                            "lower": 6,
+                            "median": 8,
+                            "upper": 8,
+                            "max": 8
+                        }
+                    }]
+                }, {
+                    "id": "AC196059.3_FG003",
+                    "name": "AC196059.3_FG003",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BEBEC0",
+                        "value": "9",
+                        "quartiles": {
+                            "min": 9,
+                            "lower": 9,
+                            "median": 9,
+                            "upper": 11,
+                            "max": 13
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#C0C0C0",
+                        "value": "4",
+                        "quartiles": {
+                            "min": 4,
+                            "lower": 4,
+                            "median": 4,
+                            "upper": 6,
+                            "max": 8
+                        }
+                    }]
+                }, {
+                    "id": "AC184169.3_FG001",
+                    "name": "AC184169.3_FG001",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BEBEC0",
+                        "value": "8",
+                        "quartiles": {
+                            "min": 4,
+                            "lower": 6,
+                            "median": 8,
+                            "upper": 8,
+                            "max": 9
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BFC0C0",
+                        "value": "5",
+                        "quartiles": {
+                            "min": 3,
+                            "lower": 4,
+                            "median": 5,
+                            "upper": 6,
+                            "max": 6
+                        }
+                    }]
+                }, {
+                    "id": "AC198725.4_FG007",
+                    "name": "AC198725.4_FG007",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BFBFC0",
+                        "value": "6",
+                        "quartiles": {
+                            "min": 3,
+                            "lower": 5,
+                            "median": 6,
+                            "upper": 6,
+                            "max": 6
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BEBFC0",
+                        "value": "7",
+                        "quartiles": {
+                            "min": 4,
+                            "lower": 6,
+                            "median": 7,
+                            "upper": 7,
+                            "max": 7
+                        }
+                    }]
+                }, {
+                    "id": "AC190743.3_FG012",
+                    "name": "AC190743.3_FG012",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BFBFC0",
+                        "value": "6",
+                        "quartiles": {
+                            "min": 4,
+                            "lower": 5,
+                            "median": 6,
+                            "upper": 6,
+                            "max": 7
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BFBFC0",
+                        "value": "6",
+                        "quartiles": {
+                            "min": 3,
+                            "lower": 4,
+                            "median": 6,
+                            "upper": 6,
+                            "max": 6
+                        }
+                    }]
+                }, {
+                    "id": "AC196066.3_FG003",
+                    "name": "AC196066.3_FG003",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BFBFC0",
+                        "value": "6",
+                        "quartiles": {
+                            "min": 3,
+                            "lower": 4,
+                            "median": 6,
+                            "upper": 6,
+                            "max": 6
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BFC0C0",
+                        "value": "5",
+                        "quartiles": {
+                            "min": 2,
+                            "lower": 4,
+                            "median": 5,
+                            "upper": 5,
+                            "max": 5
+                        }
+                    }]
+                }, {
+                    "id": "AC194965.4_FG004",
+                    "name": "AC194965.4_FG004",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#C0C0C0",
+                        "value": "4",
+                        "quartiles": {
+                            "min": 4,
+                            "lower": 4,
+                            "median": 4,
+                            "upper": 4,
+                            "max": 4
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BEBFC0",
+                        "value": "7",
+                        "quartiles": {
+                            "min": 7,
+                            "lower": 7,
+                            "median": 7,
+                            "upper": 7,
+                            "max": 7
+                        }
+                    }]
+                }, {
+                    "id": "AC185300.4_FG002",
+                    "name": "AC185300.4_FG002",
+                    "expressions": [{
+                        "factorName": "B73",
+                        "color": "#BFBFC0",
+                        "value": "6",
+                        "quartiles": {
+                            "min": 5,
+                            "lower": 5,
+                            "median": 6,
+                            "upper": 6,
+                            "max": 7
+                        }
+                    }, {
+                        "factorName": "Mo17",
+                        "color": "#BFC0C0",
+                        "value": "5",
+                        "quartiles": {
+                            "min": 5,
+                            "lower": 5,
+                            "median": 5,
+                            "upper": 5,
+                            "max": 5
+                        }
+                    }]
+                }]
+            }
+        }],
+        "anatomogram": null,
+        "experiment": null
+    }
+    var isMultiExperiment = false;
+
+    heatmap.render({
+        heatmapData: heatmapData,
+        isMultiExperiment: isMultiExperiment,
+        isDifferential: false,
+        isProteomicsBaseline: false
+    });
+</script>
+
+</html>

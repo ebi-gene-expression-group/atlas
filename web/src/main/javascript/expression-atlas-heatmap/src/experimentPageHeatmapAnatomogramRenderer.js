@@ -29,6 +29,7 @@ exports.render = function(options) {
         nonExpressedColumnHeaders = options.heatmapData.nonExpressedColumnHeaders,
         multipleColumnHeaders = options.heatmapData.multipleColumnHeaders,
         profiles = options.heatmapData.profiles,
+        jsonCoexpressions = options.heatmapData.jsonCoexpressions,
         geneSetProfiles = options.heatmapData.geneSetProfiles,
         anatomogramData = options.heatmapData.anatomogram;
 
@@ -45,7 +46,7 @@ exports.render = function(options) {
                 type: type, heatmapConfig: heatmapConfig, isWidget: false,
                 anatomogram: anatomogramData, columnHeaders: columnHeaders, nonExpressedColumnHeaders: nonExpressedColumnHeaders,
                 multipleColumnHeaders: multipleColumnHeaders,
-                profiles: profiles, geneSetProfiles: geneSetProfiles,
+                profiles: profiles, jsonCoexpressions: jsonCoexpressions, geneSetProfiles: geneSetProfiles,
                 atlasBaseURL: heatmapConfig.atlasHost + heatmapConfig.contextRoot, linksAtlasBaseURL: heatmapConfig.atlasHost + heatmapConfig.contextRoot
             }
         ),
