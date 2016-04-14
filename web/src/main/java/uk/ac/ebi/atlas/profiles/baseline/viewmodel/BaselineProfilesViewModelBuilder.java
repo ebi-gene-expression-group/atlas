@@ -32,7 +32,7 @@ public class BaselineProfilesViewModelBuilder {
         return new BaselineProfilesViewModel<>(baselineExpressionLevelRounder, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel(), profiles.getTotalResultCount(), genes);
     }
 
-    public BaselineProfileRowViewModel[] buildGenes(List<BaselineProfile> baselineProfiles, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+    BaselineProfileRowViewModel[] buildGenes(List<BaselineProfile> baselineProfiles, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
         BaselineProfileRowViewModel[] viewModels = new BaselineProfileRowViewModel[baselineProfiles.size()];
 
         int i = 0;
@@ -44,7 +44,7 @@ public class BaselineProfilesViewModelBuilder {
         return viewModels;
     }
 
-    public BaselineProfileRowViewModel build(Profile<Factor, BaselineExpression> profile, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+    BaselineProfileRowViewModel build(Profile<Factor, BaselineExpression> profile, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
         String geneId = profile.getId();
         String geneName = profile.getName();
         BaselineExpressionViewModel[] expressions = baselineExpressionViewModelBuilder.buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);
