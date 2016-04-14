@@ -1,0 +1,8 @@
+Loading required package: methods
+Experiment accession is: E-MTAB-2706
+Reading expression data from file: /nfs/ma/home/atlas3-production/analysis/baseline/rna-seq/experiments/E-MTAB-2706/E-MTAB-2706.tsv
+Coexpression matrix will be written to gzipped file: /nfs/ma/home/atlas3-production/analysis/baseline/rna-seq/experiments/E-MTAB-2706/E-MTAB-2706-coexpressions.tsv
+K-means processing....done!
+Coexpressions matrix will be written to: /nfs/ma/home/atlas3-production/analysis/baseline/rna-seq/experiments/E-MTAB-2706/E-MTAB-2706-coexpressions.tsv.gz
+File with the same name already exists, removing it.
+Comparing clusterings...............................................................................done!

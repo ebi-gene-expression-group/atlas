@@ -1,0 +1,54 @@
+  |                                                                              |                                                                      |   0%  |                                                                              |=======                                                               |  10%....... 
+  |                                                                              |==============                                                        |  20%..... 
+  |                                                                              |=====================                                                 |  30%.... 
+  |                                                                              |============================                                          |  40%......... 
+  |                                                                              |===================================                                   |  50%........ 
+  |                                                                              |==========================================                            |  60%.......... 
+  |                                                                              |=================================================                     |  70%...... 
+  |                                                                              |========================================================              |  80%..... 
+  |                                                                              |===============================================================       |  90%........... 
+  |                                                                              |======================================================================| 100%
+....... 
+
+
+------------------------------------------------------------
+Sender: LSF System <lsf@loom7>
+Subject: Job 6600926: </nfs/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/analysis/run_coexpression_for_experiment.R E-MTAB-2706 /nfs/ma/home/atlas3-production/analysis/baseline/rna-seq/experiments/E-MTAB-2706  > in cluster <EBI> Done
+
+Job </nfs/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/analysis/run_coexpression_for_experiment.R E-MTAB-2706 /nfs/ma/home/atlas3-production/analysis/baseline/rna-seq/experiments/E-MTAB-2706  > was submitted from host <ebi5-258> by user <fg_atlas> in cluster <EBI>.
+Job was executed on host(s) <loom7>, in queue <production-rh6>, as user <fg_atlas> in cluster <EBI>.
+</net/isilonP/public/rw/homes/fg_atlas> was used as the home directory.
+</nfs/ma/home/atlas3-production/analysis/baseline/rna-seq/experiments/E-MTAB-2706> was used as the working directory.
+Started at Fri Mar 18 09:53:50 2016
+Results reported at Fri Mar 18 18:11:19 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/nfs/ma/home/atlas3-production/sw/atlasinstall_prod/atlasprod/analysis/run_coexpression_for_experiment.R E-MTAB-2706 /nfs/ma/home/atlas3-production/analysis/baseline/rna-seq/experiments/E-MTAB-2706  
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               27331.00 sec.
+    Max Memory :             39126 MB
+    Average Memory :         33020.23 MB
+    Total Requested Memory : 80000.00 MB
+    Delta Memory :           40874.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               46659 MB
+
+    Max Processes :          13
+    Max Threads :            14
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <coexpression.err> for stderr output of this job.
+
