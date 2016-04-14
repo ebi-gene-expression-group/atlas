@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="adrenal gland">
+                <assay>SRR644515</assay>
+                <assay>SRR643764</assay>
+                <assay>SRR644516</assay>
+                <assay>SRR643743</assay>
+                <assay>SRR980484</assay>
+            </assay_group>
+            <assay_group id="g2" label="arm muscle">
+                <assay>SRR786772</assay>
+            </assay_group>
+            <assay_group id="g3" label="heart">
+                <assay>SRR643778</assay>
+                <assay>SRR643779</assay>
+            </assay_group>
+            <assay_group id="g4" label="kidney">
+                <assay>SRR643762</assay>
+                <assay>SRR643750</assay>
+                <assay>SRR643751</assay>
+                <assay>SRR643749</assay>
+            </assay_group>
+            <assay_group id="g5" label="large intestine">
+                <assay>SRR643755</assay>
+                <assay>SRR643741</assay>
+                <assay>SRR643757</assay>
+                <assay>SRR643759</assay>
+                <assay>SRR643761</assay>
+                <assay>SRR643748</assay>
+                <assay technical_replicate_id="t1">SRR643744</assay>
+                <assay technical_replicate_id="t1">SRR643745</assay>
+            </assay_group>
+            <assay_group id="g6" label="left kidney">
+                <assay>SRR643765</assay>
+            </assay_group>
+            <assay_group id="g7" label="left renal cortex">
+                <assay>SRR643775</assay>
+                <assay>SRR643771</assay>
+                <assay>SRR643752</assay>
+                <assay technical_replicate_id="t10">SRR643769</assay>
+                <assay technical_replicate_id="t10">SRR643768</assay>
+            </assay_group>
+            <assay_group id="g8" label="left renal pelvis">
+                <assay>SRR643789</assay>
+                <assay>SRR643774</assay>
+                <assay>SRR643788</assay>
+                <assay>SRR643753</assay>
+            </assay_group>
+            <assay_group id="g9" label="leg muscle">
+                <assay technical_replicate_id="t5">SRR980475</assay>
+                <assay technical_replicate_id="t5">SRR980476</assay>
+            </assay_group>
+            <assay_group id="g10" label="placenta">
+                <assay technical_replicate_id="t7">SRR980480</assay>
+                <assay technical_replicate_id="t7">SRR980481</assay>
+            </assay_group>
+            <assay_group id="g11" label="renal cortex">
+                <assay>SRR643780</assay>
+                <assay>SRR643754</assay>
+                <assay technical_replicate_id="t4">SRR643782</assay>
+                <assay technical_replicate_id="t4">SRR643781</assay>
+            </assay_group>
+            <assay_group id="g12" label="renal pelvis">
+                <assay>SRR643767</assay>
+                <assay>SRR643763</assay>
+                <assay technical_replicate_id="t3">SRR643777</assay>
+                <assay technical_replicate_id="t3">SRR643776</assay>
+            </assay_group>
+            <assay_group id="g13" label="right renal cortex">
+                <assay>SRR643783</assay>
+                <assay>SRR643784</assay>
+                <assay>SRR643770</assay>
+            </assay_group>
+            <assay_group id="g14" label="right renal pelvis">
+                <assay>SRR643785</assay>
+                <assay>SRR643787</assay>
+                <assay>SRR643786</assay>
+                <assay technical_replicate_id="t11">SRR643772</assay>
+                <assay technical_replicate_id="t11">SRR643773</assay>
+            </assay_group>
+            <assay_group id="g15" label="small intestine">
+                <assay>SRR643756</assay>
+                <assay>SRR643746</assay>
+                <assay>SRR643747</assay>
+                <assay>SRR643742</assay>
+                <assay>SRR643760</assay>
+                <assay>SRR643758</assay>
+            </assay_group>
+            <assay_group id="g16" label="spinal cord">
+                <assay technical_replicate_id="t8">SRR980478</assay>
+                <assay technical_replicate_id="t8">SRR980477</assay>
+                <assay technical_replicate_id="t8">SRR980479</assay>
+            </assay_group>
+            <assay_group id="g17" label="stomach">
+                <assay technical_replicate_id="t2">SRR980456</assay>
+                <assay technical_replicate_id="t2">SRR980455</assay>
+                <assay technical_replicate_id="t2">SRR980483</assay>
+                <assay technical_replicate_id="t2">SRR980482</assay>
+            </assay_group>
+            <assay_group id="g18" label="thymus">
+                <assay technical_replicate_id="t9">SRR980474</assay>
+                <assay technical_replicate_id="t9">SRR980473</assay>
+            </assay_group>
+            <assay_group id="g19" label="trunk muscle">
+                <assay technical_replicate_id="t6">SRR980486</assay>
+                <assay technical_replicate_id="t6">SRR980485</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

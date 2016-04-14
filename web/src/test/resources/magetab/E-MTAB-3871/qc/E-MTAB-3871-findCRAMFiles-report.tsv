@@ -1,0 +1,169 @@
+study_id	run_id	cram_location	organism	processing_status
+SRP001371	SRR643756	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643756/SRR643756.cram	homo_sapiens	29-AUG-2015 20:37:48	completed	99
+SRP001371	SRR786794	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643756/SRR643756.cram	homo_sapiens	04-DEC-2015 11:30:13		0
+SRP001371	SRR786808	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643756/SRR643756.cram	homo_sapiens	04-DEC-2015 14:58:21		0
+SRP001371	SRR453396	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453396/SRR453396.cram	homo_sapiens	29-AUG-2015 20:40:49	completed	96
+SRP001371	SRR453399	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453399/SRR453399.cram	homo_sapiens	29-AUG-2015 04:37:28	completed	97
+SRP001371	SRR643763	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643763/SRR643763.cram	homo_sapiens	28-AUG-2015 20:35:24	completed	99
+SRP001371	SRR980473	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980473/SRR980473.cram	homo_sapiens	31-AUG-2015 18:31:57	completed	98
+SRP001371	SRR453407	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453407/SRR453407.cram	homo_sapiens	29-AUG-2015 18:44:19	completed	91
+SRP001371	SRR786805	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453407/SRR453407.cram	homo_sapiens	04-DEC-2015 13:30:12		0
+SRP001371	SRR453391	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453391/SRR453391.cram	homo_sapiens	15-JUL-2015 08:35:58	completed	97
+SRP001371	SRR980471	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980471/SRR980471.cram	homo_sapiens	31-AUG-2015 10:31:32	completed	97
+SRP001371	SRR980457	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980471/SRR980471.cram	homo_sapiens	04-DEC-2015 11:30:14		0
+SRP001371	SRR980485	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980485/SRR980485.cram	homo_sapiens	23-JUL-2015 14:19:02	completed	85
+SRP001371	SRR980466	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980485/SRR980485.cram	homo_sapiens	04-DEC-2015 14:58:22		0
+SRP001371	SRR453392	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453392/SRR453392.cram	homo_sapiens	29-AUG-2015 08:48:53	completed	96
+SRP001371	SRR644512	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR644/SRR644512/SRR644512.cram	homo_sapiens	31-AUG-2015 01:31:25	completed	97
+SRP001371	SRR786802	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR644/SRR644512/SRR644512.cram	homo_sapiens	04-DEC-2015 13:30:14		0
+SRP001371	SRR786765	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR644/SRR644512/SRR644512.cram	homo_sapiens	04-DEC-2015 13:30:15		0
+SRP001371	SRR643772	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643772/SRR643772.cram	homo_sapiens	29-AUG-2015 00:36:16	completed	98
+SRP001371	SRR786792	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643772/SRR643772.cram	homo_sapiens	04-DEC-2015 11:30:15		0
+SRP001371	SRR786766	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643772/SRR643772.cram	homo_sapiens	04-DEC-2015 11:30:15		0
+SRP001371	SRR644513	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR644/SRR644513/SRR644513.cram	homo_sapiens	25-JUL-2015 11:34:18	completed	95
+SRP001371	SRR786803	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR644/SRR644513/SRR644513.cram	homo_sapiens	04-DEC-2015 14:58:33		0
+SRP001371	SRR980478	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980478/SRR980478.cram	homo_sapiens	21-JUL-2015 04:48:43	completed	92
+SRP001371	SRR643765	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643765/SRR643765.cram	homo_sapiens	23-JUL-2015 11:04:09	completed	92
+SRP001371	SRR980461	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643765/SRR643765.cram	homo_sapiens	04-DEC-2015 13:30:17		0
+SRP001371	SRR786773	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643765/SRR643765.cram	homo_sapiens	04-DEC-2015 14:58:34		0
+SRP001371	SRR644515	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR644/SRR644515/SRR644515.cram	homo_sapiens	21-JUL-2015 22:33:42	completed	85
+SRP001371	SRR786798	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR644/SRR644515/SRR644515.cram	homo_sapiens	04-DEC-2015 11:30:16		0
+SRP001371	SRR980468	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980468/SRR980468.cram	homo_sapiens	25-JUL-2015 19:59:14	completed	97
+SRP001371	SRR643755	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643755/SRR643755.cram	homo_sapiens	17-JUL-2015 20:32:00	completed	99
+SRP001371	SRR453403	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643755/SRR643755.cram	homo_sapiens	17-JUL-2015 14:32:19	QC: 3 reads with uncalled bases discarded	0
+SRP001371	SRR980476	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980476/SRR980476.cram	homo_sapiens	08-AUG-2015 11:36:14	completed	85
+SRP001371	SRR980470	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980470/SRR980470.cram	homo_sapiens	08-AUG-2015 01:32:46	completed	98
+SRP001371	SRR643752	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643752/SRR643752.cram	homo_sapiens	03-AUG-2015 06:34:13	completed	99
+SRP001371	SRR643786	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643786/SRR643786.cram	homo_sapiens	07-AUG-2015 04:41:20	completed	97
+SRP001371	SRR453397	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453397/SRR453397.cram	homo_sapiens	07-AUG-2015 09:14:59	completed	97
+SRP001371	SRR980453	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453397/SRR453397.cram	homo_sapiens	04-DEC-2015 10:12:04		0
+SRP001371	SRR980459	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453397/SRR453397.cram	homo_sapiens	04-DEC-2015 11:30:17		0
+SRP001371	SRR643785	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643785/SRR643785.cram	homo_sapiens	03-AUG-2015 08:35:50	completed	96
+SRP001371	SRR643741	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643741/SRR643741.cram	homo_sapiens	08-AUG-2015 03:34:44	completed	94
+SRP001371	SRR980454	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643741/SRR643741.cram	homo_sapiens	04-DEC-2015 11:30:17		0
+SRP001371	SRR786768	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643741/SRR643741.cram	homo_sapiens	04-DEC-2015 10:12:05		0
+SRP001371	SRR643764	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643764/SRR643764.cram	homo_sapiens	27-JUL-2015 17:42:16	completed	91
+SRP001371	SRR643776	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643776/SRR643776.cram	homo_sapiens	27-JUL-2015 19:35:45	completed	97
+SRP001371	SRR643768	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643768/SRR643768.cram	homo_sapiens	27-JUL-2015 21:36:15	completed	92
+SRP001371	SRR786772	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR786/SRR786772/SRR786772.cram	homo_sapiens	08-AUG-2015 13:33:35	completed	50
+SRP001371	SRR643760	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643760/SRR643760.cram	homo_sapiens	08-AUG-2015 01:44:39	completed	99
+SRP001371	SRR786790	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643760/SRR643760.cram	homo_sapiens	04-DEC-2015 11:30:18		0
+SRP001371	SRR643753	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643753/SRR643753.cram	homo_sapiens	06-AUG-2015 18:34:45	completed	92
+SRP001371	SRR643784	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643784/SRR643784.cram	homo_sapiens	06-AUG-2015 22:45:42	completed	97
+SRP001371	SRR643773	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643773/SRR643773.cram	homo_sapiens	12-AUG-2015 20:34:36	completed	98
+SRP001371	SRR980462	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643773/SRR643773.cram	homo_sapiens	04-DEC-2015 17:34:25		0
+SRP001371	SRR786788	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643773/SRR643773.cram	homo_sapiens	04-DEC-2015 11:30:19		0
+SRP001371	SRR786795	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643773/SRR643773.cram	homo_sapiens	04-DEC-2015 13:30:22		0
+SRP001371	SRR786770	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643773/SRR643773.cram	homo_sapiens	04-DEC-2015 09:41:06		0
+SRP001371	SRR453404	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453404/SRR453404.cram	homo_sapiens	12-AUG-2015 22:38:15	completed	96
+SRP001371	SRR643746	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643746/SRR643746.cram	homo_sapiens	13-AUG-2015 04:48:35	completed	98
+SRP001371	SRR980484	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980484/SRR980484.cram	homo_sapiens	17-AUG-2015 19:36:19	completed	98
+SRP001371	SRR980465	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980484/SRR980484.cram	homo_sapiens	04-DEC-2015 15:25:02		0
+SRP001371	SRR643788	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643788/SRR643788.cram	homo_sapiens	11-AUG-2015 18:14:27	completed	97
+SRP001371	SRR786796	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643788/SRR643788.cram	homo_sapiens	04-DEC-2015 13:30:24		0
+SRP001371	SRR643757	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643757/SRR643757.cram	homo_sapiens	11-AUG-2015 22:34:18	completed	89
+SRP001371	SRR786774	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643757/SRR643757.cram	homo_sapiens	04-DEC-2015 09:26:22		0
+SRP001371	SRR786776	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643757/SRR643757.cram	homo_sapiens	15-AUG-2015 09:40:37	QC: 1 no reads pass the quality threshold	0
+SRP001371	SRR643774	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643774/SRR643774.cram	homo_sapiens	12-AUG-2015 07:39:06	completed	96
+SRP001371	SRR980460	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643774/SRR643774.cram	homo_sapiens	04-DEC-2015 15:25:04		0
+SRP001371	SRR643751	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643751/SRR643751.cram	homo_sapiens	15-AUG-2015 05:36:42	completed	99
+SRP001371	SRR643759	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643759/SRR643759.cram	homo_sapiens	14-AUG-2015 03:35:41	completed	99
+SRP001371	SRR643745	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643745/SRR643745.cram	homo_sapiens	12-AUG-2015 07:42:36	completed	95
+SRP001371	SRR786800	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643745/SRR643745.cram	homo_sapiens	04-DEC-2015 14:59:12		0
+SRP001371	SRR786785	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643745/SRR643745.cram	homo_sapiens	04-DEC-2015 10:12:07		0
+SRP001371	SRR643758	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643758/SRR643758.cram	homo_sapiens	10-AUG-2015 22:57:59	completed	99
+SRP001371	SRR786791	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643758/SRR643758.cram	homo_sapiens	04-DEC-2015 11:30:20		0
+SRP001371	SRR643770	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643770/SRR643770.cram	homo_sapiens	16-AUG-2015 03:36:20	completed	98
+SRP001371	SRR786759	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643770/SRR643770.cram	homo_sapiens	04-DEC-2015 10:12:08		0
+SRP001371	SRR786804	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643770/SRR643770.cram	homo_sapiens	04-DEC-2015 09:13:21		0
+SRP001371	SRR643748	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643748/SRR643748.cram	homo_sapiens	20-AUG-2015 08:55:32	completed	99
+SRP001371	SRR643766	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643766/SRR643766.cram	homo_sapiens	18-AUG-2015 01:31:47	completed	94
+SRP001371	SRR786753	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643766/SRR643766.cram	homo_sapiens	04-DEC-2015 13:31:17		0
+SRP001371	SRR786786	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643766/SRR643766.cram	homo_sapiens	04-DEC-2015 13:31:17		0
+SRP001371	SRR980467	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643766/SRR643766.cram	homo_sapiens	04-DEC-2015 17:36:23		0
+SRP001371	SRR643744	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643744/SRR643744.cram	homo_sapiens	18-AUG-2015 11:36:18	completed	48
+SRP001371	SRR980451	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643744/SRR643744.cram	homo_sapiens	04-DEC-2015 14:59:14		0
+SRP001371	SRR643771	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643771/SRR643771.cram	homo_sapiens	18-AUG-2015 23:36:19	completed	96
+SRP001371	SRR643778	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643778/SRR643778.cram	homo_sapiens	30-AUG-2015 19:32:22	completed	94
+SRP001371	SRR453393	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453393/SRR453393.cram	homo_sapiens	15-AUG-2015 17:42:21	completed	97
+SRP001371	SRR980463	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453393/SRR453393.cram	homo_sapiens	04-DEC-2015 11:30:21		0
+SRP001371	SRR786799	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453393/SRR453393.cram	homo_sapiens	04-DEC-2015 09:26:33		0
+SRP001371	SRR643761	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643761/SRR643761.cram	homo_sapiens	21-AUG-2015 16:25:41	completed	99
+SRP001371	SRR643787	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643787/SRR643787.cram	homo_sapiens	31-AUG-2015 12:36:08	completed	97
+SRP001371	SRR453401	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453401/SRR453401.cram	homo_sapiens	31-AUG-2015 10:48:00	completed	90
+SRP001371	SRR643749	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643749/SRR643749.cram	homo_sapiens	31-AUG-2015 07:56:10	completed	99
+SRP001371	SRR980469	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980469/SRR980469.cram	homo_sapiens	01-SEP-2015 17:24:19	completed	96
+SRP001371	SRR980480	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980480/SRR980480.cram	homo_sapiens	02-SEP-2015 03:36:27	completed	97
+SRP001371	SRR643762	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643762/SRR643762.cram	homo_sapiens	24-AUG-2015 10:22:26	completed	95
+SRP001371	SRR786783	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643762/SRR643762.cram	homo_sapiens	04-DEC-2015 13:31:25		0
+SRP001371	SRR786775	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643762/SRR643762.cram	homo_sapiens	04-DEC-2015 13:31:25		0
+SRP001371	SRR980481	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980481/SRR980481.cram	homo_sapiens	01-SEP-2015 06:36:08	completed	88
+SRP001371	SRR453402	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980481/SRR980481.cram	homo_sapiens	31-AUG-2015 03:46:40	QC: 3 reads with uncalled bases discarded	0
+SRP001371	SRR980450	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980481/SRR980481.cram	homo_sapiens	04-DEC-2015 09:41:10		0
+SRP001371	SRR786780	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980481/SRR980481.cram	homo_sapiens	04-DEC-2015 09:41:10		0
+SRP001371	SRR786767	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980481/SRR980481.cram	homo_sapiens	04-DEC-2015 10:12:11		0
+SRP001371	SRR980482	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980482/SRR980482.cram	homo_sapiens	24-AUG-2015 18:00:17	completed	89
+SRP001371	SRR980486	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980486/SRR980486.cram	homo_sapiens	01-SEP-2015 04:36:08	completed	98
+SRP001371	SRR786784	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980486/SRR980486.cram	homo_sapiens	04-DEC-2015 11:30:23		0
+SRP001371	SRR980477	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980477/SRR980477.cram	homo_sapiens	07-SEP-2015 06:32:02	completed	98
+SRP001371	SRR453405	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453405/SRR453405.cram	homo_sapiens	07-SEP-2015 10:01:43	completed	95
+SRP001371	SRR786754	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453405/SRR453405.cram	homo_sapiens	04-DEC-2015 11:30:23		0
+SRP001371	SRR643754	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643754/SRR643754.cram	homo_sapiens	24-JUL-2015 16:38:54	completed	93
+SRP001371	SRR786764	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643754/SRR643754.cram	homo_sapiens	04-DEC-2015 11:30:25		0
+SRP001371	SRR786752	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643754/SRR643754.cram	homo_sapiens	04-DEC-2015 13:32:59		0
+SRP001371	SRR453398	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453398/SRR453398.cram	homo_sapiens	22-JUL-2015 07:21:23	completed	96
+SRP001371	SRR643750	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643750/SRR643750.cram	homo_sapiens	22-JUL-2015 03:19:37	completed	99
+SRP001371	SRR786756	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643750/SRR643750.cram	homo_sapiens	04-DEC-2015 11:30:26		0
+SRP001371	SRR786763	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643750/SRR643750.cram	homo_sapiens	04-DEC-2015 10:12:16		0
+SRP001371	SRR786806	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643750/SRR643750.cram	homo_sapiens	04-DEC-2015 09:41:16		0
+SRP001371	SRR786755	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643750/SRR643750.cram	homo_sapiens	04-DEC-2015 13:33:03		0
+SRP001371	SRR786793	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643750/SRR643750.cram	homo_sapiens	04-DEC-2015 11:30:27		0
+SRP001371	SRR980464	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643750/SRR643750.cram	homo_sapiens	04-DEC-2015 14:59:50		0
+SRP001371	SRR643780	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643780/SRR643780.cram	homo_sapiens	08-AUG-2015 07:46:09	completed	94
+SRP001371	SRR643781	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643781/SRR643781.cram	homo_sapiens	05-AUG-2015 11:18:43	completed	96
+SRP001371	SRR643775	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643775/SRR643775.cram	homo_sapiens	05-AUG-2015 11:20:07	completed	89
+SRP001371	SRR786760	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643775/SRR643775.cram	homo_sapiens	04-DEC-2015 14:59:50		0
+SRP001371	SRR643782	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643782/SRR643782.cram	homo_sapiens	09-SEP-2015 03:39:36	completed	95
+SRP001371	SRR786789	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643782/SRR643782.cram	homo_sapiens	04-DEC-2015 10:12:18		0
+SRP001371	SRR786801	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643782/SRR643782.cram	homo_sapiens	04-DEC-2015 13:33:07		0
+SRP001371	SRR786762	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643782/SRR643782.cram	homo_sapiens	04-DEC-2015 10:12:18		0
+SRP001371	SRR644516	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR644/SRR644516/SRR644516.cram	homo_sapiens	27-JUL-2015 21:39:55	completed	95
+SRP001371	SRR980452	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR644/SRR644516/SRR644516.cram	homo_sapiens	04-DEC-2015 13:33:15		0
+SRP001371	SRR980449	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR644/SRR644516/SRR644516.cram	homo_sapiens	04-DEC-2015 11:30:36		0
+SRP001371	SRR643769	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643769/SRR643769.cram	homo_sapiens	02-AUG-2015 22:42:20	completed	90
+SRP001371	SRR786777	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643769/SRR643769.cram	homo_sapiens	04-DEC-2015 11:30:38		0
+SRP001371	SRR643767	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643767/SRR643767.cram	homo_sapiens	16-AUG-2015 13:40:32	completed	94
+SRP001371	SRR786797	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643767/SRR643767.cram	homo_sapiens	04-DEC-2015 09:26:55		0
+SRP001371	SRR786782	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643767/SRR643767.cram	homo_sapiens	04-DEC-2015 11:30:38		0
+SRP001371	SRR786807	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643767/SRR643767.cram	homo_sapiens	04-DEC-2015 11:30:39		0
+SRP001371	SRR980475	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980475/SRR980475.cram	homo_sapiens	24-JUL-2015 18:52:13	completed	97
+SRP001371	SRR643743	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643743/SRR643743.cram	homo_sapiens	13-AUG-2015 14:50:56	completed	93
+SRP001371	SRR643747	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643747/SRR643747.cram	homo_sapiens	24-JUL-2015 16:47:35	completed	99
+SRP001371	SRR643789	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643789/SRR643789.cram	homo_sapiens	10-AUG-2015 10:41:50	completed	95
+SRP001371	SRR786771	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643789/SRR643789.cram	homo_sapiens	18-AUG-2015 13:56:42	QC: 1 no reads pass the quality threshold	0
+SRP001371	SRR786781	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643789/SRR643789.cram	homo_sapiens	04-DEC-2015 13:33:17		0
+SRP001371	SRR980455	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643789/SRR643789.cram	homo_sapiens	04-DEC-2015 11:30:39		0
+SRP001371	SRR643777	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643777/SRR643777.cram	homo_sapiens	19-AUG-2015 06:19:35	completed	96
+SRP001371	SRR980483	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980483/SRR980483.cram	homo_sapiens	19-AUG-2015 08:41:33	completed	98
+SRP001371	SRR643742	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643742/SRR643742.cram	homo_sapiens	12-AUG-2015 22:41:34	completed	94
+SRP001371	SRR980458	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643742/SRR643742.cram	homo_sapiens	04-DEC-2015 11:30:39		0
+SRP001371	SRR786769	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643742/SRR643742.cram	homo_sapiens	04-DEC-2015 13:33:18		0
+SRP001371	SRR786758	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643742/SRR643742.cram	homo_sapiens	04-DEC-2015 13:33:18		0
+SRP001371	SRR643779	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643779/SRR643779.cram	homo_sapiens	12-AUG-2015 12:39:40	completed	92
+SRP001371	SRR453406	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453406/SRR453406.cram	homo_sapiens	24-AUG-2015 11:34:37	completed	95
+SRP001371	SRR786778	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453406/SRR453406.cram	homo_sapiens	04-DEC-2015 13:33:19		0
+SRP001371	SRR980479	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980479/SRR980479.cram	homo_sapiens	10-AUG-2015 23:24:20	completed	92
+SRP001371	SRR786761	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980479/SRR980479.cram	homo_sapiens	04-DEC-2015 09:26:58		0
+SRP001371	SRR786779	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980479/SRR980479.cram	homo_sapiens	04-DEC-2015 09:26:59		0
+SRP001371	SRR786751	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980479/SRR980479.cram	homo_sapiens	12-AUG-2015 02:39:36	QC: 1 no reads pass the quality threshold	0
+SRP001371	SRR644514	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR644/SRR644514/SRR644514.cram	homo_sapiens	15-AUG-2015 01:54:47	completed	94
+SRP001371	SRR453394	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453394/SRR453394.cram	homo_sapiens	14-AUG-2015 05:59:57	completed	97
+SRP001371	SRR980474	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453394/SRR453394.cram	homo_sapiens	11-AUG-2015 11:19:46	QC: 1 no reads pass the quality threshold	0
+SRP001371	SRR453400	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453400/SRR453400.cram	homo_sapiens	12-AUG-2015 13:34:21	completed	97
+SRP001371	SRR453395	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR453/SRR453395/SRR453395.cram	homo_sapiens	01-SEP-2015 11:02:58	completed	97
+SRP001371	SRR643783	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643783/SRR643783.cram	homo_sapiens	19-AUG-2015 12:43:46	completed	96
+SRP001371	SRR980456	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643783/SRR643783.cram	homo_sapiens	04-DEC-2015 11:30:41		0
+SRP001371	SRR786757	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643783/SRR643783.cram	homo_sapiens	04-DEC-2015 11:30:41		0
+SRP001371	SRR786787	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR643/SRR643783/SRR643783.cram	homo_sapiens	04-DEC-2015 11:30:42		0
+SRP001371	SRR980472	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/SRR980/SRR980472/SRR980472.cram	homo_sapiens	14-SEP-2015 20:42:43	completed	98
+

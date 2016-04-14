@@ -1,0 +1,494 @@
+E-MTAB-3871		SRR643741	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643741	characteristic	gestational age	108 day
+E-MTAB-3871		SRR643741	characteristic	individual	H-23769
+E-MTAB-3871		SRR643741	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643741	characteristic	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643741	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643741	factor	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643742	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643742	characteristic	gestational age	108 day
+E-MTAB-3871		SRR643742	characteristic	individual	H-23769
+E-MTAB-3871		SRR643742	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643742	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3871		SRR643742	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643742	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3871		SRR643743	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643743	characteristic	gestational age	108 day
+E-MTAB-3871		SRR643743	characteristic	individual	H-23769
+E-MTAB-3871		SRR643743	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643743	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3871		SRR643743	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643743	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3871		SRR643744	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643744	characteristic	gestational age	85 day
+E-MTAB-3871		SRR643744	characteristic	individual	H-23855
+E-MTAB-3871		SRR643744	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643744	characteristic	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643744	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643744	characteristic	technical replicate	group1
+E-MTAB-3871		SRR643744	factor	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643745	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643745	characteristic	gestational age	85 day
+E-MTAB-3871		SRR643745	characteristic	individual	H-23855
+E-MTAB-3871		SRR643745	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643745	characteristic	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643745	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643745	characteristic	technical replicate	group1
+E-MTAB-3871		SRR643745	factor	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643746	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643746	characteristic	gestational age	108 day
+E-MTAB-3871		SRR643746	characteristic	individual	H-23887
+E-MTAB-3871		SRR643746	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643746	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3871		SRR643746	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643746	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3871		SRR643747	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643747	characteristic	gestational age	91 day
+E-MTAB-3871		SRR643747	characteristic	individual	H-23914
+E-MTAB-3871		SRR643747	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643747	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3871		SRR643747	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643747	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3871		SRR643748	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643748	characteristic	gestational age	120 day
+E-MTAB-3871		SRR643748	characteristic	individual	H-23941
+E-MTAB-3871		SRR643748	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643748	characteristic	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643748	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643748	factor	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643749	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643749	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643749	characteristic	individual	H-23663
+E-MTAB-3871		SRR643749	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643749	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3871		SRR643749	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643749	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3871		SRR643750	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643750	characteristic	gestational age	87 day
+E-MTAB-3871		SRR643750	characteristic	individual	H-23724
+E-MTAB-3871		SRR643750	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643750	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3871		SRR643750	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643750	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3871		SRR643751	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643751	characteristic	gestational age	85 day
+E-MTAB-3871		SRR643751	characteristic	individual	H-23855
+E-MTAB-3871		SRR643751	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643751	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3871		SRR643751	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643751	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3871		SRR643752	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643752	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643752	characteristic	individual	H-23871
+E-MTAB-3871		SRR643752	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643752	characteristic	organism part	left renal cortex
+E-MTAB-3871		SRR643752	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643752	factor	organism part	left renal cortex
+E-MTAB-3871		SRR643753	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643753	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643753	characteristic	individual	H-23871
+E-MTAB-3871		SRR643753	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643753	characteristic	organism part	left renal pelvis
+E-MTAB-3871		SRR643753	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643753	factor	organism part	left renal pelvis
+E-MTAB-3871		SRR643754	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643754	characteristic	gestational age	120 day
+E-MTAB-3871		SRR643754	characteristic	individual	H-23941
+E-MTAB-3871		SRR643754	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643754	characteristic	organism part	renal cortex
+E-MTAB-3871		SRR643754	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643754	factor	organism part	renal cortex
+E-MTAB-3871		SRR643755	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643755	characteristic	gestational age	115 day
+E-MTAB-3871		SRR643755	characteristic	individual	H-23808
+E-MTAB-3871		SRR643755	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643755	characteristic	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643755	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643755	factor	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643756	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643756	characteristic	gestational age	115 day
+E-MTAB-3871		SRR643756	characteristic	individual	H-23808
+E-MTAB-3871		SRR643756	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643756	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3871		SRR643756	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643756	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3871		SRR643757	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643757	characteristic	gestational age	91 day
+E-MTAB-3871		SRR643757	characteristic	individual	H-23914
+E-MTAB-3871		SRR643757	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643757	characteristic	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643757	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643757	factor	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643758	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643758	characteristic	gestational age	120 day
+E-MTAB-3871		SRR643758	characteristic	individual	H-23941
+E-MTAB-3871		SRR643758	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643758	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3871		SRR643758	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643758	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3871		SRR643759	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643759	characteristic	gestational age	98 day
+E-MTAB-3871		SRR643759	characteristic	individual	H-23964
+E-MTAB-3871		SRR643759	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643759	characteristic	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643759	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643759	factor	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643760	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643760	characteristic	gestational age	98 day
+E-MTAB-3871		SRR643760	characteristic	individual	H-23964
+E-MTAB-3871		SRR643760	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643760	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3871		SRR643760	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643760	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-3871		SRR643761	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643761	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643761	characteristic	individual	H-24005
+E-MTAB-3871		SRR643761	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643761	characteristic	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643761	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643761	factor	organism part	large intestine	http://purl.obolibrary.org/obo/UBERON_0000059
+E-MTAB-3871		SRR643762	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643762	characteristic	gestational age	108 day
+E-MTAB-3871		SRR643762	characteristic	individual	H-23887
+E-MTAB-3871		SRR643762	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643762	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3871		SRR643762	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643762	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-3871		SRR643763	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643763	characteristic	gestational age	91 day
+E-MTAB-3871		SRR643763	characteristic	individual	H-23914
+E-MTAB-3871		SRR643763	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643763	characteristic	organism part	renal pelvis
+E-MTAB-3871		SRR643763	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643763	factor	organism part	renal pelvis
+E-MTAB-3871		SRR643764	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643764	characteristic	gestational age	108 day
+E-MTAB-3871		SRR643764	characteristic	individual	H-23887
+E-MTAB-3871		SRR643764	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643764	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3871		SRR643764	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643764	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3871		SRR643765	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643765	characteristic	gestational age	96 day
+E-MTAB-3871		SRR643765	characteristic	individual	H-24089
+E-MTAB-3871		SRR643765	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643765	characteristic	organism part	left kidney	http://www.ebi.ac.uk/efo/EFO_0001658
+E-MTAB-3871		SRR643765	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643765	factor	organism part	left kidney	http://www.ebi.ac.uk/efo/EFO_0001658
+E-MTAB-3871		SRR643767	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643767	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643767	characteristic	individual	H-24005
+E-MTAB-3871		SRR643767	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643767	characteristic	organism part	renal pelvis
+E-MTAB-3871		SRR643767	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643767	factor	organism part	renal pelvis
+E-MTAB-3871		SRR643768	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643768	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643768	characteristic	individual	H-24111
+E-MTAB-3871		SRR643768	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643768	characteristic	organism part	left renal cortex
+E-MTAB-3871		SRR643768	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643768	characteristic	technical replicate	group10
+E-MTAB-3871		SRR643768	factor	organism part	left renal cortex
+E-MTAB-3871		SRR643769	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643769	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643769	characteristic	individual	H-24111
+E-MTAB-3871		SRR643769	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643769	characteristic	organism part	left renal cortex
+E-MTAB-3871		SRR643769	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643769	characteristic	technical replicate	group10
+E-MTAB-3871		SRR643769	factor	organism part	left renal cortex
+E-MTAB-3871		SRR643770	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643770	characteristic	gestational age	120 day
+E-MTAB-3871		SRR643770	characteristic	individual	H-24169
+E-MTAB-3871		SRR643770	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643770	characteristic	organism part	right renal cortex
+E-MTAB-3871		SRR643770	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643770	factor	organism part	right renal cortex
+E-MTAB-3871		SRR643771	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643771	characteristic	gestational age	120 day
+E-MTAB-3871		SRR643771	characteristic	individual	H-24169
+E-MTAB-3871		SRR643771	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643771	characteristic	organism part	left renal cortex
+E-MTAB-3871		SRR643771	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643771	factor	organism part	left renal cortex
+E-MTAB-3871		SRR643772	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643772	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643772	characteristic	individual	H-24111
+E-MTAB-3871		SRR643772	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643772	characteristic	organism part	right renal pelvis
+E-MTAB-3871		SRR643772	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643772	characteristic	technical replicate	group11
+E-MTAB-3871		SRR643772	factor	organism part	right renal pelvis
+E-MTAB-3871		SRR643773	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643773	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643773	characteristic	individual	H-24111
+E-MTAB-3871		SRR643773	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643773	characteristic	organism part	right renal pelvis
+E-MTAB-3871		SRR643773	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643773	characteristic	technical replicate	group11
+E-MTAB-3871		SRR643773	factor	organism part	right renal pelvis
+E-MTAB-3871		SRR643774	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643774	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643774	characteristic	individual	H-24111
+E-MTAB-3871		SRR643774	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643774	characteristic	organism part	left renal pelvis
+E-MTAB-3871		SRR643774	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643774	factor	organism part	left renal pelvis
+E-MTAB-3871		SRR643775	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643775	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643775	characteristic	individual	H-24232
+E-MTAB-3871		SRR643775	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643775	characteristic	organism part	left renal cortex
+E-MTAB-3871		SRR643775	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643775	factor	organism part	left renal cortex
+E-MTAB-3871		SRR643776	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643776	characteristic	gestational age	97 day
+E-MTAB-3871		SRR643776	characteristic	individual	H-24259
+E-MTAB-3871		SRR643776	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643776	characteristic	organism part	renal pelvis
+E-MTAB-3871		SRR643776	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643776	characteristic	technical replicate	group3
+E-MTAB-3871		SRR643776	factor	organism part	renal pelvis
+E-MTAB-3871		SRR643777	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643777	characteristic	gestational age	97 day
+E-MTAB-3871		SRR643777	characteristic	individual	H-24259
+E-MTAB-3871		SRR643777	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643777	characteristic	organism part	renal pelvis
+E-MTAB-3871		SRR643777	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643777	characteristic	technical replicate	group3
+E-MTAB-3871		SRR643777	factor	organism part	renal pelvis
+E-MTAB-3871		SRR643778	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643778	characteristic	gestational age	120 day
+E-MTAB-3871		SRR643778	characteristic	individual	H-24042
+E-MTAB-3871		SRR643778	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643778	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3871		SRR643778	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643778	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3871		SRR643779	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643779	characteristic	gestational age	91 day
+E-MTAB-3871		SRR643779	characteristic	individual	H-23744
+E-MTAB-3871		SRR643779	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643779	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3871		SRR643779	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR643779	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-3871		SRR643780	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643780	characteristic	gestational age	91 day
+E-MTAB-3871		SRR643780	characteristic	individual	H-23914
+E-MTAB-3871		SRR643780	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643780	characteristic	organism part	renal cortex
+E-MTAB-3871		SRR643780	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643780	factor	organism part	renal cortex
+E-MTAB-3871		SRR643781	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643781	characteristic	gestational age	97 day
+E-MTAB-3871		SRR643781	characteristic	individual	H-24259
+E-MTAB-3871		SRR643781	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643781	characteristic	organism part	renal cortex
+E-MTAB-3871		SRR643781	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643781	characteristic	technical replicate	group4
+E-MTAB-3871		SRR643781	factor	organism part	renal cortex
+E-MTAB-3871		SRR643782	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643782	characteristic	gestational age	97 day
+E-MTAB-3871		SRR643782	characteristic	individual	H-24259
+E-MTAB-3871		SRR643782	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643782	characteristic	organism part	renal cortex
+E-MTAB-3871		SRR643782	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643782	characteristic	technical replicate	group4
+E-MTAB-3871		SRR643782	factor	organism part	renal cortex
+E-MTAB-3871		SRR643783	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643783	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643783	characteristic	individual	H-23871
+E-MTAB-3871		SRR643783	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643783	characteristic	organism part	right renal cortex
+E-MTAB-3871		SRR643783	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643783	factor	organism part	right renal cortex
+E-MTAB-3871		SRR643784	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643784	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643784	characteristic	individual	H-24232
+E-MTAB-3871		SRR643784	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643784	characteristic	organism part	right renal cortex
+E-MTAB-3871		SRR643784	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643784	factor	organism part	right renal cortex
+E-MTAB-3871		SRR643785	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643785	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643785	characteristic	individual	H-23871
+E-MTAB-3871		SRR643785	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643785	characteristic	organism part	right renal pelvis
+E-MTAB-3871		SRR643785	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643785	factor	organism part	right renal pelvis
+E-MTAB-3871		SRR643786	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643786	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643786	characteristic	individual	H-24232
+E-MTAB-3871		SRR643786	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643786	characteristic	organism part	right renal pelvis
+E-MTAB-3871		SRR643786	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643786	factor	organism part	right renal pelvis
+E-MTAB-3871		SRR643787	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643787	characteristic	gestational age	120 day
+E-MTAB-3871		SRR643787	characteristic	individual	H-24169
+E-MTAB-3871		SRR643787	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643787	characteristic	organism part	right renal pelvis
+E-MTAB-3871		SRR643787	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643787	factor	organism part	right renal pelvis
+E-MTAB-3871		SRR643788	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643788	characteristic	gestational age	105 day
+E-MTAB-3871		SRR643788	characteristic	individual	H-24232
+E-MTAB-3871		SRR643788	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643788	characteristic	organism part	left renal pelvis
+E-MTAB-3871		SRR643788	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643788	factor	organism part	left renal pelvis
+E-MTAB-3871		SRR643789	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR643789	characteristic	gestational age	120 day
+E-MTAB-3871		SRR643789	characteristic	individual	H-24169
+E-MTAB-3871		SRR643789	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR643789	characteristic	organism part	left renal pelvis
+E-MTAB-3871		SRR643789	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR643789	factor	organism part	left renal pelvis
+E-MTAB-3871		SRR644515	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR644515	characteristic	gestational age	85 day
+E-MTAB-3871		SRR644515	characteristic	individual	H-24272
+E-MTAB-3871		SRR644515	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR644515	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3871		SRR644515	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR644515	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3871		SRR644516	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR644516	characteristic	gestational age	101 day
+E-MTAB-3871		SRR644516	characteristic	individual	H-24279
+E-MTAB-3871		SRR644516	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR644516	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3871		SRR644516	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR644516	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3871		SRR786772	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR786772	characteristic	gestational age	105 day
+E-MTAB-3871		SRR786772	characteristic	individual	H-24111
+E-MTAB-3871		SRR786772	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR786772	characteristic	organism part	arm muscle
+E-MTAB-3871		SRR786772	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-3871		SRR786772	factor	organism part	arm muscle
+E-MTAB-3871		SRR980455	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980455	characteristic	gestational age	98 day
+E-MTAB-3871		SRR980455	characteristic	individual	H-23964
+E-MTAB-3871		SRR980455	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980455	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3871		SRR980455	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980455	characteristic	technical replicate	group2
+E-MTAB-3871		SRR980455	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3871		SRR980456	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980456	characteristic	gestational age	98 day
+E-MTAB-3871		SRR980456	characteristic	individual	H-23964
+E-MTAB-3871		SRR980456	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980456	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3871		SRR980456	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980456	characteristic	technical replicate	group2
+E-MTAB-3871		SRR980456	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3871		SRR980473	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980473	characteristic	gestational age	113 day
+E-MTAB-3871		SRR980473	characteristic	individual	H-24409
+E-MTAB-3871		SRR980473	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980473	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3871		SRR980473	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980473	characteristic	technical replicate	group9
+E-MTAB-3871		SRR980473	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3871		SRR980474	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980474	characteristic	gestational age	113 day
+E-MTAB-3871		SRR980474	characteristic	individual	H-24409
+E-MTAB-3871		SRR980474	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980474	characteristic	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3871		SRR980474	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980474	characteristic	technical replicate	group9
+E-MTAB-3871		SRR980474	factor	organism part	thymus	http://purl.obolibrary.org/obo/UBERON_0002370
+E-MTAB-3871		SRR980475	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980475	characteristic	gestational age	113 day
+E-MTAB-3871		SRR980475	characteristic	individual	H-24409
+E-MTAB-3871		SRR980475	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980475	characteristic	organism part	leg muscle
+E-MTAB-3871		SRR980475	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980475	characteristic	technical replicate	group5
+E-MTAB-3871		SRR980475	factor	organism part	leg muscle
+E-MTAB-3871		SRR980476	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980476	characteristic	gestational age	113 day
+E-MTAB-3871		SRR980476	characteristic	individual	H-24409
+E-MTAB-3871		SRR980476	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980476	characteristic	organism part	leg muscle
+E-MTAB-3871		SRR980476	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980476	characteristic	technical replicate	group5
+E-MTAB-3871		SRR980476	factor	organism part	leg muscle
+E-MTAB-3871		SRR980477	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980477	characteristic	gestational age	113 day
+E-MTAB-3871		SRR980477	characteristic	individual	H-24409
+E-MTAB-3871		SRR980477	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980477	characteristic	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3871		SRR980477	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980477	characteristic	technical replicate	group8
+E-MTAB-3871		SRR980477	factor	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3871		SRR980478	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980478	characteristic	gestational age	113 day
+E-MTAB-3871		SRR980478	characteristic	individual	H-24409
+E-MTAB-3871		SRR980478	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980478	characteristic	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3871		SRR980478	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980478	characteristic	technical replicate	group8
+E-MTAB-3871		SRR980478	factor	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3871		SRR980479	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980479	characteristic	gestational age	113 day
+E-MTAB-3871		SRR980479	characteristic	individual	H-24409
+E-MTAB-3871		SRR980479	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980479	characteristic	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3871		SRR980479	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980479	characteristic	technical replicate	group8
+E-MTAB-3871		SRR980479	factor	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-MTAB-3871		SRR980480	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980480	characteristic	gestational age	113 day
+E-MTAB-3871		SRR980480	characteristic	individual	H-24409
+E-MTAB-3871		SRR980480	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980480	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3871		SRR980480	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980480	characteristic	technical replicate	group7
+E-MTAB-3871		SRR980480	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3871		SRR980481	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980481	characteristic	gestational age	113 day
+E-MTAB-3871		SRR980481	characteristic	individual	H-24409
+E-MTAB-3871		SRR980481	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980481	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3871		SRR980481	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980481	characteristic	technical replicate	group7
+E-MTAB-3871		SRR980481	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-3871		SRR980482	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980482	characteristic	gestational age	98 day
+E-MTAB-3871		SRR980482	characteristic	individual	H-23964
+E-MTAB-3871		SRR980482	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980482	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3871		SRR980482	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980482	characteristic	technical replicate	group2
+E-MTAB-3871		SRR980482	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3871		SRR980483	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980483	characteristic	gestational age	98 day
+E-MTAB-3871		SRR980483	characteristic	individual	H-23964
+E-MTAB-3871		SRR980483	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980483	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3871		SRR980483	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980483	characteristic	technical replicate	group2
+E-MTAB-3871		SRR980483	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-3871		SRR980484	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980484	characteristic	gestational age	96 day
+E-MTAB-3871		SRR980484	characteristic	individual	H-22662
+E-MTAB-3871		SRR980484	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980484	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3871		SRR980484	characteristic	sex	unknown
+E-MTAB-3871		SRR980484	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-3871		SRR980485	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980485	characteristic	gestational age	113 day
+E-MTAB-3871		SRR980485	characteristic	individual	H-24409
+E-MTAB-3871		SRR980485	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980485	characteristic	organism part	trunk muscle
+E-MTAB-3871		SRR980485	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980485	characteristic	technical replicate	group6
+E-MTAB-3871		SRR980485	factor	organism part	trunk muscle
+E-MTAB-3871		SRR980486	characteristic	developmental stage	fetus
+E-MTAB-3871		SRR980486	characteristic	gestational age	113 day
+E-MTAB-3871		SRR980486	characteristic	individual	H-24409
+E-MTAB-3871		SRR980486	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-3871		SRR980486	characteristic	organism part	trunk muscle
+E-MTAB-3871		SRR980486	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-3871		SRR980486	characteristic	technical replicate	group6
+E-MTAB-3871		SRR980486	factor	organism part	trunk muscle

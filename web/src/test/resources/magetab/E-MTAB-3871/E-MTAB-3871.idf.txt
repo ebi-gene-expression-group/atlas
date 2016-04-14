@@ -1,0 +1,30 @@
+Comment[ArrayExpressAccession]	E-MTAB-3871					
+MAGE-TAB Version	1.1					
+Investigation Title	RNA-seq of coding RNA of 19 human tissues from fetuses with congenital defects (NIH Roadmap Epigenomics Mapping Consortium)					
+Comment[Submitted Name]	RNA-seq of coding RNA of 19 human tissues from fetuses with congenital defects (NIH Roadmap Epigenomics Mapping Consortium)					
+Experiment Description	The NIH Roadmap Epigenomics Mapping Consortium aims to produce a public resource of epigenomic maps for stem cells and primary ex vivo tissues selected to represent the normal counterparts of tissues and organ systems frequently involved in human disease. This data set was submitted by University of Washington as part of GSE18927 ( http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE18927 ) / SRP001371 at NCBI Gene Expression Omnibus and Sequence Read Archive respectively.  The ArrayExpress record here contains only RNA-seq meta-data for the 53 human fetal samples covering 19 different tissues/organs from 23 fetuses.  You can find out more about WashU's contribution to this project here: http://egg2.wustl.edu/roadmap/web_portal/index.html.  The full set of NIH Epigenome Project data (not limited to RNA-seq) can be found here: http://www.ncbi.nlm.nih.gov/geo/roadmap/epigenomics					
+Experimental Factor Name	organism part					
+Experimental Factor Type	organism part					
+Person Last Name	NIH Roadmap Epigenomics Mapping Consortium					
+Person First Name	Northwest Reference Epigenome Mapping Project					
+Person Email	rharris1@bcm.tmc.edu 					
+Person Address	University of Washington, Seattle, WA 98195, USA					
+Person Affiliation	University of Washington					
+Person Roles	submitter					
+Public Release Date	2010-02-26					
+Protocol Name	P-MTAB-46366	P-MTAB-46367				
+Protocol Type	nucleic acid sequencing protocol	nucleic acid library construction protocol				
+Protocol Term Source REF	EFO	EFO				
+Protocol Term Accession Number	EFO_0004170	EFO_0004184				
+Protocol Description	Illumina HiSeq 2000 software. Illumina HiSeq2000 flow cell preparation: PE-401-3001: TruSeq PE Cluster Kit v3 - cBot - HS; GD-401-3001: TruSeq SR Cluster Kit v3 - cBot - HS; FC-401-3001: TruSeq SBS Kit v3 - HS (200-cycles). http://www.illumina.com/technology/sequencing_technology.ilmn	Please refer to this Epigenome Roadmap page for the standardised protocols used for library construction: http://www.roadmapepigenomics.org/protocols/type/experimental/				
+Protocol Hardware	Illumina HiSeq 2000					
+Term Source Name	EFO					
+Term Source File	http://www.ebi.ac.uk/efo					
+Publication Title	Integrative Analysis of 111 reference human epigenomes					
+Publication DOI	10.1038/nature14248					
+PubMed ID	25693563					
+Comment[SecondaryAccession]	SRP001371	GSE18927				
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/SRR643741-SRR643765	http://www.ebi.ac.uk/ena/data/view/SRR643767-SRR643789	http://www.ebi.ac.uk/ena/data/view/SRR644515-SRR644515	http://www.ebi.ac.uk/ena/data/view/SRR786722-SRR786722	http://www.ebi.ac.uk/ena/data/view/SRR980455-SRR980456	http://www.ebi.ac.uk/ena/data/view/SRR980473-SRR980486
+Comment[AEExperimentType]	RNA-seq of coding RNA					
+Comment[SRASubmissionDate]	2010-02-26					
+SDRF File	E-MTAB-3871.sdrf.txt					
