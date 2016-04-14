@@ -78,6 +78,18 @@ public class AnalyticsIndexDAO {
         }
     }
 
+    public void deleteAllDocuments() {
+        try {
+            solrClient.deleteByQuery("*:*");
+            solrClient.commit();
+            solrClient.optimize();
+        } catch (IOException | SolrServerException e) {
+            LOGGER.error(e.getMessage(), e);
+            rollBack();
+            throw new AnalyticsIndexerException(e);
+        }
+    }
+
     private class AnalyticsIndexerException extends RuntimeException {
         public AnalyticsIndexerException(Exception e) {
             super(e);

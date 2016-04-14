@@ -22,10 +22,6 @@ import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 20/07/15.
- */
-
 @Named
 @Scope("singleton")
 public class AnalyticsIndexerManager extends Observable {
@@ -77,6 +73,10 @@ public class AnalyticsIndexerManager extends Observable {
 
     public void indexAllPublicExperiments(int threads, int batchSize, int timeout) throws InterruptedException {
         addObserver(analyticsIndexerMonitor);
+
+        setChanged();
+        notifyObservers("Deleting all documents from analytics index...");
+        analyticsIndexerService.deleteAll();
 
         setChanged();
         notifyObservers("Analytics index build has started: sorting experiments by size");
