@@ -47,7 +47,7 @@
                 <test_assay_group>g2</test_assay_group>
             </contrast>
             <contrast id="g6_g4">
-                <name>'transgenic line BG8' vs 'wild type' at '2 week'</name>
+                <name>'transgenic line BG8' vs 'wild type' at '6 week'</name>
                 <reference_assay_group>g6</reference_assay_group>
                 <test_assay_group>g4</test_assay_group>
             </contrast>
