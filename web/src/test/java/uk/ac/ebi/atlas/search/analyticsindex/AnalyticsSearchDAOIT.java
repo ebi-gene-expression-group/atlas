@@ -25,34 +25,23 @@ public class AnalyticsSearchDAOIT {
     @Inject
     private AnalyticsIndexSearchDAO subject;
 
-    // TODO Ignore until https://www.pivotaltracker.com/story/show/101118548
-    @Ignore
+    @Test
     public void all() {
         ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("*"));
-
         assertThat(experimentTypes, containsInAnyOrder("microarray_1colour_microrna_differential", "microarray_1colour_mrna_differential", "microarray_2colour_mrna_differential", "rnaseq_mrna_baseline", "rnaseq_mrna_differential", "proteomics_baseline"));
     }
 
     @Test
     public void baselineResultOnly() {
-        ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("ENSGALG00000002646"));
-
-        assertThat(experimentTypes, contains("rnaseq_mrna_baseline"));
+        ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("ENSG00000005810"));
+        assertThat(experimentTypes, containsInAnyOrder("proteomics_baseline", "rnaseq_mrna_baseline"));
     }
 
 
     @Test
     public void diffResultOnly() {
-        ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("AT3G54730"));
-
+        ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("FBgn0000064"));
         assertThat(experimentTypes, contains("rnaseq_mrna_differential"));
-    }
-
-    @Test
-    public void noDifferentialResultsWhenLogFoldChangeLessThanOne() {
-        ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("AT2G38660"));
-
-        assertThat(experimentTypes, hasSize(0));
     }
 
 }

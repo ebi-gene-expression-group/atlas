@@ -1,25 +1,3 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-
 package uk.ac.ebi.atlas.dao;
 
 import com.google.common.collect.ImmutableMap;
@@ -45,7 +23,7 @@ public class ArrayDesignDAO {
     }
 
     public boolean isArrayDesignPresent(String arrayDesign) {
-        String query = "select count(*) from designelement_mapping where arraydesign=?";
+        String query = "SELECT COUNT(*) FROM DESIGNELEMENT_MAPPING WHERE ARRAYDESIGN=?";
 
         int count = jdbcTemplate.queryForObject(query, new String[]{arrayDesign}, Integer.class);
 
@@ -53,12 +31,12 @@ public class ArrayDesignDAO {
     }
 
     public List<String> getDesignElements(String geneIdentifier) {
-        String query = "select designelement from designelement_mapping where identifier=?";
+        String query = "SELECT DESIGNELEMENT FROM DESIGNELEMENT_MAPPING WHERE IDENTIFIER=?";
         return jdbcTemplate.queryForList(query, new String[]{geneIdentifier}, String.class);
     }
 
     public List<String> getArrayDesignAccessions() {
-        String query = "select distinct arraydesign from designelement_mapping";
+        String query = "SELECT DISTINCT ARRAYDESIGN FROM DESIGNELEMENT_MAPPING";
         return jdbcTemplate.queryForList(query, String.class);
     }
 
@@ -67,9 +45,9 @@ public class ArrayDesignDAO {
     }
 
     private Map<String, String> populateImmutableMap() {
-        ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder();
+        ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder<>();
 
-        String query = "select * from arraydesign";
+        String query = "SELECT * FROM ARRAYDESIGN";
         List<Map<String, Object>> allArrayDesigns = jdbcTemplate.queryForList(query);
 
         for (Map<String, Object> arrayDesign : allArrayDesigns) {

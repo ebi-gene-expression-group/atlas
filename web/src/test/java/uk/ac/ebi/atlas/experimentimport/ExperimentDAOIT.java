@@ -46,7 +46,7 @@ import static org.hamcrest.Matchers.*;
 public class ExperimentDAOIT {
 
     private static final String E_MTAB_513 = "E-MTAB-513";
-    private static final String E_MTAB_1066 = "E-MTAB-1066";
+    private static final String E_GEOD_5614 = "E-GEOD-5614";
     private static final ExperimentType TYPE_BASELINE = ExperimentType.RNASEQ_MRNA_BASELINE;
     private static final ExperimentType TYPE_MICROARRAY = ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL;
     public static final String SECRET_111 = "Secret_111";
@@ -55,10 +55,7 @@ public class ExperimentDAOIT {
     private ExperimentDAO subject;
 
     public void createSecret111() throws Exception {
-
-        ExperimentDTO mtab = new ExperimentDTO(SECRET_111, TYPE_MICROARRAY, Sets.newHashSet("cow"),
-                Sets.newHashSet("1"), "diff", false);
-
+        ExperimentDTO mtab = new ExperimentDTO(SECRET_111, TYPE_MICROARRAY, Sets.newHashSet("cow"), Sets.newHashSet("1"), "diff", false);
         subject.addExperiment(mtab, Optional.<String>absent());
     }
 
@@ -78,7 +75,7 @@ public class ExperimentDAOIT {
         Set<String> experimentAccessions = subject.findPublicExperimentAccessions(TYPE_BASELINE);
         assertThat(experimentAccessions, hasItem(E_MTAB_513));
         experimentAccessions = subject.findPublicExperimentAccessions(TYPE_MICROARRAY);
-        assertThat(experimentAccessions, hasItem(E_MTAB_1066));
+        assertThat(experimentAccessions, hasItem(E_GEOD_5614));
 
     }
 
@@ -98,8 +95,7 @@ public class ExperimentDAOIT {
     public void testAddExperiment() throws Exception {
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
         int size = experimentDTOs.size();
-        ExperimentDTO mtabNew = new ExperimentDTO("new", TYPE_MICROARRAY, Sets.newHashSet("cow"),
-                        Sets.newHashSet("1"), "diff", true);
+        ExperimentDTO mtabNew = new ExperimentDTO("new", TYPE_MICROARRAY, Sets.newHashSet("cow"), Sets.newHashSet("1"), "diff", true);
         subject.addExperiment(mtabNew, Optional.<String>absent());
         experimentDTOs = subject.findAllExperiments();
         assertThat(experimentDTOs.size(), is(size + 1));
