@@ -6,6 +6,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var ReactDOMServer = require('react-dom/server');
 var RadioGroup = require('react-radio-group');
+var Slider = require('rc-slider');
+require('rc-slider/assets/index.css');
 
 var $ = require('jquery');
 
@@ -97,7 +99,7 @@ var Heatmap = React.createClass({
         var coexpressionsDisplayed = {};
         if(this.props.jsonCoexpressions ) {
           for (var i = 0; i< this.props.jsonCoexpressions.length; i++){
-            coexpressionsDisplayed[this.props.jsonCoexpressions[i].geneName]=false;
+            coexpressionsDisplayed[this.props.jsonCoexpressions[i].geneName]=0;
           }
         }
         return {
@@ -128,7 +130,7 @@ var Heatmap = React.createClass({
                     return o.geneName=== thisRow.name && this.state.coexpressionsDisplayed[o.geneName]
                   }.bind(this))
             for(var j = 0 ; j < coexpressionsForThisRow.length ; j++ ){
-              [].push.apply(newRows,coexpressionsForThisRow[j].jsonProfiles.rows);
+              [].push.apply(newRows,coexpressionsForThisRow[j].jsonProfiles.rows.slice(0, this.state.coexpressionsDisplayed[coexpressionsForThisRow[j].geneName]));
             }
 
         }
@@ -238,16 +240,39 @@ var Heatmap = React.createClass({
     },
 
     _getCoexpressionsAvailable: function() {
-      return Object.keys(this.state.coexpressionsDisplayed);
+      return ! this.props.jsonCoexpressions
+             ? []
+             : this.props.jsonCoexpressions.map(function(value){
+        return {name: value.geneName, amount: value.jsonProfiles.rows.length}
+      });
     },
 
-    _toggleCoexpression : function(geneName) {
+    _showCoexpressionsFor : function(geneName, amount) {
       this.setState(function(previousState) {
         if(previousState.coexpressionsDisplayed.hasOwnProperty(geneName)){
-          previousState.coexpressionsDisplayed[geneName] = ! previousState.coexpressionsDisplayed[geneName];
+          previousState.coexpressionsDisplayed[geneName] = amount;
         }
         return {coexpressionsDisplayed: previousState.coexpressionsDisplayed};
       });
+    },
+
+    _showGeneCount: function() {
+      var shownRows, totalRows;
+      if (this.props.type.isMultiExperiment || ! this.state.showGeneSetProfiles || ! this.props.geneSetProfiles){
+          shownRows = this.props.profiles.rows.length;
+          totalRows = this.props.profiles.searchResultTotal;
+      } else {
+        shownRows = this.props.geneSetProfiles.rows.length;
+        totalRows = this.props.geneSetProfiles.searchResultTotal;
+      }
+
+      return <div style={{display: "inline-block", 'verticalAlign': "top"}}>
+        {this.props.type.isMultiExperiment
+          ? <span id="geneCount">Showing {shownRows} of {totalRows} experiments found: </span>
+          : <span id="geneCount">Showing {shownRows} of {totalRows} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found
+              {! this.props.jsonCoexpressions || ! this.props.jsonCoexpressions.length ? ":" : " and "+(this._getProfiles().rows.length-shownRows)+ " similarly expressed genes:"}</span> }
+        {this.props.geneSetProfiles && !this.props.type.isMultiExperiment ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
+      </div>
     },
 
     render: function () {
@@ -256,12 +281,7 @@ var Heatmap = React.createClass({
         return (
             <div>
                 <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{"paddingBottom": paddingMargin, "position": "sticky"}}>
-                    <div style={{display: "inline-block", 'verticalAlign': "top"}}>
-                        {this.props.type.isMultiExperiment
-                          ? <span id="geneCount">Showing {this.props.profiles.rows.length} of {this.props.profiles.searchResultTotal} experiments found: </span>
-                          : <span id="geneCount">Showing {this.props.profiles.rows.length} of {this.props.profiles.searchResultTotal} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span> }
-                        {this.props.geneSetProfiles && !this.props.type.isMultiExperiment ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
-                    </div>
+                    {this._showGeneCount()}
                     <div style={{display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top"}}>
                         <DownloadProfilesButton ref="downloadProfilesButton"
                                                 downloadProfilesURL={this.props.heatmapConfig.downloadProfilesURL}
@@ -404,7 +424,7 @@ var Heatmap = React.createClass({
                         </table>
                     </div>
                     <HeatmapBottomOptions coexpressionsAvailable={this._getCoexpressionsAvailable()}
-                                          toggleCoexpression={this._toggleCoexpression} />
+                                          showCoexpressionsFor={this._showCoexpressionsFor} />
                 </div>
 
             </div>
@@ -853,7 +873,10 @@ var HeatmapTableRows = React.createClass({
     },
 
     profileRowType: function (profile)  {
-        var geneProfileKey = this.props.heatmapConfig.species + "-" + (this.props.type.isDifferential ? profile.name + "-" + profile.designElement : profile.name);
+        var geneProfileKey = this.props.heatmapConfig.species + "-" +
+            (this.props.type.isDifferential
+              ? profile.name + "-" + profile.designElement
+              : profile.name);
         return (this.props.type.isMultiExperiment ?
             <GeneProfileRow key={geneProfileKey}
                             id={profile.id}
@@ -1201,18 +1224,22 @@ var CellMultiExperiment = React.createClass({
 
 var HeatmapBottomOptions = React.createClass({
   propTypes: {
-      coexpressionsAvailable:React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-      toggleCoexpression: React.PropTypes.func.isRequired
+      coexpressionsAvailable:React.PropTypes.arrayOf(React.PropTypes.shape({
+        name:React.PropTypes.string.isRequired,
+        amount: React.PropTypes.number.isRequired
+      })).isRequired,
+      showCoexpressionsFor: React.PropTypes.func.isRequired
   },
 
   render: function() {
     var options = [];
     for(var i = 0; i< this.props.coexpressionsAvailable.length ; i++){
-      var geneName = this.props.coexpressionsAvailable[i];
+      var el = this.props.coexpressionsAvailable[i];
       options.push(<CoexpressionOption
                 key={i}
-                geneName={geneName}
-                toggleCallback={ function(){this.props.toggleCoexpression(geneName)}.bind(this) }
+                geneName={el.name}
+                numCoexpressionsAvailable = {el.amount}
+                showCoexpressionsCallback={ function(amount){this.props.showCoexpressionsFor(el.name,amount)}.bind(this) }
                 />);
     };
     return (
@@ -1228,23 +1255,50 @@ var HeatmapBottomOptions = React.createClass({
 var CoexpressionOption = React.createClass({
   propTypes: {
     geneName: React.PropTypes.string.isRequired,
-    toggleCallback: React.PropTypes.func.isRequired
+    numCoexpressionsAvailable: React.PropTypes.number.isRequired,
+    showCoexpressionsCallback: React.PropTypes.func.isRequired
   },
   getInitialState: function() {
-    return {visible: false};
+    return {visible: 0};
   },
-  _toggle: function() {
-    this.setState(function(previousState) {return {visible: ! previousState.visible}});
-    this.props.toggleCallback();
+  _chooseValue: function(amount) {
+    this.setState({visible: amount});
+    this.props.showCoexpressionsCallback(amount);
   },
+
+  _turnOnWithDefaultValue: function() {
+    this._chooseValue(10);
+  },
+
+  _showOfferToDisplay: function(){
+    return <DisplayLevelsButton hideText=""
+                         showText="Show genes with similar expression pattern"
+                         onClickCallback={this._turnOnWithDefaultValue}
+                         displayLevels={false}
+                         width="200px"
+                         fontSize="14px"/>
+  },
+
+  _showSlider: function() {
+    var marks = {
+      0: "off",
+      10: "10"
+    };
+    marks[this.props.numCoexpressionsAvailable] = this.props.numCoexpressionsAvailable;
+    return <div>
+    <p style={{"fontSize":"93%"}}>{"Display genes with similar expressions as "+this.props.geneName+":"}</p>
+    <div style={{"width":"200px", "margin":"20px"}}>
+    <Slider min={0} max={this.props.numCoexpressionsAvailable} onAfterChange={this._chooseValue} marks={marks} included={false} defaultValue={10} />
+    </div>
+    </div>
+  },
+
   render: function() {
-    return this.state.visible
-            ? <span onClick={this._toggle}>
-                  {"Hide coexpressed genes for "+this.props.geneName}
-              </span>
-            : <span onClick={this._toggle}>
-                  {"Show coexpressed genes for "+this.props.geneName}
-              </span>;
+    return  <div>
+              {this.state.visible
+              ? this._showSlider()
+              : this._showOfferToDisplay()}
+              </div>
   }
 
 
