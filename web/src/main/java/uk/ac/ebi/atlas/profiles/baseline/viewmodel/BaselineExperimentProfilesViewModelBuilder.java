@@ -21,10 +21,10 @@ public class BaselineExperimentProfilesViewModelBuilder {
     private final FilterFactorsConverter filterFactorsConverter;
 
     @Inject
-    public BaselineExperimentProfilesViewModelBuilder(BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder, BaselineExpressionLevelRounder baselineExpressionLevelRounder, FilterFactorsConverter filterFactorsConverter) {
+    public BaselineExperimentProfilesViewModelBuilder(BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder, BaselineExpressionLevelRounder baselineExpressionLevelRounder) {
         this.baselineExpressionViewModelBuilder = baselineExpressionViewModelBuilder;
         this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
-        this.filterFactorsConverter = filterFactorsConverter;
+        this.filterFactorsConverter = new FilterFactorsConverter();
     }
 
     public BaselineProfilesViewModel build(BaselineExperimentProfilesList profiles, SortedSet<Factor> orderedFactors) {

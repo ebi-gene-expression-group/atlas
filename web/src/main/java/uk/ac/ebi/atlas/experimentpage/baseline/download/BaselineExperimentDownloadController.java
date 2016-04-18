@@ -71,8 +71,7 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
         response.setContentType("text/plain; charset=utf-8");
 
-        BaselineRequestContext requestContext = preferencesForBaselineExperiments.buildRequestContext(experiment,
-                preferences);
+        BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment,preferences);
 
         try {
 

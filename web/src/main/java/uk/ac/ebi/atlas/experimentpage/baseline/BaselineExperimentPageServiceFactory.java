@@ -34,8 +34,6 @@ public class BaselineExperimentPageServiceFactory {
     public BaselineExperimentPageServiceFactory(TracksUtil tracksUtil, ApplicationProperties applicationProperties,
                                                 BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                                 JdbcTemplate jdbcTemplate,BaselineExperimentUtil bslnUtil,
-                                                PreferencesForBaselineExperiments
-                                                        preferencesForBaselineExperiments,
                                                 SolrQueryService solrQueryService,RankBaselineProfilesFactory rankProfilesFactory) {
         this.tracksUtil = tracksUtil;
         this.applicationProperties = applicationProperties;
@@ -43,7 +41,7 @@ public class BaselineExperimentPageServiceFactory {
         this.speciesKingdomTrader = new SpeciesKingdomTrader(new OrganismKingdomDAO(jdbcTemplate), new
                 OrganismEnsemblDAO(jdbcTemplate));
         this.bslnUtil = bslnUtil;
-        this.preferencesForBaselineExperiments = preferencesForBaselineExperiments;
+        this.preferencesForBaselineExperiments = new PreferencesForBaselineExperiments();
         this.coexpressedGenesDao = new CoexpressedGenesDao(jdbcTemplate);
         this.solrQueryService = solrQueryService;
         this.rankProfilesFactory = rankProfilesFactory;

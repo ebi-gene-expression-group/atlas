@@ -44,7 +44,7 @@ import static org.mockito.Mockito.when;
 public class BaselineBarChartControllerTest {
 
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
-    public static final String SERIALIZED_FILTER_FACTORS = "serializedFilterFactors";
+    public static final String SERIALIZED_FILTER_FACTORS = "serializedFilterFactorType:Value";
     public static final String EXPERIMENT_ACCESSKEY = "accessKey";
     @Mock
     private BarChartTradersCache barChartTradersCacheMock;

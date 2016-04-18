@@ -30,6 +30,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Named;
 import java.util.Set;
@@ -80,6 +81,13 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
                 .addValue(super.toString())
                 .add("selectedFilterFactors", selectedFilterFactors)
                 .add("experiment", experiment).toString();
+    }
+
+    public static BaselineRequestContext createFor(BaselineExperiment experiment, BaselineRequestPreferences preferences){
+        return new BaselineRequestContextBuilder(new FilterFactorsConverter())
+                .forExperiment(experiment)
+                .withPreferences(preferences)
+                .build();
     }
 
 }

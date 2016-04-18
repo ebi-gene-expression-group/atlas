@@ -38,8 +38,6 @@ import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkState;
 
-@Named
-@Scope("prototype")
 public class BaselineRequestContextBuilder {
 
     private BaselineExperiment experiment;
@@ -48,7 +46,6 @@ public class BaselineRequestContextBuilder {
 
     private BaselineRequestPreferences preferences;
 
-    @Inject
     public BaselineRequestContextBuilder(FilterFactorsConverter filterFactorsConverter) {
         this.filterFactorsConverter = filterFactorsConverter;
     }

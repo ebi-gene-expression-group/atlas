@@ -111,8 +111,7 @@ public class BaselineExperimentPageService {
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
         preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
-        BaselineRequestContext requestContext = preferencesForBaselineExperiments.buildRequestContext(experiment,
-                preferences);
+        BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment,preferences);
 
         model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
         model.addAllAttributes(experiment.getBaselineAttributes());
@@ -192,8 +191,7 @@ public class BaselineExperimentPageService {
                 resultForThisGene.addProperty("geneName", e.getKey());
 
                 preferences.setGeneQuery(GeneQuery.create(e.getValue()));
-                BaselineRequestContext context = preferencesForBaselineExperiments.buildRequestContext(experiment,
-                        preferences);
+                BaselineRequestContext context = BaselineRequestContext.createFor(experiment,preferences);
                 GeneQueryResponse geneQueryResponse =
                         solrQueryService.fetchResponseBasedOnRequestContext(context,context.getFilteredBySpecies());
                 BaselineProfilesViewModel fetched = baselineProfilesViewModelBuilder.build

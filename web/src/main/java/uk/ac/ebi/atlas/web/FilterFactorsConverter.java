@@ -24,18 +24,14 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
-import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkState;
 
-@Named
-@Scope("singleton")
 public class FilterFactorsConverter {
 
     private static final String SEPARATOR = ":";

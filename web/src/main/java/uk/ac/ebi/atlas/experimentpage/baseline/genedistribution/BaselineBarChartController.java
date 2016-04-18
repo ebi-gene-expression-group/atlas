@@ -48,10 +48,16 @@ public class BaselineBarChartController {
     private BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader;
 
     @Inject
-    public BaselineBarChartController(BarChartTradersCache barChartTradersCache, FilterFactorsConverter filterFilterFactorsConverter,
+    public BaselineBarChartController(BarChartTradersCache barChartTradersCache,
+                                      BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader) {
+        this(barChartTradersCache, new FilterFactorsConverter(), barChartExperimentAccessKeyTrader);
+    }
+
+    BaselineBarChartController(BarChartTradersCache barChartTradersCache,
+                                      FilterFactorsConverter filterFactorsConverter,
                                       BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader) {
         this.barChartTradersCache = barChartTradersCache;
-        this.filterFactorsConverter = filterFilterFactorsConverter;
+        this.filterFactorsConverter = new FilterFactorsConverter();
         this.barChartExperimentAccessKeyTrader = barChartExperimentAccessKeyTrader;
     }
 
