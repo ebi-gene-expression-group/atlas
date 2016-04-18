@@ -1,25 +1,3 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-
 package uk.ac.ebi.atlas.acceptance.rest.tests;
 
 
@@ -37,17 +15,14 @@ import static org.hamcrest.Matchers.greaterThan;
 
 public class ExternalImageControllerIT {
 
-    private static final String EXTRA_INFO_EXPERIMENT_ACCESSION = "E-GEOD-26284";
-    private static final String RNASEQ_EXPERIMENT_ACCESSION = "E-GEOD-38400";
-    private static final String MICROARRAY_EXPERIMENT_ACCESSION = "E-MTAB-1066";
+    private static final String EXTRA_INFO_EXPERIMENT_ACCESSION = "E-MTAB-2812";
+    private static final String RNASEQ_EXPERIMENT_ACCESSION = "E-GEOD-54705";
+    private static final String MICROARRAY_EXPERIMENT_ACCESSION = "E-GEOD-34130";
 
     private static final String EXTRA_INFO_IMAGE_URL = "/gxa/external-resources/".concat(EXTRA_INFO_EXPERIMENT_ACCESSION).concat("/extra-info.png");
-
     private static final String RNASEQ_MA_PLOT_IMAGE_URL_TEMPLATE = "/gxa/external-resources/".concat(RNASEQ_EXPERIMENT_ACCESSION).concat("/{0}/ma-plot.png");
-
     private static final String MICROARRAY_MA_PLOT_IMAGE_URL_TEMPLATE = "/gxa/external-resources/".concat(MICROARRAY_EXPERIMENT_ACCESSION).concat("/{0}/{1}/ma-plot.png");
-
-    private static final String GSEA_PLOT_IMAGE_URL_TEMPLATE = "/gxa/external-resources/E-GEOD-11758/{0}/gsea_{1}.png";
+    private static final String GSEA_PLOT_IMAGE_URL_TEMPLATE = "/gxa/external-resources/".concat(RNASEQ_EXPERIMENT_ACCESSION).concat("/{0}/gsea_{1}.png");
 
     @Test
     public void responseForExtraInfoImageShouldBeNonEmpty() {
@@ -57,34 +32,34 @@ public class ExternalImageControllerIT {
 
     @Test
     public void responseForGseaPlotsShouldBeNonEmpty() {
-        String goUrl = MessageFormat.format(GSEA_PLOT_IMAGE_URL_TEMPLATE, "g1_g2", "go");
+        String goUrl = MessageFormat.format(GSEA_PLOT_IMAGE_URL_TEMPLATE, "g6_g2", "go");
         responseAssertions(new EndPoint(goUrl));
 
-        String interproUrl = MessageFormat.format(GSEA_PLOT_IMAGE_URL_TEMPLATE, "g1_g2", "interpro");
+        String interproUrl = MessageFormat.format(GSEA_PLOT_IMAGE_URL_TEMPLATE, "g6_g2", "interpro");
         responseAssertions(new EndPoint(interproUrl));
 
-        String reactomeUrl = MessageFormat.format(GSEA_PLOT_IMAGE_URL_TEMPLATE, "g1_g2", "reactome");
+        String reactomeUrl = MessageFormat.format(GSEA_PLOT_IMAGE_URL_TEMPLATE, "g6_g2", "reactome");
         responseAssertions(new EndPoint(reactomeUrl));
 
     }
 
     @Test
     public void responseForMicroarrayMaPlotImageShouldBeNonEmpty() {
-        String url = MessageFormat.format(MICROARRAY_MA_PLOT_IMAGE_URL_TEMPLATE, "A-AFFY-35", "g2_g3");
+        String url = MessageFormat.format(MICROARRAY_MA_PLOT_IMAGE_URL_TEMPLATE, "A-AFFY-2", "g9_g3");
         responseAssertions(new EndPoint(url));
 
-        url = MessageFormat.format(MICROARRAY_MA_PLOT_IMAGE_URL_TEMPLATE, "A-AFFY-35", "g2_g1");
+        url = MessageFormat.format(MICROARRAY_MA_PLOT_IMAGE_URL_TEMPLATE, "A-AFFY-2", "g2_g1");
         responseAssertions(new EndPoint(url));
 
     }
 
     @Test
     public void responseForDifferentContrastsShouldBeDifferent() {
-        String url = MessageFormat.format(MICROARRAY_MA_PLOT_IMAGE_URL_TEMPLATE, "A-AFFY-35", "g2_g3");
+        String url = MessageFormat.format(MICROARRAY_MA_PLOT_IMAGE_URL_TEMPLATE, "A-AFFY-2", "g2_g3");
         byte[] responseBodyForContrast1 = new EndPoint(url).getResponse().getBody().asByteArray();
         assertThat(responseBodyForContrast1, is(notNullValue()));
 
-        url = MessageFormat.format(MICROARRAY_MA_PLOT_IMAGE_URL_TEMPLATE, "A-AFFY-35", "g2_g1");
+        url = MessageFormat.format(MICROARRAY_MA_PLOT_IMAGE_URL_TEMPLATE, "A-AFFY-2", "g2_g1");
         byte[] responseBodyForContrast2 = new EndPoint(url).getResponse().getBody().asByteArray();
         assertThat(responseBodyForContrast2, is(notNullValue()));
 
@@ -94,13 +69,13 @@ public class ExternalImageControllerIT {
 
     @Test
     public void responseForRnaSeqMaPlotImageShouldBeNonEmpty() {
-        String url = MessageFormat.format(RNASEQ_MA_PLOT_IMAGE_URL_TEMPLATE, "g1_g4");
+        String url = MessageFormat.format(RNASEQ_MA_PLOT_IMAGE_URL_TEMPLATE, "g5_g2");
         responseAssertions(new EndPoint(url));
 
-        url = MessageFormat.format(RNASEQ_MA_PLOT_IMAGE_URL_TEMPLATE, "g1_g2");
+        url = MessageFormat.format(RNASEQ_MA_PLOT_IMAGE_URL_TEMPLATE, "g3_g2");
         responseAssertions(new EndPoint(url));
 
-        url = MessageFormat.format(RNASEQ_MA_PLOT_IMAGE_URL_TEMPLATE, "g1_g3");
+        url = MessageFormat.format(RNASEQ_MA_PLOT_IMAGE_URL_TEMPLATE, "g6_g2");
         responseAssertions(new EndPoint(url));
     }
 
