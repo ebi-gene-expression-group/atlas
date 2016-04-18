@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex;
 
 import com.google.common.collect.ImmutableSet;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -12,9 +11,7 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,7 +24,7 @@ public class AnalyticsSearchDAOIT {
 
     @Test
     public void all() {
-        ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("*"));
+        ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create());
         assertThat(experimentTypes, containsInAnyOrder("microarray_1colour_microrna_differential", "microarray_1colour_mrna_differential", "microarray_2colour_mrna_differential", "rnaseq_mrna_baseline", "rnaseq_mrna_differential", "proteomics_baseline"));
     }
 
@@ -36,7 +33,6 @@ public class AnalyticsSearchDAOIT {
         ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("ENSG00000005810"));
         assertThat(experimentTypes, containsInAnyOrder("proteomics_baseline", "rnaseq_mrna_baseline"));
     }
-
 
     @Test
     public void diffResultOnly() {
