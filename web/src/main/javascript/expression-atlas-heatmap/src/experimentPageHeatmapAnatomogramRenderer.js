@@ -5,8 +5,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var $ = require('jquery');
-
 //*------------------------------------------------------------------*
 
 var HeatmapAnatomogramContainer = require('./ExperimentPageHeatmapAnatomogramContainer.jsx');
@@ -47,7 +45,8 @@ exports.render = function(options) {
                 anatomogram: anatomogramData, columnHeaders: columnHeaders, nonExpressedColumnHeaders: nonExpressedColumnHeaders,
                 multipleColumnHeaders: multipleColumnHeaders,
                 profiles: profiles, jsonCoexpressions: jsonCoexpressions, geneSetProfiles: geneSetProfiles,
-                atlasBaseURL: heatmapConfig.atlasHost + heatmapConfig.contextRoot, linksAtlasBaseURL: heatmapConfig.atlasHost + heatmapConfig.contextRoot
+                atlasBaseURL: heatmapConfig.atlasHost + heatmapConfig.contextRoot,
+                linksAtlasBaseURL: heatmapConfig.atlasHost + heatmapConfig.contextRoot
             }
         ),
         document.getElementById("gxaExperimentPageHeatmapAnatomogram")
