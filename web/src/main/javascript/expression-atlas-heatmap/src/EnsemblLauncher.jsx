@@ -47,8 +47,7 @@ var EnsemblLauncher = React.createClass({
     _ensemblTrackURL: function (baseURL, selectedColumnId, selectedGeneId) {
         var ensemblSpecies = ensemblUtils.toEnsemblSpecies(this.props.species);
         var atlasTrackBaseURLWithTrackFileHeader =
-            window.location.protocol
-            + "//" + window.location.host + this.props.atlasBaseURL
+            this.props.atlasBaseURL
             + "/experiments/" + this.props.experimentAccession
             + "/tracks/" + this.props.experimentAccession + "." + selectedColumnId;
         var contigViewBottom =
@@ -69,6 +68,7 @@ var EnsemblLauncher = React.createClass({
         if (!this.state.selectedColumnId || !this.state.selectedGeneId) {
             return;
         }
+        console.log(this._ensemblTrackURL(baseURL,this.state.selectedColumnId,this.state.selectedGeneId));
         window.open(this._ensemblTrackURL(baseURL,this.state.selectedColumnId,this.state.selectedGeneId), '_blank');
     },
 
