@@ -1,24 +1,3 @@
-<%--
-  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  ~
-  ~
-  ~ For further details of the Gene Expression Atlas project, including source code,
-  ~ downloads and documentation, please see:
-  ~
-  ~ http://gxa.github.com/gxa
-  --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -42,8 +21,7 @@
 
 
 <div id="experimentDescription">
-    <a id="goto-experiment" class="thick-link" title="Experiment Page"
-       href="${experimentURL}">${experimentDescription}</a>
+    <a id="goto-experiment" class="thick-link" href="${experimentURL}">${experimentDescription}</a>
     <c:if test="${hasExtraInfo}">
         <a id="extra-info"
            href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">
@@ -99,7 +77,9 @@
 
             var $pubmedGeneQueries = $('.pubmed-genequery');
 
-            $pubmedGeneQueries.tooltip();
+            $pubmedGeneQueries.tooltip({
+                tooltipClass: "gxaHelpTooltip"
+            });
 
             $pubmedGeneQueries.click(function (event) {
                 var pubmedId = $(event.target).attr("data-pubmed-id");
