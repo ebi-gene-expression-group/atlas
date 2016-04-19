@@ -1,9 +1,9 @@
-table#experiment-design-table {
-    width: 100%;
-    border: none;
+#experiment-design-table {
+    border-width: 1px;
+    border-color: lightgrey;
 }
 
-table#experiment-design-table th, td {
+#experiment-design-table th, td {
     border: none; /* Override ebi-visual.css */
     text-align: center;
 }
@@ -43,9 +43,4 @@ table#experiment-design-table th, td {
 
 .gxaNoTextButton .ui-button-text {
     padding: 2px;
-}
-
-#download-button {
-    padding-bottom: 15px;
-    padding-left: 15px;
 }

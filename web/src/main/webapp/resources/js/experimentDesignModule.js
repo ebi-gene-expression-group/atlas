@@ -12,10 +12,6 @@ var experimentDesignTableModule = (function ($) {
         _assayHeaders,
         _oTable;
 
-    var calcDataTableWidth = function () {
-        return $('#contents').width() - 100;
-    };
-
     function initColumns(aoColumnDefs, values, startingFromColumnIndex) {
         for (var value in values) {
             aoColumnDefs[startingFromColumnIndex] = {
@@ -100,8 +96,6 @@ var experimentDesignTableModule = (function ($) {
             _oTable.fnDraw();
         });
 
-        $('div.gxaDownload').html($('#download-button')).attr('style', 'float: right');
-
         $(window).resize(function () {
             _adjustTableSize();
         });
@@ -119,15 +113,13 @@ var experimentDesignTableModule = (function ($) {
         $('#samplesHeader').attr('colspan', Object.keys(_sampleHeaders).length);
         $('#factorsHeader').attr('colspan', Object.keys(_factorHeaders).length);
 
-        $('#download-experiment-design-link').button().tooltip();
+        $('#download-experiment-design-link').button().tooltip({
+            tooltipClass: "gxaHelpTooltip"
+        });
     }
 
     function _adjustTableSize() {
-        var oSettings = _oTable.fnSettings();
-        oSettings.oScroll.sX = calcDataTableWidth();
-
-        // maybe you need to redraw the table (not sure about this)
-        _oTable.fnAdjustColumnSizing(false);
+        _oTable.fnAdjustColumnSizing();
     }
 
     function _init(assayHeaders, dataSet, runAccessions, sampleHeaders, factorHeaders) {

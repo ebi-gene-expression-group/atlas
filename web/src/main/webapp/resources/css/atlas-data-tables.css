@@ -3,11 +3,15 @@
  */
 
 .dataTables_wrapper {
-    width: 99%;
+    padding: 0 9px;  /* Combined with L14 to comply with ebi-visual.css:92 */
     margin: auto;
     position: relative;
-    /*clear: both;*/
+    clear: both;
     zoom: 1; /* Feeling sorry for IE */
+}
+
+.dataTable {
+    width: 100%;  /* Combined with L6 to comply with ebi-visual.css:92 */
 }
 
 .dataTables_length {
