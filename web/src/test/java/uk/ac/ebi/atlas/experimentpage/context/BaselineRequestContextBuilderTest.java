@@ -71,7 +71,7 @@ public class BaselineRequestContextBuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineRequestContextBuilder(filterFactorsConverterMock);
+        subject = new BaselineRequestContextBuilder(filterFactorsConverterMock, new BaselineRequestContext());
 
         when(factorMock.getType()).thenReturn(FACTOR_TYPE);
         when(factorMock.getValue()).thenReturn(FACTOR_VALUE);

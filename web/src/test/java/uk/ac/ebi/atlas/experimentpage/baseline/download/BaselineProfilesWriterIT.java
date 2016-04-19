@@ -80,7 +80,7 @@ public class BaselineProfilesWriterIT {
     public Resource tsvFileMastheadTemplateResource;
 
     BaselineRequestContextBuilder builderForExperiment() throws ExecutionException {
-        return new BaselineRequestContextBuilder(filterFactorsConverter).forExperiment(baselineExperimentsCache
+        return new BaselineRequestContextBuilder(filterFactorsConverter, new BaselineRequestContext()).forExperiment(baselineExperimentsCache
                 .getExperiment(E_MTAB_513));
     }
 
