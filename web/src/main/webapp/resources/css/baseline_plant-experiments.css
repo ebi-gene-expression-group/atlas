@@ -21,9 +21,3 @@
         margin-right: 0;
     } */
 }
-
-/*FEED NEWS*/
-.bloc_blog  ul {padding: 0 9px;}
-.bloc_blog ul li {list-style: none;}
-.bloc_blog .rssRow div  {color:#777; font-size: 90%;}
-.bloc_blog h3 { margin: 9px 0; clear: both; line-height:1.2;}
