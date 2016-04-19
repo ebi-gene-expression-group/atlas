@@ -1,3 +1,6 @@
+<%--@elvariable id="experimentAccession" type="java.lang.String"--%>
+<%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
@@ -10,7 +13,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/atlas-data-tables.css">
 
 <c:if test="${not empty param.accessKey}">
-    <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"></c:set>
+    <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"/>
 </c:if>
 
 <div class="grid_24 gxaNewSection">
@@ -24,13 +27,12 @@
                 <input type="checkbox" id="showOnlyAnalysedRuns" name="showOnlyAnalysedRuns" checked="yes"/>
             </div>
 
-            <c:if test="${!type.isBaseline()}">
+            <c:if test="${!type.baseline}">
                 <div style="float: right">
                     <div style="display: inline-block">
                         <form:label path="selectedContrast" cssStyle="vertical-align: middle;">Comparison: </form:label>
                         <input type="hidden" name="accessKey" value="${param.accessKey}"/>
-                        <form:select path="selectedContrast" items="${contrasts}" itemValue="id"
-                                     itemLabel="displayName"/>
+                        <form:select path="selectedContrast" items="${contrasts}" itemValue="id" itemLabel="displayName"/>
                     </div>
                     <div style="display: inline-block; text-align: right">
                         <span style="vertical-align: middle; padding-left: 10px">Reference:</span>
