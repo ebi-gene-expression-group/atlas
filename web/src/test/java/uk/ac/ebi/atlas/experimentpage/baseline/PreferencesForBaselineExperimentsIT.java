@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -27,8 +28,8 @@ public class PreferencesForBaselineExperimentsIT {
     @Inject
     BaselineExperimentsCache baselineExperimentsCache;
 
-    @Inject
-    PreferencesForBaselineExperiments subject;
+
+    PreferencesForBaselineExperiments subject = new PreferencesForBaselineExperiments();
 
     @Test
     public void searchingForAllFactorsSetsSpecificToFalse_singleFactorExperiment() throws ExecutionException {

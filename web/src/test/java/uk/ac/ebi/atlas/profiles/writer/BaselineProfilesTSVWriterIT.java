@@ -59,9 +59,6 @@ public class BaselineProfilesTSVWriterIT {
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;
 
-    @Inject
-    private BaselineRequestContextBuilder baselineRequestContextBuilder;
-
     private BaselineRequestPreferences requestPreferences;
 
     private BaselineRequestContext requestContext;
@@ -71,9 +68,7 @@ public class BaselineProfilesTSVWriterIT {
         requestPreferences = new BaselineRequestPreferences();
         requestPreferences.setQueryFactorType("ORGANISM_PART");
         BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
-        requestContext = baselineRequestContextBuilder.forExperiment(baselineExperiment)
-                .withPreferences(requestPreferences).build();
-
+        requestContext = BaselineRequestContext.createFor(baselineExperiment,requestPreferences);
     }
 
     @After
@@ -144,8 +139,8 @@ public class BaselineProfilesTSVWriterIT {
         requestPreferences.setQueryFactorType("CELL_LINE");
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("HPC-PL cell line", "Mickey Mouse")));
 
-        BaselineRequestContext requestContext = baselineRequestContextBuilder.forExperiment(multidimensionalExperiment)
-                                                              .withPreferences(requestPreferences).build();
+        BaselineRequestContext requestContext = BaselineRequestContext.createFor(multidimensionalExperiment,
+                requestPreferences);
 
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
@@ -164,8 +159,7 @@ public class BaselineProfilesTSVWriterIT {
         requestPreferences.setQueryFactorType("ORGANISM_PART");
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("brain")));
 
-        BaselineRequestContext requestContext = baselineRequestContextBuilder.forExperiment(experiment)
-                                                              .withPreferences(requestPreferences).build();
+        BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment,requestPreferences);
 
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 

@@ -54,9 +54,6 @@ public class BaselineProfilesWriterIT {
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;
 
-    @Inject
-    FilterFactorsConverter filterFactorsConverter;
-
     @Mock
     PrintWriter printWriterMock;
 
@@ -80,7 +77,7 @@ public class BaselineProfilesWriterIT {
     public Resource tsvFileMastheadTemplateResource;
 
     BaselineRequestContextBuilder builderForExperiment() throws ExecutionException {
-        return new BaselineRequestContextBuilder(filterFactorsConverter).forExperiment(baselineExperimentsCache
+        return new BaselineRequestContextBuilder(new FilterFactorsConverter()).forExperiment(baselineExperimentsCache
                 .getExperiment(E_MTAB_513));
     }
 

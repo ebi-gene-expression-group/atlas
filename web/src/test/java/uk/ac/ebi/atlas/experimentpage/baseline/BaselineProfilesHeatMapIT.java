@@ -45,9 +45,6 @@ public class BaselineProfilesHeatMapIT {
     private BaselineExperimentsCache baselineExperimentsCache;
 
     @Inject
-    BaselineRequestContextBuilder baselineRequestContextBuilder;
-
-    @Inject
     SolrQueryService solrQueryService;
 
     private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
@@ -63,10 +60,7 @@ public class BaselineProfilesHeatMapIT {
         BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(E_MTAB_513);
 
         requestPreferences.setQueryFactorType("ORGANISM_PART");
-        baselineRequestContext =
-                baselineRequestContextBuilder.forExperiment(baselineExperiment)
-                .withPreferences(requestPreferences)
-                .build();
+        baselineRequestContext = BaselineRequestContext.createFor(baselineExperiment, requestPreferences);
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true
