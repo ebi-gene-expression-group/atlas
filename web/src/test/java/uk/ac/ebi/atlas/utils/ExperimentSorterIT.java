@@ -12,9 +12,11 @@ import javax.inject.Inject;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 21/07/15.
@@ -24,10 +26,7 @@ import static org.hamcrest.core.Is.is;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class ExperimentSorterIT {
-
-    private static final String BIGGEST_TEST_EXPERIMENT_ACCESSION_E_GEOD_12108 = "E-GEOD-12108";
-    private static final String SMALLEST_TEST_EXPERIMENT_ACCESSION_E_MTAB_2039 = "E-MTAB-2039";
-
+    
     @Inject
     ExperimentSorter subject;
 
@@ -37,14 +36,25 @@ public class ExperimentSorterIT {
         Iterator<String> iterator = experimentAccessionsPerSizeDescending.iterator();
 
         String firstExperiment = iterator.next();
-        assertThat(firstExperiment, is(BIGGEST_TEST_EXPERIMENT_ACCESSION_E_GEOD_12108));
+
 
         String lastExperiment = firstExperiment;
         while (iterator.hasNext()) {
             lastExperiment = iterator.next();
         }
 
-        assertThat(lastExperiment, is(SMALLEST_TEST_EXPERIMENT_ACCESSION_E_MTAB_2039));
+        Long firstSize = -1L;
+        Long lastSize = -1L;
+
+        for(Map.Entry<Long, Collection<String>> e: subject.reverseSortAllExperimentsPerSize().asMap().entrySet()){
+            if(e.getValue().contains(lastExperiment)){
+                lastSize = e.getKey();
+            }
+            if(e.getValue().contains(firstExperiment)){
+                firstSize = e.getKey();
+            }
+        }
+        assertTrue(firstSize > 0 && lastSize > 0 && firstSize >= lastSize);
     }
 
     // TODO https://www.pivotaltracker.com/story/show/101118548
