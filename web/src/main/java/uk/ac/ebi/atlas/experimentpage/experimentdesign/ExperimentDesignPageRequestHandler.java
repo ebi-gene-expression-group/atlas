@@ -88,14 +88,8 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
         extendModel(model, experiment, experimentAccession);
 
         model.addAttribute("preferences", new ExperimentDesignPageRequestPreferences());
-        //Experiment design page is used for both the baseline and differential design pages, and these attributes
-        // only trigger for differential pages, but Spring will be upset if we don't provide them.
-        model.addAttribute("referenceAssays", gson.toJson(Sets.newHashSet()));
-        model.addAttribute("testAssays", gson.toJson(Sets.newHashSet()));
-
 
         return "experiment-experiment-design";
-
     }
 
     protected abstract void extendModel(Model model, T experiment, String experimentAccession);
