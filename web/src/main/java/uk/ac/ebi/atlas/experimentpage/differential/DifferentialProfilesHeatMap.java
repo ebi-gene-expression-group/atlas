@@ -1,16 +1,15 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
-import com.google.common.base.Optional;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.ProfilesHeatMapSource;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFilters;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
-import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFilters;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 

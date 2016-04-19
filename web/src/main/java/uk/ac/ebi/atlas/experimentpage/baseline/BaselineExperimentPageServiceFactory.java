@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.dao.OrganismEnsemblDAO;
 import uk.ac.ebi.atlas.dao.OrganismKingdomDAO;
@@ -49,9 +48,10 @@ public class BaselineExperimentPageServiceFactory {
     }
 
     public BaselineExperimentPageService create(BaselineProfileInputStreamFactory inputStreamFactory){
-        return new BaselineExperimentPageService(new BaselineProfilesHeatMap(rankProfilesFactory, inputStreamFactory),
+        return new BaselineExperimentPageService(new BaselineProfilesHeatMapWranglerFactory(rankProfilesFactory,
+                inputStreamFactory,baselineProfilesViewModelBuilder, solrQueryService, coexpressedGenesDao),
                 applicationProperties,
-                baselineProfilesViewModelBuilder, speciesKingdomTrader, tracksUtil, bslnUtil,
-                preferencesForBaselineExperiments, coexpressedGenesDao, solrQueryService);
+                speciesKingdomTrader, tracksUtil, bslnUtil,
+                preferencesForBaselineExperiments);
     }
 }

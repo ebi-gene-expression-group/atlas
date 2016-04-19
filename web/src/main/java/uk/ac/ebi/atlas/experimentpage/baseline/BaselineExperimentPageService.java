@@ -22,11 +22,11 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -60,33 +60,25 @@ import java.util.SortedSet;
 public class BaselineExperimentPageService {
 
     private final TracksUtil tracksUtil;
-    private final BaselineProfilesHeatMap baselineProfilesHeatMap;
+    private final BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory;
     private final ApplicationProperties applicationProperties;
-    private final BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
     private final SpeciesKingdomTrader speciesKingdomTrader;
     private BaselineExperimentUtil bslnUtil;
     private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
-    private final CoexpressedGenesDao coexpressedGenesDao;
-    private final SolrQueryService solrQueryService;
     private Gson gson = new Gson();
 
-    public BaselineExperimentPageService(BaselineProfilesHeatMap baselineProfilesHeatMap,
+    public BaselineExperimentPageService(BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory,
                                          ApplicationProperties applicationProperties,
-                                         BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                          SpeciesKingdomTrader speciesKingdomTrader,
                                          TracksUtil tracksUtil,
-                                         BaselineExperimentUtil bslnUtil, PreferencesForBaselineExperiments preferencesForBaselineExperiments
-            , CoexpressedGenesDao coexpressedGenesDao,SolrQueryService solrQueryService) {
+                                         BaselineExperimentUtil bslnUtil, PreferencesForBaselineExperiments preferencesForBaselineExperiments) {
 
         this.applicationProperties = applicationProperties;
-        this.baselineProfilesHeatMap = baselineProfilesHeatMap;
-        this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
+        this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
         this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
         this.bslnUtil = bslnUtil;
         this.preferencesForBaselineExperiments = preferencesForBaselineExperiments;
-        this.coexpressedGenesDao = coexpressedGenesDao;
-        this.solrQueryService = solrQueryService;
     }
 
     //TODO I got misplaced when refactoring, I belong in a controller, not here
@@ -121,17 +113,7 @@ public class BaselineExperimentPageService {
         model.addAttribute("queryFactorName", experimentalFactors.getFactorDisplayName(preferences.getQueryFactorType()));
         model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
 
-        Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
-
-        SortedSet<Factor> orderedFactors;
-        Set<AssayGroupFactor> filteredAssayGroupFactors;
-        if (experimentalFactors.getAllFactorsOrderedByXML() != null && !experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
-            filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactorsByXML(selectedFilterFactors);
-            orderedFactors = experimentalFactors.getComplementFactorsByXML(selectedFilterFactors);
-        } else {
-            filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors);
-            orderedFactors = experimentalFactors.getComplementFactors(selectedFilterFactors);
-        }
+        Set<AssayGroupFactor> filteredAssayGroupFactors = getFilteredAssayGroupFactors(experiment, preferences);
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
         model.addAttribute("allQueryFactors", filteredAssayGroupFactors);
@@ -144,17 +126,22 @@ public class BaselineExperimentPageService {
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
                 filteredAssayGroupFactors.iterator().next().getAssayGroupId()));
 
+        BaselineProfilesHeatMapWrangler heatMapResults = baselineProfilesHeatMapWranglerFactory.create(preferences,
+                experiment);
 
-        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext,
-                requestContext
-                .getFilteredBySpecies());
-        BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext, geneQueryResponse, false);
-        BaselineProfilesList profilesAsGeneSets = geneQueryResponse.containsGeneSets() ?
-                baselineProfilesHeatMap.fetch(requestContext, geneQueryResponse, true) : null;
+        model.addAttribute("jsonCoexpressions",
+                coexpressionsAsJsonArray(heatMapResults.getJsonCoexpressions()));
 
-        model.addAttribute("jsonCoexpressions", fetchCoexpressionsForObtainedResults(preferences,experiment,
-                orderedFactors, baselineProfiles));
-        addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, model);
+        model.addAttribute("jsonColumnHeaders", constructColumnHeaders(filteredAssayGroupFactors));
+
+        model.addAttribute("jsonProfiles", gson.toJson(heatMapResults.getJsonProfiles()));
+
+
+        Optional<BaselineProfilesViewModel> geneSets = heatMapResults.getJsonProfilesAsGeneSets();
+        model.addAttribute("jsonGeneSetProfiles",
+                geneSets.isPresent()
+                ? gson.toJson(geneSets.get())
+                : "null");
 
         if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
             model.addAllAttributes(applicationProperties.getAnatomogramProperties(species, filteredAssayGroupFactors));
@@ -178,61 +165,30 @@ public class BaselineExperimentPageService {
         }
     }
 
-    private String fetchCoexpressionsForObtainedResults(BaselineRequestPreferences preferences, BaselineExperiment
-            experiment,SortedSet<Factor> orderedFactors, BaselineProfilesList baselineProfiles) throws
-            GenesNotFoundException {
-        if (baselineProfiles.size() == 1) {
-            JsonArray result = new JsonArray();
-            GeneQuery originalGeneQuery = preferences.getGeneQuery();
+    private Set<AssayGroupFactor> getFilteredAssayGroupFactors(BaselineExperiment experiment, BaselineRequestPreferences preferences){
+        Set<Factor> selectedFilterFactors = BaselineRequestContext.createFor(experiment,preferences).getSelectedFilterFactors();
 
-            for(Map.Entry<String, ImmutableSet<String>> e: coexpressedGenesDao.coexpressedGenesForResults(experiment,
-                    baselineProfiles).entrySet()){
-                JsonObject resultForThisGene = new JsonObject();
-                resultForThisGene.addProperty("geneName", e.getKey());
-
-                preferences.setGeneQuery(GeneQuery.create(e.getValue()));
-                BaselineRequestContext context = BaselineRequestContext.createFor(experiment,preferences);
-                GeneQueryResponse geneQueryResponse =
-                        solrQueryService.fetchResponseBasedOnRequestContext(context,context.getFilteredBySpecies());
-                BaselineProfilesViewModel fetched = baselineProfilesViewModelBuilder.build
-                        (baselineProfilesHeatMap.fetch(context,geneQueryResponse, false),
-                                orderedFactors);
-                resultForThisGene.add("jsonProfiles", gson.toJsonTree(fetched).getAsJsonObject());
-                result.add(resultForThisGene);
-            }
-
-            //As we don't want to ruin SpringMVC
-            preferences.setGeneQuery(originalGeneQuery);
-
-            return gson.toJson(result);
+        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
+        if (experimentalFactors.getAllFactorsOrderedByXML() != null && !experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
+            return experimentalFactors.getComplementAssayGroupFactorsByXML(selectedFilterFactors);
         } else {
-            // we decided to only prefetch coexpressions when there is one gene
-            return gson.toJson(new JsonArray());
+            return experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors);
         }
     }
 
-
-    private void addJsonForHeatMap(BaselineProfilesList baselineProfiles, BaselineProfilesList geneSetProfiles,
-                                   Set<AssayGroupFactor> filteredAssayGroupFactors, SortedSet<Factor> orderedFactors,
-                                   Model model) {
-        if (baselineProfiles.isEmpty()) {
-            return;
+    private String coexpressionsAsJsonArray(Map<String, BaselineProfilesViewModel> coexpressions){
+        JsonArray result = new JsonArray();
+        for(Map.Entry<String, BaselineProfilesViewModel> e: coexpressions.entrySet()){
+            JsonObject resultForThisGene = new JsonObject();
+            resultForThisGene.addProperty("geneName", e.getKey());
+            resultForThisGene.add("jsonProfiles", gson.toJsonTree(e.getValue()).getAsJsonObject());
+            result.add(resultForThisGene);
         }
+        return gson.toJson(result);
+    }
 
-        ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = AssayGroupFactorViewModel.createList(filteredAssayGroupFactors);
-
-        String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
-        model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
-        BaselineProfilesViewModel profilesViewModel = baselineProfilesViewModelBuilder.build(baselineProfiles, orderedFactors);
-
-        String jsonProfiles = gson.toJson(profilesViewModel);
-
-        model.addAttribute("jsonProfiles", jsonProfiles);
-
-        if (geneSetProfiles != null) {
-            String jsonGeneSetProfiles = gson.toJson(baselineProfilesViewModelBuilder.build(geneSetProfiles, orderedFactors));
-            model.addAttribute("jsonGeneSetProfiles", jsonGeneSetProfiles);
-        }
+    private String constructColumnHeaders(Set<AssayGroupFactor> filteredAssayGroupFactors){
+        return gson.toJson(AssayGroupFactorViewModel.createList(filteredAssayGroupFactors));
     }
 
     private void addFactorMenu(Model model, BaselineExperiment experiment, BaselineRequestContext requestContext) {

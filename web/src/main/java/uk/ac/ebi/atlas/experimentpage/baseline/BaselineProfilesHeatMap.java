@@ -11,10 +11,15 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.ProfilesHeatMapSource;
 import uk.ac.ebi.atlas.profiles.baseline.*;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.SortedSet;
 import java.util.concurrent.TimeUnit;
 
 @Named

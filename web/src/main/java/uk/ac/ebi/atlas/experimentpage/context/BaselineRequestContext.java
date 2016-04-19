@@ -27,6 +27,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -88,6 +89,16 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
                 .forExperiment(experiment)
                 .withPreferences(preferences)
                 .build();
+    }
+
+    public SortedSet<Factor> getOrderedFilterFactors(){
+        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
+        Set<Factor> selectedFilterFactors = this.getSelectedFilterFactors();
+        if (experimentalFactors.getAllFactorsOrderedByXML() != null && !experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
+            return experimentalFactors.getComplementFactorsByXML(selectedFilterFactors);
+        } else {
+            return experimentalFactors.getComplementFactors(selectedFilterFactors);
+        }
     }
 
 }
