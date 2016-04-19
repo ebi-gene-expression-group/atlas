@@ -1,4 +1,5 @@
 <%--@elvariable id="isMultiExperiment" type="boolean"--%>
+<%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
 
 <c:choose>
     <c:when test="${empty jsonProfiles}">
@@ -15,18 +16,16 @@
 
     <div id="genenametooltip-content" style="display: none"></div>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
+        var heatmapData = <%@ include file="heatmap-data.jsp" %>;
+        var isMultiExperiment = ${isMultiExperiment ? true : false};
 
-            var heatmapData = <%@ include file="heatmap-data.jsp" %>;
-            var isMultiExperiment = ${isMultiExperiment ? true : false};
-
-            experimentPageHeatmap.render({
-                heatmapData: heatmapData,
-                isMultiExperiment: isMultiExperiment,
-                isDifferential: ${type.differential},
-                isProteomicsBaseline: ${type.proteomicsBaseline}
-            });
-
-        </script>
+        experimentPageHeatmap.render({
+            heatmapData: heatmapData,
+            isMultiExperiment: isMultiExperiment,
+            isDifferential: ${type.differential},
+            isProteomicsBaseline: ${type.proteomicsBaseline}
+        });
+    </script>
     </c:otherwise>
 </c:choose>
