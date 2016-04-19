@@ -22,11 +22,17 @@
 
 package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
+import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineRequestPreferencesValidator;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 
@@ -81,6 +87,13 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
 
         extendModel(model, experiment, experimentAccession);
 
+        model.addAttribute("preferences", new ExperimentDesignPageRequestPreferences());
+        //Experiment design page is used for both the baseline and differential design pages, and these attributes
+        // only trigger for differential pages, but Spring will be upset if we don't provide them.
+        model.addAttribute("referenceAssays", gson.toJson(Sets.newHashSet()));
+        model.addAttribute("testAssays", gson.toJson(Sets.newHashSet()));
+
+
         return "experiment-experiment-design";
 
     }
@@ -88,6 +101,14 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
     protected abstract void extendModel(Model model, T experiment, String experimentAccession);
 
     protected abstract Set<String> getAnalysedRowsAccessions(T experiment);
+
+    static class ExperimentDesignPageRequestPreferences extends BaselineRequestPreferences {
+
+        /*Fixes the experiment-design magic Spring form element*/
+        public String getSelectedContrast(){
+            return "";
+        }
+    }
 
 }
 

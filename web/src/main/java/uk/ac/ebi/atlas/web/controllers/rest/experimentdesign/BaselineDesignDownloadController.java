@@ -50,6 +50,15 @@ public class BaselineDesignDownloadController extends ExperimentDesignDownloadCo
 
     }
 
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params =
+            {"type=PROTEOMICS_BASELINE"})
+    public void downloadExperimentDesignProteomics(HttpServletRequest request, HttpServletResponse response) throws
+            IOException {
+
+        extractExperimentDesign(request, response);
+
+    }
+
     @Override
     protected Set<String> getAnalysedRowsAccessions(BaselineExperiment experiment) {
         return experiment.getExperimentRunAccessions();
