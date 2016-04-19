@@ -129,18 +129,20 @@ public class BaselineExperimentPageService {
         BaselineProfilesHeatMapWrangler heatMapResults = baselineProfilesHeatMapWranglerFactory.create(preferences,
                 experiment);
 
-        model.addAttribute("jsonCoexpressions",
-                coexpressionsAsJsonArray(heatMapResults.getJsonCoexpressions()));
+
 
         model.addAttribute("jsonColumnHeaders", constructColumnHeaders(filteredAssayGroupFactors));
 
-        model.addAttribute("jsonProfiles", gson.toJson(heatMapResults.getJsonProfiles()));
+        model.addAttribute("jsonProfiles", viewModelAsJson(heatMapResults.getJsonProfiles()));
+
+        model.addAttribute("jsonCoexpressions",
+                coexpressionsAsJsonArray(heatMapResults.getJsonCoexpressions()));
 
 
         Optional<BaselineProfilesViewModel> geneSets = heatMapResults.getJsonProfilesAsGeneSets();
         model.addAttribute("jsonGeneSetProfiles",
                 geneSets.isPresent()
-                ? gson.toJson(geneSets.get())
+                ? viewModelAsJson(geneSets.get())
                 : "null");
 
         if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
@@ -163,6 +165,13 @@ public class BaselineExperimentPageService {
             model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
             model.addAttribute("enableEnsemblLauncher", false);
         }
+    }
+
+    // heatmap-data.jsp will understand "" as empty
+    private String viewModelAsJson(BaselineProfilesViewModel viewModel){
+        return viewModel.getRows().length > 0
+                ? gson.toJson(viewModel)
+                : "";
     }
 
     private Set<AssayGroupFactor> getFilteredAssayGroupFactors(BaselineExperiment experiment, BaselineRequestPreferences preferences){
