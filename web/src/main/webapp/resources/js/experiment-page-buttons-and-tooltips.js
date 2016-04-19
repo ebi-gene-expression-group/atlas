@@ -16,8 +16,7 @@ function initExperimentPageButtonsAndTooltips() {
     $('#download-r').button().tooltip({tooltipClass: "gxaHelpTooltip"});
     $('#download-r-modal').button().tooltip({tooltipClass: "gxaHelpTooltip"});
     $('#goto-ae').tooltip({tooltipClass: "gxaHelpTooltip"});
-    $('#goto-experiment').tooltip({tooltipClass: "gxaHelpTooltip"});
-    $("#goto-experiment-name").tooltip({tooltipClass: "gxaHelpTooltip"});
     $('.array-design').tooltip({tooltipClass: "gxaHelpTooltip"});
     $('.pubmed-id').tooltip({tooltipClass: "gxaHelpTooltip"});
+
 }
