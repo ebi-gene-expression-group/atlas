@@ -38,7 +38,7 @@ import static org.junit.Assert.assertThat;
 
 public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture {
 
-    private static final String EXISTING_EXPERIMENT_ACCESSION = "E-MTAB-599";
+    private static final String EXISTING_EXPERIMENT_ACCESSION = "E-MTAB-2706";
     private static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";
     private static final String DIFFERENTIAL_EXPERIMENT_ACCESSION = "E-GEOD-22351";
 
