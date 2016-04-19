@@ -128,14 +128,9 @@
 
     <tiles:insertAttribute name="top-menu"/>
 
-    <div id="content" class="grid_24">
-
-        <div id="atlas-content">
-            <%--<div id="shadow"></div>--%>
-            <tiles:insertAttribute name="header" ignore="true"/>
-            <tiles:insertAttribute name="body"/>
-        </div>
-
+    <div id="content" class="grid_24 clearfix" role="main">
+        <tiles:insertAttribute name="header" ignore="true"/>
+        <tiles:insertAttribute name="body"/>
     </div>
 
     <tiles:insertAttribute name="footer"/>

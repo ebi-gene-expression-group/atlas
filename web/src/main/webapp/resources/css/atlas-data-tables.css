@@ -3,6 +3,8 @@
  */
 
 .dataTables_wrapper {
+    width: 99%;
+    margin: auto;
     position: relative;
     /*clear: both;*/
     zoom: 1; /* Feeling sorry for IE */

@@ -10,10 +10,6 @@ h1 {
     color: #207A7A; /* overrides embl-petrol-colours.css */
 }
 
-.gxaBody table {
-    margin: 0;
-}
-
 .gxaBody td {
     padding: 5px; /* overrides ebi-visual.css */
 }
@@ -48,15 +44,6 @@ a.help-icon {
     font: 10px Verdana, Helvetica, Arial, sans-serif;
 }
 
-.gxaNewSection {
-    padding-top: 20px;
-}
-
 .ui-button-text {
     text-align: center;
-}
-
-#atlas-content {
-    padding-left: 10px;
-    padding-right: 10px;
 }
