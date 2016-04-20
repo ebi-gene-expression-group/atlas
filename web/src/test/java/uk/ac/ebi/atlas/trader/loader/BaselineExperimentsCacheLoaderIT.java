@@ -47,8 +47,6 @@ import static org.hamcrest.Matchers.hasSize;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class BaselineExperimentsCacheLoaderIT {
 
-    private static final String EXPERIMENT_ACCESSION = "E-GEOD-30352";
-
     @Inject
     private BaselineExperimentsCacheLoader subject;
 
@@ -56,10 +54,10 @@ public class BaselineExperimentsCacheLoaderIT {
     @Test
     public void correctSpeciesReadFromDatabase() throws Exception {
         //given
-        BaselineExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
+        BaselineExperiment experiment = subject.load("E-MTAB-513");
         //then
         Set<String> species = experiment.getOrganisms();
-        assertThat(species, hasItems("Monodelphis domestica", "Gallus gallus", "Homo sapiens"));
+        assertThat(species, hasItems("Homo sapiens"));
         assertThat(species, not(hasItem("Ornithorhynchus anatinus")));
     }
 
