@@ -7,6 +7,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
+<script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/he/1.0.0/he.min.js"></script>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bioEntities.css">
 
 <h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : geneQuery.asString()}"/>
@@ -25,13 +27,15 @@
 </c:when>
 <c:otherwise>
     <section>
-        <h2 class="strapline" style="min-height:1.5em">
-            Expression Atlas results for <span class="searchterm">${searchDescription}</span>
-        </h2>
+        <div class="grid_19 alpha">
+            <h2 class="strapline" style="min-height:1.5em">
+                Expression Atlas results for <span class="searchterm">${searchDescription}</span>
+            </h2>
+        </div>
     </section>
 
     <section class="gxaSection">
-        <div id="accordion">
+        <div id="accordion" class="grid_24">
             <c:if test="${showBioentityPropertiesPane}">
                 <ul id="infoHeader" class="gxaBioEntityCardHeader">
                     <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
@@ -201,7 +205,7 @@
 
 
                         <c:if test="${not empty firstBaselineCounts}">
-                            <section class="grid_17">
+                            <section>
                                 <h5 style="padding: 0px">Other baseline experiments</h5>
                                 <h:baseline-search-results exactMatch="${exactMatch}" firstBaselineCounts="${firstBaselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery}" hideSpecies="true"/>
                             </section>

@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BaselineExpressionsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.web.*;
@@ -35,9 +34,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
     public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
 
         try {
-            baselineExperimentPageService
-                    .prepareModel(preferences, model, request,
-                            true, false, false);
+            baselineExperimentPageService.prepareModel(preferences, model, request, true, false, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
         }

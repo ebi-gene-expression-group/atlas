@@ -362,7 +362,6 @@
             // create initial tags
             var tags = o.initialTags.length ? o.initialTags : el.val().split(o.dregex);
             for (var i=0; i<tags.length; i++) {
-                debugger;
                 if (o.maxTags && i >= o.maxTags) break;
                 var tag = $.trim(tags[i].replace(/ +/, ' '));
                 if (tag) {

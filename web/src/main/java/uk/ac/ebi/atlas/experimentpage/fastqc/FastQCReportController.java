@@ -23,7 +23,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.MessageFormat;
-import java.util.Set;
 
 
 @Controller
@@ -84,19 +83,19 @@ public class FastQCReportController {
         preferences.setSelectedReport(reportSelected);
 
         //Specie selection
-        String specieSelected = preferences.getSelectedSpecie();
-        if(StringUtils.isBlank(specieSelected)) {
-            specieSelected = species;
+        String speciesSelected = preferences.getSelectedSpecies();
+        if(StringUtils.isBlank(speciesSelected)) {
+            speciesSelected = species;
         }
 
-        if(specieSelected != null) {
-            if(!specieSelected.equals(species)){
-                String parsedSelectedSpecie = splitSpecies(specieSelected).toLowerCase();
+        if(speciesSelected != null) {
+            if(!speciesSelected.equals(species)){
+                String parsedSelectedSpecie = splitSpecies(speciesSelected).toLowerCase();
                 String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/{2}", experimentAccession, parsedSelectedSpecie, "qc.html");
                 return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
             }
         }
-        preferences.setSelectedSpecie(specieSelected);
+        preferences.setSelectedSpecies(speciesSelected);
 
         if(!fastQCReportUtil.hasFastQC(experimentAccession, species)) {
             throw new ResourceNotFoundException("No fast qc report for " + experimentAccession);
@@ -110,8 +109,8 @@ public class FastQCReportController {
 
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
     public String forwardToQcResource(String experimentAccession, String species, String resource) throws IOException {
-        String specie_s = splitSpecies(species).toLowerCase();
-        String path = MessageFormat.format("/expdata/{0}/qc/{1}/{2}/", experimentAccession, specie_s, resource);
+        String species_s = splitSpecies(species).toLowerCase();
+        String path = MessageFormat.format("/expdata/{0}/qc/{1}/{2}/", experimentAccession, species_s, resource);
 
         return "forward:" + path;
     }
@@ -157,19 +156,19 @@ public class FastQCReportController {
         preferences.setSelectedReport(reportSelected);
 
         //Specie selection
-        String specieSelected = preferences.getSelectedSpecie();
-        if(StringUtils.isBlank(specieSelected)) {
-            specieSelected = species;
+        String speciesSelected = preferences.getSelectedSpecies();
+        if(StringUtils.isBlank(speciesSelected)) {
+            speciesSelected = species;
         }
 
-        if(specieSelected != null) {
-            if(!specieSelected.equals(species)){
-                String parsedSelectedSpecie = splitSpecies(specieSelected).toLowerCase();
+        if(speciesSelected != null) {
+            if(!speciesSelected.equals(species)){
+                String parsedSelectedSpecie = splitSpecies(speciesSelected).toLowerCase();
                 String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/mapping/{2}", experimentAccession, parsedSelectedSpecie, "tophat2.html");
                 return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
             }
         }
-        preferences.setSelectedSpecie(specieSelected);
+        preferences.setSelectedSpecies(speciesSelected);
 
         if(!fastQCReportUtil.hasMappingQC(experimentAccession, species)) {
             throw new ResourceNotFoundException("No fast qc report for " + experimentAccession);
@@ -184,8 +183,8 @@ public class FastQCReportController {
 
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
     public String forwardToMappingQcResource(String experimentAccession, String species, String resource) throws IOException {
-        String specie_s = splitSpecies(species).toLowerCase();
-        String path = MessageFormat.format("/expdata/{0}/qc/{1}/mapping/{2}", experimentAccession, specie_s, resource);
+        String species_s = splitSpecies(species).toLowerCase();
+        String path = MessageFormat.format("/expdata/{0}/qc/{1}/mapping/{2}", experimentAccession, species_s, resource);
 
         return "forward:" + path;
     }
@@ -216,19 +215,19 @@ public class FastQCReportController {
         preferences.setSelectedReport(reportSelected);
 
         //Specie selection
-        String specieSelected = preferences.getSelectedSpecie();
-        if(StringUtils.isBlank(specieSelected)) {
-            specieSelected = species;
+        String speciesSelected = preferences.getSelectedSpecies();
+        if(StringUtils.isBlank(speciesSelected)) {
+            speciesSelected = species;
         }
 
-        if(specieSelected != null) {
-            if(!specieSelected.equals(species)){
-                String parsedSelectedSpecie = splitSpecies(specieSelected).toLowerCase();
+        if(speciesSelected != null) {
+            if(!speciesSelected.equals(species)){
+                String parsedSelectedSpecie = splitSpecies(speciesSelected).toLowerCase();
                 String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/{2}", experimentAccession, parsedSelectedSpecie, "qc.html");
                 return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
             }
         }
-        preferences.setSelectedSpecie(specieSelected);
+        preferences.setSelectedSpecies(speciesSelected);
 
         String beginPath = fastQCReportUtil.buildFastQCReportIndexHtmlPath(experimentAccession, species);
 
@@ -268,8 +267,8 @@ public class FastQCReportController {
 
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
     public String forwardToFastQCReportMappingResources(String experimentAccession, String species, String resource) throws IOException {
-        String specie_s = splitSpecies(species).toLowerCase();
-        String path = MessageFormat.format("/expdata/{0}/qc/{1}/riq/{2}", experimentAccession, specie_s, resource);
+        String species_s = splitSpecies(species).toLowerCase();
+        String path = MessageFormat.format("/expdata/{0}/qc/{1}/riq/{2}", experimentAccession, species_s, resource);
 
         return "forward:" + path;
     }

@@ -1,6 +1,6 @@
 <%@ attribute name="ebiSearchTerm" required="true" type="java.lang.String"%>
 
-<aside id="search-extras" class="push_18 grid_6 shortcuts expander">
+<aside id="search-extras" class="push_18 grid_6 omega shortcuts expander">
     <input type="text"
            value="${ebiSearchTerm}"
            style="display: none" id="searchterm">
