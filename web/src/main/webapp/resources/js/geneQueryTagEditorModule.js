@@ -17,7 +17,7 @@ var geneQueryTagEditorModule = (function($) {
             })
             .tagEditor({
                 delimiter:'\t\n',
-                tagMaxLength: 20,
+                //tagMaxLength: 20,
                 maxLength: 50,
                 autocomplete: {
                     delay: 500,
