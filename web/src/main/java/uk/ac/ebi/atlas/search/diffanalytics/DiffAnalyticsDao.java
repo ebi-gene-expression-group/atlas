@@ -57,8 +57,6 @@ public class DiffAnalyticsDao {
 
     static final int RESULT_SIZE = 50;
 
-    private final DataSource dataSource;
-
     private final JdbcTemplate jdbcTemplate;
 
     private DiffAnalyticsRowMapper dbeRowMapper;
@@ -67,9 +65,12 @@ public class DiffAnalyticsDao {
 
     @Inject
     public DiffAnalyticsDao(@Qualifier("dataSourceOracle") DataSource dataSource, DiffAnalyticsRowMapper dbeRowMapper, OracleObjectFactory oracleObjectFactory) {
+        this(new JdbcTemplate(dataSource), dbeRowMapper, oracleObjectFactory) ;
+    }
+
+    DiffAnalyticsDao(JdbcTemplate jdbcTemplate, DiffAnalyticsRowMapper dbeRowMapper, OracleObjectFactory oracleObjectFactory) {
+        this.jdbcTemplate = jdbcTemplate;
         this.dbeRowMapper = dbeRowMapper;
-        this.dataSource = dataSource;
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.oracleObjectFactory = oracleObjectFactory;
     }
 
@@ -129,7 +130,7 @@ public class DiffAnalyticsDao {
 
         final MutableInt count = new MutableInt(0);
 
-        JdbcTemplate template = new JdbcTemplate(dataSource);
+        JdbcTemplate template = new JdbcTemplate(jdbcTemplate.getDataSource());
 
         template.setFetchSize(5000);
 

@@ -71,6 +71,8 @@ public class BioentitiesSearchController {
             selectedSpecies = requestParameters.getOrganism().trim();
         }
 
+
+
         if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
             //If Query just for a single bioentityID
             Optional<String> geneIdRedirectString = getGeneIdRedirectString(geneQuery, selectedSpecies, requestParameters.isExactMatch());
@@ -87,7 +89,11 @@ public class BioentitiesSearchController {
 
         String condition = efoExpander.addEfoAccessions(requestParameters.getConditionQuery()).asString();
 
-        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQueryString, condition, selectedSpecies.toLowerCase(), requestParameters.isExactMatch());
+        Optional<Set<String>> geneIdsFromGeneQuery = solrQueryService.expandGeneQueryIntoGeneIds
+                (geneQueryString, selectedSpecies.toLowerCase(), requestParameters.isExactMatch());
+
+        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups =
+                baselineExperimentAssayGroupSearchService.query(geneQueryString, condition, selectedSpecies.toLowerCase(), geneIdsFromGeneQuery);
 
         if (hasAllSameSpecies(baselineExperimentAssayGroups)
                 && hasAnyTissueExperiment(baselineExperimentAssayGroups)
@@ -104,7 +110,8 @@ public class BioentitiesSearchController {
         }
 
         // used to populate diff-heatmap-table
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(geneQueryString, condition, selectedSpecies, requestParameters.isExactMatch());
+        DiffAnalyticsList bioentityExpressions =
+                diffAnalyticsSearchService.fetchTop(condition,selectedSpecies, geneIdsFromGeneQuery);
 
         model.addAttribute("bioentities", bioentityExpressions);
         model.addAttribute("preferences", new DifferentialRequestPreferences());

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Iterables;
@@ -21,6 +22,7 @@ import java.util.Set;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -30,15 +32,13 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     @Inject
     BaselineExperimentAssayGroupSearchService subject;
 
-    private final static boolean IS_EXACT_MATCH_TRUE = true;
-
     @Test
     public void geneQuery2IDsDifferentSpecies()  {
         String geneQuery = "ENSG00000161547 ENSMUSG00000030105";
         String condition = "";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
         // System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
         assertThat(experimentAccessions, containsInAnyOrder("E-PROT-3", "E-MTAB-513", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352", "E-MTAB-2800", "E-MTAB-2800", "E-MTAB-2800"));
@@ -50,7 +50,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
         //System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
         assertThat(experimentAccessions, contains("E-MTAB-513", "E-PROT-3", "E-MTAB-1733", "E-MTAB-599", "E-MTAB-2800", "E-MTAB-2800", "E-MTAB-2800"));
@@ -62,7 +62,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, hasSize(0));
@@ -74,7 +74,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions.size(), is(17));
@@ -94,7 +94,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
@@ -107,7 +107,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, hasSize(50));
@@ -119,7 +119,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "pregnant";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
 
         assertThat(results, hasSize(0));
     }
@@ -130,7 +130,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "frozen specimen";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         BaselineExperimentAssayGroup eMtab1733 = results.iterator().next();
@@ -145,7 +145,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "adipose thymus";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-GEOD-26284", "E-MTAB-513", "E-MTAB-2836", "E-MTAB-1733", "E-MTAB-599"));
@@ -165,7 +165,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "heart AND frozen specimen";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         BaselineExperimentAssayGroup eMtab1733 = results.iterator().next();
@@ -180,7 +180,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         BaselineExperimentAssayGroup first = results.iterator().next();
@@ -196,7 +196,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "";
         String species = "homo sapiens";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         //System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
@@ -244,7 +244,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "heart";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-PROT-3", "E-MTAB-1733", "E-MTAB-599"));
@@ -264,7 +264,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "heart";
         String species = "mus musculus";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-599"));
@@ -281,7 +281,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "wild type";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         BaselineExperimentAssayGroup eMtab2812_hermaphroditeNSM = results.iterator().next();
@@ -300,7 +300,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "foobar condition";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
 
         assertThat(results.size(), is(0));
     }
@@ -311,7 +311,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-PROT-3", "E-MTAB-1733", "E-MTAB-599"));
@@ -324,7 +324,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "renal glomerulus";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
 
         assertThat(results.size(), is(0));
     }
@@ -335,7 +335,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "adult";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(results.size(), is(9));
@@ -348,7 +348,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "adult";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(results.size(), is(2));
@@ -361,15 +361,28 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "adult";
         String species = "homo sapiens";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, IS_EXACT_MATCH_TRUE);
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(results.size(), is(1));
         assertThat(experimentAccessions, contains("E-MTAB-1733"));
     }
 
+    @Test
+    public void madeUpParametersYieldNoResults(){
+        assertEquals(0, resultsFor("Such_a_wrong_gene_query","",""));
+        assertEquals(0, resultsFor("","totally_made_up_condition",""));
+        assertEquals(0, resultsFor("","","species_yeti"));
+    }
 
-    public static List<String> getExperimentAccessions(Set<BaselineExperimentAssayGroup> results) {
+
+    private List<String> resultsFor(String geneQuery, String condition, String species){
+        return getExperimentAccessions(
+                subject.query(geneQuery, condition, species, Optional.<Set<String>>absent())
+                );
+    }
+
+    private static List<String> getExperimentAccessions(Set<BaselineExperimentAssayGroup> results) {
         List<String> names = Lists.newArrayList();
         for (BaselineExperimentAssayGroup result: results) {
             names.add(result.getExperimentAccession());
@@ -377,7 +390,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         return names;
     }
 
-    public static ImmutableList<String> toStrings(Iterable<?> iterable) {
+    private static ImmutableList<String> toStrings(Iterable<?> iterable) {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
 
         for (Object o : iterable) {

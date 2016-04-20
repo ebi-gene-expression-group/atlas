@@ -33,35 +33,30 @@ public class BaselineExperimentAssayGroupSearchService {
     private final ExperimentTrader experimentTrader;
     private BaselineExperimentAssayGroupsDao baselineExperimentAssayGroupsDao;
     private BaselineConditionsSearchService baselineConditionsSearchService;
-    private SolrQueryService solrQueryService;
 
     @Inject
-    public BaselineExperimentAssayGroupSearchService(BaselineExperimentAssayGroupsDao baselineExperimentAssayGroupsDao, BaselineConditionsSearchService baselineConditionsSearchService, SolrQueryService solrQueryService, ExperimentTrader experimentTrader) {
+    public BaselineExperimentAssayGroupSearchService(BaselineExperimentAssayGroupsDao baselineExperimentAssayGroupsDao, BaselineConditionsSearchService baselineConditionsSearchService, ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
         this.baselineExperimentAssayGroupsDao = baselineExperimentAssayGroupsDao;
         this.baselineConditionsSearchService = baselineConditionsSearchService;
-        this.solrQueryService = solrQueryService;
     }
 
     boolean isEmpty(Optional<? extends Collection<?>> coll) {
         return (!coll.isPresent() || coll.get().isEmpty());
     }
 
-    public SortedSet<BaselineExperimentAssayGroup> queryAnySpecies(Set<String> geneIds, Optional<String> condition) {
-        return query(geneIds, condition, Optional.<String>absent());
-    }
-
-    public SortedSet<BaselineExperimentAssayGroup> query(Set<String> geneIds, Optional<String> condition, Optional<String> species) {
-        LOGGER.info("<query> geneIds={}, condition={}", Joiner.on(", ").join(geneIds), condition);
+    public SortedSet<BaselineExperimentAssayGroup> queryAnySpecies(Set<String> geneIds) {
+        LOGGER.info("<query> geneIds={}", Joiner.on(", ").join(geneIds));
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        String conditionString = condition.isPresent() ? condition.get() : "";
-        String speciesString = species.isPresent() ? species.get() : "";
+        String conditionString = "";
+        String speciesString = "";
 
         Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups = fetchAssayGroupsForCondition(conditionString);
 
-        SetMultimap<String, String> assayGroupsWithExpressionByExperiment = baselineExperimentAssayGroupsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, Optional.of(geneIds));
+        SetMultimap<String, String> assayGroupsWithExpressionByExperiment =
+                baselineExperimentAssayGroupsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, Optional.of(geneIds));
 
         SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups =
                 searchedForConditionButGotNoResults(conditionString, indexedAssayGroups)
@@ -78,21 +73,12 @@ public class BaselineExperimentAssayGroupSearchService {
         return (!StringUtils.isBlank(condition) && isEmpty(indexedAssayGroups));
     }
 
-    // use above query instead, see TODO below
-    @Deprecated
-    public SortedSet<BaselineExperimentAssayGroup> query(String geneQuery, String condition, String species, boolean isExactMatch) {
+    public SortedSet<BaselineExperimentAssayGroup> query(String geneQuery, String condition, String species, Optional<Set<String>> geneIds) {
         LOGGER.info("<query> geneQuery={}, condition={}", geneQuery, condition);
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
         Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups = fetchAssayGroupsForCondition(condition);
-
-        if (StringUtils.isBlank(species)) {
-            species = "";
-        }
-
-        //TODO: move outside into caller, because this is called twice, here and in DiffAnalyticsSearchService
-        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
 
         SetMultimap<String, String> assayGroupsWithExpressionByExperiment = baselineExperimentAssayGroupsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, geneIds);
 

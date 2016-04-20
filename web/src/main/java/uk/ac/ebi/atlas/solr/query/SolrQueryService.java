@@ -20,7 +20,6 @@ import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -112,18 +111,6 @@ public class SolrQueryService {
         return expandedIdentifiers;
     }
 
-    Set<String> findMatureRNAIds(String geneQuery) {
-        return findMatureRNAIds(Sets.newHashSet(bioentityPropertyValueTokenizer.split(geneQuery)));
-    }
-
-    public Set<String> findGenesFromMirBaseIDs(Collection<String> identifiers) {
-        Set<String> ensemblIDs = Sets.newHashSet();
-        for (String identifier : identifiers) {
-            ensemblIDs.addAll(fetchGeneIdentifiersFromSolr(identifier, "ensgene", true, "mirbase_id"));
-        }
-        return ensemblIDs;
-    }
-
     public GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(String geneQuery, boolean exactMatch, String species) {
 
         checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
@@ -139,14 +126,6 @@ public class SolrQueryService {
         }
         return geneQueryResponse;
 
-    }
-
-    public Optional<Set<String>> expandGeneQueryExactMatchIntoGeneIdsAnySpecies(String geneQuery) {
-        return expandGeneQueryIntoGeneIds(geneQuery, "", true);
-    }
-
-    public Optional<Set<String>> expandGeneQueryExactMatchIntoGeneIds(String geneQuery, String species) {
-        return expandGeneQueryIntoGeneIds(geneQuery, species, true);
     }
 
     /**
@@ -167,7 +146,7 @@ public class SolrQueryService {
         //resolve any gene keywords to identifiers
         Set<String> geneIds = findGeneIdsOrSets(geneQuery, isExactMatch, species);
 
-        Set<String> matureRNAIds = findMatureRNAIds(geneQuery);
+        Set<String> matureRNAIds = findMatureRNAIds(Sets.newHashSet(bioentityPropertyValueTokenizer.split(geneQuery)));
         geneIds.addAll(matureRNAIds);
 
         stopWatch.stop();

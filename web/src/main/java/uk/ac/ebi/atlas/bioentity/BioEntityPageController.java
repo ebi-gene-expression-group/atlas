@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
 import com.google.common.collect.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
@@ -229,14 +228,14 @@ public abstract class BioEntityPageController {
     }
 
     void addBaselineCounts(Set<String> geneIds, Model model) {
-        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.queryAnySpecies(geneIds, Optional.<String>absent());
+        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.queryAnySpecies(geneIds);
 
         model.addAttribute("firstBaselineCounts", removeFirstAssayGroups(baselineExperimentAssayGroups, DEFAULT_BASELINE_SPLIT));
         model.addAttribute("remainingBaselineCounts", baselineExperimentAssayGroups);
     }
 
     void addBaselineCountsForNonTissueExperiments(Set<String> geneIds, Model model) {
-        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.queryAnySpecies(geneIds, Optional.<String>absent());
+        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.queryAnySpecies(geneIds);
         SortedSet<BaselineExperimentAssayGroup> nonTissueExperiments = selectNonTissueExperiments(baselineExperimentAssayGroups);
 
         model.addAttribute("firstBaselineCounts", removeFirstAssayGroups(nonTissueExperiments, DEFAULT_BASELINE_SPLIT));

@@ -142,16 +142,6 @@ public class SolrQueryServiceIT {
         assertThat(geneQueryResponse, hasItems("ENSG00000126773", "ENSG00000183878"));
     }
 
-
-    @Test
-    public void findGenesFromMirBaseIDs()  {
-        List<String> identifiers = Lists.newArrayList("hsa-mir-636");
-
-        Set<String> ensemblIDs = subject.findGenesFromMirBaseIDs(identifiers);
-
-        assertThat(ensemblIDs, contains("ENSG00000207556"));
-    }
-
     @Test
     public void fetchCaseSensitiveGeneId() {
         Set<String> geneIds = subject.fetchGeneIds("CG17707", true, "");

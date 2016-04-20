@@ -83,13 +83,9 @@ public class DiffAnalyticsSearchService {
         return new DiffAnalyticsList();
     }
 
-    public DiffAnalyticsList fetchTop(String geneQuery, String condition, String species, boolean isExactMatch) {
+    public DiffAnalyticsList fetchTop(String condition, String species, Optional<Set<String>> geneIdsResult) {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(condition);
-
-        //TODO: move outside into caller, because this is called twice, here and in BaselineExperimentAssayGroupSearchService, and BaselineExperimentProfileSearchService
-        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species.toLowerCase(), isExactMatch);
-
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
                 || contrastsResult.isPresent() && contrastsResult.get().isEmpty()) {
