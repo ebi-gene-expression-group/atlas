@@ -1,36 +1,11 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-
 package uk.ac.ebi.atlas.experimentpage.context;
 
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -73,12 +48,11 @@ public class BaselineRequestContextBuilder {
 
         requestContext.setRequestPreferences(preferences);
 
-        SortedSet<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences
-                .getSerializedFilterFactors());
+        SortedSet<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
         requestContext.setSelectedFilterFactors(selectedFilterFactors);
 
-        String filteredBySpecie = getFilteredBySpecie(selectedFilterFactors);
-        requestContext.setFilteredBySpecies(filteredBySpecie);
+        String filteredBySpecies = getFilteredBySpecie(selectedFilterFactors);
+        requestContext.setFilteredBySpecies(filteredBySpecies);
 
         Set<Factor> queryFactors = new HashSet<>();
         for (String queryFactorValues : getQueryFactorValues()) {
