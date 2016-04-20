@@ -1,3 +1,6 @@
+<%--@elvariable id="accessKey" type="java.lang.String"--%>
+<%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
@@ -57,7 +60,7 @@
             }
 
 
-            if (${!type.isBaseline()}) {
+            if (${!type.baseline}) {
                 $("#gxaGeneDistributionButton").hide();//hide the bar chart button
                 $("#gxaGeneDistributionPanel").hide();//hide the bar chart
                 $("#slider-range-max").hide();//hide the cutoff slider
@@ -65,7 +68,7 @@
             } else {
 
                 <c:choose>
-                <c:when test="${type.isProteomicsBaseline()}">
+                <c:when test="${type.proteomicsBaseline}">
                     var loadSliderAndPlot = geneDistribution.loadProteomicsSliderAndPlot;
                 </c:when>
                 <c:otherwise>
@@ -73,10 +76,26 @@
                 </c:otherwise>
                 </c:choose>
 
-                loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', $("#queryFactorValues").val(), '${preferences.queryFactorType}', '${preferences.serializedFilterFactors}', '${accessKey}');
+                var $queryFactorValues = $("#queryFactorValues");
 
-                $("#queryFactorValues").change(function () {
-                    loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', $("#queryFactorValues").val(), '${preferences.queryFactorType}', '${preferences.serializedFilterFactors}', '${accessKey}');
+                loadSliderAndPlot(
+                    ${preferences.cutoff},
+                    '${experimentAccession}',
+                    $queryFactorValues.val(),
+                    '<spring:eval expression="T(org.apache.commons.lang3.StringEscapeUtils).escapeEcmaScript(preferences.queryFactorType)"/>',
+                    '<spring:eval expression="T(org.apache.commons.lang3.StringEscapeUtils).escapeEcmaScript(preferences.serializedFilterFactors)"/>',
+                    '${accessKey}'
+                );
+
+                $queryFactorValues.change(function () {
+                    loadSliderAndPlot(
+                        ${preferences.cutoff},
+                        '${experimentAccession}',
+                        $queryFactorValues.val(),
+                        '<spring:eval expression="T(org.apache.commons.lang3.StringEscapeUtils).escapeEcmaScript(preferences.queryFactorType)"/>',
+                        '<spring:eval expression="T(org.apache.commons.lang3.StringEscapeUtils).escapeEcmaScript(preferences.serializedFilterFactors)"/>',
+                        '${accessKey}'
+                    );
                 });
 
                 //configurations required for any browser excepted IE version 8 or lower
