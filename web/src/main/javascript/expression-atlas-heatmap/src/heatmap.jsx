@@ -477,7 +477,7 @@ var DownloadProfilesButton = React.createClass({
         return (
             <a id="download-profiles-link" ref="downloadProfilesLink" className="gxaNoTextButton"
                title="Download all results"
-               href="javascript:void(0)" onClick={this._afterDownloadButtonClicked} className="gxaButtonImage">
+               href="javascript:void(0)" onClick={this._afterDownloadButtonClicked}>
                 <img id="download-profiles" alt="Download query results" style={{width: "20px"}} src={downloadImgSrcURL}/>
                 <Modal id="myModal" show={this.state.showModal} onHide={this._closeModal} bsSize="large">
                     <Modal.Header closeButton>
@@ -496,7 +496,9 @@ var DownloadProfilesButton = React.createClass({
 
     componentDidMount: function () {
         var $downloadProfilesLink = $(ReactDOM.findDOMNode(this.refs.downloadProfilesLink));
-        $downloadProfilesLink.tooltip();
+        $downloadProfilesLink.tooltip({
+            tooltipClass: "gxaHelpTooltip"
+        });
         $downloadProfilesLink.button();
     }
 });
