@@ -42,8 +42,7 @@
             <tr>
                 <td>
                     <a class="gxaBioEntityCardLink"
-                       href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(baselineResult.serializedFilterFactors)}"
-                       title="experiment">
+                       href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(baselineResult.serializedFilterFactors)}">
                         <c:choose>
                             <c:when test="${hideSpecies}">
                                 ${baselineResult.description()}
