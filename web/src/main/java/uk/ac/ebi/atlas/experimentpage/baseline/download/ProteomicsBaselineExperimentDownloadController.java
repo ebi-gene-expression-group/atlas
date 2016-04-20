@@ -21,9 +21,8 @@ public class ProteomicsBaselineExperimentDownloadController extends BaselineExpe
     private final String TYPE_PROTEOMICS_BASELINE = "type=PROTEOMICS_BASELINE";
 
     @Inject
-    public ProteomicsBaselineExperimentDownloadController(PreferencesForBaselineExperiments preferencesForBaselineExperiments,
-                                                          ProteomicsBaselineProfilesWriter proteomicsBaselineProfilesWriter) {
-        super(preferencesForBaselineExperiments, proteomicsBaselineProfilesWriter);
+    public ProteomicsBaselineExperimentDownloadController(ProteomicsBaselineProfilesWriter proteomicsBaselineProfilesWriter) {
+        super(proteomicsBaselineProfilesWriter);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = TYPE_PROTEOMICS_BASELINE)

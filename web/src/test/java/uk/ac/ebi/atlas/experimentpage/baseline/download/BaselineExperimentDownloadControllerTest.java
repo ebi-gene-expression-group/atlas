@@ -80,10 +80,7 @@ public class BaselineExperimentDownloadControllerTest {
 
     @Mock
     private ExperimentalFactors experimentalFactorsMock;
-
-    @Mock
-    private PreferencesForBaselineExperiments preferencesForBaselineExperiments;
-
+    
     @Mock
     private AssayGroups assayGroupsMock;
 
@@ -91,8 +88,7 @@ public class BaselineExperimentDownloadControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineExperimentDownloadController(
-                preferencesForBaselineExperiments, baselineProfilesWriterMock);
+        subject = new BaselineExperimentDownloadController(baselineProfilesWriterMock);
     }
 
     @Test

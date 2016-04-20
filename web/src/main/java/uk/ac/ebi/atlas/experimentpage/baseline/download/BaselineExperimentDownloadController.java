@@ -54,9 +54,8 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
     private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
 
     @Inject
-    public BaselineExperimentDownloadController(PreferencesForBaselineExperiments preferencesForBaselineExperiments,
-                                                BaselineProfilesWriter baselineProfilesWriter) {
-        this.preferencesForBaselineExperiments = preferencesForBaselineExperiments;
+    public BaselineExperimentDownloadController(BaselineProfilesWriter baselineProfilesWriter) {
+        this.preferencesForBaselineExperiments = new PreferencesForBaselineExperiments();
         this.baselineProfilesWriter = baselineProfilesWriter;
     }
 
