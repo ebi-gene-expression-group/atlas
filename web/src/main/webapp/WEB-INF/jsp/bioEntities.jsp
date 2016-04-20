@@ -15,14 +15,14 @@
 
 <c:choose>
 <c:when test="${not empty exceptionMessage}">
-    <section>
+    <section class="gxaSection">
         <div id="error-content">
             <div class="gxaError">${exceptionMessage}</div>
         </div>
     </section>
 
-    <section>
-        <a href="/gxa">Go to Expression Atlas home page</a>
+    <section class="gxaSection">
+        <a style="font-weight: bold" href="/gxa">Go to Expression Atlas home page</a>
     </section>
 </c:when>
 <c:otherwise>
