@@ -17,16 +17,19 @@
 <script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneDistribution.js"></script>
 
+<section>
+    <div class="grid_20">
+        <c:import url="includes/request-preferences.jsp"/>
+    </div>
+</section>
 
-<div class="grid_20 alpha gxaNewSection gxaExtraPadding">
-    <c:import url="includes/request-preferences.jsp"/>
-</div>
-
-<div class="grid_24 alpha gxaNewSection gxaExtraPadding" id="gxaExperimentPageHeatmapAnatomogram">
-    <spring:hasBindErrors name="preferences">
-        <c:set var="isPreferenceError" value="true"/>
-    </spring:hasBindErrors>
-</div>
+<section class="gxaSection">
+    <div class="grid_24" id="gxaExperimentPageHeatmapAnatomogram">
+        <spring:hasBindErrors name="preferences">
+            <c:set var="isPreferenceError" value="true"/>
+        </spring:hasBindErrors>
+    </div>
+</section>
 
 
 <%@ include file="includes/heatmap-react.jsp" %>

@@ -19,7 +19,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 
 <c:if test="${isSearch}">
-<section id="gxaSearchHeaderSection">
+<section>
     <h2 class="strapline">
         Results for <span class="searchterm">${searchDescription}</span>
     </h2>
@@ -27,14 +27,16 @@
 </c:if>
 
 <!-- Simple page header -->
-<section class="gxaBioentityHeader" id="gxaBioentityHeaderSection">
-    <p class="gxaBioentityName">${bioEntityPropertyService.entityName}</p>
-    <p class="gxaBioentitySpecies">${species}</p>
-    <p class="gxaBioentityDescription">${bioEntityPropertyService.bioEntityDescription}</p>
+<section class="gxaSection">
+    <div class="gxaBioentityHeader grid_24">
+        <p class="gxaBioentityName">${bioEntityPropertyService.entityName}</p>
+        <p class="gxaBioentitySpecies">${species}</p>
+        <p class="gxaBioentityDescription">${bioEntityPropertyService.bioEntityDescription}</p>
+    </div>
 </section>
 
-<section id="gxaBioentityTabsSection">
-
+<section class="gxaSection">
+    <div class="grid_24 alpha omega">
     <ul class="nav nav-tabs" role="tablist">
         <c:if test="${hasBaselineResults}"><li title="Baseline experiments" role="presentation"><a href="genes/${identifier}#base" data-toggle="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
         <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" role="presentation" class="disabled noBorderTab">Baseline expression</li></c:if>
@@ -52,6 +54,7 @@
         <div role="tabpanel" class="tab-pane fade" id="diff"><%@ include file="differential-expression.jsp" %></div>
     </div>
 
+    </div>
 </section>
 
 

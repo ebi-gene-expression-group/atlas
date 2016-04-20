@@ -6,8 +6,7 @@
 <%@ page import="uk.ac.ebi.atlas.experimentpage.qc.QCReportUtil" %>
 
 
-<div class="grid_24 alpha gxaNewSection">
-<div id="arrayDesignsQc" class="gxaExtraPadding">
+<div id="arrayDesignsQc">
     <c:if test="${fn:length(qcArrayDesigns) > 1}">
 
         <c:if test= "${not empty qcArrayDesigns}" />
@@ -22,11 +21,12 @@
             <form:select path="arrayDesignAccession">
                 <form:options items="${qcArrayDesigns}" />
              </form:select>
+            </div>
         </form:form>
 
     </c:if>
 </div>
-</div>
+
 
 <div id="qc-content">
     <%

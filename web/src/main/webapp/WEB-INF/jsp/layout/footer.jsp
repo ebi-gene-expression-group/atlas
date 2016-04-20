@@ -59,7 +59,7 @@
 
         </nav>
 
-        <section id="ebi-footer-meta" class="gxaExtraPadding">
+        <section id="ebi-footer-meta">
             <p class="address">EMBL-EBI, Wellcome Trust Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK &nbsp;
                 &nbsp; +44 (0)1223 49 44 44</p>
 

@@ -6,7 +6,7 @@
 <%@ page import="java.nio.file.Files" %>
 <%@ page import="java.nio.file.Path" %>
 
-<div id="fastQcReports" class="gxaExtraPadding">
+<div id="fastQcReports">
     <c:set var="hasFastQcReport" value="${fastQReportUtil.hasFastQC(experimentAccession,species)}"/>
     <c:if test="${hasFastQcReport}" >
         <form:form commandName="preferences" method="get" id="prefForm" >
@@ -35,7 +35,7 @@
 </div>
 
 <%--<div style="padding-top: 11px; padding-left: 2%; padding-right: 2%; font-family: helvetica,arial,sans-serif; font-size: 10pt; background-color: #FFF; text-align: justify;">--%>
-<div class="gxaExtraPadding">
+<div>
     <hr/>
 </div>
 

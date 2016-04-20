@@ -6,127 +6,120 @@
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home_request-preferences.css" media="screen">
 
-<h2>Expression Atlas: Differential and Baseline Expression</h2>
+<section class="gxaSection">
+	<h2>Expression Atlas: Differential and Baseline Expression</h2>
 
-<%-- section for the description --%>
-<div class="grid_24">
-
-<p>The Expression Atlas provides information on gene expression patterns under
-    different biological conditions. Gene expression data is re-analysed in-house
-    to detect genes showing interesting baseline and differential expression
-    patterns. <a href="about.html">Read more about Expression Atlas.</a></p>
-</div>
+    <p>
+        The Expression Atlas provides information on gene expression patterns under
+        different biological conditions. Gene expression data is re-analysed in-house
+        to detect genes showing interesting baseline and differential expression
+        patterns. <a href="about.html">Read more about Expression Atlas.</a>
+    </p>
+</section>
 
 <%-- section for search boxes, Browse... menu, and grid sections --%>
-<div class="container_24">
-
-	<div class="grid_18 alpha">
+<section>
+	<div class="grid_18">
 
 		<h3>Search...</h3>
 
-		<div class="grid_24 alpha">
-
-			<form method="get" action="query" id="searchForm">
-				<table class="gxaFormGrid">
-					<tr>
-						<td class="gxaTableColumn35">
-							<label>Gene query</label>
-							<span data-help-loc="#geneSearch"></span>
-						</td>
-						<td class="gxaTableColumn20">
-							<label>Organism</label>
-						</td>
-						<td class="gxaTableColumn35">
-							<label>Sample properties</label>
-							<span data-help-loc="#experimentalConditions"></span>
-						</td>
-						<td class="gxaTableColumn10" rowspan="2" style="vertical-align: middle;">
-							<div class="gxaHomeSearchActionButtons">
-								<div style="text-align: right;">
-									<input id="submit-button" type="submit" value="Search" tabindex="4">
-								</div>
-								<div style="text-align: right;">
-									<input id="reset-button" type="reset" value="Reset" tabindex="5">
-								</div>
+		<form method="get" action="query" id="searchForm">
+			<table class="gxaFormGrid">
+				<tr>
+					<td class="gxaTableColumn35">
+						<label>Gene query</label>
+						<span data-help-loc="#geneSearch"></span>
+					</td>
+					<td class="gxaTableColumn20">
+						<label>Organism</label>
+					</td>
+					<td class="gxaTableColumn35">
+						<label>Sample properties</label>
+						<span data-help-loc="#experimentalConditions"></span>
+					</td>
+					<td class="gxaTableColumn10" rowspan="2" style="vertical-align: middle;">
+						<div class="gxaHomeSearchActionButtons">
+							<div style="text-align: right;">
+								<input id="submit-button" type="submit" value="Search" tabindex="4">
 							</div>
-						</td>
-					</tr>
-
-					<tr>
-						<td>
-							<div id="geneQuerySection">
-								<textarea id="geneQuery" name="geneQuery" rows="2" cols="36" placeholder="(all genes)" tabindex="1"></textarea>
-
-								<div  class="gxaSearchExamples">
-									<span style="float:left">E.g.
-										<a href="query?geneQuery=REG1B&organism=Homo+sapiens">REG1B</a>,
-										<a href="query?geneQuery=%22zinc+finger%22">zinc finger</a>
-									</span>
-
-									<span style="float:right">
-										<input style="vertical-align: middle" id="exactMatch" name="exactMatch" type="checkbox" value="true"
-											   checked="checked" tabindex="2">
-										<label for="exactMatch">Exact match</label>
-										<input type="hidden" name="_exactMatch" value="on">
-									</span>
-								</div>
+							<div style="text-align: right;">
+								<input id="reset-button" type="reset" value="Reset" tabindex="5">
 							</div>
-						</td>
+						</div>
+					</td>
+				</tr>
 
-						<td>
-							<form:select id="organism" name="organism" path="dummyPath">
-								<form:options items="${organisms}" />
-							</form:select>
-						</td>
-						<td>
-                    		<div id="conditionSection">
-								<textarea id="condition" name="condition" maxlength="900" rows="2" cols="36" placeholder="(all conditions)" tabindex="3"></textarea>
+				<tr>
+					<td>
+						<div id="geneQuerySection">
+							<textarea id="geneQuery" name="geneQuery" rows="2" cols="36" placeholder="(all genes)" tabindex="1"></textarea>
 
-								<div class="gxaSearchExamples">
-									<span>E.g.
-                                        <a href="query?condition=lung">lung</a>,
-										<a href="query?condition=leaf">leaf</a>,
-										<a href="query?condition=&quot;valproic+acid&quot;">"valproic acid"</a>,
-										<a href="query?condition=cancer">cancer</a>
-									</span>
-								</div>
+							<div  class="gxaSearchExamples">
+								<span style="float:left">E.g.
+									<a href="query?geneQuery=REG1B&organism=Homo+sapiens">REG1B</a>,
+									<a href="query?geneQuery=%22zinc+finger%22">zinc finger</a>
+								</span>
+
+								<span style="float:right">
+									<input style="vertical-align: middle" id="exactMatch" name="exactMatch" type="checkbox" value="true"
+										   checked="checked" tabindex="2">
+									<label for="exactMatch">Exact match</label>
+									<input type="hidden" name="_exactMatch" value="on">
+								</span>
 							</div>
-						</td>
-					</tr>
-				</table>
-			</form>
+						</div>
+					</td>
 
-		</div>
+					<td>
+						<form:select id="organism" name="organism" path="dummyPath">
+							<form:options items="${organisms}" />
+						</form:select>
+					</td>
+					<td>
+						<div id="conditionSection">
+							<textarea id="condition" name="condition" maxlength="900" rows="2" cols="36" placeholder="(all conditions)" tabindex="3"></textarea>
+
+							<div class="gxaSearchExamples">
+								<span>E.g.
+									<a href="query?condition=lung">lung</a>,
+									<a href="query?condition=leaf">leaf</a>,
+									<a href="query?condition=&quot;valproic+acid&quot;">"valproic acid"</a>,
+									<a href="query?condition=cancer">cancer</a>
+								</span>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form>
 
 
-		<%-- first row of the grid --%>
-		<div class="grid_24 alpha" style="padding-top: 20px">
-			<div class="grid_12 alpha">
-				<h3>iRAP: RNA-seq analysis tool</h3>
-				<p><a href="http://nunofonseca.github.io/irap/">iRAP</a> is a flexible
-				pipeline for RNA-seq analysis that integrates many existing tools for
-				filtering and mapping reads, quantifying expression and testing for
-				differential expression. iRAP is used to process all RNA-seq data in
-				Expression Atlas.</p>
-			</div>
+        <div class="grid_12 alpha">
+            <h3>iRAP: RNA-seq analysis tool</h3>
+            <p><a href="http://nunofonseca.github.io/irap/">iRAP</a> is a flexible
+            pipeline for RNA-seq analysis that integrates many existing tools for
+            filtering and mapping reads, quantifying expression and testing for
+            differential expression. iRAP is used to process all RNA-seq data in
+            Expression Atlas.</p>
+        </div>
 
-			<div class="grid_12 omega">
-				<h3>Publications</h3>
+        <div class="grid_12 omega">
+            <h3>Publications</h3>
 
-				<p class="icon icon-conceptual" data-icon="l"><a
-				href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0107026">RNA-Seq Gene Profiling - A
-				Systematic Empirical Comparison</a> (<i>PLoS One</i>, 2014).</p>
+            <p class="icon icon-conceptual" data-icon="l"><a
+            href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0107026">RNA-Seq Gene Profiling - A
+            Systematic Empirical Comparison</a> (<i>PLoS One</i>, 2014).</p>
 
-				<p class="icon icon-conceptual" data-icon="l"><a
-				href="http://nar.oxfordjournals.org/content/44/D1/D746.full">Expression Atlas update — an integrated database of gene and protein expression in humans, animals and plants</a> (<i>Nucleic Acids Research</i>, 2016).</p>
+            <p class="icon icon-conceptual" data-icon="l"><a
+            href="http://nar.oxfordjournals.org/content/44/D1/D746.full">Expression Atlas update — an integrated database of gene and protein expression in humans, animals and plants</a> (<i>Nucleic Acids Research</i>, 2016).</p>
 
-			</div>
-		</div>
+        </div>
 
 	</div>
+</section>
 
 	<%-- Browse... menu --%>
-	<aside class="grid_6 omega">
+	<aside class="grid_6">
 
 		<h3>Browse...</h3>
 
@@ -139,17 +132,6 @@
 		<h4><img src="resources/images/experiment_page_small.png" style="padding-right: 15px"><a href="experiments">All Experiments</a></h4>
 		<p>Scroll through the complete list of all data sets in Expression Atlas.</p>
 	</aside>
-
-</div>
-
-<%-- Link to the old Atlas in its own section at the bottom
-<div class="grid_24 alpha">
-	<div>
-<p>Still need the old Expression Atlas? <a href="http://www-test.ebi.ac.uk/gxa">Click here</a>.</p>
-</div>
-</div>
---%>
-
 
 
 <%-- placeholder which is loaded with tooltip text --%>

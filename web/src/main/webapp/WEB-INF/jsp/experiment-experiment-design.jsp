@@ -18,8 +18,8 @@
 
 <section>
     <h4>Experiment Design</h4>
-    <form:form method="get" commandName="preferences" id="prefForm">
 
+    <form:form method="get" commandName="preferences" id="prefForm">
         <div class="grid_23 alpha">
             <span>Show analysed only?</span>
             <input type="checkbox" id="showOnlyAnalysedRuns" name="showOnlyAnalysedRuns" checked="yes"/>
@@ -44,9 +44,7 @@
         </c:if>
     </form:form>
 
-    <div class="grid_24">
-        <table id="experiment-design-table"></table>
-    </div>
+    <table id="experiment-design-table"></table>
 
     <div id="help-placeholder" style="display: none"></div>
 </section>

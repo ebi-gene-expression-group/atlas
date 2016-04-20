@@ -7,25 +7,23 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiment-analysis-methods.css">
 
-<div class="grid_24 alpha gxaNewSection">
-    <display:table name="${csvLines}" id="csvLine" htmlId="methods-table" class="gxaAnalysisGrid">
-        <display:caption>
-            <div style="text-align:left;padding-top:10px; padding-bottom:5px">
-                <label style="font-weight: bold">
-                    Analysis Methods:
-                </label>
-            </div>
-        </display:caption>
-        <display:column class="gxaHorizontalHeaderCell">
-            <label>
-                    ${csvLine[0]}
+<display:table name="${csvLines}" id="csvLine" htmlId="methods-table" class="gxaAnalysisGrid">
+    <display:caption>
+        <div style="text-align:left;padding-top:10px; padding-bottom:5px">
+            <label style="font-weight: bold">
+                Analysis Methods:
             </label>
-        </display:column>
-        <display:column>
-            ${csvLine[1]}
-        </display:column>
-    </display:table>
-</div>
+        </div>
+    </display:caption>
+    <display:column class="gxaHorizontalHeaderCell">
+        <label>
+                ${csvLine[0]}
+        </label>
+    </display:column>
+    <display:column>
+        ${csvLine[1]}
+    </display:column>
+</display:table>
 
 <script type="text/javascript">
     $(function () {

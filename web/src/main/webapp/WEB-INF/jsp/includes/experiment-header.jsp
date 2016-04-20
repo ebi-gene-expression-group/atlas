@@ -34,15 +34,15 @@
     $.fn.bootstrapTt = bootstrapTooltip;
 </script>
 
-<section class="container_24 gxaExtraPadding" id="gxaExperimentHeader" style="text-align: justify;">
+<section id="gxaExperimentHeader" style="text-align: justify;">
 
     <div id="helpContentTooltip" style="display: none;"></div>
 
-    <div class="grid_18 alpha">
+    <div class="grid_18">
         <%@ include file="experiment-description.jsp" %>
     </div>
 
-    <div class="grid_6 omega">
+    <div class="grid_6">
         <table style="width: auto; float: right;">
             <tbody>
                 <tr>
