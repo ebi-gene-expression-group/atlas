@@ -11,7 +11,7 @@ public class FastQCReportRequestPreferences {
 
     private String selectedReport;
 
-    private String selectedSpecie;
+    private String selectedSpecies;
 
     public enum FastQCReportType {
         QC("qc"),
@@ -40,24 +40,24 @@ public class FastQCReportRequestPreferences {
         this.selectedReport = selectedReport;
     }
 
-    public String getSelectedSpecie() {
-        return selectedSpecie;
+    public String getSelectedSpecies() {
+        return selectedSpecies;
     }
 
-    public void setSelectedSpecie(String selectedSpecie) {
-        this.selectedSpecie = parseSpecie(selectedSpecie);
+    public void setSelectedSpecies(String selectedSpecies) {
+        this.selectedSpecies = parseSpecies(selectedSpecies);
     }
 
-    private String parseSpecie(String specie) {
-        if(specie.split("\\s+").length > 1) {
-            String[] arrayString = specie.split("\\s+");
+    private String parseSpecies(String species) {
+        if(species.split("\\s+").length > 1) {
+            String[] arrayString = species.split("\\s+");
             return WordUtils.capitalize(arrayString[0]) + " " + arrayString[1];
         }
         else {
-            if(specie.split("_").length > 1) {
-                String[] arrayString = specie.split("_");
+            if(species.split("_").length > 1) {
+                String[] arrayString = species.split("_");
                 return WordUtils.capitalize(arrayString[0]) + " " + arrayString[1];
-            } else { return specie; }
+            } else { return species; }
         }
     }
 
