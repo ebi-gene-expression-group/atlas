@@ -1,5 +1,5 @@
 /* browse baseline/plant experiments */
-.species-nav .species_item {min-height: 340px; text-align: center;}
+.species-nav .species_item {min-height: 300px; text-align: center;}
 .species-nav .species_item h4 {text-align: center;}
 .species-nav .species_item ul li {text-align: center;font-size: 94%;}
 .species-nav .species_item span {font-size: 700%;/*fallback*/font-size: 5.1vw}
