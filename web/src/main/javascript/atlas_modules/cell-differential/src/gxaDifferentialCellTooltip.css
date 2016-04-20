@@ -6,6 +6,7 @@
 }
 
 .gxaDifferentialCellTooltip table {
+    margin: 0; /* overrides ebi-visual.css:134 */
     background-color: white;
     border: 1px solid lightgrey;
     border-collapse: collapse;
