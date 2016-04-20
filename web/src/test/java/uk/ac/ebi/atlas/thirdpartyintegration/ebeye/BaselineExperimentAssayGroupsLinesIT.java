@@ -10,10 +10,12 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.regex.Pattern;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,7 +23,6 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class BaselineExperimentAssayGroupsLinesIT {
 
-    private static final String EXPERIMENT_ACCESSION = "E-GEOD-30352";
 
     private BaselineExperimentAssayGroupsLines subject;
 
@@ -29,34 +30,54 @@ public class BaselineExperimentAssayGroupsLinesIT {
     private ExperimentTrader experimentTrader;
 
     @Test
-    public void testExtractExperimentDesign() throws IOException {
-        BaselineExperiment baselineExperiment = (BaselineExperiment) experimentTrader.getPublicExperiment(EXPERIMENT_ACCESSION);
+    public void testSomeRnaSeqExperiments() throws Exception{
+        Object[] a = experimentTrader.getBaselineExperimentAccessions().toArray();
+        for(int i = 0 ; i <10 && i < a.length ; i++) {
+            testExtractExperimentDesignFromRnaSeqExperiment((String) a[i]);
+        }
+    }
 
+    public void testExtractExperimentDesignFromRnaSeqExperiment(String experimentAccession) throws IOException {
+        BaselineExperiment baselineExperiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+
+        assertTrue(baselineExperiment.getType().isRnaSeqBaseline());
         subject = new BaselineExperimentAssayGroupsLines(baselineExperiment);
 
+        assertAbout(subject, experimentAccession);
+    }
+
+    private void assertAbout(BaselineExperimentAssayGroupsLines subject, String experimentAccession){
+        assertTrue(subject.iterator().hasNext());
         Iterator<String[]> lines = subject.iterator();
+        while(lines.hasNext()) {
+            String[] line = lines.next();
+            String str = "This line: "+ Arrays.asList(line).toString();
 
-        String[] line1 = lines.next();
+            assertThat(line.length, is(6));
+            assertThat(line[0], is(experimentAccession));
+            assertTrue("First column is a group id:"+line[1], Pattern.matches("g.+", line[1]));
+            assertThat(str, line[2], not(isEmptyString()));
+            assertThat(str, line[3], not(isEmptyString()));
+            //4th line is sometimes empty
+            assertTrue("Sixth column is empty or a link to ontology term:"+line[5],
+                    line[5].isEmpty() || Pattern.matches("http.+", line[5]));
 
-        assertThat(lines.hasNext(), is(true));
-        assertThat(line1.length, is(6));
-        assertThat(line1[0], is("E-GEOD-30352"));
-        assertThat(line1[1], is("g1"));
-        assertThat(line1[2], is("characteristic"));
-        assertThat(line1[3], is("biosource provider"));
-        assertThat(line1[4], is("National Disease Research Interchange, USA (NDRI)"));
-        assertThat(line1[5], is(""));
+        }
+    }
+    @Test
+    public void testSomeProteomicsExperiments() throws Exception{
+        for(String accession : experimentTrader.getProteomicsBaselineExperimentAccessions()){
+            testExtractExperimentDesignFromProteomicsExperiment(accession);
+        }
+    }
 
-        String[] line2 = lines.next();
+    public void testExtractExperimentDesignFromProteomicsExperiment(String experimentAccession) throws IOException {
+        BaselineExperiment baselineExperiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
 
-        assertThat(lines.hasNext(), is(true));
-        assertThat(line2.length, is(6));
-        assertThat(line2[0], is("E-GEOD-30352"));
-        assertThat(line2[1], is("g1"));
-        assertThat(line2[2], is("characteristic"));
-        assertThat(line2[3], is("sex"));
-        assertThat(line2[4], is("male"));
-        assertThat(line2[5], is("http://www.ebi.ac.uk/efo/EFO_0001266"));
+        assertTrue(baselineExperiment.getType().isProteomicsBaseline());
+        subject = new BaselineExperimentAssayGroupsLines(baselineExperiment);
+
+        assertAbout(subject, experimentAccession);
     }
 
 }
