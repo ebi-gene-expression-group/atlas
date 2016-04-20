@@ -51,7 +51,7 @@ public class BaselineRequestContextBuilder {
         SortedSet<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
         requestContext.setSelectedFilterFactors(selectedFilterFactors);
 
-        String filteredBySpecies = getFilteredBySpecie(selectedFilterFactors);
+        String filteredBySpecies = getFilteredBySpecies(selectedFilterFactors);
         requestContext.setFilteredBySpecies(filteredBySpecies);
 
         Set<Factor> queryFactors = new HashSet<>();
@@ -75,21 +75,21 @@ public class BaselineRequestContextBuilder {
         return requestContext;
     }
 
-    String getFilteredBySpecie(Set<Factor> selectedFilterFactors) {
-        String filteredBySpecie = null;
+    String getFilteredBySpecies(Set<Factor> selectedFilterFactors) {
+        String filteredBySpecies = null;
         for (Factor selectedFilterFactor : selectedFilterFactors) {
             if (selectedFilterFactor.getType().equalsIgnoreCase("organism")) {
-                filteredBySpecie = selectedFilterFactor.getValue().toLowerCase();
+                filteredBySpecies = selectedFilterFactor.getValue().toLowerCase();
             }
         }
-        if (filteredBySpecie == null) {
-            filteredBySpecie = experiment.getFirstOrganism().toLowerCase();
+        if (filteredBySpecies == null) {
+            filteredBySpecies = experiment.getFirstOrganism().toLowerCase();
         }
         Map<String, String> speciesMapping = experiment.getOrganismToEnsemblSpeciesMapping();
-        if (speciesMapping.containsKey(filteredBySpecie)) {
-            filteredBySpecie = speciesMapping.get(filteredBySpecie);
+        if (speciesMapping.containsKey(filteredBySpecies)) {
+            filteredBySpecies = speciesMapping.get(filteredBySpecies);
         }
-        return filteredBySpecie;
+        return filteredBySpecies;
     }
 
 }
