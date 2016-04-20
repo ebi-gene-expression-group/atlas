@@ -173,7 +173,7 @@
                                 <c:choose>
                                     <c:when test="${isFortLauderdale}">
                                         <a id="download-expressions-modal" title="Download all expressions for the experiment"
-                                           role="button" ata-toggle="modal" data-target="#download-modal">
+                                           role="button" data-toggle="modal" data-target="#download-modal">
                                             <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/>
                                         </a>
                                     </c:when>
