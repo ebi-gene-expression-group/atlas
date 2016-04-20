@@ -1,23 +1,32 @@
+<%--@elvariable id="preferences" type="uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences"--%>
+<%--@elvariable id="experimentDescription" type="java.lang.String"--%>
+<%--@elvariable id="hasExtraInfo" type="boolean"--%>
+<%--@elvariable id="isWidget" type="boolean"--%>
+<%--@elvariable id="dataProviderURL" type="java.util.List<String>"--%>
+<%--@elvariable id="dataProviderDescription" type="java.util.List<String>"--%>
+<%--@elvariable id="allArrayDesigns" type="java.util.SortedSet<String>"--%>
+<%--@elvariable id="pubMedIds" type="java.util.List<String>"--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:if test="${not empty param.accessKey}">
-    <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"></c:set>
+    <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"/>
 </c:if>
 
 <c:if test="${isWidget && not empty param.accessKey}">
     <c:set var="additionalQueryOptionsString"
-           value="&geneQuery=${preferences.geneQuery.asUrlQueryParameter()}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
+           value="&geneQuery=${preferences.geneQuery.asUrlQueryParameter()}&serializedFilterFactors=${preferences.serializedFilterFactors}"/>
 </c:if>
 
 <c:if test="${isWidget && empty param.accessKey}">
     <c:set var="additionalQueryOptionsString"
-           value="?geneQuery=${preferences.geneQuery.asUrlQueryParameter()}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
+           value="?geneQuery=${preferences.geneQuery.asUrlQueryParameter()}&serializedFilterFactors=${preferences.serializedFilterFactors}"/>
 </c:if>
 
-<c:set var="experimentURL" value="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}${accessKeyQueryString}${additionalQueryOptionsString}"></c:set>
+<c:set var="experimentURL" value="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}${accessKeyQueryString}${additionalQueryOptionsString}"/>
 
 
 <div id="experimentDescription">
@@ -32,9 +41,8 @@
 </div>
 <div id="experimentOrganisms">Organism(s):
     <span style="font-style:italic">
-        <spring:eval
-                expression="T(org.apache.commons.lang3.StringUtils).removeEnd(T(org.apache.commons.lang3.StringUtils).join(allSpecies, \", \"),\", \")"/>
-     </span>
+        <spring:eval expression="T(org.apache.commons.lang3.StringUtils).removeEnd(T(org.apache.commons.lang3.StringUtils).join(allSpecies, \", \"),\", \")"/>
+    </span>
 </div>
 <c:if test="${allArrayDesigns!=null}">
     <div id="experimentArrayDesigns">Array Design(s):
@@ -100,7 +108,7 @@
                         var newGeneQuery = bioentities.join("%09");
 
                         if (url.indexOf("geneQuery") > -1) {
-                            return url.replace(/geneQuery=[^\&]*/, "geneQuery="+newGeneQuery);
+                            return url.replace(/geneQuery=[^&]*/, "geneQuery="+newGeneQuery);
                         }
 
                         return url + (url.indexOf("?") > -1 ? "&" : "?") + "geneQuery="+newGeneQuery;
