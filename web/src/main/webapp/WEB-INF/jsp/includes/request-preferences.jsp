@@ -1,5 +1,5 @@
 <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
-<%--@elvariable id="preferences" type="uk.ac.ebi.atlas.web.SearchRequest"--%>
+<%--@elvariable id="preferences" type="uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -128,7 +128,7 @@
                     </c:choose>
                 </td>
 
-                <c:if test="${!type.baseline)}">
+                <c:if test="${!type.baseline}">
                     <td>
                         <form:input style="height:27px; border: 1px solid #AAA; padding: 0px 5px;" size="10" path="foldChangeCutOff" id="foldChangeCutOff"/>
                     </td>
@@ -138,16 +138,16 @@
     </form:form>
 
 
-    <div style="padding-top: 15px;">
+    <div class="grid_24" style="padding-top: 15px; padding-bottom: 30px">
         <div id="gxaGeneDistributionPanel">
-            <div id="gene-distribution" style="height: 100px; width: 98%; display: inline-block;">
+            <div id="gene-distribution" style="height: 100px;">
             </div>
             <span data-help-loc="#gene-distribution" style="vertical-align: top"></span>
         </div>
 
         <div id="gxaSliderAndChart">
             <div>
-                <div id="gxaGeneDistributionButton" style="float: left;'">
+                <div id="gxaGeneDistributionButton" style="float: left;">
                     <a id="gxaDisplayChart" title="Display gene distribution" href="#">
                         <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
                     </a>
