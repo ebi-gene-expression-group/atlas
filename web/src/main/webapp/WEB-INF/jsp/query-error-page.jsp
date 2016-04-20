@@ -1,13 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div id="error-content" class="grid_24 alpha">
+<section>
     <span>The query is not well formed: </span>
-    <div class="gxaError">
-        ${exceptionMessage}
-    </div>
-    <br/>
+    <div class="gxaError">${exceptionMessage}</div>
     <div>Please try again.</div>
-</div>
-<div id="content" class="grid_24 alpha">
+</section>
+
+<section>
     <a href="/gxa">Go to Expression Atlas home page</a>
-</div>
+</section>

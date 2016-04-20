@@ -4,9 +4,9 @@
 <c:choose>
     <c:when test="${empty jsonProfiles}">
         <c:if test="${not isPreferenceError}">
-            <div class="grid_24" id="heatmap-message">
+            <section>
                 No expressions found
-            </div>
+            </section>
         </c:if>
     </c:when>
     <c:otherwise>

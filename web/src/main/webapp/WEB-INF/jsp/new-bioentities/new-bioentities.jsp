@@ -28,7 +28,7 @@
 
 <!-- Simple page header -->
 <section class="gxaSection">
-    <div class="gxaBioentityHeader grid_24">
+    <div class="gxaBioentityHeader">
         <p class="gxaBioentityName">${bioEntityPropertyService.entityName}</p>
         <p class="gxaBioentitySpecies">${species}</p>
         <p class="gxaBioentityDescription">${bioEntityPropertyService.bioEntityDescription}</p>
@@ -36,7 +36,6 @@
 </section>
 
 <section class="gxaSection">
-    <div class="grid_24 alpha omega">
     <ul class="nav nav-tabs" role="tablist">
         <c:if test="${hasBaselineResults}"><li title="Baseline experiments" role="presentation"><a href="genes/${identifier}#base" data-toggle="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
         <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" role="presentation" class="disabled noBorderTab">Baseline expression</li></c:if>
@@ -52,8 +51,6 @@
         <div role="tabpanel" class="tab-pane fade" id="info"><%@ include file="bioentity-information.jsp" %></div>
         <div role="tabpanel" class="tab-pane fade" id="base"><%@ include file="baseline-expression.jsp" %></div>
         <div role="tabpanel" class="tab-pane fade" id="diff"><%@ include file="differential-expression.jsp" %></div>
-    </div>
-
     </div>
 </section>
 
