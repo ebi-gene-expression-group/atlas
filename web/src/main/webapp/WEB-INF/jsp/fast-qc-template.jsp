@@ -25,7 +25,7 @@
             <c:if test="${hasMultipleOrganism}">
                 <span style="margin-left: 20px;">Selected organism:</span>
                 <div style="display: inline">
-                    <form:select path="selectedSpecie">
+                    <form:select path="selectedSpecies">
                         <form:options items="${allSpecies}"/>
                     </form:select>
                 </div>
@@ -60,7 +60,7 @@
                 $('#prefForm').submit();
             });
 
-            $('#selectedSpecie').change(function () {
+            $('#selectedSpecies').change(function () {
                 $('#prefForm').submit();
             });
 
