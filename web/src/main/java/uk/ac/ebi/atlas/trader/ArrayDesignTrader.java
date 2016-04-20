@@ -21,7 +21,11 @@ public class ArrayDesignTrader {
 
     @Inject
     public ArrayDesignTrader(ArrayDesignDAO arrayDesignDAO) {
-        this.arrayDesignMap = arrayDesignDAO.getArrayDesignMapNames();
+        this(arrayDesignDAO.getArrayDesignMapNames());
+    }
+
+    ArrayDesignTrader(Map<String, String> arrayDesignMap){
+        this.arrayDesignMap=arrayDesignMap;
     }
 
     public String getArrayDesignByName(String arrayDesignAccession) {
