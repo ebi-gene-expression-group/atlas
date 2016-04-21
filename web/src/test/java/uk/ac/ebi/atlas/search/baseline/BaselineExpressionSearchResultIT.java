@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.collect.ImmutableSet;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -67,6 +68,7 @@ public class BaselineExpressionSearchResultIT {
     }
 
     @Test
+    @Ignore("This specific data is gone form the cache but its format serves as good documentation")
     public void multiFactor_TwoSpecificAssayGroups_InSlice() throws ExecutionException  {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_GEOD_26284);
 
@@ -87,6 +89,7 @@ public class BaselineExpressionSearchResultIT {
     }
 
     @Test
+    @Ignore("This specific data is gone form the cache but its format serves as good documentation")
     public void multiFactor_AllAssayGroups_InSlice() throws ExecutionException {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_GEOD_26284);
 
