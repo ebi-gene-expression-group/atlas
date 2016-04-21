@@ -1,6 +1,7 @@
 
 package uk.ac.ebi.atlas.widget;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Sets;
@@ -31,6 +32,7 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -63,6 +65,8 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     private final BaselineExperimentPageService baselineExperimentPageService;
 
+    private final SolrQueryService solrQueryService;
+
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Inject
@@ -72,13 +76,15 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                     BaselineAnalyticsSearchService baselineAnalyticsSearchService,
                                     BaselineExperimentPageServiceFactory
                                                 baselineExperimentPageServiceFactory, @Qualifier
-                                                ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory baselineProfileInputStreamFactory) {
+                                                ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory baselineProfileInputStreamFactory
+                                    ,SolrQueryService solrQueryService) {
         this.applicationProperties = applicationProperties;
         this.speciesLookupService = speciesLookupService;
         this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
         this.baselineExperimentProfilesViewModelBuilder = baselineExperimentProfilesViewModelBuilder;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileInputStreamFactory);
+        this.solrQueryService = solrQueryService;
     }
 
 
@@ -112,7 +118,11 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                 : Species.convertToEnsemblSpecies(species);
 
 
-        BaselineExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(geneQuery.asString(), ensemblSpecies, true);
+        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery.asString(), ensemblSpecies, true);
+
+        BaselineExperimentSearchResult searchResult = geneIds.isPresent()
+            ?   baselineExperimentProfileSearchService.query(geneIds.get())
+            : new BaselineExperimentSearchResult();
 
         if (searchResult.isEmpty()) {
             throw new ResourceNotFoundException("No baseline expression in tissues found for "

@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.widget;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,7 @@ import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchSer
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResultFormatter;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
@@ -45,6 +47,7 @@ import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 @Controller
 @Scope("request")
@@ -55,21 +58,29 @@ public final class HeatmapWidgetDownloadController {
     private final BaselineExperimentProfileSearchService baselineExperimentProfileSearchService;
     private final String tsvFileMastheadTemplate;
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
+    private final SolrQueryService solrQueryService;
 
     @Inject
     private HeatmapWidgetDownloadController(BaselineExperimentProfileSearchService baselineExperimentProfileSearchService,
                                             @Value("classpath:/file-templates/download-headers-baseline-widget.txt") Resource tsvFileMastheadResource,
-                                            BaselineAnalyticsSearchService baselineAnalyticsSearchService) throws IOException {
+                                            BaselineAnalyticsSearchService baselineAnalyticsSearchService,SolrQueryService solrQueryService) throws
+            IOException {
         this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.tsvFileMastheadTemplate = IOUtils.toString(tsvFileMastheadResource.getInputStream());
+        this.solrQueryService = solrQueryService;
     }
 
     @RequestMapping(value = {"/widgets/heatmap/bioentity.tsv", "/widgets/heatmap/multiExperiment.tsv"}, method = RequestMethod.GET)
          public void heatmapWidgetData (@RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
                                         @RequestParam(value = "species", required = true) String species,
                                         HttpServletResponse response) throws IOException {
-        BaselineExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(bioEntityAccession, species, true);
+
+        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(bioEntityAccession, species, true);
+
+        BaselineExperimentSearchResult searchResult = geneIds.isPresent()
+                ?   baselineExperimentProfileSearchService.query(geneIds.get())
+                : new BaselineExperimentSearchResult();
 
         if (!searchResult.isEmpty()) {
             setHttpHeaders(response, bioEntityAccession + "_baseline.tsv");

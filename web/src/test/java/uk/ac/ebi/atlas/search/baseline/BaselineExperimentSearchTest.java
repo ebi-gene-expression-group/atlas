@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Sets;
 import com.google.common.primitives.Doubles;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
+import java.util.Set;
 import java.util.SortedSet;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -22,7 +24,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineExperimentSearchResultProducerTest {
+public class BaselineExperimentSearchTest {
 
     private static final double LUNG_LEVEL = 48948;
     private static final double THYMUS_LEVEL = 54922;
@@ -33,7 +35,6 @@ public class BaselineExperimentSearchResultProducerTest {
     private static final String E_GEOD_26284 = "E-GEOD-26284";
     private static final java.lang.String E_GEOD_26284_NAME = "cell line experiment";
     private static final java.lang.String CELL_LINE = "CELL_LINE";
-    BaselineExperimentSearchResultProducer subject;
 
     BaselineExperimentExpression g3_thymus = BaselineExperimentExpression.create(E_MTAB_599, "g3", THYMUS_LEVEL);
     BaselineExperimentExpression g5_lung = BaselineExperimentExpression.create(E_MTAB_599, "g5", LUNG_LEVEL);
@@ -67,6 +68,13 @@ public class BaselineExperimentSearchResultProducerTest {
 
     private static final FactorSet EMPTY_FACTOR_SET = new FactorSet();
 
+    @Mock
+    BaselineExpressionDao baselineExpressionDao;
+
+    BaselineExperimentSearchResultProducer searchResultProducer;
+
+    BaselineExperimentProfileSearchService searchService;
+
     @Before
     public void before() {
         when(experimentTrader.getPublicExperiment(E_MTAB_599)).thenReturn(baselineExperiment1);
@@ -93,7 +101,9 @@ public class BaselineExperimentSearchResultProducerTest {
         when(experimentalFactors2.getNonDefaultFactors(Mockito.anyString())).thenReturn(EMPTY_FACTOR_SET);
         when(experimentalFactors2.getDefaultQueryFactorType()).thenReturn(CELL_LINE);
 
-        subject = new BaselineExperimentSearchResultProducer(experimentTrader);
+        searchResultProducer = new BaselineExperimentSearchResultProducer(experimentTrader);
+
+        searchService = new BaselineExperimentProfileSearchService(baselineExpressionDao,searchResultProducer);
     }
 
     @Test
@@ -101,8 +111,25 @@ public class BaselineExperimentSearchResultProducerTest {
         // include g_nonTissueExpression which should be filtered out
         ImmutableList<BaselineExperimentExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
 
-        BaselineExperimentSearchResult result = subject.buildProfilesForTissueExperiments(expressions);
+        BaselineExperimentSearchResult result = searchResultProducer.buildProfilesForTissueExperiments(expressions);
 
+        assertAbout(result);
+
+    }
+
+    @Test
+    public void testBaselineExperimentProfileSearchServiceWithTheSameScenario(){
+        Set<String> geneIds = Sets.newHashSet("ENSG00000001337","ANOTHER_FAKE_IDENTIFIER");
+        ImmutableList<BaselineExperimentExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
+
+        when(baselineExpressionDao.fetchAverageExpressionByExperimentAssayGroup(geneIds)).thenReturn(expressions);
+
+        BaselineExperimentSearchResult result = searchService.query(geneIds);
+
+        assertAbout(result);
+    }
+
+    public void assertAbout(BaselineExperimentSearchResult result){
         BaselineExperimentProfilesList profiles = result.experimentProfiles;
         SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
 
@@ -127,7 +154,7 @@ public class BaselineExperimentSearchResultProducerTest {
         // include tissue expressions which should be filtered out
         ImmutableList<BaselineExperimentExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
 
-        BaselineExperimentSearchResult result = subject.buildProfilesForExperiments(expressions, CELL_LINE);
+        BaselineExperimentSearchResult result = searchResultProducer.buildProfilesForExperiments(expressions, CELL_LINE);
 
         BaselineExperimentProfilesList profiles = result.experimentProfiles;
         SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
@@ -148,3 +175,4 @@ public class BaselineExperimentSearchResultProducerTest {
     }
 
 }
+
