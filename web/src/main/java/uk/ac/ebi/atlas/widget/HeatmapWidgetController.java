@@ -148,7 +148,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                 speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString())
                 : Species.convertToEnsemblSpecies(species);
 
-        String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source;
+        String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source.toUpperCase();
         BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, ensemblSpecies, defaultFactorQueryType);
 
         populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
