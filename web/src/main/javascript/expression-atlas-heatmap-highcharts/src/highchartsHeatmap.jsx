@@ -99,14 +99,14 @@ var HighchartsHeatmap = React.createClass({
                     point: {
                         events: {
                             mouseOver: function() {
-                                this.series.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', this.series.xAxis.categories[this.x].id)
+                                this.series.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', this.series.xAxis.categories[this.x].id);
                                 this.series.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', this.series.yAxis.categories[this.y])
                             }
                         }
                     },
                     events: {
                         mouseOut: function () {
-                            this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', null)
+                            this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', null);
                             this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', null)
                         }
                     },
@@ -126,7 +126,6 @@ var HighchartsHeatmap = React.createClass({
                 marginTop: 82,//labels
                 marginRight: 36,//leave space for the export button to appear
                 plotBorderWidth: 1,
-                //height: this.props.profiles.rows.length * 4+200,
                 height: yAxisCategories.length * 12 + 200,
                 zoomType: 'xy'
             },

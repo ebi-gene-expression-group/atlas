@@ -136,7 +136,11 @@ var HighchartsHeatmapContainer = React.createClass({
             function (data) {
                 if (this.isMounted()) {
 
-                    var xAxisCategories = HighchartsUtils.getXAxisCategories(data.columnHeaders);
+                    var orderedData = HighchartsUtils.rankColumns(data.profiles, data.columnHeaders);
+                    var filteredDataByThreshold = HighchartsUtils.applyThresholdtoColumns(orderedData.profiles, orderedData.columnHeaders, 40);
+                    data.profiles.rows = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
+
+                    var xAxisCategories = HighchartsUtils.getXAxisCategories(filteredDataByThreshold.columnHeaders);
                     var yAxisCategories = HighchartsUtils.getYAxisCategories(data.profiles, data.config);
                     var yAxisCategoriesLinks = HighchartsUtils.getYAxisCategoriesLinks();
 
