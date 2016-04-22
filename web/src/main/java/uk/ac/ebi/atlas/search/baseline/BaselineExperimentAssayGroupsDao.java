@@ -119,12 +119,14 @@ public class BaselineExperimentAssayGroupsDao {
     }
 
 
-    DatabaseQuery<Object> buildSelect(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
+    DatabaseQuery<Object> buildSelect(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts,
+                                           Optional<? extends Collection<String>> geneIds) {
         BaselineExperimentAssayGroupQueryBuilder builder = createBaselineExpressionsQueryBuilder(indexedContrasts, geneIds);
         return builder.build();
     }
 
-    BaselineExperimentAssayGroupQueryBuilder createBaselineExpressionsQueryBuilder(Optional<? extends Collection<IndexedAssayGroup>> indexedAssayGroups, Optional<? extends Collection<String>> geneIds) {
+    private BaselineExperimentAssayGroupQueryBuilder createBaselineExpressionsQueryBuilder(Optional<? extends
+            Collection<IndexedAssayGroup>> indexedAssayGroups, Optional<? extends Collection<String>> geneIds) {
 
         BaselineExperimentAssayGroupQueryBuilder builder = new BaselineExperimentAssayGroupQueryBuilder();
 
