@@ -94,7 +94,7 @@ public class DiffAnalyticsDAOTest {
         String v = captor.getValue();
 
 
-        assertTrue(Pattern.matches("SELECT count.*FROM.*", v.toUpperCase()));
+        assertTrue(Pattern.matches("SELECT COUNT.*FROM.*", v.toUpperCase()));
         assertTrue(v.toUpperCase().contains("PRIVATE = 'F'"));
         assertEquals(1337, expressions);
     }
