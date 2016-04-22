@@ -3,9 +3,8 @@ package uk.ac.ebi.atlas.bioentity.properties;
 import com.google.common.base.Optional;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
-import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
-import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
+import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
+import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
@@ -29,23 +28,19 @@ public class BioEntityPropertyLinkBuilder {
 
     private SpeciesLookupService speciesLookupService;
 
-    private GoTermTrader goTermTrader;
+    private GoPoTermTrader goPoTermTrader;
 
-    private InterProTermTrader interProTermTrader;
-
-    private PoTermTrader poTermTrader;
+    private InterProTrader interProTermTrader;
 
     @Inject
     public BioEntityPropertyLinkBuilder(BioEntityCardProperties bioEntityCardProperties, ReactomeClient reactomeClient,
-                                        BioEntityPropertyDao bioEntityPropertyDao, SpeciesLookupService speciesLookupService, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader,
-                                        PoTermTrader poTermTrader) {
+                                        BioEntityPropertyDao bioEntityPropertyDao, SpeciesLookupService speciesLookupService, GoPoTermTrader goPoTermTrader, InterProTrader interProTermTrader) {
         this.bioEntityCardProperties = bioEntityCardProperties;
         this.reactomeClient = reactomeClient;
         this.bioEntityPropertyDao = bioEntityPropertyDao;
         this.speciesLookupService = speciesLookupService;
-        this.goTermTrader = goTermTrader;
+        this.goPoTermTrader = goPoTermTrader;
         this.interProTermTrader = interProTermTrader;
-        this.poTermTrader = poTermTrader;
     }
 
     public Optional<PropertyLink> createLink(String identifier, String propertyType, String propertyValue, String species) {
@@ -79,13 +74,13 @@ public class BioEntityPropertyLinkBuilder {
                 displayName = reactomeClient.fetchPathwayNameFailSafe(propertyValue);
                 break;
             case "go":
-                displayName = goTermTrader.getTermName(propertyValue);
+                displayName = goPoTermTrader.getTerm(propertyValue).name();
                 break;
             case "interpro":
-                displayName = interProTermTrader.getTerm(propertyValue);
+                displayName = interProTermTrader.getTermName(propertyValue);
                 break;
             case "po":
-                displayName = poTermTrader.getTermName(propertyValue);
+                displayName = goPoTermTrader.getTerm(propertyValue).name();
                 break;
 
         }

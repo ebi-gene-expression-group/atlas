@@ -34,7 +34,7 @@ public class AssayGroupFactor implements Comparable<AssayGroupFactor>{
     //used in heatmap.tag
     public @Nullable String getValueOntologyTermId() {
         // We are assuming that the only relevant ontology term for tissues is the first one
-        return factor.getValueOntologyTerms().isEmpty() ? null : factor.getValueOntologyTerms().iterator().next().id();
+        return factor.getValueOntologyTerms().isEmpty() ? null : factor.getValueOntologyTerms().iterator().next().accession();
     }
 
     @Override

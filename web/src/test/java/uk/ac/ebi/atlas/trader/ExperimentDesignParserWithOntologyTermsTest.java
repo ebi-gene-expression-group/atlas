@@ -134,7 +134,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
         assertThat(factors, contains(FACTOR2));
 
         Factor factor = factors.getFactorByType(GENOTYPE);
-        assertThat(factor.getValueOntologyTerms().iterator().next().id(), is(UBERON_0002107));
+        assertThat(factor.getValueOntologyTerms().iterator().next().accession(), is(UBERON_0002107));
     }
 
     @Test
@@ -153,7 +153,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
         assertThat(sampleCharacteristic.valueOntologyTerms().isEmpty(), is(false));
 
         OntologyTerm ontologyTerm = sampleCharacteristic.valueOntologyTerms().iterator().next();
-        assertThat(ontologyTerm.id(), is(SPECIES_1_ONTOLOGY_ID));
+        assertThat(ontologyTerm.accession(), is(SPECIES_1_ONTOLOGY_ID));
         assertThat(ontologyTerm.source(), is(HTTP_OBO));
     }
 

@@ -1,39 +1,16 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-
 package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
-import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
-import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
-import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
+import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesHeatMap;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWidgetQuery;
@@ -79,9 +56,7 @@ public abstract class BioEntityPageController {
 
     private ExperimentTrader experimentTrader;
 
-    private GoTermTrader goTermTrader;
-
-    private PoTermTrader poTermTrader;
+    private GoPoTermTrader goPoTermTrader;
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
 
@@ -110,13 +85,8 @@ public abstract class BioEntityPageController {
     }
 
     @Inject
-    public void setGoTermTrader(GoTermTrader goTermTrader) {
-        this.goTermTrader = goTermTrader;
-    }
-
-    @Inject
-    public void setPoTermTrader(PoTermTrader poTermTrader) {
-        this.poTermTrader = poTermTrader;
+    public void setGoPoTermTrader(GoPoTermTrader goPoTermTrader) {
+        this.goPoTermTrader = goPoTermTrader;
     }
 
     @Inject
@@ -273,8 +243,8 @@ public abstract class BioEntityPageController {
 
         model.addAttribute("mainTitle", "Expression summary for " + entityNames.first() + " - " + StringUtils.capitalize(species));
 
-        ImmutableSetMultimap<Integer, GoPoTerm> goTerms = mapGoTermsByDepth(propertyValuesByType.get("go"));
-        ImmutableSetMultimap<Integer, GoPoTerm> poTerms = mapPoTermsByDepth(propertyValuesByType.get("po"));
+        ImmutableSetMultimap<Integer, OntologyTerm> goTerms = mapGoPoTermsByDepth(propertyValuesByType.get("go"));
+        ImmutableSetMultimap<Integer, OntologyTerm> poTerms = mapGoPoTermsByDepth(propertyValuesByType.get("po"));
 
         bioEntityPropertyService.init(species, propertyValuesByType, goTerms, poTerms, entityNames, identifier);
     }
@@ -297,12 +267,12 @@ public abstract class BioEntityPageController {
     }
 
 
-    protected ImmutableSetMultimap<Integer, GoPoTerm> mapGoTermsByDepth(Set<String> accessions) {
-        ImmutableSetMultimap.Builder<Integer, GoPoTerm> builder = new ImmutableSetMultimap.Builder<>();
+    protected ImmutableSetMultimap<Integer, OntologyTerm> mapGoPoTermsByDepth(Set<String> accessions) {
+        ImmutableSetMultimap.Builder<Integer, OntologyTerm> builder = new ImmutableSetMultimap.Builder<>();
 
         for (String accession : accessions) {
             try {
-                builder.put(goTermTrader.getDepth(accession), goTermTrader.getTerm(accession));
+                builder.put(goPoTermTrader.getTerm(accession).depth(), goPoTermTrader.getTerm(accession));
             } catch (NullPointerException e) {
                 // Ignore terms which aren’t found in goIDToTerm.tsv
             }
@@ -311,14 +281,4 @@ public abstract class BioEntityPageController {
         return builder.build();
     }
 
-
-    protected ImmutableSetMultimap<Integer, GoPoTerm> mapPoTermsByDepth(Set<String> accessions) {
-        ImmutableSetMultimap.Builder<Integer, GoPoTerm> builder = new ImmutableSetMultimap.Builder<>();
-
-        for (String accession : accessions) {
-            builder.put(poTermTrader.getDepth(accession), poTermTrader.getTerm(accession));
-        }
-
-        return builder.build();
-    }
 }

@@ -92,7 +92,7 @@ public class RnaSeqBaselineExperimentMageTabParserIT {
         assertThat(sampleCharacteristic.valueOntologyTerms().isEmpty(), is(false));
 
         OntologyTerm ontologyTerm = sampleCharacteristic.valueOntologyTerms().iterator().next();
-        assertThat(ontologyTerm.id(), is("EFO_0000311"));
+        assertThat(ontologyTerm.accession(), is("EFO_0000311"));
         assertThat(ontologyTerm.source(), is("http://www.ebi.ac.uk/efo/"));
     }
 
@@ -139,7 +139,7 @@ public class RnaSeqBaselineExperimentMageTabParserIT {
         assertThat(organismPart.getValueOntologyTerms().isEmpty(), is(false));
 
         OntologyTerm ontologyTerm = organismPart.getValueOntologyTerms().iterator().next();
-        assertThat(ontologyTerm.id(), is("UBERON_0001013"));
+        assertThat(ontologyTerm.accession(), is("UBERON_0001013"));
         assertThat(ontologyTerm.source(), is("http://purl.obolibrary.org/obo/"));
     }
 

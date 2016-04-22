@@ -30,8 +30,8 @@ import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.utils.UniProtClient;
 
 import javax.inject.Inject;
@@ -51,8 +51,8 @@ public class BioEntityPropertyService {
 
     private SortedSetMultimap<String, String> propertyValuesByType;
 
-    private Multimap<Integer, GoPoTerm> depthToGoTerms;
-    private Multimap<Integer, GoPoTerm> depthToPoTerms;
+    private Multimap<Integer, OntologyTerm> depthToGoTerms;
+    private Multimap<Integer, OntologyTerm> depthToPoTerms;
 
     private String species;
 
@@ -70,7 +70,7 @@ public class BioEntityPropertyService {
         this.linkBuilder = linkBuilder;
     }
 
-    public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, Multimap<Integer, GoPoTerm> goTerms, Multimap<Integer, GoPoTerm> poTerms, SortedSet<String> entityNames, String identifier) {
+    public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, Multimap<Integer, OntologyTerm> goTerms, Multimap<Integer, OntologyTerm> poTerms, SortedSet<String> entityNames, String identifier) {
         this.species = species;
         this.propertyValuesByType = propertyValuesByType;
         this.entityNames = entityNames;
@@ -140,7 +140,7 @@ public class BioEntityPropertyService {
 
         if (!depthToGoTerms.isEmpty()) {
             for (int i = Collections.max(depthToGoTerms.keySet()) ; i >= 1 && propertyLinks.size() < includeAtLeast; i--) {
-                for (GoPoTerm goPoTerm : depthToGoTerms.get(i)) {
+                for (OntologyTerm goPoTerm : depthToGoTerms.get(i)) {
                     Optional<PropertyLink> link = linkBuilder.createLink(identifier, "go", goPoTerm.accession(), species);
                     if (link.isPresent()) {
                         propertyLinks.add(link.get());
@@ -157,7 +157,7 @@ public class BioEntityPropertyService {
 
         if (!depthToGoTerms.isEmpty()) {
             for (int i = Collections.max(depthToGoTerms.keySet()) ; i >= 1 ; i--) {
-                for (GoPoTerm goPoTerm : depthToGoTerms.get(i)) {
+                for (OntologyTerm goPoTerm : depthToGoTerms.get(i)) {
                     Optional<PropertyLink> link = linkBuilder.createLink(identifier, "go", goPoTerm.accession(), species);
                     if (link.isPresent()) {
                         propertyLinks.add(link.get());
@@ -174,7 +174,7 @@ public class BioEntityPropertyService {
         List<PropertyLink> propertyLinks = Lists.newArrayList();
 
         if (!depthToPoTerms.isEmpty()) {
-            for (GoPoTerm goPoTerm : depthToPoTerms.values()) {
+            for (OntologyTerm goPoTerm : depthToPoTerms.values()) {
                 Optional<PropertyLink> link = linkBuilder.createLink(identifier, "po", goPoTerm.accession(), species);
                 if (link.isPresent()) {
                     propertyLinks.add(link.get());
@@ -193,7 +193,7 @@ public class BioEntityPropertyService {
 
             if (!depthToPoTerms.isEmpty()) {
             for (int i = Collections.max(depthToPoTerms.keySet()) ; i >= 1 ; i--) {
-                for (GoPoTerm goPoTerm : depthToPoTerms.get(i)) {
+                for (OntologyTerm goPoTerm : depthToPoTerms.get(i)) {
                     Optional<PropertyLink> link = linkBuilder.createLink(identifier, "po", goPoTerm.accession(), species);
                     if (link.isPresent()) {
                         propertyLinks.add(link.get());

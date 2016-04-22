@@ -8,17 +8,27 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class OntologyTerm {
 
-    public abstract String id();
+    private final static int DEFAULT_DEPTH = 1;
 
-    @Nullable
+    public abstract String accession();
+    public abstract String name();
     public abstract String source();
+    public abstract int depth();
 
-    public static OntologyTerm create(String id) {
-        return create(id, null);
+    public static OntologyTerm create(String accession) {
+        return create(accession, "", "", DEFAULT_DEPTH);
     }
 
-    public static OntologyTerm create(String id, String source) {
-        return new AutoValue_OntologyTerm(id, source);
+    public static OntologyTerm create(String accession, String name) {
+        return create(accession, name, "", DEFAULT_DEPTH);
+    }
+
+    public static OntologyTerm create(String accession, String name, String source) {
+        return create(accession, name, source, DEFAULT_DEPTH);
+    }
+
+    public static OntologyTerm create(String accession, String name, String source, int depth) {
+        return new AutoValue_OntologyTerm(accession, name, source, depth);
     }
 
     public static OntologyTerm createFromUri(String uri) {
@@ -37,7 +47,7 @@ public abstract class OntologyTerm {
     }
 
     public String uri() {
-        return (Strings.isNullOrEmpty(source()) ? id() : addTrailingSlashIfAbsent(source()) + id());
+        return (Strings.isNullOrEmpty(source()) ? accession() : addTrailingSlashIfAbsent(source()) + accession());
     }
 
     private String addTrailingSlashIfAbsent(String s) {

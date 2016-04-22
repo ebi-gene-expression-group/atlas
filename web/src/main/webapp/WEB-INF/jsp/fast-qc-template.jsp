@@ -44,8 +44,8 @@
     <%
         // manually load file contents instead of using c:import to avoid javax.servlet.jsp.JspTagException: 304 errors
         // see http://stackoverflow.com/questions/17218609/jsp-exception-when-i-try-to-import-static-file
-        Path filePath = (Path)request.getAttribute("contentPath");
-        IOUtils.copy(Files.newInputStream(filePath), pageContext.getOut());
+        Path interProTSVFilePath = (Path)request.getAttribute("contentPath");
+        IOUtils.copy(Files.newInputStream(interProTSVFilePath), pageContext.getOut());
     %>
 </div>
 

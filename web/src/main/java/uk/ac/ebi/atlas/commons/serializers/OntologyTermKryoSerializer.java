@@ -16,13 +16,16 @@ public class OntologyTermKryoSerializer extends Serializer<OntologyTerm>  {
 
     @Override
     public void write(Kryo kryo, Output output, OntologyTerm ontologyTerm) {
-        kryo.writeObject(output, ontologyTerm.id());
-        kryo.writeObjectOrNull(output, ontologyTerm.source(), String.class);
+        kryo.writeObject(output, ontologyTerm.accession());
+        kryo.writeObject(output, ontologyTerm.name());
+        kryo.writeObject(output, ontologyTerm.source());
+        kryo.writeObject(output, ontologyTerm.depth());
     }
 
     @Override
     public OntologyTerm read(Kryo kryo, Input input, Class<OntologyTerm> aClass) {
-        return OntologyTerm.create(kryo.readObject(input, String.class), kryo.readObjectOrNull(input, String.class));
+        return OntologyTerm.create(
+                kryo.readObject(input, String.class), kryo.readObject(input, String.class), kryo.readObject(input, String.class), kryo.readObject(input, Integer.class));
     }
 
     public static void registerSerializers(final Kryo kryo) {

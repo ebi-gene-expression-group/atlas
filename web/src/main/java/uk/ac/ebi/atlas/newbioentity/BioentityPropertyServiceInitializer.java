@@ -6,12 +6,11 @@ import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
-import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
-import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
-import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
-import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
+import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
+import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService.Result;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
@@ -28,22 +27,19 @@ public class BioentityPropertyServiceInitializer {
     private final BioEntityPropertyDao bioentityPropertyDao;
 
     private final SpeciesLookupService speciesLookupService;
-    private final GoTermTrader goTermTrader;
-    private final PoTermTrader poTermTrader;
-    private final InterProTermTrader interProTermTrader;
+    private final GoPoTermTrader goPoTermTrader;
+    private final InterProTrader interProTermTrader;
     private final ReactomeClient reactomeClient;
 
     @Inject
     public BioentityPropertyServiceInitializer(BioEntityPropertyDao bioentityPropertyDao,
                                                SpeciesLookupService speciesLookupService,
-                                               GoTermTrader goTermTrader,
-                                               PoTermTrader poTermTrader,
-                                               InterProTermTrader interProTermTrader,
+                                               GoPoTermTrader goPoTermTrader,
+                                               InterProTrader interProTermTrader,
                                                ReactomeClient reactomeClient) {
         this.bioentityPropertyDao = bioentityPropertyDao;
         this.speciesLookupService = speciesLookupService;
-        this.goTermTrader = goTermTrader;
-        this.poTermTrader = poTermTrader;
+        this.goPoTermTrader = goPoTermTrader;
         this.interProTermTrader = interProTermTrader;
         this.reactomeClient = reactomeClient;
     }
@@ -57,8 +53,8 @@ public class BioentityPropertyServiceInitializer {
             entityNames.add(identifier);
         }
 
-        ImmutableSetMultimap<Integer, GoPoTerm> goTerms = mapGoTermsByDepth(propertyValuesByType.get("go"));
-        ImmutableSetMultimap<Integer, GoPoTerm> poTerms = mapPoTermsByDepth(propertyValuesByType.get("po"));
+        ImmutableSetMultimap<Integer, OntologyTerm> goTerms = mapGoPoTermsByDepth(propertyValuesByType.get("go"));
+        ImmutableSetMultimap<Integer, OntologyTerm> poTerms = mapGoPoTermsByDepth(propertyValuesByType.get("po"));
 
         bioentityPropertyService.init(species, propertyValuesByType, goTerms, poTerms, entityNames, identifier);
     }
@@ -69,9 +65,9 @@ public class BioentityPropertyServiceInitializer {
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
 
-        ImmutableSetMultimap.Builder<Integer, GoPoTerm> builder = new ImmutableSetMultimap.Builder<>();
-        ImmutableSetMultimap<Integer, GoPoTerm> goTermsByDepth = builder.build();
-        ImmutableSetMultimap<Integer, GoPoTerm> poTermsByDepth = builder.build();
+        ImmutableSetMultimap.Builder<Integer, OntologyTerm> builder = new ImmutableSetMultimap.Builder<>();
+        ImmutableSetMultimap<Integer, OntologyTerm> goTermsByDepth = builder.build();
+        ImmutableSetMultimap<Integer, OntologyTerm> poTermsByDepth = builder.build();
 
         identifier = identifier.toUpperCase();
 
@@ -79,17 +75,17 @@ public class BioentityPropertyServiceInitializer {
             propertyValuesByType.put("reactome", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeClient.fetchPathwayNameFailSafe(identifier));
         } else if (GeneSetUtil.matchesGeneOntologyAccession(identifier)) {
-            String termName = goTermTrader.getTermName(identifier);
+            String termName = goPoTermTrader.getTerm(identifier).name();
             propertyValuesByType.put("go", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
-            goTermsByDepth = mapGoTermsByDepth(propertyValuesByType.get("go"));
+            goTermsByDepth = mapGoPoTermsByDepth(propertyValuesByType.get("go"));
         } else if (GeneSetUtil.matchesPlantOntologyAccession(identifier)) {
-            String termName = poTermTrader.getTermName(identifier);
+            String termName = goPoTermTrader.getTerm(identifier).name();
             propertyValuesByType.put("po", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
-            poTermsByDepth = mapPoTermsByDepth(propertyValuesByType.get("po"));
+            poTermsByDepth = mapGoPoTermsByDepth(propertyValuesByType.get("po"));
         } else if (GeneSetUtil.matchesInterProAccession(identifier)) {
-            String term = interProTermTrader.getTerm(identifier);
+            String term = interProTermTrader.getTermName(identifier);
             propertyValuesByType.put("interpro", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
         } else if (GeneSetUtil.matchesPlantReactomeID(identifier)) {
@@ -103,25 +99,15 @@ public class BioentityPropertyServiceInitializer {
     }
 
 
-    private ImmutableSetMultimap<Integer, GoPoTerm> mapGoTermsByDepth(Set<String> accessions) {
-        ImmutableSetMultimap.Builder<Integer, GoPoTerm> builder = new ImmutableSetMultimap.Builder<>();
+    private ImmutableSetMultimap<Integer, OntologyTerm> mapGoPoTermsByDepth(Set<String> accessions) {
+        ImmutableSetMultimap.Builder<Integer, OntologyTerm> builder = new ImmutableSetMultimap.Builder<>();
 
         for (String accession : accessions) {
             try {
-                builder.put(goTermTrader.getDepth(accession), goTermTrader.getTerm(accession));
+                builder.put(goPoTermTrader.getTerm(accession).depth(), goPoTermTrader.getTerm(accession));
             } catch (NullPointerException e) {
                 // Ignore terms which aren’t found in goIDToTerm.tsv
             }
-        }
-
-        return builder.build();
-    }
-
-    private ImmutableSetMultimap<Integer, GoPoTerm> mapPoTermsByDepth(Set<String> accessions) {
-        ImmutableSetMultimap.Builder<Integer, GoPoTerm> builder = new ImmutableSetMultimap.Builder<>();
-
-        for (String accession : accessions) {
-            builder.put(poTermTrader.getDepth(accession), poTermTrader.getTerm(accession));
         }
 
         return builder.build();
