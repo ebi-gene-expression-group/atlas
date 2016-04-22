@@ -1,11 +1,16 @@
 package uk.ac.ebi.atlas.utils;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.google.common.base.Throwables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
-import java.io.*;
+import java.io.Reader;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,6 +19,7 @@ import java.util.zip.GZIPInputStream;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
+@Scope("singleton")
 public class CsvReaderFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderFactory.class);
@@ -25,7 +31,7 @@ public class CsvReaderFactory {
             return createTsvReader(dataFileReader);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalArgumentException("Error trying to open " + tsvFilePath, e);
+            throw Throwables.propagate(e);
         }
     }
 
@@ -36,7 +42,7 @@ public class CsvReaderFactory {
             return createTsvReader(dataFileReader);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalArgumentException("Error trying to open " + tsvGzFilePath, e);
+            throw Throwables.propagate(e);
         }
     }
 
