@@ -10,6 +10,7 @@
 
 img {
     margin: 0 !important; /* overrides ebi-visual.css */
+    max-width: unset !important; /* overrides ebi-visual.css */
 }
 
 h1 {
