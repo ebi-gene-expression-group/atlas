@@ -279,6 +279,12 @@ var Heatmap = React.createClass({
       </div>
     },
 
+    _constructDownloadProfilesURL: function() {
+      return this.props.heatmapConfig.downloadProfilesURL.match(/.*\?.+/) && Object.keys(this.state.coexpressionsDisplayed).length > 0
+            ?this.props.heatmapConfig.downloadProfilesURL+"&coexpressions="+JSON.stringify(this.state.coexpressionsDisplayed)
+            :this.props.heatmapConfig.downloadProfilesURL;
+    },
+
     render: function () {
         var paddingMargin = "15px";
 
@@ -288,7 +294,7 @@ var Heatmap = React.createClass({
                     {this._showGeneCount()}
                     <div style={{display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top"}}>
                         <DownloadProfilesButton ref="downloadProfilesButton"
-                                                downloadProfilesURL={this.props.heatmapConfig.downloadProfilesURL}
+                                                downloadProfilesURL={this._constructDownloadProfilesURL()}
                                                 atlasBaseURL={this.props.atlasBaseURL}
                                                 isFortLauderdale={this.props.heatmapConfig.isFortLauderdale}/>
                     </div>
