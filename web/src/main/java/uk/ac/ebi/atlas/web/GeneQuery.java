@@ -2,11 +2,13 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -46,6 +48,17 @@ public abstract class GeneQuery implements Iterable<String> {
     @Deprecated // use terms() instead
     public String asString() {
         return BioentityPropertyValueTokenizer.joinQuotingPhrases(terms());
+    }
+
+    public GeneQuery extend(String term, String... termsToAppend){
+        ImmutableList.Builder<String> b = ImmutableList.builder();
+        for(String t: terms()) {
+            b.add(t);
+            if (t.equals(term)) {
+                b.add(termsToAppend);
+            }
+        }
+        return GeneQuery.create(b.build());
     }
 
     public String as1DNF() {

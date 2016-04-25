@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.Set;
 
 public class ProfilesWriter<P extends Profile, K, O extends ProfileStreamOptions<K>> {
@@ -27,7 +28,7 @@ public class ProfilesWriter<P extends Profile, K, O extends ProfileStreamOptions
         this.tsvWriter = tsvWriter;
     }
 
-    public long write(PrintWriter outputWriter, ObjectInputStream<P> inputStream, O options, Set<K> conditions,
+    public long write(Writer outputWriter, ObjectInputStream<P> inputStream, O options, Set<K> conditions,
                       GeneQueryResponse geneQueryResponse, boolean shouldAverageIntoGeneSets)  {
 
         tsvWriter.setResponseWriter(outputWriter);

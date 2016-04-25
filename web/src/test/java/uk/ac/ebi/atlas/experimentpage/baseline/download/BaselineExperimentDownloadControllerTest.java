@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,13 +30,16 @@ import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Qualifier;
 import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
+import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
@@ -43,8 +47,10 @@ import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.Map;
 import java.util.TreeSet;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anySet;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -86,9 +92,25 @@ public class BaselineExperimentDownloadControllerTest {
 
     private BaselineExperimentDownloadController subject;
 
+    @Mock
+    BaselineProfileInputStreamFactory inputStreamFactory;
+
+    @Mock
+    BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory;
+
+    BaselineProfilesWriterService baselineProfilesWriterService;
+
+    @Mock
+    CoexpressedGenesDao coexpressedGenesDao;
+
+
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineExperimentDownloadController(baselineProfilesWriterMock);
+        baselineProfilesWriterService = new BaselineProfilesWriterService(baselineProfilesWriterMock,
+                coexpressedGenesDao);
+        when(baselineProfilesWriterServiceFactory.create(inputStreamFactory)).thenReturn(baselineProfilesWriterService);
+        subject = new BaselineExperimentDownloadController(inputStreamFactory, baselineProfilesWriterServiceFactory);
+
     }
 
     @Test
@@ -118,5 +140,30 @@ public class BaselineExperimentDownloadControllerTest {
 
         verify(baselineProfilesWriterMock).write(Matchers.eq(printWriterMock), Matchers.any
                 (BaselineRequestContext.class));
+    }
+
+
+    @Test
+    public void parseGoodCoexpressionArgument(){
+        testParse("{\\\"AC190623.3_FG001\\\":10}", ImmutableMap.of("AC190623.3_FG001", 10));
+        testParse("{\"AC190623.3_FG001\":10}", ImmutableMap.of("AC190623.3_FG001", 10));
+    }
+
+    @Test
+    public void returnEmptyForMalformedCoexpressionArgument(){
+        Map<String, Integer> empty = ImmutableMap.of();
+        testParse("", empty);
+        testParse("\"banana\"", empty);
+        testParse("notJson:[", empty);
+        testParse("{\"AC190623.3_FG001\":notAnInteger}", empty);
+    }
+
+    public void testParse(String input, Map<String, Integer> expected) {
+        when(requestMock.getParameterMap()).thenReturn(ImmutableMap.of("geneQuery", new String[] {"idOfGeneGoesHere"},
+                "coexpressions", new String[]{input}));
+        when(requestMock.getParameter("coexpressions")).thenReturn(input);
+
+        Map<String, Integer> result = subject.readCoexpressionsRequested(requestMock);
+        assertEquals(expected, result);
     }
 }

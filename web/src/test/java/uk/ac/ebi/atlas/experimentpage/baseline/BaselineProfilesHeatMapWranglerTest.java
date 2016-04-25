@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
@@ -156,8 +157,8 @@ public class BaselineProfilesHeatMapWranglerTest {
                         (GeneQueryResponse.class),
                 Matchers.eq(false))).thenReturn(rightList);
 
-        Map<String, ImmutableSet<String>> m = new HashMap<>();
-        m.put("ex", ImmutableSet.of("gene1", "gene2","gene3"));
+        Map<String, ImmutableList<String>> m = new HashMap<>();
+        m.put("ex", ImmutableList.of("gene1", "gene2","gene3"));
         when(coexpressedGenesDao.coexpressedGenesForResults(eq(experiment),eq(rightList))).thenReturn(m);
 
         BaselineProfilesHeatMapWrangler subjectHere = fakeWrangler(new BaselineRequestPreferences(), experiment);

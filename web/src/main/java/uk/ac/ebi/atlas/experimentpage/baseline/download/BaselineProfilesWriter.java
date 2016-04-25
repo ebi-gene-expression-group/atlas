@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.PrintWriter;
+import java.io.Writer;
 
 @Named
 @Scope("prototype")
@@ -33,7 +34,7 @@ public class BaselineProfilesWriter extends ProfilesWriter<BaselineProfile, Fact
         this.solrQueryService = solrQueryService;
     }
 
-    public long write(PrintWriter outputWriter, BaselineRequestContext requestContext) throws GenesNotFoundException {
+    public long write(Writer outputWriter, BaselineRequestContext requestContext) throws GenesNotFoundException {
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
         return super.write(outputWriter, inputStreamFactory.create(requestContext), requestContext, requestContext
                 .getAllQueryFactors(),geneQueryResponse, false);
@@ -41,7 +42,7 @@ public class BaselineProfilesWriter extends ProfilesWriter<BaselineProfile, Fact
 
     /* Unused, Alfonso says there was once an idea for having the download button give you exactly what's on the page
     . Didn't happen. You can consider deleting this path of the code.*/
-    public long writeAsGeneSets(PrintWriter outputWriter, BaselineRequestContext requestContext) throws GenesNotFoundException {
+    public long writeAsGeneSets(Writer outputWriter, BaselineRequestContext requestContext) throws GenesNotFoundException {
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
 
         return super.write(outputWriter, inputStreamFactory.create(requestContext), requestContext, requestContext

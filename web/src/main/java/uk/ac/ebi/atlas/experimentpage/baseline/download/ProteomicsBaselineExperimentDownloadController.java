@@ -1,10 +1,13 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -21,8 +24,9 @@ public class ProteomicsBaselineExperimentDownloadController extends BaselineExpe
     private final String TYPE_PROTEOMICS_BASELINE = "type=PROTEOMICS_BASELINE";
 
     @Inject
-    public ProteomicsBaselineExperimentDownloadController(ProteomicsBaselineProfilesWriter proteomicsBaselineProfilesWriter) {
-        super(proteomicsBaselineProfilesWriter);
+    public ProteomicsBaselineExperimentDownloadController(ProteomicsBaselineProfileInputStreamFactory inputStreamFactory,
+                                                          BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory) {
+        super(inputStreamFactory, baselineProfilesWriterServiceFactory);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = TYPE_PROTEOMICS_BASELINE)

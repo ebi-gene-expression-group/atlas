@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.coexpression;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.apache.velocity.util.StringUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -7,6 +8,7 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,14 +21,15 @@ public class CoexpressedGenesDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public ImmutableSet<String> coexpressedGenesFor(String experiment, String identifier){
+    public ImmutableList<String> coexpressedGenesFor(String experiment, String identifier){
         List<String> res = jdbcTemplate.queryForList(
                 "SELECT CE_IDENTIFIERS " +
                 "FROM RNASEQ_BSLN_CE_PROFILES " +
                 "WHERE EXPERIMENT=? AND IDENTIFIER=?",
                 new String [] {experiment,identifier},
                 String.class);
-        ImmutableSet.Builder<String> builder = ImmutableSet.builder();
+
+        ImmutableList.Builder<String> builder = ImmutableList.builder();
         for(String resultRow: res){
             for(String splitted: StringUtils.split(resultRow,",")){
                 builder.add(splitted);
@@ -35,9 +38,9 @@ public class CoexpressedGenesDao {
         return builder.build();
     }
 
-    public <T extends Profile> Map<String, ImmutableSet<String>> coexpressedGenesForResults(Experiment experiment,
+    public <T extends Profile> Map<String, ImmutableList<String>> coexpressedGenesForResults(Experiment experiment,
                                                                                              GeneProfilesList<T> baselineProfiles){
-        Map<String, ImmutableSet<String>> result = new HashMap<>();
+        Map<String, ImmutableList<String>> result = new HashMap<>();
         for(String geneName: baselineProfiles.extractGeneNames()){
             result.put(geneName, coexpressedGenesFor(experiment.getAccession(), geneName));
         }

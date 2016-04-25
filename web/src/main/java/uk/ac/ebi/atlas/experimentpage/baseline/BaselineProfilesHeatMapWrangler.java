@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
@@ -85,7 +86,7 @@ public class BaselineProfilesHeatMapWrangler {
         fetchProfilesIfMissing();
         Map<String, BaselineProfilesViewModel> result = new HashMap<>();
         if(jsonProfiles.size() == 1) {
-            for (Map.Entry<String, ImmutableSet<String>> e : coexpressedGenesDao.coexpressedGenesForResults(experiment,
+            for (Map.Entry<String, ImmutableList<String>> e : coexpressedGenesDao.coexpressedGenesForResults(experiment,
                     jsonProfiles).entrySet()) {
                 GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(GeneQuery
                                 .create(e.getValue()).asString(),
