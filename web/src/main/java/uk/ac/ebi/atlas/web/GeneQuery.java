@@ -61,6 +61,16 @@ public abstract class GeneQuery implements Iterable<String> {
         return GeneQuery.create(b.build());
     }
 
+    public GeneQuery subtract(Collection<String> termsToSubstract){
+        ImmutableList.Builder<String> b = ImmutableList.builder();
+        for(String t: terms()) {
+            if(!termsToSubstract.contains(t)){
+                b.add(t);
+            }
+        }
+        return GeneQuery.create(b.build());
+    }
+
     public String as1DNF() {
         return "\"" + StringUtils.join(terms(), "\" OR \"") + "\"";
     }

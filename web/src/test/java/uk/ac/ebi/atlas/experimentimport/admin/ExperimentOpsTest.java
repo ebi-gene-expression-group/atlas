@@ -21,6 +21,7 @@ import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfile
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class ExperimentOpsTest {
 
@@ -153,7 +154,8 @@ public class ExperimentOpsTest {
         Assert.assertNull(result.get("result"));
         Assert.assertNotNull(result.get("error"));
 
-        Assert.assertEquals(ExperimentOps.UNFINISHED, fileSystem.get(accession).iterator().next().getRight().getRight());
+        Assert.assertTrue("Log failure in op name", Pattern.matches("^FAILED.*",
+                fileSystem.get(accession).iterator().next().getLeft()));
 
     }
 }

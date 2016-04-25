@@ -116,7 +116,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     @Override
     protected String getTsvFileMasthead(BaselineRequestContext requestContext, boolean isGeneSet) {
         String responseType = isGeneSet ? "Gene sets" : "Genes";
-        String geneQuery = requestContext.getGeneQuery();
+        String geneQuery = requestContext.getGeneQuery().asString();
         String specific = requestContext.isSpecific() ? "specifically " : "";
         String exactMatch = requestContext.isExactMatch() ? " exactly" : "";
         String selectedQueryFactors = formatSelectedQueryFactors(requestContext);

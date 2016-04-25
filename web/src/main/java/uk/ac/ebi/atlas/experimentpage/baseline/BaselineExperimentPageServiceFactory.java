@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.dao.OrganismEnsemblDAO;
 import uk.ac.ebi.atlas.dao.OrganismKingdomDAO;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
+import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
@@ -25,7 +26,7 @@ public class BaselineExperimentPageServiceFactory {
     private final SpeciesKingdomTrader speciesKingdomTrader;
     private final BaselineExperimentUtil bslnUtil;
     private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
-    private final CoexpressedGenesDao coexpressedGenesDao;
+    private final CoexpressedGenesService coexpressedGenesService;
     private final SolrQueryService solrQueryService;
     private final RankBaselineProfilesFactory rankProfilesFactory;
 
@@ -41,7 +42,7 @@ public class BaselineExperimentPageServiceFactory {
                 OrganismEnsemblDAO(jdbcTemplate));
         this.bslnUtil = bslnUtil;
         this.preferencesForBaselineExperiments = new PreferencesForBaselineExperiments();
-        this.coexpressedGenesDao = new CoexpressedGenesDao(jdbcTemplate);
+        this.coexpressedGenesService = new CoexpressedGenesService(new CoexpressedGenesDao(jdbcTemplate));
         this.solrQueryService = solrQueryService;
         this.rankProfilesFactory = rankProfilesFactory;
 
@@ -49,7 +50,7 @@ public class BaselineExperimentPageServiceFactory {
 
     public BaselineExperimentPageService create(BaselineProfileInputStreamFactory inputStreamFactory){
         return new BaselineExperimentPageService(new BaselineProfilesHeatMapWranglerFactory(rankProfilesFactory,
-                inputStreamFactory,baselineProfilesViewModelBuilder, solrQueryService, coexpressedGenesDao),
+                inputStreamFactory,baselineProfilesViewModelBuilder, solrQueryService, coexpressedGenesService),
                 applicationProperties,
                 speciesKingdomTrader, tracksUtil, bslnUtil,
                 preferencesForBaselineExperiments);

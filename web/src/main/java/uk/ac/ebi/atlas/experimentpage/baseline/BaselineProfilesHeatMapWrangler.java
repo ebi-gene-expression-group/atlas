@@ -2,8 +2,10 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
+import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -36,17 +38,17 @@ public class BaselineProfilesHeatMapWrangler {
 
     private final BaselineRequestContext requestContext;
 
-    private final CoexpressedGenesDao coexpressedGenesDao;
+    private final CoexpressedGenesService coexpressedGenesService;
 
     public BaselineProfilesHeatMapWrangler(
             BaselineProfilesHeatMap baselineProfilesHeatMap,
             BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder, SolrQueryService solrQueryService,
-            CoexpressedGenesDao coexpressedGenesDao,
+            CoexpressedGenesService coexpressedGenesService,
             BaselineRequestPreferences preferences, BaselineExperiment experiment) {
         this.baselineProfilesHeatMap = baselineProfilesHeatMap;
         this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
         this.solrQueryService = solrQueryService;
-        this.coexpressedGenesDao = coexpressedGenesDao;
+        this.coexpressedGenesService = coexpressedGenesService;
         this.experiment = experiment;
         requestContext = BaselineRequestContext.createFor(experiment,preferences);
     }
@@ -86,13 +88,18 @@ public class BaselineProfilesHeatMapWrangler {
         fetchProfilesIfMissing();
         Map<String, BaselineProfilesViewModel> result = new HashMap<>();
         if(jsonProfiles.size() == 1) {
-            for (Map.Entry<String, ImmutableList<String>> e : coexpressedGenesDao.coexpressedGenesForResults(experiment,
-                    jsonProfiles).entrySet()) {
-                GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(GeneQuery
-                                .create(e.getValue()).asString(),
-                        requestContext.isExactMatch(), getSpecies());
-                result.put(e.getKey(), baselineProfilesViewModelBuilder.build
-                        (baselineProfilesHeatMap.fetch(requestContext, geneQueryResponse, false), requestContext.getOrderedFilterFactors()));
+            for(String geneName: jsonProfiles.extractGeneNames()){
+                Optional<GeneQuery> query = coexpressedGenesService.tryGetRelatedCoexpressions(experiment, requestContext
+                        .getGeneQuery(), ImmutableMap.of(geneName, 49));
+                if(query.isPresent()) {
+                    GeneQueryResponse response = solrQueryService.fetchResponseBasedOnRequestContext(query.get(),
+                            requestContext.isExactMatch(), getSpecies());
+
+                    result.put(geneName, baselineProfilesViewModelBuilder.build
+                            (baselineProfilesHeatMap.fetch(requestContext, response, false), requestContext
+                                    .getOrderedFilterFactors()));
+                }
+
             }
         }
         return result;

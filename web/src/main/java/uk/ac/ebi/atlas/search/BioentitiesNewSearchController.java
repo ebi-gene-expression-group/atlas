@@ -109,7 +109,7 @@ public class BioentitiesNewSearchController {
         return "";
 
 
-//        model.addAttribute("geneQuery", requestParameters.getGeneQuery());
+//        model.addAttribute("geneQuery", requestParameters.getGeneQueryDeprecated());
 //        model.addAttribute("searchDescription", requestParameters.getDescription());
 //        model.addAttribute("mainTitle", "Expression summary for " + requestParameters.getDescription());
 //

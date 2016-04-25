@@ -32,7 +32,11 @@ public class CoexpressedGenesDao {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for(String resultRow: res){
             for(String splitted: StringUtils.split(resultRow,",")){
-                builder.add(splitted);
+                if(!splitted.equals(identifier)) {
+                    builder.add(splitted);
+                } else {
+                    ;
+                }
             }
         }
         return builder.build();
@@ -42,9 +46,13 @@ public class CoexpressedGenesDao {
                                                                                              GeneProfilesList<T> baselineProfiles){
         Map<String, ImmutableList<String>> result = new HashMap<>();
         for(String geneName: baselineProfiles.extractGeneNames()){
-            result.put(geneName, coexpressedGenesFor(experiment.getAccession(), geneName));
+            ImmutableList<String> resultForThisGene = coexpressedGenesFor(experiment.getAccession(), geneName);
+            if (resultForThisGene.size()> 0 ){
+                result.put(geneName, resultForThisGene);
+            }
         }
 
         return result;
     }
+
 }

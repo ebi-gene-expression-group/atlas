@@ -33,6 +33,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Qualifier;
 import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
+import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.AssayGroups;
@@ -101,13 +102,12 @@ public class BaselineExperimentDownloadControllerTest {
     BaselineProfilesWriterService baselineProfilesWriterService;
 
     @Mock
-    CoexpressedGenesDao coexpressedGenesDao;
+    CoexpressedGenesService coexpressedGenesService;
 
 
     @Before
     public void setUp() throws Exception {
-        baselineProfilesWriterService = new BaselineProfilesWriterService(baselineProfilesWriterMock,
-                coexpressedGenesDao);
+        baselineProfilesWriterService = new BaselineProfilesWriterService(baselineProfilesWriterMock, coexpressedGenesService);
         when(baselineProfilesWriterServiceFactory.create(inputStreamFactory)).thenReturn(baselineProfilesWriterService);
         subject = new BaselineExperimentDownloadController(inputStreamFactory, baselineProfilesWriterServiceFactory);
 

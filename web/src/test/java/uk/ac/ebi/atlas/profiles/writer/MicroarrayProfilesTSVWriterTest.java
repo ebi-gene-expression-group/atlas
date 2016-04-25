@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.profiles.writer;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -38,6 +39,7 @@ import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import java.io.ByteArrayInputStream;
 import java.io.PrintWriter;
@@ -89,7 +91,7 @@ public class MicroarrayProfilesTSVWriterTest {
     @Before
     public void initMocks() throws Exception {
         when(geneProfileMock.getExpression(any(Contrast.class))).thenReturn(expressionMock);
-        when(microarrayRequestContextMock.getGeneQuery()).thenReturn("");
+        when(microarrayRequestContextMock.getGeneQuery()).thenReturn(GeneQuery.create(ImmutableList.of("")));
         when(microarrayRequestContextMock.getSelectedQueryFactors()).thenReturn(Collections.EMPTY_SET);
         when(microarrayRequestContextMock.getRegulation()).thenReturn(Regulation.UP);
         when(microarrayRequestContextMock.getExperiment()).thenReturn(experimentMock);

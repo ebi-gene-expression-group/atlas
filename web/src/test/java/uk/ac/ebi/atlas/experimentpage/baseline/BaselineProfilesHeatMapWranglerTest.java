@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
+import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
@@ -18,6 +18,7 @@ import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuil
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import java.util.*;
 
@@ -49,11 +50,20 @@ public class BaselineProfilesHeatMapWranglerTest {
 
     BaselineProfilesHeatMapWrangler subject;
 
+    BaselineRequestPreferences baselineRequestPreferences;
+
+    static String ACCESSION = "E-MTAB-1337";
+    static String GENE_WE_ASK_FOR = "T0";
+
     @Before
     public void setUp(){
+        when(experiment.getAccession()).thenReturn(ACCESSION);
         when(experiment.getFirstOrganism()).thenReturn("ORGANISM");
         when(experiment.getOrganismToEnsemblSpeciesMapping()).thenReturn(new HashMap<String, String>());
         when(experiment.getExperimentalFactors()).thenReturn(experimentalFactors);
+
+        baselineRequestPreferences = new BaselineRequestPreferences();
+        baselineRequestPreferences.setGeneQuery(GeneQuery.create(GENE_WE_ASK_FOR));
 
         TreeSet<Factor> ts = new TreeSet<>();
         ts.add(mock(Factor.class));
@@ -62,13 +72,13 @@ public class BaselineProfilesHeatMapWranglerTest {
         when(baselineProfilesViewModelBuilder.build(Matchers.any(BaselineProfilesList.class), Matchers.any(SortedSet
                 .class))).thenReturn(resultObject);
 
-        subject = fakeWrangler(new BaselineRequestPreferences(), experiment);
+        subject = fakeWrangler(baselineRequestPreferences, experiment);
     }
 
     public BaselineProfilesHeatMapWrangler fakeWrangler(BaselineRequestPreferences preferences, BaselineExperiment
             experiment){
         return new BaselineProfilesHeatMapWrangler(baselineProfilesHeatMap, baselineProfilesViewModelBuilder,
-                solrQueryService,coexpressedGenesDao,
+                solrQueryService,new CoexpressedGenesService(coexpressedGenesDao),
                 preferences,experiment);
     }
 
@@ -135,7 +145,7 @@ public class BaselineProfilesHeatMapWranglerTest {
         when(baselineProfilesHeatMap.fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.any
                         (GeneQueryResponse.class),
                 Matchers.eq(false))).thenReturn(list);
-        BaselineProfilesHeatMapWrangler subjectHere = fakeWrangler(new BaselineRequestPreferences(), experiment);
+        BaselineProfilesHeatMapWrangler subjectHere = fakeWrangler(baselineRequestPreferences, experiment);
         subjectHere.getJsonProfiles();
 
         verify(baselineProfilesHeatMap).fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.any
@@ -151,22 +161,22 @@ public class BaselineProfilesHeatMapWranglerTest {
     @Test
     public void jsonCoexpressionsReturnedForOneResult() throws Exception {
         BaselineProfilesList rightList = new BaselineProfilesList();
-        rightList.add(mock(BaselineProfile.class));
+        BaselineProfile profile = mock(BaselineProfile.class);
+        when(profile.getName()).thenReturn(GENE_WE_ASK_FOR);
+        rightList.add(profile);
 
         when(baselineProfilesHeatMap.fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.any
                         (GeneQueryResponse.class),
                 Matchers.eq(false))).thenReturn(rightList);
 
-        Map<String, ImmutableList<String>> m = new HashMap<>();
-        m.put("ex", ImmutableList.of("gene1", "gene2","gene3"));
-        when(coexpressedGenesDao.coexpressedGenesForResults(eq(experiment),eq(rightList))).thenReturn(m);
+        when(coexpressedGenesDao.coexpressedGenesFor(ACCESSION, GENE_WE_ASK_FOR)).thenReturn(ImmutableList.of("C1", "C2","C3"));
 
-        BaselineProfilesHeatMapWrangler subjectHere = fakeWrangler(new BaselineRequestPreferences(), experiment);
+        BaselineProfilesHeatMapWrangler subjectHere = fakeWrangler(baselineRequestPreferences, experiment);
         subjectHere.getJsonProfiles();
 
         subjectHere.getJsonCoexpressions();
 
-        verify(coexpressedGenesDao).coexpressedGenesForResults(eq(experiment),eq(rightList));
+        verify(coexpressedGenesDao).coexpressedGenesFor(ACCESSION, GENE_WE_ASK_FOR);
 
     }
 

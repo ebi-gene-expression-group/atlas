@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
+import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
@@ -19,15 +20,12 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class BaselineProfilesWriterServiceTest {
-
-    @Mock
-    BaselineProfilesWriter baselineProfilesWriter;
+public class CoexpressedGenesServiceTest {
 
     @Mock
     CoexpressedGenesDao coexpressedGenesDao;
 
-    BaselineProfilesWriterService subject;
+    CoexpressedGenesService subject;
 
     static String EX1 = "EX1";
 
@@ -41,7 +39,7 @@ public class BaselineProfilesWriterServiceTest {
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        subject = new BaselineProfilesWriterService(baselineProfilesWriter,coexpressedGenesDao);
+        subject = new CoexpressedGenesService(coexpressedGenesDao);
         for(Map.Entry<Pair<String,String>, ImmutableList<String>> e: stateOfDatabase.entrySet()){
             when(coexpressedGenesDao.coexpressedGenesFor(e.getKey().getLeft(), e.getKey().getRight())).thenReturn(e
                     .getValue());

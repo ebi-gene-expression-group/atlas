@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentpage.context;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,7 +67,7 @@ public class RequestContextTest {
 
     @Test
     public void testGetGeneQuery() throws Exception {
-        assertThat(subject.getGeneQuery(), is("GENE_QUERY"));
+        assertThat(subject.getGeneQuery(), is(GeneQuery.create(ImmutableList.of("GENE_QUERY"))));
     }
 
     @Test

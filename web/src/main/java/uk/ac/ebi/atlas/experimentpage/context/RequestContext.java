@@ -26,6 +26,7 @@ import com.google.common.base.Objects;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import java.util.Collections;
 import java.util.Set;
@@ -39,8 +40,8 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
     private String filteredBySpecies;
     private Set<T> allQueryFactors;
 
-    public String getGeneQuery() {
-        return getRequestPreferences().getGeneQuery().asString();
+    public GeneQuery getGeneQuery() {
+        return getRequestPreferences().getGeneQuery();
     }
 
     public Integer getHeatmapMatrixSize() {

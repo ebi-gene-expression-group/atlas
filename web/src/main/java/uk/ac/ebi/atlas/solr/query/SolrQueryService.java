@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -186,7 +187,13 @@ public class SolrQueryService {
 
     public GeneQueryResponse fetchResponseBasedOnRequestContext(RequestContext requestContext, String species) throws
             GenesNotFoundException {
-        return fetchResponseBasedOnRequestContext(requestContext.getGeneQuery(),requestContext.isExactMatch(), species);
+        return fetchResponseBasedOnRequestContext(requestContext.getGeneQuery(), requestContext.isExactMatch(), species);
+    }
+
+    public GeneQueryResponse fetchResponseBasedOnRequestContext(GeneQuery geneQuery, boolean isExactMatch, String
+                                                                species) throws
+            GenesNotFoundException {
+        return fetchResponseBasedOnRequestContext(geneQuery.asString() ,isExactMatch, species);
     }
     public GeneQueryResponse fetchResponseBasedOnRequestContext(String geneQuery, boolean isExactMatch, String
             species) throws

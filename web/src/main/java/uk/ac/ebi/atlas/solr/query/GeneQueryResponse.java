@@ -22,10 +22,7 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Collection;
@@ -36,7 +33,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 public class GeneQueryResponse {
 
-    private Multimap<String, String> geneIdsByQueryTerm = HashMultimap.create();
+    private Multimap<String, String> geneIdsByQueryTerm = LinkedHashMultimap.create();
 
     private boolean containsGeneSets;
 
