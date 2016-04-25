@@ -186,6 +186,9 @@ public class ExperimentOps {
                 String text = e.getMessage();
                 LOGGER.error(text);
                 result.add("error", new JsonPrimitive(text));
+                if (!opRecords.isEmpty()) {
+                    opRecords.remove(opRecords.size() - 1);
+                }
                 opRecords.add(Pair.of("FAILED: "+newOpRecord.getLeft(), Pair.of(newOpRecord.getRight().getLeft(),
                         System.currentTimeMillis())));
             } finally {
