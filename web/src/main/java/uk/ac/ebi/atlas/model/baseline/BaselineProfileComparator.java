@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.model.baseline;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import org.springframework.util.CollectionUtils;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 
 import java.util.Comparator;
 import java.util.Set;
@@ -41,6 +42,13 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     private Set<Factor> allQueryFactors;
     private double cutoffDivisor;
 
+
+    public static BaselineProfileComparator create(BaselineProfileStreamOptions options) {
+        return new BaselineProfileComparator(options.isSpecific(),
+                options.getSelectedQueryFactors(),
+                options.getAllQueryFactors(),
+                options.getCutoff());
+    }
 
     public BaselineProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
                                      Set<Factor> allQueryFactors, double cutoff) {

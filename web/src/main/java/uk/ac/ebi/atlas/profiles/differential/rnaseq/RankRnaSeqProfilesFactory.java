@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparatorFactory;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.profiles.RankProfiles;
+import uk.ac.ebi.atlas.profiles.MinMaxProfileRanking;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfilesListBuilder;
 import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
@@ -26,9 +26,9 @@ public class RankRnaSeqProfilesFactory implements RankProfilesFactory<RnaSeqProf
         this.geneProfilesListBuilder = geneProfilesListBuilder;
     }
 
-    public RankProfiles<RnaSeqProfile, DifferentialProfilesList<RnaSeqProfile>> create(DifferentialProfileStreamOptions options) {
+    public MinMaxProfileRanking<RnaSeqProfile, DifferentialProfilesList<RnaSeqProfile>> create(DifferentialProfileStreamOptions options) {
         Comparator<RnaSeqProfile> comparator = differentialProfileComparatorFactory.create(options);
-        return new RankProfiles<>(comparator, geneProfilesListBuilder);
+        return new MinMaxProfileRanking<>(comparator, geneProfilesListBuilder);
     }
 
 }

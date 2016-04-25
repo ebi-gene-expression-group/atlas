@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparatorFactory;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.profiles.RankProfiles;
+import uk.ac.ebi.atlas.profiles.MinMaxProfileRanking;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfilesListBuilder;
 import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
@@ -26,9 +26,9 @@ public class RankMicroarrayProfilesFactory implements RankProfilesFactory<Microa
         this.geneProfilesListBuilder = geneProfilesListBuilder;
     }
 
-    public RankProfiles<MicroarrayProfile, DifferentialProfilesList<MicroarrayProfile>> create(DifferentialProfileStreamOptions options) {
+    public MinMaxProfileRanking<MicroarrayProfile, DifferentialProfilesList<MicroarrayProfile>> create(DifferentialProfileStreamOptions options) {
         Comparator<MicroarrayProfile> comparator = differentialProfileComparatorFactory.create(options);
-        return new RankProfiles<>(comparator, geneProfilesListBuilder);
+        return new MinMaxProfileRanking<>(comparator, geneProfilesListBuilder);
     }
 
 }

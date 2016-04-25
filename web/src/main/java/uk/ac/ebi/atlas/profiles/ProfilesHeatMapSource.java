@@ -7,7 +7,6 @@ import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import java.io.IOException;
@@ -17,36 +16,32 @@ public class ProfilesHeatMapSource<P extends Profile<T, ? extends Expression>, L
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfilesHeatMapSource.class);
 
-    private RankProfilesFactory<P, L, O> rankProfilesFactory;
     private ProfileStreamFactory<O, P, T> profileStreamFactory;
     private ProfileStreamPipelineBuilder<P, O, T> profileStreamPipelineBuilder;
 
-    public ProfilesHeatMapSource(RankProfilesFactory<P, L, O> rankProfilesFactory, ProfileStreamFactory<O, P, T>
-            profileStreamFactory,ProfileStreamFilters<P,T> profileStreamFilters) {
-        this.rankProfilesFactory = rankProfilesFactory;
+    public ProfilesHeatMapSource(ProfileStreamFactory<O, P, T>
+                                         profileStreamFactory, ProfileStreamFilters<P, T> profileStreamFilters) {
         this.profileStreamFactory = profileStreamFactory;
         this.profileStreamPipelineBuilder = new ProfileStreamPipelineBuilder<>(profileStreamFilters);
     }
 
-    public L fetch(O options, GeneQueryResponse geneQueryResponse, boolean shouldAverageIntoGeneSets)  {
+    public L fetch(O options,SelectProfiles<P, L> selectProfiles, GeneQueryResponse geneQueryResponse, boolean
+            shouldAverageIntoGeneSets)  {
         int maxSize = options.getHeatmapMatrixSize();
-
-        RankProfiles<P, L> rankProfiles = rankProfilesFactory.create(options);
 
         try (ObjectInputStream<P> source = profileStreamFactory.create(options)) {
 
             Iterable<P> profiles = new IterableObjectInputStream<>(source);
 
             Iterable<P> profilesPipeline = profileStreamPipelineBuilder.build(profiles, options,
-                     geneQueryResponse, shouldAverageIntoGeneSets);
+                    geneQueryResponse, shouldAverageIntoGeneSets);
 
-            return rankProfiles.rank(profilesPipeline, maxSize);
+            return selectProfiles.select(profilesPipeline, maxSize);
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
         }
-
     }
 
 }

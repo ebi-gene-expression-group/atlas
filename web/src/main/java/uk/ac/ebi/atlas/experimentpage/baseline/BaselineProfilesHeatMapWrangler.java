@@ -96,7 +96,8 @@ public class BaselineProfilesHeatMapWrangler {
                             requestContext.isExactMatch(), getSpecies());
 
                     result.put(geneName, baselineProfilesViewModelBuilder.build
-                            (baselineProfilesHeatMap.fetch(requestContext, response, false), requestContext
+                            (baselineProfilesHeatMap.fetchInPrescribedOrder(query.get().terms(), requestContext, response, false),
+                                    requestContext
                                     .getOrderedFilterFactors()));
                 }
 

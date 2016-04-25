@@ -6,17 +6,18 @@ import uk.ac.ebi.atlas.model.Profile;
 
 import java.util.Comparator;
 
-public class RankProfiles<T extends Profile, L extends GeneProfilesList<T>> {
+public class MinMaxProfileRanking<T extends Profile, L extends GeneProfilesList<T>> implements SelectProfiles<T,L> {
 
     private Comparator<T> comparator;
     private GeneProfilesListBuilder<L> geneProfilesListBuilder;
 
-    public RankProfiles(Comparator<T> comparator, GeneProfilesListBuilder<L> geneProfilesListBuilder) {
+    public MinMaxProfileRanking(Comparator<T> comparator, GeneProfilesListBuilder<L> geneProfilesListBuilder) {
         this.comparator = comparator;
         this.geneProfilesListBuilder = geneProfilesListBuilder;
     }
 
-    public L rank(Iterable<T> profiles, int maxSize) {
+    @Override
+    public L select(Iterable<T> profiles, int maxSize) {
 
         MinMaxPriorityQueue<T> rankingQueue =  MinMaxPriorityQueue.orderedBy(comparator).maximumSize(maxSize).create();
 

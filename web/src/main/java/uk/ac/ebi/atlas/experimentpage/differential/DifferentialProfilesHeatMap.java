@@ -20,6 +20,10 @@ public class DifferentialProfilesHeatMap<P extends DifferentialProfile<?>, R ext
 
     SolrQueryService solrQueryService;
     private final boolean queryBySpecies;
+
+    private final RankProfilesFactory<P, DifferentialProfilesList<P>, DifferentialProfileStreamOptions>
+            rankProfilesFactory;
+
     private ProfilesHeatMapSource<P, DifferentialProfilesList<P>, DifferentialProfileStreamOptions, Contrast>
             profilesHeatmapSource;
 
@@ -28,7 +32,8 @@ public class DifferentialProfilesHeatMap<P extends DifferentialProfile<?>, R ext
                                              rankProfilesFactory,
                                        ProfileStreamFactory inputStreamFactory,
                                      SolrQueryService solrQueryService,boolean queryBySpecies) {
-        this.profilesHeatmapSource = new ProfilesHeatMapSource<>(rankProfilesFactory, inputStreamFactory, new
+        this.rankProfilesFactory = rankProfilesFactory;
+        this.profilesHeatmapSource = new ProfilesHeatMapSource<>(inputStreamFactory, new
                 DifferentialProfileStreamFilters<P>());
         this.solrQueryService = solrQueryService;
         this.queryBySpecies = queryBySpecies;
@@ -37,6 +42,7 @@ public class DifferentialProfilesHeatMap<P extends DifferentialProfile<?>, R ext
     public DifferentialProfilesList<P> fetch(R requestContext) throws GenesNotFoundException {
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
                 (requestContext, queryBySpecies ? requestContext.getFilteredBySpecies(): "");
-        return profilesHeatmapSource.fetch(requestContext,geneQueryResponse, false);
+        return profilesHeatmapSource.fetch(requestContext,rankProfilesFactory.create(requestContext),
+                geneQueryResponse, false);
     }
 }

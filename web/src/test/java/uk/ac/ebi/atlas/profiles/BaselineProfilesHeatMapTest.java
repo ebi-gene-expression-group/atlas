@@ -35,9 +35,8 @@ public class BaselineProfilesHeatMapTest {
     private static final int NUMBER_OF_FRACTIONAL_DIGITS = 0;
     private static final Factor FACTOR_LEUKOCYTE = new Factor("ORGANISM_PART", "leukocyte");
 
-    private BaselineProfileComparatorFactory baselineProfileComparatorFactory = new BaselineProfileComparatorFactory();
     private BaselineProfilesListBuilder geneProfilesListBuilder = new BaselineProfilesListBuilder();
-    private RankBaselineProfilesFactory rankProfilesFactory = new RankBaselineProfilesFactory(baselineProfileComparatorFactory, geneProfilesListBuilder);
+    private RankBaselineProfilesFactory rankProfilesFactory = new RankBaselineProfilesFactory( geneProfilesListBuilder);
     private BaselineProfilesHeatMap subject;
     private BaselineProfilesEMTab513React71 eMTab513react71InputStream = new BaselineProfilesEMTab513React71(0.5);
 
