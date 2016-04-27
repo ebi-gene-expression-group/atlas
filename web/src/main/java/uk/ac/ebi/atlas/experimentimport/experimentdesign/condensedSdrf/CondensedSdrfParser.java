@@ -18,10 +18,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 24/07/15.
- */
-
 @Named
 @Scope("prototype")
 public class CondensedSdrfParser {
@@ -34,7 +30,7 @@ public class CondensedSdrfParser {
     private static final String DOSE = "dose";
     private static final String ONTOLOGY_TERM_DELIMITER = " ";
 
-    private static final int EXPERIMENT_ACCESSION_INDEX = 0;
+    // private static final int EXPERIMENT_ACCESSION_INDEX = 0;
     private static final int ASSAY_DESIGN_INDEX = 1;
     private static final int RUN_OR_ASSAY_INDEX = 2;
     private static final int FACTOR_OR_CHARACTERISTIC_INDEX = 3;
@@ -49,13 +45,13 @@ public class CondensedSdrfParser {
 
     private FileTsvReaderBuilder fileTsvReaderBuilder;
     private final IdfParser idfParser;
-    private final ValueAndUnitJoiner valueAndUnitJoiner;
+    // private final ValueAndUnitJoiner valueAndUnitJoiner;
 
     @Inject
-    public CondensedSdrfParser(FileTsvReaderBuilder fileTsvReaderBuilder, IdfParser idfParser, ValueAndUnitJoiner valueAndUnitJoiner) {
+    public CondensedSdrfParser(FileTsvReaderBuilder fileTsvReaderBuilder, IdfParser idfParser) { //ValueAndUnitJoiner valueAndUnitJoiner) {
         this.fileTsvReaderBuilder = fileTsvReaderBuilder;
         this.idfParser = idfParser;
-        this.valueAndUnitJoiner = valueAndUnitJoiner;
+        // this.valueAndUnitJoiner = valueAndUnitJoiner;
     }
 
     public CondensedSdrfParserOutput parse(String experimentAccession, ExperimentType experimentType) throws IOException, CondensedSdrfParserException {
@@ -67,14 +63,17 @@ public class CondensedSdrfParser {
         ImmutableList.Builder<String[]> sampleCharacteristicsBuilder = new ImmutableList.Builder<>();
 
         for (String[] tsvLine : tsvReader.readAll()) {
-            if (tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX].equals(FACTOR)) {
-                factorsBuilder.add(tsvLine);
-            } else if (tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX].equals(CHARACTERISTIC)) {
-                sampleCharacteristicsBuilder.add(tsvLine);
-            } else {
-                throw new CondensedSdrfParserException(String.format(
-                        "Parsing condensed SDRF for %s: Unknown factor/characteristic descriptor “%s”",
-                        experimentAccession, tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]));
+            switch (tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]) {
+                case FACTOR:
+                    factorsBuilder.add(tsvLine);
+                    break;
+                case CHARACTERISTIC:
+                    sampleCharacteristicsBuilder.add(tsvLine);
+                    break;
+                default:
+                    throw new CondensedSdrfParserException(String.format(
+                            "Parsing condensed SDRF for %s: Unknown factor/characteristic descriptor “%s”",
+                            experimentAccession, tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]));
             }
         }
 
@@ -93,7 +92,7 @@ public class CondensedSdrfParser {
 
         for (String[] sampleCharacteristicTsvLine : sampleCharacteristicsTsvLines) {
             String header = sampleCharacteristicTsvLine[CHARACTERISTIC_TYPE_INDEX];
-            String value = cleanValueAndUnitIfNeeded(sampleCharacteristicTsvLine[CHARACTERISTIC_VALUE_INDEX]);
+            String value = sampleCharacteristicTsvLine[CHARACTERISTIC_VALUE_INDEX]; // cleanValueAndUnitIfNeeded(sampleCharacteristicTsvLine[CHARACTERISTIC_VALUE_INDEX]);
             String characteristicValueOntologyTermAsString = sampleCharacteristicTsvLine.length > ONTOLOGY_TERMS_INDEX ? sampleCharacteristicTsvLine[ONTOLOGY_TERMS_INDEX] : null;
             OntologyTerm[] characteristicOntologyTerms = parseOntologyTerms(characteristicValueOntologyTermAsString);
 
@@ -116,7 +115,7 @@ public class CondensedSdrfParser {
             for (String[] factorTsvLine : factorsByAssayRun.get(runOrAssay)) {
 
                 String factorType = factorTsvLine[FACTOR_TYPE_INDEX];
-                String factorValue = cleanValueAndUnitIfNeeded(factorTsvLine[FACTOR_VALUE_INDEX]);
+                String factorValue = factorTsvLine[FACTOR_VALUE_INDEX]; //cleanValueAndUnitIfNeeded(factorTsvLine[FACTOR_VALUE_INDEX]);
                 String factorValueOntologyTermAsString = factorTsvLine.length > ONTOLOGY_TERMS_INDEX ? factorTsvLine[ONTOLOGY_TERMS_INDEX] : null;
 
                 if (isFactorThatHasADose(factorType)) {
@@ -167,7 +166,7 @@ public class CondensedSdrfParser {
 
         if (!Strings.isNullOrEmpty(ontologyTermTsvField)) {
             for (String ontologyTermAsString : ontologyTermTsvField.split(ONTOLOGY_TERM_DELIMITER)) {
-                ontologyTermsBuilder.add(OntologyTerm.createFromUri(ontologyTermAsString));
+                ontologyTermsBuilder.add(OntologyTerm.createFromURI(ontologyTermAsString));
             }
         }
 
@@ -190,13 +189,13 @@ public class CondensedSdrfParser {
     }
 
 
-    protected String cleanValueAndUnitIfNeeded(String value) {
+//    protected String cleanValueAndUnitIfNeeded(String value) {
 //        if (!Strings.isNullOrEmpty(value)) {
 //            value = value.replaceAll("( )+", " ").replaceAll("(_)+", "_").trim();
 //            value = valueAndUnitJoiner.pluraliseAndJoin(value);
 //        }
-        return value;
-    }
+//        return value;
+//    }
 
 
     private Multimap<String, String[]> mapFactorTsvLinesByAssayRun(List<String[]> factorTsvLines) {
@@ -212,9 +211,9 @@ public class CondensedSdrfParser {
 
 
     private class CondensedSdrfParserException extends RuntimeException {
-        public CondensedSdrfParserException(String message) {
+        CondensedSdrfParserException(String message) {
             super(message);
         }
-
     }
+
 }
