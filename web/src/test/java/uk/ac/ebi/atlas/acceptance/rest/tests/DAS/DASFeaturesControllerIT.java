@@ -1,19 +1,18 @@
 package uk.ac.ebi.atlas.acceptance.rest.tests.DAS;
 
 import com.jayway.restassured.response.Response;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.startsWith;
 
 public class DASFeaturesControllerIT {
 
-    public static final int HTTP_OK = 200;
+    private static final int HTTP_OK = 200;
 
     @Test
     public void featuresURLGeneWithExpressions() {
