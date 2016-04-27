@@ -90,7 +90,7 @@ public class BaselineProfilesHeatMapWrangler {
         if(jsonProfiles.size() == 1) {
             for(String geneName: jsonProfiles.extractGeneNames()){
                 Optional<GeneQuery> query = coexpressedGenesService.tryGetRelatedCoexpressions(experiment, requestContext
-                        .getGeneQuery(), ImmutableMap.of(geneName, 49));
+                        .getGeneQuery(), ImmutableMap.of(geneName.toUpperCase(), 49));
                 if(query.isPresent()) {
                     GeneQueryResponse response = solrQueryService.fetchResponseBasedOnRequestContext(query.get(),
                             requestContext.isExactMatch(), getSpecies());

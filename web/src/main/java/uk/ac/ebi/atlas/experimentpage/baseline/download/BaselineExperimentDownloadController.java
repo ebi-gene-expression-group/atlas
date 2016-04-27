@@ -108,7 +108,7 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
             JsonElement el = jsonParser.parse(argument.replace("\\\"","\""));
             if (el != null && el.isJsonObject()) {
                 for (Map.Entry<String, JsonElement> e : el.getAsJsonObject().entrySet()) {
-                    result.put(e.getKey(), e.getValue().getAsInt());
+                    result.put(e.getKey().toUpperCase(), e.getValue().getAsInt());
                 }
             }
         } catch (JsonSyntaxException | NumberFormatException e) {

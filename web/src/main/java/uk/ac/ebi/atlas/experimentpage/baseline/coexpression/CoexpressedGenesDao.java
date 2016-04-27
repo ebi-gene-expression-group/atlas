@@ -32,7 +32,7 @@ public class CoexpressedGenesDao {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for(String resultRow: res){
             for(String splitted: StringUtils.split(resultRow,",")){
-                if(!splitted.equals(identifier)) {
+                if(!splitted.equalsIgnoreCase(identifier)) {
                     builder.add(splitted);
                 } else {
                     ;

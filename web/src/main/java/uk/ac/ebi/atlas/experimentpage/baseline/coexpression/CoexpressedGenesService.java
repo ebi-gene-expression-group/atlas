@@ -19,7 +19,7 @@ public class CoexpressedGenesService {
                                                           Map<String,Integer> coexpressionsRequested){
         GeneQuery result = geneQuery;
         for(String t: geneQuery.terms()){
-            if(coexpressionsRequested.containsKey(t)) {
+            if(coexpressionsRequested.containsKey(t.toUpperCase())) {
                 List<String> l = coexpressedGenesDao.coexpressedGenesFor(experiment.getAccession(), t);
                 l = l.subList(0, Math.min(Math.max(0,coexpressionsRequested.get(t)), l.size()));
                 result = result.extend(t,l.toArray(new String[l.size()]));
