@@ -433,6 +433,12 @@
             <artifactId>junit-dep</artifactId>
             <version>4.11</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hamcrest-core</artifactId>
+                    <groupId>org.hamcrest</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
