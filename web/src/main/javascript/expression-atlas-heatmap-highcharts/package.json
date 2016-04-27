@@ -7,6 +7,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "anatomogram": "file:../atlas_modules/anatomogram",
     "highcharts-heatmap": "^0.1.2",
     "jQuery-ajaxTransport-XDomainRequest": "git+https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git",
     "jquery": "^2.2.1",

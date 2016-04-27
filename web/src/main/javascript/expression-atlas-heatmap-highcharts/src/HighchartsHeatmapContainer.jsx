@@ -6,11 +6,15 @@ var React = require('react');
 
 var $ = require('jquery');
 require('jQuery-ajaxTransport-XDomainRequest');
+var EventEmitter = require('events');
 
 //*------------------------------------------------------------------*
 
 var HighchartsHeatmap = require('./HighchartsHeatmap.jsx');
 var HighchartsUtils = require('./highchartsUtils.js');
+
+var Anatomogram = require('anatomogram');
+
 
 //*------------------------------------------------------------------*
 
@@ -45,6 +49,7 @@ var HighchartsHeatmapContainer = React.createClass({
         sourceURL: React.PropTypes.string.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
         linksAtlasBaseURL: React.PropTypes.string.isRequired,
+        showAnatomogram:React.PropTypes.bool.isRequired,
         isWidget: React.PropTypes.bool.isRequired,
         disableGoogleAnalytics: React.PropTypes.bool.isRequired,
         fail: React.PropTypes.func
@@ -52,55 +57,73 @@ var HighchartsHeatmapContainer = React.createClass({
 
     render: function () {
 
-        var geneURL =
-            this.props.linksAtlasBaseURL + "/query" +
-            "?geneQuery=" + this.state.heatmapConfig.geneQuery +
-            "&exactMatch=" + this.state.heatmapConfig.isExactMatch +
-            "&organism=" + this.state.heatmapConfig.species;
+    var ensemblEventEmitter = new EventEmitter();
+    ensemblEventEmitter.setMaxListeners(0);
+    var anatomogramEventEmitter = new EventEmitter();
+    anatomogramEventEmitter.setMaxListeners(0);
 
-         return (
-            <div ref="this">
+    var geneURL =
+        this.props.linksAtlasBaseURL + "/query" +
+        "?geneQuery=" + this.state.heatmapConfig.geneQuery +
+        "&exactMatch=" + this.state.heatmapConfig.isExactMatch +
+        "&organism=" + this.state.heatmapConfig.species;
 
-                { this.state.experimentData ?
-                    <ExperimentDescription experiment={this.state.experimentData} linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>
-                    : null
-                }
+    var display = this.props.showAnatomogram ? "block" : "none";
+    var marginLeft = this.props.showAnatomogram ? "270.01px" : "0";
 
-                { this.state.heatmapConfig ?
-                    <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
+    return (
+      <div ref="this">
+          { this.state.experimentData ?
+              <ExperimentDescription experiment={this.state.experimentData} linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>
+              : null
+          }
 
-                        <div id="heatmap-react" className="gxaInnerHeatmap">
-                            <HighchartsHeatmap
-                                     profiles={this.state.profiles}
-                                     atlasBaseURL={this.props.atlasBaseURL}
-                                     xAxisCategories={this.state.xAxisCategories}
-                                     yAxisCategories={this.state.yAxisCategories}
-                                     yAxisCategoriesLinks={this.state.yAxisCategoriesLinks}
-                                     seriesDataNA={this.state.seriesDataNA}
-                                     seriesDataNAString={this.state.seriesDataNAString}
-                                     seriesDataBelowCutoff={this.state.seriesDataBelowCutoff}
-                                     seriesDataBelowCutoffString={this.state.seriesDataBelowCutoffString}
-                                     seriesDataRanges={this.state.seriesDataRanges}
-                            />
-                        </div>
-                    </div>
-                    :
-                    <div ref="loadingImagePlaceholder">
-                        <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
-                    </div>
-                }
+          { this.state.heatmapConfig ?
+              <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
-                { this.props.isWidget ?
-                    <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
-                        <br/>This expression view is provided by <a href={this.props.linksAtlasBaseURL}>Expression Atlas</a>.
-                        <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p>
-                    </div>
-                    :
-                    null
-                }
+                <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
+                    { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
+                        ? <Anatomogram anatomogramData={this.state.anatomogramData}
+                                     expressedTissueColour={"gray"} hoveredTissueColour={"red"}
+                                     profileRows={this.state.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
+                        : null
+                    }
+                </div>
 
-            </div>
-        );
+                  <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
+                      <HighchartsHeatmap
+                               profiles={this.state.profiles}
+                               anatomogramEventEmitter={anatomogramEventEmitter}
+                               ensemblEventEmitter={ensemblEventEmitter}
+                               atlasBaseURL={this.props.atlasBaseURL}
+                               xAxisCategories={this.state.xAxisCategories}
+                               yAxisCategories={this.state.yAxisCategories}
+                               yAxisCategoriesLinks={this.state.yAxisCategoriesLinks}
+                               seriesDataNA={this.state.seriesDataNA}
+                               seriesDataNAString={this.state.seriesDataNAString}
+                               seriesDataBelowCutoff={this.state.seriesDataBelowCutoff}
+                               seriesDataBelowCutoffString={this.state.seriesDataBelowCutoffString}
+                               seriesDataRanges={this.state.seriesDataRanges}
+                      />
+                  </div>
+              </div>
+              :
+              <div ref="loadingImagePlaceholder">
+                  <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
+              </div>
+          }
+
+          { this.props.isWidget ?
+              <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
+                  <br/>This expression view is provided by <a href={this.props.linksAtlasBaseURL}>Expression Atlas</a>.
+                  <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p>
+              </div>
+              :
+              null
+          }
+
+      </div>
+      );
     },
 
     getInitialState: function() {
@@ -111,6 +134,9 @@ var HighchartsHeatmapContainer = React.createClass({
                 minExpressionLevel: 0,
                 maxExpressionLevel: 0
             },
+            jsonCoexpressions : [],
+            geneSetProfiles: {},
+            anatomogramData: {},
 
             xAxisCategories: {},
             yAxisCategories: {},
@@ -224,7 +250,9 @@ var HighchartsHeatmapContainer = React.createClass({
                         columnHeaders: data.columnHeaders,
                         nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
                         profiles: data.profiles,
+                        jsonCoexpressions : data.jsonCoexpressions,
                         geneSetProfiles: data.geneSetProfiles,
+                        anatomogramData: data.anatomogram,
                         experimentData: data.experiment,
 
                         xAxisCategories: xAxisCategories,

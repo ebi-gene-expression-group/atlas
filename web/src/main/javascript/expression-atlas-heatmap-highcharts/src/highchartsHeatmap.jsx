@@ -4,12 +4,15 @@
 
 var React = require('react');
 
-var Highcharts = require('react-highcharts');
-require('highcharts-heatmap')(Highcharts.Highcharts);
+var ReactHighcharts = require('react-highcharts');
+var Highcharts = ReactHighcharts.Highcharts;
+require('highcharts-heatmap')(Highcharts);
 
 //*------------------------------------------------------------------*
 
 require('./HighchartsHeatmap.css');
+
+var EventEmitter = require('events');
 
 //*------------------------------------------------------------------*
 
@@ -17,8 +20,9 @@ var HighchartsHeatmap = React.createClass({
 
     propTypes: {
         profiles: React.PropTypes.object.isRequired,
-        atlasBaseURL: React.PropTypes.string.isRequired
-
+        atlasBaseURL: React.PropTypes.string.isRequired,
+        anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
+        ensemblEventEmitter : React.PropTypes.instanceOf(EventEmitter)
     },
 
     getInitialState: function () {
@@ -72,7 +76,24 @@ var HighchartsHeatmap = React.createClass({
         }
     },
 
+    _anatomogramTissueMouseEnter: function(svgPathId) {
+      Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseEnter', {svgPathId: svgPathId});
+    },
+
+    _anatomogramTissueMouseLeave: function(svgPathId) {
+      Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseLeave', {svgPathId: svgPathId});
+    },
+
+    _registerListeners: function() {
+      if (this.props.anatomogramEventEmitter) {
+          this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
+          this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
+      }
+      //ensemblEventEmitter only emits events, it doesn't receive them
+    },
+
     componentDidMount: function () {
+        this._registerListeners();
         var heatmap = this.refs.chart.getChart();
         heatmap.series[0].hide();
     },
@@ -108,12 +129,15 @@ var HighchartsHeatmap = React.createClass({
                         mouseOut: function () {
                             this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', null);
                             this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', null)
-                        }
+                        },
                     },
 
                     states: {
                         hover: {
                             color: '#eeec38' //#edab12 color cell on mouse over
+                        },
+                        select: {
+                            color: '#eeec38'
                         }
                     }
                 }
@@ -127,7 +151,26 @@ var HighchartsHeatmap = React.createClass({
                 marginRight: 36,//leave space for the export button to appear
                 plotBorderWidth: 1,
                 height: yAxisCategories.length * 12 + 200,
-                zoomType: 'xy'
+                zoomType: 'xy',
+                events: {
+                  handleGxaAnatomogramTissueMouseEnter: function(e) {
+                    Highcharts.each(this.series, function (series) {
+                        Highcharts.each(series.points, function (point) {
+                            if (point.series.xAxis.categories[point.x].id === e.svgPathId) {
+                                point.select(true, true);
+                            }
+                        });
+                    });
+                  },
+                  handleGxaAnatomogramTissueMouseLeave: function(e) {
+                    var points = this.getSelectedPoints();
+                    if (points.length > 0) {
+                        Highcharts.each(points, function (point) {
+                            point.select(false);
+                        });
+                    }
+                  }
+                }
             },
             legend: {
                 useHTML:true,
@@ -191,8 +234,8 @@ var HighchartsHeatmap = React.createClass({
                         'Expression level: <b>' + this.point.value + '</b>';
                 }
             },
-            anatomogramEventEmitter: {IAmA: "dummy0", emit:function(eventName, whatToEmit){console.log(eventName + whatToEmit)}},
-            ensemblEventEmitter: {IAmA: "dummy1", emit:function(eventName, whatToEmit){console.log(eventName + whatToEmit)}},
+            anatomogramEventEmitter: this.props.anatomogramEventEmitter,
+            ensemblEventEmitter: this.props.ensemblEventEmitter,
             series: [{
                 name: this.props.seriesDataNAString,
                 color: "#f7f7f7",
@@ -263,7 +306,7 @@ var HighchartsHeatmap = React.createClass({
         return (
             <div>
                 <div id="highcharts_container">
-                    <Highcharts config={highchartsOptions} ref="chart"/>
+                    <ReactHighcharts config={highchartsOptions} ref="chart"/>
                     {barcharts_legend}
                 </div>
 

@@ -42,6 +42,7 @@ exports.render = function(options) {
                 sourceURL: sourceURL,
                 atlasBaseURL: atlasBaseURL,
                 linksAtlasBaseURL: linksAtlasBaseURL,
+                showAnatomogram: options.showAnatomogram === undefined ? true : options.showAnatomogram,
                 isWidget: options.isWidget === undefined ? true : options.isWidget,
                 disableGoogleAnalytics: options.disableGoogleAnalytics === undefined ? false : options.disableGoogleAnalytics,
                 fail: options.fail
