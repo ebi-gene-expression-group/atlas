@@ -5,6 +5,7 @@
 <%--@elvariable id="species" type="java.lang.String"--%>
 <%--@elvariable id="hasBaselineResults" type="boolean"--%>
 <%--@elvariable id="hasDifferentialResults" type="boolean"--%>
+<%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -17,6 +18,8 @@
 <script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js-bundles/facetedSearch.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
+
+<h:ebiGlobalSearch ebiSearchTerm="${not empty searchDescription ? applicationProperties.urlParamEncode(searchDescription) : searchDescription}"/>
 
 <c:if test="${isSearch}">
 <section>
