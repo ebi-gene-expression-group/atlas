@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.bioentity.go;
 
 import au.com.bytecode.opencsv.CSVReader;
-import groovy.util.slurpersupport.GPathResult;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,8 +11,8 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -46,9 +45,9 @@ public class GoPoTermTSVParserTest {
         Map<String, OntologyTerm> map = subject.parse();
 
         //then
-        assertEquals(map.get(GO_0000001).accession(), GO_0000001);
-        assertEquals(map.get(GO_0000001).name(), MITOCHONDRION_INHERITANCE);
-        assertEquals(map.get(GO_0000001).depth(), DEPTH_6);
+        assertThat(map.get(GO_0000001).accession(), is(GO_0000001));
+        assertThat(map.get(GO_0000001).name(), is(MITOCHONDRION_INHERITANCE));
+        assertThat(map.get(GO_0000001).depth(), is(DEPTH_6));
     }
 
     @Test
@@ -63,9 +62,9 @@ public class GoPoTermTSVParserTest {
         Map<String, OntologyTerm> map = subject.parse();
 
         //then
-        assertEquals(map.get(GO_0000001).accession(), GO_0000001);
-        assertEquals(map.get(GO_0000001).name(), MITOCHONDRION_INHERITANCE);
-        assertEquals(map.get(GO_0000001).depth(), DEPTH_6);
+        assertThat(map.get(GO_0000001).accession(), is(GO_0000001));
+        assertThat(map.get(GO_0000001).name(), is(MITOCHONDRION_INHERITANCE));
+        assertThat(map.get(GO_0000001).depth(), is(DEPTH_6));
     }
 
     @Test
@@ -79,9 +78,9 @@ public class GoPoTermTSVParserTest {
         Map<String, OntologyTerm> map = subject.parse();
 
         //then
-        assertEquals(map.get(PO_0000001).accession(), PO_0000001);
-        assertEquals(map.get(PO_0000001).name(), EMBRYO_PROPER);
-        assertEquals(map.get(PO_0000001).depth(), GoPoTermTSVParser.DEFAULT_DEPTH);
+        assertThat(map.get(PO_0000001).accession(), is(PO_0000001));
+        assertThat(map.get(PO_0000001).name(), is(EMBRYO_PROPER));
+        assertThat(map.get(PO_0000001).depth(), is(GoPoTermTSVParser.DEFAULT_DEPTH));
     }
 
     @Test
@@ -95,7 +94,7 @@ public class GoPoTermTSVParserTest {
         Map<String, OntologyTerm> map = subject.parse();
 
         //then
-        assertTrue(map.isEmpty());
+        assertThat(map.isEmpty(), is(true));
     }
 
     @Test
@@ -109,9 +108,9 @@ public class GoPoTermTSVParserTest {
         Map<String, OntologyTerm> map = subject.parse();
 
         //then
-        assertEquals(map.size(), 1);
-        assertEquals(map.get(GO_0000001).name(), "");
-        assertEquals(map.get(GO_0000001).depth(), GoPoTermTSVParser.DEFAULT_DEPTH);
+        assertThat(map.size(), is(1));
+        assertThat(map.get(GO_0000001).name(), is(""));
+        assertThat(map.get(GO_0000001).depth(), is(GoPoTermTSVParser.DEFAULT_DEPTH));
     }
 
 
@@ -127,7 +126,7 @@ public class GoPoTermTSVParserTest {
         Map<String, OntologyTerm> map = subject.parse();
 
         //then
-        assertTrue(map.isEmpty());
+        assertThat(map.isEmpty(), is(true));
     }
 
 }

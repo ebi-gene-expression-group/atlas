@@ -8,7 +8,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -25,12 +26,12 @@ public class InterProTermTraderIT {
 
     @Test
     public void hasIPR000001() {
-        assertEquals(subject.getTermName(IPR000001), KRINGLE_DOMAIN);
+        assertThat(subject.getTermName(IPR000001), is(KRINGLE_DOMAIN));
     }
 
     @Test
     public void hasIPR029787() {
-        assertEquals(subject.getTermName(IPR029787), NUCLEOTIDE_CYCLASE_DOMAIN);
+        assertThat(subject.getTermName(IPR029787), is(NUCLEOTIDE_CYCLASE_DOMAIN));
     }
 
 }

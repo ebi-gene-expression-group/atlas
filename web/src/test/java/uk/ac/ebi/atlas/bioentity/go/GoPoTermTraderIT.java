@@ -10,7 +10,8 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import javax.inject.Inject;
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -32,22 +33,22 @@ public class GoPoTermTraderIT {
 
     @Test
     public void hasGO_0000001() throws IOException {
-        assertEquals(subject.getTerm(GO_0000001), GO_0000001_TERM);
+        assertThat(subject.getTerm(GO_0000001), is(GO_0000001_TERM));
     }
 
     @Test
     public void hasGO_2001317() throws IOException {
-        assertEquals(subject.getTerm(GO_2001317), GO_2001317_TERM);
+        assertThat(subject.getTerm(GO_2001317), is(GO_2001317_TERM));
     }
 
     @Test
     public void hasPO_0000001() throws IOException {
-        assertEquals(subject.getTerm(PO_0000001), PO_0000001_TERM);
+        assertThat(subject.getTerm(PO_0000001), is(PO_0000001_TERM));
     }
 
     @Test
     public void hasPO_0030087() throws IOException {
-        assertEquals(subject.getTerm(PO_0030087), PO_0030087_TERM);
+        assertThat(subject.getTerm(PO_0030087), is(PO_0030087_TERM));
     }
 
 }
