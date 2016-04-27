@@ -1,16 +1,14 @@
 package uk.ac.ebi.atlas.commons.writers;
 
-
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
 import uk.ac.ebi.atlas.commons.writers.impl.TsvWriterImpl;
 
 import javax.inject.Named;
-import java.io.*;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.MessageFormat;
 
 @Named
@@ -43,7 +41,7 @@ public class FileTsvWriterBuilder {
         try {
             return new TsvWriterImpl(new OutputStreamWriter(new FileOutputStream(new File(tsvFilePath), append)));
         } catch (IOException e) {
-            throw new IllegalStateException("Cannot write TSV file to path " + tsvFilePath.toString(), e);
+            throw new IllegalStateException("Cannot write TSV file to path " + tsvFilePath, e);
         }
     }
 
