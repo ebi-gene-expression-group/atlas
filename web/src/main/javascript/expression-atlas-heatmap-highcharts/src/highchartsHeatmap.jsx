@@ -3,6 +3,7 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
+var Snap = require('imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js');
 
 var ReactHighcharts = require('react-highcharts');
 var Highcharts = ReactHighcharts.Highcharts;
@@ -91,9 +92,26 @@ var HighchartsHeatmap = React.createClass({
       }
       //ensemblEventEmitter only emits events, it doesn't receive them
     },
+    _attachEventsToRows: function(){
+      Snap.selectAll('.highcharts-yaxis-labels > *')
+          .forEach(function (v) {
+            var title = v.select('title');
+            if (title) {
+            var text = title.node.innerHTML;
+              v.hover(function () {
+                  this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', text);
+                }.bind(this)
+                  ,
+                  function () {
+                  this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', null);
+                }.bind(this));
+            }
+          }, this);
+    },
 
     componentDidMount: function () {
         this._registerListeners();
+        this._attachEventsToRows();
         var heatmap = this.refs.chart.getChart();
         heatmap.series[0].hide();
     },
@@ -121,14 +139,12 @@ var HighchartsHeatmap = React.createClass({
                         events: {
                             mouseOver: function() {
                                 this.series.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', this.series.xAxis.categories[this.x].id);
-                                this.series.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', this.series.yAxis.categories[this.y])
                             }
                         }
                     },
                     events: {
                         mouseOut: function () {
                             this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', null);
-                            this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', null)
                         },
                     },
 
@@ -216,7 +232,7 @@ var HighchartsHeatmap = React.createClass({
                         color: "#148ff3"
                     },
                     formatter: function() {
-                        return '<a class="project_link"  href="' + atlasBaseURL +'/experiments/' + yAxisCategoriesLinks[this.value] + '">' + this.value + '</a>';
+                        return '<a href="' + atlasBaseURL +'/experiments/' + yAxisCategoriesLinks[this.value] + '">' + this.value + '</a>';
                     }
                 },
                 categories: this.props.yAxisCategories,

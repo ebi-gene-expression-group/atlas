@@ -4,11 +4,6 @@ body {
     font-size: 10px;
 }
 
-a.project_link:hover,
-a.project_link:active {
-    text-decoration: underline;
-}
-
 .gene_title {text-align:center; font-size:70%; border:0px red solid;}
 
 #container {min-width: 410px; min-height: 210px; /*avoid line overlap*/margin: 0 auto; border:0px red solid;}
