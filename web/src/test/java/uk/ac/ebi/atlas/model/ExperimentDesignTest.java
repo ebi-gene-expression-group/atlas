@@ -44,7 +44,7 @@ public class ExperimentDesignTest {
     private static final String SAMPLE_ONTOLOGY_ID1 = "S:1";
     private static final OntologyTerm SAMPLE_ONTOLOGY_TERM1 = OntologyTerm.create(SAMPLE_ONTOLOGY_ID1, HTTP_OBO);
     private static final String SAMPLE_ONTOLOGY_ID2 = "S:2";
-    private static final OntologyTerm SAMPLE_ONTOLOGY_TERM2 = OntologyTerm.create(SAMPLE_ONTOLOGY_ID2, null);
+    private static final OntologyTerm SAMPLE_ONTOLOGY_TERM2 = OntologyTerm.create(SAMPLE_ONTOLOGY_ID2, "", "");
 
 
     public ExperimentDesign subject;

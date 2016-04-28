@@ -75,7 +75,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     public static final String HTTP_OBO = "http://purl.obolibrary.org/obo/";
     private static final String SPECIES_1_ONTOLOGY_TERM_SOURCEID = HTTP_OBO + SPECIES_1_ONTOLOGY_ID;
     private static final String SPECIES_2_ONTOLOGY_TERM_SOURCEID = HTTP_OBO + SPECIES_2_ONTOLOGY_ID;
-    private static final OntologyTerm SPECIES_1_ONTOLOGY_TERM = OntologyTerm.createFromUri(SPECIES_1_ONTOLOGY_TERM_SOURCEID);
+    private static final OntologyTerm SPECIES_1_ONTOLOGY_TERM = OntologyTerm.createFromURI(SPECIES_1_ONTOLOGY_TERM_SOURCEID);
 
     private static final SampleCharacteristic ASSAY_1_SAMPLE_CHARACTERISTIC_3 = SampleCharacteristic.create("Organism", SPECIES_1, SPECIES_1_ONTOLOGY_TERM);
 
