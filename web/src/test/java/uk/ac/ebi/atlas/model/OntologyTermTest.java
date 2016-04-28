@@ -7,16 +7,23 @@ import static org.junit.Assert.assertThat;
 
 public class OntologyTermTest {
 
+    private final static String UBERON_0002107_URL = "http://purl.obolibrary.org/obo/UBERON_0002107";
+    private final static OntologyTerm UBERON_0002107_TERM = OntologyTerm.create("UBERON_0002107", "liver", "http://purl.obolibrary.org/obo/", 9);
+
     @Test
-    public void termWithSource() {
-        OntologyTerm ontologyTerm = OntologyTerm.create("UBERON:0002107", "http://purl.obolibrary.org/obo/");
-        assertThat(ontologyTerm.uri(), is("http://purl.obolibrary.org/obo/UBERON:0002107"));
+    public void createFromURI() {
+        assertThat(OntologyTerm.createFromURI(UBERON_0002107_URL).accession(), is(UBERON_0002107_TERM.accession()));
+        assertThat(OntologyTerm.createFromURI(UBERON_0002107_URL).source(), is(UBERON_0002107_TERM.source()));
     }
 
     @Test
-    public void termWithSourceNoEndingInSlash() {
-        OntologyTerm ontologyTerm = OntologyTerm.create("UBERON:0002107", "UBERON");
-        assertThat(ontologyTerm.uri(), is("UBERON/UBERON:0002107"));
+    public void uri() {
+        assertThat(UBERON_0002107_TERM.uri(), is(UBERON_0002107_URL));
+    }
+
+    @Test
+    public void uriWithoutSlashInSource() {
+        assertThat(OntologyTerm.create("UBERON_0002107", "liver", "http://purl.obolibrary.org/obo", 9).uri(), is(UBERON_0002107_URL));
     }
 
 }
