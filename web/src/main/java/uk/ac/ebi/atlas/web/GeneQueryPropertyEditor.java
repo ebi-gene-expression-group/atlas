@@ -2,13 +2,13 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
-import uk.ac.ebi.atlas.utils.StringUtil;
 
 import java.beans.PropertyEditorSupport;
 import java.util.List;
 
-public class GeneQueryPropertyEditor extends PropertyEditorSupport {
+import static org.apache.commons.lang3.StringUtils.strip;
 
+public class GeneQueryPropertyEditor extends PropertyEditorSupport {
 
     @Override
     public void setAsText(String text) {
@@ -23,7 +23,7 @@ public class GeneQueryPropertyEditor extends PropertyEditorSupport {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
 
         for (String s : strings) {
-            builder.add(StringUtil.removeSurroundingQuotes(s));
+            builder.add(strip(s, "\""));
 
         }
 

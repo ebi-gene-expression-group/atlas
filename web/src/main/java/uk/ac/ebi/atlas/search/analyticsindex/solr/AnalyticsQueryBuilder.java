@@ -14,11 +14,8 @@ import javax.inject.Named;
 
 import java.util.ArrayList;
 
-import static uk.ac.ebi.atlas.utils.StringUtil.quote;
+import static org.apache.commons.lang3.StringUtils.wrap;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 19/10/15.
- */
 @Named
 @Scope("prototype")
 public class AnalyticsQueryBuilder {
@@ -66,7 +63,7 @@ public class AnalyticsQueryBuilder {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for (String term : geneQuery) {
             if (!StringUtils.isBlank(term)) {
-                builder.add(quote(term));
+                builder.add(wrap(term, '"'));
             }
         }
         identifierSearchTerms.addAll(builder.build());
@@ -80,9 +77,9 @@ public class AnalyticsQueryBuilder {
         for (SemanticQueryTerm term : semanticQuery) {
             if (term.hasValue()) {
                 if (term.hasNoSource()) {
-                    builder.add(quote(term.value()));
+                    builder.add(wrap(term.value(), '"'));
                 } else {
-                    builder.add(quote(String.format(IDENTIFIER_SEARCH_VALUE_TEMPLATE, term.source(), term.value())));
+                    builder.add(wrap(String.format(IDENTIFIER_SEARCH_VALUE_TEMPLATE, term.source(), term.value()), '"'));
                 }
             }
         }
@@ -94,7 +91,7 @@ public class AnalyticsQueryBuilder {
 
     public AnalyticsQueryBuilder queryBioentityIdentifier(String identifier) {
         if (!Strings.isNullOrEmpty(identifier)) {
-            bioentityIdentifierTerms.add(quote(identifier));
+            bioentityIdentifierTerms.add(wrap(identifier, '"'));
         }
         return this;
     }
@@ -102,7 +99,7 @@ public class AnalyticsQueryBuilder {
 
     public AnalyticsQueryBuilder ofSpecies(String species) {
         if (!Strings.isNullOrEmpty(species)) {
-            speciesTerms.add(quote(species));
+            speciesTerms.add(wrap(species, '"'));
         }
         return this;
     }
