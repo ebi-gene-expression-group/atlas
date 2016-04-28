@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.base.Strings;
+import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Nullable;
+import static uk.ac.ebi.atlas.utils.StringUtil.splitAtLastSlash;
 
 @AutoValue
 public abstract class OntologyTerm {
@@ -16,11 +16,11 @@ public abstract class OntologyTerm {
     public abstract int depth();
 
     public static OntologyTerm create(String accession) {
-        return create(accession, "", "", DEFAULT_DEPTH);
+        return create(accession, "");
     }
 
     public static OntologyTerm create(String accession, String name) {
-        return create(accession, name, "", DEFAULT_DEPTH);
+        return create(accession, name, "");
     }
 
     public static OntologyTerm create(String accession, String name, String source) {
@@ -31,27 +31,12 @@ public abstract class OntologyTerm {
         return new AutoValue_OntologyTerm(accession, name, source, depth);
     }
 
-    public static OntologyTerm createFromUri(String uri) {
-        String[] uriSplit = splitAtFinalSlash(uri);
-        return create(uriSplit[1], uriSplit[0]);
-    }
-
-    public static String[] splitAtFinalSlash(String uri) {
-        int finalSlash = uri.lastIndexOf('/');
-
-        if (finalSlash == -1) {
-            return new String[] {null, uri};
-        }
-
-        return new String[] {uri.substring(0, finalSlash + 1), uri.substring(finalSlash + 1)};
+    public static OntologyTerm createFromURI(String uri) {
+        return uri.contains("/") ? create(splitAtLastSlash(uri)[1], "", splitAtLastSlash(uri)[0]) : create(uri);
     }
 
     public String uri() {
-        return (Strings.isNullOrEmpty(source()) ? accession() : addTrailingSlashIfAbsent(source()) + accession());
-    }
-
-    private String addTrailingSlashIfAbsent(String s) {
-        return (s.charAt(s.length() - 1) == '/' ? s : s + "/");
+        return source().isEmpty() ? accession() : StringUtils.appendIfMissing(source(), "/") + accession();
     }
 
 }

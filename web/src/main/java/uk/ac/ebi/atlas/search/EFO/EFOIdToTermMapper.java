@@ -5,12 +5,13 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
 import uk.ac.ebi.atlas.commons.efo.EFOTreeNodesTrader;
-import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.HashSet;
 import java.util.Map;
+
+import static uk.ac.ebi.atlas.utils.StringUtil.splitAtLastSlash;
 
 @Named
 @Scope("singleton")
@@ -45,7 +46,7 @@ public class EFOIdToTermMapper {
 
         ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<>();
         for (EFONode efoNode : urlToEFONode.values()) {
-            String id = OntologyTerm.splitAtFinalSlash(efoNode.getId())[1];
+            String id = efoNode.getId().contains("/") ? splitAtLastSlash(efoNode.getId())[1] : efoNode.getId();
             builder.put(efoNode.getTerm(), id);
         }
         termToId = builder.build();

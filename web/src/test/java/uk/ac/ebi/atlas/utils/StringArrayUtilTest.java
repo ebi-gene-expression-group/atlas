@@ -6,10 +6,9 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class StringArrayUtilTest {
-
     @Test
-    public void contains() {
-        assertThat(StringArrayUtil.contains(new String[]{"aa", "ab", "ba", "aba", "cc"}, "b"), is(new String[] {"ab", "ba", "aba"}));
+    public void filterBySubstring() {
+        assertThat(StringArrayUtil.filterBySubstring(new String[]{"aa", "ab", "ba", "aba", "cc"}, "b"), is(new String[] {"ab", "ba", "aba"}));
     }
 
     @Test
@@ -31,5 +30,20 @@ public class StringArrayUtilTest {
     public void filterByIndices() {
         assertThat(StringArrayUtil.filterByIndices(new String[]{"foo", "g1.one", "g2.two", "bar"}, new int[] {0,2,3}),
                 is(new String[] {"foo", "g2.two", "bar"}));
+    }
+
+    @Test
+    public void removeSurroundingQuotes() {
+        assertThat(
+                StringArrayUtil.removeSurroundingQuotes(new String[]{"\"foo bar\"", "foo bar", "\"foobar\"", "foobar"}),
+                is(new String[]{"foo bar", "foo bar", "foobar", "foobar"}));
+    }
+
+    @Test
+    public void quotePhrases() {
+        assertThat(
+                StringArrayUtil.quotePhrases(new String[]{"foo bar", "foobar"}),
+                is(new String[]{"\"foo bar\"", "foobar"}));
+
     }
 }

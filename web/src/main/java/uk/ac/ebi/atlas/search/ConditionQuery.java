@@ -3,11 +3,12 @@ package uk.ac.ebi.atlas.search;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
-import uk.ac.ebi.atlas.utils.StringUtil;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import static uk.ac.ebi.atlas.utils.StringArrayUtil.removeSurroundingQuotes;
 
 //TODO: rename to SamplePropertiesQuery
 @AutoValue
@@ -18,18 +19,7 @@ public abstract class ConditionQuery implements Iterable<String> {
     //TODO: change to use same interface as GeneQuery ie, String...
     public static ConditionQuery create(String conditionQueryString) {
         List<String> terms = BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(conditionQueryString);
-        return new AutoValue_ConditionQuery(removeSurroundingQuotes(terms));
-    }
-
-    static ImmutableList<String> removeSurroundingQuotes(List<String> strings) {
-        ImmutableList.Builder<String> builder = ImmutableList.builder();
-
-        for (String s : strings) {
-            builder.add(StringUtil.removeSurroundingQuotes(s));
-
-        }
-
-        return builder.build();
+        return new AutoValue_ConditionQuery(ImmutableList.copyOf(removeSurroundingQuotes(terms.toArray(new String[0]))));
     }
 
     public static ConditionQuery create(Set<String> terms) {

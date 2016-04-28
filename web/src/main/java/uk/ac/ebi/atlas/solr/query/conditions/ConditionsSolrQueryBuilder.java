@@ -25,25 +25,18 @@ package uk.ac.ebi.atlas.solr.query.conditions;
 import com.google.common.base.Joiner;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
+
+import static uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes;
 
 @Named
 @Scope("singleton")
 public class ConditionsSolrQueryBuilder {
 
-    public static final String CONDITIONS_SEARCH_FIELD = "conditions_search";
-
-    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
-
-    @Inject
-    public ConditionsSolrQueryBuilder(BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
-        this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
-    }
+    private static final String CONDITIONS_SEARCH_FIELD = "conditions_search";
 
     public SolrQuery build(String queryString) {
         SolrQuery solrQuery = new SolrQuery(buildQueryString(queryString));
@@ -52,7 +45,7 @@ public class ConditionsSolrQueryBuilder {
     }
 
     String buildQueryString(String queryString){
-        List<String> terms = bioentityPropertyValueTokenizer.split(queryString);
+        List<String> terms = splitBySpacePreservingQuotes(queryString);
 
         List<String> solrTerms = new ArrayList<>();
 

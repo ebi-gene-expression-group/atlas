@@ -1,13 +1,18 @@
 package uk.ac.ebi.atlas.utils;
 
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import static org.apache.commons.lang3.StringUtils.strip;
+import static uk.ac.ebi.atlas.utils.StringUtil.quoteIfMoreThanOneWord;
 
 public class StringArrayUtil {
 
-    public static String[] contains(String[] strings, String substring) {
+    public static String[] filterBySubstring(String[] strings, String substring) {
         ArrayList<String> result = new ArrayList<>(strings.length);
 
         int count = 0;
@@ -24,7 +29,7 @@ public class StringArrayUtil {
     public static String[] substringBefore(String[] strings, String separator) {
         String[] result = new String[strings.length];
 
-        for (int i = 0; i< strings.length; i++) {
+        for (int i = 0; i < strings.length; i++) {
             result[i] = StringUtils.substringBefore(strings[i], separator);
         }
 
@@ -56,5 +61,23 @@ public class StringArrayUtil {
         return result;
     }
 
+    public static String[] removeSurroundingQuotes(String[] strings) {
+        String[] result = new String[strings.length];
 
+        for (int i = 0; i < strings.length; i++) {
+            result[i] = strip(strings[i], "\"");
+        }
+
+        return result;
+    }
+
+    public static String[] quotePhrases(String[] strings) {
+        String[] result = new String[strings.length];
+
+        for (int i = 0; i < strings.length; i++) {
+            result[i] = quoteIfMoreThanOneWord(strings[i]);
+        }
+
+        return result;
+    }
 }

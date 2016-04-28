@@ -36,7 +36,7 @@ public class ProteomicsBaselineExperimentExpressionLevelFile {
     }
 
     public static String[] extractAssayGroupIds(String[] tsvFileHeader) {
-        String[] filtered = contains(tsvFileHeader, WITH_IN_SAMPLE_ABUNDANCE);
+        String[] filtered = filterBySubstring(tsvFileHeader, WITH_IN_SAMPLE_ABUNDANCE);
         return substringBefore(filtered, ".");
     }
 

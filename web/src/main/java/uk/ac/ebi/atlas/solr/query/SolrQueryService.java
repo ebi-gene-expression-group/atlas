@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static uk.ac.ebi.atlas.solr.BioentityType.GENE;
+import static uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes;
 
 @Named
 @Scope("singleton")
@@ -34,11 +35,11 @@ import static uk.ac.ebi.atlas.solr.BioentityType.GENE;
 public class SolrQueryService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SolrQueryService.class);
 
-    public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
-    public static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
-    public static final String PROPERTY_NAME_FIELD = "property_name";
+    static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
+    static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
+    static final String PROPERTY_NAME_FIELD = "property_name";
 
-    public static final String PROPERTY_EDGENGRAM_FIELD = "property_value_edgengram";
+    static final String PROPERTY_EDGENGRAM_FIELD = "property_value_edgengram";
 
     private static final String BIOENTITY_TYPE_QUERY =
             "(property_name:\"ensgene\" OR property_name:\"mirna\" OR property_name:\"ensprotein\" OR property_name:\"enstranscript\") " +
@@ -46,18 +47,15 @@ public class SolrQueryService {
 
     private static final int PROPERTY_VALUES_LIMIT = 1000;
 
-    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
-
     private GxaSolrClient solrServer;
 
     private SolrQueryBuilderFactory solrQueryBuilderFactory;
     private BioEntityPropertyDao bioEntityPropertyDao;
 
     @Inject
-    public SolrQueryService(BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer,
-                            GxaSolrClient solrServer,
-                            SolrQueryBuilderFactory solrQueryBuilderFactory, BioEntityPropertyDao bioEntityPropertyDao) {
-        this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
+    public SolrQueryService(GxaSolrClient solrServer,
+                            SolrQueryBuilderFactory solrQueryBuilderFactory,
+                            BioEntityPropertyDao bioEntityPropertyDao) {
         this.solrServer = solrServer;
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
         this.bioEntityPropertyDao = bioEntityPropertyDao;
@@ -85,7 +83,7 @@ public class SolrQueryService {
     }
 
 
-    public Set<String> fetchGeneIdentifiersFromSolr(String queryString, String bioentityType, boolean toUppercase, String... propertyNames) {
+    private Set<String> fetchGeneIdentifiersFromSolr(String queryString, String bioentityType, boolean toUppercase, String... propertyNames) {
         //eg: property_value_lower:"hsa-mir-636" AND (bioentity_type:"ensgene") AND (property_name:"mirbase_id")
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
                 .forQueryString(queryString, false)
@@ -95,7 +93,7 @@ public class SolrQueryService {
         return solrServer.query(solrQuery, toUppercase, BIOENTITY_IDENTIFIER_FIELD);
     }
 
-    public Set<String> findMatureRNAIds(Set<String> geneIdentifiers) {
+    private Set<String> findMatureRNAIds(Set<String> geneIdentifiers) {
         Set<String> expandedIdentifiers = Sets.newHashSet();
 
         for (String geneIdentifier : geneIdentifiers) {
@@ -112,7 +110,7 @@ public class SolrQueryService {
         return expandedIdentifiers;
     }
 
-    public GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(String geneQuery, boolean exactMatch, String species) {
+    private GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(String geneQuery, boolean exactMatch, String species) {
 
         checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
 
@@ -121,7 +119,7 @@ public class SolrQueryService {
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
         //associate gene ids with each token in the query string
-        for (String queryToken : bioentityPropertyValueTokenizer.split(geneQuery)) {
+        for (String queryToken : splitBySpacePreservingQuotes(geneQuery)) {
             Set<String> geneIds = fetchGeneIds(queryToken, exactMatch, species);
             geneQueryResponse.addGeneIds(queryToken, geneIds);
         }
@@ -147,7 +145,7 @@ public class SolrQueryService {
         //resolve any gene keywords to identifiers
         Set<String> geneIds = findGeneIdsOrSets(geneQuery, isExactMatch, species);
 
-        Set<String> matureRNAIds = findMatureRNAIds(Sets.newHashSet(bioentityPropertyValueTokenizer.split(geneQuery)));
+        Set<String> matureRNAIds = findMatureRNAIds(Sets.newHashSet(splitBySpacePreservingQuotes(geneQuery)));
         geneIds.addAll(matureRNAIds);
 
         stopWatch.stop();
@@ -167,7 +165,7 @@ public class SolrQueryService {
         return fetchGeneIds(geneQuery, exactMatch, species);
     }
 
-    public Set<String> fetchGeneIds(String geneQuery, boolean exactMatch, String species) {
+    Set<String> fetchGeneIds(String geneQuery, boolean exactMatch, String species) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
