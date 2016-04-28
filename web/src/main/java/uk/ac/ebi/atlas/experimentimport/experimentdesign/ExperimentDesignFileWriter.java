@@ -1,25 +1,3 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-
 package uk.ac.ebi.atlas.experimentimport.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -31,6 +9,7 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -38,7 +17,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
-public class ExperimentDesignFileWriter {
+import static org.apache.commons.lang3.StringUtils.removeEnd;
+
+public class ExperimentDesignFileWriter implements Closeable {
 
     private static final String ONTOLOGY_TERM_DELIMITER = " ";
 
@@ -56,19 +37,13 @@ public class ExperimentDesignFileWriter {
     }
 
     public void write(ExperimentDesign experimentDesign) throws IOException {
-        try {
-            String[] columnHeaders = buildColumnHeaders(experimentType, experimentDesign);
-            csvWriter.writeNext(columnHeaders);
-            csvWriter.writeAll(asTableOntologyTermsData(experimentDesign));
-            csvWriter.flush();
-        }finally {
-            csvWriter.close();
-        }
-
+        String[] columnHeaders = buildColumnHeaders(experimentType, experimentDesign);
+        csvWriter.writeNext(columnHeaders);
+        csvWriter.writeAll(asTableOntologyTermsData(experimentDesign));
+        csvWriter.flush();
     }
 
     String[] buildColumnHeaders(ExperimentType experimentType, ExperimentDesign experimentDesign) {
-
         List<String> headers = Lists.newArrayList(getCommonColumnHeaders(experimentType));
         headers.addAll(toHeaders(experimentDesign.getSampleHeaders(), SAMPLE_CHARACTERISTICS_NAME_HEADER_TEMPLATE, SAMPLE_CHARACTERISTICS_ONTOLOGY_TERM_HEADER_TEMPLATE));
         headers.addAll(toHeaders(experimentDesign.getFactorHeaders(), FACTOR_NAME_HEADER_TEMPLATE, FACTOR_VALUE_ONTOLOGY_TERM_TEMPLATE));
@@ -76,7 +51,7 @@ public class ExperimentDesignFileWriter {
         return headers.toArray(new String[headers.size()]);
     }
 
-    List<String> toHeaders(SortedSet<String> propertyNames, final String headerTemplate1, final String headerTemplate2) {
+    private List<String> toHeaders(SortedSet<String> propertyNames, final String headerTemplate1, final String headerTemplate2) {
         List<String> headers = new ArrayList<>();
         for (String propertyName: propertyNames){
             headers.add(MessageFormat.format(headerTemplate1, propertyName));
@@ -85,7 +60,7 @@ public class ExperimentDesignFileWriter {
         return headers;
     }
 
-    protected List<String> getCommonColumnHeaders(ExperimentType experimentType){
+    private List<String> getCommonColumnHeaders(ExperimentType experimentType){
         switch(experimentType.getParent()){
             case MICROARRAY_ANY:
                 return Lists.newArrayList("Assay", "Array");
@@ -98,7 +73,7 @@ public class ExperimentDesignFileWriter {
         }
     }
 
-    public List<String[]> asTableOntologyTermsData(ExperimentDesign experimentDesign) {
+    List<String[]> asTableOntologyTermsData(ExperimentDesign experimentDesign) {
         List<String[]> tableData = Lists.newArrayList();
         for (String runOrAssay : experimentDesign.getAllRunOrAssay()) {
             tableData.add(composeTableRowWithOntologyTerms(experimentDesign, runOrAssay));
@@ -106,7 +81,7 @@ public class ExperimentDesignFileWriter {
         return tableData;
     }
 
-    protected String[] composeTableRowWithOntologyTerms(ExperimentDesign experimentDesign, String runOrAssay) {
+    private String[] composeTableRowWithOntologyTerms(ExperimentDesign experimentDesign, String runOrAssay) {
         List<String> row = Lists.newArrayList(runOrAssay);
 
         String arrayDesign = experimentDesign.getArrayDesign(runOrAssay);
@@ -152,12 +127,14 @@ public class ExperimentDesignFileWriter {
     private static String joinURIs(Set<OntologyTerm> ontologyTerms) {
         StringBuilder sb = new StringBuilder();
         for (OntologyTerm ontologyTerm : ontologyTerms) {
-            sb.append(ontologyTerm.uri() + ONTOLOGY_TERM_DELIMITER);
-        }
-        if (sb.length() > 0) {
-            sb.deleteCharAt(sb.length() - 1);
+            sb.append(ontologyTerm.uri()).append(ONTOLOGY_TERM_DELIMITER);
         }
 
-        return sb.toString();
+        return removeEnd(sb.toString(), ONTOLOGY_TERM_DELIMITER);
+    }
+
+    @Override
+    public void close() throws IOException {
+        csvWriter.close();
     }
 }
