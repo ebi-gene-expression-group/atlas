@@ -12,6 +12,7 @@ var EventEmitter = require('events');
 
 var HighchartsHeatmap = require('./HighchartsHeatmap.jsx');
 var HighchartsUtils = require('./highchartsUtils.js');
+require('./HighchartsHeatmapContainer.css');
 
 var Anatomogram = require('anatomogram');
 
@@ -69,7 +70,7 @@ var HighchartsHeatmapContainer = React.createClass({
         "&organism=" + this.state.heatmapConfig.species;
 
     var display = this.props.showAnatomogram ? "block" : "none";
-    var marginLeft = this.props.showAnatomogram ? "270.01px" : "0";
+    var marginLeft = this.props.showAnatomogram ? "270px" : "0";
 
     return (
       <div ref="this">
