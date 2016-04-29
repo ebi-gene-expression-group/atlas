@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
+import com.google.common.collect.ImmutableList;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 import org.hamcrest.Matchers;
@@ -8,9 +9,11 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
@@ -18,6 +21,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -41,22 +45,19 @@ public class BaselineAnalyticsSearchDaoIT {
     }
 
     @Test
-    public void fetchFacetsForHomoSapiens() {
-        String json = subject.fetchFacets(SPECIES_HOMO_SAPIENS);
+    public void fetchExpressionLevelFaceted(){
+        String species = "rattus norvegicus";
+        String defaultQueryFactorType = "ORGANISM_PART";
+        List<Map<String, Object>> result =
+                subject.fetchExpressionLevelFaceted(GeneQuery.create("kinase"),species,defaultQueryFactorType );
 
-        ReadContext jsonCtx = JsonPath.parse(json);
+        assertThat(result.size(), greaterThan(0));
 
-        List<Integer> count = jsonCtx.read("$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline')].count");
-        List<String> species = jsonCtx.read("$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline')].species.buckets[*].val");
-        List<String> sourcesForHomoSapiens = jsonCtx.read("$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline')].species.buckets[?(@.val=='homo sapiens')].defaultQueryFactorType.buckets[*].val");
-        List<String> experimentsForHomoSapiensOrganismPart = jsonCtx.read("$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline')].species.buckets[?(@.val=='homo sapiens')].defaultQueryFactorType.buckets[?(@.val=='ORGANISM_PART')].experimentAccession.buckets[*].val");
-
-        assertThat(count, hasSize(1));
-        assertThat(count.get(0), is(greaterThan(30000)));
-        assertThat(species, contains("homo sapiens"));
-        assertThat(sourcesForHomoSapiens, hasItems("CELL_LINE"));
-        // TODO E-MTAB-513 isn’t included until https://www.pivotaltracker.com/story/show/101118548
-        assertThat(experimentsForHomoSapiensOrganismPart, containsInAnyOrder("E-MTAB-1733", "E-MTAB-2836", "E-GEOD-30352", "E-MTAB-3358"));
+        for(Map<String, Object> m : result){
+            for(String key: ImmutableList.of("val","uniqueIdentifiers","assayGroupId")){
+                assertNotNull(m.get(key));
+            }
+        }
     }
 
 }

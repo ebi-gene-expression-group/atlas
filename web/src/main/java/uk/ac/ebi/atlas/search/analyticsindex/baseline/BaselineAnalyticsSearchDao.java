@@ -68,7 +68,7 @@ public class BaselineAnalyticsSearchDao {
     }
 
 
-    String fetchFacets(String q) {
+    private String fetchFacets(String q) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
