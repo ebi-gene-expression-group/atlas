@@ -39,9 +39,11 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import javax.inject.Inject;
 
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -49,7 +51,6 @@ import static org.junit.Assert.assertThat;
 public class BaselineProfilesTSVWriterIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
-    private static final String MULTIDIMENSIONAL_EXPERIMENT_ACCESSION = "E-GEOD-26284";
 
     /*/in factor value(s)*/
 
@@ -130,42 +131,21 @@ public class BaselineProfilesTSVWriterIT {
 
     }
 
-    @Test
-    public void secondHeaderLineShouldDescribeExactMatchQueryAlsoForMultidimensionalExperiments() throws ExecutionException {
-        BaselineExperiment multidimensionalExperiment = baselineExperimentsCache.getExperiment(MULTIDIMENSIONAL_EXPERIMENT_ACCESSION);
-
-        requestPreferences.setSerializedFilterFactors("RNA:total RNA,CELLULAR_COMPONENT:whole cell");
-
-        requestPreferences.setQueryFactorType("CELL_LINE");
-        requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("HPC-PL cell line", "Mickey Mouse")));
-
-        BaselineRequestContext requestContext = BaselineRequestContext.createFor(multidimensionalExperiment,
-                requestPreferences);
-
-        String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
-
-        assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, specifically expressed " +
-                "in Cell lines: 'HPC-PL cell line, Mickey Mouse' above the expression level cutoff: 0.5 " +
-                "in experiment E-GEOD-26284, filtered by Cellular component: whole cell and RNA: total RNA"));
-
-    }
 
     @Test
-    public void secondHeaderLineShouldDescribeExactMatchQueryAlsoForTwodimensionalExperiments() throws ExecutionException {
-        BaselineExperiment experiment = baselineExperimentsCache.getExperiment("E-GEOD-41338");
+    public void secondHeaderLineShouldIncludeBitsOfTheQuery() throws ExecutionException {
+        BaselineExperiment experiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
 
-        requestPreferences.setSerializedFilterFactors("ORGANISM:Gallus gallus");
+        String organismPart = "brain";
 
         requestPreferences.setQueryFactorType("ORGANISM_PART");
-        requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("brain")));
+        requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet(organismPart)));
 
         BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment,requestPreferences);
 
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
-        assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, specifically expressed " +
-                "in Organism part: 'brain' above the expression level cutoff: 0.5 " +
-                "in experiment E-GEOD-41338, filtered by Organism: Gallus gallus"));
-
+        assertTrue(Pattern.matches("# Query: Genes.*expressed.*Organism part.*", headerRows[1]));
+        assertTrue(headerRows[1].contains(organismPart));
     }
 }
