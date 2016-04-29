@@ -33,12 +33,12 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -46,11 +46,6 @@ import static org.hamcrest.Matchers.is;
 public class BaselineProfilesInputStreamIT {
 
     public static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
-
-    private static final String GENE_ID_2 = "ENSG00000127720";
-    private static final String GENE_ID_1 = "ENSG00000244656";
-    private static final String GENE_ID_3 = "ENSG00000224440";
-    private static final String GENE_ID_6 = "ENSG00000266468";
 
     @Resource(name = "baselineProfileInputStreamFactory")
     private BaselineProfileInputStreamFactory inputStreamFactory;
@@ -63,28 +58,14 @@ public class BaselineProfilesInputStreamIT {
 
     @Before
     public void setUp() throws Exception {
-        subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION, queryFactorType, defaultCutoff, noFilterFactors);
+        setUp(defaultCutoff);
     }
 
-    @Test
-    public void readNextShouldReturnNextExpression() throws IOException {
-        //given
-        BaselineProfile baselineProfile = subject.readNext();
-        //then
-        assertThat(baselineProfile.getId(), is(GENE_ID_1));
-        assertThat(baselineProfile.getSpecificity(), is(1));
-
-        //given we next twice more
-        baselineProfile = subject.readNext();
-        //then
-        assertThat(baselineProfile.getId(), is(GENE_ID_2));
-        assertThat(baselineProfile.getSpecificity(), is(15));
-
-        baselineProfile = subject.readNext();
-
-        assertThat(baselineProfile.getId(), is(GENE_ID_3));
-        assertThat(baselineProfile.getSpecificity(), is(1));
+    public void setUp(double cutoff) throws Exception {
+        subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION, queryFactorType, cutoff,
+                noFilterFactors);
     }
+
 
 
     @Test
@@ -94,26 +75,21 @@ public class BaselineProfilesInputStreamIT {
             ++countProfiles;
         }
 
-        assertThat(countProfiles, is(263L));
+        assertThat(countProfiles, greaterThan(10L));
+
+
+        setUp(5);
+
+        long countProfiles2 = 0;
+        while (subject.readNext() != null) {
+            ++countProfiles2;
+        }
+
+        assertThat(countProfiles2, greaterThan(10L));
+
+        assertTrue(countProfiles>countProfiles2);
     }
 
-    @Test
-    public void setCutoffChangesSpecificity() throws IOException {
-        subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION, queryFactorType, 4, noFilterFactors);
-
-        //when
-        BaselineProfile baselineProfile = subject.readNext();
-        //specificity that was 15 when cutoff was 0.5d now is 2
-        assertThat(baselineProfile.getSpecificity(), is(1));
-
-        //then
-        subject.readNext();
-        subject.readNext();
-
-        //and next gene popping up after the third becomes the sixth, because 4th and 5th have lowern than 4D specificity.
-        assertThat(subject.readNext().getId(), is(GENE_ID_6));
-
-    }
 
     @Test(expected = IllegalStateException.class)
     public void givenTheReaderHasBeenClosedReadNextShouldThrowIllegalStateException() throws Exception {
