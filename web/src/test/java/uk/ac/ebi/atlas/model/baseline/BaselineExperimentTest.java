@@ -38,6 +38,8 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -111,6 +113,15 @@ public class BaselineExperimentTest {
     @Test
     public void testGetExperimentDesign() throws Exception {
         assertThat(subject.getExperimentDesign(), is(experimentDesignMock));
+    }
+
+    @Test
+    public void isTissue(){
+        when(experimentalFactorsMock.getDefaultQueryFactorType()).thenReturn("ORGANISM_PART");
+        assertTrue(subject.isTissueExperiment());
+
+        when(experimentalFactorsMock.getDefaultQueryFactorType()).thenReturn("CELL_LINE");
+        assertFalse(subject.isTissueExperiment());
     }
 
 }
