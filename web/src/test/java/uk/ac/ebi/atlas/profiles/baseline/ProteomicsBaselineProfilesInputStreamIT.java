@@ -36,7 +36,10 @@ import javax.annotation.Resource;
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -55,8 +58,13 @@ public class ProteomicsBaselineProfilesInputStreamIT {
     private static final Factor DEVELOPMENTAL_STAGE_ADULT = new Factor("developmental stage", "adult");
     private static final Factor DEVELOPMENTAL_STAGE_FETUS = new Factor("developmental stage", "fetus");
 
-    public void setup(Factor factor) {
-        subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION, ORGANISM_PART, CUTOFF_ZERO, ImmutableSet.of(factor));
+    private void setup(Factor factor) {
+        setup(factor,CUTOFF_ZERO) ;
+    }
+
+    private void setup(Factor factor, double cutoff) {
+        subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION, ORGANISM_PART, cutoff,
+                ImmutableSet.of(factor));
     }
 
     @Test
@@ -67,12 +75,9 @@ public class ProteomicsBaselineProfilesInputStreamIT {
         assertThat(baselineProfile.getId(), is("ENSG00000000003"));
         assertThat(baselineProfile.getName(), is("TSPAN6"));
         assertThat(baselineProfile.getSpecificity(), is(5));
-        assertThat(baselineProfile.getKnownExpressionLevel(new Factor(ORGANISM_PART, "colon")),is(9940000D));
-        assertThat(baselineProfile.getKnownExpressionLevel(new Factor(ORGANISM_PART, "ovary")),is(6760000D));
-        assertThat(baselineProfile.getKnownExpressionLevel(new Factor(ORGANISM_PART, "pancreas")),is(0.0000229));
-        assertThat(baselineProfile.getKnownExpressionLevel(new Factor(ORGANISM_PART, "ovary")),is(6760000D));
-        assertThat(baselineProfile.getKnownExpressionLevel(new Factor(ORGANISM_PART, "prostate")),is(0.00000731));
-
+        for(String organismPart: "colon ovary pancreas prostate".split(" ")){
+            assertNotNull(baselineProfile.getKnownExpressionLevel(new Factor(ORGANISM_PART, organismPart)));
+        }
         BaselineProfile baselineProfile2 = subject.readNext();
 
         assertThat(baselineProfile2.getId(), is("ENSG00000000419"));
@@ -94,7 +99,7 @@ public class ProteomicsBaselineProfilesInputStreamIT {
         assertThat(baselineProfile.getId(), is("ENSG00000000003"));
         assertThat(baselineProfile.getName(), is("TSPAN6"));
         assertThat(baselineProfile.getSpecificity(), is(1));
-        assertThat(baselineProfile.getKnownExpressionLevel(new Factor(ORGANISM_PART, "ovary")),is(0.000052));
+        assertNotNull(baselineProfile.getKnownExpressionLevel(new Factor(ORGANISM_PART, "ovary")));
 
         BaselineProfile baselineProfile2 = subject.readNext();
 
@@ -111,24 +116,24 @@ public class ProteomicsBaselineProfilesInputStreamIT {
 
 
     @Test
-    public void readNextShouldReturnNullGivenAllExpressionLevelsHaveBeenRead() throws Exception {
+    public void cutoffChangesAmountsOfGenes() throws Exception {
         setup(DEVELOPMENTAL_STAGE_ADULT);
-        long countProfiles = 0;
+        long countProfiles1 = 0;
         while (subject.readNext() != null) {
-            ++countProfiles;
+            ++countProfiles1;
         }
 
-        assertThat(countProfiles, is(290L));
-    }
+        assertThat(countProfiles1, greaterThan(10L));
 
-    @Test
-    public void setCutoffChangesSpecificity() throws IOException {
-        subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION, ORGANISM_PART, 4, ImmutableSet.of(DEVELOPMENTAL_STAGE_ADULT));
+        setup(DEVELOPMENTAL_STAGE_ADULT, 1E-4);
+        long countProfiles2 = 0;
+        while (subject.readNext() != null) {
+            ++countProfiles2;
+        }
 
-        BaselineProfile baselineProfile = subject.readNext();
-        assertThat(baselineProfile.getId(), is("ENSG00000000003"));
-        assertThat(baselineProfile.getName(), is("TSPAN6"));
-        assertThat(baselineProfile.getSpecificity(), is(3));
+        assertThat(countProfiles2, greaterThan(5L));
+
+        assertTrue(countProfiles1>countProfiles2);
     }
 
     @Test(expected = IllegalStateException.class)
