@@ -35,6 +35,8 @@ import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.inject.Inject;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 
 import static org.hamcrest.CoreMatchers.allOf;
@@ -43,133 +45,68 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class ExperimentalFactorsIT {
 
-    private static final String BASELINE_EXPERIMENT_ACCESSION = "E-GEOD-26284";
-
     @Inject
     private BaselineExperimentsCache experimentsCache;
 
     ExperimentalFactors subject;
 
-    @Before
-    public void setUp() throws Exception {
-        BaselineExperiment experiment = experimentsCache.getExperiment(BASELINE_EXPERIMENT_ACCESSION);
-        subject = experiment.getExperimentalFactors();
-    }
-
     @Test
-    public void getFactorsByTypeTest() {
-        assertThat(subject.getFactors("RNA").size(), is(3));
-        assertThat(subject.getFactors("CELL_LINE").size(), is(23));
-        assertThat(subject.getFactors("CELLULAR_COMPONENT").size(), is(6));
-    }
+    public void testSomeExperiments() throws Exception {
+        testFactorsFor("E-MTAB-513");
+        testFactorsFor("E-MTAB-2706");
 
-    @Test
-    public void getNonExistentFactor() {
-        assertThat(subject.getFactors("FOOBAR").size(), is(0));
-    }
-
-    @Test
-    public void getCellLineFilteredFactorsTest() {
-        Factor filterFactor1 = new Factor("RNA", "total RNA");
-        Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
-
-        SortedSet<Factor> filteredFactors = subject.getComplementFactors(Sets.newHashSet(filterFactor1, filterFactor2));
-
-        assertThat(filteredFactors.size(), is(5));
-        assertThat(filteredFactors.first().getValue(), is("CD34-positive mobilized cell cell line"));
-        assertThat(filteredFactors.last().getValue(), is("hMSC-AT cell line"));
-    }
-
-    @Test
-    public void getMaterialTypeFilteredFactorsTest() {
-        Factor filterFactor1 = new Factor("CELL_LINE", "IMR-90");
-        Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
-
-        SortedSet<Factor> filteredFactors = subject.getComplementFactors(Sets.newHashSet(filterFactor1, filterFactor2));
-
-        assertThat(filteredFactors.size(), is(2));
-        assertThat(filteredFactors.first().getValue(), is("long polyA RNA"));
-        assertThat(filteredFactors.last().getValue(), is("total RNA"));
-    }
-
-    @Test
-    public void getValidCombinationsForFactorTest() {
-
-        Factor factor = new Factor("RNA", "total RNA");
-        assertThat(subject.getCoOccurringFactors(factor).size(), is(10));
-        factor = new Factor("RNA", "long polyA RNA");
-        assertThat(subject.getCoOccurringFactors(factor).size(), is(21));
-        factor = new Factor("CELLULAR_COMPONENT", "whole cell");
-        assertThat(subject.getCoOccurringFactors(factor).size(), is(26));
-        factor = new Factor("CELL_LINE", "IMR-90");
-        assertThat(subject.getCoOccurringFactors(factor).size(), is(5));
-        factor = new Factor("CELL_LINE", "CD34-positive mobilized cell cell line");
-        assertThat(subject.getCoOccurringFactors(factor).size(), is(2));
     }
 
 
-    @Test
-    public void getCellularComponentFilteredFactorsTest() {
-        Factor filterFactor1 = new Factor("CELL_LINE", "IMR-90");
-        Factor filterFactor2 = new Factor("RNA", "total RNA");
+    public void testFactorsFor(String accession) throws Exception {
+        BaselineExperiment experiment = experimentsCache.getExperiment(accession);
+        ExperimentalFactors subject = experiment.getExperimentalFactors();
 
-        SortedSet<Factor> filteredFactors = subject.getComplementFactors(Sets.newHashSet(filterFactor1, filterFactor2));
+        Set<Factor> allFactors  = subject.getAllFactors();
+        assertThat(allFactors.size(), greaterThan(3));
 
-        assertThat(filteredFactors.size(), is(1));
-        assertThat(filteredFactors.first().getValue(), is("whole cell"));
+        for(Factor f: allFactors) {
+
+            assertTrue(subject.getFactors(f.getType()).contains(f));
+            assertTrue(subject.getFactorsByType().get(f.getType()).contains(f));
+
+            Set<Factor> complement = subject.getComplementFactors(Sets.newHashSet(f));
+            Set<Factor> cooccurring = subject.getCoOccurringFactors(f);
+
+            assertTrue(allFactors.containsAll(complement));
+            assertTrue(allFactors.containsAll(cooccurring));
+            assertFalse(complement.contains(f));
+            assertFalse(cooccurring.contains(f));
+
+            Set<Factor> intersection = new HashSet<>(complement);
+            intersection.retainAll(cooccurring);
+            assertTrue(intersection.isEmpty());
+
+            SortedSet<AssayGroupFactor> complementAssays = subject.getComplementAssayGroupFactors(Sets.newHashSet(f));
+            assertEquals(complement.size(), complementAssays.size());
+            for(AssayGroupFactor agf : complementAssays){
+                assertFalse(subject.getFactorGroup(agf.getAssayGroupId()).contains(f));
+                assertTrue(complement.contains(agf.getFactor()));
+
+
+                boolean isNonDefaultType = ! agf.getType().equals(subject.getDefaultQueryFactorType());
+                boolean hasNonDefaultFactors = ! subject.getNonDefaultFactors(agf.getAssayGroupId()).isEmpty();
+                assertEquals(isNonDefaultType, hasNonDefaultFactors);
+
+            }
+
+        }
+
+        for(FactorGroup g: subject.getFactorGroupsInOrder()) {
+            assertFalse(g.isEmpty());
+            assertTrue(g.overlapsWith(allFactors));
+        }
     }
-
-    @Test
-    public void getNonDefaultFactors_g59() {
-        Factor filterFactor1 = new Factor("RNA", "long non-polyA RNA");
-        Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
-
-        assertThat(subject.getNonDefaultFactors("g59"), contains(filterFactor1, filterFactor2));
-    }
-
-    @Test
-    public void getNonDefaultFactors_g41() {
-        Factor filterFactor1 = new Factor("RNA", "long polyA RNA");
-        Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "cytosol");
-
-        assertThat(subject.getNonDefaultFactors("g41"), contains(filterFactor1, filterFactor2));
-    }
-
-    @Test
-    public void getNonDefaultFactors_g20() {
-        Factor filterFactor1 = new Factor("RNA", "long polyA RNA");
-        Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "cytosol");
-
-        assertThat(subject.getNonDefaultFactors("g20"), contains(filterFactor1, filterFactor2));
-    }
-
-    @Test
-    public void groupAssayGroupIdsByNonDefaultFilterFactor() {
-        Multimap<FactorGroup,String> byFactorGroup = subject.getAssayGroupIdsGroupedByNonDefaultFactors(ImmutableList.of("g80", "g41", "g46"));
-
-        Factor filterFactor1 = new Factor("RNA", "total RNA");
-        Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
-        FactorSet factorSet1 = new FactorSet();
-        factorSet1.add(filterFactor1);
-        factorSet1.add(filterFactor2);
-
-        Factor filterFactor3 = new Factor("RNA", "long polyA RNA");
-        Factor filterFactor4 = new Factor("CELLULAR_COMPONENT", "cytosol");
-        FactorSet factorSet2 = new FactorSet();
-        factorSet2.add(filterFactor3);
-        factorSet2.add(filterFactor4);
-
-        assertThat(byFactorGroup.entries(), hasSize(3));
-        assertThat(byFactorGroup.asMap(), allOf(
-                hasEntry(equalTo((FactorGroup) factorSet1), containsInAnyOrder("g80")),
-                hasEntry(equalTo((FactorGroup) factorSet2), containsInAnyOrder("g46", "g41"))
-        ));
-    }
-
 }
