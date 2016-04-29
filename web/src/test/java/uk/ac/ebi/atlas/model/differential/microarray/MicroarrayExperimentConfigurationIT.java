@@ -22,24 +22,22 @@
 
 package uk.ac.ebi.atlas.model.differential.microarray;
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;
 import java.util.Set;
-import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -54,35 +52,23 @@ public class MicroarrayExperimentConfigurationIT {
 
     @Before
     public void setUp() throws Exception {
-        subject = configurationTrader.getMicroarrayExperimentConfiguration("E-GEOD-3307");
+        subject = configurationTrader.getMicroarrayExperimentConfiguration("E-GEOD-13316");
     }
 
     @Test
     public void testGetArrayDesignNames() throws Exception {
-        assertThat(subject.getArrayDesignAccessions(), contains("A-AFFY-33", "A-AFFY-34"));
+        assertThat(subject.getArrayDesignAccessions().size(), greaterThan(0));
     }
 
     @Test
     public void testGetContrasts() throws Exception {
         Set<Contrast> contrasts = subject.getContrasts();
-        assertThat(contrasts.size(), is(24));
-    }
-
-    @Test
-    public void testFirstContrast() throws Exception {
-        SortedSet<Contrast> contrasts = Sets.newTreeSet(subject.getContrasts());
-        Contrast first = contrasts.first();
-        assertThat(first.getId(), is("g1_g11"));
-        assertThat(first.getDisplayName(), is("'ALS' vs 'normal' on 'Affymetrix HG-U133A'"));
-        assertThat(first.getReferenceAssayGroup(), hasItems("GSM74356", "GSM74408", "GSM74357", "GSM74409", "GSM74406", "GSM74407", "GSM74404", "GSM119936", "GSM74361", "GSM74362", "GSM119937", "GSM74402", "GSM74363", "GSM74403", "GSM74358", "GSM74359", "GSM74410", "GSM74360"));
-        assertThat(first.getTestAssayGroup(), hasItems("GSM74248", "GSM74244", "GSM74245", "GSM74246", "GSM74247", "GSM74240", "GSM74241", "GSM74242", "GSM74243"));
-    }
-
-    @Test
-    public void testLastContrast() throws Exception {
-        SortedSet<Contrast> contrasts = Sets.newTreeSet(subject.getContrasts());
-        Contrast last = contrasts.last();
-        assertThat(last.getId(), is("g14_g17"));
-        assertThat(last.getDisplayName(), is("'LGMD2I' vs 'normal' on 'Affymetrix HG-U133B'"));
+        assertThat(contrasts.size(), greaterThan(0));
+        for(Contrast contrast: contrasts){
+            assertNotNull(contrast.getId());
+            assertNotNull(contrast.getDisplayName());
+            assertTrue(contrast.getReferenceAssayGroup().iterator().hasNext());
+            assertTrue(contrast.getTestAssayGroup().iterator().hasNext());
+        }
     }
 }
