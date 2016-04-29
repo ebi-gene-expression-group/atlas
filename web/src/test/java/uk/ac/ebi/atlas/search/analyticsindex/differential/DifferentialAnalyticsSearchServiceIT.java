@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
-import autovalue.shaded.com.google.common.common.collect.Lists;
+import com.google.common.collect.Lists;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;

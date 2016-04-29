@@ -23,8 +23,7 @@
 package uk.ac.ebi.atlas.acceptance.rest.tests;
 
 
-import autovalue.shaded.com.google.common.common.collect.Lists;
-import com.google.gson.Gson;
+import com.google.common.collect.Lists;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
@@ -32,11 +31,11 @@ import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 import uk.ac.ebi.atlas.web.SemanticQuery;
 import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 
 public class AutocompleteControllerIT {

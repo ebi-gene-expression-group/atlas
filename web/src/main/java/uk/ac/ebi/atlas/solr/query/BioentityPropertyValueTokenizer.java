@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.solr.query;
 
-import autovalue.shaded.com.google.common.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;

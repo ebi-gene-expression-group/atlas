@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import autovalue.shaded.com.google.common.common.collect.Sets;
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

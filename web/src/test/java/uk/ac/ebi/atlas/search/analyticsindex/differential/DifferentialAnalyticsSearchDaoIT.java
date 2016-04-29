@@ -1,6 +1,6 @@
 //package uk.ac.ebi.atlas.search.analyticsindex.differential;
 //
-//import autovalue.shaded.com.google.common.common.collect.Lists;
+//import com.google.common.collect.Lists;
 //import com.jayway.jsonpath.JsonPath;
 //import com.jayway.jsonpath.ReadContext;
 //import org.junit.Test;

@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
-import autovalue.shaded.com.google.common.common.collect.Lists;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.search.baseline;
 
-import autovalue.shaded.com.google.common.common.collect.Sets;
+import com.google.common.collect.Sets;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
