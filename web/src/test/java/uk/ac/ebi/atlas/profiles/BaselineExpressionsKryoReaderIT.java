@@ -24,17 +24,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.Is.is;
-
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 18/06/15.
- */
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class BaselineExpressionsKryoReaderIT {
 
-    private static final String E_MTAB_1733 = "E-MTAB-1733";
+    private static final String E_MTAB_1733 = "E-MTAB-513";
     private static final int GENE_ID_INDEX = 0;
     private static final int GENE_NAME_INDEX = 1;
     private static final int FIRST_LEVEL_INDEX = 2;
@@ -83,7 +80,9 @@ public class BaselineExpressionsKryoReaderIT {
                 expressionLevelStrings.add(expression.getLevelAsString());
             }
 
-            assertThat(expressionLevelStrings, contains(Arrays.asList(tsvLine).subList(FIRST_LEVEL_INDEX, tsvLine.length).toArray()));
+            for (String expression : Arrays.asList(tsvLine).subList(FIRST_LEVEL_INDEX, tsvLine.length)) {
+                assertTrue(expressionLevelStrings.containsAll(Arrays.asList(expression.split(","))));
+            }
         }
     }
 
