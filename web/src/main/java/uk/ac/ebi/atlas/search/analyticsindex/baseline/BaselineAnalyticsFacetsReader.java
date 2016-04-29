@@ -16,10 +16,7 @@ import java.util.*;
 @Named
 public class BaselineAnalyticsFacetsReader {
 
-    private static final String EXPERIMENTS_PATH = "$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline' || @.val=='proteomics_baseline')].species.buckets[?(@.val=='%s')].defaultQueryFactorType.buckets[?(@.val=='%s')].experimentAccession.buckets[*]";
     private final BaselineExpressionLevelRounder baselineExpressionLevelRounder;
-
-    private static final String FACET_TREE_PATH = "$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline' || @.val=='proteomics_baseline')].species.buckets[*]";
 
     @Inject
     public BaselineAnalyticsFacetsReader(BaselineExpressionLevelRounder baselineExpressionLevelRounder) {
@@ -27,10 +24,7 @@ public class BaselineAnalyticsFacetsReader {
     }
 
 
-    public ImmutableList<BaselineExperimentExpression> extractAverageExpressionLevel(String json, String species, String defaultQueryFactorType) {
-        String experimentsPath = String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType);
-
-        List<Map<String, Object>> results = JsonPath.read(json, experimentsPath);
+    public ImmutableList<BaselineExperimentExpression> extractAverageExpressionLevel(List<Map<String, Object>> results) {
 
         ImmutableList.Builder<BaselineExperimentExpression> builder = ImmutableList.builder();
 
@@ -59,9 +53,7 @@ public class BaselineAnalyticsFacetsReader {
     }
 
 
-    public static String generateFacetsTreeJson(String json) {
-
-        List<Map<String, Object>> results = JsonPath.read(json, FACET_TREE_PATH);
+    public static String generateFacetsTreeJson(List<Map<String, Object>> results) {
 
         Multimap<String, FacetTree> facetTreeMultimap = HashMultimap.create();
 

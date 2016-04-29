@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.base.Stopwatch;
+import com.jayway.jsonpath.JsonPath;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Named
@@ -31,6 +34,10 @@ public class BaselineAnalyticsSearchDao {
     private static final String QUERY_TEMPLATE = "query?q={0}&rows=0&omitHeader=true";
     private static final String FQ_TEMPLATE = "&fq=experimentType:(rnaseq_mrna_baseline OR proteomics_baseline)";
 
+    static final String EXPERIMENTS_PATH = "$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline' || @.val=='proteomics_baseline')].species.buckets[?(@.val=='%s')].defaultQueryFactorType.buckets[?(@.val=='%s')].experimentAccession.buckets[*]";
+    static final String FACET_TREE_PATH = "$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline' || @.val=='proteomics_baseline')].species.buckets[*]";
+
+
     private final String baselineHeatmapPivotQuery;
 
     @Inject
@@ -41,15 +48,9 @@ public class BaselineAnalyticsSearchDao {
     }
 
 
-    public String fetchFacetsThatHaveExpression(GeneQuery geneQuery) {
-        //if needed, could improve performance by getting counts only, and not sum(expressionLevel) or unique(bioentityIdentifier)
-        return fetchExpressionLevelFaceted(geneQuery);
-    }
-
-
-    String fetchExpressionLevelFaceted(GeneQuery geneQuery) {
-        String identifierSearch = buildGeneIdentifierQuery(geneQuery);
-        return fetchFacets(identifierSearch);
+    public List<Map<String, Object>> fetchFacetsThatHaveExpression(GeneQuery geneQuery) {
+        String response = fetchFacets(buildGeneIdentifierQuery(geneQuery));
+        return JsonPath.read(response, FACET_TREE_PATH);
     }
 
 
@@ -58,9 +59,12 @@ public class BaselineAnalyticsSearchDao {
     }
 
 
-    public String fetchExpressionLevelFaceted(GeneQuery geneQuery, String defaultQueryFactorType) {
+    public List<Map<String, Object>> fetchExpressionLevelFaceted(GeneQuery geneQuery, String species, String defaultQueryFactorType) {
         String identifierSearch = buildGeneIdentifierQuery(geneQuery);
-        return fetchFacets(String.format("%s AND defaultQueryFactorType:%s", identifierSearch, defaultQueryFactorType));
+        String response = fetchFacets(String.format("%s AND defaultQueryFactorType:%s", identifierSearch,
+                defaultQueryFactorType));
+
+        return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType));
     }
 
 

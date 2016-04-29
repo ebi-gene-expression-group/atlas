@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
-import com.google.common.collect.ImmutableSortedSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,9 +15,9 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -105,7 +104,7 @@ public class BaselineAnalyticsSearchServiceIT {
 
     @Test
     public void singleSpeciesGeneAccessionTissues() {
-        //"ENSG00000006062" seems to be a famous enough protein
+        //"ENSG00000006062" seems to be a famous enough gene
         BaselineExperimentSearchResult result = subject.findExpressions(GeneQuery.create("ENSG00000006062"), "Homo sapiens", "ORGANISM_PART");
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();

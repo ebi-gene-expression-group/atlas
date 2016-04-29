@@ -9,6 +9,8 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
+import java.util.Map;
 
 @Named
 public class BaselineAnalyticsSearchService {
@@ -31,15 +33,15 @@ public class BaselineAnalyticsSearchService {
     }
 
     public BaselineExperimentSearchResult findExpressions(GeneQuery geneQuery, String species, String defaultQueryFactorType) {
-        String jsonResponse = baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(geneQuery, defaultQueryFactorType);
-        ImmutableList<BaselineExperimentExpression> expressions = baselineAnalyticsFacetsReader.extractAverageExpressionLevel(jsonResponse, Species.convertToEnsemblSpecies(species), defaultQueryFactorType);
+        List<Map<String, Object>> response = baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(geneQuery,Species.convertToEnsemblSpecies(species),defaultQueryFactorType);
+        ImmutableList<BaselineExperimentExpression> expressions = baselineAnalyticsFacetsReader.extractAverageExpressionLevel(response);
         return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, defaultQueryFactorType);
     }
 
     public String findFacetsForTreeSearch(GeneQuery geneQuery) {
-        String jsonResponse = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery);
+        List<Map<String, Object>> results = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery);
 
-        return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(jsonResponse);
+        return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(results);
     }
 
     public boolean tissueExpressionAvailableFor(GeneQuery geneQuery) {
