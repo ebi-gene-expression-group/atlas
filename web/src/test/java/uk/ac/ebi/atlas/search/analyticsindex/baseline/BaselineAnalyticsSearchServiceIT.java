@@ -127,14 +127,15 @@ public class BaselineAnalyticsSearchServiceIT {
 
     @Test
     public void geneQueryCellLine() {
-        BaselineExperimentSearchResult result = subject.findExpressions(GeneQuery.create("protein_coding"), "",
+        BaselineExperimentSearchResult result = subject.findExpressions(
+                GeneQuery.create("protein_coding"), "homo sapiens",
                 CELL_LINE);
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
         assertThat(baselineProfilesList.size(), greaterThan(0));
         for(BaselineExperimentProfile profile : baselineProfilesList) {
-            assertThat(profile.getFilterFactors().size(), greaterThan(0));
+            assertThat(profile.getFilterFactors(), is(EMPTY_FACTOR_SET));
             assertTrue(profile.getMinExpressionLevel()< profile.getMaxExpressionLevel());
             assertFalse(profile.isExpressedOnAnyOf(organismPartFactors));
             assertTrue(profile.isExpressedOnAnyOf(cellLineFactors));
