@@ -1,9 +1,7 @@
 package uk.ac.ebi.atlas.commons.readers.impl;
 
+import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class TsvReaderDummy implements TsvReader {
 
@@ -13,7 +11,7 @@ public class TsvReaderDummy implements TsvReader {
     }
 
     @Override
-    public List<String[]> readAll() {
-        return Arrays.asList();
+    public ImmutableList<String[]> readAll() {
+        return ImmutableList.of();
     }
 }
