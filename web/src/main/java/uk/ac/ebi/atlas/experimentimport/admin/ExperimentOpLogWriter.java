@@ -37,7 +37,7 @@ public class ExperimentOpLogWriter {
         TsvReader tsvReader = fileTsvReaderBuilder
                 .forTsvFilePathTemplate(opLogTemplate)
                 .withExperimentAccession(accession)
-                .returningADummyIfFileMissing(true)
+                .returnDummyIfFileMissing()
                 .build();
         for (String[] line : tsvReader.readAll()) {
             Validate.isTrue(line.length == 3);

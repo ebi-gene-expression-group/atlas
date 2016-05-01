@@ -27,7 +27,6 @@ import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderDummy;
 import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
 
 import javax.inject.Named;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
@@ -41,7 +40,7 @@ public class FileTsvReaderBuilder {
 
     private String experimentAccession;
     private String tsvFilePathTemplate;
-    private boolean defaultToADummyIfFileMissing=false;
+    private boolean defaultToADummyIfFileMissing = false;
 
     public FileTsvReaderBuilder() {
     }
@@ -56,8 +55,8 @@ public class FileTsvReaderBuilder {
         return this;
     }
 
-    public FileTsvReaderBuilder returningADummyIfFileMissing(boolean defaultToADummyIfFileMissing) {
-        this.defaultToADummyIfFileMissing = defaultToADummyIfFileMissing;
+    public FileTsvReaderBuilder returnDummyIfFileMissing() {
+        this.defaultToADummyIfFileMissing = true;
         return this;
     }
 
