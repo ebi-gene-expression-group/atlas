@@ -1,102 +1,84 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-
 package uk.ac.ebi.atlas.commons.readers.impl;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.junit.rules.ExpectedException;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isA;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.containsString;
 
-@RunWith(MockitoJUnitRunner.class)
 public class TsvReaderImplTest {
+
+    private static final String COMMENT_LINE = "#Comment\tComment";
+    private static final String HEADER_LINE = "Column1\tColumn2\tColumn3";
+    private static final String VALUES_LINE = "Data1\tData2\tData3";
+
+    private static final String[] COMMENT_LINE_AS_ARRAY = COMMENT_LINE.split("\t");
+    private static final String[] HEADER_LINE_AS_ARRAY = HEADER_LINE.split("\t");
+    private static final String[] VALUES_LINE_AS_ARRAY = VALUES_LINE.split("\t");
+
+    private static final String DATA =
+            COMMENT_LINE + "\n" +
+            HEADER_LINE + "\n" +
+            VALUES_LINE + "\n";
 
     private TsvReaderImpl subject;
 
-    private InputStreamReader tsvFileInputStreamReaderMock;
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
-    public void setUp() throws Exception {
-
-        String data = "#Comment\nColumn1\tColumn2\tColumn3\nData1\tData2\tData3";
-
-        tsvFileInputStreamReaderMock = new InputStreamReader(new ByteArrayInputStream(data.getBytes()));
-
-        subject = new TsvReaderImpl(tsvFileInputStreamReaderMock);
+    public void setUp() {
+        InputStreamReader tsvInputStreamReader = new InputStreamReader(new ByteArrayInputStream(DATA.getBytes()));
+        subject = new TsvReaderImpl(tsvInputStreamReader);
     }
 
     @Test
-    public void testReadAll() {
-        List<String[]> result = subject.readAll();
-        assertThat(result.size(), is(2));
-        assertThat(result.get(0), hasItemInArray("Column1"));
-        assertThat(result.get(0), hasItemInArray("Column2"));
-        assertThat(result.get(0), hasItemInArray("Column3"));
-        assertThat(result.get(1), hasItemInArray("Data1"));
-        assertThat(result.get(1), hasItemInArray("Data2"));
-        assertThat(result.get(1), hasItemInArray("Data3"));
+    public void readFirstLine() {
+        assertThat(subject.readLine(0), is(COMMENT_LINE_AS_ARRAY));
     }
 
     @Test
-    public void testReadLine() {
-        String[] result = subject.readLine(2);
-        assertThat(result.length, is(3));
-        assertThat(result, hasItemInArray("Data1"));
-        assertThat(result, hasItemInArray("Data2"));
-        assertThat(result, hasItemInArray("Data3"));
+    public void readSecondLine() {
+        assertThat(subject.readLine(1), is(HEADER_LINE_AS_ARRAY));
     }
 
     @Test
-    public void testReadAndFilter() {
-        TsvReaderImpl.IsCommentPredicate commentPredicatePredicate = new TsvReaderImpl.IsCommentPredicate();
-        List<String[]> result = subject.readAndFilter(commentPredicatePredicate);
-        assertThat(result.size(), is(1));
-        assertThat(result.get(0), hasItemInArray("#Comment"));
+    public void readThirdLine() {
+        assertThat(subject.readLine(2), is(VALUES_LINE_AS_ARRAY));
     }
 
     @Test
-    public void testIsComment() {
-        TsvReaderImpl.IsCommentPredicate commentPredicatePredicate = new TsvReaderImpl.IsCommentPredicate();
-        assertThat(commentPredicatePredicate.apply("  #  Xyz"), is(true));
-        assertThat(commentPredicatePredicate.apply(" #Xyz"), is(true));
-        assertThat(commentPredicatePredicate.apply("#Xyz"), is(true));
+    public void readLineBeyondEndOfStreamReturnsNull() {
+        assertThat(subject.readLine(5), is(nullValue()));
     }
 
     @Test
-    public void testIsNotComment() {
-        TsvReaderImpl.IsNotCommentPredicate isNotCommentPredicate = new TsvReaderImpl.IsNotCommentPredicate();
-        assertThat(isNotCommentPredicate.apply("  #  Xyz"), is(false));
-        assertThat(isNotCommentPredicate.apply(" #Xyz"), is(false));
-        assertThat(isNotCommentPredicate.apply("#Xyz"), is(false));
-        assertThat(isNotCommentPredicate.apply("Xyz"), is(true));
-        assertThat(isNotCommentPredicate.apply("Xy#z"), is(true));
-        assertThat(isNotCommentPredicate.apply("Xyz # "), is(true));
+    public void underlyingReaderIsClosedAfterReading() {
+        thrown.expect(RuntimeException.class);
+        thrown.expectCause(isA(IOException.class));
+        thrown.expectMessage(containsString("Stream closed"));
+
+        subject.readLine(0);
+        subject.readLine(0);
     }
+
+    @Test
+    public void readAllIgnoresComments() {
+        List<String[]> lines = subject.readAll();
+
+        assertThat(lines.size(), is(2));
+        assertThat(lines.get(0), is(HEADER_LINE_AS_ARRAY));
+        assertThat(lines.get(1), is(VALUES_LINE_AS_ARRAY));
+    }
+
 }
