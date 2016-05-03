@@ -61,18 +61,10 @@ public class TsvReaderImpl implements TsvReader {
         }
     }
 
-    private static class IsCommentPredicate implements Predicate<String> {
+    private static class IsNotCommentPredicate implements Predicate<String> {
         @Override
         public boolean apply(String rowHeader) {
-            return rowHeader.trim().startsWith("#");
+            return ! rowHeader.trim().startsWith("#");
         }
     }
-
-    private static class IsNotCommentPredicate extends IsCommentPredicate {
-        @Override
-        public boolean apply(String rowHeader) {
-            return !super.apply(rowHeader);
-        }
-    }
-
 }
