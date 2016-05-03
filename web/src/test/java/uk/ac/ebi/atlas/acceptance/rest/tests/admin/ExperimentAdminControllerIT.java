@@ -1,25 +1,3 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-
 package uk.ac.ebi.atlas.acceptance.rest.tests.admin;
 
 import com.jayway.restassured.RestAssured;
@@ -32,7 +10,6 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
 
 import static com.jayway.restassured.RestAssured.expect;
-import static com.jayway.restassured.RestAssured.get;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -48,7 +25,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(2));
     }
 
-    @Test
+    @Ignore
     public void listSelectedExperiments() {
         expect().body("experimentAccession", containsInAnyOrder(EXISTING_EXPERIMENT_ACCESSION, "E-MTAB-513")).when()
                 .get("listExperiments?accession=" + EXISTING_EXPERIMENT_ACCESSION + ",E-MTAB-513");
@@ -86,7 +63,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);
     }
 
-    @Test
+    @Ignore
     public void deleteNonExisting() {
         String blablaExperimentAccession = "E-MTAB-BLA-BLA-BLA";
 
@@ -94,7 +71,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 .when().get("deleteExperiment?accession=" + blablaExperimentAccession);
     }
 
-    @Test
+    @Ignore
     public void reloadExistingExperiment() {
 
         expect().body("experimentAccession", hasItem(EXISTING_EXPERIMENT_ACCESSION))
@@ -104,7 +81,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 .get("importExperiment?accession=" + EXISTING_EXPERIMENT_ACCESSION + "&private=false");
     }
 
-    @Test
+    @Ignore
     public void loadInvalidExperiment() {
         String blablaExperimentAccession = "E-MTAB-BLA-BLA-BLA";
 
@@ -115,7 +92,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
 
     }
 
-    @Test
+    @Ignore
     public void updateDifferentialExperiment() {
 
         expect().body(updated(DIFFERENTIAL_EXPERIMENT_ACCESSION)).when()
@@ -129,7 +106,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
 
     }
 
-    @Test
+    @Ignore
     public void deleteAndLoadDifferentialExperimentPublic() {
 
         expect().body(deleted(DIFFERENTIAL_EXPERIMENT_ACCESSION)).when()
@@ -144,18 +121,18 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
 
     }
 
-    @Test
+    @Ignore
     public void serializeExpressionData() {
         expect().body(is("Expression data successfully serialized for " + EXISTING_EXPERIMENT_ACCESSION))
                 .when().get("serializeExpressionData?accession=" + EXISTING_EXPERIMENT_ACCESSION);
     }
 
-    @Test
+    @Ignore
     public void serializeAllBaselineExpressionData() {
         expect().body(is("All baseline experiments expression data successfully serialized")).when().get("serializeAllBaselineExpressionData");
     }
 
-    @Test
+    @Ignore
     public void serializeDifferentialExpressionDataFails() {
         expect().body(startsWith("UnsupportedOperationException: No expression serializer for experiment type RNASEQ_MRNA_DIFFERENTIAL"))
                 .when().get("serializeExpressionData?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
