@@ -50,7 +50,7 @@ public class FileTsvReaderBuilder {
                 return new TsvReaderImpl(tsvFileInputStreamReader);
             }
         } catch (IOException e) {
-            throw Throwables.propagate(e);
+            throw new IllegalStateException(e);
         }
     }
 
