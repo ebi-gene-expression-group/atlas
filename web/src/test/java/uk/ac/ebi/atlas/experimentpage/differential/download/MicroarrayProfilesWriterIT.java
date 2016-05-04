@@ -38,7 +38,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyObject;
@@ -110,42 +110,39 @@ public class MicroarrayProfilesWriterIT {
     public void testAllMicroarrayExperiments() throws Exception {
         Set<String> accessions = experimentTrader.getMicroarrayExperimentAccessions();
 
-        for(String accession: accessions){
+        for (String accession : accessions) {
             MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(accession);
             String arrayDesignAccession = experiment.getArrayDesignAccessions().iterator().next();
             Set<String> queryFactors = experiment.getContrastIds();
 
-            defaultParametersHeader(accession,arrayDesignAccession);
+            defaultParametersHeader(accession, arrayDesignAccession);
             teardown();
 
-            defaultParameters(accession,arrayDesignAccession);
+            defaultParameters(accession, arrayDesignAccession);
             teardown();
 
-            notSpecific(accession,arrayDesignAccession);
+            notSpecific(accession, arrayDesignAccession);
             teardown();
 
-//            geneQueryEmpty(accession,arrayDesignAccession);
-//            teardown();
-
-            upDownRegulationWorks(accession,arrayDesignAccession);
+            upDownRegulationWorks(accession, arrayDesignAccession);
             teardown();
 
-            verySmallPValueGivesNoData(accession,arrayDesignAccession);
+            verySmallPValueGivesNoData(accession, arrayDesignAccession);
             teardown();
 
-            veryLargeLogFoldCutoffGivesNoData(accession,arrayDesignAccession);
+            veryLargeLogFoldCutoffGivesNoData(accession, arrayDesignAccession);
             teardown();
 
-            withContrastQueryFactorNonspecific(accession,arrayDesignAccession,queryFactors);
+            withContrastQueryFactorNonspecific(accession, arrayDesignAccession, queryFactors);
             teardown();
 
-            withContrastQueryFactor(accession,arrayDesignAccession,queryFactors);
+            withContrastQueryFactor(accession, arrayDesignAccession, queryFactors);
             teardown();
         }
 
     }
 
-    private void teardown(){
+    private void teardown() {
         Mockito.reset(printWriterMock, csvWriterFactoryMock, csvWriterMock);
         requestPreferences = new MicroarrayRequestPreferences();
         subject = null;
@@ -160,14 +157,14 @@ public class MicroarrayProfilesWriterIT {
         String[] lines = headerLines();
         String queryLine = lines[1];
 
-        assertTrue(queryLine,Pattern.matches(".*Genes.*differentially expressed.*any contrast.*experiment " +
+        assertTrue(queryLine, Pattern.matches(".*Genes.*differentially expressed.*any contrast.*experiment " +
                 accession, queryLine));
 
         String[] columnHeaders = csvLines().get(0);
         assertEquals("Gene ID", columnHeaders[0]);
         assertEquals("Gene Name", columnHeaders[1]);
         assertEquals("Design Element", columnHeaders[2]);
-        assertTrue(columnHeaders.length>3);
+        assertTrue(columnHeaders.length > 3);
     }
 
     public void defaultParameters(String accession, String arrayDesignAccession) throws GenesNotFoundException, ExecutionException {
@@ -217,7 +214,7 @@ public class MicroarrayProfilesWriterIT {
 
         teardown();
 
-        assertTrue(geneNamesUpDown.size() >0);
+        assertTrue(geneNamesUpDown.size() > 0);
         assertTrue(geneNamesUpDown.containsAll(geneNamesUp));
         assertTrue(geneNamesUpDown.containsAll(geneNamesDown));
     }
@@ -228,7 +225,7 @@ public class MicroarrayProfilesWriterIT {
 
         MicroarrayRequestContext requestContext = setUpAndPopulateRequestContext(accession);
         long genesCount = subject.write(printWriterMock, requestContext, arrayDesignAccession);
-        assertEquals(accession,0, genesCount);
+        assertEquals(accession, 0, genesCount);
     }
 
     public void veryLargeLogFoldCutoffGivesNoData(String accession, String arrayDesignAccession) throws
@@ -238,11 +235,11 @@ public class MicroarrayProfilesWriterIT {
 
         MicroarrayRequestContext requestContext = setUpAndPopulateRequestContext(accession);
         long genesCount = subject.write(printWriterMock, requestContext, arrayDesignAccession);
-        assertEquals(accession,0, genesCount);
+        assertEquals(accession, 0, genesCount);
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv?queryFactorValues=g2_g3&_specific=on
-    
+
     public void withContrastQueryFactor(String accession, String arrayDesignAccession, Set<String> queryFactors)
             throws
             GenesNotFoundException, ExecutionException {
@@ -316,7 +313,7 @@ public class MicroarrayProfilesWriterIT {
 
         assertEquals(geneNamesForAllQueryFactors, geneNamesForUnspecifiedQueryFactors);
         assertTrue(geneNamesForAllQueryFactors.containsAll(geneNamesForOneQueryFactor));
-        assertTrue(geneNamesForOneQueryFactor.size()>0);
+        assertTrue(geneNamesForOneQueryFactor.size() > 0);
     }
 
     private void setFoldChangeCutOff(double cutOff) {
