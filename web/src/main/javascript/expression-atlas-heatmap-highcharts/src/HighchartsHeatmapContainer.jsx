@@ -6,6 +6,7 @@ var React = require('react');
 
 var $ = require('jquery');
 require('jQuery-ajaxTransport-XDomainRequest');
+
 var EventEmitter = require('events');
 
 //*------------------------------------------------------------------*
@@ -53,15 +54,20 @@ var HighchartsHeatmapContainer = React.createClass({
         showAnatomogram:React.PropTypes.bool.isRequired,
         isWidget: React.PropTypes.bool.isRequired,
         disableGoogleAnalytics: React.PropTypes.bool.isRequired,
-        fail: React.PropTypes.func
+        fail: React.PropTypes.func,
+        ensemblEventEmitter : React.PropTypes.object.isRequired,
+        anatomogramEventEmitter: React.PropTypes.object.isRequired
+    },
+
+    getDefaultProps: function (){
+      var ensemblEventEmitter = new EventEmitter();
+      ensemblEventEmitter.setMaxListeners(0);
+      var anatomogramEventEmitter = new EventEmitter();
+      anatomogramEventEmitter.setMaxListeners(0);
+      return {ensemblEventEmitter: ensemblEventEmitter, anatomogramEventEmitter:anatomogramEventEmitter };
     },
 
     render: function () {
-
-    var ensemblEventEmitter = new EventEmitter();
-    ensemblEventEmitter.setMaxListeners(0);
-    var anatomogramEventEmitter = new EventEmitter();
-    anatomogramEventEmitter.setMaxListeners(0);
 
     var geneURL =
         this.props.linksAtlasBaseURL + "/query" +
@@ -86,7 +92,7 @@ var HighchartsHeatmapContainer = React.createClass({
                       { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
                         ? <Anatomogram anatomogramData={this.state.anatomogramData}
                                      expressedTissueColour={"gray"} hoveredTissueColour={"red"}
-                                     profileRows={this.state.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
+                                     profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
                         : null
                       }
                   </div>
@@ -94,8 +100,8 @@ var HighchartsHeatmapContainer = React.createClass({
                   <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
                       <HighchartsHeatmap
                                profiles={this.state.profiles}
-                               anatomogramEventEmitter={anatomogramEventEmitter}
-                               ensemblEventEmitter={ensemblEventEmitter}
+                               anatomogramEventEmitter={this.props.anatomogramEventEmitter}
+                               ensemblEventEmitter={this.props.ensemblEventEmitter}
                                atlasBaseURL={this.props.atlasBaseURL}
                                xAxisCategories={this.state.xAxisCategories}
                                yAxisCategories={this.state.yAxisCategories}
@@ -282,17 +288,13 @@ var HighchartsHeatmapContainer = React.createClass({
         );
 
         if (!this.props.disableGoogleAnalytics) {
-            var _gaq = _gaq || [];
-            _gaq.push(["_setAccount", "UA-37676851-1"]);
-            _gaq.push(["_trackPageview"]);
-            (function () {
-                var ga = document.createElement("script");
-                ga.type = "text/javascript";
-                ga.async = true;
-                ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(ga, s);
-            })();
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-37676851-2', 'auto');
+            ga('send', 'pageview');
         }
     }
 });

@@ -9,9 +9,9 @@ var $ = require('jquery');
 require('jQuery-ajaxTransport-XDomainRequest');
 require('jquery-hc-sticky');
 
-var URI = require('urijs');
-
 var EventEmitter = require('events');
+
+var URI = require('urijs');
 
 //*------------------------------------------------------------------*
 
@@ -63,14 +63,21 @@ var HeatmapAnatomogramContainer = React.createClass({
         showAnatomogram: React.PropTypes.bool.isRequired,
         isWidget: React.PropTypes.bool.isRequired,
         disableGoogleAnalytics: React.PropTypes.bool.isRequired,
-        fail: React.PropTypes.func
+        fail: React.PropTypes.func,
+        googleAnalyticsCallback: React.PropTypes.func,
+        ensemblEventEmitter : React.PropTypes.object.isRequired,
+        anatomogramEventEmitter: React.PropTypes.object.isRequired
+    },
+
+    getDefaultProps: function (){
+      var ensemblEventEmitter = new EventEmitter();
+      ensemblEventEmitter.setMaxListeners(0);
+      var anatomogramEventEmitter = new EventEmitter();
+      anatomogramEventEmitter.setMaxListeners(0);
+      return {ensemblEventEmitter: ensemblEventEmitter, anatomogramEventEmitter:anatomogramEventEmitter };
     },
 
     render: function () {
-        var ensemblEventEmitter = new EventEmitter();
-        ensemblEventEmitter.setMaxListeners(0);
-        var anatomogramEventEmitter = new EventEmitter();
-        anatomogramEventEmitter.setMaxListeners(0);
 
         var anatomogramExpressedTissueColour = this.props.type.isMultiExperiment ? "red" : "gray";
         var anatomogramHoveredTissueColour = this.props.type.isMultiExperiment ? "indigo" : "red";
@@ -101,7 +108,7 @@ var HeatmapAnatomogramContainer = React.createClass({
                             { this.state.anatomogramData ?
                                 <Anatomogram anatomogramData={this.state.anatomogramData}
                                              expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
-                                             profileRows={this.state.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
+                                             profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
                                 : null
                             }
                         </div>
@@ -114,10 +121,11 @@ var HeatmapAnatomogramContainer = React.createClass({
                                          nonExpressedColumnHeaders={this.state.nonExpressedColumnHeaders}
                                          profiles={this.state.profiles}
                                          geneSetProfiles={this.state.geneSetProfiles}
-                                         ensemblEventEmitter={ensemblEventEmitter}
-                                         anatomogramEventEmitter={anatomogramEventEmitter}
+                                         ensemblEventEmitter={this.props.ensemblEventEmitter}
+                                         anatomogramEventEmitter={this.props.anatomogramEventEmitter}
                                          atlasBaseURL={this.props.atlasBaseURL}
-                                         linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>
+                                         linksAtlasBaseURL={this.props.linksAtlasBaseURL}
+                                         googleAnalyticsCallback={this.state.googleAnalyticsCallback}/>
                             </div> :
                             <div style={{marginLeft: marginLeft}}>
                                 <ExperimentsList profiles={this.state.profiles}
@@ -160,7 +168,8 @@ var HeatmapAnatomogramContainer = React.createClass({
             jsonCoexpressions:[],
             geneSetProfiles: {},
             anatomogramData: {},
-            experimentData: ''
+            experimentData: '',
+            googleAnalyticsCallback: function (){}
         }
     },
 
@@ -199,17 +208,14 @@ var HeatmapAnatomogramContainer = React.createClass({
         );
 
         if (!this.props.disableGoogleAnalytics) {
-            var _gaq = _gaq || [];
-            _gaq.push(["_setAccount", "UA-37676851-1"]);
-            _gaq.push(["_trackPageview"]);
-            (function () {
-                var ga = document.createElement("script");
-                ga.type = "text/javascript";
-                ga.async = true;
-                ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(ga, s);
-            })();
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-37676851-2', 'auto');
+            ga('send', 'pageview');
+            this.setState({googleAnalyticsCallback: ga})
         }
     },
 

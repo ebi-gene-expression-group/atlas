@@ -95,7 +95,8 @@ var Heatmap = React.createClass({
         anatomogramEventEmitter: React.PropTypes.object,
         googleAnalytics: React.PropTypes.bool,
         atlasBaseURL: React.PropTypes.string.isRequired,
-        linksAtlasBaseURL: React.PropTypes.string.isRequired
+        linksAtlasBaseURL: React.PropTypes.string.isRequired,
+        googleAnalyticsCallback: React.PropTypes.func.isRequired
     },
 
     getInitialState: function () {
@@ -114,7 +115,8 @@ var Heatmap = React.createClass({
             hoveredColumnId: null,
             hoveredGeneId: null,
             selectedRadioButton: "gradients",
-            coexpressionsDisplayed:coexpressionsDisplayed
+            coexpressionsDisplayed:coexpressionsDisplayed,
+            userInteractedWithTheHeatmap: false
         };
     },
 
@@ -203,6 +205,28 @@ var Heatmap = React.createClass({
 
     isSingleGeneResult: function () {
         return (this.props.profiles.rows.length == 1);
+    },
+
+    _stateChangeRepresentsInteraction: function (s1, s2) {
+      var ks = [
+        "displayLevels", "showGeneSetProfiles", "selectedColumnId", "selectedGeneId", "hoveredColumnId", "hoveredGeneId", "hoveredRowId"
+      ];
+      for(var i = 0; i< ks.length ; i++){
+        var k = ks[i];
+        if(s1[k] !== s2[k]){
+          return k || true;
+        }
+      }
+      return false;
+    },
+
+    componentWillUpdate: function(nextProps, nextState) {
+      if(! this.state.userInteractedWithTheHeatmap){
+        if( this._stateChangeRepresentsInteraction(this.state, nextState)) {
+          this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'interact');
+          this.setState({userInteractedWithTheHeatmap: true});
+        }
+      }
     },
 
     componentDidMount: function() {
@@ -296,7 +320,8 @@ var Heatmap = React.createClass({
                         <DownloadProfilesButton ref="downloadProfilesButton"
                                                 downloadProfilesURL={this._constructDownloadProfilesURL()}
                                                 atlasBaseURL={this.props.atlasBaseURL}
-                                                isFortLauderdale={this.props.heatmapConfig.isFortLauderdale}/>
+                                                isFortLauderdale={this.props.heatmapConfig.isFortLauderdale}
+                                                googleAnalyticsCallback={this.props.googleAnalyticsCallback}/>
                     </div>
                     <div style={{display: "inline-block", "paddingLeft": "20px"}}>
                         {this.legendType()}
@@ -435,7 +460,8 @@ var Heatmap = React.createClass({
                         </table>
                     </div>
                     <HeatmapBottomOptions coexpressionsAvailable={this._getCoexpressionsAvailable()}
-                                          showCoexpressionsFor={this._showCoexpressionsFor} />
+                                          showCoexpressionsFor={this._showCoexpressionsFor}
+                                          googleAnalyticsCallback={this.props.googleAnalyticsCallback} />
                 </div>
 
             </div>
@@ -450,7 +476,8 @@ var DownloadProfilesButton = React.createClass({
         atlasBaseURL: React.PropTypes.string.isRequired,
         downloadProfilesURL: React.PropTypes.string.isRequired,
         isFortLauderdale: React.PropTypes.bool.isRequired,
-        message:React.PropTypes.string
+        message:React.PropTypes.string,
+        googleAnalyticsCallback: React.PropTypes.func.isRequired
     },
     getInitialState: function() {
         return { showModal: false };
@@ -469,6 +496,7 @@ var DownloadProfilesButton = React.createClass({
     },
 
     _commenceDownload: function () {
+        this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'downloadData');
         window.location.href=this.props.atlasBaseURL + this.props.downloadProfilesURL;
     },
 
@@ -1274,7 +1302,8 @@ var HeatmapBottomOptions = React.createClass({
         name:React.PropTypes.string.isRequired,
         amount: React.PropTypes.number.isRequired
       })).isRequired,
-      showCoexpressionsFor: React.PropTypes.func.isRequired
+      showCoexpressionsFor: React.PropTypes.func.isRequired,
+      googleAnalyticsCallback :React.PropTypes.func.isRequired
   },
 
   render: function() {
@@ -1285,7 +1314,10 @@ var HeatmapBottomOptions = React.createClass({
                 key={i}
                 geneName={el.name}
                 numCoexpressionsAvailable = {el.amount}
-                showCoexpressionsCallback={ function(amount){this.props.showCoexpressionsFor(el.name,amount)}.bind(this) }
+                showCoexpressionsCallback={ function(amount){
+                  this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'coexpressions-use');
+                  this.props.showCoexpressionsFor(el.name,amount);
+                }.bind(this) }
                 />);
     };
     return (
@@ -1293,6 +1325,12 @@ var HeatmapBottomOptions = React.createClass({
       {options}
       </div>
     );
+  },
+
+  componentDidMount: function () {
+    if(this.props.coexpressionsAvailable.length >0){
+      this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'coexpressions-display');
+    }
   }
 
 

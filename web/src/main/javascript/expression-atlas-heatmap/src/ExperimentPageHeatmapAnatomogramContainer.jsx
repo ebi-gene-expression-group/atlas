@@ -62,14 +62,24 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
         ]).isRequired,
         isWidget: React.PropTypes.bool.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
-        linksAtlasBaseURL: React.PropTypes.string.isRequired
+        linksAtlasBaseURL: React.PropTypes.string.isRequired,
+        ensemblEventEmitter : React.PropTypes.object.isRequired,
+        anatomogramEventEmitter: React.PropTypes.object.isRequired
+    },
+
+    getDefaultProps: function (){
+      var ensemblEventEmitter = new EventEmitter();
+      ensemblEventEmitter.setMaxListeners(0);
+      var anatomogramEventEmitter = new EventEmitter();
+      anatomogramEventEmitter.setMaxListeners(0);
+      return {ensemblEventEmitter: ensemblEventEmitter, anatomogramEventEmitter:anatomogramEventEmitter };
+    },
+
+    getInitialState: function () {
+      return {googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function (){}}
     },
 
     render: function () {
-        var ensemblEventEmitter = new EventEmitter();
-        ensemblEventEmitter.setMaxListeners(0);
-        var anatomogramEventEmitter = new EventEmitter();
-        ensemblEventEmitter.setMaxListeners(0);
 
         var anatomogramExpressedTissueColour = this.props.type.isMultiExperiment ? "red" : "gray";
         var anatomogramHoveredTissueColour = this.props.type.isMultiExperiment ? "indigo" : "red";
@@ -83,7 +93,7 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                     { this.props.anatomogram ?
                         <Anatomogram anatomogramData={this.props.anatomogram}
                                      expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
-                                     profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL} />
+                                     profileRows={this.props.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL} />
                         : null}
                     { this.props.heatmapConfig.enableEnsemblLauncher ?
                         <EnsemblLauncher isBaseline={this.props.type === ExperimentTypes.BASELINE || this.props.type === ExperimentTypes.PROTEOMICS_BASELINE}
@@ -91,7 +101,7 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                                          species={this.props.heatmapConfig.species}
                                          ensemblDB={this.props.heatmapConfig.ensemblDB}
                                          columnType={this.props.heatmapConfig.columnType}
-                                         eventEmitter={ensemblEventEmitter}
+                                         eventEmitter={this.props.ensemblEventEmitter}
                                          atlasBaseURL={this.props.atlasBaseURL} />
                         : null }
                 </div>
@@ -107,10 +117,11 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                              geneSetProfiles={this.props.geneSetProfiles}
                              isWidget={false}
                              prefFormDisplayLevels={prefFormDisplayLevels}
-                             ensemblEventEmitter={ensemblEventEmitter}
-                             anatomogramEventEmitter={anatomogramEventEmitter}
+                             ensemblEventEmitter={this.props.ensemblEventEmitter}
+                             anatomogramEventEmitter={this.props.anatomogramEventEmitter}
                              atlasBaseURL={this.props.atlasBaseURL}
-                             linksAtlasBaseURL={this.props.linksAtlasBaseURL} />
+                             linksAtlasBaseURL={this.props.linksAtlasBaseURL}
+                             googleAnalyticsCallback={this.state.googleAnalyticsCallback}/>
                 </div>
 
             </div>
@@ -120,6 +131,11 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
     componentDidMount: function() {
         var $anatomogramEnsemblAside = $(ReactDOM.findDOMNode(this.refs.anatomogramEnsembl));
         $anatomogramEnsemblAside.hcSticky({responsive: true});
+
+        $(document).ready(function () {
+          this.setState({googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function (){}})
+        }.bind(this)
+        )
     }
 });
 
