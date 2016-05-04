@@ -25,8 +25,8 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class FileTsvReaderBuilderIT {
 
-    private static final String EMTAB513 = "E-MTAB-513";
-    private static final String EFOOBAR = "E-FOOBAR";
+    private static final String E_MTAB_513 = "E-MTAB-513";
+    private static final String E_FOOBAR = "E-FOOBAR";
 
     @Value("#{configuration['experiment.analysis-method.path.template']}")
     private String analysisMethodsTemplate;
@@ -43,7 +43,7 @@ public class FileTsvReaderBuilderIT {
 
     @Test
     public void buildExistingFile() {
-        TsvReader tsvReader = subject.withExperimentAccession(EMTAB513).build();
+        TsvReader tsvReader = subject.withExperimentAccession(E_MTAB_513).build();
         assertThat(tsvReader, is(instanceOf(TsvReaderImpl.class)));
     }
 
@@ -52,12 +52,12 @@ public class FileTsvReaderBuilderIT {
         thrown.expect(RuntimeException.class);
         thrown.expectCause(isA(NoSuchFileException.class));
 
-        subject.withExperimentAccession(EFOOBAR).build();
+        subject.withExperimentAccession(E_FOOBAR).build();
     }
 
     @Test
     public void returnDummyIfFileMissing() {
-        TsvReader tsvReader = subject.withExperimentAccession(EFOOBAR).returnDummyIfFileMissing().build();
+        TsvReader tsvReader = subject.withExperimentAccession(E_FOOBAR).returnDummyIfFileMissing().build();
 
         assertThat(tsvReader, is(instanceOf(TsvReaderDummy.class)));
     }

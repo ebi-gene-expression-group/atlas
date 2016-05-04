@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.commons.readers;
 
-import org.apache.commons.exec.ExecuteException;
-import org.apache.commons.io.IOExceptionWithCause;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,8 +23,8 @@ import static org.junit.Assert.*;
 
 public class UrlTsvReaderBuilderIT {
 
-    private static final String EMTAB513 = "E-MTAB-513";
-    private static final String EFOOBAR = "E-FOOBAR";
+    private static final String E_MTAB_513 = "E-MTAB-513";
+    private static final String E_FOOBAR = "E-FOOBAR";
 
     @Value("#{configuration['experiment.magetab.idf.url.template']}")
     private String arrayExpressUrlTemplate;
@@ -44,7 +42,7 @@ public class UrlTsvReaderBuilderIT {
 
     @Test
     public void build() throws Exception {
-        TsvReader idfReader = subject.withExperimentAccession(EMTAB513).build();
+        TsvReader idfReader = subject.withExperimentAccession(E_MTAB_513).build();
         assertThat(idfReader, is(instanceOf(TsvReaderImpl.class)));
     }
 
@@ -52,7 +50,7 @@ public class UrlTsvReaderBuilderIT {
     public void buildMissingExperiment() throws Exception {
         thrown.expect(IOException.class);
 
-        subject.withExperimentAccession(EFOOBAR).build();
+        subject.withExperimentAccession(E_FOOBAR).build();
     }
 
 }
