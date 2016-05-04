@@ -50,11 +50,7 @@ import static org.mockito.Mockito.*;
 public class MicroarrayProfilesWriterIT {
 
     public static final int GENE_NAME_INDEX = 1;
-    public static final String E_TABM_713 = "E-TABM-713";
-    private static final String E_GEOD_43049 = "E-GEOD-43049";
-    private static final String E_MTAB_1066 = "E-MTAB-1066";
-    private static final String E_GEOD_3307 = "E-GEOD-3307";
-
+    
     private MicroarrayProfilesWriter subject;
 
     @Inject
