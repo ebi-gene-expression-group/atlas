@@ -50,7 +50,7 @@ public final class DBSolrStatusController {
             e.printStackTrace();
         }
 
-        mav.addObject("Data base status", dbStatus);
+        mav.addObject("DataBase status", dbStatus);
         mav.addObject("Solr status", solrStatus);
         return mav;
     }

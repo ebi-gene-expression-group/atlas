@@ -82,14 +82,14 @@ var HighchartsHeatmapContainer = React.createClass({
           { this.state.heatmapConfig ?
               <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
-                <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
-                    { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
+                  <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
+                      { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
                         ? <Anatomogram anatomogramData={this.state.anatomogramData}
                                      expressedTissueColour={"gray"} hoveredTissueColour={"red"}
                                      profileRows={this.state.profiles.rows} eventEmitter={anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
                         : null
-                    }
-                </div>
+                      }
+                  </div>
 
                   <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
                       <HighchartsHeatmap
