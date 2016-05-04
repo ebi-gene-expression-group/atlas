@@ -1,0 +1,6 @@
+E-MTAB-513		ERR030875	characteristic	age	58 year
+E-MTAB-513		ERR030875	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030875	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030875	characteristic	organism part	leukocyte	http://purl.obolibrary.org/obo/CL_0000738
+E-MTAB-513		ERR030875	characteristic	sex	male
+E-MTAB-513		ERR030875	factor	organism part	leukocyte	http://purl.obolibrary.org/obo/CL_0000738
