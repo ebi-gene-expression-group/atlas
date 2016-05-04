@@ -1,0 +1,34 @@
+Comment[ArrayExpressAccession]	E-MTAB-4101						
+MAGE-TAB Version	1.1						
+Investigation Title	RNA-seq analysis of 5 cell line models for haematopoiesis in Project - Epigenomes of Cell Lines						
+Comment[Submitted Name]	RNA-seq analysis of 5 cell lines in Project 1 of  CTTV020 - Epigenomes of Cell Lines						
+Experiment Description	This experiment captures the baseline expression of 5 cell lines (K562, KU812, MEG01, HEL9217, F36-P) selected for Project 1, Open Targets (formerly CTTV020). These cell lines are all possible cell line models for haematopoiesis.<br>These RNAseq experiments are carried out as part of the Open Targets (formerly CTTV020) project to identify a gene expression signature of common immortalised cell lines / models. This signature / fingerprint will be used in combination with data from ChIPseq experiments from the same cell types to compare various human immortalised cell models against primary cells and tissues. The overall aims of the Open Targets (formerly CTTV020) Cell Line Epigenome project are to establish a systematic approach for the determination of human biological & disease relevance through the generation of transciptomic and epigenomic data in cell types of interest. Integration of cell type mRNA expression and epigenome data with existing & newly generated reference data from human tissue and cell types to identify assay systems which will provide greater confidence in translating target biology and compound pharmacology to patients. To provide a framework for the identification of optimal cell types for target identification/validation studies and drug discovery programs across multiple therapeutic areas. Development of bioinformatics pipelines and Open Targets components for analysis and provision of data.						
+Experimental Factor Name	cell line						
+Experimental Factor Type	cell line						
+Experimental Factor Term Source REF	EFO						
+Experimental Factor Term Accession Number	EFO_0000322						
+Person Last Name	MacNamara						
+Person First Name	Aidan						
+Person Mid Initials							
+Person Email	aidan.macnamara@gmail.com						
+Person Phone							
+Person Fax							
+Person Address							
+Person Affiliation	GSK						
+Person Roles	submitter						
+Date of Experiment	2015-04-01						
+Public Release Date	2016-01-27						
+Protocol Name	P-MTAB-47669	P-MTAB-47670	P-MTAB-47671	P-MTAB-47672	P-MTAB-47673	P-MTAB-47674	P-MTAB-47675
+Protocol Type	growth protocol	growth protocol	growth protocol	growth protocol	nucleic acid extraction protocol	nucleic acid library construction protocol	nucleic acid sequencing protocol
+Protocol Term Source REF	EFO	EFO	EFO	EFO	EFO	EFO	EFO
+Protocol Term Accession Number	EFO_0003789	EFO_0003789	EFO_0003789	EFO_0003789	EFO_0002944	EFO_0004184	EFO_0004170
+Protocol Description	RPMI1640 10% HiFBS 1% L-glut	RPMI1640 10% FBS	RPMI1640 10% FBS 1% Glutamax 1% sodium pyruvate	RPMI1640 10% FBS 1% Glutamax 1% sodium pyruvate 10ng/ml rhGM-CSF	Qiagen RNeasy plus mini kit	Total RNA from each sample was used as input for the Illumina TruSeq Stranded messenger RNA LT Sample Prep Kit (Illumina) and sequencing libraries were created according to the manufacturerâs protocol. Briefly, poly-A containing mRNA molecules were purified using poly-T oligo-attached magnetic beads. Following purification, the mRNA was fragmented and copied into first strand complementary DNA using random primers and reverse transcriptase. Second strand cDNA synthesis was then done using DNA polymerase I, RNase H and substituting dUTP for dTTP. The cDNA was ligated to adapters and enriched with PCR to create the final cDNA library. The library was pooled and sequenced 	Paired end sequencing at 75bp
+Protocol Hardware							Illumina HiSeq 2000
+Protocol Software							
+Term Source Name	EFO						
+Term Source File	http://www.ebi.ac.uk/efo/						
+Term Source Version							
+Comment[AEExperimentType]	RNA-seq of coding RNA						
+Comment[SecondaryAccession]	ERP010353	E-ERAD-386					
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERP010353						
+SDRF File	E-MTAB-4101.sdrf.txt						

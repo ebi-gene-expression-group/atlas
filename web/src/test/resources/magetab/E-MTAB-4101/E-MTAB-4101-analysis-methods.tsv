@@ -1,0 +1,9 @@
+Pipeline version	<a href="http://nunofonseca.github.io/irap/">iRAP</a> 0.7.0p6 
+Analyzed Libraries	See <a href="experiments/E-MTAB-4101/experiment-design">experiment design</a>
+Filtering Step 1	Discard reads below minimum quality threshold
+Filtering Step 2	Check of bacterial contamination; discard offending reads
+Filtering Step 3	Discard reads with common uncalled characters (e.g. N)
+Filtering Step 4	Remove reads from pair-end libraries that were orphaned by filtering steps 1-3
+Read Mapping 	Against genome reference (Ensembl release: 79) tophat2 version: 2.0.12
+Quantification	htseq2 version: 0.6.1p1
+Normalized Counts per Gene	(FPKMs) are calculated from the raw counts by <a href="http://nunofonseca.github.io/irap/">iRAP</a>. These are averaged for each set of technical replicates, and then quantile normalized within each set of biological replicates using <a href="http://www.bioconductor.org/packages/release/bioc/html/limma.html">limma</a>. Finally, they are averaged for all biological replicates (if any)

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="rnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="F-36P">
+                <assay>ERR999705</assay>
+                <assay>ERR1024552</assay>
+                <assay>ERR1024551</assay>
+                <assay>ERR999704</assay>
+            </assay_group>
+            <assay_group id="g2" label="HEL9217">
+                <assay>ERR999703</assay>
+                <assay>ERR1024550</assay>
+            </assay_group>
+            <assay_group id="g3" label="K562">
+                <assay>ERR1024545</assay>
+                <assay>ERR999698</assay>
+            </assay_group>
+            <assay_group id="g4" label="KU812">
+                <assay>ERR1024546</assay>
+                <assay>ERR999699</assay>
+                <assay>ERR999700</assay>
+                <assay>ERR1024547</assay>
+            </assay_group>
+            <assay_group id="g5" label="MEG01">
+                <assay>ERR999702</assay>
+                <assay>ERR1024549</assay>
+                <assay>ERR999701</assay>
+                <assay>ERR1024548</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

@@ -1,0 +1,90 @@
+E-MTAB-4101		ERR1024545	characteristic	cell line	K562	http://www.ebi.ac.uk/efo/EFO_0002067
+E-MTAB-4101		ERR1024545	characteristic	disease	chronic myelogenous leukemia	http://www.ebi.ac.uk/efo/EFO_0000339
+E-MTAB-4101		ERR1024545	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR1024545	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-4101		ERR1024545	factor	cell line	K562	http://www.ebi.ac.uk/efo/EFO_0002067
+E-MTAB-4101		ERR1024546	characteristic	cell line	KU812	http://www.ebi.ac.uk/efo/EFO_0002222
+E-MTAB-4101		ERR1024546	characteristic	cell type	myeloblast	http://purl.obolibrary.org/obo/CL_0000835
+E-MTAB-4101		ERR1024546	characteristic	disease	chronic myelogenous leukemia	http://www.ebi.ac.uk/efo/EFO_0000339
+E-MTAB-4101		ERR1024546	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR1024546	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR1024546	factor	cell line	KU812	http://www.ebi.ac.uk/efo/EFO_0002222
+E-MTAB-4101		ERR1024547	characteristic	cell line	KU812	http://www.ebi.ac.uk/efo/EFO_0002222
+E-MTAB-4101		ERR1024547	characteristic	cell type	myeloblast	http://purl.obolibrary.org/obo/CL_0000835
+E-MTAB-4101		ERR1024547	characteristic	disease	chronic myelogenous leukemia	http://www.ebi.ac.uk/efo/EFO_0000339
+E-MTAB-4101		ERR1024547	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR1024547	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR1024547	factor	cell line	KU812	http://www.ebi.ac.uk/efo/EFO_0002222
+E-MTAB-4101		ERR1024548	characteristic	cell line	MEG01	http://www.ebi.ac.uk/efo/EFO_0002232
+E-MTAB-4101		ERR1024548	characteristic	cell type	megakaryoblast	http://purl.obolibrary.org/obo/CL_0000553
+E-MTAB-4101		ERR1024548	characteristic	disease	chronic myelogenous leukemia	http://www.ebi.ac.uk/efo/EFO_0000339
+E-MTAB-4101		ERR1024548	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR1024548	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR1024548	factor	cell line	MEG01	http://www.ebi.ac.uk/efo/EFO_0002232
+E-MTAB-4101		ERR1024549	characteristic	cell line	MEG01	http://www.ebi.ac.uk/efo/EFO_0002232
+E-MTAB-4101		ERR1024549	characteristic	cell type	megakaryoblast	http://purl.obolibrary.org/obo/CL_0000553
+E-MTAB-4101		ERR1024549	characteristic	disease	chronic myelogenous leukemia	http://www.ebi.ac.uk/efo/EFO_0000339
+E-MTAB-4101		ERR1024549	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR1024549	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR1024549	factor	cell line	MEG01	http://www.ebi.ac.uk/efo/EFO_0002232
+E-MTAB-4101		ERR1024550	characteristic	cell line	HEL9217	http://www.ebi.ac.uk/efo/EFO_0002193
+E-MTAB-4101		ERR1024550	characteristic	cell type	erythroblast	http://purl.obolibrary.org/obo/CL_0000765
+E-MTAB-4101		ERR1024550	characteristic	disease	acute erythroleukemia	http://www.ebi.ac.uk/efo/EFO_0000218
+E-MTAB-4101		ERR1024550	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR1024550	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR1024550	factor	cell line	HEL9217	http://www.ebi.ac.uk/efo/EFO_0002193
+E-MTAB-4101		ERR1024551	characteristic	cell line	F-36P
+E-MTAB-4101		ERR1024551	characteristic	disease	acute myeloid leukemia	http://www.ebi.ac.uk/efo/EFO_0000222
+E-MTAB-4101		ERR1024551	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR1024551	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR1024551	factor	cell line	F-36P
+E-MTAB-4101		ERR1024552	characteristic	cell line	F-36P
+E-MTAB-4101		ERR1024552	characteristic	disease	acute myeloid leukemia	http://www.ebi.ac.uk/efo/EFO_0000222
+E-MTAB-4101		ERR1024552	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR1024552	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR1024552	factor	cell line	F-36P
+E-MTAB-4101		ERR999698	characteristic	cell line	K562	http://www.ebi.ac.uk/efo/EFO_0002067
+E-MTAB-4101		ERR999698	characteristic	disease	chronic myelogenous leukemia	http://www.ebi.ac.uk/efo/EFO_0000339
+E-MTAB-4101		ERR999698	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR999698	characteristic	sex	female	http://purl.obolibrary.org/obo/PATO_0000383
+E-MTAB-4101		ERR999698	factor	cell line	K562	http://www.ebi.ac.uk/efo/EFO_0002067
+E-MTAB-4101		ERR999699	characteristic	cell line	KU812	http://www.ebi.ac.uk/efo/EFO_0002222
+E-MTAB-4101		ERR999699	characteristic	cell type	myeloblast	http://purl.obolibrary.org/obo/CL_0000835
+E-MTAB-4101		ERR999699	characteristic	disease	chronic myelogenous leukemia	http://www.ebi.ac.uk/efo/EFO_0000339
+E-MTAB-4101		ERR999699	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR999699	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR999699	factor	cell line	KU812	http://www.ebi.ac.uk/efo/EFO_0002222
+E-MTAB-4101		ERR999700	characteristic	cell line	KU812	http://www.ebi.ac.uk/efo/EFO_0002222
+E-MTAB-4101		ERR999700	characteristic	cell type	myeloblast	http://purl.obolibrary.org/obo/CL_0000835
+E-MTAB-4101		ERR999700	characteristic	disease	chronic myelogenous leukemia	http://www.ebi.ac.uk/efo/EFO_0000339
+E-MTAB-4101		ERR999700	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR999700	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR999700	factor	cell line	KU812	http://www.ebi.ac.uk/efo/EFO_0002222
+E-MTAB-4101		ERR999701	characteristic	cell line	MEG01	http://www.ebi.ac.uk/efo/EFO_0002232
+E-MTAB-4101		ERR999701	characteristic	cell type	megakaryoblast	http://purl.obolibrary.org/obo/CL_0000553
+E-MTAB-4101		ERR999701	characteristic	disease	chronic myelogenous leukemia	http://www.ebi.ac.uk/efo/EFO_0000339
+E-MTAB-4101		ERR999701	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR999701	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR999701	factor	cell line	MEG01	http://www.ebi.ac.uk/efo/EFO_0002232
+E-MTAB-4101		ERR999702	characteristic	cell line	MEG01	http://www.ebi.ac.uk/efo/EFO_0002232
+E-MTAB-4101		ERR999702	characteristic	cell type	megakaryoblast	http://purl.obolibrary.org/obo/CL_0000553
+E-MTAB-4101		ERR999702	characteristic	disease	chronic myelogenous leukemia	http://www.ebi.ac.uk/efo/EFO_0000339
+E-MTAB-4101		ERR999702	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR999702	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR999702	factor	cell line	MEG01	http://www.ebi.ac.uk/efo/EFO_0002232
+E-MTAB-4101		ERR999703	characteristic	cell line	HEL9217	http://www.ebi.ac.uk/efo/EFO_0002193
+E-MTAB-4101		ERR999703	characteristic	cell type	erythroblast	http://purl.obolibrary.org/obo/CL_0000765
+E-MTAB-4101		ERR999703	characteristic	disease	acute erythroleukemia	http://www.ebi.ac.uk/efo/EFO_0000218
+E-MTAB-4101		ERR999703	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR999703	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR999703	factor	cell line	HEL9217	http://www.ebi.ac.uk/efo/EFO_0002193
+E-MTAB-4101		ERR999704	characteristic	cell line	F-36P
+E-MTAB-4101		ERR999704	characteristic	disease	acute myeloid leukemia	http://www.ebi.ac.uk/efo/EFO_0000222
+E-MTAB-4101		ERR999704	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR999704	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR999704	factor	cell line	F-36P
+E-MTAB-4101		ERR999705	characteristic	cell line	F-36P
+E-MTAB-4101		ERR999705	characteristic	disease	acute myeloid leukemia	http://www.ebi.ac.uk/efo/EFO_0000222
+E-MTAB-4101		ERR999705	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-4101		ERR999705	characteristic	sex	male	http://purl.obolibrary.org/obo/PATO_0000384
+E-MTAB-4101		ERR999705	factor	cell line	F-36P

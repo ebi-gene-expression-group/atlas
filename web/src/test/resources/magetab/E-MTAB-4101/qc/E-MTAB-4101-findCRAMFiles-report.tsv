@@ -1,0 +1,18 @@
+study_id	run_id	cram_location	organism	processing_status
+ERP010353	ERR1024547	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR102/007/ERR1024547/ERR1024547.cram	homo_sapiens	05-OCT-2015 00:37:13	completed	99
+ERP010353	ERR1024545	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR102/005/ERR1024545/ERR1024545.cram	homo_sapiens	05-OCT-2015 04:39:03	completed	99
+ERP010353	ERR1024551	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR102/001/ERR1024551/ERR1024551.cram	homo_sapiens	05-OCT-2015 04:40:41	completed	99
+ERP010353	ERR1024548	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR102/008/ERR1024548/ERR1024548.cram	homo_sapiens	05-OCT-2015 02:45:45	completed	99
+ERP010353	ERR1024552	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR102/002/ERR1024552/ERR1024552.cram	homo_sapiens	05-OCT-2015 02:48:46	completed	99
+ERP010353	ERR1024546	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR102/006/ERR1024546/ERR1024546.cram	homo_sapiens	05-OCT-2015 00:39:58	completed	99
+ERP010353	ERR1024549	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR102/009/ERR1024549/ERR1024549.cram	homo_sapiens	04-OCT-2015 22:39:46	completed	99
+ERP010353	ERR1024550	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR102/000/ERR1024550/ERR1024550.cram	homo_sapiens	05-OCT-2015 02:32:19	completed	99
+ERP010353	ERR999698	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR999/ERR999698/ERR999698.cram	homo_sapiens	04-OCT-2015 08:47:32	completed	99
+ERP010353	ERR999705	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR999/ERR999705/ERR999705.cram	homo_sapiens	04-OCT-2015 08:48:19	completed	99
+ERP010353	ERR999703	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR999/ERR999703/ERR999703.cram	homo_sapiens	04-OCT-2015 12:43:27	completed	99
+ERP010353	ERR999699	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR999/ERR999699/ERR999699.cram	homo_sapiens	04-OCT-2015 06:43:23	completed	99
+ERP010353	ERR999700	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR999/ERR999700/ERR999700.cram	homo_sapiens	04-OCT-2015 06:43:35	completed	99
+ERP010353	ERR999701	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR999/ERR999701/ERR999701.cram	homo_sapiens	04-OCT-2015 08:48:55	completed	99
+ERP010353	ERR999702	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR999/ERR999702/ERR999702.cram	homo_sapiens	04-OCT-2015 06:43:52	completed	99
+ERP010353	ERR999704	ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/atlas/rnaseq/ERR999/ERR999704/ERR999704.cram	homo_sapiens	04-OCT-2015 08:49:41	completed	99
+
