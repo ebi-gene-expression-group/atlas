@@ -1,13 +1,13 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMultimap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -23,6 +23,7 @@ import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamF
 import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesTSVWriter;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
@@ -34,9 +35,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
@@ -79,7 +83,10 @@ public class MicroarrayProfilesWriterIT {
     @Inject
     private SolrQueryService solrQueryService;
 
-    private MicroarrayRequestContext populateRequestContext(String experimentAccession) throws ExecutionException {
+    @Inject
+    private ExperimentTrader experimentTrader;
+
+    private MicroarrayRequestContext setUpAndPopulateRequestContext(String experimentAccession) throws ExecutionException {
         MockitoAnnotations.initMocks(this);
         MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
 
@@ -99,260 +106,221 @@ public class MicroarrayProfilesWriterIT {
 
     }
 
-
-    // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv
     @Test
-    public void defaultParameters_Header() throws GenesNotFoundException, ExecutionException {
-        MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
-        subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
+    public void testAllMicroarrayExperiments() throws Exception {
+        Set<String> accessions = experimentTrader.getMicroarrayExperimentAccessions();
+
+        for(String accession: accessions){
+            MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(accession);
+            String arrayDesignAccession = experiment.getArrayDesignAccessions().iterator().next();
+            Set<String> queryFactors = experiment.getContrastIds();
+
+            defaultParametersHeader(accession,arrayDesignAccession);
+            teardown();
+
+            defaultParameters(accession,arrayDesignAccession);
+            teardown();
+
+            notSpecific(accession,arrayDesignAccession);
+            teardown();
+
+//            geneQueryEmpty(accession,arrayDesignAccession);
+//            teardown();
+
+            upDownRegulationWorks(accession,arrayDesignAccession);
+            teardown();
+
+            verySmallPValueGivesNoData(accession,arrayDesignAccession);
+            teardown();
+
+            veryLargeLogFoldCutoffGivesNoData(accession,arrayDesignAccession);
+            teardown();
+
+            withContrastQueryFactorNonspecific(accession,arrayDesignAccession,queryFactors);
+            teardown();
+
+            withContrastQueryFactor(accession,arrayDesignAccession,queryFactors);
+            teardown();
+        }
+
+    }
+
+    private void teardown(){
+        Mockito.reset(printWriterMock, csvWriterFactoryMock, csvWriterMock);
+        requestPreferences = new MicroarrayRequestPreferences();
+        subject = null;
+    }
+
+    public void defaultParametersHeader(String accession, String arrayDesignAccession) throws GenesNotFoundException,
+            ExecutionException {
+        setFoldChangeCutOff(0);
+        MicroarrayRequestContext requestContext = setUpAndPopulateRequestContext(accession);
+        subject.write(printWriterMock, requestContext, arrayDesignAccession);
 
         String[] lines = headerLines();
         String queryLine = lines[1];
 
-        assertThat(queryLine, is("# Query: Genes matching: '' exactly, specifically up/down differentially expressed in any contrast given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment E-MTAB-1066"));
+        assertTrue(queryLine,Pattern.matches(".*Genes.*differentially expressed.*any contrast.*experiment " +
+                accession, queryLine));
 
         String[] columnHeaders = csvLines().get(0);
-        assertThat(columnHeaders, is(new String[]{"Gene ID", "Gene Name", "Design Element", "'cycC mutant' vs 'wild type'.p-value", "'cycC mutant' vs 'wild type'.log2foldchange", "'cycC mutant' vs 'wild type'.t-statistic", "'cdk8 mutant' vs 'wild type'.p-value", "'cdk8 mutant' vs 'wild type'.log2foldchange", "'cdk8 mutant' vs 'wild type'.t-statistic"}));
+        assertEquals("Gene ID", columnHeaders[0]);
+        assertEquals("Gene Name", columnHeaders[1]);
+        assertEquals("Design Element", columnHeaders[2]);
+        assertTrue(columnHeaders.length>3);
     }
 
-    // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv
-    @Test
-    public void defaultParameters() throws GenesNotFoundException, ExecutionException {
-        MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
-        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
+    public void defaultParameters(String accession, String arrayDesignAccession) throws GenesNotFoundException, ExecutionException {
+        setFoldChangeCutOff(0);
+        requestPreferences.setCutoff(1d);
+
+        MicroarrayRequestContext requestContext = setUpAndPopulateRequestContext(accession);
+        long genesCount = subject.write(printWriterMock, requestContext, arrayDesignAccession);
 
         List<String> geneNames = geneNames(csvLines());
 
-        int expectedCount = 54;
-        assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(expectedCount));
-
-        System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
-
-        assertThat(geneNames, containsInAnyOrder("CG14265", "CG5043", "CG1103", "CG18472", "CG17974", "Mst84Db", "skpB", "CG32444", "CG1443", "CG4669", "dj", "CG33459", "CG15286", "CG7742", "CG9254", "CG12689", "CG15213", "CG9981", "CG14605", "Jupiter", "CG30272", "CG5213", "CG1368", "CG31606", "CG31463", "cher", "Atg8b", "CG14540", "mthl2", "CG32686", "CG9589", "CG42329", "CG13876", "CG31624", "CG6870", "CG31139", "Ork1", "CG31803", "CG15043", "pgant8", "Cda5", "CG2150", "Cpr12A", "sba", "CG3376", "CG14694", "CG15615", "CG9040", "yip7", "CG30393", "CG10165", "Hsp60B", "CG6403", "CG11147"));
+        assertThat((int) genesCount, greaterThan(0));
+        assertEquals(genesCount, geneNames.size());
     }
 
-    // http://localhost:8080/gxa/experiments/E_MTAB_1066.tsv&_specific=on
-    @Test
-    public void notSpecific() throws GenesNotFoundException, ExecutionException {
+    public void notSpecific(String accession, String arrayDesignAccession) throws GenesNotFoundException, ExecutionException {
         setNotSpecific();
-        defaultParameters();
+        defaultParameters(accession, arrayDesignAccession);
     }
 
 
-    // http://localhost:8080/gxa/experiments/E-GEOD-43049.tsv
-    @Test
-    public void eGeod43049() throws GenesNotFoundException, ExecutionException {
-        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
-        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
-
-        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
-        Set<String> geneNames = geneNameToLine.keySet();
-
-        System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
-
-        int expectedCount = 2;
-        assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(expectedCount));
-
-        String[] sc5d = geneNameToLine.get("SC5D").asList().get(0);
-        String[] spire1 = geneNameToLine.get("SPIRE1").asList().get(0);
-
-        assertThat(geneNames, containsInAnyOrder("SC5D", "SPIRE1"));
-        assertThat(spire1, is("ENSG00000134278\tSPIRE1\tA_23_P135878\t1.54888175264243E-4\t1.0942741427441\t10.0906730728867".split("\t")));
-        assertThat(sc5d, is("ENSG00000109929\tSC5D\tA_23_P372888\t1.08617530258573E-4\t1.44526451950158\t10.8203265434862".split("\t")));
-    }
-
-    // http://localhost:8080/gxa/experiments/E-GEOD-43049.tsv?geneQuery=protein_coding
-    @Test
-    public void geneQuery_ProteinCoding() throws GenesNotFoundException, ExecutionException {
-        setGeneQuery("protein_coding");
-        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
-        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
-
-        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
-        Set<String> geneNames = geneNameToLine.keySet();
-
-        System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
-
-        int expectedCount = 2;
-        assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(expectedCount));
-
-        assertThat(geneNames, containsInAnyOrder("SC5D", "SPIRE1"));
-    }
-
-    // http://localhost:8080/gxa/experiments/E-GEOD-43049.tsv?regulation=UP&foldChangeCutOff=0
-    @Test
-    public void upRegulatedOnly() throws GenesNotFoundException, ExecutionException {
+    public void upDownRegulationWorks(String accession, String arrayDesignAccession) throws GenesNotFoundException, ExecutionException {
         setFoldChangeCutOff(0);
+        requestPreferences.setCutoff(1d);
         requestPreferences.setRegulation(Regulation.UP);
-        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
-        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
+        MicroarrayRequestContext requestContext = setUpAndPopulateRequestContext(accession);
+        subject.write(printWriterMock, requestContext, arrayDesignAccession);
+        Set<String> geneNamesUp = indexByGeneName(csvLines()).keySet();
 
-        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
-        Set<String> geneNames = geneNameToLine.keySet();
+        teardown();
 
-        System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
-
-        int expectedCount = 9;
-        assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(expectedCount));
-
-        assertThat(geneNames, containsInAnyOrder("SC5D", "SPIRE1", "DEPDC7", "CKAP2", "S100A14", "AC016629.3", "NFX1", "MTMR3", "RPL22P19"));
-    }
-
-    // http://localhost:8080/gxa/experiments/E-GEOD-43049.tsv?regulation=DOWN&foldChangeCutOff=0
-    @Test
-    public void downRegulatedOnly() throws GenesNotFoundException, ExecutionException {
         setFoldChangeCutOff(0);
+        requestPreferences.setCutoff(1d);
         requestPreferences.setRegulation(Regulation.DOWN);
-        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
-        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
+        requestContext = setUpAndPopulateRequestContext(accession);
+        subject.write(printWriterMock, requestContext, arrayDesignAccession);
+        Set<String> geneNamesDown = indexByGeneName(csvLines()).keySet();
 
-        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
-        Set<String> geneNames = geneNameToLine.keySet();
+        teardown();
 
-        int expectedCount = 14;
-        assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(expectedCount));
+        setFoldChangeCutOff(0);
+        requestPreferences.setCutoff(1d);
+        requestPreferences.setRegulation(Regulation.UP_DOWN);
+        requestContext = setUpAndPopulateRequestContext(accession);
+        subject.write(printWriterMock, requestContext, arrayDesignAccession);
+        Set<String> geneNamesUpDown = indexByGeneName(csvLines()).keySet();
 
-        assertThat(geneNames, containsInAnyOrder("NICN1", "C3orf18", "DGCR2", "KCTD15", "DCAF8", "COG2", "GNA12", "TMEM154", "TMEM70", "PSMA7", "DPP8", "SS18L2", "SSR1", "C19orf44"));
+        teardown();
+
+        assertTrue(geneNamesUpDown.size() >0);
+        assertTrue(geneNamesUpDown.containsAll(geneNamesUp));
+        assertTrue(geneNamesUpDown.containsAll(geneNamesDown));
     }
 
-    // http://localhost:8080/gxa/experiments/E-GEOD-43049.tsv?cutoff=0.002
-    @Test
-    public void withCutoff() throws GenesNotFoundException, ExecutionException {
-        requestPreferences.setCutoff(0.00014);
-        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
-        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
-        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
-        Set<String> geneNames = geneNameToLine.keySet();
+    public void verySmallPValueGivesNoData(String accession, String arrayDesignAccession) throws GenesNotFoundException, ExecutionException {
+        requestPreferences.setCutoff(1E-100);
 
-        int expectedCount = 1;
-        assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(expectedCount));
+        MicroarrayRequestContext requestContext = setUpAndPopulateRequestContext(accession);
+        long genesCount = subject.write(printWriterMock, requestContext, arrayDesignAccession);
+        assertEquals(accession,0, genesCount);
+    }
 
-        assertThat(geneNames, containsInAnyOrder("SC5D"));
+    public void veryLargeLogFoldCutoffGivesNoData(String accession, String arrayDesignAccession) throws
+            GenesNotFoundException,
+            ExecutionException {
+        requestPreferences.setFoldChangeCutOff(1e100);
+
+        MicroarrayRequestContext requestContext = setUpAndPopulateRequestContext(accession);
+        long genesCount = subject.write(printWriterMock, requestContext, arrayDesignAccession);
+        assertEquals(accession,0, genesCount);
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv?queryFactorValues=g2_g3&_specific=on
-    @Test
-    public void withContrastQueryFactor() throws GenesNotFoundException, ExecutionException {
-        setNotSpecific();
-        requestPreferences.setQueryFactorValues(Collections.singleton("g2_g3"));
-        MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
-        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
+    
+    public void withContrastQueryFactor(String accession, String arrayDesignAccession, Set<String> queryFactors)
+            throws
+            GenesNotFoundException, ExecutionException {
+        MicroarrayRequestContext requestContext;
 
-        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
-        Set<String> geneNames = geneNameToLine.keySet();
-
-        System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
-
-        int expectedCount = 21;
-        assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(expectedCount));
-
-        assertThat(geneNames, containsInAnyOrder("CG14265", "CG17974", "CG32444", "CG1443", "CG33459", "CG15213", "CG9981", "CG30272", "CG1368", "CG31463", "CG42329", "Ork1", "CG15043", "pgant8", "CG2150", "Cpr12A", "sba", "CG3376", "CG14694", "CG10165", "CG6403"));
-
-    }
-
-    // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv?queryFactorValues=g2_g3
-    @Test
-    public void withContrastQueryFactor_Specific() throws GenesNotFoundException, ExecutionException {
-        requestPreferences.setQueryFactorValues(Collections.singleton("g2_g3"));
-        MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
-        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
-
-        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
-        Set<String> geneNames = geneNameToLine.keySet();
-
-
-        System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
-
-        int expectedCount = 9;
-        assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(expectedCount));
-
-        assertThat(geneNames, containsInAnyOrder("CG17974", "CG32444", "CG33459", "CG9981", "CG30272", "CG42329", "Ork1", "CG2150", "CG6403"));
-    }
-
-
-    // http://localhost:8080/gxa/experiments/E-TABM-713.tsv?foldChangeCutOff=0
-    @Test
-    public void eTabm713() throws GenesNotFoundException, ExecutionException {
         setFoldChangeCutOff(0);
-        MicroarrayRequestContext requestContext = populateRequestContext(E_TABM_713);
-        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
+        requestPreferences.setCutoff(1d);
+        requestPreferences.setQueryFactorValues(queryFactors);
+        requestContext = setUpAndPopulateRequestContext(accession);
+        subject.write(printWriterMock, requestContext,
+                arrayDesignAccession);
+        Set<String> geneNamesForAllQueryFactors = indexByGeneName(csvLines()).keySet();
 
-        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
-        Set<String> geneNames = geneNameToLine.keySet();
+        teardown();
 
-        int expectedCount = 73;
-        int uniqueExpectedCount = 48;
-        assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(uniqueExpectedCount));
+        setFoldChangeCutOff(0);
+        requestPreferences.setCutoff(1d);
+        requestContext = setUpAndPopulateRequestContext(accession);
+        subject.write(printWriterMock, requestContext, arrayDesignAccession);
+        Set<String> geneNamesForUnspecifiedQueryFactors = indexByGeneName(csvLines()).keySet();
 
-        assertThat(geneNames, containsInAnyOrder("MIMAT0000267", "MIMAT0000083", "MIMAT0002826", "MIMAT0003306", "MIMAT0003249", "MIMAT0003237", "MIMAT0000255", "MIMAT0003303", "MIMAT0000448", "MIMAT0000274", "MIMAT0000095", "MIMAT0002821", "MIMAT0000069", "MIMAT0000693", "MIMAT0002843", "MIMAT0002809", "MIMAT0000089", "MIMAT0003227", "MIMAT0000259", "MIMAT0002869", "MIMAT0003289", "MIMAT0002844", "MIMAT0001618", "MIMAT0003883", "MIMAT0004800", "MIMAT0003304", "MIMAT0000078", "MIMAT0003242", "MIMAT0002874", "MIMAT0000093", "MIMAT0002177", "MIMAT0000258", "MIMAT0002851", "MIMAT0000449", "MIMAT0003301", "MIMAT0003220", "MIMAT0003246", "MIMAT0003337", "MIMAT0000420", "MIMAT0000269", "MIMAT0001075", "MIMAT0000439", "MIMAT0000458", "MIMAT0003253", "MIMAT0000082", "MIMAT0001541", "MIMAT0000753", "MIMAT0000261"));
+        teardown();
 
-        String[] mimat0000267 = geneNameToLine.get("MIMAT0000267").asList().get(0);
-        assertThat(mimat0000267, is(new String[] {"hsa-miR-210-3p", "MIMAT0000267", "A_25_P00010995", "0.0333837230765599", "0.827455526749746", "3.82721624713512"}));
+        setFoldChangeCutOff(0);
+        requestPreferences.setCutoff(1d);
+        requestContext = setUpAndPopulateRequestContext(accession);
+        requestPreferences.setQueryFactorValues(Collections.singleton(queryFactors.iterator().next()));
+        subject.write(printWriterMock, requestContext, arrayDesignAccession);
+        Set<String> geneNamesForOneQueryFactor = indexByGeneName(csvLines()).keySet();
+
+        teardown();
+
+        assertEquals(geneNamesForAllQueryFactors, geneNamesForUnspecifiedQueryFactors);
+        assertTrue(geneNamesForAllQueryFactors.containsAll(geneNamesForOneQueryFactor));
+    }
+
+    public void withContrastQueryFactorNonspecific(String accession, String arrayDesignAccession, Set<String>
+            queryFactors)
+            throws
+            GenesNotFoundException, ExecutionException {
+        MicroarrayRequestContext requestContext;
+
+        setNotSpecific();
+        setFoldChangeCutOff(0);
+        requestPreferences.setCutoff(1d);
+        requestPreferences.setQueryFactorValues(queryFactors);
+        requestContext = setUpAndPopulateRequestContext(accession);
+        subject.write(printWriterMock, requestContext, arrayDesignAccession);
+        Set<String> geneNamesForAllQueryFactors = indexByGeneName(csvLines()).keySet();
+
+        teardown();
+
+        setNotSpecific();
+        setFoldChangeCutOff(0);
+        requestPreferences.setCutoff(1d);
+        requestContext = setUpAndPopulateRequestContext(accession);
+        subject.write(printWriterMock, requestContext, arrayDesignAccession);
+        Set<String> geneNamesForUnspecifiedQueryFactors = indexByGeneName(csvLines()).keySet();
+
+        teardown();
+
+        setNotSpecific();
+        setFoldChangeCutOff(0);
+        requestPreferences.setCutoff(1d);
+        requestContext = setUpAndPopulateRequestContext(accession);
+        requestPreferences.setQueryFactorValues(Collections.singleton(queryFactors.iterator().next()));
+        subject.write(printWriterMock, requestContext, arrayDesignAccession);
+        Set<String> geneNamesForOneQueryFactor = indexByGeneName(csvLines()).keySet();
+
+        teardown();
+
+        assertEquals(geneNamesForAllQueryFactors, geneNamesForUnspecifiedQueryFactors);
+        assertTrue(geneNamesForAllQueryFactors.containsAll(geneNamesForOneQueryFactor));
+        assertTrue(geneNamesForOneQueryFactor.size()>0);
     }
 
     private void setFoldChangeCutOff(double cutOff) {
         requestPreferences.setFoldChangeCutOff(cutOff);
-    }
-
-    // http://localhost:8080/gxa/experiments/E-GEOD-3307.tsv?foldChangeCutOff=0
-    @Test
-    public void experimentWithMultipleArrayDesigns_ArrayDesignAccession1() throws GenesNotFoundException, ExecutionException {
-        setFoldChangeCutOff(0);
-        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_3307);
-        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
-
-        String[] columnHeaders = csvLines().get(0);
-        System.out.println("\"" + Joiner.on("\", \"").join(columnHeaders) + "\"");
-        assertThat(columnHeaders, is(new String[] {"Gene ID", "Gene Name", "Design Element", "'LGMD2I' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'LGMD2I' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'LGMD2I' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'EDMD XR' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'EDMD XR' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'EDMD XR' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'BMD' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'BMD' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'BMD' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'EDMD AD' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'EDMD AD' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'EDMD AD' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'HSP' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'HSP' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'HSP' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'FSHD' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'FSHD' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'FSHD' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'JDM' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'JDM' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'JDM' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'LGMD2A' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'LGMD2A' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'LGMD2A' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'AQM' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'AQM' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'AQM' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'ALS' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'ALS' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'ALS' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'LGMD2B' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'LGMD2B' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'LGMD2B' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'DMD' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'DMD' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'DMD' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic"}));
-
-        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
-        Set<String> geneNames = geneNameToLine.keySet();
-
-        int expectedCount = 89;
-        int uniqueExpectedCount = 45;
-        assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(uniqueExpectedCount));
-
-        assertThat(geneNames, containsInAnyOrder("TSPAN6", "DPM1", "SCYL3", "C1orf112", "CFH", "GCLC", "NFYA", "NIPAL3", "LAS1L", "ENPP4", "SEMA3F", "CFTR", "RAD52", "BAD", "LAP3", "CD99", "HS3ST1", "AOC1", "HECW1", "MAD1L1", "LASP1", "SNX11", "TMEM176A", "M6PR", "CYP26B1", "ICA1", "DBNDD1", "CASP10", "CFLAR", "TFPI", "RBM5", "SLC7A2", "SARM1", "POLDIP2", "PLXND1", "AK2", "CD38", "FKBP4", "KDM1A", "RBM6", "RECQL", "CCDC132", "HSPB6", "ARHGAP33", "NDUFAB1"));
-
-        String[] geneLine = geneNameToLine.get("TSPAN6").asList().get(0);
-        assertThat(geneLine, is(new String[] {"ENSG00000000003", "TSPAN6", "209108_at", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "3.22392001630122E-5", "0.413107096522765", "5.02112235896101", null, null, null, null, null, null, "0.0119843116644908", "0.313794065216056", "3.12520915964694", null, null, null, "0.0110142369806691", "0.453232593478132", "3.27165792658763"}));
-    }
-
-
-    // http://localhost:8080/gxa/experiments/E-GEOD-3307.tsv?foldChangeCutOff=0
-    @Test
-    public void experimentWithMultipleArrayDesigns_ArrayDesignAccession2() throws GenesNotFoundException, ExecutionException {
-        setFoldChangeCutOff(0);
-        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_3307);
-        requestContext.setArrayDesignAccession(requestContext.getExperiment().getArrayDesignAccessions().last());
-        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getExperiment().getArrayDesignAccessions().last());
-
-        String[] columnHeaders = csvLines().get(0);
-        assertThat(columnHeaders, is(new String[] {"Gene ID", "Gene Name", "Design Element", "'FSHD' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'FSHD' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'FSHD' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'EDMD AD' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'EDMD AD' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'EDMD AD' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'BMD' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'BMD' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'BMD' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'DMD' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'DMD' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'DMD' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'LGMD2I' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'LGMD2I' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'LGMD2I' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'EDMD XR' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'EDMD XR' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'EDMD XR' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'AQM' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'AQM' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'AQM' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'LGMD2A' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'LGMD2A' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'LGMD2A' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'HSP' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'HSP' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'HSP' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'JDM' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'JDM' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'JDM' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'LGMD2B' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'LGMD2B' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'LGMD2B' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'ALS' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'ALS' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'ALS' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic"}));
-
-        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
-        Set<String> geneNames = geneNameToLine.keySet();
-
-        int expectedCount = 88;
-        int uniqueExpectedCount = 61;
-        assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(uniqueExpectedCount));
-
-        assertThat(geneNames, containsInAnyOrder("SCYL3", "FUCA2", "NFYA", "STPG1", "NIPAL3", "LAS1L", "CFTR", "ANKIB1", "HECW1", "KLHL13", "CYP26B1", "ICA1", "ALS2", "CFLAR", "NDUFAF7", "RBM5", "MTMR7", "SLC7A2", "SARM1", "POLDIP2", "CAMKK1", "CCDC132", "HSPB6", "ARHGAP33", "PDK4", "SLC22A16", "ARX", "SLC25A13", "SKAP2", "DHX33", "THSD7A", "LIG3", "SPPL2B", "COPZ2", "CREBBP", "WDR54", "KMT2E", "RHBDD2", "SOX8", "FBXL3", "ZFX", "ASB4", "GDE1", "OSBPL7", "TMEM98", "TMEM132A", "ZNF263", "DLX6", "RALA", "BAIAP2L1", "KDM7A", "TTC22", "CCL26", "FARP2", "IFRD1", "ARSD", "UPP2", "CCDC124", "DNAH9", "SLC13A2", "ST7L"));
-
-        String[] geneLine = geneNameToLine.get("SCYL3").asList().get(0);
-        assertThat(geneLine, is(new String[] {"ENSG00000000457", "SCYL3", "231111_at", "0.0130556396535823", "0.212702005676215", "3.1690924162594", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "7.74486134849082E-4", "0.300456061009448", "3.9026735704204", null, null, null, null, null, null}));
     }
 
 
