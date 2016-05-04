@@ -76,40 +76,6 @@ public class ProteomicsBaselineExperimentCondensedSdrfParserIT {
         assertThat(sampleCharacteristic.header(), Matchers.is(DEVELOPMENTAL_STAGE));
         assertThat(sampleCharacteristic.value(), Matchers.is("adult"));
         assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0001272"));
-
-        assertThat(experimentDesign.asTableData(), hasSize(30));
-        assertThat(experimentDesign.asTableData(), contains(
-                arrayContaining("Adult_Adrenalgland", "adult", "Homo sapiens", "adrenal gland", "adult", "adrenal gland"),
-                arrayContaining("Adult_Bcells", "adult", "Homo sapiens", "B cell", "adult", "B cell"),
-                arrayContaining("Adult_CD4Tcells", "adult", "Homo sapiens", "CD4-positive T cell", "adult", "CD4-positive T cell"),
-                arrayContaining("Adult_CD8Tcells", "adult", "Homo sapiens", "CD8-positive T cell", "adult", "CD8-positive T cell"),
-                arrayContaining("Adult_Colon", "adult", "Homo sapiens", "colon", "adult", "colon"),
-                arrayContaining("Adult_Esophagus", "adult", "Homo sapiens", "esophagus", "adult", "esophagus"),
-                arrayContaining("Adult_Frontalcortex", "adult", "Homo sapiens", "frontal cortex", "adult", "frontal cortex"),
-                arrayContaining("Adult_Gallbladder", "adult", "Homo sapiens", "gallbladder", "adult", "gallbladder"),
-                arrayContaining("Adult_Heart", "adult", "Homo sapiens", "heart", "adult", "heart"),
-                arrayContaining("Adult_Kidney", "adult", "Homo sapiens", "kidney", "adult", "kidney"),
-                arrayContaining("Adult_Liver", "adult", "Homo sapiens", "liver", "adult", "liver"),
-                arrayContaining("Adult_Lung", "adult", "Homo sapiens", "lung", "adult", "lung"),
-                arrayContaining("Adult_Monocytes", "adult", "Homo sapiens", "monocyte", "adult", "monocyte"),
-                arrayContaining("Adult_NKcells", "adult", "Homo sapiens", "natural killer cell", "adult", "natural killer cell"),
-                arrayContaining("Adult_Ovary", "adult", "Homo sapiens", "ovary", "adult", "ovary"),
-                arrayContaining("Adult_Pancreas", "adult", "Homo sapiens", "pancreas", "adult", "pancreas"),
-                arrayContaining("Adult_Platelets", "adult", "Homo sapiens", "platelet", "adult", "platelet"),
-                arrayContaining("Adult_Prostate", "adult", "Homo sapiens", "prostate", "adult", "prostate"),
-                arrayContaining("Adult_Rectum", "adult", "Homo sapiens", "rectum", "adult", "rectum"),
-                arrayContaining("Adult_Retina", "adult", "Homo sapiens", "retina", "adult", "retina"),
-                arrayContaining("Adult_Spinalcord", "adult", "Homo sapiens", "spinal cord", "adult", "spinal cord"),
-                arrayContaining("Adult_Testis", "adult", "Homo sapiens", "testis", "adult", "testis"),
-                arrayContaining("Adult_Urinarybladder", "adult", "Homo sapiens", "urinary bladder", "adult", "urinary bladder"),
-                arrayContaining("Fetal_Brain", "fetus", "Homo sapiens", "brain", "fetus", "brain"),
-                arrayContaining("Fetal_Gut", "fetus", "Homo sapiens", "gut", "fetus", "gut"),
-                arrayContaining("Fetal_Heart", "fetus", "Homo sapiens", "heart", "fetus", "heart"),
-                arrayContaining("Fetal_Liver", "fetus", "Homo sapiens", "liver", "fetus", "liver"),
-                arrayContaining("Fetal_Ovary", "fetus", "Homo sapiens", "ovary", "fetus", "ovary"),
-                arrayContaining("Fetal_Placenta", "fetus", "Homo sapiens", "placenta", "fetus", "placenta"),
-                arrayContaining("Fetal_Testis", "fetus", "Homo sapiens", "testis", "fetus", "testis"))
-        );
     }
 
 }
