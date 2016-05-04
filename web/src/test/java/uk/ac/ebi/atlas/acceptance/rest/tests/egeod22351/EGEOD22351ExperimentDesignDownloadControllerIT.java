@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.rest.tests.geod22351;
+package uk.ac.ebi.atlas.acceptance.rest.tests.egeod22351;
 
 
 import com.jayway.restassured.response.Response;
@@ -33,7 +33,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GEOD22351ExperimentDesignDownloadControllerIT {
+public class EGEOD22351ExperimentDesignDownloadControllerIT {
 
     private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-22351/experiment-design.tsv");
 
@@ -80,7 +80,7 @@ public class GEOD22351ExperimentDesignDownloadControllerIT {
     }
 
     @Test
-    public void verifyLenghtOfDocument() {
+    public void verifyLengthOfDocument() {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
