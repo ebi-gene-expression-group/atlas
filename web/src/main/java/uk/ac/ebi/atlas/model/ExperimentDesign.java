@@ -40,10 +40,12 @@ public class ExperimentDesign implements Serializable {
     private Map<String, String> arrayDesigns = Maps.newHashMap();
     private List<String> assayHeaders = Lists.newArrayList();
 
+
     public void putSampleCharacteristic(String runOrAssay, String sampleCharacteristicHeader, String sampleCharacteristicValue) {
         SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleCharacteristicHeader, sampleCharacteristicValue);
         putSampleCharacteristic(runOrAssay, sampleCharacteristicHeader, sampleCharacteristic);
     }
+
 
     public void putSampleCharacteristic(String runOrAssay, String sampleHeader, SampleCharacteristic sampleCharacteristic) {
         if (!samples.containsKey(runOrAssay)) {
@@ -53,9 +55,11 @@ public class ExperimentDesign implements Serializable {
         sampleHeaders.add(sampleHeader);
     }
 
+
     public void putFactor(String runOrAssay, String factorHeader, String factorValue) {
         putFactor(runOrAssay, factorHeader, factorValue, new OntologyTerm[0]);
     }
+
 
     public void putFactor(String runOrAssay, String factorHeader, String factorValue, OntologyTerm ... factorOntologyTerms) {
         Factor factor = new Factor(factorHeader, factorValue, factorOntologyTerms);
@@ -66,40 +70,49 @@ public class ExperimentDesign implements Serializable {
         factorHeaders.add(factorHeader);
     }
 
+
     public void putArrayDesign(String runOrAssay, String arrayDesign) {
         arrayDesigns.put(runOrAssay, arrayDesign);
     }
+
 
     public String getArrayDesign(String runOrAssay) {
         return arrayDesigns.get(runOrAssay);
     }
 
+
     public void addAssayHeader(String assayHeader) {
         assayHeaders.add(assayHeader);
     }
+
 
     public List<String> getAssayHeaders() {
         return assayHeaders;
     }
 
+
     public SortedSet<String> getSampleHeaders() {
         return Collections.unmodifiableSortedSet(sampleHeaders);
     }
+
 
     //NB: factor headers are not normalized (see Factor.normalize), unlike factor type !
     public SortedSet<String> getFactorHeaders() {
         return Collections.unmodifiableSortedSet(factorHeaders);
     }
 
+
     public @Nullable String getSampleCharacteristicValue(String runOrAssay, String sampleHeader) {
         SampleCharacteristic sampleCharacteristic = getSampleCharacteristic(runOrAssay, sampleHeader);
         return sampleCharacteristic == null ? null : sampleCharacteristic.value();
     }
 
+
     public @Nullable SampleCharacteristic getSampleCharacteristic(String runOrAssay, String sampleHeader) {
         SampleCharacteristics sampleCharacteristics = this.samples.get(runOrAssay);
         return (sampleCharacteristics == null) ? null :  sampleCharacteristics.get(sampleHeader);
     }
+
 
     public @Nullable Factor getFactor(String runOrAssay, String factorHeader) {
         FactorSet factorSet = factorSetMap.get(runOrAssay);
@@ -108,6 +121,7 @@ public class ExperimentDesign implements Serializable {
         }
         return factorSet.getFactorByType(Factor.normalize(factorHeader));
     }
+
 
     public @Nullable String getFactorValue(String runOrAssay, String factorHeader) {
         FactorSet factorSet = factorSetMap.get(runOrAssay);
@@ -129,6 +143,7 @@ public class ExperimentDesign implements Serializable {
         return builder.build();
     }
 
+
     private void addCharacteristicOntologyTerms(ImmutableSetMultimap.Builder<String, String> builder) {
         for (Map.Entry<String, SampleCharacteristics> sampleEntry : samples.entrySet()) {
             String runOrAssay = sampleEntry.getKey();
@@ -143,6 +158,7 @@ public class ExperimentDesign implements Serializable {
         }
     }
 
+
     private void addFactorOntologyTerms(ImmutableSetMultimap.Builder<String, String> builder) {
         for (Map.Entry<String, FactorSet> factorSetEntry : factorSetMap.entrySet()) {
             String runOrAssay = factorSetEntry.getKey();
@@ -155,6 +171,7 @@ public class ExperimentDesign implements Serializable {
             }
         }
     }
+
 
     /**
      *
@@ -175,12 +192,14 @@ public class ExperimentDesign implements Serializable {
         return valueByHeader;
     }
 
+
     public FactorSet getFactors(String runOrAssay){
         if(factorSetMap.containsKey(runOrAssay)){
             return factorSetMap.get(runOrAssay);
         }
         return null;
     }
+
 
     public Collection<SampleCharacteristic> getSampleCharacteristics(String runOrAssay) {
         return this.samples.get(runOrAssay).values();
@@ -204,9 +223,11 @@ public class ExperimentDesign implements Serializable {
         return builder.build();
     }
 
+
     public SortedSet<String> getAllRunOrAssay() {
         return Sets.newTreeSet(samples.keySet());
     }
+
 
     public List<String[]> asTableData() {
         List<String[]> tableData = Lists.newArrayList();
@@ -216,7 +237,8 @@ public class ExperimentDesign implements Serializable {
         return tableData;
     }
 
-    protected String[] composeTableRow(String runOrAssay) {
+
+    private String[] composeTableRow(String runOrAssay) {
         List<String> row = Lists.newArrayList(runOrAssay);
 
         String arrayDesign = getArrayDesign(runOrAssay);
@@ -235,6 +257,7 @@ public class ExperimentDesign implements Serializable {
         return row.toArray(new String[row.size()]);
     }
 
+
     public Set<String> getSpeciesForAssays(Set<String> assayAccessions) {
         Set<String> species = Sets.newHashSet();
         for (String assayAccession: assayAccessions){
@@ -250,6 +273,5 @@ public class ExperimentDesign implements Serializable {
         }
         return species;
     }
-
 
 }

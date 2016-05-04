@@ -9,7 +9,7 @@ public class CondensedSdrfParserOutput {
     private String experimentAccession;
     private ExperimentType experimentType;
     private String title;
-    ImmutableSet<String> pubmedIds;
+    private ImmutableSet<String> pubmedIds;
     private ExperimentDesign experimentDesign;
 
     CondensedSdrfParserOutput(String experimentAccession, ExperimentType experimentType, String title, ImmutableSet<String> pubmedIds, ExperimentDesign experimentDesign) {

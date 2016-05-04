@@ -14,16 +14,12 @@ import uk.ac.ebi.atlas.model.SampleCharacteristic;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
 @Named
 @Scope("prototype")
 public class CondensedSdrfParser {
-
-    @Value("#{configuration['experiment.condensed-sdrf.path.template']}")
-    private String sdrfPathTemplate;
 
     private static final Set<String> FACTORS_NEEDING_DOSE = Sets.newHashSet("compound", "irradiate");
 
@@ -47,21 +43,26 @@ public class CondensedSdrfParser {
     private final IdfParser idfParser;
     // private final ValueAndUnitJoiner valueAndUnitJoiner;
 
+
     @Inject
-    public CondensedSdrfParser(FileTsvReaderBuilder fileTsvReaderBuilder, IdfParser idfParser) { //ValueAndUnitJoiner valueAndUnitJoiner) {
-        this.fileTsvReaderBuilder = fileTsvReaderBuilder;
+    public CondensedSdrfParser(@Value("#{configuration['experiment.condensed-sdrf.path.template']}") String sdrfPathTemplate,
+                               FileTsvReaderBuilder fileTsvReaderBuilder,
+                               IdfParser idfParser) { //ValueAndUnitJoiner valueAndUnitJoiner) {
+
+        this.fileTsvReaderBuilder = fileTsvReaderBuilder.forTsvFilePathTemplate(sdrfPathTemplate);
         this.idfParser = idfParser;
         // this.valueAndUnitJoiner = valueAndUnitJoiner;
+
     }
 
-    public CondensedSdrfParserOutput parse(String experimentAccession, ExperimentType experimentType) throws IOException, CondensedSdrfParserException {
+
+    public CondensedSdrfParserOutput parse(String experimentAccession, ExperimentType experimentType) throws CondensedSdrfParserException {
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
-        TsvReader tsvReader = fileTsvReaderBuilder.forTsvFilePathTemplate(sdrfPathTemplate).withExperimentAccession(experimentAccession).build();
+        TsvReader tsvReader = fileTsvReaderBuilder.withExperimentAccession(experimentAccession).build();
 
         ImmutableList.Builder<String[]> factorsBuilder = new ImmutableList.Builder<>();
         ImmutableList.Builder<String[]> sampleCharacteristicsBuilder = new ImmutableList.Builder<>();
-
         for (String[] tsvLine : tsvReader.readAll()) {
             switch (tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]) {
                 case FACTOR:
@@ -81,12 +82,13 @@ public class CondensedSdrfParser {
         addFactorValuesToExperimentDesign(experimentDesign, assayRunToTsvLines);
         addCharacteristicToExperimentDesign(experimentDesign, sampleCharacteristicsBuilder.build());
 
-        addArrays(experimentDesign, assayRunToTsvLines);
+        addArraysToExperimentDesign(experimentDesign, assayRunToTsvLines);
 
         idfParser.parse(experimentAccession);
 
         return new CondensedSdrfParserOutput(experimentAccession, experimentType, idfParser.getTitle(), idfParser.getPubMedIds(), experimentDesign);
     }
+
 
     private void addCharacteristicToExperimentDesign(ExperimentDesign experimentDesign, List<String[]> sampleCharacteristicsTsvLines) {
 
@@ -104,6 +106,7 @@ public class CondensedSdrfParser {
         }
     }
 
+
     private void addFactorValuesToExperimentDesign(ExperimentDesign experimentDesign, Multimap<String, String[]> factorsByAssayRun) {
 
         for (String runOrAssay : factorsByAssayRun.keys()) {
@@ -115,7 +118,8 @@ public class CondensedSdrfParser {
             for (String[] factorTsvLine : factorsByAssayRun.get(runOrAssay)) {
 
                 String factorType = factorTsvLine[FACTOR_TYPE_INDEX];
-                String factorValue = factorTsvLine[FACTOR_VALUE_INDEX]; //cleanValueAndUnitIfNeeded(factorTsvLine[FACTOR_VALUE_INDEX]);
+                String factorValue = factorTsvLine[FACTOR_VALUE_INDEX];
+                //cleanValueAndUnitIfNeeded(factorTsvLine[FACTOR_VALUE_INDEX]);
                 String factorValueOntologyTermAsString = factorTsvLine.length > ONTOLOGY_TERMS_INDEX ? factorTsvLine[ONTOLOGY_TERMS_INDEX] : null;
 
                 if (isFactorThatHasADose(factorType)) {
@@ -135,7 +139,7 @@ public class CondensedSdrfParser {
                         compoundFactorValue = null;
                         compoundFactorValueOntologyTermAsString = null;
                     } else {
-                        throw new IllegalStateException(DOSE + " : " + factorValue + " has no corresponding value for any of the following factors: " + FACTORS_NEEDING_DOSE);
+                        throw new CondensedSdrfParserException(DOSE + " : " + factorValue + " has no corresponding value for any of the following factors: " + FACTORS_NEEDING_DOSE);
                     }
 
                 }
@@ -157,9 +161,11 @@ public class CondensedSdrfParser {
         return FACTORS_NEEDING_DOSE.contains(factorName.toLowerCase());
     }
 
+
     private boolean isDoseFactor(String factorName) {
         return DOSE.equals(factorName.toLowerCase());
     }
+
 
     private OntologyTerm[] parseOntologyTerms(String ontologyTermTsvField) {
         ImmutableSet.Builder<OntologyTerm> ontologyTermsBuilder = new ImmutableSet.Builder<>();
@@ -174,13 +180,14 @@ public class CondensedSdrfParser {
         return ontologyTerms.toArray(new OntologyTerm[ontologyTerms.size()]);
     }
 
-    private void addArrays(ExperimentDesign experimentDesign, Multimap<String, String[]> assayRunToTsvLines) {
+
+    private void addArraysToExperimentDesign(ExperimentDesign experimentDesign, Multimap<String, String[]> assayRunToTsvLines) {
         for (String assayRun : assayRunToTsvLines.keys()) {
 
             String assayDesign = assayRunToTsvLines.get(assayRun).iterator().next()[ASSAY_DESIGN_INDEX];
             for (String[] tsvLine : assayRunToTsvLines.get(assayRun)) {
                 if (!tsvLine[ASSAY_DESIGN_INDEX].equals(assayDesign)) {
-                    throw new IllegalStateException("Assays with multiple array designs are not supported.");
+                    throw new CondensedSdrfParserException("Assays with multiple array designs are not supported.");
                 }
             }
 
@@ -201,16 +208,16 @@ public class CondensedSdrfParser {
     private Multimap<String, String[]> mapFactorTsvLinesByAssayRun(List<String[]> factorTsvLines) {
 
         ImmutableMultimap.Builder<String, String[]> multimapBuilder = new ImmutableMultimap.Builder<>();
-
         for (String[] factorTsvLine : factorTsvLines) {
             multimapBuilder.put(factorTsvLine[RUN_OR_ASSAY_INDEX], factorTsvLine);
         }
 
         return multimapBuilder.build();
+
     }
 
 
-    private class CondensedSdrfParserException extends RuntimeException {
+    class CondensedSdrfParserException extends RuntimeException {
         CondensedSdrfParserException(String message) {
             super(message);
         }
