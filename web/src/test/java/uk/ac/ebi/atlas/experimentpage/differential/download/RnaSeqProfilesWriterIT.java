@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
@@ -24,17 +23,14 @@ import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.RnaSeqProfilesTSVWriter;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
@@ -42,6 +38,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
@@ -51,8 +48,6 @@ import static org.mockito.Mockito.*;
 public class RnaSeqProfilesWriterIT {
 
     public static final int GENE_NAME_INDEX = 1;
-
-    private static final String ACCESSION = "E-GEOD-22351";
 
     private RnaSeqProfilesWriter subject;
 
@@ -82,6 +77,9 @@ public class RnaSeqProfilesWriterIT {
     @Inject
     private SolrQueryService solrQueryService;
 
+    @Inject
+    private ExperimentTrader experimentTrader;
+
     private RnaSeqRequestContext populateRequestContext(String experimentAccession) throws ExecutionException {
         MockitoAnnotations.initMocks(this);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
@@ -102,17 +100,45 @@ public class RnaSeqProfilesWriterIT {
         return requestContext;
     }
 
-
-    // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv
     @Test
-    public void defaultParameters_Header() throws GenesNotFoundException, ExecutionException {
-        RnaSeqRequestContext requestContext = populateRequestContext(ACCESSION);
+    public void testSomeExperiments() throws Exception{
+        Set<String> rnaSeqExperiments = experimentTrader.getRnaSeqDifferentialExperimentAccessions();
+        assertTrue(rnaSeqExperiments.size()>0);
+
+        for(String accession: rnaSeqExperiments){
+            defaultParametersHeader(accession);
+            teardown();
+
+            weHaveSomeResults(accession);
+            teardown();
+
+            notSpecific(accession);
+            teardown();
+
+            upDownRegulationWorks(accession);
+            teardown();
+
+            noDataWithVeryStrictPValueCutoff(accession);
+            teardown();
+
+            noDataWithVeryLargeFoldChangeCutoff(accession);
+            teardown();
+        }
+    }
+
+    private void teardown(){
+        Mockito.reset(csvWriterFactoryMock, csvWriterMock,printWriterMock);
+        requestPreferences = new DifferentialRequestPreferences();
+    }
+
+    public void defaultParametersHeader(String accession) throws GenesNotFoundException, ExecutionException {
+        RnaSeqRequestContext requestContext = populateRequestContext(accession);
         subject.write(printWriterMock, requestContext);
 
         String[] lines = headerLines();
         String queryLine = lines[1];
 
-        assertTrue(Pattern.matches(".*Genes .* up/down differentially expressed.*"+ACCESSION,
+        assertTrue(Pattern.matches(".*Genes .* up/down differentially expressed.*"+accession,
                 queryLine));
 
         String[] columnHeaders = csvLines().get(0);
@@ -122,73 +148,50 @@ public class RnaSeqProfilesWriterIT {
         assertThat(columnHeaders.length, greaterThan(2));
                     }
 
-
-    // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv
-    @Test
-    public void defaultParameters() throws GenesNotFoundException, ExecutionException {
-        RnaSeqRequestContext requestContext = populateRequestContext(ACCESSION);
+    public void weHaveSomeResults(String accession) throws GenesNotFoundException, ExecutionException {
+        requestPreferences.setCutoff(1D);
+        requestPreferences.setFoldChangeCutOff(0D);
+        RnaSeqRequestContext requestContext = populateRequestContext(accession);
         long genesCount = subject.write(printWriterMock, requestContext);
 
         ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
 
+        if(genesCount ==0 ){
+            fail();
+        }
         assertThat((int) genesCount, greaterThan(0) );
         assertEquals(genesCount, geneNames.size());
     }
 
-    // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv&_specific=on
-    @Test
-    public void notSpecific() throws GenesNotFoundException, ExecutionException {
-        setNotSpecific();
-        defaultParameters();
+
+    public void notSpecific(String accession) throws GenesNotFoundException, ExecutionException {
+        requestPreferences.setSpecific(false);
+        weHaveSomeResults(accession);
     }
-
-    // http://localhost:8080/gxa/experiments/E-GEOD-21860.tsv?geneQuery=protein_coding
-    @Test
-    public void proteinCodingContainsAllResults() throws GenesNotFoundException, ExecutionException {
-        setGeneQuery("protein_coding");
-        RnaSeqRequestContext requestContext = populateRequestContext(ACCESSION);
-        long genesCount = subject.write(printWriterMock, requestContext);
-
-        List<String> geneNames = geneNames(csvLines());
-
-        Mockito.reset(printWriterMock);
-        setGeneQuery("");
-        requestContext = populateRequestContext(ACCESSION);
-        long genesCount2 = subject.write(printWriterMock, requestContext);
-
-        List<String> geneNames2 = geneNames(csvLines());
-
-        assertTrue(genesCount>0);
-        assertEquals(geneNames, geneNames2);
-        assertEquals(genesCount, genesCount2);
-
-    }
-
-    // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?regulation=UP
-    @Test
-    public void upDownRegulationWorks() throws GenesNotFoundException, ExecutionException {
+    
+    public void upDownRegulationWorks(String accession) throws GenesNotFoundException, ExecutionException {
         requestPreferences.setRegulation(Regulation.UP);
 
-        RnaSeqRequestContext requestContext = populateRequestContext(ACCESSION);
+        RnaSeqRequestContext requestContext = populateRequestContext(accession);
         long genesCountUp = subject.write(printWriterMock, requestContext);
 
         List<String> geneNamesUp = geneNames(csvLines());
 
-        Mockito.reset(printWriterMock);
+        teardown();
 
         requestPreferences.setRegulation(Regulation.DOWN);
 
-        requestContext = populateRequestContext(ACCESSION);
+        requestContext = populateRequestContext(accession);
         long genesCountDown = subject.write(printWriterMock, requestContext);
 
         List<String> geneNamesDown = geneNames(csvLines());
 
-        Mockito.reset(printWriterMock);
+        teardown();
 
         requestPreferences.setRegulation(Regulation.UP_DOWN);
 
-        requestContext = populateRequestContext(ACCESSION);
+        requestContext = populateRequestContext(accession);
         long genesCountUpDown = subject.write(printWriterMock, requestContext);
 
         List<String> geneNamesUpDown = geneNames(csvLines());
@@ -198,27 +201,23 @@ public class RnaSeqProfilesWriterIT {
         resultsSeparately.addAll(geneNamesDown);
 
         assertEquals(resultsSeparately,new HashSet<>(geneNamesUpDown) );
-        assertEquals(genesCountUp+genesCountDown, genesCountUpDown);
+        assertTrue(genesCountUp+genesCountDown >= genesCountUpDown);
 
          }
 
-
-    // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?cutoff=0.002
-    @Test
-    public void withCutoff() throws GenesNotFoundException, ExecutionException {
-        requestPreferences.setCutoff(0.00000001);
-        RnaSeqRequestContext requestContext = populateRequestContext(ACCESSION);
+    
+    public void noDataWithVeryStrictPValueCutoff(String accession) throws GenesNotFoundException, ExecutionException {
+        requestPreferences.setCutoff(1e-100);
+        RnaSeqRequestContext requestContext = populateRequestContext(accession);
         long genesCount = subject.write(printWriterMock, requestContext);
-
         assertEquals(0L, genesCount);
-
     }
 
-    // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?foldChangeCutOff=5
-    @Test
-    public void withFoldChangeCutoff() throws GenesNotFoundException, ExecutionException {
+
+    
+    public void noDataWithVeryLargeFoldChangeCutoff(String accession) throws GenesNotFoundException, ExecutionException {
         requestPreferences.setFoldChangeCutOff(50000D);
-        RnaSeqRequestContext requestContext = populateRequestContext(ACCESSION);
+        RnaSeqRequestContext requestContext = populateRequestContext(accession);
         long genesCount = subject.write(printWriterMock, requestContext);
 
         assertEquals(0L, genesCount);
@@ -244,7 +243,7 @@ public class RnaSeqProfilesWriterIT {
         for (String line[] : lines) {
             String geneName = line[GENE_NAME_INDEX];
             if (!"Gene Name".equals(geneName)) {
-                builder.put(line[GENE_NAME_INDEX], line);
+                builder.put(line[GENE_NAME_INDEX-1]+" "+ line[GENE_NAME_INDEX], line);
             }
         }
 
@@ -262,14 +261,5 @@ public class RnaSeqProfilesWriterIT {
 
         return builder.build();
     }
-
-    private void setGeneQuery(String geneQuery) {
-        requestPreferences.setGeneQuery(GeneQuery.create(geneQuery));
-    }
-
-    private void setNotSpecific() {
-        requestPreferences.setSpecific(false);
-    }
-
 
 }
