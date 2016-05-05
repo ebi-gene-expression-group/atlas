@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf;
 
 import com.google.common.collect.*;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -134,8 +135,7 @@ public class CondensedSdrfParserTest {
     public void parse() {
         //given
         given(tsvReaderImplMock.readAll()).willReturn(ImmutableList.copyOf(E_MTAB_513_CONDENSED_SDRF_ARRAY));
-        given(idfParserMock.getTitle()).willReturn(E_MTAB_513_TITLE);
-        given(idfParserMock.getPubMedIds()).willReturn(E_MTAB_513_PUBMED_IDS);
+        given(idfParserMock.parse(E_MTAB_513)).willReturn(new ImmutablePair<>(E_MTAB_513_TITLE, E_MTAB_513_PUBMED_IDS));
 
         //when
         CondensedSdrfParserOutput output = subject.parse(E_MTAB_513, ExperimentType.RNASEQ_MRNA_BASELINE);
@@ -161,8 +161,7 @@ public class CondensedSdrfParserTest {
     public void parseRunWithoutFactorIsDiscarded() {
         //given
         given(tsvReaderImplMock.readAll()).willReturn(ImmutableList.copyOf(Arrays.copyOfRange(E_MTAB_513_CONDENSED_SDRF_ARRAY, 0, E_MTAB_513_CONDENSED_SDRF_ARRAY.length - 1)));
-        given(idfParserMock.getTitle()).willReturn(E_MTAB_513_TITLE);
-        given(idfParserMock.getPubMedIds()).willReturn(E_MTAB_513_PUBMED_IDS);
+        given(idfParserMock.parse(E_MTAB_513)).willReturn(new ImmutablePair<>(E_MTAB_513_TITLE, E_MTAB_513_PUBMED_IDS));
 
         //when
         CondensedSdrfParserOutput output = subject.parse(E_MTAB_513, ExperimentType.RNASEQ_MRNA_BASELINE);
@@ -177,8 +176,7 @@ public class CondensedSdrfParserTest {
     public void parseAssayWithCompoundAndDose() {
         //given
         given(tsvReaderImplMock.readAll()).willReturn(ImmutableList.copyOf(E_MEXP_1810_CONDENSED_SDRF_ARRAY));
-        given(idfParserMock.getTitle()).willReturn(E_MEXP_1810_TITLE);
-        given(idfParserMock.getPubMedIds()).willReturn(E_MEXP_1810_PUBMED_IDS);
+        given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>(E_MEXP_1810_TITLE, E_MEXP_1810_PUBMED_IDS));
 
         //when
         CondensedSdrfParserOutput output = subject.parse(E_MEXP_1810, ExperimentType.RNASEQ_MRNA_BASELINE);
@@ -192,8 +190,7 @@ public class CondensedSdrfParserTest {
     public void parseAssayWithCompoundAndNoDose() {
         //given
         given(tsvReaderImplMock.readAll()).willReturn(ImmutableList.of(E_MEXP_1810_CONDENSED_SDRF_ARRAY[0], E_MEXP_1810_CONDENSED_SDRF_ARRAY[1]));
-        given(idfParserMock.getTitle()).willReturn(E_MEXP_1810_TITLE);
-        given(idfParserMock.getPubMedIds()).willReturn(E_MEXP_1810_PUBMED_IDS);
+        given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>(E_MEXP_1810_TITLE, E_MEXP_1810_PUBMED_IDS));
 
         //when
         CondensedSdrfParserOutput output = subject.parse(E_MEXP_1810, ExperimentType.RNASEQ_MRNA_BASELINE);
@@ -210,9 +207,7 @@ public class CondensedSdrfParserTest {
 
         //given
         given(tsvReaderImplMock.readAll()).willReturn(ImmutableList.of(E_MEXP_1810_CONDENSED_SDRF_ARRAY[0], E_MEXP_1810_CONDENSED_SDRF_ARRAY[2]));
-        given(idfParserMock.getTitle()).willReturn(E_MEXP_1810_TITLE);
-        given(idfParserMock.getPubMedIds()).willReturn(E_MEXP_1810_PUBMED_IDS);
-
+        given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>(E_MEXP_1810_TITLE, E_MEXP_1810_PUBMED_IDS));
         //when
         subject.parse(E_MEXP_1810, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
     }
@@ -224,8 +219,7 @@ public class CondensedSdrfParserTest {
 
         //given
         given(tsvReaderImplMock.readAll()).willReturn(ImmutableList.copyOf(MULTIPLE_ARRAY_DESIGNS_CONDENSED_SDRF_ARRAY));
-        given(idfParserMock.getTitle()).willReturn("");
-        given(idfParserMock.getPubMedIds()).willReturn(ImmutableSet.of(""));
+        given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>("", ImmutableSet.of("")));
 
         //when
         subject.parse(E_MEXP_1810, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
@@ -238,8 +232,7 @@ public class CondensedSdrfParserTest {
 
         //given
         given(tsvReaderImplMock.readAll()).willReturn(ImmutableList.copyOf(NO_FACTOR_OR_CHARACTERISTIC_CONDENSED_SDRF_ARRAY));
-        given(idfParserMock.getTitle()).willReturn("");
-        given(idfParserMock.getPubMedIds()).willReturn(ImmutableSet.of(""));
+        given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>("", ImmutableSet.of("")));
 
         //when
         subject.parse(E_MEXP_1810, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
