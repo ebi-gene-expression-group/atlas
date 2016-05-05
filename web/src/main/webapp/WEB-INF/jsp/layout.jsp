@@ -32,11 +32,13 @@
 
     <!-- compliance style start -->
 
-    <meta name="description" content="EMBL-EBI">
+    <meta name="description"
+          content="EMBL-EBI Expression Atlas- an open public repository of gene expression pattern data under different biological conditions ">
     <!-- Describe what this page is about -->
-    <meta name="keywords" content="bioinformatics, atlas, gxa, ebi, functional, genomics">
+    <meta name="keywords"
+          content="bioinformatics, atlas, gxa, ebi, functional, genomics, repository, public">
     <!-- A few keywords that relate to the content of THIS PAGE (not the whol project) -->
-    <meta name="author" content="EMBL-EBI">
+    <meta name="author" content="EMBL-EBI Expression Atlas development team: github.com/gxa/atlas/graphs/contributors">
     <!-- Your [project-name] here -->
 
     <!-- Mobile viewport optimized: j.mp/bplateviewport -->
