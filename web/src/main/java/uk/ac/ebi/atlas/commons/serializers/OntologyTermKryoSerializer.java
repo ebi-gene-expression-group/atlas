@@ -6,9 +6,6 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 28/05/15.
- */
 public class OntologyTermKryoSerializer extends Serializer<OntologyTerm>  {
     public OntologyTermKryoSerializer() {
         super();

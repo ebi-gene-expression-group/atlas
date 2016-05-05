@@ -1,7 +1,3 @@
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 28/05/15.
- */
-
 package uk.ac.ebi.atlas.commons.serializers;
 
 import com.esotericsoftware.kryo.Kryo;
