@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.*;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 @Named
-@Scope("prototype")
+@Scope("singleton")
 public class CondensedSdrfParser {
 
     private static final Set<String> FACTORS_NEEDING_DOSE = Sets.newHashSet("compound", "irradiate");
@@ -84,9 +85,9 @@ public class CondensedSdrfParser {
 
         addArraysToExperimentDesign(experimentDesign, assayRunToTsvLines);
 
-        idfParser.parse(experimentAccession);
+        Pair<String, ImmutableSet<String>> idfParserOutput = idfParser.parse(experimentAccession);
 
-        return new CondensedSdrfParserOutput(experimentAccession, experimentType, idfParser.getTitle(), idfParser.getPubMedIds(), experimentDesign);
+        return new CondensedSdrfParserOutput(experimentAccession, experimentType, idfParserOutput.getLeft(), idfParserOutput.getRight(), experimentDesign);
     }
 
 
