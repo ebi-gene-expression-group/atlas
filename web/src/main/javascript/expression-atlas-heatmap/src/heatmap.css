@@ -117,3 +117,10 @@ th.gxaHeatmapTableDesignElement {
 .gxaNoTextButton .ui-button-text {
     padding: 2px;
 }
+
+.gxaFeedbackBoxWrapper {
+  position: fixed;
+  margin-top: 15px;
+  right: 10px;
+  z-index: 1;
+}

@@ -12,6 +12,7 @@
     "cell-differential": "file:../atlas_modules/cell-differential",
     "contrast-tooltips": "file:../atlas_modules/contrast-tooltips",
     "display-levels-button": "file:../atlas_modules/display-levels-button",
+    "atlas-feedback": "file:../atlas_modules/atlas-feedback",
     "fancybox": "^3.0.0",
     "heatmap-baseline-cell-variance": "file:../atlas_modules/heatmap-baseline-cell-variance",
     "help-tooltips": "file:../atlas_modules/help-tooltips",

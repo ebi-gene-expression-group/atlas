@@ -13,6 +13,7 @@ var EventEmitter = require('events');
 //*------------------------------------------------------------------*
 
 var Anatomogram = require('anatomogram');
+var FeedbackBox=require('atlas-feedback');
 var Heatmap = require('./Heatmap.jsx');
 var EnsemblLauncher = require('./EnsemblLauncher.jsx');
 
@@ -105,7 +106,15 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                                          atlasBaseURL={this.props.atlasBaseURL} />
                         : null }
                 </div>
-
+                <span className="gxaFeedbackBoxWrapper">
+                  <FeedbackBox collectionCallback= {
+                    function(score,optionalComment){
+                      this.state.googleAnalyticsCallback(
+                        'send','event','HeatmapReact', 'feedback',
+                        typeof optionalComment === 'undefined'? "": optionalComment,
+                        score);
+                    }.bind(this)} />
+                </span>
                 <div id="heatmap-react" className="gxaHeatmapPosition">
                     <Heatmap type={this.props.type}
                              heatmapConfig={this.props.heatmapConfig}
