@@ -1,0 +1,28 @@
+{
+  "name": "atlas-feedback",
+  "version": "1.0.0",
+  "description": "Feedback feature for the experiment page",
+  "main": "index.js",
+  "author": "Wojtek Bazant <wbazant@ebi.ac.uk>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "^0.14.7",
+    "react-addons-css-transition-group": "^0.14.8",
+    "react-bootstrap": "^0.29.3",
+    "react-dom": "^0.14.7",
+    "react-localstorage": "^0.2.9",
+    "react-timer-mixin": "^0.13.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-react-display-name": "^6.5.0",
+    "babel-plugin-transform-react-jsx": "^6.6.5",
+    "clean-webpack-plugin": "^0.1.8",
+    "css-loader": "^0.23.1",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  }
+}

@@ -1,0 +1,52 @@
+div.gxaFeedbackQuestionBox {
+  margin: 30px;
+  width: 300px;
+  background-color: #b3e0ff;
+  border: 3px solid #008ae6;
+  opacity: 0.6;
+  filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+
+#feedbackBoxCross {
+  margin: 3px;
+  margin-top: 5px;
+  float: right;
+  cursor:pointer;
+}
+
+#feedbackBoxCross:before {
+  color: #BF2222;
+}
+
+div.gxaFeedbackQuestionBox p {
+  margin: 2%;
+ font-weight: bold;
+ text-align: center;
+}
+
+div.gxaFeedbackQuestionBox a {
+  float: right;
+  margin-top: 6px;
+  cursor:pointer;
+}
+
+div.gxaFeedbackQuestionBoxAnswer {
+  position:relative;
+text-align: center;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  width: 90%;
+}
+
+div.gxaFeedbackQuestionBox button {
+ width: auto;
+}
+
+.feedbackBoxTransitionWrapper-leave {
+  opacity: 1;
+}
+
+.feedbackBoxTransitionWrapper-leave.feedbackBoxTransitionWrapper-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
