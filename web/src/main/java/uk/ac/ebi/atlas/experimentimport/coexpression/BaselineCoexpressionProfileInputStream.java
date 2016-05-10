@@ -108,13 +108,10 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
             return null;
         }
 
-        String geneID = line[GENE_ID_COLUMN_INDEX];
-        Iterable<BaselineCoexpression> coexpressionProfile = readCoexpressionsFromLine(line, lineNumber-1);
-
-        return new BaselineCoexpressionProfile(geneID, coexpressionProfile);
+        return new BaselineCoexpressionProfile(line[GENE_ID_COLUMN_INDEX], readCoexpressionProfileValues(line, lineNumber-1));
     }
 
-    private Iterable<BaselineCoexpression> readCoexpressionsFromLine(String[] line, int
+    private Iterable<BaselineCoexpression> readCoexpressionProfileValues(String[] line, int
             diagonalElementPosition) {
         checkArgument(line.length == geneIDsHeader.length,
                 "Line length differs from the header length, but the file is supposed to be a matrix!");
