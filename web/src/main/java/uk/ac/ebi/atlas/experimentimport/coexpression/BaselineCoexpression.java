@@ -32,16 +32,15 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class BaselineCoexpression implements Comparable<BaselineCoexpression> {
-    static BaselineCoexpression create(String geneID, double ceStatistic, String ceGeneID) {
-        return new AutoValue_BaselineCoexpression(geneID, ceStatistic, ceGeneID);
+    static BaselineCoexpression create( double ceStatistic, String ceGeneID) {
+        return new AutoValue_BaselineCoexpression(ceStatistic, ceGeneID);
     }
 
-    public abstract String geneID();
     public abstract double ceStatistic();
     public abstract String ceGeneID();
 
     @Override
-    public int compareTo(BaselineCoexpression bc) {
-        return Double.compare(this.ceStatistic(), bc.ceStatistic());
+    public int compareTo(BaselineCoexpression other) {
+        return Double.compare(this.ceStatistic(), other.ceStatistic());
     }
 }

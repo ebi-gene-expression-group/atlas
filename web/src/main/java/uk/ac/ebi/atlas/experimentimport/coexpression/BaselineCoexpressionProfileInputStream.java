@@ -29,17 +29,13 @@
 package uk.ac.ebi.atlas.experimentimport.coexpression;
 
 import au.com.bytecode.opencsv.CSVReader;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.MinMaxPriorityQueue;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.solr.util.BoundedTreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -47,10 +43,9 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineCoexpressionProfileInputStream.class);
 
-    private static final int COEXPRESSION_PROFILE_SIZE = 100;
+    private final int maxCoexpressionProfileSize;
 
     private static final int GENE_ID_COLUMN_INDEX = 0;
-    private static final int FIRST_CE_STATISTIC_INDEX = 1;
 
     private final CSVReader csvReader;
     private final String fileName;
@@ -60,9 +55,16 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
 
 
     public BaselineCoexpressionProfileInputStream(CSVReader csvReader, String fileName) {
+        this(csvReader, fileName, 100);
+    }
+
+    BaselineCoexpressionProfileInputStream(CSVReader csvReader, String fileName, int maxCoexpressionProfileSize) {
+        this.maxCoexpressionProfileSize = maxCoexpressionProfileSize;
         this.fileName = fileName;
         this.csvReader = csvReader;
-        this.geneIDsHeader = (String[]) ArrayUtils.remove(readCsvLine(), 0);
+        this.geneIDsHeader = readCsvLine();
+        checkArgument(geneIDsHeader != null && geneIDsHeader.length > 1,
+                "Could not read in the first line- possibly a malformed or empty file");
     }
 
 
@@ -107,39 +109,24 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
         }
 
         String geneID = line[GENE_ID_COLUMN_INDEX];
-        String[] baselineCoexpressionsLine = (String[]) ArrayUtils.subarray(line, FIRST_CE_STATISTIC_INDEX, line.length);
-        MinMaxPriorityQueue<BaselineCoexpression> coexpressionProfile = createProfile(geneID, baselineCoexpressionsLine);
+        Iterable<BaselineCoexpression> coexpressionProfile = readCoexpressionsFromLine(line, lineNumber-1);
 
-        if (coexpressionProfile.isEmpty()) {
-            return readNextNonZeroLine();
-        }
-
-        ImmutableList.Builder<String> geneIDsBuilder = new ImmutableList.Builder<>();
-        for (BaselineCoexpression baselineCoexpression : coexpressionProfile) {
-            geneIDsBuilder.add(baselineCoexpression.ceGeneID());
-        }
         return new BaselineCoexpressionProfile(geneID, coexpressionProfile);
     }
 
+    private Iterable<BaselineCoexpression> readCoexpressionsFromLine(String[] line, int
+            diagonalElementPosition) {
+        checkArgument(line.length == geneIDsHeader.length,
+                "Line length differs from the header length, but the file is supposed to be a matrix!");
 
-    private MinMaxPriorityQueue<BaselineCoexpression> createProfile(String geneID, String[] baselineCoexpressionsLine) {
-        checkArgument(StringUtils.isNotBlank(geneID), "Cannot load baseline coexpressions profile - gene ID is blank");
-        checkArgument(baselineCoexpressionsLine.length == geneIDsHeader.length,
-                      String.format(
-                          "Cannot load baseline coexpressions profile - expecting %d expressions but got %d instead.",
-                          geneIDsHeader.length, baselineCoexpressionsLine.length));
-
-
-        baselineCoexpressionsLine = (String[]) ArrayUtils.remove(baselineCoexpressionsLine, lineNumber - 2);
-
-        MinMaxPriorityQueue<BaselineCoexpression> coexpressionProfile = MinMaxPriorityQueue.expectedSize(COEXPRESSION_PROFILE_SIZE).maximumSize(COEXPRESSION_PROFILE_SIZE).create();
-        for (int i = 0; i < baselineCoexpressionsLine.length; i++) {
-            String ceGeneID = geneIDsHeader[i];
-            coexpressionProfile.add(
-                    BaselineCoexpression.create(geneID, Double.parseDouble(baselineCoexpressionsLine[i]), ceGeneID));
+        TreeSet<BaselineCoexpression> coexpressionProfile = new BoundedTreeSet<>(maxCoexpressionProfileSize);
+        for (int i = 0; i < line.length; i++) {
+            if (i != GENE_ID_COLUMN_INDEX && i != diagonalElementPosition) {
+                String ceGeneID = geneIDsHeader[i];
+                coexpressionProfile.add(
+                        BaselineCoexpression.create(Double.parseDouble(line[i]), ceGeneID));
+            }
         }
-
         return coexpressionProfile;
     }
-
 }

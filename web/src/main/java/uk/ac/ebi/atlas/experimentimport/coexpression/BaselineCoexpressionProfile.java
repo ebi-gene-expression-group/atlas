@@ -34,9 +34,9 @@ import com.google.common.collect.MinMaxPriorityQueue;
 
 public class BaselineCoexpressionProfile {
     private String geneID;
-    private MinMaxPriorityQueue<BaselineCoexpression> coexpressions;
+    private Iterable<BaselineCoexpression> coexpressions;
 
-    public BaselineCoexpressionProfile(String geneID, MinMaxPriorityQueue<BaselineCoexpression> coexpressions) {
+    public BaselineCoexpressionProfile(String geneID, Iterable<BaselineCoexpression> coexpressions) {
         this.geneID = geneID;
         this.coexpressions = coexpressions;
     }
