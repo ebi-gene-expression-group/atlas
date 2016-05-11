@@ -143,7 +143,7 @@ public class AnalysisMethodsPageController {
 
         model.addAttribute("experimentAccession", experimentAccession);
 
-        downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
+        model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(request));
 
         return "experiment-analysis-methods";
     }

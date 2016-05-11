@@ -107,11 +107,15 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
             try {
 
-                model.addAttribute("gseaPlots", gseaPlotsBuilder.createJsonByContrastId(experiment.getAccession(), contrasts));
                 DifferentialProfilesList differentialProfiles = profilesHeatMap.fetch(requestContext);
-                addJsonForHeatMap(differentialProfiles, contrasts, model);
-
-                downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
+                if(!differentialProfiles.isEmpty()){
+                    model.addAttribute("gseaPlots", gson.toJson(gseaPlotsBuilder.createJsonByContrastId(experiment
+                            .getAccession(), contrasts)));
+                    model.addAttribute("jsonColumnHeaders", gson.toJson(contrasts));
+                    model.addAttribute("jsonProfiles", gson.toJson(differentialProfilesViewModelBuilder.build
+                            (differentialProfiles, contrasts)));
+                }
+                model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(request));
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery().description() + "'"));
@@ -120,21 +124,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         }
 
         return "experiment";
-    }
-
-    private void addJsonForHeatMap(DifferentialProfilesList diffProfiles, Set<Contrast> contrasts, Model model) {
-        if (diffProfiles.isEmpty()) {
-            return;
-        }
-
-        String jsonContrasts = gson.toJson(contrasts);
-        model.addAttribute("jsonColumnHeaders", jsonContrasts);
-
-        DifferentialProfilesViewModel profilesViewModel = differentialProfilesViewModelBuilder.build(diffProfiles, contrasts);
-
-        String jsonProfiles = gson.toJson(profilesViewModel);
-        model.addAttribute("jsonProfiles", jsonProfiles);
-
     }
 
     private void initRequestPreferences(Model model, K requestPreferences, T experiment) {

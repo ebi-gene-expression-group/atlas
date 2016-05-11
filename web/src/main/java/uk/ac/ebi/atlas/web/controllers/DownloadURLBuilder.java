@@ -27,6 +27,8 @@ import org.springframework.ui.Model;
 
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @Named
 @Scope("request")
@@ -43,12 +45,18 @@ public class DownloadURLBuilder {
     private static final String R_FILE_EXTENSION = "-atlasExperimentSummary.Rdata";
 
     public void addDataDownloadUrlsToModel(Model model, HttpServletRequest request) {
-        model.addAttribute("rawDownloadUrl", buildDownloadRawUrl(request));
-        model.addAttribute("normalizedUrl", buildDownloadNormalizedDataUrl(request));
-        model.addAttribute("logFoldUrl", buildDownloadLogFoldDataUrl(request));
-        model.addAttribute("analyticsDownloadUrl", buildDownloadAllAnalyticsUrl(request));
-        model.addAttribute("rDownloadUrl", buildDownloadRFileUrl(request));
-        model.addAttribute("clusteringPdfUrl", buildDownloadClusteringPdfFileUrl(request));
+        model.addAllAttributes(dataDownloadUrls(request));
+    }
+    
+    public Map<String,String> dataDownloadUrls(HttpServletRequest request){
+        Map<String,String> result = new HashMap<>();
+        result.put("rawDownloadUrl", buildDownloadRawUrl(request));
+        result.put("normalizedUrl", buildDownloadNormalizedDataUrl(request));
+        result.put("logFoldUrl", buildDownloadLogFoldDataUrl(request));
+        result.put("analyticsDownloadUrl", buildDownloadAllAnalyticsUrl(request));
+        result.put("rDownloadUrl", buildDownloadRFileUrl(request));
+        result.put("clusteringPdfUrl", buildDownloadClusteringPdfFileUrl(request));
+        return result;
     }
 
     public static void addRDownloadUrlToModel(Model model, HttpServletRequest request) {
