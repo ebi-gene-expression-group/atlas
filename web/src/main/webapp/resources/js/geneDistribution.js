@@ -122,6 +122,11 @@ var geneDistribution = (function ($) {
             var $prefFormDisplayGeneDistribution = $("#prefForm").find("#displayGeneDistribution");
 
             var isDisplayEnabled = $prefFormDisplayGeneDistribution.val();
+
+            if(typeof ga !== 'undefined'){
+                ga('send', 'event', 'Barchart', 'clickDisplayChartButton', "",isDisplayEnabled === "true"? 0 : 1);
+            }
+
             if (isDisplayEnabled === "true") {
                 $prefFormDisplayGeneDistribution.val("false");
             } else {
@@ -129,6 +134,9 @@ var geneDistribution = (function ($) {
             }
 
             hideOrDisplayGeneDistribution(false);
+
+
+
 
             return false;
         }).tooltip();
@@ -287,6 +295,9 @@ var geneDistribution = (function ($) {
                         $("#cutoff").val(scaledCutoff);
                     },
                     stop: function (event, ui) {
+                        if(typeof ga !== 'undefined'){
+                            ga('send', 'event', 'Barchart', 'slideTheSlider');
+                        }
                         $("form#prefForm").submit();
                     }
                 });
