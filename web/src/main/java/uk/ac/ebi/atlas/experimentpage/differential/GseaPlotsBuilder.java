@@ -1,11 +1,17 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.Set;
 
 @Named
@@ -18,19 +24,22 @@ public class GseaPlotsBuilder {
         this.gseaPathTemplate = gseaPathTemplate;
     }
 
-    public GseaPlots create(String experimentAccession, String contrastId) {
-        return new GseaPlots(gseaPathTemplate, experimentAccession, contrastId);
+    public JsonElement createJsonByContrastId(String experimentAccession, Collection<Contrast> contrasts) {
+        JsonObject result = new JsonObject();
+        for (Contrast contrast : contrasts) {
+            JsonObject valuesForThisContrast = new JsonObject();
+            valuesForThisContrast.addProperty("go",hasFile(experimentAccession, contrast.getId(), "go") );
+            valuesForThisContrast.addProperty("interpro",hasFile(experimentAccession, contrast.getId(), "interpro") );
+            valuesForThisContrast.addProperty("reactome",hasFile(experimentAccession, contrast.getId(), "reactome") );
+            result.add(contrast.getId(), valuesForThisContrast);
+        }
+        return result;
     }
 
-    public ImmutableMap<String, GseaPlots> createMapByContrastId(String experimentAccession, Set<Contrast> contrasts) {
-        ImmutableMap.Builder<String, GseaPlots> builder = ImmutableMap.builder();
+    private boolean hasFile(String experimentAccession, String contrastId, String geneSetType) {
+        String imagePath = MessageFormat.format(gseaPathTemplate, experimentAccession, contrastId, geneSetType);
 
-        for (Contrast contrast : contrasts) {
-            GseaPlots gseaPlots = new GseaPlots(gseaPathTemplate, experimentAccession, contrast.getId());
-            builder.put(contrast.getId(), gseaPlots);
-        }
-
-        return builder.build();
+        return Files.exists(Paths.get(imagePath));
     }
 
 }

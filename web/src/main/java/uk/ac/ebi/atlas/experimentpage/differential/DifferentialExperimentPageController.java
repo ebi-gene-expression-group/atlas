@@ -106,10 +106,10 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         if (!result.hasErrors()) {
 
             try {
-                ImmutableMap<String, GseaPlots> gseaPlots = gseaPlotsBuilder.createMapByContrastId(experiment.getAccession(), contrasts);
 
+                model.addAttribute("gseaPlots", gseaPlotsBuilder.createJsonByContrastId(experiment.getAccession(), contrasts));
                 DifferentialProfilesList differentialProfiles = profilesHeatMap.fetch(requestContext);
-                addJsonForHeatMap(differentialProfiles, contrasts, gseaPlots, model);
+                addJsonForHeatMap(differentialProfiles, contrasts, model);
 
                 downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
 
@@ -122,7 +122,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         return "experiment";
     }
 
-    private void addJsonForHeatMap(DifferentialProfilesList diffProfiles, Set<Contrast> contrasts, ImmutableMap<String, GseaPlots> gseaPlots, Model model) {
+    private void addJsonForHeatMap(DifferentialProfilesList diffProfiles, Set<Contrast> contrasts, Model model) {
         if (diffProfiles.isEmpty()) {
             return;
         }
@@ -134,9 +134,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
         String jsonProfiles = gson.toJson(profilesViewModel);
         model.addAttribute("jsonProfiles", jsonProfiles);
-
-        String jsonGseaPlots = gson.toJson(gseaPlots);
-        model.addAttribute("gseaPlots", jsonGseaPlots);
 
     }
 
