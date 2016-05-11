@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
-import com.google.gson.Gson;
+import com.google.common.base.Optional;
+import com.google.gson.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -27,7 +28,9 @@ public class ExperimentAdminController {
     private final ExperimentOps experimentOps;
     private final ExperimentTrader experimentTrader;
     private final ExperimentMetadataCRUD experimentMetadataCRUD;
+    private final Gson gson= new GsonBuilder().setPrettyPrinting().create();
 
+    
     @Inject
     public ExperimentAdminController(ExperimentOps experimentOps, ExperimentTrader experimentTrader,
                                      ExperimentMetadataCRUD experimentMetadataCRUD) {
@@ -58,20 +61,45 @@ public class ExperimentAdminController {
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String doOp(@PathVariable("accessions") String accessionParameter, @PathVariable("op") String opParameter) {
-        ExperimentOps.Op op;
         try {
-            op = ExperimentOps.Op.valueOf(opParameter.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            return new Gson().toJson("Operation " + opParameter + " not known. Here are the available ones: " +
-                    Arrays.toString(ExperimentOps.Op.values()));
-        }
+            Optional<Collection<String>> accessions = accessionParameter.length() == 0 || accessionParameter.toLowerCase().equals("all")
+                    ? Optional.<Collection<String>>absent()
+                    : Optional.of(readAccessions(accessionParameter));
 
-        if (accessionParameter.length() == 0 || accessionParameter.toLowerCase().equals("all")) {
-            // the case of all operations is sometimes optimized
-            return new Gson().toJson(experimentOps.perform(op));
-        } else {
-            return new Gson().toJson(experimentOps.perform(readAccessions(accessionParameter), op));
+            return gson.toJson(experimentOps.perform(accessions, readOps(opParameter)));
+        } catch (IllegalArgumentException e) {
+            return gson.toJson(usageMessage(opParameter));
+        } catch (Exception e) {
+            return gson.toJson(errorMessage(accessionParameter, e));
         }
+    }
+
+    private List<ExperimentOps.Op> readOps(String opParameter) throws IllegalArgumentException {
+        List<ExperimentOps.Op> ops = new ArrayList<>();
+        for(String s: opParameter.split(",")){
+            ops.add(ExperimentOps.Op.valueOf(s.toUpperCase()));
+        }
+        return ops;
+    }
+
+    private JsonElement errorMessage(String accessionParameter, Exception e){
+        JsonArray result = new JsonArray();
+        JsonObject messageObject = new JsonObject();
+        messageObject.addProperty("accession", accessionParameter);
+        messageObject.addProperty("error",e.getMessage());
+        result.add(messageObject);
+        return result;
+    }
+
+    private JsonElement usageMessage(String opParameter){
+        JsonObject messageObject = new JsonObject();
+        messageObject.addProperty("error","Operation " + opParameter + " not known" );
+        JsonArray a = new JsonArray();
+        for(ExperimentOps.Op op: ExperimentOps.Op.values()){
+            a.add(new JsonPrimitive(op.name()));
+        }
+        messageObject.add("available", a);
+        return messageObject;
     }
 
     private Collection<String> readAccessions(String accessionParameter) {

@@ -1,6 +1,9 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.tuple.Pair;
@@ -22,6 +25,12 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.*;
 import java.util.regex.Pattern;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class ExperimentOpsTest {
 
@@ -99,17 +108,65 @@ public class ExperimentOpsTest {
                 accessions.add("E-DUMMY-" + rand.nextInt(10000));
             }
 
-            Iterator<JsonElement> result = experimentOps.perform(accessions, op).iterator();
+            Iterator<JsonElement> result = experimentOps.perform(Optional.of(accessions), Collections.singleton(op))
+                    .iterator();
 
             int i = 0;
             while (result.hasNext()) {
                 JsonObject o = result.next().getAsJsonObject();
-                Assert.assertEquals(accessions.get(i), o.get("accession").getAsString());
+                assertEquals(accessions.get(i), o.get("accession").getAsString());
                 Assert.assertNotNull(o.get("result"));
                 Assert.assertNull(o.get("error"));
                 i++;
             }
         }
+    }
+    
+    @Test
+    public void aggregateOpsInANeatFashion() {
+        String accession = "E-DUMMY-" + new Random().nextInt(10000);
+        Mockito.when(experimentCRUD.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
+        List<ExperimentOps.Op> ops= new ArrayList<>();
+        ops.add(ExperimentOps.Op.UPDATE_DESIGN); // says "success!"
+        ops.add(ExperimentOps.Op.CLEAR_LOG); // says "success!"
+        ops.add(ExperimentOps.Op.LIST); // says something else
+        ops.add(ExperimentOps.Op.DELETE); //throws, should give an error
+        ops.add(ExperimentOps.Op.COEXPRESSION_DELETE); // should not be started
+        ops.add(ExperimentOps.Op.COEXPRESSION_IMPORT); // should not be started
+
+
+        JsonArray result = experimentOps.perform(Optional.of(Collections.singletonList(accession)),ops);
+
+        assertTrue(result.toString(), result.get(0).getAsJsonObject().has("accession"));
+        assertThat(result.get(0).getAsJsonObject().get("accession").getAsJsonPrimitive()
+                .getAsString(), is(accession));
+        JsonArray successes = result.get(0).getAsJsonObject().get("result").getAsJsonArray();
+        JsonArray failures = result.get(0).getAsJsonObject().get("error").getAsJsonArray();
+
+        assertThat(successes.toString(), successes.size(), is(new String[]{"success!", "<sth else>"}.length));
+        assertThat(failures.toString(),failures.size(), is(new String[]{"<error msg>", "not started"}.length));
+
+        Set<Map.Entry<String, JsonElement>> firstSuccess = successes.get(0).getAsJsonObject().entrySet();
+        assertThat(firstSuccess.size(), is(1));
+        String opNameOfFirstSuccessEntry = firstSuccess.iterator().next().getKey();
+        assertThat(opNameOfFirstSuccessEntry, containsString(ExperimentOps.Op.UPDATE_DESIGN.name()));
+        assertThat(opNameOfFirstSuccessEntry, containsString(ExperimentOps.Op.CLEAR_LOG.name()));
+
+        Set<Map.Entry<String, JsonElement>> secondSuccess = successes.get(1).getAsJsonObject().entrySet();
+        assertThat(secondSuccess.size(), is(1));
+        assertEquals(ExperimentOps.Op.LIST.name(), secondSuccess.iterator().next().getKey());
+
+        Set<Map.Entry<String, JsonElement>> firstFailure = failures.get(0).getAsJsonObject().entrySet();
+        assertThat(firstFailure.size(), is(1));
+        assertEquals(ExperimentOps.Op.DELETE.name(), firstFailure.iterator().next().getKey());
+
+
+        Set<Map.Entry<String, JsonElement>> secondFailure = failures.get(1).getAsJsonObject().entrySet();
+        assertThat(secondFailure.size(), is(1));
+        String key3 = secondFailure.iterator().next().getKey();
+        assertThat(key3, containsString(ExperimentOps.Op.COEXPRESSION_DELETE.name()));
+        assertThat(key3, containsString(ExperimentOps.Op.COEXPRESSION_IMPORT.name()));
+
     }
 
     @Test
@@ -117,10 +174,11 @@ public class ExperimentOpsTest {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         for (ExperimentOps.Op op : ExperimentOps.Op.values()) {
             if (!op.equals(ExperimentOps.Op.CLEAR_LOG)) {
-                experimentOps.perform(Arrays.asList(accession), op);
+                experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList
+                        (op));
             }
         }
-        Assert.assertEquals(
+        assertEquals(
                 ExperimentOps.Op.values().length
                         - Arrays.asList(ExperimentOps.Op.LIST, ExperimentOps.Op.LOG, ExperimentOps.Op.STATUS,
                         ExperimentOps.Op.CLEAR_LOG).size()
@@ -131,12 +189,12 @@ public class ExperimentOpsTest {
     public void timestampsLookRight() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         for (ExperimentOps.Op op : ExperimentOps.Op.values()) {
-            experimentOps.perform(Arrays.asList(accession), op);
+            experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(op));
         }
         for (Pair<String, Pair<Long, Long>> p : fileSystem.get(accession)) {
             Long start = p.getRight().getLeft();
             Long finish = p.getRight().getRight();
-            Assert.assertTrue("Starting time before finish", finish - start >= 0);
+            assertTrue("Starting time before finish", finish - start >= 0);
             Assert.assertNotEquals(ExperimentOps.UNFINISHED, start);
             Assert.assertNotEquals(ExperimentOps.UNFINISHED, finish);
         }
@@ -147,14 +205,15 @@ public class ExperimentOpsTest {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         Mockito.when(experimentCRUD.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
 
-        JsonObject result = experimentOps.perform(Arrays.asList(accession), ExperimentOps.Op.DELETE)
+        JsonObject result = experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singleton(ExperimentOps.Op
+                .DELETE))
                 .iterator().next().getAsJsonObject();
 
-        Assert.assertEquals(accession, result.get("accession").getAsString());
+        assertEquals(accession, result.get("accession").getAsString());
         Assert.assertNull(result.get("result"));
         Assert.assertNotNull(result.get("error"));
 
-        Assert.assertTrue("Log failure in op name", Pattern.matches("^FAILED.*",
+        assertTrue("Log failure in op name", Pattern.matches("^FAILED.*",
                 fileSystem.get(accession).iterator().next().getLeft()));
 
     }
