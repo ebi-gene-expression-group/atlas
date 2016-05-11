@@ -14986,10 +14986,38 @@ webpackJsonp_name_([1],[
 	        });
 	    },
 	
+	    _getMaxExpressionLevel: function () {
+	        var maxExpressionLevel = -Infinity;
+	        var profileRows = this._getProfiles().rows;
+	        for (var i = 0; i < profileRows.length; i++) {
+	            for (var j = 0; j < (profileRows[i].expressions || []).length; j++) {
+	                var value = profileRows[i].expressions[j].value;
+	                if (!isNaN(value) && value > maxExpressionLevel) {
+	                    maxExpressionLevel = value;
+	                }
+	            }
+	        }
+	        return maxExpressionLevel;
+	    },
+	
+	    _getMinExpressionLevel: function () {
+	        var minExpressionLevel = Infinity;
+	        var profileRows = this._getProfiles().rows;
+	        for (var i = 0; i < profileRows.length; i++) {
+	            for (var j = 0; j < (profileRows[i].expressions || []).length; j++) {
+	                var value = profileRows[i].expressions[j].value;
+	                if (!isNaN(value) && value < minExpressionLevel) {
+	                    minExpressionLevel = value;
+	                }
+	            }
+	        }
+	        return minExpressionLevel;
+	    },
+	
 	    legendType: function () {
 	        return this.props.type.isBaseline || this.props.type.isMultiExperiment ? React.createElement(LegendBaseline, { atlasBaseURL: this.props.atlasBaseURL,
-	            minExpressionLevel: this._getProfiles().minExpressionLevel.toString(),
-	            maxExpressionLevel: this._getProfiles().maxExpressionLevel.toString(),
+	            minExpressionLevel: this._getMinExpressionLevel().toString(),
+	            maxExpressionLevel: this._getMaxExpressionLevel().toString(),
 	            isMultiExperiment: this.props.type.isMultiExperiment ? true : false }) : React.createElement(LegendDifferential, { atlasBaseURL: this.props.atlasBaseURL,
 	            minDownLevel: this._getProfiles().minDownLevel.toString(),
 	            maxDownLevel: this._getProfiles().maxDownLevel.toString(),
