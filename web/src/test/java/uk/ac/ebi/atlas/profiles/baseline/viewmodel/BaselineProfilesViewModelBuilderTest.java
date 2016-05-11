@@ -40,7 +40,7 @@ public class BaselineProfilesViewModelBuilderTest {
     private Color blankColour = Color.WHITE;
     private double colourScale = 1;
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
-    private BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder = new BaselineExpressionViewModelBuilder(colorGradient, new BaselineExpressionLevelRounder());
+    private BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder = new BaselineExpressionViewModelBuilder(colorGradient);
     private BaselineProfilesViewModelBuilder subject = new BaselineProfilesViewModelBuilder(baselineExpressionViewModelBuilder, new BaselineExpressionLevelRounder());
     private SortedSet<Factor> orderedFactors = ImmutableSortedSet.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
 
@@ -50,7 +50,7 @@ public class BaselineProfilesViewModelBuilderTest {
 
         BaselineProfilesViewModel profiles = new BaselineProfilesViewModel<>(new BaselineExpressionLevelRounder(), 1.1, 2.2, 50, genes);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
         String json = gson.toJson(profiles);
 
         String expected = "{\n" +
@@ -65,23 +65,23 @@ public class BaselineProfilesViewModelBuilderTest {
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": \"\",\n" +
+                "          \"value\": NaN,\n" +
                 "          \"svgPathId\": \"ontologyTerm\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"adrenal\",\n" +
                 "          \"color\": \"#9697C0\",\n" +
-                "          \"value\": \"9\"\n" +
+                "          \"value\": 9.0\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"brain\",\n" +
                 "          \"color\": \"#A9AAC0\",\n" +
-                "          \"value\": \"5\"\n" +
+                "          \"value\": 5.0\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"breast\",\n" +
                 "          \"color\": \"#8D8DC0\",\n" +
-                "          \"value\": \"11\"\n" +
+                "          \"value\": 11.0\n" +
                 "        }\n" +
                 "      ]\n" +
                 "    },\n" +
@@ -92,23 +92,23 @@ public class BaselineProfilesViewModelBuilderTest {
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": \"\",\n" +
+                "          \"value\": NaN,\n" +
                 "          \"svgPathId\": \"ontologyTerm\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"adrenal\",\n" +
                 "          \"color\": \"#0000FF\",\n" +
-                "          \"value\": \"47\"\n" +
+                "          \"value\": 47.0\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"brain\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": \"\"\n" +
+                "          \"value\": NaN\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"breast\",\n" +
                 "          \"color\": \"#4A4AC0\",\n" +
-                "          \"value\": \"25\"\n" +
+                "          \"value\": 25.0\n" +
                 "        }\n" +
                 "      ]\n" +
                 "    }\n" +

@@ -44,10 +44,6 @@ public class DownloadURLBuilder {
 
     private static final String R_FILE_EXTENSION = "-atlasExperimentSummary.Rdata";
 
-    public void addDataDownloadUrlsToModel(Model model, HttpServletRequest request) {
-        model.addAllAttributes(dataDownloadUrls(request));
-    }
-    
     public Map<String,String> dataDownloadUrls(HttpServletRequest request){
         Map<String,String> result = new HashMap<>();
         result.put("rawDownloadUrl", buildDownloadRawUrl(request));

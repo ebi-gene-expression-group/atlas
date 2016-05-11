@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.base.Optional;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
@@ -37,7 +38,9 @@ public class BaselineExperimentPageService {
     private final SpeciesKingdomTrader speciesKingdomTrader;
     private BaselineExperimentUtil bslnUtil;
     private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
-    private Gson gson = new Gson();
+    private Gson gson = new GsonBuilder()
+            .serializeSpecialFloatingPointValues() //Allow "NaN" for expression levels
+            .create();
 
     public BaselineExperimentPageService(BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory,
                                          ApplicationProperties applicationProperties,

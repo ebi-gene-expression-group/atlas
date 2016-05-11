@@ -126,7 +126,7 @@ var Heatmap = React.createClass({
       } else if (! this.props.jsonCoexpressions){
         return this.props.profiles;
       } else {
-        var newRows = [] ;
+        var newRows = [];
         for(var i = 0; i< this.props.profiles.rows.length ; i++){
             var thisRow = this.props.profiles.rows[i];
             newRows.push(thisRow);
@@ -254,11 +254,39 @@ var Heatmap = React.createClass({
                  );
     },
 
+    _getMaxExpressionLevel: function () {
+      var maxExpressionLevel = -Infinity;
+      var profileRows = this._getProfiles().rows;
+      for(var i = 0; i< profileRows.length; i++){
+        for(var j = 0 ; j < (profileRows[i].expressions || []).length; j ++) {
+          var value = profileRows[i].expressions[j].value;
+          if(!isNaN(value) && value > maxExpressionLevel){
+            maxExpressionLevel = value;
+          }
+        }
+      }
+      return maxExpressionLevel;
+    },
+
+    _getMinExpressionLevel: function () {
+      var minExpressionLevel = Infinity;
+      var profileRows = this._getProfiles().rows;
+      for(var i = 0; i< profileRows.length; i++){
+        for(var j = 0 ; j < (profileRows[i].expressions || []).length; j ++) {
+          var value = profileRows[i].expressions[j].value;
+          if(!isNaN(value) && value < minExpressionLevel){
+            minExpressionLevel = value;
+          }
+        }
+      }
+      return minExpressionLevel;
+    },
+
     legendType: function () {
         return (this.props.type.isBaseline || this.props.type.isMultiExperiment ?
             <LegendBaseline atlasBaseURL={this.props.atlasBaseURL}
-                                   minExpressionLevel={this._getProfiles().minExpressionLevel.toString()}
-                                   maxExpressionLevel={this._getProfiles().maxExpressionLevel.toString()}
+                                   minExpressionLevel={this._getMinExpressionLevel().toString()}
+                                   maxExpressionLevel={this._getMaxExpressionLevel().toString()}
                                    isMultiExperiment={this.props.type.isMultiExperiment ? true : false}/> :
             <LegendDifferential atlasBaseURL={this.props.atlasBaseURL}
                                        minDownLevel={this._getProfiles().minDownLevel.toString()}

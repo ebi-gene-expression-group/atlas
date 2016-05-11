@@ -20,7 +20,6 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSlice;
 import uk.ac.ebi.atlas.utils.ColourGradient;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import java.awt.*;
 import java.util.Collection;
@@ -44,7 +43,7 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
     private Color blankColour = Color.WHITE;
     private double colourScale = 1;
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
-    private BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder = new BaselineExpressionViewModelBuilder(colorGradient, new BaselineExpressionLevelRounder());
+    private BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder = new BaselineExpressionViewModelBuilder(colorGradient);
     private BaselineExperimentProfilesViewModelBuilder subject = new BaselineExperimentProfilesViewModelBuilder(baselineExpressionViewModelBuilder, new BaselineExpressionLevelRounder());
     private SortedSet<Factor> orderedFactors = ImmutableSortedSet.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
 
@@ -94,7 +93,7 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
         BaselineExperimentProfilesList baselineExperimentProfilesList = new BaselineExperimentProfilesList(baselineExperimentProfiles);
         BaselineProfilesViewModel profiles = subject.build(baselineExperimentProfilesList, orderedFactors);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
         String json = gson.toJson(profiles);
 
         String expected = "{\n" +
@@ -110,23 +109,23 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": \"\",\n" +
+                "          \"value\": NaN,\n" +
                 "          \"svgPathId\": \"ontologyTerm\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"adrenal\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": \"\"\n" +
+                "          \"value\": NaN\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"brain\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": \"\"\n" +
+                "          \"value\": NaN\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"breast\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": \"\"\n" +
+                "          \"value\": NaN\n" +
                 "        }\n" +
                 "      ],\n" +
                 "      \"serializedFilterFactors\": \"ORGANISM:Homo sapiens\"\n" +
@@ -139,23 +138,23 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": \"\",\n" +
+                "          \"value\": NaN,\n" +
                 "          \"svgPathId\": \"ontologyTerm\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"adrenal\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": \"\"\n" +
+                "          \"value\": NaN\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"brain\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": \"\"\n" +
+                "          \"value\": NaN\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"breast\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": \"\"\n" +
+                "          \"value\": NaN\n" +
                 "        }\n" +
                 "      ],\n" +
                 "      \"serializedFilterFactors\": \"\"\n" +

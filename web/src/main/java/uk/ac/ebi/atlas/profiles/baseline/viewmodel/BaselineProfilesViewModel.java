@@ -4,8 +4,9 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 
 public class BaselineProfilesViewModel<R> {
 
-    private final double minExpressionLevel;
-    private final double maxExpressionLevel;
+    /*For the baseline heatmap, this is now calculated on the client. TODO remove other usages*/
+    @Deprecated private final double minExpressionLevel;
+    @Deprecated private final double maxExpressionLevel;
     private final int searchResultTotal;
     private final R[] rows;
 

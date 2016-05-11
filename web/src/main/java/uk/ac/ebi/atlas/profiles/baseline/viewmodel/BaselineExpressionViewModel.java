@@ -7,11 +7,12 @@ public class BaselineExpressionViewModel {
 
     private final String factorName;
     private final String color;
-    private final String value;
+    private final double value;
     private final String svgPathId;
     private Quartiles quartiles;
 
-    public BaselineExpressionViewModel(String factorName, String color, String value, String svgPathId, Optional<Quartiles> quartiles) {
+    public BaselineExpressionViewModel(String factorName, String color, double value, String svgPathId,
+                                       Optional<Quartiles> quartiles) {
         this.factorName = factorName;
         this.color = color;
         this.value = value;

@@ -8,9 +8,7 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.Quartiles;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import java.awt.*;
@@ -37,7 +35,7 @@ public class BaselineExpressionViewModelBuilderTest {
     private double colourScale = 1;
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
 
-    private BaselineExpressionViewModelBuilder subject = new BaselineExpressionViewModelBuilder(colorGradient, new BaselineExpressionLevelRounder());
+    private BaselineExpressionViewModelBuilder subject = new BaselineExpressionViewModelBuilder(colorGradient);
     private SortedSet<Factor> orderedFactors = ImmutableSortedSet.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
 
 
@@ -49,30 +47,30 @@ public class BaselineExpressionViewModelBuilderTest {
 
         BaselineExpressionViewModel[] expressions = subject.buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
         String json = gson.toJson(expressions);
 
         String expected = "[\n"  +
             "  {\n" +
             "    \"factorName\": \"adipose\",\n" +
             "    \"color\": \"\",\n" +
-            "    \"value\": \"NT\",\n" +
+            "    \"value\": NaN,\n" +
             "    \"svgPathId\": \"ontologyTerm\"\n" +
             "  },\n" +
             "  {\n" +
             "    \"factorName\": \"adrenal\",\n" +
             "    \"color\": \"#C0C0C0\",\n" +
-            "    \"value\": \"0.3\"\n" +
+            "    \"value\": 0.3\n" +
             "  },\n" +
             "  {\n" +
             "    \"factorName\": \"brain\",\n" +
             "    \"color\": \"\",\n" +
-            "    \"value\": \"\"\n" +
+            "    \"value\": NaN\n" +
             "  },\n" +
             "  {\n" +
             "    \"factorName\": \"breast\",\n" +
             "    \"color\": \"\",\n" +
-            "    \"value\": \"\"\n" +
+            "    \"value\": NaN\n" +
             "  }\n" +
         "]";
 
@@ -88,20 +86,20 @@ public class BaselineExpressionViewModelBuilderTest {
 
         BaselineExpressionViewModel[] expressions = subject.buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
         String json = gson.toJson(expressions);
 
         String expected = "[\n" +
                 "  {\n" +
                 "    \"factorName\": \"adipose\",\n" +
                 "    \"color\": \"\",\n" +
-                "    \"value\": \"NT\",\n" +
+                "    \"value\": NaN,\n" +
                 "    \"svgPathId\": \"ontologyTerm\"\n" +
                 "  },\n" +
                 "  {\n" +
                 "    \"factorName\": \"adrenal\",\n" +
                 "    \"color\": \"#C0C0C0\",\n" +
-                "    \"value\": \"0.3\",\n" +
+                "    \"value\": 0.3,\n" +
                 "    \"quartiles\": {\n" +
                 "      \"min\": 0.1,\n" +
                 "      \"lower\": 0.2,\n" +
@@ -113,12 +111,12 @@ public class BaselineExpressionViewModelBuilderTest {
                 "  {\n" +
                 "    \"factorName\": \"brain\",\n" +
                 "    \"color\": \"\",\n" +
-                "    \"value\": \"\"\n" +
+                "    \"value\": NaN\n" +
                 "  },\n" +
                 "  {\n" +
                 "    \"factorName\": \"breast\",\n" +
                 "    \"color\": \"\",\n" +
-                "    \"value\": \"\"\n" +
+                "    \"value\": NaN\n" +
                 "  }\n" +
                 "]";
 

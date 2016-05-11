@@ -19,12 +19,10 @@ import java.util.SortedSet;
 public class BaselineExpressionViewModelBuilder {
 
     private final ColourGradient colourGradient;
-    private final BaselineExpressionLevelRounder baselineExpressionLevelRounder;
 
     @Inject
-    public BaselineExpressionViewModelBuilder(ColourGradient colourGradient, BaselineExpressionLevelRounder baselineExpressionLevelRounder) {
+    public BaselineExpressionViewModelBuilder(ColourGradient colourGradient) {
         this.colourGradient = colourGradient;
-        this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
     }
 
     public BaselineExpressionViewModel[] buildExpressions(Profile<Factor, BaselineExpression> profile,
@@ -46,7 +44,9 @@ public class BaselineExpressionViewModelBuilder {
         BaselineExpression expression = profile.getExpression(factor);
         Optional<Quartiles> quartiles = (expression == null || expression.getQuartiles().length == 0) ? Optional.<Quartiles>absent() : Optional.of(Quartiles.create(expression.getQuartiles()));
 
-        String value = (expression == null) ? "" : (expression.getLevelAsString().equals("NT")) ? "NT" : (!expression.isKnown() ? "UNKNOWN" : baselineExpressionLevelRounder.format(expression.getLevel()));
+        Double value = expression == null || expression.getLevelAsString().equals("NT") || ! expression.isKnown()
+                ? Double.NaN
+                : expression.getLevel();
         String color = (expression == null) ? "" : (expression.isKnown() && !expression.getLevelAsString().equals("NT") ?
                 colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel) : (expression.getLevelAsString().equals("NT") ? "" : "UNKNOWN"));
 
