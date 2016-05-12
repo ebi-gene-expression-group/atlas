@@ -17,19 +17,17 @@ import java.util.SortedSet;
 public class BaselineExperimentProfilesViewModelBuilder {
 
     private final BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder;
-    private final BaselineExpressionLevelRounder baselineExpressionLevelRounder;
     private final FilterFactorsConverter filterFactorsConverter;
 
     @Inject
-    public BaselineExperimentProfilesViewModelBuilder(BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder, BaselineExpressionLevelRounder baselineExpressionLevelRounder) {
+    public BaselineExperimentProfilesViewModelBuilder(BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder) {
         this.baselineExpressionViewModelBuilder = baselineExpressionViewModelBuilder;
-        this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
         this.filterFactorsConverter = new FilterFactorsConverter();
     }
 
     public BaselineProfilesViewModel build(BaselineExperimentProfilesList profiles, SortedSet<Factor> orderedFactors) {
         BaselineExperimentProfileRowViewModel[] genes = buildExperiments(profiles, orderedFactors, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel());
-        return new BaselineProfilesViewModel<>(baselineExpressionLevelRounder, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel(), profiles.getTotalResultCount(), genes);
+        return new BaselineProfilesViewModel<>(profiles.getTotalResultCount(), genes);
     }
 
     public BaselineExperimentProfileRowViewModel[] buildExperiments(List<BaselineExperimentProfile> baselineProfiles, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {

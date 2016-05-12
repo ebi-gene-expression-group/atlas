@@ -44,7 +44,7 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
     private double colourScale = 1;
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
     private BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder = new BaselineExpressionViewModelBuilder(colorGradient);
-    private BaselineExperimentProfilesViewModelBuilder subject = new BaselineExperimentProfilesViewModelBuilder(baselineExpressionViewModelBuilder, new BaselineExpressionLevelRounder());
+    private BaselineExperimentProfilesViewModelBuilder subject = new BaselineExperimentProfilesViewModelBuilder(baselineExpressionViewModelBuilder);
     private SortedSet<Factor> orderedFactors = ImmutableSortedSet.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
 
     private static final FactorGroup EMPTY_FACTOR_SET = new FactorSet();
@@ -96,9 +96,7 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
         String json = gson.toJson(profiles);
 
-        String expected = "{\n" +
-                "  \"minExpressionLevel\": 1.7976931348623157E308,\n" +
-                "  \"maxExpressionLevel\": 0.0,\n" +
+        String expected = "{\n"+
                 "  \"searchResultTotal\": 0,\n" +
                 "  \"rows\": [\n" +
                 "    {\n" +

@@ -8,7 +8,6 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileDeserializer;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
@@ -41,21 +40,19 @@ public class BaselineProfilesViewModelBuilderTest {
     private double colourScale = 1;
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
     private BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder = new BaselineExpressionViewModelBuilder(colorGradient);
-    private BaselineProfilesViewModelBuilder subject = new BaselineProfilesViewModelBuilder(baselineExpressionViewModelBuilder, new BaselineExpressionLevelRounder());
+    private BaselineProfilesViewModelBuilder subject = new BaselineProfilesViewModelBuilder(baselineExpressionViewModelBuilder);
     private SortedSet<Factor> orderedFactors = ImmutableSortedSet.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
 
     @Test
     public void buildProfilesViewModel() {
         BaselineProfileRowViewModel[] genes = subject.buildGenes(baselineProfiles, orderedFactors, minExpressionLevel, maxExpressionLevel);
 
-        BaselineProfilesViewModel profiles = new BaselineProfilesViewModel<>(new BaselineExpressionLevelRounder(), 1.1, 2.2, 50, genes);
+        BaselineProfilesViewModel profiles = new BaselineProfilesViewModel<>(50, genes);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
         String json = gson.toJson(profiles);
 
         String expected = "{\n" +
-                "  \"minExpressionLevel\": 1.0,\n" +
-                "  \"maxExpressionLevel\": 2.0,\n" +
                 "  \"searchResultTotal\": 50,\n" +
                 "  \"rows\": [\n" +
                 "    {\n" +

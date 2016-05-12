@@ -51,13 +51,10 @@ public class BaselineExpressionDao {
 
     private final OracleObjectFactory oracleObjectFactory;
 
-    private final BaselineExpressionLevelRounder baselineExpressionLevelRounder;
-
     @Inject
-    public BaselineExpressionDao(JdbcTemplate jdbcTemplate, OracleObjectFactory oracleObjectFactory, BaselineExpressionLevelRounder baselineExpressionLevelRounder) {
+    public BaselineExpressionDao(JdbcTemplate jdbcTemplate, OracleObjectFactory oracleObjectFactory) {
         this.jdbcTemplate = jdbcTemplate;
         this.oracleObjectFactory = oracleObjectFactory;
-        this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
     }
 
     //TODO: allow fetching by species
@@ -93,7 +90,8 @@ public class BaselineExpressionDao {
                                 return;
                             }
 
-                            double expression = baselineExpressionLevelRounder.round(rs.getDouble(BaselineQueryBuilder.EXPRESSION) / numberOfGenesExpressedInCurrentExperiment.intValue());
+                            double expression = BaselineExpressionLevelRounder.round(rs.getDouble
+                                    (BaselineQueryBuilder.EXPRESSION) / numberOfGenesExpressedInCurrentExperiment.intValue());
                             BaselineExperimentExpression bslnExpression = BaselineExperimentExpression.create(experimentAccession, assayGroupId, expression);
 
                             builder.add(bslnExpression);

@@ -127,7 +127,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     }
 
     private static double fold(double value, int foldFactor) {
-        return new BaselineExpressionLevelRounder().round(value / foldFactor);
+        return BaselineExpressionLevelRounder.round(value / foldFactor);
     }
 
     private void resetMaxMin() {

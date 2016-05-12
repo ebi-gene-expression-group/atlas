@@ -28,38 +28,15 @@ import org.springframework.context.annotation.Scope;
 import javax.inject.Named;
 import java.text.NumberFormat;
 
-@Named("baselineExpressionLevelRounder")
-@Scope("singleton")
 public class BaselineExpressionLevelRounder {
 
-    private static final int FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE = 0;
-    private static final int FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE = 1;
-    private static final int FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ZEROPOINTONE = 7;
+    private BaselineExpressionLevelRounder(){}
 
-    private final NumberFormat format1Dp = NumberFormat.getNumberInstance();
-    private final NumberFormat formatNoDp = NumberFormat.getNumberInstance();
-    private final NumberFormat format7Dp = NumberFormat.getNumberInstance();
-
-    public BaselineExpressionLevelRounder() {
-        format1Dp.setGroupingUsed(false);
-        format1Dp.setMaximumFractionDigits(1);
-        formatNoDp.setGroupingUsed(false);
-        formatNoDp.setMaximumFractionDigits(0);
-        format7Dp.setGroupingUsed(false);
-        format7Dp.setMaximumFractionDigits(7);
-    }
-
-    public String format(double expressionLevel) {
-        if (expressionLevel >= 1) return formatNoDp.format(expressionLevel);
-        else if (expressionLevel >= 0.1) return format1Dp.format(expressionLevel);
-        else return format7Dp.format(expressionLevel);
-    }
-
-    public double round(double value) {
-        int numberOfFractionalDigits = 0;
-        if (value >= 1) numberOfFractionalDigits = FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE;
-        else if (value >= 0.1) numberOfFractionalDigits = FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE;
-        else numberOfFractionalDigits = FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ZEROPOINTONE;
+    public static double round(double value) {
+        int numberOfFractionalDigits;
+        if (value >= 1) numberOfFractionalDigits = 0;
+        else if (value >= 0.1) numberOfFractionalDigits = 1;
+        else numberOfFractionalDigits = 7;
         return MathUtils.round(value, numberOfFractionalDigits);
     }
 

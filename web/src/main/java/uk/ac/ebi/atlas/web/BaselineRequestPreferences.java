@@ -33,8 +33,6 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
     private static final String DEFAULT_GENE_QUERY_VALUE = "protein_coding";
     private static final String DEFAULT_GENE_QUERY_SOURCE = "gene_biotype";
 
-    private BaselineExpressionLevelRounder baselineExpressionLevelRounder = new BaselineExpressionLevelRounder();
-
     @Override
     protected GeneQuery getDefaultGeneQuery() {
         return GeneQuery.create(DEFAULT_GENE_QUERY);
@@ -53,7 +51,7 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
     @Override
     public void setCutoff(Double cutoff) {
         if (cutoff != null) {
-            super.setCutoff(baselineExpressionLevelRounder.round(cutoff));
+            super.setCutoff(BaselineExpressionLevelRounder.round(cutoff));
         } else {
             super.setCutoff(null);
         }

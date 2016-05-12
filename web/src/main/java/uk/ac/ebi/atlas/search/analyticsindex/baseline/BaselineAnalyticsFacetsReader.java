@@ -1,28 +1,21 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.collect.*;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jayway.jsonpath.JsonPath;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
 
-import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @Named
 public class BaselineAnalyticsFacetsReader {
-
-    private final BaselineExpressionLevelRounder baselineExpressionLevelRounder;
-
-    @Inject
-    public BaselineAnalyticsFacetsReader(BaselineExpressionLevelRounder baselineExpressionLevelRounder) {
-        this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
-    }
-
 
     public ImmutableList<BaselineExperimentExpression> extractAverageExpressionLevel(List<Map<String, Object>> results) {
 
@@ -42,7 +35,7 @@ public class BaselineAnalyticsFacetsReader {
                 double sumExpressionLevel;
                 sumExpressionLevel = ((Number) assayGroup.get("sumExpressionLevel")).doubleValue();
 
-                double expression = baselineExpressionLevelRounder.round(sumExpressionLevel / numberOfGenesExpressedAcrossAllAssayGroups);
+                double expression = BaselineExpressionLevelRounder.round(sumExpressionLevel / numberOfGenesExpressedAcrossAllAssayGroups);
                 BaselineExperimentExpression bslnExpression = BaselineExperimentExpression.create(experimentAccession, assayGroupId, expression);
 
                 builder.add(bslnExpression);
