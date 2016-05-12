@@ -89,10 +89,11 @@
          <title id="aorta">aorta</title>
          </path>
       <g
-         id="Circulatory_system"
+         id="UBERON_0001009"
          transform="matrix(0.16698404,0,0,0.15488747,-193.5534,-10.298909)"
-         inkscape:label="Circulatory system"
+         inkscape:label="circulatory system"
          style="fill:none">
+         <title id="circulatory_system">circulatory system</title>
         <g
            id="g7204"
            style="fill:none">

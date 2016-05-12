@@ -220,9 +220,13 @@
          <path
          style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
          d="m 85.744368,76.183066 c 2.539062,-4.6875 7.617187,-3.71093 7.617187,-3.71093 6.25,2.14843 5.859375,4.6875 5.859375,4.6875 -0.78125,3.32031 -4.296875,1.36718 -4.296875,1.36718 -3.710937,-0.78125 -5.46875,-0.58593 -5.46875,-0.58593 -0.651042,0.0651 -1.302083,0.13021 -1.953125,0.19531 -1.660156,0 -1.757812,-1.95313 -1.757812,-1.95313 z"
-         id="corpora_quadrigemina"
+         id="UBERON_0002259"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ccccccc"
-         inkscape:label="corpora_quadrigemina" /></g><!-- LAYER_EFO --></g>
+         inkscape:label="corpora_quadrigemina">
+         <title id="corpora_quadrigemina">corpora quadrigemina</title>
+         </path>
+         
+         </g><!-- LAYER_EFO --></g>
     <!-- group_all -->
 <a id="ccLogo" xlink:href="https://www.ebi.ac.uk/gxa/license.html"> <image  xlink:href="https://licensebuttons.net/i/l/by/ffffff/33/99/33/80x15.png" x="55" y="0" height="15" width="80" /></a></svg>
