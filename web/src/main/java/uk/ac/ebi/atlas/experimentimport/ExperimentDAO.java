@@ -214,4 +214,10 @@ public class ExperimentDAO {
         throw new IncorrectResultSizeDataAccessException(experimentDTOs.size());
 
     }
+
+    public Integer countExperiments() {
+        String query = "SELECT COUNT(*) FROM EXPERIMENT";
+
+        return jdbcTemplate.queryForObject(query, Integer.class);
+    }
 }

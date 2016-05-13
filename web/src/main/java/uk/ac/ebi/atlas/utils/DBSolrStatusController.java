@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.utils;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ public final class DBSolrStatusController {
 
     private ExperimentDAO experimentDAO;
     private SolrClient solrClient;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DBSolrStatusController.class);
 
     @Inject
     public DBSolrStatusController(ExperimentDAO experimentDAO, SolrClient solrClient) {
@@ -34,24 +37,22 @@ public final class DBSolrStatusController {
         ModelAndView mav = new ModelAndView(new MappingJacksonJsonView());
 
         //check database is up or down
-        Integer experimentsSize = experimentDAO.findAllExperiments().size();
-        String dbStatus = (experimentsSize > 0) ? "up" : "down";
+        Integer experimentsSize = experimentDAO.countExperiments();
+        String dbStatus = (experimentsSize > 0) ? "UP" : "DOWN";
 
         //check solr is up or down
-        String solrStatus = null;
+        String solrStatus = "UP";
         try {
             if(solrClient.ping().getStatus() == 0) {
-                solrStatus = "up";
+                solrStatus = "UP";
             }
-        } catch (SolrServerException e) {
-            e.printStackTrace();
-            solrStatus = "down";
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SolrServerException | IOException e) {
+            LOGGER.error(e.getMessage());
+            solrStatus = "DOWN";
         }
 
-        mav.addObject("DataBase status", dbStatus);
-        mav.addObject("Solr status", solrStatus);
+        mav.addObject("DB", dbStatus);
+        mav.addObject("Solr", solrStatus);
         return mav;
     }
 }
