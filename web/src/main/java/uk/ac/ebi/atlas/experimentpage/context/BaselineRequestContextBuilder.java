@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
+import com.google.common.base.Optional;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -21,6 +22,8 @@ public class BaselineRequestContextBuilder {
 
     private BaselineRequestPreferences preferences;
 
+    private Optional<String> queryDescription = Optional.absent();
+
     public BaselineRequestContextBuilder(FilterFactorsConverter filterFactorsConverter) {
         this.filterFactorsConverter = filterFactorsConverter;
     }
@@ -32,6 +35,11 @@ public class BaselineRequestContextBuilder {
 
     public BaselineRequestContextBuilder withPreferences(BaselineRequestPreferences preferences) {
         this.preferences = preferences;
+        return this;
+    }
+
+    public BaselineRequestContextBuilder withCustomQueryDescription(String description) {
+        this.queryDescription = Optional.of(description);
         return this;
     }
 
@@ -47,6 +55,10 @@ public class BaselineRequestContextBuilder {
         requestContext.setExperiment(experiment);
 
         requestContext.setRequestPreferences(preferences);
+
+        requestContext.setQueryDescription(queryDescription.or(preferences.getGeneQuery().description()));
+
+
 
         SortedSet<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
         requestContext.setSelectedFilterFactors(selectedFilterFactors);

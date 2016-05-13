@@ -30,6 +30,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import java.util.SortedSet;
@@ -74,6 +75,7 @@ public class DifferentialRequestContextBuilderTest {
 
         when(experimentMock.getContrasts()).thenReturn(sortedSet);
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet("a")));
+        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.EMPTY);
         when(experimentMock.getContrast(CONTRAST_NAME1)).thenReturn(contrastMock1);
 
     }

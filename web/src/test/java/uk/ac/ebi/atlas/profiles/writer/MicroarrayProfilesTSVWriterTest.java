@@ -92,6 +92,7 @@ public class MicroarrayProfilesTSVWriterTest {
     public void initMocks() throws Exception {
         when(geneProfileMock.getExpression(any(Contrast.class))).thenReturn(expressionMock);
         when(microarrayRequestContextMock.getGeneQuery()).thenReturn(GeneQuery.create(ImmutableList.of("")));
+        when(microarrayRequestContextMock.getQueryDescription()).thenReturn("");
         when(microarrayRequestContextMock.getSelectedQueryFactors()).thenReturn(Collections.EMPTY_SET);
         when(microarrayRequestContextMock.getRegulation()).thenReturn(Regulation.UP);
         when(microarrayRequestContextMock.getExperiment()).thenReturn(experimentMock);

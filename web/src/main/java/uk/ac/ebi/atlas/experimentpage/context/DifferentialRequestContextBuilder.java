@@ -34,11 +34,11 @@ import java.util.Set;
 import java.util.SortedSet;
 
 public class DifferentialRequestContextBuilder<T extends DifferentialRequestContext, K extends DifferentialRequestPreferences> {
-    private T requestContext;
+    protected T requestContext;
     private K requestPreferences;
     private DifferentialExperiment experiment;
 
-    public DifferentialRequestContextBuilder(T requestContext) {
+    protected DifferentialRequestContextBuilder(T requestContext) {
         this.requestContext = requestContext;
     }
 
@@ -56,17 +56,19 @@ public class DifferentialRequestContextBuilder<T extends DifferentialRequestCont
 
         Preconditions.checkState(experiment != null, "Please invoke forExperiment before build");
 
-        getRequestContext().setRequestPreferences(getRequestPreferences());
+        requestContext.setRequestPreferences(getRequestPreferences());
 
-        getRequestContext().setSelectedQueryFactors(getSelectedQueryContrasts(experiment));
+        requestContext.setQueryDescription(getRequestPreferences().getGeneQuery().description());
 
-        getRequestContext().setFilteredBySpecies(experiment.getFirstOrganism().toLowerCase());
+        requestContext.setSelectedQueryFactors(getSelectedQueryContrasts(experiment));
 
-        getRequestContext().setAllQueryFactors(experiment.getContrasts());
+        requestContext.setFilteredBySpecies(experiment.getFirstOrganism().toLowerCase());
 
-        getRequestContext().setExperiment(experiment);
+        requestContext.setAllQueryFactors(experiment.getContrasts());
 
-        return getRequestContext();
+        requestContext.setExperiment(experiment);
+
+        return requestContext;
     }
 
     Set<Contrast> getSelectedQueryContrasts(DifferentialExperiment experiment) {
@@ -86,10 +88,6 @@ public class DifferentialRequestContextBuilder<T extends DifferentialRequestCont
 
         }
         return selectedQueryContrasts;
-    }
-
-    protected T getRequestContext() {
-        return requestContext;
     }
 
     protected DifferentialRequestPreferences getRequestPreferences() {

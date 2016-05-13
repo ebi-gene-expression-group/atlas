@@ -40,7 +40,7 @@ public class MicroarrayRequestContextBuilder extends DifferentialRequestContextB
     @Override
     public MicroarrayRequestContextBuilder withPreferences(MicroarrayRequestPreferences requestPreferences) {
         super.withPreferences(requestPreferences);
-        getRequestContext().setArrayDesignAccession(requestPreferences.getArrayDesignAccession());
+        requestContext.setArrayDesignAccession(requestPreferences.getArrayDesignAccession());
         return this;
     }
 

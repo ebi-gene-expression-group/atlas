@@ -91,6 +91,16 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
                 .build();
     }
 
+    public static BaselineRequestContext createWithCustomGeneQueryDescription(BaselineExperiment experiment,
+                                                               BaselineRequestPreferences  preferences, String
+                                                                                      description){
+        return new BaselineRequestContextBuilder(new FilterFactorsConverter())
+                .forExperiment(experiment)
+                .withPreferences(preferences)
+                .withCustomQueryDescription(description)
+                .build();
+    }
+
     public SortedSet<Factor> getOrderedFilterFactors(){
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
         Set<Factor> selectedFilterFactors = this.getSelectedFilterFactors();

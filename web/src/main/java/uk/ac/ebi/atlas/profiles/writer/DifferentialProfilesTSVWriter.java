@@ -91,9 +91,8 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
 
     @Override
     protected String getTsvFileMasthead(DifferentialProfileStreamOptions options, boolean isGeneSet) {
-        //TODO: this class should be decoupled from requestContext
         DifferentialRequestContext requestContext = getRequestContext();
-        String geneQuery = requestContext.getGeneQuery().asString();
+        String geneQuery = requestContext.getQueryDescription();
         String specific = requestContext.isSpecific() ? " specifically" : "";
         String exactMatch = requestContext.isExactMatch() ? " exactly" : "";
         String regulation = " " + requestContext.getRegulation().getLabel();

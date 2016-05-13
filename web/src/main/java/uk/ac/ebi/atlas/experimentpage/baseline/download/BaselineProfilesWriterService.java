@@ -23,14 +23,22 @@ public class BaselineProfilesWriterService {
 
     public long write(Writer writer, BaselineRequestPreferences preferences, BaselineExperiment experiment,
                      Map<String, Integer> coexpressionsRequested) throws GenesNotFoundException {
-        if(coexpressionsRequested.isEmpty()){
+        int totalCoexpressionsRequested = 0;
+        for(Map.Entry<String, Integer> e: coexpressionsRequested.entrySet()){
+            totalCoexpressionsRequested+=e.getValue();
+        }
+        if(totalCoexpressionsRequested==0){
             return baselineProfilesWriter.write(writer, BaselineRequestContext.createFor(experiment,preferences));
         } else {
             GeneQuery originalGeneQuery = preferences.getGeneQuery();
+            GeneQuery extendedGeneQuery = coexpressedGenesService.extendGeneQueryWithCoexpressions(experiment,
+                    originalGeneQuery,coexpressionsRequested);
 
-            preferences.setGeneQuery(coexpressedGenesService.extendGeneQueryWithCoexpressions(experiment,
-                    originalGeneQuery,coexpressionsRequested));
-            long count = baselineProfilesWriter.write(writer, BaselineRequestContext.createFor(experiment,preferences));
+            preferences.setGeneQuery(extendedGeneQuery);
+            long count = baselineProfilesWriter.write(writer, BaselineRequestContext
+                    .createWithCustomGeneQueryDescription(experiment,preferences, originalGeneQuery.description()
+                            +" with "+(extendedGeneQuery.size()-originalGeneQuery.size())+" similarly expressed " +
+                            "genes"));
             preferences.setGeneQuery(originalGeneQuery);
 
             return count;

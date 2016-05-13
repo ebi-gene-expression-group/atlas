@@ -21,7 +21,7 @@ public class CoexpressedGenesService {
         for(String t: geneQuery.terms()){
             if(coexpressionsRequested.containsKey(t.toUpperCase())) {
                 List<String> l = coexpressedGenesDao.coexpressedGenesFor(experiment.getAccession(), t);
-                l = l.subList(0, Math.min(Math.max(0,coexpressionsRequested.get(t)), l.size()));
+                l = l.subList(0, Math.min(Math.max(0,coexpressionsRequested.get(t.toUpperCase())), l.size()));
                 result = result.extend(t,l.toArray(new String[l.size()]));
             }
         }

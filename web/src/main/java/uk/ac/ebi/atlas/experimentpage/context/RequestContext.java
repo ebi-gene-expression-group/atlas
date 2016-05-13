@@ -39,6 +39,11 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
     private Set<T> selectedQueryFactors;
     private String filteredBySpecies;
     private Set<T> allQueryFactors;
+    private String queryDescription;
+
+    public String getQueryDescription(){
+        return queryDescription;
+    }
 
     public GeneQuery getGeneQuery() {
         return getRequestPreferences().getGeneQuery();
@@ -84,6 +89,10 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
 
     void setFilteredBySpecies(String filteredBySpecies) {
         this.filteredBySpecies = filteredBySpecies;
+    }
+
+    void setQueryDescription(String queryDescription){
+        this.queryDescription = queryDescription;
     }
 
     protected void setRequestPreferences(K requestPreferences) {

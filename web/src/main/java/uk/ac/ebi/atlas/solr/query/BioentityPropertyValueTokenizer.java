@@ -12,9 +12,9 @@ import java.util.regex.Pattern;
 
 import static uk.ac.ebi.atlas.utils.StringArrayUtil.quotePhrases;
 
-@Named
-@Scope("singleton")
 public class BioentityPropertyValueTokenizer {
+
+    private BioentityPropertyValueTokenizer(){}
 
     private static final String SPLIT_BY_SPACE_PRESERVING_DOUBLE_QUOTES_REGEXP = "\"([^\"]*)\"|(\\S+)";
 
