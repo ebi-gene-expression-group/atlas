@@ -1384,10 +1384,10 @@ var CoexpressionOption = React.createClass({
 
   _showOfferToDisplay: function(){
     return <DisplayLevelsButton hideText=""
-                         showText="Show genes with similar expression pattern"
+                         showText="Add similarly expressed genes"
                          onClickCallback={this._turnOnWithDefaultValue}
                          displayLevels={false}
-                         width="200px"
+                         width="250px"
                          fontSize="14px"/>
   },
 
@@ -1398,15 +1398,15 @@ var CoexpressionOption = React.createClass({
     };
     marks[this.props.numCoexpressionsAvailable] = this.props.numCoexpressionsAvailable;
     return <div>
-    <p style={{"fontSize":"93%"}}>{"Display genes with similar expressions as "+this.props.geneName+":"}</p>
-    <div style={{"width":"200px", "margin":"20px"}}>
-    <Slider min={0} max={this.props.numCoexpressionsAvailable} onAfterChange={this._chooseValue} marks={marks} included={false} defaultValue={10} />
-    </div>
+      <p>{"Display genes with similar expressions to "+this.props.geneName+":"}</p>
+      <div className="gxaSlider">
+        <Slider min={0} max={this.props.numCoexpressionsAvailable} onAfterChange={this._chooseValue} marks={marks} included={false} defaultValue={10} />
+      </div>
     </div>
   },
 
   render: function() {
-    return  <div>
+    return  <div className="gxaDisplayCoexpressionOffer">
               {this.state.visible
               ? this._showSlider()
               : this._showOfferToDisplay()}
