@@ -182,7 +182,7 @@ public class BioentitiesNewSearchController {
     }
 
     private String singleTermGeneQueryAsJson(SemanticQuery geneQuery, String species) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
 
         // Gene set ID
         if (GeneSetUtil.isGeneSetSourceOrMatchesGeneSetAccession(geneQuery)) {

@@ -98,7 +98,7 @@ public class DifferentialResultsReader {
 
         resultsWithLevels.put("results", filteredDocuments);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
         return gson.toJson(resultsWithLevels);
     }
 }

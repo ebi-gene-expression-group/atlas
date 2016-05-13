@@ -67,7 +67,7 @@ public class BaselineAnalyticsFacetsReader {
             }
         }
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
 
         return gson.toJson(facetTreeMultimap.asMap());
     }

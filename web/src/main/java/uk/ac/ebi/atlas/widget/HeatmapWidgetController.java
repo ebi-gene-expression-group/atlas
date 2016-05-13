@@ -67,7 +67,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     private final SolrQueryService solrQueryService;
 
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
 
     @Inject
     private HeatmapWidgetController(ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService,

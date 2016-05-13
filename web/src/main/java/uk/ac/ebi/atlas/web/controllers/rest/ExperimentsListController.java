@@ -20,6 +20,7 @@ import java.util.List;
 @Scope("request")
 public class ExperimentsListController {
 
+    private Gson gson = new Gson();
     private ExperimentInfoListBuilder experimentInfoListBuilder;
 
     @Inject
@@ -37,10 +38,8 @@ public class ExperimentsListController {
 
         List<ExperimentInfo> experimentInfos = experimentInfoListBuilder.build();
         Collections.sort(experimentInfos);
-        ExperimentInfoWrapper experimentInfoWrapper = new ExperimentInfoWrapper(experimentInfos);
 
-        Gson gson = new Gson();
-        return gson.toJson(experimentInfoWrapper);
+        return gson.toJson(new ExperimentInfoWrapper(experimentInfos));
     }
 
     /**

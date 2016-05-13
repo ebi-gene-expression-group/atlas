@@ -15,6 +15,8 @@ import java.util.Collection;
 @Scope("request")
 public class ConditionsQueryController {
     private DifferentialConditionsSearchService differentialConditionsSearchService;
+    private Gson gson = new Gson();
+
 
     @Inject
     public ConditionsQueryController(DifferentialConditionsSearchService differentialConditionsSearchService) {
@@ -27,7 +29,6 @@ public class ConditionsQueryController {
     public String findContrasts(@RequestParam(value = "query") String query) {
         Collection<IndexedAssayGroup> contrasts = differentialConditionsSearchService.findContrasts(query);
 
-        Gson gson = new Gson();
         return gson.toJson(contrasts);
     }
 }
