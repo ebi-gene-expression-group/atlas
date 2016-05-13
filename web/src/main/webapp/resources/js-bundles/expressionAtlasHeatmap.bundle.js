@@ -13434,10 +13434,10 @@ webpackJsonp_name_([3],[
 	
 	    _showOfferToDisplay: function () {
 	        return React.createElement(DisplayLevelsButton, { hideText: '',
-	            showText: 'Show genes with similar expression pattern',
+	            showText: 'Add similarly expressed genes',
 	            onClickCallback: this._turnOnWithDefaultValue,
 	            displayLevels: false,
-	            width: '200px',
+	            width: '250px',
 	            fontSize: '14px' });
 	    },
 	
@@ -13452,12 +13452,12 @@ webpackJsonp_name_([3],[
 	            null,
 	            React.createElement(
 	                'p',
-	                { style: { "fontSize": "93%" } },
-	                "Display genes with similar expressions as " + this.props.geneName + ":"
+	                null,
+	                "Display genes with similar expressions to " + this.props.geneName + ":"
 	            ),
 	            React.createElement(
 	                'div',
-	                { style: { "width": "200px", "margin": "20px" } },
+	                { className: 'gxaSlider' },
 	                React.createElement(Slider, { min: 0, max: this.props.numCoexpressionsAvailable, onAfterChange: this._chooseValue, marks: marks, included: false, defaultValue: 10 })
 	            )
 	        );
@@ -13466,7 +13466,7 @@ webpackJsonp_name_([3],[
 	    render: function () {
 	        return React.createElement(
 	            'div',
-	            null,
+	            { className: 'gxaDisplayCoexpressionOffer' },
 	            this.state.visible ? this._showSlider() : this._showOfferToDisplay()
 	        );
 	    }
@@ -23158,7 +23158,7 @@ webpackJsonp_name_([3],[
 	
 	
 	// module
-	exports.push([module.id, ".gxaHeatmapMatrixTopLeftCorner {\n    position: relative;\n    display: table;\n    height: 110px;\n    width: 100%;\n    min-width: 160px;\n}\n\n.gxaTableGrid {\n    color: #404040;\n    background-color: white;\n    border: 1px solid #cdcdcd !important;\n    border-spacing: 0;\n    empty-cells: show;\n    height: 100%;\n    text-align: left;\n    width: auto;\n    border-collapse: collapse;\n}\n\n.gxaTableGrid>tbody>tr>td, .gxaTableGrid>thead>tr>td {\n    color: #3D3D3D;\n    vertical-align: middle;\n    border: 1px solid #cdcdcd !important;\n    height: 25px;\n    width: 25px;\n    white-space: nowrap;\n}\n\nth.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {\n    font-weight: normal;\n    background-color: rgb(237, 246, 246) !important;\n}\n\nth.gxaHoverableHeader:hover, th.gxaHeaderHover {\n    background-color: #deebeb !important;\n}\n\nth.gxaSelectableHeader:hover {\n    cursor: pointer;\n}\n\nth.gxaVerticalHeaderCell-selected, th.gxaVerticalHeaderCell-selected:hover, th.gxaHorizontalHeaderCell-selected, th.gxaHorizontalHeaderCell-selected:hover {\n    background-color: rgb(181, 234, 234) !important;\n    border: 1px solid #cdcdcd;\n    padding:5px;\n}\n\nth.gxaHorizontalHeaderCell {\n    border: 1px solid #cdcdcd;\n    white-space: nowrap;\n    padding:5px;\n    text-align: left !important;\n}\n\ntr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell {\n    background-color: rgb(210, 233, 233) !important;\n}\n\ntr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell:hover {\n    background-color: rgb(200, 220, 220) !important;\n}\n\n.gxaHeatmapCell {\n    font-size: 9px;\n    background-color: white;\n    margin: 4px;\n    padding: 2px;\n    white-space: nowrap;\n    text-align: center;\n}\n\nth.gxaHeatmapTableDesignElement {\n    font-weight: normal;\n    text-align: left;\n    border: 1px solid #CDCDCD;\n}\n\n.gxaHeatmapCountAndLegend {\n    background: white;\n}\n\n.csstransforms .rotated_cell {\n    height: 130px;\n    border: 1px solid #cdcdcd;\n    vertical-align: bottom;\n    padding-bottom: 10px\n}\n\n.csstransforms .rotate_text {\n    position: relative;\n    top: 27px;\n    width: 25px;\n    padding-top: 5px;\n    white-space: nowrap;\n    -moz-transform: rotate(-90deg);\n    -moz-transform-origin: top left;\n    -ms-transform: rotate(-90deg);\n    -ms-transform-origin: top left;\n    -webkit-transform: rotate(-90deg);\n    -webkit-transform-origin: top left;\n    -o-transform: rotate(-90deg);\n    -o-transform-origin: top left;\n}\n\n.csstransforms .rotate_tick {\n    -moz-transform: rotate(-270deg);\n    -webkit-transform: rotate(-270deg);\n    -ms-transform: rotate(-270deg);\n    -o-transform: rotate(-270deg);\n}\n\n.gxaNoTextButton {\n    border: 1px solid #ccc !important; /* overrides ebi-visual.css */\n}\n\n.gxaNoTextButton .ui-button-text {\n    padding: 2px;\n}\n\n.gxaFeedbackBoxWrapper {\n  position: fixed;\n  margin-top: 15px;\n  right: 10px;\n  z-index: 1;\n}\n", ""]);
+	exports.push([module.id, ".gxaHeatmapMatrixTopLeftCorner {\n    position: relative;\n    display: table;\n    height: 110px;\n    width: 100%;\n    min-width: 160px;\n}\n\n.gxaTableGrid {\n    color: #404040;\n    background-color: white;\n    border: 1px solid #cdcdcd !important;\n    border-spacing: 0;\n    empty-cells: show;\n    height: 100%;\n    text-align: left;\n    width: auto;\n    border-collapse: collapse;\n}\n\n.gxaTableGrid>tbody>tr>td, .gxaTableGrid>thead>tr>td {\n    color: #3D3D3D;\n    vertical-align: middle;\n    border: 1px solid #cdcdcd !important;\n    height: 25px;\n    width: 25px;\n    white-space: nowrap;\n}\n\nth.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {\n    font-weight: normal;\n    background-color: rgb(237, 246, 246) !important;\n}\n\nth.gxaHoverableHeader:hover, th.gxaHeaderHover {\n    background-color: #deebeb !important;\n}\n\nth.gxaSelectableHeader:hover {\n    cursor: pointer;\n}\n\nth.gxaVerticalHeaderCell-selected, th.gxaVerticalHeaderCell-selected:hover, th.gxaHorizontalHeaderCell-selected, th.gxaHorizontalHeaderCell-selected:hover {\n    background-color: rgb(181, 234, 234) !important;\n    border: 1px solid #cdcdcd;\n    padding:5px;\n}\n\nth.gxaHorizontalHeaderCell {\n    border: 1px solid #cdcdcd;\n    white-space: nowrap;\n    padding:5px;\n    text-align: left !important;\n}\n\ntr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell {\n    background-color: rgb(210, 233, 233) !important;\n}\n\ntr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell:hover {\n    background-color: rgb(200, 220, 220) !important;\n}\n\n.gxaHeatmapCell {\n    font-size: 9px;\n    background-color: white;\n    margin: 4px;\n    padding: 2px;\n    white-space: nowrap;\n    text-align: center;\n}\n\nth.gxaHeatmapTableDesignElement {\n    font-weight: normal;\n    text-align: left;\n    border: 1px solid #CDCDCD;\n}\n\n.gxaHeatmapCountAndLegend {\n    background: white;\n}\n\n.csstransforms .rotated_cell {\n    height: 130px;\n    border: 1px solid #cdcdcd;\n    vertical-align: bottom;\n    padding-bottom: 10px\n}\n\n.csstransforms .rotate_text {\n    position: relative;\n    top: 27px;\n    width: 25px;\n    padding-top: 5px;\n    white-space: nowrap;\n    -moz-transform: rotate(-90deg);\n    -moz-transform-origin: top left;\n    -ms-transform: rotate(-90deg);\n    -ms-transform-origin: top left;\n    -webkit-transform: rotate(-90deg);\n    -webkit-transform-origin: top left;\n    -o-transform: rotate(-90deg);\n    -o-transform-origin: top left;\n}\n\n.csstransforms .rotate_tick {\n    -moz-transform: rotate(-270deg);\n    -webkit-transform: rotate(-270deg);\n    -ms-transform: rotate(-270deg);\n    -o-transform: rotate(-270deg);\n}\n\n.gxaNoTextButton {\n    border: 1px solid #ccc !important; /* overrides ebi-visual.css */\n}\n\n.gxaNoTextButton .ui-button-text {\n    padding: 2px;\n}\n\n.gxaFeedbackBoxWrapper {\n  position: fixed;\n  margin-top: 15px;\n  right: 10px;\n  z-index: 1;\n}\n\n.gxaDisplayCoexpressionOffer {\n  margin-top: 30px;\n}\n\n.gxaDisplayCoexpressionOffer .gxaSlider {\n  width: 250px;\n  margin: 15px;\n  margin-bottom: 20px;\n}\n\n.gxaDisplayCoexpressionOffer p {\n  font-size: 93%;\n}\n", ""]);
 	
 	// exports
 
