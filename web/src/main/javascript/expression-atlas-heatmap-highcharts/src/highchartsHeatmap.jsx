@@ -95,11 +95,16 @@ var HighchartsHeatmap = React.createClass({
     _attachEventsToRows: function(){
       Snap.selectAll('.highcharts-yaxis-labels > *')
           .forEach(function (v) {
-            var title = v.select('title');
+            //careful - if the label doesn't fit, the element will have two children: displayed and full title
+            //here we assume the longest text is the correct title of the experiment
+            var title =
+              v.selectAll('*').items
+              .map(function(c){return c.node.textContent})
+              .reduce(function(l,r){return l.length > r.length? l : r}, "");
             if (title) {
-            var text = title.node.innerHTML;
-              v.hover(function () {
-                  this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', text);
+              v.hover(
+                function () {
+                  this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', title);
                 }.bind(this)
                   ,
                   function () {
