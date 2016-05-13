@@ -107,7 +107,7 @@
                 </li>
                 <li id="gxaLocalNavLicense" class="last">
                     <a href="${pageContext.request.contextPath}/license.html"
-                       title="Expression Atlas License">License</a>
+                       title="Expression Atlas License">Licence</a>
                 </li>
                 <!--
                 <li class="last"><a href="#">About [service-name]</a></li>
