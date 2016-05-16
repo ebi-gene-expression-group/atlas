@@ -1,16 +1,13 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
+import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -71,22 +68,22 @@ public class BaselineProfilesHeatMapWrangler {
             jsonProfiles = baselineProfilesHeatMap.fetch( requestContext, getGeneQueryResponseForProfiles(), false);
         }
     }
-    public BaselineProfilesViewModel getJsonProfiles() throws GenesNotFoundException {
+    public JsonObject getJsonProfiles() throws GenesNotFoundException {
         fetchProfilesIfMissing();
         return baselineProfilesViewModelBuilder.build(jsonProfiles, requestContext.getOrderedFilterFactors());
     }
 
-    public Optional<BaselineProfilesViewModel> getJsonProfilesAsGeneSets() throws GenesNotFoundException {
+    public Optional<JsonObject> getJsonProfilesAsGeneSets() throws GenesNotFoundException {
         GeneQueryResponse r = getGeneQueryResponseForProfiles();
         return r.containsGeneSets()
-                ? Optional.of(baselineProfilesViewModelBuilder.build(baselineProfilesHeatMap.fetch( requestContext, r, true),
+                ? Optional.of(baselineProfilesViewModelBuilder.build(baselineProfilesHeatMap.fetch(requestContext,r, true),
                 requestContext.getOrderedFilterFactors()))
-                : Optional.<BaselineProfilesViewModel>absent();
+                : Optional.<JsonObject>absent();
     }
 
-    public Map<String, BaselineProfilesViewModel> getJsonCoexpressions() throws GenesNotFoundException {
+    public Map<String, JsonObject> getJsonCoexpressions() throws GenesNotFoundException {
         fetchProfilesIfMissing();
-        Map<String, BaselineProfilesViewModel> result = new HashMap<>();
+        Map<String, JsonObject> result = new HashMap<>();
         if(jsonProfiles.size() == 1) {
             for(String geneName: jsonProfiles.extractGeneNames()){
                 Optional<GeneQuery> query = coexpressedGenesService.tryGetRelatedCoexpressions(experiment, requestContext

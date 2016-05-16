@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
 import com.google.common.base.Optional;
+import com.google.gson.JsonArray;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
@@ -23,18 +24,17 @@ public class BaselineExpressionViewModelBuilder {
         this.colourGradient = colourGradient;
     }
 
-    public BaselineExpressionViewModel[] buildExpressions(Profile<Factor, BaselineExpression> profile,
-                                                          SortedSet<Factor> orderedFactors, double
+    public JsonArray buildExpressions(Profile<Factor, BaselineExpression> profile,
+                                      SortedSet<Factor> orderedFactors, double
                                                                   minExpressionLevel, double maxExpressionLevel) {
-        BaselineExpressionViewModel[] expressionViewModels = new BaselineExpressionViewModel[orderedFactors.size()];
+        JsonArray result = new JsonArray();
 
-        int i = 0;
         for (Factor factor : orderedFactors) {
-            BaselineExpressionViewModel expressionViewModel = createBaselineExpressionViewModel(profile, factor, minExpressionLevel, maxExpressionLevel);
-            expressionViewModels[i++] = expressionViewModel;
+            result.add(createBaselineExpressionViewModel(profile, factor, minExpressionLevel, maxExpressionLevel)
+                    .toJson());
         }
 
-        return expressionViewModels;
+        return result;
     }
 
     private BaselineExpressionViewModel createBaselineExpressionViewModel(Profile<Factor, BaselineExpression> profile, Factor factor, double minExpressionLevel, double maxExpressionLevel) {

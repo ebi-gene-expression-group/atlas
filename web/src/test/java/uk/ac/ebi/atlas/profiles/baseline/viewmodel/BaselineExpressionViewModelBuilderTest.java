@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
@@ -45,16 +46,16 @@ public class BaselineExpressionViewModelBuilderTest {
         profile.add("ORGANISM_PART", new BaselineExpression(NT, new FactorSet(ADIPOSE)));
         profile.add("ORGANISM_PART", new BaselineExpression(0.3, new FactorSet(ADRENAL)));
 
-        BaselineExpressionViewModel[] expressions = subject.buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);
+        JsonArray expressions = subject.buildExpressions(profile, orderedFactors,
+                minExpressionLevel, maxExpressionLevel);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(expressions);
 
         String expected = "[\n"  +
             "  {\n" +
             "    \"factorName\": \"adipose\",\n" +
             "    \"color\": \"\",\n" +
-            "    \"value\": NaN,\n" +
             "    \"svgPathId\": \"ontologyTerm\"\n" +
             "  },\n" +
             "  {\n" +
@@ -64,13 +65,11 @@ public class BaselineExpressionViewModelBuilderTest {
             "  },\n" +
             "  {\n" +
             "    \"factorName\": \"brain\",\n" +
-            "    \"color\": \"\",\n" +
-            "    \"value\": NaN\n" +
+            "    \"color\": \"\"\n" +
             "  },\n" +
             "  {\n" +
             "    \"factorName\": \"breast\",\n" +
-            "    \"color\": \"\",\n" +
-            "    \"value\": NaN\n" +
+            "    \"color\": \"\"\n" +
             "  }\n" +
         "]";
 
@@ -84,16 +83,16 @@ public class BaselineExpressionViewModelBuilderTest {
         profile.add("ORGANISM_PART", new BaselineExpression(NT, new FactorSet(ADIPOSE)));
         profile.add("ORGANISM_PART", new BaselineExpression(new double[]{0.1,0.2,0.3,0.4,0.5}, new FactorSet(ADRENAL)));
 
-        BaselineExpressionViewModel[] expressions = subject.buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);
+        JsonArray expressions = subject.buildExpressions(profile, orderedFactors,
+                minExpressionLevel, maxExpressionLevel);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(expressions);
 
         String expected = "[\n" +
                 "  {\n" +
                 "    \"factorName\": \"adipose\",\n" +
                 "    \"color\": \"\",\n" +
-                "    \"value\": NaN,\n" +
                 "    \"svgPathId\": \"ontologyTerm\"\n" +
                 "  },\n" +
                 "  {\n" +
@@ -110,13 +109,11 @@ public class BaselineExpressionViewModelBuilderTest {
                 "  },\n" +
                 "  {\n" +
                 "    \"factorName\": \"brain\",\n" +
-                "    \"color\": \"\",\n" +
-                "    \"value\": NaN\n" +
+                "    \"color\": \"\"\n" +
                 "  },\n" +
                 "  {\n" +
                 "    \"factorName\": \"breast\",\n" +
-                "    \"color\": \"\",\n" +
-                "    \"value\": NaN\n" +
+                "    \"color\": \"\"\n" +
                 "  }\n" +
                 "]";
 

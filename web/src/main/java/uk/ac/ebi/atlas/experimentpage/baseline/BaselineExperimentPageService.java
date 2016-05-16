@@ -1,10 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.base.Optional;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -39,7 +36,6 @@ public class BaselineExperimentPageService {
     private BaselineExperimentUtil bslnUtil;
     private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
     private Gson gson = new GsonBuilder()
-            .serializeSpecialFloatingPointValues() //Allow "NaN" for expression levels
             .create();
 
     public BaselineExperimentPageService(BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory,
@@ -114,7 +110,7 @@ public class BaselineExperimentPageService {
                 coexpressionsAsJsonArray(heatMapResults.getJsonCoexpressions()));
 
 
-        Optional<BaselineProfilesViewModel> geneSets = heatMapResults.getJsonProfilesAsGeneSets();
+        Optional<JsonObject> geneSets = heatMapResults.getJsonProfilesAsGeneSets();
         model.addAttribute("jsonGeneSetProfiles",
                 geneSets.isPresent()
                 ? viewModelAsJson(geneSets.get())
@@ -143,8 +139,10 @@ public class BaselineExperimentPageService {
     }
 
     // heatmap-data.jsp will understand "" as empty
-    private String viewModelAsJson(BaselineProfilesViewModel viewModel){
-        return viewModel.getRows().length > 0
+    private String viewModelAsJson(JsonObject viewModel){
+        return viewModel.has("rows")
+                && viewModel.get("rows").isJsonArray()
+                && viewModel.get("rows").getAsJsonArray().size() >0
                 ? gson.toJson(viewModel)
                 : "";
     }
@@ -160,12 +158,12 @@ public class BaselineExperimentPageService {
         }
     }
 
-    private String coexpressionsAsJsonArray(Map<String, BaselineProfilesViewModel> coexpressions){
+    private String coexpressionsAsJsonArray(Map<String, JsonObject> coexpressions){
         JsonArray result = new JsonArray();
-        for(Map.Entry<String, BaselineProfilesViewModel> e: coexpressions.entrySet()){
+        for(Map.Entry<String, JsonObject> e: coexpressions.entrySet()){
             JsonObject resultForThisGene = new JsonObject();
             resultForThisGene.addProperty("geneName", e.getKey());
-            resultForThisGene.add("jsonProfiles", gson.toJsonTree(e.getValue()).getAsJsonObject());
+            resultForThisGene.add("jsonProfiles", e.getValue());
             result.add(resultForThisGene);
         }
         return gson.toJson(result);

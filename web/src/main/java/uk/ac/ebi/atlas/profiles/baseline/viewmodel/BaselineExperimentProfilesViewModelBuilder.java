@@ -1,10 +1,12 @@
 package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
+import uk.ac.ebi.atlas.model.baseline.GenericBaselineProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Inject;
@@ -20,35 +22,42 @@ public class BaselineExperimentProfilesViewModelBuilder {
     private final FilterFactorsConverter filterFactorsConverter;
 
     @Inject
-    public BaselineExperimentProfilesViewModelBuilder(BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder) {
+    public BaselineExperimentProfilesViewModelBuilder(BaselineExpressionViewModelBuilder
+                                                                  baselineExpressionViewModelBuilder) {
         this.baselineExpressionViewModelBuilder = baselineExpressionViewModelBuilder;
         this.filterFactorsConverter = new FilterFactorsConverter();
     }
 
-    public BaselineProfilesViewModel build(BaselineExperimentProfilesList profiles, SortedSet<Factor> orderedFactors) {
-        BaselineExperimentProfileRowViewModel[] genes = buildExperiments(profiles, orderedFactors, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel());
-        return new BaselineProfilesViewModel<>(profiles.getTotalResultCount(), genes);
+    public JsonElement buildJson(GenericBaselineProfilesList<BaselineExperimentProfile> profiles, SortedSet<Factor>
+            orderedFactors) {
+        JsonObject result = new JsonObject();
+        result.addProperty("searchResultTotal", profiles.getTotalResultCount());
+        result.add("rows", buildExperimentsJson(profiles, orderedFactors, profiles.getMinExpressionLevel(), profiles
+                .getMaxExpressionLevel()));
+        return result;
     }
 
-    public BaselineExperimentProfileRowViewModel[] buildExperiments(List<BaselineExperimentProfile> baselineProfiles, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
-        BaselineExperimentProfileRowViewModel[] viewModels = new BaselineExperimentProfileRowViewModel[baselineProfiles.size()];
-
-        int i = 0;
+    private JsonArray buildExperimentsJson(List<BaselineExperimentProfile> baselineProfiles,
+                                           SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+        JsonArray result = new JsonArray();
         for (BaselineExperimentProfile baselineProfile : baselineProfiles) {
-            BaselineExperimentProfileRowViewModel profileViewModel = buildExperiment(baselineProfile, orderedFactors, minExpressionLevel, maxExpressionLevel);
-            viewModels[i++] = profileViewModel;
+            result.add(buildExperimentJson(baselineProfile, orderedFactors, minExpressionLevel, maxExpressionLevel));
         }
-
-        return viewModels;
+        return result;
     }
 
-    public BaselineExperimentProfileRowViewModel buildExperiment(BaselineExperimentProfile profile, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
-        String geneId = profile.getId();
-        String geneName = profile.getShortName();
-        String experimentType = profile.getExperimentType();
-        String serializedFilterFactors = filterFactorsConverter.serialize(profile.getFilterFactors());
-        BaselineExpressionViewModel[] expressions = baselineExpressionViewModelBuilder.buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);
-        return new BaselineExperimentProfileRowViewModel(geneId, geneName, expressions, serializedFilterFactors, experimentType);
+    private JsonElement buildExperimentJson(BaselineExperimentProfile profile,
+                                            SortedSet<Factor>
+            orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+        JsonObject result = new JsonObject();
+        result.addProperty("id", profile.getId());
+        result.addProperty("name",profile.getShortName());
+        result.addProperty("experimentType", profile.getExperimentType());
+        result.add("expressions", baselineExpressionViewModelBuilder.buildExpressions(profile, orderedFactors,
+                minExpressionLevel, maxExpressionLevel));
+        result.addProperty("serializedFilterFactors", filterFactorsConverter.serialize(profile.getFilterFactors()));
+        return result;
     }
+
 
 }

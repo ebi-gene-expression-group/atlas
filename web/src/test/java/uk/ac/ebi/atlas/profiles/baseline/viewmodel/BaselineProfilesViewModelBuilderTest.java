@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
@@ -45,72 +46,66 @@ public class BaselineProfilesViewModelBuilderTest {
 
     @Test
     public void buildProfilesViewModel() {
-        BaselineProfileRowViewModel[] genes = subject.buildGenes(baselineProfiles, orderedFactors, minExpressionLevel, maxExpressionLevel);
+        JsonElement profiles = subject.buildGenes(baselineProfiles, orderedFactors,
+                minExpressionLevel, maxExpressionLevel);
 
-        BaselineProfilesViewModel profiles = new BaselineProfilesViewModel<>(50, genes);
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(profiles);
 
-        String expected = "{\n" +
-                "  \"searchResultTotal\": 50,\n" +
-                "  \"rows\": [\n" +
-                "    {\n" +
-                "      \"id\": \"ENSG00000082258\",\n" +
-                "      \"name\": \"CCNT2\",\n" +
-                "      \"expressions\": [\n" +
-                "        {\n" +
-                "          \"factorName\": \"adipose\",\n" +
-                "          \"color\": \"\",\n" +
-                "          \"value\": NaN,\n" +
-                "          \"svgPathId\": \"ontologyTerm\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "          \"factorName\": \"adrenal\",\n" +
-                "          \"color\": \"#9697C0\",\n" +
-                "          \"value\": 9.0\n" +
-                "        },\n" +
-                "        {\n" +
-                "          \"factorName\": \"brain\",\n" +
-                "          \"color\": \"#A9AAC0\",\n" +
-                "          \"value\": 5.0\n" +
-                "        },\n" +
-                "        {\n" +
-                "          \"factorName\": \"breast\",\n" +
-                "          \"color\": \"#8D8DC0\",\n" +
-                "          \"value\": 11.0\n" +
-                "        }\n" +
-                "      ]\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"id\": \"ENSG00000047315\",\n" +
-                "      \"name\": \"POLR2B\",\n" +
-                "      \"expressions\": [\n" +
-                "        {\n" +
-                "          \"factorName\": \"adipose\",\n" +
-                "          \"color\": \"\",\n" +
-                "          \"value\": NaN,\n" +
-                "          \"svgPathId\": \"ontologyTerm\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "          \"factorName\": \"adrenal\",\n" +
-                "          \"color\": \"#0000FF\",\n" +
-                "          \"value\": 47.0\n" +
-                "        },\n" +
-                "        {\n" +
-                "          \"factorName\": \"brain\",\n" +
-                "          \"color\": \"\",\n" +
-                "          \"value\": NaN\n" +
-                "        },\n" +
-                "        {\n" +
-                "          \"factorName\": \"breast\",\n" +
-                "          \"color\": \"#4A4AC0\",\n" +
-                "          \"value\": 25.0\n" +
-                "        }\n" +
-                "      ]\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}";
+        String expected =
+                "[\n" +
+                "  {\n" +
+                "    \"id\": \"ENSG00000082258\",\n" +
+                "    \"name\": \"CCNT2\",\n" +
+                "    \"expressions\": [\n" +
+                "      {\n" +
+                "        \"factorName\": \"adipose\",\n" +
+                "        \"color\": \"\",\n" +
+                "        \"svgPathId\": \"ontologyTerm\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"factorName\": \"adrenal\",\n" +
+                "        \"color\": \"#9697C0\",\n" +
+                "        \"value\": 9.0\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"factorName\": \"brain\",\n" +
+                "        \"color\": \"#A9AAC0\",\n" +
+                "        \"value\": 5.0\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"factorName\": \"breast\",\n" +
+                "        \"color\": \"#8D8DC0\",\n" +
+                "        \"value\": 11.0\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"id\": \"ENSG00000047315\",\n" +
+                "    \"name\": \"POLR2B\",\n" +
+                "    \"expressions\": [\n" +
+                "      {\n" +
+                "        \"factorName\": \"adipose\",\n" +
+                "        \"color\": \"\",\n" +
+                "        \"svgPathId\": \"ontologyTerm\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"factorName\": \"adrenal\",\n" +
+                "        \"color\": \"#0000FF\",\n" +
+                "        \"value\": 47.0\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"factorName\": \"brain\",\n" +
+                "        \"color\": \"\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"factorName\": \"breast\",\n" +
+                "        \"color\": \"#4A4AC0\",\n" +
+                "        \"value\": 25.0\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  }\n" +
+                "]";
 
         assertThat(json, is(expected));
     }

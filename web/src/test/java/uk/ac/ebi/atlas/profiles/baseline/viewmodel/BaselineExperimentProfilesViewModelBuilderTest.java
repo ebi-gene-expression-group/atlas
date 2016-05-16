@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -91,9 +92,9 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
     public void buildProfilesViewModel() {
         Collection<BaselineExperimentProfile> baselineExperimentProfiles = ImmutableList.of(profile1, profile2);
         BaselineExperimentProfilesList baselineExperimentProfilesList = new BaselineExperimentProfilesList(baselineExperimentProfiles);
-        BaselineProfilesViewModel profiles = subject.build(baselineExperimentProfilesList, orderedFactors);
+        JsonElement profiles = subject.buildJson(baselineExperimentProfilesList, orderedFactors);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(profiles);
 
         String expected = "{\n"+
@@ -107,23 +108,19 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": NaN,\n" +
                 "          \"svgPathId\": \"ontologyTerm\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"adrenal\",\n" +
-                "          \"color\": \"\",\n" +
-                "          \"value\": NaN\n" +
+                "          \"color\": \"\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"brain\",\n" +
-                "          \"color\": \"\",\n" +
-                "          \"value\": NaN\n" +
+                "          \"color\": \"\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"breast\",\n" +
-                "          \"color\": \"\",\n" +
-                "          \"value\": NaN\n" +
+                "          \"color\": \"\"\n" +
                 "        }\n" +
                 "      ],\n" +
                 "      \"serializedFilterFactors\": \"ORGANISM:Homo sapiens\"\n" +
@@ -136,23 +133,19 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
                 "          \"color\": \"\",\n" +
-                "          \"value\": NaN,\n" +
                 "          \"svgPathId\": \"ontologyTerm\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"adrenal\",\n" +
-                "          \"color\": \"\",\n" +
-                "          \"value\": NaN\n" +
+                "          \"color\": \"\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"brain\",\n" +
-                "          \"color\": \"\",\n" +
-                "          \"value\": NaN\n" +
+                "          \"color\": \"\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"breast\",\n" +
-                "          \"color\": \"\",\n" +
-                "          \"value\": NaN\n" +
+                "          \"color\": \"\"\n" +
                 "        }\n" +
                 "      ],\n" +
                 "      \"serializedFilterFactors\": \"\"\n" +

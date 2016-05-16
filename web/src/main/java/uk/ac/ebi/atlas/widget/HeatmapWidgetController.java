@@ -67,7 +67,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     private final SolrQueryService solrQueryService;
 
-    private Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
+    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Inject
     private HeatmapWidgetController(ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService,
@@ -203,9 +203,8 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
         model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
 
-        BaselineProfilesViewModel profilesViewModel = baselineExperimentProfilesViewModelBuilder.build(baselineProfiles, orderedFactors);
-        String jsonProfiles = gson.toJson(profilesViewModel);
-        model.addAttribute("jsonProfiles", jsonProfiles);
+        model.addAttribute("jsonProfiles", gson.toJson(baselineExperimentProfilesViewModelBuilder.buildJson
+                (baselineProfiles, orderedFactors)));
 
 
 

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +14,6 @@ import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesServ
 import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -45,8 +45,7 @@ public class BaselineProfilesHeatMapWranglerTest {
     @Mock
     private ExperimentalFactors experimentalFactors;
 
-    @Mock
-    BaselineProfilesViewModel resultObject;
+    JsonObject resultObject = new JsonObject();
 
     BaselineProfilesHeatMapWrangler subject;
 

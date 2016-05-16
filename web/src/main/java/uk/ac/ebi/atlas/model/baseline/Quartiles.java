@@ -3,6 +3,8 @@ package uk.ac.ebi.atlas.model.baseline;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.Iterator;
 
@@ -44,6 +46,16 @@ public abstract class Quartiles {
         double max = Double.parseDouble(iterator.next());
 
         return Quartiles.create(min, lower, median, upper, max);
+    }
+
+    public JsonElement toJson(){
+        JsonObject result = new JsonObject();
+        result.addProperty("min", min());
+        result.addProperty("lower", lower());
+        result.addProperty("median", median());
+        result.addProperty("upper", upper());
+        result.addProperty("max", max());
+        return result;
     }
 
 }
