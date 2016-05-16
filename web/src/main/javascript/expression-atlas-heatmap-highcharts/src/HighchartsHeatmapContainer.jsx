@@ -171,7 +171,8 @@ var HighchartsHeatmapContainer = React.createClass({
 
                     var orderedData = HighchartsUtils.rankColumns(data.profiles, data.columnHeaders);
                     var filteredDataByThreshold = HighchartsUtils.applyThresholdtoColumns(orderedData.profiles, orderedData.columnHeaders, 40);
-                    data.profiles.rows = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
+                    var rankedExperiments = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
+                    data.profiles.rows = HighchartsUtils.applyThresholdToRows(rankedExperiments, filteredDataByThreshold.columnHeaders, 40);
 
                     var xAxisCategories = HighchartsUtils.getXAxisCategories(filteredDataByThreshold.columnHeaders);
                     var yAxisCategories = HighchartsUtils.getYAxisCategories(data.profiles, data.config);

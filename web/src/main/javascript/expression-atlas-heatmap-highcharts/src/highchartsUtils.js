@@ -137,7 +137,7 @@ function applyThresholdtoColumns(rows, columns, threshold) {
 
     var percentageExpressed = percentageExpressedAboveThresholdSorted.concat(percentageExpressedBelowThresholdSorted);
 
-    //Filter and order the rows with the new percentage
+    //Filter and order the columns with the new percentage
     for (var i=0; i< rows.length; i++) {
         var expressions = rows[i].expressions;
         var new_expressions = [];
@@ -156,6 +156,51 @@ function applyThresholdtoColumns(rows, columns, threshold) {
         rows: rows,
         columnHeaders: new_columnHeaders
     }
+}
+
+function applyThresholdToRows(rows, columns, threshold) {
+    var percentageExpressedBelowThreshold = [];
+    var percentageExpressedAboveThreshold = [];
+
+    for (var i=0; i < rows.length; i++) {
+        var count = 0;
+        for (var j=0; j < columns.length; j++) {
+            var value = rows[i].expressions[j].value;
+            if(value != "NT" && value != "") {
+                count++;
+            }
+        }
+
+        var totalExpressed = {};
+        totalExpressed.total = count;
+        totalExpressed.percentage = (count / columns.length) * 100;
+        totalExpressed.index = i;
+
+        if(totalExpressed.percentage > threshold) {
+            percentageExpressedAboveThreshold.push(totalExpressed);
+        } else {
+            percentageExpressedBelowThreshold.push(totalExpressed);
+        }
+    }
+
+    //Sort by percentage
+    var percentageExpressedAboveThresholdSorted = percentageExpressedAboveThreshold.sort(function (a,b) {
+        return b.percentage-a.percentage;
+    });
+    var percentageExpressedBelowThresholdSorted = percentageExpressedBelowThreshold.sort(function (a,b) {
+        return b.percentage-a.percentage;
+    });
+
+    var percentageExpressed = percentageExpressedAboveThresholdSorted.concat(percentageExpressedBelowThresholdSorted);
+
+    //Filter and order the rows with the new percentage
+    var new_rows = [];
+    for (var i = 0; i < percentageExpressed.length; i++) {
+        var position = percentageExpressed[i].index;
+        new_rows.push(rows[position]);
+    }
+
+    return new_rows;
 }
 
 function rankExperiments(rows, columns) {
@@ -237,3 +282,4 @@ exports.getYAxisCategoriesLinks = getYAxisCategoriesLinks;
 exports.rankColumns = rankColumns;
 exports.rankExperiments = rankExperiments;
 exports.applyThresholdtoColumns = applyThresholdtoColumns;
+exports.applyThresholdToRows = applyThresholdToRows;
