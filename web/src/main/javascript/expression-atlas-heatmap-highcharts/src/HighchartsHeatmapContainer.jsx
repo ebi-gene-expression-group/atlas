@@ -7,8 +7,6 @@ var React = require('react');
 var $ = require('jquery');
 require('jQuery-ajaxTransport-XDomainRequest');
 
-var EventEmitter = require('events');
-
 //*------------------------------------------------------------------*
 
 var HighchartsHeatmap = require('./HighchartsHeatmap.jsx');
@@ -57,14 +55,6 @@ var HighchartsHeatmapContainer = React.createClass({
         fail: React.PropTypes.func,
         ensemblEventEmitter : React.PropTypes.object.isRequired,
         anatomogramEventEmitter: React.PropTypes.object.isRequired
-    },
-
-    getDefaultProps: function (){
-      var ensemblEventEmitter = new EventEmitter();
-      ensemblEventEmitter.setMaxListeners(0);
-      var anatomogramEventEmitter = new EventEmitter();
-      anatomogramEventEmitter.setMaxListeners(0);
-      return {ensemblEventEmitter: ensemblEventEmitter, anatomogramEventEmitter:anatomogramEventEmitter };
     },
 
     render: function () {

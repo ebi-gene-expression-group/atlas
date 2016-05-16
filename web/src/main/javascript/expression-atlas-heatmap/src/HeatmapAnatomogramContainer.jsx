@@ -9,8 +9,6 @@ var $ = require('jquery');
 require('jQuery-ajaxTransport-XDomainRequest');
 require('jquery-hc-sticky');
 
-var EventEmitter = require('events');
-
 var URI = require('urijs');
 
 //*------------------------------------------------------------------*
@@ -67,14 +65,6 @@ var HeatmapAnatomogramContainer = React.createClass({
         googleAnalyticsCallback: React.PropTypes.func,
         ensemblEventEmitter : React.PropTypes.object.isRequired,
         anatomogramEventEmitter: React.PropTypes.object.isRequired
-    },
-
-    getDefaultProps: function (){
-      var ensemblEventEmitter = new EventEmitter();
-      ensemblEventEmitter.setMaxListeners(0);
-      var anatomogramEventEmitter = new EventEmitter();
-      anatomogramEventEmitter.setMaxListeners(0);
-      return {ensemblEventEmitter: ensemblEventEmitter, anatomogramEventEmitter:anatomogramEventEmitter };
     },
 
     render: function () {

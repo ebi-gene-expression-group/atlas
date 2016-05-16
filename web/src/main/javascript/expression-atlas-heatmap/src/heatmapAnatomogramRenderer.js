@@ -5,6 +5,8 @@ var ReactDOM = require('react-dom');
 
 //*------------------------------------------------------------------*
 
+var EventEmitter = require('events');
+
 var HeatmapAnatomogramContainer = require('./HeatmapAnatomogramContainer.jsx');
 
 var ExperimentTypes = require('./experimentTypes.js');
@@ -42,11 +44,15 @@ exports.render = function(options) {
 
     var sourceURL = atlasBaseURL + endpointPath + "?" + options.params;
 
+    var ensemblEventEmitter = new EventEmitter();
+    ensemblEventEmitter.setMaxListeners(0);
+    var anatomogramEventEmitter = new EventEmitter();
+    anatomogramEventEmitter.setMaxListeners(0);
 
     ReactDOM.render(
         React.createElement(
             HeatmapAnatomogramContainer,
-            {
+            {   key: JSON.stringify(options.params),
                 sourceURL: sourceURL,
                 atlasBaseURL: atlasBaseURL,
                 linksAtlasBaseURL: linksAtlasBaseURL,
@@ -54,7 +60,9 @@ exports.render = function(options) {
                 showAnatomogram: options.showAnatomogram === undefined ? true : options.showAnatomogram,
                 isWidget: options.isWidget === undefined ? true : options.isWidget,
                 disableGoogleAnalytics: options.disableGoogleAnalytics === undefined ? false : options.disableGoogleAnalytics,
-                fail: options.fail
+                fail: options.fail,
+                ensemblEventEmitter: ensemblEventEmitter,
+                anatomogramEventEmitter: anatomogramEventEmitter
             }
         ),
         (typeof options.target === "string") ? document.getElementById(options.target) : options.target

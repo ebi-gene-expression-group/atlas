@@ -69,6 +69,7 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
     },
 
     getDefaultProps: function (){
+      //one ExperimentPageHeatmapAnatomogramContainer per page so this is fine- otherwise the event emitters would be shared
       var ensemblEventEmitter = new EventEmitter();
       ensemblEventEmitter.setMaxListeners(0);
       var anatomogramEventEmitter = new EventEmitter();
