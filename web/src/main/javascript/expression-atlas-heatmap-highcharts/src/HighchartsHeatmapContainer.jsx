@@ -51,6 +51,7 @@ var HighchartsHeatmapContainer = React.createClass({
         linksAtlasBaseURL: React.PropTypes.string.isRequired,
         showAnatomogram:React.PropTypes.bool.isRequired,
         isWidget: React.PropTypes.bool.isRequired,
+        isMultiExperiment: React.PropTypes.bool.isRequired,
         disableGoogleAnalytics: React.PropTypes.bool.isRequired,
         fail: React.PropTypes.func,
         ensemblEventEmitter : React.PropTypes.object.isRequired,
@@ -162,7 +163,11 @@ var HighchartsHeatmapContainer = React.createClass({
                     var orderedData = HighchartsUtils.rankColumns(data.profiles, data.columnHeaders);
                     var filteredDataByThreshold = HighchartsUtils.applyThresholdtoColumns(orderedData.profiles, orderedData.columnHeaders, 40);
                     var rankedExperiments = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
-                    data.profiles.rows = HighchartsUtils.applyThresholdToRows(rankedExperiments, filteredDataByThreshold.columnHeaders, 40);
+                    if (this.props.isMultiExperiment) {
+                        data.profiles.rows = HighchartsUtils.applyThresholdToRows(rankedExperiments, filteredDataByThreshold.columnHeaders, 40);
+                    } else { //We don't apply threshold for reference experiments
+                        data.profiles.rows = rankedExperiments;
+                    }
 
                     var xAxisCategories = HighchartsUtils.getXAxisCategories(filteredDataByThreshold.columnHeaders);
                     var yAxisCategories = HighchartsUtils.getYAxisCategories(data.profiles, data.config);

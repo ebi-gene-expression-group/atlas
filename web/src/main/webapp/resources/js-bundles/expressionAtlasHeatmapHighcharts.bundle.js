@@ -68,6 +68,7 @@ webpackJsonp_name_([4],{
 	                linksAtlasBaseURL: linksAtlasBaseURL,
 	                showAnatomogram: options.showAnatomogram === undefined ? true : options.showAnatomogram,
 	                isWidget: options.isWidget === undefined ? true : options.isWidget,
+	                isMultiExperiment: options.isMultiExperiment,
 	                disableGoogleAnalytics: options.disableGoogleAnalytics === undefined ? false : options.disableGoogleAnalytics,
 	                fail: options.fail
 	            }
@@ -1175,6 +1176,7 @@ webpackJsonp_name_([4],{
 	        linksAtlasBaseURL: React.PropTypes.string.isRequired,
 	        showAnatomogram: React.PropTypes.bool.isRequired,
 	        isWidget: React.PropTypes.bool.isRequired,
+	        isMultiExperiment: React.PropTypes.bool.isRequired,
 	        disableGoogleAnalytics: React.PropTypes.bool.isRequired,
 	        fail: React.PropTypes.func,
 	        ensemblEventEmitter: React.PropTypes.object.isRequired,
@@ -1301,7 +1303,13 @@ webpackJsonp_name_([4],{
 	
 	                var orderedData = HighchartsUtils.rankColumns(data.profiles, data.columnHeaders);
 	                var filteredDataByThreshold = HighchartsUtils.applyThresholdtoColumns(orderedData.profiles, orderedData.columnHeaders, 40);
-	                data.profiles.rows = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
+	                var rankedExperiments = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
+	                if (this.props.isMultiExperiment) {
+	                    data.profiles.rows = HighchartsUtils.applyThresholdToRows(rankedExperiments, filteredDataByThreshold.columnHeaders, 40);
+	                } else {
+	                    //We don't apply threshold for reference experiments
+	                    data.profiles.rows = rankedExperiments;
+	                }
 	
 	                var xAxisCategories = HighchartsUtils.getXAxisCategories(filteredDataByThreshold.columnHeaders);
 	                var yAxisCategories = HighchartsUtils.getYAxisCategories(data.profiles, data.config);
@@ -12223,7 +12231,7 @@ webpackJsonp_name_([4],{
 	
 	    var percentageExpressed = percentageExpressedAboveThresholdSorted.concat(percentageExpressedBelowThresholdSorted);
 	
-	    //Filter and order the rows with the new percentage
+	    //Filter and order the columns with the new percentage
 	    for (var i=0; i< rows.length; i++) {
 	        var expressions = rows[i].expressions;
 	        var new_expressions = [];
@@ -12280,22 +12288,13 @@ webpackJsonp_name_([4],{
 	    var percentageExpressed = percentageExpressedAboveThresholdSorted.concat(percentageExpressedBelowThresholdSorted);
 	
 	    //Filter and order the rows with the new percentage
-	    for (var i=0; i< rows.length; i++) {
-	        var expressions = rows[i].expressions;
-	        var new_expressions = [];
-	
-	        for (var j = 0; j < percentageExpressed.length; j++) {
-	            var position = percentageExpressed[j].index;
-	            new_expressions.push(expressions[position]);
-	        }
-	
-	        rows[i].expressions = new_expressions;
+	    var new_rows = [];
+	    for (var i = 0; i < percentageExpressed.length; i++) {
+	        var position = percentageExpressed[i].index;
+	        new_rows.push(rows[position]);
 	    }
 	
-	    return {
-	        rows: rows
-	    }
-	
+	    return new_rows;
 	}
 	
 	function rankExperiments(rows, columns) {
@@ -12377,6 +12376,7 @@ webpackJsonp_name_([4],{
 	exports.rankColumns = rankColumns;
 	exports.rankExperiments = rankExperiments;
 	exports.applyThresholdtoColumns = applyThresholdtoColumns;
+	exports.applyThresholdToRows = applyThresholdToRows;
 
 /***/ },
 

@@ -51,6 +51,7 @@ exports.render = function(options) {
                 linksAtlasBaseURL: linksAtlasBaseURL,
                 showAnatomogram: options.showAnatomogram === undefined ? true : options.showAnatomogram,
                 isWidget: options.isWidget === undefined ? true : options.isWidget,
+                isMultiExperiment: options.isMultiExperiment,
                 disableGoogleAnalytics: options.disableGoogleAnalytics === undefined ? false : options.disableGoogleAnalytics,
                 fail: options.fail,
                 ensemblEventEmitter: ensemblEventEmitter,
