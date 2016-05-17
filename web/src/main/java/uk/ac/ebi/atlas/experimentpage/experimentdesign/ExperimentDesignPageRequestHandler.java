@@ -22,19 +22,14 @@
 
 package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
-import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineRequestPreferencesValidator;
+import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -86,6 +81,8 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
         model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(request));
 
         extendModel(model, experiment, experimentAccession);
+
+        model.addAllAttributes(experiment.getAttributes());
 
         model.addAttribute("preferences", new ExperimentDesignPageRequestPreferences());
 

@@ -3,10 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineRequestPreferencesValidator;
 import uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -21,8 +18,6 @@ import java.util.Set;
 @Controller
 @Scope("request")
 public class BaselineDesignPageController extends ExperimentDesignPageRequestHandler<BaselineExperiment> {
-
-    private static final String SPECIES = "species";
 
     private FastQCReportUtil fastQCReportUtil;
 
@@ -60,7 +55,7 @@ public class BaselineDesignPageController extends ExperimentDesignPageRequestHan
         try {
             if (fastQCReportUtil.hasFastQC(experimentAccession, species)) {
                 fastQCReportUtil.buildFastQCIndexHtmlPath(experimentAccession, species);
-                model.addAttribute(SPECIES, species);
+                model.addAttribute("species", species);
             }
         } catch (IOException e) {
             throw new ResourceNotFoundException("Species could not be found");
