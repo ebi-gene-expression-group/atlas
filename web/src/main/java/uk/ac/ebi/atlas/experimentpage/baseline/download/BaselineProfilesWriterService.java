@@ -4,6 +4,14 @@ import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesServ
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFilters;
+import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
+import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
@@ -12,13 +20,24 @@ import java.util.Map;
 
 public class BaselineProfilesWriterService {
 
-    private BaselineProfilesWriter baselineProfilesWriter;
+
+    private BaselineProfileInputStreamFactory inputStreamFactory;
+
+    private ProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriter;
+
+    private SolrQueryService solrQueryService;
 
     private CoexpressedGenesService coexpressedGenesService;
 
-    public BaselineProfilesWriterService(BaselineProfilesWriter baselineProfilesWriter, CoexpressedGenesService coexpressedGenesService){
-        this.baselineProfilesWriter = baselineProfilesWriter;
+    public BaselineProfilesWriterService(BaselineProfileInputStreamFactory inputStreamFactory,
+                                         ProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriter,
+                                         SolrQueryService solrQueryService,
+                                         CoexpressedGenesService coexpressedGenesService){
+        this.inputStreamFactory = inputStreamFactory;
+        this.profilesWriter = profilesWriter;
+        this.solrQueryService = solrQueryService;
         this.coexpressedGenesService = coexpressedGenesService;
+
     }
 
     public long write(Writer writer, BaselineRequestPreferences preferences, BaselineExperiment experiment,
@@ -28,20 +47,32 @@ public class BaselineProfilesWriterService {
             totalCoexpressionsRequested+=e.getValue();
         }
         if(totalCoexpressionsRequested==0){
-            return baselineProfilesWriter.write(writer, BaselineRequestContext.createFor(experiment,preferences));
+            return write(writer, BaselineRequestContext.createFor(experiment,preferences));
         } else {
             GeneQuery originalGeneQuery = preferences.getGeneQuery();
             GeneQuery extendedGeneQuery = coexpressedGenesService.extendGeneQueryWithCoexpressions(experiment,
                     originalGeneQuery,coexpressionsRequested);
 
             preferences.setGeneQuery(extendedGeneQuery);
-            long count = baselineProfilesWriter.write(writer, BaselineRequestContext
-                    .createWithCustomGeneQueryDescription(experiment,preferences, originalGeneQuery.description()
-                            +" with "+(extendedGeneQuery.size()-originalGeneQuery.size())+" similarly expressed " +
-                            "genes"));
+            long count = write(writer, BaselineRequestContext.createWithCustomGeneQueryDescription(experiment,preferences,
+                    describe(originalGeneQuery, extendedGeneQuery.size()-originalGeneQuery.size())));
             preferences.setGeneQuery(originalGeneQuery);
 
             return count;
         }
+    }
+
+    private String describe(GeneQuery gq, int coexpressedGenes){
+        return gq.description() +" with "+coexpressedGenes+" similarly expressed genes";
+    }
+
+    /*
+    Note there is an additional path of the code for gene sets, and that we do not use it here.
+    Alfonso says there was once an idea for having the download button give you exactly what's on the page.
+    Didn't happen, you can consider deleting.
+     */
+    private long write(Writer outputWriter, BaselineRequestContext requestContext) throws GenesNotFoundException {
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
+        return profilesWriter.write(outputWriter, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(),geneQueryResponse, false);
     }
 }

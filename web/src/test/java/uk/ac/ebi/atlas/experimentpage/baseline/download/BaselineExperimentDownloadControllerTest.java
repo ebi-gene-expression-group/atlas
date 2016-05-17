@@ -27,23 +27,23 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Qualifier;
-import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
-import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +53,7 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anySet;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -66,7 +66,7 @@ public class BaselineExperimentDownloadControllerTest {
     private BaselineRequestContextBuilder requestContextBuilderMock;
 
     @Mock
-    private BaselineProfilesWriter baselineProfilesWriterMock;
+    private ProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriterMock;
 
     @Mock
     private HttpServletRequest requestMock;
@@ -105,11 +105,14 @@ public class BaselineExperimentDownloadControllerTest {
     @Mock
     CoexpressedGenesService coexpressedGenesService;
 
+    @Mock
+    SolrQueryService solrQueryService;
+
 
     @Before
     public void setUp() throws Exception {
-        baselineProfilesWriterService = new BaselineProfilesWriterService(baselineProfilesWriterMock, coexpressedGenesService);
-        when(baselineProfilesWriterServiceFactory.create(inputStreamFactory)).thenReturn(baselineProfilesWriterService);
+        BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory = new
+                BaselineProfilesWriterServiceFactory(profilesWriterMock, solrQueryService,coexpressedGenesService );
         subject = new BaselineExperimentDownloadController(inputStreamFactory, baselineProfilesWriterServiceFactory);
 
     }
@@ -131,8 +134,8 @@ public class BaselineExperimentDownloadControllerTest {
         when(experimentalFactorsMock.getComplementFactors(anySet())).thenReturn(t);
 
         when(responseMock.getWriter()).thenReturn(printWriterMock);
-        when(baselineProfilesWriterMock.write(Matchers.eq(printWriterMock), Matchers.any
-                (BaselineRequestContext.class))).thenReturn
+        when(profilesWriterMock.write(eq(printWriterMock),any(ObjectInputStream.class),
+                any(BaselineRequestContext.class), anySet(), any(GeneQueryResponse.class), anyBoolean())).thenReturn
                 (0L);
 
         subject.downloadGeneProfiles(requestMock, preferencesMock, responseMock);
@@ -140,8 +143,8 @@ public class BaselineExperimentDownloadControllerTest {
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
-        verify(baselineProfilesWriterMock).write(Matchers.eq(printWriterMock), Matchers.any
-                (BaselineRequestContext.class));
+        verify(profilesWriterMock).write(eq(printWriterMock), any(ObjectInputStream.class), any
+                (BaselineRequestContext.class), anySet(), any(GeneQueryResponse.class), anyBoolean());
     }
 
 
