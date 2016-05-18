@@ -153,6 +153,34 @@ public class BaselineCoexpressionProfileInputStreamTest {
         test(data, expected, 1337);
     }
 
+    @Test
+    public void testExampleThatHasTheSameValuesAndWantsAlphabeticalSorting() throws Exception {
+
+        List<String[]> data = new ArrayList<>();
+        for(String line:
+                new String[]{
+                        "_  c   o   e   x   p ",
+                        "c  0   1.0 1.0 1.0 1.0",
+                        "o  1.0 0   1.4 1.5 1.6",
+                        "e  1.0 1.4 0   1.7 1.8",
+                        "x  1.0 1.5 1.7 0   1.9",
+                        "p  1.0 1.6 1.8 1.9 0"
+
+                }){
+            data.add(line.split(" +"));
+        }
+        data.add(null);
+        Map<String, ImmutableList<String>> expected = ImmutableMap.of(
+                "c", ImmutableList.of("e","o","p"),
+                "o", ImmutableList.of("c","e","x"),
+                "e", ImmutableList.of("c","o","x"),
+                "x", ImmutableList.of("c","o","e"),
+                "p", ImmutableList.of("c","o","e")
+        );
+
+        test(data, expected, 3);
+    }
+
 
 
     private void test(List<String[]> data, Map<String, ImmutableList<String>> expected, int sizeForTest) throws

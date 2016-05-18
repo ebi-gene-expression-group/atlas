@@ -41,6 +41,11 @@ public abstract class BaselineCoexpression implements Comparable<BaselineCoexpre
 
     @Override
     public int compareTo(BaselineCoexpression other) {
-        return Double.compare(this.ceStatistic(), other.ceStatistic());
+
+        int c= Double.compare(this.ceStatistic(), other.ceStatistic());
+
+        return c == 0
+                ? this.ceGeneID().compareTo(other.ceGeneID())
+                : c;
     }
 }
