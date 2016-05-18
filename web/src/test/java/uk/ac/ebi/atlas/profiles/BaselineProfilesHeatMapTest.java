@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSetMultimap;
 import org.apache.commons.math.util.MathUtils;
 import org.junit.Before;
@@ -12,8 +11,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesEMTab513React71;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesHeatMap;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.baseline.*;
-import uk.ac.ebi.atlas.profiles.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
+import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import java.util.Collections;
