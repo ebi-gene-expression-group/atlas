@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.base.Objects;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
@@ -142,4 +143,19 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BaselineProfile)) return false;
+        BaselineProfile that = (BaselineProfile) o;
+        return super.equals(that) &&
+                Double.compare(that.getMaxExpressionLevel(), getMaxExpressionLevel()) == 0 &&
+                Double.compare(that.getMinExpressionLevel(), getMinExpressionLevel()) == 0 ;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getMaxExpressionLevel(), getMinExpressionLevel(), super.hashCode());
+    }
 }

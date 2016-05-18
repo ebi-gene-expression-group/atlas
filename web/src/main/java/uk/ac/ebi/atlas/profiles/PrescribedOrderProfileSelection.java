@@ -8,12 +8,12 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PrescribedOrderProfileSelection<T extends Profile, L extends GeneProfilesList<T>> implements SelectProfiles<T,L>{
+public class PrescribedOrderProfileSelection<T extends Profile, L extends GeneProfilesList<T>> implements SelectProfiles<T, L> {
 
     private final List<String> geneNamesInOrder;
     private final GeneProfilesListBuilder<L> geneProfilesListBuilder;
 
-    public PrescribedOrderProfileSelection(List<String> geneNamesInOrder,GeneProfilesListBuilder<L> geneProfilesListBuilder){
+    public PrescribedOrderProfileSelection(List<String> geneNamesInOrder, GeneProfilesListBuilder<L> geneProfilesListBuilder) {
         this.geneNamesInOrder = geneNamesInOrder;
         this.geneProfilesListBuilder = geneProfilesListBuilder;
     }
@@ -22,12 +22,12 @@ public class PrescribedOrderProfileSelection<T extends Profile, L extends GenePr
     @Override
     public L select(Iterable<T> profiles, int maxSize) {
         List<LinkedList<T>> ans = new ArrayList<>(geneNamesInOrder.size());
-        for(String _ : geneNamesInOrder){
+        for (String _ : geneNamesInOrder) {
             ans.add(new LinkedList<T>());
         }
-        for(T profile: profiles){
-            int pos = geneNamesInOrder.indexOf(profile.getName());
-            if(pos >-1){
+        for (T profile : profiles) {
+            int pos = geneNamesInOrder.indexOf(profile.getId());
+            if (pos > -1) {
                 LinkedList<T> l = ans.get(pos);
                 l.addLast(profile);
             }
@@ -35,10 +35,20 @@ public class PrescribedOrderProfileSelection<T extends Profile, L extends GenePr
         }
 
         L result = geneProfilesListBuilder.create();
-        for(LinkedList<T> l : ans){
-            result.addAll(l);
-        }
 
+
+        int i = 0;
+        loop:
+        for (LinkedList<T> l : ans) {
+            for (T el : l) {
+                if (i >= maxSize) {
+                    break loop;
+                } else {
+                    result.add(el);
+                    i++;
+                }
+            }
+        }
 
 
         return result;

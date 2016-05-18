@@ -43,6 +43,21 @@ public abstract class Profile<K, T extends Expression> {
 
     private String name;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Profile)) return false;
+        Profile<?, ?> profile = (Profile<?, ?>) o;
+        return Objects.equal(expressionsByCondition, profile.expressionsByCondition) &&
+                Objects.equal(getId(), profile.getId()) &&
+                Objects.equal(getName(), profile.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(expressionsByCondition, getId(), getName());
+    }
+
     protected Profile(String id, String name) {
         this.id = id;
         this.name = name;
