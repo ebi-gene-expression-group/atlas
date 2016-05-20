@@ -124,6 +124,33 @@ var HighchartsHeatmapContainer = React.createClass({
       );
     },
 
+    componentDidUpdate: function() {
+      /*
+      I am a hack and I attach event listeners to the labels.
+      There seems to be no way to do it in the HighchartsHeatmap component -
+      the labels that are selected when HighchartsHeatmap.componentDidUpdate is called are redrawn when both components appear on the screen
+      */
+      Snap.selectAll('.highcharts-yaxis-labels > *')
+        .forEach(function (v) {
+          //careful - if the label doesn't fit, the element will have two children: displayed and full title
+          //here we assume the longest text is the correct title of the experiment
+          var title =
+            v.selectAll('*').items
+            .map(function(c){return c.node.textContent})
+            .reduce(function(l,r){return l.length > r.length? l : r}, "");
+          if (title) {
+            v.hover(
+              function onMouseEnterSendTitle() {
+                this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', title);
+              }
+                ,
+                function onMouseLeaveSendNull() {
+                this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', null);
+              } , this, this);
+          }
+        }, this);
+    },
+
     getInitialState: function() {
         return {
             heatmapConfig: '',
