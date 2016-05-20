@@ -1,0 +1,3 @@
+Comment[ArrayExpressAccession]	TEST-RNASEQ-BASELINE
+Investigation Title	RNA-Seq of human individual tissues and mixture of 16 tissues (Illumina Body Map)
+PubMed ID	22496456	22955988	23258890

@@ -1,0 +1,16 @@
+E-GEOD-34130	A-AFFY-2	GSM842204	characteristic	age	12 day
+E-GEOD-34130	A-AFFY-2	GSM842204	characteristic	developmental stage	seedling	http://purl.obolibrary.org/obo/PO_0007131
+E-GEOD-34130	A-AFFY-2	GSM842204	characteristic	ecotype	Col0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-34130	A-AFFY-2	GSM842204	characteristic	growth condition	KCl control for 2 hours
+E-GEOD-34130	A-AFFY-2	GSM842204	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-34130	A-AFFY-2	GSM842204	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-34130	A-AFFY-2	GSM842204	factor	ecotype	Col0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-34130	A-AFFY-2	GSM842204	factor	growth condition	control	http://www.ebi.ac.uk/efo/EFO_0001461
+E-GEOD-34130	A-AFFY-2	GSM842207	characteristic	age	12 day
+E-GEOD-34130	A-AFFY-2	GSM842207	characteristic	developmental stage	seedling	http://purl.obolibrary.org/obo/PO_0007131
+E-GEOD-34130	A-AFFY-2	GSM842207	characteristic	ecotype	Col0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-34130	A-AFFY-2	GSM842207	characteristic	growth condition	KNO3 nitrogen for 2 hours
+E-GEOD-34130	A-AFFY-2	GSM842207	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-34130	A-AFFY-2	GSM842207	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
+E-GEOD-34130	A-AFFY-2	GSM842207	factor	ecotype	Col0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-34130	A-AFFY-2	GSM842207	factor	growth condition	KNO3 nitrogen for 2 hours

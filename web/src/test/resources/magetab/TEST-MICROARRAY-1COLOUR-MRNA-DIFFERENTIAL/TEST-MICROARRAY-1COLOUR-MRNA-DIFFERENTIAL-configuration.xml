@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AFFY-2</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="Col0; KNO3 nitrogen for 2 hours">
+                <assay>GSM842207</assay>
+            </assay_group>
+            <assay_group id="g2" label="Col0; control">
+                <assay>GSM842204</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g2_g1">
+                <name>'KNO3 nitrogen for 2 hours' vs 'control' in 'Col0'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

@@ -1,0 +1,12 @@
+E-GEOD-22351		SRR057596	characteristic	age	21 day
+E-GEOD-22351		SRR057596	characteristic	genotype	non transgenic
+E-GEOD-22351		SRR057596	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-22351		SRR057596	characteristic	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-GEOD-22351		SRR057596	characteristic	strain	C57BL/6;SJL
+E-GEOD-22351		SRR057596	factor	genotype	non transgenic
+E-GEOD-22351		SRR057599	characteristic	age	21 day
+E-GEOD-22351		SRR057599	characteristic	genotype	expressing human TDP-43
+E-GEOD-22351		SRR057599	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-22351		SRR057599	characteristic	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-GEOD-22351		SRR057599	characteristic	strain	C57BL/6;SJL
+E-GEOD-22351		SRR057599	factor	genotype	expressing human TDP-43

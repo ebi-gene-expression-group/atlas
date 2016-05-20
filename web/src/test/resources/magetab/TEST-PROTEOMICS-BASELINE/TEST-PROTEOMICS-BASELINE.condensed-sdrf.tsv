@@ -1,0 +1,5 @@
+E-PROT-1		Adult_Adrenalgland	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Adrenalgland	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Adrenalgland	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-PROT-1		Adult_Adrenalgland	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Adrenalgland	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336

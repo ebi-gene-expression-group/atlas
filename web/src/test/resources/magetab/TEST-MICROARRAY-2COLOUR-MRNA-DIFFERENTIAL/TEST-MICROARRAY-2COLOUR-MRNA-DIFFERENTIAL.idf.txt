@@ -1,0 +1,2 @@
+Comment[ArrayExpressAccession]	TEST-MICROARRAY-2COLOUR-MRNA-DIFFERENTIAL
+Investigation Title	Caco-2 cells: cultured in conventional vs apical anaerobic conditions

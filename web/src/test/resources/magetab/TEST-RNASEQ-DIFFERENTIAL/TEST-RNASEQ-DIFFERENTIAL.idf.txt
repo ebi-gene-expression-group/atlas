@@ -1,0 +1,3 @@
+Comment[ArrayExpressAccession]	TEST-RNASEQ-DIFFERENTIAL
+Investigation Title	Altered Distributions of SMN-containing GEMs and Mitochondria in Motor Neurons of TDP-43 transgenic Mice
+PubMed ID	20736350
