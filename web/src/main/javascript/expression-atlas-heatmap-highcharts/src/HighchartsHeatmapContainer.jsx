@@ -240,17 +240,14 @@ var HighchartsHeatmapContainer = React.createClass({
                             }
 
                             for (var k = 0; k < xAxisCategories.length; k++) {
-                                var literalValue = data.profiles.rows[j].expressions[k].value;
-
-                                if (literalValue === "") {
-                                    seriesDataBelowCutoff.push([k, j, seriesDataBelowCutoffString])
-                                } else if (literalValue === "NT") {
-                                    seriesDataNA.push([k, j, seriesDataNAString])
+                                var expression = data.profiles.rows[j].expressions[k];
+                                //we switched from strings to doubles in April 2016, after a release you can assume we serve doubles that are optionally absent to mean "NT"
+                                if (!expression.hasOwnProperty("value") || expression.value === "NT"){
+                                  seriesDataNA.push([k, j, seriesDataNAString]);
+                                } else if (!expression.value) {
+                                  seriesDataBelowCutoff.push([k, j, seriesDataBelowCutoffString]);
                                 } else {
-                                    var value = parseFloat(literalValue);
-                                    if (!isNaN(value)) {
-                                        experimentTypeSeriesData.push([k, j, value]);
-                                    }
+                                  experimentTypeSeriesData.push([k, j, +expression.value]);
                                 }
                             }
                         }
