@@ -1,0 +1,3 @@
+Comment[ArrayExpressAccession]	TEST-PROTEOMICS-BASELINE
+Investigation Title	Reanalysis of Pandey lab's draft of the human proteome	
+PubMed ID	24669763	24870542

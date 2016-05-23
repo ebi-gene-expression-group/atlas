@@ -1,0 +1,3 @@
+Comment[ArrayExpressAccession]	TEST-MICROARRAY-1COLOUR-MICRORNA-DIFFERENTIAL
+Investigation Title	miRNA expression data in idiopathic pulmonary fibrosis					
+PubMed ID	20395557

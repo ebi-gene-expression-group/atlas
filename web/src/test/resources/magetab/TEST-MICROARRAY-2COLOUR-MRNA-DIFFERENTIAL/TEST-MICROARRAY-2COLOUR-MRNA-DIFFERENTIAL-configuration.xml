@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_2colour_mrna_differential" r_data="1">
+    <analytics>
+        <array_design>A-AGIL-28</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="Apical anaerobic">
+                <assay>GSM1055613.Cy3</assay>
+            </assay_group>
+            <assay_group id="g2" label="Conventional">
+                <assay>GSM1055613.Cy5</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g2_g1">
+                <name>'Apical anaerobic' vs 'Conventional'</name>
+                <reference_assay_group>g2</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

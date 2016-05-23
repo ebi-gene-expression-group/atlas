@@ -1,0 +1,2 @@
+Comment[ArrayExpressAccession]	TEST-MICROARRAY-1COLOUR-MRNA-DIFFERENTIAL
+Investigation Title	Ecotype specific nitrogen responses in the Arabidopsis root

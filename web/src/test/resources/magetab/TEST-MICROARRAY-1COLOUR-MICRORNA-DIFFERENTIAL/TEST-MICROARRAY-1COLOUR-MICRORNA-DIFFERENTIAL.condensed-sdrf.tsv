@@ -1,0 +1,8 @@
+E-GEOD-13316	A-GEOD-6955	GSM336064	characteristic	disease	idiopathic pulmonary fibrosis	http://www.ebi.ac.uk/efo/EFO_0000768
+E-GEOD-13316	A-GEOD-6955	GSM336064	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-13316	A-GEOD-6955	GSM336064	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-GEOD-13316	A-GEOD-6955	GSM336064	factor	disease	idiopathic pulmonary fibrosis	http://www.ebi.ac.uk/efo/EFO_0000768
+E-GEOD-13316	A-GEOD-6955	GSM336079	characteristic	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
+E-GEOD-13316	A-GEOD-6955	GSM336079	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-GEOD-13316	A-GEOD-6955	GSM336079	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-GEOD-13316	A-GEOD-6955	GSM336079	factor	disease	normal	http://purl.obolibrary.org/obo/PATO_0000461
