@@ -88,9 +88,6 @@ var HeatmapAnatomogramContainer = React.createClass({
         } else {
             display = "none";
             marginLeft = "0";
-            //EventEmitter call here
-            
-            
         }
 
         var homoSapiensCellLine = this.state.heatmapConfig.species === "homo sapiens" && new URI(this.props.sourceURL).search(true).source === "CELL_LINE";
@@ -185,7 +182,13 @@ var HeatmapAnatomogramContainer = React.createClass({
             geneSetProfiles: data.geneSetProfiles,
             anatomogramData: data.anatomogram,
             experimentData: data.experiment
-        })
+        });
+
+        if (this.state.anatomogramData) {
+            this.props.eventEmitter.emit('existAnatomogramData', true);
+        } else {
+            this.props.eventEmitter.emit('existAnatomogramData', false);
+        }
     },
 
     componentDidMount: function() {
