@@ -10,6 +10,8 @@ require('jquery.browser');
 
 var URI = require('urijs');
 
+var EventEmitter = require('events');
+
 //*------------------------------------------------------------------*
 
 var FacetsTree = require('./BaselineFacetsTree.jsx');
@@ -45,6 +47,9 @@ module.exports = function (options) {
 
     var selectedSpecies = options.selectedSpecies,
         facetsTreeData = options.facetsTreeData;
+
+    var eventEmitter = new EventEmitter();
+    eventEmitter.setMaxListeners(0);
 
     if (selectedSpecies && facetsTreeData.hasOwnProperty(selectedSpecies)) {
         var selectedSpeciesFactors = facetsTreeData[selectedSpecies];
@@ -104,14 +109,16 @@ module.exports = function (options) {
         ReactDOM.render(
             React.createElement(
                 FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked,
-                    toggleAnatomograms: toggleAnatomograms, showAnatomograms: showAnatomograms, disableAnatomogramsCheckbox: !organismPartInQuerySelect()}
+                    toggleAnatomograms: toggleAnatomograms, showAnatomograms: showAnatomograms, disableAnatomogramsCheckbox: !organismPartInQuerySelect(),
+                    eventEmitter: eventEmitter}
             ),
             facetsElement
         );
 
         ReactDOM.render(
             React.createElement(
-                BaselineHeatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms: showAnatomograms, atlasHost: host}
+                BaselineHeatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms: showAnatomograms, atlasHost: host,
+                    eventEmitter: eventEmitter}
             ),
             heatmapsElement, triggerScrollEvent
         );

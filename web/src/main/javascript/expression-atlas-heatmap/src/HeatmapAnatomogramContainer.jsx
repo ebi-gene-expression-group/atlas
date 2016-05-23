@@ -64,7 +64,8 @@ var HeatmapAnatomogramContainer = React.createClass({
         fail: React.PropTypes.func,
         googleAnalyticsCallback: React.PropTypes.func,
         ensemblEventEmitter : React.PropTypes.object.isRequired,
-        anatomogramEventEmitter: React.PropTypes.object.isRequired
+        anatomogramEventEmitter: React.PropTypes.object.isRequired,
+        eventEmitter: React.PropTypes.object.isRequired
     },
 
     render: function () {
@@ -78,8 +79,19 @@ var HeatmapAnatomogramContainer = React.createClass({
             "&exactMatch=" + this.state.heatmapConfig.isExactMatch +
             "&organism=" + this.state.heatmapConfig.species;
 
-        var display = this.props.showAnatomogram ? "block" : "none";
-        var marginLeft = this.props.showAnatomogram ? "270px" : "0";
+        var display;
+        var marginLeft;
+
+        if (this.state.anatomogramData) {
+            display = this.props.showAnatomogram ? "block" : "none";
+            marginLeft = this.props.showAnatomogram ? "270px" : "0";
+        } else {
+            display = "none";
+            marginLeft = "0";
+            //EventEmitter call here
+            
+            
+        }
 
         var homoSapiensCellLine = this.state.heatmapConfig.species === "homo sapiens" && new URI(this.props.sourceURL).search(true).source === "CELL_LINE";
 

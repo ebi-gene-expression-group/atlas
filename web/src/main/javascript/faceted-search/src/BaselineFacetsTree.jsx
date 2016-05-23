@@ -26,11 +26,17 @@ var BaselineFacetsTree = React.createClass({
         setChecked: React.PropTypes.func.isRequired,
         showAnatomograms: React.PropTypes.bool.isRequired,
         toggleAnatomograms: React.PropTypes.func.isRequired,
-        disableAnatomogramsCheckbox: React.PropTypes.bool.isRequired
+        disableAnatomogramsCheckbox: React.PropTypes.bool.isRequired,
+        eventEmitter: React.PropTypes.object.isRequired
     },
 
     _setChecked: function (checked, facet, facetItem) {
         this.props.setChecked(checked, facet, facetItem);
+    },
+
+    _checkAnatomogramData: function (checkedAnatomogram) {
+        checkedAnatomogram = false;
+        return checkedAnatomogram ? this.props.disableAnatomogramsCheckbox : checkedAnatomogram;
     },
 
     render: function () {
@@ -44,7 +50,7 @@ var BaselineFacetsTree = React.createClass({
         return (
             <div className="hidden-xs gxaFacetsContainer">
                 <h5 style={{padding: 0}}>
-                    <input type="checkbox" checked={this.props.showAnatomograms} onChange={this.props.toggleAnatomograms} disabled={this.props.disableAnatomogramsCheckbox}/>
+                    <input type="checkbox" checked={this.props.showAnatomograms} onChange={this.props.toggleAnatomograms} disabled={this._checkAnatomogramData}/>
                     <span className={this.props.disableAnatomogramsCheckbox ? "gxaDisabledCheckbox" : ""}>Show anatomograms</span>
                 </h5>
                 <h3>Filter your results</h3>
