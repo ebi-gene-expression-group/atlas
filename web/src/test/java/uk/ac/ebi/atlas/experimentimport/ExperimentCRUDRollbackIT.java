@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -67,10 +68,11 @@ public class ExperimentCRUDRollbackIT {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        when(conditionsIndexTrader.getIndex(any(Experiment.class))).thenThrow(new IllegalStateException("die!"));
-        ExperimentMetadataCRUD experimentMetadataCRUDmock = new ExperimentMetadataCRUD(experimentDAO,
-                experimentDesignFileWriterBuilder, experimentTrader, experimentDTOBuilder,
-                condensedSdrfParser, conditionsIndexTrader, efoParentsLookupService);
+        when(conditionsIndexTrader.getIndex(any(ExperimentType.class))).thenThrow(new IllegalStateException("die!"));
+        ExperimentMetadataCRUD experimentMetadataCRUDmock =
+                new ExperimentMetadataCRUD(experimentDAO, experimentTrader, experimentDTOBuilder, condensedSdrfParser, efoParentsLookupService);
+        experimentMetadataCRUDmock.setConditionsIndexTrader(conditionsIndexTrader);
+        experimentMetadataCRUDmock.setExperimentDesignFileWriterBuilder(experimentDesignFileWriterBuilder);
         subject.setExperimentMetadataCRUD(experimentMetadataCRUDmock);
     }
 

@@ -86,7 +86,7 @@ public class ExperimentMetadataCRUDTest {
     private ConditionsIndexTrader conditionsIndexTraderMock;
 
     @Mock
-    private ConditionsIndex<Experiment> conditionsIndexMock;
+    private ConditionsIndex conditionsIndexMock;
 
     @Mock
     private ExperimentDTOBuilder experimentDTOBuilderMock;
@@ -126,7 +126,7 @@ public class ExperimentMetadataCRUDTest {
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
 
-        given(conditionsIndexTraderMock.getIndex(any(Experiment.class))).willReturn(conditionsIndexMock);
+        given(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).willReturn(conditionsIndexMock);
         given(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).willReturn(conditionsIndexMock);
         doNothing().when(conditionsIndexMock).removeConditions(anyString());
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
@@ -151,9 +151,9 @@ public class ExperimentMetadataCRUDTest {
         when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(builder.build());
         when(efoParentsLookupServiceMock.getAllParents(anySetOf(String.class))).thenReturn(EXPANDED_EFO_TERMS);
 
-        subject = new ExperimentMetadataCRUD(
-                experimentDAOMock, experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock,
-                condensedSdrfParserMock, conditionsIndexTraderMock, efoParentsLookupServiceMock);
+        subject = new ExperimentMetadataCRUD(experimentDAOMock, experimentTraderMock, experimentDTOBuilderMock, condensedSdrfParserMock, efoParentsLookupServiceMock);
+        subject.setConditionsIndexTrader(conditionsIndexTraderMock);
+        subject.setExperimentDesignFileWriterBuilder(experimentDesignFileWriterBuilderMock);
         subject.setAnalyticsIndexerManager(analyticsIndexerManagerMock);
     }
 

@@ -42,7 +42,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 .when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);
 
         expect().body(is("Experiment TEST-BASELINE successfully deleted.")).when()
-                .get("deleteExperiment?accession=" + NEW_EXPERIMENT_ACCESSION);
+                .get("deleteExperimentDeletesDB?accession=" + NEW_EXPERIMENT_ACCESSION);
 
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);
     }
@@ -58,7 +58,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 .when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);
 
         expect().body(is("Experiment TEST-BASELINE successfully deleted.")).when()
-                .get("deleteExperiment?accession=" + NEW_EXPERIMENT_ACCESSION);
+                .get("deleteExperimentDeletesDB?accession=" + NEW_EXPERIMENT_ACCESSION);
 
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);
     }
@@ -68,7 +68,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
         String blablaExperimentAccession = "E-MTAB-BLA-BLA-BLA";
 
         expect().body(is("ResourceNotFoundException: Experiment: " + blablaExperimentAccession + " not found"))
-                .when().get("deleteExperiment?accession=" + blablaExperimentAccession);
+                .when().get("deleteExperimentDeletesDB?accession=" + blablaExperimentAccession);
     }
 
     @Ignore
@@ -110,7 +110,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     public void deleteAndLoadDifferentialExperimentPublic() {
 
         expect().body(deleted(DIFFERENTIAL_EXPERIMENT_ACCESSION)).when()
-                .get("deleteExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
+                .get("deleteExperimentDeletesDB?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
 
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(0));
 

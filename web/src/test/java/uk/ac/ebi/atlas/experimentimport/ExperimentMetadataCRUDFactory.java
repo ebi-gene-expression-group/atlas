@@ -56,10 +56,11 @@ public class ExperimentMetadataCRUDFactory {
         ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache = new ProteomicsBaselineExperimentsCache(loadingCache);
         ExperimentTrader experimentTrader = new ExperimentTrader(experimentDao, baselineExperimentsCache, rnaSeqDiffExperimentsCache, microarrayExperimentsCache, proteomicsBaselineExperimentsCache, publicExperimentTypesCache);
 
-        return new ExperimentMetadataCRUD(
-                experimentDao, experimentDesignFileWriterBuilder,
-                experimentTrader, experimentDTOBuilder, condensedSdrfParser,
-                conditionsIndexTrader, efoParentsLookupService);
+        ExperimentMetadataCRUD experimentMetadataCRUD = new ExperimentMetadataCRUD(experimentDao, experimentTrader, experimentDTOBuilder, condensedSdrfParser, efoParentsLookupService);
+        experimentMetadataCRUD.setConditionsIndexTrader(conditionsIndexTrader);
+        experimentMetadataCRUD.setExperimentDesignFileWriterBuilder(experimentDesignFileWriterBuilder);
+
+        return experimentMetadataCRUD;
 
     }
 }

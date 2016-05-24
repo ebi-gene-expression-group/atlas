@@ -10,33 +10,30 @@ import static org.mockito.Mockito.mock;
 
 public class DummyUpdateSolrClient extends HttpSolrClient {
 
-    public DummyUpdateSolrClient(String baseUrl){
+    public DummyUpdateSolrClient(String baseUrl) {
         super(baseUrl);
     }
 
+    // Do nothing! This is required because update methods do not work on lime from a remote server
+
     @Override
-    public UpdateResponse deleteByQuery(String query){
-        //do nothing! This is required because update methods do not work on lime from a remote server
+    public UpdateResponse deleteByQuery(String query) {
         return mock(UpdateResponse.class);
     }
 
     @Override
-    public UpdateResponse commit(){
-        //do nothing! This is required because update methods do not work on lime from a remote server
+    public UpdateResponse commit() {
         return mock(UpdateResponse.class);
     }
 
     @Override
-    public UpdateResponse addBeans(Collection<?> documentBeans){
-        //do nothing! This is required because update methods do not work on lime from a remote server
+    public UpdateResponse addBeans(Collection<?> documentBeans) {
         return mock(UpdateResponse.class);
     }
 
     @Override
-    public UpdateResponse optimize(){
-        //do nothing! This is required because update methods do not work on lime from a remote server
+    public UpdateResponse optimize() {
         return mock(UpdateResponse.class);
     }
-
 
 }
