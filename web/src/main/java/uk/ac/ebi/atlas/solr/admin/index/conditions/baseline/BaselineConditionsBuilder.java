@@ -17,21 +17,24 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class BaselineConditionsBuilder extends ConditionsBuilder<BaselineExperiment> {
+public class BaselineConditionsBuilder extends ConditionsBuilder {
+
     @Override
-    public Collection<Condition> buildProperties(BaselineExperiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
+    public Collection<Condition> buildProperties(Experiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
         Collection<Condition> conditions = Lists.newLinkedList();
 
-        AssayGroups assayGroups = experiment.getAssayGroups();
+        BaselineExperiment baselineExperiment = (BaselineExperiment)experiment;
+
+        AssayGroups assayGroups = baselineExperiment.getAssayGroups();
         for (AssayGroup assayGroup : assayGroups) {
-            conditions.addAll(buildPropertiesForAssayGroup(experiment, assayGroup, ontologyTermIdsByAssayAccession));
+            conditions.addAll(buildPropertiesForAssayGroup(baselineExperiment, assayGroup, ontologyTermIdsByAssayAccession));
         }
 
         return conditions;
 
     }
 
-    protected Collection<Condition> buildPropertiesForAssayGroup(Experiment experiment, AssayGroup assayGroup, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
+    private Collection<Condition> buildPropertiesForAssayGroup(BaselineExperiment experiment, AssayGroup assayGroup, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
 
         Collection<Condition> conditions = Sets.newHashSet();
 

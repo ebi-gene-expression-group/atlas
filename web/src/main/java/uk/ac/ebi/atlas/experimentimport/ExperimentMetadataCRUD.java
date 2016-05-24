@@ -39,25 +39,21 @@ public class ExperimentMetadataCRUD {
     private ExperimentTrader experimentTrader;
     private ExperimentDTOBuilder experimentDTOBuilder;
     private final CondensedSdrfParser condensedSdrfParser;
-    private final ConditionsIndexTrader conditionsIndexTrader;
+    private ConditionsIndexTrader conditionsIndexTrader;
     private EFOParentsLookupService efoParentsLookupService;
     private AnalyticsIndexerManager analyticsIndexerManager;
 
     //TODO: refactor this class - it has too many collaborators
     @Inject
     public ExperimentMetadataCRUD(ExperimentDAO experimentDAO,
-                                  ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
                                   ExperimentTrader experimentTrader,
                                   ExperimentDTOBuilder experimentDTOBuilder,
                                   CondensedSdrfParser condensedSdrfParser,
-                                  ConditionsIndexTrader conditionsIndexTrader,
                                   EFOParentsLookupService efoParentsLookupService) {
         this.experimentDAO = experimentDAO;
-        this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;
         this.experimentDTOBuilder = experimentDTOBuilder;
         this.condensedSdrfParser = condensedSdrfParser;
-        this.conditionsIndexTrader = conditionsIndexTrader;
         this.efoParentsLookupService = efoParentsLookupService;
     }
 
@@ -66,6 +62,16 @@ public class ExperimentMetadataCRUD {
     @Inject
     public void setAnalyticsIndexerManager(AnalyticsIndexerManager analyticsIndexerManager) {
         this.analyticsIndexerManager = analyticsIndexerManager;
+    }
+
+    @Inject
+    public void setConditionsIndexTrader(ConditionsIndexTrader conditionsIndexTrader) {
+        this.conditionsIndexTrader = conditionsIndexTrader;
+    }
+
+    @Inject
+    public void setExperimentDesignFileWriterBuilder(ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder) {
+        this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
     }
 
     public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate, Optional<String> accessKey) throws IOException {
@@ -86,11 +92,11 @@ public class ExperimentMetadataCRUD {
 
         //experiment can be indexed only after it's been added to the DB, since fetching experiment
         //from cache gets this experiment from the DB first
-        //TODO: change this so it uses experimentconfiguration, experiment design, and accession rather than experiment
+        //TODO: change this so it uses experimentConfiguration, experimentDesign, and accession rather than experiment
         if (!isPrivate) {
             Experiment experiment = experimentTrader.getPublicExperiment(accession);
             ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
-            conditionsIndexTrader.getIndex(experiment).addConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
+            conditionsIndexTrader.getIndex(experiment.getType()).addConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
         }
 
         return uuid;
@@ -195,7 +201,7 @@ public class ExperimentMetadataCRUD {
             if (!experimentDTO.isPrivate()) {
                 Experiment experiment = experimentTrader.getPublicExperiment(accession);
                 ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
-                conditionsIndexTrader.getIndex(experiment).updateConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
+                conditionsIndexTrader.getIndex(experiment.getType()).updateConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
             }
 
         } catch (IOException e) {

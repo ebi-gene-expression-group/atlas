@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
 import com.google.common.collect.Iterables;

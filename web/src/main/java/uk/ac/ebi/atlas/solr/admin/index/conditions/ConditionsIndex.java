@@ -10,22 +10,22 @@ import uk.ac.ebi.atlas.model.Experiment;
 import java.io.IOException;
 import java.util.Collection;
 
-public abstract class ConditionsIndex<T extends Experiment> {
+public abstract class ConditionsIndex {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConditionsIndex.class);
 
     private SolrClient solrClient;
 
-    private ConditionsBuilder<T> propertiesBuilder;
+    private ConditionsBuilder propertiesBuilder;
 
 
-    public ConditionsIndex(SolrClient solrClient, ConditionsBuilder<T> propertiesBuilder) {
+    public ConditionsIndex(SolrClient solrClient, ConditionsBuilder propertiesBuilder) {
         this.solrClient = solrClient;
         this.propertiesBuilder = propertiesBuilder;
     }
 
 
-    public void updateConditions(T experiment, SetMultimap<String, String> ontologyTerms) {
+    public void updateConditions(Experiment experiment, SetMultimap<String, String> ontologyTerms) {
 
         LOGGER.info("<updateConditions> {}", experiment.getAccession());
 
@@ -34,7 +34,7 @@ public abstract class ConditionsIndex<T extends Experiment> {
         addConditions(experiment, ontologyTerms);
     }
 
-    public void addConditions(T experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
+    public void addConditions(Experiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
         try {
 
             Collection propertiesBeans = propertiesBuilder.buildProperties(experiment, ontologyTermIdsByAssayAccession);

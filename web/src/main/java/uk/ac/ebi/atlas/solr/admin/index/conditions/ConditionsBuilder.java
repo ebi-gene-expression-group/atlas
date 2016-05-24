@@ -13,11 +13,11 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public abstract class ConditionsBuilder<T extends Experiment> {
+public abstract class ConditionsBuilder {
 
-    public static final String ERROR_MESSAGE_TEMPLATE = "No %s found for assay accession '%s'. Check assays defined in configuration.xml match Assay Name/Scan Name in the SDRF.";
+    private static final String ERROR_MESSAGE_TEMPLATE = "No %s found for assay accession '%s'. Check assays defined in configuration.xml match Assay Name/Scan Name in the SDRF.";
 
-    public abstract Collection buildProperties(T experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession);
+    public abstract Collection buildProperties(Experiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession);
 
     protected Set<String> collectAssayProperties(ExperimentDesign experimentDesign, String assayAccession, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
 
