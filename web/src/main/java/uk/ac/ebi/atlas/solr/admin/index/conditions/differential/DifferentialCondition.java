@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.admin.index.conditions.differential;
 
 import org.apache.solr.client.solrj.beans.Field;

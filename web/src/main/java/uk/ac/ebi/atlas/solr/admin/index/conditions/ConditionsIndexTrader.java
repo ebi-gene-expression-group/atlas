@@ -10,19 +10,20 @@ import javax.inject.Named;
 @Named
 public class ConditionsIndexTrader {
 
-    private BaselineConditionsIndex baselineConditionIndex;
-    private DifferentialConditionsIndex differentialConditionIndex;
+    private BaselineConditionsIndex baselineConditionsIndex;
+    private DifferentialConditionsIndex differentialConditionsIndex;
 
     @Inject
-    public ConditionsIndexTrader(BaselineConditionsIndex baselineConditionIndex, DifferentialConditionsIndex differentialConditionIndex) {
-        this.baselineConditionIndex = baselineConditionIndex;
-        this.differentialConditionIndex = differentialConditionIndex;
+    public ConditionsIndexTrader(BaselineConditionsIndex baselineConditionsIndex, DifferentialConditionsIndex differentialConditionsIndex) {
+        this.baselineConditionsIndex = baselineConditionsIndex;
+        this.differentialConditionsIndex = differentialConditionsIndex;
     }
 
     public ConditionsIndex getIndex(ExperimentType experimentType) {
         if (experimentType.isBaseline()) {
-            return baselineConditionIndex;
+            return baselineConditionsIndex;
         }
-        return differentialConditionIndex;
+        return differentialConditionsIndex;
     }
+
 }
