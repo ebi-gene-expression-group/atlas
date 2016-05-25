@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline.BaselineAnalyticsIndexerService;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.DiffAnalyticsIndexerService;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.RnaSeqDiffAnalyticsIndexerService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.MicroArrayDiffAnalyticsIndexerService;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -24,11 +24,11 @@ public class AnalyticsIndexerService {
 
     private final AnalyticsIndexDAO analyticsIndexDAO;
     private final BaselineAnalyticsIndexerService baselineAnalyticsIndexerService;
-    private final DiffAnalyticsIndexerService diffAnalyticsIndexerService;
+    private final RnaSeqDiffAnalyticsIndexerService diffAnalyticsIndexerService;
     private final MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService;
 
     @Inject
-    public AnalyticsIndexerService(AnalyticsIndexDAO analyticsIndexDAO, BaselineAnalyticsIndexerService baselineAnalyticsIndexerService, DiffAnalyticsIndexerService diffAnalyticsIndexerService, MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService, ExperimentTrader experimentTrader) {
+    public AnalyticsIndexerService(AnalyticsIndexDAO analyticsIndexDAO, BaselineAnalyticsIndexerService baselineAnalyticsIndexerService, RnaSeqDiffAnalyticsIndexerService diffAnalyticsIndexerService, MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService, ExperimentTrader experimentTrader) {
         this.analyticsIndexDAO = analyticsIndexDAO;
         this.baselineAnalyticsIndexerService = baselineAnalyticsIndexerService;
         this.diffAnalyticsIndexerService = diffAnalyticsIndexerService;

@@ -29,6 +29,7 @@ import javax.inject.Inject;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 
@@ -65,7 +66,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        when(analyticsIndexDAOMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), anyInt())).thenAnswer(storeDocuments());
+        given(analyticsIndexDAOMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), anyInt())).willAnswer(storeDocuments());
         subject = new BaselineAnalyticsIndexerService(streamFactory, efoParentsLookupService, baselineAnalyticsInputStreamFactory, proteomicsBaselineAnalyticsInputStreamFactory, analyticsIndexDAOMock, baselineConditionsBuilder);
     }
 
@@ -90,7 +91,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     }
 
     @Test
-    public void indexBaselineExperimentAnalytics() {
+    public void indexRnaSeqBaselineExperiment() {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-MTAB-513");
         subject.index(experiment, ImmutableMap.of("", ""), 0);
 
@@ -107,7 +108,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     }
 
     @Test
-    public void indexProteomicsBaselineExperimentAnalytics() {
+    public void indexProteomicsBaselineExperiment() {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1");
         subject.index(experiment, ImmutableMap.of("", ""), 1024);
 

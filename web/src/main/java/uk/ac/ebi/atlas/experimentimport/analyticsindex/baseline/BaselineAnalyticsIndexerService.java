@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableMap;
@@ -7,7 +6,6 @@ import com.google.common.collect.SetMultimap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
@@ -34,7 +32,6 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkArgument;
 
 @Named
-@Scope("singleton")
 public class BaselineAnalyticsIndexerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineAnalyticsIndexerService.class);
@@ -58,16 +55,12 @@ public class BaselineAnalyticsIndexerService {
 
     public int index(BaselineExperiment experiment, Map<String, String> bioentityIdToIdentifierSearch, int batchSize) {
         String experimentAccession = experiment.getAccession();
-
         ExperimentType experimentType = experiment.getType();
-
         String defaultQueryFactorType = experiment.getExperimentalFactors().getDefaultQueryFactorType();
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
 
         ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId = SpeciesGrouper.buildEnsemblSpeciesGroupedByAssayGroupId(experiment);
-
         ImmutableSetMultimap<String, String> ontologyTermIdsByAssayAccession = expandOntologyTerms(experimentDesign.getAllOntologyTermIdsByAssayAccession());
-
         ImmutableSetMultimap<String, String> conditionSearchTermsByAssayGroupId = buildConditionSearchTermsByAssayGroupId(experiment, ontologyTermIdsByAssayAccession);
 
         checkArgument(StringUtils.isNotBlank(defaultQueryFactorType));
@@ -92,8 +85,8 @@ public class BaselineAnalyticsIndexerService {
     }
 
     private ImmutableSetMultimap<String, String> expandOntologyTerms(ImmutableSetMultimap<String, String> termIdsByAssayAccession) {
-
         ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
+
         for (String assayAccession : termIdsByAssayAccession.keys()) {
             Set<String> expandedOntologyTerms = new HashSet<>();
 
@@ -106,10 +99,8 @@ public class BaselineAnalyticsIndexerService {
         return builder.build();
     }
 
-    ImmutableSetMultimap<String, String> buildConditionSearchTermsByAssayGroupId(BaselineExperiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
-
+    private ImmutableSetMultimap<String, String> buildConditionSearchTermsByAssayGroupId(BaselineExperiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
         Collection<Condition> conditions = baselineConditionsBuilder.buildProperties(experiment, ontologyTermIdsByAssayAccession);
-
         ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
 
         for (Condition condition : conditions) {
@@ -117,10 +108,9 @@ public class BaselineAnalyticsIndexerService {
         }
 
         return builder.build();
-
     }
 
-    public int indexBaselineExperimentAnalytics(String experimentAccession, ExperimentType experimentType,
+    private int indexBaselineExperimentAnalytics(String experimentAccession, ExperimentType experimentType,
                                                 String defaultQueryFactorType,
                                                 SetMultimap<String, String> conditionSearchTermsByAssayGroupId,
                                                 ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId,
@@ -146,7 +136,7 @@ public class BaselineAnalyticsIndexerService {
     }
 
     private class AnalyticsIndexerServiceException extends RuntimeException {
-        public AnalyticsIndexerServiceException(Exception e) {
+        AnalyticsIndexerServiceException(Exception e) {
             super(e);
         }
     }

@@ -1,10 +1,8 @@
-
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.SpeciesGrouper;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -20,8 +18,8 @@ import javax.inject.Named;
 import java.util.*;
 
 @Named
-@Scope("singleton")
 public class MicroArrayDiffAnalyticsIndexerService {
+
     private final EFOParentsLookupService efoParentsLookupService;
     private final DifferentialConditionsBuilder diffConditionsBuilder;
     private final MicroArrayDiffAnalyticsDocumentStreamIndexer microArrayDiffAnalyticsDocumentStreamIndexer;

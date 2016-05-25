@@ -19,16 +19,16 @@ import java.util.Map;
 import java.util.Set;
 
 @Named
-public class DiffAnalyticsDocumentStreamIndexer {
+public class RnaSeqDiffAnalyticsDocumentStreamIndexer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DiffAnalyticsDocumentStreamIndexer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RnaSeqDiffAnalyticsDocumentStreamIndexer.class);
 
     private final RnaSeqDifferentialAnalyticsInputStreamFactory rnaSeqDifferentialAnalyticsInputStreamFactory;
     private DiffAnalyticsDocumentStreamFactory streamFactory;
     private AnalyticsIndexDAO analyticsIndexDAO;
 
     @Inject
-    public DiffAnalyticsDocumentStreamIndexer(RnaSeqDifferentialAnalyticsInputStreamFactory rnaSeqDifferentialAnalyticsInputStreamFactory, DiffAnalyticsDocumentStreamFactory streamFactory, AnalyticsIndexDAO analyticsIndexDAO) {
+    public RnaSeqDiffAnalyticsDocumentStreamIndexer(RnaSeqDifferentialAnalyticsInputStreamFactory rnaSeqDifferentialAnalyticsInputStreamFactory, DiffAnalyticsDocumentStreamFactory streamFactory, AnalyticsIndexDAO analyticsIndexDAO) {
         this.rnaSeqDifferentialAnalyticsInputStreamFactory = rnaSeqDifferentialAnalyticsInputStreamFactory;
         this.streamFactory = streamFactory;
         this.analyticsIndexDAO = analyticsIndexDAO;
@@ -70,7 +70,7 @@ public class DiffAnalyticsDocumentStreamIndexer {
     }
 
     private class DiffAnalyticsDocumentStreamIndexerException extends RuntimeException {
-        public DiffAnalyticsDocumentStreamIndexerException(Exception e) {
+        DiffAnalyticsDocumentStreamIndexerException(Exception e) {
             super(e);
         }
     }

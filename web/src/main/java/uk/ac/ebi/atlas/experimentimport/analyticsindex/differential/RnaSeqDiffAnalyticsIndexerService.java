@@ -1,10 +1,8 @@
-
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.SpeciesGrouper;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -22,38 +20,31 @@ import java.util.Map;
 import java.util.Set;
 
 @Named
-@Scope("singleton")
-public class DiffAnalyticsIndexerService {
+public class RnaSeqDiffAnalyticsIndexerService {
 
     private final EFOParentsLookupService efoParentsLookupService;
     private final DifferentialConditionsBuilder diffConditionsBuilder;
-    private final DiffAnalyticsDocumentStreamIndexer diffAnalyticsDocumentStreamIndexer;
+    private final RnaSeqDiffAnalyticsDocumentStreamIndexer rnaSeqDiffAnalyticsDocumentStreamIndexer;
 
     @Inject
-    public DiffAnalyticsIndexerService(EFOParentsLookupService efoParentsLookupService, DifferentialConditionsBuilder diffConditionsBuilder, DiffAnalyticsDocumentStreamIndexer diffAnalyticsDocumentStreamIndexer) {
+    public RnaSeqDiffAnalyticsIndexerService(EFOParentsLookupService efoParentsLookupService, DifferentialConditionsBuilder diffConditionsBuilder, RnaSeqDiffAnalyticsDocumentStreamIndexer rnaSeqDiffAnalyticsDocumentStreamIndexer) {
         this.efoParentsLookupService = efoParentsLookupService;
         this.diffConditionsBuilder = diffConditionsBuilder;
-        this.diffAnalyticsDocumentStreamIndexer = diffAnalyticsDocumentStreamIndexer;
+        this.rnaSeqDiffAnalyticsDocumentStreamIndexer = rnaSeqDiffAnalyticsDocumentStreamIndexer;
     }
 
     public int index(DifferentialExperiment experiment, Map<String, String> bioentityIdToIdentifierSearch, int batchSize) {
         String experimentAccession = experiment.getAccession();
-
         ExperimentType experimentType = experiment.getType();
-
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
 
         ImmutableMap<String, String> ensemblSpeciesGroupedByContrastId = SpeciesGrouper.buildEnsemblSpeciesGroupedByContrastId(experiment);
-
         ImmutableSetMultimap<String, String> ontologyTermIdsByAssayAccession = expandOntologyTerms(experimentDesign.getAllOntologyTermIdsByAssayAccession());
-
         ImmutableSetMultimap<String, String> conditionSearchTermsByContrastId = buildConditionSearchTermsByAssayGroupId(experiment, ontologyTermIdsByAssayAccession);
-
         Set<String> factors = experimentDesign.getFactorHeaders();
-
         Map<String, Integer> numReplicatesByContrastId = buildNumReplicatesByContrastId(experiment);
 
-        return  diffAnalyticsDocumentStreamIndexer.index(experimentAccession, experimentType, factors,
+        return  rnaSeqDiffAnalyticsDocumentStreamIndexer.index(experimentAccession, experimentType, factors,
                 conditionSearchTermsByContrastId, ensemblSpeciesGroupedByContrastId, numReplicatesByContrastId, bioentityIdToIdentifierSearch, batchSize);
     }
 
@@ -83,7 +74,7 @@ public class DiffAnalyticsIndexerService {
         return builder.build();
     }
 
-    ImmutableSetMultimap<String, String> buildConditionSearchTermsByAssayGroupId(DifferentialExperiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
+    private ImmutableSetMultimap<String, String> buildConditionSearchTermsByAssayGroupId(DifferentialExperiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
 
         Collection<DifferentialCondition> conditions = diffConditionsBuilder.buildProperties(experiment, ontologyTermIdsByAssayAccession);
 
