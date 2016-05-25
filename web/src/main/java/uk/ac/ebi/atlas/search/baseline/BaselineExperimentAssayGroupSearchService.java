@@ -14,7 +14,6 @@ import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.BaselineConditionsSearchService;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -111,7 +110,7 @@ public class BaselineExperimentAssayGroupSearchService {
                 FactorGroup filterFactor = filterFactorAssayGroupIds.getKey();
                 Collection<String> assayGroupIdsForFilterFactor = filterFactorAssayGroupIds.getValue();
 
-                String experimentSpecies = experiment.isMultiOrganismExperiment() ? filterFactor.getOrganismFactorValue() : experiment.getFirstOrganism();
+                String experimentSpecies = experiment.getFirstOrganism();
 
                 if (StringUtils.isBlank(searchSpecies) || Species.sameSpecies(experimentSpecies, searchSpecies)) {
                     BaselineExperimentAssayGroup result = new BaselineExperimentAssayGroup(experiment.getAccession(), experiment.getDisplayName(),

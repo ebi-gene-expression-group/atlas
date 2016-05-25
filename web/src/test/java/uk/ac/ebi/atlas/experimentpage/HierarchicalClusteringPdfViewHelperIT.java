@@ -15,19 +15,17 @@ import static org.junit.Assert.assertThat;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class HierarchicalClusteringPdfViewHelperIT {
-
     @Inject
     HierarchicalClusteringPdfViewHelper subject;
 
     @Test
-    public void hasSingleSpeciesPdf_EMTAB_513() {
-        assertThat(subject.hasSingleSpeciesPdf("E-MTAB-513"), is(true));
+    public void hasClusteringPdf() {
+        assertThat(subject.hasClusteringPdf("E-MTAB-513"), is(true));
+        assertThat(subject.hasClusteringPdf("E-GEOD-13316"), is(false));
     }
 
     @Test
-    public void hasPdf_EGEOD_30352_homo_sapiens() {
-        assertThat(subject.hasPdf("E-GEOD-30352", "homo sapiens"), is(true));
+    public void generateClusteringPdfUrl() {
+        assertThat(subject.generateClusteringPdfUrl("E-MTAB-513"), is("/experiments/E-MTAB-513/E-MTAB-513-heatmap.pdf"));
     }
-
-
 }

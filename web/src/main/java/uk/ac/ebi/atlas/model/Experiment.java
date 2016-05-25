@@ -125,11 +125,6 @@ public class Experiment implements Serializable {
         return "";
     }
 
-    public boolean isMultiOrganismExperiment() {
-        return getOrganisms().size() > 1;
-    }
-
-
     public Map<String, ?> getAttributes(){
         Map<String, Object> result = new HashMap<>();
         result.put("type", this.getType());

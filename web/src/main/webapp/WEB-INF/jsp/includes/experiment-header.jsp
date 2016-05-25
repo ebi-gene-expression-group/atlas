@@ -109,10 +109,10 @@
 
 
                     <%--@elvariable id="hierarchicalClusteringPdfViewHelper" type="uk.ac.ebi.atlas.experimentpage.HierarchicalClusteringPdfViewHelper"--%>
-                    <c:if test="${experiment.multiOrganismExperiment ? hierarchicalClusteringPdfViewHelper.hasPdf(experimentAccession, species) : hierarchicalClusteringPdfViewHelper.hasSingleSpeciesPdf(experimentAccession)}" >
+                    <c:if test="${hierarchicalClusteringPdfViewHelper.hasClusteringPdf(experimentAccession)}" >
                         <td>
                             <a id="clustering-pdf" title="Explore hierarchical clustering between experimental conditions and the top 100 most variable genes in the experiment"
-                               href="${pageContext.request.contextPath}${experiment.multiOrganismExperiment ? hierarchicalClusteringPdfViewHelper.generateUrl(experimentAccession, species) : hierarchicalClusteringPdfViewHelper.generateSingleSpeciesUrl(experimentAccession)}${accessKeyQueryString}">
+                               href="${pageContext.request.contextPath}${hierarchicalClusteringPdfViewHelper.generateClusteringPdfUrl(experimentAccession)}${accessKeyQueryString}">
                                 <img src="${pageContext.request.contextPath}/resources/images/cluster_button.png"/>
                             </a>
                         </td>

@@ -24,7 +24,7 @@ public abstract class BaselineExperimentSlice {
     }
 
     public String organism() {
-        return experiment().isMultiOrganismExperiment() ? filterFactors().getOrganismFactorValue() : experiment().getFirstOrganism();
+        return experiment().getFirstOrganism();
     }
 
     public String experimentAccession() {

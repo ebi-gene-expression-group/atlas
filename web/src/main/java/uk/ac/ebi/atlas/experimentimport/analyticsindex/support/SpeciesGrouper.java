@@ -14,14 +14,6 @@ public final class SpeciesGrouper {
     private SpeciesGrouper() {}
 
     public static ImmutableMap<String, String> buildEnsemblSpeciesGroupedByAssayGroupId(BaselineExperiment experiment) {
-        if (experiment.isMultiOrganismExperiment()) {
-            return buildMultipleEnsemblSpeciesGroupedByAssayGroupId(experiment);
-        } else {
-            return buildSingleEnsemblSpeciesGroupedByAssayGroupId(experiment);
-        }
-    }
-
-    private static ImmutableMap<String, String> buildSingleEnsemblSpeciesGroupedByAssayGroupId(BaselineExperiment experiment) {
         Set<String> assayGroupIds = experiment.getAssayGroups().getAssayGroupIds();
 
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
@@ -35,28 +27,7 @@ public final class SpeciesGrouper {
         return builder.build();
     }
 
-    private static ImmutableMap<String, String> buildMultipleEnsemblSpeciesGroupedByAssayGroupId(BaselineExperiment experiment) {
-        ImmutableMap<String, Factor> organismPartByGroupId = experiment.getExperimentalFactors().getFactorGroupedByAssayGroupId("ORGANISM");
-
-        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
-
-        for (Map.Entry<String, Factor> entry : organismPartByGroupId.entrySet())  {
-            String ensemblSpecies = Species.convertToEnsemblSpecies(experiment.getOrganismToEnsemblSpeciesMapping(), entry.getValue().getValue());
-            builder.put(entry.getKey(), ensemblSpecies);
-        }
-
-        return builder.build();
-    }
-
     public static ImmutableMap<String, String> buildEnsemblSpeciesGroupedByContrastId(DifferentialExperiment experiment) {
-        if (experiment.isMultiOrganismExperiment()) {
-            return buildMultipleEnsemblSpeciesGroupedByContrastId(experiment);
-        } else {
-            return buildSingleEnsemblSpeciesGroupedByContrastId(experiment);
-        }
-    }
-
-    private static ImmutableMap<String, String> buildSingleEnsemblSpeciesGroupedByContrastId(DifferentialExperiment experiment) {
         Set<String> contrastIds = experiment.getContrastIds();
 
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
@@ -70,8 +41,5 @@ public final class SpeciesGrouper {
         return builder.build();
     }
 
-    private static ImmutableMap<String, String> buildMultipleEnsemblSpeciesGroupedByContrastId(DifferentialExperiment experiment) {
-        throw new UnsupportedOperationException();
-    }
 
 }
