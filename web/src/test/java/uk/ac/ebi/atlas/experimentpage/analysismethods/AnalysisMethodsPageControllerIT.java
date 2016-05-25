@@ -19,11 +19,11 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -47,7 +47,7 @@ public class AnalysisMethodsPageControllerIT {
     @Inject
     private FileTsvReaderBuilder fileTsvReaderBuilder;
 
-    Model model = new BindingAwareModelMap();
+    private Model model = new BindingAwareModelMap();
 
     @Before
     public void initSubject() throws Exception {
@@ -59,20 +59,14 @@ public class AnalysisMethodsPageControllerIT {
 
     @Test
     public void testExtractProteomicsAnalysisMethods() throws IOException {
-
         //given
         subject.proteomicsAnalysisMethods(EXPERIMENT_ACCESSION, model, requestMock);
 
         TsvReader tsvReader = fileTsvReaderBuilder.forTsvFilePathTemplate(analysisMethodsTemplate).withExperimentAccession(EXPERIMENT_ACCESSION).build();
-
         List<String[]> result = tsvReader.readAll();
-        String[] firstLine = result.get(0);
-        String[] lastLine = result.get(result.size() - 1);
 
-        assertThat(result.size(), is(10));
-        assertThat(firstLine, arrayContaining("Pipeline ", "Please see <a href=\"experiments/E-PROT-1/analysis-methods/HumanDataAnalysisFigure.pdf\">Workflow</a> and <a href=\"experiments/E-PROT-1/analysis-methods/HumanDataAnalysisMethods.pdf\">Methods</a> for more information."));
-        assertThat(lastLine, arrayContaining("Normalized Counts per Gene", "Obtained from the <a href=\"http://cufflinks.cbcb.umd.edu/manual.html#fpkm_tracking_format\">genes.fpkm_tracking files</a>, then averaged for all biological replicates (if any)"));
-
+        assertThat(result.size(), is(greaterThan(0)));
+        assertThat(Arrays.asList(result.get(0)), hasItem("Pipeline "));
     }
 
     @Test

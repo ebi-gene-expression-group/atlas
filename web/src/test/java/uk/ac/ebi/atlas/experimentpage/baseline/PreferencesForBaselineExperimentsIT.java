@@ -6,13 +6,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import java.util.concurrent.ExecutionException;
@@ -25,16 +22,15 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class PreferencesForBaselineExperimentsIT {
 
+    private PreferencesForBaselineExperiments subject = new PreferencesForBaselineExperiments();
+
     @Inject
     BaselineExperimentsCache baselineExperimentsCache;
 
-
-    PreferencesForBaselineExperiments subject = new PreferencesForBaselineExperiments();
-
     @Test
     public void searchingForAllFactorsSetsSpecificToFalse_singleFactorExperiment() throws ExecutionException {
-        BaselineExperiment experiment = baselineExperimentsCache.getExperiment("E-MTAB-599");
-        ImmutableSet<String> allFactors = ImmutableSet.of("heart", "hippocampus", "liver", "lung", "spleen", "thymus");
+        BaselineExperiment experiment = baselineExperimentsCache.getExperiment("E-MTAB-3827");
+        ImmutableSet<String> allFactors = ImmutableSet.of("cord blood", "venous blood");
 
         BaselineRequestPreferences preferences = new BaselineRequestPreferences();
         preferences.setSpecific(true);

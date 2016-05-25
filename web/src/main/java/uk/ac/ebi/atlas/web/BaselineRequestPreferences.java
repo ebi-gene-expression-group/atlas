@@ -1,8 +1,6 @@
-
 package uk.ac.ebi.atlas.web;
 
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
-
 
 public class BaselineRequestPreferences extends ExperimentPageRequestPreferences{
 
