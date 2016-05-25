@@ -64,7 +64,7 @@ public class ExperimentOps {
             if(accessions.isPresent()){
                 return perform(accessions.get(), ops);
             } else {
-                return perform(accessions.get(), ops);
+                return perform(ops);
             }
         }
     }
