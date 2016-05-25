@@ -103,24 +103,4 @@ public class SpeciesGrouperTest {
         assertThat(speciesGroupedByAssayGroupId, hasEntry(G2, HOMO_SAPIENS_ENSEMBL));
     }
 
-    @Test
-    public void buildMultipleEnsemblSpeciesGroupedByAssayGroupId() throws Exception {
-
-        BaselineExperiment experiment = subject.forOrganisms(Sets.newHashSet(HOMO_SAPIENS, MUS_MUSCULUS))
-                .withAccession(EXPERIMENT_ACCESSION)
-                .withSpeciesMapping(speciesMap)
-                .withExperimentDesign(experimentDesignMock)
-                .withExperimentalFactors(experimentalFactors)
-                .withAssayGroups(assayGroupsMock)
-                .withPubMedIds(Collections.<String>emptySet())
-                .withExperimentalFactors(experimentalFactorsMock)
-                .create();
-
-        ImmutableMap<String, String> speciesGroupedByAssayGroupId = SpeciesGrouper.buildEnsemblSpeciesGroupedByAssayGroupId(experiment);
-
-        assertThat(speciesGroupedByAssayGroupId.size(), is(2));
-        assertThat(speciesGroupedByAssayGroupId, hasEntry(G1, HOMO_SAPIENS_ENSEMBL));
-        assertThat(speciesGroupedByAssayGroupId, hasEntry(G2, Species.convertToEnsemblSpecies(MUS_MUSCULUS)));
-    }
-
 }
