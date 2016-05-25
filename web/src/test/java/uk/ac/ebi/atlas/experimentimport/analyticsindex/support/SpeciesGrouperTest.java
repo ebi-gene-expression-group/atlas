@@ -32,13 +32,9 @@ public class SpeciesGrouperTest {
     private static final String EXPERIMENT_ACCESSION = "accession";
     private static final String RUN_ACCESSION1 = "run1";
     private static final String RUN_ACCESSION2 = "run2";
-    private static final String MUS_MUSCULUS = "Mus musculus";
     public static final String ORGANISM_PART = "ORGANISM_PART";
     public static final String G1 = "g1";
     public static final String G2 = "g2";
-    private static final Factor FACTOR_HOMO_SAPIENS = new Factor(ORGANISM_PART, HOMO_SAPIENS);
-    private static final Factor FACTOR_MUS_MUSCULUS = new Factor(ORGANISM_PART, MUS_MUSCULUS);
-    private static final String ORGANISM = "ORGANISM";
 
     private BaselineExperimentBuilder subject;
 
@@ -79,9 +75,6 @@ public class SpeciesGrouperTest {
         when(assayGroupsOrganismPartMock.iterator()).thenReturn(Sets.newHashSet(new AssayGroup(G1, RUN_ACCESSION1), new AssayGroup(G2, RUN_ACCESSION2)).iterator());
         when(assayGroupsOrganismPartMock.getAssayAccessions()).thenReturn(Sets.newHashSet(RUN_ACCESSION1, RUN_ACCESSION2));
         when(assayGroupsOrganismPartMock.getAssayGroupIds()).thenReturn(Sets.newHashSet(G1, G2));
-
-        ImmutableMap<String, Factor> organismPartByAssayGroupId = ImmutableMap.of(G1, FACTOR_HOMO_SAPIENS, G2, FACTOR_MUS_MUSCULUS);
-        when(experimentalFactorsMock.getFactorGroupedByAssayGroupId(ORGANISM)).thenReturn(organismPartByAssayGroupId);
     }
 
     @Test
