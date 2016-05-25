@@ -1,3 +1,7 @@
+<%--@elvariable id="experimentAccession" type="java.lang.String"--%>
+<%--@elvariable id="species" type="java.lang.String"--%>
+<%--@elvariable id="fastQCReportUtil" type="uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil"--%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -7,7 +11,7 @@
 <%@ page import="java.nio.file.Path" %>
 
 <div id="fastQcReports">
-    <c:set var="hasFastQcReport" value="${fastQReportUtil.hasFastQC(experimentAccession,species)}"/>
+    <c:set var="hasFastQcReport" value="${fastQCReportUtil.hasFastQC(experimentAccession, species)}"/>
     <c:if test="${hasFastQcReport}" >
         <form:form commandName="preferences" method="get" id="prefForm" >
             <c:if test="${not empty param.accessKey}">
@@ -20,16 +24,6 @@
                     <form:options items="${fastQCReports}" itemLabel="qcReport" />
                 </form:select>
             </div>
-
-            <c:set var="hasMultipleOrganism" value="${fastQReportUtil.hasMultiOrganism(experimentAccession,param.accessKey)}" />
-            <c:if test="${hasMultipleOrganism}">
-                <span style="margin-left: 20px;">Selected organism:</span>
-                <div style="display: inline">
-                    <form:select path="selectedSpecies">
-                        <form:options items="${allSpecies}"/>
-                    </form:select>
-                </div>
-            </c:if>
         </form:form>
     </c:if>
 </div>
@@ -53,9 +47,7 @@
 
 <script>
     (function ($) {
-
         $(document).ready(function () {
-
             $('#selectedReport').change(function () {
                 $('#prefForm').submit();
             });
@@ -63,16 +55,11 @@
             $('#selectedSpecies').change(function () {
                 $('#prefForm').submit();
             });
-
-
         });
-
     })(jQuery);
 
     (function ($, queryString) {
-
         $(document).ready(function () {
-
             function startsWith(str, test) {
                 return str.lastIndexOf(test, 0) === 0;
             }
@@ -81,7 +68,6 @@
                 var url = e.target.href;
                 if (!startsWith(url, "javascript")) {
                     e.preventDefault();
-
 
                     var query = queryString.parse(window.location.search.slice(1));
 
@@ -94,8 +80,6 @@
             };
 
             $('#fast-qc-content').on('click', 'a', addAccessKeyToUrl);
-
         });
-
     })($, queryString);
 </script>

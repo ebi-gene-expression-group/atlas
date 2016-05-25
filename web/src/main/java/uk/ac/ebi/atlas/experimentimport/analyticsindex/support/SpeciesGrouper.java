@@ -3,10 +3,8 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.support;
 import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
-import java.util.Map;
 import java.util.Set;
 
 public final class SpeciesGrouper {

@@ -12,19 +12,12 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.text.MessageFormat;
 
-/**
- * Created with IntelliJ IDEA.
- * User: barrera
- */
-
 @Named
-@Scope("singleton")
 public class FastQCReportUtil {
 
     private String qcFilePathTemplate;
     private String mappingQCFilePathTemplate;
     private String fastQCFilePathTemplate;
-    private ExperimentTrader experimentTrader;
 
     @Inject
     public FastQCReportUtil(@Value("#{configuration['rnaseq.mrna.fast.qc.path.template']}") String qcFilePathTemplate,
@@ -34,7 +27,6 @@ public class FastQCReportUtil {
         this.qcFilePathTemplate = qcFilePathTemplate;
         this.mappingQCFilePathTemplate = mappingQCFilePathTemplate;
         this.fastQCFilePathTemplate = fastQCFilePathTemplate;
-        this.experimentTrader = experimentTrader;
     }
 
     /***** FAST QC index ****/
@@ -65,20 +57,12 @@ public class FastQCReportUtil {
         return MessageFormat.format(fastQCFilePathTemplate, experimentAccession, specie_s);
     }
 
-    /***** Species selection ****/
-    public boolean hasMultiOrganism(String experimentAccession, String accessKey) {
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-        return experiment.getOrganisms().size() > 1;
-    }
-
-
     /**
      * Replace white space for "_" from species if it has more than one word
      * and if species has more than 2 words, it keeps only the first 2.
      */
     private String splitSpecies(String species) {
         String[] splitStr = species.split("\\s+");
-
         return splitStr.length > 1 ? splitStr[0] + "_" + splitStr[1] : species;
     }
 
