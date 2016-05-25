@@ -35,7 +35,7 @@ public class ExperimentCRUDRollbackIT {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentCRUDRollbackIT.class);
 
-    public static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";
+    private static final String NEW_EXPERIMENT_ACCESSION = "TEST-RNASEQ-BASELINE";
 
     @Inject
     private ExperimentCRUD subject;
