@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +26,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyInt;
@@ -35,6 +36,8 @@ import static org.mockito.Mockito.when;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class BaselineAnalyticsIndexerServiceIT {
+
+    private BaselineAnalyticsIndexerService subject;
 
     @Inject
     BaselineAnalyticsDocumentStreamFactory streamFactory;
@@ -57,8 +60,6 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Inject
     private BaselineConditionsBuilder baselineConditionsBuilder;
 
-    private BaselineAnalyticsIndexerService subject;
-
     private ImmutableList<AnalyticsDocument> documents;
 
     @Before
@@ -68,7 +69,7 @@ public class BaselineAnalyticsIndexerServiceIT {
         subject = new BaselineAnalyticsIndexerService(streamFactory, efoParentsLookupService, baselineAnalyticsInputStreamFactory, proteomicsBaselineAnalyticsInputStreamFactory, analyticsIndexDAOMock, baselineConditionsBuilder);
     }
 
-    Answer<Integer> storeDocuments() {
+    private Answer<Integer> storeDocuments() {
         return new Answer<Integer>() {
 
             @Override
@@ -77,33 +78,32 @@ public class BaselineAnalyticsIndexerServiceIT {
                 Iterable<AnalyticsDocument> documentStream = (Iterable<AnalyticsDocument>) invocationOnMock.getArguments()[0];
 
                 ImmutableList.Builder<AnalyticsDocument> documentsBuilder = ImmutableList.builder();
-
                 for (AnalyticsDocument document : documentStream) {
                     documentsBuilder.add(document);
                 }
-
                 documents = documentsBuilder.build();
 
                 return documents.size();
             }
+
         };
     }
 
     @Test
     public void indexBaselineExperimentAnalytics() {
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-MTAB-2039");
+        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-MTAB-513");
         subject.index(experiment, ImmutableMap.of("", ""), 0);
-        assertThat(documents, hasSize(14));
 
-        AnalyticsDocument document = documents.get(0);
-        assertThat(document.getBioentityIdentifier(), is("OS12G0515800"));
-        assertThat(document.getSpecies(), is("oryza sativa"));
-        assertThat(document.getExperimentAccession(), is("E-MTAB-2039"));
-        assertThat(document.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
-        assertThat(document.getDefaultQueryFactorType(), is("ORGANISM_PART"));
-        assertThat(document.getConditionsSearch(), is("EFO_0000001 EFO_0000635 Oryza sativa Japonica Group 60 days after sowing EFO_0001029 OBI_0100026 NCBITaxon_33090 snap#MaterialEntity NCBITaxon_39947 emerging inflorescence EFO_0000786 NCBITaxon_2759 EFO_0000789 Nipponbare EFO_0000992 whole post-emergence inflorescence"));
-        assertThat(document.getAssayGroupId(), is("g2"));
-        assertThat(document.getExpressionLevel(), is(0.2));
+        assertThat(documents, hasSize(greaterThan(10000)));
+
+        // This Matcher cast shouldn’t be necessary and I’m not sure why it is :/
+        assertThat(documents, everyItem((Matcher)hasProperty("species", is("homo sapiens"))));
+        assertThat(documents, everyItem((Matcher)hasProperty("experimentAccession", is("E-MTAB-513"))));
+        assertThat(documents, everyItem((Matcher)hasProperty("experimentType", is(ExperimentType.RNASEQ_MRNA_BASELINE))));
+        assertThat(documents, everyItem((Matcher)hasProperty("defaultQueryFactorType", is("ORGANISM_PART"))));
+        assertThat(documents, everyItem((Matcher)hasProperty("expressionLevel")));
+        assertThat(documents, everyItem((Matcher)hasProperty("bioentityIdentifier")));
+        assertThat(documents, everyItem((Matcher)hasProperty("assayGroupId")));
     }
 
     @Test
@@ -111,17 +111,16 @@ public class BaselineAnalyticsIndexerServiceIT {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1");
         subject.index(experiment, ImmutableMap.of("", ""), 1024);
 
-        assertThat(documents, hasSize(3366));
+        assertThat(documents, hasSize(greaterThan(10000)));
 
-        AnalyticsDocument document = documents.get(0);
-        assertThat(document.getBioentityIdentifier(), is("ENSG00000000003"));
-        assertThat(document.getSpecies(), is("homo sapiens"));
-        assertThat(document.getExperimentAccession(), is("E-PROT-1"));
-        assertThat(document.getExperimentType(), is(ExperimentType.PROTEOMICS_BASELINE));
-        assertThat(document.getDefaultQueryFactorType(), is("ORGANISM_PART"));
-        assertThat(document.getConditionsSearch(), is("EFO_0000399 EFO_0000635 EFO_0000001 EFO_0001272 colon adult UBERON_0001155 OBI_0100026 snap#MaterialEntity NCBITaxon_9606 EFO_0000786 EFO_0000787 NCBITaxon_2759 Homo sapiens span#ProcessualEntity"));
-        assertThat(document.getAssayGroupId(), is("g5"));
-        assertThat(document.getExpressionLevel(), is(9.94E06));
+        // This Matcher cast shouldn’t be necessary and I’m not sure why it is :/
+        assertThat(documents, everyItem((Matcher)hasProperty("species", is("homo sapiens"))));
+        assertThat(documents, everyItem((Matcher)hasProperty("experimentAccession", is("E-PROT-1"))));
+        assertThat(documents, everyItem((Matcher)hasProperty("experimentType", is(ExperimentType.PROTEOMICS_BASELINE))));
+        assertThat(documents, everyItem((Matcher)hasProperty("defaultQueryFactorType", is("ORGANISM_PART"))));
+        assertThat(documents, everyItem((Matcher)hasProperty("expressionLevel")));
+        assertThat(documents, everyItem((Matcher)hasProperty("bioentityIdentifier")));
+        assertThat(documents, everyItem((Matcher)hasProperty("assayGroupId")));
     }
 
 }
