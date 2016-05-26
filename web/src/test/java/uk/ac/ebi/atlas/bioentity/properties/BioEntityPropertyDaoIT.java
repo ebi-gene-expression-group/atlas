@@ -68,14 +68,6 @@ public class BioEntityPropertyDaoIT {
     }
 
     @Test
-    public void fetchProperties_goterm() throws SolrServerException {
-        //when
-        Multimap<String, String> multimap = subject.fetchProperties("ENSG00000109819", new String[]{"goterm"});
-        // then
-        MatcherAssert.assertThat(multimap.get("goterm"), hasItems("RNA splicing", "cellular response to oxidative stress", "cellular glucose homeostasis"));
-    }
-
-    @Test
     public void findPropertyValuesForGeneId() throws SolrServerException {
         assertThat(subject.fetchPropertyValuesForGeneId("ENSG00000179218", "symbol"), hasItem("CALR"));
         assertThat(subject.fetchPropertyValuesForGeneId("ENSMUSG00000029816", "symbol"), hasItem("Gpnmb"));

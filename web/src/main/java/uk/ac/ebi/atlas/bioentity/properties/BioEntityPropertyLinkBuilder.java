@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.base.Optional;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.model.Species;
@@ -17,24 +16,19 @@ import java.text.MessageFormat;
 import java.util.Set;
 
 @Named
-@Scope("singleton")
 public class BioEntityPropertyLinkBuilder {
 
     private BioEntityCardProperties bioEntityCardProperties;
-
     private ReactomeClient reactomeClient;
-
     private BioEntityPropertyDao bioEntityPropertyDao;
-
     private SpeciesLookupService speciesLookupService;
-
     private GoPoTermTrader goPoTermTrader;
-
     private InterProTrader interProTermTrader;
 
     @Inject
     public BioEntityPropertyLinkBuilder(BioEntityCardProperties bioEntityCardProperties, ReactomeClient reactomeClient,
-                                        BioEntityPropertyDao bioEntityPropertyDao, SpeciesLookupService speciesLookupService, GoPoTermTrader goPoTermTrader, InterProTrader interProTermTrader) {
+                                        BioEntityPropertyDao bioEntityPropertyDao, SpeciesLookupService speciesLookupService,
+                                        GoPoTermTrader goPoTermTrader, InterProTrader interProTermTrader) {
         this.bioEntityCardProperties = bioEntityCardProperties;
         this.reactomeClient = reactomeClient;
         this.bioEntityPropertyDao = bioEntityPropertyDao;
@@ -43,7 +37,7 @@ public class BioEntityPropertyLinkBuilder {
         this.interProTermTrader = interProTermTrader;
     }
 
-    public Optional<PropertyLink> createLink(String identifier, String propertyType, String propertyValue, String species) {
+    Optional<PropertyLink> createLink(String identifier, String propertyType, String propertyValue, String species) {
         final String linkSpecies = Species.convertSpacesToUnderscore(species);
 
         String linkText = fetchLinkText(propertyType, propertyValue);
@@ -64,7 +58,7 @@ public class BioEntityPropertyLinkBuilder {
         return Optional.of(new PropertyLink(linkText));
     }
 
-    String fetchLinkText(String propertyType, String propertyValue) {
+    private String fetchLinkText(String propertyType, String propertyValue) {
         String displayName = propertyValue;
         switch (propertyType) {
             case "ortholog":
@@ -87,7 +81,7 @@ public class BioEntityPropertyLinkBuilder {
         return displayName;
     }
 
-    String fetchSymbolAndSpeciesForOrtholog(String identifier) {
+    private String fetchSymbolAndSpeciesForOrtholog(String identifier) {
         try {
             String species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
 
@@ -104,11 +98,12 @@ public class BioEntityPropertyLinkBuilder {
         }
     }
 
-    String getEncodedString(String value) {
+    private String getEncodedString(String value) {
         try {
             return URLEncoder.encode(value, "ISO-8859-1");
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("Cannot create URL from " + value, e);
         }
     }
+
 }

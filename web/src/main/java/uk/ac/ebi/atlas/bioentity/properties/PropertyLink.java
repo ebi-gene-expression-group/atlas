@@ -1,18 +1,17 @@
-
 package uk.ac.ebi.atlas.bioentity.properties;
 
+// Used in bioentity-information.jsp
 public class PropertyLink {
 
     private String text;
-
     private String url;
 
-    public PropertyLink(String text, String url) {
+    PropertyLink(String text, String url) {
         this.text = text;
         this.url = url;
     }
 
-    public PropertyLink(String text) {
+    PropertyLink(String text) {
         this(text, "");
     }
 

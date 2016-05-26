@@ -45,7 +45,6 @@ public class BioEntityPropertyDao {
 
     }
 
-
     public SortedSetMultimap<String, String> fetchTooltipProperties(String identifier) {
         return fetchProperties(identifier, tooltipPropertyTypes);
 
@@ -59,13 +58,7 @@ public class BioEntityPropertyDao {
         return propertiesByName;
     }
 
-    public boolean hasBioentityProperties(String identifier, String[] propertyNames) {
-        SortedSetMultimap<String, String> propertiesByName = fetchProperties(identifier, propertyNames);
-
-        return !propertiesByName.isEmpty();
-    }
-
-    SortedSetMultimap<String, String> fetchProperties(String bioentityIdentifier, String[] propertyNames) {
+    private SortedSetMultimap<String, String> fetchProperties(String bioentityIdentifier, String[] propertyNames) {
 
         SolrQuery solrQuery = solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder()
                 .withPropertyNames(propertyNames).buildBioentityQuery(bioentityIdentifier);
@@ -78,4 +71,5 @@ public class BioEntityPropertyDao {
         return solrServer.queryForProperties(solrQuery);
 
     }
+
 }

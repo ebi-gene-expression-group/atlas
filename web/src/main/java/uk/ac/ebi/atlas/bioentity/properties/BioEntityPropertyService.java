@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.base.Optional;
@@ -210,12 +209,12 @@ public class BioEntityPropertyService {
         return entityName;
     }
 
-    String getFirstValueOfProperty(String propertyType) {
+    private String getFirstValueOfProperty(String propertyType) {
         Collection<String> properties = propertyValuesByType.get(propertyType);
         return CollectionUtils.isNotEmpty(properties) ? properties.iterator().next() : "";
     }
 
-    void addReactomePropertyValues() {
+    private void addReactomePropertyValues() {
         Collection<String> uniprotIds = propertyValuesByType.get("uniprot");
         if (CollectionUtils.isNotEmpty(uniprotIds)) {
             for (String uniprotId : uniprotIds) {
@@ -224,5 +223,6 @@ public class BioEntityPropertyService {
             }
         }
     }
+
 }
 
