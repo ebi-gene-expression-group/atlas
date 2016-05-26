@@ -1,4 +1,6 @@
-<%--@elvariable id="experimentAccession" type="java.lang.String"--%>
+<%@ page import="java.nio.file.Path" %>
+<%@ page import="org.apache.commons.io.IOUtils" %>
+<%@ page import="java.nio.file.Files" %><%--@elvariable id="experimentAccession" type="java.lang.String"--%>
 <%--@elvariable id="species" type="java.lang.String"--%>
 <%--@elvariable id="rawDownloadUrl" type="java.lang.String"--%>
 <%--@elvariable id="analyticsDownloadUrl" type="java.lang.String"--%>
@@ -126,7 +128,7 @@
                             <c:choose>
                                 <c:when test="${isFortLauderdale}">
                                     <a id="download-r-modal" title="Download experiment data ready to load into R"
-                                       role="button" data-toggle="modal" data-target="#download-modal">
+                                       role="button" data-load-url="${pageContext.request.contextPath}/resources/html/blueprint.html" data-toggle="modal" data-target="#download-modal">
                                         <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
                                     </a>
                                 </c:when>
@@ -173,7 +175,7 @@
                                 <c:choose>
                                     <c:when test="${isFortLauderdale}">
                                         <a id="download-expressions-modal" title="Download all expressions for the experiment"
-                                           role="button" data-toggle="modal" data-target="#download-modal">
+                                           role="button" data-load-url="${pageContext.request.contextPath}/resources/html/blueprint.html" data-toggle="modal" data-target="#download-modal">
                                             <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/>
                                         </a>
                                     </c:when>
@@ -209,8 +211,8 @@
                     <h4></h4>
                 </div>
 
-                <div class="modal-body" style="max-height: 360px">
-                    <c:import url="/resources/html/blueprint.html" />
+                <div class="modal-body edit-content" style="max-height: 360px">
+
                 </div>
 
                 <div class="modal-footer">
@@ -243,6 +245,11 @@
                 padding:0,
                 openEffect:'elastic',
                 closeEffect:'elastic'
+            });
+
+            $('#download-modal').on('show.bs.modal', function (event) {
+                var loadURL = event.relatedTarget;
+                $(this).find('.modal-body').load(loadURL.dataset.loadUrl);
             });
 
             $("#download-expressions-modal").click(function(event) {
