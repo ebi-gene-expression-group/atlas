@@ -50,6 +50,23 @@ public final class ExperimentDispatcher {
         return "forward:" + buildForwardURL(request, experiment, accessKey);
     }
 
+    @RequestMapping(value = {"/json/experiments/{experimentAccession}", "/experiments/{experimentAccession}/*"})
+    public String dispatchData(HttpServletRequest request, HttpServletResponse response,
+                           @PathVariable String experimentAccession,
+                           @RequestParam(value = "accessKey",required = false) String accessKey, Model model) {
+
+        if (alreadyForwardedButNoOtherControllerHandledTheRequest(request)) {
+            // prevent an infinite loop
+            throw new NoExperimentSubResourceException();
+        }
+
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+
+        request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
+
+        return "forward:" + buildForwardURL(request, experiment, accessKey);
+    }
+
     private boolean alreadyForwardedButNoOtherControllerHandledTheRequest(HttpServletRequest request) {
         return StringUtils.startsWith(request.getQueryString(), "type=");
     }

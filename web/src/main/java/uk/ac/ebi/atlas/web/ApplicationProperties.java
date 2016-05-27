@@ -158,7 +158,7 @@ public class ApplicationProperties {
         String uri = StringUtils.remove(requestUri, request.getContextPath());
 
         return Joiner.on("?").skipNulls()
-                .join(new String[]{uri + TSV_FILE_EXTENSION, queryString});
+                .join(new String[]{uri.replace("/json/experiments","/experiments") + TSV_FILE_EXTENSION, queryString});
     }
 
     public String buildDownloadURLForWidget(HttpServletRequest request, String experimentAccession) {

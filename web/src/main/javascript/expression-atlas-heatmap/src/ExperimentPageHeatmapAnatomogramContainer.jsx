@@ -25,6 +25,70 @@ require('./ExperimentPageHeatmapAnatomogramContainer.css');
 
 //*------------------------------------------------------------------*
 
+var AsynchronouslyLoadedInternalHeatmapAnatomogramContainer = React.createClass({
+  propTypes: {
+    sourceURL: React.PropTypes.string.isRequired,
+    type: React.PropTypes.oneOf([
+        ExperimentTypes.BASELINE, ExperimentTypes.MULTIEXPERIMENT, ExperimentTypes.DIFFERENTIAL, ExperimentTypes.PROTEOMICS_BASELINE
+    ]).isRequired,
+    atlasBaseURL: React.PropTypes.string.isRequired,
+    linksAtlasBaseURL: React.PropTypes.string.isRequired
+  },
+  getInitialState: function() {
+    return {
+      heatmapData: {}
+    };
+  },
+
+  componentDidMount: function() {
+      var httpRequest = {
+          url: this.props.sourceURL,
+          dataType: "json",
+          method: "GET"
+      };
+
+      this.serverRequest = $.ajax(httpRequest).done(
+           this._updateStateAsynchronously
+      ).fail(
+          function (jqXHR, textStatus, errorThrown) {
+              if (textStatus === "parsererror") {
+                  $(ReactDOM.findDOMNode(this.refs.this)).html("<div class='gxaError'>Could not parse JSON response</div>");
+              } else {
+                  $(ReactDOM.findDOMNode(this.refs.this)).html(jqXHR.responseText);
+              }
+          }.bind(this)
+      );
+  },
+
+  _updateStateAsynchronously: function (data) {
+      this.setState({heatmapData:data});
+  },
+
+  render: function () {
+    return Object.keys(this.state.heatmapData).length
+      ?
+        this.state.heatmapData.error
+        ? <p>{this.state.heatmapData.error}</p>
+        : <InternalHeatmapAnatomogramContainer
+            type={this.props.type}
+            heatmapConfig={this.state.heatmapData.config}
+            isWidget={false}
+            anatomogram={this.state.heatmapData.anatomogram}
+            columnHeaders={this.state.heatmapData.columnHeaders}
+            nonExpressedColumnHeaders={this.state.heatmapData.nonExpressedColumnHeaders}
+            multipleColumnHeaders={this.state.heatmapData.multipleColumnHeaders}
+            profiles={this.state.heatmapData.profiles}
+            jsonCoexpressions={this.state.heatmapData.jsonCoexpressions}
+            geneSetProfiles={this.state.heatmapData.geneSetProfiles}
+            atlasBaseURL={this.state.heatmapData.config.atlasHost+this.state.heatmapData.config.contextRoot}
+            linksAtlasBaseURL={this.props.linksAtlasBaseURL}
+          />
+      : <div ref="loadingImagePlaceholder">
+          <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
+      </div>
+  },
+});
+
 var InternalHeatmapAnatomogramContainer = React.createClass({
     propTypes: {
         anatomogram: React.PropTypes.object,
@@ -151,4 +215,4 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
 
 //*------------------------------------------------------------------*
 
-module.exports = InternalHeatmapAnatomogramContainer;
+module.exports = AsynchronouslyLoadedInternalHeatmapAnatomogramContainer;

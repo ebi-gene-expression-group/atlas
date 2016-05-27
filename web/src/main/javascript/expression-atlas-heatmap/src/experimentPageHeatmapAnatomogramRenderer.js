@@ -22,14 +22,21 @@ var ExperimentTypes = require('./experimentTypes.js');
  */
 exports.render = function(options) {
 
-    var heatmapConfig = options.heatmapData.config,
-        columnHeaders = options.heatmapData.columnHeaders,
-        nonExpressedColumnHeaders = options.heatmapData.nonExpressedColumnHeaders,
-        multipleColumnHeaders = options.heatmapData.multipleColumnHeaders,
-        profiles = options.heatmapData.profiles,
-        jsonCoexpressions = options.heatmapData.jsonCoexpressions,
-        geneSetProfiles = options.heatmapData.geneSetProfiles,
-        anatomogramData = options.heatmapData.anatomogram;
+  var protocol = window.location.protocol + "//",
+      atlasHost = options.atlasHost === undefined ? "www.ebi.ac.uk" : options.atlasHost,
+      atlasPath = "/gxa";
+
+  var linksAtlasBaseURL =
+      (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://") === 0) ? atlasHost + atlasPath :
+      protocol + atlasHost + atlasPath;
+
+  var atlasBaseURL = options.proxyPrefix ? options.proxyPrefix + "/" + atlasHost + atlasPath : linksAtlasBaseURL;
+
+  var endpointPath =
+      options.analyticsSearch ? "/widgets/heatmap/baselineAnalytics" :
+          options.isMultiExperiment ? "/widgets/heatmap/multiExperiment" : "/widgets/heatmap/referenceExperiment";
+
+  var sourceURL = atlasBaseURL + endpointPath + "?" + options.params;
 
     var type =
         options.isMultiExperiment ? ExperimentTypes.MULTIEXPERIMENT :
@@ -41,12 +48,10 @@ exports.render = function(options) {
         React.createElement(
             HeatmapAnatomogramContainer,
             {
-                type: type, heatmapConfig: heatmapConfig, isWidget: false,
-                anatomogram: anatomogramData, columnHeaders: columnHeaders, nonExpressedColumnHeaders: nonExpressedColumnHeaders,
-                multipleColumnHeaders: multipleColumnHeaders,
-                profiles: profiles, jsonCoexpressions: jsonCoexpressions, geneSetProfiles: geneSetProfiles,
-                atlasBaseURL: heatmapConfig.atlasHost + heatmapConfig.contextRoot,
-                linksAtlasBaseURL: heatmapConfig.atlasHost + heatmapConfig.contextRoot
+                type: type,
+                sourceURL: options.sourceURL,
+                atlasBaseURL: atlasBaseURL,
+                linksAtlasBaseURL: linksAtlasBaseURL
             }
         ),
         document.getElementById("gxaExperimentPageHeatmapAnatomogram")

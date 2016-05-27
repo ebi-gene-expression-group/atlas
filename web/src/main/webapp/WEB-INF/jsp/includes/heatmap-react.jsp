@@ -17,11 +17,10 @@
     <div id="genenametooltip-content" style="display: none"></div>
 
     <script type="text/javascript">
-        var heatmapData = <%@ include file="heatmap-data.jsp" %>;
         var isMultiExperiment = ${isMultiExperiment ? true : false};
 
         experimentPageHeatmap.render({
-            heatmapData: heatmapData,
+            sourceURL: "${sourceURL}",
             isMultiExperiment: isMultiExperiment,
             isDifferential: ${type.differential},
             isProteomicsBaseline: ${type.proteomicsBaseline}
