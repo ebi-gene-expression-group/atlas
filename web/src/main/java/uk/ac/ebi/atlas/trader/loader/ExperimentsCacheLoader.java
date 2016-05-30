@@ -64,7 +64,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
         ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
 
-        String experimentDescription = fetchExperimentNameFromArrayExpress(experimentAccession, experimentDTO);
+        String experimentDescription = "";//fetchExperimentNameFromArrayExpress(experimentAccession, experimentDTO);
 
         return load(experimentDTO, experimentDescription, hasExtraInfoFile, experimentDesign);
 

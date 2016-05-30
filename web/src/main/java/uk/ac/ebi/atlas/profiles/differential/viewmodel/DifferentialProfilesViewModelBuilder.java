@@ -1,18 +1,18 @@
 package uk.ac.ebi.atlas.profiles.differential.viewmodel;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.Set;
 
 @Named
@@ -22,6 +22,7 @@ public class DifferentialProfilesViewModelBuilder {
     private final ColourGradient colourGradient;
     private final PValueFormatter pValueFormatter;
     private final NumberFormat format2Dp = NumberFormat.getNumberInstance();
+
     private final FoldChangeRounder foldChangeRounder = new FoldChangeRounder();
 
     @Inject
@@ -33,54 +34,70 @@ public class DifferentialProfilesViewModelBuilder {
         format2Dp.setMaximumFractionDigits(2);
     }
 
-    public DifferentialProfilesViewModel build(DifferentialProfilesList<? extends DifferentialProfile<? extends DifferentialExpression>> diffProfiles, Set<Contrast> orderedContrasts) {
-        DifferentialProfileRowViewModel[] genes = buildGenes(diffProfiles, orderedContrasts);
+    public JsonObject build(DifferentialProfilesList<? extends DifferentialProfile<? extends
+            DifferentialExpression>> diffProfiles, Set<Contrast> orderedContrasts) {
+        JsonObject result = new JsonObject();
+        addDoublePropertyIfNotNaN(result, "maxDownLevel", diffProfiles.getMaxDownRegulatedExpressionLevel());
+        addDoublePropertyIfNotNaN(result, "maxUpLevel", diffProfiles.getMaxUpRegulatedExpressionLevel());
+        addDoublePropertyIfNotNaN(result, "minDownLevel", diffProfiles.getMinDownRegulatedExpressionLevel());
+        addDoublePropertyIfNotNaN(result, "minUpLevel", diffProfiles.getMinUpRegulatedExpressionLevel());
 
-        return new DifferentialProfilesViewModel(diffProfiles.getMinUpRegulatedExpressionLevel(), diffProfiles.getMaxUpRegulatedExpressionLevel(), diffProfiles.getMinDownRegulatedExpressionLevel(), diffProfiles.getMaxDownRegulatedExpressionLevel(), diffProfiles.getTotalResultCount(), genes);
+        result.add("rows", buildGenes(diffProfiles, orderedContrasts));
+        result.addProperty("searchResultTotal", diffProfiles.getTotalResultCount());
+        return result;
     }
 
-    public DifferentialProfileRowViewModel[] buildGenes(DifferentialProfilesList<? extends DifferentialProfile<? extends DifferentialExpression>> profiles, Set<Contrast> orderedContrasts) {
-        return build(profiles, orderedContrasts, profiles.getMinUpRegulatedExpressionLevel(), profiles.getMaxUpRegulatedExpressionLevel(), profiles.getMinDownRegulatedExpressionLevel(), profiles.getMaxDownRegulatedExpressionLevel());
-    }
-
-    private DifferentialProfileRowViewModel[] build(List<? extends DifferentialProfile<? extends DifferentialExpression>> profiles, Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
-        DifferentialProfileRowViewModel[] viewModels = new DifferentialProfileRowViewModel[profiles.size()];
-
-        int i = 0;
-        for (DifferentialProfile<? extends DifferentialExpression> profile : profiles) {
-            DifferentialProfileRowViewModel profileViewModel = build(profile, orderedContrasts, minUpLevel, maxUpLevel, minDownLevel, maxDownLevel);
-            viewModels[i++] = profileViewModel;
+    private void addDoublePropertyIfNotNaN(JsonObject o,String name, double d){
+        if(! Double.isNaN(d)){
+            o.addProperty(name,foldChangeRounder.round(d));
         }
-
-        return viewModels;
     }
 
-    private DifferentialProfileRowViewModel build(DifferentialProfile<? extends DifferentialExpression> profile, Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
-        String geneId = profile.getId();
-        String geneName = profile.getName();
-        String designElement = (profile instanceof MicroarrayProfile) ? ((MicroarrayProfile)profile).getDesignElementName() : null;
-        DifferentialExpressionViewModel[] expressions = buildExpressions(profile, orderedContrasts, minUpLevel, maxUpLevel, minDownLevel, maxDownLevel);
-        return new DifferentialProfileRowViewModel(geneId, geneName, designElement, expressions);
+    private <P extends DifferentialProfile<?
+            extends DifferentialExpression>> JsonArray buildGenes(DifferentialProfilesList<P> profiles,
+                                                                  Set<Contrast> orderedContrasts) {
+        JsonArray serializedProfiles = new JsonArray();
+        for(P profile: profiles){
+            serializedProfiles.add(build(profile, orderedContrasts, profiles.getMinUpRegulatedExpressionLevel(),
+                    profiles.getMaxUpRegulatedExpressionLevel(), profiles.getMinDownRegulatedExpressionLevel(),
+                    profiles.getMaxDownRegulatedExpressionLevel()));
+        }
+        return serializedProfiles;
     }
 
-    private DifferentialExpressionViewModel[] buildExpressions(DifferentialProfile<? extends DifferentialExpression> profile, Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
-        DifferentialExpressionViewModel[] expressionViewModels = new DifferentialExpressionViewModel[orderedContrasts.size()];
+    private JsonObject build(DifferentialProfile<? extends DifferentialExpression> profile,
+                             Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
+        JsonObject serializedProfileRow = new JsonObject();
+        serializedProfileRow.addProperty("id", profile.getId());
+        serializedProfileRow.addProperty("name", profile.getName());
+        serializedProfileRow.addProperty("designElement", profile.getDesignElementName());
+        serializedProfileRow.add("expressions", buildExpressions(profile, orderedContrasts, minUpLevel,
+                maxUpLevel, minDownLevel, maxDownLevel) );
+        return serializedProfileRow;
+    }
 
-        int i = 0;
-        for (Contrast contrast : orderedContrasts) {
-            String contrastName = contrast.getDisplayName();
+    private JsonArray buildExpressions(DifferentialProfile<? extends DifferentialExpression>
+                                                                        profile, Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
+        JsonArray serializedExpressions = new JsonArray();
+        for(Contrast contrast: orderedContrasts){
+            JsonObject expr = new JsonObject();
+            expr.addProperty("contrastName", contrast.getDisplayName());
+
             DifferentialExpression expression = profile.getExpression(contrast);
+            if(expression!=null){
 
-            String foldChange = (expression == null) ? null : foldChangeRounder.format(expression.getFoldChange());
-            String color = (expression == null) ? null : expression.isOverExpressed() ? colourGradient.getGradientColour(expression.getFoldChange(), minUpLevel, maxUpLevel, "pink", "red") : colourGradient.getGradientColour(expression.getFoldChange(), minDownLevel, maxDownLevel, "lightGray", "blue");
-            String pValue = (expression == null) ? null : pValueFormatter.formatPValueAsScientificNotation(expression.getPValue());
-            String tStat = !(expression instanceof MicroarrayExpression) ? null : format2Dp.format(((MicroarrayExpression) expression).getTstatistic());
-
-            DifferentialExpressionViewModel expressionViewModel = new DifferentialExpressionViewModel(contrastName, color, foldChange, pValue, tStat);
-            expressionViewModels[i++] = expressionViewModel;
+                expr.addProperty("color",
+                        expression.isOverExpressed()
+                                ? colourGradient.getGradientColour(expression.getFoldChange(), minUpLevel, maxUpLevel, "pink", "red")
+                                : colourGradient.getGradientColour(expression.getFoldChange(), minDownLevel, maxDownLevel, "lightGray", "blue"));
+                expr.addProperty("foldChange",foldChangeRounder.format(expression.getFoldChange()));
+                expr.addProperty("pValue",pValueFormatter.formatPValueAsScientificNotation(expression.getPValue()) );
+                if(expression instanceof MicroarrayExpression){
+                    expr.addProperty("tStat", format2Dp.format(((MicroarrayExpression) expression).getTstatistic()));
+                }
+            }
+            serializedExpressions.add(expr);
         }
-
-        return expressionViewModels;
+        return serializedExpressions;
     }
-
 }

@@ -1,7 +1,6 @@
 
 package uk.ac.ebi.atlas.experimentpage.differential;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.solr.common.SolrException;
@@ -14,17 +13,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.differential.*;
-import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModel;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
@@ -41,12 +42,11 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     private TracksUtil tracksUtil;
 
     private Gson gson = new GsonBuilder()
-            .serializeSpecialFloatingPointValues()
             .create();
 
     @SuppressWarnings("unchecked")
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder
-            differentialRequestContextBuilder,
+                                                           differentialRequestContextBuilder,
                                                    DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap,
                                                    DownloadURLBuilder downloadURLBuilder, DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                                    SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
@@ -87,7 +87,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
             try {
 
                 DifferentialProfilesList differentialProfiles = profilesHeatMap.fetch(requestContext);
-                if(!differentialProfiles.isEmpty()){
+                if (!differentialProfiles.isEmpty()) {
                     model.addAttribute("gseaPlots", gson.toJson(gseaPlotsBuilder.createJsonByContrastId(experiment
                             .getAccession(), contrasts)));
                     model.addAttribute("jsonColumnHeaders", gson.toJson(contrasts));
