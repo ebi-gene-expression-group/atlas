@@ -74,24 +74,7 @@
             "profiles": ${not empty jsonProfiles ? jsonProfiles : "null"},
             "geneSetProfiles": ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : "null"},
             "jsonCoexpressions" :${not empty jsonCoexpressions? jsonCoexpressions : "[]"},
-            "anatomogram" :
-            <c:choose>
-                <c:when test="${hasAnatomogram}">
-                    {
-                    "maleAnatomogramFile": "${maleAnatomogramFile}",
-                    "femaleAnatomogramFile":  "${femaleAnatomogramFile}",
-                    "brainAnatomogramFile": "${brainAnatomogramFile}",
-                    "allSvgPathIds": ${empty allSvgPathIds ? "null" : allSvgPathIds},
-                    "contextRoot": "${pageContext.request.contextPath}",
-                    "toggleButtonMaleImageTemplate": "${toggleButtonMaleImageTemplate}",
-                    "toggleButtonFemaleImageTemplate": "${toggleButtonFemaleImageTemplate}",
-                    "toggleButtonBrainImageTemplate": "${toggleButtonBrainImageTemplate}"
-                    }
-                </c:when>
-                <c:otherwise>
-                    null
-                </c:otherwise>
-            </c:choose>,
+            "anatomogram" : ${anatomogram},
             "experiment" :
             <c:choose>
                 <c:when test="${isWidget && !isMultiExperiment}">

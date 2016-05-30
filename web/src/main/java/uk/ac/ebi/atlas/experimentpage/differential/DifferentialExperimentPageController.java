@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.differential;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonNull;
 import org.apache.solr.common.SolrException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -82,6 +83,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
         model.addAttribute("enableEnsemblLauncher", tracksUtil.hasDiffTracksPath(experiment.getAccession(), contrasts.iterator().next().getId()));
 
+        model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
         if (!result.hasErrors()) {
 
             try {

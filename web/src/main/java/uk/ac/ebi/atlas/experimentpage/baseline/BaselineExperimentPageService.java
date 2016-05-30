@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -35,6 +34,7 @@ public class BaselineExperimentPageService {
     private final SpeciesKingdomTrader speciesKingdomTrader;
     private BaselineExperimentUtil bslnUtil;
     private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
+    private final AnatomogramFactory anatomogramFactory;
     private Gson gson = new GsonBuilder()
             .create();
 
@@ -45,6 +45,7 @@ public class BaselineExperimentPageService {
                                          BaselineExperimentUtil bslnUtil, PreferencesForBaselineExperiments preferencesForBaselineExperiments) {
 
         this.applicationProperties = applicationProperties;
+        this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
         this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
         this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
@@ -61,6 +62,7 @@ public class BaselineExperimentPageService {
     public void prepareModel(BaselineRequestPreferences preferences, Model model, HttpServletRequest request, boolean
             shouldAddRDownloadUrl, boolean amIAWidget, boolean disableGeneLinks) throws
             GenesNotFoundException {
+        String contextRoot = request.getContextPath();
 
         if (amIAWidget) {
             // possibly we could always do this - investigate if it matters for not-a-widget
@@ -116,12 +118,8 @@ public class BaselineExperimentPageService {
                 ? viewModelAsJson(geneSets.get())
                 : "null");
 
-        if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
-            model.addAllAttributes(applicationProperties.getAnatomogramProperties(species, filteredAssayGroupFactors));
-
-        } else {
-            model.addAttribute("hasAnatomogram", false);
-        }
+        model.addAttribute("anatomogram", gson.toJson(anatomogramFactory.get(requestContext.getQueryFactorType(), species,
+                filteredAssayGroupFactors, contextRoot)));
 
         if (shouldAddRDownloadUrl) {
             //Currently I am false for proteomics and widgets - is there a harm in adding me?
