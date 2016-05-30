@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.base.Optional;
 import com.google.gson.*;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -9,6 +10,7 @@ import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
@@ -128,12 +130,34 @@ public class BaselineExperimentPageService {
         if (!amIAWidget) {
             model.addAttribute("isWidget", false);
             addFactorMenu(model, experiment, requestContext);
+            model.addAttribute("experiment", gson.toJson(JsonNull.INSTANCE));
         } else {
             model.addAttribute("isWidget", true);
             model.addAttribute("disableGeneLinks", disableGeneLinks);
             model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
             model.addAttribute("enableEnsemblLauncher", false);
+
+            //note this should only happen for single experiment - see HeatmapWidgetController.populateModelWithMultiExperimentResults
+            model.addAttribute("experiment",gson.toJson(prepareExperimentDescription(experiment, preferences
+                    .getGeneQuery(), preferences.getSerializedFilterFactors())));
         }
+
+    }
+
+    //used when external parties include our widget
+    private JsonElement prepareExperimentDescription(Experiment experiment, GeneQuery geneQuery,
+                                                                      String
+            serializedFilterFactors){
+        String additionalQueryOptionsString =
+                "?geneQuery="+geneQuery.asUrlQueryParameter()+
+                        "&serializedFilterFactors="+serializedFilterFactors;
+
+        JsonObject experimentDescription = new JsonObject();
+        experimentDescription.addProperty("URL",
+                "/experiments/"+experiment.getAccession()+additionalQueryOptionsString);
+        experimentDescription.addProperty("description", experiment.getDescription());
+        experimentDescription.addProperty("allSpecies", StringUtils.join(experiment.getOrganisms(), ", "));
+        return experimentDescription;
     }
 
     // heatmap-data.jsp will understand "" as empty

@@ -75,21 +75,7 @@
             "geneSetProfiles": ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : "null"},
             "jsonCoexpressions" :${not empty jsonCoexpressions? jsonCoexpressions : "[]"},
             "anatomogram" : ${anatomogram},
-            "experiment" :
-            <c:choose>
-                <c:when test="${isWidget && !isMultiExperiment}">
-                    <c:set var="additionalQueryOptionsString" value="?geneQuery=${geneQuery.asUrlQueryParameter()}&serializedFilterFactors=${preferences.serializedFilterFactors}"/>
-                    <c:set var="experimentURL" value="/experiments/${experimentAccession}${additionalQueryOptionsString}"/>
-                    {
-                    "URL": "${experimentURL}",
-                    "description":  "${experimentDescription}",
-                    "allSpecies": "${allSpecies}"
-                    }
-                </c:when>
-                <c:otherwise>
-                    null
-                </c:otherwise>
-            </c:choose>
+            "experiment" : ${experiment}
         }
     </c:otherwise>
 </c:choose>

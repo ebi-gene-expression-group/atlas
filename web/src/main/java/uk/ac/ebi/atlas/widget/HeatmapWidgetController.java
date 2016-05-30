@@ -173,7 +173,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
         model.addAttribute("species", ensemblSpecies);
         model.addAttribute("isWidget", true);
-        model.addAttribute("isMultiExperiment", true);
+        model.addAttribute("experiment", gson.toJson(JsonNull.INSTANCE));
         model.addAttribute("geneQuery", geneQuery);
     }
 
