@@ -61,7 +61,8 @@ public class BaselineExperimentPageService {
         binder.addValidators(new BaselineRequestPreferencesValidator());
     }
 
-    public void prepareModel(BaselineRequestPreferences preferences, Model model, HttpServletRequest request, boolean amIAWidget, boolean disableGeneLinks) throws
+    public void prepareModel(BaselineExperiment experiment,BaselineRequestPreferences preferences, Model model,
+                             HttpServletRequest request, boolean amIAWidget, boolean disableGeneLinks) throws
             GenesNotFoundException {
         String contextRoot = request.getContextPath();
 
@@ -74,7 +75,6 @@ public class BaselineExperimentPageService {
             preferences.setGeneQuery(GeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
         }
 
-        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
         preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);

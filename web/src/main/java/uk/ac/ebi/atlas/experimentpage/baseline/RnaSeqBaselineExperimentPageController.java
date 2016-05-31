@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.*;
@@ -51,11 +52,13 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")
     public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
+                                     @PathVariable String experimentAccession,
                                      @RequestParam Map<String,String> allParameters,
                                      BindingResult result, Model model, HttpServletRequest request) {
 
         try {
-            baselineExperimentPageService.prepareModel(preferences, model, request, false, false);
+            baselineExperimentPageService.prepareModel((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession),
+                    preferences, model, request, false, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
         }
@@ -76,7 +79,8 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
             request.setAttribute(EXPERIMENT_ATTRIBUTE, experimentTrader.getPublicExperiment(experimentAccession));
         }
         try {
-            baselineExperimentPageService.prepareModel(preferences, model, request, false, false);
+            baselineExperimentPageService.prepareModel((BaselineExperiment) experimentTrader.getPublicExperiment
+                    (experimentAccession), preferences, model, request, false, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
         }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
@@ -65,13 +66,10 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
                                    @RequestParam Map<String,String> allParameters,
                                    @PathVariable String experimentAccession, BindingResult result, Model model, HttpServletRequest request) {
 
-        if(request.getAttribute(EXPERIMENT_ATTRIBUTE) == null) {
-            DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-            request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
-        }
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters,
                 request.getRequestURI()));
-        return super.showGeneProfiles(preferences, result, model, request);
+        return super.showGeneProfiles((DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession),
+                preferences, result, model, request);
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
@@ -80,12 +78,8 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
                                        HttpServletRequest request, HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 
-        if(request.getAttribute(EXPERIMENT_ATTRIBUTE) == null) {
-            DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-            request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
-        }
-
-        super.showGeneProfiles(preferences, result, model, request);
+        super.showGeneProfiles((DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession),
+                preferences, result, model, request);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }

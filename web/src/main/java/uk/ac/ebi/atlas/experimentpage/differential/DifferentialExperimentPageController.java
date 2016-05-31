@@ -66,9 +66,8 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     }
 
     // called from sub classes
-    public String showGeneProfiles(K requestPreferences, BindingResult result, Model model, HttpServletRequest request) {
-
-        T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+    public String showGeneProfiles(T experiment, K requestPreferences, BindingResult result, Model model,
+                                   HttpServletRequest request) {
 
         initRequestPreferences(model, requestPreferences, experiment);
 

@@ -65,12 +65,13 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
     public String showGeneProfiles(
             @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,@RequestParam Map<String,
-            String> allParameters,
+            String> allParameters, @PathVariable String experimentAccession,
             BindingResult result, Model model, HttpServletRequest request) {
 
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters,
                 request.getRequestURI()));
-        return super.showGeneProfiles(preferences, result, model, request);
+        return super.showGeneProfiles((MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession),
+                preferences, result, model, request);
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
@@ -79,12 +80,8 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
             BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 
-        if(request.getAttribute(EXPERIMENT_ATTRIBUTE) == null) {
-            DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-            request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
-        }
-
-        super.showGeneProfiles(preferences, result, model, request);
+        super.showGeneProfiles((MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession),
+                preferences, result, model, request);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }

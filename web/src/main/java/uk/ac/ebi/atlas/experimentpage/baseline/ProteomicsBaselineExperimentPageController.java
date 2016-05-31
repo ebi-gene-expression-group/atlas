@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
@@ -55,13 +56,13 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=PROTEOMICS_BASELINE")
     public String baselineExperiment(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences
-            , @RequestParam Map<String,String> allParameters, BindingResult result, Model model, HttpServletRequest
+            , @PathVariable String experimentAccession, @RequestParam Map<String,String> allParameters, BindingResult
+                                                 result, Model model, HttpServletRequest
                                                  request) {
 
         try {
-            baselineExperimentPageService.prepareModel(preferences,
-                    model, request,
-                    false, false);
+            baselineExperimentPageService.prepareModel((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession),
+                    preferences,model, request,false, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
         }
@@ -76,11 +77,10 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
             , BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 
-        if(request.getAttribute(EXPERIMENT_ATTRIBUTE) == null) {
-            request.setAttribute(EXPERIMENT_ATTRIBUTE, experimentTrader.getPublicExperiment(experimentAccession));
-        }
         try {
-            baselineExperimentPageService.prepareModel(preferences,
+            baselineExperimentPageService.prepareModel((BaselineExperiment) experimentTrader.getPublicExperiment
+                    (experimentAccession),
+                    preferences,
                     model, request,
                     false, false);
         } catch (GenesNotFoundException e) {
