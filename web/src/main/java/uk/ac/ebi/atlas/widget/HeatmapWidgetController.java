@@ -19,7 +19,6 @@ import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.*;
@@ -92,12 +91,13 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     public String fetchReferenceExperimentProfilesJson(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                                        @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request,
                                                        HttpServletResponse response) {
+        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute("experiment");
 
+        baselineExperimentPageService
+                .prepareRequestPreferencesAndHeaderData(experiment, preferences, model,request,true);
         try {
             baselineExperimentPageService
-                    .prepareModel((BaselineExperiment) request.getAttribute("experiment"), preferences, model,request,
-                            true,
-                            disableGeneLinks);
+                    .populateModelWithHeatmapData(experiment, preferences, model,request,true, disableGeneLinks);
         } catch (GenesNotFoundException e) {
             throw new ResourceNotFoundException("No genes found matching query: '" + preferences.getGeneQuery() + "'");
         }

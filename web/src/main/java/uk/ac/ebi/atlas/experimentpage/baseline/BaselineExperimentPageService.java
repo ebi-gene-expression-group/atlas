@@ -61,10 +61,8 @@ public class BaselineExperimentPageService {
         binder.addValidators(new BaselineRequestPreferencesValidator());
     }
 
-    public void prepareModel(BaselineExperiment experiment,BaselineRequestPreferences preferences, Model model,
-                             HttpServletRequest request, boolean amIAWidget, boolean disableGeneLinks) throws
-            GenesNotFoundException {
-        String contextRoot = request.getContextPath();
+    public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
+                                                       HttpServletRequest request, boolean amIAWidget) {
 
         if (amIAWidget) {
             // possibly we could always do this - investigate if it matters for not-a-widget
@@ -77,8 +75,6 @@ public class BaselineExperimentPageService {
 
         preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
-        BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
-
         Set<AssayGroupFactor> filteredAssayGroupFactors = getFilteredAssayGroupFactors(experiment, preferences);
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
@@ -86,7 +82,14 @@ public class BaselineExperimentPageService {
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
         model.addAllAttributes(experiment.getBaselineAttributes());
         DownloadURLBuilder.addRDownloadUrlToModel(model, request.getRequestURI());
+    }
+    public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
+                                             HttpServletRequest request, boolean amIAWidget, boolean disableGeneLinks) throws
+            GenesNotFoundException {
 
+        BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
+        Set<AssayGroupFactor> filteredAssayGroupFactors = getFilteredAssayGroupFactors(experiment, preferences);
+        String contextRoot = request.getContextPath();
         /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
         model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
         model.addAttribute("exactMatch", preferences.isExactMatch());

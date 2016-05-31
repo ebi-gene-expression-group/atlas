@@ -66,23 +66,20 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     }
 
     // called from sub classes
-    public String showGeneProfiles(T experiment, K requestPreferences, BindingResult result, Model model,
-                                   HttpServletRequest request) {
+    public void prepareRequestPreferencesAndHeaderData(T experiment, K requestPreferences, Model model) {
 
         initRequestPreferences(model, requestPreferences, experiment);
 
-        DifferentialRequestContext requestContext = initRequestContext(experiment, requestPreferences);
-
-        String species = requestContext.getFilteredBySpecies();
-
-        Set<Contrast> contrasts = experiment.getContrasts();
-
-
         model.addAttribute("queryFactorName", "Comparison");
-        model.addAttribute("allQueryFactors", contrasts);
+        model.addAttribute("allQueryFactors", experiment.getContrasts());
         model.addAllAttributes(experiment.getDifferentialAttributes());
+    }
 
-        // Below here, not required for request-preferences.jsp or experiment-header.jsp
+    public void populateModelWithHeatmapData(T experiment, K requestPreferences, BindingResult result, Model model,
+                                             HttpServletRequest request) {
+        DifferentialRequestContext requestContext = initRequestContext(experiment, requestPreferences);
+        String species = requestContext.getFilteredBySpecies();
+        Set<Contrast> contrasts = experiment.getContrasts();
         model.addAttribute("queryFactorName", "Comparison");
         model.addAttribute("exactMatch", requestPreferences.isExactMatch());
         model.addAttribute("geneQuery", requestPreferences.getGeneQuery());
@@ -112,8 +109,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
             }
 
         }
-
-        return "experiment";
     }
 
     private void initRequestPreferences(Model model, K requestPreferences, T experiment) {

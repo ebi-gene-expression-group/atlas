@@ -60,12 +60,8 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
                                                  result, Model model, HttpServletRequest
                                                  request) {
 
-        try {
-            baselineExperimentPageService.prepareModel((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession),
-                    preferences,model, request,false, false);
-        } catch (GenesNotFoundException e) {
-            result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
-        }
+        baselineExperimentPageService.prepareRequestPreferencesAndHeaderData((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession),
+                preferences,model, request,false);
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters,
                 request.getRequestURI()));
         return "experiment";
@@ -78,7 +74,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 
         try {
-            baselineExperimentPageService.prepareModel((BaselineExperiment) experimentTrader.getPublicExperiment
+            baselineExperimentPageService.populateModelWithHeatmapData((BaselineExperiment) experimentTrader.getPublicExperiment
                     (experimentAccession),
                     preferences,
                     model, request,

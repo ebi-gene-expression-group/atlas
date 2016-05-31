@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
@@ -64,14 +63,15 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
     public String showGeneProfiles(
-            @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,@RequestParam Map<String,
+            @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences, @RequestParam Map<String,
             String> allParameters, @PathVariable String experimentAccession,
-            BindingResult result, Model model, HttpServletRequest request) {
+            Model model, HttpServletRequest request) {
 
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters,
                 request.getRequestURI()));
-        return super.showGeneProfiles((MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession),
-                preferences, result, model, request);
+        super.prepareRequestPreferencesAndHeaderData((MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession),
+                preferences, model);
+        return "experiment";
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
@@ -80,7 +80,7 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
             BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 
-        super.showGeneProfiles((MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession),
+        super.populateModelWithHeatmapData((MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession),
                 preferences, result, model, request);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";

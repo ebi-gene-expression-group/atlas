@@ -1,30 +1,18 @@
 <%--@elvariable id="isMultiExperiment" type="boolean"--%>
 <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
 
-<c:choose>
-    <c:when test="${empty jsonProfiles}">
-        <c:if test="${not isPreferenceError}">
-            <section>
-                No expressions found
-            </section>
-        </c:if>
-    </c:when>
-    <c:otherwise>
 
-    <script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js-bundles/experimentPageHeatmap.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/experimentPageHeatmap.bundle.js"></script>
 
-    <div id="genenametooltip-content" style="display: none"></div>
+<div id="genenametooltip-content" style="display: none"></div>
 
-    <script type="text/javascript">
-        var isMultiExperiment = ${isMultiExperiment ? true : false};
+<script type="text/javascript">
 
-        experimentPageHeatmap.render({
-            sourceURL: "${sourceURL}",
-            isMultiExperiment: isMultiExperiment,
-            isDifferential: ${type.differential},
-            isProteomicsBaseline: ${type.proteomicsBaseline}
-        });
-    </script>
-    </c:otherwise>
-</c:choose>
+    experimentPageHeatmap.render({
+        sourceURL: "${sourceURL}",
+        isMultiExperiment: ${isMultiExperiment ? true : false},
+        isDifferential: ${type.differential},
+        isProteomicsBaseline: ${type.proteomicsBaseline}
+    });
+</script>

@@ -53,15 +53,10 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")
     public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                      @PathVariable String experimentAccession,
-                                     @RequestParam Map<String,String> allParameters,
-                                     BindingResult result, Model model, HttpServletRequest request) {
+                                     @RequestParam Map<String,String> allParameters, Model model, HttpServletRequest request) {
 
-        try {
-            baselineExperimentPageService.prepareModel((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession),
-                    preferences, model, request, false, false);
-        } catch (GenesNotFoundException e) {
-            result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
-        }
+        baselineExperimentPageService.prepareRequestPreferencesAndHeaderData((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession),
+                preferences, model, request, false);
 
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters,
                 request.getRequestURI()));
@@ -79,7 +74,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
             request.setAttribute(EXPERIMENT_ATTRIBUTE, experimentTrader.getPublicExperiment(experimentAccession));
         }
         try {
-            baselineExperimentPageService.prepareModel((BaselineExperiment) experimentTrader.getPublicExperiment
+            baselineExperimentPageService.populateModelWithHeatmapData((BaselineExperiment) experimentTrader.getPublicExperiment
                     (experimentAccession), preferences, model, request, false, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
