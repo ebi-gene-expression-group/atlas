@@ -65,10 +65,12 @@ var BaselineFacetsTree = React.createClass({
             />;
         }.bind(this));
 
+        var _checked = this.state.checkedAnatomogram ? this.state.checkedAnatomogram : this.props.showAnatomograms ;
+
         return (
             <div className="hidden-xs gxaFacetsContainer">
                 <h5 style={{padding: 0}}>
-                    <input type="checkbox" checked={this.props.showAnatomograms} onChange={this.props.toggleAnatomograms} disabled={this.state.checkedAnatomogram}/>
+                    <input type="checkbox" checked={_checked} onChange={this.props.toggleAnatomograms} disabled={this.state.checkedAnatomogram}/>
                     <span className={this.props.disableAnatomogramsCheckbox ? "gxaDisabledCheckbox" : ""}>Show anatomograms</span>
                 </h5>
                 <h3>Filter your results</h3>
