@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.LinkedHashMultimap;
@@ -97,7 +96,7 @@ public class ExperimentalFactorsBuilder {
         return factorsByType;
     }
 
-    LinkedHashMultimap<String, Factor> buildXmlFactorsByType() {
+    private LinkedHashMultimap<String, Factor> buildXmlFactorsByType() {
         LinkedHashMultimap<String, Factor> xmlFactorsByType = LinkedHashMultimap.create();
 
         for(FactorGroup factorGroup : orderedFactorGroups) {
@@ -129,7 +128,7 @@ public class ExperimentalFactorsBuilder {
         return coOccurringFactors;
     }
 
-    LinkedHashMultimap<Factor, Factor> buildXmlCoOccurringFactors() {
+    private LinkedHashMultimap<Factor, Factor> buildXmlCoOccurringFactors() {
 
         LinkedHashMultimap<Factor, Factor> xmlCoOccurringFactors = LinkedHashMultimap.create();
 
