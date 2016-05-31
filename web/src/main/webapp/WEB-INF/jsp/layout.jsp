@@ -82,6 +82,7 @@
 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css" media="screen">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-tageditor-1.0.20/jquery.tag-editor.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.css" media="screen">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ae-autocomplete.css" media="screen">
 
     <script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/json2/20150503/json2.min.js"></script>
@@ -92,6 +93,7 @@
 
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-caret/jquery.caret.js"></script>
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-tageditor-1.0.20/jquery.tag-editor.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.min.js"></script>
 
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneQueryTagEditorModule.js"></script>
@@ -113,7 +115,7 @@
 
 </head>
 
-<body class="gxaBody">
+<body class="gxaBody full-width">
 
 <div id="skip-to">
     <ul>
