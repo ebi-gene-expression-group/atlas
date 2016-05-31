@@ -1324,17 +1324,17 @@ webpackJsonp_name_([4],{
 	        $.ajax(httpRequest).done(function (data) {
 	            if (this.isMounted()) {
 	
-	                var orderedData = HighchartsUtils.rankColumns(data.profiles, data.columnHeaders);
-	                var filteredDataByThreshold = HighchartsUtils.applyThresholdtoColumns(orderedData.profiles, orderedData.columnHeaders, 40);
-	                var rankedExperiments = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
-	                if (this.props.isMultiExperiment) {
-	                    data.profiles.rows = HighchartsUtils.applyThresholdToRows(rankedExperiments, filteredDataByThreshold.columnHeaders, 40);
-	                } else {
-	                    //We don't apply threshold for reference experiments
-	                    data.profiles.rows = rankedExperiments;
-	                }
+	                // var orderedData = HighchartsUtils.rankColumns(data.profiles, data.columnHeaders);
+	                // var filteredDataByThreshold = HighchartsUtils.applyThresholdtoColumns(orderedData.profiles, orderedData.columnHeaders, 40);
+	                // var rankedExperiments = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
+	                // if (this.props.isMultiExperiment) {
+	                //     data.profiles.rows = HighchartsUtils.applyThresholdToRows(rankedExperiments, filteredDataByThreshold.columnHeaders, 40);
+	                // } else { //We don't apply threshold for reference experiments
+	                //     data.profiles.rows = rankedExperiments;
+	                // }
 	
-	                var xAxisCategories = HighchartsUtils.getXAxisCategories(filteredDataByThreshold.columnHeaders);
+	                // var xAxisCategories = HighchartsUtils.getXAxisCategories(filteredDataByThreshold.columnHeaders);
+	                var xAxisCategories = HighchartsUtils.getXAxisCategories(data.columnHeaders);
 	                var yAxisCategories = HighchartsUtils.getYAxisCategories(data.profiles, data.config);
 	                var yAxisCategoriesLinks = HighchartsUtils.getYAxisCategoriesLinks();
 	
