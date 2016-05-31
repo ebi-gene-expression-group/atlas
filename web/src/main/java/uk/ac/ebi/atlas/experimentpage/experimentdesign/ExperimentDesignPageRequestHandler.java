@@ -57,7 +57,7 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
         // add general experiment attributes to model
         model.addAttribute("experimentAccession", experimentAccession);
 
-        model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(request));
+        model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(request.getRequestURI()));
 
         extendModel(model, experiment, experimentAccession);
 

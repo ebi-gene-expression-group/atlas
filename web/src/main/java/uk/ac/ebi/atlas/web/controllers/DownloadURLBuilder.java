@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.ui.Model;
 
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,51 +22,48 @@ public class DownloadURLBuilder {
 
     private static final String R_FILE_EXTENSION = "-atlasExperimentSummary.Rdata";
 
-    public Map<String,String> dataDownloadUrls(HttpServletRequest request){
+    public Map<String,String> dataDownloadUrls(String requestURI){
         Map<String,String> result = new HashMap<>();
-        result.put("rawDownloadUrl", buildDownloadRawUrl(request));
-        result.put("normalizedUrl", buildDownloadNormalizedDataUrl(request));
-        result.put("logFoldUrl", buildDownloadLogFoldDataUrl(request));
-        result.put("analyticsDownloadUrl", buildDownloadAllAnalyticsUrl(request));
-        result.put("rDownloadUrl", buildDownloadRFileUrl(request));
-        result.put("clusteringPdfUrl", buildDownloadClusteringPdfFileUrl(request));
+        result.put("rawDownloadUrl", buildDownloadRawUrl(requestURI));
+        result.put("normalizedUrl", buildDownloadNormalizedDataUrl(requestURI));
+        result.put("logFoldUrl", buildDownloadLogFoldDataUrl(requestURI));
+        result.put("analyticsDownloadUrl", buildDownloadAllAnalyticsUrl(requestURI));
+        result.put("rDownloadUrl", buildDownloadRFileUrl(requestURI));
+        result.put("clusteringPdfUrl", buildDownloadClusteringPdfFileUrl(requestURI));
         return result;
     }
 
-    public static void addRDownloadUrlToModel(Model model, HttpServletRequest request) {
-        model.addAttribute("rDownloadUrl", buildDownloadRFileUrl(request));
+    public static void addRDownloadUrlToModel(Model model, String requestURI) {
+        model.addAttribute("rDownloadUrl", buildDownloadRFileUrl(requestURI));
     }
 
-    private String buildDownloadRawUrl(HttpServletRequest request) {
-        return extractBaseURL(request) + TSV_RAW_FILE_EXTENSION;
+    private String buildDownloadRawUrl(String requestURI) {
+        return extractBaseURL(requestURI) + TSV_RAW_FILE_EXTENSION;
     }
 
-    private String buildDownloadAllAnalyticsUrl(HttpServletRequest request) {
-        return extractBaseURL(request) + TSV_ANALYTICS_FILE_EXTENSION;
+    private String buildDownloadAllAnalyticsUrl(String requestURI) {
+        return extractBaseURL(requestURI) + TSV_ANALYTICS_FILE_EXTENSION;
     }
 
-    private String buildDownloadNormalizedDataUrl(HttpServletRequest request) {
-        return extractBaseURL(request) + TSV_NORMALIZED_FILE_EXTENSION;
+    private String buildDownloadNormalizedDataUrl(String requestURI) {
+        return extractBaseURL(requestURI) + TSV_NORMALIZED_FILE_EXTENSION;
     }
 
-    private String buildDownloadLogFoldDataUrl(HttpServletRequest request) {
-        return extractBaseURL(request) + TSV_LOG_FOLD_FILE_EXTENSION;
+    private String buildDownloadLogFoldDataUrl(String requestURI) {
+        return extractBaseURL(requestURI) + TSV_LOG_FOLD_FILE_EXTENSION;
     }
 
-    private static String buildDownloadRFileUrl(HttpServletRequest request) {
-        String requestURI = request.getRequestURI();
+    public static String buildDownloadRFileUrl(String requestURI) {
         String slashExperimentAccession = requestURI.substring(requestURI.lastIndexOf("/"));
         return requestURI + slashExperimentAccession + R_FILE_EXTENSION;
     }
 
-    private String buildDownloadClusteringPdfFileUrl(HttpServletRequest request) {
-        String requestURI = request.getRequestURI();
+    private String buildDownloadClusteringPdfFileUrl(String requestURI) {
         String slashExperimentAccession = requestURI.substring(requestURI.lastIndexOf("/"));
         return requestURI + slashExperimentAccession + R_FILE_EXTENSION;
     }
 
-    private String extractBaseURL(HttpServletRequest request) {
-        String requestURI = request.getRequestURI();
+    private String extractBaseURL(String requestURI) {
         if (requestURI.endsWith("/experiment-design")) {
             return requestURI.replace("/experiment-design", "");
         } else if (requestURI.endsWith("/analysis-methods")) {

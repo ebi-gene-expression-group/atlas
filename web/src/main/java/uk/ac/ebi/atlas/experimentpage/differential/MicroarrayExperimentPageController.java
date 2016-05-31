@@ -89,6 +89,8 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
         return "heatmap-data";
     }
 
+
+    //needed in experiment-header.jsp
     @Override
     protected void initExtraPageConfigurations(Model model, MicroarrayRequestPreferences requestPreferences, MicroarrayExperiment experiment) {
         SortedSet<String> arrayDesignNames = arrayDesignTrader.getArrayDesignNames(experiment.getArrayDesignAccessions());

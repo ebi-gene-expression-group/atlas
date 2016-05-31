@@ -61,8 +61,7 @@ public class BaselineExperimentPageService {
         binder.addValidators(new BaselineRequestPreferencesValidator());
     }
 
-    public void prepareModel(BaselineRequestPreferences preferences, Model model, HttpServletRequest request, boolean
-            shouldAddRDownloadUrl, boolean amIAWidget, boolean disableGeneLinks) throws
+    public void prepareModel(BaselineRequestPreferences preferences, Model model, HttpServletRequest request, boolean amIAWidget, boolean disableGeneLinks) throws
             GenesNotFoundException {
         String contextRoot = request.getContextPath();
 
@@ -80,18 +79,22 @@ public class BaselineExperimentPageService {
 
         BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
 
-        model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
-        model.addAllAttributes(experiment.getBaselineAttributes());
-
-        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-
-        model.addAttribute("queryFactorName", experimentalFactors.getFactorDisplayName(preferences.getQueryFactorType()));
-        model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
-
         Set<AssayGroupFactor> filteredAssayGroupFactors = getFilteredAssayGroupFactors(experiment, preferences);
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
         model.addAttribute("allQueryFactors", filteredAssayGroupFactors);
+        model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
+        model.addAllAttributes(experiment.getBaselineAttributes());
+        DownloadURLBuilder.addRDownloadUrlToModel(model, request.getRequestURI());
+
+        /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
+        model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
+        model.addAttribute("exactMatch", preferences.isExactMatch());
+        model.addAttribute("geneQuery", preferences.getGeneQuery());
+        model.addAllAttributes(experiment.getBaselineAttributes());
+
+        model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
+        model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
 
         String species = requestContext.getFilteredBySpecies();
 
@@ -123,10 +126,6 @@ public class BaselineExperimentPageService {
         model.addAttribute("anatomogram", gson.toJson(anatomogramFactory.get(requestContext.getQueryFactorType(), species,
                 filteredAssayGroupFactors, contextRoot)));
 
-        if (shouldAddRDownloadUrl) {
-            //Currently I am false for proteomics and widgets - is there a harm in adding me?
-            DownloadURLBuilder.addRDownloadUrlToModel(model, request);
-        }
         if (!amIAWidget) {
             model.addAttribute("isWidget", false);
             addFactorMenu(model, experiment, requestContext);
@@ -138,16 +137,14 @@ public class BaselineExperimentPageService {
             model.addAttribute("enableEnsemblLauncher", false);
 
             //note this should only happen for single experiment - see HeatmapWidgetController.populateModelWithMultiExperimentResults
-            model.addAttribute("experiment",gson.toJson(prepareExperimentDescription(experiment, preferences
+            model.addAttribute("experimentDescription",gson.toJson(prepareExperimentDescription(experiment, preferences
                     .getGeneQuery(), preferences.getSerializedFilterFactors())));
         }
 
     }
 
     //used when external parties include our widget
-    private JsonElement prepareExperimentDescription(Experiment experiment, GeneQuery geneQuery,
-                                                                      String
-            serializedFilterFactors){
+    private JsonElement prepareExperimentDescription(Experiment experiment, GeneQuery geneQuery, String serializedFilterFactors){
         String additionalQueryOptionsString =
                 "?geneQuery="+geneQuery.asUrlQueryParameter()+
                         "&serializedFilterFactors="+serializedFilterFactors;

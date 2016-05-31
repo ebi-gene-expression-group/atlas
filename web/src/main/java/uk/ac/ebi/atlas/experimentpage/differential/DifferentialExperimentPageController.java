@@ -78,12 +78,22 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
         Set<Contrast> contrasts = experiment.getContrasts();
 
+
+        model.addAttribute("queryFactorName", "Comparison");
+        model.addAttribute("allQueryFactors", contrasts);
+        model.addAllAttributes(experiment.getDifferentialAttributes());
+
+        // Below here, not required for request-preferences.jsp or experiment-header.jsp
+        model.addAttribute("queryFactorName", "Comparison");
+        model.addAttribute("exactMatch", requestPreferences.isExactMatch());
+        model.addAttribute("geneQuery", requestPreferences.getGeneQuery());
         model.addAllAttributes(experiment.getDifferentialAttributes());
         model.addAllAttributes(speciesKingdomTrader.getAttributesFor(species));
 
         model.addAttribute("enableEnsemblLauncher", tracksUtil.hasDiffTracksPath(experiment.getAccession(), contrasts.iterator().next().getId()));
 
         model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
+        model.addAttribute("experimentDescription", gson.toJson(JsonNull.INSTANCE));
         if (!result.hasErrors()) {
 
             try {
@@ -96,7 +106,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
                     model.addAttribute("jsonProfiles", gson.toJson(differentialProfilesViewModelBuilder.build
                             (differentialProfiles, contrasts)));
                 }
-                model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(request));
+                model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(request.getRequestURI()));
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery().description() + "'"));

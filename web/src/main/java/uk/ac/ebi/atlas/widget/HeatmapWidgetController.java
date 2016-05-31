@@ -94,7 +94,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
         try {
             baselineExperimentPageService
-                    .prepareModel(preferences, model,request, false, true, disableGeneLinks);
+                    .prepareModel(preferences, model,request, true, disableGeneLinks);
         } catch (GenesNotFoundException e) {
             throw new ResourceNotFoundException("No genes found matching query: '" + preferences.getGeneQuery() + "'");
         }

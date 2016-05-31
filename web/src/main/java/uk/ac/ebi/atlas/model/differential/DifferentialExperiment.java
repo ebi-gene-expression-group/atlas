@@ -58,8 +58,6 @@ public class DifferentialExperiment extends Experiment {
     public Map<String, ?> getDifferentialAttributes(){
         Map<String, Object> result = new HashMap<>();
         result.putAll(super.getAttributes());
-        result.put("queryFactorName", "Comparison");
-        result.put("allQueryFactors", this.getContrasts());
         result.put("regulationValues", Regulation.values());
         result.put("isFortLauderdale", false);
         return result;

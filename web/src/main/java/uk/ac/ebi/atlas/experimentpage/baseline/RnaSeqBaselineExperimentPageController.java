@@ -55,7 +55,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
                                      BindingResult result, Model model, HttpServletRequest request) {
 
         try {
-            baselineExperimentPageService.prepareModel(preferences, model, request, true, false, false);
+            baselineExperimentPageService.prepareModel(preferences, model, request, false, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
         }
@@ -76,7 +76,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
             request.setAttribute(EXPERIMENT_ATTRIBUTE, experimentTrader.getPublicExperiment(experimentAccession));
         }
         try {
-            baselineExperimentPageService.prepareModel(preferences, model, request, true, false, false);
+            baselineExperimentPageService.prepareModel(preferences, model, request, false, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
         }

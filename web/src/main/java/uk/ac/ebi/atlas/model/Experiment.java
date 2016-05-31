@@ -131,6 +131,7 @@ public class Experiment implements Serializable {
     public Map<String, ?> getAttributes(){
         Map<String, Object> result = new HashMap<>();
         result.put("type", this.getType());
+        result.put("experimentHasRData", this.hasRData());
         //TODO possibly allSpecies and experimentDescription are no longer used. Check and either remove this comment
         // or the two properties.
         result.put("allSpecies", StringUtils.join(this.getOrganisms(), ", "));

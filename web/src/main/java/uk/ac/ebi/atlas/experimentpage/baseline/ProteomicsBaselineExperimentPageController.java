@@ -61,7 +61,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
         try {
             baselineExperimentPageService.prepareModel(preferences,
                     model, request,
-                    false, false, false);
+                    false, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
         }
@@ -82,7 +82,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
         try {
             baselineExperimentPageService.prepareModel(preferences,
                     model, request,
-                    false, false, false);
+                    false, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
         }

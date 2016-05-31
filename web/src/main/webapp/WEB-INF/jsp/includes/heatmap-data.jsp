@@ -1,6 +1,5 @@
 <%--@elvariable id="geneQuery" type="uk.ac.ebi.atlas.web.GeneQuery"--%>
 <%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
-<%--@elvariable id="preferences" type="uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences"--%>
 <%--@elvariable id="species" type="java.lang.String"--%>
 <%--@elvariable id="jsonProfiles" type="java.lang.String"--%>
 <%--@elvariable id="experimentAccession" type="java.lang.String"--%>
@@ -28,8 +27,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-<c:set var="geneQuery" value="${empty preferences ? geneQuery : preferences.geneQuery}" />
 
 <%--TODO Remove when anatomogram without brains are no longer supported https://www.pivotaltracker.com/story/show/101029574--%>
 <c:set var="toggleButtonImage" value="/resources/images/male_selected.png"/>
@@ -60,7 +57,7 @@
                 "species": "${species}",
                 "ensemblDB": "${ensemblDB}",
                 "columnType": "${fn:toLowerCase(queryFactorName)}",
-                "isExactMatch": ${not empty preferences ? preferences.exactMatch : "true"},
+                "isExactMatch": ${empty exactMatch ? "true": exactMatch},
                 "enableGeneLinks": true,
                 "enableEnsemblLauncher": ${isMultiExperiment ? false : (empty enableEnsemblLauncher ? true : enableEnsemblLauncher)},
                 "showMaPlotButton": true,
@@ -74,8 +71,8 @@
             "profiles": ${not empty jsonProfiles ? jsonProfiles : "null"},
             "geneSetProfiles": ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : "null"},
             "jsonCoexpressions" :${not empty jsonCoexpressions? jsonCoexpressions : "[]"},
-            "anatomogram" : ${anatomogram},
-            "experiment" : ${experiment}
+            "anatomogram" : ${not empty anatomogram? anatomogram : "null"},
+            "experiment" : ${not empty experimentDescription? experimentDescription: "null"}
         }
     </c:otherwise>
 </c:choose>
