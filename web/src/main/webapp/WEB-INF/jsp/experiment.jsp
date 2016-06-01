@@ -26,6 +26,15 @@
     </div>
 </section>
 
+<section class="gxaSection">
+    <div class="grid_24" id="gxaExperimentPageHeatmapAnatomogram">
+        <spring:hasBindErrors name="preferences">
+            <c:set var="isPreferenceError" value="true"/>
+        </spring:hasBindErrors>
+    </div>
+</section>
+
+
 <%@ include file="includes/heatmap-react.jsp" %>
 
 <%-- used by helpTooltipsModule and the prefForm --%>
