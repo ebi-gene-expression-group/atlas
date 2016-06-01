@@ -19,6 +19,7 @@ import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewM
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
@@ -33,8 +34,6 @@ import java.util.Map;
 public class RnaSeqExperimentPageController extends DifferentialExperimentPageController<DifferentialExperiment, DifferentialRequestPreferences, RnaSeqProfile> {
 
     private ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
-
-    public static final String EXPERIMENT_ATTRIBUTE = "experiment";
 
     private ExperimentTrader experimentTrader;
 
@@ -51,8 +50,10 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
                                           DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                           SpeciesKingdomTrader speciesKingdomTrader,
                                           TracksUtil tracksUtil,
-                                          GseaPlotsBuilder gseaPlotsBuilder) {
-        super(rnaSeqRequestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder, speciesKingdomTrader, tracksUtil, gseaPlotsBuilder);
+                                          GseaPlotsBuilder gseaPlotsBuilder,
+                                          ApplicationProperties applicationProperties) {
+        super(rnaSeqRequestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder,
+                speciesKingdomTrader, tracksUtil, gseaPlotsBuilder,applicationProperties);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters,
                 request.getRequestURI()));
         super.prepareRequestPreferencesAndHeaderData((DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession),
-                preferences, model);
+                preferences, model,request);
         return "experiment";
     }
 

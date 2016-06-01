@@ -10,6 +10,7 @@
 <script type="text/javascript">
 
     experimentPageHeatmap.render({
+        atlasHost: "${not empty atlasHost? atlasHost: "www.ebi.ac.uk"}",
         sourceURL: "${sourceURL}",
         isMultiExperiment: ${isMultiExperiment ? true : false},
         isDifferential: ${type.differential},

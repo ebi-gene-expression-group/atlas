@@ -20,6 +20,7 @@ import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
@@ -55,8 +56,10 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
                                               MicroarrayProfilesHeatMap profilesHeatMap,
                                               DownloadURLBuilder downloadURLBuilder,
                                               ArrayDesignTrader arrayDesignTrader,
-                                              DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
-        super(requestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder, speciesKingdomTrader, tracksUtil, gseaPlotsBuilder);
+                                              DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesKingdomTrader speciesKingdomTrader,
+                                              TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder,ApplicationProperties applicationProperties) {
+        super(requestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder,
+                speciesKingdomTrader, tracksUtil, gseaPlotsBuilder,applicationProperties);
 
         this.arrayDesignTrader = arrayDesignTrader;
     }
@@ -70,7 +73,7 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters,
                 request.getRequestURI()));
         super.prepareRequestPreferencesAndHeaderData((MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession),
-                preferences, model);
+                preferences, model,request);
         return "experiment";
     }
 

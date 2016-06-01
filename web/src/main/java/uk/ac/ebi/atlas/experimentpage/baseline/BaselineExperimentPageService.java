@@ -78,6 +78,7 @@ public class BaselineExperimentPageService {
         Set<AssayGroupFactor> filteredAssayGroupFactors = getFilteredAssayGroupFactors(experiment, preferences);
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
+        model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
         model.addAttribute("allQueryFactors", filteredAssayGroupFactors);
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
         model.addAllAttributes(experiment.getBaselineAttributes());

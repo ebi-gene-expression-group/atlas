@@ -25,6 +25,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
@@ -41,6 +42,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
     private DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap;
     private TracksUtil tracksUtil;
+    private final ApplicationProperties applicationProperties;
 
     private Gson gson = new GsonBuilder()
             .create();
@@ -50,7 +52,8 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
                                                            differentialRequestContextBuilder,
                                                    DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap,
                                                    DownloadURLBuilder downloadURLBuilder, DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
-                                                   SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
+                                                   SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil,
+                                                   GseaPlotsBuilder gseaPlotsBuilder,ApplicationProperties applicationProperties) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.profilesHeatMap = profilesHeatMap;
         this.downloadURLBuilder = downloadURLBuilder;
@@ -58,6 +61,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
         this.gseaPlotsBuilder = gseaPlotsBuilder;
+        this.applicationProperties = applicationProperties;
     }
 
     @InitBinder("preferences")
@@ -66,10 +70,10 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     }
 
     // called from sub classes
-    public void prepareRequestPreferencesAndHeaderData(T experiment, K requestPreferences, Model model) {
+    public void prepareRequestPreferencesAndHeaderData(T experiment, K requestPreferences, Model model,HttpServletRequest request) {
 
         initRequestPreferences(model, requestPreferences, experiment);
-
+        model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
         model.addAttribute("queryFactorName", "Comparison");
         model.addAttribute("allQueryFactors", experiment.getContrasts());
         model.addAllAttributes(experiment.getDifferentialAttributes());
