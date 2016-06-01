@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -53,14 +55,13 @@ public class DifferentialProfilesViewModelBuilderTest {
 
     @Test
     public void buildProfilesViewModel() {
-        DifferentialProfileRowViewModel[] genes = subject.buildGenes(diffProfiles, orderedContrasts);
+        diffProfiles.setTotalResultCount(50);
+        //DifferentialProfileRowViewModel[] genes = subject.buildGenesJson(diffProfiles, orderedContrasts);
 
-        DifferentialProfilesViewModel profiles = new DifferentialProfilesViewModel(diffProfiles.getMinUpRegulatedExpressionLevel(), diffProfiles.getMaxUpRegulatedExpressionLevel(), diffProfiles.getMinDownRegulatedExpressionLevel(), diffProfiles.getMaxDownRegulatedExpressionLevel(), 50, genes);
+//        DifferentialProfilesViewModel profiles = new DifferentialProfilesViewModel(diffProfiles.getMinUpRegulatedExpressionLevel(), diffProfiles.getMaxUpRegulatedExpressionLevel(), diffProfiles.getMinDownRegulatedExpressionLevel(), diffProfiles.getMaxDownRegulatedExpressionLevel(), 50, genes);
 
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .create();
-        String json = gson.toJson(profiles);
+        JsonObject actual = subject.build(diffProfiles, orderedContrasts);
+
 
         String expected = "{\n" +
                 "  \"minUpLevel\": 1.3,\n" +
@@ -110,7 +111,7 @@ public class DifferentialProfilesViewModelBuilderTest {
                 "  \"maxDownLevel\": -8.8\n" +
                 "}";
 
-        assertThat(json, is(expected));
+        assertThat(actual,is(new JsonParser().parse(expected)));
 
     }
 

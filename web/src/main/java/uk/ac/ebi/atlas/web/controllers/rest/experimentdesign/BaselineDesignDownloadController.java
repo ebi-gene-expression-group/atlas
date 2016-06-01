@@ -3,9 +3,12 @@ package uk.ac.ebi.atlas.web.controllers.rest.experimentdesign;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -18,23 +21,28 @@ import java.util.Set;
 public class BaselineDesignDownloadController extends ExperimentDesignDownloadController<BaselineExperiment> {
 
     @Inject
-    public BaselineDesignDownloadController(FileTsvReaderBuilder fileTsvReaderBuilder) {
-        super(fileTsvReaderBuilder);
+    public BaselineDesignDownloadController(FileTsvReaderBuilder fileTsvReaderBuilder,ExperimentTrader experimentTrader) {
+        super(fileTsvReaderBuilder,experimentTrader);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=RNASEQ_MRNA_BASELINE"})
-    public void downloadExperimentDesign(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void downloadExperimentDesign(@PathVariable String experimentAccession,
+                                         @RequestParam(value = "accessKey",required = false) String accessKey,
+                                         HttpServletResponse response) throws
+            IOException {
 
-        extractExperimentDesign(request, response);
+        extractExperimentDesign(experimentAccession, response, accessKey);
 
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params =
             {"type=PROTEOMICS_BASELINE"})
-    public void downloadExperimentDesignProteomics(HttpServletRequest request, HttpServletResponse response) throws
+    public void downloadExperimentDesignProteomics(@PathVariable String experimentAccession,
+                                                   @RequestParam(value = "accessKey",required = false) String accessKey,
+                                                   HttpServletResponse response) throws
             IOException {
 
-        extractExperimentDesign(request, response);
+        extractExperimentDesign(experimentAccession, response, accessKey);
 
     }
 

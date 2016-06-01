@@ -12,9 +12,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
+import uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil;
 import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -45,11 +49,16 @@ public class ProteomicsBaselineDesignPageControllerIT {
 
     private static final Set<String> runSet = Sets.newLinkedHashSet();
 
-    @Inject
-    private BaselineDesignPageController subject;
+    BaselineDesignPageController subject;
 
     @Inject
-    private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache;
+    DownloadURLBuilder downloadURLBuilder;
+    @Inject
+    ArrayDesignTrader arrayDesignTrader;
+    @Inject
+    ExperimentTrader experimentTrader;
+    @Inject
+    FastQCReportUtil fastQCReportUtil;
 
     private HttpServletRequest requestMock;
 
@@ -57,9 +66,9 @@ public class ProteomicsBaselineDesignPageControllerIT {
 
     @Before
     public void initSubject() throws Exception {
+        subject = new BaselineDesignPageController(downloadURLBuilder,arrayDesignTrader,experimentTrader,
+                fastQCReportUtil);
         requestMock = mock(HttpServletRequest.class);
-        ProteomicsBaselineExperiment proteomicsBaselineExperiment = proteomicsBaselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
-        when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(proteomicsBaselineExperiment);
         when(requestMock.getRequestURI()).thenReturn("/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design");
 
     }
@@ -68,7 +77,7 @@ public class ProteomicsBaselineDesignPageControllerIT {
     public void testExtractProteomicsExperimentDesign() throws IOException {
 
         //given
-        subject.showProteomicsExperimentDesign(model, requestMock);
+        subject.showProteomicsExperimentDesign(EXPERIMENT_ACCESSION,model,"", requestMock);
 
         Gson gson = new Gson();
         runSet.addAll(RUNS);

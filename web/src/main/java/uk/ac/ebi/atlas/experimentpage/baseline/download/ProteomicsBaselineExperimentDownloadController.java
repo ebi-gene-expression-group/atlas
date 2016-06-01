@@ -1,13 +1,13 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -25,21 +25,24 @@ public class ProteomicsBaselineExperimentDownloadController extends BaselineExpe
 
     @Inject
     public ProteomicsBaselineExperimentDownloadController(ProteomicsBaselineProfileInputStreamFactory inputStreamFactory,
-                                                          BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory) {
-        super(inputStreamFactory, baselineProfilesWriterServiceFactory);
+                                                          BaselineProfilesWriterServiceFactory
+                                                                  baselineProfilesWriterServiceFactory,ExperimentTrader experimentTrader) {
+        super(inputStreamFactory, baselineProfilesWriterServiceFactory, experimentTrader);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = TYPE_PROTEOMICS_BASELINE)
-    public void downloadGeneProfiles(HttpServletRequest request
+    public void downloadGeneProfiles(HttpServletRequest request, @PathVariable String experimentAccession
+            ,@RequestParam(value = "accessKey",required = false) String accessKey
+
             , @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
-        geneProfilesHandler(request, preferences, response);
+        geneProfilesHandler(experimentAccession,request, preferences, response, accessKey);
 
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = TYPE_PROTEOMICS_BASELINE)
-    public String downloadRdataURL(HttpServletRequest request) throws IOException {
+    public String downloadRdataURL(@PathVariable String experimentAccession) throws IOException {
         throw new ResourceNotFoundException("");
     }
 }

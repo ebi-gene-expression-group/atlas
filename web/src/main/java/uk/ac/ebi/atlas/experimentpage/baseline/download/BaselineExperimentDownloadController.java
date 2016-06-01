@@ -10,15 +10,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentController;
 import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,6 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 @Controller
 @Scope("request")
@@ -43,16 +43,21 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
     private final JsonParser jsonParser = new JsonParser();
 
+    private final ExperimentTrader experimentTrader;
+
     @Inject
     public BaselineExperimentDownloadController(@Qualifier("baselineProfileInputStreamFactory")
                                                 BaselineProfileInputStreamFactory inputStreamFactory,
-                                                BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory) {
+                                                BaselineProfilesWriterServiceFactory
+                                                        baselineProfilesWriterServiceFactory,ExperimentTrader experimentTrader) {
         this.preferencesForBaselineExperiments = new PreferencesForBaselineExperiments();
         this.baselineProfilesWriterService = baselineProfilesWriterServiceFactory.create(inputStreamFactory);
+        this.experimentTrader =experimentTrader;
     }
 
-    protected void geneProfilesHandler(HttpServletRequest request, BaselineRequestPreferences preferences, HttpServletResponse response) throws IOException {
-        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+    protected void geneProfilesHandler(String experimentAccession, HttpServletRequest request,
+                                       BaselineRequestPreferences preferences, HttpServletResponse response, String accessKey) throws IOException {
+        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
         preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
@@ -97,19 +102,19 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_RNASEQ_BASELINE)
-    public void downloadGeneProfiles(HttpServletRequest request
+    public void downloadGeneProfiles(HttpServletRequest request, @PathVariable String experimentAccession
+                                     ,@RequestParam(value = "accessKey",required = false) String accessKey
             , @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
-        geneProfilesHandler(request, preferences, response);
+        geneProfilesHandler(experimentAccession,request, preferences, response, accessKey);
 
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = PARAMS_TYPE_RNASEQ_BASELINE)
-    public String downloadRdataURL(HttpServletRequest request) throws IOException {
-        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+    public String downloadRdataURL(@PathVariable String experimentAccession) throws IOException {
 
-        String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experiment.getAccession());
+        String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experimentAccession);
 
         return "forward:" + path;
     }

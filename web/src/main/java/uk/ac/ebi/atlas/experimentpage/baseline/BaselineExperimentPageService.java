@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.base.Optional;
 import com.google.gson.*;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -9,9 +10,9 @@ import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -35,6 +36,7 @@ public class BaselineExperimentPageService {
     private final SpeciesKingdomTrader speciesKingdomTrader;
     private BaselineExperimentUtil bslnUtil;
     private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
+    private final AnatomogramFactory anatomogramFactory;
     private Gson gson = new GsonBuilder()
             .create();
 
@@ -45,6 +47,7 @@ public class BaselineExperimentPageService {
                                          BaselineExperimentUtil bslnUtil, PreferencesForBaselineExperiments preferencesForBaselineExperiments) {
 
         this.applicationProperties = applicationProperties;
+        this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
         this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
         this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
@@ -58,9 +61,8 @@ public class BaselineExperimentPageService {
         binder.addValidators(new BaselineRequestPreferencesValidator());
     }
 
-    public void prepareModel(BaselineRequestPreferences preferences, Model model, HttpServletRequest request, boolean
-            shouldAddRDownloadUrl, boolean amIAWidget, boolean disableGeneLinks) throws
-            GenesNotFoundException {
+    public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
+                                                       HttpServletRequest request, boolean amIAWidget) {
 
         if (amIAWidget) {
             // possibly we could always do this - investigate if it matters for not-a-widget
@@ -71,23 +73,34 @@ public class BaselineExperimentPageService {
             preferences.setGeneQuery(GeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
         }
 
-        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
         preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
-
-        BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
-
-        model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
-        model.addAllAttributes(experiment.getBaselineAttributes());
-
-        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-
-        model.addAttribute("queryFactorName", experimentalFactors.getFactorDisplayName(preferences.getQueryFactorType()));
-        model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
 
         Set<AssayGroupFactor> filteredAssayGroupFactors = getFilteredAssayGroupFactors(experiment, preferences);
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
+        model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
         model.addAttribute("allQueryFactors", filteredAssayGroupFactors);
+        model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
+        model.addAllAttributes(experiment.getBaselineAttributes());
+        DownloadURLBuilder.addRDownloadUrlToModel(model, request.getRequestURI());
+    }
+    public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
+                                             HttpServletRequest request, boolean amIAWidget, boolean disableGeneLinks) throws
+            GenesNotFoundException {
+        //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
+        preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
+
+        BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
+        Set<AssayGroupFactor> filteredAssayGroupFactors = getFilteredAssayGroupFactors(experiment, preferences);
+        String contextRoot = request.getContextPath();
+        /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
+        model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
+        model.addAttribute("exactMatch", preferences.isExactMatch());
+        model.addAttribute("geneQuery", preferences.getGeneQuery());
+        model.addAllAttributes(experiment.getBaselineAttributes());
+
+        model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
+        model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
 
         String species = requestContext.getFilteredBySpecies();
 
@@ -116,26 +129,38 @@ public class BaselineExperimentPageService {
                 ? viewModelAsJson(geneSets.get())
                 : "null");
 
-        if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
-            model.addAllAttributes(applicationProperties.getAnatomogramProperties(species, filteredAssayGroupFactors));
+        model.addAttribute("anatomogram", gson.toJson(anatomogramFactory.get(requestContext.getQueryFactorType(), species,
+                filteredAssayGroupFactors, contextRoot)));
 
-        } else {
-            model.addAttribute("hasAnatomogram", false);
-        }
-
-        if (shouldAddRDownloadUrl) {
-            //Currently I am false for proteomics and widgets - is there a harm in adding me?
-            DownloadURLBuilder.addRDownloadUrlToModel(model, request);
-        }
         if (!amIAWidget) {
             model.addAttribute("isWidget", false);
             addFactorMenu(model, experiment, requestContext);
+            model.addAttribute("experiment", gson.toJson(JsonNull.INSTANCE));
         } else {
             model.addAttribute("isWidget", true);
             model.addAttribute("disableGeneLinks", disableGeneLinks);
             model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
             model.addAttribute("enableEnsemblLauncher", false);
+
+            //note this should only happen for single experiment - see HeatmapWidgetController.populateModelWithMultiExperimentResults
+            model.addAttribute("experimentDescription",gson.toJson(prepareExperimentDescription(experiment, preferences
+                    .getGeneQuery(), preferences.getSerializedFilterFactors())));
         }
+
+    }
+
+    //used when external parties include our widget
+    private JsonElement prepareExperimentDescription(Experiment experiment, GeneQuery geneQuery, String serializedFilterFactors){
+        String additionalQueryOptionsString =
+                "?geneQuery="+geneQuery.asUrlQueryParameter()+
+                        "&serializedFilterFactors="+serializedFilterFactors;
+
+        JsonObject experimentDescription = new JsonObject();
+        experimentDescription.addProperty("URL",
+                "/experiments/"+experiment.getAccession()+additionalQueryOptionsString);
+        experimentDescription.addProperty("description", experiment.getDescription());
+        experimentDescription.addProperty("allSpecies", StringUtils.join(experiment.getOrganisms(), ", "));
+        return experimentDescription;
     }
 
     // heatmap-data.jsp will understand "" as empty

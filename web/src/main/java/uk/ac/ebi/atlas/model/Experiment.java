@@ -3,7 +3,10 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.apache.commons.lang.StringUtils;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import java.io.Serializable;
 import java.util.*;
@@ -128,6 +131,9 @@ public class Experiment implements Serializable {
     public Map<String, ?> getAttributes(){
         Map<String, Object> result = new HashMap<>();
         result.put("type", this.getType());
+        result.put("experimentHasRData", this.hasRData());
+        //TODO possibly allSpecies and experimentDescription are no longer used. Check and either remove this comment
+        // or the two properties.
         result.put("allSpecies", StringUtils.join(this.getOrganisms(), ", "));
         result.put("experimentDescription", this.getDescription());
         result.put("hasExtraInfo", this.hasExtraInfoFile());

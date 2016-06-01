@@ -189,7 +189,7 @@ var Heatmap = React.createClass({
     },
 
     isMicroarray: function () {
-        return !(typeof(this.props.profiles.rows[0].designElement) === "undefined");
+        return this.props.profiles.rows[0].hasOwnProperty("designElement") && this.props.profiles.rows[0].designElement;
     },
 
     hasQuartiles: function() {
@@ -283,16 +283,29 @@ var Heatmap = React.createClass({
     },
 
     legendType: function () {
-        return (this.props.type.isBaseline || this.props.type.isMultiExperiment ?
-            <LegendBaseline atlasBaseURL={this.props.atlasBaseURL}
-                                   minExpressionLevel={this._getMinExpressionLevel().toString()}
-                                   maxExpressionLevel={this._getMaxExpressionLevel().toString()}
-                                   isMultiExperiment={this.props.type.isMultiExperiment ? true : false}/> :
-            <LegendDifferential atlasBaseURL={this.props.atlasBaseURL}
-                                       minDownLevel={this._getProfiles().minDownLevel.toString()}
-                                       maxDownLevel={this._getProfiles().maxDownLevel.toString()}
-                                       minUpLevel={this._getProfiles().minUpLevel.toString()}
-                                       maxUpLevel={this._getProfiles().maxUpLevel.toString()}/>);
+        if (this.props.type.isBaseline || this.props.type.isMultiExperiment) {
+          return <LegendBaseline
+            atlasBaseURL={this.props.atlasBaseURL}
+            minExpressionLevel={this._getMinExpressionLevel().toString()}
+            maxExpressionLevel={this._getMaxExpressionLevel().toString()}
+            isMultiExperiment={this.props.type.isMultiExperiment ? true : false}/> ;
+        } else {
+          var ps = this._getProfiles();
+          return <LegendDifferential
+            atlasBaseURL={this.props.atlasBaseURL}
+            minDownLevel={ps.hasOwnProperty("minDownLevel")
+                            ? ps.minDownLevel.toString()
+                            : "NaN"}
+            maxDownLevel={ps.hasOwnProperty("maxDownLevel")
+                            ? ps.maxDownLevel.toString()
+                            : "NaN"}
+            minUpLevel={ps.hasOwnProperty("minUpLevel")
+                            ? ps.minUpLevel.toString()
+                            : "NaN"}
+            maxUpLevel={ps.hasOwnProperty("maxUpLevel")
+                            ? ps.maxUpLevel.toString()
+                            : "NaN"}  />;
+        }
     },
 
     _getCoexpressionsAvailable: function() {

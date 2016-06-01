@@ -24,8 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public final class ExperimentDispatcher {
 
-    public static final String EXPERIMENT_ATTRIBUTE = "experiment";
-
     private ExperimentTrader experimentTrader;
 
     @Inject
@@ -34,20 +32,29 @@ public final class ExperimentDispatcher {
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/*"})
-    public String dispatch(HttpServletRequest request, HttpServletResponse response,
+    public String dispatch(HttpServletRequest request,
                            @PathVariable String experimentAccession,
-                           @RequestParam(value = "accessKey",required = false) String accessKey, Model model) {
+                           @RequestParam(value = "accessKey",required = false) String accessKey) {
 
         if (alreadyForwardedButNoOtherControllerHandledTheRequest(request)) {
             // prevent an infinite loop
             throw new NoExperimentSubResourceException();
         }
 
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        return "forward:" + buildForwardURL(request, experimentTrader.getExperiment(experimentAccession, accessKey), accessKey);
+    }
 
-        request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
+    @RequestMapping(value = {"/json/experiments/{experimentAccession}", "/json/experiments/{experimentAccession}/*"})
+    public String dispatchData(HttpServletRequest request,
+                           @PathVariable String experimentAccession,
+                           @RequestParam(value = "accessKey",required = false) String accessKey) {
 
-        return "forward:" + buildForwardURL(request, experiment, accessKey);
+        if (alreadyForwardedButNoOtherControllerHandledTheRequest(request)) {
+            // prevent an infinite loop
+            throw new NoExperimentSubResourceException();
+        }
+
+        return "forward:" + buildForwardURL(request, experimentTrader.getExperiment(experimentAccession, accessKey), accessKey);
     }
 
     private boolean alreadyForwardedButNoOtherControllerHandledTheRequest(HttpServletRequest request) {

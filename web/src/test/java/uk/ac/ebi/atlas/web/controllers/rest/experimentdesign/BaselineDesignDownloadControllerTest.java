@@ -8,12 +8,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.List;
@@ -30,9 +29,7 @@ public class BaselineDesignDownloadControllerTest {
 
     public static final String EXPERIMENT_ACCESSION = "accession";
     public static final String RUN_ACCESSION = "runAccession";
-
-    @Mock
-    private HttpServletRequest requestMock;
+    private static final String ACCESS_KEY = "hunter2";
 
     @Mock
     private HttpServletResponse responseMock;
@@ -49,6 +46,9 @@ public class BaselineDesignDownloadControllerTest {
     @Mock
     private PrintWriter printWriterMock;
 
+    @Mock
+    ExperimentTrader experimentTrader;
+
     private BaselineDesignDownloadController subject;
 
     @Before
@@ -58,7 +58,7 @@ public class BaselineDesignDownloadControllerTest {
         when(fileTsvReaderBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(fileTsvReaderBuilderMock);
         when(fileTsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
 
-        subject = new BaselineDesignDownloadController(fileTsvReaderBuilderMock);
+        subject = new BaselineDesignDownloadController(fileTsvReaderBuilderMock,experimentTrader);
         subject.initializeTsvReader();
     }
 
@@ -70,7 +70,7 @@ public class BaselineDesignDownloadControllerTest {
         designs.add(new String[]{RUN_ACCESSION, "value2", "value3"});
         designs.add(new String[]{"otherAccession", "value5", "value6"});
 
-        when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(experimentMock);
+        when(experimentTrader.getExperiment(EXPERIMENT_ACCESSION,ACCESS_KEY)).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
         when(tsvReaderMock.readAll()).thenReturn(designs);
 
@@ -79,7 +79,7 @@ public class BaselineDesignDownloadControllerTest {
 
         when(responseMock.getWriter()).thenReturn(printWriterMock);
 
-        subject.downloadExperimentDesign(requestMock, responseMock);
+        subject.downloadExperimentDesign(EXPERIMENT_ACCESSION,ACCESS_KEY, responseMock);
         verify(printWriterMock).write("header1\theader2\theader3\tAnalysed\n", 0, 33);
         verify(printWriterMock).write("runAccession\tvalue2\tvalue3\tYes\n", 0, 31);
         verify(printWriterMock).write("otherAccession\tvalue5\tvalue6\tNo\n", 0, 32);

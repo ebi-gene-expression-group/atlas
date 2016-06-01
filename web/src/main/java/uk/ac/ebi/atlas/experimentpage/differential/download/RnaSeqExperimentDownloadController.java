@@ -5,11 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 
@@ -37,23 +40,27 @@ public class RnaSeqExperimentDownloadController {
 
     private DataWriterFactory dataWriterFactory;
 
+    private final ExperimentTrader experimentTrader;
+
     @Inject
     public RnaSeqExperimentDownloadController(
             RnaSeqRequestContextBuilder requestContextBuilder, RnaSeqProfilesWriter profilesWriter
-            , DataWriterFactory dataWriterFactory) {
+            , DataWriterFactory dataWriterFactory, ExperimentTrader experimentTrader) {
 
         this.requestContextBuilder = requestContextBuilder;
         this.profilesWriter = profilesWriter;
         this.dataWriterFactory = dataWriterFactory;
+        this.experimentTrader = experimentTrader;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_DIFFERENTIAL)
-    public void downloadGeneProfiles(HttpServletRequest request
-            , @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid DifferentialRequestPreferences preferences
-            , HttpServletResponse response) throws IOException {
+    public void downloadGeneProfiles(@PathVariable String experimentAccession,
+                                     @RequestParam(value = "accessKey",required = false) String accessKey,
+                                     HttpServletRequest request, @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid
+                                         DifferentialRequestPreferences preferences , HttpServletResponse response) throws IOException {
 
-        DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-
+        DifferentialExperiment experiment = (DifferentialExperiment)
+                experimentTrader.getExperiment(experimentAccession,accessKey);
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: {}", preferences);
 
@@ -76,9 +83,11 @@ public class RnaSeqExperimentDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/raw-counts.tsv", params = PARAMS_TYPE_DIFFERENTIAL)
-    public void downloadRawCounts(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-
+    public void downloadRawCounts(@PathVariable String experimentAccession,
+                                  @RequestParam(value = "accessKey",required = false) String accessKey,
+                                  HttpServletRequest request, HttpServletResponse response) throws IOException {
+        DifferentialExperiment experiment = (DifferentialExperiment)
+                experimentTrader.getExperiment(experimentAccession,accessKey);
         prepareResponse(response, experiment.getAccession(), RAW_COUNTS_TSV);
 
         ExpressionsWriter rnaSeqRawDataWriter = dataWriterFactory.getRnaSeqRawDataWriter(experiment, response.getWriter());
@@ -88,8 +97,11 @@ public class RnaSeqExperimentDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = PARAMS_TYPE_DIFFERENTIAL)
-    public void downloadAllAnalytics(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+    public void downloadAllAnalytics(@PathVariable String experimentAccession,
+                                     @RequestParam(value = "accessKey",required = false) String accessKey,
+            HttpServletRequest request, HttpServletResponse response) throws IOException {
+        DifferentialExperiment experiment = (DifferentialExperiment)
+                experimentTrader.getExperiment(experimentAccession,accessKey);
 
         prepareResponse(response, experiment.getAccession(), ALL_ANALYTICS_TSV);
 
@@ -101,10 +113,9 @@ public class RnaSeqExperimentDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = PARAMS_TYPE_DIFFERENTIAL)
-    public String downloadRdataURL(HttpServletRequest request) throws IOException {
-        DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-
-        String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experiment.getAccession());
+    public String downloadRdataURL(@PathVariable String experimentAccession,
+                                   HttpServletRequest request) throws IOException {
+        String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experimentAccession);
 
         return "forward:" + path;
     }

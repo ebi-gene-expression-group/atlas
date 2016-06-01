@@ -6,11 +6,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 
@@ -44,10 +47,12 @@ public class MicroarrayExperimentDownloadController {
 
     private DataWriterFactory dataWriterFactory;
 
-    @Inject
-    public MicroarrayExperimentDownloadController(
-            MicroarrayRequestContextBuilder requestContextBuilder, MicroarrayProfilesWriter profilesWriter, DataWriterFactory dataWriterFactory) {
+    private final ExperimentTrader experimentTrader;
 
+    @Inject
+    public MicroarrayExperimentDownloadController(ExperimentTrader experimentTrader,
+            MicroarrayRequestContextBuilder requestContextBuilder, MicroarrayProfilesWriter profilesWriter, DataWriterFactory dataWriterFactory) {
+        this.experimentTrader = experimentTrader;
         this.requestContextBuilder = requestContextBuilder;
         this.profilesWriter = profilesWriter;
         this.dataWriterFactory = dataWriterFactory;
@@ -55,14 +60,17 @@ public class MicroarrayExperimentDownloadController {
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_MICROARRAY)
     public void downloadGeneProfiles(
-        HttpServletRequest request,
+        HttpServletRequest request, @PathVariable String experimentAccession,
+        @RequestParam(value = "accessKey", required = false) String accessKey,
         @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences, HttpServletResponse response) throws IOException {
 
-        MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        MicroarrayExperiment experiment = (MicroarrayExperiment)
+                experimentTrader.getExperiment(experimentAccession,accessKey);
+
 
         LOGGER.info("<downloadMicroarrayGeneProfiles> received download request for requestPreferences: {}", preferences);
 
-        prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), QUERY_RESULTS_TSV);
+        prepareResponse(response, experimentAccession, experiment.getArrayDesignAccessions(), QUERY_RESULTS_TSV);
 
         MicroarrayRequestContext requestContext = requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
 
@@ -70,7 +78,7 @@ public class MicroarrayExperimentDownloadController {
 
             String arrayDesign = experiment.getArrayDesignAccessions().first();
 
-            writeMicroarrayGeneProfiles(response.getWriter(), experiment, requestContext, arrayDesign);
+            writeMicroarrayGeneProfiles(response.getWriter(), experimentAccession, requestContext, arrayDesign);
 
         } else {
 
@@ -82,7 +90,7 @@ public class MicroarrayExperimentDownloadController {
                 ZipEntry ze = new ZipEntry(filename);
                 zipOutputStream.putNextEntry(ze);
 
-                writeMicroarrayGeneProfiles(new PrintWriter(zipOutputStream), experiment, requestContext, selectedArrayDesign);
+                writeMicroarrayGeneProfiles(new PrintWriter(zipOutputStream), experimentAccession, requestContext, selectedArrayDesign);
                 zipOutputStream.closeEntry();
             }
 
@@ -92,20 +100,21 @@ public class MicroarrayExperimentDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = PARAMS_TYPE_MICROARRAY)
-    public String downloadRdataURL(HttpServletRequest request) throws IOException {
-        MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+    public String downloadRdataURL(@PathVariable String experimentAccession) throws
+            IOException {
 
-        String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experiment.getAccession());
+        String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experimentAccession);
 
         return "forward:" + path;
     }
 
 
-    void writeMicroarrayGeneProfiles(PrintWriter writer, MicroarrayExperiment experiment, MicroarrayRequestContext requestContext, String arrayDesign){
+    void writeMicroarrayGeneProfiles(PrintWriter writer, String experimentAccession, MicroarrayRequestContext
+            requestContext, String arrayDesign){
         try {
 
             long genesCount = profilesWriter.write(writer, requestContext, arrayDesign);
-            LOGGER.info("<writeMicroarrayGeneProfiles> wrote {} genes for experiment {}", genesCount, experiment.getAccession());
+            LOGGER.info("<writeMicroarrayGeneProfiles> wrote {} genes for experiment {}", genesCount, experimentAccession);
 
         } catch (GenesNotFoundException e) {
             LOGGER.info("<writeMicroarrayGeneProfiles> no genes found");
@@ -114,12 +123,13 @@ public class MicroarrayExperimentDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/normalized.tsv", params = PARAMS_TYPE_MICROARRAY)
-    public void downloadNormalizedData(HttpServletRequest request
-            , @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
+    public void downloadNormalizedData(HttpServletRequest request, @PathVariable String experimentAccession
+            , @RequestParam(value = "accessKey",required = false) String accessKey,
+              @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
-        MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-
+        MicroarrayExperiment experiment = (MicroarrayExperiment)
+                experimentTrader.getExperiment(experimentAccession,accessKey);
         prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), NORMALIZED_EXPRESSIONS_TSV);
 
         if (experiment.getArrayDesignAccessions().size() == 1) {
@@ -160,12 +170,13 @@ public class MicroarrayExperimentDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/logFold.tsv", params = PARAMS_TYPE_MICROARRAY)
-    public void downloadLogFoldData(HttpServletRequest request
-            , @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
+    public void downloadLogFoldData(HttpServletRequest request, @PathVariable String experimentAccession
+            , @RequestParam(value = "accessKey",required = false) String accessKey,@ModelAttribute
+                                                (MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
-        MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-
+        MicroarrayExperiment experiment = (MicroarrayExperiment)
+                experimentTrader.getExperiment(experimentAccession,accessKey);
         prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), LOG_FOLD_CHANGES_TSV);
 
         if (experiment.getArrayDesignAccessions().size() == 1) {
@@ -206,11 +217,13 @@ public class MicroarrayExperimentDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = PARAMS_TYPE_MICROARRAY)
-    public void downloadAllAnalytics(HttpServletRequest request
-            , @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
+    public void downloadAllAnalytics(HttpServletRequest request, @PathVariable String experimentAccession
+            , @RequestParam(value = "accessKey",required = false) String accessKey,@ModelAttribute
+                                                 (MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
             , HttpServletResponse response) throws IOException {
 
-        MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        MicroarrayExperiment experiment = (MicroarrayExperiment)
+                experimentTrader.getExperiment(experimentAccession, accessKey);
 
         prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), ANALYTICS_TSV);
 

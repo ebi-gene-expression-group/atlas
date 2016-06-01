@@ -54,47 +54,6 @@ public class ApplicationProperties {
         return configurationProperties.getProperty(key + ending);
     }
 
-    public Map<String, ?> getAnatomogramProperties(String species, Set<AssayGroupFactor> filteredAssayGroupFactors) {
-        Map<String, Object> result = new HashMap<>();
-        String maleAnatomogramFileName = getAnatomogramFileName(species, AnatomogramType.MALE);
-        result.put("maleAnatomogramFile", getAnatomogramFileName(species, AnatomogramType.MALE));
-
-        String femaleAnatomogramFileName = getAnatomogramFileName(species, AnatomogramType.FEMALE);
-        result.put("femaleAnatomogramFile", femaleAnatomogramFileName);
-
-        String brainAnatomogramFileName = getAnatomogramFileName(species, AnatomogramType.BRAIN);
-        result.put("brainAnatomogramFile", brainAnatomogramFileName);
-
-        result.put("hasAnatomogram", maleAnatomogramFileName != null || femaleAnatomogramFileName != null || brainAnatomogramFileName != null);
-
-        if(species.equals("oryza sativa") || species.equals("oryza sativa japonica group")){
-            result.put("toggleButtonMaleImageTemplate", "/resources/images/whole_plant");
-            result.put("toggleButtonFemaleImageTemplate", "/resources/images/flower_parts");
-        }
-        else {
-            result.put("toggleButtonMaleImageTemplate", "/resources/images/male");
-            result.put("toggleButtonFemaleImageTemplate", "/resources/images/female");
-            result.put("toggleButtonBrainImageTemplate", "/resources/images/brain");
-        }
-
-        result.put("allSvgPathIds", new Gson().toJson(extractOntologyTerm
-                (filteredAssayGroupFactors)));
-
-        return result;
-    }
-
-    private ImmutableSet<String> extractOntologyTerm(Set<AssayGroupFactor> filteredAssayGroupFactors) {
-        ImmutableSet.Builder<String> builder = ImmutableSet.builder();
-
-        for (AssayGroupFactor assayGroupFactor : filteredAssayGroupFactors) {
-            String valueOntologyTermId = assayGroupFactor.getValueOntologyTermId();
-            if (valueOntologyTermId != null) {
-                builder.add(valueOntologyTermId);
-            }
-        }
-        return builder.build();
-    }
-
     //This is invoked from jsp el
     public String getArrayExpressURL(String experimentAccession) {
         String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.url.template");
@@ -158,7 +117,7 @@ public class ApplicationProperties {
         String uri = StringUtils.remove(requestUri, request.getContextPath());
 
         return Joiner.on("?").skipNulls()
-                .join(new String[]{uri + TSV_FILE_EXTENSION, queryString});
+                .join(new String[]{uri.replace("/json/experiments","/experiments") + TSV_FILE_EXTENSION, queryString});
     }
 
     public String buildDownloadURLForWidget(HttpServletRequest request, String experimentAccession) {

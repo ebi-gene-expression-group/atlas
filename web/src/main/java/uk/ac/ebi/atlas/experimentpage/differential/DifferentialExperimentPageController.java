@@ -1,9 +1,9 @@
 
 package uk.ac.ebi.atlas.experimentpage.differential;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonNull;
 import org.apache.solr.common.SolrException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -14,17 +14,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.differential.*;
-import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModel;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
@@ -39,17 +42,18 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
     private DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap;
     private TracksUtil tracksUtil;
+    private final ApplicationProperties applicationProperties;
 
     private Gson gson = new GsonBuilder()
-            .serializeSpecialFloatingPointValues()
             .create();
 
     @SuppressWarnings("unchecked")
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder
-            differentialRequestContextBuilder,
+                                                           differentialRequestContextBuilder,
                                                    DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap,
                                                    DownloadURLBuilder downloadURLBuilder, DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
-                                                   SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
+                                                   SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil,
+                                                   GseaPlotsBuilder gseaPlotsBuilder,ApplicationProperties applicationProperties) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.profilesHeatMap = profilesHeatMap;
         this.downloadURLBuilder = downloadURLBuilder;
@@ -57,6 +61,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
         this.gseaPlotsBuilder = gseaPlotsBuilder;
+        this.applicationProperties = applicationProperties;
     }
 
     @InitBinder("preferences")
@@ -65,44 +70,49 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     }
 
     // called from sub classes
-    public String showGeneProfiles(K requestPreferences, BindingResult result, Model model, HttpServletRequest request) {
-
-        T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+    public void prepareRequestPreferencesAndHeaderData(T experiment, K requestPreferences, Model model,HttpServletRequest request) {
 
         initRequestPreferences(model, requestPreferences, experiment);
+        model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
+        model.addAttribute("queryFactorName", "Comparison");
+        model.addAttribute("allQueryFactors", experiment.getContrasts());
+        model.addAllAttributes(experiment.getDifferentialAttributes());
+    }
 
+    public void populateModelWithHeatmapData(T experiment, K requestPreferences, BindingResult result, Model model,
+                                             HttpServletRequest request) {
         DifferentialRequestContext requestContext = initRequestContext(experiment, requestPreferences);
-
         String species = requestContext.getFilteredBySpecies();
-
         Set<Contrast> contrasts = experiment.getContrasts();
-
+        model.addAttribute("queryFactorName", "Comparison");
+        model.addAttribute("exactMatch", requestPreferences.isExactMatch());
+        model.addAttribute("geneQuery", requestPreferences.getGeneQuery());
         model.addAllAttributes(experiment.getDifferentialAttributes());
         model.addAllAttributes(speciesKingdomTrader.getAttributesFor(species));
 
         model.addAttribute("enableEnsemblLauncher", tracksUtil.hasDiffTracksPath(experiment.getAccession(), contrasts.iterator().next().getId()));
 
+        model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
+        model.addAttribute("experimentDescription", gson.toJson(JsonNull.INSTANCE));
         if (!result.hasErrors()) {
 
             try {
 
                 DifferentialProfilesList differentialProfiles = profilesHeatMap.fetch(requestContext);
-                if(!differentialProfiles.isEmpty()){
+                if (!differentialProfiles.isEmpty()) {
                     model.addAttribute("gseaPlots", gson.toJson(gseaPlotsBuilder.createJsonByContrastId(experiment
                             .getAccession(), contrasts)));
                     model.addAttribute("jsonColumnHeaders", gson.toJson(contrasts));
                     model.addAttribute("jsonProfiles", gson.toJson(differentialProfilesViewModelBuilder.build
                             (differentialProfiles, contrasts)));
                 }
-                model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(request));
+                model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(request.getRequestURI()));
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery().description() + "'"));
             }
 
         }
-
-        return "experiment";
     }
 
     private void initRequestPreferences(Model model, K requestPreferences, T experiment) {

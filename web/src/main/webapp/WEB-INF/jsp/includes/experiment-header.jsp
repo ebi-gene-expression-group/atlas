@@ -123,7 +123,7 @@
 
                     <c:set var="download-expressions" value="${false}"/>
                     <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
-                    <c:if test="${experiment.hasRData()}">
+                    <c:if test="${experimentHasRData}">
                         <td>
                             <c:choose>
                                 <c:when test="${isFortLauderdale}">
@@ -223,7 +223,7 @@
                                 Continue downloading
                             </button>
                         </c:if>
-                        <c:if test="${experiment.hasRData()}">
+                        <c:if test="${experimentHasRData}">
                              <button class="btn btn-primary" id="continue-download-R"
                                      onclick="location.href='${rDownloadUrl}${accessKeyQueryString}'">Continue downloading</button>
                         </c:if>

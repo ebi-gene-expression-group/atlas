@@ -8,10 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,17 +26,21 @@ public abstract class ExperimentDesignDownloadController<T extends Experiment> {
 
     private FileTsvReaderBuilder fileTsvReaderBuilder;
 
+    private final ExperimentTrader experimentTrader;
+
     @PostConstruct
     protected void initializeTsvReader() {
         this.fileTsvReaderBuilder = fileTsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
     }
 
-    public ExperimentDesignDownloadController(FileTsvReaderBuilder fileTsvReaderBuilder) {
+    public ExperimentDesignDownloadController(FileTsvReaderBuilder fileTsvReaderBuilder,ExperimentTrader experimentTrader) {
         this.fileTsvReaderBuilder = fileTsvReaderBuilder;
+        this.experimentTrader =experimentTrader;
     }
 
-    protected void extractExperimentDesign(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+    protected void extractExperimentDesign(String experimentAccession, HttpServletResponse response, String
+            accessKey) throws IOException {
+        T experiment = (T) experimentTrader.getExperiment(experimentAccession,accessKey);
 
         TsvReader tsvReader = fileTsvReaderBuilder.withExperimentAccession(experiment.getAccession()).build();
 

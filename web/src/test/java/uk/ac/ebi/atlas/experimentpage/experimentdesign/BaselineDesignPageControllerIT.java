@@ -12,9 +12,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
+import uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -42,11 +46,17 @@ public class BaselineDesignPageControllerIT {
     private static final Set<String> runSet = Sets.newLinkedHashSet();
 
 
-    @Inject
-    private BaselineDesignPageController subject;
+    BaselineDesignPageController subject;
 
     @Inject
-    private BaselineExperimentsCache baselineExperimentsCache;
+    DownloadURLBuilder downloadURLBuilder;
+    @Inject
+    ArrayDesignTrader arrayDesignTrader;
+    @Inject
+    ExperimentTrader experimentTrader;
+    @Inject
+    FastQCReportUtil fastQCReportUtil;
+
 
     private HttpServletRequest requestMock;
 
@@ -54,9 +64,8 @@ public class BaselineDesignPageControllerIT {
 
     @Before
     public void initSubject() throws Exception {
+        subject = new BaselineDesignPageController(downloadURLBuilder,arrayDesignTrader,experimentTrader,fastQCReportUtil);
         requestMock = mock(HttpServletRequest.class);
-        BaselineExperiment proteomicsBaselineExperiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
-        when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(proteomicsBaselineExperiment);
         when(requestMock.getRequestURI()).thenReturn("/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design");
 
     }
@@ -64,7 +73,7 @@ public class BaselineDesignPageControllerIT {
     @Test
     public void testExtractBaselineExperimentDesign() throws IOException {
         //given
-        subject.showRnaSeqExperimentDesign(model, requestMock);
+        subject.showRnaSeqExperimentDesign(EXPERIMENT_ACCESSION,"",model, requestMock);
 
         Gson gson = new Gson();
         runSet.addAll(RUNS);

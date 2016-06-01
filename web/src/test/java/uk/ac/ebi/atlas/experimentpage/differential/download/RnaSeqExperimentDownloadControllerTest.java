@@ -9,8 +9,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,13 +54,16 @@ public class RnaSeqExperimentDownloadControllerTest {
     @Mock
     private ExpressionsWriter expressionsWriterMock;
 
+    @Mock
+    private ExperimentTrader experimentTrader;
+
     private RnaSeqExperimentDownloadController subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new RnaSeqExperimentDownloadController(requestContextBuilderMock, profilesWriter, dataWriterFactoryMock);
-
-        when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(experimentMock);
+        subject = new RnaSeqExperimentDownloadController(requestContextBuilderMock, profilesWriter,
+                dataWriterFactoryMock, experimentTrader);
+        when(experimentTrader.getExperiment(EXPERIMENT_ACCESSION,"")).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
         when(requestContextBuilderMock.forExperiment(experimentMock)).thenReturn(requestContextBuilderMock);
         when(requestContextBuilderMock.withPreferences(preferencesMock)).thenReturn(requestContextBuilderMock);
@@ -71,7 +74,7 @@ public class RnaSeqExperimentDownloadControllerTest {
 
     @Test
     public void testDownloadGeneProfiles() throws Exception {
-        subject.downloadGeneProfiles(requestMock, preferencesMock, responseMock);
+        subject.downloadGeneProfiles(EXPERIMENT_ACCESSION,"",requestMock, preferencesMock, responseMock);
 
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
@@ -84,7 +87,7 @@ public class RnaSeqExperimentDownloadControllerTest {
         when(dataWriterFactoryMock.getRnaSeqRawDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
         when(expressionsWriterMock.write()).thenReturn(0L);
 
-        subject.downloadRawCounts(requestMock, responseMock);
+        subject.downloadRawCounts(EXPERIMENT_ACCESSION,"",requestMock, responseMock);
 
         verify(expressionsWriterMock).write();
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-raw-counts.tsv\"");
@@ -97,7 +100,7 @@ public class RnaSeqExperimentDownloadControllerTest {
         when(dataWriterFactoryMock.getRnaSeqAnalyticsDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
         when(expressionsWriterMock.write()).thenReturn(0L);
 
-        subject.downloadAllAnalytics(requestMock, responseMock);
+        subject.downloadAllAnalytics(EXPERIMENT_ACCESSION,"",requestMock, responseMock);
 
         verify(expressionsWriterMock).write();
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-analytics.tsv\"");

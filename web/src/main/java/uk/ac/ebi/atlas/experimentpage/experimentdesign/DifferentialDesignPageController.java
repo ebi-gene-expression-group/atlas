@@ -7,14 +7,16 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -25,23 +27,33 @@ import java.util.SortedSet;
 @Scope("request")
 public class DifferentialDesignPageController extends ExperimentDesignPageRequestHandler<DifferentialExperiment> {
 
+    @Inject
+    public DifferentialDesignPageController(DownloadURLBuilder downloadURLBuilder, ArrayDesignTrader arrayDesignTrader,
+                                            ExperimentTrader experimentTrader){
+        super(downloadURLBuilder,arrayDesignTrader,experimentTrader);
+    }
+
     private String contrastId;
     private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
 
     @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
-    public String showRnaSeqExperimentDesign(@ModelAttribute("preferences") @Valid DifferentialDesignRequestPreferences preferences
+    public String showRnaSeqExperimentDesign(@PathVariable String experimentAccession,
+                                             @RequestParam(value = "accessKey",required = false) String accessKey,
+                                             @ModelAttribute("preferences")@Valid DifferentialDesignRequestPreferences preferences
             , Model model, HttpServletRequest request) throws IOException {
 
         contrastId = preferences.getSelectedContrast();
-        return handleRequest(model, request);
+        return handleRequest(experimentAccession,model, request, accessKey);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=MICROARRAY_ANY"})
-    public String showMicroarrayExperimentDesign(@ModelAttribute("preferences") @Valid DifferentialDesignRequestPreferences preferences
+    public String showMicroarrayExperimentDesign(@PathVariable String experimentAccession,
+                                                 @RequestParam(value = "accessKey",required = false) String accessKey,
+                                                 @ModelAttribute("preferences") @Valid DifferentialDesignRequestPreferences preferences
             , Model model, HttpServletRequest request) throws IOException {
 
         contrastId = preferences.getSelectedContrast();
-        return handleRequest(model, request);
+        return handleRequest(experimentAccession,model, request, accessKey);
     }
 
     @Override

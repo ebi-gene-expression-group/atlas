@@ -15,7 +15,8 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
         this.designElementName = designElementName;
     }
 
-    //It's used in jsp EL
+    //It's used in jsp EL as well as serialization
+    @Override
     public String getDesignElementName() {
         return designElementName;
     }
