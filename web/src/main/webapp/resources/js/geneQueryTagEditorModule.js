@@ -65,7 +65,9 @@ var geneQueryTagEditorModule = (function($) {
                     }
                 },
                 onChange: onChange,
-                placeholder: 'Enter gene query...'
+                placeholder: 'Enter gene query...',
+                maxLength: 100,
+                maxTagLength: 20
         });
 
     }

@@ -141,79 +141,67 @@
 <%@ include file="includes/condition-autocomplete-js.jsp" %>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        function disableButtonsOnChange (field, editor, tags) {
+            $buttons.button('option', 'disabled', tags.length == 0);
+        }
 
-    (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+        var $buttons = $('#submit-button, #reset-button'), $searchFields = $('#geneQuery, #condition');
 
-        $(document).ready(function () {
-            var $buttons = $('#submit-button, #reset-button'), $searchFields = $('#geneQuery, #condition');
+        geneQueryTagEditorModule.init('#geneQuery', undefined, disableButtonsOnChange);
+        conditionAutocompleteModule.init('${arrayexpressUrl}', disableButtonsOnChange);
 
-            geneQueryTagEditorModule.init("#geneQuery", undefined, disableButtonsOnChange);
+        searchFormModule.searchBoxEnterEventHandler('#submit-button');
+        searchFormModule.disableCarriageReturn('#condition');
 
-            conditionAutocompleteModule.init("${arrayexpressUrl}", disableButtonsOnChange);
+        helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
-            searchFormModule.searchBoxEnterEventHandler("#submit-button");
-            searchFormModule.disableCarriageReturn("#condition");
+        initButtons();
+        selectHomoSapiens();
+        disableButtonsWhenAllSearchFieldsAreEmpty();
+        onResetButtonRemoveAllTagsAndSelectHomoSapiens();
 
-            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
+        function initButtons() {
+            $buttons.each(function () {
+                $(this).button({ disabled: true });
+            });
+        }
 
-            initButtons();
-
-            disableButtonsWhenAllSearchFieldsAreEmpty();
-
-            selectDefaultOrganism();
-
-            onResetButtonEventHandler();
-
-            function initButtons() {
-                $buttons.each(function () {
-                    $(this).button({ disabled: true });
-                });
-            }
-
-            function onResetButtonEventHandler() {
-                $('#reset-button').on('click' , function () {
-                    // Remove all tags
-                    var $geneQuery = $('#geneQuery'),
-                        geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
-                    for (var i = 0; i < geneQueryTags.length; i++) {
-                        $geneQuery.jsonTagEditor('removeTag', geneQueryTags[i].tagValue);
-                    }
-
-                    var $sampleProperties =  $('#condition'),
-                        samplePropertiesTags = $sampleProperties.tagEditor('getTags')[0].tags;
-                    for (var i = 0; i < samplePropertiesTags.length; i++) {
-                        $sampleProperties.tagEditor('removeTag', samplePropertiesTags[i]);
-                    }
-
-                    selectDefaultOrganism();
-                });
-            }
-
-            function disableButtonsWhenAllSearchFieldsAreEmpty() {
-                $searchFields.on('keyup',function () {
-                    $buttons.button("option", "disabled", allFieldsEmpty());
-                }).keyup();
-
-                function allFieldsEmpty() {
-                    var atLeastOneValue = false;
-                    $searchFields.each(function () {
-                        atLeastOneValue = atLeastOneValue || ($.trim(this.value).length > 0);
-                    });
-                    return !atLeastOneValue;
+        function onResetButtonRemoveAllTagsAndSelectHomoSapiens() {
+            $('#reset-button').on('click' , function () {
+                // Remove all tags
+                var $geneQuery = $('#geneQuery'),
+                    geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
+                for (var i = 0; i < geneQueryTags.length; i++) {
+                    $geneQuery.jsonTagEditor('removeTag', geneQueryTags[i].tagValue);
                 }
+
+                var $sampleProperties =  $('#condition'),
+                    samplePropertiesTags = $sampleProperties.tagEditor('getTags')[0].tags;
+                for (var i = 0; i < samplePropertiesTags.length; i++) {
+                    $sampleProperties.tagEditor('removeTag', samplePropertiesTags[i]);
+                }
+
+                selectHomoSapiens();
+            });
+        }
+
+        function disableButtonsWhenAllSearchFieldsAreEmpty() {
+            $searchFields.on('keyup',function () {
+                $buttons.button('option', 'disabled', allFieldsEmpty());
+            }).keyup();
+
+            function allFieldsEmpty() {
+                var atLeastOneValue = false;
+                $searchFields.each(function () {
+                    atLeastOneValue = atLeastOneValue || ($.trim(this.value).length > 0);
+                });
+                return !atLeastOneValue;
             }
+        }
 
-            function disableButtonsOnChange (field, editor, tags) {
-                $buttons.button("option", "disabled", tags.length == 0);
-            }
-
-            function selectDefaultOrganism(){
-                $('select[id="organism"] option[value="Homo sapiens"]').attr("selected","selected");
-
-            }
-
-        });
-
-    })(jQuery);
-
+        function selectHomoSapiens(){
+            $('select[id="organism"] option[value="Homo sapiens"]').attr('selected', 'selected');
+        }
+    });
 </script>
