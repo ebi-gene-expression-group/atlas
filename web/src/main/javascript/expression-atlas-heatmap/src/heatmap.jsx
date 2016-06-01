@@ -1325,96 +1325,99 @@ var CellMultiExperiment = React.createClass({
 });
 
 var HeatmapBottomOptions = React.createClass({
-  propTypes: {
-      coexpressionsAvailable:React.PropTypes.arrayOf(React.PropTypes.shape({
-        name:React.PropTypes.string.isRequired,
-        amount: React.PropTypes.number.isRequired
-      })).isRequired,
-      showCoexpressionsFor: React.PropTypes.func.isRequired,
-      googleAnalyticsCallback :React.PropTypes.func.isRequired
-  },
+    propTypes: {
+        coexpressionsAvailable: React.PropTypes.arrayOf(React.PropTypes.shape({
+            name: React.PropTypes.string.isRequired,
+            amount: React.PropTypes.number.isRequired
+        })).isRequired,
+        showCoexpressionsFor: React.PropTypes.func.isRequired,
+        googleAnalyticsCallback: React.PropTypes.func.isRequired
+    },
 
-  render: function() {
-    var options = [];
-    for(var i = 0; i< this.props.coexpressionsAvailable.length ; i++){
-      var el = this.props.coexpressionsAvailable[i];
-      options.push(<CoexpressionOption
+    render: function () {
+        var options = [];
+        for (var i = 0; i < this.props.coexpressionsAvailable.length; i++) {
+            var el = this.props.coexpressionsAvailable[i];
+            options.push(<CoexpressionOption
                 key={i}
                 geneName={el.name}
-                numCoexpressionsAvailable = {el.amount}
+                numCoexpressionsAvailable={el.amount}
                 showCoexpressionsCallback={ function(amount){
                   this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'coexpressions-use');
                   this.props.showCoexpressionsFor(el.name,amount);
                 }.bind(this) }
-                />);
-    };
-    return (
-      <div>
-      {options}
-      </div>
-    );
-  },
+            />);
+        }
+        ;
+        return (
+            <div>
+                {options}
+            </div>
+        );
+    },
 
-  componentDidMount: function () {
-    if(this.props.coexpressionsAvailable.length >0){
-      this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'coexpressions-display');
+    componentDidMount: function () {
+        if (this.props.coexpressionsAvailable.length > 0) {
+            this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'coexpressions-display');
+        }
     }
-  }
 
 
 });
 
 var CoexpressionOption = React.createClass({
-  propTypes: {
-    geneName: React.PropTypes.string.isRequired,
-    numCoexpressionsAvailable: React.PropTypes.number.isRequired,
-    showCoexpressionsCallback: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {visible: 0};
-  },
-  _chooseValue: function(amount) {
-    this.setState({visible: amount});
-    this.props.showCoexpressionsCallback(amount);
-  },
+    propTypes: {
+        geneName: React.PropTypes.string.isRequired,
+        numCoexpressionsAvailable: React.PropTypes.number.isRequired,
+        showCoexpressionsCallback: React.PropTypes.func.isRequired
+    },
+    getInitialState: function () {
+        return {visible: 0};
+    },
+    _chooseValue: function (amount) {
+        this.setState({visible: amount});
+        this.props.showCoexpressionsCallback(amount);
+    },
 
-  _turnOnWithDefaultValue: function() {
-    this._chooseValue(10);
-  },
+    _turnOnWithDefaultValue: function () {
+        this._chooseValue(10);
+    },
 
-  _showOfferToDisplay: function(){
-    return <DisplayLevelsButton hideText=""
-                         showText="Add similarly expressed genes"
-                         onClickCallback={this._turnOnWithDefaultValue}
-                         displayLevels={false}
-                         width="250px"
-                         fontSize="14px"/>
-  },
+    _showOfferToDisplay: function () {
+        return <DisplayLevelsButton hideText=""
+                                    showText="Add similarly expressed genes"
+                                    onClickCallback={this._turnOnWithDefaultValue}
+                                    displayLevels={false}
+                                    width="250px"
+                                    fontSize="14px"/>
+    },
 
-  _showSlider: function() {
-    var marks = {
-      0: "off",
-      10: "10"
-    };
-    marks[this.props.numCoexpressionsAvailable] = this.props.numCoexpressionsAvailable;
-    return <div>
-      <p>{"Display genes with similar expressions to "+this.props.geneName+":"}</p>
-      <div className="gxaSlider">
-        <Slider min={0} max={this.props.numCoexpressionsAvailable} onAfterChange={this._chooseValue} marks={marks} included={false} defaultValue={10} />
-      </div>
-    </div>
-  },
+    _showSlider: function () {
+        var marks = {
+            0: "off",
+            10: "10"
+        };
+        marks[this.props.numCoexpressionsAvailable] = this.props.numCoexpressionsAvailable;
+        return <div>
+            <p>{"Display genes with similar expressions to " + this.props.geneName + ":"}</p>
+            <div className="gxaSlider">
+                <Slider min={0} max={this.props.numCoexpressionsAvailable} onAfterChange={this._chooseValue}
+                        marks={marks} included={false} defaultValue={10}/>
+            </div>
+        </div>
+    },
 
-  render: function() {
-    return  <div className="gxaDisplayCoexpressionOffer">
-              {this.state.visible
-              ? this._showSlider()
-              : this._showOfferToDisplay()}
-              </div>
-  }
+    render: function () {
+        return <div className="gxaDisplayCoexpressionOffer">
+            {this.state.visible
+                ? this._showSlider()
+                : this._showOfferToDisplay()}
+        </div>
+    },
 
-
-
+    componentDidUpdate: function () {
+        $(window).trigger("gxaResizeHeatmapAnatomogramHeader");
+    }
 });
 
 //*------------------------------------------------------------------*

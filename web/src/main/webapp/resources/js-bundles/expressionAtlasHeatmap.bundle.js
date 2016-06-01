@@ -3659,7 +3659,8 @@ webpackJsonp_name_([3],[
 	                    this.props.showCoexpressionsFor(el.name, amount);
 	                }.bind(this)
 	            }));
-	        };
+	        }
+	        ;
 	        return React.createElement(
 	            'div',
 	            null,
@@ -3721,7 +3722,8 @@ webpackJsonp_name_([3],[
 	            React.createElement(
 	                'div',
 	                { className: 'gxaSlider' },
-	                React.createElement(Slider, { min: 0, max: this.props.numCoexpressionsAvailable, onAfterChange: this._chooseValue, marks: marks, included: false, defaultValue: 10 })
+	                React.createElement(Slider, { min: 0, max: this.props.numCoexpressionsAvailable, onAfterChange: this._chooseValue,
+	                    marks: marks, included: false, defaultValue: 10 })
 	            )
 	        );
 	    },
@@ -3732,8 +3734,11 @@ webpackJsonp_name_([3],[
 	            { className: 'gxaDisplayCoexpressionOffer' },
 	            this.state.visible ? this._showSlider() : this._showOfferToDisplay()
 	        );
-	    }
+	    },
 	
+	    componentDidUpdate: function () {
+	        $(window).trigger("gxaResizeHeatmapAnatomogramHeader");
+	    }
 	});
 	
 	//*------------------------------------------------------------------*
@@ -7053,7 +7058,7 @@ webpackJsonp_name_([3],[
 	            props.afterPopupVisibleChange(state.popupVisible);
 	          }
 	        });
-	        if (props.action.indexOf('click') !== -1) {
+	        if (_this.isClickToHide()) {
 	          if (state.popupVisible) {
 	            if (!_this.clickOutsideHandler) {
 	              _this.clickOutsideHandler = _rcUtil.Dom.addEventListener(document, 'mousedown', _this.onDocumentClick);
