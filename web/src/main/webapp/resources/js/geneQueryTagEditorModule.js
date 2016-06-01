@@ -1,24 +1,21 @@
+"use strict";
+
 var geneQueryTagEditorModule = (function($) {
-    "use strict";
 
     function initAutocomplete(element, species, onChange) {
         $(element)
-            // don't navigate away from the field on tab when selecting an item
-            .bind( 'keydown', function( event ) {
-                if ( event.keyCode === $.ui.keyCode.TAB &&
-                    $( this ).data( "ui-autocomplete" ).menu.active ) {
-                    event.preventDefault();
-                }
-            })
-            .on('paste',function(e) {
-                e.preventDefault();
-                var text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('Paste something...');
-                window.document.execCommand('insertText', false, text);
-            })
-            .tagEditor({
-                delimiter:'\t\n',
-                //tagMaxLength: 20,
-                maxLength: 50,
+            // Don't navigate away from the field on tab when selecting an item
+            // .bind('keydown', function(event) {
+            //     if (event.keyCode === $.ui.keyCode.TAB && $(this).data('ui-autocomplete').menu.active) {
+            //         event.preventDefault();
+            //     }
+            // })
+            // .on('paste', function(e) {
+            //     e.preventDefault();
+            //     var text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('Paste something...');
+            //     window.document.execCommand('insertText', false, text);
+            // })
+            .jsonTagEditor({
                 autocomplete: {
                     delay: 500,
                     minLength: 1,
@@ -41,12 +38,10 @@ var geneQueryTagEditorModule = (function($) {
                                         label: obj.value,
                                         value: obj.value,
                                         source: obj.source
-
                                     };
                                 });
                                 response(source_data);
                             },
-
                             error: function (jqXHR, textStatus, errorThrown) {
                                 console.log('Error. Status: ' + textStatus + ', errorThrown: ' + errorThrown);
                                 response([]);
@@ -62,21 +57,15 @@ var geneQueryTagEditorModule = (function($) {
                         return $('<li style="width: 280px;"></li>')
                             .attr('data-value', item.value )
                             .attr('data-source', item.source )
-                            .append(
-                                '<a>' +
-                                '<span>' + item.label + '</span>' +
-                                '<span style="float: right"><small><strong>' + source_des + '</strong></small></span>' +
-                                '</a>'
-                            )
-                            .appendTo(ul);
+                            .append( "<a>" + "<div style='float:left; text-align: left'>" + item.label + "</div><div style='float: right; text-align: right'><small>" + source_des + "</small></div></a>" )
+                            .appendTo( ul );
                     },
                     select: function(event, ui) {
-                        window.selectedTagSource = [ui.item.source];
+                        ui.item.value = '{"tagValue":"' + ui.item.value + '", "tagSource":"' + ui.item.source + '"}';
                     }
                 },
                 onChange: onChange,
-                placeholder: 'Enter gene query...',
-                forceLowercase: false
+                placeholder: 'Enter gene query...'
         });
 
     }
