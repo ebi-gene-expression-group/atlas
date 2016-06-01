@@ -3678,15 +3678,19 @@ webpackJsonp_name_([5],[
 	    _draw: function () {
 	        var svg = Snap(ReactDOM.findDOMNode(this.refs.anatomogram)).select("g");
 	        if (svg !== null) {
-	            this._drawOnSvg(svg);
+	            this._drawOnSvg(svg, this.refs.imageParts.state.toDraw);
+	            this.refs.imageParts.setState({ toDraw: [] });
 	        }
 	    },
+	    _drawInitialLayout: function (svg) {
+	        this._drawOnSvg(svg, this.refs.imageParts.getInitialState().toDraw);
+	        this.refs.imageParts.setState({ toDraw: [] });
+	    },
 	
-	    _drawOnSvg: function (svg) {
-	        this.refs.imageParts.state.toDraw.forEach(function (instruction) {
+	    _drawOnSvg: function (svg, instructions) {
+	        instructions.forEach(function (instruction) {
 	            this._highlightOrganismParts(svg, instruction.id, instruction.colour, instruction.opacity);
 	        }.bind(this));
-	        this.refs.imageParts.setState({ toDraw: [] });
 	    },
 	
 	    render: function () {
@@ -3739,7 +3743,7 @@ webpackJsonp_name_([5],[
 	            allElements.remove();
 	        }
 	
-	        var displayAllOrganismPartsCallback = this._drawOnSvg;
+	        var displayAllOrganismPartsCallback = this._drawInitialLayout;
 	        var registerHoverEventsCallback = this._registerHoverEvents;
 	        Snap.load(svgFile, function (fragment) {
 	            var g = fragment.select("g");
@@ -3918,6 +3922,7 @@ webpackJsonp_name_([5],[
 	                    React.createElement(AnatomogramSelectImageButtons, { selectedId: this.state.selectedId, availableAnatomograms: this.state.availableAnatomograms, onClick: this._handleChange })
 	                ),
 	                React.createElement(AnatomogramImage, {
+	                    key: this.state.selectedId,
 	                    ref: 'currentImage',
 	                    file: this._getAnatomogramSVGFile(this.state.selectedId),
 	                    height: containsHuman(this.props.anatomogramData.maleAnatomogramFile) ? "375" : "265",
@@ -4172,7 +4177,7 @@ webpackJsonp_name_([5],[
 	    },
 	
 	    isMicroarray: function () {
-	        return !(typeof this.props.profiles.rows[0].designElement === "undefined");
+	        return this.props.profiles.rows[0].hasOwnProperty("designElement") && this.props.profiles.rows[0].designElement;
 	    },
 	
 	    hasQuartiles: function () {
@@ -4259,14 +4264,21 @@ webpackJsonp_name_([5],[
 	    },
 	
 	    legendType: function () {
-	        return this.props.type.isBaseline || this.props.type.isMultiExperiment ? React.createElement(LegendBaseline, { atlasBaseURL: this.props.atlasBaseURL,
-	            minExpressionLevel: this._getMinExpressionLevel().toString(),
-	            maxExpressionLevel: this._getMaxExpressionLevel().toString(),
-	            isMultiExperiment: this.props.type.isMultiExperiment ? true : false }) : React.createElement(LegendDifferential, { atlasBaseURL: this.props.atlasBaseURL,
-	            minDownLevel: this._getProfiles().minDownLevel.toString(),
-	            maxDownLevel: this._getProfiles().maxDownLevel.toString(),
-	            minUpLevel: this._getProfiles().minUpLevel.toString(),
-	            maxUpLevel: this._getProfiles().maxUpLevel.toString() });
+	        if (this.props.type.isBaseline || this.props.type.isMultiExperiment) {
+	            return React.createElement(LegendBaseline, {
+	                atlasBaseURL: this.props.atlasBaseURL,
+	                minExpressionLevel: this._getMinExpressionLevel().toString(),
+	                maxExpressionLevel: this._getMaxExpressionLevel().toString(),
+	                isMultiExperiment: this.props.type.isMultiExperiment ? true : false });
+	        } else {
+	            var ps = this._getProfiles();
+	            return React.createElement(LegendDifferential, {
+	                atlasBaseURL: this.props.atlasBaseURL,
+	                minDownLevel: ps.hasOwnProperty("minDownLevel") ? ps.minDownLevel.toString() : "NaN",
+	                maxDownLevel: ps.hasOwnProperty("maxDownLevel") ? ps.maxDownLevel.toString() : "NaN",
+	                minUpLevel: ps.hasOwnProperty("minUpLevel") ? ps.minUpLevel.toString() : "NaN",
+	                maxUpLevel: ps.hasOwnProperty("maxUpLevel") ? ps.maxUpLevel.toString() : "NaN" });
+	        }
 	    },
 	
 	    _getCoexpressionsAvailable: function () {

@@ -30,14 +30,21 @@ webpackJsonp_name_([1],[
 	 */
 	exports.render = function(options) {
 	
-	    var heatmapConfig = options.heatmapData.config,
-	        columnHeaders = options.heatmapData.columnHeaders,
-	        nonExpressedColumnHeaders = options.heatmapData.nonExpressedColumnHeaders,
-	        multipleColumnHeaders = options.heatmapData.multipleColumnHeaders,
-	        profiles = options.heatmapData.profiles,
-	        jsonCoexpressions = options.heatmapData.jsonCoexpressions,
-	        geneSetProfiles = options.heatmapData.geneSetProfiles,
-	        anatomogramData = options.heatmapData.anatomogram;
+	  var protocol = window.location.protocol + "//",
+	      atlasHost = options.atlasHost === undefined ? "www.ebi.ac.uk" : options.atlasHost,
+	      atlasPath = "/gxa";
+	
+	  var linksAtlasBaseURL =
+	      (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://") === 0) ? atlasHost + atlasPath :
+	      protocol + atlasHost + atlasPath;
+	
+	  var atlasBaseURL = options.proxyPrefix ? options.proxyPrefix + "/" + atlasHost + atlasPath : linksAtlasBaseURL;
+	
+	  var endpointPath =
+	      options.analyticsSearch ? "/widgets/heatmap/baselineAnalytics" :
+	          options.isMultiExperiment ? "/widgets/heatmap/multiExperiment" : "/widgets/heatmap/referenceExperiment";
+	
+	  var sourceURL = atlasBaseURL + endpointPath + "?" + options.params;
 	
 	    var type =
 	        options.isMultiExperiment ? ExperimentTypes.MULTIEXPERIMENT :
@@ -49,12 +56,10 @@ webpackJsonp_name_([1],[
 	        React.createElement(
 	            HeatmapAnatomogramContainer,
 	            {
-	                type: type, heatmapConfig: heatmapConfig, isWidget: false,
-	                anatomogram: anatomogramData, columnHeaders: columnHeaders, nonExpressedColumnHeaders: nonExpressedColumnHeaders,
-	                multipleColumnHeaders: multipleColumnHeaders,
-	                profiles: profiles, jsonCoexpressions: jsonCoexpressions, geneSetProfiles: geneSetProfiles,
-	                atlasBaseURL: heatmapConfig.atlasHost + heatmapConfig.contextRoot,
-	                linksAtlasBaseURL: heatmapConfig.atlasHost + heatmapConfig.contextRoot
+	                type: type,
+	                sourceURL: options.sourceURL,
+	                atlasBaseURL: atlasBaseURL,
+	                linksAtlasBaseURL: linksAtlasBaseURL
 	            }
 	        ),
 	        document.getElementById("gxaExperimentPageHeatmapAnatomogram")
@@ -1380,6 +1385,67 @@ webpackJsonp_name_([1],[
 	
 	//*------------------------------------------------------------------*
 	
+	var AsynchronouslyLoadedInternalHeatmapAnatomogramContainer = React.createClass({
+	    displayName: 'AsynchronouslyLoadedInternalHeatmapAnatomogramContainer',
+	
+	    propTypes: {
+	        sourceURL: React.PropTypes.string.isRequired,
+	        type: React.PropTypes.oneOf([ExperimentTypes.BASELINE, ExperimentTypes.MULTIEXPERIMENT, ExperimentTypes.DIFFERENTIAL, ExperimentTypes.PROTEOMICS_BASELINE]).isRequired,
+	        atlasBaseURL: React.PropTypes.string.isRequired,
+	        linksAtlasBaseURL: React.PropTypes.string.isRequired
+	    },
+	    getInitialState: function () {
+	        return {
+	            heatmapData: {}
+	        };
+	    },
+	
+	    componentDidMount: function () {
+	        var httpRequest = {
+	            url: this.props.sourceURL,
+	            dataType: "json",
+	            method: "GET"
+	        };
+	
+	        this.serverRequest = $.ajax(httpRequest).done(this._updateStateAsynchronously).fail(function (jqXHR, textStatus, errorThrown) {
+	            if (textStatus === "parsererror") {
+	                $(ReactDOM.findDOMNode(this.refs.this)).html("<div class='gxaError'>Could not parse JSON response</div>");
+	            } else {
+	                $(ReactDOM.findDOMNode(this.refs.this)).html(jqXHR.responseText);
+	            }
+	        }.bind(this));
+	    },
+	
+	    _updateStateAsynchronously: function (data) {
+	        this.setState({ heatmapData: data });
+	    },
+	
+	    render: function () {
+	        return Object.keys(this.state.heatmapData).length ? this.state.heatmapData.error ? React.createElement(
+	            'p',
+	            null,
+	            this.state.heatmapData.error
+	        ) : React.createElement(InternalHeatmapAnatomogramContainer, {
+	            type: this.props.type,
+	            heatmapConfig: this.state.heatmapData.config,
+	            isWidget: false,
+	            anatomogram: this.state.heatmapData.anatomogram,
+	            columnHeaders: this.state.heatmapData.columnHeaders,
+	            nonExpressedColumnHeaders: this.state.heatmapData.nonExpressedColumnHeaders,
+	            multipleColumnHeaders: this.state.heatmapData.multipleColumnHeaders,
+	            profiles: this.state.heatmapData.profiles,
+	            jsonCoexpressions: this.state.heatmapData.jsonCoexpressions,
+	            geneSetProfiles: this.state.heatmapData.geneSetProfiles,
+	            atlasBaseURL: this.state.heatmapData.config.atlasHost + this.state.heatmapData.config.contextRoot,
+	            linksAtlasBaseURL: this.props.linksAtlasBaseURL
+	        }) : React.createElement(
+	            'div',
+	            { ref: 'loadingImagePlaceholder' },
+	            React.createElement('img', { src: this.props.atlasBaseURL + "/resources/images/loading.gif" })
+	        );
+	    }
+	});
+	
 	var InternalHeatmapAnatomogramContainer = React.createClass({
 	    displayName: 'InternalHeatmapAnatomogramContainer',
 	
@@ -1498,7 +1564,7 @@ webpackJsonp_name_([1],[
 	
 	//*------------------------------------------------------------------*
 	
-	module.exports = InternalHeatmapAnatomogramContainer;
+	module.exports = AsynchronouslyLoadedInternalHeatmapAnatomogramContainer;
 
 /***/ },
 /* 582 */
@@ -1707,15 +1773,19 @@ webpackJsonp_name_([1],[
 	    _draw: function () {
 	        var svg = Snap(ReactDOM.findDOMNode(this.refs.anatomogram)).select("g");
 	        if (svg !== null) {
-	            this._drawOnSvg(svg);
+	            this._drawOnSvg(svg, this.refs.imageParts.state.toDraw);
+	            this.refs.imageParts.setState({ toDraw: [] });
 	        }
 	    },
+	    _drawInitialLayout: function (svg) {
+	        this._drawOnSvg(svg, this.refs.imageParts.getInitialState().toDraw);
+	        this.refs.imageParts.setState({ toDraw: [] });
+	    },
 	
-	    _drawOnSvg: function (svg) {
-	        this.refs.imageParts.state.toDraw.forEach(function (instruction) {
+	    _drawOnSvg: function (svg, instructions) {
+	        instructions.forEach(function (instruction) {
 	            this._highlightOrganismParts(svg, instruction.id, instruction.colour, instruction.opacity);
 	        }.bind(this));
-	        this.refs.imageParts.setState({ toDraw: [] });
 	    },
 	
 	    render: function () {
@@ -1768,7 +1838,7 @@ webpackJsonp_name_([1],[
 	            allElements.remove();
 	        }
 	
-	        var displayAllOrganismPartsCallback = this._drawOnSvg;
+	        var displayAllOrganismPartsCallback = this._drawInitialLayout;
 	        var registerHoverEventsCallback = this._registerHoverEvents;
 	        Snap.load(svgFile, function (fragment) {
 	            var g = fragment.select("g");
@@ -1947,6 +2017,7 @@ webpackJsonp_name_([1],[
 	                    React.createElement(AnatomogramSelectImageButtons, { selectedId: this.state.selectedId, availableAnatomograms: this.state.availableAnatomograms, onClick: this._handleChange })
 	                ),
 	                React.createElement(AnatomogramImage, {
+	                    key: this.state.selectedId,
 	                    ref: 'currentImage',
 	                    file: this._getAnatomogramSVGFile(this.state.selectedId),
 	                    height: containsHuman(this.props.anatomogramData.maleAnatomogramFile) ? "375" : "265",
@@ -5228,7 +5299,7 @@ webpackJsonp_name_([1],[
 	    },
 	
 	    isMicroarray: function () {
-	        return !(typeof this.props.profiles.rows[0].designElement === "undefined");
+	        return this.props.profiles.rows[0].hasOwnProperty("designElement") && this.props.profiles.rows[0].designElement;
 	    },
 	
 	    hasQuartiles: function () {
@@ -5315,14 +5386,21 @@ webpackJsonp_name_([1],[
 	    },
 	
 	    legendType: function () {
-	        return this.props.type.isBaseline || this.props.type.isMultiExperiment ? React.createElement(LegendBaseline, { atlasBaseURL: this.props.atlasBaseURL,
-	            minExpressionLevel: this._getMinExpressionLevel().toString(),
-	            maxExpressionLevel: this._getMaxExpressionLevel().toString(),
-	            isMultiExperiment: this.props.type.isMultiExperiment ? true : false }) : React.createElement(LegendDifferential, { atlasBaseURL: this.props.atlasBaseURL,
-	            minDownLevel: this._getProfiles().minDownLevel.toString(),
-	            maxDownLevel: this._getProfiles().maxDownLevel.toString(),
-	            minUpLevel: this._getProfiles().minUpLevel.toString(),
-	            maxUpLevel: this._getProfiles().maxUpLevel.toString() });
+	        if (this.props.type.isBaseline || this.props.type.isMultiExperiment) {
+	            return React.createElement(LegendBaseline, {
+	                atlasBaseURL: this.props.atlasBaseURL,
+	                minExpressionLevel: this._getMinExpressionLevel().toString(),
+	                maxExpressionLevel: this._getMaxExpressionLevel().toString(),
+	                isMultiExperiment: this.props.type.isMultiExperiment ? true : false });
+	        } else {
+	            var ps = this._getProfiles();
+	            return React.createElement(LegendDifferential, {
+	                atlasBaseURL: this.props.atlasBaseURL,
+	                minDownLevel: ps.hasOwnProperty("minDownLevel") ? ps.minDownLevel.toString() : "NaN",
+	                maxDownLevel: ps.hasOwnProperty("maxDownLevel") ? ps.maxDownLevel.toString() : "NaN",
+	                minUpLevel: ps.hasOwnProperty("minUpLevel") ? ps.minUpLevel.toString() : "NaN",
+	                maxUpLevel: ps.hasOwnProperty("maxUpLevel") ? ps.maxUpLevel.toString() : "NaN" });
+	        }
 	    },
 	
 	    _getCoexpressionsAvailable: function () {

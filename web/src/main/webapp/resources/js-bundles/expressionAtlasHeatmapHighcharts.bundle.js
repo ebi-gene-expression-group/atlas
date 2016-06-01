@@ -2776,15 +2776,19 @@ webpackJsonp_name_([4],{
 	    _draw: function () {
 	        var svg = Snap(ReactDOM.findDOMNode(this.refs.anatomogram)).select("g");
 	        if (svg !== null) {
-	            this._drawOnSvg(svg);
+	            this._drawOnSvg(svg, this.refs.imageParts.state.toDraw);
+	            this.refs.imageParts.setState({ toDraw: [] });
 	        }
 	    },
+	    _drawInitialLayout: function (svg) {
+	        this._drawOnSvg(svg, this.refs.imageParts.getInitialState().toDraw);
+	        this.refs.imageParts.setState({ toDraw: [] });
+	    },
 	
-	    _drawOnSvg: function (svg) {
-	        this.refs.imageParts.state.toDraw.forEach(function (instruction) {
+	    _drawOnSvg: function (svg, instructions) {
+	        instructions.forEach(function (instruction) {
 	            this._highlightOrganismParts(svg, instruction.id, instruction.colour, instruction.opacity);
 	        }.bind(this));
-	        this.refs.imageParts.setState({ toDraw: [] });
 	    },
 	
 	    render: function () {
@@ -2837,7 +2841,7 @@ webpackJsonp_name_([4],{
 	            allElements.remove();
 	        }
 	
-	        var displayAllOrganismPartsCallback = this._drawOnSvg;
+	        var displayAllOrganismPartsCallback = this._drawInitialLayout;
 	        var registerHoverEventsCallback = this._registerHoverEvents;
 	        Snap.load(svgFile, function (fragment) {
 	            var g = fragment.select("g");
@@ -3016,6 +3020,7 @@ webpackJsonp_name_([4],{
 	                    React.createElement(AnatomogramSelectImageButtons, { selectedId: this.state.selectedId, availableAnatomograms: this.state.availableAnatomograms, onClick: this._handleChange })
 	                ),
 	                React.createElement(AnatomogramImage, {
+	                    key: this.state.selectedId,
 	                    ref: 'currentImage',
 	                    file: this._getAnatomogramSVGFile(this.state.selectedId),
 	                    height: containsHuman(this.props.anatomogramData.maleAnatomogramFile) ? "375" : "265",
