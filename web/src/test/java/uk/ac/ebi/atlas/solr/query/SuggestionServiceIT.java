@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.solr.query;
 
-import com.google.common.base.Joiner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -11,7 +10,7 @@ import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 import javax.inject.Inject;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -20,17 +19,16 @@ import static org.junit.Assert.assertThat;
 public class SuggestionServiceIT {
 
     @Inject
-    private SuggestionService suggestionService;
+    private SuggestionService subject;
 
     @Test
-    public void apop() {
-        List<SemanticQueryTerm> suggestions = suggestionService.fetchTopSuggestions("apop", null);
-        System.out.println(Joiner.on(",\n").join(suggestions));
+    public void fetchTopSuggestions() {
+        List<SemanticQueryTerm> suggestions = subject.fetchTopSuggestions("apop", null);
 
-        assertThat(suggestions.get(0).value(), is("Apopt1"));
-        assertThat(suggestions.get(0).source(), is("symbol"));
-        assertThat(suggestions.get(13).value(), is("apoplast"));
-        assertThat(suggestions.get(13).source(), is(""));
+        assertThat(suggestions, hasSize(greaterThan(10)));
+        for (SemanticQueryTerm queryTerm : suggestions) {
+            assertThat(queryTerm.value().toLowerCase(), containsString("apop"));
+        }
     }
 
 }
