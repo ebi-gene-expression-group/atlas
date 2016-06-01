@@ -21,7 +21,6 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,7 +31,7 @@ public class BaselineAnalyticsSearchServiceIT {
     private static final FactorGroup EMPTY_FACTOR_SET = new FactorSet();
 
     public static final String ORGANISM_PART = "ORGANISM_PART";
-    static Set<Factor> organismPartFactors = new HashSet<>();
+    private static final Set<Factor> organismPartFactors = new HashSet<>();
     static {
         organismPartFactors.add(new Factor(ORGANISM_PART, "adipose tissue"));
         organismPartFactors.add(new Factor(ORGANISM_PART, "adrenal gland"));
@@ -114,14 +113,12 @@ public class BaselineAnalyticsSearchServiceIT {
             assertThat(profile.getId(), not(isEmptyOrNullString()));
             assertThat(profile.getName(), not(isEmptyOrNullString()));
             assertThat(profile.getShortName(), not(isEmptyOrNullString()));
-            assertTrue(ExperimentType.get(profile.getExperimentType()).isBaseline());
-            assertTrue(profile.getMinExpressionLevel()< profile.getMaxExpressionLevel());
+            assertThat(ExperimentType.get(profile.getExperimentType()).isBaseline(), is(true));
+            assertThat(profile.getMinExpressionLevel(), is(lessThanOrEqualTo(profile.getMaxExpressionLevel())));
             assertThat(profile.getFilterFactors(), is(EMPTY_FACTOR_SET));
             assertThat(profile.getConditions().size(), greaterThan(4));
-            assertTrue(profile.isExpressedOnAnyOf(organismPartFactors));
-            assertFalse(profile.isExpressedOnAnyOf(cellLineFactors));
-
-
+            assertThat(profile.isExpressedOnAnyOf(organismPartFactors), is(true));
+            assertThat(profile.isExpressedOnAnyOf(cellLineFactors), is(false));
         }
     }
 
@@ -135,10 +132,9 @@ public class BaselineAnalyticsSearchServiceIT {
 
         assertThat(baselineProfilesList.size(), greaterThan(0));
         for(BaselineExperimentProfile profile : baselineProfilesList) {
-            assertThat(profile.getFilterFactors(), is(EMPTY_FACTOR_SET));
-            assertTrue(profile.getMinExpressionLevel()< profile.getMaxExpressionLevel());
-            assertFalse(profile.isExpressedOnAnyOf(organismPartFactors));
-            assertTrue(profile.isExpressedOnAnyOf(cellLineFactors));
+            assertThat(profile.getMinExpressionLevel(), is(lessThanOrEqualTo(profile.getMaxExpressionLevel())));
+            assertThat(profile.isExpressedOnAnyOf(organismPartFactors), is(false));
+            assertThat(profile.isExpressedOnAnyOf(cellLineFactors), is(true));
         }
     }
 

@@ -1,8 +1,5 @@
-
 package uk.ac.ebi.atlas.solr.query;
 
-
-import com.google.common.base.CharMatcher;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
