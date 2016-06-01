@@ -31,8 +31,6 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
 
     BaselineExperimentPageService baselineExperimentPageService;
 
-    public static final String EXPERIMENT_ATTRIBUTE = "experiment";
-
     private ExperimentTrader experimentTrader;
 
     private ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
@@ -70,9 +68,6 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
                                          HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 
-        if(request.getAttribute(EXPERIMENT_ATTRIBUTE) == null) {
-            request.setAttribute(EXPERIMENT_ATTRIBUTE, experimentTrader.getPublicExperiment(experimentAccession));
-        }
         try {
             baselineExperimentPageService.populateModelWithHeatmapData((BaselineExperiment) experimentTrader.getPublicExperiment
                     (experimentAccession), preferences, model, request, false, false);

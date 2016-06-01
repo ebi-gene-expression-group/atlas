@@ -53,7 +53,6 @@ public class AnalysisMethodsPageControllerIT {
     public void initSubject() throws Exception {
         requestMock = mock(HttpServletRequest.class);
         ProteomicsBaselineExperiment proteomicsBaselineExperiment = proteomicsBaselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
-        when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(proteomicsBaselineExperiment);
         when(requestMock.getRequestURI()).thenReturn("/gxa/experiments/" + EXPERIMENT_ACCESSION + "/analysis-methods");
     }
 

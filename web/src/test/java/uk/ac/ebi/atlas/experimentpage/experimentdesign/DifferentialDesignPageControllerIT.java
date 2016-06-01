@@ -14,8 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
 import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -40,8 +43,14 @@ public class DifferentialDesignPageControllerIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-25185";
 
-    @Inject
     private DifferentialDesignPageController subject;
+
+    @Inject
+    DownloadURLBuilder downloadURLBuilder;
+    @Inject
+    ArrayDesignTrader arrayDesignTrader;
+    @Inject
+    ExperimentTrader experimentTrader;
 
     @Inject
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
@@ -54,21 +63,20 @@ public class DifferentialDesignPageControllerIT {
 
     @Before
     public void initSubject() throws Exception {
+        subject = new DifferentialDesignPageController(downloadURLBuilder,arrayDesignTrader,experimentTrader);
 
         requestMock = mock(HttpServletRequest.class);
         preferencesMock = mock(DifferentialDesignRequestPreferences.class);
-        DifferentialExperiment differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
-        when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(differentialExperiment);
         when(requestMock.getRequestURI()).thenReturn("/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design");
 
-        assertNotNull(differentialExperiment);
+        assertNotNull(experimentTrader.getExperiment(EXPERIMENT_ACCESSION, ""));
     }
 
     @Test
     public void testExtractExperimentDesign() throws IOException {
 
         // given
-        subject.showRnaSeqExperimentDesign(preferencesMock, model, requestMock);
+        subject.showRnaSeqExperimentDesign(EXPERIMENT_ACCESSION,"",preferencesMock, model, requestMock);
 
         Gson gson = new Gson();
 

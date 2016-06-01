@@ -3,11 +3,16 @@ package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -19,23 +24,30 @@ import java.util.Set;
 @Scope("request")
 public class BaselineDesignPageController extends ExperimentDesignPageRequestHandler<BaselineExperiment> {
 
-    private FastQCReportUtil fastQCReportUtil;
+    private final FastQCReportUtil fastQCReportUtil;
 
     @Inject
-    public void setFastQCReportUtil(FastQCReportUtil fastQCReportUtil) {
+    public BaselineDesignPageController(DownloadURLBuilder downloadURLBuilder, ArrayDesignTrader arrayDesignTrader,
+                                            ExperimentTrader experimentTrader,FastQCReportUtil fastQCReportUtil){
+        super(downloadURLBuilder,arrayDesignTrader,experimentTrader);
         this.fastQCReportUtil = fastQCReportUtil;
     }
 
+
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=RNASEQ_MRNA_BASELINE"})
-    public String showRnaSeqExperimentDesign(Model model, HttpServletRequest request) throws IOException {
+    public String showRnaSeqExperimentDesign(@PathVariable String experimentAccession,
+                                             @RequestParam(value = "accessKey",required = false) String accessKey,
+                                              Model model, HttpServletRequest request) throws IOException {
         model.addAttribute("type", ExperimentType.RNASEQ_MRNA_BASELINE);
-        return handleRequest(model, request);
+        return handleRequest(experimentAccession,model, request, accessKey);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=PROTEOMICS_BASELINE"})
-    public String showProteomicsExperimentDesign(Model model, HttpServletRequest request) throws IOException {
+    public String showProteomicsExperimentDesign(@PathVariable String experimentAccession,Model model,
+                                                 @RequestParam(value = "accessKey",required = false) String accessKey,
+                                                 HttpServletRequest request) throws IOException {
         model.addAttribute("type", ExperimentType.PROTEOMICS_BASELINE);
-        return handleRequest(model, request);
+        return handleRequest(experimentAccession,model, request, accessKey);
     }
 
     @Override

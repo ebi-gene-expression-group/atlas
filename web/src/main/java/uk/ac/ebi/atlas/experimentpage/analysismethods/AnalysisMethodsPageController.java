@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil;
@@ -15,6 +16,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -46,6 +48,8 @@ public class AnalysisMethodsPageController {
 
     private String pdfFileTemplate;
 
+    private final ExperimentTrader experimentTrader;
+
     @Inject
     public void setFastQCReportUtil(FastQCReportUtil fastQCReportUtil) {
         this.fastQCReportUtil = fastQCReportUtil;
@@ -54,18 +58,21 @@ public class AnalysisMethodsPageController {
     @Inject
     public AnalysisMethodsPageController(FileTsvReaderBuilder fileTsvReaderBuilder, DownloadURLBuilder downloadURLBuilder,
                                          @Value("#{configuration['experiment.analysis-method.path.template']}") String pathTemplate,
-                                         ArrayDesignTrader arrayDesignTrader,
+                                         ArrayDesignTrader arrayDesignTrader,ExperimentTrader experimentTrader,
                                          @Value("#{configuration['analysis-methods.pdf.path.template']}") String pdfFileTemplate) {
 
         this.fileTsvReaderBuilder = fileTsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
         this.downloadURLBuilder = downloadURLBuilder;
         this.arrayDesignTrader = arrayDesignTrader;
+        this.experimentTrader = experimentTrader;
         this.pdfFileTemplate = pdfFileTemplate;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = {"type=RNASEQ_MRNA_BASELINE"})
-    public String baselineAnalysisMethods(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
-        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+    public String baselineAnalysisMethods(@PathVariable String experimentAccession,@RequestParam(value = "accessKey",
+            required = false) String accessKey, Model model, HttpServletRequest request) throws IOException {
+        BaselineExperiment experiment = (BaselineExperiment)
+                experimentTrader.getExperiment(experimentAccession, accessKey);
 
         //This is necessary for adding functionality to the QC button
         Set<Factor> organisms = experiment.getExperimentalFactors().getDefaultFilterFactors();
@@ -88,33 +95,37 @@ public class AnalysisMethodsPageController {
             throw new ResourceNotFoundException("Species could not be found");
         }
 
-        return analysisMethods(experimentAccession, model, request);
+        return analysisMethods(experimentAccession, model, request.getRequestURI());
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
     public String rnaSeqAnalysisMethods(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
-        return analysisMethods(experimentAccession, model, request);
+        return analysisMethods(experimentAccession, model, request.getRequestURI());
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = {"type=MICROARRAY_ANY"})
-    public String microArrayAnalysisMethods(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
+    public String microArrayAnalysisMethods(@PathVariable String experimentAccession,
+                                            @RequestParam(value = "accessKey",required = false) String accessKey,
+                                            Model model, HttpServletRequest request) throws IOException {
 
         //For showing the QC REPORTS button in the header
-        MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+        MicroarrayExperiment experiment = (MicroarrayExperiment)
+                experimentTrader.getExperiment(experimentAccession,accessKey);
         request.setAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
 
         SortedSet<String> arrayDesignNames = arrayDesignTrader.getArrayDesignNames(experiment.getArrayDesignAccessions());
         model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, arrayDesignNames);
 
-        return analysisMethods(experimentAccession, model, request);
+        return analysisMethods(experimentAccession, model, request.getRequestURI());
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = {"type=PROTEOMICS_BASELINE"})
     public String proteomicsAnalysisMethods(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
-        return analysisMethods(experimentAccession, model, request);
+        return analysisMethods(experimentAccession, model, request.getRequestURI());
     }
 
-    public String analysisMethods(String experimentAccession, Model model, HttpServletRequest request) throws IOException {
+    public String analysisMethods(String experimentAccession, Model model, String requestURI) throws
+            IOException {
 
         TsvReader tsvReader = fileTsvReaderBuilder.withExperimentAccession(experimentAccession).build();
 
@@ -122,14 +133,13 @@ public class AnalysisMethodsPageController {
 
         model.addAttribute("experimentAccession", experimentAccession);
 
-        model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(request.getRequestURI()));
+        model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(requestURI));
 
         return "experiment-analysis-methods";
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods/{resource}.pdf", method = RequestMethod.GET)
-    public String getAnalysisMethodsPdf(@PathVariable String experimentAccession,
-                                        @PathVariable String resource) throws IOException {
+    public String getAnalysisMethodsPdf(@PathVariable String experimentAccession,@PathVariable String resource) throws IOException {
         if(!hasPDF(experimentAccession, resource)) {
             throw new ResourceNotFoundException("No pdf for " + resource);
         }

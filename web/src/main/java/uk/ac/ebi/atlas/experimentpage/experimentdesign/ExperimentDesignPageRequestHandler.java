@@ -3,40 +3,36 @@ package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
 import com.google.gson.Gson;
 import org.springframework.ui.Model;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
 public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
 
-    private DownloadURLBuilder downloadURLBuilder;
+    private final DownloadURLBuilder downloadURLBuilder;
 
-    protected ArrayDesignTrader arrayDesignTrader;
+    protected final ArrayDesignTrader arrayDesignTrader;
 
     protected static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
 
-    @Inject
-    void setDownloadURLBuilder(DownloadURLBuilder downloadURLBuilder) {
+    private final ExperimentTrader experimentTrader;
+
+    ExperimentDesignPageRequestHandler(DownloadURLBuilder downloadURLBuilder,ArrayDesignTrader arrayDesignTrader,
+                                       ExperimentTrader experimentTrader){
         this.downloadURLBuilder = downloadURLBuilder;
-    }
-
-    @Inject
-    public void setArrayDesignTrader(ArrayDesignTrader arrayDesignTrader) {
         this.arrayDesignTrader = arrayDesignTrader;
+        this.experimentTrader = experimentTrader;
     }
 
-    public String handleRequest(Model model, HttpServletRequest request) {
-        T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
-
-        String experimentAccession = experiment.getAccession();
+    public String handleRequest(String experimentAccession, Model model, HttpServletRequest request, String accessKey) {
+        T experiment = (T) experimentTrader.getExperiment(experimentAccession, accessKey);
 
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
 

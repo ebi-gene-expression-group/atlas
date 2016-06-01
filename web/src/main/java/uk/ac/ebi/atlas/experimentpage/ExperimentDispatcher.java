@@ -24,8 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public final class ExperimentDispatcher {
 
-    public static final String EXPERIMENT_ATTRIBUTE = "experiment";
-
     private ExperimentTrader experimentTrader;
 
     @Inject
@@ -46,7 +44,7 @@ public final class ExperimentDispatcher {
         return "forward:" + buildForwardURL(request, experimentTrader.getExperiment(experimentAccession, accessKey), accessKey);
     }
 
-    @RequestMapping(value = {"/json/experiments/{experimentAccession}", "/experiments/{experimentAccession}/*"})
+    @RequestMapping(value = {"/json/experiments/{experimentAccession}", "/json/experiments/{experimentAccession}/*"})
     public String dispatchData(HttpServletRequest request,
                            @PathVariable String experimentAccession,
                            @RequestParam(value = "accessKey",required = false) String accessKey) {

@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -22,6 +23,7 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
@@ -87,18 +89,22 @@ public class BaselineExperimentDownloadControllerTest {
     @Mock
     SolrQueryService solrQueryService;
 
+    @Mock
+    ExperimentTrader experimentTraderMock;
+
 
     @Before
     public void setUp() throws Exception {
         BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory = new
-                BaselineProfilesWriterServiceFactory(profilesWriterMock, solrQueryService,coexpressedGenesService );
-        subject = new BaselineExperimentDownloadController(inputStreamFactory, baselineProfilesWriterServiceFactory);
+                BaselineProfilesWriterServiceFactory(profilesWriterMock, solrQueryService,coexpressedGenesService);
+        subject = new BaselineExperimentDownloadController(inputStreamFactory, baselineProfilesWriterServiceFactory,experimentTraderMock);
 
     }
 
     @Test
     public void testDownloadGeneProfiles() throws Exception {
-        when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(baselineExperimentMock);
+        when(experimentTraderMock.getExperiment(Matchers.eq(EXPERIMENT_ACCESSION), Matchers.anyString())).thenReturn
+                (baselineExperimentMock);
         when(preferencesMock.getQueryFactorType()).thenReturn("queryFactorType");
         when(preferencesMock.getSerializedFilterFactors()).thenReturn("TYPE:value");
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet("factorValues")));
@@ -117,7 +123,7 @@ public class BaselineExperimentDownloadControllerTest {
                 any(BaselineRequestContext.class), anySet(), any(GeneQueryResponse.class), anyBoolean())).thenReturn
                 (0L);
 
-        subject.downloadGeneProfiles(requestMock, preferencesMock, responseMock);
+        subject.downloadGeneProfiles(requestMock,EXPERIMENT_ACCESSION, "",preferencesMock, responseMock);
 
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");

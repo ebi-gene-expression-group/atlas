@@ -86,6 +86,8 @@ public class BaselineExperimentPageService {
     public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
                                              HttpServletRequest request, boolean amIAWidget, boolean disableGeneLinks) throws
             GenesNotFoundException {
+        //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
+        preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
         Set<AssayGroupFactor> filteredAssayGroupFactors = getFilteredAssayGroupFactors(experiment, preferences);
