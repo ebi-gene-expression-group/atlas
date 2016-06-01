@@ -173,14 +173,16 @@
             function onResetButtonEventHandler() {
                 $('#reset-button').on('click' , function () {
                     // Remove all tags
-                    var tags = $('#geneQuery').tagEditor('getTags')[0].tags;
-                    for (i = 0; i < tags.length; i++) {
-                        $('#geneQuery').tagEditor('removeTag', tags[i]);
+                    var $geneQuery = $('#geneQuery'),
+                        geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
+                    for (var i = 0; i < geneQueryTags.length; i++) {
+                        $geneQuery.jsonTagEditor('removeTag', geneQueryTags[i].tagValue);
                     }
 
-                    var tags = $('#condition').tagEditor('getTags')[0].tags;
-                    for (i = 0; i < tags.length; i++) {
-                        $('#condition').tagEditor('removeTag', tags[i]);
+                    var $sampleProperties =  $('#condition'),
+                        samplePropertiesTags = $sampleProperties.tagEditor('getTags')[0].tags;
+                    for (var i = 0; i < samplePropertiesTags.length; i++) {
+                        $sampleProperties.tagEditor('removeTag', samplePropertiesTags[i]);
                     }
 
                     selectDefaultOrganism();
