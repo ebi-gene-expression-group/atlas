@@ -69,7 +69,6 @@ var geneQueryTagEditorModule = (function($) {
                 maxLength: 100,
                 maxTagLength: 20
         });
-
     }
 
     return {

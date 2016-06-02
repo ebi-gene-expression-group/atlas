@@ -52,7 +52,7 @@
                 <tr>
                     <td>
                         <div id="geneQuerySection">
-                            <textarea id="geneQuery" name="geneQuery" rows="2" cols="36" placeholder="(all genes)" tabindex="1"></textarea>
+                            <textarea id="geneQuery" name="geneQuery" rows="2" cols="36" tabindex="1"></textarea>
 
                             <div  class="gxaSearchExamples">
                                 <span style="float:left">E.g.
@@ -77,7 +77,7 @@
                     </td>
                     <td>
                         <div id="conditionSection">
-                            <textarea id="condition" name="condition" maxlength="900" rows="2" cols="36" placeholder="(all conditions)" tabindex="3"></textarea>
+                            <textarea id="condition" name="condition" maxlength="900" rows="2" cols="36" tabindex="3"></textarea>
 
                             <div class="gxaSearchExamples">
                                 <span>E.g.
@@ -115,24 +115,23 @@
 
         </div>
 
-	</div>
+    </div>
 </section>
 
-	<%-- Browse... menu --%>
-	<aside class="grid_6">
+<%-- Browse... menu --%>
+<aside class="grid_6">
 
-		<h3>Browse...</h3>
+    <h3>Browse...</h3>
 
-        <h4><img src="resources/images/allup2_transparent_bkg.png" style="padding-right: 15px"><a href="baseline/experiments">Baseline Experiments</a></h4>
-        <p>See all baseline expression data sets in Expression Atlas.</p>
+    <h4><img src="resources/images/allup2_transparent_bkg.png" style="padding-right: 15px"><a href="baseline/experiments">Baseline Experiments</a></h4>
+    <p>See all baseline expression data sets in Expression Atlas.</p>
 
-        <h4><span class="icon icon-species" data-icon="P"></span><a href="plant/experiments">Plant Experiments</a></h4>
-        <p>See all expression data sets in plants in Expression Atlas.</p>
+    <h4><span class="icon icon-species" data-icon="P"></span><a href="plant/experiments">Plant Experiments</a></h4>
+    <p>See all expression data sets in plants in Expression Atlas.</p>
 
-		<h4><img src="resources/images/experiment_page_small.png" style="padding-right: 15px"><a href="experiments">All Experiments</a></h4>
-		<p>Scroll through the complete list of all data sets in Expression Atlas.</p>
-	</aside>
-
+    <h4><img src="resources/images/experiment_page_small.png" style="padding-right: 15px"><a href="experiments">All Experiments</a></h4>
+    <p>Scroll through the complete list of all data sets in Expression Atlas.</p>
+</aside>
 
 <%-- placeholder which is loaded with tooltip text --%>
 <div id="help-placeholder" style="display: none"></div>
@@ -163,7 +162,13 @@
 
         function initButtons() {
             $buttons.each(function () {
-                $(this).button({ disabled: true });
+                $(this).button({disabled: true});
+
+                $('#searchForm').submit(function() {
+                    var $geneQuery = $('#geneQuery'),
+                        geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
+                    $geneQuery.val(JSON.stringify(geneQueryTags));
+                });
             });
         }
 
