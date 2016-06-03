@@ -242,7 +242,7 @@ public class ExperimentOps {
         if (!opRecords.isEmpty()) {
             opRecords.remove(opRecords.size() - 1);
         }
-        opRecords.add(Pair.of(result.equals(OpResult.FAILURE)?"FAILED: ":""
+        opRecords.add(Pair.of((result.equals(OpResult.FAILURE)?"FAILED: ":"")
                 +newOpRecord.getLeft(), Pair.of(newOpRecord.getRight().getLeft(),
                 System.currentTimeMillis())));
     }
