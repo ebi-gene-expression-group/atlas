@@ -70,9 +70,9 @@
             "multipleColumnHeaders": ${not empty jsonMultipleColumnHeaders ? jsonMultipleColumnHeaders : "null"},
             "profiles": ${not empty jsonProfiles ? jsonProfiles : "null"},
             "geneSetProfiles": ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : "null"},
-            "jsonCoexpressions" :${not empty jsonCoexpressions? jsonCoexpressions : "[]"},
-            "anatomogram" : ${not empty anatomogram? anatomogram : "null"},
-            "experiment" : ${not empty experimentDescription? experimentDescription: "null"}
+            "jsonCoexpressions" :${not empty jsonCoexpressions ? jsonCoexpressions : "[]"},
+            "anatomogram" : ${not empty anatomogram ? anatomogram : "null"},
+            "experiment" : ${not empty jsonExperiment ? jsonExperiment: "null"}
         }
     </c:otherwise>
 </c:choose>

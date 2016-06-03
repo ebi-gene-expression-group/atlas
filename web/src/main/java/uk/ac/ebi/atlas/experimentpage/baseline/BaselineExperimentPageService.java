@@ -6,7 +6,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
@@ -85,7 +84,7 @@ public class BaselineExperimentPageService {
         DownloadURLBuilder.addRDownloadUrlToModel(model, request.getRequestURI());
     }
     public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
-                                             HttpServletRequest request, boolean amIAWidget, boolean disableGeneLinks) throws
+                                             HttpServletRequest request, boolean isWidget, boolean disableGeneLinks) throws
             GenesNotFoundException {
         //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
         preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
@@ -132,21 +131,20 @@ public class BaselineExperimentPageService {
         model.addAttribute("anatomogram", gson.toJson(anatomogramFactory.get(requestContext.getQueryFactorType(), species,
                 filteredAssayGroupFactors, contextRoot)));
 
-        if (!amIAWidget) {
-            model.addAttribute("isWidget", false);
+        model.addAttribute("isWidget", isWidget);
+        if (!isWidget) {
             addFactorMenu(model, experiment, requestContext);
-            model.addAttribute("experiment", gson.toJson(JsonNull.INSTANCE));
         } else {
-            model.addAttribute("isWidget", true);
             model.addAttribute("disableGeneLinks", disableGeneLinks);
             model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
             model.addAttribute("enableEnsemblLauncher", false);
-
-            //note this should only happen for single experiment - see HeatmapWidgetController.populateModelWithMultiExperimentResults
-            model.addAttribute("experimentDescription",gson.toJson(prepareExperimentDescription(experiment, preferences
-                    .getGeneQuery(), preferences.getSerializedFilterFactors())));
         }
 
+        //note this should only happen for single experiment - see HeatmapWidgetController.populateModelWithMultiExperimentResults
+        model.addAttribute(
+            "jsonExperiment",
+            gson.toJson(prepareExperimentDescription(experiment, preferences.getGeneQuery(), preferences.getSerializedFilterFactors()))
+        );
     }
 
     //used when external parties include our widget
