@@ -119,10 +119,7 @@ th.gxaHeatmapTableDesignElement {
 }
 
 .gxaFeedbackBoxWrapper {
-  position: fixed;
   margin-top: 15px;
-  right: 10px;
-  z-index: 1;
 }
 
 .gxaDisplayCoexpressionOffer {
