@@ -58,7 +58,7 @@ public class ExperimentOps {
             if(accessions.isPresent()){
                 return perform(accessions.get(), ops.iterator().next());
             } else {
-                return perform(ops);
+                return perform(ops.iterator().next());
             }
         } else {
             if(accessions.isPresent()){
@@ -86,6 +86,24 @@ public class ExperimentOps {
                 accessions.add(dto.getExperimentAccession());
             }
             return perform(accessions, ops);
+        }
+    }
+
+    private JsonArray perform(Op op){
+        List<ExperimentDTO> dtos = experimentMetadataCRUD.findAllExperiments();
+        //default case of all experiments and a request to list them, optimised here
+        if (op.equals(Op.LIST)) {
+            JsonArray array = new JsonArray();
+            for (ExperimentDTO dto : dtos) {
+                array.add(showResult(dto.getExperimentAccession(),OpResult.SUCCESS, dto.toJson()));
+            }
+            return array;
+        } else {
+            List<String> accessions = new ArrayList<>();
+            for (ExperimentDTO dto : dtos) {
+                accessions.add(dto.getExperimentAccession());
+            }
+            return perform(accessions, op);
         }
     }
 
