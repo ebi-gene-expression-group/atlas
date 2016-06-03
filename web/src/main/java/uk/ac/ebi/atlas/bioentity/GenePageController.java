@@ -1,3 +1,4 @@
+
 package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.collect.ImmutableSet;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
 public class GenePageController extends BioentityPageController {
 
     private SolrQueryService solrQueryService;
+    private static final String GENES = "genes";
 
     @Inject
     public GenePageController(SolrQueryService solrQueryService) {
@@ -74,7 +76,7 @@ public class GenePageController extends BioentityPageController {
             return false;
         } else {
             String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
-            return bioentityPageName.equalsIgnoreCase("genes");
+            return bioentityPageName.equalsIgnoreCase(GENES);
         }
     }
 }

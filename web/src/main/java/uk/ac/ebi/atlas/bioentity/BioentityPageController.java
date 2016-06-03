@@ -94,7 +94,7 @@ public abstract class BioentityPageController {
         return "bioentities";
     }
 
-    protected Map<String, String> buildPropertyNamesByTypeMap() {
+    private Map<String, String> buildPropertyNamesByTypeMap() {
         LinkedHashMap<String, String> result = Maps.newLinkedHashMap();
         for (String propertyName : propertyNames) {
             if (isDisplayedInPropertyList(propertyName)) {
