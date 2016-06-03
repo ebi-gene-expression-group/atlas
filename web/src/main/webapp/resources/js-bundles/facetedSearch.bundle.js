@@ -14917,7 +14917,7 @@ webpackJsonp_name_([5],[
 	    },
 	
 	    getInitialState: function () {
-	        return { checkedAnatomogram: true };
+	        return { checkedAnatomogram: this.props.showAnatomograms };
 	    },
 	
 	    _setChecked: function (checked, facet, facetItem) {
@@ -14950,7 +14950,7 @@ webpackJsonp_name_([5],[
 	            });
 	        }.bind(this));
 	
-	        var _checked = this.state.checkedAnatomogram ? this.state.checkedAnatomogram : this.props.showAnatomograms;
+	        var _checked = this.state.checkedAnatomogram ? !this.state.checkedAnatomogram : this.props.showAnatomograms;
 	
 	        return React.createElement(
 	            'div',
@@ -14961,7 +14961,7 @@ webpackJsonp_name_([5],[
 	                React.createElement('input', { type: 'checkbox', checked: _checked, onChange: this.props.toggleAnatomograms, disabled: this.state.checkedAnatomogram }),
 	                React.createElement(
 	                    'span',
-	                    { className: this.props.disableAnatomogramsCheckbox ? "gxaDisabledCheckbox" : "" },
+	                    { className: this.state.checkedAnatomogram ? "gxaDisabledCheckbox" : "" },
 	                    'Show anatomograms'
 	                )
 	            ),
