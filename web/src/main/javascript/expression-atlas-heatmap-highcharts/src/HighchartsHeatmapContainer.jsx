@@ -55,7 +55,8 @@ var HighchartsHeatmapContainer = React.createClass({
         disableGoogleAnalytics: React.PropTypes.bool.isRequired,
         fail: React.PropTypes.func,
         ensemblEventEmitter : React.PropTypes.object.isRequired,
-        anatomogramEventEmitter: React.PropTypes.object.isRequired
+        anatomogramEventEmitter: React.PropTypes.object.isRequired,
+        eventEmitter: React.PropTypes.object.isRequired
     },
 
     render: function () {
@@ -66,8 +67,16 @@ var HighchartsHeatmapContainer = React.createClass({
         "&exactMatch=" + this.state.heatmapConfig.isExactMatch +
         "&organism=" + this.state.heatmapConfig.species;
 
-    var display = this.props.showAnatomogram ? "block" : "none";
-    var marginLeft = this.props.showAnatomogram ? "270px" : "0";
+        var display;
+        var marginLeft;
+
+        if (this.state.anatomogramData) {
+            display = this.props.showAnatomogram ? "block" : "none";
+            marginLeft = this.props.showAnatomogram ? "270px" : "0";
+        } else {
+            display = "none";
+            marginLeft = "0";
+        }
 
     return (
       <div ref="this">
@@ -125,12 +134,12 @@ var HighchartsHeatmapContainer = React.createClass({
     },
 
     componentDidUpdate: function() {
-      /*
-      I am a hack and I attach event listeners to the labels.
-      There seems to be no way to do it in the HighchartsHeatmap component -
-      the labels that are selected when HighchartsHeatmap.componentDidUpdate is called are redrawn when both components appear on the screen
-      */
-      Snap.selectAll('.highcharts-yaxis-labels > *')
+        /*
+        I am a hack and I attach event listeners to the labels.
+        There seems to be no way to do it in the HighchartsHeatmap component -
+        the labels that are selected when HighchartsHeatmap.componentDidUpdate is called are redrawn when both components appear on the screen
+        */
+        Snap.selectAll('.highcharts-yaxis-labels > *')
         .forEach(function (v) {
           //careful - if the label doesn't fit, the element will have two children: displayed and full title
           //here we assume the longest text is the correct title of the experiment
@@ -149,6 +158,12 @@ var HighchartsHeatmapContainer = React.createClass({
               } , this, this);
           }
         }, this);
+
+        if (this.state.anatomogramData) {
+            this.props.eventEmitter.emit('existAnatomogramData', true);
+        } else {
+            this.props.eventEmitter.emit('existAnatomogramData', false);
+        }
     },
 
     getInitialState: function() {
@@ -294,6 +309,12 @@ var HighchartsHeatmapContainer = React.createClass({
                         seriesDataRanges: seriesDataRanges
 
                     });
+
+                    if (this.state.anatomogramData) {
+                        this.props.eventEmitter.emit('existAnatomogramData', true);
+                    } else {
+                        this.props.eventEmitter.emit('existAnatomogramData', false);
+                    }
                 }
             }.bind(this)
         ).fail(

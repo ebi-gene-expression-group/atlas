@@ -234,6 +234,12 @@ var HeatmapAnatomogramContainer = React.createClass({
         }
 
         $(window).trigger("gxaResizeHeatmapAnatomogramHeader");
+
+        if (this.state.anatomogramData) {
+            this.props.eventEmitter.emit('existAnatomogramData', true);
+        } else {
+            this.props.eventEmitter.emit('existAnatomogramData', false);
+        }
     },
     componentWillUnmount: function() {
         this.serverRequest.abort();

@@ -3,12 +3,12 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var EventEmitter = require('events');
-
 //*------------------------------------------------------------------*
 
-var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
+var EventEmitter = require('events');
 
+var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
+    
 //*------------------------------------------------------------------*
 
 /**
@@ -23,6 +23,7 @@ var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
  * @param {boolean=}        options.isWidget
  * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
  * @param {function}        options.fail - Callback to run if the AJAX request to the server fails. (jqXHR, textStatus)
+ * @param {function}        options.eventEmitter
  */
 exports.render = function(options) {
 
@@ -55,7 +56,8 @@ exports.render = function(options) {
                 disableGoogleAnalytics: options.disableGoogleAnalytics === undefined ? false : options.disableGoogleAnalytics,
                 fail: options.fail,
                 ensemblEventEmitter: ensemblEventEmitter,
-                anatomogramEventEmitter:anatomogramEventEmitter
+                anatomogramEventEmitter:anatomogramEventEmitter,
+                eventEmitter: options.eventEmitter
             }
         ),
         (typeof options.target === "string") ? document.getElementById(options.target) : options.target
