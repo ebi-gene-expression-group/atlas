@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.differential;
 
 import org.springframework.beans.factory.annotation.Required;
@@ -34,14 +33,13 @@ import java.util.SortedSet;
 @Controller
 @Scope("request")
 public class MicroarrayExperimentPageController extends DifferentialExperimentPageController<MicroarrayExperiment, MicroarrayRequestPreferences, MicroarrayProfile> {
+
     private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
     private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
 
     private ArrayDesignTrader arrayDesignTrader;
 
     private ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
-
-    public static final String EXPERIMENT_ATTRIBUTE = "experiment";
 
     private ExperimentTrader experimentTrader;
 
@@ -57,34 +55,42 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
                                               DownloadURLBuilder downloadURLBuilder,
                                               ArrayDesignTrader arrayDesignTrader,
                                               DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesKingdomTrader speciesKingdomTrader,
-                                              TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder,ApplicationProperties applicationProperties) {
+                                              TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder, ApplicationProperties applicationProperties) {
         super(requestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder,
-                speciesKingdomTrader, tracksUtil, gseaPlotsBuilder,applicationProperties);
+              speciesKingdomTrader, tracksUtil, gseaPlotsBuilder,applicationProperties);
 
         this.arrayDesignTrader = arrayDesignTrader;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
-    public String showGeneProfiles(
-            @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences, @RequestParam Map<String,
-            String> allParameters, @PathVariable String experimentAccession,
-            Model model, HttpServletRequest request) {
+    public String showGeneProfiles(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
+                                   @RequestParam Map<String, String> allParameters,
+                                   @PathVariable String experimentAccession, Model model, HttpServletRequest request) {
+        String accessKey = allParameters.containsKey("accessKey") ? allParameters.get("accessKey") : "";
+        model.addAttribute("accessKey", accessKey);
 
-        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters,
-                request.getRequestURI()));
-        super.prepareRequestPreferencesAndHeaderData((MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession),
-                preferences, model,request);
+        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
+
+        super.prepareRequestPreferencesAndHeaderData(
+                (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
+                preferences, model,request
+        );
+
         return "experiment";
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
-    public String showGeneProfilesData(
-            @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences, @PathVariable String experimentAccession,
-            BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String showGeneProfilesData(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
+                                       @ModelAttribute("accessKey") String accessKey,
+                                       @PathVariable String experimentAccession,
+                                       BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 
-        super.populateModelWithHeatmapData((MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession),
-                preferences, result, model, request);
+        super.populateModelWithHeatmapData(
+                (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
+                preferences, result, model, request
+        );
+
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }

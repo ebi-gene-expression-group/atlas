@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
@@ -11,7 +10,6 @@ import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
 @Named
-@Scope("singleton")
 public class ProteomicsBaselineExperimentsCache implements ExperimentsCache<ProteomicsBaselineExperiment> {
 
     private LoadingCache<String, ProteomicsBaselineExperiment> experiments;

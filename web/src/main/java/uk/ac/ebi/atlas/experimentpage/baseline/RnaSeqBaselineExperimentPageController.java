@@ -29,10 +29,8 @@ import java.util.Map;
 @Scope("request")
 public class RnaSeqBaselineExperimentPageController extends BaselineExperimentController {
 
-    BaselineExperimentPageService baselineExperimentPageService;
-
+    private BaselineExperimentPageService baselineExperimentPageService;
     private ExperimentTrader experimentTrader;
-
     private ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
 
     @Inject
@@ -42,9 +40,8 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
     }
 
     @Inject
-    public RnaSeqBaselineExperimentPageController(BaselineExperimentPageServiceFactory
-                                                              baselineExperimentPageServiceFactory, @Qualifier
-            ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory baselineProfileInputStreamFactory) {
+    public RnaSeqBaselineExperimentPageController(BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
+                                                  @Qualifier("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory baselineProfileInputStreamFactory) {
         this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileInputStreamFactory);
     }
 
@@ -52,31 +49,36 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
     public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                      @PathVariable String experimentAccession,
                                      @RequestParam Map<String,String> allParameters, Model model, HttpServletRequest request) {
+        String accessKey = allParameters.containsKey("accessKey") ? allParameters.get("accessKey") : "";
+        model.addAttribute("accessKey", accessKey);
 
-        baselineExperimentPageService.prepareRequestPreferencesAndHeaderData((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession),
-                preferences, model, request, false);
+        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
 
-        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters,
-                request.getRequestURI()));
+        baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(
+                (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, model, request, false
+        );
+
         return "experiment";
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")
     public String baselineExperimentData(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
+                                         @ModelAttribute("accessKey") String accessKey,
                                          @PathVariable String experimentAccession,
-                                      BindingResult result, Model model, HttpServletRequest request,
+                                         BindingResult result, Model model, HttpServletRequest request,
                                          HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 
         try {
-            baselineExperimentPageService.populateModelWithHeatmapData((BaselineExperiment) experimentTrader.getPublicExperiment
-                    (experimentAccession), preferences, model, request, false, false);
+            baselineExperimentPageService.populateModelWithHeatmapData(
+                    (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, model, request, false, false
+            );
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
         }
+
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }
-
 
 }

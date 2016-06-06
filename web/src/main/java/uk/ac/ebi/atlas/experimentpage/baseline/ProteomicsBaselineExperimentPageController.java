@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import org.springframework.beans.factory.annotation.Required;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
 import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
@@ -29,12 +28,8 @@ import java.util.Map;
 @Scope("request")
 public class ProteomicsBaselineExperimentPageController extends BaselineExperimentController {
 
-    BaselineExperimentPageService baselineExperimentPageService;
-
+    private BaselineExperimentPageService baselineExperimentPageService;
     private ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
-
-    public static final String EXPERIMENT_ATTRIBUTE = "experiment";
-
     private ExperimentTrader experimentTrader;
 
     @Inject
@@ -43,45 +38,43 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
         this.experimentTrader = experimentTrader;
     }
 
-
     @Inject
-    public ProteomicsBaselineExperimentPageController(BaselineExperimentPageServiceFactory
-                                                              baselineExperimentPageServiceFactory,
-                                                      ProteomicsBaselineProfileInputStreamFactory
-                                                              proteomicsBaselineProfileInputStreamFactory) {
-
+    public ProteomicsBaselineExperimentPageController(BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
+                                                      ProteomicsBaselineProfileInputStreamFactory proteomicsBaselineProfileInputStreamFactory) {
         this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(proteomicsBaselineProfileInputStreamFactory);
     }
 
-
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=PROTEOMICS_BASELINE")
-    public String baselineExperiment(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences
-            , @PathVariable String experimentAccession, @RequestParam Map<String,String> allParameters, BindingResult
-                                                 result, Model model, HttpServletRequest
-                                                 request) {
+    public String baselineExperiment(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
+                                     @PathVariable String experimentAccession,
+                                     @RequestParam Map<String,String> allParameters, Model model, HttpServletRequest request) {
+        String accessKey = allParameters.containsKey("accessKey") ? allParameters.get("accessKey") : "";
+        model.addAttribute("accessKey", accessKey);
 
-        baselineExperimentPageService.prepareRequestPreferencesAndHeaderData((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession),
-                preferences,model, request,false);
-        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters,
-                request.getRequestURI()));
+        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
+
+        baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(
+                (ProteomicsBaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,model, request,false
+        );
+
         return "experiment";
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = "type=PROTEOMICS_BASELINE")
-    public String baselineExperimentData(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences
-                                                 preferences, @PathVariable String experimentAccession
-            , BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String baselineExperimentData(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
+                                         @ModelAttribute("accessKey") String accessKey,
+                                         @PathVariable String experimentAccession,
+                                         BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 
         try {
-            baselineExperimentPageService.populateModelWithHeatmapData((BaselineExperiment) experimentTrader.getPublicExperiment
-                    (experimentAccession),
-                    preferences,
-                    model, request,
-                    false, false);
+            baselineExperimentPageService.populateModelWithHeatmapData(
+                    (ProteomicsBaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
+                    preferences, model, request, false, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
         }
+
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }

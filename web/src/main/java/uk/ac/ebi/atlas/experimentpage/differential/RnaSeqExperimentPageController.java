@@ -65,22 +65,28 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
                                    @RequestParam Map<String, String> allParameters,
                                    @PathVariable String experimentAccession, Model model, HttpServletRequest request) {
+        String accessKey = allParameters.containsKey("accessKey") ? allParameters.get("accessKey") : "";
+        model.addAttribute("accessKey", accessKey);
 
-        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters,
-                request.getRequestURI()));
-        super.prepareRequestPreferencesAndHeaderData((DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession),
-                preferences, model,request);
+        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
+
+        super.prepareRequestPreferencesAndHeaderData(
+                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, model,request
+        );
+
         return "experiment";
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
     public String showGeneProfilesData(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
+                                       @ModelAttribute("accessKey") String accessKey,
                                        @PathVariable String experimentAccession, BindingResult result, Model model,
                                        HttpServletRequest request, HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 
-        super.populateModelWithHeatmapData((DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession),
-                preferences, result, model, request);
+        super.populateModelWithHeatmapData(
+                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, result, model, request
+        );
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }

@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader;
 
 import com.google.common.collect.ImmutableSet;
@@ -19,7 +18,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 @Named
-@Scope("singleton")
 public class ExperimentTrader {
 
     private BaselineExperimentsCache baselineExperimentsCache;
