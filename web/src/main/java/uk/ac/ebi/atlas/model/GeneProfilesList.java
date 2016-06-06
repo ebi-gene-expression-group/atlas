@@ -49,6 +49,14 @@ public class GeneProfilesList<T extends Profile> extends ArrayList<T> {
         return builder.build();
     }
 
+    public ImmutableList<String> extractGeneIds() {
+        ImmutableList.Builder<String> builder = ImmutableList.builder();
+        for (T profile : this) {
+            builder.add(profile.getId());
+        }
+        return builder.build();
+    }
+
     // add all from queue, in order they come off the queue
     public void addAll(Queue<T> queue) {
         T profile;

@@ -61,9 +61,9 @@ public class BaselineExperimentPageService {
     }
 
     public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
-                                                       HttpServletRequest request, boolean amIAWidget) {
+                                                       HttpServletRequest request, boolean isWidget) {
 
-        if (amIAWidget) {
+        if (isWidget) {
             // possibly we could always do this - investigate if it matters for not-a-widget
 
             //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax

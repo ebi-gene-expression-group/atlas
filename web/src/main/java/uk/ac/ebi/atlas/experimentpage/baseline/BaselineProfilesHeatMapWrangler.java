@@ -85,14 +85,14 @@ public class BaselineProfilesHeatMapWrangler {
         fetchProfilesIfMissing();
         Map<String, JsonObject> result = new HashMap<>();
         if(jsonProfiles.size() == 1) {
-            for(String geneName: jsonProfiles.extractGeneNames()){
+            for(String geneId: jsonProfiles.extractGeneIds()){
                 Optional<GeneQuery> query = coexpressedGenesService.tryGetRelatedCoexpressions(experiment, requestContext
-                        .getGeneQuery(), ImmutableMap.of(geneName.toUpperCase(), 49));
+                        .getGeneQuery(), ImmutableMap.of(geneId.toUpperCase(), 49));
                 if(query.isPresent()) {
                     GeneQueryResponse response = solrQueryService.fetchResponseBasedOnRequestContext(query.get(),
                             requestContext.isExactMatch(), getSpecies());
 
-                    result.put(geneName, baselineProfilesViewModelBuilder.build
+                    result.put(geneId, baselineProfilesViewModelBuilder.build
                             (baselineProfilesHeatMap.fetchInPrescribedOrder(query.get().terms(), requestContext, response, false),
                                     requestContext
                                     .getOrderedFilterFactors()));

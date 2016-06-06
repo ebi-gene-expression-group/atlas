@@ -31,28 +31,13 @@ public class CoexpressedGenesDao {
 
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for(String resultRow: res){
-            for(String splitted: StringUtils.split(resultRow,",")){
-                if(!splitted.equalsIgnoreCase(identifier)) {
-                    builder.add(splitted);
-                } else {
-                    ;
+            for(String geneId: StringUtils.split(resultRow,",")){
+                if(!geneId.equalsIgnoreCase(identifier)) {
+                    builder.add(geneId);
                 }
             }
         }
         return builder.build();
-    }
-
-    public <T extends Profile> Map<String, ImmutableList<String>> coexpressedGenesForResults(Experiment experiment,
-                                                                                             GeneProfilesList<T> baselineProfiles){
-        Map<String, ImmutableList<String>> result = new HashMap<>();
-        for(String geneName: baselineProfiles.extractGeneNames()){
-            ImmutableList<String> resultForThisGene = coexpressedGenesFor(experiment.getAccession(), geneName);
-            if (resultForThisGene.size()> 0 ){
-                result.put(geneName, resultForThisGene);
-            }
-        }
-
-        return result;
     }
 
 }
