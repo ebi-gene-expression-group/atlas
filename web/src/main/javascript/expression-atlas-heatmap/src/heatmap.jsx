@@ -104,7 +104,7 @@ var Heatmap = React.createClass({
         var coexpressionsDisplayed = {};
         if(this.props.jsonCoexpressions ) {
           for (var i = 0; i< this.props.jsonCoexpressions.length; i++){
-            coexpressionsDisplayed[this.props.jsonCoexpressions[i].geneName]=0;
+            coexpressionsDisplayed[this.props.jsonCoexpressions[i].geneId]=0;
           }
         }
         return {
@@ -133,10 +133,10 @@ var Heatmap = React.createClass({
             var coexpressionsForThisRow =
                 this.props.jsonCoexpressions
                   .filter(function(o){
-                    return o.geneName=== thisRow.name && this.state.coexpressionsDisplayed[o.geneName]
+                    return o.geneId=== thisRow.id && this.state.coexpressionsDisplayed[o.geneId]
                   }.bind(this))
             for(var j = 0 ; j < coexpressionsForThisRow.length ; j++ ){
-              [].push.apply(newRows,coexpressionsForThisRow[j].jsonProfiles.rows.slice(0, this.state.coexpressionsDisplayed[coexpressionsForThisRow[j].geneName]));
+              [].push.apply(newRows,coexpressionsForThisRow[j].jsonProfiles.rows.slice(0, this.state.coexpressionsDisplayed[coexpressionsForThisRow[j].geneId]));
             }
 
         }
@@ -312,14 +312,14 @@ var Heatmap = React.createClass({
       return ! this.props.jsonCoexpressions
              ? []
              : this.props.jsonCoexpressions.map(function(value){
-        return {name: value.geneName, amount: value.jsonProfiles.rows.length}
+        return {name: value.geneName, id: value.geneId, amount: value.jsonProfiles.rows.length}
       });
     },
 
-    _showCoexpressionsFor : function(geneName, amount) {
+    _showCoexpressionsFor : function(geneId, amount) {
       this.setState(function(previousState) {
-        if(previousState.coexpressionsDisplayed.hasOwnProperty(geneName)){
-          previousState.coexpressionsDisplayed[geneName] = amount;
+        if(previousState.coexpressionsDisplayed.hasOwnProperty(geneId)){
+          previousState.coexpressionsDisplayed[geneId] = amount;
         }
         return {coexpressionsDisplayed: previousState.coexpressionsDisplayed};
       });
@@ -1341,6 +1341,7 @@ var HeatmapBottomOptions = React.createClass({
     propTypes: {
         coexpressionsAvailable: React.PropTypes.arrayOf(React.PropTypes.shape({
             name: React.PropTypes.string.isRequired,
+            id: React.PropTypes.string.isRequired,
             amount: React.PropTypes.number.isRequired
         })).isRequired,
         showCoexpressionsFor: React.PropTypes.func.isRequired,
@@ -1357,7 +1358,7 @@ var HeatmapBottomOptions = React.createClass({
                 numCoexpressionsAvailable={el.amount}
                 showCoexpressionsCallback={ function(amount){
                   this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'coexpressions-use');
-                  this.props.showCoexpressionsFor(el.name,amount);
+                  this.props.showCoexpressionsFor(el.id,amount);
                 }.bind(this) }
             />);
         }

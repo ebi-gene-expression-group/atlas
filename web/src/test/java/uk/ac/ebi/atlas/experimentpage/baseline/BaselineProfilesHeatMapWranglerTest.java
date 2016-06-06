@@ -53,6 +53,7 @@ public class BaselineProfilesHeatMapWranglerTest {
 
     static String ACCESSION = "E-MTAB-1337";
     static String GENE_WE_ASK_FOR = "T0";
+    static String NAME_OF_THE_GENE_WE_ASK_FOR = "N0";
 
     @Before
     public void setUp(){
@@ -161,7 +162,8 @@ public class BaselineProfilesHeatMapWranglerTest {
     public void jsonCoexpressionsReturnedForOneResult() throws Exception {
         BaselineProfilesList rightList = new BaselineProfilesList();
         BaselineProfile profile = mock(BaselineProfile.class);
-        when(profile.getName()).thenReturn(GENE_WE_ASK_FOR);
+        when(profile.getName()).thenReturn(NAME_OF_THE_GENE_WE_ASK_FOR);
+        when(profile.getId()).thenReturn(GENE_WE_ASK_FOR);
         rightList.add(profile);
 
         when(baselineProfilesHeatMap.fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.any

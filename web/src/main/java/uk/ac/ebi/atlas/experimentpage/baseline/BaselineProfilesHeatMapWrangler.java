@@ -2,11 +2,13 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
@@ -81,21 +83,25 @@ public class BaselineProfilesHeatMapWrangler {
                 : Optional.<JsonObject>absent();
     }
 
-    public Map<String, JsonObject> getJsonCoexpressions() throws GenesNotFoundException {
+    public JsonArray getJsonCoexpressions() throws GenesNotFoundException {
         fetchProfilesIfMissing();
-        Map<String, JsonObject> result = new HashMap<>();
+        JsonArray result = new JsonArray();
         if(jsonProfiles.size() == 1) {
-            for(String geneId: jsonProfiles.extractGeneIds()){
+            for(BaselineProfile baselineProfile: jsonProfiles){
                 Optional<GeneQuery> query = coexpressedGenesService.tryGetRelatedCoexpressions(experiment, requestContext
-                        .getGeneQuery(), ImmutableMap.of(geneId.toUpperCase(), 49));
+                        .getGeneQuery(), ImmutableMap.of(baselineProfile.getId().toUpperCase(), 49));
                 if(query.isPresent()) {
                     GeneQueryResponse response = solrQueryService.fetchResponseBasedOnRequestContext(query.get(),
                             requestContext.isExactMatch(), getSpecies());
 
-                    result.put(geneId, baselineProfilesViewModelBuilder.build
+                    JsonObject o = new JsonObject();
+                    o.addProperty("geneName", baselineProfile.getName());
+                    o.addProperty("geneId", baselineProfile.getId());
+                    o.add("jsonProfiles", baselineProfilesViewModelBuilder.build
                             (baselineProfilesHeatMap.fetchInPrescribedOrder(query.get().terms(), requestContext, response, false),
                                     requestContext
                                     .getOrderedFilterFactors()));
+                    result.add(o);
                 }
 
             }

@@ -118,8 +118,7 @@ public class BaselineExperimentPageService {
 
         model.addAttribute("jsonProfiles", viewModelAsJson(heatMapResults.getJsonProfiles()));
 
-        model.addAttribute("jsonCoexpressions",
-                coexpressionsAsJsonArray(heatMapResults.getJsonCoexpressions()));
+        model.addAttribute("jsonCoexpressions",gson.toJson(heatMapResults.getJsonCoexpressions()));
 
 
         Optional<JsonObject> geneSets = heatMapResults.getJsonProfilesAsGeneSets();
@@ -179,17 +178,6 @@ public class BaselineExperimentPageService {
         } else {
             return experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors);
         }
-    }
-
-    private String coexpressionsAsJsonArray(Map<String, JsonObject> coexpressions){
-        JsonArray result = new JsonArray();
-        for(Map.Entry<String, JsonObject> e: coexpressions.entrySet()){
-            JsonObject resultForThisGene = new JsonObject();
-            resultForThisGene.addProperty("geneName", e.getKey());
-            resultForThisGene.add("jsonProfiles", e.getValue());
-            result.add(resultForThisGene);
-        }
-        return gson.toJson(result);
     }
 
     private String constructColumnHeaders(Set<AssayGroupFactor> filteredAssayGroupFactors){
