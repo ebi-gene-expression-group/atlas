@@ -2,14 +2,30 @@
     <h1>Expression Atlas data in R</h1>
 
     <div class="grid_18">
-        <p>For microarray and RNA-seq experiments in Expression Atlas,
-        you can download a file containing the expression data and meta-data that you
-        can load into <a href="http://www.r-project.org/">R</a>. Click the <strong>R</strong> button on the top-right of any
-        differential experiment page to download one.</p>
+        <p>The expression data and meta-data for experiments in Atlas are
+        available as a pre-packaged <a href="http://www.r-project.org/">R</a> object.
+        There are two ways to access this data:
+        <ul>
+            <li>Using the 
+        <a href="http://www.bioconductor.org/packages/release/bioc/html/ExpressionAtlas.html">ExpressionAtlas</a>
+        package</a>, available from <a href="http://www.bioconductor.org">Bioconductor</a>. This package allows
+        you to search Atlas and download the data you need inside an R session. See the
+        <a
+        href="https://www.bioconductor.org/packages/release/bioc/vignettes/ExpressionAtlas/inst/doc/ExpressionAtlas.html">package
+        vignette</a> for more information.</p></li>
+    <li>By going to each experiment page in Expression Atlas and downloading the file containing the R object, which you can then load into R (see below).</li>
+        </ul>
+        </p>
+
+        <h2><a name="howto">How to load an Atlas experiment summary file in R</a></h2>
+
+        <p>If you don't want to use the <a
+        href="http://www.bioconductor.org/packages/release/bioc/html/ExpressionAtlas.html">ExpressionAtlas</a>
+        package to access Atlas R data, you can download the file containing the R
+        object representing an experiment by clicking the <strong>R</strong> button
+        on the top-right of any differential experiment page to download one.</p>
 
         <img src="resources/images/help/Rhelp_exptPage_buttons.png" alt="Experiment page download button screenshot" />
-
-        <h2><a name="howto">How to load an Atlas experiment summary in R</a></h2>
 
         <p>Start an R session on your computer. For details on how to get and use R,
         please see the documentation on the <a href="http://www.r-project.org/">R
