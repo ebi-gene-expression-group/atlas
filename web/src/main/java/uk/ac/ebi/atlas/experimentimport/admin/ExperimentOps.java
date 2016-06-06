@@ -271,10 +271,11 @@ public class ExperimentOps {
         int deleteCount;
         int loadCount;
         switch (op) {
+            case UPDATE_PRIVATE:
+                experimentMetadataCRUD.updateExperiment(accession, true);
+                break;
             case UPDATE_PUBLIC:
-                isPrivate = false;
-            case UPDATE:
-                experimentMetadataCRUD.updateExperiment(accession, isPrivate);
+                experimentMetadataCRUD.updateExperiment(accession, false);
                 break;
             case UPDATE_DESIGN:
                 experimentMetadataCRUD.updateExperimentDesign(accession);
@@ -358,7 +359,7 @@ public class ExperimentOps {
     }
 
     public enum Op {
-        LIST, LOG, STATUS, CLEAR_LOG, UPDATE, UPDATE_PUBLIC, UPDATE_DESIGN, IMPORT, IMPORT_PUBLIC, DELETE,
+        LIST, LOG, STATUS, CLEAR_LOG, UPDATE_PRIVATE, UPDATE_PUBLIC, UPDATE_DESIGN, IMPORT, IMPORT_PUBLIC, DELETE,
         SERIALIZE, COEXPRESSION_IMPORT, COEXPRESSION_UPDATE, COEXPRESSION_DELETE, ANALYTICS_IMPORT, ANALYTICS_DELETE
     }
 }
