@@ -3599,7 +3599,7 @@ webpackJsonp_name_([5],[
 	        var coexpressionsDisplayed = {};
 	        if (this.props.jsonCoexpressions) {
 	            for (var i = 0; i < this.props.jsonCoexpressions.length; i++) {
-	                coexpressionsDisplayed[this.props.jsonCoexpressions[i].geneName] = 0;
+	                coexpressionsDisplayed[this.props.jsonCoexpressions[i].geneId] = 0;
 	            }
 	        }
 	        return {
@@ -3626,10 +3626,10 @@ webpackJsonp_name_([5],[
 	                var thisRow = this.props.profiles.rows[i];
 	                newRows.push(thisRow);
 	                var coexpressionsForThisRow = this.props.jsonCoexpressions.filter(function (o) {
-	                    return o.geneName === thisRow.name && this.state.coexpressionsDisplayed[o.geneName];
+	                    return o.geneId === thisRow.id && this.state.coexpressionsDisplayed[o.geneId];
 	                }.bind(this));
 	                for (var j = 0; j < coexpressionsForThisRow.length; j++) {
-	                    [].push.apply(newRows, coexpressionsForThisRow[j].jsonProfiles.rows.slice(0, this.state.coexpressionsDisplayed[coexpressionsForThisRow[j].geneName]));
+	                    [].push.apply(newRows, coexpressionsForThisRow[j].jsonProfiles.rows.slice(0, this.state.coexpressionsDisplayed[coexpressionsForThisRow[j].geneId]));
 	                }
 	            }
 	            return Object.create(this.props.profiles, { rows: { value: newRows } });
@@ -3787,14 +3787,14 @@ webpackJsonp_name_([5],[
 	
 	    _getCoexpressionsAvailable: function () {
 	        return !this.props.jsonCoexpressions ? [] : this.props.jsonCoexpressions.map(function (value) {
-	            return { name: value.geneName, amount: value.jsonProfiles.rows.length };
+	            return { name: value.geneName, id: value.geneId, amount: value.jsonProfiles.rows.length };
 	        });
 	    },
 	
-	    _showCoexpressionsFor: function (geneName, amount) {
+	    _showCoexpressionsFor: function (geneId, amount) {
 	        this.setState(function (previousState) {
-	            if (previousState.coexpressionsDisplayed.hasOwnProperty(geneName)) {
-	                previousState.coexpressionsDisplayed[geneName] = amount;
+	            if (previousState.coexpressionsDisplayed.hasOwnProperty(geneId)) {
+	                previousState.coexpressionsDisplayed[geneId] = amount;
 	            }
 	            return { coexpressionsDisplayed: previousState.coexpressionsDisplayed };
 	        });
@@ -4954,6 +4954,7 @@ webpackJsonp_name_([5],[
 	    propTypes: {
 	        coexpressionsAvailable: React.PropTypes.arrayOf(React.PropTypes.shape({
 	            name: React.PropTypes.string.isRequired,
+	            id: React.PropTypes.string.isRequired,
 	            amount: React.PropTypes.number.isRequired
 	        })).isRequired,
 	        showCoexpressionsFor: React.PropTypes.func.isRequired,
@@ -4970,7 +4971,7 @@ webpackJsonp_name_([5],[
 	                numCoexpressionsAvailable: el.amount,
 	                showCoexpressionsCallback: function (amount) {
 	                    this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'coexpressions-use');
-	                    this.props.showCoexpressionsFor(el.name, amount);
+	                    this.props.showCoexpressionsFor(el.id, amount);
 	                }.bind(this)
 	            }));
 	        }
@@ -20222,7 +20223,7 @@ webpackJsonp_name_([5],[
 	
 	
 	// module
-	exports.push([module.id, "div.gxaFeedbackQuestionBox {\n  margin: 30px;\n  width: 300px;\n  background-color: #b3e0ff;\n  border: 3px solid #008ae6;\n  opacity: 0.6;\n  filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n\n#feedbackBoxCross {\n  margin: 3px;\n  margin-top: 5px;\n  float: right;\n  cursor:pointer;\n}\n\n#feedbackBoxCross:before {\n  color: #BF2222;\n}\n\ndiv.gxaFeedbackQuestionBox p {\n  margin: 2%;\n font-weight: bold;\n text-align: center;\n}\n\ndiv.gxaFeedbackQuestionBox a {\n  float: right;\n  margin-top: 6px;\n  cursor:pointer;\n}\n\ndiv.gxaFeedbackQuestionBoxAnswer {\n  position:relative;\ntext-align: center;\n  margin: 0 auto;\n  margin-bottom: 10px;\n  width: 90%;\n}\n\ndiv.gxaFeedbackQuestionBox button {\n width: auto;\n}\n\n.feedbackBoxTransitionWrapper-leave {\n  opacity: 1;\n}\n\n.feedbackBoxTransitionWrapper-leave.feedbackBoxTransitionWrapper-leave-active {\n  opacity: 0.01;\n  transition: opacity 300ms ease-in;\n}\n\n.gxaSmiley {\n  opacity: 0.6;\n  text-decoration:none;\n  cursor:pointer;\n}\n\n.gxaSmiley:hover {\n  opacity: 0.9;\n  text-decoration:none;\n  cursor:pointer;\n}\n\n.gxaSmileyClicked {\n  opacity: 1;\n}\n\n.gxaSmileyFeedbackBox {\n  text-align: center;\n  width: 300px;\n  margin: 10px;\n  background-color: #b3e0ff;\n  border-radius: 20px;\n  opacity: 0.8;\n  filter: alpha(opacity=80); /* For IE8 and earlier */\n}\n\n.gxaSmileyRow {\n  text-align: center!important;\n}\n\n.gxaSmileyFeedbackBox p {\n  padding-top: 5px;\n  font-weight: bold;\n  font-size: larger;\n}\n\n.gxaSmileyFeedbackBox form {\n  padding: 6px;\n  width: 87%;\n}\n\n.gxaSmileyFeedbackBox button {\n  width: 100px;\n  margin-left: 95px;\n}\n\n.form-control {\n  display: block;\n  width: 100%;\n  height: 34px;\n  padding: 6px 12px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n}\n.form-control:focus {\n  border-color: #66afe9;\n  outline: 0;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);\n          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);\n}\n.form-control::-moz-placeholder {\n  color: #999;\n  opacity: 1;\n}\n.form-control:-ms-input-placeholder {\n  color: #999;\n}\n.form-control::-webkit-input-placeholder {\n  color: #999;\n}\n", ""]);
+	exports.push([module.id, "div.gxaFeedbackQuestionBox {\n  margin: 30px;\n  width: 300px;\n  background-color: #b3e0ff;\n  border: 3px solid #008ae6;\n  opacity: 0.6;\n  filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n\n#feedbackBoxCross {\n  margin: 3px;\n  margin-top: 5px;\n  float: right;\n  cursor:pointer;\n}\n\n#feedbackBoxCross:before {\n  color: #BF2222;\n}\n\ndiv.gxaFeedbackQuestionBox p {\n  margin: 2%;\n font-weight: bold;\n text-align: center;\n}\n\ndiv.gxaFeedbackQuestionBox a {\n  float: right;\n  margin-top: 6px;\n  cursor:pointer;\n}\n\ndiv.gxaFeedbackQuestionBoxAnswer {\n  position:relative;\ntext-align: center;\n  margin: 0 auto;\n  margin-bottom: 10px;\n  width: 90%;\n}\n\ndiv.gxaFeedbackQuestionBox button {\n width: auto;\n}\n\n.feedbackBoxTransitionWrapper-leave {\n  opacity: 1;\n}\n\n.feedbackBoxTransitionWrapper-leave.feedbackBoxTransitionWrapper-leave-active {\n  opacity: 0.01;\n  transition: opacity 300ms ease-in;\n}\n\n.gxaSmiley {\n  opacity: 0.6;\n  text-decoration:none;\n  cursor:pointer;\n}\n\n.gxaSmiley:hover {\n  opacity: 0.9;\n  text-decoration:none;\n  cursor:pointer;\n}\n\n.gxaSmileyClicked {\n  opacity: 1;\n}\n\n.gxaSmileyFeedbackBox {\n  text-align: center;\n  width: 300px;\n  margin: 10px;\n  background-color: #b3e0ff;\n  border-radius: 20px;\n  opacity: 0.8;\n  filter: alpha(opacity=80); /* For IE8 and earlier */\n}\n\n.gxaSmileyRow {\n  text-align: center!important;\n}\n\n.gxaSmileyFeedbackBox p {\n  padding-top: 5px;\n  font-weight: bold;\n  font-size: 14px;\n}\n\n.gxaSmileyFeedbackBox form {\n  padding: 6px;\n  width: 87%;\n}\n\n.gxaSmileyFeedbackBox button {\n  width: 100px;\n  margin-left: 95px;\n}\n\n.form-control {\n  display: block;\n  width: 100%;\n  height: 34px;\n  padding: 6px 12px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n}\n.form-control:focus {\n  border-color: #66afe9;\n  outline: 0;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);\n          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);\n}\n.form-control::-moz-placeholder {\n  color: #999;\n  opacity: 1;\n}\n.form-control:-ms-input-placeholder {\n  color: #999;\n}\n.form-control::-webkit-input-placeholder {\n  color: #999;\n}\n", ""]);
 	
 	// exports
 
