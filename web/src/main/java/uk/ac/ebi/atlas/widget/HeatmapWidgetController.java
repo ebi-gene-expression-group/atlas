@@ -119,7 +119,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                 : Species.convertToEnsemblSpecies(species);
 
 
-        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery.asString(), ensemblSpecies, true);
+        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery.asString(), ensemblSpecies);
 
         BaselineExperimentSearchResult searchResult = geneIds.isPresent()
             ?   baselineExperimentProfileSearchService.query(geneIds.get())

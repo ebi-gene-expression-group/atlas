@@ -82,7 +82,6 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("geneQuery", getGeneQuery())
-                .add("exactMatch", isExactMatch())
                 .add("condition", condition)
                 .add("organism", organism)
                 .toString();

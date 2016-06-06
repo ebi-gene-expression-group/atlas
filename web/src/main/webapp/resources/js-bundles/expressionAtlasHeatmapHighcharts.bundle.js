@@ -2243,7 +2243,7 @@ webpackJsonp_name_([4],[
 	
 	    render: function () {
 	
-	        var geneURL = this.props.linksAtlasBaseURL + "/query" + "?geneQuery=" + this.state.heatmapConfig.geneQuery + "&exactMatch=" + this.state.heatmapConfig.isExactMatch + "&organism=" + this.state.heatmapConfig.species;
+	        var geneURL = this.props.linksAtlasBaseURL + "/query" + "?geneQuery=" + this.state.heatmapConfig.geneQuery + "&organism=" + this.state.heatmapConfig.species;
 	
 	        var display;
 	        var marginLeft;

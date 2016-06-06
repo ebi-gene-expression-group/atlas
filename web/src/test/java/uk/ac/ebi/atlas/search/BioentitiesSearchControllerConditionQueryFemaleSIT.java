@@ -32,7 +32,7 @@ public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePa
         BaselineBioEntitiesSearchResult result = selectFirstResult(baselineCounts, "dummy-E-MTAB-2706");
         assertThat(result.getExperimentName(), is("Cell Lines - 675 Genentech - B-cell lymphoma, lymph node"));
         assertThat(result.getSpecies(), is("Homo sapiens"));
-        assertThat(result.getHref(), endsWith("experiments/dummy-E-MTAB-2706?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=OCI-LY-19,RI-1,SU-DHL-5,Toledo&geneQuery=&exactMatch=true&serializedFilterFactors=DISEASE:B-cell%20lymphoma,ORGANISM_PART:lymph%20node"));
+        assertThat(result.getHref(), endsWith("experiments/dummy-E-MTAB-2706?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=OCI-LY-19,RI-1,SU-DHL-5,Toledo&geneQuery=&serializedFilterFactors=DISEASE:B-cell%20lymphoma,ORGANISM_PART:lymph%20node"));
 
     }
 

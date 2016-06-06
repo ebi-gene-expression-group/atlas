@@ -26,30 +26,16 @@ public class FindGeneIdsIT {
     private static final String SPECIES = "homo sapiens";
 
     @Test
-    public void findGeneIdsWithoutExactMatchTest() throws URISyntaxException, GenesNotFoundException {
+    public void findGeneIds() throws URISyntaxException, GenesNotFoundException {
         //given
         String geneQuery = "GO:0008134 \"p53 binding\"";
         //when
-        Set<String> result = subject.findGeneIdsOrSets(geneQuery, false, SPECIES);
+        Set<String> result = subject.findGeneIdsOrSets(geneQuery, SPECIES);
 
         //some genes are found
         assertThat(result, hasItems("ENSG00000131759", "ENSG00000112592"));
         assertThat(result.size(), is(greaterThan(300)));
         assertThat(result.size(), is(lessThan(600)));
-
-    }
-
-    @Test
-    public void findGeneIdsWithExactMatchTest() throws URISyntaxException, GenesNotFoundException {
-        //given
-        String geneQuery = "ENSG00000131759 \"mRNA splicing, via spliceosome\"";
-        //when
-        Set<String> result = subject.findGeneIdsOrSets(geneQuery, true, SPECIES);
-
-        //some genes are found
-        assertThat(result, hasItems("ENSG00000131759", "ENSG00000084072"));
-        assertThat(result.size(), is(205));
-
     }
 
     @Test
@@ -57,11 +43,9 @@ public class FindGeneIdsIT {
         //given
         String query = "\"NOTHING FOUND\"";
 
-        Set<String> geneQueryResponse = subject.findGeneIdsOrSets(query, false, SPECIES);
+        Set<String> geneQueryResponse = subject.findGeneIdsOrSets(query, SPECIES);
 
         assertThat(geneQueryResponse.isEmpty(), is(true));
-
     }
-
 
 }

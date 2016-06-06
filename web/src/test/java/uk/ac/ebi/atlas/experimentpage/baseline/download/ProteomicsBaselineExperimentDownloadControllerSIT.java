@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.*;
 
 public class ProteomicsBaselineExperimentDownloadControllerSIT {
 
-    private EndPoint subject = new EndPoint("/gxa/experiments/E-PROT-1.tsv?geneQuery=&exactMatch=false");
+    private EndPoint subject = new EndPoint("/gxa/experiments/E-PROT-1.tsv?geneQuery=");
 
     @Test
     public void verifyHeader() {

@@ -73,7 +73,7 @@ public class BioentitiesSearchController {
 
         if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
             //If Query just for a single bioentityID
-            Optional<String> geneIdRedirectString = getGeneIdRedirectString(geneQuery, selectedSpecies, requestParameters.isExactMatch());
+            Optional<String> geneIdRedirectString = getGeneIdRedirectString(geneQuery, selectedSpecies);
             if (geneIdRedirectString.isPresent()) {
                 redirectAttributes.addFlashAttribute("searchDescription", geneQueryString);
                 redirectAttributes.addFlashAttribute("selectedSpecies", selectedSpecies.toLowerCase());
@@ -87,8 +87,7 @@ public class BioentitiesSearchController {
 
         ConditionQuery condition = efoExpander.addEfoAccessions(requestParameters.getConditionQuery());
 
-        Optional<Set<String>> geneIdsFromGeneQuery = solrQueryService.expandGeneQueryIntoGeneIds
-                (geneQueryString, selectedSpecies.toLowerCase(), requestParameters.isExactMatch());
+        Optional<Set<String>> geneIdsFromGeneQuery = solrQueryService.expandGeneQueryIntoGeneIds(geneQueryString, selectedSpecies.toLowerCase());
 
         SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups =
                 baselineExperimentAssayGroupSearchService.query(geneQueryString, condition.asString(), selectedSpecies.toLowerCase(), geneIdsFromGeneQuery);
@@ -114,7 +113,6 @@ public class BioentitiesSearchController {
         model.addAttribute("bioentities", bioentityExpressions);
         model.addAttribute("preferences", new DifferentialRequestPreferences());
         model.addAttribute("requestParameters", requestParameters);
-        model.addAttribute("exactMatch", requestParameters.isExactMatch());
 
         String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQueryString, requestParameters.getConditionQuery());
 
@@ -123,7 +121,7 @@ public class BioentitiesSearchController {
         return "bioentities-search-results";
     }
 
-    private Optional<String> getGeneIdRedirectString(GeneQuery geneQuery, String species, boolean isExactMatch) {
+    private Optional<String> getGeneIdRedirectString(GeneQuery geneQuery, String species) {
 
         boolean singleTerm = geneQuery.size() == 1;
         if (singleTerm && GeneSetUtil.matchesGeneSetAccession(geneQuery.terms().get(0).toUpperCase())) {
@@ -140,7 +138,7 @@ public class BioentitiesSearchController {
         if (StringUtils.isBlank(species)) {
            species = "";
         }
-        Optional<Set<String>> geneIdsOrSets = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery.asString().trim(), species, isExactMatch);
+        Optional<Set<String>> geneIdsOrSets = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery.asString().trim(), species);
 
         if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
             return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());

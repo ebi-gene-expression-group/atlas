@@ -85,7 +85,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         String species = requestContext.getFilteredBySpecies();
         Set<Contrast> contrasts = experiment.getContrasts();
         model.addAttribute("queryFactorName", "Comparison");
-        model.addAttribute("exactMatch", requestPreferences.isExactMatch());
         model.addAttribute("geneQuery", requestPreferences.getGeneQuery());
         model.addAllAttributes(experiment.getDifferentialAttributes());
         model.addAllAttributes(speciesKingdomTrader.getAttributesFor(species));

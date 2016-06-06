@@ -17,7 +17,7 @@ public class BioentitiesSearchControllerOrganismQueryOneBaselineResultWidgetSIT 
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "geneQuery=zinc+finger&exactMatch=true&_exactMatch=on&organism=Mus+musculus&condition=");
+        subject = BioEntitiesPage.search(driver, "geneQuery=zinc+finger&organism=Mus+musculus&condition=");
         subject.get();
     }
 

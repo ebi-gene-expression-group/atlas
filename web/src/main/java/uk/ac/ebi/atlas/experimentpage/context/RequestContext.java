@@ -50,10 +50,6 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         return getRequestPreferences().isSpecific();
     }
 
-    public boolean isExactMatch() {
-        return getRequestPreferences().isExactMatch();
-    }
-
     public Set<T> getAllQueryFactors() {
         return allQueryFactors;
     }

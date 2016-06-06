@@ -3432,7 +3432,7 @@ webpackJsonp_name_([3],[
 	
 	    geneNameLinked: function () {
 	        var experimentURL = '/experiments/' + this.props.id + '?geneQuery=' + this.props.heatmapConfig.geneQuery + (this.props.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(this.props.serializedFilterFactors) : "");
-	        var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + this.props.heatmapConfig.isExactMatch : '/genes/' + this.props.id;
+	        var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name : '/genes/' + this.props.id;
 	
 	        var titleTooltip = this.props.type.isMultiExperiment ? this.props.experimentType == "PROTEOMICS_BASELINE" ? "Protein Expression" : "RNA Expression" : "";
 	
@@ -10367,7 +10367,7 @@ webpackJsonp_name_([3],[
 	        var anatomogramExpressedTissueColour = this.props.type.isMultiExperiment ? "red" : "gray";
 	        var anatomogramHoveredTissueColour = this.props.type.isMultiExperiment ? "indigo" : "red";
 	
-	        var geneURL = this.props.linksAtlasBaseURL + "/query" + "?geneQuery=" + this.state.heatmapConfig.geneQuery + "&exactMatch=" + this.state.heatmapConfig.isExactMatch + "&organism=" + this.state.heatmapConfig.species;
+	        var geneURL = this.props.linksAtlasBaseURL + "/query" + "?geneQuery=" + this.state.heatmapConfig.geneQuery + "&organism=" + this.state.heatmapConfig.species;
 	
 	        var display;
 	        var marginLeft;

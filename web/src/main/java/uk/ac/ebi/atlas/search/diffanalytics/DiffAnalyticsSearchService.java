@@ -36,13 +36,13 @@ public class DiffAnalyticsSearchService {
     }
 
 
-    public int visitEachExpression(String geneQuery, String condition, String specie, boolean isExactMatch, Visitor<DiffAnalytics> visitor) {
+    public int visitEachExpression(String geneQuery, String condition, String specie, Visitor<DiffAnalytics> visitor) {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(condition);
 
         String species = StringUtils.isNotBlank(specie) ? specie : "";
 
-        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
+        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species);
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
                  || contrastsResult.isPresent() && contrastsResult.get().isEmpty()) {

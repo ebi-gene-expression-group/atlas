@@ -98,7 +98,6 @@ public class BaselineExperimentPageService {
         String contextRoot = request.getContextPath();
         /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
         model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
-        model.addAttribute("exactMatch", preferences.isExactMatch());
         model.addAttribute("geneQuery", preferences.getGeneQuery());
         model.addAllAttributes(experiment.getBaselineAttributes());
 

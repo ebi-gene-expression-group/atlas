@@ -45,25 +45,20 @@ public class RnaSeqProfilesTSVWriterIT {
 
     @Before
     public void setUp() throws Exception {
-
         differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(RNA_SEQ_EXPERIMENT_ACCESSION);
         requestContext = rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
                 .withPreferences(requestPreferences).build();
-
     }
 
     @Test
     public void headerTextShouldContainThreeRows(){
-
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows.length, is(3));
-
     }
 
     @Test
     public void thirdHeaderLineShouldDescribeTimestamp(){
-
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows[2], startsWith("# Timestamp: "));
@@ -73,7 +68,6 @@ public class RnaSeqProfilesTSVWriterIT {
 
     @Test
     public void firstHeaderLineShouldDescribeAtlasVersion(){
-
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows[0], startsWith("# Expression Atlas version: "));
@@ -83,33 +77,14 @@ public class RnaSeqProfilesTSVWriterIT {
 
     @Test
     public void secondHeaderLineShouldDescribeQuery(){
-
-        requestPreferences.setExactMatch(false);
-
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: '', specifically up/down differentially expressed in " +
                 "any contrast given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment "+RNA_SEQ_EXPERIMENT_ACCESSION));
-
-    }
-
-    @Test
-    public void secondHeaderLineShouldDescribeExactMatchQuery(){
-
-        requestPreferences.setExactMatch(true);
-        requestPreferences.setSpecific(false);
-
-        String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
-
-        assertThat(headerRows[1], is("# Query: Genes matching: '' exactly, up/down differentially expressed in any " +
-                "contrast given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment "+RNA_SEQ_EXPERIMENT_ACCESSION));
-        assertThat(headerRows[2], startsWith("# Timestamp: "));
-
     }
 
     @Test
     public void secondHeaderLineShouldDescribeQueryAlsoWhenSelectingContrasts(){
-
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("g1_g2")));
 
         rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
@@ -121,4 +96,5 @@ public class RnaSeqProfilesTSVWriterIT {
                 Pattern.matches("# Query: Genes.*differentially.*"+RNA_SEQ_EXPERIMENT_ACCESSION,headerRows[1]));
         assertThat(headerRows[2], startsWith("# Timestamp: "));
     }
+
 }

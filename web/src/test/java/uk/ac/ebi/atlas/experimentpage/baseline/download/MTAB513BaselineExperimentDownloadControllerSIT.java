@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 
 public class MTAB513BaselineExperimentDownloadControllerSIT {
 
-    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-513.tsv?geneQuery=&exactMatch=false");
+    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-513.tsv?geneQuery=");
 
     @Test
     public void verifyHeader() {

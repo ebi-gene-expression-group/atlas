@@ -95,13 +95,12 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
         String responseType = isGeneSet ? "Gene sets" : "Genes";
         String geneQuery = requestContext.getQueryDescription();
         String specific = requestContext.isSpecific() ? "specifically " : "";
-        String exactMatch = requestContext.isExactMatch() ? " exactly" : "";
         String selectedQueryFactors = formatSelectedQueryFactors(requestContext);
         double cutoff = requestContext.getCutoff();
         String experimentAccession = requestContext.getExperiment().getAccession();
         String selectedFilterFactors = formatSelectedFilterFactors(requestContext);
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
-        return MessageFormat.format(tsvFileMastheadTemplate, responseType, geneQuery, exactMatch, specific, selectedQueryFactors, cutoff,
+        return MessageFormat.format(tsvFileMastheadTemplate, responseType, geneQuery, specific, selectedQueryFactors, cutoff,
                 experimentAccession, selectedFilterFactors, timeStamp);
 
     }

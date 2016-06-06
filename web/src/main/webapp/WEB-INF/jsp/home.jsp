@@ -59,13 +59,6 @@
                                     <a href="query?geneQuery=REG1B&organism=Homo+sapiens">REG1B</a>,
                                     <a href="query?geneQuery=%22zinc+finger%22">zinc finger</a>
                                 </span>
-
-                                <span style="float:right">
-                                    <input style="vertical-align: middle" id="exactMatch" name="exactMatch" type="checkbox" value="true"
-                                           checked="checked" tabindex="2">
-                                    <label for="exactMatch">Exact match</label>
-                                    <input type="hidden" name="_exactMatch" value="on">
-                                </span>
                             </div>
                         </div>
                     </td>

@@ -8,8 +8,6 @@ public class SearchRequest {
     private GeneQuery geneQuery = getDefaultGeneQuery();
     private SemanticQuery semanticQuery = getDefaultSemanticQuery();
 
-    private boolean exactMatch = true;
-
     protected GeneQuery getDefaultGeneQuery() {
         return GeneQuery.EMPTY;
     }
@@ -37,16 +35,7 @@ public class SearchRequest {
     public String toString() {
         return Objects.toStringHelper(this.getClass())
                 .add("geneQuery", geneQuery)
-                .add("exactMatch", exactMatch)
                 .toString();
-    }
-
-    public boolean isExactMatch() {
-        return exactMatch;
-    }
-
-    public void setExactMatch(boolean exactMatch) {
-        this.exactMatch = exactMatch;
     }
 
     public boolean hasGeneQuery() {

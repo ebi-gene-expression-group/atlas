@@ -57,7 +57,6 @@
                 "species": "${species}",
                 "ensemblDB": "${ensemblDB}",
                 "columnType": "${fn:toLowerCase(queryFactorName)}",
-                "isExactMatch": ${empty exactMatch ? "true": exactMatch},
                 "enableGeneLinks": true,
                 "enableEnsemblLauncher": ${isMultiExperiment ? false : (empty enableEnsemblLauncher ? true : enableEnsemblLauncher)},
                 "showMaPlotButton": true,

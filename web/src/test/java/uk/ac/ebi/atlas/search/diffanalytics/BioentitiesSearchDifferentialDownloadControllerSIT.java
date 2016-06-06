@@ -17,11 +17,11 @@ import static org.hamcrest.Matchers.*;
 
 public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssuredFixture {
 
-    private EndPoint subject = new EndPoint("/gxa/query.tsv?geneQuery=Cyba&exactMatch=true&_exactMatch=on&organism=Any&condition=");
+    private EndPoint subject = new EndPoint("/gxa/query.tsv?geneQuery=Cyba&organism=Any&condition=");
 
     @Ignore
     public void hasResultsForEfoAnnotatedContrasts() {
-        Response response = get("query.tsv?geneQuery=&exactMatch=true&_exactMatch=on&organism=Any&condition=sex");
+        Response response = get("query.tsv?geneQuery=&organism=Any&condition=sex");
 
         ResponseBody body = response.getBody();
 
@@ -81,7 +81,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
 
     @Test
     public void downloadSearchGeneQueryWithOrganism() {
-        String url = "/query.tsv?geneQuery=Cyba&exactMatch=true&_exactMatch=on&organism=Homo%20sapiens&condition=";
+        String url = "/query.tsv?geneQuery=Cyba&organism=Homo%20sapiens&condition=";
 
         Response response = given().urlEncodingEnabled(false).get(url);
 
@@ -98,7 +98,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
 
     @Test
     public void downloadSearchConditionWithOrganism() {
-        String url = "/query.tsv?geneQuery=&exactMatch=true&_exactMatch=on&organism=Arabidopsis+thaliana&condition=%22wild+type%22";
+        String url = "/query.tsv?geneQuery=true&organism=Arabidopsis+thaliana&condition=%22wild+type%22";
 
         Response response = given().urlEncodingEnabled(false).get(url);
 

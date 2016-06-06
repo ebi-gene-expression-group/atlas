@@ -365,12 +365,10 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">geneQuery</stringProp>
               </elementProp>
-              <elementProp name="exactMatch" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">false</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">exactMatch</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
@@ -432,12 +430,10 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">geneQuery</stringProp>
               </elementProp>
-              <elementProp name="exactMatch" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">false</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">exactMatch</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
@@ -659,7 +655,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/gxa/query?geneQuery=saa4+ysl2&amp;exactMatch=true&amp;_exactMatch=on&amp;condition=</stringProp>
+          <stringProp name="HTTPSampler.path">/gxa/query?geneQuery=saa4+ysl2&amp;condition=</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -692,7 +688,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/gxa/query?geneQuery=saa4+ysl2&amp;exactMatch=true&amp;_exactMatch=on&amp;condition=</stringProp>
+          <stringProp name="HTTPSampler.path">/gxa/query?geneQuery=saa4+ysl2&amp;condition=</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -725,7 +721,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/gxa/query?geneQuery=saa4+ysl2&amp;exactMatch=true&amp;_exactMatch=on&amp;condition=</stringProp>
+          <stringProp name="HTTPSampler.path">/gxa/query?geneQuery=saa4+ysl2&amp;condition=</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -758,7 +754,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/gxa/query?geneQuery=saa4+ysl2&amp;exactMatch=true&amp;_exactMatch=on&amp;condition=</stringProp>
+          <stringProp name="HTTPSampler.path">/gxa/query?geneQuery=saa4+ysl2&amp;condition=</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>

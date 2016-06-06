@@ -81,7 +81,6 @@
             <tr>
                 <td>
                     <textarea id="geneQuery" name="geneQuery" rows="2" cols="36" >${preferences.geneQuery.asTags()}</textarea>
-                    <form:checkbox style="vertical-align: middle" id="exactMatch" path="exactMatch" label="Exact match"/>
                 </td>
 
                 <c:if test="${selectedFilterFactorNamesAndValues.size() > 0}">

@@ -41,7 +41,6 @@ public class RequestContextTest {
         when(preferencesMock.getHeatmapMatrixSize()).thenReturn(42);
         when(preferencesMock.getCutoff()).thenReturn(0.05);
         when(preferencesMock.isSpecific()).thenReturn(true);
-        when(preferencesMock.isExactMatch()).thenReturn(false);
     }
 
     @Test
@@ -72,11 +71,6 @@ public class RequestContextTest {
     @Test
     public void testIsSpecific() throws Exception {
         assertThat(subject.isSpecific(), is(true));
-    }
-
-    @Test
-    public void testIsExactMatch() throws Exception {
-        assertThat(subject.isExactMatch(), is(false));
     }
 
     @Test

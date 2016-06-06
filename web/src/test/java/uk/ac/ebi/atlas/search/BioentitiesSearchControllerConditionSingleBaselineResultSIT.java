@@ -32,7 +32,7 @@ public class BioentitiesSearchControllerConditionSingleBaselineResultSIT extends
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Tissues - 6"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=REACT_77799%09REACT_115202&exactMatch=true"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=REACT_77799%09REACT_115202"));
     }
 
 }

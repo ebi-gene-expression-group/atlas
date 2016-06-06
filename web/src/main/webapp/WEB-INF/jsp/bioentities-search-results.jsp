@@ -208,7 +208,7 @@
                         <c:if test="${not empty firstBaselineCounts}">
                             <section>
                                 <h5 style="padding: 0px">Other baseline experiments</h5>
-                                <h:baseline-search-results exactMatch="${exactMatch}" firstBaselineCounts="${firstBaselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery}" hideSpecies="true"/>
+                                <h:baseline-search-results firstBaselineCounts="${firstBaselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery}" hideSpecies="true"/>
                             </section>
                         </c:if>
 
@@ -216,7 +216,7 @@
 
                     <c:otherwise>
                         <c:if test="${not empty firstBaselineCounts}">
-                            <h:baseline-search-results exactMatch="${exactMatch}" firstBaselineCounts="${firstBaselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery}"/>
+                            <h:baseline-search-results firstBaselineCounts="${firstBaselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery}"/>
                         </c:if>
                     </c:otherwise>
                 </c:choose>

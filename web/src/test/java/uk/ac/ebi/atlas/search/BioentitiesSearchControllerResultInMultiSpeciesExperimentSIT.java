@@ -31,13 +31,13 @@ public class BioentitiesSearchControllerResultInMultiSpeciesExperimentSIT extend
         assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-GEOD-30352"));
         assertThat(baselineCounts.get(2).getExperimentName(), is("Vertebrate tissues"));
         assertThat(baselineCounts.get(2).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(2).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=tex33&exactMatch=true&serializedFilterFactors=ORGANISM:Homo%20sapiens"));
+        assertThat(baselineCounts.get(2).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=tex33&serializedFilterFactors=ORGANISM:Homo%20sapiens"));
 
 
         assertThat(baselineCounts.get(3).getExperimentAccession(), is("E-GEOD-30352"));
         assertThat(baselineCounts.get(3).getExperimentName(), is("Vertebrate tissues"));
         assertThat(baselineCounts.get(3).getSpecies(), is("Mus musculus"));
-        assertThat(baselineCounts.get(3).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=tex33&exactMatch=true&serializedFilterFactors=ORGANISM:Mus%20musculus"));
+        assertThat(baselineCounts.get(3).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=tex33&serializedFilterFactors=ORGANISM:Mus%20musculus"));
     }
 
 }

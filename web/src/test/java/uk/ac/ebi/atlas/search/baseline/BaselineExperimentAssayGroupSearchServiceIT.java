@@ -125,12 +125,9 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String species = "";
 
         List<String> fullResults = getExperimentAccessions(subject.query(geneQuery, condition, species, solrQueryService
-                .expandGeneQueryIntoGeneIds
-                (geneQuery, species.toLowerCase(), true)));
+                .expandGeneQueryIntoGeneIds(geneQuery, species.toLowerCase())));
 
-        List<String> resultsWithoutExpansion = getExperimentAccessions(subject.query(geneQuery, condition, species,
-                Optional
-                .<Set<String>>absent()));
+        List<String> resultsWithoutExpansion = getExperimentAccessions(subject.query(geneQuery, condition, species, Optional.<Set<String>>absent()));
 
         assertTrue(fullResults.size()>0);
         assertEquals(Lists.newArrayList(),resultsWithoutExpansion);
@@ -148,10 +145,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
 
     private List<String> resultsFor(String geneQuery, String condition, String species){
-        return getExperimentAccessions(
-                subject.query(geneQuery, condition, species, solrQueryService.expandGeneQueryIntoGeneIds
-                        (geneQuery, species.toLowerCase(), true))
-                );
+        return getExperimentAccessions(subject.query(geneQuery, condition, species, solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species.toLowerCase())));
     }
 
     private static List<String> getExperimentAccessions(Set<BaselineExperimentAssayGroup> results) {
