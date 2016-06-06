@@ -7,5 +7,6 @@
     var btn = $.fn.button.noConflict() // reverts $.fn.button to jqueryui btn
     // $.fn.btn = btn // assigns bootstrap button functionality to $.fn.btn
 </script>
-
+<link rel="stylesheet" type="text/css"
+      href="${pageContext.request.contextPath}/resources/css/customized-bootstrap-3.3.5.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/new-bioentities/custom-bootstrap-additions.css"/>

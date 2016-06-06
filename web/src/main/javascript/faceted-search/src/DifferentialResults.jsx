@@ -11,6 +11,7 @@ var DisplayLevelsButton = require('display-levels-button');
 var Legend = require('legend').LegendDifferential;
 var CellDifferential = require('cell-differential');
 var DifferentialDownloadButton = require('./DifferentialDownloadButton.jsx');
+var FeedbackSmileys = require('atlas-feedback');
 
 //*------------------------------------------------------------------*
 
@@ -83,7 +84,8 @@ var DifferentialResults = React.createClass({
 
     getInitialState: function () {
         return {
-            displayLevels: false
+            displayLevels: false,
+            googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function (){}
         };
     },
 
@@ -132,6 +134,14 @@ var DifferentialResults = React.createClass({
                             {differentialResultRows}
                     </tbody>
                 </table>
+                <div style={{"margin-top":"50px"}}>
+                <FeedbackSmileys collectionCallback= {
+                  function(score,comment){
+                    this.state.googleAnalyticsCallback(
+                      'send','event','DifferentialHeatmaps', 'feedback',
+                      comment,score);
+                  }.bind(this)} />
+                  </div>
             </div>
         );
     }
@@ -228,6 +238,12 @@ var DifferentialResultRow = React.createClass({
 
     componentDidMount: function () {
         ContrastTooltips(window.location.protocol + "//" + this.props.atlasBaseURL, "", ReactDOM.findDOMNode(this.refs.comparison), this.props.experimentAccession, this.props.contrastId);
+        $(document).ready(function () {
+          this.setState(
+              {googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function (){}}
+            );
+          }.bind(this)
+        )
     }
 });
 

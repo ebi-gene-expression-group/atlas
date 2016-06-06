@@ -3,10 +3,13 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
+var $ = require('jquery');
 
 //*------------------------------------------------------------------*
 
 var BaselineHeatmapWidget = require('./BaselineHeatmapWidget.jsx');
+
+var FeedbackSmileys = require('atlas-feedback');
 
 //*------------------------------------------------------------------*
 
@@ -27,6 +30,17 @@ var BaselineHeatmaps = React.createClass({
         eventEmitter: React.PropTypes.object.isRequired
     },
 
+    getInitialState: function () {
+      return {googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function (){}}
+    },
+
+    componentDidMount: function() {
+        $(document).ready(function () {
+          this.setState({googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function (){}})
+        }.bind(this)
+        )
+    },
+
     _isOrganismPart: function(a){
         return a.factor==="ORGANISM_PART";
     },
@@ -44,6 +58,12 @@ var BaselineHeatmaps = React.createClass({
                                                   showHeatmapLabel={this._hasMoreThanOneSpecies()} species={heatmap.species} factor={heatmap.factor}
                                                   atlasHost={this.props.atlasHost} geneQuery={this.props.geneQuery} eventEmitter={this.props.eventEmitter} />;
                 }.bind(this))}
+                <FeedbackSmileys collectionCallback= {
+                  function(score,comment){
+                    this.state.googleAnalyticsCallback(
+                      'send','event','BaselineHeatmaps', 'feedback',
+                      comment,score);
+                  }.bind(this)} />
             </div>
         );
     },
@@ -62,5 +82,3 @@ var BaselineHeatmaps = React.createClass({
 //*------------------------------------------------------------------*
 
 module.exports = BaselineHeatmaps;
-
-
