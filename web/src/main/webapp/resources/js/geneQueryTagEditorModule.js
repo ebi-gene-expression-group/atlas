@@ -48,22 +48,27 @@ var geneQueryTagEditorModule = (function($) {
                             },
 
                             error: function (jqXHR, textStatus, errorThrown) {
-                                console.log("Error. Status: " + textStatus + ", errorThrown: " + errorThrown);
+                                console.log('Error. Status: ' + textStatus + ', errorThrown: ' + errorThrown);
                                 response([]);
                             }
                         });
                     },
                     _renderItem: function(ul, item) {
-                        var source_des ="&nbsp;";
+                        var source_des ='&nbsp;';
                         if(item.source.length != 0) {
                             source_des = item.source;
                         }
 
-                        return $( "<li style='width: 280px;'></li>" )
-                            .attr( "data-value", item.value )
-                            .attr( "data-source", item.source )
-                            .append( "<a>" + "<div style='float:left; text-align: left'>" + item.label + "</div><div style='float: right; text-align: right'><small>" + source_des + "</small></div></a>" )
-                            .appendTo( ul );
+                        return $('<li style="width: 280px;"></li>')
+                            .attr('data-value', item.value )
+                            .attr('data-source', item.source )
+                            .append(
+                                '<a>' +
+                                '<span>' + item.label + '</span>' +
+                                '<span style="float: right"><small><strong>' + source_des + '</strong></small></span>' +
+                                '</a>'
+                            )
+                            .appendTo(ul);
                     },
                     select: function(event, ui) {
                         window.selectedTagSource = [ui.item.source];
