@@ -57,8 +57,13 @@ var geneQueryTagEditorModule = (function($) {
                         return $('<li style="width: 280px;"></li>')
                             .attr('data-value', item.value )
                             .attr('data-source', item.source )
-                            .append( "<a>" + "<div style='float:left; text-align: left'>" + item.label + "</div><div style='float: right; text-align: right'><small>" + source_des + "</small></div></a>" )
-                            .appendTo( ul );
+                            .append(
+                                '<a>' +
+                                    '<span>' + item.label + '</span>' +
+                                    '<span style="float: right"><small><strong>' + source_des + '</strong></small></span>' +
+                                '</a>'
+                            )
+                            .appendTo(ul);
                     },
                     select: function(event, ui) {
                         ui.item.value = '{"tagValue":"' + ui.item.value + '", "tagSource":"' + ui.item.source + '"}';
