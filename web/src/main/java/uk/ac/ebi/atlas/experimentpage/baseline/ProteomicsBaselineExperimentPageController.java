@@ -48,7 +48,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
     public String baselineExperiment(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
                                      @PathVariable String experimentAccession,
                                      @RequestParam Map<String,String> allParameters,
-                                     @RequestParam(value="accessKey", required=false) String accessKey,
+                                     @RequestParam(required = false) String accessKey,
                                      Model model, HttpServletRequest request) {
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
 
@@ -62,7 +62,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = "type=PROTEOMICS_BASELINE")
     public String baselineExperimentData(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
                                          @PathVariable String experimentAccession,
-                                         @RequestParam(value="accessKey", required=false) String accessKey,
+                                         @RequestParam(required = false) String accessKey,
                                          BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 

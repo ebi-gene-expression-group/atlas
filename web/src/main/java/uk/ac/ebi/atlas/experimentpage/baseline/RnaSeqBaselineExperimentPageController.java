@@ -49,7 +49,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
     public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                      @PathVariable String experimentAccession,
                                      @RequestParam Map<String,String> allParameters,
-                                     @RequestParam(value="accessKey", required=false) String accessKey,
+                                     @RequestParam(required = false) String accessKey,
                                      Model model, HttpServletRequest request) {
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
 
@@ -63,7 +63,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")
     public String baselineExperimentData(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                          @PathVariable String experimentAccession,
-                                         @RequestParam(value="accessKey", required=false) String accessKey,
+                                         @RequestParam(required = false) String accessKey,
                                          BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 
