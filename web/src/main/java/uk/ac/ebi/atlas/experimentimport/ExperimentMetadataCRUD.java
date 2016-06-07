@@ -129,7 +129,11 @@ public class ExperimentMetadataCRUD {
     }
 
     void writeExperimentDesignFile(String accession, ExperimentType experimentType, ExperimentDesign experimentDesign) throws IOException {
-        try (ExperimentDesignFileWriter experimentDesignFileWriter = experimentDesignFileWriterBuilder.forExperimentAccession(accession).withExperimentType(experimentType).build()) {
+        try (ExperimentDesignFileWriter experimentDesignFileWriter =
+                     experimentDesignFileWriterBuilder
+                             .forExperimentAccession(accession)
+                             .withExperimentType(experimentType)
+                             .build()) {
             experimentDesignFileWriter.write(experimentDesign);
         }
     }
@@ -158,24 +162,16 @@ public class ExperimentMetadataCRUD {
         return experimentDAO.findAllExperiments();
     }
 
-    public void updateExperiment(String experimentAccession, boolean isPrivate) throws IOException {
-        experimentDAO.updateExperiment(experimentAccession, isPrivate);
-
-        if (!isPrivate) {
-            ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
-            updateExperimentDesign(experimentDTO);
-            experimentTrader.removeExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
-        } else {
-            analyticsIndexerManager.deleteFromAnalyticsIndex(experimentAccession);
-        }
+    public void makeExperimentPrivate(String experimentAccession) throws IOException {
+        experimentDAO.updateExperiment(experimentAccession, true);
+        analyticsIndexerManager.deleteFromAnalyticsIndex(experimentAccession);
     }
 
-    public int updateAllExperimentDesigns() {
-        List<ExperimentDTO> experiments = experimentDAO.findAllExperiments();
-        for (ExperimentDTO experiment : experiments) {
-            updateExperimentDesign(experiment);
-        }
-        return experiments.size();
+    public void makeExperimentPublic(String experimentAccession) throws IOException {
+        experimentDAO.updateExperiment(experimentAccession, false);
+        ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, false);
+        updateExperimentDesign(experimentDTO);
+        experimentTrader.removeExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
     }
 
     public void updateExperimentDesign(String experimentAccession) {
@@ -208,9 +204,4 @@ public class ExperimentMetadataCRUD {
             throw new IllegalStateException(e);
         }
     }
-
-    public List<ExperimentDTO> findExperiments(Set<String> experimentAccessions) {
-        return experimentDAO.findExperiments(experimentAccessions, true);
-    }
-
 }

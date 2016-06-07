@@ -272,10 +272,10 @@ public class ExperimentOps {
         int loadCount;
         switch (op) {
             case UPDATE_PRIVATE:
-                experimentMetadataCRUD.updateExperiment(accession, true);
+                experimentMetadataCRUD.makeExperimentPrivate(accession);
                 break;
             case UPDATE_PUBLIC:
-                experimentMetadataCRUD.updateExperiment(accession, false);
+                experimentMetadataCRUD.makeExperimentPublic(accession);
                 break;
             case UPDATE_DESIGN:
                 experimentMetadataCRUD.updateExperimentDesign(accession);

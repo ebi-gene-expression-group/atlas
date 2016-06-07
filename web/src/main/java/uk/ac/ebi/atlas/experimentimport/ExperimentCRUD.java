@@ -56,7 +56,6 @@ public class ExperimentCRUD {
     public UUID importExperiment(String experimentAccession, boolean isPrivate) throws IOException {
 
         ExperimentConfiguration configuration = loadExperimentConfiguration(experimentAccession);
-        experimentChecker.checkAllFiles(experimentAccession, configuration.getExperimentType());
 
         Optional<String> accessKey = fetchExperimentAccessKey(experimentAccession);
 
@@ -98,7 +97,9 @@ public class ExperimentCRUD {
 
     private ExperimentConfiguration loadExperimentConfiguration(String experimentAccession) {
         experimentChecker.checkConfigurationFilePermissions(experimentAccession);
-        return configurationTrader.getExperimentConfiguration(experimentAccession);
+        ExperimentConfiguration configuration = configurationTrader.getExperimentConfiguration(experimentAccession);
+        experimentChecker.checkAllFiles(experimentAccession, configuration.getExperimentType());
+        return configuration;
     }
 
     public void serializeExpressionData(String experimentAccession) {
