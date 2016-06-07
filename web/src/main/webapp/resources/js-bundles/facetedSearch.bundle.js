@@ -3615,6 +3615,14 @@ webpackJsonp_name_([5],[
 	        };
 	    },
 	
+	    _coexpressionsCurrentlyShown: function () {
+	        var ans = 0;
+	        for (var k in this.state.coexpressionsDisplayed) {
+	            ans += this.state.coexpressionsDisplayed[k];
+	        }
+	        return ans;
+	    },
+	
 	    _getProfiles: function () {
 	        if (this.state.showGeneSetProfiles) {
 	            return this.props.geneSetProfiles;
@@ -3881,6 +3889,7 @@ webpackJsonp_name_([5],[
 	                        isMicroarray: this.isMicroarray(),
 	                        hasQuartiles: this.hasQuartiles(),
 	                        isSingleGeneResult: this.isSingleGeneResult(),
+	                        currentlyShowingCoexpressions: !!this._coexpressionsCurrentlyShown(),
 	                        type: this.props.type,
 	                        columnHeaders: this.props.columnHeaders,
 	                        nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders,
@@ -3924,6 +3933,7 @@ webpackJsonp_name_([5],[
 	                            radioId: 'intersect',
 	                            hasQuartiles: this.hasQuartiles(),
 	                            isSingleGeneResult: this.isSingleGeneResult(),
+	                            currentlyShowingCoexpressions: !!this._coexpressionsCurrentlyShown(),
 	                            type: this.props.type,
 	                            columnHeaders: this.props.columnHeaders,
 	                            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders,
@@ -3951,6 +3961,7 @@ webpackJsonp_name_([5],[
 	                            radioId: 'column',
 	                            hasQuartiles: this.hasQuartiles(),
 	                            isSingleGeneResult: this.isSingleGeneResult(),
+	                            currentlyShowingCoexpressions: !!this._coexpressionsCurrentlyShown(),
 	                            columnHeaders: this.props.columnHeaders,
 	                            nonExpressedColumnHeaders: this.props.nonExpressedColumnHeaders,
 	                            type: this.props.type,
@@ -3992,6 +4003,7 @@ webpackJsonp_name_([5],[
 	                            radioId: 'header',
 	                            hasQuartiles: this.hasQuartiles(),
 	                            isSingleGeneResult: this.isSingleGeneResult(),
+	                            currentlyShowingCoexpressions: !!this._coexpressionsCurrentlyShown(),
 	                            hoverColumnCallback: this._hoverColumn,
 	                            type: this.props.type,
 	                            columnHeaders: this.props.columnHeaders,
@@ -4105,7 +4117,8 @@ webpackJsonp_name_([5],[
 	    displayName: 'HeatmapTableHeader',
 	
 	    propTypes: {
-	        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string)
+	        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string),
+	        currentlyShowingCoexpressions: React.PropTypes.bool.isRequired
 	    },
 	
 	    renderContrastFactorHeaders: function () {
@@ -4143,6 +4156,7 @@ webpackJsonp_name_([5],[
 	                        hasQuartiles: this.props.hasQuartiles,
 	                        radioId: this.props.radioId,
 	                        isSingleGeneResult: this.props.isSingleGeneResult,
+	                        currentlyShowingCoexpressions: this.props.currentlyShowingCoexpressions,
 	                        heatmapConfig: this.props.heatmapConfig,
 	                        displayLevels: this.props.displayLevels,
 	                        toggleDisplayLevels: this.props.toggleDisplayLevels,
@@ -4501,7 +4515,8 @@ webpackJsonp_name_([5],[
 	
 	    displayLevelsBaseline: function () {
 	        if (this.props.hasQuartiles && this.props.isSingleGeneResult) {
-	            return React.createElement(LevelsRadioGroup, { radioId: this.props.radioId,
+	            var LRG = this.props.currentlyShowingCoexpressions ? LevelsRadioGroup("gradients", "levels") : LevelsRadioGroup("gradients", "levels", "variance");
+	            return React.createElement(LRG, { radioId: this.props.radioId,
 	                selectedRadioButton: this.props.selectedRadioButton,
 	                toggleRadioButton: this.props.toggleRadioButton });
 	        } else if (this.props.type.isBaseline || this.props.type.isMultiExperiment) {
@@ -4538,41 +4553,41 @@ webpackJsonp_name_([5],[
 	
 	});
 	
-	var LevelsRadioGroup = React.createClass({
-	    displayName: 'LevelsRadioGroup',
+	var LevelsRadioGroup = function (__args__) {
+	    var inputElements = [].concat.apply({}, [].slice.call(arguments).map(function (el, ix) {
+	        return [React.createElement('input', { key: 3 * ix, type: 'radio', value: el }), React.createElement(
+	            'span',
+	            { key: 3 * ix + 1 },
+	            "Display " + el
+	        ), React.createElement('br', { key: 3 * ix + 2 })];
+	    })).slice(1, -1);
+	    return React.createClass({
 	
+	        getInitialState: function () {
+	            return { value: this.props.selectedRadioButton };
+	        },
 	
-	    getInitialState: function () {
-	        return { value: this.props.selectedRadioButton };
-	    },
+	        render: function () {
+	            return React.createElement(
+	                RadioGroup,
+	                { name: "displayLevelsGroup_" + this.props.radioId, value: this.props.selectedRadioButton, onChange: this.handleChange },
+	                React.createElement(
+	                    'div',
+	                    { style: { "marginLeft": "10px", "marginTop": "8px" } },
+	                    inputElements
+	                )
+	            );
+	        },
 	
-	    render: function () {
-	        return React.createElement(
-	            RadioGroup,
-	            { name: "displayLevelsGroup_" + this.props.radioId, value: this.props.selectedRadioButton, onChange: this.handleChange },
-	            React.createElement(
-	                'div',
-	                { style: { "marginLeft": "10px", "marginTop": "8px" } },
-	                React.createElement('input', { type: 'radio', value: 'gradients' }),
-	                'Display gradients',
-	                React.createElement('br', null),
-	                React.createElement('input', { type: 'radio', value: 'levels' }),
-	                'Display levels',
-	                React.createElement('br', null),
-	                React.createElement('input', { type: 'radio', value: 'variance' }),
-	                'Display variance'
-	            )
-	        );
-	    },
+	        handleChange: function (event) {
+	            this.props.toggleRadioButton(event.target.value);
+	            this.setState({ value: this.props.selectedRadioButton });
 	
-	    handleChange: function (event) {
-	        this.props.toggleRadioButton(event.target.value);
-	        this.setState({ value: this.props.selectedRadioButton });
-	
-	        // To resize the sticky column/header in case the row height or column width changes
-	        $(window).resize();
-	    }
-	});
+	            // To resize the sticky column/header in case the row height or column width changes
+	            $(window).resize();
+	        }
+	    });
+	};
 	
 	var HeatmapTableRows = React.createClass({
 	    displayName: 'HeatmapTableRows',
