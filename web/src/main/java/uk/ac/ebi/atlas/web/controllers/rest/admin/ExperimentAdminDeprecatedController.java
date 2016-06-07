@@ -28,86 +28,12 @@ public class ExperimentAdminDeprecatedController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentAdminDeprecatedController.class);
 
-    private ExperimentCRUD experimentCRUD;
-    private ExperimentMetadataCRUD experimentMetadataCRUD;
     private ExperimentTrader trader;
 
     @Inject
-    public ExperimentAdminDeprecatedController(ExperimentCRUD experimentCRUD,
-                                               ExperimentMetadataCRUD experimentMetadataCRUD, ExperimentTrader trader) {
+    public ExperimentAdminDeprecatedController(ExperimentTrader trader) {
         this.trader = trader;
-        this.experimentCRUD = experimentCRUD;
-        this.experimentMetadataCRUD = experimentMetadataCRUD;
     }
-
-    @RequestMapping(value = "/importExperiment", produces="text/plain;charset=UTF-8")
-    @ResponseBody
-    public String importExperiment(@RequestParam("accession") String experimentAccession,
-                                   @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
-        UUID accessKeyUUID = experimentCRUD.importExperiment(experimentAccession, isPrivate);
-        return "Experiment " + experimentAccession + " loaded, accessKey: " + accessKeyUUID;
-    }
-
-    // TODO This should be automatically done when an experiment is imported. See TODO note in ExperimentCRUD
-    @RequestMapping(value = "/serializeExpressionData", produces="text/plain;charset=UTF-8")
-    @ResponseBody
-    public String serializeExpressionData(@RequestParam("accession") String experimentAccession) throws IOException {
-        experimentCRUD.serializeExpressionData(experimentAccession);
-        return "Expression data successfully serialized for " + experimentAccession;
-    }
-
-    @RequestMapping(value = "/serializeAllBaselineExpressionData", produces="text/plain;charset=UTF-8")
-    @ResponseBody
-    public String serializeAllBaselineExpressionData() throws IOException {
-        for (String baselineExperimentAccession : trader.getBaselineExperimentAccessions()) {
-            experimentCRUD.serializeExpressionData(baselineExperimentAccession);
-        }
-        return "All baseline experiments expression data successfully serialized";
-    }
-
-    @RequestMapping(value = "/deleteExperiment", produces = "text/plain;charset=UTF-8")
-    @ResponseBody
-    public String deleteExperiment(@RequestParam("accession") String experimentAccession) {
-        experimentCRUD.deleteExperiment(experimentAccession);
-        return "Experiment " + experimentAccession + " successfully deleted.";
-    }
-
-    @RequestMapping(value = "/updateStatus", produces="text/plain;charset=UTF-8")
-    @ResponseBody
-    public String updateExperiment(@RequestParam("accession") String experimentAccession,
-                                   @RequestParam("private") boolean isPrivate) throws IOException {
-
-        experimentMetadataCRUD.updateExperiment(experimentAccession, isPrivate);
-        return "Experiment " + experimentAccession + " successfully updated.";
-    }
-
-    @RequestMapping(value = "/listExperiments", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String listExperiments(@RequestParam(value = "accession", required = false) Set<String> experimentAccessions) {
-        List<ExperimentDTO> experiments;
-        if (CollectionUtils.isEmpty(experimentAccessions)) {
-            experiments = experimentMetadataCRUD.findAllExperiments();
-        } else {
-            experiments = experimentMetadataCRUD.findExperiments(experimentAccessions);
-        }
-        return new Gson().toJson(experiments);
-
-    }
-
-    @RequestMapping(value = "/updateAllExperimentDesigns", produces="text/plain;charset=UTF-8")
-    @ResponseBody
-    public String updateAllExperimentDesigns() {
-        int updatedExperimentsCount = experimentMetadataCRUD.updateAllExperimentDesigns();
-        return "Experiment design was updated for " + updatedExperimentsCount + " experiments";
-    }
-
-    @RequestMapping(value = "/updateExperimentDesign", produces="text/plain;charset=UTF-8")
-    @ResponseBody
-    public String updateExperimentDesign(@RequestParam("accession") String experimentAccession) {
-        experimentMetadataCRUD.updateExperimentDesign(experimentAccession);
-        return "Experiment design was updated for " + experimentAccession;
-    }
-
 
     @RequestMapping(value = "/invalidateExperimentCache", produces="text/plain;charset=UTF-8")
     @ResponseBody
@@ -131,14 +57,6 @@ public class ExperimentAdminDeprecatedController {
         }
 
         return sb.toString();
-    }
-
-    @ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    @ResponseBody
-    public String handleResourceNotFoundException(Exception e) throws IOException {
-        LOGGER.error(e.getMessage(), e);
-        return e.getClass().getSimpleName() + ": " + e.getMessage();
     }
 
 }
