@@ -120,6 +120,14 @@ var Heatmap = React.createClass({
         };
     },
 
+    _coexpressionsCurrentlyShown: function() {
+      var ans = 0;
+      for(var k in this.state.coexpressionsDisplayed){
+        ans+= this.state.coexpressionsDisplayed[k];
+      }
+      return ans;
+    },
+
     _getProfiles: function() {
       if(this.state.showGeneSetProfiles){
         return this.props.geneSetProfiles;
@@ -376,6 +384,7 @@ var Heatmap = React.createClass({
                                             isMicroarray={this.isMicroarray()}
                                             hasQuartiles={this.hasQuartiles()}
                                             isSingleGeneResult={this.isSingleGeneResult()}
+                                            currentlyShowingCoexpressions={!!this._coexpressionsCurrentlyShown()}
                                             type={this.props.type}
                                             columnHeaders={this.props.columnHeaders}
                                             nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
@@ -416,6 +425,7 @@ var Heatmap = React.createClass({
                                                     radioId="intersect"
                                                     hasQuartiles={this.hasQuartiles()}
                                                     isSingleGeneResult={this.isSingleGeneResult()}
+                                                    currentlyShowingCoexpressions={!!this._coexpressionsCurrentlyShown()}
                                                     type={this.props.type}
                                                     columnHeaders={this.props.columnHeaders}
                                                     nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
@@ -441,6 +451,7 @@ var Heatmap = React.createClass({
                                                 radioId="column"
                                                 hasQuartiles={this.hasQuartiles()}
                                                 isSingleGeneResult={this.isSingleGeneResult()}
+                                                currentlyShowingCoexpressions={!!this._coexpressionsCurrentlyShown()}
                                                 columnHeaders={this.props.columnHeaders}
                                                 nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                                 type={this.props.type}
@@ -480,6 +491,7 @@ var Heatmap = React.createClass({
                                                     radioId="header"
                                                     hasQuartiles={this.hasQuartiles()}
                                                     isSingleGeneResult={this.isSingleGeneResult()}
+                                                    currentlyShowingCoexpressions={!!this._coexpressionsCurrentlyShown()}
                                                     hoverColumnCallback={this._hoverColumn}
                                                     type={this.props.type}
                                                     columnHeaders={this.props.columnHeaders}
@@ -581,7 +593,8 @@ var DownloadProfilesButton = React.createClass({
 
 var HeatmapTableHeader = React.createClass({
     propTypes: {
-        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string)
+        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string),
+        currentlyShowingCoexpressions: React.PropTypes.bool.isRequired
     },
 
     renderContrastFactorHeaders: function () {
@@ -618,6 +631,7 @@ var HeatmapTableHeader = React.createClass({
                                        hasQuartiles={this.props.hasQuartiles}
                                        radioId={this.props.radioId}
                                        isSingleGeneResult={this.props.isSingleGeneResult}
+                                       currentlyShowingCoexpressions={this.props.currentlyShowingCoexpressions}
                                        heatmapConfig={this.props.heatmapConfig}
                                        displayLevels={this.props.displayLevels}
                                        toggleDisplayLevels={this.props.toggleDisplayLevels}
@@ -906,13 +920,15 @@ var ContrastHeader = React.createClass({
 
 });
 
-
 var TopLeftCorner = React.createClass({
 
     displayLevelsBaseline: function() {
         if (this.props.hasQuartiles && this.props.isSingleGeneResult) {
+            var LRG = this.props.currentlyShowingCoexpressions
+              ? LevelsRadioGroup("gradients", "levels")
+              : LevelsRadioGroup("gradients", "levels", "variance");
             return (
-                <LevelsRadioGroup radioId={this.props.radioId}
+                <LRG radioId={this.props.radioId}
                                   selectedRadioButton={this.props.selectedRadioButton}
                                   toggleRadioButton={this.props.toggleRadioButton}/>
             );
@@ -953,7 +969,17 @@ var TopLeftCorner = React.createClass({
 });
 
 
-var LevelsRadioGroup = React.createClass({
+var LevelsRadioGroup = function(__args__) {
+  var inputElements = [].concat.apply({},
+    [].slice.call(arguments).map(
+      function(el, ix){
+        return [
+          <input key={3*ix} type="radio" value={el}/>,
+          <span key={3*ix +1}>{"Display "+el}</span>,
+          <br key={3*ix +2}/> ];
+      }
+    )).slice(1,-1);
+  return (React.createClass({
 
     getInitialState: function() {
         return {value: this.props.selectedRadioButton};
@@ -963,9 +989,7 @@ var LevelsRadioGroup = React.createClass({
         return (
             <RadioGroup name={"displayLevelsGroup_" + this.props.radioId} value={this.props.selectedRadioButton} onChange={this.handleChange}>
                 <div style={{"marginLeft": "10px", "marginTop": "8px"}}>
-                    <input type="radio" value="gradients"/>Display gradients<br />
-                    <input type="radio" value="levels"/>Display levels<br />
-                    <input type="radio" value="variance"/>Display variance
+                    {inputElements}
                 </div>
             </RadioGroup>
         );
@@ -978,7 +1002,8 @@ var LevelsRadioGroup = React.createClass({
         // To resize the sticky column/header in case the row height or column width changes
         $(window).resize();
     }
-});
+  }) );
+};
 
 
 var HeatmapTableRows = React.createClass({
