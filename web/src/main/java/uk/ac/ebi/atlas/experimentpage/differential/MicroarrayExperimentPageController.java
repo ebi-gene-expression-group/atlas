@@ -65,10 +65,8 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
                                    @RequestParam Map<String, String> allParameters,
+                                   @RequestParam(value="accessKey", required=false) String accessKey,
                                    @PathVariable String experimentAccession, Model model, HttpServletRequest request) {
-        String accessKey = allParameters.containsKey("accessKey") ? allParameters.get("accessKey") : "";
-        model.addAttribute("accessKey", accessKey);
-
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
 
         super.prepareRequestPreferencesAndHeaderData(
@@ -81,8 +79,8 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
     public String showGeneProfilesData(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
-                                       @ModelAttribute("accessKey") String accessKey,
                                        @PathVariable String experimentAccession,
+                                       @RequestParam(value="accessKey", required=false) String accessKey,
                                        BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 

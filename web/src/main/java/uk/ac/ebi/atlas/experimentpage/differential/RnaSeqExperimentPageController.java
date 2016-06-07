@@ -27,6 +27,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -64,10 +65,8 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
                                    @RequestParam Map<String, String> allParameters,
+                                   @RequestParam(value="accessKey", required=false) String accessKey,
                                    @PathVariable String experimentAccession, Model model, HttpServletRequest request) {
-        String accessKey = allParameters.containsKey("accessKey") ? allParameters.get("accessKey") : "";
-        model.addAttribute("accessKey", accessKey);
-
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
 
         super.prepareRequestPreferencesAndHeaderData(
@@ -79,13 +78,13 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
     public String showGeneProfilesData(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
-                                       @ModelAttribute("accessKey") String accessKey,
-                                       @PathVariable String experimentAccession, BindingResult result, Model model,
-                                       HttpServletRequest request, HttpServletResponse response) {
+                                       @PathVariable String experimentAccession,
+                                       @RequestParam(value="accessKey", required=false) String key,
+                                       BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
         experimentPageCallbacks.adjustReceivedObjects(preferences);
 
         super.populateModelWithHeatmapData(
-                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, result, model, request
+                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, key), preferences, result, model, request
         );
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";

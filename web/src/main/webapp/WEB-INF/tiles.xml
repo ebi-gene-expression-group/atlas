@@ -90,9 +90,9 @@
         <put-attribute name="body" value="/WEB-INF/jsp/error-page.jsp"/>
     </definition>
 
-    <definition name="experiment-notFound-page" extends="base.definition">
+    <definition name="experiment-not-found-page" extends="base.definition">
         <put-attribute name="header" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/experiment-notFound-page.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/experiment-not-found-page.jsp"/>
     </definition>
 
     <definition name="query-error-page" extends="base.definition">

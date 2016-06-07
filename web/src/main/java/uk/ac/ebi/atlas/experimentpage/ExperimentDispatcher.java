@@ -4,7 +4,6 @@ package uk.ac.ebi.atlas.experimentpage;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -13,12 +12,10 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * This is a global router for the experiment page.
  * It looks up the kind of experiment and sends the request to the right controller.
- *
  */
 
 @Controller
@@ -34,39 +31,35 @@ public final class ExperimentDispatcher {
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/*"})
     public String dispatch(HttpServletRequest request,
                            @PathVariable String experimentAccession,
-                           @RequestParam(value = "accessKey",required = false) String accessKey) {
-
+                           @RequestParam(value = "accessKey", required = false) String accessKey) {
         if (alreadyForwardedButNoOtherControllerHandledTheRequest(request)) {
             // prevent an infinite loop
             throw new NoExperimentSubResourceException();
         }
 
-        return "forward:" + buildForwardURL(request, experimentTrader.getExperiment(experimentAccession, accessKey), accessKey);
+        return "forward:" + buildForwardURL(request, experimentTrader.getExperiment(experimentAccession, accessKey));
     }
 
     @RequestMapping(value = {"/json/experiments/{experimentAccession}", "/json/experiments/{experimentAccession}/*"})
     public String dispatchData(HttpServletRequest request,
                            @PathVariable String experimentAccession,
-                           @RequestParam(value = "accessKey",required = false) String accessKey) {
-
+                           @RequestParam(value = "accessKey", required = false) String accessKey) {
         if (alreadyForwardedButNoOtherControllerHandledTheRequest(request)) {
             // prevent an infinite loop
             throw new NoExperimentSubResourceException();
         }
 
-        return "forward:" + buildForwardURL(request, experimentTrader.getExperiment(experimentAccession, accessKey), accessKey);
+        return "forward:" + buildForwardURL(request, experimentTrader.getExperiment(experimentAccession, accessKey));
     }
 
     private boolean alreadyForwardedButNoOtherControllerHandledTheRequest(HttpServletRequest request) {
         return StringUtils.startsWith(request.getQueryString(), "type=");
     }
 
-    private String buildForwardURL(HttpServletRequest request, Experiment experiment, String accessKey) {
+    private String buildForwardURL(HttpServletRequest request, Experiment experiment) {
         String requestURL = getRequestURL(request);
         requestURL += "?type=" + experiment.getType().getParent();
-        if (StringUtils.isNotBlank(accessKey)){
-            requestURL += "&accessKey=" + accessKey;
-        }
+
         return requestURL;
     }
 
@@ -80,13 +73,13 @@ public final class ExperimentDispatcher {
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ModelAndView handleException(Exception e) {
-        ModelAndView mav = new ModelAndView("experiment-notFound-page");
+        ModelAndView mav = new ModelAndView("experiment-not-found-page");
         mav.addObject("exceptionMessage", e.getMessage());
 
         return mav;
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public class NoExperimentSubResourceException extends RuntimeException {}
+    private class NoExperimentSubResourceException extends RuntimeException {}
 
 }
