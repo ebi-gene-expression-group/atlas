@@ -142,6 +142,8 @@ public class ExperimentMetadataCRUDTest {
         given(experimentDTOBuilderMock.withTitle(anyString())).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.build()).willReturn(experimentDTOMock);
 
+        when(experimentDAOMock.findExperiment(anyString(), anyBoolean())).thenReturn(experimentDTOMock);
+
         given(experimentDTOMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
 
         given(condensedSdrfParserMock.parse(anyString(), any(ExperimentType.class))).willReturn(condensedSdrfParserOutputMock);
