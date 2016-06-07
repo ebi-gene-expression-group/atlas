@@ -165,14 +165,12 @@ public class ExperimentMetadataCRUD {
     public void makeExperimentPrivate(String experimentAccession) throws IOException {
         experimentDAO.updateExperiment(experimentAccession, true);
         analyticsIndexerManager.deleteFromAnalyticsIndex(experimentAccession);
-        ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, false);
-        experimentTrader.removeExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
+        updateExperimentDesign(experimentAccession);
     }
 
     public void makeExperimentPublic(String experimentAccession) throws IOException {
         experimentDAO.updateExperiment(experimentAccession, false);
-        ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, false);
-        updateExperimentDesign(experimentDTO);
+        updateExperimentDesign(experimentAccession);
     }
 
     public void updateExperimentDesign(String experimentAccession) {
