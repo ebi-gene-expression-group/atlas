@@ -109,6 +109,9 @@ public class ExperimentMetadataCRUDTest {
     @Mock
     private AnalyticsIndexerManager analyticsIndexerManagerMock;
 
+    @Mock
+    private ExperimentDTO experimentDTOMock;
+
     @Captor
     private ArgumentCaptor<String> experimentAccessionCaptor;
 
@@ -122,8 +125,8 @@ public class ExperimentMetadataCRUDTest {
         when(experimentConfigurationMock.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
 
         given(experimentDesignFileWriterBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDesignFileWriterBuilderMock);
-        given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE)).willReturn(experimentDesignFileWriterBuilderMock);
-        given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
+        given(experimentDesignFileWriterBuilderMock.withExperimentType(any(ExperimentType.class))).willReturn
+                (experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
 
         given(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).willReturn(conditionsIndexMock);
@@ -137,6 +140,9 @@ public class ExperimentMetadataCRUDTest {
         given(experimentDTOBuilderMock.withSpecies(anySetOf(String.class))).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withPubMedIds(anySetOf(String.class))).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withTitle(anyString())).willReturn(experimentDTOBuilderMock);
+        given(experimentDTOBuilderMock.build()).willReturn(experimentDTOMock);
+
+        given(experimentDTOMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
 
         given(condensedSdrfParserMock.parse(anyString(), any(ExperimentType.class))).willReturn(condensedSdrfParserOutputMock);
         given(condensedSdrfParserOutputMock.getExperimentDesign()).willReturn(experimentDesignMock);
@@ -145,6 +151,7 @@ public class ExperimentMetadataCRUDTest {
         given(condensedSdrfParserOutputMock.getExperimentType()).willReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
         given(condensedSdrfParserOutputMock.getPubmedIds()).willReturn(new ImmutableSet.Builder<String>().build());
         given(condensedSdrfParserOutputMock.getTitle()).willReturn("");
+
 
         ImmutableSetMultimap.Builder<String, String> builder = new ImmutableSetMultimap.Builder<>();
         builder.put(EXPERIMENT_ASSAY, EFO_0000761);
@@ -174,9 +181,16 @@ public class ExperimentMetadataCRUDTest {
     }
 
     @Test
-    public void updateExperimentShouldDelegateToDAO() throws Exception {
-        subject.updateExperiment(EXPERIMENT_ACCESSION, true);
+    public void updateExperimentToPrivateShouldDelegateToDAO() throws Exception {
+        subject.makeExperimentPrivate(EXPERIMENT_ACCESSION);
         verify(experimentDAOMock).updateExperiment(EXPERIMENT_ACCESSION, true);
+    }
+
+    @Test
+    public void updateExperimentToPublicShouldDelegateToDAO() throws Exception {
+        given(experimentDAOMock.findExperiment(EXPERIMENT_ACCESSION, false)).willReturn(experimentDTOMock);
+        subject.makeExperimentPublic(EXPERIMENT_ACCESSION);
+        verify(experimentDAOMock).updateExperiment(EXPERIMENT_ACCESSION, false);
     }
 
     @Test
@@ -220,7 +234,7 @@ public class ExperimentMetadataCRUDTest {
 
     @Test
     public void updateExperimentToPrivateShouldRemoveExperimentFromAnalyticsIndex() throws Exception {
-        subject.updateExperiment(EXPERIMENT_ACCESSION, true);
+        subject.makeExperimentPrivate(EXPERIMENT_ACCESSION);
         verify(analyticsIndexerManagerMock).deleteFromAnalyticsIndex(experimentAccessionCaptor.capture());
 
         assertThat(experimentAccessionCaptor.getValue(), is(EXPERIMENT_ACCESSION));
