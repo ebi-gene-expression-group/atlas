@@ -71,8 +71,6 @@ div.gxaFeedbackQuestionBox button {
   text-align: center;
   width: 300px;
   margin: 10px;
-  background-color: #b3e0ff;
-  border-radius: 20px;
   opacity: 0.8;
   filter: alpha(opacity=80); /* For IE8 and earlier */
 }
@@ -82,6 +80,7 @@ div.gxaFeedbackQuestionBox button {
 }
 
 .gxaSmileyFeedbackBox p {
+  padding-left: 18px;
   padding-top: 5px;
   font-weight: bold;
   font-size: 14px;
@@ -94,7 +93,7 @@ div.gxaFeedbackQuestionBox button {
 
 .gxaSmileyFeedbackBox button {
   width: 100px;
-  margin-left: 95px;
+  margin-left: 91px;
 }
 
 .form-control {

@@ -231,7 +231,6 @@ var FeedbackBox = React.createClass({
       render: function() { /* identifiers from http://emoji.codes/ */
         return (
           <div className="gxaSmileyFeedbackBox">
-          <div id="feedbackBoxCross" className="icon icon-functional" data-icon="x" onClick={this.props.onRequestHide}></div>
             <p> Did you find these results useful?</p>
             <div className="gxaSmileyRow">
               {[[":frowning:", 0],[":slight_frown:", 2], [":neutral_face:", 5], [":slight_smile:",8], [":smiley:",10]].map(function(ar){
