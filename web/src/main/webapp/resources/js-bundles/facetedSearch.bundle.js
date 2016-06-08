@@ -15922,7 +15922,7 @@ webpackJsonp_name_([5],[
 	            if (this.isMounted()) {
 	
 	                // var orderedData = HighchartsUtils.rankColumns(data.profiles, data.columnHeaders);
-	                // var filteredDataByThreshold = HighchartsUtils.applyThresholdtoColumns(orderedData.profiles, orderedData.columnHeaders, 40);
+	                // var filteredDataByThreshold = HighchartsUtils.applyThresholdToColumns(orderedData.profiles, orderedData.columnHeaders, 40);
 	                // var rankedExperiments = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
 	                // if (this.props.isMultiExperiment) {
 	                //     data.profiles.rows = HighchartsUtils.applyThresholdToRows(rankedExperiments, filteredDataByThreshold.columnHeaders, 40);
