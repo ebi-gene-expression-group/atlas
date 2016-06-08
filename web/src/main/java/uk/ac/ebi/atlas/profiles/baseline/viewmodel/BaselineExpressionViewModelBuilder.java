@@ -14,7 +14,6 @@ import javax.inject.Named;
 import java.util.SortedSet;
 
 @Named
-@Scope("singleton")
 public class BaselineExpressionViewModelBuilder {
 
     private final ColourGradient colourGradient;
@@ -30,8 +29,7 @@ public class BaselineExpressionViewModelBuilder {
         JsonArray result = new JsonArray();
 
         for (Factor factor : orderedFactors) {
-            result.add(createBaselineExpressionViewModel(profile, factor, minExpressionLevel, maxExpressionLevel)
-                    .toJson());
+            result.add(createBaselineExpressionViewModel(profile, factor, minExpressionLevel, maxExpressionLevel).toJson());
         }
 
         return result;
@@ -42,11 +40,16 @@ public class BaselineExpressionViewModelBuilder {
         BaselineExpression expression = profile.getExpression(factor);
         Optional<Quartiles> quartiles = (expression == null || expression.getQuartiles().length == 0) ? Optional.<Quartiles>absent() : Optional.of(Quartiles.create(expression.getQuartiles()));
 
-        Double value = expression == null || expression.getLevelAsString().equals("NT") || ! expression.isKnown()
-                ? Double.NaN
+        Double value = expression == null || expression.getLevelAsString().equals("NT") || !expression.isKnown()
+                ? 0
                 : expression.getLevel();
-        String color = (expression == null) ? "" : (expression.isKnown() && !expression.getLevelAsString().equals("NT") ?
-                colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel) : (expression.getLevelAsString().equals("NT") ? "" : "UNKNOWN"));
+        String color = (expression == null)
+                ? ""
+                : (expression.isKnown() && !expression.getLevelAsString().equals("NT")
+                    ? colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel)
+                    : (expression.getLevelAsString().equals("NT")
+                        ? ""
+                        : "UNKNOWN"));
 
         // We are assuming that the only relevant ontology term for tissues is the first one
         String svgPathId = factor.getValueOntologyTerms().isEmpty() ? null : factor.getValueOntologyTerms().iterator().next().accession();
