@@ -108,19 +108,23 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
                 "          \"color\": \"\",\n" +
+                "          \"value\": 0.0,\n" +
                 "          \"svgPathId\": \"ontologyTerm\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"adrenal\",\n" +
-                "          \"color\": \"\"\n" +
+                "          \"color\": \"\",\n" +
+                "          \"value\": 0.0\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"brain\",\n" +
-                "          \"color\": \"\"\n" +
+                "          \"color\": \"\",\n" +
+                "          \"value\": 0.0\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"breast\",\n" +
-                "          \"color\": \"\"\n" +
+                "          \"color\": \"\",\n" +
+                "          \"value\": 0.0\n" +
                 "        }\n" +
                 "      ],\n" +
                 "      \"serializedFilterFactors\": \"ORGANISM:Homo sapiens\"\n" +
@@ -133,19 +137,23 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
                 "          \"color\": \"\",\n" +
+                "          \"value\": 0.0,\n" +
                 "          \"svgPathId\": \"ontologyTerm\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"adrenal\",\n" +
-                "          \"color\": \"\"\n" +
+                "          \"color\": \"\",\n" +
+                "          \"value\": 0.0\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"brain\",\n" +
-                "          \"color\": \"\"\n" +
+                "          \"color\": \"\",\n" +
+                "          \"value\": 0.0\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"breast\",\n" +
-                "          \"color\": \"\"\n" +
+                "          \"color\": \"\",\n" +
+                "          \"value\": 0.0\n" +
                 "        }\n" +
                 "      ],\n" +
                 "      \"serializedFilterFactors\": \"\"\n" +
