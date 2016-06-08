@@ -12,8 +12,8 @@
 
 <c:set var="thisPage" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
-<div class="grid_5 alpha" id="gxaBaselineFacetsContainerDiv"></div>
-<div class="grid_19 omega" id="gxaBaselineResultsContainerDiv"></div>
+<div class="grid_4 alpha" id="gxaBaselineFacetsContainerDiv"></div>
+<div class="grid_20 omega" id="gxaBaselineResultsContainerDiv"></div>
 
 <script>
     <c:if test="${hasBaselineResults}">
