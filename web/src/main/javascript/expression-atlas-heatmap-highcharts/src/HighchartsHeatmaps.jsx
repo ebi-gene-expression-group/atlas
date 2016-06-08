@@ -274,19 +274,23 @@ var HighchartsHeatmap = React.createClass({
 
         var barcharts_legend = (
             <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
-                <span>Click to interact:</span>
+                <div className="legend-item">Click to interact:</div>
 
                 <div id="legend_1" ref="legend_1" className={clsName_1} onClick={this.handleClick.bind(this,1)} >
-                    <div className="legend-rectangle col_below"></div><span>Below cutoff</span>
+                    <div className="legend-rectangle col_below"></div>
+                    <span>Below cutoff</span>
                 </div>
                 <div id="legend_2" className={clsName_2} onClick={this.handleClick.bind(this,2)}>
-                    <div className="legend-rectangle col_low"></div><span>Low</span>
+                    <div className="legend-rectangle col_low"></div>
+                    <span>Low</span>
                 </div>
                 <div id="legend_3" className={clsName_3} onClick={this.handleClick.bind(this,3)}>
-                    <div className="legend-rectangle col_med"></div><span>Medium</span>
+                    <div className="legend-rectangle col_med"></div>
+                    <span>Medium</span>
                 </div>
                 <div id="legend_4" className={clsName_4} onClick={this.handleClick.bind(this,4)}>
-                    <div className="legend-rectangle col_high"></div><span>High</span>
+                    <div className="legend-rectangle col_high"></div>
+                    <span>High</span>
                 </div>
 
                 <div className="legend-item">
@@ -296,7 +300,8 @@ var HighchartsHeatmap = React.createClass({
                 </div>
 
                 <div id="legend_5" className="legend-item special">
-                    <div className="legend-rectangle col_nd"></div><span>No data available</span>
+                    <div className="legend-rectangle col_nd"></div>
+                    <span>No data available</span>
                 </div>
             </div>
         );

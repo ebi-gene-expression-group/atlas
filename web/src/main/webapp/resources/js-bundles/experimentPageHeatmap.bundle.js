@@ -4908,7 +4908,7 @@ webpackJsonp_name_([1],[
 	
 	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })(); /*!
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * react-emojione
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * Copyright(c) 2015 Pedro Ladaria
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * Copyright(c) 2016 Pedro Ladaria
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * MIT Licensed
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */
 	
@@ -4946,9 +4946,9 @@ webpackJsonp_name_([1],[
 	_asciiToUnicode2.default.forEach(function (_ref) {
 	    var _ref2 = _slicedToArray(_ref, 2);
 	
-	    var regExpStr = _ref2[0];
+	    var reStr = _ref2[0];
 	    var unicode = _ref2[1];
-	    return asciiRegExpToUnicode.set(RegExp(regExpStr), unicode);
+	    return asciiRegExpToUnicode.set(RegExp(reStr), unicode);
 	});
 	
 	var asciiRegexStr = _asciiToUnicode2.default.map(function (_ref3) {
@@ -5003,6 +5003,28 @@ webpackJsonp_name_([1],[
 	var RE_SHORTNAMES_UNICODES = RegExp('(:\\w+:|' + _emojiFormatConversion.unicodes.join('|') + ')');
 	var RE_SHORTNAMES_UNICODES_ASCII = RegExp('(:\\w+:|' + _emojiFormatConversion.unicodes.join('|') + '|' + asciiRegexStr + ')');
 	
+	var startsWithSpace = function startsWithSpace(str) {
+	    return (/^\s/.test(str)
+	    );
+	};
+	var endsWithSpace = function endsWithSpace(str) {
+	    return (/\s$/.test(str)
+	    );
+	};
+	
+	var shouldConvertAscii = function shouldConvertAscii(parts, index) {
+	    if (parts.length === 1) {
+	        return true;
+	    }
+	    if (index === 0) {
+	        return startsWithSpace(parts[index + 1]);
+	    }
+	    if (index === parts.length - 1) {
+	        return endsWithSpace(parts[index - 1]);
+	    }
+	    return endsWithSpace(parts[index - 1]) && startsWithSpace(parts[index + 1]);
+	};
+	
 	var emojify = exports.emojify = function emojify(str) {
 	    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 	
@@ -5016,8 +5038,8 @@ webpackJsonp_name_([1],[
 	
 	    var renderCodepoint = (0, _rendererFactory2.default)(mergedOptions);
 	
-	    var convertedParts = str.split(regExp).map(function (part, index) {
-	        if (convertAscii) {
+	    var convertedParts = str.split(regExp).filter(Boolean).map(function (part, index, parts) {
+	        if (convertAscii && shouldConvertAscii(parts, index)) {
 	            var unicode = convertAsciiToUnicodeOrNull(part);
 	            if (unicode) {
 	                return renderCodepoint(_emojiFormatConversion.unicodeToCodepoint.get(unicode), 'a-' + index);
@@ -5078,9 +5100,9 @@ webpackJsonp_name_([1],[
 	[':-?D', '😃'], // :D :-D
 	['=-?\\)', '😊'], // =) =-)
 	[':-?>', '😁'], // :> :->
-	['x-?D', '😆'], // xD x-D
-	['X[-\']D', '😂'], // X-D X'D
-	['x\'D', '😂'], // x'D
+	['[xX]-?DD+', '😂'], // xDDD x-DDD
+	['[xX]-?D', '😆'], // xD x-D
+	['[xX]\'D', '😂'], // x'D
 	['\\^_*\\^', '😄'], // ^^ ^_^ ^__^ ...
 	// sad
 	[':-?\\(', '🙁'], // :( :-(

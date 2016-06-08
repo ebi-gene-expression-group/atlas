@@ -1,20 +1,20 @@
-.gene_title {text-align:center; font-size:70%; border:0px red solid;}
+.gene_title {text-align:center; font-size:70%; border:0 red solid;}
 
-#container {min-width: 410px; min-height: 210px; /*avoid line overlap*/margin: 0 auto; border:0px red solid;}
+#container {min-width: 410px; min-height: 210px; /*avoid line overlap*/margin: 0 auto; border:0 red solid;}
 
-#barcharts_legend_list_items {color:#606060; margin-left: 180px; margin-top:-9px; border: 0px solid olive;position:absolute;}
+#barcharts_legend_list_items {color:#606060; margin-left: 180px; border: 0 solid olive;}
 .col_below {background:#d7d7d7;}
 .col_low {background: #dff8ff;}
 .col_med {background: #9fd2fa;}
 .col_high {background: #45affd;}
 .col_nd {background: #fff;}
-#barcharts_legend_list_items .legend-item {cursor: pointer;  vertical-align: middle;display:inline-block; padding:4px;}
+#barcharts_legend_list_items .legend-item {cursor: pointer; display: inline-block;padding:4px;vertical-align: middle;}
 #barcharts_legend_list_items .legend-item:hover {color:black;}
 #barcharts_legend_list_items .legend-item.legend-item-off {color:#ccc;}
 #barcharts_legend_list_items .legend-item.legend-item-off div {background-color: #f7f7f7;}
 #barcharts_legend_list_items .legend-item.special {cursor:default;margin-left:36px;color:black;}
 
-#barcharts_legend_list_items .legend-item .legend-rectangle {width: 12px;height: 12px; border:1px rgba(0, 0, 0, 0.2) solid;float:left;margin-right:4px;}
+#barcharts_legend_list_items .legend-item .legend-rectangle {width: 12px;height: 12px; border:1px rgba(0, 0, 0, 0.2) solid;display:inline-block;margin-right:4px;vertical-align:middle;}
 
 
 #barcharts_legend_list_items .legend-item  .icon-generic:before {

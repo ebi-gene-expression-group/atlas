@@ -3881,8 +3881,8 @@ webpackJsonp_name_([5],[
 	            'div',
 	            { id: 'barcharts_legend_list_items', ref: 'barcharts_legend_items' },
 	            React.createElement(
-	                'span',
-	                null,
+	                'div',
+	                { className: 'legend-item' },
 	                'Click to interact:'
 	            ),
 	            React.createElement(
@@ -4044,7 +4044,7 @@ webpackJsonp_name_([5],[
 	
 	
 	// module
-	exports.push([module.id, ".gene_title {text-align:center; font-size:70%; border:0px red solid;}\n\n#container {min-width: 410px; min-height: 210px; /*avoid line overlap*/margin: 0 auto; border:0px red solid;}\n\n#barcharts_legend_list_items {color:#606060; margin-left: 180px; margin-top:-9px; border: 0px solid olive;position:absolute;}\n.col_below {background:#d7d7d7;}\n.col_low {background: #dff8ff;}\n.col_med {background: #9fd2fa;}\n.col_high {background: #45affd;}\n.col_nd {background: #fff;}\n#barcharts_legend_list_items .legend-item {cursor: pointer;  vertical-align: middle;display:inline-block; padding:4px;}\n#barcharts_legend_list_items .legend-item:hover {color:black;}\n#barcharts_legend_list_items .legend-item.legend-item-off {color:#ccc;}\n#barcharts_legend_list_items .legend-item.legend-item-off div {background-color: #f7f7f7;}\n#barcharts_legend_list_items .legend-item.special {cursor:default;margin-left:36px;color:black;}\n\n#barcharts_legend_list_items .legend-item .legend-rectangle {width: 12px;height: 12px; border:1px rgba(0, 0, 0, 0.2) solid;float:left;margin-right:4px;}\n\n\n#barcharts_legend_list_items .legend-item  .icon-generic:before {\n    font-size: 180%;\n    color: #7e7e7e;\n}\n\n#barcharts_legend_list_items .legend-item:hover .icon-generic:before {color:#353535;}\n\n/*****************************************EBI font*******************************************************/\n@font-face{font-family:'EBI-Conceptual';src:url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');src:url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),\nurl('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),\nlocal('\\263A'),\nurl('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),\nurl('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');font-weight:normal;font-style:normal}\n\n\n@font-face{font-family:'EBI-Functional';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),\nlocal('\\263A'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}\n\n@font-face{font-family:'EBI-Generic';src:url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');src:url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),\nurl('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),\nlocal('\\263A'),\nurl('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),\nurl('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');font-weight:normal;font-style:normal}\n\n\n@font-face{font-family:'EBI-Species';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),\nlocal('\\263A'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');font-weight:normal;font-style:normal}\n\n@font-face{font-family:'EBI-SocialMedia';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),\nlocal('\\263A'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-Species') format('svg'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype');font-weight:normal;font-style:normal}\n\n.icon-socialmedia:before {font-family: 'EBI-SocialMedia';margin: 0 0.3em 0 0;content: attr(data-icon);color: white;font-size: 100%;}\n.icon-conceptual:before {font-family: 'EBI-Conceptual';margin: 0 0.3em 0 0;content: attr(data-icon); color: #7e7e7e;font-size: 180%;}\n\n.icon-species:before {\n    font-family: 'EBI-Species';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n.icon {\n    text-decoration: none;\n    font-style: normal;\n}\n\n.icon-static:before, .icon-generic:before {\n    font-family: 'EBI-Generic';\n    font-size: 100%;\n    color: #BBB;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon-functional:before {\n    font-family: 'EBI-Functional';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0.3em 0 0;\n}\n/*****************************************END EBI font*******************************************************/\n", ""]);
+	exports.push([module.id, ".gene_title {text-align:center; font-size:70%; border:0 red solid;}\n\n#container {min-width: 410px; min-height: 210px; /*avoid line overlap*/margin: 0 auto; border:0 red solid;}\n\n#barcharts_legend_list_items {color:#606060; margin-left: 180px; border: 0 solid olive;}\n.col_below {background:#d7d7d7;}\n.col_low {background: #dff8ff;}\n.col_med {background: #9fd2fa;}\n.col_high {background: #45affd;}\n.col_nd {background: #fff;}\n#barcharts_legend_list_items .legend-item {cursor: pointer; display: inline-block;padding:4px;vertical-align: middle;}\n#barcharts_legend_list_items .legend-item:hover {color:black;}\n#barcharts_legend_list_items .legend-item.legend-item-off {color:#ccc;}\n#barcharts_legend_list_items .legend-item.legend-item-off div {background-color: #f7f7f7;}\n#barcharts_legend_list_items .legend-item.special {cursor:default;margin-left:36px;color:black;}\n\n#barcharts_legend_list_items .legend-item .legend-rectangle {width: 12px;height: 12px; border:1px rgba(0, 0, 0, 0.2) solid;display:inline-block;margin-right:4px;vertical-align:middle;}\n\n\n#barcharts_legend_list_items .legend-item  .icon-generic:before {\n    font-size: 180%;\n    color: #7e7e7e;\n}\n\n#barcharts_legend_list_items .legend-item:hover .icon-generic:before {color:#353535;}\n\n/*****************************************EBI font*******************************************************/\n@font-face{font-family:'EBI-Conceptual';src:url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');src:url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),\nurl('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),\nlocal('\\263A'),\nurl('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),\nurl('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');font-weight:normal;font-style:normal}\n\n\n@font-face{font-family:'EBI-Functional';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),\nlocal('\\263A'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}\n\n@font-face{font-family:'EBI-Generic';src:url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');src:url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),\nurl('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),\nlocal('\\263A'),\nurl('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),\nurl('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');font-weight:normal;font-style:normal}\n\n\n@font-face{font-family:'EBI-Species';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),\nlocal('\\263A'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');font-weight:normal;font-style:normal}\n\n@font-face{font-family:'EBI-SocialMedia';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),\nlocal('\\263A'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-Species') format('svg'),\nurl('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype');font-weight:normal;font-style:normal}\n\n.icon-socialmedia:before {font-family: 'EBI-SocialMedia';margin: 0 0.3em 0 0;content: attr(data-icon);color: white;font-size: 100%;}\n.icon-conceptual:before {font-family: 'EBI-Conceptual';margin: 0 0.3em 0 0;content: attr(data-icon); color: #7e7e7e;font-size: 180%;}\n\n.icon-species:before {\n    font-family: 'EBI-Species';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n.icon {\n    text-decoration: none;\n    font-style: normal;\n}\n\n.icon-static:before, .icon-generic:before {\n    font-family: 'EBI-Generic';\n    font-size: 100%;\n    color: #BBB;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon-functional:before {\n    font-family: 'EBI-Functional';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0.3em 0 0;\n}\n/*****************************************END EBI font*******************************************************/\n", ""]);
 	
 	// exports
 
@@ -7715,7 +7715,7 @@ webpackJsonp_name_([5],[
 	
 	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })(); /*!
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * react-emojione
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * Copyright(c) 2015 Pedro Ladaria
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * Copyright(c) 2016 Pedro Ladaria
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * MIT Licensed
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */
 	
@@ -7753,9 +7753,9 @@ webpackJsonp_name_([5],[
 	_asciiToUnicode2.default.forEach(function (_ref) {
 	    var _ref2 = _slicedToArray(_ref, 2);
 	
-	    var regExpStr = _ref2[0];
+	    var reStr = _ref2[0];
 	    var unicode = _ref2[1];
-	    return asciiRegExpToUnicode.set(RegExp(regExpStr), unicode);
+	    return asciiRegExpToUnicode.set(RegExp(reStr), unicode);
 	});
 	
 	var asciiRegexStr = _asciiToUnicode2.default.map(function (_ref3) {
@@ -7810,6 +7810,28 @@ webpackJsonp_name_([5],[
 	var RE_SHORTNAMES_UNICODES = RegExp('(:\\w+:|' + _emojiFormatConversion.unicodes.join('|') + ')');
 	var RE_SHORTNAMES_UNICODES_ASCII = RegExp('(:\\w+:|' + _emojiFormatConversion.unicodes.join('|') + '|' + asciiRegexStr + ')');
 	
+	var startsWithSpace = function startsWithSpace(str) {
+	    return (/^\s/.test(str)
+	    );
+	};
+	var endsWithSpace = function endsWithSpace(str) {
+	    return (/\s$/.test(str)
+	    );
+	};
+	
+	var shouldConvertAscii = function shouldConvertAscii(parts, index) {
+	    if (parts.length === 1) {
+	        return true;
+	    }
+	    if (index === 0) {
+	        return startsWithSpace(parts[index + 1]);
+	    }
+	    if (index === parts.length - 1) {
+	        return endsWithSpace(parts[index - 1]);
+	    }
+	    return endsWithSpace(parts[index - 1]) && startsWithSpace(parts[index + 1]);
+	};
+	
 	var emojify = exports.emojify = function emojify(str) {
 	    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 	
@@ -7823,8 +7845,8 @@ webpackJsonp_name_([5],[
 	
 	    var renderCodepoint = (0, _rendererFactory2.default)(mergedOptions);
 	
-	    var convertedParts = str.split(regExp).map(function (part, index) {
-	        if (convertAscii) {
+	    var convertedParts = str.split(regExp).filter(Boolean).map(function (part, index, parts) {
+	        if (convertAscii && shouldConvertAscii(parts, index)) {
 	            var unicode = convertAsciiToUnicodeOrNull(part);
 	            if (unicode) {
 	                return renderCodepoint(_emojiFormatConversion.unicodeToCodepoint.get(unicode), 'a-' + index);
@@ -7885,9 +7907,9 @@ webpackJsonp_name_([5],[
 	[':-?D', '😃'], // :D :-D
 	['=-?\\)', '😊'], // =) =-)
 	[':-?>', '😁'], // :> :->
-	['x-?D', '😆'], // xD x-D
-	['X[-\']D', '😂'], // X-D X'D
-	['x\'D', '😂'], // x'D
+	['[xX]-?DD+', '😂'], // xDDD x-DDD
+	['[xX]-?D', '😆'], // xD x-D
+	['[xX]\'D', '😂'], // x'D
 	['\\^_*\\^', '😄'], // ^^ ^_^ ^__^ ...
 	// sad
 	[':-?\\(', '🙁'], // :( :-(
