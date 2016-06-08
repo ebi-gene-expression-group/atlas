@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-#!/usr/bin/env bash
-
 echo "Stopping Tomcat on ves-hx-77..."
 sudo -u tc_fg02 ssh ves-hx-77 '/nfs/public/rw/webadmin/tomcat/bases/fg/tc-fg-gxa_test/bin/controller stop'
 
