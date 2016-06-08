@@ -23,7 +23,7 @@ var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
  * @param {boolean=}        options.isWidget
  * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
  * @param {function}        options.fail - Callback to run if the AJAX request to the server fails. (jqXHR, textStatus)
- * @param {function}        options.eventEmitter
+ * @param {function}        options.anatomogramDataEventEmitter
  */
 exports.render = function(options) {
 
@@ -57,7 +57,7 @@ exports.render = function(options) {
                 fail: options.fail,
                 ensemblEventEmitter: ensemblEventEmitter,
                 anatomogramEventEmitter:anatomogramEventEmitter,
-                eventEmitter: options.eventEmitter
+                anatomogramDataEventEmitter: options.anatomogramDataEventEmitter
             }
         ),
         (typeof options.target === "string") ? document.getElementById(options.target) : options.target

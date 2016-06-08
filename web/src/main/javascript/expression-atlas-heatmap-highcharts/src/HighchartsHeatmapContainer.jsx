@@ -4,6 +4,8 @@
 
 var React = require('react');
 
+var Snap = require('imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js');
+
 var $ = require('jquery');
 require('jQuery-ajaxTransport-XDomainRequest');
 
@@ -56,7 +58,7 @@ var HighchartsHeatmapContainer = React.createClass({
         fail: React.PropTypes.func,
         ensemblEventEmitter : React.PropTypes.object.isRequired,
         anatomogramEventEmitter: React.PropTypes.object.isRequired,
-        eventEmitter: React.PropTypes.object.isRequired
+        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
     },
 
     render: function () {
@@ -160,9 +162,9 @@ var HighchartsHeatmapContainer = React.createClass({
         }, this);
 
         if (this.state.anatomogramData) {
-            this.props.eventEmitter.emit('existAnatomogramData', true);
+            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
         } else {
-            this.props.eventEmitter.emit('existAnatomogramData', false);
+            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
         }
     },
 
@@ -203,7 +205,7 @@ var HighchartsHeatmapContainer = React.createClass({
                 if (this.isMounted()) {
 
                     // var orderedData = HighchartsUtils.rankColumns(data.profiles, data.columnHeaders);
-                    // var filteredDataByThreshold = HighchartsUtils.applyThresholdtoColumns(orderedData.profiles, orderedData.columnHeaders, 40);
+                    // var filteredDataByThreshold = HighchartsUtils.applyThresholdToColumns(orderedData.profiles, orderedData.columnHeaders, 40);
                     // var rankedExperiments = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
                     // if (this.props.isMultiExperiment) {
                     //     data.profiles.rows = HighchartsUtils.applyThresholdToRows(rankedExperiments, filteredDataByThreshold.columnHeaders, 40);
@@ -311,9 +313,9 @@ var HighchartsHeatmapContainer = React.createClass({
                     });
 
                     if (this.state.anatomogramData) {
-                        this.props.eventEmitter.emit('existAnatomogramData', true);
+                        this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
                     } else {
-                        this.props.eventEmitter.emit('existAnatomogramData', false);
+                        this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
                     }
                 }
             }.bind(this)

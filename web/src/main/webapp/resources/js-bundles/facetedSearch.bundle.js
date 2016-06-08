@@ -1330,8 +1330,8 @@ webpackJsonp_name_([5],[
 	    var selectedSpecies = options.selectedSpecies,
 	        facetsTreeData = options.facetsTreeData;
 	
-	    var eventEmitter = new EventEmitter();
-	    eventEmitter.setMaxListeners(0);
+	    var anatomogramDataEventEmitter = new EventEmitter();
+	    anatomogramDataEventEmitter.setMaxListeners(0);
 	
 	    if (selectedSpecies && facetsTreeData.hasOwnProperty(selectedSpecies)) {
 	        var selectedSpeciesFactors = facetsTreeData[selectedSpecies];
@@ -1392,7 +1392,7 @@ webpackJsonp_name_([5],[
 	            React.createElement(
 	                FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked,
 	                    toggleAnatomograms: toggleAnatomograms, showAnatomograms: showAnatomograms, disableAnatomogramsCheckbox: !organismPartInQuerySelect(),
-	                    eventEmitter: eventEmitter}
+	                    anatomogramDataEventEmitter: anatomogramDataEventEmitter}
 	            ),
 	            facetsElement
 	        );
@@ -1400,7 +1400,7 @@ webpackJsonp_name_([5],[
 	        ReactDOM.render(
 	            React.createElement(
 	                BaselineHeatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms: showAnatomograms, atlasHost: host,
-	                    eventEmitter: eventEmitter}
+	                    anatomogramDataEventEmitter: anatomogramDataEventEmitter}
 	            ),
 	            heatmapsElement, triggerScrollEvent
 	        );
@@ -2458,7 +2458,7 @@ webpackJsonp_name_([5],[
 	        showAnatomograms: React.PropTypes.bool.isRequired,
 	        toggleAnatomograms: React.PropTypes.func.isRequired,
 	        disableAnatomogramsCheckbox: React.PropTypes.bool.isRequired,
-	        eventEmitter: React.PropTypes.object.isRequired
+	        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
 	    },
 	
 	    getInitialState: function () {
@@ -2480,8 +2480,8 @@ webpackJsonp_name_([5],[
 	    },
 	
 	    _addListeners: function () {
-	        if (this.props.eventEmitter) {
-	            this.props.eventEmitter.addListener('existAnatomogramData', this._checkAnatomogramData);
+	        if (this.props.anatomogramDataEventEmitter) {
+	            this.props.anatomogramDataEventEmitter.addListener('existAnatomogramData', this._checkAnatomogramData);
 	        }
 	    },
 	
@@ -2990,7 +2990,7 @@ webpackJsonp_name_([5],[
 	            species: React.PropTypes.string.isRequired,
 	            factor: React.PropTypes.string.isRequired
 	        })).isRequired,
-	        eventEmitter: React.PropTypes.object.isRequired
+	        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
 	    },
 	
 	    getInitialState: function () {
@@ -3019,7 +3019,7 @@ webpackJsonp_name_([5],[
 	                return React.createElement(BaselineHeatmapWidget, { key: heatmap.species + "_" + heatmap.factor,
 	                    showAnatomogram: this.props.showAnatomograms,
 	                    showHeatmapLabel: this._hasMoreThanOneSpecies(), species: heatmap.species, factor: heatmap.factor,
-	                    atlasHost: this.props.atlasHost, geneQuery: this.props.geneQuery, eventEmitter: this.props.eventEmitter });
+	                    atlasHost: this.props.atlasHost, geneQuery: this.props.geneQuery, anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter });
 	            }.bind(this)),
 	            React.createElement(FeedbackSmileys, { collectionCallback: function (score, comment) {
 	                    this.state.googleAnalyticsCallback('send', 'event', 'BaselineHeatmaps', 'feedback', comment, score);
@@ -3058,7 +3058,6 @@ webpackJsonp_name_([5],[
 	
 	//*------------------------------------------------------------------*
 	
-	// var heatmapRenderer = require('expression-atlas-heatmap');
 	var highchartsHeatmapRenderer = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 1430);
 	
 	//*------------------------------------------------------------------*
@@ -3073,7 +3072,7 @@ webpackJsonp_name_([5],[
 	        factor: React.PropTypes.string.isRequired,
 	        showAnatomogram: React.PropTypes.bool.isRequired,
 	        showHeatmapLabel: React.PropTypes.bool.isRequired,
-	        eventEmitter: React.PropTypes.object.isRequired
+	        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
 	    },
 	
 	    componentDidMount: function () {
@@ -3085,7 +3084,7 @@ webpackJsonp_name_([5],[
 	            target: ReactDOM.findDOMNode(this.refs.widgetBody),
 	            isWidget: false,
 	            showAnatomogram: this.props.showAnatomogram,
-	            eventEmitter: this.props.eventEmitter
+	            anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
 	        });
 	    },
 	
@@ -3098,7 +3097,7 @@ webpackJsonp_name_([5],[
 	            target: ReactDOM.findDOMNode(this.refs.widgetBody),
 	            isWidget: false,
 	            showAnatomogram: this.props.showAnatomogram,
-	            eventEmitter: this.props.eventEmitter
+	            anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
 	        });
 	    },
 	
@@ -3180,7 +3179,7 @@ webpackJsonp_name_([5],[
 	 * @param {boolean=}        options.isWidget
 	 * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
 	 * @param {function}        options.fail - Callback to run if the AJAX request to the server fails. (jqXHR, textStatus)
-	 * @param {function}        options.eventEmitter
+	 * @param {function}        options.anatomogramDataEventEmitter
 	 */
 	exports.render = function(options) {
 	
@@ -3214,7 +3213,7 @@ webpackJsonp_name_([5],[
 	                fail: options.fail,
 	                ensemblEventEmitter: ensemblEventEmitter,
 	                anatomogramEventEmitter:anatomogramEventEmitter,
-	                eventEmitter: options.eventEmitter
+	                anatomogramDataEventEmitter: options.anatomogramDataEventEmitter
 	            }
 	        ),
 	        (typeof options.target === "string") ? document.getElementById(options.target) : options.target
@@ -3235,12 +3234,14 @@ webpackJsonp_name_([5],[
 	
 	var React = __webpack_require__(/*! react */ 1260);
 	
+	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 1433);
+	
 	var $ = __webpack_require__(/*! jquery */ 1417);
-	__webpack_require__(/*! jQuery-ajaxTransport-XDomainRequest */ 1433);
+	__webpack_require__(/*! jQuery-ajaxTransport-XDomainRequest */ 1434);
 	
 	//*------------------------------------------------------------------*
 	
-	var HighchartsHeatmap = __webpack_require__(/*! ./HighchartsHeatmap.jsx */ 1434);
+	var HighchartsHeatmap = __webpack_require__(/*! ./HighchartsHeatmap.jsx */ 1435);
 	var HighchartsUtils = __webpack_require__(/*! ./highchartsUtils.js */ 1441);
 	__webpack_require__(/*! ./HighchartsHeatmapContainer.css */ 1442);
 	
@@ -3305,7 +3306,7 @@ webpackJsonp_name_([5],[
 	        fail: React.PropTypes.func,
 	        ensemblEventEmitter: React.PropTypes.object.isRequired,
 	        anatomogramEventEmitter: React.PropTypes.object.isRequired,
-	        eventEmitter: React.PropTypes.object.isRequired
+	        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
 	    },
 	
 	    render: function () {
@@ -3415,9 +3416,9 @@ webpackJsonp_name_([5],[
 	        }, this);
 	
 	        if (this.state.anatomogramData) {
-	            this.props.eventEmitter.emit('existAnatomogramData', true);
+	            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
 	        } else {
-	            this.props.eventEmitter.emit('existAnatomogramData', false);
+	            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
 	        }
 	    },
 	
@@ -3457,7 +3458,7 @@ webpackJsonp_name_([5],[
 	            if (this.isMounted()) {
 	
 	                // var orderedData = HighchartsUtils.rankColumns(data.profiles, data.columnHeaders);
-	                // var filteredDataByThreshold = HighchartsUtils.applyThresholdtoColumns(orderedData.profiles, orderedData.columnHeaders, 40);
+	                // var filteredDataByThreshold = HighchartsUtils.applyThresholdToColumns(orderedData.profiles, orderedData.columnHeaders, 40);
 	                // var rankedExperiments = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
 	                // if (this.props.isMultiExperiment) {
 	                //     data.profiles.rows = HighchartsUtils.applyThresholdToRows(rankedExperiments, filteredDataByThreshold.columnHeaders, 40);
@@ -3561,9 +3562,9 @@ webpackJsonp_name_([5],[
 	                });
 	
 	                if (this.state.anatomogramData) {
-	                    this.props.eventEmitter.emit('existAnatomogramData', true);
+	                    this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
 	                } else {
-	                    this.props.eventEmitter.emit('existAnatomogramData', false);
+	                    this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
 	                }
 	            }
 	        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
@@ -3595,11 +3596,16 @@ webpackJsonp_name_([5],[
 
 /***/ },
 /* 1433 */
+/*!************************************************************************************************************************!*\
+  !*** ./faceted-search/~/imports-loader?this=>window,fix=>module.exports=0!./faceted-search/~/snapsvg/dist/snap.svg.js ***!
+  \************************************************************************************************************************/
+420,
+/* 1434 */
 /*!*********************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js ***!
   \*********************************************************************************************************************************/
 [1748, 1417],
-/* 1434 */
+/* 1435 */
 /*!****************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/src/HighchartsHeatmap.jsx ***!
   \****************************************************************************************/
@@ -3610,7 +3616,6 @@ webpackJsonp_name_([5],[
 	//*------------------------------------------------------------------*
 	
 	var React = __webpack_require__(/*! react */ 1260);
-	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 1435);
 	
 	var ReactHighcharts = __webpack_require__(/*! react-highcharts */ 1436);
 	var Highcharts = ReactHighcharts.Highcharts;
@@ -3957,11 +3962,6 @@ webpackJsonp_name_([5],[
 	module.exports = HighchartsHeatmap;
 
 /***/ },
-/* 1435 */
-/*!************************************************************************************************************************!*\
-  !*** ./faceted-search/~/imports-loader?this=>window,fix=>module.exports=0!./faceted-search/~/snapsvg/dist/snap.svg.js ***!
-  \************************************************************************************************************************/
-420,
 /* 1436 */
 /*!*******************************************************************!*\
   !*** ./faceted-search/~/react-highcharts/dist/ReactHighcharts.js ***!
@@ -4160,7 +4160,7 @@ webpackJsonp_name_([5],[
 	    }
 	}
 	
-	function applyThresholdtoColumns(rows, columns, threshold) {
+	function applyThresholdToColumns(rows, columns, threshold) {
 	
 	    var percentageExpressedBelowThreshold = [];
 	    var percentageExpressedAboveThreshold = [];
@@ -4339,7 +4339,7 @@ webpackJsonp_name_([5],[
 	exports.getYAxisCategoriesLinks = getYAxisCategoriesLinks;
 	exports.rankColumns = rankColumns;
 	exports.rankExperiments = rankExperiments;
-	exports.applyThresholdtoColumns = applyThresholdtoColumns;
+	exports.applyThresholdtoColumns = applyThresholdToColumns;
 	exports.applyThresholdToRows = applyThresholdToRows;
 
 /***/ },
@@ -4419,7 +4419,7 @@ webpackJsonp_name_([5],[
 	__webpack_require__(/*! jquery-hc-sticky */ 1446);
 	__webpack_require__(/*! jquery-ui-bundle */ 1447);
 	
-	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 1435);
+	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 1433);
 	
 	var EventEmitter = __webpack_require__(/*! events */ 419);
 	

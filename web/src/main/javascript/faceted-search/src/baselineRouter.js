@@ -48,8 +48,8 @@ module.exports = function (options) {
     var selectedSpecies = options.selectedSpecies,
         facetsTreeData = options.facetsTreeData;
 
-    var eventEmitter = new EventEmitter();
-    eventEmitter.setMaxListeners(0);
+    var anatomogramDataEventEmitter = new EventEmitter();
+    anatomogramDataEventEmitter.setMaxListeners(0);
 
     if (selectedSpecies && facetsTreeData.hasOwnProperty(selectedSpecies)) {
         var selectedSpeciesFactors = facetsTreeData[selectedSpecies];
@@ -110,7 +110,7 @@ module.exports = function (options) {
             React.createElement(
                 FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked,
                     toggleAnatomograms: toggleAnatomograms, showAnatomograms: showAnatomograms, disableAnatomogramsCheckbox: !organismPartInQuerySelect(),
-                    eventEmitter: eventEmitter}
+                    anatomogramDataEventEmitter: anatomogramDataEventEmitter}
             ),
             facetsElement
         );
@@ -118,7 +118,7 @@ module.exports = function (options) {
         ReactDOM.render(
             React.createElement(
                 BaselineHeatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms: showAnatomograms, atlasHost: host,
-                    eventEmitter: eventEmitter}
+                    anatomogramDataEventEmitter: anatomogramDataEventEmitter}
             ),
             heatmapsElement, triggerScrollEvent
         );

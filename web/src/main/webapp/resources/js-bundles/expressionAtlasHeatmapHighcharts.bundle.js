@@ -47,7 +47,7 @@ webpackJsonp_name_([4],{
 	 * @param {boolean=}        options.isWidget
 	 * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
 	 * @param {function}        options.fail - Callback to run if the AJAX request to the server fails. (jqXHR, textStatus)
-	 * @param {function}        options.eventEmitter
+	 * @param {function}        options.anatomogramDataEventEmitter
 	 */
 	exports.render = function(options) {
 	
@@ -81,7 +81,7 @@ webpackJsonp_name_([4],{
 	                fail: options.fail,
 	                ensemblEventEmitter: ensemblEventEmitter,
 	                anatomogramEventEmitter:anatomogramEventEmitter,
-	                eventEmitter: options.eventEmitter
+	                anatomogramDataEventEmitter: options.anatomogramDataEventEmitter
 	            }
 	        ),
 	        (typeof options.target === "string") ? document.getElementById(options.target) : options.target
@@ -1120,6 +1120,8 @@ webpackJsonp_name_([4],{
 	
 	var React = __webpack_require__(/*! react */ 1083);
 	
+	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 420);
+	
 	var $ = __webpack_require__(/*! jquery */ 1241);
 	__webpack_require__(/*! jQuery-ajaxTransport-XDomainRequest */ 1242);
 	
@@ -1190,7 +1192,7 @@ webpackJsonp_name_([4],{
 	        fail: React.PropTypes.func,
 	        ensemblEventEmitter: React.PropTypes.object.isRequired,
 	        anatomogramEventEmitter: React.PropTypes.object.isRequired,
-	        eventEmitter: React.PropTypes.object.isRequired
+	        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
 	    },
 	
 	    render: function () {
@@ -1300,9 +1302,9 @@ webpackJsonp_name_([4],{
 	        }, this);
 	
 	        if (this.state.anatomogramData) {
-	            this.props.eventEmitter.emit('existAnatomogramData', true);
+	            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
 	        } else {
-	            this.props.eventEmitter.emit('existAnatomogramData', false);
+	            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
 	        }
 	    },
 	
@@ -1342,7 +1344,7 @@ webpackJsonp_name_([4],{
 	            if (this.isMounted()) {
 	
 	                // var orderedData = HighchartsUtils.rankColumns(data.profiles, data.columnHeaders);
-	                // var filteredDataByThreshold = HighchartsUtils.applyThresholdtoColumns(orderedData.profiles, orderedData.columnHeaders, 40);
+	                // var filteredDataByThreshold = HighchartsUtils.applyThresholdToColumns(orderedData.profiles, orderedData.columnHeaders, 40);
 	                // var rankedExperiments = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
 	                // if (this.props.isMultiExperiment) {
 	                //     data.profiles.rows = HighchartsUtils.applyThresholdToRows(rankedExperiments, filteredDataByThreshold.columnHeaders, 40);
@@ -1446,9 +1448,9 @@ webpackJsonp_name_([4],{
 	                });
 	
 	                if (this.state.anatomogramData) {
-	                    this.props.eventEmitter.emit('existAnatomogramData', true);
+	                    this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
 	                } else {
-	                    this.props.eventEmitter.emit('existAnatomogramData', false);
+	                    this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
 	                }
 	            }
 	        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
@@ -1503,7 +1505,6 @@ webpackJsonp_name_([4],{
 	//*------------------------------------------------------------------*
 	
 	var React = __webpack_require__(/*! react */ 1083);
-	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 420);
 	
 	var ReactHighcharts = __webpack_require__(/*! react-highcharts */ 1244);
 	var Highcharts = ReactHighcharts.Highcharts;
@@ -2370,7 +2371,7 @@ webpackJsonp_name_([4],{
 	    }
 	}
 	
-	function applyThresholdtoColumns(rows, columns, threshold) {
+	function applyThresholdToColumns(rows, columns, threshold) {
 	
 	    var percentageExpressedBelowThreshold = [];
 	    var percentageExpressedAboveThreshold = [];
@@ -2549,7 +2550,7 @@ webpackJsonp_name_([4],{
 	exports.getYAxisCategoriesLinks = getYAxisCategoriesLinks;
 	exports.rankColumns = rankColumns;
 	exports.rankExperiments = rankExperiments;
-	exports.applyThresholdtoColumns = applyThresholdtoColumns;
+	exports.applyThresholdtoColumns = applyThresholdToColumns;
 	exports.applyThresholdToRows = applyThresholdToRows;
 
 /***/ },

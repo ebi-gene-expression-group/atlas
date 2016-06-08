@@ -7,7 +7,6 @@ var ReactDOM = require('react-dom');
 
 //*------------------------------------------------------------------*
 
-// var heatmapRenderer = require('expression-atlas-heatmap');
 var highchartsHeatmapRenderer = require('expression-atlas-heatmap-highcharts');
 
 //*------------------------------------------------------------------*
@@ -20,7 +19,7 @@ var BaselineHeatmapWidget = React.createClass({
         factor: React.PropTypes.string.isRequired,
         showAnatomogram: React.PropTypes.bool.isRequired,
         showHeatmapLabel: React.PropTypes.bool.isRequired,
-        eventEmitter: React.PropTypes.object.isRequired
+        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
     },
 
     componentDidMount: function() {
@@ -32,7 +31,7 @@ var BaselineHeatmapWidget = React.createClass({
             target: ReactDOM.findDOMNode(this.refs.widgetBody),
             isWidget: false,
             showAnatomogram: this.props.showAnatomogram,
-            eventEmitter: this.props.eventEmitter
+            anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
         });
     },
 
@@ -45,7 +44,7 @@ var BaselineHeatmapWidget = React.createClass({
             target: ReactDOM.findDOMNode(this.refs.widgetBody),
             isWidget: false,
             showAnatomogram: this.props.showAnatomogram,
-            eventEmitter: this.props.eventEmitter
+            anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
         });
     },
 
