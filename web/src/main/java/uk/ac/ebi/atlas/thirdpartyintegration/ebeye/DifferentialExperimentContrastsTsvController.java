@@ -14,14 +14,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
-/**
- * Created with IntelliJ IDEA.
- * User: barrera
- * Date: 09/01/2014
- *
- * Generates a tsv url with a List of all contrast details for all differential experiments
- *
- */
 @Controller
 @Scope("request")
 public class DifferentialExperimentContrastsTsvController {
@@ -61,12 +53,10 @@ public class DifferentialExperimentContrastsTsvController {
 
         response.setContentType("text/tab-separated-values");
 
-        Iterator<String[]> lines = diffExperimentContrastLines.iterator();
-
-        while (lines.hasNext()){
-            String[] line = lines.next();
+        for (String[] line : diffExperimentContrastLines) {
             String lineTab = Joiner.on("\t").join(line);
             writer.write(lineTab + "\n");
         }
     }
+
 }
