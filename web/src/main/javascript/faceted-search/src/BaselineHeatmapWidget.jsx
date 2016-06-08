@@ -7,7 +7,7 @@ var ReactDOM = require('react-dom');
 
 //*------------------------------------------------------------------*
 
-var heatmapRenderer = require('expression-atlas-heatmap');
+// var heatmapRenderer = require('expression-atlas-heatmap');
 var highchartsHeatmapRenderer = require('expression-atlas-heatmap-highcharts');
 
 //*------------------------------------------------------------------*

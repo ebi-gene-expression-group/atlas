@@ -31,19 +31,21 @@ var BaselineFacetsTree = React.createClass({
     },
 
     getInitialState: function() {
-        return {checkedAnatomogram: this.props.showAnatomograms}
+        return {containsAnatomogram: this.props.showAnatomograms,
+                existsOneAnatomogramInHeatmaps: false}
     },
 
     _setChecked: function (checked, facet, facetItem) {
         this.props.setChecked(checked, facet, facetItem);
     },
 
-    _checkAnatomogramData: function (checkedAnatomogram) {
-        if(checkedAnatomogram == true) {
-            this.setState({checkedAnatomogram: this.props.disableAnatomogramsCheckbox});
+    _checkAnatomogramData: function (existsAnatomogram) {
+        if(existsAnatomogram) {
+            this.setState({containsAnatomogram: existsAnatomogram,
+                           existsOneAnatomogramInHeatmaps: true});
         }
         else {
-            this.setState({checkedAnatomogram: !checkedAnatomogram});
+            this.setState({containsAnatomogram: existsAnatomogram});
         }
     },
 
@@ -65,13 +67,13 @@ var BaselineFacetsTree = React.createClass({
             />;
         }.bind(this));
 
-        var _checked = this.state.checkedAnatomogram ? !this.state.checkedAnatomogram : this.props.showAnatomograms ;
+        var _checked = this.state.containsAnatomogram ? this.props.showAnatomograms : (this.state.existsOneAnatomogramInHeatmaps ? this.props.showAnatomograms : this.state.containsAnatomogram);
 
         return (
             <div className="hidden-xs gxaFacetsContainer">
                 <h5 style={{padding: 0}}>
-                    <input type="checkbox" checked={_checked} onChange={this.props.toggleAnatomograms} disabled={this.state.checkedAnatomogram}/>
-                    <span className={this.state.checkedAnatomogram ? "gxaDisabledCheckbox" : ""}>Show anatomograms</span>
+                    <input type="checkbox" checked={_checked} onChange={this.props.toggleAnatomograms} disabled={!this.state.existsOneAnatomogramInHeatmaps}/>
+                    <span className={!this.state.existsOneAnatomogramInHeatmaps ? "gxaDisabledCheckbox" : ""}>Show anatomograms</span>
                 </h5>
                 <h3>Filter your results</h3>
                 {facets}
