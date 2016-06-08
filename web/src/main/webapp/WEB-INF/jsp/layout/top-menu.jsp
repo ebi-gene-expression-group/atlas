@@ -101,11 +101,11 @@
                     <a href="${pageContext.request.contextPath}/help/index.html"
                        title="Help pages">Help</a>
                 </li>
-                <li id="gxaLocalNavLicence" class="last">
+                <li id="gxaLocalNavLicence">
                     <a href="${pageContext.request.contextPath}/licence.html"
                        title="Expression Atlas Licence">Licence</a>
                 </li>
-                <li id="gxaLocalNavAbout">
+                <li id="gxaLocalNavAbout" class="last">
                     <a href="${pageContext.request.contextPath}/about.html"
                        title="About Expression Atlas">About</a>
                 </li>
