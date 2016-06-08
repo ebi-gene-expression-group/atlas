@@ -19,7 +19,7 @@ module.exports = function(mountNode,atlasBaseURL,downloadProfilesURL, isFortLaud
               atlasBaseURL:atlasBaseURL,
               downloadProfilesURL: downloadProfilesURL,
               isFortLauderdale: isFortLauderdale,
-               googleAnalyticsCallback:
+               onDownloadCallbackForAnalytics:
                 typeof googleAnalyticsCallback ==='undefined'
                   ? console.log
                   : googleAnalyticsCallback

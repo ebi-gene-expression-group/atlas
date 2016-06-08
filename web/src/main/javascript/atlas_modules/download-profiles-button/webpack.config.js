@@ -6,7 +6,7 @@ module.exports = {
     entry: {
         downloadProfilesButton: './index.js',
         renderer: './html/renderer.js',
-        dependencies: ['react', 'react-dom', 'jquery', 'jquery-ui-bundle']
+        dependencies: ['react', 'react-dom']
     },
 
     output: {

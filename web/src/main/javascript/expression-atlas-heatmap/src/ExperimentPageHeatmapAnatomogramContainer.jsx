@@ -186,7 +186,8 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                              anatomogramEventEmitter={this.props.anatomogramEventEmitter}
                              atlasBaseURL={this.props.atlasBaseURL}
                              linksAtlasBaseURL={this.props.linksAtlasBaseURL}
-                             googleAnalyticsCallback={this.state.googleAnalyticsCallback}/>
+                             onDownloadCallbackForAnalytics={
+                               function() {this.state.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'downloadData')}.bind(this)/>
                 </div>
                 <div className="gxaHeatmapPosition gxaFeedbackBoxWrapper">
                   <FeedbackSmileys collectionCallback= {

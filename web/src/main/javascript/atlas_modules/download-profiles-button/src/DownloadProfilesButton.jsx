@@ -7,10 +7,10 @@ var ReactDOM = require('react-dom');
 
 var Modal = require('react-bootstrap/lib/Modal');
 var BootstrapButton = require('react-bootstrap/lib/Button');
-var BlueprintText = require('./BlueprintText.jsx');
+var Tooltip = require('react-bootstrap/lib/Tooltip');
+var OverlayTrigger = require('react-bootstrap/lib/OverlayTrigger');
 
-var $ = require('jquery');
-require('jquery-ui-bundle');
+var BlueprintText = require('./BlueprintText.jsx');
 
 //*------------------------------------------------------------------*
 
@@ -22,7 +22,7 @@ var DownloadProfilesButton = React.createClass({
         atlasBaseURL: React.PropTypes.string.isRequired,
         downloadProfilesURL: React.PropTypes.string.isRequired,
         isFortLauderdale: React.PropTypes.bool.isRequired,
-        googleAnalyticsCallback: React.PropTypes.func.isRequired
+        onDownloadCallbackForAnalytics: React.PropTypes.func.isRequired
     },
     getInitialState: function() {
         return { showModal: false };
@@ -41,7 +41,7 @@ var DownloadProfilesButton = React.createClass({
     },
 
     _commenceDownload: function () {
-        this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'downloadData');
+        this.props.onDownloadCallbackForAnalytics();
         window.location.href=this.props.atlasBaseURL + this.props.downloadProfilesURL;
     },
 
@@ -52,12 +52,19 @@ var DownloadProfilesButton = React.createClass({
 
     render: function () {
         var downloadImgSrcURL = this.props.atlasBaseURL + "/resources/images/download_blue_small.png";
-
         return (
             <a id="download-profiles-link" ref="downloadProfilesLink" className="gxaNoTextButton"
-               title="Download all results"
                href="javascript:void(0)" onClick={this._afterDownloadButtonClicked}>
-                <img id="download-profiles" alt="Download query results" style={{width: "20px"}} src={downloadImgSrcURL}/>
+                <OverlayTrigger
+                  placement="bottom"
+                  overlay={<Tooltip id="downloadResultsTooltip">
+                              <div className="gxaHelpTooltip">
+                                Download all results
+                              </div>
+                            </Tooltip>}
+                  delay={0}>
+                  <img id="download-profiles" alt="Download query results" style={{width: "20px"}} src={downloadImgSrcURL}/>
+                </OverlayTrigger>
                 <Modal id="myModal" show={this.state.showModal} onHide={this._closeModal} bsSize="large">
                     <Modal.Header closeButton>
                     </Modal.Header>
@@ -71,14 +78,6 @@ var DownloadProfilesButton = React.createClass({
                 </Modal>
             </a>
         );
-    },
-
-    componentDidMount: function () {
-        var $downloadProfilesLink = $(ReactDOM.findDOMNode(this.refs.downloadProfilesLink));
-        $downloadProfilesLink.tooltip({
-            tooltipClass: "gxaHelpTooltip"
-        });
-        $downloadProfilesLink.button();
     }
 });
 
