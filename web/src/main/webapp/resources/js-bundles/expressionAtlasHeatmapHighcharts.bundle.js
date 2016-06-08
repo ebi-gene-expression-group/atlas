@@ -47,7 +47,7 @@ webpackJsonp_name_([4],{
 	 * @param {boolean=}        options.isWidget
 	 * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
 	 * @param {function}        options.fail - Callback to run if the AJAX request to the server fails. (jqXHR, textStatus)
-	 * @param {function}        options.eventEmitter
+	 * @param {function}        options.anatomogramDataEventEmitter
 	 */
 	exports.render = function(options) {
 	
@@ -81,7 +81,7 @@ webpackJsonp_name_([4],{
 	                fail: options.fail,
 	                ensemblEventEmitter: ensemblEventEmitter,
 	                anatomogramEventEmitter:anatomogramEventEmitter,
-	                eventEmitter: options.eventEmitter
+	                anatomogramDataEventEmitter: options.anatomogramDataEventEmitter
 	            }
 	        ),
 	        (typeof options.target === "string") ? document.getElementById(options.target) : options.target
@@ -1190,7 +1190,7 @@ webpackJsonp_name_([4],{
 	        fail: React.PropTypes.func,
 	        ensemblEventEmitter: React.PropTypes.object.isRequired,
 	        anatomogramEventEmitter: React.PropTypes.object.isRequired,
-	        eventEmitter: React.PropTypes.object.isRequired
+	        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
 	    },
 	
 	    render: function () {
@@ -1300,9 +1300,9 @@ webpackJsonp_name_([4],{
 	        }, this);
 	
 	        if (this.state.anatomogramData) {
-	            this.props.eventEmitter.emit('existAnatomogramData', true);
+	            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
 	        } else {
-	            this.props.eventEmitter.emit('existAnatomogramData', false);
+	            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
 	        }
 	    },
 	
@@ -1446,9 +1446,9 @@ webpackJsonp_name_([4],{
 	                });
 	
 	                if (this.state.anatomogramData) {
-	                    this.props.eventEmitter.emit('existAnatomogramData', true);
+	                    this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
 	                } else {
-	                    this.props.eventEmitter.emit('existAnatomogramData', false);
+	                    this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
 	                }
 	            }
 	        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {

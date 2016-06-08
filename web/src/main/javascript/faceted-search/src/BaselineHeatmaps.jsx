@@ -27,7 +27,7 @@ var BaselineHeatmaps = React.createClass({
             species: React.PropTypes.string.isRequired,
             factor: React.PropTypes.string.isRequired
         })).isRequired,
-        eventEmitter: React.PropTypes.object.isRequired
+        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
     },
 
     getInitialState: function () {
@@ -56,7 +56,7 @@ var BaselineHeatmaps = React.createClass({
                     return <BaselineHeatmapWidget key={heatmap.species + "_" + heatmap.factor}
                                                   showAnatomogram={this.props.showAnatomograms}
                                                   showHeatmapLabel={this._hasMoreThanOneSpecies()} species={heatmap.species} factor={heatmap.factor}
-                                                  atlasHost={this.props.atlasHost} geneQuery={this.props.geneQuery} eventEmitter={this.props.eventEmitter} />;
+                                                  atlasHost={this.props.atlasHost} geneQuery={this.props.geneQuery} anatomogramDataEventEmitter={this.props.anatomogramDataEventEmitter} />;
                 }.bind(this))}
                 <FeedbackSmileys collectionCallback= {
                   function(score,comment){

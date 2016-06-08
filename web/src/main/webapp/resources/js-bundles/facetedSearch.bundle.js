@@ -1330,8 +1330,8 @@ webpackJsonp_name_([5],[
 	    var selectedSpecies = options.selectedSpecies,
 	        facetsTreeData = options.facetsTreeData;
 	
-	    var eventEmitter = new EventEmitter();
-	    eventEmitter.setMaxListeners(0);
+	    var anatomogramDataEventEmitter = new EventEmitter();
+	    anatomogramDataEventEmitter.setMaxListeners(0);
 	
 	    if (selectedSpecies && facetsTreeData.hasOwnProperty(selectedSpecies)) {
 	        var selectedSpeciesFactors = facetsTreeData[selectedSpecies];
@@ -1392,7 +1392,7 @@ webpackJsonp_name_([5],[
 	            React.createElement(
 	                FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked,
 	                    toggleAnatomograms: toggleAnatomograms, showAnatomograms: showAnatomograms, disableAnatomogramsCheckbox: !organismPartInQuerySelect(),
-	                    eventEmitter: eventEmitter}
+	                    anatomogramDataEventEmitter: anatomogramDataEventEmitter}
 	            ),
 	            facetsElement
 	        );
@@ -1400,7 +1400,7 @@ webpackJsonp_name_([5],[
 	        ReactDOM.render(
 	            React.createElement(
 	                BaselineHeatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms: showAnatomograms, atlasHost: host,
-	                    eventEmitter: eventEmitter}
+	                    anatomogramDataEventEmitter: anatomogramDataEventEmitter}
 	            ),
 	            heatmapsElement, triggerScrollEvent
 	        );
@@ -2458,7 +2458,7 @@ webpackJsonp_name_([5],[
 	        showAnatomograms: React.PropTypes.bool.isRequired,
 	        toggleAnatomograms: React.PropTypes.func.isRequired,
 	        disableAnatomogramsCheckbox: React.PropTypes.bool.isRequired,
-	        eventEmitter: React.PropTypes.object.isRequired
+	        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
 	    },
 	
 	    getInitialState: function () {
@@ -2480,8 +2480,8 @@ webpackJsonp_name_([5],[
 	    },
 	
 	    _addListeners: function () {
-	        if (this.props.eventEmitter) {
-	            this.props.eventEmitter.addListener('existAnatomogramData', this._checkAnatomogramData);
+	        if (this.props.anatomogramDataEventEmitter) {
+	            this.props.anatomogramDataEventEmitter.addListener('existAnatomogramData', this._checkAnatomogramData);
 	        }
 	    },
 	
@@ -2990,7 +2990,7 @@ webpackJsonp_name_([5],[
 	            species: React.PropTypes.string.isRequired,
 	            factor: React.PropTypes.string.isRequired
 	        })).isRequired,
-	        eventEmitter: React.PropTypes.object.isRequired
+	        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
 	    },
 	
 	    getInitialState: function () {
@@ -3019,7 +3019,7 @@ webpackJsonp_name_([5],[
 	                return React.createElement(BaselineHeatmapWidget, { key: heatmap.species + "_" + heatmap.factor,
 	                    showAnatomogram: this.props.showAnatomograms,
 	                    showHeatmapLabel: this._hasMoreThanOneSpecies(), species: heatmap.species, factor: heatmap.factor,
-	                    atlasHost: this.props.atlasHost, geneQuery: this.props.geneQuery, eventEmitter: this.props.eventEmitter });
+	                    atlasHost: this.props.atlasHost, geneQuery: this.props.geneQuery, anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter });
 	            }.bind(this)),
 	            React.createElement(FeedbackSmileys, { collectionCallback: function (score, comment) {
 	                    this.state.googleAnalyticsCallback('send', 'event', 'BaselineHeatmaps', 'feedback', comment, score);
@@ -3073,7 +3073,7 @@ webpackJsonp_name_([5],[
 	        factor: React.PropTypes.string.isRequired,
 	        showAnatomogram: React.PropTypes.bool.isRequired,
 	        showHeatmapLabel: React.PropTypes.bool.isRequired,
-	        eventEmitter: React.PropTypes.object.isRequired
+	        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
 	    },
 	
 	    componentDidMount: function () {
@@ -3085,7 +3085,7 @@ webpackJsonp_name_([5],[
 	            target: ReactDOM.findDOMNode(this.refs.widgetBody),
 	            isWidget: false,
 	            showAnatomogram: this.props.showAnatomogram,
-	            eventEmitter: this.props.eventEmitter
+	            anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
 	        });
 	    },
 	
@@ -3098,7 +3098,7 @@ webpackJsonp_name_([5],[
 	            target: ReactDOM.findDOMNode(this.refs.widgetBody),
 	            isWidget: false,
 	            showAnatomogram: this.props.showAnatomogram,
-	            eventEmitter: this.props.eventEmitter
+	            anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
 	        });
 	    },
 	
@@ -3180,7 +3180,7 @@ webpackJsonp_name_([5],[
 	 * @param {boolean=}        options.isWidget
 	 * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
 	 * @param {function}        options.fail - Callback to run if the AJAX request to the server fails. (jqXHR, textStatus)
-	 * @param {function}        options.eventEmitter
+	 * @param {function}        options.anatomogramDataEventEmitter
 	 */
 	exports.render = function(options) {
 	
@@ -3214,7 +3214,7 @@ webpackJsonp_name_([5],[
 	                fail: options.fail,
 	                ensemblEventEmitter: ensemblEventEmitter,
 	                anatomogramEventEmitter:anatomogramEventEmitter,
-	                eventEmitter: options.eventEmitter
+	                anatomogramDataEventEmitter: options.anatomogramDataEventEmitter
 	            }
 	        ),
 	        (typeof options.target === "string") ? document.getElementById(options.target) : options.target
@@ -3305,7 +3305,7 @@ webpackJsonp_name_([5],[
 	        fail: React.PropTypes.func,
 	        ensemblEventEmitter: React.PropTypes.object.isRequired,
 	        anatomogramEventEmitter: React.PropTypes.object.isRequired,
-	        eventEmitter: React.PropTypes.object.isRequired
+	        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
 	    },
 	
 	    render: function () {
@@ -3415,9 +3415,9 @@ webpackJsonp_name_([5],[
 	        }, this);
 	
 	        if (this.state.anatomogramData) {
-	            this.props.eventEmitter.emit('existAnatomogramData', true);
+	            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
 	        } else {
-	            this.props.eventEmitter.emit('existAnatomogramData', false);
+	            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
 	        }
 	    },
 	
@@ -3561,9 +3561,9 @@ webpackJsonp_name_([5],[
 	                });
 	
 	                if (this.state.anatomogramData) {
-	                    this.props.eventEmitter.emit('existAnatomogramData', true);
+	                    this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
 	                } else {
-	                    this.props.eventEmitter.emit('existAnatomogramData', false);
+	                    this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
 	                }
 	            }
 	        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {

@@ -27,7 +27,7 @@ var BaselineFacetsTree = React.createClass({
         showAnatomograms: React.PropTypes.bool.isRequired,
         toggleAnatomograms: React.PropTypes.func.isRequired,
         disableAnatomogramsCheckbox: React.PropTypes.bool.isRequired,
-        eventEmitter: React.PropTypes.object.isRequired
+        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
     },
 
     getInitialState: function() {
@@ -50,8 +50,8 @@ var BaselineFacetsTree = React.createClass({
     },
 
     _addListeners: function () {
-        if (this.props.eventEmitter) {
-            this.props.eventEmitter.addListener('existAnatomogramData', this._checkAnatomogramData);
+        if (this.props.anatomogramDataEventEmitter) {
+            this.props.anatomogramDataEventEmitter.addListener('existAnatomogramData', this._checkAnatomogramData);
         }
     },
 
