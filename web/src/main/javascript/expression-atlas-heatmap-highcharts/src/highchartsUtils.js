@@ -102,7 +102,7 @@ function rankColumns (profiles, columnHeaders) {
     }
 }
 
-function applyThresholdtoColumns(rows, columns, threshold) {
+function applyThresholdToColumns(rows, columns, threshold) {
 
     var percentageExpressedBelowThreshold = [];
     var percentageExpressedAboveThreshold = [];
@@ -281,5 +281,5 @@ exports.getYAxisCategories = getYAxisCategories;
 exports.getYAxisCategoriesLinks = getYAxisCategoriesLinks;
 exports.rankColumns = rankColumns;
 exports.rankExperiments = rankExperiments;
-exports.applyThresholdtoColumns = applyThresholdtoColumns;
+exports.applyThresholdtoColumns = applyThresholdToColumns;
 exports.applyThresholdToRows = applyThresholdToRows;
