@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home_request-preferences.css" media="screen">
 
 <section class="gxaSection">
-	<h2>Expression Atlas: Differential and Baseline Expression</h2>
+    <h2>Expression Atlas: Differential and Baseline Expression</h2>
 
     <p>
         The Expression Atlas provides information on gene expression patterns under
@@ -19,79 +19,79 @@
 
 <%-- section for search boxes, Browse... menu, and grid sections --%>
 <section>
-	<div class="grid_18">
+    <div class="grid_18">
 
-		<h3>Search...</h3>
+        <h3>Search...</h3>
 
-		<form method="get" action="query" id="searchForm">
-			<table class="gxaFormGrid">
-				<tr>
-					<td class="gxaTableColumn35">
-						<label>Gene query</label>
-						<span data-help-loc="#geneSearch"></span>
-					</td>
-					<td class="gxaTableColumn20">
-						<label>Organism</label>
-					</td>
-					<td class="gxaTableColumn35">
-						<label>Sample properties</label>
-						<span data-help-loc="#experimentalConditions"></span>
-					</td>
-					<td class="gxaTableColumn10" rowspan="2" style="vertical-align: middle;">
-						<div class="gxaHomeSearchActionButtons">
-							<div style="text-align: right;">
-								<input id="submit-button" type="submit" value="Search" tabindex="4">
-							</div>
-							<div style="text-align: right;">
-								<input id="reset-button" type="reset" value="Reset" tabindex="5">
-							</div>
-						</div>
-					</td>
-				</tr>
+        <form method="get" action="query" id="searchForm">
+            <table class="gxaFormGrid">
+                <tr>
+                    <td class="gxaTableColumn35">
+                        <label>Gene query</label>
+                        <span data-help-loc="#geneSearch"></span>
+                    </td>
+                    <td class="gxaTableColumn20">
+                        <label>Organism</label>
+                    </td>
+                    <td class="gxaTableColumn35">
+                        <label>Sample properties</label>
+                        <span data-help-loc="#experimentalConditions"></span>
+                    </td>
+                    <td class="gxaTableColumn10" rowspan="2" style="vertical-align: middle;">
+                        <div class="gxaHomeSearchActionButtons">
+                            <div style="text-align: right;">
+                                <input id="submit-button" type="submit" value="Search" tabindex="4">
+                            </div>
+                            <div style="text-align: right;">
+                                <input id="reset-button" type="reset" value="Reset" tabindex="5">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
 
-				<tr>
-					<td>
-						<div id="geneQuerySection">
-							<textarea id="geneQuery" name="geneQuery" rows="2" cols="36" placeholder="(all genes)" tabindex="1"></textarea>
+                <tr>
+                    <td>
+                        <div id="geneQuerySection">
+                            <textarea id="geneQuery" name="geneQuery" rows="2" cols="36" placeholder="(all genes)" tabindex="1"></textarea>
 
-							<div  class="gxaSearchExamples">
-								<span style="float:left">E.g.
-									<a href="query?geneQuery=REG1B&organism=Homo+sapiens">REG1B</a>,
-									<a href="query?geneQuery=%22zinc+finger%22">zinc finger</a>
-								</span>
+                            <div  class="gxaSearchExamples">
+                                <span style="float:left">E.g.
+                                    <a href="query?geneQuery=REG1B&organism=Homo+sapiens">REG1B</a>,
+                                    <a href="query?geneQuery=%22zinc+finger%22">zinc finger</a>
+                                </span>
 
-								<span style="float:right">
-									<input style="vertical-align: middle" id="exactMatch" name="exactMatch" type="checkbox" value="true"
-										   checked="checked" tabindex="2">
-									<label for="exactMatch">Exact match</label>
-									<input type="hidden" name="_exactMatch" value="on">
-								</span>
-							</div>
-						</div>
-					</td>
+                                <span style="float:right">
+                                    <input style="vertical-align: middle" id="exactMatch" name="exactMatch" type="checkbox" value="true"
+                                           checked="checked" tabindex="2">
+                                    <label for="exactMatch">Exact match</label>
+                                    <input type="hidden" name="_exactMatch" value="on">
+                                </span>
+                            </div>
+                        </div>
+                    </td>
 
-					<td>
-						<form:select id="organism" name="organism" path="dummyPath">
-							<form:options items="${organisms}" />
-						</form:select>
-					</td>
-					<td>
-						<div id="conditionSection">
-							<textarea id="condition" name="condition" maxlength="900" rows="2" cols="36" placeholder="(all conditions)" tabindex="3"></textarea>
+                    <td>
+                        <form:select id="organism" name="organism" path="dummyPath">
+                            <form:options items="${organisms}" />
+                        </form:select>
+                    </td>
+                    <td>
+                        <div id="conditionSection">
+                            <textarea id="condition" name="condition" maxlength="900" rows="2" cols="36" placeholder="(all conditions)" tabindex="3"></textarea>
 
-							<div class="gxaSearchExamples">
-								<span>E.g.
-									<a href="query?condition=lung">lung</a>,
-									<a href="query?condition=leaf">leaf</a>,
-									<a href="query?condition=&quot;valproic+acid&quot;">"valproic acid"</a>,
-									<a href="query?condition=cancer">cancer</a>
-								</span>
-							</div>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</form>
+                            <div class="gxaSearchExamples">
+                                <span>E.g.
+                                    <a href="query?condition=lung">lung</a>,
+                                    <a href="query?condition=leaf">leaf</a>,
+                                    <a href="query?condition=&quot;valproic+acid&quot;">"valproic acid"</a>,
+                                    <a href="query?condition=cancer">cancer</a>
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
 
 
         <div class="grid_12 alpha">
