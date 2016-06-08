@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -102,7 +101,7 @@ public class ExperimentOpsTest {
     public void allOpsReturnTheSameKindOfJson() {
         Random rand = new Random();
 
-        for (ExperimentOps.Op op : ExperimentOps.Op.values()) {
+        for (Op op : Op.values()) {
             List<String> accessions = new ArrayList<>();
             for (int i = -1; i < rand.nextInt(5); i++) {
                 accessions.add("E-DUMMY-" + rand.nextInt(10000));
@@ -126,13 +125,13 @@ public class ExperimentOpsTest {
     public void aggregateOpsInANeatFashion() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         Mockito.when(experimentCRUD.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
-        List<ExperimentOps.Op> ops= new ArrayList<>();
-        ops.add(ExperimentOps.Op.UPDATE_DESIGN); // says "success!"
-        ops.add(ExperimentOps.Op.CLEAR_LOG); // says "success!"
-        ops.add(ExperimentOps.Op.LIST); // says something else
-        ops.add(ExperimentOps.Op.DELETE); //throws, should give an error
-        ops.add(ExperimentOps.Op.COEXPRESSION_DELETE); // should not be started
-        ops.add(ExperimentOps.Op.COEXPRESSION_IMPORT); // should not be started
+        List<Op> ops= new ArrayList<>();
+        ops.add(Op.UPDATE_DESIGN); // says "success!"
+        ops.add(Op.CLEAR_LOG); // says "success!"
+        ops.add(Op.LIST); // says something else
+        ops.add(Op.DELETE); //throws, should give an error
+        ops.add(Op.COEXPRESSION_DELETE); // should not be started
+        ops.add(Op.COEXPRESSION_IMPORT); // should not be started
 
 
         JsonArray result = experimentOps.perform(Optional.of(Collections.singletonList(accession)),ops);
@@ -149,46 +148,46 @@ public class ExperimentOpsTest {
         Set<Map.Entry<String, JsonElement>> firstSuccess = successes.get(0).getAsJsonObject().entrySet();
         assertThat(firstSuccess.size(), is(1));
         String opNameOfFirstSuccessEntry = firstSuccess.iterator().next().getKey();
-        assertThat(opNameOfFirstSuccessEntry, containsString(ExperimentOps.Op.UPDATE_DESIGN.name()));
-        assertThat(opNameOfFirstSuccessEntry, containsString(ExperimentOps.Op.CLEAR_LOG.name()));
+        assertThat(opNameOfFirstSuccessEntry, containsString(Op.UPDATE_DESIGN.name()));
+        assertThat(opNameOfFirstSuccessEntry, containsString(Op.CLEAR_LOG.name()));
 
         Set<Map.Entry<String, JsonElement>> secondSuccess = successes.get(1).getAsJsonObject().entrySet();
         assertThat(secondSuccess.size(), is(1));
-        assertEquals(ExperimentOps.Op.LIST.name(), secondSuccess.iterator().next().getKey());
+        assertEquals(Op.LIST.name(), secondSuccess.iterator().next().getKey());
 
         Set<Map.Entry<String, JsonElement>> firstFailure = failures.get(0).getAsJsonObject().entrySet();
         assertThat(firstFailure.size(), is(1));
-        assertEquals(ExperimentOps.Op.DELETE.name(), firstFailure.iterator().next().getKey());
+        assertEquals(Op.DELETE.name(), firstFailure.iterator().next().getKey());
 
 
         Set<Map.Entry<String, JsonElement>> secondFailure = failures.get(1).getAsJsonObject().entrySet();
         assertThat(secondFailure.size(), is(1));
         String key3 = secondFailure.iterator().next().getKey();
-        assertThat(key3, containsString(ExperimentOps.Op.COEXPRESSION_DELETE.name()));
-        assertThat(key3, containsString(ExperimentOps.Op.COEXPRESSION_IMPORT.name()));
+        assertThat(key3, containsString(Op.COEXPRESSION_DELETE.name()));
+        assertThat(key3, containsString(Op.COEXPRESSION_IMPORT.name()));
 
     }
 
     @Test
     public void statefulOpsModifyTheOpLog() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        for (ExperimentOps.Op op : ExperimentOps.Op.values()) {
-            if (!op.equals(ExperimentOps.Op.CLEAR_LOG)) {
+        for (Op op : Op.values()) {
+            if (!op.equals(Op.CLEAR_LOG)) {
                 experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList
                         (op));
             }
         }
         assertEquals(
-                ExperimentOps.Op.values().length
-                        - Arrays.asList(ExperimentOps.Op.LIST, ExperimentOps.Op.LOG, ExperimentOps.Op.STATUS,
-                        ExperimentOps.Op.CLEAR_LOG).size()
+                Op.values().length
+                        - Arrays.asList(Op.LIST, Op.LOG, Op.STATUS,
+                        Op.CLEAR_LOG).size()
                 , fileSystem.get(accession).size());
     }
 
     @Test
     public void timestampsLookRight() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        for (ExperimentOps.Op op : ExperimentOps.Op.values()) {
+        for (Op op : Op.values()) {
             experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(op));
         }
         for (Pair<String, Pair<Long, Long>> p : fileSystem.get(accession)) {
@@ -205,7 +204,7 @@ public class ExperimentOpsTest {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         Mockito.when(experimentCRUD.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
 
-        JsonObject result = experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singleton(ExperimentOps.Op
+        JsonObject result = experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singleton(Op
                 .DELETE))
                 .iterator().next().getAsJsonObject();
 

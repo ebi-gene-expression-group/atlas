@@ -94,12 +94,16 @@ public class ExperimentMetadataCRUD {
         //from cache gets this experiment from the DB first
         //TODO: change this so it uses experimentConfiguration, experimentDesign, and accession rather than experiment
         if (!isPrivate) {
-            Experiment experiment = experimentTrader.getPublicExperiment(accession);
-            ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
-            conditionsIndexTrader.getIndex(experiment.getType()).addConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
+            addPublicExperimentToConditionsIndex(accession, experimentDesign);
         }
 
         return uuid;
+    }
+
+    private void addPublicExperimentToConditionsIndex(String accession, ExperimentDesign experimentDesign) {
+        Experiment experiment = experimentTrader.getPublicExperiment(accession);
+        ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
+        conditionsIndexTrader.getIndex(experiment.getType()).addConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
     }
 
     private ImmutableSetMultimap<String, String> expandOntologyTerms(ImmutableSetMultimap<String, String> termIdsByAssayAccession) {
@@ -194,9 +198,7 @@ public class ExperimentMetadataCRUD {
             LOGGER.info("updated design for experiment {}", accession);
 
             if (!experimentDTO.isPrivate()) {
-                Experiment experiment = experimentTrader.getPublicExperiment(accession);
-                ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
-                conditionsIndexTrader.getIndex(experiment.getType()).updateConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
+                addPublicExperimentToConditionsIndex(accession,experimentDesign);
             }
 
         } catch (IOException e) {

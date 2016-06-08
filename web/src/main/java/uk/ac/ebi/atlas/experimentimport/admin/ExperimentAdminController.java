@@ -28,6 +28,7 @@ public class ExperimentAdminController {
     private final ExperimentOps experimentOps;
     private final ExperimentTrader experimentTrader;
     private final ExperimentMetadataCRUD experimentMetadataCRUD;
+    private final ExperimentAdminHelpPage helpPage = new ExperimentAdminHelpPage();
     private final Gson gson= new GsonBuilder().setPrettyPrinting().create();
 
     
@@ -43,16 +44,22 @@ public class ExperimentAdminController {
             value = "",
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
+    @ResponseBody
     public String listAllExperiments() {
-        return "redirect:all/list";
+        return doOp("all", "list");
     }
 
     @RequestMapping(
             value = "/{accessions}",
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
+    @ResponseBody
     public String listExperiments(@PathVariable("accessions") String accessions) {
-        return "redirect:" + accessions + "/list";
+        if(accessions.equalsIgnoreCase("help")){
+            return helpPage.getMessage();
+        } else {
+            return doOp(accessions, "list");
+        }
     }
 
     @RequestMapping(
@@ -66,20 +73,12 @@ public class ExperimentAdminController {
                     ? Optional.<Collection<String>>absent()
                     : Optional.of(readAccessions(accessionParameter));
 
-            return gson.toJson(experimentOps.perform(accessions, readOps(opParameter)));
+            return gson.toJson(experimentOps.perform(accessions,  Op.opsForParameter(opParameter)));
         } catch (IllegalArgumentException e) {
             return gson.toJson(usageMessage(opParameter));
         } catch (Exception e) {
             return gson.toJson(errorMessage(accessionParameter, e));
         }
-    }
-
-    private List<ExperimentOps.Op> readOps(String opParameter) throws IllegalArgumentException {
-        List<ExperimentOps.Op> ops = new ArrayList<>();
-        for(String s: opParameter.split(",")){
-            ops.add(ExperimentOps.Op.valueOf(s.toUpperCase()));
-        }
-        return ops;
     }
 
     private JsonElement errorMessage(String accessionParameter, Exception e){
@@ -93,12 +92,8 @@ public class ExperimentAdminController {
 
     private JsonElement usageMessage(String opParameter){
         JsonObject messageObject = new JsonObject();
-        messageObject.addProperty("error","Operation " + opParameter + " not known" );
-        JsonArray a = new JsonArray();
-        for(ExperimentOps.Op op: ExperimentOps.Op.values()){
-            a.add(new JsonPrimitive(op.name()));
-        }
-        messageObject.add("available", a);
+        messageObject.addProperty("error","Could not understand: " + opParameter );
+        messageObject.addProperty("help","see gxa/admin/experiments/help for more info");
         return messageObject;
     }
 
