@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/gxa/resources/css/jquery-ui-1.11.4.custom/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/gxa/resources/css/atlas.css">
+    <link rel="stylesheet" href="http://www.ebi.ac.uk/gxa/resources/css/customized-bootstrap-3.3.5.css">
+
+
+    <script src="../dist/vendor.bundle.js"></script>
+    <script src="../dist/renderer.bundle.js"></script>
+</head>
+<body>
+    <div id="main">
+        <p>Fort lauderdale button</p>
+        <div style="margin-bottom: 10px" id="button1"></div>
+        <p>Just a button</p>
+        <div id="button2"></div>
+    </div>
+</body>
+
+<script>
+    renderer(document.getElementById("button2"), "http://www.ebi.ac.uk/gxa",":void", false);
+    renderer(document.getElementById("button1"), "http://www.ebi.ac.uk/gxa",":void", true);
+
+</script>
+
+</html>
