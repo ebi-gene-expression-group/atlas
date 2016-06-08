@@ -47,14 +47,15 @@ public class BaselineExperimentProfilesViewModelBuilder {
     }
 
     private JsonElement buildExperimentJson(BaselineExperimentProfile profile,
-                                            SortedSet<Factor>
-            orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+                                            SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
         JsonObject result = new JsonObject();
         result.addProperty("id", profile.getId());
         result.addProperty("name",profile.getShortName());
         result.addProperty("experimentType", profile.getExperimentType());
-        result.add("expressions", baselineExpressionViewModelBuilder.buildExpressions(profile, orderedFactors,
-                minExpressionLevel, maxExpressionLevel));
+        result.add(
+                "expressions", baselineExpressionViewModelBuilder.buildExpressions(profile, orderedFactors,
+                minExpressionLevel, maxExpressionLevel)
+        );
         result.addProperty("serializedFilterFactors", filterFactorsConverter.serialize(profile.getFilterFactors()));
         return result;
     }

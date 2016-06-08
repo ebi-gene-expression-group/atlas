@@ -166,7 +166,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
 
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
-            model.addAttribute("anatomogram",anatomogramFactory.get("ORGANISM_PART",ensemblSpecies,filteredAssayGroupFactors, contextRoot));
+            model.addAttribute("anatomogram", anatomogramFactory.get("ORGANISM_PART",ensemblSpecies,filteredAssayGroupFactors, contextRoot));
         } else {
             model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
         }
