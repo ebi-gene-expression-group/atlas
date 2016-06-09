@@ -32,7 +32,7 @@ public class BaselineProfilesWriterService {
     public BaselineProfilesWriterService(BaselineProfileInputStreamFactory inputStreamFactory,
                                          ProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriter,
                                          SolrQueryService solrQueryService,
-                                         CoexpressedGenesService coexpressedGenesService){
+                                         CoexpressedGenesService coexpressedGenesService) {
         this.inputStreamFactory = inputStreamFactory;
         this.profilesWriter = profilesWriter;
         this.solrQueryService = solrQueryService;
@@ -41,34 +41,33 @@ public class BaselineProfilesWriterService {
     }
 
     public long write(Writer writer, BaselineRequestPreferences preferences, BaselineExperiment experiment,
-                     Map<String, Integer> coexpressionsRequested) throws GenesNotFoundException {
+                      Map<String, Integer> coexpressionsRequested) throws GenesNotFoundException {
         int totalCoexpressionsRequested = 0;
-        for(Map.Entry<String, Integer> e: coexpressionsRequested.entrySet()){
-            totalCoexpressionsRequested+=e.getValue();
+        for (Map.Entry<String, Integer> e : coexpressionsRequested.entrySet()) {
+            totalCoexpressionsRequested += e.getValue();
         }
-        if(totalCoexpressionsRequested==0){
-            BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment,preferences);
-            GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
-            return profilesWriter
-                    .write(writer, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(),geneQueryResponse);
+        final BaselineRequestContext requestContext;
+        final GeneQueryResponse geneQueryResponse;
+
+        if (totalCoexpressionsRequested == 0) {
+            requestContext = BaselineRequestContext.createFor(experiment, preferences);
+            geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
         } else {
-            GeneQuery originalGeneQuery = preferences.getGeneQuery();
-            GeneQuery extendedGeneQuery = coexpressedGenesService.extendGeneQueryWithCoexpressions(experiment,
-                    originalGeneQuery,coexpressionsRequested);
 
-            preferences.setGeneQuery(extendedGeneQuery);
-            BaselineRequestContext requestContext = BaselineRequestContext.createWithCustomGeneQueryDescription(experiment,preferences,
-                    describe(originalGeneQuery, extendedGeneQuery.size()-originalGeneQuery.size()));
-            GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
-            long count = profilesWriter.write(writer, inputStreamFactory.create(requestContext), requestContext,
-                    requestContext.getAllQueryFactors(),geneQueryResponse);
-            preferences.setGeneQuery(originalGeneQuery);
+            GeneQueryResponse originalResponse = solrQueryService.fetchResponseBasedOnRequestContext(preferences
+                    .getGeneQuery(), preferences.isExactMatch(), BaselineRequestContext.createFor(experiment, preferences).getFilteredBySpecies());
 
-            return count;
+            geneQueryResponse = coexpressedGenesService
+                    .extendGeneQueryResponseWithCoexpressions(experiment, originalResponse, coexpressionsRequested);
+
+            requestContext = BaselineRequestContext.createWithCustomGeneQueryDescription(experiment,
+                    preferences, describe(preferences.getGeneQuery(), geneQueryResponse.getAllGeneIds().size() - originalResponse.getAllGeneIds().size()));
+
         }
+        return profilesWriter.write(writer, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(), geneQueryResponse);
     }
 
-    private String describe(GeneQuery gq, int coexpressedGenes){
-        return gq.description() +" with "+coexpressedGenes+" similarly expressed genes";
+    private String describe(GeneQuery gq, int coexpressedGenes) {
+        return gq.description() + " with " + coexpressedGenes + " similarly expressed genes";
     }
 }

@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -158,6 +159,7 @@ public class BaselineProfilesHeatMapWranglerTest {
         verifyNoMoreInteractions(baselineProfilesHeatMap);
     }
 
+    @Ignore
     @Test
     public void jsonCoexpressionsReturnedForOneResult() throws Exception {
         BaselineProfilesList rightList = new BaselineProfilesList();
