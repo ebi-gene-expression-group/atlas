@@ -7015,7 +7015,7 @@ webpackJsonp_name_([3],[
 	            props.afterPopupVisibleChange(state.popupVisible);
 	          }
 	        });
-	        if (_this.isClickToHide()) {
+	        if (props.action.indexOf('click') !== -1) {
 	          if (state.popupVisible) {
 	            if (!_this.clickOutsideHandler) {
 	              _this.clickOutsideHandler = _rcUtil.Dom.addEventListener(document, 'mousedown', _this.onDocumentClick);
