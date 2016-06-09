@@ -274,7 +274,7 @@ var HighchartsHeatmap = React.createClass({
 
         var barcharts_legend = (
             <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
-                <div className="legend-item">Click to interact:</div>
+                <div className="legend-text">Click to interact:</div>
 
                 <div id="legend_1" ref="legend_1" className={clsName_1} onClick={this.handleClick.bind(this,1)} >
                     <div className="legend-rectangle col_below"></div>
@@ -295,7 +295,7 @@ var HighchartsHeatmap = React.createClass({
 
                 <div className="legend-item">
                     <span className="icon icon-generic" data-icon="i" data-toggle="tooltip" data-placement="bottom"
-                          title="This range of value indicates gene expression level accross different tissues. It is calculated in different a different way between DNA and RNA experiments">
+                          title="This range of values indicates gene expression level across different factors (e.g. tissues). It is calculated differently between RNA and proteomics experiments.">
                     </span>
                 </div>
 
