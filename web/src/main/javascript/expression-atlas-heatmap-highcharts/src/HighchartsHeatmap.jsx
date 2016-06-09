@@ -11,6 +11,7 @@ require('highcharts-heatmap')(Highcharts);
 //*------------------------------------------------------------------*
 
 require('./HighchartsHeatmap.css');
+var DownloadProfilesButton = require('download-profiles-button');
 
 var EventEmitter = require('events');
 
@@ -22,7 +23,8 @@ var HighchartsHeatmap = React.createClass({
         profiles: React.PropTypes.object.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
         anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
-        ensemblEventEmitter : React.PropTypes.instanceOf(EventEmitter)
+        ensemblEventEmitter : React.PropTypes.instanceOf(EventEmitter),
+        googleAnalyticsCallback: React.PropTypes.func
     },
 
     getInitialState: function () {
@@ -107,6 +109,16 @@ var HighchartsHeatmap = React.createClass({
         this.state.legend_3 ? heatmap.series[3].hide() : heatmap.series[3].show();
         this.state.legend_4 ? heatmap.series[4].hide() : heatmap.series[4].show();
 
+    },
+
+    _showGeneCount: function() {
+        var shownRows, totalRows;
+            shownRows = this.props.profiles.rows.length;
+            totalRows = this.props.profiles.searchResultTotal;
+
+        return <div style={{display: "inline-block", 'verticalAlign': "top"}}>
+                    <span id="geneCount">Showing {shownRows} of {totalRows} experiments found: </span>
+            </div>
     },
 
     render: function () {
@@ -306,8 +318,21 @@ var HighchartsHeatmap = React.createClass({
             </div>
         );
 
+        var paddingMargin = "15px";
+
         return (
             <div>
+                <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{"paddingBottom": paddingMargin, "position": "sticky"}}>
+                    {this._showGeneCount()}
+                    <div style={{display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top"}}>
+                        <DownloadProfilesButton ref="downloadProfilesButton"
+                                                downloadProfilesURL={this.props.heatmapConfig.downloadProfilesURL}
+                                                atlasBaseURL={this.props.atlasBaseURL}
+                                                isFortLauderdale={this.props.heatmapConfig.isFortLauderdale}
+                                                onDownloadCallbackForAnalytics={function() {this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'downloadData')}.bind(this)}/>
+                    </div>
+                </div>
+
                 <div id="highcharts_container">
                     <ReactHighcharts config={highchartsOptions} ref="chart"/>
                     {barcharts_legend}

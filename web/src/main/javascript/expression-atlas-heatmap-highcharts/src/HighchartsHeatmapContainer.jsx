@@ -56,6 +56,7 @@ var HighchartsHeatmapContainer = React.createClass({
         isMultiExperiment: React.PropTypes.bool.isRequired,
         disableGoogleAnalytics: React.PropTypes.bool.isRequired,
         fail: React.PropTypes.func,
+        googleAnalyticsCallback: React.PropTypes.func,
         ensemblEventEmitter : React.PropTypes.object.isRequired,
         anatomogramEventEmitter: React.PropTypes.object.isRequired,
         anatomogramDataEventEmitter: React.PropTypes.object.isRequired
@@ -102,9 +103,11 @@ var HighchartsHeatmapContainer = React.createClass({
                   <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
                       <HighchartsHeatmap
                                profiles={this.state.profiles}
+                               heatmapConfig={this.state.heatmapConfig}
                                anatomogramEventEmitter={this.props.anatomogramEventEmitter}
                                ensemblEventEmitter={this.props.ensemblEventEmitter}
                                atlasBaseURL={this.props.atlasBaseURL}
+                               googleAnalyticsCallback={this.state.googleAnalyticsCallback}
                                xAxisCategories={this.state.xAxisCategories}
                                yAxisCategories={this.state.yAxisCategories}
                                yAxisCategoriesLinks={this.state.yAxisCategoriesLinks}
@@ -179,6 +182,7 @@ var HighchartsHeatmapContainer = React.createClass({
             jsonCoexpressions : [],
             geneSetProfiles: {},
             anatomogramData: {},
+            googleAnalyticsCallback: function (){},
 
             xAxisCategories: {},
             yAxisCategories: {},
@@ -339,6 +343,7 @@ var HighchartsHeatmapContainer = React.createClass({
 
             ga('create', 'UA-37676851-2', 'auto');
             ga('send', 'pageview');
+            this.setState({googleAnalyticsCallback: ga});
         }
     }
 });
