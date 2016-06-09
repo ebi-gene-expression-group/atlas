@@ -2576,7 +2576,9 @@ webpackJsonp_name_([3],[
 	                        downloadProfilesURL: this._constructDownloadProfilesURL(),
 	                        atlasBaseURL: this.props.atlasBaseURL,
 	                        isFortLauderdale: this.props.heatmapConfig.isFortLauderdale,
-	                        googleAnalyticsCallback: this.props.googleAnalyticsCallback })
+	                        onDownloadCallbackForAnalytics: function () {
+	                            this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'downloadData');
+	                        }.bind(this) })
 	                ),
 	                React.createElement(
 	                    'div',

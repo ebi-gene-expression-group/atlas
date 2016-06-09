@@ -1540,9 +1540,7 @@ webpackJsonp_name_([1],[
 	                    anatomogramEventEmitter: this.props.anatomogramEventEmitter,
 	                    atlasBaseURL: this.props.atlasBaseURL,
 	                    linksAtlasBaseURL: this.props.linksAtlasBaseURL,
-	                    onDownloadCallbackForAnalytics: function () {
-	                        this.state.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'downloadData');
-	                    }.bind(this) })
+	                    googleAnalyticsCallback: this.state.googleAnalyticsCallback })
 	            ),
 	            React.createElement(
 	                'div',
@@ -7388,7 +7386,9 @@ webpackJsonp_name_([1],[
 	                        downloadProfilesURL: this._constructDownloadProfilesURL(),
 	                        atlasBaseURL: this.props.atlasBaseURL,
 	                        isFortLauderdale: this.props.heatmapConfig.isFortLauderdale,
-	                        googleAnalyticsCallback: this.props.googleAnalyticsCallback })
+	                        onDownloadCallbackForAnalytics: function () {
+	                            this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'downloadData');
+	                        }.bind(this) })
 	                ),
 	                React.createElement(
 	                    'div',

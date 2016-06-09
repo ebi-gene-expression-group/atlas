@@ -220,7 +220,7 @@ var HeatmapAnatomogramContainer = React.createClass({
 
             ga('create', 'UA-37676851-2', 'auto');
             ga('send', 'pageview');
-            this.setState({googleAnalyticsCallback: ga})
+            this.setState({googleAnalyticsCallback: ga});
         }
     },
 

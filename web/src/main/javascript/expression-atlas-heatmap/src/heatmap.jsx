@@ -368,7 +368,7 @@ var Heatmap = React.createClass({
                                                 downloadProfilesURL={this._constructDownloadProfilesURL()}
                                                 atlasBaseURL={this.props.atlasBaseURL}
                                                 isFortLauderdale={this.props.heatmapConfig.isFortLauderdale}
-                                                googleAnalyticsCallback={this.props.googleAnalyticsCallback}/>
+                                                onDownloadCallbackForAnalytics={function() {this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'downloadData')}.bind(this)}/>
                     </div>
                     <div style={{display: "inline-block", "paddingLeft": "20px"}}>
                         {this.legendType()}
