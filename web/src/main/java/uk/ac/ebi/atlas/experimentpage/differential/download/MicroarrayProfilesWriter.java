@@ -41,7 +41,7 @@ public class MicroarrayProfilesWriter extends ProfilesWriter<MicroarrayProfile, 
                 (requestContext,"");
         MicroarrayProfilesTsvInputStream inputStream = inputStreamFactory.create(requestContext, arrayDesign);
         Set<Contrast> contrasts = Sets.newHashSet(inputStream.getOrderedContrastsPresentInStream());
-        return super.write(outputWriter, inputStream, requestContext, contrasts,geneQueryResponse, false);
+        return super.write(outputWriter, inputStream, requestContext, contrasts,geneQueryResponse);
     }
 
 }

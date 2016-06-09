@@ -47,15 +47,21 @@ public class BaselineProfilesWriterService {
             totalCoexpressionsRequested+=e.getValue();
         }
         if(totalCoexpressionsRequested==0){
-            return write(writer, BaselineRequestContext.createFor(experiment,preferences));
+            BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment,preferences);
+            GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
+            return profilesWriter
+                    .write(writer, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(),geneQueryResponse);
         } else {
             GeneQuery originalGeneQuery = preferences.getGeneQuery();
             GeneQuery extendedGeneQuery = coexpressedGenesService.extendGeneQueryWithCoexpressions(experiment,
                     originalGeneQuery,coexpressionsRequested);
 
             preferences.setGeneQuery(extendedGeneQuery);
-            long count = write(writer, BaselineRequestContext.createWithCustomGeneQueryDescription(experiment,preferences,
-                    describe(originalGeneQuery, extendedGeneQuery.size()-originalGeneQuery.size())));
+            BaselineRequestContext requestContext = BaselineRequestContext.createWithCustomGeneQueryDescription(experiment,preferences,
+                    describe(originalGeneQuery, extendedGeneQuery.size()-originalGeneQuery.size()));
+            GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
+            long count = profilesWriter.write(writer, inputStreamFactory.create(requestContext), requestContext,
+                    requestContext.getAllQueryFactors(),geneQueryResponse);
             preferences.setGeneQuery(originalGeneQuery);
 
             return count;
@@ -64,15 +70,5 @@ public class BaselineProfilesWriterService {
 
     private String describe(GeneQuery gq, int coexpressedGenes){
         return gq.description() +" with "+coexpressedGenes+" similarly expressed genes";
-    }
-
-    /*
-    Note there is an additional path of the code for gene sets, and that we do not use it here.
-    Alfonso says there was once an idea for having the download button give you exactly what's on the page.
-    Didn't happen, you can consider deleting.
-     */
-    private long write(Writer outputWriter, BaselineRequestContext requestContext) throws GenesNotFoundException {
-        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
-        return profilesWriter.write(outputWriter, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(),geneQueryResponse, false);
     }
 }

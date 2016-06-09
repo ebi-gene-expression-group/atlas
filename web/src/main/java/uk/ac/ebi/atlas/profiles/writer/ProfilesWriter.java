@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Set;
 
@@ -33,8 +32,13 @@ public class ProfilesWriter<P extends Profile, K, O extends ProfileStreamOptions
     }
 
     public long write(Writer outputWriter, ObjectInputStream<P> inputStream, O options, Set<K> conditions,
-                      GeneQueryResponse geneQueryResponse, boolean shouldAverageIntoGeneSets)  {
-
+                      GeneQueryResponse geneQueryResponse)  {
+        /*
+        Note there is an additional path of the code for gene sets, and that we do not use it here.
+        Alfonso says there was once an idea for having the download button give you exactly what's on the page.
+        Didn't happen, you can consider deleting.
+        */
+        boolean shouldAverageIntoGeneSets = false;
         tsvWriter.setResponseWriter(outputWriter);
 
         try (ObjectInputStream<P> source = inputStream) {

@@ -10,7 +10,6 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
@@ -120,7 +119,7 @@ public class BaselineExperimentDownloadControllerTest {
 
         when(responseMock.getWriter()).thenReturn(printWriterMock);
         when(profilesWriterMock.write(eq(printWriterMock),any(ObjectInputStream.class),
-                any(BaselineRequestContext.class), anySet(), any(GeneQueryResponse.class), anyBoolean())).thenReturn
+                any(BaselineRequestContext.class), anySet(), any(GeneQueryResponse.class))).thenReturn
                 (0L);
 
         subject.downloadGeneProfiles(requestMock,EXPERIMENT_ACCESSION, "",preferencesMock, responseMock);
@@ -129,7 +128,7 @@ public class BaselineExperimentDownloadControllerTest {
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
         verify(profilesWriterMock).write(eq(printWriterMock), any(ObjectInputStream.class), any
-                (BaselineRequestContext.class), anySet(), any(GeneQueryResponse.class), anyBoolean());
+                (BaselineRequestContext.class), anySet(), any(GeneQueryResponse.class));
     }
 
 

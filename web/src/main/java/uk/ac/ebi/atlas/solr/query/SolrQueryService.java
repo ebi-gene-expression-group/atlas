@@ -112,16 +112,11 @@ public class SolrQueryService {
 
     private GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(String geneQuery, boolean exactMatch, String species) {
 
-        checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
-
-        species = Species.convertToEnsemblSpecies(species);
-
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
         //associate gene ids with each token in the query string
         for (String queryToken : splitBySpacePreservingQuotes(geneQuery)) {
-            Set<String> geneIds = fetchGeneIds(queryToken, exactMatch, species);
-            geneQueryResponse.addGeneIds(queryToken, geneIds);
+            geneQueryResponse.addGeneIds(queryToken, fetchGeneIds(queryToken, exactMatch, species));
         }
         return geneQueryResponse;
 
@@ -201,9 +196,8 @@ public class SolrQueryService {
             return new GeneQueryResponse();
         }
 
-        GeneQueryResponse geneQueryResponse = fetchGeneIdsOrSetsGroupedByGeneQueryToken(geneQuery,
-                isExactMatch,
-                species);
+        GeneQueryResponse geneQueryResponse =
+                fetchGeneIdsOrSetsGroupedByGeneQueryToken(geneQuery, isExactMatch,Species.convertToEnsemblSpecies(species));
 
         if (geneQueryResponse.isEmpty()) {
             throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + species);

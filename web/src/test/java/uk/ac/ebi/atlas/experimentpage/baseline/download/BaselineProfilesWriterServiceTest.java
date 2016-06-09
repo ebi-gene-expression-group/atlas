@@ -133,7 +133,7 @@ public class BaselineProfilesWriterServiceTest {
         Mockito.verify(solrQueryService).fetchResponseBasedOnRequestContext(any(RequestContext.class), anyString());
         Mockito.verify(inputStreamFactory).create(any(BaselineProfileStreamOptions.class));
         Mockito.verify(profilesWriter).write(eq(writer), eq(inputStream), any(BaselineRequestContext.class), anySet(), eq
-                (responseFromSolr), anyBoolean());
+                (responseFromSolr));
         Mockito.verifyNoMoreInteractions(solrQueryService, inputStreamFactory, profilesWriter);
         Mockito.reset(solrQueryService, inputStreamFactory, profilesWriter);
     }
@@ -146,7 +146,7 @@ public class BaselineProfilesWriterServiceTest {
         long expected = 123L;
 
         when(profilesWriter.write(eq(writer), any(ObjectInputStream.class), any(BaselineRequestContext.class), anySet()
-                , any(GeneQueryResponse.class), anyBoolean())).thenReturn(expected);
+                , any(GeneQueryResponse.class))).thenReturn(expected);
 
         long returnValue = subject.write(writer, preferencesMock, baselineExperimentMock,coexpressions );
 
