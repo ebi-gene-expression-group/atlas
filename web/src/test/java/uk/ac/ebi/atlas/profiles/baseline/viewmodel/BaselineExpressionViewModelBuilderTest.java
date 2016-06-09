@@ -56,7 +56,6 @@ public class BaselineExpressionViewModelBuilderTest {
             "  {\n" +
             "    \"factorName\": \"adipose\",\n" +
             "    \"color\": \"\",\n" +
-            "    \"value\": 0.0,\n" +
             "    \"svgPathId\": \"ontologyTerm\"\n" +
             "  },\n" +
             "  {\n" +
@@ -66,13 +65,11 @@ public class BaselineExpressionViewModelBuilderTest {
             "  },\n" +
             "  {\n" +
             "    \"factorName\": \"brain\",\n" +
-            "    \"color\": \"\",\n" +
-            "    \"value\": 0.0\n" +
+            "    \"color\": \"\"\n" +
             "  },\n" +
             "  {\n" +
             "    \"factorName\": \"breast\",\n" +
-            "    \"color\": \"\",\n" +
-            "    \"value\": 0.0\n" +
+            "    \"color\": \"\"\n" +
             "  }\n" +
         "]";
 
@@ -96,7 +93,6 @@ public class BaselineExpressionViewModelBuilderTest {
                 "  {\n" +
                 "    \"factorName\": \"adipose\",\n" +
                 "    \"color\": \"\",\n" +
-                "    \"value\": 0.0,\n" +
                 "    \"svgPathId\": \"ontologyTerm\"\n" +
                 "  },\n" +
                 "  {\n" +
@@ -113,13 +109,11 @@ public class BaselineExpressionViewModelBuilderTest {
                 "  },\n" +
                 "  {\n" +
                 "    \"factorName\": \"brain\",\n" +
-                "    \"color\": \"\",\n" +
-                "    \"value\": 0.0\n" +
+                "    \"color\": \"\"\n" +
                 "  },\n" +
                 "  {\n" +
                 "    \"factorName\": \"breast\",\n" +
-                "    \"color\": \"\",\n" +
-                "    \"value\": 0.0\n" +
+                "    \"color\": \"\"\n" +
                 "  }\n" +
                 "]";
 
