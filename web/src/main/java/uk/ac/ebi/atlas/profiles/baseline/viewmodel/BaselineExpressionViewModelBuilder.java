@@ -40,8 +40,8 @@ public class BaselineExpressionViewModelBuilder {
         BaselineExpression expression = profile.getExpression(factor);
         Optional<Quartiles> quartiles = (expression == null || expression.getQuartiles().length == 0) ? Optional.<Quartiles>absent() : Optional.of(Quartiles.create(expression.getQuartiles()));
 
-        Double value = expression == null || expression.getLevelAsString().equals("NT") || !expression.isKnown()
-                ? 0
+        Double value = expression == null || !expression.isKnown()
+                ? Double.NaN
                 : expression.getLevel();
         String color = (expression == null)
                 ? ""

@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
@@ -67,16 +68,24 @@ public class BaselineExperimentSearchResultProducer {
             BaselineExperimentProfile profile = new BaselineExperimentProfile(experimentSlice);
 
             for (BaselineExperimentExpression baselineExpression : expressionsByExperimentSlice.get(experimentSlice)) {
-                uk.ac.ebi.atlas.model.baseline.BaselineExpression expression = createBaselineExpression(experiment, baselineExpression);
-                //check expression level string if the factor
+                BaselineExpression expression = createBaselineExpression(experiment, baselineExpression);
                 profile.add(defaultQueryFactorType, expression);
             }
 
-            //For the nonFilterFactors which don't have expression, create new expression with NT level
+            // For the nonFilterFactors which don't have expression, create new expression with NT level
             for (Factor factor : factorDifference) {
                 FactorGroup factorGroup = new FactorSet(factor);
-                uk.ac.ebi.atlas.model.baseline.BaselineExpression baselineExpression = new uk.ac.ebi.atlas.model.baseline.BaselineExpression("NT", factorGroup);
+                BaselineExpression baselineExpression = new BaselineExpression("NT", factorGroup);
                 profile.add(defaultQueryFactorType, baselineExpression);
+            }
+
+            // For the expressed factors below cutoff
+            for (Factor factor : tissueFactorsAcrossAllExperiments) {
+                if (profile.getExpression(factor) == null) {
+                    FactorGroup factorGroup = new FactorSet(factor);
+                    BaselineExpression baselineExpression = new BaselineExpression("NA", factorGroup);
+                    profile.add(defaultQueryFactorType, baselineExpression);
+                }
             }
 
             profiles.add(profile);
