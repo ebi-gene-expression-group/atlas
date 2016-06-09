@@ -171,7 +171,7 @@
 <script>
     //hide/show when there is more than 5 items in the list
     $(function() {
-        var $ul = $("ul");
+        var $ul = $(".species_item ul");
         $ul.find(".hide_button").hide();//temp - to add in css by default
         $ul.find("li:gt(4)").hide();//hide extra list item
 
