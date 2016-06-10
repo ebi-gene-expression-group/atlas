@@ -29,7 +29,7 @@ var FeedbackPersistence = function createFeedbackComponent(FeedbackUIComponent){
 
       getInitialState: function() {
         return {
-          created : new Date().toISOString("2016-05-02T11:10:05.417Z"), //TODO
+          created : new Date().toISOString(),
           shownTimes : 0,
           show : true
             };
@@ -39,7 +39,7 @@ var FeedbackPersistence = function createFeedbackComponent(FeedbackUIComponent){
         var timeDiff = Math.abs(new Date().getTime() - new Date(this.state.created).getTime());
         var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-        return this.state.show && diffDays >0 && this.state.shownTimes < 1500;
+        return this.state.show && diffDays >0 && this.state.shownTimes < 50;
       },
 
       _hide: function () {
