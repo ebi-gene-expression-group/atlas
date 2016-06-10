@@ -45,9 +45,9 @@ public class BaselineExpressionViewModelBuilder {
                 : expression.getLevel();
         String color = (expression == null)
                 ? ""
-                : (expression.isKnown() && !expression.isSpecialValue()
+                : (expression.isKnown() && !expression.getLevelAsString().equals("NT")
                     ? colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel)
-                    : (expression.isSpecialValue()
+                    : (expression.getLevelAsString().equals("NT")
                         ? ""
                         : "UNKNOWN"));
 

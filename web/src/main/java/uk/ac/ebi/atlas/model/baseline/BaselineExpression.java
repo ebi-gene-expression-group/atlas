@@ -6,7 +6,6 @@ import com.esotericsoftware.kryo.KryoSerializable;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.atlas.model.Expression;
@@ -62,10 +61,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
         }
         this.factorGroup = factorGroup;
         this.quartiles = new double[]{};
-    }
-
-    public boolean isSpecialValue(){
-        return ImmutableList.of("NA","NT").contains(getLevelAsString());
     }
 
     public double[] getQuartiles() {

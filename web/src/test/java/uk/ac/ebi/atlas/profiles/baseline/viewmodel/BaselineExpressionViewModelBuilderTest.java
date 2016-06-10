@@ -17,7 +17,6 @@ import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
 
 public class BaselineExpressionViewModelBuilderTest {
 
@@ -27,6 +26,7 @@ public class BaselineExpressionViewModelBuilderTest {
     private static final Factor BRAIN = new Factor(ORGANISM_PART, "brain");
     private static final Factor BREAST = new Factor(ORGANISM_PART, "breast");
 
+    private static final String NT = "NT";
     private static final double minExpressionLevel = 0.3;
     private static final double maxExpressionLevel = 47;
 
@@ -43,7 +43,7 @@ public class BaselineExpressionViewModelBuilderTest {
     @Test
     public void buildExpressionViewModel () {
         BaselineProfile profile = new BaselineProfile("Factor_ID", "Factor_NAME");
-        profile.add("ORGANISM_PART", new BaselineExpression("NT", new FactorSet(ADIPOSE)));
+        profile.add("ORGANISM_PART", new BaselineExpression(NT, new FactorSet(ADIPOSE)));
         profile.add("ORGANISM_PART", new BaselineExpression(0.3, new FactorSet(ADRENAL)));
 
         JsonArray expressions = subject.buildExpressions(profile, orderedFactors,
@@ -80,7 +80,7 @@ public class BaselineExpressionViewModelBuilderTest {
     @Test
     public void buildExpressionViewModelWithQuartiles () {
         BaselineProfile profile = new BaselineProfile("Factor_ID", "Factor_NAME");
-        profile.add("ORGANISM_PART", new BaselineExpression("NT", new FactorSet(ADIPOSE)));
+        profile.add("ORGANISM_PART", new BaselineExpression(NT, new FactorSet(ADIPOSE)));
         profile.add("ORGANISM_PART", new BaselineExpression(new double[]{0.1,0.2,0.3,0.4,0.5}, new FactorSet(ADRENAL)));
 
         JsonArray expressions = subject.buildExpressions(profile, orderedFactors,
@@ -118,24 +118,6 @@ public class BaselineExpressionViewModelBuilderTest {
                 "]";
 
         assertThat(json, is(expected));
-    }
-
-    @Test
-    public void stringsNAAndNTShouldBeSerialisedInTheSameWay(){
-        BaselineProfile p1 = new BaselineProfile("Factor_ID", "Factor_NAME");
-        p1.add("ORGANISM_PART", new BaselineExpression("NT", new FactorSet(ADIPOSE)));
-
-        BaselineProfile p2 = new BaselineProfile("Factor_ID", "Factor_NAME");
-        p2.add("ORGANISM_PART", new BaselineExpression("NA", new FactorSet(ADIPOSE)));
-
-        JsonArray e1 = subject.buildExpressions(p1, orderedFactors,
-                minExpressionLevel, maxExpressionLevel);
-
-        JsonArray e2 = subject.buildExpressions(p2, orderedFactors,
-                minExpressionLevel, maxExpressionLevel);
-
-        assertEquals(e1, e2);
-
     }
 
 }
