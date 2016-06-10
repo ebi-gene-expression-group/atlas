@@ -86,21 +86,24 @@ var HighchartsHeatmap = React.createClass({
       Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseLeave', {svgPathId: svgPathId});
     },
 
-    _registerListeners: function() {
-      if (this.props.anatomogramEventEmitter) {
-          this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
-          this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
-      }
-      //ensemblEventEmitter only emits events, it doesn't receive them
+    _registerListenerIfNecessary(name, fn){
+      if (this.props.anatomogramEventEmitter &&
+          this.props.anatomogramEventEmitter._events &&
+          !this.props.anatomogramEventEmitter._events.hasOwnProperty(name)){
+            this.props.anatomogramEventEmitter.addListener(name, fn);
+          }
     },
 
     componentDidMount: function () {
-        this._registerListeners();
+        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
+        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
         var heatmap = this.refs.chart.getChart();
         heatmap.series[0].hide();
     },
 
     componentDidUpdate: function () {
+        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
+        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
         var heatmap = this.refs.chart.getChart();
         heatmap.series[0].hide();
 
