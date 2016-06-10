@@ -24,7 +24,7 @@ var HighchartsHeatmap = React.createClass({
         atlasBaseURL: React.PropTypes.string.isRequired,
         anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
         ensemblEventEmitter : React.PropTypes.instanceOf(EventEmitter),
-        googleAnalyticsCallback: React.PropTypes.func
+        googleAnalyticsCallback: React.PropTypes.func.isRequired
     },
 
     getInitialState: function () {
@@ -329,7 +329,7 @@ var HighchartsHeatmap = React.createClass({
                                                 downloadProfilesURL={this.props.heatmapConfig.downloadProfilesURL}
                                                 atlasBaseURL={this.props.atlasBaseURL}
                                                 isFortLauderdale={this.props.heatmapConfig.isFortLauderdale}
-                                                onDownloadCallbackForAnalytics={function() {this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'downloadData')}.bind(this)}/>
+                                                onDownloadCallbackForAnalytics={function() {this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')}.bind(this)}/>
                     </div>
                 </div>
 
