@@ -31,8 +31,8 @@
     "cell-differential": "file:./atlas_modules/cell-differential",
     "contrast-tooltips": "file:./atlas_modules/contrast-tooltips",
     "display-levels-button": "file:./atlas_modules/display-levels-button",
-    "fancybox": "^3.0.0",
     "expression-atlas-heatmap": "file:./expression-atlas-heatmap",
+    "fancybox": "^3.0.0",
     "highcharts-heatmap": "^0.1.2",
     "highcharts-more": "^0.1.2",
     "jQuery-ajaxTransport-XDomainRequest": "git+https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git",
@@ -45,7 +45,7 @@
     "query-string": "^2.3.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
-    "react-highcharts": "^8.0.3",
+    "react-highcharts": "^8.3.2",
     "react-radio-group": "^1.1.0",
     "snapsvg": "^0.4.0",
     "urijs": "^1.16.0"

@@ -83,18 +83,16 @@
     });
 
     $baselineTabLink.on("shown.bs.tab", function() {
+        // Hack to resize Highcharts heat maps to container width
         if (ie9) {
             function dispatchEvent(eventName) {
                 var evt = document.createEvent("CustomEvent");
                 evt.initCustomEvent(eventName, true, false, {});
                 window.dispatchEvent(evt);
             }
-
-            dispatchEvent("gxaResizeHeatmapAnatomogramHeader");
-            dispatchEvent("scroll");
+            dispatchEvent("resize");
         } else {
-            window.dispatchEvent(new Event("scroll"));
-            window.dispatchEvent(new Event("gxaResizeHeatmapAnatomogramHeader"));
+            window.dispatchEvent(new Event("resize"));
         }
     });
 
@@ -106,8 +104,6 @@
     } else {
         window.addEventListener("popstate", showTabOnHash);
     }
-
-
 
     function showTabOnHash() {
         if (window.location.hash === "#baseline") {

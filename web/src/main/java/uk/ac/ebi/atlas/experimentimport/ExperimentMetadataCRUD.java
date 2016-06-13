@@ -106,6 +106,12 @@ public class ExperimentMetadataCRUD {
         conditionsIndexTrader.getIndex(experiment.getType()).addConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
     }
 
+    private void updatePublicExperimentInConditionsIndex(String accession, ExperimentDesign experimentDesign) {
+        Experiment experiment = experimentTrader.getPublicExperiment(accession);
+        ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
+        conditionsIndexTrader.getIndex(experiment.getType()).updateConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
+    }
+
     private ImmutableSetMultimap<String, String> expandOntologyTerms(ImmutableSetMultimap<String, String> termIdsByAssayAccession) {
 
         ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
@@ -198,7 +204,7 @@ public class ExperimentMetadataCRUD {
             LOGGER.info("updated design for experiment {}", accession);
 
             if (!experimentDTO.isPrivate()) {
-                addPublicExperimentToConditionsIndex(accession,experimentDesign);
+                updatePublicExperimentInConditionsIndex(accession,experimentDesign);
             }
 
         } catch (IOException e) {

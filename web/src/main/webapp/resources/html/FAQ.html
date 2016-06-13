@@ -496,6 +496,10 @@
 		a condition (baseline) from the column headings. Next, click the Ensembl Genome
 		Browser <strong>Open</strong> button, to the left of the heatmap.</p>
 
+		<h3><a name="similarExpression">How are similarly expressed genes computed?</a></h3>
+
+		<p>Similarly expressed genes across conditions in baseline experiments (e.g. tissues, developmental stages) are shown where available. They are computed on per-experiment basis, for experiments with three or more conditions. The method for estimating them involves two steps. The first one involves k-means clustering of the expression of each gene across (e.g.) tissues. The second step compares the clusters on a gene to gene basis and outputs a ranked list of genes with decreasing similarity of expression patterns for each gene. The top 50 similarly expressed genes can be explored on our interface. Lowly expressed genes are filtered out from the calculation. A manuscript describing the methods is currently in preparation and the method will be soon available as an R package.</p>
+
 	</div>
 </section>
 <!-- End of main text section -->
@@ -554,6 +558,7 @@
         <li><a href="FAQ.html#BLdownloadAnalytics">Can I
 		download the baseline expression results?</a></li>
 		<li><a href="FAQ.html#ensembl">Can I view the results in the Ensembl browser?</a></li>
+		<li><a href="FAQ.html#similarExpression">How are similarly expressed genes computed?</a></li>
 
 		
 		<!-- <li><a href="FAQ.html#"></a></li> -->

@@ -134,14 +134,12 @@ var DifferentialResults = React.createClass({
                             {differentialResultRows}
                     </tbody>
                 </table>
-                <div style={{"margin-top":"50px"}}>
-                <FeedbackSmileys collectionCallback= {
-                  function(score,comment){
-                    this.state.googleAnalyticsCallback(
-                      'send','event','DifferentialHeatmaps', 'feedback',
-                      comment,score);
-                  }.bind(this)} />
-                  </div>
+                <div style={{marginTop:"50px"}}>
+                    <FeedbackSmileys
+                        collectionCallback={function(score,comment) {
+                            this.state.googleAnalyticsCallback('send','event','DifferentialHeatmaps', 'feedback', comment, score);
+                        }.bind(this)}/>
+                </div>
             </div>
         );
     }
