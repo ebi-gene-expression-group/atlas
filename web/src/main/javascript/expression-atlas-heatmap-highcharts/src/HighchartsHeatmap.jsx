@@ -263,19 +263,19 @@ var HighchartsHeatmap = React.createClass({
                 data: this.props.seriesDataBelowCutoff
             }, {
                 name: this.props.seriesDataRanges[0].label,
-                color: "#dff8ff",
+                color: "#45affd",
                 borderWidth: 1,
                 borderColor: "#fff",
                 data: this.props.seriesDataRanges[0].seriesData
             }, {
                 name: this.props.seriesDataRanges[1].label,
-                color: "#9fd2fa",
+                color: "#1E74CA",
                 borderWidth: 1,
                 borderColor: "#fff",
                 data: this.props.seriesDataRanges[1].seriesData
             }, {
                 name: this.props.seriesDataRanges[2].label,
-                color: "#45affd",
+                color: "#024990",
                 borderWidth: 1,
                 borderColor: "#fff",
                 data: this.props.seriesDataRanges[2].seriesData

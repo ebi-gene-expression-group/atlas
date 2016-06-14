@@ -278,14 +278,10 @@ var HighchartsHeatmapContainer = React.createClass({
                             return a[2] - b[2];
                         });
 
-                        var experimentTypeMax = experimentTypeSeriesData[experimentTypeSeriesData.length - 1][2];
-
-
                         for (var k = 0; k < seriesDataRanges.length; k++) {
-                            //seriesDataRanges[k].seriesData.concat(
                             experimentTypeSeriesData.filter(
                                 function(datum) {
-                                    return datum[2] > seriesDataRanges[k].from * experimentTypeMax && datum[2] <= seriesDataRanges[k].to * experimentTypeMax;
+                                    return datum[2] > seriesDataRanges[k].from && datum[2] <= seriesDataRanges[k].to;
                                 }).forEach(
                                 function(filteredDatum) {
                                     seriesDataRanges[k].seriesData.push(filteredDatum);
