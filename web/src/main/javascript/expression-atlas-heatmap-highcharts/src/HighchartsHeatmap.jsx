@@ -142,7 +142,7 @@ var HighchartsHeatmap = React.createClass({
                     events: {
                         mouseOut: function () {
                             this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', null);
-                        },
+                        }
                     },
 
                     states: {
@@ -163,7 +163,7 @@ var HighchartsHeatmap = React.createClass({
                 marginTop: 82,//labels
                 marginRight: 36,//leave space for the export button to appear
                 plotBorderWidth: 1,
-                height: yAxisCategories.length * 12 + 200,
+                height: yAxisCategories.length * 20 + 200,
                 zoomType: 'xy',
                 events: {
                   handleGxaAnatomogramTissueMouseEnter: function(e) {
@@ -235,7 +235,8 @@ var HighchartsHeatmap = React.createClass({
                 categories: this.props.yAxisCategories,
                 title: null,
                 gridLineWidth: 0,
-                minorGridLineWidth: 0
+                minorGridLineWidth: 0,
+                endOnTick: false
             },
             tooltip: {
                 useHTML: true,
