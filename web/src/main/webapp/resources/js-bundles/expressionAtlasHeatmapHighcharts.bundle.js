@@ -2573,7 +2573,9 @@ webpackJsonp_name_([4],[
 	
 	        var highchartsOptions = {
 	            plotOptions: {
-	                turboThreshold: 0,
+	                heatmap: {
+	                    turboThreshold: 0
+	                },
 	                series: {
 	                    point: {
 	                        events: {
@@ -2606,7 +2608,7 @@ webpackJsonp_name_([4],[
 	                marginTop: 82, //labels
 	                marginRight: 36, //leave space for the export button to appear
 	                plotBorderWidth: 1,
-	                height: yAxisCategories.length * 50 + 200,
+	                height: yAxisCategories.length * 20 + 200,
 	                zoomType: 'xy',
 	                events: {
 	                    handleGxaAnatomogramTissueMouseEnter: function (e) {
