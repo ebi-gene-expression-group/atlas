@@ -42,12 +42,14 @@ var HighchartsHeatmap = React.createClass({
                     from: 0,
                     to: 10,
                     seriesData: []
-                }, {
+                },
+                {
                     label: "Medium",
                     from: 10,
                     to: 1000,
                     seriesData: []
-                }, {
+                },
+                {
                     label: "High",
                     from: 1000,
                     to: 100000,
@@ -55,16 +57,19 @@ var HighchartsHeatmap = React.createClass({
                 }
             ],
 
+            legend_0: false,
             legend_1: false,
             legend_2: false,
-            legend_3: false,
-            legend_4: false
+            legend_3: false
 
         })
     },
 
-    handleClick: function (index) {
-        if (index == 1) {
+    _handleClick: function (index) {
+        if (index == 0) {
+            this.setState({legend_0: !this.state.legend_0});
+        }
+        else if (index == 1) {
             this.setState({legend_1: !this.state.legend_1});
         }
         else if (index == 2) {
@@ -73,44 +78,38 @@ var HighchartsHeatmap = React.createClass({
         else if (index == 3) {
             this.setState({legend_3: !this.state.legend_3});
         }
-        else if (index == 4) {
-            this.setState({legend_4: !this.state.legend_4});
-        }
     },
 
     _anatomogramTissueMouseEnter: function(svgPathId) {
-      Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseEnter', {svgPathId: svgPathId});
+        Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseEnter', {svgPathId: svgPathId});
     },
 
     _anatomogramTissueMouseLeave: function(svgPathId) {
-      Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseLeave', {svgPathId: svgPathId});
+        Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseLeave', {svgPathId: svgPathId});
     },
 
-    _registerListenerIfNecessary(name, fn){
+    _registerListenerIfNecessary(name, fn) {
       if (this.props.anatomogramEventEmitter &&
           this.props.anatomogramEventEmitter._events &&
-          !this.props.anatomogramEventEmitter._events.hasOwnProperty(name)){
-            this.props.anatomogramEventEmitter.addListener(name, fn);
+          !this.props.anatomogramEventEmitter._events.hasOwnProperty(name)) {
+              this.props.anatomogramEventEmitter.addListener(name, fn);
           }
     },
 
     componentDidMount: function () {
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
-        var heatmap = this.refs.chart.getChart();
-        heatmap.series[0].hide();
     },
 
     componentDidUpdate: function () {
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
         var heatmap = this.refs.chart.getChart();
-        heatmap.series[0].hide();
 
-        this.state.legend_1 ? heatmap.series[1].hide() : heatmap.series[1].show();
-        this.state.legend_2 ? heatmap.series[2].hide() : heatmap.series[2].show();
-        this.state.legend_3 ? heatmap.series[3].hide() : heatmap.series[3].show();
-        this.state.legend_4 ? heatmap.series[4].hide() : heatmap.series[4].show();
+        this.state.legend_1 ? heatmap.series[0].hide() : heatmap.series[0].show();
+        this.state.legend_2 ? heatmap.series[1].hide() : heatmap.series[1].show();
+        this.state.legend_3 ? heatmap.series[2].hide() : heatmap.series[2].show();
+        this.state.legend_4 ? heatmap.series[3].hide() : heatmap.series[3].show();
 
     },
 
@@ -120,14 +119,17 @@ var HighchartsHeatmap = React.createClass({
             totalRows = this.props.profiles.searchResultTotal;
 
         return <div style={{display: "inline-block", 'verticalAlign': "top"}}>
-                    <span id="geneCount">Showing {shownRows} of {totalRows} experiments found: </span>
-            </div>
+                   <span id="geneCount">Showing {shownRows} of {totalRows} experiments found: </span>
+               </div>
     },
 
     render: function () {
         var atlasBaseURL = this.props.atlasBaseURL;
         var yAxisCategoriesLinks = this.props.yAxisCategoriesLinks;
         var yAxisCategories = this.props.yAxisCategories;
+
+        var xAxisLongestHeaderLength =
+            Math.max.apply(null, this.props.xAxisCategories.map(function(category) {return category.label.length}));
 
         var highchartsOptions = {
             plotOptions: {
@@ -163,10 +165,10 @@ var HighchartsHeatmap = React.createClass({
             },
             chart: {
                 type: 'heatmap',
-                marginTop: 82,//labels
+                marginTop: xAxisLongestHeaderLength * 5,//labels
                 marginRight: 36,//leave space for the export button to appear
                 plotBorderWidth: 1,
-                height: yAxisCategories.length * 20 + 200,
+                height: yAxisCategories.length * 30 + xAxisLongestHeaderLength * 5,
                 zoomType: 'xy',
                 events: {
                   handleGxaAnatomogramTissueMouseEnter: function(e) {
@@ -246,7 +248,7 @@ var HighchartsHeatmap = React.createClass({
                 formatter: function() {
                     return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y] + '</b>  <br> Tissue: <b>' + this.series.xAxis.categories[this.point.x].label + '</b><br><b>' +
                         '</b>' +
-                        '<span style="border:1px rgb(192, 192, 192) solid; §-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';">' +
+                        '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';">' +
                         '</span> Expression level: <b></span>' +
                         'Expression level: <b>' + this.point.value + '</b>';
                 }
@@ -254,12 +256,6 @@ var HighchartsHeatmap = React.createClass({
             anatomogramEventEmitter: this.props.anatomogramEventEmitter,
             ensemblEventEmitter: this.props.ensemblEventEmitter,
             series: [{
-                name: this.props.seriesDataNAString,
-                color: "#f7f7f7",
-                borderWidth: 1,
-                borderColor: "#fff",
-                data: this.props.seriesDataNA
-            }, {
                 name: this.props.seriesDataBelowCutoffString,
                 color: "#eaeaea",
                 borderWidth: 1,
@@ -286,28 +282,28 @@ var HighchartsHeatmap = React.createClass({
             }]
         };
 
+        var clsName_0 = this.state.legend_0 ? 'legend-item legend-item-off' : 'legend-item';
         var clsName_1 = this.state.legend_1 ? 'legend-item legend-item-off' : 'legend-item';
         var clsName_2 = this.state.legend_2 ? 'legend-item legend-item-off' : 'legend-item';
         var clsName_3 = this.state.legend_3 ? 'legend-item legend-item-off' : 'legend-item';
-        var clsName_4 = this.state.legend_4 ? 'legend-item legend-item-off' : 'legend-item';
 
         var barcharts_legend = (
             <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
                 <div className="legend-text">Click to interact:</div>
 
-                <div id="legend_1" ref="legend_1" className={clsName_1} onClick={this.handleClick.bind(this,1)} >
+                <div id="legend_0" ref="legend_1" className={clsName_0} onClick={this._handleClick.bind(this, 0)} >
                     <div className="legend-rectangle col_below"></div>
                     <span>Below cutoff</span>
                 </div>
-                <div id="legend_2" className={clsName_2} onClick={this.handleClick.bind(this,2)}>
+                <div id="legend_1" className={clsName_1} onClick={this._handleClick.bind(this, 1)}>
                     <div className="legend-rectangle col_low"></div>
                     <span>Low</span>
                 </div>
-                <div id="legend_3" className={clsName_3} onClick={this.handleClick.bind(this,3)}>
+                <div id="legend_2" className={clsName_2} onClick={this._handleClick.bind(this, 2)}>
                     <div className="legend-rectangle col_med"></div>
                     <span>Medium</span>
                 </div>
-                <div id="legend_4" className={clsName_4} onClick={this.handleClick.bind(this,4)}>
+                <div id="legend_3" className={clsName_3} onClick={this._handleClick.bind(this, 3)}>
                     <div className="legend-rectangle col_high"></div>
                     <span>High</span>
                 </div>
@@ -318,7 +314,7 @@ var HighchartsHeatmap = React.createClass({
                     </span>
                 </div>
 
-                <div id="legend_5" className="legend-item special">
+                <div id="legend_4" className="legend-item special">
                     <div className="legend-rectangle col_nd"></div>
                     <span>No data available</span>
                 </div>
