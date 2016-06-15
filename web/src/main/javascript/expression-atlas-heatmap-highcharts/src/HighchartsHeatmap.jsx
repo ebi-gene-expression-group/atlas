@@ -131,6 +131,7 @@ var HighchartsHeatmap = React.createClass({
 
         var highchartsOptions = {
             plotOptions: {
+                turboThreshold: 0,
                 series: {
                     point: {
                         events: {
@@ -163,7 +164,7 @@ var HighchartsHeatmap = React.createClass({
                 marginTop: 82,//labels
                 marginRight: 36,//leave space for the export button to appear
                 plotBorderWidth: 1,
-                height: yAxisCategories.length * 20 + 200,
+                height: yAxisCategories.length * 50 + 200,
                 zoomType: 'xy',
                 events: {
                   handleGxaAnatomogramTissueMouseEnter: function(e) {
@@ -243,7 +244,7 @@ var HighchartsHeatmap = React.createClass({
                 formatter: function() {
                     return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y] + '</b>  <br> Tissue: <b>' + this.series.xAxis.categories[this.point.x].label + '</b><br><b>' +
                         '</b>' +
-                        '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';">' +
+                        '<span style="border:1px rgb(192, 192, 192) solid; §-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';">' +
                         '</span> Expression level: <b></span>' +
                         'Expression level: <b>' + this.point.value + '</b>';
                 }
