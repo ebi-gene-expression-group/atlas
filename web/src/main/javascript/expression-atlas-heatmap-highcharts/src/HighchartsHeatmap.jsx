@@ -118,7 +118,7 @@ var HighchartsHeatmap = React.createClass({
             shownRows = this.props.profiles.rows.length;
             totalRows = this.props.profiles.searchResultTotal;
 
-        return <div style={{display: "inline-block", 'verticalAlign': "top"}}>
+        return <div style={{display: 'inline-block', verticalAlign: 'top'}}>
                    <span id="geneCount">Showing {shownRows} of {totalRows} experiments found: </span>
                </div>
     },
@@ -165,10 +165,10 @@ var HighchartsHeatmap = React.createClass({
             },
             chart: {
                 type: 'heatmap',
-                marginTop: xAxisLongestHeaderLength * 5,//labels
+                marginTop: xAxisLongestHeaderLength * 4,//labels
                 marginRight: 36,//leave space for the export button to appear
                 plotBorderWidth: 1,
-                height: yAxisCategories.length * 30 + xAxisLongestHeaderLength * 5,
+                height: yAxisCategories.length * 30 + xAxisLongestHeaderLength * 4,
                 zoomType: 'xy',
                 events: {
                   handleGxaAnatomogramTissueMouseEnter: function(e) {
@@ -191,35 +191,23 @@ var HighchartsHeatmap = React.createClass({
                 }
             },
             legend: {
-                useHTML:true,
                 enabled: false,
-                itemDistance: 18,
-                symbolWidth: 12,
-                symbolHeight:12,
-                x: 150,
-                align: 'left',
-                verticalAlign: 'bottom',
-                layout: 'horizontal',
-                itemStyle: {
-                    lineHeight:"10px",
-                    fontSize: "10px",
-                    color: '#606060',
-                    fontWeight: 'normal'
-                }
             },
             title: null,
             xAxis: { //tissues
                 tickLength: 5,
-                tickColor: "rgb(192, 192, 192)",
-                lineColor: "rgb(192, 192, 192)",
+                tickColor: 'rgb(192, 192, 192)',
+                lineColor: 'rgb(192, 192, 192)',
                 labels: {
                     y: -6,
                     style: {
-                        fontSize: "9px"
+                        fontSize: '9px',
+                        textOverflow: 'none',
+                        whiteSpace: 'nowrap'
                     },
                     autoRotation: [-45, -90],
                     formatter: function() {
-                        return this.value.label
+                        return this.value.label;
                     }
                 },
                 opposite: 'true',
@@ -230,8 +218,8 @@ var HighchartsHeatmap = React.createClass({
                 reversed: true,
                 labels: {
                     style: {
-                        fontSize: "10px",
-                        color: "#148ff3"
+                        fontSize: '10px',
+                        color: '#148ff3'
                     },
                     formatter: function() {
                         return '<a href="' + atlasBaseURL +'/experiments/' + yAxisCategoriesLinks[this.value] + '">' + this.value + '</a>';
@@ -282,28 +270,26 @@ var HighchartsHeatmap = React.createClass({
             }]
         };
 
-        var clsName_0 = this.state.legend_0 ? 'legend-item legend-item-off' : 'legend-item';
-        var clsName_1 = this.state.legend_1 ? 'legend-item legend-item-off' : 'legend-item';
-        var clsName_2 = this.state.legend_2 ? 'legend-item legend-item-off' : 'legend-item';
-        var clsName_3 = this.state.legend_3 ? 'legend-item legend-item-off' : 'legend-item';
+        var clsName_0 = this.state.legend_0 ? 'legend-item legend-item-off' : 'legend-item special';
+        var clsName_1 = this.state.legend_1 ? 'legend-item legend-item-off' : 'legend-item special';
+        var clsName_2 = this.state.legend_2 ? 'legend-item legend-item-off' : 'legend-item special';
+        var clsName_3 = this.state.legend_3 ? 'legend-item legend-item-off' : 'legend-item special';
 
         var barcharts_legend = (
             <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
-                <div className="legend-text">Click to interact:</div>
-
-                <div id="legend_0" ref="legend_1" className={clsName_0} onClick={this._handleClick.bind(this, 0)} >
+                <div id="legend_0" ref="legend_1" className={clsName_0} >
                     <div className="legend-rectangle col_below"></div>
                     <span>Below cutoff</span>
                 </div>
-                <div id="legend_1" className={clsName_1} onClick={this._handleClick.bind(this, 1)}>
+                <div id="legend_1" className={clsName_1} >
                     <div className="legend-rectangle col_low"></div>
                     <span>Low</span>
                 </div>
-                <div id="legend_2" className={clsName_2} onClick={this._handleClick.bind(this, 2)}>
+                <div id="legend_2" className={clsName_2} >
                     <div className="legend-rectangle col_med"></div>
                     <span>Medium</span>
                 </div>
-                <div id="legend_3" className={clsName_3} onClick={this._handleClick.bind(this, 3)}>
+                <div id="legend_3" className={clsName_3} >
                     <div className="legend-rectangle col_high"></div>
                     <span>High</span>
                 </div>
