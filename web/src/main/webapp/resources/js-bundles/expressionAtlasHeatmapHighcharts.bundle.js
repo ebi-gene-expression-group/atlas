@@ -2341,7 +2341,8 @@ webpackJsonp_name_([4],[
 	                            var expression = data.profiles.rows[j].expressions[k];
 	                            //we switched from strings to doubles in April 2016, after a release you can assume we serve doubles that are optionally absent to mean "NT"
 	                            if (!expression.hasOwnProperty("value") || expression.value === "NT") {
-	                                seriesDataNA.push([k, j, seriesDataNAString]);
+	                                //seriesDataNA.push([k, j, seriesDataNAString]);
+	                                continue;
 	                            } else if (!expression.value) {
 	                                seriesDataBelowCutoff.push([k, j, seriesDataBelowCutoffString]);
 	                            } else {
@@ -2493,23 +2494,23 @@ webpackJsonp_name_([4],[
 	                seriesData: []
 	            }],
 	
+	            legend_0: false,
 	            legend_1: false,
 	            legend_2: false,
-	            legend_3: false,
-	            legend_4: false
+	            legend_3: false
 	
 	        };
 	    },
 	
-	    handleClick: function (index) {
-	        if (index == 1) {
+	    _handleClick: function (index) {
+	        if (index == 0) {
+	            this.setState({ legend_0: !this.state.legend_0 });
+	        } else if (index == 1) {
 	            this.setState({ legend_1: !this.state.legend_1 });
 	        } else if (index == 2) {
 	            this.setState({ legend_2: !this.state.legend_2 });
 	        } else if (index == 3) {
 	            this.setState({ legend_3: !this.state.legend_3 });
-	        } else if (index == 4) {
-	            this.setState({ legend_4: !this.state.legend_4 });
 	        }
 	    },
 	
@@ -2530,20 +2531,17 @@ webpackJsonp_name_([4],[
 	    componentDidMount: function () {
 	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
 	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
-	        var heatmap = this.refs.chart.getChart();
-	        heatmap.series[0].hide();
 	    },
 	
 	    componentDidUpdate: function () {
 	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
 	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
 	        var heatmap = this.refs.chart.getChart();
-	        heatmap.series[0].hide();
 	
-	        this.state.legend_1 ? heatmap.series[1].hide() : heatmap.series[1].show();
-	        this.state.legend_2 ? heatmap.series[2].hide() : heatmap.series[2].show();
-	        this.state.legend_3 ? heatmap.series[3].hide() : heatmap.series[3].show();
-	        this.state.legend_4 ? heatmap.series[4].hide() : heatmap.series[4].show();
+	        this.state.legend_1 ? heatmap.series[0].hide() : heatmap.series[0].show();
+	        this.state.legend_2 ? heatmap.series[1].hide() : heatmap.series[1].show();
+	        this.state.legend_3 ? heatmap.series[2].hide() : heatmap.series[2].show();
+	        this.state.legend_4 ? heatmap.series[3].hide() : heatmap.series[3].show();
 	    },
 	
 	    _showGeneCount: function () {
@@ -2553,7 +2551,7 @@ webpackJsonp_name_([4],[
 	
 	        return React.createElement(
 	            'div',
-	            { style: { display: "inline-block", 'verticalAlign': "top" } },
+	            { style: { display: 'inline-block', verticalAlign: 'top' } },
 	            React.createElement(
 	                'span',
 	                { id: 'geneCount' },
@@ -2570,6 +2568,10 @@ webpackJsonp_name_([4],[
 	        var atlasBaseURL = this.props.atlasBaseURL;
 	        var yAxisCategoriesLinks = this.props.yAxisCategoriesLinks;
 	        var yAxisCategories = this.props.yAxisCategories;
+	
+	        var xAxisLongestHeaderLength = Math.max.apply(null, this.props.xAxisCategories.map(function (category) {
+	            return category.label.length;
+	        }));
 	
 	        var highchartsOptions = {
 	            plotOptions: {
@@ -2605,10 +2607,10 @@ webpackJsonp_name_([4],[
 	            },
 	            chart: {
 	                type: 'heatmap',
-	                marginTop: 82, //labels
+	                marginTop: xAxisLongestHeaderLength * 4, //labels
 	                marginRight: 36, //leave space for the export button to appear
 	                plotBorderWidth: 1,
-	                height: yAxisCategories.length * 20 + 200,
+	                height: yAxisCategories.length * 30 + xAxisLongestHeaderLength * 4,
 	                zoomType: 'xy',
 	                events: {
 	                    handleGxaAnatomogramTissueMouseEnter: function (e) {
@@ -2631,31 +2633,19 @@ webpackJsonp_name_([4],[
 	                }
 	            },
 	            legend: {
-	                useHTML: true,
-	                enabled: false,
-	                itemDistance: 18,
-	                symbolWidth: 12,
-	                symbolHeight: 12,
-	                x: 150,
-	                align: 'left',
-	                verticalAlign: 'bottom',
-	                layout: 'horizontal',
-	                itemStyle: {
-	                    lineHeight: "10px",
-	                    fontSize: "10px",
-	                    color: '#606060',
-	                    fontWeight: 'normal'
-	                }
+	                enabled: false
 	            },
 	            title: null,
 	            xAxis: { //tissues
 	                tickLength: 5,
-	                tickColor: "rgb(192, 192, 192)",
-	                lineColor: "rgb(192, 192, 192)",
+	                tickColor: 'rgb(192, 192, 192)',
+	                lineColor: 'rgb(192, 192, 192)',
 	                labels: {
 	                    y: -6,
 	                    style: {
-	                        fontSize: "9px"
+	                        fontSize: '9px',
+	                        textOverflow: 'none',
+	                        whiteSpace: 'nowrap'
 	                    },
 	                    autoRotation: [-45, -90],
 	                    formatter: function () {
@@ -2670,8 +2660,8 @@ webpackJsonp_name_([4],[
 	                reversed: true,
 	                labels: {
 	                    style: {
-	                        fontSize: "10px",
-	                        color: "#148ff3"
+	                        fontSize: '10px',
+	                        color: '#148ff3'
 	                    },
 	                    formatter: function () {
 	                        return '<a href="' + atlasBaseURL + '/experiments/' + yAxisCategoriesLinks[this.value] + '">' + this.value + '</a>';
@@ -2686,18 +2676,12 @@ webpackJsonp_name_([4],[
 	            tooltip: {
 	                useHTML: true,
 	                formatter: function () {
-	                    return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y] + '</b>  <br> Tissue: <b>' + this.series.xAxis.categories[this.point.x].label + '</b><br><b>' + '</b>' + '<span style="border:1px rgb(192, 192, 192) solid; §-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';">' + '</span> Expression level: <b></span>' + 'Expression level: <b>' + this.point.value + '</b>';
+	                    return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y] + '</b>  <br> Tissue: <b>' + this.series.xAxis.categories[this.point.x].label + '</b><br><b>' + '</b>' + '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';">' + '</span> Expression level: <b></span>' + 'Expression level: <b>' + this.point.value + '</b>';
 	                }
 	            },
 	            anatomogramEventEmitter: this.props.anatomogramEventEmitter,
 	            ensemblEventEmitter: this.props.ensemblEventEmitter,
 	            series: [{
-	                name: this.props.seriesDataNAString,
-	                color: "#f7f7f7",
-	                borderWidth: 1,
-	                borderColor: "#fff",
-	                data: this.props.seriesDataNA
-	            }, {
 	                name: this.props.seriesDataBelowCutoffString,
 	                color: "#eaeaea",
 	                borderWidth: 1,
@@ -2724,22 +2708,17 @@ webpackJsonp_name_([4],[
 	            }]
 	        };
 	
-	        var clsName_1 = this.state.legend_1 ? 'legend-item legend-item-off' : 'legend-item';
-	        var clsName_2 = this.state.legend_2 ? 'legend-item legend-item-off' : 'legend-item';
-	        var clsName_3 = this.state.legend_3 ? 'legend-item legend-item-off' : 'legend-item';
-	        var clsName_4 = this.state.legend_4 ? 'legend-item legend-item-off' : 'legend-item';
+	        var clsName_0 = this.state.legend_0 ? 'legend-item legend-item-off' : 'legend-item special';
+	        var clsName_1 = this.state.legend_1 ? 'legend-item legend-item-off' : 'legend-item special';
+	        var clsName_2 = this.state.legend_2 ? 'legend-item legend-item-off' : 'legend-item special';
+	        var clsName_3 = this.state.legend_3 ? 'legend-item legend-item-off' : 'legend-item special';
 	
 	        var barcharts_legend = React.createElement(
 	            'div',
 	            { id: 'barcharts_legend_list_items', ref: 'barcharts_legend_items' },
 	            React.createElement(
 	                'div',
-	                { className: 'legend-text' },
-	                'Click to interact:'
-	            ),
-	            React.createElement(
-	                'div',
-	                { id: 'legend_1', ref: 'legend_1', className: clsName_1, onClick: this.handleClick.bind(this, 1) },
+	                { id: 'legend_0', ref: 'legend_1', className: clsName_0 },
 	                React.createElement('div', { className: 'legend-rectangle col_below' }),
 	                React.createElement(
 	                    'span',
@@ -2749,7 +2728,7 @@ webpackJsonp_name_([4],[
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_2', className: clsName_2, onClick: this.handleClick.bind(this, 2) },
+	                { id: 'legend_1', className: clsName_1 },
 	                React.createElement('div', { className: 'legend-rectangle col_low' }),
 	                React.createElement(
 	                    'span',
@@ -2759,7 +2738,7 @@ webpackJsonp_name_([4],[
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_3', className: clsName_3, onClick: this.handleClick.bind(this, 3) },
+	                { id: 'legend_2', className: clsName_2 },
 	                React.createElement('div', { className: 'legend-rectangle col_med' }),
 	                React.createElement(
 	                    'span',
@@ -2769,7 +2748,7 @@ webpackJsonp_name_([4],[
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_4', className: clsName_4, onClick: this.handleClick.bind(this, 4) },
+	                { id: 'legend_3', className: clsName_3 },
 	                React.createElement('div', { className: 'legend-rectangle col_high' }),
 	                React.createElement(
 	                    'span',
@@ -2785,7 +2764,7 @@ webpackJsonp_name_([4],[
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_5', className: 'legend-item special' },
+	                { id: 'legend_4', className: 'legend-item special' },
 	                React.createElement('div', { className: 'legend-rectangle col_nd' }),
 	                React.createElement(
 	                    'span',
@@ -2914,7 +2893,7 @@ webpackJsonp_name_([4],[
 	
 	
 	// module
-	exports.push([module.id, ".gene_title {\n    text-align: center;\n    font-size: 70%;\n    border: 0 red solid;\n}\n\n#container {\n    min-width: 410px;\n    min-height: 210px;\n    margin: 0 auto; /*avoid line overlap*/\n    border: 0 red solid;\n}\n\n#barcharts_legend_list_items {\n    color: #606060;\n    margin-left: 180px;\n    border: 0 solid olive;\n}\n\n.col_below {\n    background: #d7d7d7;\n}\n\n.col_low {\n    background: #45affd;\n}\n\n.col_med {\n    background: #1E74CA/**#9fd2fa**/;\n}\n\n.col_high {\n    background: #024990/**#dff8ff**/;\n}\n\n.col_nd {\n    background: #fff;\n}\n\n#barcharts_legend_list_items .legend-text {\n    display: inline-block;\n    padding: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item {\n    cursor: pointer;\n    display: inline-block;\n    padding: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item:hover {\n    color: black;\n}\n\n#barcharts_legend_list_items .legend-item.legend-item-off {\n    color: #ccc;\n}\n\n#barcharts_legend_list_items .legend-item.legend-item-off div {\n    background-color: #f7f7f7;\n}\n\n#barcharts_legend_list_items .legend-item.special {\n    cursor: default;\n    margin-left: 36px;\n    color: black;\n}\n\n#barcharts_legend_list_items .legend-item .legend-rectangle {\n    width: 12px;\n    height: 12px;\n    border: 1px rgba(0, 0, 0, 0.2) solid;\n    display: inline-block;\n    margin-right: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item .icon-generic:before {\n    font-size: 180%;\n    color: #7e7e7e;\n}\n\n#barcharts_legend_list_items .legend-item:hover .icon-generic:before {\n    color: #353535;\n}\n\n/*****************************************EBI font*******************************************************/\n@font-face {\n    font-family: 'EBI-Conceptual';\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Functional';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Generic';\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Species';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-SocialMedia';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-Species') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n.icon-socialmedia:before {\n    font-family: 'EBI-SocialMedia';\n    margin: 0 0.3em 0 0;\n    content: attr(data-icon);\n    color: white;\n    font-size: 100%;\n}\n\n.icon-conceptual:before {\n    font-family: 'EBI-Conceptual';\n    margin: 0 0.3em 0 0;\n    content: attr(data-icon);\n    color: #7e7e7e;\n    font-size: 180%;\n}\n\n.icon-species:before {\n    font-family: 'EBI-Species';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon {\n    text-decoration: none;\n    font-style: normal;\n}\n\n.icon-static:before, .icon-generic:before {\n    font-family: 'EBI-Generic';\n    font-size: 100%;\n    color: #BBB;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon-functional:before {\n    font-family: 'EBI-Functional';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0.3em 0 0;\n}\n\n/*****************************************END EBI font*******************************************************/\n", ""]);
+	exports.push([module.id, ".gene_title {\n    text-align: center;\n    font-size: 70%;\n    border: 0 red solid;\n}\n\n#container {\n    min-width: 410px;\n    min-height: 210px;\n    margin: 0 auto; /*avoid line overlap*/\n    border: 0 red solid;\n}\n\n#barcharts_legend_list_items {\n    color: #606060;\n    margin-left: 180px;\n    border: 0 solid olive;\n}\n\n.col_below {\n    background: #d7d7d7;\n}\n\n.col_low {\n    background: #45affd;\n}\n\n.col_med {\n    background: #1E74CA/**#9fd2fa**/;\n}\n\n.col_high {\n    background: #024990/**#dff8ff**/;\n}\n\n.col_nd {\n    background: #fff;\n}\n\n#barcharts_legend_list_items .legend-text {\n    display: inline-block;\n    padding: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item {\n    cursor: pointer;\n    display: inline-block;\n    padding: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item:hover {\n    color: black;\n}\n\n#barcharts_legend_list_items .legend-item.legend-item-off {\n    color: #ccc;\n}\n\n#barcharts_legend_list_items .legend-item.legend-item-off div {\n    background-color: #f7f7f7;\n}\n\n#barcharts_legend_list_items .legend-item.special {\n    cursor: default;\n    margin-left: 8px;\n    color: black;\n}\n\n#barcharts_legend_list_items .legend-item .legend-rectangle {\n    width: 12px;\n    height: 12px;\n    border: 1px rgba(0, 0, 0, 0.2) solid;\n    display: inline-block;\n    margin-right: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item .icon-generic:before {\n    font-size: 180%;\n    color: #7e7e7e;\n}\n\n#barcharts_legend_list_items .legend-item:hover .icon-generic:before {\n    color: #353535;\n}\n\n/*****************************************EBI font*******************************************************/\n@font-face {\n    font-family: 'EBI-Conceptual';\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Functional';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Generic';\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Species';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-SocialMedia';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-Species') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n.icon-socialmedia:before {\n    font-family: 'EBI-SocialMedia';\n    margin: 0 0.3em 0 0;\n    content: attr(data-icon);\n    color: white;\n    font-size: 100%;\n}\n\n.icon-conceptual:before {\n    font-family: 'EBI-Conceptual';\n    margin: 0 0.3em 0 0;\n    content: attr(data-icon);\n    color: #7e7e7e;\n    font-size: 180%;\n}\n\n.icon-species:before {\n    font-family: 'EBI-Species';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon {\n    text-decoration: none;\n    font-style: normal;\n}\n\n.icon-static:before, .icon-generic:before {\n    font-family: 'EBI-Generic';\n    font-size: 100%;\n    color: #BBB;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon-functional:before {\n    font-family: 'EBI-Functional';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0.3em 0 0;\n}\n\n/*****************************************END EBI font*******************************************************/\n", ""]);
 	
 	// exports
 
