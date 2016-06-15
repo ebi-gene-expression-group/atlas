@@ -133,8 +133,9 @@ var HighchartsHeatmap = React.createClass({
 
         var marginTop =
             this.props.xAxisCategories.length < 10 ? 20 :   // labels aren’t tilted
-                this.props.xAxisCategories.length < 50 ? xAxisLongestHeaderLength * 4 : // labels at -45°
-                    xAxisLongestHeaderLength * 5;   // labels at -90°
+                this.props.xAxisCategories.length < 50 ? xAxisLongestHeaderLength * 3.5 : // labels at -45°
+                    Math.round(xAxisLongestHeaderLength * 5);   // labels at -90°
+        marginTop = Math.min(150, marginTop);
 
         var highchartsOptions = {
             plotOptions: {
@@ -173,7 +174,7 @@ var HighchartsHeatmap = React.createClass({
                 marginTop: marginTop,
                 marginRight: 60, //leave space for tilted long headers
                 plotBorderWidth: 1,
-                height: yAxisCategories.length * 30 + marginTop,
+                height: Math.max(70, yAxisCategories.length * 30 + marginTop),
                 zoomType: 'xy',
                 events: {
                   handleGxaAnatomogramTissueMouseEnter: function(e) {
@@ -207,8 +208,8 @@ var HighchartsHeatmap = React.createClass({
                     y: -6,
                     style: {
                         fontSize: '9px',
-                        textOverflow: 'none',
-                        whiteSpace: 'nowrap'
+                        // textOverflow: 'none',
+                        // whiteSpace: 'nowrap'
                     },
                     autoRotation: [-45, -90],
                     formatter: function() {
