@@ -2574,9 +2574,8 @@ webpackJsonp_name_([4],[
 	        }));
 	
 	        var marginTop = this.props.xAxisCategories.length < 10 ? 20 : // labels aren’t tilted
-	        this.props.xAxisCategories.length < 50 ? xAxisLongestHeaderLength * 3.5 : // labels at -45°
-	        Math.round(xAxisLongestHeaderLength * 5); // labels at -90°
-	        marginTop = Math.min(150, marginTop);
+	        this.props.xAxisCategories.length < 50 ? Math.min(105, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
+	        Math.min(150, Math.round(xAxisLongestHeaderLength * 5)); // labels at -90°
 	
 	        var highchartsOptions = {
 	            plotOptions: {
