@@ -2573,6 +2573,10 @@ webpackJsonp_name_([4],[
 	            return category.label.length;
 	        }));
 	
+	        var marginTop = this.props.xAxisCategories.length < 10 ? 20 : // labels aren’t tilted
+	        this.props.xAxisCategories.length < 50 ? xAxisLongestHeaderLength * 4 : // labels at -45°
+	        xAxisLongestHeaderLength * 5; // labels at -90°
+	
 	        var highchartsOptions = {
 	            plotOptions: {
 	                heatmap: {
@@ -2603,14 +2607,14 @@ webpackJsonp_name_([4],[
 	                }
 	            },
 	            credits: {
-	                enabled: false //remove highchart text in the bottom right corner
+	                enabled: false //remove Highcharts text in the bottom right corner
 	            },
 	            chart: {
 	                type: 'heatmap',
-	                marginTop: xAxisLongestHeaderLength * 4, //labels
-	                marginRight: 36, //leave space for the export button to appear
+	                marginTop: marginTop,
+	                marginRight: 60, //leave space for tilted long headers
 	                plotBorderWidth: 1,
-	                height: yAxisCategories.length * 30 + xAxisLongestHeaderLength * 4,
+	                height: yAxisCategories.length * 30 + marginTop,
 	                zoomType: 'xy',
 	                events: {
 	                    handleGxaAnatomogramTissueMouseEnter: function (e) {
@@ -2774,14 +2778,12 @@ webpackJsonp_name_([4],[
 	            )
 	        );
 	
-	        var paddingMargin = "15px";
-	
 	        return React.createElement(
 	            'div',
 	            null,
 	            React.createElement(
 	                'div',
-	                { ref: 'countAndLegend', className: 'gxaHeatmapCountAndLegend', style: { "paddingBottom": paddingMargin, "position": "sticky" } },
+	                { ref: 'countAndLegend', className: 'gxaHeatmapCountAndLegend', style: { paddingBottom: '15px', position: 'sticky' } },
 	                this._showGeneCount(),
 	                React.createElement(
 	                    'div',

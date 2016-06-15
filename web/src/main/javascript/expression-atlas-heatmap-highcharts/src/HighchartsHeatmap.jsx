@@ -131,6 +131,11 @@ var HighchartsHeatmap = React.createClass({
         var xAxisLongestHeaderLength =
             Math.max.apply(null, this.props.xAxisCategories.map(function(category) {return category.label.length}));
 
+        var marginTop =
+            this.props.xAxisCategories.length < 10 ? 20 :   // labels aren’t tilted
+                this.props.xAxisCategories.length < 50 ? xAxisLongestHeaderLength * 4 : // labels at -45°
+                    xAxisLongestHeaderLength * 5;   // labels at -90°
+
         var highchartsOptions = {
             plotOptions: {
                 heatmap: {
@@ -161,14 +166,14 @@ var HighchartsHeatmap = React.createClass({
                 }
             },
             credits: {
-                enabled: false //remove highchart text in the bottom right corner
+                enabled: false //remove Highcharts text in the bottom right corner
             },
             chart: {
                 type: 'heatmap',
-                marginTop: xAxisLongestHeaderLength * 4,//labels
-                marginRight: 36,//leave space for the export button to appear
+                marginTop: marginTop,
+                marginRight: 60, //leave space for tilted long headers
                 plotBorderWidth: 1,
-                height: yAxisCategories.length * 30 + xAxisLongestHeaderLength * 4,
+                height: yAxisCategories.length * 30 + marginTop,
                 zoomType: 'xy',
                 events: {
                   handleGxaAnatomogramTissueMouseEnter: function(e) {
@@ -191,7 +196,7 @@ var HighchartsHeatmap = React.createClass({
                 }
             },
             legend: {
-                enabled: false,
+                enabled: false
             },
             title: null,
             xAxis: { //tissues
@@ -307,11 +312,9 @@ var HighchartsHeatmap = React.createClass({
             </div>
         );
 
-        var paddingMargin = "15px";
-
         return (
             <div>
-                <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{"paddingBottom": paddingMargin, "position": "sticky"}}>
+                <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{paddingBottom: '15px', position: 'sticky'}}>
                     {this._showGeneCount()}
                     <div style={{display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top"}}>
                         <DownloadProfilesButton ref="downloadProfilesButton"
@@ -326,7 +329,6 @@ var HighchartsHeatmap = React.createClass({
                     <ReactHighcharts config={highchartsOptions} ref="chart"/>
                     {barcharts_legend}
                 </div>
-
             </div>
         );
     }
