@@ -10,6 +10,11 @@ var ReactDOM = require('react-dom');
 
 //*------------------------------------------------------------------*
 
+require('./DifferentialDownloadButton.css');
+
+//*------------------------------------------------------------------*
+
+
 var DownloadDifferentialButton = React.createClass({
 
     propTypes: {
@@ -34,7 +39,7 @@ var DownloadDifferentialButton = React.createClass({
         })).isRequired
     },
 
-    convertJSONtoTSV: function (results) {
+    _convertJSONtoTSV: function (results) {
         var headers;
         var containsTStatistics = false;
         var arrayResults = typeof results != 'object' ? JSON.parse(results) : results;
@@ -64,8 +69,7 @@ var DownloadDifferentialButton = React.createClass({
         var headerFields = headers.join('\t');
 
         bodyFields.unshift(headerFields);
-        var str = bodyFields.join('\n');
-        return str;
+        return bodyFields.join('\n');
     },
 
     _downloadDifferentialProfiles: function () {
@@ -75,14 +79,14 @@ var DownloadDifferentialButton = React.createClass({
     render: function () {
         var downloadImgSrcURL = "http://" + this.props.host + "/gxa/resources/images/download_blue_small.png";
 
-        var tsvString = this.convertJSONtoTSV(this.props.results);
-        var uri = "data:text/tsv;charset=utf-8," + escape(tsvString);
+        var tsvString = this._convertJSONtoTSV(this.props.results);
+        var uri = "data:text/tsv;charset=utf-8," + encodeURI(tsvString);
         var fileName = "differentialResults.tsv";
 
         return (
             <div style={{display: "inline-block", verticalAlign: "top", paddingLeft: "10px"}}>
-                <a id="download-profiles-link" ref="downloadProfilesLink"
-                   href={uri} download={fileName} className="gxaNoTextButton" target="_blank"
+                <a ref="downloadProfilesLink" className="gxaNoTextButton"
+                   href={uri} download={fileName} target="_blank"
                    onClick={this._downloadDifferentialProfiles}>
                     <img id="download-profiles" alt="Download query results" style={{width: "20px"}}
                          src={downloadImgSrcURL} />
