@@ -298,7 +298,7 @@ var HighchartsHeatmap = React.createClass({
                     <span>High</span>
                 </div>
 
-                <div className="legend-item">
+                <div className="legend-item special">
                     <span className="icon icon-generic" data-icon="i" data-toggle="tooltip" data-placement="bottom"
                           title="This range of values indicates gene expression level across different experimental conditions (e.g. tissues). It is calculated differently between RNA and proteomics experiments.">
                     </span>

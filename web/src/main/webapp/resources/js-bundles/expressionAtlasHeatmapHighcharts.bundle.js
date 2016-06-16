@@ -12608,7 +12608,7 @@ webpackJsonp_name_([4],[
 	            ),
 	            React.createElement(
 	                'div',
-	                { className: 'legend-item' },
+	                { className: 'legend-item special' },
 	                React.createElement('span', { className: 'icon icon-generic', 'data-icon': 'i', 'data-toggle': 'tooltip', 'data-placement': 'bottom',
 	                    title: 'This range of values indicates gene expression level across different experimental conditions (e.g. tissues). It is calculated differently between RNA and proteomics experiments.' })
 	            ),
