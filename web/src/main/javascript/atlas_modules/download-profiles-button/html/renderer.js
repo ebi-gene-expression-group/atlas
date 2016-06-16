@@ -16,13 +16,10 @@ module.exports = function(mountNode,atlasBaseURL,downloadProfilesURL, isFortLaud
         React.createElement(
             DownloadProfilesButton,
             {
-              atlasBaseURL:atlasBaseURL,
-              downloadProfilesURL: downloadProfilesURL,
-              isFortLauderdale: isFortLauderdale,
-               onDownloadCallbackForAnalytics:
-                typeof googleAnalyticsCallback ==='undefined'
-                  ? console.log
-                  : googleAnalyticsCallback
+                atlasBaseURL:atlasBaseURL,
+                downloadProfilesURL: downloadProfilesURL,
+                isFortLauderdale: isFortLauderdale,
+                onDownloadCallbackForAnalytics: typeof googleAnalyticsCallback ==='undefined' ? console.log : googleAnalyticsCallback
             }
         ),
         mountNode

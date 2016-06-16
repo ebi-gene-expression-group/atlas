@@ -3,10 +3,10 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
-var ReactDOM = require('react-dom');
 
 var Modal = require('react-bootstrap/lib/Modal');
-var BootstrapButton = require('react-bootstrap/lib/Button');
+var Button = require('react-bootstrap/lib/Button');
+var Glyphicon = require('react-bootstrap/lib/Glyphicon');
 var Tooltip = require('react-bootstrap/lib/Tooltip');
 var OverlayTrigger = require('react-bootstrap/lib/OverlayTrigger');
 
@@ -28,11 +28,11 @@ var DownloadProfilesButton = React.createClass({
         return { showModal: false };
     },
 
-    _closeModal: function () {
+    _closeModal: function() {
         this.setState({ showModal: false });
     },
 
-    _afterDownloadButtonClicked: function () {
+    _afterDownloadButtonClicked: function() {
         if(!this.props.isFortLauderdale) {
             this._commenceDownload();
         } else {
@@ -40,40 +40,35 @@ var DownloadProfilesButton = React.createClass({
         }
     },
 
-    _commenceDownload: function () {
+    _commenceDownload: function() {
         this.props.onDownloadCallbackForAnalytics();
         window.location.href=this.props.atlasBaseURL + this.props.downloadProfilesURL;
     },
 
-    _commenceDownloadAndCloseModal: function (){
+    _commenceDownloadAndCloseModal: function() {
         this._commenceDownload();
         this._closeModal();
     },
 
-    render: function () {
-        var downloadImgSrcURL = this.props.atlasBaseURL + "/resources/images/download_blue_small.png";
+    render: function() {
         return (
-            <a id="download-profiles-link" ref="downloadProfilesLink" className="gxaNoTextButton"
-               href="javascript:void(0)" onClick={this._afterDownloadButtonClicked}>
+            <a ref="downloadProfilesLink" onClick={this._afterDownloadButtonClicked}>
                 <OverlayTrigger
-                  placement="bottom"
-                  overlay={<Tooltip id="downloadResultsTooltip">
-                              <div className="gxaHelpTooltip">
-                                Download all results
-                              </div>
-                            </Tooltip>}
-                  delay={0}>
-                  <img id="download-profiles" alt="Download query results" style={{width: "20px"}} src={downloadImgSrcURL}/>
+                    placement="bottom"
+                    overlay={<Tooltip id="downloadResultsTooltip">Download all results</Tooltip>}
+                    delay={0}>
+                    <Button bsStyle="primary" bsSize="xsmall"><Glyphicon glyph="download-alt"/></Button>
                 </OverlayTrigger>
-                <Modal id="myModal" show={this.state.showModal} onHide={this._closeModal} bsSize="large">
+
+                <Modal show={this.state.showModal} onHide={this._closeModal} bsSize="large">
                     <Modal.Header closeButton>
                     </Modal.Header>
-                    <Modal.Body style={{'maxHeight' : '360px' }}>
+                    <Modal.Body style={{maxHeight: '360px'}}>
                         <BlueprintText/>
                     </Modal.Body>
                     <Modal.Footer>
-                        <BootstrapButton onClick={this._closeModal}>Close</BootstrapButton>
-                        <BootstrapButton bsStyle="primary" onClick={this._commenceDownloadAndCloseModal}>Continue downloading</BootstrapButton>
+                        <Button onClick={this._closeModal}>Close</Button>
+                        <Button bsStyle="primary" onClick={this._commenceDownloadAndCloseModal}>Continue downloading</Button>
                     </Modal.Footer>
                 </Modal>
             </a>
