@@ -2538,10 +2538,10 @@ webpackJsonp_name_([4],[
 	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
 	        var heatmap = this.refs.chart.getChart();
 	
-	        this.state.legend_1 ? heatmap.series[0].hide() : heatmap.series[0].show();
-	        this.state.legend_2 ? heatmap.series[1].hide() : heatmap.series[1].show();
-	        this.state.legend_3 ? heatmap.series[2].hide() : heatmap.series[2].show();
-	        this.state.legend_4 ? heatmap.series[3].hide() : heatmap.series[3].show();
+	        this.state.legend_0 ? heatmap.series[0].hide() : heatmap.series[0].show();
+	        this.state.legend_1 ? heatmap.series[1].hide() : heatmap.series[1].show();
+	        this.state.legend_2 ? heatmap.series[2].hide() : heatmap.series[2].show();
+	        this.state.legend_3 ? heatmap.series[3].hide() : heatmap.series[3].show();
 	    },
 	
 	    _showGeneCount: function () {
@@ -2680,7 +2680,7 @@ webpackJsonp_name_([4],[
 	            tooltip: {
 	                useHTML: true,
 	                formatter: function () {
-	                    return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y] + '</b>  <br> Tissue: <b>' + this.series.xAxis.categories[this.point.x].label + '</b><br><b>' + '</b>' + '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';">' + '</span> Expression level: <b></span>' + 'Expression level: <b>' + this.point.value + '</b>';
+	                    return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y] + '</b><br>' + 'Experimental condition: <b>' + this.series.xAxis.categories[this.point.x].label + '</b><br>' + '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';"></span>' + 'Expression level: <b>' + this.point.value + '</b>';
 	                }
 	            },
 	            anatomogramEventEmitter: this.props.anatomogramEventEmitter,
