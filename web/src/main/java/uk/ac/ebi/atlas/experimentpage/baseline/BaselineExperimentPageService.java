@@ -63,16 +63,19 @@ public class BaselineExperimentPageService {
     public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
                                                        HttpServletRequest request, boolean isWidget) {
 
+
         if (isWidget) {
             // possibly we could always do this - investigate if it matters for not-a-widget
-
             //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
             // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
             // instead of the current tab separated syntax for geneQuery
             preferences.setGeneQuery(GeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
+            preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
+        } else {
+            preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
+            BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
+            addFactorMenu(model, experiment, requestContext);
         }
-
-        preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         Set<AssayGroupFactor> filteredAssayGroupFactors = getFilteredAssayGroupFactors(experiment, preferences);
 
@@ -83,9 +86,10 @@ public class BaselineExperimentPageService {
         model.addAllAttributes(experiment.getBaselineAttributes());
         DownloadURLBuilder.addRDownloadUrlToModel(model, request.getRequestURI());
     }
-    public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
-                                             HttpServletRequest request, boolean isWidget, boolean disableGeneLinks) throws
-            GenesNotFoundException {
+
+    public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,
+                                             Model model, HttpServletRequest request, boolean isWidget,
+                                             boolean disableGeneLinks) throws GenesNotFoundException {
         //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
         preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
@@ -111,8 +115,6 @@ public class BaselineExperimentPageService {
 
         BaselineProfilesHeatMapWrangler heatMapResults = baselineProfilesHeatMapWranglerFactory.create(preferences,
                 experiment);
-
-
 
         model.addAttribute("jsonColumnHeaders", constructColumnHeaders(filteredAssayGroupFactors));
 
