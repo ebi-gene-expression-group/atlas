@@ -69,8 +69,8 @@ div.gxaFeedbackQuestionBox button {
 
 .gxaSmileyFeedbackBox {
   text-align: center;
+  clear: both;
   width: 300px;
-  margin: 50px 0;
   opacity: 0.8;
   filter: alpha(opacity=80); /* For IE8 and earlier */
 }

@@ -22,15 +22,15 @@
 }
 
 .col_low {
-    background: #dff8ff;
+    background: #45affd;
 }
 
 .col_med {
-    background: #9fd2fa;
+    background: #1E74CA/**#9fd2fa**/;
 }
 
 .col_high {
-    background: #45affd;
+    background: #024990/**#dff8ff**/;
 }
 
 .col_nd {
@@ -64,7 +64,7 @@
 
 #barcharts_legend_list_items .legend-item.special {
     cursor: default;
-    margin-left: 36px;
+    margin-left: 8px;
     color: black;
 }
 

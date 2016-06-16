@@ -264,12 +264,13 @@ var HighchartsHeatmapContainer = React.createClass({
                             for (var k = 0; k < xAxisCategories.length; k++) {
                                 var expression = data.profiles.rows[j].expressions[k];
                                 //we switched from strings to doubles in April 2016, after a release you can assume we serve doubles that are optionally absent to mean "NT"
-                                if (!expression.hasOwnProperty("value") || expression.value === "NT"){
-                                  seriesDataNA.push([k, j, seriesDataNAString]);
+                                if (!expression.hasOwnProperty("value") || expression.value === "NT") {
+                                    //seriesDataNA.push([k, j, seriesDataNAString]);
+                                    continue;
                                 } else if (!expression.value) {
-                                  seriesDataBelowCutoff.push([k, j, seriesDataBelowCutoffString]);
+                                    seriesDataBelowCutoff.push([k, j, seriesDataBelowCutoffString]);
                                 } else {
-                                  experimentTypeSeriesData.push([k, j, +expression.value]);
+                                    experimentTypeSeriesData.push([k, j, +expression.value]);
                                 }
                             }
                         }
@@ -278,14 +279,10 @@ var HighchartsHeatmapContainer = React.createClass({
                             return a[2] - b[2];
                         });
 
-                        var experimentTypeMax = experimentTypeSeriesData[experimentTypeSeriesData.length - 1][2];
-
-
                         for (var k = 0; k < seriesDataRanges.length; k++) {
-                            //seriesDataRanges[k].seriesData.concat(
                             experimentTypeSeriesData.filter(
                                 function(datum) {
-                                    return datum[2] > seriesDataRanges[k].from * experimentTypeMax && datum[2] <= seriesDataRanges[k].to * experimentTypeMax;
+                                    return datum[2] > seriesDataRanges[k].from && datum[2] <= seriesDataRanges[k].to;
                                 }).forEach(
                                 function(filteredDatum) {
                                     seriesDataRanges[k].seriesData.push(filteredDatum);

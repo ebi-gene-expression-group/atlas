@@ -3666,7 +3666,8 @@ webpackJsonp_name_([5],[
 	                            var expression = data.profiles.rows[j].expressions[k];
 	                            //we switched from strings to doubles in April 2016, after a release you can assume we serve doubles that are optionally absent to mean "NT"
 	                            if (!expression.hasOwnProperty("value") || expression.value === "NT") {
-	                                seriesDataNA.push([k, j, seriesDataNAString]);
+	                                //seriesDataNA.push([k, j, seriesDataNAString]);
+	                                continue;
 	                            } else if (!expression.value) {
 	                                seriesDataBelowCutoff.push([k, j, seriesDataBelowCutoffString]);
 	                            } else {
@@ -3679,12 +3680,9 @@ webpackJsonp_name_([5],[
 	                        return a[2] - b[2];
 	                    });
 	
-	                    var experimentTypeMax = experimentTypeSeriesData[experimentTypeSeriesData.length - 1][2];
-	
 	                    for (var k = 0; k < seriesDataRanges.length; k++) {
-	                        //seriesDataRanges[k].seriesData.concat(
 	                        experimentTypeSeriesData.filter(function (datum) {
-	                            return datum[2] > seriesDataRanges[k].from * experimentTypeMax && datum[2] <= seriesDataRanges[k].to * experimentTypeMax;
+	                            return datum[2] > seriesDataRanges[k].from && datum[2] <= seriesDataRanges[k].to;
 	                        }).forEach(function (filteredDatum) {
 	                            seriesDataRanges[k].seriesData.push(filteredDatum);
 	                        });
@@ -3821,23 +3819,23 @@ webpackJsonp_name_([5],[
 	                seriesData: []
 	            }],
 	
+	            legend_0: false,
 	            legend_1: false,
 	            legend_2: false,
-	            legend_3: false,
-	            legend_4: false
+	            legend_3: false
 	
 	        };
 	    },
 	
-	    handleClick: function (index) {
-	        if (index == 1) {
+	    _handleClick: function (index) {
+	        if (index == 0) {
+	            this.setState({ legend_0: !this.state.legend_0 });
+	        } else if (index == 1) {
 	            this.setState({ legend_1: !this.state.legend_1 });
 	        } else if (index == 2) {
 	            this.setState({ legend_2: !this.state.legend_2 });
 	        } else if (index == 3) {
 	            this.setState({ legend_3: !this.state.legend_3 });
-	        } else if (index == 4) {
-	            this.setState({ legend_4: !this.state.legend_4 });
 	        }
 	    },
 	
@@ -3858,20 +3856,17 @@ webpackJsonp_name_([5],[
 	    componentDidMount: function () {
 	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
 	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
-	        var heatmap = this.refs.chart.getChart();
-	        heatmap.series[0].hide();
 	    },
 	
 	    componentDidUpdate: function () {
 	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
 	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
 	        var heatmap = this.refs.chart.getChart();
-	        heatmap.series[0].hide();
 	
-	        this.state.legend_1 ? heatmap.series[1].hide() : heatmap.series[1].show();
-	        this.state.legend_2 ? heatmap.series[2].hide() : heatmap.series[2].show();
-	        this.state.legend_3 ? heatmap.series[3].hide() : heatmap.series[3].show();
-	        this.state.legend_4 ? heatmap.series[4].hide() : heatmap.series[4].show();
+	        this.state.legend_1 ? heatmap.series[0].hide() : heatmap.series[0].show();
+	        this.state.legend_2 ? heatmap.series[1].hide() : heatmap.series[1].show();
+	        this.state.legend_3 ? heatmap.series[2].hide() : heatmap.series[2].show();
+	        this.state.legend_4 ? heatmap.series[3].hide() : heatmap.series[3].show();
 	    },
 	
 	    _showGeneCount: function () {
@@ -3881,7 +3876,7 @@ webpackJsonp_name_([5],[
 	
 	        return React.createElement(
 	            'div',
-	            { style: { display: "inline-block", 'verticalAlign': "top" } },
+	            { style: { display: 'inline-block', verticalAlign: 'top' } },
 	            React.createElement(
 	                'span',
 	                { id: 'geneCount' },
@@ -3899,8 +3894,19 @@ webpackJsonp_name_([5],[
 	        var yAxisCategoriesLinks = this.props.yAxisCategoriesLinks;
 	        var yAxisCategories = this.props.yAxisCategories;
 	
+	        var xAxisLongestHeaderLength = Math.max.apply(null, this.props.xAxisCategories.map(function (category) {
+	            return category.label.length;
+	        }));
+	
+	        var marginTop = this.props.xAxisCategories.length < 10 ? 20 : // labels aren’t tilted
+	        this.props.xAxisCategories.length < 50 ? Math.min(105, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
+	        Math.min(150, Math.round(xAxisLongestHeaderLength * 5)); // labels at -90°
+	
 	        var highchartsOptions = {
 	            plotOptions: {
+	                heatmap: {
+	                    turboThreshold: 0
+	                },
 	                series: {
 	                    point: {
 	                        events: {
@@ -3926,14 +3932,14 @@ webpackJsonp_name_([5],[
 	                }
 	            },
 	            credits: {
-	                enabled: false //remove highchart text in the bottom right corner
+	                enabled: false //remove Highcharts text in the bottom right corner
 	            },
 	            chart: {
 	                type: 'heatmap',
-	                marginTop: 82, //labels
-	                marginRight: 36, //leave space for the export button to appear
+	                marginTop: marginTop,
+	                marginRight: 60, //leave space for tilted long headers
 	                plotBorderWidth: 1,
-	                height: yAxisCategories.length * 12 + 200,
+	                height: Math.max(70, yAxisCategories.length * 30 + marginTop),
 	                zoomType: 'xy',
 	                events: {
 	                    handleGxaAnatomogramTissueMouseEnter: function (e) {
@@ -3956,32 +3962,20 @@ webpackJsonp_name_([5],[
 	                }
 	            },
 	            legend: {
-	                useHTML: true,
-	                enabled: false,
-	                itemDistance: 18,
-	                symbolWidth: 12,
-	                symbolHeight: 12,
-	                x: 150,
-	                align: 'left',
-	                verticalAlign: 'bottom',
-	                layout: 'horizontal',
-	                itemStyle: {
-	                    lineHeight: "10px",
-	                    fontSize: "10px",
-	                    color: '#606060',
-	                    fontWeight: 'normal'
-	                }
+	                enabled: false
 	            },
 	            title: null,
 	            xAxis: { //tissues
 	                tickLength: 5,
-	                tickColor: "rgb(192, 192, 192)",
-	                lineColor: "rgb(192, 192, 192)",
+	                tickColor: 'rgb(192, 192, 192)',
+	                lineColor: 'rgb(192, 192, 192)',
 	                labels: {
 	                    y: -6,
 	                    style: {
-	                        fontSize: "9px"
+	                        fontSize: '9px'
 	                    },
+	                    // textOverflow: 'none',
+	                    // whiteSpace: 'nowrap'
 	                    autoRotation: [-45, -90],
 	                    formatter: function () {
 	                        return this.value.label;
@@ -3995,8 +3989,8 @@ webpackJsonp_name_([5],[
 	                reversed: true,
 	                labels: {
 	                    style: {
-	                        fontSize: "10px",
-	                        color: "#148ff3"
+	                        fontSize: '10px',
+	                        color: '#148ff3'
 	                    },
 	                    formatter: function () {
 	                        return '<a href="' + atlasBaseURL + '/experiments/' + yAxisCategoriesLinks[this.value] + '">' + this.value + '</a>';
@@ -4005,7 +3999,8 @@ webpackJsonp_name_([5],[
 	                categories: this.props.yAxisCategories,
 	                title: null,
 	                gridLineWidth: 0,
-	                minorGridLineWidth: 0
+	                minorGridLineWidth: 0,
+	                endOnTick: false
 	            },
 	            tooltip: {
 	                useHTML: true,
@@ -4016,12 +4011,6 @@ webpackJsonp_name_([5],[
 	            anatomogramEventEmitter: this.props.anatomogramEventEmitter,
 	            ensemblEventEmitter: this.props.ensemblEventEmitter,
 	            series: [{
-	                name: this.props.seriesDataNAString,
-	                color: "#f7f7f7",
-	                borderWidth: 1,
-	                borderColor: "#fff",
-	                data: this.props.seriesDataNA
-	            }, {
 	                name: this.props.seriesDataBelowCutoffString,
 	                color: "#eaeaea",
 	                borderWidth: 1,
@@ -4029,41 +4018,36 @@ webpackJsonp_name_([5],[
 	                data: this.props.seriesDataBelowCutoff
 	            }, {
 	                name: this.props.seriesDataRanges[0].label,
-	                color: "#dff8ff",
+	                color: "#45affd",
 	                borderWidth: 1,
 	                borderColor: "#fff",
 	                data: this.props.seriesDataRanges[0].seriesData
 	            }, {
 	                name: this.props.seriesDataRanges[1].label,
-	                color: "#9fd2fa",
+	                color: "#1E74CA",
 	                borderWidth: 1,
 	                borderColor: "#fff",
 	                data: this.props.seriesDataRanges[1].seriesData
 	            }, {
 	                name: this.props.seriesDataRanges[2].label,
-	                color: "#45affd",
+	                color: "#024990",
 	                borderWidth: 1,
 	                borderColor: "#fff",
 	                data: this.props.seriesDataRanges[2].seriesData
 	            }]
 	        };
 	
-	        var clsName_1 = this.state.legend_1 ? 'legend-item legend-item-off' : 'legend-item';
-	        var clsName_2 = this.state.legend_2 ? 'legend-item legend-item-off' : 'legend-item';
-	        var clsName_3 = this.state.legend_3 ? 'legend-item legend-item-off' : 'legend-item';
-	        var clsName_4 = this.state.legend_4 ? 'legend-item legend-item-off' : 'legend-item';
+	        var clsName_0 = this.state.legend_0 ? 'legend-item legend-item-off' : 'legend-item special';
+	        var clsName_1 = this.state.legend_1 ? 'legend-item legend-item-off' : 'legend-item special';
+	        var clsName_2 = this.state.legend_2 ? 'legend-item legend-item-off' : 'legend-item special';
+	        var clsName_3 = this.state.legend_3 ? 'legend-item legend-item-off' : 'legend-item special';
 	
 	        var barcharts_legend = React.createElement(
 	            'div',
 	            { id: 'barcharts_legend_list_items', ref: 'barcharts_legend_items' },
 	            React.createElement(
 	                'div',
-	                { className: 'legend-text' },
-	                'Click to interact:'
-	            ),
-	            React.createElement(
-	                'div',
-	                { id: 'legend_1', ref: 'legend_1', className: clsName_1, onClick: this.handleClick.bind(this, 1) },
+	                { id: 'legend_0', ref: 'legend_1', className: clsName_0 },
 	                React.createElement('div', { className: 'legend-rectangle col_below' }),
 	                React.createElement(
 	                    'span',
@@ -4073,7 +4057,7 @@ webpackJsonp_name_([5],[
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_2', className: clsName_2, onClick: this.handleClick.bind(this, 2) },
+	                { id: 'legend_1', className: clsName_1 },
 	                React.createElement('div', { className: 'legend-rectangle col_low' }),
 	                React.createElement(
 	                    'span',
@@ -4083,7 +4067,7 @@ webpackJsonp_name_([5],[
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_3', className: clsName_3, onClick: this.handleClick.bind(this, 3) },
+	                { id: 'legend_2', className: clsName_2 },
 	                React.createElement('div', { className: 'legend-rectangle col_med' }),
 	                React.createElement(
 	                    'span',
@@ -4093,7 +4077,7 @@ webpackJsonp_name_([5],[
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_4', className: clsName_4, onClick: this.handleClick.bind(this, 4) },
+	                { id: 'legend_3', className: clsName_3 },
 	                React.createElement('div', { className: 'legend-rectangle col_high' }),
 	                React.createElement(
 	                    'span',
@@ -4109,7 +4093,7 @@ webpackJsonp_name_([5],[
 	            ),
 	            React.createElement(
 	                'div',
-	                { id: 'legend_5', className: 'legend-item special' },
+	                { id: 'legend_4', className: 'legend-item special' },
 	                React.createElement('div', { className: 'legend-rectangle col_nd' }),
 	                React.createElement(
 	                    'span',
@@ -4119,14 +4103,12 @@ webpackJsonp_name_([5],[
 	            )
 	        );
 	
-	        var paddingMargin = "15px";
-	
 	        return React.createElement(
 	            'div',
 	            null,
 	            React.createElement(
 	                'div',
-	                { ref: 'countAndLegend', className: 'gxaHeatmapCountAndLegend', style: { "paddingBottom": paddingMargin, "position": "sticky" } },
+	                { ref: 'countAndLegend', className: 'gxaHeatmapCountAndLegend', style: { paddingBottom: '15px', position: 'sticky' } },
 	                this._showGeneCount(),
 	                React.createElement(
 	                    'div',
@@ -4160,7 +4142,11 @@ webpackJsonp_name_([5],[
 /*!*********************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-highcharts/dist/ReactHighcharts.js ***!
   \*********************************************************************************************************/
-[2042, 1408, 1585],
+/***/ function(module, exports, __webpack_require__) {
+
+	!function(t,r){ true?module.exports=r(__webpack_require__(/*! react */ 1408),__webpack_require__(/*! highcharts */ 1585)):"function"==typeof define&&define.amd?define(["react","highcharts"],r):"object"==typeof exports?exports.ReactHighcharts=r(require("react"),require("highcharts")):t.ReactHighcharts=r(t.React,t.Highcharts)}(this,function(t,r){return function(t){function r(o){if(e[o])return e[o].exports;var n=e[o]={exports:{},id:o,loaded:!1};return t[o].call(n.exports,n,n.exports,r),n.loaded=!0,n.exports}var e={};return r.m=t,r.c=e,r.p="",r(0)}([function(t,r,e){t.exports=e(3)},function(r,e){r.exports=t},function(t,r,e){(function(r){"use strict";var o=Object.assign||function(t){for(var r=1;r<arguments.length;r++){var e=arguments[r];for(var o in e)Object.prototype.hasOwnProperty.call(e,o)&&(t[o]=e[o])}return t},n=e(1);t.exports=function(t,e){var i="Highcharts"+t,c=n.createClass({displayName:i,propTypes:{config:n.PropTypes.object.isRequired,isPureConfig:n.PropTypes.bool,neverReflow:n.PropTypes.bool,callback:n.PropTypes.func},defaultProps:{callback:function(){}},renderChart:function(n){var c=this;if(!n)throw new Error("Config must be specified for the "+i+" component");var s=n.chart;this.chart=new e[t](o({},n,{chart:o({},s,{renderTo:this.refs.chart})}),this.props.callback),this.props.neverReflow||r.requestAnimationFrame&&requestAnimationFrame(function(){c.chart&&c.chart.options&&c.chart.reflow()})},shouldComponentUpdate:function(t){return t.neverReflow||t.isPureConfig&&this.props.config===t.config?!0:(this.renderChart(t.config),!1)},getChart:function(){if(!this.chart)throw new Error("getChart() should not be called before the component is mounted");return this.chart},componentDidMount:function(){this.renderChart(this.props.config)},componentWillUnmount:function(){this.chart.destroy()},render:function(){var t=this.props;return t=o({},t,{ref:"chart"}),n.createElement("div",t)}});return c.Highcharts=e,c}}).call(r,function(){return this}())},function(t,r,e){"use strict";t.exports=e(2)("Chart",e(4))},function(t,e){t.exports=r}])});
+
+/***/ },
 /* 1585 */
 /*!************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-highcharts/~/highcharts/highcharts.js ***!
@@ -4238,7 +4224,7 @@ webpackJsonp_name_([5],[
 	
 	
 	// module
-	exports.push([module.id, ".gene_title {\n    text-align: center;\n    font-size: 70%;\n    border: 0 red solid;\n}\n\n#container {\n    min-width: 410px;\n    min-height: 210px;\n    margin: 0 auto; /*avoid line overlap*/\n    border: 0 red solid;\n}\n\n#barcharts_legend_list_items {\n    color: #606060;\n    margin-left: 180px;\n    border: 0 solid olive;\n}\n\n.col_below {\n    background: #d7d7d7;\n}\n\n.col_low {\n    background: #dff8ff;\n}\n\n.col_med {\n    background: #9fd2fa;\n}\n\n.col_high {\n    background: #45affd;\n}\n\n.col_nd {\n    background: #fff;\n}\n\n#barcharts_legend_list_items .legend-text {\n    display: inline-block;\n    padding: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item {\n    cursor: pointer;\n    display: inline-block;\n    padding: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item:hover {\n    color: black;\n}\n\n#barcharts_legend_list_items .legend-item.legend-item-off {\n    color: #ccc;\n}\n\n#barcharts_legend_list_items .legend-item.legend-item-off div {\n    background-color: #f7f7f7;\n}\n\n#barcharts_legend_list_items .legend-item.special {\n    cursor: default;\n    margin-left: 36px;\n    color: black;\n}\n\n#barcharts_legend_list_items .legend-item .legend-rectangle {\n    width: 12px;\n    height: 12px;\n    border: 1px rgba(0, 0, 0, 0.2) solid;\n    display: inline-block;\n    margin-right: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item .icon-generic:before {\n    font-size: 180%;\n    color: #7e7e7e;\n}\n\n#barcharts_legend_list_items .legend-item:hover .icon-generic:before {\n    color: #353535;\n}\n\n/*****************************************EBI font*******************************************************/\n@font-face {\n    font-family: 'EBI-Conceptual';\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Functional';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Generic';\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Species';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-SocialMedia';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-Species') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n.icon-socialmedia:before {\n    font-family: 'EBI-SocialMedia';\n    margin: 0 0.3em 0 0;\n    content: attr(data-icon);\n    color: white;\n    font-size: 100%;\n}\n\n.icon-conceptual:before {\n    font-family: 'EBI-Conceptual';\n    margin: 0 0.3em 0 0;\n    content: attr(data-icon);\n    color: #7e7e7e;\n    font-size: 180%;\n}\n\n.icon-species:before {\n    font-family: 'EBI-Species';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon {\n    text-decoration: none;\n    font-style: normal;\n}\n\n.icon-static:before, .icon-generic:before {\n    font-family: 'EBI-Generic';\n    font-size: 100%;\n    color: #BBB;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon-functional:before {\n    font-family: 'EBI-Functional';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0.3em 0 0;\n}\n\n/*****************************************END EBI font*******************************************************/\n", ""]);
+	exports.push([module.id, ".gene_title {\n    text-align: center;\n    font-size: 70%;\n    border: 0 red solid;\n}\n\n#container {\n    min-width: 410px;\n    min-height: 210px;\n    margin: 0 auto; /*avoid line overlap*/\n    border: 0 red solid;\n}\n\n#barcharts_legend_list_items {\n    color: #606060;\n    margin-left: 180px;\n    border: 0 solid olive;\n}\n\n.col_below {\n    background: #d7d7d7;\n}\n\n.col_low {\n    background: #45affd;\n}\n\n.col_med {\n    background: #1E74CA/**#9fd2fa**/;\n}\n\n.col_high {\n    background: #024990/**#dff8ff**/;\n}\n\n.col_nd {\n    background: #fff;\n}\n\n#barcharts_legend_list_items .legend-text {\n    display: inline-block;\n    padding: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item {\n    cursor: pointer;\n    display: inline-block;\n    padding: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item:hover {\n    color: black;\n}\n\n#barcharts_legend_list_items .legend-item.legend-item-off {\n    color: #ccc;\n}\n\n#barcharts_legend_list_items .legend-item.legend-item-off div {\n    background-color: #f7f7f7;\n}\n\n#barcharts_legend_list_items .legend-item.special {\n    cursor: default;\n    margin-left: 8px;\n    color: black;\n}\n\n#barcharts_legend_list_items .legend-item .legend-rectangle {\n    width: 12px;\n    height: 12px;\n    border: 1px rgba(0, 0, 0, 0.2) solid;\n    display: inline-block;\n    margin-right: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item .icon-generic:before {\n    font-size: 180%;\n    color: #7e7e7e;\n}\n\n#barcharts_legend_list_items .legend-item:hover .icon-generic:before {\n    color: #353535;\n}\n\n/*****************************************EBI font*******************************************************/\n@font-face {\n    font-family: 'EBI-Conceptual';\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Functional';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Generic';\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');\n    src: url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),\n    url('http://www.ebi.ac.uk//web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Species';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-SocialMedia';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-Species') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n.icon-socialmedia:before {\n    font-family: 'EBI-SocialMedia';\n    margin: 0 0.3em 0 0;\n    content: attr(data-icon);\n    color: white;\n    font-size: 100%;\n}\n\n.icon-conceptual:before {\n    font-family: 'EBI-Conceptual';\n    margin: 0 0.3em 0 0;\n    content: attr(data-icon);\n    color: #7e7e7e;\n    font-size: 180%;\n}\n\n.icon-species:before {\n    font-family: 'EBI-Species';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon {\n    text-decoration: none;\n    font-style: normal;\n}\n\n.icon-static:before, .icon-generic:before {\n    font-family: 'EBI-Generic';\n    font-size: 100%;\n    color: #BBB;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon-functional:before {\n    font-family: 'EBI-Functional';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0.3em 0 0;\n}\n\n/*****************************************END EBI font*******************************************************/\n", ""]);
 	
 	// exports
 
@@ -12305,7 +12291,7 @@ webpackJsonp_name_([5],[
 	
 	
 	// module
-	exports.push([module.id, "div.gxaFeedbackQuestionBox {\n  margin: 30px;\n  width: 300px;\n  background-color: #b3e0ff;\n  border: 3px solid #008ae6;\n  opacity: 0.6;\n  filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n\n#feedbackBoxCross {\n  margin: 3px;\n  margin-top: 5px;\n  float: right;\n  cursor:pointer;\n}\n\n#feedbackBoxCross:before {\n  color: #BF2222;\n}\n\ndiv.gxaFeedbackQuestionBox p {\n  margin: 2%;\n font-weight: bold;\n text-align: center;\n}\n\ndiv.gxaFeedbackQuestionBox a {\n  float: right;\n  margin-top: 6px;\n  cursor:pointer;\n}\n\ndiv.gxaFeedbackQuestionBoxAnswer {\n  position:relative;\ntext-align: center;\n  margin: 0 auto;\n  margin-bottom: 10px;\n  width: 90%;\n}\n\ndiv.gxaFeedbackQuestionBox button {\n width: auto;\n}\n\n.feedbackBoxTransitionWrapper-leave {\n  opacity: 1;\n}\n\n.feedbackBoxTransitionWrapper-leave.feedbackBoxTransitionWrapper-leave-active {\n  opacity: 0.01;\n  transition: opacity 300ms ease-in;\n}\n\n.gxaSmiley {\n  opacity: 0.6;\n  text-decoration:none;\n  cursor:pointer;\n}\n\n.gxaSmiley:hover {\n  opacity: 0.9;\n  text-decoration:none;\n  cursor:pointer;\n}\n\n.gxaSmileyClicked {\n  opacity: 1;\n}\n\n.gxaSmileyFeedbackBox {\n  text-align: center;\n  width: 300px;\n  margin: 50px 0;\n  opacity: 0.8;\n  filter: alpha(opacity=80); /* For IE8 and earlier */\n}\n\n.gxaSmileyRow {\n  text-align: center!important;\n}\n\n.gxaSmileyFeedbackBox p {\n  padding-left: 18px;\n  padding-top: 5px;\n  font-weight: bold;\n  font-size: 14px;\n}\n\n.gxaSmileyFeedbackBox form {\n  padding: 6px;\n  width: 87%;\n}\n\n.gxaSmileyFeedbackBox button {\n  width: 100px;\n  margin-left: 91px;\n}\n\n.form-control {\n  display: block;\n  width: 100%;\n  height: 34px;\n  padding: 6px 12px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n}\n.form-control:focus {\n  border-color: #66afe9;\n  outline: 0;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);\n          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);\n}\n.form-control::-moz-placeholder {\n  color: #999;\n  opacity: 1;\n}\n.form-control:-ms-input-placeholder {\n  color: #999;\n}\n.form-control::-webkit-input-placeholder {\n  color: #999;\n}\n", ""]);
+	exports.push([module.id, "div.gxaFeedbackQuestionBox {\n  margin: 30px;\n  width: 300px;\n  background-color: #b3e0ff;\n  border: 3px solid #008ae6;\n  opacity: 0.6;\n  filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n\n#feedbackBoxCross {\n  margin: 3px;\n  margin-top: 5px;\n  float: right;\n  cursor:pointer;\n}\n\n#feedbackBoxCross:before {\n  color: #BF2222;\n}\n\ndiv.gxaFeedbackQuestionBox p {\n  margin: 2%;\n font-weight: bold;\n text-align: center;\n}\n\ndiv.gxaFeedbackQuestionBox a {\n  float: right;\n  margin-top: 6px;\n  cursor:pointer;\n}\n\ndiv.gxaFeedbackQuestionBoxAnswer {\n  position:relative;\ntext-align: center;\n  margin: 0 auto;\n  margin-bottom: 10px;\n  width: 90%;\n}\n\ndiv.gxaFeedbackQuestionBox button {\n width: auto;\n}\n\n.feedbackBoxTransitionWrapper-leave {\n  opacity: 1;\n}\n\n.feedbackBoxTransitionWrapper-leave.feedbackBoxTransitionWrapper-leave-active {\n  opacity: 0.01;\n  transition: opacity 300ms ease-in;\n}\n\n.gxaSmiley {\n  opacity: 0.6;\n  text-decoration:none;\n  cursor:pointer;\n}\n\n.gxaSmiley:hover {\n  opacity: 0.9;\n  text-decoration:none;\n  cursor:pointer;\n}\n\n.gxaSmileyClicked {\n  opacity: 1;\n}\n\n.gxaSmileyFeedbackBox {\n  text-align: center;\n  clear: both;\n  width: 300px;\n  opacity: 0.8;\n  filter: alpha(opacity=80); /* For IE8 and earlier */\n}\n\n.gxaSmileyRow {\n  text-align: center!important;\n}\n\n.gxaSmileyFeedbackBox p {\n  padding-left: 18px;\n  padding-top: 5px;\n  font-weight: bold;\n  font-size: 14px;\n}\n\n.gxaSmileyFeedbackBox form {\n  padding: 6px;\n  width: 87%;\n}\n\n.gxaSmileyFeedbackBox button {\n  width: 100px;\n  margin-left: 91px;\n}\n\n.form-control {\n  display: block;\n  width: 100%;\n  height: 34px;\n  padding: 6px 12px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n}\n.form-control:focus {\n  border-color: #66afe9;\n  outline: 0;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);\n          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);\n}\n.form-control::-moz-placeholder {\n  color: #999;\n  opacity: 1;\n}\n.form-control:-ms-input-placeholder {\n  color: #999;\n}\n.form-control::-webkit-input-placeholder {\n  color: #999;\n}\n", ""]);
 	
 	// exports
 

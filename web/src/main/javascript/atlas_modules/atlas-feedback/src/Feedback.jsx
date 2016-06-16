@@ -140,7 +140,7 @@ var FeedbackBox = React.createClass({
             :
               <div>
                 <BootstrapButton bsStyle="default" onClick={this._submitPositiveAnswer}>Yes</BootstrapButton>
-                <BootstrapButton onClick={function(){this.setState({askingWhyTheResultsWereNotUseful:true})}.bind(this)}bsStyle="default">No</BootstrapButton>
+                <BootstrapButton onClick={function(){this.setState({askingWhyTheResultsWereNotUseful:true})}.bind(this)} bsStyle="default">No</BootstrapButton>
                 <a onClick={this.props.onRequestHide} >Do not show this again</a>
               </div>}
           </div>
@@ -172,7 +172,7 @@ var FeedbackBox = React.createClass({
           width: '32px',
           height: '32px',
           margin: '4px'
-      },
+      }
     },
 
     render: function () {
