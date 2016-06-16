@@ -129,7 +129,7 @@ th.gxaHeatmapTableDesignElement {
 .gxaDisplayCoexpressionOffer .gxaSlider {
   width: 250px;
   margin: 15px;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .gxaDisplayCoexpressionOffer p {
