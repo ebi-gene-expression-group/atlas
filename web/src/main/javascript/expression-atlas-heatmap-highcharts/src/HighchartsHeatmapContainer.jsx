@@ -102,20 +102,21 @@ var HighchartsHeatmapContainer = React.createClass({
 
                   <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
                       <HighchartsHeatmap
-                               profiles={this.state.profiles}
-                               heatmapConfig={this.state.heatmapConfig}
-                               anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-                               ensemblEventEmitter={this.props.ensemblEventEmitter}
-                               atlasBaseURL={this.props.atlasBaseURL}
-                               googleAnalyticsCallback={this.state.googleAnalyticsCallback}
-                               xAxisCategories={this.state.xAxisCategories}
-                               yAxisCategories={this.state.yAxisCategories}
-                               yAxisCategoriesLinks={this.state.yAxisCategoriesLinks}
-                               seriesDataNA={this.state.seriesDataNA}
-                               seriesDataNAString={this.state.seriesDataNAString}
-                               seriesDataBelowCutoff={this.state.seriesDataBelowCutoff}
-                               seriesDataBelowCutoffString={this.state.seriesDataBelowCutoffString}
-                               seriesDataRanges={this.state.seriesDataRanges}
+                          isMultiExperiment={this.props.isMultiExperiment}
+                          profiles={this.state.profiles}
+                          heatmapConfig={this.state.heatmapConfig}
+                          anatomogramEventEmitter={this.props.anatomogramEventEmitter}
+                          ensemblEventEmitter={this.props.ensemblEventEmitter}
+                          atlasBaseURL={this.props.atlasBaseURL}
+                          googleAnalyticsCallback={this.state.googleAnalyticsCallback}
+                          xAxisCategories={this.state.xAxisCategories}
+                          yAxisCategories={this.state.yAxisCategories}
+                          yAxisCategoriesLinks={this.state.yAxisCategoriesLinks}
+                          seriesDataNA={this.state.seriesDataNA}
+                          seriesDataNAString={this.state.seriesDataNAString}
+                          seriesDataBelowCutoff={this.state.seriesDataBelowCutoff}
+                          seriesDataBelowCutoffString={this.state.seriesDataBelowCutoffString}
+                          seriesDataRanges={this.state.seriesDataRanges}
                       />
                   </div>
               </div>
