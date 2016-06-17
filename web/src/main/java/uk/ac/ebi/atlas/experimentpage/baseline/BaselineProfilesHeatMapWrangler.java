@@ -32,8 +32,6 @@ public class BaselineProfilesHeatMapWrangler {
 
     private final BaselineExperiment experiment;
 
-    private final boolean IGNORE_SPECIES = false;
-
     private final BaselineRequestContext requestContext;
 
     private final CoexpressedGenesService coexpressedGenesService;
@@ -52,10 +50,10 @@ public class BaselineProfilesHeatMapWrangler {
     }
 
     private String getSpecies() {
-        return IGNORE_SPECIES ? "" : requestContext.getFilteredBySpecies();
+        return requestContext.getFilteredBySpecies();
     }
 
-    public GeneQueryResponse getGeneQueryResponseForProfiles() throws GenesNotFoundException {
+    private GeneQueryResponse getGeneQueryResponseForProfiles() throws GenesNotFoundException {
         if (geneQueryResponseForProfiles == null) {
             geneQueryResponseForProfiles =
                     solrQueryService.fetchResponseBasedOnRequestContext(requestContext,
@@ -86,26 +84,27 @@ public class BaselineProfilesHeatMapWrangler {
     public JsonArray getJsonCoexpressions() throws GenesNotFoundException {
         fetchProfilesIfMissing();
         JsonArray result = new JsonArray();
+
         if (jsonProfiles.size() == 1) {
-            for (BaselineProfile baselineProfile : jsonProfiles) {
-                Optional<Pair<GeneQueryResponse, List<String>>> coexpressedStuff = coexpressedGenesService.tryGetRelatedCoexpressions(experiment,
-                        getGeneQueryResponseForProfiles(), ImmutableMap.of(baselineProfile.getId().toUpperCase(), 49));
-                if (coexpressedStuff.isPresent()) {
+            BaselineProfile baselineProfile = jsonProfiles.get(0);
 
-                    JsonObject o = new JsonObject();
-                    o.addProperty("geneName", baselineProfile.getName());
-                    o.addProperty("geneId", baselineProfile.getId());
-                    o.add("jsonProfiles", baselineProfilesViewModelBuilder.build
-                            (baselineProfilesHeatMap.fetchInPrescribedOrder(coexpressedStuff.get().getRight(),
-                                    requestContext,
-                                    coexpressedStuff.get().getLeft(), false),
-                                    requestContext
-                                            .getOrderedFilterFactors()));
-                    result.add(o);
-                }
+            Optional<Pair<GeneQueryResponse, List<String>>> coexpressedStuff =
+                    coexpressedGenesService.tryGetRelatedCoexpressions(experiment, getGeneQueryResponseForProfiles(), ImmutableMap.of(baselineProfile.getId().toUpperCase(), 49));
+            if (coexpressedStuff.isPresent()) {
 
+                JsonObject o = new JsonObject();
+                o.addProperty("geneName", baselineProfile.getName());
+                o.addProperty("geneId", baselineProfile.getId());
+                o.add("jsonProfiles", baselineProfilesViewModelBuilder.build
+                        (baselineProfilesHeatMap.fetchInPrescribedOrder(coexpressedStuff.get().getRight(),
+                                requestContext,
+                                coexpressedStuff.get().getLeft(), false),
+                                requestContext
+                                        .getOrderedFilterFactors()));
+                result.add(o);
             }
         }
+
         return result;
 
     }

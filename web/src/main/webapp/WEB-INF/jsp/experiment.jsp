@@ -42,42 +42,50 @@
 
 <script type="text/javascript">
 
-    (function ($, URI) { //self invoking wrapper function that prevents $ namespace conflicts
+    $(document).ready(function () {
 
-        $(document).ready(function () {
+        clearLocalNav();
+        $('#gxaLocalNavHome').addClass("active");
 
-            clearLocalNav();
-            $('#gxaLocalNavHome').addClass("active");
-
-            if ($.browser.msie && $.browser.version <= 8) {
-                $("#anatomogram").remove();
-                $("#heatmap-div").removeClass();
-                $("#heatmap-profilesAsGeneSets").removeClass();
-                $("#gxaGeneDistributionButton").hide();//hide the bar chart button
-                $("#gxaGeneDistributionPanel").hide();//hide the bar chart
-                $("#slider-range-max").hide();//hide the cutoff slider
-                $("#slider-help").hide();//hide the slider help
-            }
+        if ($.browser.msie && $.browser.version <= 8) {
+            $("#anatomogram").remove();
+            $("#heatmap-div").removeClass();
+            $("#heatmap-profilesAsGeneSets").removeClass();
+            $("#gxaGeneDistributionButton").hide();//hide the bar chart button
+            $("#gxaGeneDistributionPanel").hide();//hide the bar chart
+            $("#slider-range-max").hide();//hide the cutoff slider
+            $("#slider-help").hide();//hide the slider help
+        }
 
 
-            if (${!type.baseline}) {
-                $("#gxaGeneDistributionButton").hide();//hide the bar chart button
-                $("#gxaGeneDistributionPanel").hide();//hide the bar chart
-                $("#slider-range-max").hide();//hide the cutoff slider
-                $("#slider-help").hide();//hide the slider help
-            } else {
+        if (${!type.baseline}) {
+            $("#gxaGeneDistributionButton").hide();//hide the bar chart button
+            $("#gxaGeneDistributionPanel").hide();//hide the bar chart
+            $("#slider-range-max").hide();//hide the cutoff slider
+            $("#slider-help").hide();//hide the slider help
+        } else {
 
-                <c:choose>
-                <c:when test="${type.proteomicsBaseline}">
-                    var loadSliderAndPlot = geneDistribution.loadProteomicsSliderAndPlot;
-                </c:when>
-                <c:otherwise>
-                    var loadSliderAndPlot = geneDistribution.loadSliderAndPlot;
-                </c:otherwise>
-                </c:choose>
+            <c:choose>
+            <c:when test="${type.proteomicsBaseline}">
+                var loadSliderAndPlot = geneDistribution.loadProteomicsSliderAndPlot;
+            </c:when>
+            <c:otherwise>
+                var loadSliderAndPlot = geneDistribution.loadSliderAndPlot;
+            </c:otherwise>
+            </c:choose>
 
-                var $queryFactorValues = $("#queryFactorValues");
+            var $queryFactorValues = $("#queryFactorValues");
 
+            loadSliderAndPlot(
+                ${preferences.cutoff},
+                '${experimentAccession}',
+                $queryFactorValues.val(),
+                '<spring:eval expression="T(org.apache.commons.lang3.StringEscapeUtils).escapeEcmaScript(preferences.queryFactorType)"/>',
+                '<spring:eval expression="T(org.apache.commons.lang3.StringEscapeUtils).escapeEcmaScript(preferences.serializedFilterFactors)"/>',
+                '${accessKey}'
+            );
+
+            $queryFactorValues.change(function () {
                 loadSliderAndPlot(
                     ${preferences.cutoff},
                     '${experimentAccession}',
@@ -86,37 +94,26 @@
                     '<spring:eval expression="T(org.apache.commons.lang3.StringEscapeUtils).escapeEcmaScript(preferences.serializedFilterFactors)"/>',
                     '${accessKey}'
                 );
+            });
 
-                $queryFactorValues.change(function () {
-                    loadSliderAndPlot(
-                        ${preferences.cutoff},
-                        '${experimentAccession}',
-                        $queryFactorValues.val(),
-                        '<spring:eval expression="T(org.apache.commons.lang3.StringEscapeUtils).escapeEcmaScript(preferences.queryFactorType)"/>',
-                        '<spring:eval expression="T(org.apache.commons.lang3.StringEscapeUtils).escapeEcmaScript(preferences.serializedFilterFactors)"/>',
-                        '${accessKey}'
-                    );
-                });
+            //configurations required for any browser excepted IE version 8 or lower
+            geneDistribution.initBarChartButton();
 
-                //configurations required for any browser excepted IE version 8 or lower
-                geneDistribution.initBarChartButton();
+        }
 
-            }
+        //configurations required for any browser...
+        searchFormModule.init();
+        geneQueryTagEditorModule.init('#geneQuery', '${species}');
+        helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', $('[data-help-loc]').not('#heatmap-react [data-help-loc]'));
 
-            //configurations required for any browser...
-            searchFormModule.init();
-            geneQueryTagEditorModule.init('#geneQuery', '${species}');
-            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', $('[data-help-loc]').not('#heatmap-react [data-help-loc]'));
-
-            // Populate gene query tag-editor
-            var geneQueryStr = new URI(window.location).search(true)["geneQuery"];
-            if(geneQueryStr) {
-                var geneTerms = geneQueryStr.split("\t");
-                geneTerms.forEach(function(geneTerm) {
-                    $('#geneQuery').tagEditor('addTag', geneTerm);
-                });
-            }
-        });
-    })(jQuery, URI);
+        // Populate gene query tag-editor
+        var geneQueryStr = new URI(window.location).search(true)["geneQuery"];
+        if(geneQueryStr) {
+            var geneTerms = geneQueryStr.split("\t");
+            geneTerms.forEach(function(geneTerm) {
+                $('#geneQuery').tagEditor('addTag', geneTerm);
+            });
+        }
+    });
 
 </script>

@@ -14,8 +14,10 @@ var ExperimentTypes = require('./experimentTypes.js');
 //*------------------------------------------------------------------*
 
 /**
- * @param {Object} options
- * @param {Object} options.heatmapData
+ * @param {Object}  options
+ * @param {string}  options.proxyPrefix
+ * @param {string}  options.atlasHost
+ * @param {string}  options.sourceURL
  * @param {boolean} options.isMultiExperiment
  * @param {boolean} options.isDifferential
  * @param {boolean} options.isProteomicsBaseline
@@ -31,12 +33,6 @@ exports.render = function(options) {
       protocol + atlasHost + atlasPath;
 
   var atlasBaseURL = options.proxyPrefix ? options.proxyPrefix + "/" + atlasHost + atlasPath : linksAtlasBaseURL;
-
-  var endpointPath =
-      options.analyticsSearch ? "/widgets/heatmap/baselineAnalytics" :
-          options.isMultiExperiment ? "/widgets/heatmap/multiExperiment" : "/widgets/heatmap/referenceExperiment";
-
-  var sourceURL = atlasBaseURL + endpointPath + "?" + options.params;
 
     var type =
         options.isMultiExperiment ? ExperimentTypes.MULTIEXPERIMENT :

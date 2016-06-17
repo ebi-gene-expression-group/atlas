@@ -44,6 +44,7 @@
     "legend": "file:./atlas_modules/legend",
     "query-string": "^2.3.0",
     "react": "^0.14.7",
+    "react-bootstrap": "^0.28.5",
     "react-dom": "^0.14.7",
     "react-highcharts": "^8.3.2",
     "react-radio-group": "^1.1.0",

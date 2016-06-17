@@ -86,7 +86,7 @@ var AsynchronouslyLoadedInternalHeatmapAnatomogramContainer = React.createClass(
       : <div ref="loadingImagePlaceholder">
           <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
       </div>
-  },
+  }
 });
 
 var InternalHeatmapAnatomogramContainer = React.createClass({

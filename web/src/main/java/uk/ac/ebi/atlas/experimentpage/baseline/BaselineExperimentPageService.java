@@ -120,7 +120,7 @@ public class BaselineExperimentPageService {
 
         model.addAttribute("jsonProfiles", viewModelAsJson(heatMapResults.getJsonProfiles()));
 
-        model.addAttribute("jsonCoexpressions",gson.toJson(heatMapResults.getJsonCoexpressions()));
+        model.addAttribute("jsonCoexpressions", gson.toJson(heatMapResults.getJsonCoexpressions()));
 
 
         Optional<JsonObject> geneSets = heatMapResults.getJsonProfilesAsGeneSets();

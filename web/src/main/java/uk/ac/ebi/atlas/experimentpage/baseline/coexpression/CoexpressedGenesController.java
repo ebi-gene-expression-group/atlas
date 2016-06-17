@@ -27,7 +27,7 @@ public class CoexpressedGenesController {
     @RequestMapping(value ={"/json/experiments/coexpression"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchCoexpressedGenes(@RequestParam(value = "experiment", required = true) String experiment,
-                                              @RequestParam(value = "identifier", required = true) String identifier) {
+                                        @RequestParam(value = "identifier", required = true) String identifier) {
         return gson.toJson(coexpressedGenesDao.coexpressedGenesFor(experiment, identifier), Set.class);
     }
 }
