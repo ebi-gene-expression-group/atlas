@@ -20,6 +20,7 @@ var EventEmitter = require('events');
 var HighchartsHeatmap = React.createClass({
 
     propTypes: {
+        isMultiExperiment: React.PropTypes.bool.isRequired,
         profiles: React.PropTypes.object.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
         anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
@@ -113,14 +114,22 @@ var HighchartsHeatmap = React.createClass({
 
     },
 
-    _showGeneCount: function() {
-        var shownRows, totalRows;
-            shownRows = this.props.profiles.rows.length;
+    _showCount: function() {
+        var shownRows = this.props.profiles.rows.length,
             totalRows = this.props.profiles.searchResultTotal;
 
-        return <div style={{display: 'inline-block', verticalAlign: 'top'}}>
-                   <span id="geneCount">Showing {shownRows} of {totalRows} experiments found: </span>
-               </div>
+        var what =
+            (this.props.isMultiExperiment ? 'experiment' : 'gene') +
+            (totalRows > 1 ? 's' : '');
+
+        var message = 'Showing ' + shownRows + ' ' +
+            (totalRows === shownRows ? what + ':' : 'of ' + totalRows + ' ' + what + ' found:');
+
+        return (
+            <div style={{display: 'inline-block', verticalAlign: 'top'}}>
+                {message}
+            </div>
+        );
     },
 
     render: function () {
@@ -133,8 +142,8 @@ var HighchartsHeatmap = React.createClass({
 
         var marginTop =
             this.props.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
-                this.props.xAxisCategories.length < 50 ? Math.min(105, Math.round(xAxisLongestHeaderLength * 4)) : // labels at -45°
-                    Math.min(150, Math.round(xAxisLongestHeaderLength * 5.5));   // labels at -90°
+                this.props.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
+                    Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5));   // labels at -90°
 
         var highchartsOptions = {
             plotOptions: {
@@ -172,9 +181,10 @@ var HighchartsHeatmap = React.createClass({
                 type: 'heatmap',
                 marginTop: marginTop,
                 marginRight: 60, //leave space for tilted long headers
+                spacintTop: 0,
                 plotBorderWidth: 1,
                 height: Math.max(70, yAxisCategories.length * 30 + marginTop),
-                zoomType: 'xy',
+                zoomType: 'x',
                 events: {
                   handleGxaAnatomogramTissueMouseEnter: function(e) {
                     Highcharts.each(this.series, function (series) {
@@ -204,11 +214,9 @@ var HighchartsHeatmap = React.createClass({
                 tickColor: 'rgb(192, 192, 192)',
                 lineColor: 'rgb(192, 192, 192)',
                 labels: {
-                    y: -6,
                     style: {
                         fontSize: '9px',
-                        // textOverflow: 'none',
-                        // whiteSpace: 'nowrap'
+                        textOverflow: 'ellipsis'
                     },
                     autoRotation: [-45, -90],
                     formatter: function() {
@@ -314,7 +322,7 @@ var HighchartsHeatmap = React.createClass({
         return (
             <div>
                 <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{paddingBottom: '15px', position: 'sticky'}}>
-                    {this._showGeneCount()}
+                    {this._showCount()}
                     <div style={{display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top"}}>
                         <DownloadProfilesButton ref="downloadProfilesButton"
                                                 downloadProfilesURL={this.props.heatmapConfig.downloadProfilesURL}

@@ -3502,6 +3502,7 @@ webpackJsonp_name_([5],[
 	                    'div',
 	                    { id: 'heatmap-react', className: 'gxaInnerHeatmap', style: { marginLeft: marginLeft, display: "block" } },
 	                    React.createElement(HighchartsHeatmap, {
+	                        isMultiExperiment: this.props.isMultiExperiment,
 	                        profiles: this.state.profiles,
 	                        heatmapConfig: this.state.heatmapConfig,
 	                        anatomogramEventEmitter: this.props.anatomogramEventEmitter,
@@ -3797,6 +3798,7 @@ webpackJsonp_name_([5],[
 	
 	
 	    propTypes: {
+	        isMultiExperiment: React.PropTypes.bool.isRequired,
 	        profiles: React.PropTypes.object.isRequired,
 	        atlasBaseURL: React.PropTypes.string.isRequired,
 	        anatomogramEventEmitter: React.PropTypes.instanceOf(EventEmitter).isRequired,
@@ -3880,23 +3882,18 @@ webpackJsonp_name_([5],[
 	        this.state.legend_3 ? heatmap.series[3].hide() : heatmap.series[3].show();
 	    },
 	
-	    _showGeneCount: function () {
-	        var shownRows, totalRows;
-	        shownRows = this.props.profiles.rows.length;
-	        totalRows = this.props.profiles.searchResultTotal;
+	    _showCount: function () {
+	        var shownRows = this.props.profiles.rows.length,
+	            totalRows = this.props.profiles.searchResultTotal;
+	
+	        var what = (this.props.isMultiExperiment ? 'experiment' : 'gene') + (totalRows > 1 ? 's' : '');
+	
+	        var message = 'Showing ' + shownRows + ' ' + (totalRows === shownRows ? what + ':' : 'of ' + totalRows + ' ' + what + ' found:');
 	
 	        return React.createElement(
 	            'div',
 	            { style: { display: 'inline-block', verticalAlign: 'top' } },
-	            React.createElement(
-	                'span',
-	                { id: 'geneCount' },
-	                'Showing ',
-	                shownRows,
-	                ' of ',
-	                totalRows,
-	                ' experiments found: '
-	            )
+	            message
 	        );
 	    },
 	
@@ -3910,7 +3907,7 @@ webpackJsonp_name_([5],[
 	        }));
 	
 	        var marginTop = this.props.xAxisCategories.length < 10 ? 30 : // labels aren’t tilted
-	        this.props.xAxisCategories.length < 50 ? Math.min(105, Math.round(xAxisLongestHeaderLength * 4)) : // labels at -45°
+	        this.props.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
 	        Math.min(150, Math.round(xAxisLongestHeaderLength * 5.5)); // labels at -90°
 	
 	        var highchartsOptions = {
@@ -3949,9 +3946,10 @@ webpackJsonp_name_([5],[
 	                type: 'heatmap',
 	                marginTop: marginTop,
 	                marginRight: 60, //leave space for tilted long headers
+	                spacintTop: 0,
 	                plotBorderWidth: 1,
 	                height: Math.max(70, yAxisCategories.length * 30 + marginTop),
-	                zoomType: 'xy',
+	                zoomType: 'x',
 	                events: {
 	                    handleGxaAnatomogramTissueMouseEnter: function (e) {
 	                        Highcharts.each(this.series, function (series) {
@@ -3981,12 +3979,10 @@ webpackJsonp_name_([5],[
 	                tickColor: 'rgb(192, 192, 192)',
 	                lineColor: 'rgb(192, 192, 192)',
 	                labels: {
-	                    y: -6,
 	                    style: {
-	                        fontSize: '9px'
+	                        fontSize: '9px',
+	                        textOverflow: 'ellipsis'
 	                    },
-	                    // textOverflow: 'none',
-	                    // whiteSpace: 'nowrap'
 	                    autoRotation: [-45, -90],
 	                    formatter: function () {
 	                        return this.value.label;
@@ -4120,7 +4116,7 @@ webpackJsonp_name_([5],[
 	            React.createElement(
 	                'div',
 	                { ref: 'countAndLegend', className: 'gxaHeatmapCountAndLegend', style: { paddingBottom: '15px', position: 'sticky' } },
-	                this._showGeneCount(),
+	                this._showCount(),
 	                React.createElement(
 	                    'div',
 	                    { style: { display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top" } },
