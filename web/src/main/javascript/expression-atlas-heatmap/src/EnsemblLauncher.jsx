@@ -129,7 +129,7 @@ var EnsemblLauncher = React.createClass({
                     </div>
                     : null
                 }
-                <div style={{"fontSize": "x-small", height: "30px", padding: "9px 9px"}}>{this._helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)}</div>
+                <div style={{"fontSize": "x-small", padding: "9px 9px"}}>{this._helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)}</div>
             </div>
         );
     },
