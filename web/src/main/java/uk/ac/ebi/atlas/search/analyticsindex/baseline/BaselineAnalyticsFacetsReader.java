@@ -1,18 +1,16 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
+import uk.ac.manchester.cs.bhig.util.Tree;
 
 import javax.inject.Named;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Named
 public class BaselineAnalyticsFacetsReader {
@@ -48,7 +46,7 @@ public class BaselineAnalyticsFacetsReader {
 
     public static String generateFacetsTreeJson(List<Map<String, Object>> results) {
 
-        Multimap<String, FacetTree> facetTreeMultimap = HashMultimap.create();
+        TreeMultimap<String, FacetTreeItem> facetTreeMultimap = TreeMultimap.create();
 
         for (Map<String, Object> experiment : results) {
             String species = (String) experiment.get("val");
@@ -61,7 +59,7 @@ public class BaselineAnalyticsFacetsReader {
             for(Map<String, Object> defaultQueryFactorType : buckets)  {
                 String key = (String) defaultQueryFactorType.get("val");
                 String name = Factor.convertToLowerCase(key);
-                FacetTree factor = FacetTree.create(key, name);
+                FacetTreeItem factor = FacetTreeItem.create(key, name);
 
                 facetTreeMultimap.put(species, factor);
             }
@@ -72,11 +70,21 @@ public class BaselineAnalyticsFacetsReader {
         return gson.toJson(facetTreeMultimap.asMap());
     }
 
-
     @AutoValue
-    abstract static class FacetTree {
-        static FacetTree create(String name, String value) {
-            return new AutoValue_BaselineAnalyticsFacetsReader_FacetTree(name, value);
+    abstract static class FacetTreeItem implements Comparable<FacetTreeItem> {
+        static FacetTreeItem create(String name, String value) {
+            return new AutoValue_BaselineAnalyticsFacetsReader_FacetTreeItem(name, value);
+        }
+
+        @Override
+        public int compareTo(FacetTreeItem other) {
+            if (this.name().equals(other.name())) {
+                return 0;
+            } else if (this.name().equals("ORGANISM_PART")) {
+                return -1;
+            } else {
+                return this.name().compareTo(other.name());
+            }
         }
 
         abstract String name();
