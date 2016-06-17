@@ -3908,7 +3908,7 @@ webpackJsonp_name_([5],[
 	
 	        var marginTop = this.props.xAxisCategories.length < 10 ? 30 : // labels aren’t tilted
 	        this.props.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
-	        Math.min(150, Math.round(xAxisLongestHeaderLength * 5.5)); // labels at -90°
+	        Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5)); // labels at -90°
 	
 	        var highchartsOptions = {
 	            plotOptions: {
@@ -5503,7 +5503,7 @@ webpackJsonp_name_([5],[
 	            'div',
 	            null,
 	            React.createElement('img', { ref: 'toggleButton', onClick: this._onClick, src: this.props.selected ? selectedToggleSrc : unselectedToggleSrc,
-	                style: { width: "20px", height: "20px", padding: "2px" } })
+	                style: { width: "24px", height: "24px", padding: "2px" } })
 	        );
 	    },
 	

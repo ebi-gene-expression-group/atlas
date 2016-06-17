@@ -1371,7 +1371,7 @@ webpackJsonp_name_([3],[
 	            'div',
 	            null,
 	            React.createElement('img', { ref: 'toggleButton', onClick: this._onClick, src: this.props.selected ? selectedToggleSrc : unselectedToggleSrc,
-	                style: { width: "20px", height: "20px", padding: "2px" } })
+	                style: { width: "24px", height: "24px", padding: "2px" } })
 	        );
 	    },
 	
