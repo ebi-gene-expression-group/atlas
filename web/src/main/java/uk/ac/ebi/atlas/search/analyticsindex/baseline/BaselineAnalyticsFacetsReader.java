@@ -82,6 +82,8 @@ public class BaselineAnalyticsFacetsReader {
                 return 0;
             } else if (this.name().equals("ORGANISM_PART")) {
                 return -1;
+            } else if (other.name().equals("ORGANISM_PART")) {
+                return 1;
             } else {
                 return this.name().compareTo(other.name());
             }
