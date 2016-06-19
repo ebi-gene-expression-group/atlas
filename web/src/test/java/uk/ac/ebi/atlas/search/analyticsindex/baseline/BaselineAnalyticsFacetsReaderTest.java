@@ -23,22 +23,22 @@ public class BaselineAnalyticsFacetsReaderTest {
             "{\n" +
             "  \"Homo sapiens\": [\n" +
             "    {\n" +
-            "      \"name\": \"CELL_LINE\",\n" +
-            "      \"value\": \"Cell line\"\n" +
-            "    },\n" +
-            "    {\n" +
             "      \"name\": \"ORGANISM_PART\",\n" +
             "      \"value\": \"Organism part\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"name\": \"CELL_LINE\",\n" +
+            "      \"value\": \"Cell line\"\n" +
             "    }\n" +
             "  ],\n" +
             "  \"Mus musculus\": [\n" +
             "    {\n" +
-            "      \"name\": \"CELL_LINE\",\n" +
-            "      \"value\": \"Cell line\"\n" +
-            "    },\n" +
-            "    {\n" +
             "      \"name\": \"ORGANISM_PART\",\n" +
             "      \"value\": \"Organism part\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"name\": \"CELL_LINE\",\n" +
+            "      \"value\": \"Cell line\"\n" +
             "    }\n" +
             "  ]\n" +
             "}";
