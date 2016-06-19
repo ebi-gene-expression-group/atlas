@@ -2571,6 +2571,14 @@ webpackJsonp_name_([4],[
 	        );
 	    },
 	
+	    _showZoomInstructions: function () {
+	        return React.createElement(
+	            'div',
+	            { style: { fontSize: 'small', color: 'grey' } },
+	            'To zoom in, click and drag left/right, or tap with two fingers and pinch'
+	        );
+	    },
+	
 	    render: function () {
 	        var atlasBaseURL = this.props.atlasBaseURL;
 	        var yAxisCategoriesLinks = this.props.yAxisCategoriesLinks;
@@ -2583,6 +2591,8 @@ webpackJsonp_name_([4],[
 	        var marginTop = this.props.xAxisCategories.length < 10 ? 30 : // labels aren’t tilted
 	        this.props.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
 	        Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5)); // labels at -90°
+	
+	        var marginRight = 60;
 	
 	        var highchartsOptions = {
 	            plotOptions: {
@@ -2619,8 +2629,8 @@ webpackJsonp_name_([4],[
 	            chart: {
 	                type: 'heatmap',
 	                marginTop: marginTop,
-	                marginRight: 60, //leave space for tilted long headers
-	                spacintTop: 0,
+	                marginRight: marginRight, //leave space for tilted long headers
+	                spacingTop: 0,
 	                plotBorderWidth: 1,
 	                height: Math.max(70, yAxisCategories.length * 30 + marginTop),
 	                zoomType: 'x',
@@ -2793,7 +2803,7 @@ webpackJsonp_name_([4],[
 	                this._showCount(),
 	                React.createElement(
 	                    'div',
-	                    { style: { display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top" } },
+	                    { style: { display: "inline-block", verticalAlign: "top", float: "right", marginRight: marginRight } },
 	                    React.createElement(DownloadProfilesButton, { ref: 'downloadProfilesButton',
 	                        downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
 	                        atlasBaseURL: this.props.atlasBaseURL,
@@ -2801,7 +2811,8 @@ webpackJsonp_name_([4],[
 	                        onDownloadCallbackForAnalytics: function () {
 	                            this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData');
 	                        }.bind(this) })
-	                )
+	                ),
+	                this.props.xAxisCategories.length > 100 ? this._showZoomInstructions() : null
 	            ),
 	            React.createElement(
 	                'div',
@@ -3298,20 +3309,10 @@ webpackJsonp_name_([4],[
 	            'a',
 	            { ref: 'downloadProfilesLink', onClick: this._afterDownloadButtonClicked },
 	            React.createElement(
-	                OverlayTrigger,
-	                {
-	                    placement: 'bottom',
-	                    overlay: React.createElement(
-	                        Tooltip,
-	                        { id: 'downloadResultsTooltip' },
-	                        'Download all results'
-	                    ),
-	                    delay: 0 },
-	                React.createElement(
-	                    Button,
-	                    { bsStyle: 'primary', bsSize: 'xsmall' },
-	                    React.createElement(Glyphicon, { glyph: 'download-alt' })
-	                )
+	                Button,
+	                { bsStyle: 'primary', bsSize: 'xsmall' },
+	                React.createElement(Glyphicon, { glyph: 'download-alt' }),
+	                ' Download all results'
 	            ),
 	            React.createElement(
 	                Modal,

@@ -10358,20 +10358,10 @@ webpackJsonp_name_([3],[
 	            'a',
 	            { ref: 'downloadProfilesLink', onClick: this._afterDownloadButtonClicked },
 	            React.createElement(
-	                OverlayTrigger,
-	                {
-	                    placement: 'bottom',
-	                    overlay: React.createElement(
-	                        Tooltip,
-	                        { id: 'downloadResultsTooltip' },
-	                        'Download all results'
-	                    ),
-	                    delay: 0 },
-	                React.createElement(
-	                    Button,
-	                    { bsStyle: 'primary', bsSize: 'xsmall' },
-	                    React.createElement(Glyphicon, { glyph: 'download-alt' })
-	                )
+	                Button,
+	                { bsStyle: 'primary', bsSize: 'xsmall' },
+	                React.createElement(Glyphicon, { glyph: 'download-alt' }),
+	                ' Download all results'
 	            ),
 	            React.createElement(
 	                Modal,
