@@ -53,12 +53,7 @@ var DownloadProfilesButton = React.createClass({
     render: function() {
         return (
             <a ref="downloadProfilesLink" onClick={this._afterDownloadButtonClicked}>
-                <OverlayTrigger
-                    placement="bottom"
-                    overlay={<Tooltip id="downloadResultsTooltip">Download all results</Tooltip>}
-                    delay={0}>
-                    <Button bsStyle="primary" bsSize="xsmall"><Glyphicon glyph="download-alt"/></Button>
-                </OverlayTrigger>
+                <Button bsStyle="primary" bsSize="xsmall"><Glyphicon glyph="download-alt"/> Download all results</Button>
 
                 <Modal show={this.state.showModal} onHide={this._closeModal} bsSize="large">
                     <Modal.Header closeButton>
