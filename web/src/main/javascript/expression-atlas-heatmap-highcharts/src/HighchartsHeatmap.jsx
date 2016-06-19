@@ -132,6 +132,14 @@ var HighchartsHeatmap = React.createClass({
         );
     },
 
+    _showZoomInstructions: function() {
+        return (
+            <div style={{fontSize: 'small', color: 'grey'}}>
+                To zoom in, click and drag left/right, or tap with two fingers and pinch
+            </div>
+        )
+    },
+
     render: function () {
         var atlasBaseURL = this.props.atlasBaseURL;
         var yAxisCategoriesLinks = this.props.yAxisCategoriesLinks;
@@ -144,6 +152,8 @@ var HighchartsHeatmap = React.createClass({
             this.props.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
                 this.props.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
                     Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5));   // labels at -90°
+
+        var marginRight = 60;
 
         var highchartsOptions = {
             plotOptions: {
@@ -180,8 +190,8 @@ var HighchartsHeatmap = React.createClass({
             chart: {
                 type: 'heatmap',
                 marginTop: marginTop,
-                marginRight: 60, //leave space for tilted long headers
-                spacintTop: 0,
+                marginRight: marginRight, //leave space for tilted long headers
+                spacingTop: 0,
                 plotBorderWidth: 1,
                 height: Math.max(70, yAxisCategories.length * 30 + marginTop),
                 zoomType: 'x',
@@ -323,13 +333,14 @@ var HighchartsHeatmap = React.createClass({
             <div>
                 <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{paddingBottom: '15px', position: 'sticky'}}>
                     {this._showCount()}
-                    <div style={{display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top"}}>
+                    <div style={{display: "inline-block", verticalAlign: "top", float: "right", marginRight: marginRight}}>
                         <DownloadProfilesButton ref="downloadProfilesButton"
                                                 downloadProfilesURL={this.props.heatmapConfig.downloadProfilesURL}
                                                 atlasBaseURL={this.props.atlasBaseURL}
                                                 isFortLauderdale={this.props.heatmapConfig.isFortLauderdale}
                                                 onDownloadCallbackForAnalytics={function() {this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')}.bind(this)}/>
                     </div>
+                    {this.props.xAxisCategories.length > 100 ? this._showZoomInstructions() : null}
                 </div>
 
                 <div id="highcharts_container">
