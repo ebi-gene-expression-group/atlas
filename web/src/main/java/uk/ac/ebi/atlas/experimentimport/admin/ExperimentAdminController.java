@@ -26,17 +26,15 @@ public class ExperimentAdminController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentAdminController.class);
 
     private final ExperimentOps experimentOps;
-    private final ExperimentTrader experimentTrader;
     private final ExperimentMetadataCRUD experimentMetadataCRUD;
     private final ExperimentAdminHelpPage helpPage = new ExperimentAdminHelpPage();
     private final Gson gson= new GsonBuilder().setPrettyPrinting().create();
 
     
     @Inject
-    public ExperimentAdminController(ExperimentOps experimentOps, ExperimentTrader experimentTrader,
+    public ExperimentAdminController(ExperimentOps experimentOps,
                                      ExperimentMetadataCRUD experimentMetadataCRUD) {
         this.experimentOps = experimentOps;
-        this.experimentTrader = experimentTrader;
         this.experimentMetadataCRUD = experimentMetadataCRUD;
     }
 
@@ -98,17 +96,7 @@ public class ExperimentAdminController {
     }
 
     private Collection<String> readAccessions(String accessionParameter) {
-        if (accessionParameter.toLowerCase().equals("baseline")) {
-            return experimentTrader.getAllBaselineExperimentAccessions();
-        } else if (accessionParameter.toLowerCase().equals("baseline_public")) {
-            return experimentTrader.getBaselineExperimentAccessions();
-        } else if (accessionParameter.toLowerCase().equals("microarray_differential")) {
-            return experimentTrader.getMicroarrayExperimentAccessions();
-        } else if (accessionParameter.toLowerCase().equals("proteomics")) {
-            return experimentTrader.getProteomicsBaselineExperimentAccessions();
-        } else if (accessionParameter.toLowerCase().equals("rnaseq_differential")) {
-            return experimentTrader.getRnaSeqDifferentialExperimentAccessions();
-        } else if (accessionParameter.contains("*")) {
+        if (accessionParameter.contains("*")) {
             List<String> result = new ArrayList<>();
             Pattern pattern = Pattern.compile(accessionParameter.replaceAll("\\*", ".*"));
             for (ExperimentDTO dto : experimentMetadataCRUD.findAllExperiments()) {
@@ -120,24 +108,6 @@ public class ExperimentAdminController {
         } else {
             return Arrays.asList(accessionParameter.split(","));
         }
-    }
-
-
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    @ResponseBody
-    public String handleException(Exception e) throws IOException {
-        String lineSeparator = "<br>";
-        LOGGER.error(e.getMessage(), e);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(e.getClass().getSimpleName()).append(": ").append(e.getMessage()).append(lineSeparator);
-
-        for (StackTraceElement element : e.getStackTrace()) {
-            sb.append(element.toString()).append(lineSeparator);
-        }
-
-        return sb.toString();
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)

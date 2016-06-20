@@ -21,7 +21,6 @@ import javax.inject.Inject;
 public class NewGenePageController extends NewBioentityPageController {
 
     private SolrQueryService solrQueryService;
-    private static final String GENES = "genes";
 
     @Inject
     public NewGenePageController(SolrQueryService solrQueryService) {
@@ -75,7 +74,7 @@ public class NewGenePageController extends NewBioentityPageController {
             return false;
         } else {
             String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
-            return bioentityPageName.equalsIgnoreCase(GENES);
+            return bioentityPageName.equalsIgnoreCase("genes");
         }
     }
 }
