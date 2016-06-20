@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.Properties;
 import java.util.Set;
 
@@ -36,7 +37,7 @@ public class ExperimentChecker {
     public void checkAllFiles(String experimentAccession, ExperimentType experimentType) {
 
         // every experiment should have analysis methods file
-        checkFilePermission("experiment.analysis-method.path.template", experimentAccession);
+        checkFileExistsAndIsReadable("experiment.analysis-method.path.template", experimentAccession);
 
         switch (experimentType) {
             case RNASEQ_MRNA_BASELINE:
@@ -63,14 +64,14 @@ public class ExperimentChecker {
         Set<String> baselineExperimentPathTemplates =
                 Sets.newHashSet("experiment.magetab.path.template", "experiment.factors.path.template");
 
-        checkFilesPermissions(baselineExperimentPathTemplates, experimentAccession);
+        checkFilesAreAllPresentAndWeCanReadThem(baselineExperimentPathTemplates, experimentAccession);
     }
 
     void checkDifferentialFiles(String experimentAccession) {
         Set<String> differentialExperimentPathTemplates =
                 Sets.newHashSet("diff.experiment.data.path.template", "diff.experiment.raw-counts.path.template");
 
-        checkFilesPermissions(differentialExperimentPathTemplates, experimentAccession);
+        checkFilesAreAllPresentAndWeCanReadThem(differentialExperimentPathTemplates, experimentAccession);
     }
 
     void checkMicroarrayFiles(String experimentAccession) {
@@ -78,7 +79,7 @@ public class ExperimentChecker {
                         configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
         for (String arrayDesign : microarrayConfiguration.getArrayDesignAccessions()) {
             Set<String> arrayDesignDependentPathTemplates = Sets.newHashSet("microarray.experiment.data.path.template", "microarray.normalized.data.path.template");
-            checkFilesPermissions(arrayDesignDependentPathTemplates, experimentAccession, arrayDesign);
+            checkFilesAreAllPresentAndWeCanReadThem(arrayDesignDependentPathTemplates, experimentAccession, arrayDesign);
         }
     }
 
@@ -88,24 +89,24 @@ public class ExperimentChecker {
 
         Set<String> arrayDesignDependentPathTemplates = Sets.newHashSet("microarray.experiment.data.path.template", "microarray.log-fold-changes.data.path.template");
         for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignAccessions()) {
-            checkFilesPermissions(arrayDesignDependentPathTemplates, experimentAccession, arrayDesign);
+            checkFilesAreAllPresentAndWeCanReadThem(arrayDesignDependentPathTemplates, experimentAccession, arrayDesign);
         }
     }
 
-    void checkFilesPermissions(Set<String> pathTemplatePropertyKeys, String... pathArguments) {
+    void checkFilesAreAllPresentAndWeCanReadThem(Collection<String> pathTemplatePropertyKeys, String... pathArguments) {
         for (String pathTemplatePropertyKey : pathTemplatePropertyKeys) {
-            checkFilePermission(pathTemplatePropertyKey, pathArguments);
+            checkFileExistsAndIsReadable(pathTemplatePropertyKey, pathArguments);
         }
     }
 
-    void checkFilePermission(String pathTemplatePropertyKey, String... pathArguments) {
+    void checkFileExistsAndIsReadable(String pathTemplatePropertyKey, String... pathArguments) {
         String pathTemplate = configurationProperties.getProperty(pathTemplatePropertyKey);
         Path path = Paths.get(MessageFormat.format(pathTemplate, (Object[])pathArguments));
         checkState(Files.isReadable(path), "Required file can not be read: " + path.toAbsolutePath().toString());
     }
 
     public void checkConfigurationFilePermissions(String accession) {
-        checkFilePermission("experiment.configuration.path.template", accession);
+        checkFileExistsAndIsReadable("experiment.configuration.path.template", accession);
     }
 
 }
