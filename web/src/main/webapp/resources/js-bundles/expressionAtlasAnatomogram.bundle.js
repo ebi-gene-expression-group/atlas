@@ -1274,7 +1274,9 @@ webpackJsonp_name_([2],{
 	    },
 	
 	    componentWillReceiveProps: function (nextProps) {
-	        this._loadAnatomogram(nextProps.file);
+	        if (nextProps.file !== this.props.file) {
+	            this._loadAnatomogram(nextProps.file);
+	        }
 	    },
 	
 	    componentDidMount: function () {

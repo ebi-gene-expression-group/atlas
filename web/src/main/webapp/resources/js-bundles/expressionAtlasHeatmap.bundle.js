@@ -1498,7 +1498,9 @@ webpackJsonp_name_([3],[
 	    },
 	
 	    componentWillReceiveProps: function (nextProps) {
-	        this._loadAnatomogram(nextProps.file);
+	        if (nextProps.file !== this.props.file) {
+	            this._loadAnatomogram(nextProps.file);
+	        }
 	    },
 	
 	    componentDidMount: function () {
@@ -7034,7 +7036,7 @@ webpackJsonp_name_([3],[
 	            props.afterPopupVisibleChange(state.popupVisible);
 	          }
 	        });
-	        if (_this.isClickToHide()) {
+	        if (props.action.indexOf('click') !== -1) {
 	          if (state.popupVisible) {
 	            if (!_this.clickOutsideHandler) {
 	              _this.clickOutsideHandler = _rcUtil.Dom.addEventListener(document, 'mousedown', _this.onDocumentClick);

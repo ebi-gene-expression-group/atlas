@@ -71,8 +71,6 @@ public class BioentitiesSearchController {
             selectedSpecies = requestParameters.getOrganism().trim();
         }
 
-
-
         if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
             //If Query just for a single bioentityID
             Optional<String> geneIdRedirectString = getGeneIdRedirectString(geneQuery, selectedSpecies, requestParameters.isExactMatch());

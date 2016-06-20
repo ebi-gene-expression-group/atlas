@@ -291,7 +291,7 @@
 
     <c:if test="${showWidget}">
         <script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasHeatmap.bundle.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasHeatmapHighcharts.bundle.js"></script>
     </c:if>
 
     <c:set var="hasBaselineResults" value="${showWidget || not empty firstBaselineCounts}"/>
@@ -316,7 +316,7 @@
     <script>
         <c:if test="${showWidget}">
             var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
-            expressionAtlasHeatmap.render({
+            expressionAtlasHeatmapHighcharts.render({
                 atlasHost: window.location.host,
                 params: "geneQuery=${geneQuery.asUrlQueryParameter()}" + widgetParameters,
                 analyticsSearch: false,
