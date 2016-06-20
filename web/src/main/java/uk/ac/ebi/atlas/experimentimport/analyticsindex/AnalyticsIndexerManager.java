@@ -74,16 +74,13 @@ public class AnalyticsIndexerManager extends Observable {
     public void indexAllPublicExperiments(int threads, int batchSize, int timeout) throws InterruptedException {
         addObserver(analyticsIndexerMonitor);
 
-        setChanged();
-        notifyObservers("Deleting all documents from analytics index...");
+        setChangedAndNotifyObservers("Deleting all documents from analytics index...");
         analyticsIndexerService.deleteAll();
 
-        setChanged();
-        notifyObservers("Analytics index build has started: sorting experiments by size");
+        setChangedAndNotifyObservers("Analytics index build has started: sorting experiments by size");
 
         TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortAllExperimentsPerSize();
-        setChanged();
-        notifyObservers(descendingFileSizeToExperimentAccessions);
+        setChangedAndNotifyObservers(descendingFileSizeToExperimentAccessions);
 
         ImmutableMap<String, String> bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap();
         indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), bioentityIdToIdentifierSearch, threads, batchSize, timeout);
@@ -96,8 +93,7 @@ public class AnalyticsIndexerManager extends Observable {
         addObserver(analyticsIndexerMonitor);
 
         TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortExperimentsPerSize(experimentType);
-        setChanged();
-        notifyObservers(descendingFileSizeToExperimentAccessions);
+        setChangedAndNotifyObservers(descendingFileSizeToExperimentAccessions);
 
         ImmutableMap<String, String> bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap(experimentType);
         indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), bioentityIdToIdentifierSearch, threads, batchSize, timeout);
@@ -128,20 +124,16 @@ public class AnalyticsIndexerManager extends Observable {
         threadPool.shutdown();
         try {
             if (threadPool.awaitTermination(timeout, TimeUnit.HOURS)) {
-                setChanged();
-                notifyObservers("Pool shut down successfully. All threads finished within the specified timeout.\n");
+                setChangedAndNotifyObservers("Pool shut down successfully. All threads finished within the specified timeout.\n");
             }
             else {
-                setChanged();
-                notifyObservers("Pool timed out. Initiating shutdown of running threads...\n");
+                setChangedAndNotifyObservers("Pool timed out. Initiating shutdown of running threads...\n");
                 threadPool.shutdownNow();
                 // Wait a while for tasks to respond to being cancelled
                 if (threadPool.awaitTermination(LONGER_THAN_BIGGEST_EXPERIMENT_INDEX_TIME, TimeUnit.MINUTES)) {
-                    setChanged();
-                    notifyObservers("Threads closed successfully.\n");
+                    setChangedAndNotifyObservers("Threads closed successfully.\n");
                 } else {
-                    setChanged();
-                    notifyObservers("Unable to close open threads. This means there is a thread leak in the current session.\n");
+                    setChangedAndNotifyObservers("Unable to close open threads. This means there is a thread leak in the current session.\n");
                 }
             }
         } catch (InterruptedException e) {
@@ -152,11 +144,13 @@ public class AnalyticsIndexerManager extends Observable {
             notifyObservers("Pool main thread interrupted. Make sure there are no remaining running threads.\n");
         }
 
-        setChanged();
-        notifyObservers();
+        setChangedAndNotifyObservers(null);
     }
 
-
+    void setChangedAndNotifyObservers(Object arg){
+        setChanged();
+        notifyObservers(arg);
+    }
 
     private class ReindexTask implements Runnable {
         private final String experimentAccession;
@@ -172,11 +166,10 @@ public class AnalyticsIndexerManager extends Observable {
         public void run() {
             try {
                 addToAnalyticsIndex(experimentAccession, bioentityIdToIdentifierSearch, solrBatchSize);
-                AnalyticsIndexerManager.this.setChanged();
-                AnalyticsIndexerManager.this.notifyObservers(experimentAccession);
+                AnalyticsIndexerManager.this.setChangedAndNotifyObservers(experimentAccession);
             } catch (Exception exception) {
-                AnalyticsIndexerManager.this.setChanged();
-                AnalyticsIndexerManager.this.notifyObservers(String.format("Failed to index %s - Cause: %s", experimentAccession, exception.getMessage()));
+                AnalyticsIndexerManager.this.setChangedAndNotifyObservers(
+                        String.format("Failed to index %s - Cause: %s", experimentAccession, exception.getMessage()));
             }
         }
     }
