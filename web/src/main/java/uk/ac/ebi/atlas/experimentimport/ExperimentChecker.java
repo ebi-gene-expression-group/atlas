@@ -40,10 +40,8 @@ public class ExperimentChecker {
 
         switch (experimentType) {
             case RNASEQ_MRNA_BASELINE:
-                checkBaselineFiles(experimentAccession);
-                break;
             case PROTEOMICS_BASELINE:
-                checkProteomicsBaselineFiles(experimentAccession);
+                checkBaselineFiles(experimentAccession);
                 break;
             case RNASEQ_MRNA_DIFFERENTIAL:
                 checkDifferentialFiles(experimentAccession);
@@ -62,13 +60,6 @@ public class ExperimentChecker {
 
 
     void checkBaselineFiles(String experimentAccession) {
-        Set<String> baselineExperimentPathTemplates =
-                Sets.newHashSet("experiment.magetab.path.template", "experiment.factors.path.template");
-
-        checkFilesPermissions(baselineExperimentPathTemplates, experimentAccession);
-    }
-
-    void checkProteomicsBaselineFiles(String experimentAccession) {
         Set<String> baselineExperimentPathTemplates =
                 Sets.newHashSet("experiment.magetab.path.template", "experiment.factors.path.template");
 
