@@ -59,7 +59,7 @@ var HighchartsHeatmapContainer = React.createClass({
         googleAnalyticsCallback: React.PropTypes.func,
         ensemblEventEmitter : React.PropTypes.object.isRequired,
         anatomogramEventEmitter: React.PropTypes.object.isRequired,
-        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
+        anatomogramDataEventEmitter: React.PropTypes.object
     },
 
     render: function () {
@@ -165,10 +165,12 @@ var HighchartsHeatmapContainer = React.createClass({
           }
         }, this);
 
-        if (this.state.anatomogramData) {
-            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
-        } else {
-            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
+        if (this.props.anatomogramDataEventEmitter) {
+            if (this.state.anatomogramData) {
+                this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
+            } else {
+                this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
+            }
         }
     },
 
@@ -314,10 +316,12 @@ var HighchartsHeatmapContainer = React.createClass({
 
                     });
 
-                    if (this.state.anatomogramData) {
-                        this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
-                    } else {
-                        this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
+                    if(this.props.anatomogramDataEventEmitter) {
+                        if (this.state.anatomogramData) {
+                            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
+                        } else {
+                            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
+                        }
                     }
                 }
             }.bind(this)
