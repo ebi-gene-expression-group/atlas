@@ -9,7 +9,8 @@
 
 <script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/he/1.0.0/he.min.js"></script>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bioEntities.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customized-bootstrap-3.3.5.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bioentities-search-results.css">
 
 <h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : geneQuery.asString()}"/>
 

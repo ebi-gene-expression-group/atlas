@@ -72,10 +72,10 @@
         <put-attribute name="body" value="/WEB-INF/jsp/plant-experiments.jsp"/>
     </definition>
 
-    <definition name="bioEntities" extends="base.definition">
+    <definition name="bioentities-search-results" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas"/>
         <put-attribute name="header" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/bioEntities.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/bioentities-search-results.jsp"/>
     </definition>
 
     <definition name="new-bioentities" extends="base.definition">

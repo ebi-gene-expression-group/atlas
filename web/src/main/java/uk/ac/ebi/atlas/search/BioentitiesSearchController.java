@@ -120,7 +120,7 @@ public class BioentitiesSearchController {
 
         model.addAttribute("globalSearchTerm", globalSearchTerm);
 
-        return "bioEntities";
+        return "bioentities-search-results";
     }
 
     private Optional<String> getGeneIdRedirectString(GeneQuery geneQuery, String species, boolean isExactMatch) {
@@ -153,7 +153,7 @@ public class BioentitiesSearchController {
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     public ModelAndView handleException(Exception e) {
-        ModelAndView mav = new ModelAndView("bioEntities");
+        ModelAndView mav = new ModelAndView("bioentities-search-results");
         mav.addObject("exceptionMessage", e.getMessage());
         return mav;
     }

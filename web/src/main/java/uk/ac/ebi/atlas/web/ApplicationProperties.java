@@ -132,7 +132,7 @@ public class ApplicationProperties {
         return Joiner.on(",").join(iterable);
     }
 
-    /* Used in bioEntities.jsp */
+    /* Used in bioentities-search-results.jsp */
     public String urlParamEncode(String value) throws UnsupportedEncodingException {
         return URLEncoder.encode(value, "UTF-8");
     }
