@@ -16,7 +16,7 @@ public class CoexpressedGenesService {
         this.coexpressedGenesDao =coexpressedGenesDao;
     }
 
-    private Pair<GeneQueryResponse, List<String>> extendGeneQueryResponseWithCoexpressions(GeneQueryResponse originalResponse,
+    Pair<GeneQueryResponse, List<String>> extendGeneQueryResponseWithCoexpressions(GeneQueryResponse originalResponse,
                                                                                            BaselineExperiment experiment,
                                                                                            Map<String,Integer> coexpressionsRequested,
                                                                                            boolean alsoIncludeOriginalGeneQueryResponse) {
