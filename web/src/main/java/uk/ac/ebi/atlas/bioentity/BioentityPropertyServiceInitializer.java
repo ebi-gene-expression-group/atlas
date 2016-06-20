@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.newbioentity;
+package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Sets;

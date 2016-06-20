@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.newbioentity;
+package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.StringUtils;
@@ -18,12 +18,12 @@ import javax.inject.Inject;
 
 @Controller
 @Scope("request")
-public class NewGenePageController extends NewBioentityPageController {
+public class GenePageController extends BioentityPageController {
 
     private SolrQueryService solrQueryService;
 
     @Inject
-    public NewGenePageController(SolrQueryService solrQueryService) {
+    public GenePageController(SolrQueryService solrQueryService) {
         super();
         this.solrQueryService = solrQueryService;
     }

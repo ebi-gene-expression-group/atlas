@@ -12,8 +12,8 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
 <%@ include file="includes/bootstrap.jsp" %>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/new-bioentities/bioentities.css"/>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/new-bioentities/bioentities-box.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bioentities/bioentities.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bioentities/bioentities-box.css"/>
 
 <script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js-bundles/facetedSearch.bundle.js"></script>

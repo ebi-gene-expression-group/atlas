@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.newbioentity;
+package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.collect.Maps;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class NewBioentityPageController {
+public abstract class BioentityPageController {
 
     private static final String BIOENTITY_PROPERTY_NAME = "symbol";
     private static final String PROPERTY_TYPE_DESCRIPTION = "description";
@@ -91,7 +91,7 @@ public abstract class NewBioentityPageController {
         model.addAttribute("identifier", identifier);
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 
-        return "new-bioentities";
+        return "bioentities";
     }
 
     protected Map<String, String> buildPropertyNamesByTypeMap() {
