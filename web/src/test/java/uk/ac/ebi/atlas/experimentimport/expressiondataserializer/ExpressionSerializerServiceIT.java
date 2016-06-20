@@ -3,10 +3,14 @@ package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
@@ -19,6 +23,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.verify;
 
 @Named
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,6 +38,9 @@ public class ExpressionSerializerServiceIT {
     @Inject
     public BaselineExperimentsCache baselineExperimentsCache;
 
+    @Mock
+    ExperimentChecker experimentChecker;
+
     private String serializedExpressionsFileTemplate;
     private String serializedExpressionLevelsFileTemplate;
 
@@ -39,7 +48,7 @@ public class ExpressionSerializerServiceIT {
     public String tsvFileTemplate;
 
 
-    String accesion = "E-MTAB-513";
+    String accession = "E-MTAB-513";
 
     private ExpressionSerializerFactory expressionSerializerFactory;
     private ExpressionSerializerService subject;
@@ -47,6 +56,7 @@ public class ExpressionSerializerServiceIT {
 
     @Before
     public void setUp() throws IOException {
+        MockitoAnnotations.initMocks(this);
 
         Path tmp = Files.createTempDirectory("serialized_expression");
         serializedExpressionsFileTemplate = tmp.toString() + "/{0}.kryo";
@@ -57,19 +67,26 @@ public class ExpressionSerializerServiceIT {
                         serializedExpressionLevelsFileTemplate, tsvFileTemplate, new CsvReaderFactory()));
 
         subject = new ExpressionSerializerService(experimentTrader, expressionSerializerFactory,
-                baselineExperimentsCache);
+                baselineExperimentsCache,experimentChecker);
     }
 
     @Test
     public void weCanSerializeTheFile() {
-        assertEquals(true, fileExists(tsvFileTemplate, accesion));
-        assertEquals(false, fileExists(serializedExpressionsFileTemplate, accesion));
-        assertEquals(false, fileExists(serializedExpressionLevelsFileTemplate, accesion));
+        assertEquals(true, fileExists(tsvFileTemplate, accession));
+        assertEquals(false, fileExists(serializedExpressionsFileTemplate, accession));
+        assertEquals(false, fileExists(serializedExpressionLevelsFileTemplate, accession));
 
-        subject.kryoSerializeExpressionData(accesion);
+        subject.kryoSerializeExpressionData(accession);
 
-        assertEquals(true, fileExists(serializedExpressionsFileTemplate, accesion));
-        assertEquals(true, fileExists(serializedExpressionLevelsFileTemplate, accesion));
+        assertEquals(true, fileExists(serializedExpressionsFileTemplate, accession));
+        assertEquals(true, fileExists(serializedExpressionLevelsFileTemplate, accession));
+    }
+
+    @Test
+    public void weCheckTheFileExistsBeforeWeAttemptToSerializeIt(){
+        subject.kryoSerializeExpressionData(accession);
+
+        verify(experimentChecker).checkAllFiles(eq(accession), any(ExperimentType.class));
     }
 
     private boolean fileExists(String template, String experimentAccession) {
