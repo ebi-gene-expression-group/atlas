@@ -53,14 +53,14 @@ public class ExperimentCheckerTest {
         File tempFile = File.createTempFile(TEMP_FILENAME + EXPERIMENT_ACCESSION, ".tmp");
         String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
         when(configurationPropertiesMock.getProperty(CONFIGURATION_PROPERTY_KEY)).thenReturn(pathTemplate);
-        subject.checkFilePermission(CONFIGURATION_PROPERTY_KEY, EXPERIMENT_ACCESSION);
+        subject.checkFileExistsAndIsReadable(CONFIGURATION_PROPERTY_KEY, EXPERIMENT_ACCESSION);
         tempFile.delete();
     }
 
     @Test(expected = IllegalStateException.class)
     public void testCheckRequiredFileCanReadException() throws Exception {
         when(configurationPropertiesMock.getProperty(CONFIGURATION_PROPERTY_KEY)).thenReturn(NON_EXISTING_PATH);
-        subject.checkFilePermission(CONFIGURATION_PROPERTY_KEY, EXPERIMENT_ACCESSION);
+        subject.checkFileExistsAndIsReadable(CONFIGURATION_PROPERTY_KEY, EXPERIMENT_ACCESSION);
     }
 
     @Test

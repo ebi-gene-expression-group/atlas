@@ -96,7 +96,7 @@ public class ExperimentCRUD {
     }
 
     private ExperimentConfiguration loadExperimentConfiguration(String experimentAccession) {
-        experimentChecker.checkConfigurationFilePermissions(experimentAccession);
+        experimentChecker.checkConfigurationFile(experimentAccession);
         ExperimentConfiguration configuration = configurationTrader.getExperimentConfiguration(experimentAccession);
         experimentChecker.checkAllFiles(experimentAccession, configuration.getExperimentType());
         return configuration;

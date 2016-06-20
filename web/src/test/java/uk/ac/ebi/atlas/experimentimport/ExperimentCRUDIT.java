@@ -31,6 +31,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
 import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -43,6 +44,10 @@ public class ExperimentCRUDIT {
 
     @Inject
     private ExperimentCRUD subject;
+
+    @Spy
+    @Inject
+    private ExperimentChecker experimentCheckerSpy;
 
     @Inject
     private ExperimentMetadataCRUD experimentMetadataCRUD;
@@ -70,6 +75,7 @@ public class ExperimentCRUDIT {
         experimentMetadataCRUD.setConditionsIndexTrader(conditionsIndexTrader);
 
         subject.setExperimentMetadataCRUD(experimentMetadataCRUD);
+        subject.setExperimentChecker(experimentCheckerSpy);
     }
 
     @Test
@@ -81,6 +87,7 @@ public class ExperimentCRUDIT {
     @Test
     public void importReloadDeleteRnaSeqBaselineExperiment() throws IOException, SolrServerException {
         testImportNewImportExistingAndDelete("TEST-RNASEQ-BASELINE", ExperimentType.RNASEQ_MRNA_BASELINE);
+        verify(experimentCheckerSpy, times(2)).checkBaselineFiles("TEST-RNASEQ-BASELINE");
     }
 
     @Test
@@ -106,6 +113,7 @@ public class ExperimentCRUDIT {
     @Test
     public void importReloadDeleteProteomicsBaselineExperiment() throws IOException, SolrServerException {
         testImportNewImportExistingAndDelete("TEST-PROTEOMICS-BASELINE", ExperimentType.PROTEOMICS_BASELINE);
+        verify(experimentCheckerSpy, times(2)).checkBaselineFiles("TEST-PROTEOMICS-BASELINE");
     }
 
 

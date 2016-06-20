@@ -105,7 +105,7 @@ public class ExperimentChecker {
         checkState(Files.isReadable(path), "Required file can not be read: " + path.toAbsolutePath().toString());
     }
 
-    public void checkConfigurationFilePermissions(String accession) {
+    public void checkConfigurationFile(String accession) {
         checkFileExistsAndIsReadable("experiment.configuration.path.template", accession);
     }
 
