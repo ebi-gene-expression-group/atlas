@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -22,6 +23,9 @@ import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import java.io.IOException;
+import java.sql.SQLDataException;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -30,6 +34,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 public class ExperimentOpsTest {
 
@@ -47,6 +52,8 @@ public class ExperimentOpsTest {
     AnalyticsIndexerManager analyticsIndexerManager;
 
     final Map<String, List<Pair<String, Pair<Long, Long>>>> fileSystem = new HashMap<>();
+
+    String accession = "E-EXAMPLE-1";
 
     @Before
     public void setUp() {
@@ -215,5 +222,66 @@ public class ExperimentOpsTest {
         assertTrue("Log failure in op name", Pattern.matches("^FAILED.*",
                 fileSystem.get(accession).iterator().next().getLeft()));
 
+    }
+
+    @Test
+    public void loadingExperimentsWorksAsExpectedWhenEverythingIsGood() throws Exception {
+        //if not you should update the tests
+        assertEquals(Op.opsForParameter("LOAD_PUBLIC"), ImmutableList.of(Op.IMPORT_PUBLIC,Op.COEXPRESSION_UPDATE,
+                Op.SERIALIZE,Op.ANALYTICS_IMPORT) );
+
+        new ExperimentAdminController(experimentOps,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
+
+        verify(experimentCRUD).importExperiment(accession, false);
+        verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
+        verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
+        verify(experimentCRUD).serializeExpressionData(accession);
+        verify(analyticsIndexerManager).addToAnalyticsIndex(accession);
+
+        verifyNoMoreInteractions(experimentCRUD,experimentMetadataCRUD,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+    }
+
+    @Test
+    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled1() throws Exception {
+        Mockito.doThrow(new RuntimeException("The files are bad!"))
+                .when(experimentCRUD)
+                .importExperiment(accession,false);
+
+        new ExperimentAdminController(experimentOps,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
+
+        verify(experimentCRUD).importExperiment(accession, false);
+
+        verifyNoMoreInteractions(experimentCRUD,experimentMetadataCRUD,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+    }
+
+    @Test
+    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled2() throws Exception {
+        Mockito.doThrow(new RuntimeException("Database down, or something"))
+                .when(baselineCoexpressionProfileLoader)
+                .loadBaselineCoexpressionsProfile(accession);
+
+        new ExperimentAdminController(experimentOps,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
+
+        verify(experimentCRUD).importExperiment(accession, false);
+        verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
+        verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
+
+        verifyNoMoreInteractions(experimentCRUD,experimentMetadataCRUD,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+    }
+
+    @Test
+    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled3() throws Exception {
+        Mockito.doThrow(new RuntimeException("Serializing failed"))
+                .when(experimentCRUD)
+                .serializeExpressionData(accession);
+
+        new ExperimentAdminController(experimentOps,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
+
+        verify(experimentCRUD).importExperiment(accession, false);
+        verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
+        verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
+        verify(experimentCRUD).serializeExpressionData(accession);
+
+        verifyNoMoreInteractions(experimentCRUD,experimentMetadataCRUD,analyticsIndexerManager,baselineCoexpressionProfileLoader);
     }
 }
