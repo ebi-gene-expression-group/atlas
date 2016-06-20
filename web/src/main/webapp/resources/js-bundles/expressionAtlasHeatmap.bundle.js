@@ -7036,7 +7036,7 @@ webpackJsonp_name_([3],[
 	            props.afterPopupVisibleChange(state.popupVisible);
 	          }
 	        });
-	        if (props.action.indexOf('click') !== -1) {
+	        if (_this.isClickToHide()) {
 	          if (state.popupVisible) {
 	            if (!_this.clickOutsideHandler) {
 	              _this.clickOutsideHandler = _rcUtil.Dom.addEventListener(document, 'mousedown', _this.onDocumentClick);
@@ -10362,8 +10362,12 @@ webpackJsonp_name_([3],[
 	            React.createElement(
 	                Button,
 	                { bsStyle: 'primary', bsSize: 'xsmall' },
-	                React.createElement(Glyphicon, { glyph: 'download-alt' }),
-	                ' Download all results'
+	                React.createElement(Glyphicon, { style: { verticalAlign: 'middle', paddingBottom: '2px' }, glyph: 'download-alt' }),
+	                React.createElement(
+	                    'span',
+	                    { style: { verticalAlign: 'middle', paddingTop: '2px' } },
+	                    ' Download all results'
+	                )
 	            ),
 	            React.createElement(
 	                Modal,

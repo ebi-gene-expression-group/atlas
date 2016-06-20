@@ -301,19 +301,19 @@ var HighchartsHeatmap = React.createClass({
             <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
                 <div id="legend_0" ref="legend_1" className={clsName_0} >
                     <div className="legend-rectangle col_below"></div>
-                    <span>Below cutoff</span>
+                    <span style={{verticalAlign: "middle"}}>Below cutoff</span>
                 </div>
                 <div id="legend_1" className={clsName_1} >
                     <div className="legend-rectangle col_low"></div>
-                    <span>Low</span>
+                    <span style={{verticalAlign: "middle"}}>Low</span>
                 </div>
                 <div id="legend_2" className={clsName_2} >
                     <div className="legend-rectangle col_med"></div>
-                    <span>Medium</span>
+                    <span style={{verticalAlign: "middle"}}>Medium</span>
                 </div>
                 <div id="legend_3" className={clsName_3} >
                     <div className="legend-rectangle col_high"></div>
-                    <span>High</span>
+                    <span style={{verticalAlign: "middle"}}>High</span>
                 </div>
 
                 <div className="legend-item special">
@@ -324,7 +324,7 @@ var HighchartsHeatmap = React.createClass({
 
                 <div id="legend_4" className="legend-item special">
                     <div className="legend-rectangle col_nd"></div>
-                    <span>No data available</span>
+                    <span style={{verticalAlign: "middle"}}>No data available</span>
                 </div>
             </div>
         );
