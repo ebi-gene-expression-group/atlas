@@ -5,9 +5,50 @@
     <div class="grid_18">
         <h2><a name="latest_release">Latest release note</a></h2>
          
-        <h3>><img src="resources/images/help/atlas_release_icon.png" alt="Atlas release" align="bottom" />21 June 2016</h3>
-        
-        <h4>New experiments for this release</h4>
+        <h3><img src="resources/images/help/atlas_release_icon.png" alt="Atlas release" align="bottom" />22 June 2016</h3>
+
+        <h4>Data statistics</h4>
+
+        <ul>
+            <li><p>Ensembl <strong>84</strong> / Ensembl Genomes <strong>31</strong> gene annotations and array design probe set mappings.</p></li>
+            <li>This release contains <strong>2914</strong> datasets (<strong>106062</strong> assays), in particular:
+            </li>
+            <ul>
+                <li><strong>401</strong> RNA-seq and <strong>2</strong> proteomics
+                    datasets, of which <strong>96</strong> report <a
+                            href="http://www.ebi.ac.uk/gxa/baseline/experiments">baseline</a> gene
+                    expression, across a total of <strong>23</strong> different
+                    organisms;</li>
+                <li><strong>671</strong> datasets reporting expression in <a href="http://www.ebi.ac.uk/gxa/plant/experiments">plants</a>;</li>
+                <li><strong>2818</strong> datasets studying samples in <strong>7863</strong>
+                    <a href="http://www.ebi.ac.uk/gxa/help/differential-atlas.html">differential</a> comparisons across <strong>30</strong> different organisms.</li>
+            </ul>
+        </ul>
+
+        <h4>New heatmap</h4>
+
+        <p>This release launches the new style of <strong>heatmap</strong> on the <strong>gene/gene-set page</strong>. The changes include:</p>
+        <ul>
+            <li>resize-able, zoom-able display</li>
+            <li>assigning expression levels to <strong>low</strong>, <strong>medium</strong>, <strong>high</strong></li>
+        </ul>
+    <p>Examples:</p>
+        <ul>
+            <li><a href="http://www.ebi.ac.uk/gxa/genes/ENSMUSG00000048756">Foxo3 (mouse)</a></li>
+            <li><a href="http://www.ebi.ac.uk/gxa/genesets/GO:0007585">Respiratory gaseous exchange</a></li>
+        </ul>
+
+        <h4>New feature: similar expression patterns</h4>
+
+        <p>This release includes a new feature for exploring genes with similar expression patterns across conditions in baseline experiments. Explore examples:</p>
+        <ul>
+            <li>In <a href="http://www.ebi.ac.uk/gxa/experiments/E-MTAB-4220?accessKey=&serializedFilterFactors=&queryFactorType=DEVELOPMENTAL_STAGE&rootContext=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=VIT_01s0010g00060&exactMatch=true&_exactMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5"><i>Vitis vinifera</i> development</a></li>
+            <li>In <a href="http://www.ebi.ac.uk/gxa/experiments/E-MTAB-2037?accessKey=&serializedFilterFactors=&queryFactorType=ORGANISM_PART&rootContext=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=EPlOSAG00000008047&exactMatch=true&_exactMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5"><i>Oryza sativa</i> tissues</a></li>
+        </ul>
+
+        For more information please see <a href="FAQ.html#similarExpression">FAQ: How are similarly expressed genes computed?</a>
+
+        <h4>New experiments</h4>
 
         <p>This release of Expression Atlas includes datasets on <strong>tomato</strong> (<i>Solanum lycopersicum</i>), a new species for us! We now have <strong>four baseline experiments</strong>, studying fruit development and profiling various tissues:</p>
 
@@ -47,23 +88,7 @@
 
         <p>We are pleased to announce that the <a href="http://www.bioconductor.org/packages/release/bioc/html/ExpressionAtlas.html">ExpressionAtlas R package</a> is now available as of version 3.3 of <a href="http://www.bioconductor.org/">Bioconductor</a>. Using this package you can search for Atlas datasets and download the data from inside an R session or script. Please see the <a href="http://www.bioconductor.org/packages/release/bioc/vignettes/ExpressionAtlas/inst/doc/ExpressionAtlas.html">package vignette</a> for more information.</p>
 
-        <h4>Data statistics for this release</h4>
 
-        <ul>
-            <li><p>Ensembl <strong>84</strong> / Ensembl Genomes <strong>31</strong> gene annotations and array design probe set mappings.</p></li>
-            <li>This release contains <strong>2914</strong> datasets (<strong>106062</strong> assays), in particular:
-            </li>
-            <ul>
-                <li><strong>401</strong> RNA-seq and <strong>2</strong> proteomics
-                datasets, of which <strong>96</strong> report <a
-                href="http://www.ebi.ac.uk/gxa/baseline/experiments">baseline</a> gene
-            expression, across a total of <strong>23</strong> different
-            organisms;</li>
-                <li><strong>671</strong> datasets reporting expression in <a href="http://www.ebi.ac.uk/gxa/plant/experiments">plants</a>;</li>
-                <li><strong>2818</strong> datasets studying samples in <strong>7863</strong>
-                    <a href="http://www.ebi.ac.uk/gxa/help/differential-atlas.html">differential</a> comparisons across <strong>30</strong> different organisms.</li>
-            </ul>
-        </ul>
 
 
         <h3><img src="resources/images/help/atlas_release_icon.png" alt="Atlas release" align="bottom" />21 April 2016
@@ -149,7 +174,7 @@
             <br />
             <li>This release launches the <b>new gene and gene-set interface</b>, available for species-specific gene queries or gene-set identifier queries, via Gene Ontology (GO) or Reactome IDs, e.g.
                 <ul>
-                 <li><a href="http://www.ebi.ac.uk/gxa/genes/ENSMUSG00000048756">Foxo2 (mouse)</a></li>
+                 <li><a href="http://www.ebi.ac.uk/gxa/genes/ENSMUSG00000048756">Foxo3 (mouse)</a></li>
                  <li><a href="http://www.ebi.ac.uk/gxa/genesets/GO:0007585">Respiratory gaseous exchange</a></li>
                 </ul>
                 <br />
