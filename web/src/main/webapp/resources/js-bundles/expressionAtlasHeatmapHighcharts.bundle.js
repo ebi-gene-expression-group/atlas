@@ -2168,7 +2168,7 @@ webpackJsonp_name_([4],[
 	                React.createElement(
 	                    'div',
 	                    { ref: 'anatomogramEnsembl', className: 'gxaAside', style: { display: display } },
-	                    this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length ? React.createElement(Anatomogram, { anatomogramData: this.state.anatomogramData,
+	                    this._shouldShowAnatomogram() ? React.createElement(Anatomogram, { anatomogramData: this.state.anatomogramData,
 	                        expressedTissueColour: "gray", hoveredTissueColour: "red",
 	                        profileRows: this.state.profiles.rows, eventEmitter: this.props.anatomogramEventEmitter, atlasBaseURL: this.props.atlasBaseURL }) : null
 	                ),
@@ -2229,6 +2229,14 @@ webpackJsonp_name_([4],[
 	        );
 	    },
 	
+	    _shouldShowAnatomogram: function () {
+	        return this.props.showAnatomogram && this._couldShowAnatomogram();
+	    },
+	
+	    _couldShowAnatomogram: function () {
+	        return this.state.anatomogramData && Object.keys(this.state.anatomogramData).length > 0;
+	    },
+	
 	    componentDidUpdate: function () {
 	        /*
 	        I am a hack and I attach event listeners to the labels.
@@ -2253,11 +2261,7 @@ webpackJsonp_name_([4],[
 	        }, this);
 	
 	        if (this.props.anatomogramDataEventEmitter) {
-	            if (this.state.anatomogramData) {
-	                this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
-	            } else {
-	                this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
-	            }
+	            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', this._couldShowAnatomogram());
 	        }
 	    },
 	
@@ -2398,14 +2402,6 @@ webpackJsonp_name_([4],[
 	                    seriesDataRanges: seriesDataRanges
 	
 	                });
-	
-	                if (this.props.anatomogramDataEventEmitter) {
-	                    if (this.state.anatomogramData) {
-	                        this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
-	                    } else {
-	                        this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
-	                    }
-	                }
 	            }
 	        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
 	            if (this.props.fail) {

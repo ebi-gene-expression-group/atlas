@@ -2650,10 +2650,12 @@ webpackJsonp_name_([5],[
 	
 	    render: function () {
 	        var facets = Object.keys(this.props.facets).map(function (facet) {
-	            return React.createElement(Facet, { key: facet, facetName: facet, facetItems: this.props.facets[facet],
+	            return React.createElement(Facet, {
+	                key: facet,
+	                facetName: facet,
+	                facetItems: this.props.facets[facet],
 	                checkedFacetItems: this.props.checkedFacets && this.props.checkedFacets[facet],
-	                setChecked: this._setChecked
-	            });
+	                setChecked: this._setChecked });
 	        }.bind(this));
 	
 	        var _checked = this.state.containsAnatomogram ? this.props.showAnatomograms : this.state.existsOneAnatomogramInHeatmaps ? this.props.showAnatomograms : this.state.containsAnatomogram;
@@ -3226,7 +3228,7 @@ webpackJsonp_name_([5],[
 	        anatomogramDataEventEmitter: React.PropTypes.object.isRequired
 	    },
 	
-	    componentDidMount: function () {
+	    _renderHeatmap: function () {
 	        highchartsHeatmapRenderer.render({
 	            atlasHost: this.props.atlasHost,
 	            params: "geneQuery=" + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
@@ -3239,17 +3241,12 @@ webpackJsonp_name_([5],[
 	        });
 	    },
 	
+	    componentDidMount: function () {
+	        this._renderHeatmap();
+	    },
+	
 	    componentDidUpdate: function () {
-	        highchartsHeatmapRenderer.render({
-	            atlasHost: this.props.atlasHost,
-	            params: "geneQuery=" + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
-	            analyticsSearch: true,
-	            isMultiExperiment: true,
-	            target: ReactDOM.findDOMNode(this.refs.widgetBody),
-	            isWidget: false,
-	            showAnatomogram: this.props.showAnatomogram,
-	            anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
-	        });
+	        this._renderHeatmap();
 	    },
 	
 	    render: function () {
@@ -3486,7 +3483,7 @@ webpackJsonp_name_([5],[
 	                React.createElement(
 	                    'div',
 	                    { ref: 'anatomogramEnsembl', className: 'gxaAside', style: { display: display } },
-	                    this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length ? React.createElement(Anatomogram, { anatomogramData: this.state.anatomogramData,
+	                    this._shouldShowAnatomogram() ? React.createElement(Anatomogram, { anatomogramData: this.state.anatomogramData,
 	                        expressedTissueColour: "gray", hoveredTissueColour: "red",
 	                        profileRows: this.state.profiles.rows, eventEmitter: this.props.anatomogramEventEmitter, atlasBaseURL: this.props.atlasBaseURL }) : null
 	                ),
@@ -3547,6 +3544,14 @@ webpackJsonp_name_([5],[
 	        );
 	    },
 	
+	    _shouldShowAnatomogram: function () {
+	        return this.props.showAnatomogram && this._couldShowAnatomogram();
+	    },
+	
+	    _couldShowAnatomogram: function () {
+	        return this.state.anatomogramData && Object.keys(this.state.anatomogramData).length > 0;
+	    },
+	
 	    componentDidUpdate: function () {
 	        /*
 	        I am a hack and I attach event listeners to the labels.
@@ -3571,11 +3576,7 @@ webpackJsonp_name_([5],[
 	        }, this);
 	
 	        if (this.props.anatomogramDataEventEmitter) {
-	            if (this.state.anatomogramData) {
-	                this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
-	            } else {
-	                this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
-	            }
+	            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', this._couldShowAnatomogram());
 	        }
 	    },
 	
@@ -3716,14 +3717,6 @@ webpackJsonp_name_([5],[
 	                    seriesDataRanges: seriesDataRanges
 	
 	                });
-	
-	                if (this.props.anatomogramDataEventEmitter) {
-	                    if (this.state.anatomogramData) {
-	                        this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
-	                    } else {
-	                        this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
-	                    }
-	                }
 	            }
 	        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
 	            if (this.props.fail) {
