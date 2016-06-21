@@ -11,7 +11,7 @@ echo "============================================================"
 echo `date`
 echo "============================================================"
 echo "Stopping Solr on ves-hx-77..."
-sudo -u fg_atlas ssh ves-hx-77 '/nfs/public/rw/fg/atlas/solr_acceptance.sh stop'
+sudo -u fg_atlas ssh ves-hx-77 '/nfs/public/rw/fg/atlas/solr_production.sh stop'
 
 echo "============================================================"
 echo `date`
@@ -23,7 +23,7 @@ echo "============================================================"
 echo `date`
 echo "============================================================"
 echo "Starting Solr on ves-hx-77..."
-sudo -u fg_atlas ssh ves-hx-77 '/nfs/public/rw/fg/atlas/solr_acceptance.sh start' &
+sudo -u fg_atlas ssh ves-hx-77 '/nfs/public/rw/fg/atlas/solr_production.sh start' &
 
 # sudo -u fg_atlas ssh ves-hx-77 './atlas_scripts/sync_data_dir.sh'
 echo "============================================================"
@@ -44,9 +44,6 @@ echo "============================================================"
 echo `date`
 echo "============================================================"
 
-echo "============================================================"
-echo `date`
-echo "============================================================"
 echo -n "Waiting for Atlas to start... "
 sleep 60
 echo "done"
