@@ -10,7 +10,7 @@ module.exports = {
         expressionAtlasHeatmapHighcharts:'./expression-atlas-heatmap-highcharts',
         experimentPageHeatmap: './expression-atlas-heatmap/src/experimentPageHeatmapAnatomogramRenderer.js',
         facetedSearch: './faceted-search',
-        dependencies: ['react', 'react-dom', 'react-radio-group', 'react-bootstrap',
+        dependencies: ['react', 'react-dom', 'react-radio-group', 'react-bootstrap', 'rc-slider',
                        'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jQuery-ajaxTransport-XDomainRequest', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
                        'urijs', 'query-string', 'atlas-modernizr',
                        'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
