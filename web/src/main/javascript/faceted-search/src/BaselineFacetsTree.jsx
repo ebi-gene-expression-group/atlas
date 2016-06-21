@@ -61,13 +61,19 @@ var BaselineFacetsTree = React.createClass({
 
     render: function () {
         var facets = Object.keys(this.props.facets).map(function (facet) {
-            return <Facet key={facet} facetName={facet} facetItems={this.props.facets[facet]}
-                checkedFacetItems={this.props.checkedFacets && this.props.checkedFacets[facet]}
-                setChecked={this._setChecked}
-            />;
+            return <Facet
+                      key={facet}
+                      facetName={facet}
+                      facetItems={this.props.facets[facet]}
+                      checkedFacetItems={this.props.checkedFacets && this.props.checkedFacets[facet]}
+                      setChecked={this._setChecked} />;
         }.bind(this));
 
-        var _checked = this.state.containsAnatomogram ? this.props.showAnatomograms : (this.state.existsOneAnatomogramInHeatmaps ? this.props.showAnatomograms : this.state.containsAnatomogram);
+        var _checked = this.state.containsAnatomogram
+                        ? this.props.showAnatomograms
+                        : (this.state.existsOneAnatomogramInHeatmaps
+                            ? this.props.showAnatomograms
+                            : this.state.containsAnatomogram);
 
         return (
             <div className="hidden-xs gxaFacetsContainer">
