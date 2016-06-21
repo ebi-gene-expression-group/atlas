@@ -114,6 +114,28 @@ var HighchartsHeatmap = React.createClass({
 
     },
 
+    _prepareDataSeries: function () {
+      var dataSeries = ([this.props.seriesDataBelowCutoff]).concat(
+        this.props.seriesDataRanges.map(function(o){
+          return o.seriesData;
+        })
+      );
+      return ([
+       ["Below cutoff", "#eaeaea"],
+       ["Low", "#45affd"],
+       ["Medium", "#1E74CA"],
+       ["High", "#024990"]
+     ]).map(function (__args__, ix) {
+       return {
+         name: __args__[0],
+         color: __args__[1],
+         borderWidth: 1,
+         borderColor: "#fff",
+         data: dataSeries[ix]
+       }
+     });
+    },
+
     render: function () {
         var atlasBaseURL = this.props.atlasBaseURL;
         var yAxisCategoriesLinks = this.props.yAxisCategoriesLinks;
@@ -239,31 +261,7 @@ var HighchartsHeatmap = React.createClass({
             },
             anatomogramEventEmitter: this.props.anatomogramEventEmitter,
             ensemblEventEmitter: this.props.ensemblEventEmitter,
-            series: [{
-                name: this.props.seriesDataBelowCutoffString,
-                color: "#eaeaea",
-                borderWidth: 1,
-                borderColor: "#fff",
-                data: this.props.seriesDataBelowCutoff
-            }, {
-                name: this.props.seriesDataRanges[0].label,
-                color: "#45affd",
-                borderWidth: 1,
-                borderColor: "#fff",
-                data: this.props.seriesDataRanges[0].seriesData
-            }, {
-                name: this.props.seriesDataRanges[1].label,
-                color: "#1E74CA",
-                borderWidth: 1,
-                borderColor: "#fff",
-                data: this.props.seriesDataRanges[1].seriesData
-            }, {
-                name: this.props.seriesDataRanges[2].label,
-                color: "#024990",
-                borderWidth: 1,
-                borderColor: "#fff",
-                data: this.props.seriesDataRanges[2].seriesData
-            }]
+            series: this._prepareDataSeries()
         };
 
         var clsName_0 = this.state.legend_0 ? 'legend-item legend-item-off' : 'legend-item special';

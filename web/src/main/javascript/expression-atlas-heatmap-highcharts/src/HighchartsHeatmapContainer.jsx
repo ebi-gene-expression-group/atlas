@@ -232,17 +232,14 @@ var HighchartsHeatmapContainer = React.createClass({
                         seriesDataBelowCutoffString = "Below cutoff";
 
                     var seriesDataRanges = [{
-                        label: "Low",
                         from: 0,
                         to: 10,
                         seriesData: []
                     }, {
-                        label: "Medium",
                         from: 10,
                         to: 1000,
                         seriesData: []
                     }, {
-                        label: "High",
                         from: 1000,
                         to: 100000,
                         seriesData: []
