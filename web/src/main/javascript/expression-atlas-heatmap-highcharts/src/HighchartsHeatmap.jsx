@@ -114,32 +114,6 @@ var HighchartsHeatmap = React.createClass({
 
     },
 
-    _showCount: function() {
-        var shownRows = this.props.profiles.rows.length,
-            totalRows = this.props.profiles.searchResultTotal;
-
-        var what =
-            (this.props.isMultiExperiment ? 'experiment' : 'gene') +
-            (totalRows > 1 ? 's' : '');
-
-        var message = 'Showing ' + shownRows + ' ' +
-            (totalRows === shownRows ? what + ':' : 'of ' + totalRows + ' ' + what + ' found:');
-
-        return (
-            <div style={{display: 'inline-block', verticalAlign: 'top'}}>
-                {message}
-            </div>
-        );
-    },
-
-    _showZoomInstructions: function() {
-        return (
-            <div style={{fontSize: 'small', color: 'grey'}}>
-                To zoom in, click and drag left/right, or tap with two fingers and pinch
-            </div>
-        )
-    },
-
     render: function () {
         var atlasBaseURL = this.props.atlasBaseURL;
         var yAxisCategoriesLinks = this.props.yAxisCategoriesLinks;
@@ -331,17 +305,15 @@ var HighchartsHeatmap = React.createClass({
 
         return (
             <div>
-                <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{paddingBottom: '15px', position: 'sticky'}}>
-                    {this._showCount()}
-                    <div style={{display: "inline-block", verticalAlign: "top", float: "right", marginRight: marginRight}}>
-                        <DownloadProfilesButton ref="downloadProfilesButton"
-                                                downloadProfilesURL={this.props.heatmapConfig.downloadProfilesURL}
-                                                atlasBaseURL={this.props.atlasBaseURL}
-                                                isFortLauderdale={this.props.heatmapConfig.isFortLauderdale}
-                                                onDownloadCallbackForAnalytics={function() {this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')}.bind(this)}/>
-                    </div>
-                    {this.props.xAxisCategories.length > 100 ? this._showZoomInstructions() : null}
-                </div>
+                <HeatmapOptions
+                  marginRight={marginRight}
+                  profiles={this.props.profiles}
+                  downloadProfilesURL={this.props.heatmapConfig.downloadProfilesURL}
+                  atlasBaseURL={this.props.atlasBaseURL}
+                  isFortLauderdale={this.props.heatmapConfig.isFortLauderdale}
+                  isMultiExperiment={this.props.isMultiExperiment}
+                  googleAnalyticsCallback={this.props.googleAnalyticsCallback}
+                  showUsageMessage={this.props.xAxisCategories.length > 100} />
 
                 <div id="highcharts_container">
                     <ReactHighcharts config={highchartsOptions} ref="chart"/>
@@ -350,6 +322,54 @@ var HighchartsHeatmap = React.createClass({
             </div>
         );
     }
+
+});
+
+var HeatmapOptions = React.createClass({
+  propTypes: {
+    marginRight: React.PropTypes.number.isRequired,
+    profiles: React.PropTypes.object.isRequired,
+    downloadProfilesURL: React.PropTypes.string.isRequired,
+    atlasBaseURL: React.PropTypes.string.isRequired,
+    isFortLauderdale: React.PropTypes.bool.isRequired,
+    isMultiExperiment: React.PropTypes.bool.isRequired,
+    googleAnalyticsCallback: React.PropTypes.func.isRequired,
+    showUsageMessage: React.PropTypes.bool.isRequired
+  },
+
+  _introductoryMessage: function() {
+      var shownRows = this.props.profiles.rows.length,
+          totalRows = this.props.profiles.searchResultTotal;
+
+      var what =
+          (this.props.isMultiExperiment ? 'experiment' : 'gene') +
+          (totalRows > 1 ? 's' : '');
+
+      return 'Showing ' + shownRows + ' ' +
+       (totalRows === shownRows ? what + ':' : 'of ' + totalRows + ' ' + what + ' found:');
+  },
+
+  render: function () {
+    return (
+      <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{paddingBottom: '15px', position: 'sticky'}}>
+          <div style={{display: 'inline-block', verticalAlign: 'top'}}>
+              {this._introductoryMessage()}
+          </div>
+          <div style={{display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight}}>
+              <DownloadProfilesButton ref="downloadProfilesButton"
+                                      downloadProfilesURL={this.props.downloadProfilesURL}
+                                      atlasBaseURL={this.props.atlasBaseURL}
+                                      isFortLauderdale={this.props.isFortLauderdale}
+                                      onDownloadCallbackForAnalytics={function() {this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')}.bind(this)}/>
+          </div>
+          {this.props.showUsageMessage
+            ? <div style={{fontSize: 'small', color: 'grey'}}>
+                  To zoom in, click and drag left/right, or tap with two fingers and pinch
+              </div>
+            : null}
+      </div>
+    );
+  }
 
 });
 
