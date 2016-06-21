@@ -46,7 +46,7 @@ public class BaselineAnalyticsFacetsReader {
 
     public static String generateFacetsTreeJson(List<Map<String, Object>> results) {
 
-        TreeMultimap<String, FacetTreeItem> facetTreeMultimap = TreeMultimap.create();
+        TreeMultimap<String, FacetTreeItem> facetTreeMultimap = TreeMultimap.create(new HomoSapiensFirstComparator(), new OrganismPartFirstComparator());
 
         for (Map<String, Object> experiment : results) {
             String species = (String) experiment.get("val");
@@ -70,23 +70,41 @@ public class BaselineAnalyticsFacetsReader {
         return gson.toJson(facetTreeMultimap.asMap());
     }
 
-    @AutoValue
-    abstract static class FacetTreeItem implements Comparable<FacetTreeItem> {
-        static FacetTreeItem create(String name, String value) {
-            return new AutoValue_BaselineAnalyticsFacetsReader_FacetTreeItem(name, value);
-        }
-
+    private static class HomoSapiensFirstComparator implements Comparator<String> {
         @Override
-        public int compareTo(FacetTreeItem other) {
-            if (this.name().equals(other.name())) {
+        public int compare(String o1, String o2) {
+            if (o1.equals(o2)) {
                 return 0;
-            } else if (this.name().equals("ORGANISM_PART")) {
+            } else  if (o1.equals("homo sapiens")) {
                 return -1;
-            } else if (other.name().equals("ORGANISM_PART")) {
+            } else if (o2.equals("homo sapiens")) {
+                return 1;
+            }
+            else {
+                return o1.compareTo(o2);
+            }
+        }
+    }
+
+    private static class OrganismPartFirstComparator implements Comparator<FacetTreeItem> {
+        @Override
+        public int compare(FacetTreeItem o1, FacetTreeItem o2) {
+            if (o1.name().equals(o2.name())) {
+                return 0;
+            } else if (o1.name().equals("ORGANISM_PART")) {
+                return -1;
+            } else if (o2.name().equals("ORGANISM_PART")) {
                 return 1;
             } else {
-                return this.name().compareTo(other.name());
+                return o1.name().compareTo(o2.name());
             }
+        }
+    }
+
+    @AutoValue
+    abstract static class FacetTreeItem {
+        static FacetTreeItem create(String name, String value) {
+            return new AutoValue_BaselineAnalyticsFacetsReader_FacetTreeItem(name, value);
         }
 
         abstract String name();
