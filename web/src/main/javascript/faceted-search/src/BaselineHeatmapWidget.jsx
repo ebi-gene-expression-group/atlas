@@ -22,30 +22,25 @@ var BaselineHeatmapWidget = React.createClass({
         anatomogramDataEventEmitter: React.PropTypes.object.isRequired
     },
 
+    _renderHeatmap: function() {
+      highchartsHeatmapRenderer.render({
+          atlasHost: this.props.atlasHost,
+          params: "geneQuery=" + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
+          analyticsSearch: true,
+          isMultiExperiment: true,
+          target: ReactDOM.findDOMNode(this.refs.widgetBody),
+          isWidget: false,
+          showAnatomogram: this.props.showAnatomogram,
+          anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
+      });
+    },
+
     componentDidMount: function() {
-        highchartsHeatmapRenderer.render({
-            atlasHost: this.props.atlasHost,
-            params: "geneQuery=" + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
-            analyticsSearch: true,
-            isMultiExperiment: true,
-            target: ReactDOM.findDOMNode(this.refs.widgetBody),
-            isWidget: false,
-            showAnatomogram: this.props.showAnatomogram,
-            anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
-        });
+      this._renderHeatmap();
     },
 
     componentDidUpdate: function() {
-        highchartsHeatmapRenderer.render({
-            atlasHost: this.props.atlasHost,
-            params: "geneQuery=" + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
-            analyticsSearch: true,
-            isMultiExperiment: true,
-            target: ReactDOM.findDOMNode(this.refs.widgetBody),
-            isWidget: false,
-            showAnatomogram: this.props.showAnatomogram,
-            anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
-        });
+      this._renderHeatmap();
     },
 
     render: function() {
