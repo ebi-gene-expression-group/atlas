@@ -92,7 +92,7 @@ var HighchartsHeatmapContainer = React.createClass({
               <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
                   <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
-                      { this._shouldShowAnatomogram()
+                      { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
                         ? <Anatomogram anatomogramData={this.state.anatomogramData}
                                      expressedTissueColour={"gray"} hoveredTissueColour={"red"}
                                      profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
@@ -139,14 +139,6 @@ var HighchartsHeatmapContainer = React.createClass({
       );
     },
 
-    _shouldShowAnatomogram: function() {
-      return this.props.showAnatomogram && this._couldShowAnatomogram() ;
-    },
-
-    _couldShowAnatomogram: function() {
-      return this.state.anatomogramData && Object.keys(this.state.anatomogramData).length >0 ;
-    },
-
     componentDidUpdate: function() {
         /*
         I am a hack and I attach event listeners to the labels.
@@ -174,7 +166,11 @@ var HighchartsHeatmapContainer = React.createClass({
         }, this);
 
         if (this.props.anatomogramDataEventEmitter) {
-            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', this._couldShowAnatomogram());
+            if (this.state.anatomogramData && Object.keys(this.state.anatomogramData).length !== 0) {
+                this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
+            } else {
+                this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
+            }
         }
     },
 
@@ -319,6 +315,14 @@ var HighchartsHeatmapContainer = React.createClass({
                         seriesDataRanges: seriesDataRanges
 
                     });
+
+                    if(this.props.anatomogramDataEventEmitter) {
+                        if (this.state.anatomogramData) {
+                            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
+                        } else {
+                            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
+                        }
+                    }
                 }
             }.bind(this)
         ).fail(

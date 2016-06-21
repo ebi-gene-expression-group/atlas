@@ -291,6 +291,9 @@
     <br/>
 
     <c:if test="${showWidget}">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customized-bootstrap-3.3.5.css">
+        <script src="${pageContext.request.contextPath}/resources/js/lib/bootstrap-3.3.5.min.js"></script>
+
         <script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasHeatmapHighcharts.bundle.js"></script>
     </c:if>
