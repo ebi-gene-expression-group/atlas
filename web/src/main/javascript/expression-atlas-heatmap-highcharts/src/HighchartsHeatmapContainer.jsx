@@ -166,11 +166,7 @@ var HighchartsHeatmapContainer = React.createClass({
         }, this);
 
         if (this.props.anatomogramDataEventEmitter) {
-            if (this.state.anatomogramData) {
-                this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
-            } else {
-                this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
-            }
+            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', !!this.state.anatomogramData);
         }
     },
 
@@ -315,14 +311,6 @@ var HighchartsHeatmapContainer = React.createClass({
                         seriesDataRanges: seriesDataRanges
 
                     });
-
-                    if(this.props.anatomogramDataEventEmitter) {
-                        if (this.state.anatomogramData) {
-                            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
-                        } else {
-                            this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
-                        }
-                    }
                 }
             }.bind(this)
         ).fail(
