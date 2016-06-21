@@ -16276,14 +16276,6 @@ webpackJsonp_name_([5],[
 	                    seriesDataRanges: seriesDataRanges
 	
 	                });
-	
-	                if (this.props.anatomogramDataEventEmitter) {
-	                    if (this.state.anatomogramData) {
-	                        this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
-	                    } else {
-	                        this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', false);
-	                    }
-	                }
 	            }
 	        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
 	            if (this.props.fail) {
