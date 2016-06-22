@@ -25,37 +25,29 @@ var HighchartsHeatmap = React.createClass({
         atlasBaseURL: React.PropTypes.string.isRequired,
         anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
         ensemblEventEmitter : React.PropTypes.instanceOf(EventEmitter),
-        googleAnalyticsCallback: React.PropTypes.func.isRequired
+        googleAnalyticsCallback: React.PropTypes.func.isRequired,
+        dataSeries: React.PropTypes.arrayOf(
+            React.PropTypes.arrayOf(
+              React.PropTypes.arrayOf(
+                function(series){
+                  if (! Array.isArray(series)
+                      || series.length !== 3
+                      || typeof series[0] !== 'number'
+                      || typeof series[1] !== 'number'){
+                    return new Error("Data series should be array of number, number, value to display")
+                  }
+                }
+              )
+            )
+          ).isRequired
     },
 
     getInitialState: function () {
         return ({
             xAxisCategories:{},
             yAxisCategories:{},
-            seriesDataNA: [],
-            seriesDataNAString: "NA",
-            seriesDataBelowCutoff: [],
-            seriesDataBelowCutoffString: "Below cutoff",
-            seriesDataRanges: [
-                {
-                    label: "Low",
-                    from: 0,
-                    to: 10,
-                    seriesData: []
-                },
-                {
-                    label: "Medium",
-                    from: 10,
-                    to: 1000,
-                    seriesData: []
-                },
-                {
-                    label: "High",
-                    from: 1000,
-                    to: 100000,
-                    seriesData: []
-                }
-            ],
+            dataSeries:[[],[],[],[]],
+
 
             legend_0: false,
             legend_1: false,
@@ -114,11 +106,6 @@ var HighchartsHeatmap = React.createClass({
     },
 
     _prepareDataSeries: function () {
-      var dataSeries = ([this.props.seriesDataBelowCutoff]).concat(
-        this.props.seriesDataRanges.map(function(o){
-          return o.seriesData;
-        })
-      );
       return ([
        ["Below cutoff", "#eaeaea"],
        ["Low", "#45affd"],
@@ -130,9 +117,9 @@ var HighchartsHeatmap = React.createClass({
          color: __args__[1],
          borderWidth: 1,
          borderColor: "#fff",
-         data: dataSeries[ix]
+         data: this.props.dataSeries[ix]
        }
-     });
+     }.bind(this));
     },
 
     render: function () {

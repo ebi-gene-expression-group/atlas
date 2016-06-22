@@ -11,9 +11,9 @@ function getXAxisCategories (columnHeaders) {
 
 var yAxisCategoriesLinks = {};
 
-function getYAxisCategories (profiles, heatmapConfig) {
+function getYAxisCategories (rows, heatmapConfig) {
 
-    return profiles.rows.map(function (profile) {
+    return rows.map(function (profile) {
         return {"label": profile.name,
                 "id" : profile.id + "?geneQuery=" + heatmapConfig.geneQuery +
                     "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) };

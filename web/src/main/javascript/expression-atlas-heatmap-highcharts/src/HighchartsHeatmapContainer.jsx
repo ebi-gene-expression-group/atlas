@@ -7,6 +7,7 @@ var React = require('react');
 var Snap = require('imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js');
 
 var $ = require('jquery');
+
 require('jQuery-ajaxTransport-XDomainRequest');
 
 //*------------------------------------------------------------------*
@@ -111,11 +112,7 @@ var HighchartsHeatmapContainer = React.createClass({
                           googleAnalyticsCallback={this.state.googleAnalyticsCallback}
                           xAxisCategories={this.state.xAxisCategories}
                           yAxisCategories={this.state.yAxisCategories}
-                          seriesDataNA={this.state.seriesDataNA}
-                          seriesDataNAString={this.state.seriesDataNAString}
-                          seriesDataBelowCutoff={this.state.seriesDataBelowCutoff}
-                          seriesDataBelowCutoffString={this.state.seriesDataBelowCutoffString}
-                          seriesDataRanges={this.state.seriesDataRanges}
+                          dataSeries={this.state.dataSeries}
                       />
                   </div>
               </div>
@@ -188,13 +185,7 @@ var HighchartsHeatmapContainer = React.createClass({
 
             xAxisCategories: {},
             yAxisCategories: {},
-
-            seriesDataNA: [],
-            seriesDataNAString: "NA",
-            seriesDataBelowCutoff: [],
-            seriesDataBelowCutoffString: "Below cutoff",
-
-            seriesDataRanges: []
+            dataSeries: [[],[],[],[]]
         }
     },
 
@@ -219,15 +210,7 @@ var HighchartsHeatmapContainer = React.createClass({
                     // }
 
                     // var xAxisCategories = HighchartsUtils.getXAxisCategories(filteredDataByThreshold.columnHeaders);
-                    var xAxisCategories = HighchartsUtils.getXAxisCategories(data.columnHeaders);
-                    var yAxisCategories = HighchartsUtils.getYAxisCategories(data.profiles, data.config);
-
-                    var seriesDataNA = [],
-                        seriesDataNAString = "NA";
-
-                    var seriesDataBelowCutoff = [],
-                        seriesDataBelowCutoffString = "Below cutoff";
-
+                    var seriesDataBelowCutoff = [];
                     var seriesDataRanges = [{
                         from: 0,
                         to: 10,
@@ -253,19 +236,18 @@ var HighchartsHeatmapContainer = React.createClass({
                     for (var i = 0; i < experimentTypes.length; i++) {
                         var experimentTypeSeriesData = [];
 
-                        for (var j = 0; j < yAxisCategories.length; j++) {
+                        for (var j = 0; j < data.profiles.rows.length; j++) {
                             if (data.profiles.rows[j].experimentType !== experimentTypes[i]) {
                                 continue;
                             }
 
-                            for (var k = 0; k < xAxisCategories.length; k++) {
+                            for (var k = 0; k < data.columnHeaders.length; k++) {
                                 var expression = data.profiles.rows[j].expressions[k];
                                 //we switched from strings to doubles in April 2016, after a release you can assume we serve doubles that are optionally absent to mean "NT"
                                 if (!expression.hasOwnProperty("value") || expression.value === "NT") {
-                                    //seriesDataNA.push([k, j, seriesDataNAString]);
                                     continue;
                                 } else if (!expression.value) {
-                                    seriesDataBelowCutoff.push([k, j, seriesDataBelowCutoffString]);
+                                    seriesDataBelowCutoff.push([k, j, "Below cutoff"]);
                                 } else {
                                     experimentTypeSeriesData.push([k, j, +expression.value]);
                                 }
@@ -287,6 +269,12 @@ var HighchartsHeatmapContainer = React.createClass({
                         }
                     }
 
+                    var dataSeries = ([seriesDataBelowCutoff]).concat(
+                      seriesDataRanges.map(function(o){
+                        return o.seriesData;
+                      })
+                    );
+
 
                     this.setState({
                         heatmapConfig: data.config,
@@ -298,15 +286,10 @@ var HighchartsHeatmapContainer = React.createClass({
                         anatomogramData: data.anatomogram,
                         experimentData: data.experiment,
 
-                        xAxisCategories: xAxisCategories,
-                        yAxisCategories: yAxisCategories,
+                        xAxisCategories: HighchartsUtils.getXAxisCategories(data.columnHeaders),
+                        yAxisCategories: HighchartsUtils.getYAxisCategories(data.profiles.rows, data.config),
 
-                        seriesDataBelowCutoff: seriesDataBelowCutoff,
-                        seriesDataBelowCutoffString: seriesDataBelowCutoffString,
-                        seriesDataNA: seriesDataNA,
-                        seriesDataNAString: seriesDataNAString,
-                        seriesDataRanges: seriesDataRanges
-
+                        dataSeries: dataSeries
                     });
                 }
             }.bind(this)
