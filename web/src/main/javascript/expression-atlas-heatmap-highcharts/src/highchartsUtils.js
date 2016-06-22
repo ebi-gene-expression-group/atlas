@@ -4,7 +4,8 @@
 
 function getXAxisCategories (columnHeaders) {
     return columnHeaders.map(function (columnHeader) {
-        return {"label": columnHeader.factorValue, "id" : columnHeader.factorValueOntologyTermId};
+        return {"label": columnHeader.factorValue,
+                "id" : columnHeader.factorValueOntologyTermId};
     });
 }
 
@@ -13,14 +14,10 @@ var yAxisCategoriesLinks = {};
 function getYAxisCategories (profiles, heatmapConfig) {
 
     return profiles.rows.map(function (profile) {
-        yAxisCategoriesLinks[profile.name] = profile.id + "?geneQuery=" + heatmapConfig.geneQuery +
-            "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors);
-        return profile.name;
+        return {"label": profile.name,
+                "id" : profile.id + "?geneQuery=" + heatmapConfig.geneQuery +
+                    "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) };
     });
-}
-
-function getYAxisCategoriesLinks () {
-    return yAxisCategoriesLinks;
 }
 
 function compareLevels(a,b) {
@@ -278,7 +275,6 @@ function rankExperiments(rows, columns) {
 
 exports.getXAxisCategories = getXAxisCategories;
 exports.getYAxisCategories = getYAxisCategories;
-exports.getYAxisCategoriesLinks = getYAxisCategoriesLinks;
 exports.rankColumns = rankColumns;
 exports.rankExperiments = rankExperiments;
 exports.applyThresholdtoColumns = applyThresholdToColumns;

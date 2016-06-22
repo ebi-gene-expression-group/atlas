@@ -32,7 +32,6 @@ var HighchartsHeatmap = React.createClass({
         return ({
             xAxisCategories:{},
             yAxisCategories:{},
-            yAxisCategoriesLinks: {},
             seriesDataNA: [],
             seriesDataNAString: "NA",
             seriesDataBelowCutoff: [],
@@ -138,7 +137,6 @@ var HighchartsHeatmap = React.createClass({
 
     render: function () {
         var atlasBaseURL = this.props.atlasBaseURL;
-        var yAxisCategoriesLinks = this.props.yAxisCategoriesLinks;
         var yAxisCategories = this.props.yAxisCategories;
 
         var xAxisLongestHeaderLength =
@@ -241,7 +239,7 @@ var HighchartsHeatmap = React.createClass({
                         color: '#148ff3'
                     },
                     formatter: function() {
-                        return '<a href="' + atlasBaseURL +'/experiments/' + yAxisCategoriesLinks[this.value] + '">' + this.value + '</a>';
+                        return '<a href="' + atlasBaseURL +'/experiments/' + this.value.id + '">' + this.value.label + '</a>';
                     }
                 },
                 categories: this.props.yAxisCategories,
@@ -253,7 +251,7 @@ var HighchartsHeatmap = React.createClass({
             tooltip: {
                 useHTML: true,
                 formatter: function() {
-                    return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y] + '</b><br>' +
+                    return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y].label + '</b><br>' +
                         'Experimental condition: <b>' + this.series.xAxis.categories[this.point.x].label + '</b><br>' +
                         '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';"></span>' +
                         'Expression level: <b>' + this.point.value + '</b>';

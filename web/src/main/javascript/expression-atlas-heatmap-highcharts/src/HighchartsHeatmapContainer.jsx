@@ -111,7 +111,6 @@ var HighchartsHeatmapContainer = React.createClass({
                           googleAnalyticsCallback={this.state.googleAnalyticsCallback}
                           xAxisCategories={this.state.xAxisCategories}
                           yAxisCategories={this.state.yAxisCategories}
-                          yAxisCategoriesLinks={this.state.yAxisCategoriesLinks}
                           seriesDataNA={this.state.seriesDataNA}
                           seriesDataNAString={this.state.seriesDataNAString}
                           seriesDataBelowCutoff={this.state.seriesDataBelowCutoff}
@@ -189,7 +188,6 @@ var HighchartsHeatmapContainer = React.createClass({
 
             xAxisCategories: {},
             yAxisCategories: {},
-            yAxisCategoriesLinks: {},
 
             seriesDataNA: [],
             seriesDataNAString: "NA",
@@ -223,7 +221,6 @@ var HighchartsHeatmapContainer = React.createClass({
                     // var xAxisCategories = HighchartsUtils.getXAxisCategories(filteredDataByThreshold.columnHeaders);
                     var xAxisCategories = HighchartsUtils.getXAxisCategories(data.columnHeaders);
                     var yAxisCategories = HighchartsUtils.getYAxisCategories(data.profiles, data.config);
-                    var yAxisCategoriesLinks = HighchartsUtils.getYAxisCategoriesLinks();
 
                     var seriesDataNA = [],
                         seriesDataNAString = "NA";
@@ -303,7 +300,6 @@ var HighchartsHeatmapContainer = React.createClass({
 
                         xAxisCategories: xAxisCategories,
                         yAxisCategories: yAxisCategories,
-                        yAxisCategoriesLinks: yAxisCategoriesLinks,
 
                         seriesDataBelowCutoff: seriesDataBelowCutoff,
                         seriesDataBelowCutoffString: seriesDataBelowCutoffString,
