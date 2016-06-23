@@ -8,7 +8,7 @@ var ReactDOM = require('react-dom');
 var EventEmitter = require('events');
 
 var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
-    
+
 //*------------------------------------------------------------------*
 
 /**
@@ -38,8 +38,6 @@ exports.render = function(options) {
 
     var sourceURL = atlasBaseURL + endpointPath + "?" + options.params;
 
-    var ensemblEventEmitter = new EventEmitter();
-    ensemblEventEmitter.setMaxListeners(0);
     var anatomogramEventEmitter = new EventEmitter();
     anatomogramEventEmitter.setMaxListeners(0);
 
@@ -55,7 +53,6 @@ exports.render = function(options) {
                 isMultiExperiment: options.isMultiExperiment,
                 disableGoogleAnalytics: options.disableGoogleAnalytics === undefined ? false : options.disableGoogleAnalytics,
                 fail: options.fail,
-                ensemblEventEmitter: ensemblEventEmitter,
                 anatomogramEventEmitter:anatomogramEventEmitter,
                 anatomogramDataEventEmitter: options.anatomogramDataEventEmitter
             }

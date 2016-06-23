@@ -58,7 +58,6 @@ var HighchartsHeatmapContainer = React.createClass({
         disableGoogleAnalytics: React.PropTypes.bool.isRequired,
         fail: React.PropTypes.func,
         googleAnalyticsCallback: React.PropTypes.func,
-        ensemblEventEmitter : React.PropTypes.object.isRequired,
         anatomogramEventEmitter: React.PropTypes.object.isRequired,
         anatomogramDataEventEmitter: React.PropTypes.object
     },
@@ -107,7 +106,6 @@ var HighchartsHeatmapContainer = React.createClass({
                           profiles={this.state.profiles}
                           heatmapConfig={this.state.heatmapConfig}
                           anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-                          ensemblEventEmitter={this.props.ensemblEventEmitter}
                           atlasBaseURL={this.props.atlasBaseURL}
                           googleAnalyticsCallback={this.state.googleAnalyticsCallback}
                           xAxisCategories={this.state.xAxisCategories}
