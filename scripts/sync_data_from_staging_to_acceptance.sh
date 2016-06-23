@@ -33,7 +33,7 @@ echo "Syncing data from ves-hx-76 to ves-hx-77..."
 sudo -u fg_atlas ssh ves-hx-77 'rsync -irltz --delete --exclude gxa/solr** --exclude gxa/lost+found** ves-hx-76:/srv/gxa /srv'
 
 echo "Refreshing ATLASPUBFALL1 to latest snapshot..."
-sudo -u dxatlas ssh fb1-001 '/net/nasP/oracle/delphix/ebi_refresh_vdb.sh ATLASPUBFALL1 "`/net/nasP/oracle/delphix/ebi_list_snapshots.sh ATLASPUBFALL1 | tail -1`"'
+sudo -u dxatlas sh -c '/net/nasP/oracle/delphix/ebi_refresh_vdb.sh ATLASTST "`/net/nasP/oracle/delphix/ebi_list_snapshots.sh ATLASTST | tail -1`"'
 echo "============================================================"
 echo `date`
 echo "============================================================"
