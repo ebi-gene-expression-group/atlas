@@ -7,7 +7,7 @@ var React = require('react');
 var Snap = require('imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js');
 
 var $ = require('jquery');
-
+var _ = require('lodash');
 require('jQuery-ajaxTransport-XDomainRequest');
 
 //*------------------------------------------------------------------*
@@ -210,70 +210,64 @@ var HighchartsHeatmapContainer = React.createClass({
                     // }
 
                     // var xAxisCategories = HighchartsUtils.getXAxisCategories(filteredDataByThreshold.columnHeaders);
-                    var seriesDataBelowCutoff = [];
-                    var seriesDataRanges = [{
-                        from: 0,
-                        to: 10,
-                        seriesData: []
-                    }, {
-                        from: 10,
-                        to: 1000,
-                        seriesData: []
-                    }, {
-                        from: 1000,
-                        to: 100000,
-                        seriesData: []
-                    }];
 
-                    var experimentTypes = [];
-
-                    for (var i = 0; i < data.profiles.rows.length; i++) {
-                        if (experimentTypes.indexOf(data.profiles.rows[i].experimentType) === -1) {
-                            experimentTypes.push(data.profiles.rows[i].experimentType);
-                        }
+                    var thresholds = {
+                      RNASEQ_MRNA_BASELINE : [0,10,1000],
+                      PROTEOMICS_BASELINE : [0,10,1000], //TODO decide on the thresholds for proteomics baseline experiments
+                      DEFAULT : [0,10,1000]
                     }
 
-                    for (var i = 0; i < experimentTypes.length; i++) {
-                        var experimentTypeSeriesData = [];
-
-                        for (var j = 0; j < data.profiles.rows.length; j++) {
-                            if (data.profiles.rows[j].experimentType !== experimentTypes[i]) {
-                                continue;
-                            }
-
-                            for (var k = 0; k < data.columnHeaders.length; k++) {
-                                var expression = data.profiles.rows[j].expressions[k];
-                                //we switched from strings to doubles in April 2016, after a release you can assume we serve doubles that are optionally absent to mean "NT"
-                                if (!expression.hasOwnProperty("value") || expression.value === "NT") {
-                                    continue;
-                                } else if (!expression.value) {
-                                    seriesDataBelowCutoff.push([k, j, "Below cutoff"]);
-                                } else {
-                                    experimentTypeSeriesData.push([k, j, +expression.value]);
-                                }
-                            }
-                        }
-
-                        experimentTypeSeriesData.sort(function(a, b) {
-                            return a[2] - b[2];
-                        });
-
-                        for (var k = 0; k < seriesDataRanges.length; k++) {
-                            experimentTypeSeriesData.filter(
-                                function(datum) {
-                                    return datum[2] > seriesDataRanges[k].from && datum[2] <= seriesDataRanges[k].to;
-                                }).forEach(
-                                function(filteredDatum) {
-                                    seriesDataRanges[k].seriesData.push(filteredDatum);
-                                });
-                        }
-                    }
-
-                    var dataSeries = ([seriesDataBelowCutoff]).concat(
-                      seriesDataRanges.map(function(o){
-                        return o.seriesData;
-                      })
-                    );
+                    var dataSeries =
+                        _
+                        .chain(data.profiles.rows)
+                        .map(
+                            function(row, columnNumber) {
+                                return [row.experimentType,
+                                    row.expressions
+                                    .map(function(expression, rowNumber) {
+                                        return (
+                                            expression.hasOwnProperty("value") && expression.value !== "NT"
+                                            ? [rowNumber, columnNumber, expression.value || "Below cutoff"]
+                                            : null)
+                                    })
+                                    .filter(function(el) {
+                                        return el;
+                                    })
+                                ]
+                            })
+                        .groupBy(function(experimentTypeAndRow) {
+                            return experimentTypeAndRow[0]
+                        })
+                        .mapValues(function(rows) {
+                            return rows.map(function(experimentTypeAndRow) {
+                                return experimentTypeAndRow[1];
+                            })
+                        })
+                        .mapValues(_.flatten)
+                        .toPairs()
+                        .map(_.spread(
+                            function(experimentType, dataPoints) {
+                                return dataPoints.map(
+                                    _.spread(function(xPosition, yPosition, value) {
+                                        return [
+                                            _.sortedIndex(thresholds[experimentType] || thresholds.DEFAULT, value), [xPosition, yPosition, value]
+                                        ];
+                                    })
+                                )
+                            }))
+                        .flatten()
+                        .groupBy(_.spread(function(dataSeriesAssigned, point) {
+                            return dataSeriesAssigned;
+                        }))
+                        .mapValues(function(bucket) {
+                            return bucket.map(_.spread(function(dataSeriesAssigned, point) {
+                                return point;
+                            }))
+                        })
+                        .transform(function(result, bucket, bucketNumber) {
+                            result[bucketNumber] = bucket;
+                        }, _.fill(Array(4), []))
+                        .value();
 
 
                     this.setState({
