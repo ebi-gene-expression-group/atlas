@@ -13,7 +13,6 @@ require('jQuery-ajaxTransport-XDomainRequest');
 //*------------------------------------------------------------------*
 
 var HighchartsHeatmap = require('./HighchartsHeatmap.jsx');
-var HighchartsUtils = require('./highchartsUtils.js');
 require('./HighchartsHeatmapContainer.css');
 
 var Anatomogram = require('anatomogram');
@@ -47,7 +46,34 @@ var ExperimentDescription = React.createClass({
 
 });
 
-var HighchartsHeatmapContainer = React.createClass({
+var _createOrdering = _.curry(
+  function(comparator, arr){
+    return (
+      _
+      .zip(arr.map(function(e, ix){return ix}),arr)
+      .sort(function(l,r){
+        return comparator(l[1],r[1]);
+      })
+      .map(_.spread(function(originalIndex, element){
+        return originalIndex;
+      }))
+    );
+  },2);
+var _orderingByPropertyName = function(property){
+  return _createOrdering(
+    function comparator(e1,e2){
+      return e1[property].localeCompare(e2[property]);
+    });
+};
+
+var _orderingByPropertyNameReversedForDebugging = function(property){
+  return _createOrdering(
+    function comparator(e1,e2){
+      return -e1[property].localeCompare(e2[property]);
+    });
+};
+
+var Container = React.createClass({
     propTypes: {
         sourceURL: React.PropTypes.string.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
@@ -108,9 +134,7 @@ var HighchartsHeatmapContainer = React.createClass({
                           anatomogramEventEmitter={this.props.anatomogramEventEmitter}
                           atlasBaseURL={this.props.atlasBaseURL}
                           googleAnalyticsCallback={this.state.googleAnalyticsCallback}
-                          xAxisCategories={this.state.xAxisCategories}
-                          yAxisCategories={this.state.yAxisCategories}
-                          dataSeries={this.state.dataSeries}
+                          heatmapData={this.state.heatmapData}
                       />
                   </div>
               </div>
@@ -180,10 +204,13 @@ var HighchartsHeatmapContainer = React.createClass({
             geneSetProfiles: {},
             anatomogramData: {},
             googleAnalyticsCallback: function (){},
-
-            xAxisCategories: {},
-            yAxisCategories: {},
-            dataSeries: [[],[],[],[]]
+            heatmapData: {
+              xAxisCategories: {},
+              columnOrderings: {},
+              yAxisCategories: {},
+              rowOrderings:{},
+              dataSeries: [[],[],[],[]],
+            }
         }
     },
 
@@ -209,65 +236,6 @@ var HighchartsHeatmapContainer = React.createClass({
 
                     // var xAxisCategories = HighchartsUtils.getXAxisCategories(filteredDataByThreshold.columnHeaders);
 
-                    var thresholds = {
-                      RNASEQ_MRNA_BASELINE : [0,10,1000],
-                      PROTEOMICS_BASELINE : [0,10,1000], //TODO decide on the thresholds for proteomics baseline experiments
-                      DEFAULT : [0,10,1000]
-                    }
-
-                    var dataSeries =
-                        _
-                        .chain(data.profiles.rows)
-                        .map(
-                            function(row, columnNumber) {
-                                return [row.experimentType,
-                                    row.expressions
-                                    .map(function(expression, rowNumber) {
-                                        return (
-                                            expression.hasOwnProperty("value") && expression.value !== "NT"
-                                            ? [rowNumber, columnNumber, expression.value || "Below cutoff"]
-                                            : null)
-                                    })
-                                    .filter(function(el) {
-                                        return el;
-                                    })
-                                ]
-                            })
-                        .groupBy(function(experimentTypeAndRow) {
-                            return experimentTypeAndRow[0]
-                        })
-                        .mapValues(function(rows) {
-                            return rows.map(function(experimentTypeAndRow) {
-                                return experimentTypeAndRow[1];
-                            })
-                        })
-                        .mapValues(_.flatten)
-                        .toPairs()
-                        .map(_.spread(
-                            function(experimentType, dataPoints) {
-                                return dataPoints.map(
-                                    _.spread(function(xPosition, yPosition, value) {
-                                        return [
-                                            _.sortedIndex(thresholds[experimentType] || thresholds.DEFAULT, value), [xPosition, yPosition, value]
-                                        ];
-                                    })
-                                )
-                            }))
-                        .flatten()
-                        .groupBy(_.spread(function(dataSeriesAssigned, point) {
-                            return dataSeriesAssigned;
-                        }))
-                        .mapValues(function(bucket) {
-                            return bucket.map(_.spread(function(dataSeriesAssigned, point) {
-                                return point;
-                            }))
-                        })
-                        .transform(function(result, bucket, bucketNumber) {
-                            result[bucketNumber] = bucket;
-                        }, _.fill(Array(4), []))
-                        .value();
-
-
                     this.setState({
                         heatmapConfig: data.config,
                         columnHeaders: data.columnHeaders,
@@ -277,11 +245,29 @@ var HighchartsHeatmapContainer = React.createClass({
                         geneSetProfiles: data.geneSetProfiles,
                         anatomogramData: data.anatomogram,
                         experimentData: data.experiment,
-
-                        xAxisCategories: HighchartsUtils.getXAxisCategories(data.columnHeaders),
-                        yAxisCategories: HighchartsUtils.getYAxisCategories(data.profiles.rows, data.config),
-
-                        dataSeries: dataSeries
+                        heatmapData:{
+                          xAxisCategories: Container.getXAxisCategories(data.columnHeaders),
+                          yAxisCategories: Container.getYAxisCategories(data.profiles.rows, data.config),
+                          orderings: {
+                            "Default" : {
+                              columns: Container.xAxisAlphabeticalOrdering(data.columnHeaders),
+                              rows: Container.yAxisAlphabeticalOrdering(data.profiles.rows)
+                            },
+                            "Gene expression" : { //TODO
+                              columns: Container.noOrdering(data.columnHeaders),
+                              rows: Container.noOrdering(data.profiles.rows)
+                            },
+                            "Debug- no ordering" :{
+                              columns: Container.noOrdering(data.columnHeaders),
+                              rows: Container.noOrdering(data.profiles.rows)
+                            },
+                            "Debug- reversed" :{
+                              columns: _orderingByPropertyNameReversedForDebugging("factorValue")(data.columnHeaders),
+                              rows: _orderingByPropertyNameReversedForDebugging("name")(data.profiles.rows)
+                            }
+                          },
+                          dataSeries: Container.getDataSeries(data.profiles.rows)
+                        }
                     });
                 }
             }.bind(this)
@@ -307,9 +293,89 @@ var HighchartsHeatmapContainer = React.createClass({
             ga('send', 'pageview');
             this.setState({googleAnalyticsCallback: ga});
         }
+    },
+
+    statics: {
+      getXAxisCategories: function (columnHeaders) {
+          return columnHeaders.map(function (columnHeader) {
+              return {"label": columnHeader.factorValue,
+                      "id" : columnHeader.factorValueOntologyTermId};
+          });
+      },
+      getYAxisCategories: function (rows, heatmapConfig) {
+          return rows.map(function (profile) {
+              return {"label": profile.name,
+                      "id" : profile.id + "?geneQuery=" + heatmapConfig.geneQuery +
+                          "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) };
+          });
+      },
+      noOrdering: function(arr){
+        return arr.map(function(el,ix){return ix;})
+      },
+      xAxisAlphabeticalOrdering: _orderingByPropertyName("factorValue"),
+      yAxisAlphabeticalOrdering: _orderingByPropertyName("name"),
+      getDataSeries: function (profilesRows) {
+        var thresholds = {
+          RNASEQ_MRNA_BASELINE : [0,10,1000],
+          PROTEOMICS_BASELINE : [0,10,1000], //TODO decide on the thresholds for proteomics baseline experiments
+          DEFAULT : [0,10,1000]
+        };
+        return (_
+          .chain(profilesRows)
+          .map(
+              function(row, columnNumber) {
+                  return [row.experimentType,
+                      row.expressions
+                      .map(function(expression, rowNumber) {
+                          return (
+                              expression.hasOwnProperty("value") && expression.value !== "NT"
+                              ? [rowNumber, columnNumber, expression.value || "Below cutoff"]
+                              : null)
+                      })
+                      .filter(function(el) {
+                          return el;
+                      })
+                  ]
+              })
+          .groupBy(function(experimentTypeAndRow) {
+              return experimentTypeAndRow[0]
+          })
+          .mapValues(function(rows) {
+              return rows.map(function(experimentTypeAndRow) {
+                  return experimentTypeAndRow[1];
+              })
+          })
+          .mapValues(_.flatten)
+          .toPairs()
+          .map(_.spread(
+              function(experimentType, dataPoints) {
+                  return dataPoints.map(
+                      _.spread(function(xPosition, yPosition, value) {
+                          return [
+                              _.sortedIndex(thresholds[experimentType] || thresholds.DEFAULT, value),
+                              [xPosition, yPosition, value]
+                          ];
+                      }.bind(this))
+                  )
+              }.bind(this)))
+          .flatten()
+          .groupBy(_.spread(function(dataSeriesAssigned, point) {
+              return dataSeriesAssigned;
+          }))
+          .mapValues(function(bucket) {
+              return bucket.map(_.spread(function(dataSeriesAssigned, point) {
+                  return point;
+              }))
+          })
+          .transform(function(result, bucket, bucketNumber) {
+              result[bucketNumber] = bucket;
+          }, _.fill(Array(4), []))
+          .value()
+        );
+      }
     }
 });
 
 //*------------------------------------------------------------------*
 
-module.exports = HighchartsHeatmapContainer;
+module.exports = Container;

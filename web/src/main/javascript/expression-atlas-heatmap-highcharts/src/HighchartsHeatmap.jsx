@@ -39,6 +39,43 @@ var AxisCategoriesPropType = React.PropTypes.arrayOf(
     })
   ).isRequired;
 
+var HeatmapDataPropType = React.PropTypes.objectOf(
+  function(heatmapData){
+    var width = heatmapData.xAxisCategories.length;
+    var height = heatmapData.yAxisCategories.length;
+    if(heatmapData.dataSeries.length!== 4){
+      return new Error("There should be four data series supplied");
+    }
+    for(var i = 0; i < 4; i++){
+      for(var j = 0; j < heatmapData.dataSeries[i].length; j++){
+        var point = heatmapData.dataSeries[i][j];
+        if(point.length !==3){
+          return new Error("Each point in data series should be [x,y,value]:"+ point.toString());
+        }
+        var x = point[0];
+        var y = point[1];
+        if(x < 0 || y < 0 || x >= width || y >= height){
+          return new Error("Point with coordinates outside range:" + point.toString());
+        }
+      }
+    }
+    var isPermutation = function(arr){
+      return arr.sort(function(a,b){return a-b}).map(function(el,ix){return el===ix}).reduce(function(l,r){return l&&r},true);
+    }
+    for(var orderingName in heatmapData.orderings){
+      if(heatmapData.orderings.hasOwnProperty(orderingName)){
+        var ordering = heatmapData.orderings[orderingName];
+        if(ordering.columns.length!== width || !isPermutation(ordering.columns)){
+          return new Error("Column ordering invalid in "+orderingName);
+        }
+        if(ordering.rows.length!==height || ! isPermutation(ordering.rows)){
+          return new Error("Row ordering invalid in "+orderingName);
+        }
+      }
+    }
+  });
+
+
 var HeatmapContainer = React.createClass({
   propTypes: {
       isMultiExperiment: React.PropTypes.bool.isRequired,
@@ -46,9 +83,7 @@ var HeatmapContainer = React.createClass({
       atlasBaseURL: React.PropTypes.string.isRequired,
       anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
       googleAnalyticsCallback: React.PropTypes.func.isRequired,
-      xAxisCategories: AxisCategoriesPropType,
-      yAxisCategories: AxisCategoriesPropType,
-      dataSeries: DataSeriesPropType
+      heatmapData: HeatmapDataPropType
   },
 
   _introductoryMessage: function() {
@@ -75,15 +110,15 @@ var HeatmapContainer = React.createClass({
                 atlasBaseURL: this.props.atlasBaseURL,
                 isFortLauderdale: this.props.heatmapConfig.isFortLauderdale}}
               googleAnalyticsCallback={this.props.googleAnalyticsCallback}
-              showUsageMessage={this.props.xAxisCategories.length > 100} />
+              showUsageMessage={this.props.heatmapData.xAxisCategories.length > 100} />
 
             <HighchartsHeatmap
               marginRight={marginRight}
               atlasBaseURL={this.props.atlasBaseURL}
               anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-              dataSeries={this.props.dataSeries}
-              xAxisCategories={this.props.xAxisCategories}
-              yAxisCategories={this.props.yAxisCategories}
+              dataSeries={this.props.heatmapData.dataSeries}
+              xAxisCategories={this.props.heatmapData.xAxisCategories}
+              yAxisCategories={this.props.heatmapData.yAxisCategories}
             />
         </div>
     );
