@@ -28,8 +28,8 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
     private ExperimentTrader experimentTrader;
 
     @Inject
-    public HeatmapWidgetDispatcher(SpeciesLookupService speciesLookupService, ApplicationProperties
-            applicationProperties, ExperimentTrader experimentTrader){
+    public HeatmapWidgetDispatcher(SpeciesLookupService speciesLookupService, ApplicationProperties applicationProperties,
+                                   ExperimentTrader experimentTrader){
         this.speciesLookupService = speciesLookupService;
         this.applicationProperties = applicationProperties;
         this.experimentTrader = experimentTrader;

@@ -72,10 +72,9 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                     BaselineExperimentProfileSearchService baselineExperimentProfileSearchService,
                                     BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder,
                                     BaselineAnalyticsSearchService baselineAnalyticsSearchService,
-                                    BaselineExperimentPageServiceFactory
-                                                baselineExperimentPageServiceFactory, @Qualifier
-                                                ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory baselineProfileInputStreamFactory
-                                    ,SolrQueryService solrQueryService) {
+                                    BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
+                                    @Qualifier ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory baselineProfileInputStreamFactory,
+                                    SolrQueryService solrQueryService) {
         this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
         this.speciesLookupService = speciesLookupService;
         this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
@@ -85,19 +84,16 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         this.solrQueryService = solrQueryService;
     }
 
-
-
     @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE")
     public String fetchReferenceExperimentProfilesJson(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
-                                                       @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request,
+                                                       @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks,
+                                                       BindingResult result, Model model, HttpServletRequest request,
                                                        HttpServletResponse response) {
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute("experiment");
 
-        baselineExperimentPageService
-                .prepareRequestPreferencesAndHeaderData(experiment, preferences, model,request,true);
+        baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(experiment, preferences, model,request,true);
         try {
-            baselineExperimentPageService
-                    .populateModelWithHeatmapData(experiment, preferences, model,request,true, disableGeneLinks);
+            baselineExperimentPageService.populateModelWithHeatmapData(experiment, preferences, model,request,true, disableGeneLinks);
         } catch (GenesNotFoundException e) {
             throw new ResourceNotFoundException("No genes found matching query: '" + preferences.getGeneQuery() + "'");
         }
@@ -108,11 +104,10 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     }
 
     @RequestMapping(value = "/widgets/heatmap/multiExperiment")
-    public String multiExperimentJson(
-            @RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
-            @RequestParam(value = "species", required = false) String species,
-            @RequestParam(value = "propertyType", required = false) String propertyType,
-            Model model,HttpServletRequest request, HttpServletResponse response) {
+    public String multiExperimentJson(@RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
+                                      @RequestParam(value = "species", required = false) String species,
+                                      @RequestParam(value = "propertyType", required = false) String propertyType,
+                                      Model model,HttpServletRequest request, HttpServletResponse response) {
 
         String ensemblSpecies= StringUtils.isBlank(species)
                 ?speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString())
@@ -138,12 +133,11 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     }
 
     @RequestMapping(value = "/widgets/heatmap/baselineAnalytics")
-    public String analyticsJson(
-            @RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
-            @RequestParam(value = "species", required = false) String species,
-            @RequestParam(value = "propertyType", required = false) String propertyType,
-            @RequestParam(value = "source", required = false) String source,
-            Model model,HttpServletRequest request, HttpServletResponse response) {
+    public String analyticsJson(@RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
+                                @RequestParam(value = "species", required = false) String species,
+                                @RequestParam(value = "propertyType", required = false) String propertyType,
+                                @RequestParam(value = "source", required = false) String source,
+                                Model model, HttpServletRequest request, HttpServletResponse response) {
 
         String ensemblSpecies = StringUtils.isBlank(species) ?
                 speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString())
@@ -152,21 +146,20 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source.toUpperCase();
         BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, ensemblSpecies, defaultFactorQueryType);
 
-        populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, ensemblSpecies, searchResult,
-                model);
+        populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, ensemblSpecies, searchResult, model);
 
         // set here instead of in JSP, because the JSP may be included elsewhere
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }
 
-    private void populateModelWithMultiExperimentResults(String contextRoot,GeneQuery geneQuery, String ensemblSpecies,
+    private void populateModelWithMultiExperimentResults(String contextRoot, GeneQuery geneQuery, String ensemblSpecies,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
         SortedSet<Factor> orderedFactors = searchResult.getFactorsAcrossAllExperiments();
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
 
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
-            model.addAttribute("anatomogram", anatomogramFactory.get("ORGANISM_PART",ensemblSpecies,filteredAssayGroupFactors, contextRoot));
+            model.addAttribute("anatomogram", anatomogramFactory.get("ORGANISM_PART", ensemblSpecies, filteredAssayGroupFactors, contextRoot));
         } else {
             model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
         }
@@ -191,27 +184,16 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         return builder.build();
     }
 
-    private void addJsonForHeatMap(BaselineExperimentProfilesList baselineProfiles, SortedSet<AssayGroupFactor> filteredAssayGroupFactors, SortedSet<Factor> orderedFactors, Model model) {
+    private void addJsonForHeatMap(BaselineExperimentProfilesList baselineProfiles, SortedSet<AssayGroupFactor> filteredAssayGroupFactors,
+                                   SortedSet<Factor> orderedFactors, Model model) {
         if (baselineProfiles.isEmpty()) {
             return;
         }
 
         ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = AssayGroupFactorViewModel.createList(filteredAssayGroupFactors);
-
-        JsonObject jsonObject = new JsonObject();
-        Type type = new TypeToken<ImmutableList<AssayGroupFactorViewModel>>() {}.getType();
-        JsonElement jsonElement = gson.toJsonTree(assayGroupFactorViewModels, type);
-        jsonObject.add("primary", jsonElement);
-
-        model.addAttribute("jsonMultipleColumnHeaders", jsonObject);
-
         String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
         model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
-
-        model.addAttribute("jsonProfiles", gson.toJson(baselineExperimentProfilesViewModelBuilder.buildJson
-                (baselineProfiles, orderedFactors)));
-
-
+        model.addAttribute("jsonProfiles", gson.toJson(baselineExperimentProfilesViewModelBuilder.buildJson(baselineProfiles, orderedFactors)));
 
         Set<Factor> nonExpressedFactors = Sets.newHashSet(orderedFactors);
         for (BaselineExperimentProfile baselineProfile : baselineProfiles) {
@@ -233,7 +215,4 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
         model.addAttribute("jsonNonExpressedColumnHeaders", gson.toJson(nonExpressedColumnHeaders));
     }
-
-
-
 }
