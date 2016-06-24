@@ -133,9 +133,10 @@ var HeatmapContainer = React.createClass({
               marginRight={marginRight}
               atlasBaseURL={this.props.atlasBaseURL}
               anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-              dataSeries={this.props.heatmapData.dataSeries}
-              xAxisCategories={this.props.heatmapData.xAxisCategories}
-              yAxisCategories={this.props.heatmapData.yAxisCategories}
+              data={{
+                dataSeries: this.props.heatmapData.dataSeries
+                xAxisCategories: this.props.heatmapData.xAxisCategories
+                yAxisCategories: this.props.heatmapData.yAxisCategories}}
             />
         </div>
     );
@@ -149,9 +150,11 @@ var HighchartsHeatmap = React.createClass({
         marginRight: React.PropTypes.number.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
         anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
-        dataSeries: DataSeriesPropType,
-        xAxisCategories: AxisCategoriesPropType,
-        yAxisCategories: AxisCategoriesPropType
+        data: React.PropTypes.shape({
+          dataSeries: DataSeriesPropType,
+          xAxisCategories: AxisCategoriesPropType,
+          yAxisCategories: AxisCategoriesPropType
+        })
     },
 
     getInitialState: function () {
@@ -223,7 +226,7 @@ var HighchartsHeatmap = React.createClass({
          color: __args__[1],
          borderWidth: 1,
          borderColor: "#fff",
-         data: this.props.dataSeries[ix]
+         data: this.props.data.dataSeries[ix]
        }
      }.bind(this));
     },
@@ -232,11 +235,11 @@ var HighchartsHeatmap = React.createClass({
         var atlasBaseURL = this.props.atlasBaseURL;
 
         var xAxisLongestHeaderLength =
-            Math.max.apply(null, this.props.xAxisCategories.map(function(category) {return category.label.length}));
+            Math.max.apply(null, this.props.data.xAxisCategories.map(function(category) {return category.label.length}));
 
         var marginTop =
-            this.props.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
-                this.props.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
+            this.props.data.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
+                this.props.data.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
                     Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5));   // labels at -90°
 
         var highchartsOptions = {
@@ -277,7 +280,7 @@ var HighchartsHeatmap = React.createClass({
                 marginRight: this.props.marginRight, //leave space for tilted long headers
                 spacingTop: 0,
                 plotBorderWidth: 1,
-                height: Math.max(70, this.props.yAxisCategories.length * 30 + marginTop),
+                height: Math.max(70, this.props.data.yAxisCategories.length * 30 + marginTop),
                 zoomType: 'x',
                 events: {
                   handleGxaAnatomogramTissueMouseEnter: function(e) {
@@ -318,7 +321,7 @@ var HighchartsHeatmap = React.createClass({
                     }
                 },
                 opposite: 'true',
-                categories: this.props.xAxisCategories
+                categories: this.props.data.xAxisCategories
             },
             yAxis: { //experiments
                 useHTML: true,
@@ -332,7 +335,7 @@ var HighchartsHeatmap = React.createClass({
                         return '<a href="' + atlasBaseURL +'/experiments/' + this.value.id + '">' + this.value.label + '</a>';
                     }
                 },
-                categories: this.props.yAxisCategories,
+                categories: this.props.data.yAxisCategories,
                 title: null,
                 gridLineWidth: 0,
                 minorGridLineWidth: 0,
@@ -418,11 +421,12 @@ var OrderingDropdown = React.createClass({
         onSelect={this.props.onSelect}
         id={"ordering-dropdown"}>
         {this.props.available.map(function(option){
-          return (
-            option === this.props.current
-            ? <MenuItem key={option} eventKey={option} active>{option}</MenuItem>
-            : <MenuItem key={option} eventKey={option} >{option}</MenuItem>
-          );
+          return ( <MenuItem
+                      key={option}
+                      eventKey={option}
+                      active={option === this.props.current}>
+                        {option}
+                   </MenuItem> );
         }.bind(this))}
       </DropdownButton>
       </div>
