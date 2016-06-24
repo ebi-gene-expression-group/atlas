@@ -62,7 +62,18 @@ var HeatmapDataPropType = React.PropTypes.objectOf(
       }
     }
     var isPermutation = function(arr){
-      return arr.sort(function(a,b){return a-b}).map(function(el,ix){return el===ix}).reduce(function(l,r){return l&&r},true);
+      return (
+        [].concat(arr)
+        .sort(function(a,b){
+          return a-b;
+        })
+        .map(function(el,ix){
+          return el===ix;
+        })
+        .reduce(function(l,r){
+          return l&&r;
+        },true)
+      );
     }
     if(!heatmapData.orderings.hasOwnProperty("Default")){
       return new Error("Default ordering missing!");
@@ -108,6 +119,52 @@ var HeatmapContainer = React.createClass({
        (totalRows === shownRows ? what + ':' : 'of ' + totalRows + ' ' + what + ' found:');
   },
 
+  _data: function() {
+    var permuteX = function(x){
+      return this.props.heatmapData.orderings[this.state.ordering].columns.indexOf(x);
+    }.bind(this);
+
+    var permuteY = function(y){
+      return this.props.heatmapData.orderings[this.state.ordering].rows.indexOf(y);
+    }.bind(this);
+
+    var permuteArray = function(arr, permute){
+      return (
+        arr
+          .map(
+            function(el, ix){
+              return [el, permute(ix)];
+            })
+          .sort(
+            function(l,r){
+              return l[1]-r[1];
+            })
+          .map(
+            function(el){
+              return el[0];
+            }
+          )
+        );
+    }
+    return {
+      dataSeries:
+        this.props.heatmapData.dataSeries.map(
+          function(series){
+            return series.map(
+              function(point){
+                return [
+                  permuteX(point[0]),
+                  permuteY(point[1]),
+                  point[2]];
+            });
+          }),
+      xAxisCategories:
+        permuteArray(this.props.heatmapData.xAxisCategories, permuteX),
+      yAxisCategories:
+        permuteArray(this.props.heatmapData.yAxisCategories, permuteY)
+    };
+  },
+
   render: function () {
     var marginRight = 60;
     return (
@@ -133,10 +190,7 @@ var HeatmapContainer = React.createClass({
               marginRight={marginRight}
               atlasBaseURL={this.props.atlasBaseURL}
               anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-              data={{
-                dataSeries: this.props.heatmapData.dataSeries
-                xAxisCategories: this.props.heatmapData.xAxisCategories
-                yAxisCategories: this.props.heatmapData.yAxisCategories}}
+              data={this._data()}
             />
         </div>
     );
