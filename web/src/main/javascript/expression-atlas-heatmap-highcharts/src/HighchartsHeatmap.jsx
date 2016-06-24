@@ -11,6 +11,8 @@ require('highcharts-heatmap')(Highcharts);
 //*------------------------------------------------------------------*
 
 require('./HighchartsHeatmap.css');
+var DropdownButton = require('react-bootstrap/lib/DropdownButton');
+var MenuItem = require('react-bootstrap/lib/MenuItem');
 var DownloadProfilesButton = require('download-profiles-button');
 
 var EventEmitter = require('events');
@@ -62,6 +64,9 @@ var HeatmapDataPropType = React.PropTypes.objectOf(
     var isPermutation = function(arr){
       return arr.sort(function(a,b){return a-b}).map(function(el,ix){return el===ix}).reduce(function(l,r){return l&&r},true);
     }
+    if(!heatmapData.orderings.hasOwnProperty("Default")){
+      return new Error("Default ordering missing!");
+    }
     for(var orderingName in heatmapData.orderings){
       if(heatmapData.orderings.hasOwnProperty(orderingName)){
         var ordering = heatmapData.orderings[orderingName];
@@ -75,7 +80,6 @@ var HeatmapDataPropType = React.PropTypes.objectOf(
     }
   });
 
-
 var HeatmapContainer = React.createClass({
   propTypes: {
       isMultiExperiment: React.PropTypes.bool.isRequired,
@@ -84,6 +88,12 @@ var HeatmapContainer = React.createClass({
       anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
       googleAnalyticsCallback: React.PropTypes.func.isRequired,
       heatmapData: HeatmapDataPropType
+  },
+
+  getInitialState: function() {
+    return {
+      ordering: "Default"
+    };
   },
 
   _introductoryMessage: function() {
@@ -109,6 +119,13 @@ var HeatmapContainer = React.createClass({
                 downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
                 atlasBaseURL: this.props.atlasBaseURL,
                 isFortLauderdale: this.props.heatmapConfig.isFortLauderdale}}
+              orderings={{
+                available: Object.keys(this.props.heatmapData.orderings),
+                current: this.state.ordering,
+                onSelect: function(orderingChosen){
+                  this.setState({ordering: orderingChosen})
+                }.bind(this)
+                }}
               googleAnalyticsCallback={this.props.googleAnalyticsCallback}
               showUsageMessage={this.props.heatmapData.xAxisCategories.length > 100} />
 
@@ -381,12 +398,45 @@ var HighchartsHeatmap = React.createClass({
 
 });
 
+
+var propsForOrderingDropdown = {
+  available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  current: React.PropTypes.string.isRequired,
+  onSelect: React.PropTypes.func.isRequired
+};
+
+var OrderingDropdown = React.createClass({
+  propTypes: propsForOrderingDropdown,
+
+  render: function () {
+    return (
+      <div className="btn-group">
+      <DropdownButton
+        bsStyle={"primary"}
+        bsSize={"xs"}
+        title={"Order by"}
+        onSelect={this.props.onSelect}
+        id={"ordering-dropdown"}>
+        {this.props.available.map(function(option){
+          return (
+            option === this.props.current
+            ? <MenuItem key={option} eventKey={option} active>{option}</MenuItem>
+            : <MenuItem key={option} eventKey={option} >{option}</MenuItem>
+          );
+        }.bind(this))}
+      </DropdownButton>
+      </div>
+    );
+  }
+});
+
 var HeatmapOptions = React.createClass({
   propTypes: {
     marginRight: React.PropTypes.number.isRequired,
     downloadOptions: React.PropTypes.object.isRequired,
     googleAnalyticsCallback: React.PropTypes.func.isRequired,
-    showUsageMessage: React.PropTypes.bool.isRequired
+    showUsageMessage: React.PropTypes.bool.isRequired,
+    orderings: React.PropTypes.shape(propsForOrderingDropdown)
   },
 
   render: function () {
@@ -396,11 +446,21 @@ var HeatmapOptions = React.createClass({
               {this.props.introductoryMessage}
           </div>
           <div style={{display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight}}>
-              <DownloadProfilesButton ref="downloadProfilesButton"
-                                      downloadProfilesURL={this.props.downloadOptions.downloadProfilesURL}
-                                      atlasBaseURL={this.props.downloadOptions.atlasBaseURL}
-                                      isFortLauderdale={this.props.downloadOptions.isFortLauderdale}
-                                      onDownloadCallbackForAnalytics={function() {this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')}.bind(this)}/>
+            <div className="btn-group">
+              <OrderingDropdown
+                available={this.props.orderings.available}
+                current={this.props.orderings.current}
+                onSelect={this.props.orderings.onSelect}/>
+              <DownloadProfilesButton
+                ref="downloadProfilesButton"
+                downloadProfilesURL={this.props.downloadOptions.downloadProfilesURL}
+                atlasBaseURL={this.props.downloadOptions.atlasBaseURL}
+                isFortLauderdale={this.props.downloadOptions.isFortLauderdale}
+                onDownloadCallbackForAnalytics={
+                  function() {
+                    this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')
+                  }.bind(this)}/>
+            </div>
           </div>
           {this.props.showUsageMessage
             ? <div style={{fontSize: 'small', color: 'grey'}}>
