@@ -16,42 +16,7 @@ var EMPTY = {
   dataSeries: [[],[],[],[]],
 };
 
-var combineComparators =
-    _.curry(
-      function(comparators,e1,e2){
-        return (
-          comparators
-          .map(
-            function(comparator){
-              return (comparator(e1,e2));
-            })
-          .filter(
-            function(res){
-              return res;
-            })
-          .concat([0])
-          [0]
-          );
-      },3);
-
-
-var _createOrdering = _.curry(
-  function(comparator, arr){
-    return (
-      arr
-      .map(function(e,ix){
-        return [e,ix];
-      })
-      .sort(function(e_ixLeft,e_ixRight){
-        return comparator(e_ixLeft[0],e_ixRight[0]);
-      })
-      .map(function(e_ix){
-        return e_ix[1];
-      })
-    );
-  },2);
-
-//apply rank first, if the ranks are the same use comparator value
+//apply rank first,use comparator to resolve ties
 var createOrdering = function(rank, comparator, arr){
   return (
     arr
@@ -69,34 +34,11 @@ var createOrdering = function(rank, comparator, arr){
   );
 };
 
-var _orderingByRank= _.curry(
-  function(rank, arr){
-    return _createOrdering(
-      function(ixL,ixR){
-        return rank[ixR]-rank[ixL]; //higher ranks go to the beginning of series
-      }
-    )(_.range(0,arr.length));
-  },2);
-
-var orderingByRank = function(rank){
-  return (
-    _.range(0,rank.length)
-    .sort(
-      function(ixL,ixR){
-        return rank[ixR]-rank[ixL]; //higher ranks go to the beginning of series
-      }
-    )
-  );
-};
-
-//LOL this will not work, this can only sort indices
-var comparatorByRank = function(rank){
-  return (
-    function(ixL,ixR){
-      return rank[ixR]-rank[ixL]; //higher ranks go to the beginning of series
-    }
-  );
-};
+var comparatorByProperty = _.curry(
+  function (property,e1,e2){
+    return e1[property].localeCompare(e2[property]);
+  }
+);
 
 var rankColumnsByExpression = function(expressions){
   return (
@@ -174,47 +116,6 @@ var rankColumnsByThreshold = function(threshold, expressions){
 
 var rankRowsByThreshold = function(threshold, expressions){
   return rankColumnsByThreshold(threshold, _.zip.apply(_,expressions));
-};
-
-var rankRowsByThreshold2 = function(threshold, expressions){
-  return (
-    expressions
-    .map(
-      function(row){
-        return (
-          row.map(
-            function(point){
-              return +point.hasOwnProperty("value");
-            }
-          )
-        );
-      })
-    .map(
-      function(row){
-        return (
-          _.sum(row) > row.length * threshold
-          ? 10e6
-          : 0
-        );
-      })
-  );
-}
-
-var comparatorByProperty = _.curry(
-  function (property,e1,e2){
-    return e1[property].localeCompare(e2[property]);
-  }
-);
-
-var _orderingByPropertyName = function(property){
-  return _createOrdering(comparatorByProperty);
-};
-
-var _orderingByPropertyNameReversedForDebugging = function(property){
-  return _createOrdering(
-    function comparator(e1,e2){
-      return - e1[property].localeCompare(e2[property]);
-    });
 };
 
 var getXAxisCategories = function (columnHeaders) {
@@ -327,20 +228,12 @@ var getTheWholeDataObject = function(rows, columnHeaders, config, isMultiExperim
         rows: noOrdering(rows)
       },
       "Gene expression" : {
-        columns: orderingByRank(columnRank),
-        rows: orderingByRank(rowRank)
-      },
-      "Gene expression - new" : {
         columns: createOrdering(columnRank,comparatorByProperty("factorValue"),columnHeaders),
         rows: createOrdering(rowRank,comparatorByProperty("name"),rows)
       },
       "Alphabetical" : {
-        columns: _orderingByPropertyName("factorValue")(columnHeaders),
-        rows: _orderingByPropertyName("name")(rows)
-      },
-      "Debug- reversed" :{
-        columns: _orderingByPropertyNameReversedForDebugging("factorValue")(columnHeaders),
-        rows: _orderingByPropertyNameReversedForDebugging("name")(rows)
+        columns: createOrdering(columnHeaders.map(_.constant(0)), comparatorByProperty("factorValue"),columnHeaders),
+        rows: createOrdering(rows.map(_.constant(0)), comparatorByProperty("name"), rows)
       }
     },
     dataSeries: getDataSeries(rows)
