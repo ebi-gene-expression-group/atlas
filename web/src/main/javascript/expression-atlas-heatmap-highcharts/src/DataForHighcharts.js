@@ -16,6 +16,24 @@ var EMPTY = {
   dataSeries: [[],[],[],[]],
 };
 
+var combineComparators =
+    _.curry(
+      function(comparators,e1,e2){
+        return (
+          comparators
+          .map(
+            function(comparator){
+              return (comparator(e1,e2));
+            })
+          .filter(
+            function(res){
+              return res;
+            })
+          .concat([0])
+          [0]
+          );
+      },3);
+
 
 var _createOrdering = _.curry(
   function(comparator, arr){
@@ -33,39 +51,83 @@ var _createOrdering = _.curry(
     );
   },2);
 
+//apply rank first, if the ranks are the same use comparator value
+var createOrdering = function(rank, comparator, arr){
+  return (
+    arr
+    .map(function(e,ix){
+      return [e,ix];
+    })
+    .sort(function(e_ixLeft,e_ixRight){
+      return ( //higher ranks go to the beginning of series
+        rank[e_ixRight[1]] - rank[e_ixLeft[1]] || comparator(e_ixLeft[0],e_ixRight[0])
+      );
+    })
+    .map(function(e_ix){
+      return e_ix[1];
+    })
+  );
+};
+
 var _orderingByRank= _.curry(
   function(rank, arr){
     return _createOrdering(
       function(ixL,ixR){
         return rank[ixR]-rank[ixL]; //higher ranks go to the beginning of series
       }
-    )(arr);
-  }
-);
+    )(_.range(0,arr.length));
+  },2);
+
+var orderingByRank = function(rank){
+  return (
+    _.range(0,rank.length)
+    .sort(
+      function(ixL,ixR){
+        return rank[ixR]-rank[ixL]; //higher ranks go to the beginning of series
+      }
+    )
+  );
+};
+
+//LOL this will not work, this can only sort indices
+var comparatorByRank = function(rank){
+  return (
+    function(ixL,ixR){
+      return rank[ixR]-rank[ixL]; //higher ranks go to the beginning of series
+    }
+  );
+};
 
 var rankColumnsByExpression = function(expressions){
   return (
     expressions
     .map(
       function(row){
-        var factorsSortedByExpression =
-          row
+        var rowIndexed = row.map(
+          function(point, ix){
+            return [point,ix];
+          }
+        );
+        var indicesSortedByExpression =
+          rowIndexed
           .filter(
             function(e){
-              return e.hasOwnProperty("value")
+              return e[0].hasOwnProperty("value")
             })
           .sort(
               function(l,r){
-                return l.value - r.value;
+                return l[0].value - r[0].value;
             })
           .map(
             function(p){
-              return p.factorName;
-            }
-          )
-        return row.map(function(point){
-          return 1+ factorsSortedByExpression.indexOf(point.factorName); //rank value zero means no expression
-        })
+              return p[1];
+            });
+        return (
+          rowIndexed.map(
+            function(pointAndIndex){
+              return 1+ indicesSortedByExpression.indexOf(pointAndIndex[1]); //rank value zero means no expression
+          })
+        );
       })
   .reduce(function(r1,r2){
     return r1.map(
@@ -138,11 +200,14 @@ var rankRowsByThreshold2 = function(threshold, expressions){
   );
 }
 
+var comparatorByProperty = _.curry(
+  function (property,e1,e2){
+    return e1[property].localeCompare(e2[property]);
+  }
+);
+
 var _orderingByPropertyName = function(property){
-  return _createOrdering(
-    function comparator(e1,e2){
-      return e1[property].localeCompare(e2[property]);
-    });
+  return _createOrdering(comparatorByProperty);
 };
 
 var _orderingByPropertyNameReversedForDebugging = function(property){
@@ -237,12 +302,14 @@ var getTheWholeDataObject = function(rows, columnHeaders, config, isMultiExperim
     function(row){
       return row.expressions;
     }
-  )
+  );
+
   var columnRank =
     _.zip(
       rankColumnsByExpression(expressions),
       rankColumnsByThreshold(0.4,expressions)
     ).map(_.sum);
+
   var rowRank =
     isMultiExperiment
     ? _.zip(
@@ -256,16 +323,20 @@ var getTheWholeDataObject = function(rows, columnHeaders, config, isMultiExperim
     yAxisCategories: getYAxisCategories(rows, config),
     orderings: {
       "Default" : {
-        columns: _orderingByPropertyName("factorValue")(columnHeaders),
-        rows: _orderingByPropertyName("name")(rows)
-      },
-      "Gene expression" : {
-        columns: _orderingByRank(columnRank)(columnHeaders),
-        rows: _orderingByRank(rowRank)(rows)
-      },
-      "Debug- no sorting" : {
         columns: noOrdering(columnHeaders),
         rows: noOrdering(rows)
+      },
+      "Gene expression" : {
+        columns: orderingByRank(columnRank),
+        rows: orderingByRank(rowRank)
+      },
+      "Gene expression - new" : {
+        columns: createOrdering(columnRank,comparatorByProperty("factorValue"),columnHeaders),
+        rows: createOrdering(rowRank,comparatorByProperty("name"),rows)
+      },
+      "Alphabetical" : {
+        columns: _orderingByPropertyName("factorValue")(columnHeaders),
+        rows: _orderingByPropertyName("name")(rows)
       },
       "Debug- reversed" :{
         columns: _orderingByPropertyNameReversedForDebugging("factorValue")(columnHeaders),
