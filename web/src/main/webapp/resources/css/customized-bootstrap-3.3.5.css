@@ -795,6 +795,18 @@ button.close {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-top: 4px solid \9;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+
 @font-face{
     font-family:'Glyphicons Halflings';
     src:url(https://maxcdn.bootstrapcdn.com/bootstrap/latest/fonts/glyphicons-halflings-regular.eot);
