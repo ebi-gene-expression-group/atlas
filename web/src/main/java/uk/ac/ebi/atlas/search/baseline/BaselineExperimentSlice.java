@@ -23,8 +23,8 @@ public abstract class BaselineExperimentSlice {
         return experiment().getExperimentalFactors().getComplementFactors(filterFactors());
     }
 
-    public String organism() {
-        return experiment().getFirstOrganism();
+    public String species() {
+        return experiment().getSpecies();
     }
 
     public String experimentAccession() {

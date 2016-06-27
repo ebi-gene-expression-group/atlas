@@ -25,13 +25,13 @@ public class MicroarrayRequestContextBuilderTest {
     @Mock
     MicroarrayRequestPreferences preferencesMock;
 
-    MicroarrayRequestContextBuilder subject;
+    private MicroarrayRequestContextBuilder subject;
 
     @Before
     public void setUp() throws Exception {
         when(preferencesMock.getArrayDesignAccession()).thenReturn(ACCESSION);
         when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.EMPTY);
-        when(experimentMock.getFirstOrganism()).thenReturn(SPECIES);
+        when(experimentMock.getSpecies()).thenReturn(SPECIES);
         subject = new MicroarrayRequestContextBuilder(new MicroarrayRequestContext());
     }
 

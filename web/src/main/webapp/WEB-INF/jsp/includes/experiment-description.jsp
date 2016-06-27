@@ -39,7 +39,7 @@
         </a>
     </c:if>
 </div>
-<div id="experimentOrganisms">Organism(s):
+<div id="experimentOrganisms">Organism:
     <span style="font-style:italic">
         <spring:eval expression="T(org.apache.commons.lang3.StringUtils).removeEnd(T(org.apache.commons.lang3.StringUtils).join(allSpecies, \", \"),\", \")"/>
     </span>

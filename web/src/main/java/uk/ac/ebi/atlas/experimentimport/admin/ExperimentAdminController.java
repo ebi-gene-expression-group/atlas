@@ -71,7 +71,7 @@ public class ExperimentAdminController {
                     ? Optional.<Collection<String>>absent()
                     : Optional.of(readAccessions(accessionParameter));
 
-            return gson.toJson(experimentOps.perform(accessions,  Op.opsForParameter(opParameter)));
+            return gson.toJson(experimentOps.perform(accessions, Op.opsForParameter(opParameter)));
         } catch (IllegalArgumentException e) {
             return gson.toJson(usageMessage(opParameter));
         } catch (Exception e) {

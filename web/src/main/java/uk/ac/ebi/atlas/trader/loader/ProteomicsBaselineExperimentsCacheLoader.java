@@ -52,18 +52,12 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
         boolean hasRData = configurationTrader.getExperimentConfiguration(experimentAccession).hasRData();
 
         String kingdom = speciesKingdomTrader.getKingdom(experimentDTO.getSpecies());
-        if (kingdom.isEmpty()) {
-            Iterator<String> speciesIterator = experimentDTO.getSpecies().iterator();
-            while (speciesIterator.hasNext() && kingdom.isEmpty()) {
-                kingdom = speciesKingdomTrader.getKingdom(factorsConfig.getSpeciesMapping().get(speciesIterator.next()));
-            }
-        }
 
         String[] orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
 
         ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentAccession, experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
 
-        return createExperimentBuilder().forOrganisms(experimentDTO.getSpecies())
+        return createExperimentBuilder().forSpecies(experimentDTO.getSpecies())
                 .ofKingdom(kingdom)
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())

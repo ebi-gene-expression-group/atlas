@@ -95,17 +95,13 @@ public class PlantExperimentsController {
                 String displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
                 experimentDisplayNames.put(experimentAccession, displayName + " (" + numberOfAssays + " assays)");
 
-                for (String species : experiment.getOrganisms()) {
-                    if (speciesKingdomTrader.getKingdom(species).equals("plants")) {
-                        baselineExperimentAccessionsBySpecies.put(species, experimentAccession);
-                        if (experiment.getOrganisms().size() > 1) {
-                            experimentLinks.put(experimentAccession + species, "?serializedFilterFactors=ORGANISM:" + species);
-                        } else {
-                            experimentLinks.put(experimentAccession + species, "");
-                        }
-                        numberOfPlantExperiments++;
-                    }
+                String species = experiment.getSpecies();
+                if (speciesKingdomTrader.getKingdom(species).equals("plants")) {
+                    baselineExperimentAccessionsBySpecies.put(species, experimentAccession);
+                    experimentLinks.put(experimentAccession + species, "");
+                    numberOfPlantExperiments++;
                 }
+
             } catch (RuntimeException e) {
                 // we don't want the entire application to crash just because one condensedSdrf file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
@@ -130,23 +126,23 @@ public class PlantExperimentsController {
         for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
             try {
                 DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getExperimentFromCache(experimentAccession, experimentType);
-                for (String species : experiment.getOrganisms()) {
+                String species = experiment.getSpecies();
 
-                    if (speciesKingdomTrader.getKingdom(species) == null) {
-                        LOGGER.warn(species + " has no kingdom (maybe it is missing in BIOENTITY_ORGANISM ot it has been mis-spelled)");
-                        continue;
-                    }
-
-                    if (speciesKingdomTrader.getKingdom(species).equals("plants")) {
-                        Integer numSoFar = numDifferentialExperimentsBySpecies.get(species);
-                        if (numDifferentialExperimentsBySpecies.get(species) == null) {
-                            numDifferentialExperimentsBySpecies.put(species, 1);
-                        } else {
-                            numDifferentialExperimentsBySpecies.put(species, ++numSoFar);
-                        }
-                        numberOfPlantExperiments++;
-                    }
+                if (speciesKingdomTrader.getKingdom(species) == null) {
+                    LOGGER.warn(species + " has no kingdom (maybe it is missing in BIOENTITY_ORGANISM ot it has been mis-spelled)");
+                    continue;
                 }
+
+                if (speciesKingdomTrader.getKingdom(species).equals("plants")) {
+                    Integer numSoFar = numDifferentialExperimentsBySpecies.get(species);
+                    if (numDifferentialExperimentsBySpecies.get(species) == null) {
+                        numDifferentialExperimentsBySpecies.put(species, 1);
+                    } else {
+                        numDifferentialExperimentsBySpecies.put(species, ++numSoFar);
+                    }
+                    numberOfPlantExperiments++;
+                }
+
             } catch (RuntimeException e) {
                 // we don't want the entire application to crash just because one condensedSdrf file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);

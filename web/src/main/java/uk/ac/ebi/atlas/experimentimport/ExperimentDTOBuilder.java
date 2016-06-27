@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentimport;
 
 import org.springframework.context.annotation.Scope;
@@ -14,7 +13,7 @@ public class ExperimentDTOBuilder {
     private ExperimentType experimentType;
     private boolean isPrivate;
 
-    private Set<String> species;
+    private String species;
     private String title;
     private Set<String> pubmedIds;
 
@@ -33,7 +32,7 @@ public class ExperimentDTOBuilder {
         return this;
     }
 
-    public ExperimentDTOBuilder withSpecies(Set<String> species) {
+    public ExperimentDTOBuilder withSpecies(String species) {
         this.species = species;
         return this;
     }

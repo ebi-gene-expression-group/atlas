@@ -79,7 +79,7 @@ public class SpeciesGrouperTest {
     @Test
     public void buildSingleEnsemblSpeciesGroupedByAssayGroupId() throws Exception {
 
-        BaselineExperiment experiment = subject.forOrganisms(Sets.newHashSet(HOMO_SAPIENS))
+        BaselineExperiment experiment = subject.forSpecies(HOMO_SAPIENS)
                 .withAccession(EXPERIMENT_ACCESSION)
                 .withSpeciesMapping(speciesMap)
                 .withExperimentDesign(experimentDesignMock)

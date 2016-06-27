@@ -1,7 +1,3 @@
-
-//ToDo ... this is impossible to test without bootstrapping spring, as most other IT tests
-
-
 package uk.ac.ebi.atlas.trader.loader;
 
 import org.junit.Test;
@@ -13,13 +9,11 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Set;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -35,9 +29,8 @@ public class BaselineExperimentsCacheLoaderIT {
         //given
         BaselineExperiment experiment = subject.load("E-MTAB-513");
         //then
-        Set<String> species = experiment.getOrganisms();
-        assertThat(species, hasItems("Homo sapiens"));
-        assertThat(species, not(hasItem("Ornithorhynchus anatinus")));
+        String species = experiment.getSpecies();
+        assertThat(species, is("Homo sapiens"));
     }
 
 

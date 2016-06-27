@@ -59,8 +59,8 @@ public class BaselineProfilesHeatMapWranglerTest {
     @Before
     public void setUp(){
         when(experiment.getAccession()).thenReturn(ACCESSION);
-        when(experiment.getFirstOrganism()).thenReturn("ORGANISM");
-        when(experiment.getOrganismToEnsemblSpeciesMapping()).thenReturn(new HashMap<String, String>());
+        when(experiment.getSpecies()).thenReturn("SPECIES");
+        when(experiment.getSpeciesToEnsemblMapping()).thenReturn(new HashMap<String, String>());
         when(experiment.getExperimentalFactors()).thenReturn(experimentalFactors);
 
         baselineRequestPreferences = new BaselineRequestPreferences();

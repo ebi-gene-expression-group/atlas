@@ -102,15 +102,8 @@ public class BaselineExperimentsController {
 
             try {
                 BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-
-                for (String specie : experiment.getOrganisms()) {
-                    experimentAccessionsBySpecies.put(specie, experimentAccession);
-                    if (experiment.getOrganisms().size() > 1) {
-                        experimentLinks.put(experimentAccession + specie, "?serializedFilterFactors=ORGANISM:" + specie);
-                    } else {
-                        experimentLinks.put(experimentAccession + specie, "");
-                    }
-                }
+                experimentAccessionsBySpecies.put(experiment.getSpecies(), experimentAccession);
+                experimentLinks.put(experimentAccession + experiment.getSpecies(), "");
             } catch (RuntimeException e) {
                 // we don't want the entire application to crash just because one condensedSdrf file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);

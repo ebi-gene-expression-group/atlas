@@ -106,9 +106,7 @@ public class ExperimentDAO {
     private static final String INSERT_EXPERIMENT_SPECIE = "INSERT INTO EXPERIMENT_ORGANISM (EXPERIMENT, ORGANISM) values (?, ?)";
 
     private void addExperimentSpeciesRows(ExperimentDTO experimentDTO) {
-        for (String species : experimentDTO.getSpecies()) {
-            jdbcTemplate.update(INSERT_EXPERIMENT_SPECIE,  experimentDTO.getExperimentAccession(), species);
-        }
+        jdbcTemplate.update(INSERT_EXPERIMENT_SPECIE,  experimentDTO.getExperimentAccession(), experimentDTO.getSpecies());
     }
 
     public void deleteExperiment(String experimentAccession) {

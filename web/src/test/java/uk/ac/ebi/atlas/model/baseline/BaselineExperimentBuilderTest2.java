@@ -26,7 +26,7 @@ public class BaselineExperimentBuilderTest2 {
 
     private static final String DISPLAY_NAME = "DISPLAY NAME";
     private static final String PUBMEDID = "PUBMEDID";
-    private static final String SPECIE = "homo sapiens";
+    private static final String SPECIES = "homo sapiens";
     private static final String RUN_ACCESSION1 = "ENS0";
     private static final String RUN_ACCESSION2 = "ENS1";
     private static final String DESCRIPTION = "aDescription";
@@ -67,7 +67,7 @@ public class BaselineExperimentBuilderTest2 {
         when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newHashSet("g1", "g2"));
 
         subject = new BaselineExperimentBuilder()
-                .forOrganisms(Sets.newHashSet(SPECIE))
+                .forSpecies(SPECIES)
                 .withDescription(DESCRIPTION)
                 .withSpeciesMapping(Collections.EMPTY_MAP)
                 .withDisplayName(DISPLAY_NAME)
@@ -91,7 +91,7 @@ public class BaselineExperimentBuilderTest2 {
 
     @Test
     public void testSpecies() {
-        assertThat(subject.getFirstOrganism(), is(SPECIE));
+        assertThat(subject.getSpecies(), is(SPECIES));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class BaselineExperimentBuilderTest2 {
 
     @Test
     public void testSpeciesMapping() {
-        assertThat(subject.getOrganismToEnsemblSpeciesMapping(), is(Collections.EMPTY_MAP));
+        assertThat(subject.getSpeciesToEnsemblMapping(), is(Collections.EMPTY_MAP));
     }
 
     @Test

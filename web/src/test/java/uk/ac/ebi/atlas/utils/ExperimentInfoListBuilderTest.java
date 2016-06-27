@@ -86,7 +86,7 @@ public class ExperimentInfoListBuilderTest {
         when(microarrayExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
         when(microarrayExperimentMock.getType()).thenReturn(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
 
-        when(baselineExperimentMock.getOrganisms()).thenReturn(Sets.newHashSet(SPECIES));
+        when(baselineExperimentMock.getSpecies()).thenReturn(SPECIES);
         when(baselineExperimentMock.getAccession()).thenReturn(ACCESSION);
         when(baselineExperimentMock.getLastUpdate()).thenReturn(lastUpdateStub);
         when(baselineExperimentMock.getDescription()).thenReturn(DESCRIPTION);
@@ -166,7 +166,7 @@ public class ExperimentInfoListBuilderTest {
         assertThat(experimentInfo.getExperimentAccession(), is(ACCESSION));
         assertThat(experimentInfo.getLastUpdate(), is("12-01-1940"));
         assertThat(experimentInfo.getExperimentDescription(), is(DESCRIPTION));
-        assertThat(experimentInfo.getSpecies(), contains(SPECIES));
+        assertThat(experimentInfo.getSpecies(), is(SPECIES));
         assertThat(experimentInfo.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
     }
 
