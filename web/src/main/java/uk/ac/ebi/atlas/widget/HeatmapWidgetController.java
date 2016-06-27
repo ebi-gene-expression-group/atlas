@@ -101,37 +101,6 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         return "heatmap-data";
     }
 
-    @RequestMapping(value = "/widgets/heatmap/multiExperiment")
-    public String multiExperimentJson(@RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
-                                      @RequestParam(value = "species", required = false) String species,
-                                      @RequestParam(value = "propertyType", required = false) String propertyType,
-                                      Model model,HttpServletRequest request, HttpServletResponse response) {
-
-        String ensemblSpecies= StringUtils.isBlank(species)
-                ?speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString())
-                : Species.convertToEnsemblSpecies(species);
-
-
-        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery.asString(), ensemblSpecies, true);
-
-        BaselineExperimentSearchResult searchResult = geneIds.isPresent()
-            ?   baselineExperimentProfileSearchService.query(geneIds.get())
-            : new BaselineExperimentSearchResult();
-
-        if (searchResult.isEmpty()) {
-            throw new ResourceNotFoundException("No baseline expression in tissues found for "
-                    + geneQuery.description());
-        }
-
-        populateModelWithMultiExperimentResults(request.getContextPath(),geneQuery, ensemblSpecies, searchResult, model);
-
-        // set here instead of in JSP, because the JSP may be included elsewhere
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        return "heatmap-data";
-    }
-
-    //This endpoint is used in gene/geneset page, for the callback,
-    // e.g. http://wwwdev.ebi.ac.uk/gxa/genesets/GO:0000002
     @RequestMapping(value = "/widgets/heatmap/baselineAnalytics")
     public String analyticsJson(@RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
                                 @RequestParam(value = "species", required = false) String species,
