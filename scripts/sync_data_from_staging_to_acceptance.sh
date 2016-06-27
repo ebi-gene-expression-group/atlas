@@ -30,7 +30,7 @@ echo "============================================================"
 echo `date`
 echo "============================================================"
 echo "Syncing data from ves-hx-76 to ves-hx-77..."
-sudo -u fg_atlas ssh ves-hx-77 'rsync -irltz --delete --exclude gxa/solr** --exclude gxa/lost+found** ves-hx-76:/srv/gxa /srv'
+sudo -u fg_atlas sh -c 'rsync -irltz --delete /nfs/public/ro/fg/atlas/experiments/* /nfs/public/ro/fg/atlas/experiments_test'
 
 echo "Refreshing VATLASTST to latest snapshot..."
 sudo -u dxatlas sh -c '/net/nasP/oracle/delphix/ebi_refresh_vdb.sh Delphix_Silver1 VATLASTST "`/net/nasP/oracle/delphix/ebi_list_snapshots.sh Delphix_Silver1 VATLASTST | tail -1`"'
