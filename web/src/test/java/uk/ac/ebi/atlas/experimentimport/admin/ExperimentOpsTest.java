@@ -23,9 +23,6 @@ import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
-import java.io.IOException;
-import java.sql.SQLDataException;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -133,7 +130,7 @@ public class ExperimentOpsTest {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         Mockito.when(experimentCRUD.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
         List<Op> ops= new ArrayList<>();
-        ops.add(Op.UPDATE_DESIGN); // says "success!"
+        ops.add(Op.UPDATE_DESIGN_ONLY); // says "success!"
         ops.add(Op.CLEAR_LOG); // says "success!"
         ops.add(Op.LIST); // says something else
         ops.add(Op.DELETE); //throws, should give an error
@@ -155,7 +152,7 @@ public class ExperimentOpsTest {
         Set<Map.Entry<String, JsonElement>> firstSuccess = successes.get(0).getAsJsonObject().entrySet();
         assertThat(firstSuccess.size(), is(1));
         String opNameOfFirstSuccessEntry = firstSuccess.iterator().next().getKey();
-        assertThat(opNameOfFirstSuccessEntry, containsString(Op.UPDATE_DESIGN.name()));
+        assertThat(opNameOfFirstSuccessEntry, containsString(Op.UPDATE_DESIGN_ONLY.name()));
         assertThat(opNameOfFirstSuccessEntry, containsString(Op.CLEAR_LOG.name()));
 
         Set<Map.Entry<String, JsonElement>> secondSuccess = successes.get(1).getAsJsonObject().entrySet();

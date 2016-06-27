@@ -277,7 +277,7 @@ public class ExperimentOps {
             case UPDATE_PUBLIC:
                 experimentMetadataCRUD.makeExperimentPublic(accession);
                 break;
-            case UPDATE_DESIGN:
+            case UPDATE_DESIGN_ONLY:
                 experimentMetadataCRUD.updateExperimentDesign(accession);
                 break;
             case IMPORT_PUBLIC:
