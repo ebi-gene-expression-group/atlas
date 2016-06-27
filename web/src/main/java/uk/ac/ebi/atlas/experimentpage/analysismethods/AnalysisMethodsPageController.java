@@ -75,7 +75,7 @@ public class AnalysisMethodsPageController {
         BaselineExperiment experiment = (BaselineExperiment)experimentTrader.getExperiment(experimentAccession, accessKey);
 
         String species = experiment.getSpecies();
-        model.addAttribute("allSpecies", species);
+        model.addAttribute("species", species);
 
         try {
             if (fastQCReportUtil.hasFastQC(experimentAccession, species)) {

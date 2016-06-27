@@ -30,7 +30,7 @@ var ExperimentDescription = React.createClass({
         experiment: React.PropTypes.shape({
             URL: React.PropTypes.string.isRequired,
             description: React.PropTypes.string.isRequired,
-            allSpecies: React.PropTypes.string.isRequired
+            species: React.PropTypes.string.isRequired
         }).isRequired
     },
 
@@ -43,7 +43,7 @@ var ExperimentDescription = React.createClass({
                 <div id="experimentDescription">
                     <a id="goto-experiment" className="gxaThickLink" title="Experiment Page" href={experimentURL}>{this.props.experiment.description}</a>
                 </div>
-                <div id="experimentOrganisms">Organism(s): <span style={{"fontStyle":"italic"}}>{this.props.experiment.allSpecies}</span></div>
+                <div id="experimentOrganisms">Organism(s): <span style={{"fontStyle":"italic"}}>{this.props.experiment.species}</span></div>
             </div>
         );
     }
