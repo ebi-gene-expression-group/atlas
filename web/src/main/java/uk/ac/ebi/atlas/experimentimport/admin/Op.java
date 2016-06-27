@@ -30,7 +30,7 @@ public enum Op {
     ANALYTICS_DELETE("Tell Solr to delete all data with this experiment accession");
 
     static ImmutableMap<String, ImmutableList<Op>> synonyms = ImmutableMap.of(
-            "UPDATE_DESIGN",ImmutableList.of(UPDATE_DESIGN_ONLY,SERIALIZE)
+            "UPDATE_DESIGN",ImmutableList.of(UPDATE_DESIGN_ONLY,SERIALIZE),
             "UPDATE", ImmutableList.of(UPDATE_PRIVATE), // Deprecated June 2016
             "LOAD_PUBLIC", ImmutableList.of(IMPORT_PUBLIC,COEXPRESSION_UPDATE,SERIALIZE,ANALYTICS_IMPORT),
             "LOAD", ImmutableList.of(IMPORT,COEXPRESSION_UPDATE,SERIALIZE)
