@@ -25,11 +25,11 @@ public class RnaSeqRequestContextBuilderTest {
     @Mock
     DifferentialRequestPreferences preferencesMock;
 
-    RnaSeqRequestContextBuilder subject;
+    private RnaSeqRequestContextBuilder subject;
 
     @Before
     public void setUp() throws Exception {
-        when(experimentMock.getFirstOrganism()).thenReturn(SPECIES);
+        when(experimentMock.getSpecies()).thenReturn(SPECIES);
         when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.EMPTY);
         subject = new RnaSeqRequestContextBuilder(new RnaSeqRequestContext());
     }

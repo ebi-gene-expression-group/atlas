@@ -1,10 +1,5 @@
-
-//ToDo ... this is impossible to test without bootstrapping spring, as most other IT tests
-
-
 package uk.ac.ebi.atlas.trader.loader;
 
-import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,7 +54,8 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
 
         Set<String> pubMedIds = Collections.emptySet();
         ExperimentDTO experimentDTO = new ExperimentDTO(E_PROT_1, ExperimentType.PROTEOMICS_BASELINE,
-                ImmutableSet.of("Homo sapiens"), pubMedIds, "title", new Date(), false, UUID.randomUUID().toString());
+                                                        "Homo sapiens", pubMedIds, "title", new Date(),
+                                                        false, UUID.randomUUID().toString());
         when(experimentDao.findExperiment(E_PROT_1, true)).thenReturn(experimentDTO);
 
         when(arrayExpressClient.fetchExperimentName(E_PROT_1)).thenReturn("title");
@@ -73,8 +69,8 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         //given
         ProteomicsBaselineExperiment experiment = subject.load(E_PROT_1);
         //then
-        Set<String> species = experiment.getOrganisms();
-        assertThat(species, contains("Homo sapiens"));
+        String species = experiment.getSpecies();
+        assertThat(species, is("Homo sapiens"));
 
     }
 

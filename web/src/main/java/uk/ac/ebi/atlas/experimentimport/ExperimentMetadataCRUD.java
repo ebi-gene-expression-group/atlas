@@ -85,7 +85,7 @@ public class ExperimentMetadataCRUD {
         writeExperimentDesignFile(accession, experimentType, experimentDesign);
 
         Set<String> assayAccessions = experimentConfiguration.getAssayAccessions();
-        Set<String> species = experimentDesign.getSpeciesForAssays(assayAccessions);
+        String species = experimentDesign.getSpeciesForAssays(assayAccessions);
 
         ExperimentDTO experimentDTO = buildExperimentDTO(condensedSdrfParserOutput, species, isPrivate);
         UUID uuid = experimentDAO.addExperiment(experimentDTO, accessKey);
@@ -127,7 +127,7 @@ public class ExperimentMetadataCRUD {
         return builder.build();
     }
 
-    private ExperimentDTO buildExperimentDTO(CondensedSdrfParserOutput condensedSdrfParserOutput, Set<String> species, boolean isPrivate) {
+    private ExperimentDTO buildExperimentDTO(CondensedSdrfParserOutput condensedSdrfParserOutput, String species, boolean isPrivate) {
         return experimentDTOBuilder
                 .forExperimentAccession(condensedSdrfParserOutput.getExperimentAccession())
                 .withExperimentType(condensedSdrfParserOutput.getExperimentType())

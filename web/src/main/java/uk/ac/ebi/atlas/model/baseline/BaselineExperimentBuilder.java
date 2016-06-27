@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class BaselineExperimentBuilder {
 
-    private Set<String> organisms;
+    private String species;
     private String kingdom;
     private String ensemblDB;
     private String description;
@@ -37,8 +37,8 @@ public class BaselineExperimentBuilder {
     private AssayGroups assayGroups;
     private ExperimentalFactors experimentalFactors;
 
-    public BaselineExperimentBuilder forOrganisms(Set<String> organisms) {
-        this.organisms = organisms;
+    public BaselineExperimentBuilder forSpecies(String species) {
+        this.species = species;
         return this;
     }
 
@@ -121,7 +121,7 @@ public class BaselineExperimentBuilder {
         validate();
 
         return new BaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
-                displayName, organisms, kingdom, ensemblDB, speciesMapping, hasExtraInfoFile, hasRData,
+                displayName, species, kingdom, ensemblDB, speciesMapping, hasExtraInfoFile, hasRData,
                 pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
     }
 
@@ -129,7 +129,7 @@ public class BaselineExperimentBuilder {
         validate();
 
         return new ProteomicsBaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
-                displayName, organisms, kingdom, ensemblDB, speciesMapping, hasExtraInfoFile, hasRData,
+                displayName, species, kingdom, ensemblDB, speciesMapping, hasExtraInfoFile, hasRData,
                 pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
     }
 

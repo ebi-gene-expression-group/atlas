@@ -137,7 +137,7 @@ public class ExperimentMetadataCRUDTest {
         given(experimentDTOBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE)).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withPrivate(false)).willReturn(experimentDTOBuilderMock);
-        given(experimentDTOBuilderMock.withSpecies(anySetOf(String.class))).willReturn(experimentDTOBuilderMock);
+        given(experimentDTOBuilderMock.withSpecies(anyString())).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withPubMedIds(anySetOf(String.class))).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withTitle(anyString())).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.build()).willReturn(experimentDTOMock);

@@ -29,9 +29,9 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
                 experimentByAccession.put(experimentAccession, experiment);
             }
 
-            String specie = resultSet.getString("organism");
-            if (!StringUtils.isBlank(specie)) {
-                experiment.addSpecies(specie);
+            String species = resultSet.getString("organism");
+            if (!StringUtils.isBlank(species)) {
+                experiment.setSpecies(species);
             }
 
         }

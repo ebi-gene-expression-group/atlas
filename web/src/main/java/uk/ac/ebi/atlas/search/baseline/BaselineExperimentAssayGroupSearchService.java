@@ -110,7 +110,7 @@ public class BaselineExperimentAssayGroupSearchService {
                 FactorGroup filterFactor = filterFactorAssayGroupIds.getKey();
                 Collection<String> assayGroupIdsForFilterFactor = filterFactorAssayGroupIds.getValue();
 
-                String experimentSpecies = experiment.getFirstOrganism();
+                String experimentSpecies = experiment.getSpecies();
 
                 if (StringUtils.isBlank(searchSpecies) || Species.sameSpecies(experimentSpecies, searchSpecies)) {
                     BaselineExperimentAssayGroup result = new BaselineExperimentAssayGroup(experiment.getAccession(), experiment.getDisplayName(),

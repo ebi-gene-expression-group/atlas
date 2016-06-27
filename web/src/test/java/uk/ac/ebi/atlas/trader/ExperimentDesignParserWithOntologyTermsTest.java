@@ -49,9 +49,9 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     private static final String SPECIES_1 = "Drosophila melanogaster";
     private static final String SPECIES_2 = "Rabbit";
 
-    public static final String SPECIES_1_ONTOLOGY_ID = "DROS";
-    public static final String SPECIES_2_ONTOLOGY_ID = "RABBIT";
-    public static final String HTTP_OBO = "http://purl.obolibrary.org/obo/";
+    private static final String SPECIES_1_ONTOLOGY_ID = "DROS";
+    private static final String SPECIES_2_ONTOLOGY_ID = "RABBIT";
+    private static final String HTTP_OBO = "http://purl.obolibrary.org/obo/";
     private static final String SPECIES_1_ONTOLOGY_TERM_SOURCEID = HTTP_OBO + SPECIES_1_ONTOLOGY_ID;
     private static final String SPECIES_2_ONTOLOGY_TERM_SOURCEID = HTTP_OBO + SPECIES_2_ONTOLOGY_ID;
     private static final OntologyTerm SPECIES_1_ONTOLOGY_TERM = OntologyTerm.createFromURI(SPECIES_1_ONTOLOGY_TERM_SOURCEID);
@@ -64,7 +64,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
 
     private static final String[] HEADER_LINE = new String[]{ASSAY, ARRAY, "Sample Characteristic[DevelopmentalStage]", "Sample Characteristic[Genotype]", "Sample Characteristic[Organism]", "Sample Characteristic Ontology Term[Organism]", "Sample Characteristic[StrainOrLine]", "Factor Value[GENOTYPE]", "Factor Value Ontology Term[GENOTYPE]"};
     private static final String[] FIRST_LINE = new String[]{ASSAY_ACCESSION_1, A_AFFY_35, RD_INSTAR_LARVA, "w1118; +; cycCY5", SPECIES_1, SPECIES_1_ONTOLOGY_TERM_SOURCEID, "", CYC_C_MUTANT, ONTOLOGY_TERM_1};
-    public static final String CYC = "cyc";
+    private static final String CYC = "cyc";
     private static final String[] EMPTY_ONTOLOGY_TERM = new String[]{ASSAY_ACCESSION_3, A_AFFY_35, RD_INSTAR_LARVA, CYC, SPECIES_2, "", OREGON_R, CYC, ""};
     private static final String[] LAST_LINE = new String[]{ASSAY_ACCESSION_2, A_AFFY_35, RD_INSTAR_LARVA, "wild_type", SPECIES_2, SPECIES_2_ONTOLOGY_TERM_SOURCEID, OREGON_R, "wild_type", ONTOLOGY_TERM_2};
     private static final List<String[]> DATA = Lists.newArrayList(HEADER_LINE, FIRST_LINE, EMPTY_ONTOLOGY_TERM, LAST_LINE);
@@ -178,8 +178,8 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     @Test
     public void testGetSpeciesForAssays() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        Set<String> species = experimentDesign.getSpeciesForAssays(Sets.newHashSet(ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
-        assertThat(species, Matchers.containsInAnyOrder(SPECIES_1, SPECIES_2));
+        String species = experimentDesign.getSpeciesForAssays(Sets.newHashSet(ASSAY_ACCESSION_1));
+        assertThat(species, is(SPECIES_1));
     }
 
 }

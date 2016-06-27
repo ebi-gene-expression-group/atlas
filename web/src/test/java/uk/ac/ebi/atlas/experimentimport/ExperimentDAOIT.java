@@ -34,7 +34,7 @@ public class ExperimentDAOIT {
     private ExperimentDAO subject;
 
     public void createSecret111() throws Exception {
-        ExperimentDTO mtab = new ExperimentDTO(SECRET_111, TYPE_MICROARRAY, Sets.newHashSet("cow"), Sets.newHashSet("1"), "diff", false);
+        ExperimentDTO mtab = new ExperimentDTO(SECRET_111, TYPE_MICROARRAY, "cow", Sets.newHashSet("1"), "diff", false);
         subject.addExperiment(mtab, Optional.<String>absent());
     }
 
@@ -46,7 +46,7 @@ public class ExperimentDAOIT {
     public void testFindExperiments() throws Exception {
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
         assertThat(experimentDTOs, hasSize(NumberOfExperiments.ALL));
-        assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_513, TYPE_BASELINE, Sets.newHashSet(""), Sets.newHashSet(""), "", false)));
+        assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_513, TYPE_BASELINE, "", Sets.newHashSet(""), "", false)));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ExperimentDAOIT {
     public void testAddExperiment() throws Exception {
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
         int size = experimentDTOs.size();
-        ExperimentDTO mtabNew = new ExperimentDTO("new", TYPE_MICROARRAY, Sets.newHashSet("cow"), Sets.newHashSet("1"), "diff", true);
+        ExperimentDTO mtabNew = new ExperimentDTO("new", TYPE_MICROARRAY, "cow", Sets.newHashSet("1"), "diff", true);
         subject.addExperiment(mtabNew, Optional.<String>absent());
         experimentDTOs = subject.findAllExperiments();
         assertThat(experimentDTOs.size(), is(size + 1));

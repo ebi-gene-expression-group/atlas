@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader.loader;
 
 import com.google.common.collect.Sets;
@@ -55,13 +54,13 @@ public class MicroarrayExperimentsCacheLoaderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, speciesKingdomTraderMock, "{0}{1}");
+        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, speciesKingdomTraderMock);
 
         when(experimentDTOMock.getExperimentAccession()).thenReturn(ACCESSION);
         when(experimentDTOMock.getExperimentType()).thenReturn(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
         when(experimentDTOMock.getAccessKey()).thenReturn(ACCESS_KEY);
         when(experimentDTOMock.getPubmedIds()).thenReturn(Sets.newHashSet("pubmed1"));
-        when(experimentDTOMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIES));
+        when(experimentDTOMock.getSpecies()).thenReturn(SPECIES);
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
         when(speciesKingdomTraderMock.getKingdom(experimentDTOMock.getSpecies())).thenReturn("kingdom");
@@ -77,7 +76,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
                 false, experimentDesignMock);
         assertThat(microarrayExperiment.getAccession(), is(ACCESSION));
         assertThat(microarrayExperiment.getArrayDesignAccessions(), hasItem(ARRAYDESIGNS));
-        assertThat(microarrayExperiment.getOrganisms(), hasItem(SPECIES));
+        assertThat(microarrayExperiment.getSpecies(), is(SPECIES));
         assertThat(microarrayExperiment.getExperimentDesign(), is(experimentDesignMock));
     }
 }

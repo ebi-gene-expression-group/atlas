@@ -77,7 +77,7 @@ public class BaselineProfilesWriterServiceTest {
         when(baselineExperimentMock.getAccession()).thenReturn("ACCESSION");
         when(baselineExperimentMock.getAssayGroups()).thenReturn(assayGroupsMock);
         when(baselineExperimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
-        when(baselineExperimentMock.getFirstOrganism()).thenReturn("some_organism");
+        when(baselineExperimentMock.getSpecies()).thenReturn("some_species");
         TreeSet<Factor> t = new TreeSet<>();
         t.add(new Factor("h1", "p1"));
         when(experimentalFactorsMock.getComplementFactors(anySet())).thenReturn(t);

@@ -53,7 +53,7 @@ public class ExperimentOpsTest {
 
     final Map<String, List<Pair<String, Pair<Long, Long>>>> fileSystem = new HashMap<>();
 
-    String accession = "E-EXAMPLE-1";
+   private String accession = "E-EXAMPLE-1";
 
     @Before
     public void setUp() {
@@ -72,8 +72,8 @@ public class ExperimentOpsTest {
                         [new Random().nextInt(ExperimentType.values().length)];
 
                 return new ExperimentDTO(accession, experimentType,
-                        ImmutableSet.of("Homo sapiens"), new HashSet<String>(),
-                        "title", new Date(), false, UUID.randomUUID().toString());
+                                         "Homo sapiens", new HashSet<String>(),
+                                         "title", new Date(), false, UUID.randomUUID().toString());
             }
         }).when(experimentMetadataCRUD).findExperiment(Matchers.anyString());
 

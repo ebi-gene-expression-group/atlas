@@ -52,20 +52,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         boolean hasRData = configurationTrader.getExperimentConfiguration(experimentAccession).hasRData();
 
         String kingdom = speciesKingdomTrader.getKingdom(experimentDTO.getSpecies());
-        if (kingdom.isEmpty()) {
-            Iterator<String> speciesIterator = experimentDTO.getSpecies().iterator();
-            while (speciesIterator.hasNext() && kingdom.isEmpty()) {
-                kingdom = speciesKingdomTrader.getKingdom(factorsConfig.getSpeciesMapping().get(speciesIterator.next()));
-            }
-        }
 
         String ensemblDB = speciesKingdomTrader.getEnsemblDB(experimentDTO.getSpecies());
-        if (ensemblDB.isEmpty()) {
-            Iterator<String> speciesIterator = experimentDTO.getSpecies().iterator();
-            while (speciesIterator.hasNext() && ensemblDB.isEmpty()) {
-                ensemblDB = speciesKingdomTrader.getEnsemblDB(factorsConfig.getSpeciesMapping().get(speciesIterator.next()));
-            }
-        }
 
         String[] orderedAssayGroupIds;
         boolean orderCurated;
@@ -80,7 +68,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentAccession, experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds, orderCurated);
 
-        return createExperimentBuilder().forOrganisms(experimentDTO.getSpecies())
+        return createExperimentBuilder().forSpecies(experimentDTO.getSpecies())
                 .ofKingdom(kingdom)
                 .ofEnsemblDB(ensemblDB)
                 .withAccession(experimentAccession)

@@ -14,7 +14,6 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -83,7 +82,7 @@ public class BaselineExperimentBuilderTest {
     @Test
     public void testCreate() throws Exception {
 
-        BaselineExperiment experiment = subject.forOrganisms(Sets.newHashSet(SPECIES))
+        BaselineExperiment experiment = subject.forSpecies(SPECIES)
                 .withAccession(EXPERIMENT_ACCESSION)
                 .withDescription(DESCRIPTION)
                 .withDisplayName(DISPLAY_NAME)
@@ -97,7 +96,7 @@ public class BaselineExperimentBuilderTest {
                 .withDataProviderDescription(PROVIDER_DESCRIPTION)
                 .create();
 
-        BaselineExperiment experiment1 = subject.forOrganisms(Sets.newHashSet(SPECIES))
+        BaselineExperiment experiment1 = subject.forSpecies(SPECIES)
                 .withAccession(EXPERIMENT_ACCESSION)
                 .withDescription(DESCRIPTION)
                 .withDisplayName(DISPLAY_NAME)
@@ -116,9 +115,8 @@ public class BaselineExperimentBuilderTest {
         assertThat(experiment.getDescription(), is(DESCRIPTION));
         assertThat(experiment.getDisplayName(), is(DISPLAY_NAME));
         assertThat(experiment.hasExtraInfoFile(), is(false));
-        assertThat(experiment.getOrganisms(), hasItem(SPECIES));
-        assertThat(experiment.getFirstOrganism(), is(SPECIES));
-        assertThat(experiment.getOrganismToEnsemblSpeciesMapping(), is(speciesMap));
+        assertThat(experiment.getSpecies(), is(SPECIES));
+        assertThat(experiment.getSpeciesToEnsemblMapping(), is(speciesMap));
         assertThat(experiment.getType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(experiment.getPubMedIds(), contains(PUBMEDID));
         assertThat(experiment.getExperimentDesign(), is(experimentDesignMock));

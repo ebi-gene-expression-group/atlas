@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader;
 
 import com.google.common.collect.Lists;
@@ -116,10 +115,10 @@ public class ExperimentDesignParserTest {
     }
 
     @Test
-    public void testGetSpeciesForAssays(){
+    public void testGetSpeciesForAssays() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        Set<String> species = experimentDesign.getSpeciesForAssays(Sets.newHashSet(ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
-        assertThat(species, Matchers.containsInAnyOrder(SPECIES_1, SPECIES_2));
+        String species = experimentDesign.getSpeciesForAssays(Sets.newHashSet(ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
+        assertThat(species, is(SPECIES_1));
     }
 
     @Test

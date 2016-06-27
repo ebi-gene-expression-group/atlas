@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class ProteomicsBaselineExperiment extends BaselineExperiment {
 
-    ProteomicsBaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors, String description, String displayName, Set<String> species, String kingdom, String ensemblDB, Map<String, String> speciesMapping, boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription) {
+    ProteomicsBaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors, String description, String displayName, String species, String kingdom, String ensemblDB, Map<String, String> speciesMapping, boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription) {
         super(ExperimentType.PROTEOMICS_BASELINE, accession, lastUpdate, experimentalFactors, description, displayName, species, kingdom, ensemblDB, speciesMapping, hasExtraInfoFile, hasRData, pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
     }
 }

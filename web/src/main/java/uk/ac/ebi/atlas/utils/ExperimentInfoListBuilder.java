@@ -170,7 +170,7 @@ public class ExperimentInfoListBuilder {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         experimentInfo.setLastUpdate(dateFormat.format(experiment.getLastUpdate()));
         experimentInfo.setExperimentDescription(experiment.getDescription());
-        experimentInfo.setSpecies(experiment.getOrganisms());
+        experimentInfo.setSpecies(experiment.getSpecies());
         experimentInfo.setKingdom(experiment.getKingdom());
         experimentInfo.setEnsemblDB(experiment.getEnsemblDB());
         experimentInfo.setExperimentType(experiment.getType().getParent());

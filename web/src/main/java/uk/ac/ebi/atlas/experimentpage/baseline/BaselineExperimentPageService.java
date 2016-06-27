@@ -155,10 +155,9 @@ public class BaselineExperimentPageService {
                         "&serializedFilterFactors="+serializedFilterFactors;
 
         JsonObject experimentDescription = new JsonObject();
-        experimentDescription.addProperty("URL",
-                "/experiments/"+experiment.getAccession()+additionalQueryOptionsString);
+        experimentDescription.addProperty("URL", "/experiments/"+experiment.getAccession()+additionalQueryOptionsString);
         experimentDescription.addProperty("description", experiment.getDescription());
-        experimentDescription.addProperty("allSpecies", StringUtils.join(experiment.getOrganisms(), ", "));
+        experimentDescription.addProperty("species", experiment.getSpecies());
         return experimentDescription;
     }
 
