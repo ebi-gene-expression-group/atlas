@@ -29,7 +29,7 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class BaselineAnalyticsSearchDaoIT {
 
-    public static final String SPECIES_HOMO_SAPIENS = "species:\"homo sapiens\"";
+    private static final String SPECIES_HOMO_SAPIENS = "species:\"homo sapiens\"";
     @Inject
     BaselineAnalyticsSearchDao subject;
 
@@ -38,8 +38,8 @@ public class BaselineAnalyticsSearchDaoIT {
         assertThat(subject.buildQueryUrl(SPECIES_HOMO_SAPIENS), Matchers.endsWith("solr/analytics/query?q=species:%22homo%20sapiens%22&rows=0&omitHeader=true" +
                 "&fq=experimentType:(rnaseq_mrna_baseline%20OR%20proteomics_baseline)" +
                 "&json.facet=%7B%22experimentType%22:%7B%22terms%22:%7B%22field%22:%22experimentType%22,%22facet%22:%7B%22species%22:%7B%22terms%22:" +
-                "%7B%22field%22:%22species%22,%22facet%22:%7B%22defaultQueryFactorType%22:%7B%22terms%22:%7B%22field%22:%22defaultQueryFactorType%22,%22facet%22:%7B%22" +
-                "experimentAccession%22:%7B%22terms%22:%7B%22field%22:%22experimentAccession%22,%22facet%22:%7B%22assayGroupId%22:%7B%22terms%22:%7B%22field%22:%22assayGroupId%22" +
+                "%7B%22field%22:%22species%22,%22limit%22:1000,%22facet%22:%7B%22defaultQueryFactorType%22:%7B%22terms%22:%7B%22field%22:%22defaultQueryFactorType%22,%22facet%22:%7B%22" +
+                "experimentAccession%22:%7B%22terms%22:%7B%22field%22:%22experimentAccession%22,%22limit%22:5000,%22facet%22:%7B%22assayGroupId%22:%7B%22terms%22:%7B%22field%22:%22assayGroupId%22" +
                 ",%22limit%22:1000,%22facet%22:%7B%22sumExpressionLevel%22:%22sum(expressionLevel)%22%7D%7D%7D,%22uniqueIdentifiers%22:%22unique(bioentityIdentifier)" +
                 "%22%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D%7D"));
     }
