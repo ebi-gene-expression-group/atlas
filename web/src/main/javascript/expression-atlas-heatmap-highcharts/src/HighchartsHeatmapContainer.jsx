@@ -209,7 +209,6 @@ var Container = React.createClass({
                     this.setState({
                         heatmapConfig: data.config,
                         columnHeaders: data.columnHeaders,
-                        nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
                         profiles: data.profiles,
                         jsonCoexpressions : data.jsonCoexpressions,
                         geneSetProfiles: data.geneSetProfiles,

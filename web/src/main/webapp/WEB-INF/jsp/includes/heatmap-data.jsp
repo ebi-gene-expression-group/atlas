@@ -64,7 +64,6 @@
                 "isFortLauderdale": ${empty isFortLauderdale ? "false" : isFortLauderdale}
             },
             "columnHeaders": ${not empty jsonColumnHeaders ? jsonColumnHeaders : "null"},
-            "nonExpressedColumnHeaders": ${not empty jsonNonExpressedColumnHeaders ? jsonNonExpressedColumnHeaders : "[]"},
             "profiles": ${not empty jsonProfiles ? jsonProfiles : "null"},
             "geneSetProfiles": ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : "null"},
             "jsonCoexpressions" :${not empty jsonCoexpressions ? jsonCoexpressions : "[]"},

@@ -126,9 +126,7 @@ public class ExperimentConfiguration {
     public AssayGroups getAssayGroups() {
         List<AssayGroup> assayGroups = Lists.newArrayList();
 
-        String[] assayGoupIds = xmlConfiguration.getStringArray("/analytics/assay_groups/assay_group/@id");
-
-        for (String assayGoupId : assayGoupIds) {
+        for (String assayGoupId : xmlConfiguration.getStringArray("/analytics/assay_groups/assay_group/@id")) {
             assayGroups.add(getAssayGroup(assayGoupId));
         }
 

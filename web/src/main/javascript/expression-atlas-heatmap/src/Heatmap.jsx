@@ -81,7 +81,6 @@ var Heatmap = React.createClass({
                 displayName: React.PropTypes.string.isRequired
             }))
         ]).isRequired,
-        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         profiles: React.PropTypes.object.isRequired,
         jsonCoexpressions: React.PropTypes.arrayOf(React.PropTypes.shape({
           geneName: React.PropTypes.string.isRequired,
@@ -385,7 +384,6 @@ var Heatmap = React.createClass({
                                             currentlyShowingCoexpressions={!!this._coexpressionsCurrentlyShown()}
                                             type={this.props.type}
                                             columnHeaders={this.props.columnHeaders}
-                                            nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                             multipleColumnHeaders={this.props.multipleColumnHeaders}
                                             selectedColumnId={this.state.selectedColumnId}
                                             selectColumn={this.selectColumn}
@@ -400,7 +398,6 @@ var Heatmap = React.createClass({
                                             renderContrastFactorHeaders={true}
                                             anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>
                         <HeatmapTableRows profiles={this._getProfiles().rows}
-                                          nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                           selectedGeneId={this.state.selectedGeneId}
                                           selectGene={this.selectGene}
                                           type={this.props.type}
@@ -426,7 +423,6 @@ var Heatmap = React.createClass({
                                                     currentlyShowingCoexpressions={!!this._coexpressionsCurrentlyShown()}
                                                     type={this.props.type}
                                                     columnHeaders={this.props.columnHeaders}
-                                                    nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                                     multipleColumnHeaders={this.props.multipleColumnHeaders}
                                                     selectedColumnId={this.state.selectedColumnId}
                                                     selectColumn={this.selectColumn}
@@ -451,7 +447,6 @@ var Heatmap = React.createClass({
                                                 isSingleGeneResult={this.isSingleGeneResult()}
                                                 currentlyShowingCoexpressions={!!this._coexpressionsCurrentlyShown()}
                                                 columnHeaders={this.props.columnHeaders}
-                                                nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                                 type={this.props.type}
                                                 multipleColumnHeaders={this.props.multipleColumnHeaders}
                                                 selectedColumnId={this.state.selectedColumnId}
@@ -465,7 +460,6 @@ var Heatmap = React.createClass({
                                                 toggleRadioButton={this.toggleRadioButton}
                                                 renderContrastFactorHeaders={false}/>
                             <HeatmapTableRows profiles={this._getProfiles().rows}
-                                              nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                               selectedGeneId={this.state.selectedGeneId}
                                               selectGene={this.selectGene}
                                               type={this.props.type}
@@ -493,7 +487,6 @@ var Heatmap = React.createClass({
                                                     hoverColumnCallback={this._hoverColumn}
                                                     type={this.props.type}
                                                     columnHeaders={this.props.columnHeaders}
-                                                    nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                                                     multipleColumnHeaders={this.props.multipleColumnHeaders}
                                                     selectedColumnId={this.state.selectedColumnId}
                                                     selectColumn={this.selectColumn}
@@ -523,14 +516,13 @@ var Heatmap = React.createClass({
 
 var HeatmapTableHeader = React.createClass({
     propTypes: {
-        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string),
         currentlyShowingCoexpressions: React.PropTypes.bool.isRequired
     },
 
     renderContrastFactorHeaders: function () {
         var heatmapConfig = this.props.heatmapConfig;
         if (this.props.type.isBaseline) {
-            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, this.props.mainHeaderNames, this.props.type, this.props.columnHeaders, this.props.nonExpressedColumnHeaders, heatmapConfig.experimentAccession,
+            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, this.props.mainHeaderNames, this.props.type, this.props.columnHeaders, heatmapConfig.experimentAccession,
                                         this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
         }
         else if (this.props.type.isDifferential) {
@@ -544,7 +536,7 @@ var HeatmapTableHeader = React.createClass({
                                      gseaPlots={heatmapConfig.gseaPlots}/>);
         }
         else if (this.props.type.isMultiExperiment) {
-            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, null, this.props.type, this.props.columnHeaders, this.props.nonExpressedColumnHeaders, "",
+            return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, null, this.props.type, this.props.columnHeaders, "",
                 this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
         }
     },
@@ -596,7 +588,7 @@ function restrictLabelSize(label, maxSize) {
 }
 
 
-function renderFactorHeaders(heatmapConfig, atlasBaseURL, mainHeaderNames, type, assayGroupFactors, nonExpressedGroupFactors, experimentAccession, selectColumn,
+function renderFactorHeaders(heatmapConfig, atlasBaseURL, mainHeaderNames, type, assayGroupFactors, experimentAccession, selectColumn,
                              selectedColumnId, hoverColumnCallback, anatomogramEventEmitter) {
 
     return assayGroupFactors.map(function (assayGroupFactor) {
@@ -938,7 +930,6 @@ var LevelsRadioGroup = function(__args__) {
 
 var HeatmapTableRows = React.createClass({
     propTypes: {
-        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string),
         profiles: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
     },
 
@@ -954,7 +945,6 @@ var HeatmapTableRows = React.createClass({
                             type={this.props.type}
                             experimentType={profile.experimentType}
                             expressions={profile.expressions}
-                            nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                             serializedFilterFactors={profile.serializedFilterFactors}
                             heatmapConfig={this.props.heatmapConfig}
                             atlasBaseURL={this.props.atlasBaseURL}
@@ -972,7 +962,6 @@ var HeatmapTableRows = React.createClass({
                             name={profile.name}
                             type={this.props.type}
                             expressions={profile.expressions}
-                            nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                             heatmapConfig={this.props.heatmapConfig}
                             atlasBaseURL={this.props.atlasBaseURL}
                             linksAtlasBaseURL={this.props.linksAtlasBaseURL}
@@ -1004,7 +993,6 @@ var HeatmapTableRows = React.createClass({
 
 var GeneProfileRow = React.createClass({
     propTypes: {
-        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string),
         atlasBaseURL: React.PropTypes.string.isRequired,
         linksAtlasBaseURL: React.PropTypes.string.isRequired
     },
@@ -1123,14 +1111,7 @@ var GeneProfileRow = React.createClass({
         }
     },
 
-    cells: function (expressions, nonExpressedColumnHeaders) {
-        //var filteredExpressions = expressions.filter(function(expression) {
-        //    return (nonExpressedColumnHeaders.indexOf(expression.factorName) == -1)
-        //});
-        //
-        //return filteredExpressions.map(function (expression) {
-        //    return this.cellType(expression);
-        //}.bind(this));
+    cells: function (expressions) {
 
         return expressions.map(function (expression) {
             return this.cellType(expression);
@@ -1156,7 +1137,7 @@ var GeneProfileRow = React.createClass({
                     </div>
                 </th>
                 {this.props.designElement ? <th className="gxaHeatmapTableDesignElement">{this.props.designElement}</th> : null}
-                {this.props.renderExpressionCells ? this.cells(this.props.expressions, this.props.nonExpressedColumnHeaders) : null}
+                {this.props.renderExpressionCells ? this.cells(this.props.expressions) : null}
             </tr>
         );
     },

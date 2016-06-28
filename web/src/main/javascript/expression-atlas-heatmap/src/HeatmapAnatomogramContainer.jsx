@@ -117,7 +117,6 @@ var HeatmapAnatomogramContainer = React.createClass({
                                 <Heatmap type={this.props.type}
                                          heatmapConfig={this.state.heatmapConfig}
                                          columnHeaders={this.state.columnHeaders}
-                                         nonExpressedColumnHeaders={this.state.nonExpressedColumnHeaders}
                                          profiles={this.state.profiles}
                                          geneSetProfiles={this.state.geneSetProfiles}
                                          ensemblEventEmitter={this.props.ensemblEventEmitter}
@@ -158,7 +157,6 @@ var HeatmapAnatomogramContainer = React.createClass({
         return {
             heatmapConfig: '',
             columnHeaders: [],
-            nonExpressedColumnHeaders: [],
             profiles: {
                 rows: [],
                 minExpressionLevel: 0,
@@ -176,7 +174,6 @@ var HeatmapAnatomogramContainer = React.createClass({
         this.setState({
             heatmapConfig: data.config,
             columnHeaders: data.columnHeaders,
-            nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
             profiles: data.profiles,
             jsonCoexpressions : data.jsonCoexpressions,
             geneSetProfiles: data.geneSetProfiles,
