@@ -243,7 +243,7 @@ var HighchartsHeatmap = React.createClass({
         Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseLeave', {svgPathId: svgPathId});
     },
 
-    _registerListenerIfNecessary(name, fn) {
+    _registerListenerIfNecessary: function(name, fn) {
       if (this.props.anatomogramEventEmitter &&
           this.props.anatomogramEventEmitter._events &&
           !this.props.anatomogramEventEmitter._events.hasOwnProperty(name)) {
