@@ -140,7 +140,7 @@ var noOrdering = function(arr){
 var getDataSeries = function (profilesRows) {
   var thresholds = {
     RNASEQ_MRNA_BASELINE : [0,10,1000],
-    PROTEOMICS_BASELINE : [0,10,1000], //TODO decide on the thresholds for proteomics baseline experiments
+    PROTEOMICS_BASELINE : [0,0.001,8],
     DEFAULT : [0,10,1000]
   };
   return (_
