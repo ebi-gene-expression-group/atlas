@@ -51,6 +51,7 @@ public class ExperimentOpLogWriter {
                 .forTsvFilePathTemplate(opLogTemplate)
                 .withExperimentAccession(accession)
                 .withAppend(false)
+                .makeGroupWritable()
                 .build();
         List<String[]> lines = new ArrayList<>();
         for (int i = opLog.size() - Math.min(opLog.size(), MAX_LENGTH); i < opLog.size(); i++) {

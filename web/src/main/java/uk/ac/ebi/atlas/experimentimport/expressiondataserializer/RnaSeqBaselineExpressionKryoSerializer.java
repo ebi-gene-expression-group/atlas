@@ -19,11 +19,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermission;
 import java.text.MessageFormat;
+import java.util.Set;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 01/04/15.
- */
 @Named
 public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSerializer {
 
@@ -35,17 +36,14 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
     private static final int FIRST_EXPRESSION_LEVEL_INDEX = 2;
 
     private String serializedExpressionsFileTemplate;
-    private String serializedExpressionLevelsFileTemplate;
     private String tsvFileTemplate;
     private CsvReaderFactory csvReaderFactory;
 
     @Inject
     public RnaSeqBaselineExpressionKryoSerializer(@Value("#{configuration['experiment.kryo_expressions.path.template']}") String serializedExpressionsFileTemplate,
-                                                  @Value("#{configuration['experiment.kryo_expression_levels.path.template']}") String serializedExpressionLevelsFileTemplate,
                                                   @Value("#{configuration['experiment.magetab.path.template']}") String tsvFileTemplate,
                                                   CsvReaderFactory csvReaderFactory) {
         this.serializedExpressionsFileTemplate = serializedExpressionsFileTemplate;
-        this.serializedExpressionLevelsFileTemplate = serializedExpressionLevelsFileTemplate;
         this.tsvFileTemplate = tsvFileTemplate;
         this.csvReaderFactory = csvReaderFactory;
     }
@@ -61,18 +59,14 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
 
         String tsvFilePath = MessageFormat.format(tsvFileTemplate, experimentAccession);
         String serializedExpressionsFileURL = MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession);
-        String serializedExpressionLevelsFileURL = MessageFormat.format(serializedExpressionLevelsFileTemplate, experimentAccession);
 
         try (FileOutputStream expressionsOutputStream = new FileOutputStream(serializedExpressionsFileURL);
              UnsafeOutput expressionsOutput = new UnsafeOutput(expressionsOutputStream);
-             FileOutputStream expressionLevelsOutputStream = new FileOutputStream(serializedExpressionLevelsFileURL);
-             UnsafeOutput expressionLevelsOutput = new UnsafeOutput(expressionLevelsOutputStream);
              CSVReader tsvReaderForLineCount = csvReaderFactory.createTsvReader(tsvFilePath);
              CSVReader tsvReader = csvReaderFactory.createTsvReader(tsvFilePath)) {
 
             LOGGER.debug("Parsing {}", tsvFilePath);
             LOGGER.debug("Writing full baseline expressions to {}", serializedExpressionsFileURL);
-            LOGGER.debug("Writing expression levels to {}", serializedExpressionLevelsFileURL);
 
             // Count number of genes (lines except the header)
             int geneCount = 0;
@@ -81,20 +75,17 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
             }
             geneCount--;
             kryo.writeObject(expressionsOutput, geneCount);
-            kryo.writeObject(expressionLevelsOutput, geneCount);
 
             // First line contains an array {"Gene ID", "Gene Name", "g1", "g2", "g3",  ...}
             String[] assays = tsvReader.readNext();
             assays = (String[]) ArrayUtils.subarray(assays, FIRST_EXPRESSION_LEVEL_INDEX, assays.length);
             kryo.writeObject(expressionsOutput, assays);
-            kryo.writeObject(expressionLevelsOutput, assays);
 
             FactorGroup[] factorGroups = new FactorGroup[assays.length];
             for (int i = 0 ; i < assays.length ; i++) {
                 factorGroups[i] = experimentalFactors.getFactorGroup(assays[i]);
             }
             kryo.writeObject(expressionsOutput, factorGroups);
-            kryo.writeObject(expressionLevelsOutput, factorGroups);
 
             LOGGER.debug("Writing {} genes with {} assay groups each", geneCount, assays.length);
 
@@ -111,17 +102,12 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
                 kryo.writeObject(expressionsOutput, geneId);
                 kryo.writeObject(expressionsOutput, geneName);
                 kryo.writeObject(expressionsOutput, baselineExpressions);
-
-                double[] expressionLevels = new double[assays.length];
-                for (int i = 0 ; i < assays.length ; i++) {
-                    expressionLevels[i] = baselineExpressions[i].getLevel();
-                }
-                kryo.writeObject(expressionLevelsOutput, geneId);
-                kryo.writeObject(expressionLevelsOutput, geneName);
-                kryo.writeObject(expressionLevelsOutput, expressionLevels);
             }
             LOGGER.info("Files successfully written in {} ms", System.currentTimeMillis() - start);
 
+            Set<PosixFilePermission> perms = Files.getPosixFilePermissions(Paths.get(serializedExpressionsFileURL));
+            perms.add(PosixFilePermission.GROUP_WRITE);
+            Files.setPosixFilePermissions(Paths.get(serializedExpressionsFileURL), perms);
         }
         catch (IOException exception) {
             LOGGER.error(exception.getMessage(), exception);
