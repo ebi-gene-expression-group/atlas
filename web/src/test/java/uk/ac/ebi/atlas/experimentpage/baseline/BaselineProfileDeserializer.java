@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.profiles.baseline;
+package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -26,7 +26,7 @@ public final class BaselineProfileDeserializer {
         return buildProfiles(normalizedFactorType, factorGroups, profileLines, cutOff);
     }
 
-    public static ImmutableList<BaselineProfile> buildProfiles(String factorType, OrderedFactorGroups factorGroups, String expressions, double cutOff) {
+    static ImmutableList<BaselineProfile> buildProfiles(String factorType, OrderedFactorGroups factorGroups, String expressions, double cutOff) {
         ImmutableList.Builder<BaselineProfile> builder = ImmutableList.builder();
         String[] expressionLines = expressions.split("\n");
 
@@ -59,7 +59,7 @@ public final class BaselineProfileDeserializer {
         return !expression.isKnown() || expression.isGreaterThan(cutOff);
     }
 
-    public static OrderedFactorGroups orderedFactorGroupsOfSameFactorType(String factorType, String factorValues) {
+    static OrderedFactorGroups orderedFactorGroupsOfSameFactorType(String factorType, String factorValues) {
         ImmutableList.Builder<FactorGroup> builder = ImmutableList.builder();
         String[] values = factorValues.split(",");
 

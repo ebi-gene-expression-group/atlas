@@ -9,7 +9,7 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileDeserializer;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfileDeserializer;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import java.awt.*;

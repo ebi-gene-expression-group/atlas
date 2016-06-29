@@ -53,16 +53,13 @@ public class BaselineProfilesHeatMap {
         return profiles;
     }
 
-    public BaselineProfilesList fetchInPrescribedOrder(List<String> geneNamesInOrder, BaselineProfileStreamOptions
-            options,
-                                                       GeneQueryResponse geneQueryResponse, boolean asGeneSets) {
+    public BaselineProfilesList fetchInPrescribedOrder(List<String> geneNamesInOrder, BaselineProfileStreamOptions options,
+                                                        GeneQueryResponse geneQueryResponse, boolean asGeneSets) {
 
-        SelectProfiles<BaselineProfile, BaselineProfilesList> s = new PrescribedOrderProfileSelection<>
-                (geneNamesInOrder, new BaselineProfilesListBuilder());
+        SelectProfiles<BaselineProfile, BaselineProfilesList> s =
+                new PrescribedOrderProfileSelection<>(geneNamesInOrder, new BaselineProfilesListBuilder());
 
-        return profilesHeatmapSource.fetch(options, s,
-                geneQueryResponse,
-                asGeneSets);
+        return profilesHeatmapSource.fetch(options, s,geneQueryResponse, asGeneSets);
     }
 
 }
