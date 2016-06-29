@@ -1,113 +1,111 @@
-
 package uk.ac.ebi.atlas.model;
 
-import org.apache.commons.configuration.SubnodeConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.configuration.tree.xpath.XPathExpressionEngine;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.w3c.dom.Document;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ExperimentConfigurationTest {
 
-    private static final String CONTRAST_ID = "contrastId";
-    private static final String REFERENCE_ASSAY_GROUP = "reference_assay_group";
-    private static final String TEST_ASSAY_GROUP = "test_assay_group";
-    private static final String NAME = "name";
-    private static final String XML_CONTENT =
-            "<configuration experimentType=\"microarray_1colour_mrna_differential\">" +
-                    "    <analytics>" +
-                    "        <assay_groups>" +
-                    "            <assay_group id=\"" + REFERENCE_ASSAY_GROUP + "\">" +
-                    "<assay technical_replicate_id=\"t29\">ERR315431</assay>\n" +
-                    "<assay technical_replicate_id=\"t28\">ERR315343</assay>\n" +
-                    "<assay technical_replicate_id=\"t28\">ERR315342</assay>\n" +
-                    "<assay technical_replicate_id=\"t27\">ERR315332</assay>\n" +
-                    "<assay technical_replicate_id=\"t29\">ERR315378</assay>\n" +
-                    "            </assay_group>" +
-                    "            <assay_group id=\"" + TEST_ASSAY_GROUP + "\">" +
-                    "<assay>SRR057599</assay>\n" +
-                    "<assay>SRR057600</assay>\n" +
-                    "<assay>SRR057601</assay>\n" +
-                    "<assay>SRR057602</assay>\n" +
-                    "            </assay_group>" +
-                    "        </assay_groups>" +
-                    "        <contrasts>" +
-                    "            <contrast id=\"" + CONTRAST_ID + "\">" +
-                    "                <name>" + NAME + "</name>" +
-                    "                <reference_assay_group>" + REFERENCE_ASSAY_GROUP + "</reference_assay_group>" +
-                    "                <test_assay_group>" + TEST_ASSAY_GROUP + "</test_assay_group>" +
-                    "            </contrast>" +
-                    "        </contrasts>" +
-                    "    </analytics>" +
-                    "</configuration>";
+    private static final String RNASEQ_BASELINE_CONFIGURATION_XML =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                    "<configuration experimentType=\"microarray_1colour_mrna_differential\" r_data=\"1\">\n" +
+                    "    <analytics>\n" +
+                    "        <assay_groups>\n" +
+                    "            <assay_group id=\"g1\">\n" +
+                    "                <assay>A</assay>\n" +
+                    "            </assay_group>\n" +
+                    "            <assay_group id=\"g2\">\n" +
+                    "                <assay technical_replicate_id=\"t1\">A</assay>\n" +
+                    "                <assay technical_replicate_id=\"t1\">B</assay>\n" +
+                    "            </assay_group>\n" +
+                    "            <assay_group id=\"g3\">\n" +
+                    "                <assay>A</assay>\n" +
+                    "                <assay>B</assay>\n" +
+                    "            </assay_group>\n" +
+                    "            <assay_group id=\"g4\">\n" +
+                    "                <assay>A</assay>\n" +
+                    "                <assay technical_replicate_id=\"t1\">B</assay>\n" +
+                    "                <assay technical_replicate_id=\"t1\">C</assay>\n" +
+                    "                <assay>D</assay>\n" +
+                    "                <assay technical_replicate_id=\"t1\">E</assay>\n" +
+                    "            </assay_group>\n" +
+                    "            <assay_group id=\"g5\">\n" +
+                    "                <assay>A</assay>\n" +
+                    "                <assay technical_replicate_id=\"t1\">B</assay>\n" +
+                    "                <assay technical_replicate_id=\"t1\">C</assay>\n" +
+                    "                <assay>D</assay>\n" +
+                    "                <assay technical_replicate_id=\"t1\">E</assay>\n" +
+                    "                <assay>F</assay>\n" +
+                    "                <assay technical_replicate_id=\"t2\">G</assay>\n" +
+                    "                <assay technical_replicate_id=\"t2\">H</assay>\n" +
+                    "            </assay_group>\n" +
+                    "        </assay_groups>\n" +
+                    "        <contrasts>\n" +
+                    "            <contrast id=\"g1_g2\">\n" +
+                    "                <name>'g1' vs 'g2'</name>\n" +
+                    "                <reference_assay_group>g1</reference_assay_group>\n" +
+                    "                <test_assay_group>g2</test_assay_group>\n" +
+                    "            </contrast>\n" +
+                    "        </contrasts>\n" +
+                    "    </analytics>\n" +
+                    "</configuration>\n";
 
-    @Mock
-    XMLConfiguration xmlConfigurationMock;
-
-    @Mock
-    SubnodeConfiguration configurationMock;
-
-    ExperimentConfiguration subject;
+    private ExperimentConfiguration subject;
 
     @Before
     public void setUp() throws Exception {
-        when(xmlConfigurationMock.getStringArray("analytics/contrasts/contrast/@id")).thenReturn(new String[]{CONTRAST_ID});
-        when(xmlConfigurationMock.getStringArray("/analytics/assay_groups/assay_group/@id")).thenReturn(new String[]{REFERENCE_ASSAY_GROUP, TEST_ASSAY_GROUP});
-        when(xmlConfigurationMock.getStringArray("analytics/assay_groups/assay_group[@id=\'" + REFERENCE_ASSAY_GROUP + "\']/assay")).thenReturn(new String[]{REFERENCE_ASSAY_GROUP});
-        when(xmlConfigurationMock.getStringArray("analytics/assay_groups/assay_group[@id=\'" + TEST_ASSAY_GROUP + "\']/assay")).thenReturn(new String[]{TEST_ASSAY_GROUP});
-        when(xmlConfigurationMock.configurationAt("analytics/contrasts/contrast[@id=\'" + CONTRAST_ID + "\']")).thenReturn(configurationMock);
-        when(configurationMock.getString(NAME)).thenReturn(NAME);
-        when(configurationMock.getString(REFERENCE_ASSAY_GROUP)).thenReturn(REFERENCE_ASSAY_GROUP);
-        when(configurationMock.getString(TEST_ASSAY_GROUP)).thenReturn(TEST_ASSAY_GROUP);
+        InputStream inputStream = new ByteArrayInputStream(RNASEQ_BASELINE_CONFIGURATION_XML.getBytes(StandardCharsets.UTF_8));
+
+        XMLConfiguration xmlConfiguration = new XMLConfiguration();
+        xmlConfiguration.load(inputStream);
+        xmlConfiguration.setExpressionEngine(new XPathExpressionEngine());
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(new ByteArrayInputStream(XML_CONTENT.getBytes()));
+        inputStream.reset();
+        Document document = builder.parse(inputStream);
 
-        subject = new ExperimentConfiguration(xmlConfigurationMock, doc);
-    }
-
-    @Test
-    public void testGetContrasts()  {
-        Set<Contrast> contrasts = subject.getContrasts();
-        assertThat(contrasts.size(), is(1));
-        Contrast contrast = contrasts.iterator().next();
-        assertThat(contrast.getId(), is(CONTRAST_ID));
-        assertThat(contrast.getDisplayName(), is(NAME));
-        assertThat(contrast.getReferenceAssayGroup(), contains("ERR315378", "ERR315332", "ERR315342", "ERR315343", "ERR315431"));
-        assertThat(contrast.getTestAssayGroup(), contains("SRR057601", "SRR057602", "SRR057600", "SRR057599"));
+        subject = new ExperimentConfiguration(xmlConfiguration, document);
     }
 
     @Test
     public void testGetAssayGroups()  {
         AssayGroups assayGroups = subject.getAssayGroups();
-        assertThat(assayGroups.getAssayGroupIds(), hasSize(2));
+        assertThat(assayGroups.getAssayGroupIds(), hasSize(5));
     }
 
     @Test
-    public void replicatesIsNumberOfUniqueTechnicalReplicates() {
+    public void replicatesIsSumOfUniqueTechnicalReplicatesAndUnqualifiedAssays() {
         AssayGroups assayGroups = subject.getAssayGroups();
-        assertThat(assayGroups.getAssayGroup(REFERENCE_ASSAY_GROUP).getReplicates(), is(3));
+        assertThat(assayGroups.getAssayGroup("g1").getReplicates(), is(1));
+        assertThat(assayGroups.getAssayGroup("g2").getReplicates(), is(1));
+        assertThat(assayGroups.getAssayGroup("g3").getReplicates(), is(2));
+        assertThat(assayGroups.getAssayGroup("g4").getReplicates(), is(3));
+        assertThat(assayGroups.getAssayGroup("g5").getReplicates(), is(5));
     }
 
     @Test
-    public void replicatesIsNumberOfAssays() {
-        AssayGroups assayGroups = subject.getAssayGroups();
-        assertThat(assayGroups.getAssayGroup(TEST_ASSAY_GROUP).getReplicates(), is(4));
+    public void testGetContrasts()  {
+        Set<Contrast> contrasts = subject.getContrasts();
+        assertThat(contrasts, hasSize(1));
+        Contrast contrast = contrasts.iterator().next();
+        assertThat(contrast.getId(), is("g1_g2"));
+        assertThat(contrast.getDisplayName(), is("'g1' vs 'g2'"));
+        assertThat(contrast.getReferenceAssayGroup(), contains("A"));
+        assertThat(contrast.getTestAssayGroup(), contains("A", "B"));
     }
 
     @Test
