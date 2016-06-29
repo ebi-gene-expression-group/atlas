@@ -224,7 +224,7 @@ var getTheWholeDataObject = function(rows, columnHeaders, config, isMultiExperim
     yAxisCategories: getYAxisCategories(rows, config),
     orderings: {
       "Default" : {
-        columns: noOrdering(columnHeaders),
+        columns: createOrdering(columnHeaders.map(_.constant(0)), comparatorByProperty("factorValue"),columnHeaders),
         rows: noOrdering(rows)
       },
       "Gene expression" : {

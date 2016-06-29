@@ -505,10 +505,6 @@ var HeatmapOptions = React.createClass({
           </div>
           <div style={{display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight}}>
             <div className="btn-group">
-              <OrderingDropdown
-                available={this.props.orderings.available}
-                current={this.props.orderings.current}
-                onSelect={this.props.orderings.onSelect}/>
               <DownloadProfilesButton
                 ref="downloadProfilesButton"
                 downloadProfilesURL={this.props.downloadOptions.downloadProfilesURL}
