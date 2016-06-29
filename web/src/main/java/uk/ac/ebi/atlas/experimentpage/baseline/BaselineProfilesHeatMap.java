@@ -33,8 +33,7 @@ public class BaselineProfilesHeatMap {
     public BaselineProfilesHeatMap(RankBaselineProfilesFactory rankProfilesFactory,
                                    @Qualifier("baselineProfileInputStreamFactory") BaselineProfileInputStreamFactory inputStreamFactory) {
         this.rankProfilesFactory = rankProfilesFactory;
-        profilesHeatmapSource = new ProfilesHeatMapSource<>(
-                inputStreamFactory,new BaselineProfileStreamFilters());
+        profilesHeatmapSource = new ProfilesHeatMapSource<>(inputStreamFactory, new BaselineProfileStreamFilters());
     }
 
     public BaselineProfilesList fetch(BaselineProfileStreamOptions options,
@@ -42,26 +41,21 @@ public class BaselineProfilesHeatMap {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        BaselineProfilesList profiles = profilesHeatmapSource.fetch(options, rankProfilesFactory.create(options),
-                geneQueryResponse,
-                asGeneSets);
+        BaselineProfilesList profiles =
+                profilesHeatmapSource.fetch(options, rankProfilesFactory.create(options), geneQueryResponse, asGeneSets);
 
         stopwatch.stop();
 
-        LOGGER.debug(
-                "<fetch> for [{}] (asGeneSets={}) took {} secs",
-                 geneQueryResponse.getAllGeneIds().size(), asGeneSets,
-                stopwatch
-                .elapsed(TimeUnit
-                .MILLISECONDS) /
-                        1000D);
+        LOGGER.debug("<fetch> for [{}] (asGeneSets={}) took {} secs",
+                geneQueryResponse.getAllGeneIds().size(), asGeneSets,
+                stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
 
         return profiles;
     }
 
     public BaselineProfilesList fetchInPrescribedOrder(List<String> geneNamesInOrder, BaselineProfileStreamOptions
-                                                       options,
-                                                       GeneQueryResponse geneQueryResponse, boolean asGeneSets){
+            options,
+                                                       GeneQueryResponse geneQueryResponse, boolean asGeneSets) {
 
         SelectProfiles<BaselineProfile, BaselineProfilesList> s = new PrescribedOrderProfileSelection<>
                 (geneNamesInOrder, new BaselineProfilesListBuilder());
