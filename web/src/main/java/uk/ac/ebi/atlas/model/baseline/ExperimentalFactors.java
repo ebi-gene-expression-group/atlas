@@ -147,8 +147,7 @@ public class ExperimentalFactors implements Serializable {
 
     // return factors for the slice specified
     public SortedSet<Factor> getComplementFactors(final FactorGroup slice) {
-        TreeSet<Factor> factors = Sets.newTreeSet(slice);
-        return getComplementFactors(factors);
+        return getComplementFactors(Sets.newTreeSet(slice));
     }
 
     public SortedSet<Factor> getComplementFactors(final Set<Factor> filterFactors) {
@@ -169,11 +168,6 @@ public class ExperimentalFactors implements Serializable {
 
         return filteredFactors;
 
-    }
-
-    public Set<Factor> getComplementFactorsByXML(final FactorGroup slice) {
-        TreeSet<Factor> factors = Sets.newTreeSet(slice);
-        return getComplementFactorsByXML(factors);
     }
 
     public SortedSet<Factor> getComplementFactorsByXML(final Set<Factor> filterFactors) {

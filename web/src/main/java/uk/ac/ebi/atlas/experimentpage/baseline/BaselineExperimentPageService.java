@@ -1,8 +1,12 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+
 import com.google.common.base.Optional;
-import com.google.gson.*;
-import org.apache.commons.lang.StringUtils;
+import com.google.common.collect.Lists;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -10,7 +14,10 @@ import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
@@ -22,10 +29,7 @@ import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 public class BaselineExperimentPageService {
 
@@ -70,18 +74,18 @@ public class BaselineExperimentPageService {
             // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
             // instead of the current tab separated syntax for geneQuery
             preferences.setGeneQuery(GeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
-            preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
-        } else {
-            preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
-            BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
+        }
+        preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
+        BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
+
+        if(!isWidget) {
             addFactorMenu(model, experiment, requestContext);
         }
 
-        Set<AssayGroupFactor> filteredAssayGroupFactors = getFilteredAssayGroupFactors(experiment, preferences);
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
-        model.addAttribute("allQueryFactors", filteredAssayGroupFactors);
+        model.addAttribute("allQueryFactors", requestContext.getOrderedAssayGroupFactors());
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
         model.addAllAttributes(experiment.getBaselineAttributes());
         DownloadURLBuilder.addRDownloadUrlToModel(model, request.getRequestURI());
@@ -94,7 +98,7 @@ public class BaselineExperimentPageService {
         preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
-        Set<AssayGroupFactor> filteredAssayGroupFactors = getFilteredAssayGroupFactors(experiment, preferences);
+        List<AssayGroupFactor> filteredAssayGroupFactors =requestContext.getOrderedAssayGroupFactors();
         String contextRoot = request.getContextPath();
         /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
         model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
@@ -111,10 +115,9 @@ public class BaselineExperimentPageService {
 
         model.addAttribute("enableEnsemblLauncher", !filteredAssayGroupFactors.isEmpty()
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
-                filteredAssayGroupFactors.iterator().next().getAssayGroupId()));
+                filteredAssayGroupFactors.get(0).getAssayGroupId()));
 
-        BaselineProfilesHeatMapWrangler heatMapResults = baselineProfilesHeatMapWranglerFactory.create(preferences,
-                experiment);
+        BaselineProfilesHeatMapWrangler heatMapResults = baselineProfilesHeatMapWranglerFactory.create(preferences,experiment);
 
         model.addAttribute("jsonColumnHeaders", constructColumnHeaders(filteredAssayGroupFactors));
 
@@ -169,19 +172,8 @@ public class BaselineExperimentPageService {
                 ? gson.toJson(viewModel)
                 : "";
     }
-
-    private Set<AssayGroupFactor> getFilteredAssayGroupFactors(BaselineExperiment experiment, BaselineRequestPreferences preferences){
-        Set<Factor> selectedFilterFactors = BaselineRequestContext.createFor(experiment,preferences).getSelectedFilterFactors();
-
-        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-        if (experimentalFactors.getAllFactorsOrderedByXML() != null && !experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
-            return experimentalFactors.getComplementAssayGroupFactorsByXML(selectedFilterFactors);
-        } else {
-            return experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors);
-        }
-    }
-
-    private String constructColumnHeaders(Set<AssayGroupFactor> filteredAssayGroupFactors){
+    
+    private String constructColumnHeaders(List<AssayGroupFactor> filteredAssayGroupFactors){
         return gson.toJson(AssayGroupFactorViewModel.createList(filteredAssayGroupFactors));
     }
 
