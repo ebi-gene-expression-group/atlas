@@ -64,7 +64,7 @@ public class ExpressionSerializerServiceIT {
 
         expressionSerializerFactory = new ExpressionSerializerFactory(
                 new RnaSeqBaselineExpressionKryoSerializer(serializedExpressionsFileTemplate,
-                        serializedExpressionLevelsFileTemplate, tsvFileTemplate, new CsvReaderFactory()));
+                        tsvFileTemplate, new CsvReaderFactory()));
 
         subject = new ExpressionSerializerService(experimentTrader, expressionSerializerFactory,
                 baselineExperimentsCache,experimentChecker);

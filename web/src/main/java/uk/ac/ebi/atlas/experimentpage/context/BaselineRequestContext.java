@@ -81,22 +81,11 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
     }
 
     public SortedSet<Factor> getOrderedFilterFactors(){
-        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-        Set<Factor> selectedFilterFactors = this.getSelectedFilterFactors();
-        if (experimentalFactors.getAllFactorsOrderedByXML() != null && !experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
-            return experimentalFactors.getComplementFactorsByXML(selectedFilterFactors);
-        } else {
-            return experimentalFactors.getComplementFactors(selectedFilterFactors);
-        }
+        return experiment.getExperimentalFactors().getComplementFactors(this.getSelectedFilterFactors());
     }
 
     public List<AssayGroupFactor> getOrderedAssayGroupFactors(){
-        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-        if (experimentalFactors.getAllFactorsOrderedByXML() != null && !experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
-            return Lists.newArrayList(experimentalFactors.getComplementAssayGroupFactorsByXML(selectedFilterFactors));
-        } else {
-            return Lists.newArrayList(experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors));
-        }
+        return experiment.getExperimentalFactors().getComplementAssayGroupFactors(selectedFilterFactors);
     }
 
 }

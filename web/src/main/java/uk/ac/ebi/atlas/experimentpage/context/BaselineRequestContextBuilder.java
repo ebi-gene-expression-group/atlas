@@ -70,16 +70,10 @@ public class BaselineRequestContextBuilder {
         requestContext.setSelectedQueryFactors(queryFactors);
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-        if (experimentalFactors.getXmlFactorsByType() != null &&
-                !experimentalFactors.getXmlFactorsByType().isEmpty()) {
-            Set<Factor> allQueryFactors = experimentalFactors.getComplementFactorsByXML(selectedFilterFactors);
-            checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
-            requestContext.setAllQueryFactors(allQueryFactors);
-        } else {
-            SortedSet<Factor> allQueryFactors = experimentalFactors.getComplementFactors(selectedFilterFactors);
-            checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
-            requestContext.setAllQueryFactors(allQueryFactors);
-        }
+
+        SortedSet<Factor> allQueryFactors = experimentalFactors.getComplementFactors(selectedFilterFactors);
+        checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
+        requestContext.setAllQueryFactors(allQueryFactors);
 
         return requestContext;
     }

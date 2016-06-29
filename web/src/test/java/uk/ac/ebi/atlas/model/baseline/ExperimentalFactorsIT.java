@@ -15,6 +15,7 @@ import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.inject.Inject;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -54,7 +55,6 @@ public class ExperimentalFactorsIT {
         for(Factor f: allFactors) {
 
             assertTrue(subject.getFactors(f.getType()).contains(f));
-            assertTrue(subject.getFactorsByType().get(f.getType()).contains(f));
 
             Set<Factor> complement = subject.getComplementFactors(Sets.newHashSet(f));
             Set<Factor> cooccurring = subject.getCoOccurringFactors(f);
@@ -68,7 +68,7 @@ public class ExperimentalFactorsIT {
             intersection.retainAll(cooccurring);
             assertTrue(intersection.isEmpty());
 
-            SortedSet<AssayGroupFactor> complementAssays = subject.getComplementAssayGroupFactors(Sets.newHashSet(f));
+            List<AssayGroupFactor> complementAssays = subject.getComplementAssayGroupFactors(Sets.newHashSet(f));
             assertEquals(complement.size(), complementAssays.size());
             for(AssayGroupFactor agf : complementAssays){
                 assertFalse(subject.getFactorGroup(agf.getAssayGroupId()).contains(f));

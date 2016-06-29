@@ -9,11 +9,11 @@ import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import java.util.Set;
 
 public class PreferencesForBaselineExperiments {
-    
-    public PreferencesForBaselineExperiments() {
+
+    private PreferencesForBaselineExperiments() {
     }
 
-    public void setPreferenceDefaults(BaselineRequestPreferences preferences, BaselineExperiment baselineExperiment) {
+    public static void setPreferenceDefaults(BaselineRequestPreferences preferences, BaselineExperiment baselineExperiment) {
 
         if (StringUtils.isBlank(preferences.getQueryFactorType())) {
             preferences.setQueryFactorType(baselineExperiment.getExperimentalFactors().getDefaultQueryFactorType());
@@ -29,17 +29,8 @@ public class PreferencesForBaselineExperiments {
 
     }
 
-    private boolean allFactorsInSliceSelected(BaselineRequestPreferences preferences, BaselineExperiment experiment) {
-        Set<Factor> selectedFilterFactors = FilterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
-
-        Set<Factor> allFactorsInSlice;
-        if(experiment.getExperimentalFactors().getAllFactorsOrderedByXML() != null &&
-                !experiment.getExperimentalFactors().getAllFactorsOrderedByXML().isEmpty()) {
-            allFactorsInSlice = experiment.getExperimentalFactors().getComplementFactorsByXML(selectedFilterFactors);
-        } else {
-            allFactorsInSlice = experiment.getExperimentalFactors().getComplementFactors(selectedFilterFactors);
-        }
-
-        return (preferences.getQueryFactorValues().size() == allFactorsInSlice.size());
+    private static boolean allFactorsInSliceSelected(BaselineRequestPreferences preferences, BaselineExperiment
+            experiment) {
+        return (preferences.getQueryFactorValues().size() == experiment.getExperimentalFactors().getComplementFactors(FilterFactorsConverter.deserialize(preferences.getSerializedFilterFactors())).size());
     }
 }

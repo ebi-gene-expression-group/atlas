@@ -89,7 +89,7 @@ public class ExperimentalFactorsTest {
     @Test
     public void getFactorsWithGivenNameCooccurringWithGivenFactorTest() {
         //when
-        SortedSet<Factor> factors = subject.getCoOccurringFactors(factorWithType2);
+        Set<Factor> factors = subject.getCoOccurringFactors(factorWithType2);
         //then
         assertThat(factors, contains(factorWithType1, factorWithType3));
 
@@ -130,7 +130,8 @@ public class ExperimentalFactorsTest {
 
     @Test
     public void getComplementAssayGroupFactors() {
-        SortedSet<AssayGroupFactor> complement = subject.getComplementAssayGroupFactors(Sets.newHashSet(factorWithType1, factorWithType2));
+        List<AssayGroupFactor> complement = subject.getComplementAssayGroupFactors(Sets.newHashSet(factorWithType1,
+                factorWithType2));
 
         assertThat(complement, contains(new AssayGroupFactor(G1, factorWithType3)));
         assertThat(complement, not(hasItem(new AssayGroupFactor(G2, factorWithType3DifferentValue))));

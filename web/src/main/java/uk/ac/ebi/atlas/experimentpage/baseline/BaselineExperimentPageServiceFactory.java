@@ -25,7 +25,6 @@ public class BaselineExperimentPageServiceFactory {
     private final BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
     private final SpeciesKingdomTrader speciesKingdomTrader;
     private final BaselineExperimentUtil bslnUtil;
-    private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
     private final CoexpressedGenesService coexpressedGenesService;
     private final SolrQueryService solrQueryService;
     private final RankBaselineProfilesFactory rankProfilesFactory;
@@ -41,7 +40,6 @@ public class BaselineExperimentPageServiceFactory {
         this.speciesKingdomTrader = new SpeciesKingdomTrader(new OrganismKingdomDAO(jdbcTemplate), new
                 OrganismEnsemblDAO(jdbcTemplate));
         this.bslnUtil = bslnUtil;
-        this.preferencesForBaselineExperiments = new PreferencesForBaselineExperiments();
         this.coexpressedGenesService = new CoexpressedGenesService(new CoexpressedGenesDao(jdbcTemplate));
         this.solrQueryService = solrQueryService;
         this.rankProfilesFactory = rankProfilesFactory;
@@ -52,7 +50,7 @@ public class BaselineExperimentPageServiceFactory {
         return new BaselineExperimentPageService(new BaselineProfilesHeatMapWranglerFactory(rankProfilesFactory,
                 inputStreamFactory,baselineProfilesViewModelBuilder, solrQueryService, coexpressedGenesService),
                 applicationProperties,
-                speciesKingdomTrader, tracksUtil, bslnUtil,
-                preferencesForBaselineExperiments);
+                speciesKingdomTrader, tracksUtil, bslnUtil
+        );
     }
 }

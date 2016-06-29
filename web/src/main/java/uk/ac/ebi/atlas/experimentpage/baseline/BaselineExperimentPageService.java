@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 
 
 import com.google.common.base.Optional;
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -38,7 +37,6 @@ public class BaselineExperimentPageService {
     private final ApplicationProperties applicationProperties;
     private final SpeciesKingdomTrader speciesKingdomTrader;
     private BaselineExperimentUtil bslnUtil;
-    private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
     private final AnatomogramFactory anatomogramFactory;
     private Gson gson = new GsonBuilder()
             .create();
@@ -47,7 +45,7 @@ public class BaselineExperimentPageService {
                                          ApplicationProperties applicationProperties,
                                          SpeciesKingdomTrader speciesKingdomTrader,
                                          TracksUtil tracksUtil,
-                                         BaselineExperimentUtil bslnUtil, PreferencesForBaselineExperiments preferencesForBaselineExperiments) {
+                                         BaselineExperimentUtil bslnUtil) {
 
         this.applicationProperties = applicationProperties;
         this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
@@ -55,7 +53,6 @@ public class BaselineExperimentPageService {
         this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
         this.bslnUtil = bslnUtil;
-        this.preferencesForBaselineExperiments = preferencesForBaselineExperiments;
     }
 
     //TODO I got misplaced when refactoring, I belong in a controller, not here
@@ -75,7 +72,7 @@ public class BaselineExperimentPageService {
             // instead of the current tab separated syntax for geneQuery
             preferences.setGeneQuery(GeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
         }
-        preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
+        PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
         BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
 
         if(!isWidget) {
@@ -95,7 +92,7 @@ public class BaselineExperimentPageService {
                                              Model model, HttpServletRequest request, boolean isWidget,
                                              boolean disableGeneLinks) throws GenesNotFoundException {
         //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
-        preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
+        PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
         List<AssayGroupFactor> filteredAssayGroupFactors =requestContext.getOrderedAssayGroupFactors();
@@ -184,12 +181,7 @@ public class BaselineExperimentPageService {
         //ToDo: this stuff should be refactored, menu should be a separate REST service
         SortedSet<String> menuFactorNames = experimentalFactors.getMenuFilterFactorNames();
         if (!menuFactorNames.isEmpty()) {
-            Set<Factor> menuFactors;
-            if (!experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
-                menuFactors = experimentalFactors.getAllFactorsOrderedByXML();
-            } else {
-                menuFactors = experimentalFactors.getAllFactors();
-            }
+            Set<Factor> menuFactors = experimentalFactors.getAllFactors();
 
             SortedSet<FilterFactorMenuVoice> filterFactorMenu = new FilterFactorMenuBuilder()
                     .withExperimentalFactors(experimentalFactors)
