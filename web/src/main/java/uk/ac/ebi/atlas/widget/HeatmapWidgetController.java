@@ -1,6 +1,7 @@
 
 package uk.ac.ebi.atlas.widget;
 
+import autovalue.shaded.com.google.common.common.collect.Lists;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
@@ -40,6 +41,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -124,7 +127,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     private void populateModelWithMultiExperimentResults(String contextRoot, GeneQuery geneQuery, String ensemblSpecies,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
-        SortedSet<Factor> orderedFactors = searchResult.getFactorsAcrossAllExperiments();
+        List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
 
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
             model.addAttribute("anatomogram", anatomogramFactory.get("ORGANISM_PART", ensemblSpecies, convert(orderedFactors), contextRoot));
@@ -141,18 +144,20 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         model.addAttribute("geneQuery", geneQuery);
     }
 
-    private SortedSet<AssayGroupFactor> convert(SortedSet<Factor> orderedFactors) {
+    private List<AssayGroupFactor> convert(List<Factor> orderedFactors) {
         ImmutableSortedSet.Builder<AssayGroupFactor> builder = ImmutableSortedSet.naturalOrder();
 
+        List<AssayGroupFactor> result = new ArrayList<>();
         for (Factor factor : orderedFactors) {
             AssayGroupFactor assayGropuFactor = new AssayGroupFactor("none",factor);
             builder.add(assayGropuFactor);
         }
 
-        return builder.build();
+        return new ArrayList<>(builder.build());
     }
 
-    private void addJsonForHeatMap(BaselineExperimentProfilesList baselineProfiles, SortedSet<Factor> orderedFactors, Model model) {
+    private void addJsonForHeatMap(BaselineExperimentProfilesList baselineProfiles, List<Factor> orderedFactors, Model
+            model) {
         if (baselineProfiles.isEmpty()) {
             return;
         }

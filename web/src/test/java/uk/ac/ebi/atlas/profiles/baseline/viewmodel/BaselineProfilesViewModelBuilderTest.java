@@ -1,19 +1,18 @@
 package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import org.junit.Test;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfileDeserializer;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfileDeserializer;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
-import java.awt.*;
-import java.util.SortedSet;
+import java.awt.Color;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -42,7 +41,7 @@ public class BaselineProfilesViewModelBuilderTest {
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
     private BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder = new BaselineExpressionViewModelBuilder(colorGradient);
     private BaselineProfilesViewModelBuilder subject = new BaselineProfilesViewModelBuilder(baselineExpressionViewModelBuilder);
-    private SortedSet<Factor> orderedFactors = ImmutableSortedSet.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
+    private List<Factor> orderedFactors = ImmutableList.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
 
     @Test
     public void buildProfilesViewModel() {

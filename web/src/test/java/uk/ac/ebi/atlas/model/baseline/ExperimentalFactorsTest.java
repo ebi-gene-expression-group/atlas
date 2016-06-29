@@ -138,6 +138,15 @@ public class ExperimentalFactorsTest {
     }
 
     @Test
+    public void getComplementAssayGroupFactors2() {
+        List<AssayGroupFactor> complement = subject.getComplementAssayGroupFactors(Sets.newHashSet(factorWithType1,
+                factorWithType3));
+
+        assertThat(complement, contains(new AssayGroupFactor(G1, factorWithType2)));
+        assertThat(complement, not(hasItem(new AssayGroupFactor(G2, factorWithType3DifferentValue))));
+    }
+
+    @Test
     public void getFactorGroupedByAssayGroupId() {
         ImmutableMap<String, Factor> type2ByAssayGroupId = subject.getFactorGroupedByAssayGroupId("TYPE2");
 

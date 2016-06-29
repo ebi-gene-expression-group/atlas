@@ -70,7 +70,7 @@ public class BaselineProfilesHeatMapWranglerTest {
         ts.add(mock(Factor.class));
         when(experimentalFactors.getComplementFactors(anySet())).thenReturn(ts);
 
-        when(baselineProfilesViewModelBuilder.build(Matchers.any(BaselineProfilesList.class), Matchers.any(SortedSet
+        when(baselineProfilesViewModelBuilder.build(Matchers.any(BaselineProfilesList.class), Matchers.any(List
                 .class))).thenReturn(resultObject);
 
         subject = fakeWrangler(baselineRequestPreferences, experiment);

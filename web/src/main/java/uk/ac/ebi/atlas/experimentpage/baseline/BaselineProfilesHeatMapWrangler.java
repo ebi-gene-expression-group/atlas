@@ -70,14 +70,14 @@ public class BaselineProfilesHeatMapWrangler {
 
     public JsonObject getJsonProfiles() throws GenesNotFoundException {
         fetchProfilesIfMissing();
-        return baselineProfilesViewModelBuilder.build(jsonProfiles, requestContext.getOrderedFilterFactors());
+        return baselineProfilesViewModelBuilder.build(jsonProfiles, requestContext.getFilterFactorsInTheSameOrderAsTheExperimentHeader());
     }
 
     public Optional<JsonObject> getJsonProfilesAsGeneSets() throws GenesNotFoundException {
         GeneQueryResponse r = getGeneQueryResponseForProfiles();
         return r.containsGeneSets()
                 ? Optional.of(baselineProfilesViewModelBuilder.build(baselineProfilesHeatMap.fetch(requestContext, r, true),
-                requestContext.getOrderedFilterFactors()))
+                requestContext.getFilterFactorsInTheSameOrderAsTheExperimentHeader()))
                 : Optional.<JsonObject>absent();
     }
 
@@ -100,7 +100,7 @@ public class BaselineProfilesHeatMapWrangler {
                                 requestContext,
                                 coexpressedStuff.get().getLeft(), false),
                                 requestContext
-                                        .getOrderedFilterFactors()));
+                                        .getFilterFactorsInTheSameOrderAsTheExperimentHeader()));
                 result.add(o);
             }
         }

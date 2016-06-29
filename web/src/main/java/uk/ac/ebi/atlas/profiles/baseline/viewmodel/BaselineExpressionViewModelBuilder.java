@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 import java.util.SortedSet;
 
 @Named
@@ -24,7 +25,7 @@ public class BaselineExpressionViewModelBuilder {
     }
 
     public JsonArray buildExpressions(Profile<Factor, BaselineExpression> profile,
-                                      SortedSet<Factor> orderedFactors, double
+                                      List<Factor> orderedFactors, double
                                                                   minExpressionLevel, double maxExpressionLevel) {
         JsonArray result = new JsonArray();
 

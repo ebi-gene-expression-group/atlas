@@ -26,7 +26,7 @@ public class BaselineExperimentProfilesViewModelBuilder {
         this.baselineExpressionViewModelBuilder = baselineExpressionViewModelBuilder;
     }
 
-    public JsonElement buildJson(GenericBaselineProfilesList<BaselineExperimentProfile> profiles, SortedSet<Factor>
+    public JsonElement buildJson(GenericBaselineProfilesList<BaselineExperimentProfile> profiles, List<Factor>
             orderedFactors) {
         JsonObject result = new JsonObject();
         result.addProperty("searchResultTotal", profiles.getTotalResultCount());
@@ -36,7 +36,8 @@ public class BaselineExperimentProfilesViewModelBuilder {
     }
 
     private JsonArray buildExperimentsJson(List<BaselineExperimentProfile> baselineProfiles,
-                                           SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+                                           List<Factor> orderedFactors, double minExpressionLevel, double
+                                                   maxExpressionLevel) {
         JsonArray result = new JsonArray();
         for (BaselineExperimentProfile baselineProfile : baselineProfiles) {
             result.add(buildExperimentJson(baselineProfile, orderedFactors, minExpressionLevel, maxExpressionLevel));
@@ -45,7 +46,8 @@ public class BaselineExperimentProfilesViewModelBuilder {
     }
 
     private JsonElement buildExperimentJson(BaselineExperimentProfile profile,
-                                            SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+                                            List<Factor> orderedFactors, double minExpressionLevel, double
+                                                    maxExpressionLevel) {
         JsonObject result = new JsonObject();
         result.addProperty("id", profile.getId());
         result.addProperty("name",profile.getShortName());

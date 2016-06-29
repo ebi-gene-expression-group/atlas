@@ -56,7 +56,8 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
     private BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder = new BaselineExpressionViewModelBuilder(colorGradient);
     private BaselineExperimentProfilesViewModelBuilder subject = new BaselineExperimentProfilesViewModelBuilder(baselineExpressionViewModelBuilder);
-    private SortedSet<Factor> orderedFactors = ImmutableSortedSet.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
+    private List<Factor> orderedFactors = ImmutableList.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
+    private List<Factor> reversedFactors = ImmutableList.of(BREAST,BRAIN,ADRENAL,ADIPOSE);
 
     private static final FactorGroup EMPTY_FACTOR_SET = new FactorSet();
 
@@ -175,8 +176,8 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 (profiles),
                 orderedFactors));
 
-        List<List<String>> resultReversed = expressionsFromResult(subject.buildJson(new BaselineExperimentProfilesList(profiles),
-                ImmutableSortedSet.<Factor>reverseOrder().addAll(orderedFactors).build()));
+        List<List<String>> resultReversed = expressionsFromResult(subject.buildJson(new
+                BaselineExperimentProfilesList(profiles),reversedFactors));
 
         List<String> orderExpected = new ArrayList<>();
         for(Factor f: orderedFactors){

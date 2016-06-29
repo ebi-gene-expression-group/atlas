@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -80,8 +81,12 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
                 .build();
     }
 
-    public SortedSet<Factor> getOrderedFilterFactors(){
-        return experiment.getExperimentalFactors().getComplementFactors(this.getSelectedFilterFactors());
+    public List<Factor> getFilterFactorsInTheSameOrderAsTheExperimentHeader(){
+        List<Factor> result = new ArrayList<>();
+        for(AssayGroupFactor assayGroupFactor: getOrderedAssayGroupFactors()){
+            result.add(assayGroupFactor.getFactor());
+        }
+        return result;
     }
 
     public List<AssayGroupFactor> getOrderedAssayGroupFactors(){
