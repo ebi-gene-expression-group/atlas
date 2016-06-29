@@ -9,7 +9,7 @@
   "dependencies": {
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
-    "react-bootstrap": "^0.28.5"
+    "react-bootstrap": "^0.29.5"
   },
   "devDependencies": {
     "babel-core": "^6.7.0",
