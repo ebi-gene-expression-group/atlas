@@ -9,11 +9,8 @@ import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import java.util.Set;
 
 public class PreferencesForBaselineExperiments {
-
-    private FilterFactorsConverter filterFactorsConverter;
-
+    
     public PreferencesForBaselineExperiments() {
-        this.filterFactorsConverter = new FilterFactorsConverter();
     }
 
     public void setPreferenceDefaults(BaselineRequestPreferences preferences, BaselineExperiment baselineExperiment) {
@@ -23,7 +20,7 @@ public class PreferencesForBaselineExperiments {
         }
 
         if (StringUtils.isBlank(preferences.getSerializedFilterFactors())) {
-            preferences.setSerializedFilterFactors(filterFactorsConverter.serialize(baselineExperiment.getExperimentalFactors().getDefaultFilterFactors()));
+            preferences.setSerializedFilterFactors(FilterFactorsConverter.serialize(baselineExperiment.getExperimentalFactors().getDefaultFilterFactors()));
         }
 
         if (allFactorsInSliceSelected(preferences, baselineExperiment)) {
@@ -33,7 +30,7 @@ public class PreferencesForBaselineExperiments {
     }
 
     private boolean allFactorsInSliceSelected(BaselineRequestPreferences preferences, BaselineExperiment experiment) {
-        Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
+        Set<Factor> selectedFilterFactors = FilterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
 
         Set<Factor> allFactorsInSlice;
         if(experiment.getExperimentalFactors().getAllFactorsOrderedByXML() != null &&

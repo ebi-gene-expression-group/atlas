@@ -22,21 +22,12 @@ public class BaselineBarChartController {
 
     private BarChartTradersCache barChartTradersCache;
 
-    private FilterFactorsConverter filterFactorsConverter;
-
     private BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader;
 
     @Inject
     public BaselineBarChartController(BarChartTradersCache barChartTradersCache,
                                       BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader) {
-        this(barChartTradersCache, new FilterFactorsConverter(), barChartExperimentAccessKeyTrader);
-    }
-
-    BaselineBarChartController(BarChartTradersCache barChartTradersCache,
-                                      FilterFactorsConverter filterFactorsConverter,
-                                      BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader) {
         this.barChartTradersCache = barChartTradersCache;
-        this.filterFactorsConverter = new FilterFactorsConverter();
         this.barChartExperimentAccessKeyTrader = barChartExperimentAccessKeyTrader;
     }
 
@@ -61,7 +52,7 @@ public class BaselineBarChartController {
             }
         }
 
-        Set<Factor> filterFactors = filterFactorsConverter.deserialize(serializedFilterFactors);
+        Set<Factor> filterFactors = FilterFactorsConverter.deserialize(serializedFilterFactors);
 
         NavigableMap<Double, Integer> chartData = barchartTrader.getChart(filterFactors, queryFactors);
 

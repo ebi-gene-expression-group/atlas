@@ -2,15 +2,12 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSetMultimap;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Named;
 import java.util.Set;
@@ -64,7 +61,7 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
     }
 
     public static BaselineRequestContext createFor(BaselineExperiment experiment, BaselineRequestPreferences preferences){
-        return new BaselineRequestContextBuilder(new FilterFactorsConverter())
+        return new BaselineRequestContextBuilder()
                 .forExperiment(experiment)
                 .withPreferences(preferences)
                 .build();
@@ -73,7 +70,7 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
     public static BaselineRequestContext createWithCustomGeneQueryDescription(BaselineExperiment experiment,
                                                                BaselineRequestPreferences  preferences, String
                                                                                       description){
-        return new BaselineRequestContextBuilder(new FilterFactorsConverter())
+        return new BaselineRequestContextBuilder()
                 .forExperiment(experiment)
                 .withPreferences(preferences)
                 .withCustomQueryDescription(description)

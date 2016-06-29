@@ -18,14 +18,11 @@ public class BaselineRequestContextBuilder {
 
     private BaselineExperiment experiment;
 
-    private FilterFactorsConverter filterFactorsConverter;
-
     private BaselineRequestPreferences preferences;
 
     private Optional<String> queryDescription = Optional.absent();
 
-    public BaselineRequestContextBuilder(FilterFactorsConverter filterFactorsConverter) {
-        this.filterFactorsConverter = filterFactorsConverter;
+    public BaselineRequestContextBuilder() {
     }
 
     public BaselineRequestContextBuilder forExperiment(BaselineExperiment experiment) {
@@ -60,7 +57,7 @@ public class BaselineRequestContextBuilder {
 
 
 
-        SortedSet<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
+        SortedSet<Factor> selectedFilterFactors = FilterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
         requestContext.setSelectedFilterFactors(selectedFilterFactors);
 
         String filteredBySpecies = getFilteredBySpecies(selectedFilterFactors);

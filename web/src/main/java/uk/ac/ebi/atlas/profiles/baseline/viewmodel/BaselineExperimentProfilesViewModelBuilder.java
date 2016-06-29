@@ -19,13 +19,11 @@ import java.util.SortedSet;
 public class BaselineExperimentProfilesViewModelBuilder {
 
     private final BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder;
-    private final FilterFactorsConverter filterFactorsConverter;
 
     @Inject
     public BaselineExperimentProfilesViewModelBuilder(BaselineExpressionViewModelBuilder
                                                                   baselineExpressionViewModelBuilder) {
         this.baselineExpressionViewModelBuilder = baselineExpressionViewModelBuilder;
-        this.filterFactorsConverter = new FilterFactorsConverter();
     }
 
     public JsonElement buildJson(GenericBaselineProfilesList<BaselineExperimentProfile> profiles, SortedSet<Factor>
@@ -56,7 +54,7 @@ public class BaselineExperimentProfilesViewModelBuilder {
                 "expressions", baselineExpressionViewModelBuilder.buildExpressions(profile, orderedFactors,
                 minExpressionLevel, maxExpressionLevel)
         );
-        result.addProperty("serializedFilterFactors", filterFactorsConverter.serialize(profile.getFilterFactors()));
+        result.addProperty("serializedFilterFactors", FilterFactorsConverter.serialize(profile.getFilterFactors()));
         return result;
     }
 
