@@ -63,8 +63,7 @@ public class ExpressionSerializerServiceIT {
         serializedExpressionLevelsFileTemplate = tmp.toString() + "/{0}_levels.kryo";
 
         expressionSerializerFactory = new ExpressionSerializerFactory(
-                new RnaSeqBaselineExpressionKryoSerializer(serializedExpressionsFileTemplate,
-                        tsvFileTemplate, new CsvReaderFactory()));
+                new RnaSeqBaselineExpressionKryoSerializer(serializedExpressionsFileTemplate, tsvFileTemplate, new CsvReaderFactory()));
 
         subject = new ExpressionSerializerService(experimentTrader, expressionSerializerFactory,
                 baselineExperimentsCache,experimentChecker);
