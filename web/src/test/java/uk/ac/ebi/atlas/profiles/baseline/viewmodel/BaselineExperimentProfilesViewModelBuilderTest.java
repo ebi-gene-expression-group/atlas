@@ -1,10 +1,13 @@
 package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
+import autovalue.shaded.com.google.common.common.collect.Lists;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,12 +25,19 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSlice;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
-import java.awt.*;
+
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -61,6 +71,7 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
 
     private BaselineExperimentProfile profile1;
     private BaselineExperimentProfile profile2;
+    private Collection<BaselineExperimentProfile> profiles;
 
     @Mock
     private BaselineExperimentSlice experimentSlice1;
@@ -86,13 +97,14 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
 
         profile1 = new BaselineExperimentProfile(experimentSlice1);
         profile2 = new BaselineExperimentProfile(experimentSlice2);
+        profiles = ImmutableList.of(profile1, profile2);
+
     }
 
     @Test
     public void buildProfilesViewModel() {
-        Collection<BaselineExperimentProfile> baselineExperimentProfiles = ImmutableList.of(profile1, profile2);
-        BaselineExperimentProfilesList baselineExperimentProfilesList = new BaselineExperimentProfilesList(baselineExperimentProfiles);
-        JsonElement profiles = subject.buildJson(baselineExperimentProfilesList, orderedFactors);
+
+        JsonElement profiles = subject.buildJson(new BaselineExperimentProfilesList(ImmutableList.of(profile1, profile2)), orderedFactors);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(profiles);
@@ -155,5 +167,43 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
 
         assertThat(json, is(expected));
     }
+
+    @Test
+    public void expressionsHaveTheOrderDefinedByFilterFactors() {
+
+        List<List<String>> resultOrdered = expressionsFromResult(subject.buildJson(new BaselineExperimentProfilesList
+                (profiles),
+                orderedFactors));
+
+        List<List<String>> resultReversed = expressionsFromResult(subject.buildJson(new BaselineExperimentProfilesList(profiles),
+                ImmutableSortedSet.<Factor>reverseOrder().addAll(orderedFactors).build()));
+
+        List<String> orderExpected = new ArrayList<>();
+        for(Factor f: orderedFactors){
+            orderExpected.add(f.getValue());
+        }
+
+        for(List<String> ordered: resultOrdered){
+            assertEquals(orderExpected, ordered);
+        }
+
+        for(List<String> reversed: resultReversed){
+            assertEquals(orderExpected, Lists.reverse(reversed));
+        }
+
+    }
+
+    private List<List<String>> expressionsFromResult(JsonElement result){
+        List<List<String>> rowsInExpressions = new ArrayList<>();
+        for(JsonElement e : result.getAsJsonObject().get("rows").getAsJsonArray()){
+            List<String> expressionsForThisRow = new ArrayList<>();
+            for(JsonElement f: e.getAsJsonObject().get("expressions").getAsJsonArray()){
+                expressionsForThisRow.add(f.getAsJsonObject().get("factorName").getAsString());
+            }
+            rowsInExpressions.add(expressionsForThisRow);
+        }
+        return rowsInExpressions;
+    }
+
 
 }
