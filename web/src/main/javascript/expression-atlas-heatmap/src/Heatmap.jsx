@@ -298,16 +298,16 @@ var Heatmap = React.createClass({
           var ps = this._getProfiles();
           return <LegendDifferential
             atlasBaseURL={this.props.atlasBaseURL}
-            minDownLevel={ps.hasOwnProperty("minDownLevel")
+            minDownLevel={"minDownLevel" in ps
                             ? ps.minDownLevel.toString()
                             : "NaN"}
-            maxDownLevel={ps.hasOwnProperty("maxDownLevel")
+            maxDownLevel={"maxDownLevel" in ps
                             ? ps.maxDownLevel.toString()
                             : "NaN"}
-            minUpLevel={ps.hasOwnProperty("minUpLevel")
+            minUpLevel={"minUpLevel" in ps
                             ? ps.minUpLevel.toString()
                             : "NaN"}
-            maxUpLevel={ps.hasOwnProperty("maxUpLevel")
+            maxUpLevel={"maxUpLevel" in ps
                             ? ps.maxUpLevel.toString()
                             : "NaN"}  />;
         }
