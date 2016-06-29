@@ -190,25 +190,5 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
         model.addAttribute("jsonColumnHeaders", gson.toJson(AssayGroupFactorViewModel.createList(convert(orderedFactors))));
         model.addAttribute("jsonProfiles", gson.toJson(baselineExperimentProfilesViewModelBuilder.buildJson(baselineProfiles, orderedFactors)));
-
-        Set<Factor> nonExpressedFactors = Sets.newHashSet(orderedFactors);
-        for (BaselineExperimentProfile baselineProfile : baselineProfiles) {
-            double defaultCutoff =
-                    baselineProfile.getExperimentType().equalsIgnoreCase(ExperimentType.PROTEOMICS_BASELINE.toString()) ?
-                            BaselineAnalyticsSearchDao.DEFAULT_PROTEOMICS_CUT_OFF : BaselineAnalyticsSearchDao.DEFAULT_BASELINE_CUT_OFF;
-
-            for (Factor factor : Sets.newHashSet(nonExpressedFactors)) {
-                BaselineExpression expression = baselineProfile.getExpression(factor);
-                if (expression != null && expression.isKnown() && expression.getLevel() >= defaultCutoff) {
-                    nonExpressedFactors.remove(factor);
-                }
-            }
-        }
-        Set<String> nonExpressedColumnHeaders = Sets.newHashSetWithExpectedSize(nonExpressedFactors.size());
-        for (Factor nonExpressedFactor : nonExpressedFactors) {
-            nonExpressedColumnHeaders.add(nonExpressedFactor.getValue());
-        }
-
-        model.addAttribute("jsonNonExpressedColumnHeaders", gson.toJson(nonExpressedColumnHeaders));
     }
 }
