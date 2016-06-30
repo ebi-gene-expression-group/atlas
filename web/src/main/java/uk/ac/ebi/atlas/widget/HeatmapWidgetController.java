@@ -146,10 +146,8 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     private List<AssayGroupFactor> convert(List<Factor> orderedFactors) {
         ImmutableSortedSet.Builder<AssayGroupFactor> builder = ImmutableSortedSet.naturalOrder();
 
-        List<AssayGroupFactor> result = new ArrayList<>();
         for (Factor factor : orderedFactors) {
-            AssayGroupFactor assayGropuFactor = new AssayGroupFactor("none",factor);
-            builder.add(assayGropuFactor);
+            builder.add( new AssayGroupFactor("none",factor));
         }
 
         return new ArrayList<>(builder.build());

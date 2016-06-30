@@ -16,14 +16,11 @@ var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
  * @param {string}          options.proxyPrefix - Proxy URL with protocol: required by CTTV
  * @param {boolean=}        options.disableGoogleAnalytics - Disable Google Analytics: required by CTTV
  * @param {string=}         options.atlasHost - Atlas host with port (note: don’t include port)
- * @param {string}          options.params
- * @param {boolean}         options.analyticsSearch
- * @param {boolean=}        options.isMultiExperiment
- * @param {boolean=}        options.showAnatomogram
- * @param {boolean=}        options.isWidget
+ * @param {string}          options.sourceURL - Where to source the data from
+ * *                        e.g. /json/experiments/E-PROT-1, /json/genes/ENSG00000005801, /json/genesets/GO:0000001 or a widget endpoint
+ * @param {string}          options.params - Alternate way of sourcing data if you do not provide the sourceURL
  * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
  * @param {function}        options.fail - Callback to run if the AJAX request to the server fails. (jqXHR, textStatus)
- * @param {function}        options.anatomogramDataEventEmitter
  */
 exports.render = function(options) {
 
@@ -31,12 +28,17 @@ exports.render = function(options) {
         atlasHost = options.atlasHost === undefined ? "www.ebi.ac.uk" : options.atlasHost,
         atlasPath = "/gxa";
 
-    var linksAtlasBaseURL = protocol + atlasHost + atlasPath,
-        atlasBaseURL = options.proxyPrefix ? options.proxyPrefix + "/" + atlasHost + atlasPath : linksAtlasBaseURL;
+    var linksAtlasBaseURL =
+        (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://") === 0) ? atlasHost + atlasPath :
+        protocol + atlasHost + atlasPath;
 
-    var endpointPath =  options.isMultiExperiment ? "/widgets/heatmap/baselineAnalytics" : "/widgets/heatmap/referenceExperiment";
+    var atlasBaseURL = options.proxyPrefix ? options.proxyPrefix + "/" + atlasHost + atlasPath : linksAtlasBaseURL;
 
-    var sourceURL = atlasBaseURL + endpointPath + "?" + options.params;
+    //If using this renderer for a standalone widget, see uk.ac.ebi.atlas.widget.HeatmapWidgetController.java for the source URL/params required
+    var sourceURL = options.sourceURL ||
+                      atlasBaseURL + "/widgets/heatmap"
+                      + (options.isMultiExperiment? "/baselineAnalytics" : "/referenceExperiment")
+                      + endpointPath + "?" + options.params;
 
     var anatomogramEventEmitter = new EventEmitter();
     anatomogramEventEmitter.setMaxListeners(0);
