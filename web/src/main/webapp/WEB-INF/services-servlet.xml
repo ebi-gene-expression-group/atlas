@@ -49,7 +49,8 @@
                 <entry key="applicationProperties" value-ref="applicationProperties"/>
                 <entry key="qcReportUtil" value-ref="QCReportUtil"/>
                 <entry key="fastQCReportUtil" value-ref="fastQCReportUtil"/>
-                <entry key="hierarchicalClusteringPdfViewHelper" value-ref="hierarchicalClusteringPdfViewHelper"/>
+                <entry key="clusteringPdfViewHelper" value-ref="clusteringPdfViewHelper"/>
+                <entry key="rDataViewHelper" value-ref="RDataViewHelper"/>
                 <!-- heatmap-matrix-searchresults-diffanalytics.jsp -->
                 <entry key="colourGradient" value-ref="colourGradient"/>
                 <!-- request-preferences.jsp -->

@@ -1,14 +1,15 @@
-<%@ page import="java.nio.file.Path" %>
-<%@ page import="org.apache.commons.io.IOUtils" %>
-<%@ page import="java.nio.file.Files" %><%--@elvariable id="experimentAccession" type="java.lang.String"--%>
+<%--@elvariable id="experimentAccession" type="java.lang.String"--%>
 <%--@elvariable id="species" type="java.lang.String"--%>
 <%--@elvariable id="rawDownloadUrl" type="java.lang.String"--%>
 <%--@elvariable id="analyticsDownloadUrl" type="java.lang.String"--%>
 <%--@elvariable id="normalizedUrl" type="java.lang.String"--%>
 <%--@elvariable id="logFoldUrl" type="java.lang.String"--%>
-<%--@elvariable id="rDownloadUrl" type="java.lang.String"--%>
 <%--@elvariable id="qcArrayDesigns" type="java.util.SortedSet"--%>
 <%--@elvariable id="experiment" type="uk.ac.ebi.atlas.model.Experiment"--%>
+
+<%@ page import="java.nio.file.Path" %>
+<%@ page import="org.apache.commons.io.IOUtils" %>
+<%@ page import="java.nio.file.Files" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -110,11 +111,11 @@
                     </c:if>
 
 
-                    <%--@elvariable id="hierarchicalClusteringPdfViewHelper" type="uk.ac.ebi.atlas.experimentpage.HierarchicalClusteringPdfViewHelper"--%>
-                    <c:if test="${hierarchicalClusteringPdfViewHelper.hasClusteringPdf(experimentAccession)}" >
+                    <%--@elvariable id="clusteringPdfViewHelper" type="uk.ac.ebi.atlas.experimentpage.ClusteringPdfViewHelper"--%>
+                    <c:if test="${clusteringPdfViewHelper.hasFile(experimentAccession)}" >
                         <td>
                             <a id="clustering-pdf" title="Explore hierarchical clustering between experimental conditions and the top 100 most variable genes in the experiment"
-                               href="${pageContext.request.contextPath}${hierarchicalClusteringPdfViewHelper.generateClusteringPdfUrl(experimentAccession)}${accessKeyQueryString}">
+                               href="${pageContext.request.contextPath}${clusteringPdfViewHelper.generateUrl(experimentAccession)}${accessKeyQueryString}">
                                 <img src="${pageContext.request.contextPath}/resources/images/cluster_button.png"/>
                             </a>
                         </td>
@@ -123,7 +124,8 @@
 
                     <c:set var="download-expressions" value="${false}"/>
                     <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
-                    <c:if test="${experimentHasRData}">
+                    <%--@elvariable id="rDataViewHelper" type="uk.ac.ebi.atlas.experimentpage.RDataViewHelper"--%>
+                    <c:if test="${rDataViewHelper.hasFile(experimentAccession)}">
                         <td>
                             <c:choose>
                                 <c:when test="${isFortLauderdale}">
@@ -134,7 +136,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <a id="download-r" title="Download experiment data ready to load into R"
-                                       href="${rDownloadUrl}${accessKeyQueryString}">
+                                       href="${pageContext.request.contextPath}${rDataViewHelper.generateUrl(experimentAccession)}${accessKeyQueryString}">
                                         <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
                                     </a>
                                 </c:otherwise>
@@ -223,9 +225,9 @@
                                 Continue downloading
                             </button>
                         </c:if>
-                        <c:if test="${experimentHasRData}">
+                        <c:if test="${rDataViewHelper.hasFile(experimentAccession)}">
                              <button class="btn btn-primary" id="continue-download-R"
-                                     onclick="location.href='${rDownloadUrl}${accessKeyQueryString}'">Continue downloading</button>
+                                     onclick="location.href='${pageContext.request.contextPath}${rDataViewHelper.generateUrl(experimentAccession)}${accessKeyQueryString}'">Continue downloading</button>
                         </c:if>
                 </div>
 

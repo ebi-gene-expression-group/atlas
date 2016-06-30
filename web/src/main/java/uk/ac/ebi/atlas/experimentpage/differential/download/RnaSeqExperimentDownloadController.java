@@ -120,6 +120,14 @@ public class RnaSeqExperimentDownloadController {
         return "forward:" + path;
     }
 
+    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-heatmap.pdf", params = PARAMS_TYPE_DIFFERENTIAL)
+    public String downloadPdf(@PathVariable String experimentAccession) throws IOException {
+
+        String path = MessageFormat.format("/expdata/{0}/{0}-heatmap.pdf", experimentAccession);
+
+        return "forward:" + path;
+    }
+
     private void prepareResponse(HttpServletResponse response, String experimentAccession, String fileExtension) {
         response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + fileExtension + "\"");
         response.setContentType("text/plain; charset=utf-8");

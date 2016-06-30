@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import org.slf4j.Logger;
@@ -108,8 +107,16 @@ public class MicroarrayExperimentDownloadController {
         return "forward:" + path;
     }
 
+    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-heatmap.pdf", params = PARAMS_TYPE_MICROARRAY)
+    public String downloadPdf(@PathVariable String experimentAccession) throws IOException {
 
-    void writeMicroarrayGeneProfiles(PrintWriter writer, String experimentAccession, MicroarrayRequestContext
+        String path = MessageFormat.format("/expdata/{0}/{0}-heatmap.pdf", experimentAccession);
+
+        return "forward:" + path;
+    }
+
+
+    private void writeMicroarrayGeneProfiles(PrintWriter writer, String experimentAccession, MicroarrayRequestContext
             requestContext, String arrayDesign){
         try {
 

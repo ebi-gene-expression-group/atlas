@@ -84,8 +84,8 @@ public class BaselineExperimentPageService {
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
         model.addAttribute("allQueryFactors", requestContext.getOrderedAssayGroupFactors());
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
+        model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
         model.addAllAttributes(experiment.getBaselineAttributes());
-        DownloadURLBuilder.addRDownloadUrlToModel(model, request.getRequestURI());
     }
 
     public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,

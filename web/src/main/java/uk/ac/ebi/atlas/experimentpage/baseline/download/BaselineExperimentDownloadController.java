@@ -116,4 +116,12 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
         return "forward:" + path;
     }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-heatmap.pdf", params = PARAMS_TYPE_RNASEQ_BASELINE)
+    public String downloadClusteringPdf(@PathVariable String experimentAccession) throws IOException {
+
+        String path = MessageFormat.format("/expdata/{0}/{0}-heatmap.pdf", experimentAccession);
+
+        return "forward:" + path;
+    }
 }
