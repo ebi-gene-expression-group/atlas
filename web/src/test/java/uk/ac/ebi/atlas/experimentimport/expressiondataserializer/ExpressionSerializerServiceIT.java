@@ -22,7 +22,8 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.verify;
 
@@ -31,6 +32,8 @@ import static org.mockito.Mockito.verify;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class ExpressionSerializerServiceIT {
+
+    private static final String accession = "E-MTAB-513";
 
     @Inject
     public ExperimentTrader experimentTrader;
@@ -42,15 +45,10 @@ public class ExpressionSerializerServiceIT {
     ExperimentChecker experimentChecker;
 
     private String serializedExpressionsFileTemplate;
-    private String serializedExpressionLevelsFileTemplate;
 
     @Value("#{configuration['experiment.magetab.path.template']}")
     public String tsvFileTemplate;
 
-
-    String accession = "E-MTAB-513";
-
-    private ExpressionSerializerFactory expressionSerializerFactory;
     private ExpressionSerializerService subject;
 
 
@@ -60,9 +58,8 @@ public class ExpressionSerializerServiceIT {
 
         Path tmp = Files.createTempDirectory("serialized_expression");
         serializedExpressionsFileTemplate = tmp.toString() + "/{0}.kryo";
-        serializedExpressionLevelsFileTemplate = tmp.toString() + "/{0}_levels.kryo";
 
-        expressionSerializerFactory = new ExpressionSerializerFactory(
+        ExpressionSerializerFactory expressionSerializerFactory = new ExpressionSerializerFactory(
                 new RnaSeqBaselineExpressionKryoSerializer(serializedExpressionsFileTemplate, tsvFileTemplate, new CsvReaderFactory()));
 
         subject = new ExpressionSerializerService(experimentTrader, expressionSerializerFactory,
@@ -71,20 +68,17 @@ public class ExpressionSerializerServiceIT {
 
     @Test
     public void weCanSerializeTheFile() {
-        assertEquals(true, fileExists(tsvFileTemplate, accession));
-        assertEquals(false, fileExists(serializedExpressionsFileTemplate, accession));
-        assertEquals(false, fileExists(serializedExpressionLevelsFileTemplate, accession));
+        assertThat(fileExists(tsvFileTemplate, accession), is(true));
+        assertThat(fileExists(serializedExpressionsFileTemplate, accession), is(false));
 
         subject.kryoSerializeExpressionData(accession);
 
-        assertEquals(true, fileExists(serializedExpressionsFileTemplate, accession));
-        assertEquals(true, fileExists(serializedExpressionLevelsFileTemplate, accession));
+        assertThat(fileExists(serializedExpressionsFileTemplate, accession), is(true));
     }
 
     @Test
     public void weCheckTheFileExistsBeforeWeAttemptToSerializeIt(){
         subject.kryoSerializeExpressionData(accession);
-
         verify(experimentChecker).checkAllFiles(eq(accession), any(ExperimentType.class));
     }
 
