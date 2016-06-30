@@ -40,7 +40,6 @@ public class ExperimentDesignFileWriter implements Closeable {
         String[] columnHeaders = buildColumnHeaders(experimentType, experimentDesign);
         tsvWriter.writeNext(columnHeaders);
         tsvWriter.writeAll(asTableOntologyTermsData(experimentDesign));
-        tsvWriter.flush();
     }
 
     String[] buildColumnHeaders(ExperimentType experimentType, ExperimentDesign experimentDesign) {

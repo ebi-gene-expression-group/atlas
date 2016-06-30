@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.Pair;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
@@ -9,42 +9,42 @@ import uk.ac.ebi.atlas.commons.writers.FileTsvWriterBuilder;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.core.Is.is;
 
 public class ExperimentOpLogWriterTest {
 
-    ExperimentOpLogWriter experimentOpLogWriter;
+    private static final String DUMMY_ACCESSION = "DUMMY_ACCESSION";
 
-    String accession = "DUMMY_ACCESSION";
+    private ExperimentOpLogWriter subject;
 
     @Before
     public void setUp() {
-        experimentOpLogWriter = new ExperimentOpLogWriter(new FileTsvReaderBuilder(), new FileTsvWriterBuilder());
+        subject = new ExperimentOpLogWriter(new FileTsvReaderBuilder(), new FileTsvWriterBuilder());
 
         File dir = new File(System.getProperty("java.io.tmpdir") + "/" + System.currentTimeMillis());
         dir.mkdir();
         dir.deleteOnExit();
-        experimentOpLogWriter.opLogTemplate = dir.getAbsolutePath() + "/{0}-temp.tsv";
+        subject.opLogTemplate = dir.getAbsolutePath() + "/{0}-temp.tsv";
     }
 
     @Test
     public void initiallyGetEmptyLog() {
-        Assert.assertEquals("Initially get empty op log", Arrays.asList(),
-                experimentOpLogWriter.getCurrentOpLog(accession));
+        assertThat(subject.getCurrentOpLog(DUMMY_ACCESSION), hasSize(0));
     }
 
     @Test
     public void writeAndThenReadTheLog() {
-        List<Pair<String, Pair<Long, Long>>> opLog = Arrays.asList(Pair.of("update", Pair.of(100L, 150L)));
+        List<Pair<String, Pair<Long, Long>>> opLog = ImmutableList.of(Pair.of("update", Pair.of(100L, 150L)));
 
-        Assert.assertEquals("Initially get empty op log", Arrays.asList(),
-                experimentOpLogWriter.getCurrentOpLog(accession));
+        assertThat(subject.getCurrentOpLog(DUMMY_ACCESSION), hasSize(0));
 
-        experimentOpLogWriter.persistOpLog(accession, opLog);
+        subject.persistOpLog(DUMMY_ACCESSION, opLog);
 
-        Assert.assertEquals("Get op log back", opLog,
-                experimentOpLogWriter.getCurrentOpLog(accession));
+        assertThat(subject.getCurrentOpLog(DUMMY_ACCESSION), is(opLog));
     }
 
     @Test
@@ -56,17 +56,15 @@ public class ExperimentOpLogWriterTest {
             opLog.add(Pair.of("update", Pair.of(100L * i, 100L * i + 50)));
 
             if (i % 10 == 0) {
-                experimentOpLogWriter.persistOpLog(accession, opLog);
+                subject.persistOpLog(DUMMY_ACCESSION, opLog);
             }
         }
-        experimentOpLogWriter.persistOpLog(accession, opLog);
+        subject.persistOpLog(DUMMY_ACCESSION, opLog);
 
-        List<Pair<String, Pair<Long, Long>>> opLogNow = experimentOpLogWriter.getCurrentOpLog(accession);
+        List<Pair<String, Pair<Long, Long>>> opLogNow = subject.getCurrentOpLog(DUMMY_ACCESSION);
 
-        Assert.assertEquals(ExperimentOpLogWriter.MAX_LENGTH, opLogNow.size());
+        assertThat(opLogNow, hasSize(ExperimentOpLogWriter.MAX_LENGTH));
 
-        Assert.assertEquals(opLog.get(ourMax - 1), opLogNow.get(ExperimentOpLogWriter.MAX_LENGTH - 1));
-
-
+        assertThat(opLogNow.get(ExperimentOpLogWriter.MAX_LENGTH - 1), is(opLog.get(ourMax - 1)));
     }
 }
