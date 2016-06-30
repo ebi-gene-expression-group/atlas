@@ -38,7 +38,7 @@ exports.render = function(options) {
     var sourceURL = options.sourceURL ||
                       atlasBaseURL + "/widgets/heatmap"
                       + (options.isMultiExperiment? "/baselineAnalytics" : "/referenceExperiment")
-                      + endpointPath + "?" + options.params;
+                      + "?" + options.params;
 
     var anatomogramEventEmitter = new EventEmitter();
     anatomogramEventEmitter.setMaxListeners(0);
@@ -51,8 +51,9 @@ exports.render = function(options) {
                 atlasBaseURL: atlasBaseURL,
                 linksAtlasBaseURL: linksAtlasBaseURL,
                 showAnatomogram: options.showAnatomogram === undefined ? true : options.showAnatomogram,
-                isWidget: options.isWidget === undefined ? true : options.isWidget,
+                isDifferential: options.isDifferential,
                 isMultiExperiment: options.isMultiExperiment,
+                isWidget: options.isWidget === undefined ? true : options.isWidget,
                 disableGoogleAnalytics: options.disableGoogleAnalytics === undefined ? false : options.disableGoogleAnalytics,
                 fail: options.fail,
                 anatomogramEventEmitter:anatomogramEventEmitter,
