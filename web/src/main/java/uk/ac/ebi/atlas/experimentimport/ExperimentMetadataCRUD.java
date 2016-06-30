@@ -141,7 +141,7 @@ public class ExperimentMetadataCRUD {
     void writeExperimentDesignFile(String accession, ExperimentType experimentType, ExperimentDesign experimentDesign) throws IOException {
         try (ExperimentDesignFileWriter experimentDesignFileWriter =
                      experimentDesignFileWriterBuilder
-                             .forExperimentAccession(accession)
+                             .withExperimentAccession(accession)
                              .withExperimentType(experimentType)
                              .build()) {
             experimentDesignFileWriter.write(experimentDesign);

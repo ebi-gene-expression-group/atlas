@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.commons.writers;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.writers.impl.TsvWriterImpl;
 
 import javax.inject.Named;
 
@@ -58,7 +57,7 @@ public class FileTsvWriterBuilder {
     public TsvWriter build() {
         path = MessageFormat.format(tsvFilePathTemplate, experimentAccession);
         try {
-            TsvWriter tsvWriter = new TsvWriterImpl(new OutputStreamWriter(new FileOutputStream(new File(path), append)));
+            TsvWriter tsvWriter = new TsvWriter(new OutputStreamWriter(new FileOutputStream(new File(path), append)));
             setFilePermissions();
             return tsvWriter;
         } catch (IOException e) {

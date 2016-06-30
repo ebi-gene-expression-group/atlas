@@ -61,6 +61,6 @@ public class ExperimentOpLogWriter {
                     loggedOp.getRight().getLeft().toString(),
                     loggedOp.getRight().getRight().toString()});
         }
-        tsvWriter.write(lines);
+        tsvWriter.writeAll(lines);
     }
 }

@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commons.writers.TsvWriter;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.OntologyTerm;
@@ -48,7 +49,7 @@ public class ExperimentDesignFileWriterTest {
     private static final OntologyTerm[] ABSENT_ONTOLOGY_TERMS = {};
 
     @Mock
-    private CSVWriter csvWriter;
+    private TsvWriter tsvWriter;
 
     private ExperimentDesign experimentDesign;
 
@@ -56,7 +57,7 @@ public class ExperimentDesignFileWriterTest {
 
     @Before
     public void buildExperimentDesign() {
-        subject = new ExperimentDesignFileWriter(csvWriter, ExperimentType.RNASEQ_MRNA_BASELINE);
+        subject = new ExperimentDesignFileWriter(tsvWriter, ExperimentType.RNASEQ_MRNA_BASELINE);
         experimentDesign = new ExperimentDesign();
 
         SampleCharacteristic sampleCharacteristic1 = SampleCharacteristic.create("C1", CHAR_1, OntologyTerm.createFromURI(HTTP_OBO_UBERON_1));

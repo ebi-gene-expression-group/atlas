@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import uk.ac.ebi.atlas.commons.writers.TsvWriter;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.OntologyTerm;
@@ -28,19 +28,19 @@ public class ExperimentDesignFileWriter implements Closeable {
     private static final String FACTOR_NAME_HEADER_TEMPLATE = "Factor Value[{0}]";
     private static final String FACTOR_VALUE_ONTOLOGY_TERM_TEMPLATE = "Factor Value Ontology Term[{0}]";
 
-    private CSVWriter csvWriter;
+    private TsvWriter tsvWriter;
     private ExperimentType experimentType;
 
-    ExperimentDesignFileWriter(CSVWriter csvWriter, ExperimentType experimentType){
-        this.csvWriter = csvWriter;
+    ExperimentDesignFileWriter(TsvWriter tsvWriter, ExperimentType experimentType){
+        this.tsvWriter = tsvWriter;
         this.experimentType = experimentType;
     }
 
     public void write(ExperimentDesign experimentDesign) throws IOException {
         String[] columnHeaders = buildColumnHeaders(experimentType, experimentDesign);
-        csvWriter.writeNext(columnHeaders);
-        csvWriter.writeAll(asTableOntologyTermsData(experimentDesign));
-        csvWriter.flush();
+        tsvWriter.writeNext(columnHeaders);
+        tsvWriter.writeAll(asTableOntologyTermsData(experimentDesign));
+        tsvWriter.flush();
     }
 
     String[] buildColumnHeaders(ExperimentType experimentType, ExperimentDesign experimentDesign) {
@@ -135,6 +135,6 @@ public class ExperimentDesignFileWriter implements Closeable {
 
     @Override
     public void close() throws IOException {
-        csvWriter.close();
+        tsvWriter.close();
     }
 }

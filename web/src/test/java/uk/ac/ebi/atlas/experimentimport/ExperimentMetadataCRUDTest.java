@@ -124,7 +124,7 @@ public class ExperimentMetadataCRUDTest {
         when(microarrayExperimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
         when(experimentConfigurationMock.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
 
-        given(experimentDesignFileWriterBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDesignFileWriterBuilderMock);
+        given(experimentDesignFileWriterBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.withExperimentType(any(ExperimentType.class))).willReturn
                 (experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
@@ -170,7 +170,7 @@ public class ExperimentMetadataCRUDTest {
     public void generateExperimentDesignShouldUseTheExperimentDesignWriter() throws Exception {
 
         subject.writeExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, experimentDesignMock);
-        verify(experimentDesignFileWriterBuilderMock).forExperimentAccession(EXPERIMENT_ACCESSION);
+        verify(experimentDesignFileWriterBuilderMock).withExperimentAccession(EXPERIMENT_ACCESSION);
         verify(experimentDesignFileWriterBuilderMock).withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE);
         verify(experimentDesignFileWriterBuilderMock).build();
         verify(experimentDesignFileWriterMock).write(experimentDesignMock);
