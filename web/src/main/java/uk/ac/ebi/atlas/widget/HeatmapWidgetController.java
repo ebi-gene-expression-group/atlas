@@ -1,12 +1,11 @@
 
 package uk.ac.ebi.atlas.widget;
 
-import autovalue.shaded.com.google.common.common.collect.Lists;
-import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.Sets;
-import com.google.gson.*;
+import com.google.common.collect.Lists;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonNull;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -14,19 +13,21 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
-import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.*;
-import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchDao;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineExperimentProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
@@ -43,8 +44,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
 
 @Controller
 @Scope("request")
