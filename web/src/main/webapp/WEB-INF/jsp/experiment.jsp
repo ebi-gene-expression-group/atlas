@@ -34,8 +34,15 @@
     </div>
 </section>
 
+<c:choose>
+    <c:when test="${not empty pageContext.request.getParameter(\"highcharts\")}" >
+    <%@ include file="includes/heatmap-highcharts.jsp" %>
+    </c:when>
+    <c:otherwise>
+        <%@ include file="includes/heatmap-react.jsp" %>
+    </c:otherwise>
+</c:choose>
 
-<%@ include file="includes/heatmap-react.jsp" %>
 
 <%-- used by helpTooltipsModule and the prefForm --%>
 <div id="help-placeholder" style="display: none"></div>
