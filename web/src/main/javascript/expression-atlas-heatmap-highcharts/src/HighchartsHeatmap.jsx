@@ -45,12 +45,9 @@ var HeatmapDataPropType = React.PropTypes.objectOf(
   function(heatmapData){
     var width = heatmapData.xAxisCategories.length;
     var height = heatmapData.yAxisCategories.length;
-    if(heatmapData.dataSeries.length!== 4){
-      return new Error("There should be four data series supplied");
-    }
-    for(var i = 0; i < 4; i++){
+    for(var i = 0; i < heatmapData.dataSeries.length; i++){
       for(var j = 0; j < heatmapData.dataSeries[i].length; j++){
-        var point = heatmapData.dataSeries[i][j];
+        var point = heatmapData.dataSeries[i].data[j];
         if(point.length !==3){
           return new Error("Each point in data series should be [x,y,value]:"+ point.toString());
         }
@@ -128,6 +125,13 @@ var HeatmapContainer = React.createClass({
       return this.props.heatmapData.orderings[this.state.ordering].rows.indexOf(y);
     }.bind(this);
 
+    var permutePoint = function(point){
+      return [
+        permuteX(point[0]),
+        permuteY(point[1]),
+        point[2]];
+    };
+
     var permuteArray = function(arr, permute){
       return (
         arr
@@ -146,24 +150,29 @@ var HeatmapContainer = React.createClass({
           )
         );
     };
-      
+
     return {
       dataSeries:
         this.props.heatmapData.dataSeries.map(
           function(series){
-            return series.map(
-              function(point){
-                return [
-                  permuteX(point[0]),
-                  permuteY(point[1]),
-                  point[2]];
-            });
+            return series.data.map(permutePoint);
           }),
       xAxisCategories:
         permuteArray(this.props.heatmapData.xAxisCategories, permuteX),
       yAxisCategories:
         permuteArray(this.props.heatmapData.yAxisCategories, permuteY)
     };
+  },
+
+  _labels: function(){
+    return this.props.heatmapData.dataSeries.map(
+      function (e){
+        return {
+          colour: e.colour,
+          name: e.name
+        }
+      }
+    )
   },
 
   render: function () {
@@ -192,6 +201,7 @@ var HeatmapContainer = React.createClass({
               atlasBaseURL={this.props.atlasBaseURL}
               anatomogramEventEmitter={this.props.anatomogramEventEmitter}
               data={this._data()}
+              labels={this._labels()}
             />
         </div>
     );
@@ -209,32 +219,19 @@ var HighchartsHeatmap = React.createClass({
           dataSeries: DataSeriesPropType,
           xAxisCategories: AxisCategoriesPropType,
           yAxisCategories: AxisCategoriesPropType
-        })
+        }),
+        labels: React.PropTypes.arrayOf(React.PropTypes.shape({
+          name: React.PropTypes.string,
+          colour: React.PropTypes.string
+        })).isRequired
     },
 
     getInitialState: function () {
         return ({
-            legend_0: false,
-            legend_1: false,
-            legend_2: false,
-            legend_3: false
+            legendState: this.props.labels.map(function(e){return true;})
         })
     },
 
-    _handleClick: function (index) {
-        if (index == 0) {
-            this.setState({legend_0: !this.state.legend_0});
-        }
-        else if (index == 1) {
-            this.setState({legend_1: !this.state.legend_1});
-        }
-        else if (index == 2) {
-            this.setState({legend_2: !this.state.legend_2});
-        }
-        else if (index == 3) {
-            this.setState({legend_3: !this.state.legend_3});
-        }
-    },
 
     _anatomogramTissueMouseEnter: function(svgPathId) {
         Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseEnter', {svgPathId: svgPathId});
@@ -261,29 +258,69 @@ var HighchartsHeatmap = React.createClass({
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
         var heatmap = this.refs.chart.getChart();
-
-        this.state.legend_0 ? heatmap.series[0].hide() : heatmap.series[0].show();
-        this.state.legend_1 ? heatmap.series[1].hide() : heatmap.series[1].show();
-        this.state.legend_2 ? heatmap.series[2].hide() : heatmap.series[2].show();
-        this.state.legend_3 ? heatmap.series[3].hide() : heatmap.series[3].show();
-
+        this.state.legendState.map(function(e,ix){
+          if(e){
+            heatmap.series[ix].show();
+          }else {
+            heatmap.series[ix].hide();
+          }
+        })
     },
 
     _prepareDataSeries: function () {
-      return ([
-       ["Below cutoff", "#eaeaea"],
-       ["Low", "#45affd"],
-       ["Medium", "#1E74CA"],
-       ["High", "#024990"]
-     ]).map(function (__args__, ix) {
-       return {
-         name: __args__[0],
-         color: __args__[1],
-         borderWidth: 1,
-         borderColor: "#fff",
-         data: this.props.data.dataSeries[ix]
-       }
-     }.bind(this));
+      return (
+        this.props.labels.map(
+          function(e, ix){
+            return {
+              name: e.name,
+              color: e.colour,
+              borderWidth: 1,
+              borderColor: "#fff",
+              data: this.props.data.dataSeries[ix]
+            }
+        }.bind(this)));
+    },
+
+    _makeLabelToggle: function(ix){
+      return function(){
+        this.setState(function(previousState){
+          return {
+            legendState: previousState.legendState.map(
+              function(e,jx){
+                return ix===jx ? !e : e;
+              })
+          }
+        });
+      }.bind(this);
+    },
+
+    renderLegend: function(){
+      return (
+        <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
+          { this.props.labels.map(
+            function(e, ix){
+              return (
+                <HeatmapLegendBox key={e.name}
+                  name={e.name}
+                  colour={e.colour}
+                  on={this.state.legendState[ix]}
+                  onClickCallback={this._makeLabelToggle(ix)} />
+              );
+            }.bind(this)
+          )
+          }
+          <div className="legend-item special">
+              <span className="icon icon-generic" data-icon="i" data-toggle="tooltip" data-placement="bottom"
+                    title="This range of values indicates gene expression level across different experimental conditions (e.g. tissues). It is calculated differently between RNA and proteomics experiments.">
+              </span>
+          </div>
+          <HeatmapLegendBox key={"No data available"}
+            name={"No data available"}
+            colour={"white"}
+            on={ true}
+            onClickCallback={function(){}}/>
+        </div>
+      );
     },
 
     render: function () {
@@ -408,54 +445,33 @@ var HighchartsHeatmap = React.createClass({
             anatomogramEventEmitter: this.props.anatomogramEventEmitter,
             series: this._prepareDataSeries()
         };
-
-        var clsName_0 = this.state.legend_0 ? 'legend-item legend-item-off' : 'legend-item special';
-        var clsName_1 = this.state.legend_1 ? 'legend-item legend-item-off' : 'legend-item special';
-        var clsName_2 = this.state.legend_2 ? 'legend-item legend-item-off' : 'legend-item special';
-        var clsName_3 = this.state.legend_3 ? 'legend-item legend-item-off' : 'legend-item special';
-
-        var barcharts_legend = (
-            <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
-                <div id="legend_0" ref="legend_1" className={clsName_0} >
-                    <div className="legend-rectangle col_below"></div>
-                    <span style={{verticalAlign: "middle"}}>Below cutoff</span>
-                </div>
-                <div id="legend_1" className={clsName_1} >
-                    <div className="legend-rectangle col_low"></div>
-                    <span style={{verticalAlign: "middle"}}>Low</span>
-                </div>
-                <div id="legend_2" className={clsName_2} >
-                    <div className="legend-rectangle col_med"></div>
-                    <span style={{verticalAlign: "middle"}}>Medium</span>
-                </div>
-                <div id="legend_3" className={clsName_3} >
-                    <div className="legend-rectangle col_high"></div>
-                    <span style={{verticalAlign: "middle"}}>High</span>
-                </div>
-
-                <div className="legend-item special">
-                    <span className="icon icon-generic" data-icon="i" data-toggle="tooltip" data-placement="bottom"
-                          title="This range of values indicates gene expression level across different experimental conditions (e.g. tissues). It is calculated differently between RNA and proteomics experiments.">
-                    </span>
-                </div>
-
-                <div id="legend_4" className="legend-item special">
-                    <div className="legend-rectangle col_nd"></div>
-                    <span style={{verticalAlign: "middle"}}>No data available</span>
-                </div>
-            </div>
-        );
-
         return (
               <div id="highcharts_container">
                   <ReactHighcharts config={highchartsOptions} ref="chart"/>
-                  {barcharts_legend}
+                  {this.renderLegend()}
               </div>
         );
     }
 
 });
 
+var HeatmapLegendBox = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired,
+    colour: React.PropTypes.string.isRequired,
+    on: React.PropTypes.bool.isRequired,
+    onClickCallback: React.PropTypes.func.isRequired
+  },
+  render: function () {
+    return (
+      <div className={"legend-item "+(this.props.on? "special" : "legend-item-off")} onClick={this.props.onClickCallback}>
+          <div style={{background: this.props.colour}} className="legend-rectangle"></div>
+          <span style={{verticalAlign: "middle"}}>{this.props.name}</span>
+      </div>
+    );
+  }
+
+})
 
 var propsForOrderingDropdown = {
   available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
@@ -475,13 +491,15 @@ var OrderingDropdown = React.createClass({
         title={"Order by"}
         onSelect={this.props.onSelect}
         id={"ordering-dropdown"}>
-        {this.props.available.map(function(option){
-          return ( <MenuItem
-                      key={option}
-                      eventKey={option}
-                      active={option === this.props.current}>
-                        {option}
-                   </MenuItem> );
+        {this.props.available.map(
+          function(option){
+            return (
+              <MenuItem
+                key={option}
+                eventKey={option}
+                active={option === this.props.current}>
+                  {option}
+             </MenuItem>);
         }.bind(this))}
       </DropdownButton>
       </div>
@@ -506,6 +524,15 @@ var HeatmapOptions = React.createClass({
           </div>
           <div style={{display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight}}>
             <div className="btn-group">
+              { this.props.orderings.available.length>1
+                ?
+                  <OrderingDropdown
+                    available={this.props.orderings.available}
+                    current={this.props.orderings.current}
+                    onSelect={this.props.orderings.onSelect}/>
+                :
+                  null
+              }
               <DownloadProfilesButton
                 ref="downloadProfilesButton"
                 downloadProfilesURL={this.props.downloadOptions.downloadProfilesURL}
@@ -525,7 +552,6 @@ var HeatmapOptions = React.createClass({
       </div>
     );
   }
-
 });
 
 //*------------------------------------------------------------------*

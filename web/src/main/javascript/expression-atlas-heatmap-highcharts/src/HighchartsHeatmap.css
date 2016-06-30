@@ -17,26 +17,6 @@
     border: 0 solid olive;
 }
 
-.col_below {
-    background: #d7d7d7;
-}
-
-.col_low {
-    background: #45affd;
-}
-
-.col_med {
-    background: #1E74CA/**#9fd2fa**/;
-}
-
-.col_high {
-    background: #024990/**#dff8ff**/;
-}
-
-.col_nd {
-    background: #fff;
-}
-
 #barcharts_legend_list_items .legend-text {
     display: inline-block;
     padding: 4px;

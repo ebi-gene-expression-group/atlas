@@ -53,8 +53,9 @@ var Container = React.createClass({
         atlasBaseURL: React.PropTypes.string.isRequired,
         linksAtlasBaseURL: React.PropTypes.string.isRequired,
         showAnatomogram:React.PropTypes.bool.isRequired,
-        isWidget: React.PropTypes.bool.isRequired,
+        isDifferential: React.PropTypes.bool.isRequired,
         isMultiExperiment: React.PropTypes.bool.isRequired,
+        isWidget: React.PropTypes.bool.isRequired,
         disableGoogleAnalytics: React.PropTypes.bool.isRequired,
         fail: React.PropTypes.func,
         googleAnalyticsCallback: React.PropTypes.func,
@@ -192,18 +193,13 @@ var Container = React.createClass({
             function (data) {
                 if (this.isMounted()) {
 
-                    // var orderedData = HighchartsUtils.rankColumns(data.profiles, data.columnHeaders);
-                    // var filteredDataByThreshold = HighchartsUtils.applyThresholdToColumns(orderedData.profiles, orderedData.columnHeaders, 40);
-                    // var rankedExperiments = HighchartsUtils.rankExperiments(filteredDataByThreshold.rows, filteredDataByThreshold.columnHeaders.length);
-                    // if (this.props.isMultiExperiment) {
-                    //     data.profiles.rows = HighchartsUtils.applyThresholdToRows(rankedExperiments, filteredDataByThreshold.columnHeaders, 40);
-                    // } else { //We don't apply threshold for reference experiments
-                    //     data.profiles.rows = rankedExperiments;
-                    // }
-
-                    // var xAxisCategories = HighchartsUtils.getXAxisCategories(filteredDataByThreshold.columnHeaders);
-
-
+                    var config = {
+                      geneQuery: data.config.geneQuery,
+                      isExperimentPage: this.props.sourceURL.indexOf("/json/experiments/") >-1,
+                      isMultiExperiment: this.props.isMultiExperiment,
+                      isReferenceExperiment: !this.props.isMultiExperiment && this.props.sourceURL.indexOf("/json/experiments/") === -1,
+                      isDifferential: this.props.isDifferential
+                    }
 
                     this.setState({
                         heatmapConfig: data.config,
@@ -213,9 +209,7 @@ var Container = React.createClass({
                         geneSetProfiles: data.geneSetProfiles,
                         anatomogramData: data.anatomogram,
                         experimentData: data.experiment,
-                        heatmapData: HeatmapData.get(
-                          data.profiles.rows, data.columnHeaders,
-                           data.config, this.props.isMultiExperiment)
+                        heatmapData: HeatmapData.get(data.profiles.rows, data.columnHeaders, config)
                     });
                 }
             }.bind(this)

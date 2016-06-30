@@ -9,10 +9,11 @@
 <script type="text/javascript">
     expressionAtlasHeatmapHighcharts.render({
         atlasHost: "${not empty atlasHost? atlasHost: "www.ebi.ac.uk"}",
-        sourceURL: "${sourceURL}",
-        isMultiExperiment: ${isMultiExperiment ? true : false},
         isDifferential: ${type.differential},
+        isMultiExperiment: ${isMultiExperiment ? true : false},
         isProteomicsBaseline: ${type.proteomicsBaseline},
+        isWidget: false,
+        sourceURL: "${sourceURL}",
         target: "gxaExperimentPageHeatmapAnatomogram"
     });
 </script>
