@@ -64,71 +64,70 @@ var Container = React.createClass({
 
     render: function () {
 
-    var geneURL =
-        this.props.linksAtlasBaseURL + "/query" +
-        "?geneQuery=" + this.state.heatmapConfig.geneQuery +
-        "&exactMatch=" + this.state.heatmapConfig.isExactMatch +
-        "&organism=" + this.state.heatmapConfig.species;
+        var geneURL =
+            this.props.linksAtlasBaseURL + "/query" +
+            "?geneQuery=" + this.state.heatmapConfig.geneQuery +
+            "&exactMatch=" + this.state.heatmapConfig.isExactMatch +
+            "&organism=" + this.state.heatmapConfig.species;
 
-        var display;
-        var marginLeft;
+            var display;
+            var marginLeft;
 
-        if (this.state.anatomogramData) {
-            display = this.props.showAnatomogram ? "block" : "none";
-            marginLeft = this.props.showAnatomogram ? "270px" : "0";
-        } else {
-            display = "none";
-            marginLeft = "0";
-        }
+            if (this.state.anatomogramData) {
+                display = this.props.showAnatomogram ? "block" : "none";
+                marginLeft = this.props.showAnatomogram ? "270px" : "0";
+            } else {
+                display = "none";
+                marginLeft = "0";
+            }
 
-    return (
-      <div ref="this">
-          { this.state.experimentData ?
-              <ExperimentDescription experiment={this.state.experimentData} linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>
-              : null
-          }
+        return (
+          <div ref="this">
+              { this.state.experimentData ?
+                  <ExperimentDescription experiment={this.state.experimentData} linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>
+                  : null
+              }
 
-          { this.state.heatmapConfig ?
-              <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
+              { this.state.heatmapConfig ?
+                  <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
-                  <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
-                      { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
-                        ? <Anatomogram anatomogramData={this.state.anatomogramData}
-                                     expressedTissueColour={"gray"} hoveredTissueColour={"red"}
-                                     profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
-                        : null
-                      }
+                      <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
+                          { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
+                            ? <Anatomogram anatomogramData={this.state.anatomogramData}
+                                         expressedTissueColour={"gray"} hoveredTissueColour={"red"}
+                                         profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
+                            : null
+                          }
+                      </div>
+
+                      <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
+                          <HighchartsHeatmap
+                              isMultiExperiment={this.props.isMultiExperiment}
+                              profiles={this.state.profiles}
+                              heatmapConfig={this.state.heatmapConfig}
+                              anatomogramEventEmitter={this.props.anatomogramEventEmitter}
+                              atlasBaseURL={this.props.atlasBaseURL}
+                              googleAnalyticsCallback={this.state.googleAnalyticsCallback}
+                              heatmapData={this.state.heatmapData}
+                          />
+                      </div>
                   </div>
-
-                  <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
-                      <HighchartsHeatmap
-                          isMultiExperiment={this.props.isMultiExperiment}
-                          profiles={this.state.profiles}
-                          heatmapConfig={this.state.heatmapConfig}
-                          anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-                          atlasBaseURL={this.props.atlasBaseURL}
-                          googleAnalyticsCallback={this.state.googleAnalyticsCallback}
-                          heatmapData={this.state.heatmapData}
-                      />
+                  :
+                  <div ref="loadingImagePlaceholder">
+                      <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
                   </div>
-              </div>
-              :
-              <div ref="loadingImagePlaceholder">
-                  <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
-              </div>
-          }
+              }
 
-          { this.props.isWidget ?
-              <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
-                  <br/>This expression view is provided by <a href={this.props.linksAtlasBaseURL}>Expression Atlas</a>.
-                  <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p>
-              </div>
-              :
-              null
-          }
-
-      </div>
-      );
+              { this.props.isWidget ?
+                  <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
+                      <br/>This expression view is provided by <a href={this.props.linksAtlasBaseURL}>Expression Atlas</a>.
+                      <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p>
+                  </div>
+                  :
+                  null
+              }
+          </div>
+        );
     },
 
     componentDidUpdate: function() {

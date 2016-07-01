@@ -145,7 +145,8 @@ var HeatmapContainer = React.createClass({
             }
           )
         );
-    }
+    };
+      
     return {
       dataSeries:
         this.props.heatmapData.dataSeries.map(
