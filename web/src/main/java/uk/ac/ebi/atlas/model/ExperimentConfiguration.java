@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Joiner;
@@ -13,7 +12,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.utils.StringUtil;
 
 import javax.xml.xpath.*;
 import java.util.EnumSet;
@@ -22,8 +20,8 @@ import java.util.Set;
 
 public class ExperimentConfiguration {
 
-    public static final String EXPERIMENT_TYPE = "experimentType";
-    public static final String RDATA = "r_data";
+    private static final String EXPERIMENT_TYPE = "experimentType";
+    private static final String RDATA = "r_data";
     private XMLConfiguration xmlConfiguration;
 
     private Document document;
@@ -62,7 +60,7 @@ public class ExperimentConfiguration {
         }
     }
 
-    Contrast getContrast(String id, String arrayDesignAccession) {
+    private Contrast getContrast(String id, String arrayDesignAccession) {
         Configuration configuration = xmlConfiguration.configurationAt("analytics/contrasts/contrast[@id=\'" + id + "\']");
         String name = configuration.getString("name");
         String reference = configuration.getString("reference_assay_group");
@@ -70,26 +68,28 @@ public class ExperimentConfiguration {
         return new Contrast(id, arrayDesignAccession, getAssayGroup(reference), getAssayGroup(test), name);
     }
 
-    AssayGroup getAssayGroup(String id) {
+    private AssayGroup getAssayGroup(String id) {
         try {
-
             XPathExpression expr = xpath.compile("/configuration/analytics/assay_groups/assay_group[@id='" + id + "']/assay");
 
             NodeList nl = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
             String[] assayAccessions = new String[nl.getLength()];
 
-            ImmutableSet.Builder<String> builder = ImmutableSet.builder();
+            ImmutableSet.Builder<String> technicalReplicatesBuilder = ImmutableSet.builder();
+            int soloAssayCount = 0;
             for (int i = 0; i < nl.getLength(); i++) {
                 Node node = nl.item(i);
                 String technicalReplicateId = getAttribute(node, "technical_replicate_id");
                 if (technicalReplicateId != null) {
-                    builder.add(technicalReplicateId);
+                    technicalReplicatesBuilder.add(technicalReplicateId);
+                } else {
+                    soloAssayCount++;
                 }
                 assayAccessions[i] = node.getTextContent();
             }
 
-            int technicalReplicates = builder.build().size();
-            int biologicalReplicates = (technicalReplicates == 0) ? assayAccessions.length : technicalReplicates;
+            int technicalReplicates = technicalReplicatesBuilder.build().size();
+            int biologicalReplicates = technicalReplicates + soloAssayCount;
             return new AssayGroup(id, biologicalReplicates, assayAccessions);
 
         } catch (XPathExpressionException e) {
@@ -126,9 +126,7 @@ public class ExperimentConfiguration {
     public AssayGroups getAssayGroups() {
         List<AssayGroup> assayGroups = Lists.newArrayList();
 
-        String[] assayGoupIds = xmlConfiguration.getStringArray("/analytics/assay_groups/assay_group/@id");
-
-        for (String assayGoupId : assayGoupIds) {
+        for (String assayGoupId : xmlConfiguration.getStringArray("/analytics/assay_groups/assay_group/@id")) {
             assayGroups.add(getAssayGroup(assayGoupId));
         }
 
@@ -137,7 +135,6 @@ public class ExperimentConfiguration {
 
     public ExperimentType getExperimentType() {
         Element configuration = document.getDocumentElement();
-
         String type = configuration.getAttribute(EXPERIMENT_TYPE);
 
         if (StringUtils.isEmpty(type)) {
@@ -145,7 +142,6 @@ public class ExperimentConfiguration {
         }
 
         ExperimentType experimentType = ExperimentType.get(type);
-
         if (experimentType == null) {
             throw new IllegalStateException(String.format("Unknown %s attribute: \"%s\". Must be one of: [%s]", EXPERIMENT_TYPE, type, Joiner.on(", ").join(EnumSet.allOf(ExperimentType.class))));
         }

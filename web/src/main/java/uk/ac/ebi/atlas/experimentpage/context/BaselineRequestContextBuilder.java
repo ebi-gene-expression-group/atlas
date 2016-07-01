@@ -18,14 +18,11 @@ public class BaselineRequestContextBuilder {
 
     private BaselineExperiment experiment;
 
-    private FilterFactorsConverter filterFactorsConverter;
-
     private BaselineRequestPreferences preferences;
 
     private Optional<String> queryDescription = Optional.absent();
 
-    public BaselineRequestContextBuilder(FilterFactorsConverter filterFactorsConverter) {
-        this.filterFactorsConverter = filterFactorsConverter;
+    public BaselineRequestContextBuilder() {
     }
 
     public BaselineRequestContextBuilder forExperiment(BaselineExperiment experiment) {
@@ -60,7 +57,7 @@ public class BaselineRequestContextBuilder {
 
 
 
-        SortedSet<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
+        SortedSet<Factor> selectedFilterFactors = FilterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
         requestContext.setSelectedFilterFactors(selectedFilterFactors);
 
         String filteredBySpecies = getFilteredBySpecies(selectedFilterFactors);
@@ -73,21 +70,15 @@ public class BaselineRequestContextBuilder {
         requestContext.setSelectedQueryFactors(queryFactors);
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-        if (experimentalFactors.getXmlFactorsByType() != null &&
-                !experimentalFactors.getXmlFactorsByType().isEmpty()) {
-            Set<Factor> allQueryFactors = experimentalFactors.getComplementFactorsByXML(selectedFilterFactors);
-            checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
-            requestContext.setAllQueryFactors(allQueryFactors);
-        } else {
-            SortedSet<Factor> allQueryFactors = experimentalFactors.getComplementFactors(selectedFilterFactors);
-            checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
-            requestContext.setAllQueryFactors(allQueryFactors);
-        }
+
+        SortedSet<Factor> allQueryFactors = experimentalFactors.getComplementFactors(selectedFilterFactors);
+        checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
+        requestContext.setAllQueryFactors(allQueryFactors);
 
         return requestContext;
     }
 
-    String getFilteredBySpecies(Set<Factor> selectedFilterFactors) {
+    private String getFilteredBySpecies(Set<Factor> selectedFilterFactors) {
         String filteredBySpecies = null;
         for (Factor selectedFilterFactor : selectedFilterFactors) {
             if (selectedFilterFactor.getType().equalsIgnoreCase("organism")) {
@@ -95,9 +86,9 @@ public class BaselineRequestContextBuilder {
             }
         }
         if (filteredBySpecies == null) {
-            filteredBySpecies = experiment.getFirstOrganism().toLowerCase();
+            filteredBySpecies = experiment.getSpecies().toLowerCase();
         }
-        Map<String, String> speciesMapping = experiment.getOrganismToEnsemblSpeciesMapping();
+        Map<String, String> speciesMapping = experiment.getSpeciesToEnsemblMapping();
         if (speciesMapping.containsKey(filteredBySpecies)) {
             filteredBySpecies = speciesMapping.get(filteredBySpecies);
         }

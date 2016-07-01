@@ -84,17 +84,8 @@ public class FilterFactorMenuBuilder {
     }
 
     protected Set<Factor> filterRemainingFactors(Factor factor, Set<Factor> allFactors) {
-        Set<Factor> remaining;
-        //if the factor order is the same as the xml file
-        if(experimentalFactors.getAllFactorsOrderedByXML() != null && !experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
-            Set<Factor> coOccurringFactors = experimentalFactors.getCoOccurringFactorsByXML(factor);
-            remaining = Sets.newHashSet(coOccurringFactors);
-            remaining.retainAll(allFactors);
-        } else {
-            SortedSet<Factor> coOccurringFactors = experimentalFactors.getCoOccurringFactors(factor);
-            remaining = Sets.newHashSet(coOccurringFactors);
-            remaining.retainAll(allFactors);
-        }
+        Set<Factor> remaining = new HashSet<>(experimentalFactors.getCoOccurringFactors(factor));
+        remaining.retainAll(allFactors);
 
         return remaining;
     }

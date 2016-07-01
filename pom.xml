@@ -593,6 +593,18 @@
             <timezone>0</timezone>
             <properties/>
         </developer>
+        <developer>
+            <id>wbazant</id>
+            <name>Wojtek Bażant</name>
+            <email>wbazant@ebi.ac.uk</email>
+            <organization>EBI</organization>
+            <organizationUrl>http://www.ebi.ac.uk</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>0</timezone>
+            <properties/>
+        </developer>
     </developers>
 
     <modules>
@@ -600,11 +612,11 @@
     </modules>
 
     <profiles>
-        <!-- environment profiles -->
+        <!-- Execution profiles -->
         <profile>
-            <!-- used for build that is deployed to ves-hx-77 -->
-            <id>acceptance</id>
-            <!-- oracleContext.xml is located on the filesystem and specified in tomcat's context xml -->
+            <!-- Used for build that is deployed to ves-hx-77 -->
+            <id>test</id>
+            <!-- oracleContext.xml is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
                 <log.level.root>info</log.level.root>
@@ -615,7 +627,7 @@
         <profile>
             <!--build used for staging and production -->
             <id>production</id>
-            <!-- oracleContext.xml is located on the filesystem and specified in tomcat's context xml -->
+            <!-- oracleContext.xml is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
             <properties>
                 <arrayexpress.ac.url>/arrayexpress</arrayexpress.ac.url>
                 <europepmc.base.url>/europepmc</europepmc.base.url>
@@ -639,11 +651,11 @@
                     </resource>
                 </resources>
             </build>
-            <!-- embedded tomcat started by mvn in bamboo plan -->
+            <!-- Embedded tomcat started by mvn in Bamboo plan -->
             <properties>
                 <solr.host>localhost</solr.host>
                 <solr.test.host>lime</solr.test.host>
-                <!-- this directory is populated from /web/src/test/resources/ by the build plan  -->
+                <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3it</oracle.jdbc.username>
@@ -653,8 +665,9 @@
                 <log.prudent>false</log.prudent>
             </properties>
         </profile>
+
+        <!-- Development profiles -->
         <profile>
-            <!-- for development -->
             <id>dev</id>
             <build>
                 <resources>
@@ -680,7 +693,6 @@
             </properties>
         </profile>
         <profile>
-            <!-- for development -->
             <id>dev.local.solr</id>
             <build>
                 <resources>
@@ -707,7 +719,6 @@
             </properties>
         </profile>
         <profile>
-            <!-- for development -->
             <id>dev.local.vm</id>
             <build>
                 <resources>
@@ -760,7 +771,7 @@
             </properties>
         </profile>
         <profile>
-            <!-- for debugging database performance -->
+            <!-- For debugging database performance -->
             <id>dev.using.atlas.acceptance</id>
             <build>
                 <resources>
@@ -777,7 +788,7 @@
             <properties>
                 <solr.host>ves-hx-77</solr.host>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
+                <oracle.jdbc.url>jdbc:oracle:thin:@ora-dlvm-039.ebi.ac.uk:1521:VATLASTST</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3</oracle.jdbc.password>
                 <log.level.root>info</log.level.root>
@@ -786,7 +797,7 @@
             </properties>
         </profile>
         <profile>
-            <!-- access solr and oracle via localhost ssh tunnel -->
+            <!-- Access Solr and Oracle via localhost ssh tunnel -->
             <id>dev.via.tunnel</id>
             <build>
                 <resources>
@@ -811,58 +822,6 @@
                 <log.prudent>false</log.prudent>
             </properties>
         </profile>
-        <profile>
-            <id>dev.using.production-oy-76</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <includes>
-                            <include>
-                                oracleContext.xml
-                            </include>
-                        </includes>
-                    </resource>
-                </resources>
-            </build>
-            <properties>
-                <solr.host>ves-oy-76:8983</solr.host>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <oracle.jdbc.url>jdbc:oracle:thin:@ora-oyvm-009.ebi.ac.uk:1531:ATLASPUB</oracle.jdbc.url>
-                <oracle.jdbc.username>atlasprd3</oracle.jdbc.username>
-                <oracle.jdbc.password>atla5p4d3</oracle.jdbc.password>
-                <log.level.root>info</log.level.root>
-                <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
-            </properties>
-        </profile>
-        <profile>
-            <id>dev.using.production-pg-76</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <includes>
-                            <include>
-                                oracleContext.xml
-                            </include>
-                        </includes>
-                    </resource>
-                </resources>
-            </build>
-            <properties>
-                <solr.host>ves-pg-76:8983</solr.host>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <oracle.jdbc.url>jdbc:oracle:thin:@ora-pgvm-009.ebi.ac.uk:1531:ATLASPUB</oracle.jdbc.url>
-                <oracle.jdbc.username>atlasprd3</oracle.jdbc.username>
-                <oracle.jdbc.password>atla5p4d3</oracle.jdbc.password>
-                <log.level.root>info</log.level.root>
-                <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
-            </properties>
-        </profile>
-        <!-- execution profiles -->
-
     </profiles>
 
 </project>

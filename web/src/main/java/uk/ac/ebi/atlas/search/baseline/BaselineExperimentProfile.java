@@ -13,10 +13,7 @@ public class BaselineExperimentProfile extends BaselineProfile implements Compar
     private final Integer nonFilterFactorsSize;
 
     private ExperimentType experimentType;
-
-    private FilterFactorsConverter filterFactorsConverter = new FilterFactorsConverter();
-
-
+    
     public BaselineExperimentProfile(BaselineExperimentSlice experimentSlice) {
         super(experimentSlice.experimentAccession(), experimentSlice.experimentDisplayName());
         filterFactors = experimentSlice.filterFactors();
@@ -51,7 +48,7 @@ public class BaselineExperimentProfile extends BaselineProfile implements Compar
         StringBuilder sb = new StringBuilder();
         sb.append(super.getName());
         if (!filterFactors.isEmpty() && !filterFactors.containsOnlyOrganism()) {
-            sb.append(" - ").append(filterFactorsConverter.prettyPrint(filterFactors));
+            sb.append(" - ").append(FilterFactorsConverter.prettyPrint(filterFactors));
         }
         return sb.toString();
     }
@@ -72,7 +69,7 @@ public class BaselineExperimentProfile extends BaselineProfile implements Compar
         }
 
         if (!filterFactors.isEmpty() && !filterFactors.containsOnlyOrganism()) {
-            sb.append(" - ").append(filterFactorsConverter.prettyPrint(filterFactors));
+            sb.append(" - ").append(FilterFactorsConverter.prettyPrint(filterFactors));
         }
         return sb.toString();
     }

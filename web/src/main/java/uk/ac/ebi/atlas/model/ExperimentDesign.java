@@ -258,20 +258,19 @@ public class ExperimentDesign implements Serializable {
     }
 
 
-    public Set<String> getSpeciesForAssays(Set<String> assayAccessions) {
-        Set<String> species = Sets.newHashSet();
-        for (String assayAccession: assayAccessions){
+    public String getSpeciesForAssays(Set<String> assayAccessions) {
+        for (String assayAccession: assayAccessions) {
             Map<String, String> assaySamples = getSampleCharacteristicsValues(assayAccession);
 
             checkNotNull(assaySamples, String.format("Assay accession %s does not exist or has no samples", assayAccession));
 
-            for (String sampleName : assaySamples.keySet()){
+            for (String sampleName : assaySamples.keySet()) {
                 if ("organism".equalsIgnoreCase(sampleName)){
-                    species.add(assaySamples.get(sampleName));
+                    return assaySamples.get(sampleName);
                 }
             }
         }
-        return species;
-    }
 
+        return "";
+    }
 }

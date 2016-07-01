@@ -19,16 +19,14 @@ import java.util.SortedSet;
 public class BaselineExperimentProfilesViewModelBuilder {
 
     private final BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder;
-    private final FilterFactorsConverter filterFactorsConverter;
 
     @Inject
     public BaselineExperimentProfilesViewModelBuilder(BaselineExpressionViewModelBuilder
                                                                   baselineExpressionViewModelBuilder) {
         this.baselineExpressionViewModelBuilder = baselineExpressionViewModelBuilder;
-        this.filterFactorsConverter = new FilterFactorsConverter();
     }
 
-    public JsonElement buildJson(GenericBaselineProfilesList<BaselineExperimentProfile> profiles, SortedSet<Factor>
+    public JsonElement buildJson(GenericBaselineProfilesList<BaselineExperimentProfile> profiles, List<Factor>
             orderedFactors) {
         JsonObject result = new JsonObject();
         result.addProperty("searchResultTotal", profiles.getTotalResultCount());
@@ -38,7 +36,8 @@ public class BaselineExperimentProfilesViewModelBuilder {
     }
 
     private JsonArray buildExperimentsJson(List<BaselineExperimentProfile> baselineProfiles,
-                                           SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+                                           List<Factor> orderedFactors, double minExpressionLevel, double
+                                                   maxExpressionLevel) {
         JsonArray result = new JsonArray();
         for (BaselineExperimentProfile baselineProfile : baselineProfiles) {
             result.add(buildExperimentJson(baselineProfile, orderedFactors, minExpressionLevel, maxExpressionLevel));
@@ -47,7 +46,8 @@ public class BaselineExperimentProfilesViewModelBuilder {
     }
 
     private JsonElement buildExperimentJson(BaselineExperimentProfile profile,
-                                            SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+                                            List<Factor> orderedFactors, double minExpressionLevel, double
+                                                    maxExpressionLevel) {
         JsonObject result = new JsonObject();
         result.addProperty("id", profile.getId());
         result.addProperty("name",profile.getShortName());
@@ -56,7 +56,7 @@ public class BaselineExperimentProfilesViewModelBuilder {
                 "expressions", baselineExpressionViewModelBuilder.buildExpressions(profile, orderedFactors,
                 minExpressionLevel, maxExpressionLevel)
         );
-        result.addProperty("serializedFilterFactors", filterFactorsConverter.serialize(profile.getFilterFactors()));
+        result.addProperty("serializedFilterFactors", FilterFactorsConverter.serialize(profile.getFilterFactors()));
         return result;
     }
 

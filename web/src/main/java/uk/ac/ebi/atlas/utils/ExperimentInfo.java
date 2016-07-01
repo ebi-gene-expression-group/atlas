@@ -15,7 +15,7 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
     private String lastUpdate;
     private int numberOfAssays;
     private int numberOfContrasts;
-    private SortedSet<String> species = Sets.newTreeSet();
+    private String species;
     private String kingdom;
     private String ensemblDB;
     private SortedSet<String> experimentalFactors = Sets.newTreeSet();
@@ -62,12 +62,12 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
         this.numberOfContrasts = numberOfContrasts;
     }
 
-    public SortedSet<String> getSpecies() {
+    public String getSpecies() {
         return species;
     }
 
-    public void setSpecies(Set<String> species) {
-        this.species = Sets.newTreeSet(species);
+    public void setSpecies(String species) {
+        this.species = species;
     }
 
     public String getKingdom() {

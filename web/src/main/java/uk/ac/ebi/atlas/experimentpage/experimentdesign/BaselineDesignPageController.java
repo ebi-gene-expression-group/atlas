@@ -54,7 +54,7 @@ public class BaselineDesignPageController extends ExperimentDesignPageRequestHan
     protected void extendModel(Model model, BaselineExperiment experiment, String experimentAccession) {
         //This is necessary for adding functionality to the QC button
         Set<Factor> organisms = experiment.getExperimentalFactors().getDefaultFilterFactors();
-        String species = experiment.getFirstOrganism();
+        String species = experiment.getSpecies();
 
         if(!organisms.isEmpty()) {
             for (Factor factor : organisms) {

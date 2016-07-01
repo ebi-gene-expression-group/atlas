@@ -37,7 +37,6 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentDownloadController.class);
 
     private static final String PARAMS_TYPE_RNASEQ_BASELINE = "type=RNASEQ_MRNA_BASELINE";
-    private final PreferencesForBaselineExperiments preferencesForBaselineExperiments;
 
     private final BaselineProfilesWriterService baselineProfilesWriterService;
 
@@ -50,7 +49,6 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
                                                 BaselineProfileInputStreamFactory inputStreamFactory,
                                                 BaselineProfilesWriterServiceFactory
                                                         baselineProfilesWriterServiceFactory,ExperimentTrader experimentTrader) {
-        this.preferencesForBaselineExperiments = new PreferencesForBaselineExperiments();
         this.baselineProfilesWriterService = baselineProfilesWriterServiceFactory.create(inputStreamFactory);
         this.experimentTrader =experimentTrader;
     }
@@ -59,7 +57,7 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
                                        BaselineRequestPreferences preferences, HttpServletResponse response, String accessKey) throws IOException {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
+        PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: {}", preferences);
 
@@ -115,6 +113,14 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
     public String downloadRdataURL(@PathVariable String experimentAccession) throws IOException {
 
         String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experimentAccession);
+
+        return "forward:" + path;
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-heatmap.pdf", params = PARAMS_TYPE_RNASEQ_BASELINE)
+    public String downloadClusteringPdf(@PathVariable String experimentAccession) throws IOException {
+
+        String path = MessageFormat.format("/expdata/{0}/{0}-heatmap.pdf", experimentAccession);
 
         return "forward:" + path;
     }

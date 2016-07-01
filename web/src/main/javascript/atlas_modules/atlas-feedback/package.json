@@ -9,7 +9,7 @@
   "dependencies": {
     "react": "^0.14.7",
     "react-addons-css-transition-group": "^0.14.8",
-    "react-bootstrap": "^0.29.3",
+    "react-bootstrap": "^0.29.5",
     "react-dom": "^0.14.7",
     "react-emojione": "^1.1.1",
     "react-localstorage": "^0.2.9",

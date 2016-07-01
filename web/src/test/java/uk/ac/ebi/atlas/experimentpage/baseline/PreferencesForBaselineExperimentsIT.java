@@ -22,8 +22,6 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class PreferencesForBaselineExperimentsIT {
 
-    private PreferencesForBaselineExperiments subject = new PreferencesForBaselineExperiments();
-
     @Inject
     BaselineExperimentsCache baselineExperimentsCache;
 
@@ -36,7 +34,7 @@ public class PreferencesForBaselineExperimentsIT {
         preferences.setSpecific(true);
         preferences.setQueryFactorValues(allFactors);
 
-        subject.setPreferenceDefaults(preferences, experiment);
+        PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         assertThat(preferences.isSpecific(), is(false));
     }
@@ -51,7 +49,7 @@ public class PreferencesForBaselineExperimentsIT {
         preferences.setQueryFactorValues(allFactors);
         preferences.setSerializedFilterFactors("DEVELOPMENTAL_STAGE:3-fold embryo Ce,ORGANISM_PART:organism");
 
-        subject.setPreferenceDefaults(preferences, experiment);
+        PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         assertThat(preferences.isSpecific(), is(false));
     }

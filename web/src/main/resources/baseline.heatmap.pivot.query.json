@@ -6,6 +6,7 @@
         "species": {
           "terms": {
             "field": "species",
+            "limit": 1000,
             "facet": {
               "defaultQueryFactorType": {
                 "terms": {
@@ -14,6 +15,7 @@
                     "experimentAccession": {
                       "terms": {
                         "field": "experimentAccession",
+                        "limit": 5000,
                         "facet": {
                           "assayGroupId": {
                             "terms": {

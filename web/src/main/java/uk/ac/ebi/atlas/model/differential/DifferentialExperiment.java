@@ -16,11 +16,11 @@ public class DifferentialExperiment extends Experiment {
 
     private LinkedHashMap<String, Contrast> contrastsById = Maps.newLinkedHashMap();
 
-    public DifferentialExperiment(String accession, Date lastUpdate, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, boolean hasRData, Set<String> species, String kingdom, String ensemblDB, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
+    public DifferentialExperiment(String accession, Date lastUpdate, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, boolean hasRData, String species, String kingdom, String ensemblDB, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
         this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasExtraInfoFile, hasRData, species, kingdom, ensemblDB, pubMedIds, experimentDesign);
     }
 
-    protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, boolean hasRData, Set<String> species, String kingdom, String ensemblDB, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
+    protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, boolean hasRData, String species, String kingdom, String ensemblDB, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
         super(experimentType, accession, lastUpdate, description, hasExtraInfoFile, hasRData, species, kingdom, ensemblDB, null, pubMedIds, experimentDesign);
         for (Contrast contrast : contrasts) {
             contrastsById.put(contrast.getId(), contrast);

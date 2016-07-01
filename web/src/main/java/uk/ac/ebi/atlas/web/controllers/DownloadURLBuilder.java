@@ -12,15 +12,18 @@ import java.util.Map;
 @Scope("request")
 public class DownloadURLBuilder {
 
-    private static final String TSV_RAW_FILE_EXTENSION = "/raw-counts.tsv";
-
+    private static final String TSV_RAW_FILE_NAME = "/raw-counts.tsv";
     private static final String TSV_NORMALIZED_FILE_EXTENSION = "/normalized.tsv";
-
     private static final String TSV_LOG_FOLD_FILE_EXTENSION = "/logFold.tsv";
-
     private static final String TSV_ANALYTICS_FILE_EXTENSION = "/all-analytics.tsv";
-
     private static final String R_FILE_EXTENSION = "-atlasExperimentSummary.Rdata";
+
+    private String experimentAccession;
+
+    public DownloadURLBuilder withExperimentAccession(String experimentAccession) {
+        this.experimentAccession = experimentAccession;
+        return this;
+    }
 
     public Map<String,String> dataDownloadUrls(String requestURI){
         Map<String,String> result = new HashMap<>();
@@ -29,16 +32,11 @@ public class DownloadURLBuilder {
         result.put("logFoldUrl", buildDownloadLogFoldDataUrl(requestURI));
         result.put("analyticsDownloadUrl", buildDownloadAllAnalyticsUrl(requestURI));
         result.put("rDownloadUrl", buildDownloadRFileUrl(requestURI));
-        result.put("clusteringPdfUrl", buildDownloadClusteringPdfFileUrl(requestURI));
         return result;
     }
 
-    public static void addRDownloadUrlToModel(Model model, String requestURI) {
-        model.addAttribute("rDownloadUrl", buildDownloadRFileUrl(requestURI));
-    }
-
     private String buildDownloadRawUrl(String requestURI) {
-        return extractBaseURL(requestURI) + TSV_RAW_FILE_EXTENSION;
+        return extractBaseURL(requestURI) + TSV_RAW_FILE_NAME;
     }
 
     private String buildDownloadAllAnalyticsUrl(String requestURI) {
@@ -53,14 +51,8 @@ public class DownloadURLBuilder {
         return extractBaseURL(requestURI) + TSV_LOG_FOLD_FILE_EXTENSION;
     }
 
-    public static String buildDownloadRFileUrl(String requestURI) {
-        String slashExperimentAccession = requestURI.substring(requestURI.lastIndexOf("/"));
-        return requestURI + slashExperimentAccession + R_FILE_EXTENSION;
-    }
-
-    private String buildDownloadClusteringPdfFileUrl(String requestURI) {
-        String slashExperimentAccession = requestURI.substring(requestURI.lastIndexOf("/"));
-        return requestURI + slashExperimentAccession + R_FILE_EXTENSION;
+    private String buildDownloadRFileUrl(String requestURI) {
+        return extractBaseURL(requestURI) + experimentAccession + R_FILE_EXTENSION;
     }
 
     private String extractBaseURL(String requestURI) {

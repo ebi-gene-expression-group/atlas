@@ -62,7 +62,7 @@ public class FastQCReportController {
 
         model.addAttribute("fastQCReports", preferences.fastQCReportsList());
 
-        model.addAttribute("allSpecies", experiment.getOrganisms());
+        model.addAttribute("species", experiment.getSpecies());
 
         String reportSelected = preferences.getSelectedReport();
 
@@ -135,7 +135,7 @@ public class FastQCReportController {
 
         model.addAttribute("fastQCReports", preferences.fastQCReportsList());
 
-        model.addAttribute("allSpecies", experiment.getOrganisms());
+        model.addAttribute("species", experiment.getSpecies());
 
         String reportSelected = preferences.getSelectedReport();
 
@@ -254,7 +254,7 @@ public class FastQCReportController {
 
         model.addAttribute("fastQCReports", preferences.fastQCReportsList());
 
-        model.addAttribute("allSpecies", experiment.getOrganisms());
+        model.addAttribute("species", experiment.getSpecies());
 
         request.setAttribute("contentPath", path);
 

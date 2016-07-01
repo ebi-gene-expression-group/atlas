@@ -75,7 +75,6 @@ var AsynchronouslyLoadedInternalHeatmapAnatomogramContainer = React.createClass(
             isWidget={false}
             anatomogram={this.state.heatmapData.anatomogram}
             columnHeaders={this.state.heatmapData.columnHeaders}
-            nonExpressedColumnHeaders={this.state.heatmapData.nonExpressedColumnHeaders}
             multipleColumnHeaders={this.state.heatmapData.multipleColumnHeaders}
             profiles={this.state.heatmapData.profiles}
             jsonCoexpressions={this.state.heatmapData.jsonCoexpressions}
@@ -113,7 +112,6 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                 displayName: React.PropTypes.string.isRequired
             }))
         ]).isRequired,
-        nonExpressedColumnHeaders: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         multipleColumnHeaders: React.PropTypes.object,
         profiles: React.PropTypes.object.isRequired,
         jsonCoexpressions: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -175,7 +173,6 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                     <Heatmap type={this.props.type}
                              heatmapConfig={this.props.heatmapConfig}
                              columnHeaders={this.props.columnHeaders}
-                             nonExpressedColumnHeaders={this.props.nonExpressedColumnHeaders}
                              multipleColumnHeaders={this.props.multipleColumnHeaders}
                              profiles={this.props.profiles}
                              jsonCoexpressions={ this.props.jsonCoexpressions}

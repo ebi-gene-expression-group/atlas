@@ -15,24 +15,16 @@ public class MicroarrayExperiment extends DifferentialExperiment {
 
     private SortedSet<String> arrayDesignAccessions;
 
-    private boolean isTwoColour = false;
-
     public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate, Set<Contrast> contrasts,
                                 String description, boolean hasExtraInfoFile, boolean hasRData,
-                                Set<String> species, String kingdom, String ensemblDB, SortedSet<String> arrayDesignAccessions, boolean twoColour,
+                                String species, String kingdom, String ensemblDB, SortedSet<String> arrayDesignAccessions,
                                 Set<String> pubMedIds, ExperimentDesign experimentDesign) {
 
         super(type, accession, lastUpdate, contrasts, description, hasExtraInfoFile, hasRData, species, kingdom, ensemblDB, pubMedIds, experimentDesign);
         this.arrayDesignAccessions = arrayDesignAccessions;
-
-        isTwoColour = twoColour;
     }
 
     public SortedSet<String> getArrayDesignAccessions() {
         return arrayDesignAccessions;
-    }
-
-    public boolean isTwoColour() {
-        return isTwoColour;
     }
 }

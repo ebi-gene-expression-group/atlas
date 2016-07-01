@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
@@ -13,9 +12,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class AssayGroup implements Iterable<String>{
 
     private String id;
-
     private Set<String> assayAccessions;
-
     private int replicates;
 
     public AssayGroup(String id, String... assayAccessions) {

@@ -39,10 +39,8 @@
         </a>
     </c:if>
 </div>
-<div id="experimentOrganisms">Organism(s):
-    <span style="font-style:italic">
-        <spring:eval expression="T(org.apache.commons.lang3.StringUtils).removeEnd(T(org.apache.commons.lang3.StringUtils).join(allSpecies, \", \"),\", \")"/>
-    </span>
+<div id="experimentOrganisms">Organism:
+    <span style="font-style:italic">${species}</span>
 </div>
 <c:if test="${allArrayDesigns!=null}">
     <div id="experimentArrayDesigns">Array Design(s):

@@ -7,12 +7,13 @@ var React = require('react');
 var Snap = require('imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js');
 
 var $ = require('jquery');
+
+var HeatmapData= require('./DataForHighcharts.js');
 require('jQuery-ajaxTransport-XDomainRequest');
 
 //*------------------------------------------------------------------*
 
 var HighchartsHeatmap = require('./HighchartsHeatmap.jsx');
-var HighchartsUtils = require('./highchartsUtils.js');
 require('./HighchartsHeatmapContainer.css');
 
 var Anatomogram = require('anatomogram');
@@ -26,7 +27,7 @@ var ExperimentDescription = React.createClass({
         experiment: React.PropTypes.shape({
             URL: React.PropTypes.string.isRequired,
             description: React.PropTypes.string.isRequired,
-            allSpecies: React.PropTypes.string.isRequired
+            species: React.PropTypes.string.isRequired
         }).isRequired
     },
 
@@ -39,14 +40,14 @@ var ExperimentDescription = React.createClass({
                 <div id="experimentDescription">
                     <a id="goto-experiment" className="gxaThickLink" title="Experiment Page" href={experimentURL}>{this.props.experiment.description}</a>
                 </div>
-                <div id="experimentOrganisms">Organism(s): <span style={{"fontStyle":"italic"}}>{this.props.experiment.allSpecies}</span></div>
+                <div id="experimentOrganisms">Organism(s): <span style={{"fontStyle":"italic"}}>{this.props.experiment.species}</span></div>
             </div>
         );
     }
 
 });
 
-var HighchartsHeatmapContainer = React.createClass({
+var Container = React.createClass({
     propTypes: {
         sourceURL: React.PropTypes.string.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
@@ -57,7 +58,6 @@ var HighchartsHeatmapContainer = React.createClass({
         disableGoogleAnalytics: React.PropTypes.bool.isRequired,
         fail: React.PropTypes.func,
         googleAnalyticsCallback: React.PropTypes.func,
-        ensemblEventEmitter : React.PropTypes.object.isRequired,
         anatomogramEventEmitter: React.PropTypes.object.isRequired,
         anatomogramDataEventEmitter: React.PropTypes.object
     },
@@ -106,17 +106,9 @@ var HighchartsHeatmapContainer = React.createClass({
                           profiles={this.state.profiles}
                           heatmapConfig={this.state.heatmapConfig}
                           anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-                          ensemblEventEmitter={this.props.ensemblEventEmitter}
                           atlasBaseURL={this.props.atlasBaseURL}
                           googleAnalyticsCallback={this.state.googleAnalyticsCallback}
-                          xAxisCategories={this.state.xAxisCategories}
-                          yAxisCategories={this.state.yAxisCategories}
-                          yAxisCategoriesLinks={this.state.yAxisCategoriesLinks}
-                          seriesDataNA={this.state.seriesDataNA}
-                          seriesDataNAString={this.state.seriesDataNAString}
-                          seriesDataBelowCutoff={this.state.seriesDataBelowCutoff}
-                          seriesDataBelowCutoffString={this.state.seriesDataBelowCutoffString}
-                          seriesDataRanges={this.state.seriesDataRanges}
+                          heatmapData={this.state.heatmapData}
                       />
                   </div>
               </div>
@@ -186,17 +178,7 @@ var HighchartsHeatmapContainer = React.createClass({
             geneSetProfiles: {},
             anatomogramData: {},
             googleAnalyticsCallback: function (){},
-
-            xAxisCategories: {},
-            yAxisCategories: {},
-            yAxisCategoriesLinks: {},
-
-            seriesDataNA: [],
-            seriesDataNAString: "NA",
-            seriesDataBelowCutoff: [],
-            seriesDataBelowCutoffString: "Below cutoff",
-
-            seriesDataRanges: []
+            heatmapData: HeatmapData.EMPTY
         }
     },
 
@@ -221,99 +203,20 @@ var HighchartsHeatmapContainer = React.createClass({
                     // }
 
                     // var xAxisCategories = HighchartsUtils.getXAxisCategories(filteredDataByThreshold.columnHeaders);
-                    var xAxisCategories = HighchartsUtils.getXAxisCategories(data.columnHeaders);
-                    var yAxisCategories = HighchartsUtils.getYAxisCategories(data.profiles, data.config);
-                    var yAxisCategoriesLinks = HighchartsUtils.getYAxisCategoriesLinks();
 
-                    var seriesDataNA = [],
-                        seriesDataNAString = "NA";
-
-                    var seriesDataBelowCutoff = [],
-                        seriesDataBelowCutoffString = "Below cutoff";
-
-                    var seriesDataRanges = [{
-                        label: "Low",
-                        from: 0,
-                        to: 10,
-                        seriesData: []
-                    }, {
-                        label: "Medium",
-                        from: 10,
-                        to: 1000,
-                        seriesData: []
-                    }, {
-                        label: "High",
-                        from: 1000,
-                        to: 100000,
-                        seriesData: []
-                    }];
-
-                    var experimentTypes = [];
-
-                    for (var i = 0; i < data.profiles.rows.length; i++) {
-                        if (experimentTypes.indexOf(data.profiles.rows[i].experimentType) === -1) {
-                            experimentTypes.push(data.profiles.rows[i].experimentType);
-                        }
-                    }
-
-                    for (var i = 0; i < experimentTypes.length; i++) {
-                        var experimentTypeSeriesData = [];
-
-                        for (var j = 0; j < yAxisCategories.length; j++) {
-                            if (data.profiles.rows[j].experimentType !== experimentTypes[i]) {
-                                continue;
-                            }
-
-                            for (var k = 0; k < xAxisCategories.length; k++) {
-                                var expression = data.profiles.rows[j].expressions[k];
-                                //we switched from strings to doubles in April 2016, after a release you can assume we serve doubles that are optionally absent to mean "NT"
-                                if (!expression.hasOwnProperty("value") || expression.value === "NT") {
-                                    //seriesDataNA.push([k, j, seriesDataNAString]);
-                                    continue;
-                                } else if (!expression.value) {
-                                    seriesDataBelowCutoff.push([k, j, seriesDataBelowCutoffString]);
-                                } else {
-                                    experimentTypeSeriesData.push([k, j, +expression.value]);
-                                }
-                            }
-                        }
-
-                        experimentTypeSeriesData.sort(function(a, b) {
-                            return a[2] - b[2];
-                        });
-
-                        for (var k = 0; k < seriesDataRanges.length; k++) {
-                            experimentTypeSeriesData.filter(
-                                function(datum) {
-                                    return datum[2] > seriesDataRanges[k].from && datum[2] <= seriesDataRanges[k].to;
-                                }).forEach(
-                                function(filteredDatum) {
-                                    seriesDataRanges[k].seriesData.push(filteredDatum);
-                                });
-                        }
-                    }
 
 
                     this.setState({
                         heatmapConfig: data.config,
                         columnHeaders: data.columnHeaders,
-                        nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
                         profiles: data.profiles,
                         jsonCoexpressions : data.jsonCoexpressions,
                         geneSetProfiles: data.geneSetProfiles,
                         anatomogramData: data.anatomogram,
                         experimentData: data.experiment,
-
-                        xAxisCategories: xAxisCategories,
-                        yAxisCategories: yAxisCategories,
-                        yAxisCategoriesLinks: yAxisCategoriesLinks,
-
-                        seriesDataBelowCutoff: seriesDataBelowCutoff,
-                        seriesDataBelowCutoffString: seriesDataBelowCutoffString,
-                        seriesDataNA: seriesDataNA,
-                        seriesDataNAString: seriesDataNAString,
-                        seriesDataRanges: seriesDataRanges
-
+                        heatmapData: HeatmapData.get(
+                          data.profiles.rows, data.columnHeaders,
+                           data.config, this.props.isMultiExperiment)
                     });
                 }
             }.bind(this)
@@ -344,4 +247,4 @@ var HighchartsHeatmapContainer = React.createClass({
 
 //*------------------------------------------------------------------*
 
-module.exports = HighchartsHeatmapContainer;
+module.exports = Container;

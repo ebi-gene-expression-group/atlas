@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfileDeserializer;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 

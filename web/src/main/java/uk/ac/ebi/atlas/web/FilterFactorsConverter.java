@@ -15,6 +15,9 @@ public class FilterFactorsConverter {
 
     private static final String SEPARATOR = ":";
 
+    private FilterFactorsConverter() {
+    }
+
     public static String prettyPrint(Iterable<Factor> factors) {
         if (!factors.iterator().hasNext()) {
             return "";
@@ -38,7 +41,7 @@ public class FilterFactorsConverter {
         return StringUtils.join(serializedFactors, ",");
     }
 
-    public SortedSet<Factor> deserialize(String csvSerializedFactors) {
+    public static SortedSet<Factor> deserialize(String csvSerializedFactors) {
         SortedSet<Factor> factors = Sets.newTreeSet();
 
         if (StringUtils.isBlank(csvSerializedFactors)) {

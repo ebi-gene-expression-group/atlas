@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.GeneQuery;
@@ -22,9 +23,9 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialRequestContextBuilderTest {
 
-    public static final String ORGANISM = "homo sapiens";
-    public static final String CONTRAST_NAME1 = "a";
-    public static final String CONTRAST_NAME2 = "b";
+    public static final String SPECIES = "homo sapiens";
+    private static final String CONTRAST_NAME1 = "a";
+    private static final String CONTRAST_NAME2 = "b";
 
     @Mock
     MicroarrayExperiment experimentMock;
@@ -44,11 +45,11 @@ public class DifferentialRequestContextBuilderTest {
     public void setUp() throws Exception {
         subject = new MicroarrayRequestContextBuilder(new MicroarrayRequestContext());
 
-        when(experimentMock.getFirstOrganism()).thenReturn(ORGANISM);
+        when(experimentMock.getSpecies()).thenReturn(SPECIES);
 
         when(contrastMock1.getDisplayName()).thenReturn(CONTRAST_NAME1);
         when(contrastMock2.getDisplayName()).thenReturn(CONTRAST_NAME2);
-        SortedSet<Contrast> sortedSet = new TreeSet();
+        SortedSet<Contrast> sortedSet = new TreeSet<>();
         sortedSet.add(contrastMock1);
         sortedSet.add(contrastMock2);
 
@@ -63,7 +64,7 @@ public class DifferentialRequestContextBuilderTest {
     public void testBuild() throws Exception {
         MicroarrayRequestContext context = subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
         assertThat(context.getSelectedQueryFactors(), hasItem(contrastMock1));
-        assertThat(context.getFilteredBySpecies(), is(ORGANISM));
+        assertThat(context.getFilteredBySpecies(), is(SPECIES));
         assertThat(context.getAllQueryFactors(), hasItems(contrastMock1, contrastMock2));
     }
 }

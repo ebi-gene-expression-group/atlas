@@ -31,7 +31,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
-import java.util.HashSet;
 import java.util.NavigableMap;
 import java.util.TreeSet;
 
@@ -50,9 +49,6 @@ public class BaselineBarChartControllerTest {
     private BarChartTradersCache barChartTradersCacheMock;
 
     @Mock
-    private FilterFactorsConverter filterFactorsConverterMock;
-
-    @Mock
     private BarChartTrader barChartTraderMock;
 
     @Mock
@@ -63,7 +59,7 @@ public class BaselineBarChartControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineBarChartController(barChartTradersCacheMock, filterFactorsConverterMock, barChartExperimentAccessKeyTrader);
+        subject = new BaselineBarChartController(barChartTradersCacheMock, barChartExperimentAccessKeyTrader);
     }
 
     @Test
@@ -75,7 +71,6 @@ public class BaselineBarChartControllerTest {
         chartData.put(0.3D, 3);
 
         when(barChartTradersCacheMock.getBarchartTrader(EXPERIMENT_ACCESSION)).thenReturn(barChartTraderMock);
-        when(filterFactorsConverterMock.deserialize(SERIALIZED_FILTER_FACTORS)).thenReturn(new TreeSet<Factor>());
         when(barChartTraderMock.getChart(anySet(), anySet())).thenReturn(chartData);
 
         String json = subject.getMap(EXPERIMENT_ACCESSION, null, "queryFactorType", SERIALIZED_FILTER_FACTORS, EXPERIMENT_ACCESSKEY);

@@ -1,45 +1,39 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commons.writers.FileTsvWriterBuilder;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.MessageFormat;
 
 @Named
+@Scope("prototype")
 public class ExperimentDesignFileWriterBuilder {
 
-    @Value("#{configuration['experiment.experiment-design.path.template']}")
-    private String targetFilePathTemplate;
-
-    private String experimentAccession;
+    private FileTsvWriterBuilder fileTsvWriterBuilder;
     private ExperimentType experimentType;
 
-    public ExperimentDesignFileWriterBuilder forExperimentAccession(String experimentAccession){
-        this.experimentAccession = experimentAccession;
+    @Inject
+    public ExperimentDesignFileWriterBuilder(@Value("#{configuration['experiment.experiment-design.path.template']}") String targetFilePathTemplate,
+                                             FileTsvWriterBuilder fileTsvWriterBuilder) {
+        this.fileTsvWriterBuilder = fileTsvWriterBuilder;
+        this.fileTsvWriterBuilder.forTsvFilePathTemplate(targetFilePathTemplate).makeGroupWritable();
+    }
+
+    public ExperimentDesignFileWriterBuilder withExperimentAccession(String experimentAccession) {
+        this.fileTsvWriterBuilder.withExperimentAccession(experimentAccession);
         return this;
     }
 
-    public ExperimentDesignFileWriterBuilder withExperimentType(ExperimentType experimentType){
+    public ExperimentDesignFileWriterBuilder withExperimentType(ExperimentType experimentType) {
         this.experimentType = experimentType;
         return this;
     }
 
     public ExperimentDesignFileWriter build() throws IOException {
-        String targetFilePath = MessageFormat.format(targetFilePathTemplate, experimentAccession);
-        Path experimentDesignPath = Paths.get(targetFilePath);
-
-        BufferedWriter writer = Files.newBufferedWriter(experimentDesignPath, StandardCharsets.UTF_8);
-
-        CSVWriter csvWriter = new CSVWriter(writer, '\t');
-
-        return new ExperimentDesignFileWriter(csvWriter, experimentType);
+        return new ExperimentDesignFileWriter(fileTsvWriterBuilder.build(), experimentType);
     }
 }

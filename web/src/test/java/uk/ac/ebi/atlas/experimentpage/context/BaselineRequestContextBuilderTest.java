@@ -30,12 +30,11 @@ public class BaselineRequestContextBuilderTest {
     public static final String QUERY_FACTOR3 = "c";
     public static final String FACTOR_TYPE = "organism";
     public static final String FACTOR_VALUE = "homo sapiens";
-    public static final String SERIALIZED_FACTORS = "serialized";
+    public static final String factorTypeSelectedToFilterBy = "ORGANISM_PART";
+    public static final String factorValueSelectedToFilterBy = "lung";
+    public static final String SERIALIZED_FACTORS = factorTypeSelectedToFilterBy+":"+factorValueSelectedToFilterBy;
 
     BaselineRequestContextBuilder subject;
-
-    @Mock
-    FilterFactorsConverter filterFactorsConverterMock;
 
     @Mock
     BaselineExperiment experimentMock;
@@ -44,30 +43,25 @@ public class BaselineRequestContextBuilderTest {
     BaselineRequestPreferences preferencesMock;
 
     @Mock
-    Factor factorMock;
-
-    @Mock
     ExperimentalFactors experimentalFactorsMock;
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineRequestContextBuilder(filterFactorsConverterMock);
+        subject = new BaselineRequestContextBuilder();
 
-        when(factorMock.getType()).thenReturn(FACTOR_TYPE);
-        when(factorMock.getValue()).thenReturn(FACTOR_VALUE);
-        when(filterFactorsConverterMock.deserialize(SERIALIZED_FACTORS)).thenReturn(ImmutableSortedSet.of(factorMock));
         when(preferencesMock.getSerializedFilterFactors()).thenReturn(SERIALIZED_FACTORS);
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet(QUERY_FACTOR1, QUERY_FACTOR2, QUERY_FACTOR3)));
         when(preferencesMock.getQueryFactorType()).thenReturn(FACTOR_TYPE);
         when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.EMPTY);
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
+        when(experimentMock.getSpecies()).thenReturn("homo sapiens");
         when(experimentalFactorsMock.getComplementFactors(anySet())).thenReturn(Sets.newTreeSet(Sets.newHashSet(new Factor(FACTOR_TYPE, FACTOR_VALUE))));
     }
 
     @Test
     public void testBuild() throws Exception {
         BaselineRequestContext context = subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
-        assertThat(context.getSelectedFilterFactors(), hasItem(factorMock));
+        assertThat(context.getSelectedFilterFactors(), hasItem(new Factor(factorTypeSelectedToFilterBy,factorValueSelectedToFilterBy)));
         assertThat(context.getFilteredBySpecies(), is(FACTOR_VALUE));
         Factor factor1 = new Factor(FACTOR_TYPE, QUERY_FACTOR1);
         Factor factor2 = new Factor(FACTOR_TYPE, QUERY_FACTOR2);

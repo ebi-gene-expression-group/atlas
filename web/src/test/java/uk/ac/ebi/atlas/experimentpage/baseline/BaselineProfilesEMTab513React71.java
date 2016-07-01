@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.OrderedFactorGroups;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileDeserializer;
 
 import java.util.Iterator;
 
@@ -63,7 +62,4 @@ public class BaselineProfilesEMTab513React71 implements ObjectInputStream<Baseli
         // do nothing
     }
 
-    public String getSourceString() {
-        return HEADER + EXPRESSIONS;
-    }
 }

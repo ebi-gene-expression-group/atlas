@@ -25,9 +25,7 @@ public class BaselineExperimentAssayGroup implements Comparable<BaselineExperime
     private String serializedFilterFactors;
 
     private String defaultQueryFactorType;
-
-    private FilterFactorsConverter filterFactorsConverter = new FilterFactorsConverter();
-
+    
     private boolean tissueExperiment;
 
     public BaselineExperimentAssayGroup(String experimentAccession, String experimentName, String species, String defaultQueryFactorType, boolean tissueExperiment) {
@@ -100,7 +98,7 @@ public class BaselineExperimentAssayGroup implements Comparable<BaselineExperime
     }
 
     public void setSerializedFilterFactors(FactorGroup filterFactors) {
-        this.serializedFilterFactors = filterFactorsConverter.serialize(filterFactors);
+        this.serializedFilterFactors = FilterFactorsConverter.serialize(filterFactors);
     }
 
     @Override
@@ -138,7 +136,7 @@ public class BaselineExperimentAssayGroup implements Comparable<BaselineExperime
         StringBuilder sb = new StringBuilder();
         sb.append(experimentName);
         if (!filterFactors.isEmpty() && !filterFactors.containsOnlyOrganism()) {
-            sb.append(" - ").append(filterFactorsConverter.prettyPrint(filterFactors));
+            sb.append(" - ").append(FilterFactorsConverter.prettyPrint(filterFactors));
         }
         return sb.toString();
     }

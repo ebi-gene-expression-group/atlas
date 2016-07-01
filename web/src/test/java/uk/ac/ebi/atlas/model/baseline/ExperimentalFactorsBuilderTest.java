@@ -2,6 +2,7 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import org.junit.Before;
@@ -35,7 +36,7 @@ public class ExperimentalFactorsBuilderTest {
     private FactorGroup factorGroup2 = new FactorSet().add(factorWithType3)
             .add(factorWithType2DifferentValue)
             .add(factorWithType1);
-
+    List<FactorGroup> factorGroups = Lists.newArrayList(factorGroup1, factorGroup2);
 
     @Before
     public void setUp() throws Exception {
@@ -44,8 +45,6 @@ public class ExperimentalFactorsBuilderTest {
         factorNameByType.put("TYPE1", "NAME1");
         factorNameByType.put("TYPE2", "NAME2");
         factorNameByType.put("TYPE3", "NAME3");
-
-        List<FactorGroup> factorGroups = Lists.newArrayList(factorGroup1, factorGroup2);
 
         subject = new ExperimentalFactorsBuilder();
         subject.withMenuFilterFactorTypes(Sets.newHashSet("TYPE1"))
@@ -68,7 +67,7 @@ public class ExperimentalFactorsBuilderTest {
     public void testCoOccurringFactors() {
         subject.create();
 
-        SortedSetMultimap<Factor, Factor> coOccurringFactors = subject.buildCoOccurringFactors();
+        SetMultimap<Factor, Factor> coOccurringFactors = ExperimentalFactors.createCoOccurringFactors(factorGroups);
 
         assertThat(coOccurringFactors.get(factorWithType1), contains(factorWithType2DifferentValue, factorWithType2, factorWithType3));
     }

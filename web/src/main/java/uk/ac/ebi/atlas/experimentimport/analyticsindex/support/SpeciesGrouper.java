@@ -16,7 +16,7 @@ public final class SpeciesGrouper {
 
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
 
-        String ensemblSpecies = Species.convertToEnsemblSpecies(experiment.getOrganismToEnsemblSpeciesMapping(), experiment.getFirstOrganism());
+        String ensemblSpecies = Species.convertToEnsemblSpecies(experiment.getSpeciesToEnsemblMapping(), experiment.getSpecies());
 
         for (String assayGroupId : assayGroupIds)  {
             builder.put(assayGroupId, ensemblSpecies);
@@ -30,7 +30,7 @@ public final class SpeciesGrouper {
 
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
 
-        String ensemblSpecies = Species.convertToEnsemblSpecies(experiment.getFirstOrganism());
+        String ensemblSpecies = Species.convertToEnsemblSpecies(experiment.getSpecies());
 
         for (String contrastId : contrastIds)  {
             builder.put(contrastId, ensemblSpecies);

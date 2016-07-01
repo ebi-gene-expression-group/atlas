@@ -17,7 +17,7 @@ echo "============================================================"
 echo `date`
 echo "============================================================"
 echo "Syncing Solr indexes from ves-hx-76 to ves-hx-77..."
-sudo -u fg_atlas ssh ves-hx-77 'rsync -irltz --delete ves-hx-76:/srv/gxa/solr/* /srv/gxa/solr'
+sudo -u fg_atlas ssh ves-hx-77 'rsync -irltpz --delete ves-hx-76:/srv/gxa/solr/* /srv/gxa/solr'
 
 echo "============================================================"
 echo `date`
@@ -30,10 +30,11 @@ echo "============================================================"
 echo `date`
 echo "============================================================"
 echo "Syncing data from ves-hx-76 to ves-hx-77..."
-sudo -u fg_atlas ssh ves-hx-77 'rsync -irltz --delete --exclude gxa/solr** --exclude gxa/lost+found** ves-hx-76:/srv/gxa /srv'
+sudo -u fg_atlas sh -c 'rsync -irlpt --delete /nfs/public/ro/fg/atlas/experiments/* /nfs/public/ro/fg/atlas/experiments_test'
+sudo -u fg_atlas ssh ves-hx-77 'rsync -irtpz --safe-links --delete ves-hx-76:/srv/gxa/data/* /srv/gxa/data'
 
-echo "Refreshing ATLASPUBFALL1 to latest snapshot..."
-sudo -u dxatlas sh -c '/net/nasP/oracle/delphix/ebi_refresh_vdb.sh ATLASTST "`/net/nasP/oracle/delphix/ebi_list_snapshots.sh ATLASTST | tail -1`"'
+echo "Refreshing VATLASTST to latest snapshot..."
+sudo -u dxatlas sh -c '/net/nasP/oracle/delphix/ebi_refresh_vdb.sh Delphix_Silver1 VATLASTST "`/net/nasP/oracle/delphix/ebi_list_snapshots.sh Delphix_Silver1 VATLASTST | tail -1`"'
 echo "============================================================"
 echo `date`
 echo "============================================================"

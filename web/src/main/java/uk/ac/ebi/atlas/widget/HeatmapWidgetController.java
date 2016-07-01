@@ -1,12 +1,11 @@
 
 package uk.ac.ebi.atlas.widget;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.Sets;
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
+import com.google.common.collect.Lists;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonNull;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -14,19 +13,21 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
-import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.*;
-import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchDao;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineExperimentProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
@@ -41,9 +42,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.lang.reflect.Type;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @Scope("request")
@@ -103,35 +103,6 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         return "heatmap-data";
     }
 
-    @RequestMapping(value = "/widgets/heatmap/multiExperiment")
-    public String multiExperimentJson(@RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
-                                      @RequestParam(value = "species", required = false) String species,
-                                      @RequestParam(value = "propertyType", required = false) String propertyType,
-                                      Model model,HttpServletRequest request, HttpServletResponse response) {
-
-        String ensemblSpecies= StringUtils.isBlank(species)
-                ?speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString())
-                : Species.convertToEnsemblSpecies(species);
-
-
-        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery.asString(), ensemblSpecies, true);
-
-        BaselineExperimentSearchResult searchResult = geneIds.isPresent()
-            ?   baselineExperimentProfileSearchService.query(geneIds.get())
-            : new BaselineExperimentSearchResult();
-
-        if (searchResult.isEmpty()) {
-            throw new ResourceNotFoundException("No baseline expression in tissues found for "
-                    + geneQuery.description());
-        }
-
-        populateModelWithMultiExperimentResults(request.getContextPath(),geneQuery, ensemblSpecies, searchResult, model);
-
-        // set here instead of in JSP, because the JSP may be included elsewhere
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        return "heatmap-data";
-    }
-
     @RequestMapping(value = "/widgets/heatmap/baselineAnalytics")
     public String analyticsJson(@RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
                                 @RequestParam(value = "species", required = false) String species,
@@ -155,17 +126,16 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     private void populateModelWithMultiExperimentResults(String contextRoot, GeneQuery geneQuery, String ensemblSpecies,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
-        SortedSet<Factor> orderedFactors = searchResult.getFactorsAcrossAllExperiments();
-        SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
+        List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
 
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
-            model.addAttribute("anatomogram", anatomogramFactory.get("ORGANISM_PART", ensemblSpecies, filteredAssayGroupFactors, contextRoot));
+            model.addAttribute("anatomogram", anatomogramFactory.get("ORGANISM_PART", ensemblSpecies, convert(orderedFactors), contextRoot));
         } else {
             model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
         }
 
         BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
-        addJsonForHeatMap(experimentProfiles, filteredAssayGroupFactors, orderedFactors, model);
+        addJsonForHeatMap(experimentProfiles, orderedFactors, model);
 
         model.addAttribute("species", ensemblSpecies);
         model.addAttribute("isWidget", true);
@@ -173,46 +143,23 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         model.addAttribute("geneQuery", geneQuery);
     }
 
-    private SortedSet<AssayGroupFactor> convert(SortedSet<Factor> orderedFactors) {
+    private List<AssayGroupFactor> convert(List<Factor> orderedFactors) {
         ImmutableSortedSet.Builder<AssayGroupFactor> builder = ImmutableSortedSet.naturalOrder();
 
         for (Factor factor : orderedFactors) {
-            AssayGroupFactor assayGropuFactor = new AssayGroupFactor("none",factor);
-            builder.add(assayGropuFactor);
+            builder.add( new AssayGroupFactor("none",factor));
         }
 
-        return builder.build();
+        return new ArrayList<>(builder.build());
     }
 
-    private void addJsonForHeatMap(BaselineExperimentProfilesList baselineProfiles, SortedSet<AssayGroupFactor> filteredAssayGroupFactors,
-                                   SortedSet<Factor> orderedFactors, Model model) {
+    private void addJsonForHeatMap(BaselineExperimentProfilesList baselineProfiles, List<Factor> orderedFactors, Model
+            model) {
         if (baselineProfiles.isEmpty()) {
             return;
         }
 
-        ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = AssayGroupFactorViewModel.createList(filteredAssayGroupFactors);
-        String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
-        model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
+        model.addAttribute("jsonColumnHeaders", gson.toJson(AssayGroupFactorViewModel.createList(convert(orderedFactors))));
         model.addAttribute("jsonProfiles", gson.toJson(baselineExperimentProfilesViewModelBuilder.buildJson(baselineProfiles, orderedFactors)));
-
-        Set<Factor> nonExpressedFactors = Sets.newHashSet(orderedFactors);
-        for (BaselineExperimentProfile baselineProfile : baselineProfiles) {
-            double defaultCutoff =
-                    baselineProfile.getExperimentType().equalsIgnoreCase(ExperimentType.PROTEOMICS_BASELINE.toString()) ?
-                            BaselineAnalyticsSearchDao.DEFAULT_PROTEOMICS_CUT_OFF : BaselineAnalyticsSearchDao.DEFAULT_BASELINE_CUT_OFF;
-
-            for (Factor factor : Sets.newHashSet(nonExpressedFactors)) {
-                BaselineExpression expression = baselineProfile.getExpression(factor);
-                if (expression != null && expression.isKnown() && expression.getLevel() >= defaultCutoff) {
-                    nonExpressedFactors.remove(factor);
-                }
-            }
-        }
-        Set<String> nonExpressedColumnHeaders = Sets.newHashSetWithExpectedSize(nonExpressedFactors.size());
-        for (Factor nonExpressedFactor : nonExpressedFactors) {
-            nonExpressedColumnHeaders.add(nonExpressedFactor.getValue());
-        }
-
-        model.addAttribute("jsonNonExpressedColumnHeaders", gson.toJson(nonExpressedColumnHeaders));
     }
 }

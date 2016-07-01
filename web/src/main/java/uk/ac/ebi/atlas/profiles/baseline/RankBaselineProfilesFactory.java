@@ -23,8 +23,7 @@ public class RankBaselineProfilesFactory implements RankProfilesFactory<Baseline
     }
 
     public MinMaxProfileRanking<BaselineProfile, BaselineProfilesList> create(BaselineProfileStreamOptions options) {
-        Comparator<BaselineProfile> comparator = BaselineProfileComparator.create(options);
-        return new MinMaxProfileRanking<>(comparator, geneProfilesListBuilder);
+        return new MinMaxProfileRanking<>(BaselineProfileComparator.create(options), geneProfilesListBuilder);
     }
 
 }

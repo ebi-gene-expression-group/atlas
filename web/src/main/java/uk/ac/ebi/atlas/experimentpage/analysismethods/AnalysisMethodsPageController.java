@@ -36,7 +36,7 @@ public class AnalysisMethodsPageController {
 
     private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
     private static final String SPECIES = "species";
-    protected static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
+    private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
 
     private FileTsvReaderBuilder fileTsvReaderBuilder;
 
@@ -69,27 +69,18 @@ public class AnalysisMethodsPageController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = {"type=RNASEQ_MRNA_BASELINE"})
-    public String baselineAnalysisMethods(@PathVariable String experimentAccession,@RequestParam(value = "accessKey",
-            required = false) String accessKey, Model model, HttpServletRequest request) throws IOException {
-        BaselineExperiment experiment = (BaselineExperiment)
-                experimentTrader.getExperiment(experimentAccession, accessKey);
+    public String baselineAnalysisMethods(@PathVariable String experimentAccession,
+                                          @RequestParam(value = "accessKey", required = false) String accessKey,
+                                          Model model, HttpServletRequest request) throws IOException {
+        BaselineExperiment experiment = (BaselineExperiment)experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        //This is necessary for adding functionality to the QC button
-        Set<Factor> organisms = experiment.getExperimentalFactors().getDefaultFilterFactors();
-        String specie = experiment.getFirstOrganism();
-
-        if(!organisms.isEmpty()) {
-            for (Factor factor : organisms) {
-                if (factor.getType().equals("ORGANISM")) {
-                    specie = factor.getValue();
-                }
-            }
-        }
+        String species = experiment.getSpecies();
+        model.addAttribute("species", species);
 
         try {
-            if (fastQCReportUtil.hasFastQC(experimentAccession, specie)) {
-                fastQCReportUtil.buildFastQCIndexHtmlPath(experimentAccession, specie);
-                model.addAttribute(SPECIES, specie);
+            if (fastQCReportUtil.hasFastQC(experimentAccession, species)) {
+                fastQCReportUtil.buildFastQCIndexHtmlPath(experimentAccession, species);
+                model.addAttribute(SPECIES, species);
             }
         } catch (IOException e) {
             throw new ResourceNotFoundException("Species could not be found");
@@ -124,7 +115,7 @@ public class AnalysisMethodsPageController {
         return analysisMethods(experimentAccession, model, request.getRequestURI());
     }
 
-    public String analysisMethods(String experimentAccession, Model model, String requestURI) throws
+    private String analysisMethods(String experimentAccession, Model model, String requestURI) throws
             IOException {
 
         TsvReader tsvReader = fileTsvReaderBuilder.withExperimentAccession(experimentAccession).build();
@@ -149,7 +140,7 @@ public class AnalysisMethodsPageController {
     }
 
     /***** analysis-methods pdf path ****/
-    public boolean hasPDF(String experimentAccession, String resource) throws IOException {
+    private boolean hasPDF(String experimentAccession, String resource) throws IOException {
         String path = buildPDFPath(experimentAccession, resource);
         return Files.exists(FileSystems.getDefault().getPath(path));
     }

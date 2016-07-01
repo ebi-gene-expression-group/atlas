@@ -30,7 +30,7 @@ var ExperimentDescription = React.createClass({
         experiment: React.PropTypes.shape({
             URL: React.PropTypes.string.isRequired,
             description: React.PropTypes.string.isRequired,
-            allSpecies: React.PropTypes.string.isRequired
+            species: React.PropTypes.string.isRequired
         }).isRequired
     },
 
@@ -43,7 +43,7 @@ var ExperimentDescription = React.createClass({
                 <div id="experimentDescription">
                     <a id="goto-experiment" className="gxaThickLink" title="Experiment Page" href={experimentURL}>{this.props.experiment.description}</a>
                 </div>
-                <div id="experimentOrganisms">Organism(s): <span style={{"fontStyle":"italic"}}>{this.props.experiment.allSpecies}</span></div>
+                <div id="experimentOrganisms">Organism(s): <span style={{"fontStyle":"italic"}}>{this.props.experiment.species}</span></div>
             </div>
         );
     }
@@ -117,7 +117,6 @@ var HeatmapAnatomogramContainer = React.createClass({
                                 <Heatmap type={this.props.type}
                                          heatmapConfig={this.state.heatmapConfig}
                                          columnHeaders={this.state.columnHeaders}
-                                         nonExpressedColumnHeaders={this.state.nonExpressedColumnHeaders}
                                          profiles={this.state.profiles}
                                          geneSetProfiles={this.state.geneSetProfiles}
                                          ensemblEventEmitter={this.props.ensemblEventEmitter}
@@ -158,7 +157,6 @@ var HeatmapAnatomogramContainer = React.createClass({
         return {
             heatmapConfig: '',
             columnHeaders: [],
-            nonExpressedColumnHeaders: [],
             profiles: {
                 rows: [],
                 minExpressionLevel: 0,
@@ -176,7 +174,6 @@ var HeatmapAnatomogramContainer = React.createClass({
         this.setState({
             heatmapConfig: data.config,
             columnHeaders: data.columnHeaders,
-            nonExpressedColumnHeaders: data.nonExpressedColumnHeaders,
             profiles: data.profiles,
             jsonCoexpressions : data.jsonCoexpressions,
             geneSetProfiles: data.geneSetProfiles,

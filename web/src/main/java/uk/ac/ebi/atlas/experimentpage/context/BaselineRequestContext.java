@@ -2,17 +2,18 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Named;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -64,7 +65,7 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
     }
 
     public static BaselineRequestContext createFor(BaselineExperiment experiment, BaselineRequestPreferences preferences){
-        return new BaselineRequestContextBuilder(new FilterFactorsConverter())
+        return new BaselineRequestContextBuilder()
                 .forExperiment(experiment)
                 .withPreferences(preferences)
                 .build();
@@ -73,21 +74,23 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
     public static BaselineRequestContext createWithCustomGeneQueryDescription(BaselineExperiment experiment,
                                                                BaselineRequestPreferences  preferences, String
                                                                                       description){
-        return new BaselineRequestContextBuilder(new FilterFactorsConverter())
+        return new BaselineRequestContextBuilder()
                 .forExperiment(experiment)
                 .withPreferences(preferences)
                 .withCustomQueryDescription(description)
                 .build();
     }
 
-    public SortedSet<Factor> getOrderedFilterFactors(){
-        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-        Set<Factor> selectedFilterFactors = this.getSelectedFilterFactors();
-        if (experimentalFactors.getAllFactorsOrderedByXML() != null && !experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
-            return experimentalFactors.getComplementFactorsByXML(selectedFilterFactors);
-        } else {
-            return experimentalFactors.getComplementFactors(selectedFilterFactors);
+    public List<Factor> getFilterFactorsInTheSameOrderAsTheExperimentHeader(){
+        List<Factor> result = new ArrayList<>();
+        for(AssayGroupFactor assayGroupFactor: getOrderedAssayGroupFactors()){
+            result.add(assayGroupFactor.getFactor());
         }
+        return result;
+    }
+
+    public List<AssayGroupFactor> getOrderedAssayGroupFactors(){
+        return experiment.getExperimentalFactors().getComplementAssayGroupFactors(selectedFilterFactors);
     }
 
 }

@@ -10,7 +10,7 @@ module.exports = {
                        'jquery', 'jquery-ui-bundle', 'jquery.browser', 'fancybox', 'jquery-hc-sticky', 'jquery-toolbar', 'jQuery-ajaxTransport-XDomainRequest', 'jquery-hc-sticky',
                        'urijs', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js', 'atlas-modernizr',
                        'highcharts-more', 'react-highcharts',
-                       'events']
+                       'events', 'rc-slider']
     },
 
     output: {

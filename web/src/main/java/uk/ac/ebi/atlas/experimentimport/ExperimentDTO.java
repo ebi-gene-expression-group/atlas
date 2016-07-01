@@ -22,23 +22,23 @@ public class ExperimentDTO {
 
     private boolean isPrivate;
 
-    private Set<String> species;
+    private String species;
 
     private Set<String> pubmedIds;
 
     private String title;
 
-    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Set<String> species, Set<String> pubmedIds,
+    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, String species, Set<String> pubmedIds,
                          String title, boolean isPrivate) {
         this(experimentAccession, experimentType, species, pubmedIds, title, null, isPrivate, UUID.randomUUID().toString());
     }
 
     public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Set<String> pubmedIds,
                          String title, Date lastUpdate, boolean aPrivate, String accessKey) {
-        this(experimentAccession, experimentType, new HashSet(), pubmedIds, title, lastUpdate, aPrivate, accessKey);
+        this(experimentAccession, experimentType, "", pubmedIds, title, lastUpdate, aPrivate, accessKey);
     }
 
-    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Set<String> species, Set<String> pubmedIds,
+    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, String species, Set<String> pubmedIds,
                          String title, Date lastUpdate, boolean isPrivate, String accessKey) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
@@ -96,9 +96,7 @@ public class ExperimentDTO {
         result.add("accession", new JsonPrimitive(experimentAccession));
         result.add("type", new JsonPrimitive(experimentType.name()));
         JsonArray speciesArray = new JsonArray();
-        for(String specie: species){
-            speciesArray.add(new JsonPrimitive(specie));
-        }
+        speciesArray.add(new JsonPrimitive(species));
         result.add("species", speciesArray);
         JsonArray pubmedIdsArray = new JsonArray();
         for(String id: pubmedIds){
@@ -120,7 +118,7 @@ public class ExperimentDTO {
         return accessKey;
     }
 
-    public Set<String> getSpecies() {
+    public String getSpecies() {
         return species;
     }
 
@@ -132,8 +130,8 @@ public class ExperimentDTO {
         return title;
     }
 
-    public void addSpecies(String aSpecies) {
-        species.add(aSpecies);
+    public void setSpecies(String species) {
+        this.species = species;
     }
 
 }

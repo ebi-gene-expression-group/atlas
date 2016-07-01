@@ -144,7 +144,7 @@ var experimentsPageModule = (function ($) {
                     } },
                 { "sTitle":"Organisms", "mData":"species", "sClass":"center italic", "sWidth":"10%",
                     "mRender": function (data, type, full) {
-                        return withLineBreaks(data);
+                        return data;
                     } },
                 { "sTitle":"Experimental Variables", "mData":"experimentalFactors", "sClass":"center",
                     "mRender": function (data, type, full) {

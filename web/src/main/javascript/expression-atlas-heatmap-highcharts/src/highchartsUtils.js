@@ -2,27 +2,6 @@
 
 //*------------------------------------------------------------------*
 
-function getXAxisCategories (columnHeaders) {
-    return columnHeaders.map(function (columnHeader) {
-        return {"label": columnHeader.factorValue, "id" : columnHeader.factorValueOntologyTermId};
-    });
-}
-
-var yAxisCategoriesLinks = {};
-
-function getYAxisCategories (profiles, heatmapConfig) {
-
-    return profiles.rows.map(function (profile) {
-        yAxisCategoriesLinks[profile.name] = profile.id + "?geneQuery=" + heatmapConfig.geneQuery +
-            "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors);
-        return profile.name;
-    });
-}
-
-function getYAxisCategoriesLinks () {
-    return yAxisCategoriesLinks;
-}
-
 function compareLevels(a,b) {
     var a1 = parseFloat( a.value );
     var b1 = parseFloat( b.value );
@@ -276,9 +255,6 @@ function rankExperiments(rows, columns) {
 
 //*------------------------------------------------------------------*
 
-exports.getXAxisCategories = getXAxisCategories;
-exports.getYAxisCategories = getYAxisCategories;
-exports.getYAxisCategoriesLinks = getYAxisCategoriesLinks;
 exports.rankColumns = rankColumns;
 exports.rankExperiments = rankExperiments;
 exports.applyThresholdtoColumns = applyThresholdToColumns;

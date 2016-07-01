@@ -14,7 +14,7 @@ public enum Op {
     CLEAR_LOG("Clear the operation history"),
     UPDATE_PRIVATE("Set experiment as private in the database and delete from analytics index"),
     UPDATE_PUBLIC("Set experiment as public in the database and update the design"),
-    UPDATE_DESIGN("Assume the experiment is public. Then update the design"),
+    UPDATE_DESIGN_ONLY("Assume the experiment is public. Then update the design. Expect serialize to follow"),
     IMPORT("Parse and validate the configuration.xml file. Delete the experiment if already present, " +
             "then use the configuration to load the analytics into database. Then update the design," +
             " and add the experiment to database."),
@@ -30,6 +30,7 @@ public enum Op {
     ANALYTICS_DELETE("Tell Solr to delete all data with this experiment accession");
 
     static ImmutableMap<String, ImmutableList<Op>> synonyms = ImmutableMap.of(
+            "UPDATE_DESIGN",ImmutableList.of(UPDATE_DESIGN_ONLY,SERIALIZE),
             "UPDATE", ImmutableList.of(UPDATE_PRIVATE), // Deprecated June 2016
             "LOAD_PUBLIC", ImmutableList.of(IMPORT_PUBLIC,COEXPRESSION_UPDATE,SERIALIZE,ANALYTICS_IMPORT),
             "LOAD", ImmutableList.of(IMPORT,COEXPRESSION_UPDATE,SERIALIZE)

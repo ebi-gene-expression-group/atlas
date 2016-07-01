@@ -5,8 +5,6 @@ import uk.ac.ebi.atlas.model.AnatomogramType;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
-import java.util.Set;
-
 public class AnatomogramFactory {
 
     private final ApplicationProperties applicationProperties;
@@ -15,7 +13,7 @@ public class AnatomogramFactory {
         this.applicationProperties = applicationProperties;
     }
 
-    public JsonElement get(String queryFactorType, String species, Set<AssayGroupFactor> filteredAssayGroupFactors,
+    public JsonElement get(String queryFactorType, String species, Iterable<AssayGroupFactor> filteredAssayGroupFactors,
                            String contextRoot) {
         if ("ORGANISM_PART".equals(queryFactorType)) {
             String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.MALE);
@@ -30,7 +28,7 @@ public class AnatomogramFactory {
         }
     }
 
-    private JsonObject getAnatomogramProperties(String species, Set<AssayGroupFactor> filteredAssayGroupFactors,
+    private JsonObject getAnatomogramProperties(String species, Iterable<AssayGroupFactor> filteredAssayGroupFactors,
                                                 String maleAnatomogramFileName, String femaleAnatomogramFileName,
                                                 String brainAnatomogramFileName, String contextRoot) {
         JsonObject anatomogramProperties = new JsonObject();
@@ -71,7 +69,7 @@ public class AnatomogramFactory {
 
     }
 
-    private JsonElement extractOntologyTerm(Set<AssayGroupFactor> filteredAssayGroupFactors) {
+    private JsonElement extractOntologyTerm(Iterable<AssayGroupFactor> filteredAssayGroupFactors) {
         JsonArray ontologyTerms = new JsonArray();
 
         for (AssayGroupFactor assayGroupFactor : filteredAssayGroupFactors) {

@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.text.MessageFormat;
 
 @Controller
 @Scope("request")
 public class ProteomicsBaselineExperimentDownloadController extends BaselineExperimentDownloadController {
 
-    private final String TYPE_PROTEOMICS_BASELINE = "type=PROTEOMICS_BASELINE";
+    private final String PARAMS_TYPE_PROTEOMICS_BASELINE = "type=PROTEOMICS_BASELINE";
 
     @Inject
     public ProteomicsBaselineExperimentDownloadController(ProteomicsBaselineProfileInputStreamFactory inputStreamFactory,
@@ -30,7 +30,7 @@ public class ProteomicsBaselineExperimentDownloadController extends BaselineExpe
         super(inputStreamFactory, baselineProfilesWriterServiceFactory, experimentTrader);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = TYPE_PROTEOMICS_BASELINE)
+    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_PROTEOMICS_BASELINE)
     public void downloadGeneProfiles(HttpServletRequest request, @PathVariable String experimentAccession
             ,@RequestParam(value = "accessKey",required = false) String accessKey
 
@@ -41,8 +41,19 @@ public class ProteomicsBaselineExperimentDownloadController extends BaselineExpe
 
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = TYPE_PROTEOMICS_BASELINE)
+    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = PARAMS_TYPE_PROTEOMICS_BASELINE)
     public String downloadRdataURL(@PathVariable String experimentAccession) throws IOException {
-        throw new ResourceNotFoundException("");
+
+        String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experimentAccession);
+
+        return "forward:" + path;
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-heatmap.pdf", params = PARAMS_TYPE_PROTEOMICS_BASELINE)
+    public String downloadClusteringPdf(@PathVariable String experimentAccession) throws IOException {
+
+        String path = MessageFormat.format("/expdata/{0}/{0}-heatmap.pdf", experimentAccession);
+
+        return "forward:" + path;
     }
 }

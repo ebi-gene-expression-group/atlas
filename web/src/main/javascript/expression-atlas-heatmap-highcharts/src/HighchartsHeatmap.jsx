@@ -11,58 +11,212 @@ require('highcharts-heatmap')(Highcharts);
 //*------------------------------------------------------------------*
 
 require('./HighchartsHeatmap.css');
+var DropdownButton = require('react-bootstrap/lib/DropdownButton');
+var MenuItem = require('react-bootstrap/lib/MenuItem');
 var DownloadProfilesButton = require('download-profiles-button');
 
 var EventEmitter = require('events');
 
 //*------------------------------------------------------------------*
 
+var DataSeriesPropType = React.PropTypes.arrayOf(
+    React.PropTypes.arrayOf(
+      React.PropTypes.arrayOf(
+        function(series){
+          if (! Array.isArray(series)
+              || series.length !== 3
+              || typeof series[0] !== 'number'
+              || typeof series[1] !== 'number'){
+            return new Error("Data series should be array of number, number, value to display")
+          }
+        }
+      )
+    )
+  ).isRequired;
+
+var AxisCategoriesPropType = React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      id: React.PropTypes.string, // ontology ID can be missing for x axis
+      label: React.PropTypes.string.isRequired
+    })
+  ).isRequired;
+
+var HeatmapDataPropType = React.PropTypes.objectOf(
+  function(heatmapData){
+    var width = heatmapData.xAxisCategories.length;
+    var height = heatmapData.yAxisCategories.length;
+    if(heatmapData.dataSeries.length!== 4){
+      return new Error("There should be four data series supplied");
+    }
+    for(var i = 0; i < 4; i++){
+      for(var j = 0; j < heatmapData.dataSeries[i].length; j++){
+        var point = heatmapData.dataSeries[i][j];
+        if(point.length !==3){
+          return new Error("Each point in data series should be [x,y,value]:"+ point.toString());
+        }
+        var x = point[0];
+        var y = point[1];
+        if(x < 0 || y < 0 || x >= width || y >= height){
+          return new Error("Point with coordinates outside range:" + point.toString());
+        }
+      }
+    }
+    var isPermutation = function(arr){
+      return (
+        [].concat(arr)
+        .sort(function(a,b){
+          return a-b;
+        })
+        .map(function(el,ix){
+          return el===ix;
+        })
+        .reduce(function(l,r){
+          return l&&r;
+        },true)
+      );
+    }
+    if(!heatmapData.orderings.hasOwnProperty("Default")){
+      return new Error("Default ordering missing!");
+    }
+    for(var orderingName in heatmapData.orderings){
+      if(heatmapData.orderings.hasOwnProperty(orderingName)){
+        var ordering = heatmapData.orderings[orderingName];
+        if(ordering.columns.length!== width || !isPermutation(ordering.columns)){
+          return new Error("Column ordering invalid in "+orderingName);
+        }
+        if(ordering.rows.length!==height || ! isPermutation(ordering.rows)){
+          return new Error("Row ordering invalid in "+orderingName);
+        }
+      }
+    }
+  });
+
+var HeatmapContainer = React.createClass({
+  propTypes: {
+      isMultiExperiment: React.PropTypes.bool.isRequired,
+      profiles: React.PropTypes.object.isRequired,
+      atlasBaseURL: React.PropTypes.string.isRequired,
+      anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
+      googleAnalyticsCallback: React.PropTypes.func.isRequired,
+      heatmapData: HeatmapDataPropType
+  },
+
+  getInitialState: function() {
+    return {
+      ordering: "Default"
+    };
+  },
+
+  _introductoryMessage: function() {
+      var shownRows = this.props.profiles.rows.length,
+          totalRows = this.props.profiles.searchResultTotal;
+
+      var what =
+          (this.props.isMultiExperiment ? 'experiment' : 'gene') +
+          (totalRows > 1 ? 's' : '');
+
+      return 'Showing ' + shownRows + ' ' +
+       (totalRows === shownRows ? what + ':' : 'of ' + totalRows + ' ' + what + ' found:');
+  },
+
+  _data: function() {
+    var permuteX = function(x){
+      return this.props.heatmapData.orderings[this.state.ordering].columns.indexOf(x);
+    }.bind(this);
+
+    var permuteY = function(y){
+      return this.props.heatmapData.orderings[this.state.ordering].rows.indexOf(y);
+    }.bind(this);
+
+    var permuteArray = function(arr, permute){
+      return (
+        arr
+          .map(
+            function(el, ix){
+              return [el, permute(ix)];
+            })
+          .sort(
+            function(l,r){
+              return l[1]-r[1];
+            })
+          .map(
+            function(el){
+              return el[0];
+            }
+          )
+        );
+    }
+    return {
+      dataSeries:
+        this.props.heatmapData.dataSeries.map(
+          function(series){
+            return series.map(
+              function(point){
+                return [
+                  permuteX(point[0]),
+                  permuteY(point[1]),
+                  point[2]];
+            });
+          }),
+      xAxisCategories:
+        permuteArray(this.props.heatmapData.xAxisCategories, permuteX),
+      yAxisCategories:
+        permuteArray(this.props.heatmapData.yAxisCategories, permuteY)
+    };
+  },
+
+  render: function () {
+    var marginRight = 60;
+    return (
+        <div>
+            <HeatmapOptions
+              marginRight={marginRight}
+              introductoryMessage={this._introductoryMessage()}
+              downloadOptions={{
+                downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
+                atlasBaseURL: this.props.atlasBaseURL,
+                isFortLauderdale: this.props.heatmapConfig.isFortLauderdale}}
+              orderings={{
+                available: Object.keys(this.props.heatmapData.orderings),
+                current: this.state.ordering,
+                onSelect: function(orderingChosen){
+                  this.setState({ordering: orderingChosen})
+                }.bind(this)
+                }}
+              googleAnalyticsCallback={this.props.googleAnalyticsCallback}
+              showUsageMessage={this.props.heatmapData.xAxisCategories.length > 100} />
+
+            <HighchartsHeatmap
+              marginRight={marginRight}
+              atlasBaseURL={this.props.atlasBaseURL}
+              anatomogramEventEmitter={this.props.anatomogramEventEmitter}
+              data={this._data()}
+            />
+        </div>
+    );
+  }
+
+});
+
 var HighchartsHeatmap = React.createClass({
 
     propTypes: {
-        isMultiExperiment: React.PropTypes.bool.isRequired,
-        profiles: React.PropTypes.object.isRequired,
+        marginRight: React.PropTypes.number.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
         anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
-        ensemblEventEmitter : React.PropTypes.instanceOf(EventEmitter),
-        googleAnalyticsCallback: React.PropTypes.func.isRequired
+        data: React.PropTypes.shape({
+          dataSeries: DataSeriesPropType,
+          xAxisCategories: AxisCategoriesPropType,
+          yAxisCategories: AxisCategoriesPropType
+        })
     },
 
     getInitialState: function () {
         return ({
-            xAxisCategories:{},
-            yAxisCategories:{},
-            yAxisCategoriesLinks: {},
-            seriesDataNA: [],
-            seriesDataNAString: "NA",
-            seriesDataBelowCutoff: [],
-            seriesDataBelowCutoffString: "Below cutoff",
-            seriesDataRanges: [
-                {
-                    label: "Low",
-                    from: 0,
-                    to: 10,
-                    seriesData: []
-                },
-                {
-                    label: "Medium",
-                    from: 10,
-                    to: 1000,
-                    seriesData: []
-                },
-                {
-                    label: "High",
-                    from: 1000,
-                    to: 100000,
-                    seriesData: []
-                }
-            ],
-
             legend_0: false,
             legend_1: false,
             legend_2: false,
             legend_3: false
-
         })
     },
 
@@ -89,7 +243,7 @@ var HighchartsHeatmap = React.createClass({
         Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseLeave', {svgPathId: svgPathId});
     },
 
-    _registerListenerIfNecessary(name, fn) {
+    _registerListenerIfNecessary: function(name, fn) {
       if (this.props.anatomogramEventEmitter &&
           this.props.anatomogramEventEmitter._events &&
           !this.props.anatomogramEventEmitter._events.hasOwnProperty(name)) {
@@ -114,20 +268,33 @@ var HighchartsHeatmap = React.createClass({
 
     },
 
+    _prepareDataSeries: function () {
+      return ([
+       ["Below cutoff", "#eaeaea"],
+       ["Low", "#45affd"],
+       ["Medium", "#1E74CA"],
+       ["High", "#024990"]
+     ]).map(function (__args__, ix) {
+       return {
+         name: __args__[0],
+         color: __args__[1],
+         borderWidth: 1,
+         borderColor: "#fff",
+         data: this.props.data.dataSeries[ix]
+       }
+     }.bind(this));
+    },
+
     render: function () {
         var atlasBaseURL = this.props.atlasBaseURL;
-        var yAxisCategoriesLinks = this.props.yAxisCategoriesLinks;
-        var yAxisCategories = this.props.yAxisCategories;
 
         var xAxisLongestHeaderLength =
-            Math.max.apply(null, this.props.xAxisCategories.map(function(category) {return category.label.length}));
+            Math.max.apply(null, this.props.data.xAxisCategories.map(function(category) {return category.label.length}));
 
         var marginTop =
-            this.props.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
-                this.props.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
+            this.props.data.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
+                this.props.data.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
                     Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5));   // labels at -90°
-
-        var marginRight = 60;
 
         var highchartsOptions = {
             plotOptions: {
@@ -164,10 +331,10 @@ var HighchartsHeatmap = React.createClass({
             chart: {
                 type: 'heatmap',
                 marginTop: marginTop,
-                marginRight: marginRight, //leave space for tilted long headers
+                marginRight: this.props.marginRight, //leave space for tilted long headers
                 spacingTop: 0,
                 plotBorderWidth: 1,
-                height: Math.max(70, yAxisCategories.length * 30 + marginTop),
+                height: Math.max(70, this.props.data.yAxisCategories.length * 30 + marginTop),
                 zoomType: 'x',
                 events: {
                   handleGxaAnatomogramTissueMouseEnter: function(e) {
@@ -208,7 +375,7 @@ var HighchartsHeatmap = React.createClass({
                     }
                 },
                 opposite: 'true',
-                categories: this.props.xAxisCategories
+                categories: this.props.data.xAxisCategories
             },
             yAxis: { //experiments
                 useHTML: true,
@@ -219,10 +386,10 @@ var HighchartsHeatmap = React.createClass({
                         color: '#148ff3'
                     },
                     formatter: function() {
-                        return '<a href="' + atlasBaseURL +'/experiments/' + yAxisCategoriesLinks[this.value] + '">' + this.value + '</a>';
+                        return '<a href="' + atlasBaseURL +'/experiments/' + this.value.id + '">' + this.value.label + '</a>';
                     }
                 },
-                categories: this.props.yAxisCategories,
+                categories: this.props.data.yAxisCategories,
                 title: null,
                 gridLineWidth: 0,
                 minorGridLineWidth: 0,
@@ -231,39 +398,14 @@ var HighchartsHeatmap = React.createClass({
             tooltip: {
                 useHTML: true,
                 formatter: function() {
-                    return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y] + '</b><br>' +
+                    return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y].label + '</b><br>' +
                         'Experimental condition: <b>' + this.series.xAxis.categories[this.point.x].label + '</b><br>' +
                         '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';"></span>' +
                         'Expression level: <b>' + this.point.value + '</b>';
                 }
             },
             anatomogramEventEmitter: this.props.anatomogramEventEmitter,
-            ensemblEventEmitter: this.props.ensemblEventEmitter,
-            series: [{
-                name: this.props.seriesDataBelowCutoffString,
-                color: "#eaeaea",
-                borderWidth: 1,
-                borderColor: "#fff",
-                data: this.props.seriesDataBelowCutoff
-            }, {
-                name: this.props.seriesDataRanges[0].label,
-                color: "#45affd",
-                borderWidth: 1,
-                borderColor: "#fff",
-                data: this.props.seriesDataRanges[0].seriesData
-            }, {
-                name: this.props.seriesDataRanges[1].label,
-                color: "#1E74CA",
-                borderWidth: 1,
-                borderColor: "#fff",
-                data: this.props.seriesDataRanges[1].seriesData
-            }, {
-                name: this.props.seriesDataRanges[2].label,
-                color: "#024990",
-                borderWidth: 1,
-                borderColor: "#fff",
-                data: this.props.seriesDataRanges[2].seriesData
-            }]
+            series: this._prepareDataSeries()
         };
 
         var clsName_0 = this.state.legend_0 ? 'legend-item legend-item-off' : 'legend-item special';
@@ -304,63 +446,75 @@ var HighchartsHeatmap = React.createClass({
         );
 
         return (
-            <div>
-                <HeatmapOptions
-                  marginRight={marginRight}
-                  profiles={this.props.profiles}
-                  downloadProfilesURL={this.props.heatmapConfig.downloadProfilesURL}
-                  atlasBaseURL={this.props.atlasBaseURL}
-                  isFortLauderdale={this.props.heatmapConfig.isFortLauderdale}
-                  isMultiExperiment={this.props.isMultiExperiment}
-                  googleAnalyticsCallback={this.props.googleAnalyticsCallback}
-                  showUsageMessage={this.props.xAxisCategories.length > 100} />
-
-                <div id="highcharts_container">
-                    <ReactHighcharts config={highchartsOptions} ref="chart"/>
-                    {barcharts_legend}
-                </div>
-            </div>
+              <div id="highcharts_container">
+                  <ReactHighcharts config={highchartsOptions} ref="chart"/>
+                  {barcharts_legend}
+              </div>
         );
     }
 
 });
 
+
+var propsForOrderingDropdown = {
+  available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  current: React.PropTypes.string.isRequired,
+  onSelect: React.PropTypes.func.isRequired
+};
+
+var OrderingDropdown = React.createClass({
+  propTypes: propsForOrderingDropdown,
+
+  render: function () {
+    return (
+      <div className="btn-group">
+      <DropdownButton
+        bsStyle={"primary"}
+        bsSize={"xs"}
+        title={"Order by"}
+        onSelect={this.props.onSelect}
+        id={"ordering-dropdown"}>
+        {this.props.available.map(function(option){
+          return ( <MenuItem
+                      key={option}
+                      eventKey={option}
+                      active={option === this.props.current}>
+                        {option}
+                   </MenuItem> );
+        }.bind(this))}
+      </DropdownButton>
+      </div>
+    );
+  }
+});
+
 var HeatmapOptions = React.createClass({
   propTypes: {
     marginRight: React.PropTypes.number.isRequired,
-    profiles: React.PropTypes.object.isRequired,
-    downloadProfilesURL: React.PropTypes.string.isRequired,
-    atlasBaseURL: React.PropTypes.string.isRequired,
-    isFortLauderdale: React.PropTypes.bool.isRequired,
-    isMultiExperiment: React.PropTypes.bool.isRequired,
+    downloadOptions: React.PropTypes.object.isRequired,
     googleAnalyticsCallback: React.PropTypes.func.isRequired,
-    showUsageMessage: React.PropTypes.bool.isRequired
-  },
-
-  _introductoryMessage: function() {
-      var shownRows = this.props.profiles.rows.length,
-          totalRows = this.props.profiles.searchResultTotal;
-
-      var what =
-          (this.props.isMultiExperiment ? 'experiment' : 'gene') +
-          (totalRows > 1 ? 's' : '');
-
-      return 'Showing ' + shownRows + ' ' +
-       (totalRows === shownRows ? what + ':' : 'of ' + totalRows + ' ' + what + ' found:');
+    showUsageMessage: React.PropTypes.bool.isRequired,
+    orderings: React.PropTypes.shape(propsForOrderingDropdown)
   },
 
   render: function () {
     return (
       <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{paddingBottom: '15px', position: 'sticky'}}>
           <div style={{display: 'inline-block', verticalAlign: 'top'}}>
-              {this._introductoryMessage()}
+              {this.props.introductoryMessage}
           </div>
           <div style={{display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight}}>
-              <DownloadProfilesButton ref="downloadProfilesButton"
-                                      downloadProfilesURL={this.props.downloadProfilesURL}
-                                      atlasBaseURL={this.props.atlasBaseURL}
-                                      isFortLauderdale={this.props.isFortLauderdale}
-                                      onDownloadCallbackForAnalytics={function() {this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')}.bind(this)}/>
+            <div className="btn-group">
+              <DownloadProfilesButton
+                ref="downloadProfilesButton"
+                downloadProfilesURL={this.props.downloadOptions.downloadProfilesURL}
+                atlasBaseURL={this.props.downloadOptions.atlasBaseURL}
+                isFortLauderdale={this.props.downloadOptions.isFortLauderdale}
+                onDownloadCallbackForAnalytics={
+                  function() {
+                    this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')
+                  }.bind(this)}/>
+            </div>
           </div>
           {this.props.showUsageMessage
             ? <div style={{fontSize: 'small', color: 'grey'}}>
@@ -375,4 +529,4 @@ var HeatmapOptions = React.createClass({
 
 //*------------------------------------------------------------------*
 
-module.exports = HighchartsHeatmap;
+module.exports = HeatmapContainer;

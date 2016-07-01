@@ -32,9 +32,7 @@ public class ExperimentalFactors implements Serializable {
 
     private BiMap<String, String> factorDisplayNamesByType = HashBiMap.create();
 
-    private SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
-
-    private LinkedHashMultimap<Factor, Factor> xmlCoOcurringFactors = LinkedHashMultimap.create();
+    private SetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
 
     private Set<String> menuFilterFactorTypes;
 
@@ -45,7 +43,6 @@ public class ExperimentalFactors implements Serializable {
     ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType,
                         Map<String, String> factorDisplayNamesByType,
                         List<FactorGroup> orderedFactorGroups,
-                        SortedSetMultimap<Factor, Factor> coOccurringFactors,
                         Set<String> menuFilterFactorTypes,
                         Map<String, FactorGroup> orderedFactorGroupsByAssayGroupId,
                         String defaultQueryFactorType,
@@ -54,7 +51,7 @@ public class ExperimentalFactors implements Serializable {
         this.orderedFactorGroupsByAssayGroupId = orderedFactorGroupsByAssayGroupId;
         this.factorDisplayNamesByType.putAll(factorDisplayNamesByType);
         this.orderedFactorGroups = orderedFactorGroups;
-        this.coOccurringFactors = coOccurringFactors;
+        this.coOccurringFactors = createCoOccurringFactors(orderedFactorGroups);
         this.menuFilterFactorTypes = menuFilterFactorTypes;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
@@ -65,7 +62,6 @@ public class ExperimentalFactors implements Serializable {
     ExperimentalFactors(LinkedHashMultimap<String, Factor> factorsByType,
                         Map<String, String> factorDisplayNamesByType,
                         List<FactorGroup> orderedFactorGroups,
-                        LinkedHashMultimap<Factor, Factor> coOccurringFactors,
                         Set<String> menuFilterFactorTypes,
                         Map<String, FactorGroup> orderedFactorGroupsByAssayGroupId,
                         String defaultQueryFactorType,
@@ -74,10 +70,30 @@ public class ExperimentalFactors implements Serializable {
         this.orderedFactorGroupsByAssayGroupId = orderedFactorGroupsByAssayGroupId;
         this.factorDisplayNamesByType.putAll(factorDisplayNamesByType);
         this.orderedFactorGroups = orderedFactorGroups;
-        this.xmlCoOcurringFactors = coOccurringFactors;
+        this.coOccurringFactors = createCoOccurringFactors(orderedFactorGroups);
         this.menuFilterFactorTypes = menuFilterFactorTypes;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
+    }
+
+    static SetMultimap<Factor, Factor> createCoOccurringFactors(List<FactorGroup> orderedFactorGroups) {
+
+        SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
+
+        for (FactorGroup factorGroup : orderedFactorGroups) {
+            for (Factor factor : factorGroup) {
+                for (Factor value : factorGroup) {
+                    if (!value.equals(factor)) {
+                        coOccurringFactors.put(factor, value);
+                    }
+                }
+            }
+        }
+        return coOccurringFactors;
+    }
+
+    private boolean orderingSpecifiedByCuratorsInConfigurationFile(){
+        return xmlFactorsByType!=null && !xmlFactorsByType.isEmpty();
     }
 
     public String getDefaultQueryFactorType() {
@@ -103,12 +119,8 @@ public class ExperimentalFactors implements Serializable {
     }
 
     //ToDo: this is only used to build factor filter menu, maybe should be encapsulated in a menu builder and the menu builder could be used by a menu cache loader
-    public SortedSet<Factor> getCoOccurringFactors(Factor factor) {
+    public Set<Factor> getCoOccurringFactors(Factor factor) {
         return coOccurringFactors.get(factor);
-    }
-
-    public Set<Factor> getCoOccurringFactorsByXML(Factor factor) {
-        return xmlCoOcurringFactors.get(factor);
     }
 
     public ImmutableSortedSet<Factor> getFactors(String type) {
@@ -147,8 +159,7 @@ public class ExperimentalFactors implements Serializable {
 
     // return factors for the slice specified
     public SortedSet<Factor> getComplementFactors(final FactorGroup slice) {
-        TreeSet<Factor> factors = Sets.newTreeSet(slice);
-        return getComplementFactors(factors);
+        return getComplementFactors(Sets.newTreeSet(slice));
     }
 
     public SortedSet<Factor> getComplementFactors(final Set<Factor> filterFactors) {
@@ -171,62 +182,13 @@ public class ExperimentalFactors implements Serializable {
 
     }
 
-    public Set<Factor> getComplementFactorsByXML(final FactorGroup slice) {
-        TreeSet<Factor> factors = Sets.newTreeSet(slice);
-        return getComplementFactorsByXML(factors);
-    }
-
-    public SortedSet<Factor> getComplementFactorsByXML(final Set<Factor> filterFactors) {
-        if (CollectionUtils.isEmpty(filterFactors)) {
-            return getAllFactorsOrderedByXML();
-        }
-
-        SortedSet<Factor> filteredFactors = Sets.newTreeSet();
-
-        for (FactorGroup factorGroup : orderedFactorGroups) {
-
-            List<Factor> remainingFactors = factorGroup.remove(filterFactors);
-            if (remainingFactors.size() == 1) {
-                filteredFactors.add(remainingFactors.get(0));
-            }
-        }
-
-        return filteredFactors;
-
-    }
-
-    public LinkedHashMultimap<String, Factor> getXmlFactorsByType() {
-        return xmlFactorsByType;
-    }
-
-    public SortedSetMultimap<String, Factor> getFactorsByType() {
-        return factorsByType;
-    }
-
     // match each FactorGroup with the filterFactors, and for each match return the remaining single factor
     // (if there is one and only one)
-    public SortedSet<AssayGroupFactor> getComplementAssayGroupFactors(final Set<Factor> filterFactors) {
+    public List<AssayGroupFactor> getComplementAssayGroupFactors(final Set<Factor> filterFactors) {
 
-        SortedSet<AssayGroupFactor> result = Sets.newTreeSet();
-
-        for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
-            List<Factor> remainingFactors;
-
-            if (CollectionUtils.isNotEmpty(filterFactors)) {
-                remainingFactors = orderedFactorGroupsByAssayGroupId.get(groupId).remove(filterFactors);
-            } else {
-                remainingFactors = Lists.newArrayList(orderedFactorGroupsByAssayGroupId.get(groupId).iterator());
-            }
-            if (remainingFactors.size() == 1) {
-                result.add(new AssayGroupFactor(groupId, remainingFactors.get(0)));
-            }
-        }
-
-        return result;
-    }
-
-    public Set<AssayGroupFactor> getComplementAssayGroupFactorsByXML(final Set<Factor> filterFactors) {
-        LinkedHashSet<AssayGroupFactor> result = Sets.newLinkedHashSet();
+        Set<AssayGroupFactor> result =
+                orderingSpecifiedByCuratorsInConfigurationFile() ? Sets.<AssayGroupFactor>newLinkedHashSet() :
+                Sets.<AssayGroupFactor>newTreeSet();
 
         for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
             List<Factor> remainingFactors;
@@ -241,7 +203,7 @@ public class ExperimentalFactors implements Serializable {
             }
         }
 
-        return result;
+        return Lists.newArrayList(result);
     }
 
     public FactorGroup getFactorGroup(String assayGroupId) {
@@ -272,7 +234,7 @@ public class ExperimentalFactors implements Serializable {
     }
 
     public SortedSet<Factor> getAllFactors() {
-        if (!xmlFactorsByType.isEmpty()) {
+        if (orderingSpecifiedByCuratorsInConfigurationFile()) {
             return ImmutableSortedSet.copyOf(xmlFactorsByType.values());
         }
         else {

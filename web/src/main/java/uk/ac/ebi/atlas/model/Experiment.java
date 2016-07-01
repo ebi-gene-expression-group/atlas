@@ -15,7 +15,7 @@ public class Experiment implements Serializable {
 
     private ExperimentType type;
     private ExperimentDesign experimentDesign;
-    private SortedSet<String> organisms;
+    private String species;
     private String kingdom;
     private String ensemblDB;
     private SortedSet<String> pubMedIds;
@@ -28,7 +28,7 @@ public class Experiment implements Serializable {
     private Date lastUpdate;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      boolean hasExtraInfoFile, boolean hasRData, Set<String> organisms, String kingdom, String ensemblDB, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
+                      boolean hasExtraInfoFile, boolean hasRData, String species, String kingdom, String ensemblDB, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
@@ -37,7 +37,7 @@ public class Experiment implements Serializable {
         this.description = description;
         this.hasExtraInfoFile = hasExtraInfoFile;
         this.hasRData = hasRData;
-        this.organisms = new TreeSet<>(organisms);
+        this.species = species;
         this.kingdom = kingdom;
         this.ensemblDB = ensemblDB;
         this.speciesMapping = speciesMapping;
@@ -45,8 +45,8 @@ public class Experiment implements Serializable {
     }
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String description, boolean hasExtraInfoFile, boolean hasRData,
-                      Set<String> organisms, String kingdom, String ensemblDB, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
-        this(type, accession, lastUpdate, null, description, hasExtraInfoFile, hasRData, organisms, kingdom, ensemblDB, speciesMapping, pubMedIds, experimentDesign);
+                      String species, String kingdom, String ensemblDB, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
+        this(type, accession, lastUpdate, null, description, hasExtraInfoFile, hasRData, species, kingdom, ensemblDB, speciesMapping, pubMedIds, experimentDesign);
     }
 
     public ExperimentType getType() {
@@ -84,10 +84,6 @@ public class Experiment implements Serializable {
         return accession;
     }
 
-    public Set<String> getOrganisms() {
-        return Collections.unmodifiableSet(organisms);
-    }
-
     public String getKingdom() {
         return kingdom;
     }
@@ -100,9 +96,8 @@ public class Experiment implements Serializable {
         return Lists.newArrayList(pubMedIds);
     }
 
-    //TODO: deprecate this in favor of a method that will return the organism actually needed, rather than just the first
-    public String getFirstOrganism() {
-        return organisms.iterator().next();
+    public String getSpecies() {
+        return species;
     }
 
     /*
@@ -116,7 +111,7 @@ public class Experiment implements Serializable {
 
     //TODO: this should be moved to BaselineExperiment, because speciesMapping is always null for differentialExperiment
     // (see DifferentialExperiment constructor)
-    public Map<String, String> getOrganismToEnsemblSpeciesMapping() {
+    public Map<String, String> getSpeciesToEnsemblMapping() {
         return Collections.unmodifiableMap(speciesMapping);
     }
 
@@ -132,9 +127,7 @@ public class Experiment implements Serializable {
         Map<String, Object> result = new HashMap<>();
         result.put("type", this.getType());
         result.put("experimentHasRData", this.hasRData());
-        //TODO possibly allSpecies and experimentDescription are no longer used. Check and either remove this comment
-        // or the two properties.
-        result.put("allSpecies", StringUtils.join(this.getOrganisms(), ", "));
+        result.put("species", this.getSpecies());
         result.put("experimentDescription", this.getDescription());
         result.put("hasExtraInfo", this.hasExtraInfoFile());
         result.put("pubMedIds", this.getPubMedIds());

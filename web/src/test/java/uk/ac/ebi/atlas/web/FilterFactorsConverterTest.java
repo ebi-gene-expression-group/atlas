@@ -20,7 +20,6 @@ public class FilterFactorsConverterTest {
     private static final String SERIALIZED_FACTOR1 = "TYPE1:value1";
     private static final String SERIALIZED_FACTOR2 = "TYPE2:value2";
     private static final String SERIALIZED_FACTORS = SERIALIZED_FACTOR1 + "," + SERIALIZED_FACTOR2;
-    private FilterFactorsConverter subject;
 
     private Factor factor1 = new Factor("type1", "value1");
     private Factor factor2 = new Factor("type2", "value2");
@@ -28,7 +27,6 @@ public class FilterFactorsConverterTest {
     @Before
     public void setUp() throws Exception {
         BaselineExperiment experimentMock = mock(BaselineExperiment.class);
-        subject = new FilterFactorsConverter();
     }
 
     @Test
@@ -38,20 +36,20 @@ public class FilterFactorsConverterTest {
         factors.add(factor1);
         factors.add(factor2);
 
-        assertThat(subject.prettyPrint(factors), is("value2, value1"));
+        assertThat(FilterFactorsConverter.prettyPrint(factors), is("value2, value1"));
     }
 
     @Test
     public void testPrettyPrintWithEmptyFactors() {
         FactorSet factors = new FactorSet();
 
-        assertThat(subject.prettyPrint(factors), is(""));
+        assertThat(FilterFactorsConverter.prettyPrint(factors), is(""));
     }
 
     @Test
     public void testSerializeFactors() throws Exception {
         //given
-        String serializedFactors = subject.serialize(Lists.newArrayList(factor1, factor2));
+        String serializedFactors = FilterFactorsConverter.serialize(Lists.newArrayList(factor1, factor2));
         //then
         assertThat(serializedFactors, is(SERIALIZED_FACTORS));
     }
@@ -59,7 +57,7 @@ public class FilterFactorsConverterTest {
     @Test
     public void testDeserialize() throws Exception {
         //given
-        Set<Factor> factors = subject.deserialize(SERIALIZED_FACTORS);
+        Set<Factor> factors = FilterFactorsConverter.deserialize(SERIALIZED_FACTORS);
         //then
         assertThat(factors, containsInAnyOrder(factor1, factor2));
     }

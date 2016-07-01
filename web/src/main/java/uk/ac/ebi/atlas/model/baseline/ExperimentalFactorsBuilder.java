@@ -67,10 +67,9 @@ public class ExperimentalFactorsBuilder {
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
 
         SortedSetMultimap<String, Factor> factorsByType = buildFactorsByType();
-        SortedSetMultimap<Factor, Factor> coOccurringFactors = buildCoOccurringFactors();
 
         return new ExperimentalFactors(factorsByType, factorNamesByType, orderedFactorGroups,
-                coOccurringFactors, menuFilterFactorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
+                menuFilterFactorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
     }
 
     public ExperimentalFactors createFromXML() {
@@ -79,10 +78,9 @@ public class ExperimentalFactorsBuilder {
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
 
         LinkedHashMultimap<String, Factor> xmlFactorsByType = buildXmlFactorsByType();
-        LinkedHashMultimap<Factor, Factor> coOccurringFactors = buildXmlCoOccurringFactors();
 
         return new ExperimentalFactors(xmlFactorsByType, factorNamesByType, orderedFactorGroups,
-                coOccurringFactors, menuFilterFactorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
+                menuFilterFactorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
     }
 
     SortedSetMultimap<String, Factor> buildFactorsByType() {
@@ -108,42 +106,4 @@ public class ExperimentalFactorsBuilder {
         return xmlFactorsByType;
 
     }
-
-
-    SortedSetMultimap<Factor, Factor> buildCoOccurringFactors() {
-
-        SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
-
-        for (FactorGroup factorGroup : orderedFactorGroups) {
-
-            for (Factor factor : factorGroup) {
-
-                for (Factor value : factorGroup) {
-                    if (!value.equals(factor)) {
-                        coOccurringFactors.put(factor, value);
-                    }
-                }
-            }
-        }
-        return coOccurringFactors;
-    }
-
-    private LinkedHashMultimap<Factor, Factor> buildXmlCoOccurringFactors() {
-
-        LinkedHashMultimap<Factor, Factor> xmlCoOccurringFactors = LinkedHashMultimap.create();
-
-        for (FactorGroup factorGroup : orderedFactorGroups) {
-
-            for (Factor factor : factorGroup) {
-
-                for (Factor value : factorGroup) {
-                    if (!value.equals(factor)) {
-                        xmlCoOccurringFactors.put(factor, value);
-                    }
-                }
-            }
-        }
-        return xmlCoOccurringFactors;
-    }
-
 }
