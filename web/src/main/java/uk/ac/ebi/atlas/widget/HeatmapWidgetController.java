@@ -55,33 +55,25 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     private SpeciesLookupService speciesLookupService;
 
-    private final BaselineExperimentProfileSearchService baselineExperimentProfileSearchService;
-
     private final BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder;
 
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
     private final BaselineExperimentPageService baselineExperimentPageService;
 
-    private final SolrQueryService solrQueryService;
-
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Inject
     private HeatmapWidgetController(ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService,
-                                    BaselineExperimentProfileSearchService baselineExperimentProfileSearchService,
                                     BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder,
                                     BaselineAnalyticsSearchService baselineAnalyticsSearchService,
                                     BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
-                                    @Qualifier ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory baselineProfileInputStreamFactory,
-                                    SolrQueryService solrQueryService) {
+                                    @Qualifier ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory baselineProfileInputStreamFactory) {
         this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
         this.speciesLookupService = speciesLookupService;
-        this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
         this.baselineExperimentProfilesViewModelBuilder = baselineExperimentProfilesViewModelBuilder;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileInputStreamFactory);
-        this.solrQueryService = solrQueryService;
     }
 
     @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE")
