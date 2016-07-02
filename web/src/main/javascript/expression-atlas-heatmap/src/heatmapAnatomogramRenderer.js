@@ -19,13 +19,11 @@ var ExperimentTypes = require('./experimentTypes.js');
  * @param {boolean=}        options.disableGoogleAnalytics - Disable Google Analytics: required by CTTV
  * @param {string=}         options.atlasHost - Atlas host with port (note: don’t include port)
  * @param {string}          options.params
- * @param {boolean}         options.analyticsSearch
  * @param {boolean=}        options.isMultiExperiment
  * @param {boolean=}        options.showAnatomogram
  * @param {boolean=}        options.isWidget
  * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
  * @param {function}        options.fail - Callback to run if the AJAX request to the server fails. (jqXHR, textStatus)
- * @param {function}        options.eventEmitter
  */
 exports.render = function(options) {
 
@@ -39,14 +37,10 @@ exports.render = function(options) {
 
     var atlasBaseURL = options.proxyPrefix ? options.proxyPrefix + "/" + atlasHost + atlasPath : linksAtlasBaseURL;
 
-    var endpointPath =
-        options.analyticsSearch ? "/widgets/heatmap/baselineAnalytics" :
-            options.isMultiExperiment ? "/widgets/heatmap/multiExperiment" : "/widgets/heatmap/referenceExperiment";
+    var endpointPath = options.isMultiExperiment ? "/widgets/heatmap/baselineAnalytics" : "/widgets/heatmap/referenceExperiment";
 
     var sourceURL = atlasBaseURL + endpointPath + "?" + options.params;
 
-    var ensemblEventEmitter = new EventEmitter();
-    ensemblEventEmitter.setMaxListeners(0);
     var anatomogramEventEmitter = new EventEmitter();
     anatomogramEventEmitter.setMaxListeners(0);
 
@@ -62,9 +56,7 @@ exports.render = function(options) {
                 isWidget: options.isWidget === undefined ? true : options.isWidget,
                 disableGoogleAnalytics: options.disableGoogleAnalytics === undefined ? false : options.disableGoogleAnalytics,
                 fail: options.fail,
-                ensemblEventEmitter: ensemblEventEmitter,
-                anatomogramEventEmitter: anatomogramEventEmitter,
-                eventEmitter: options.eventEmitter
+                anatomogramEventEmitter: anatomogramEventEmitter
             }
         ),
         (typeof options.target === "string") ? document.getElementById(options.target) : options.target
