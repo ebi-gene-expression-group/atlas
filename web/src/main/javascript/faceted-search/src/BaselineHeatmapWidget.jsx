@@ -26,7 +26,6 @@ var BaselineHeatmapWidget = React.createClass({
       highchartsHeatmapRenderer.render({
           atlasHost: this.props.atlasHost,
           params: "geneQuery=" + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
-          analyticsSearch: true,
           isMultiExperiment: true,
           target: ReactDOM.findDOMNode(this.refs.widgetBody),
           isWidget: false,
