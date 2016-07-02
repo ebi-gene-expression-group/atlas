@@ -21,6 +21,11 @@ var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
  * @param {string}          options.params - Alternate way of sourcing data if you do not provide the sourceURL
  * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
  * @param {function}        options.fail - Callback to run if the AJAX request to the server fails. (jqXHR, textStatus)
+ * @param {Object}          options.anatomogramDataEventEmitter - emits events to the facets tree to signal the existence of anatomogram
+ * @param {boolean=}        options.showAnatomogram - optionally hide the anatomogram
+ * @param {boolean}         options.isDifferential
+ * @param {boolean}         options.isMultiExperiment
+ * @param {boolean=}        options.isWidget
  */
 exports.render = function(options) {
 
