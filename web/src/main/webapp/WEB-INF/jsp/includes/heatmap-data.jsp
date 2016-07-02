@@ -42,7 +42,6 @@
         {
             <%--
             //TODO: extract ensembl genome launcher config parameters (ensemblDB, columnType etc.) out into separate object
-            //TODO: remove enableGeneLinks parameter
             //TODO: investigate why showMaPlotButton is always true
             //TODO: break into common params, differential params, and baseline and multiexperiment params (if any)
             --%>
@@ -56,8 +55,7 @@
                 "ensemblDB": "${ensemblDB}",
                 "columnType": "${fn:toLowerCase(queryFactorName)}",
                 "isExactMatch": ${empty exactMatch ? "true": exactMatch},
-                "enableGeneLinks": true,
-                "enableEnsemblLauncher": ${isMultiExperiment ? false : (empty enableEnsemblLauncher ? true : enableEnsemblLauncher)},
+                "enableEnsemblLauncher": ${empty enableEnsemblLauncher ? "false" : enableEnsemblLauncher},
                 "showMaPlotButton": true,
                 "gseaPlots": ${empty gseaPlots ? "null" : gseaPlots},
                 "downloadProfilesURL": "${not empty downloadURL ? downloadURL : applicationProperties.buildDownloadURL(pageContext.request)}",
