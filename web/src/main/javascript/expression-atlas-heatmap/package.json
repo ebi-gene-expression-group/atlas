@@ -27,7 +27,7 @@
     "legend": "file:../atlas_modules/legend",
     "modernizr": "^3.3.1",
     "number-format": "file:../atlas_modules/number-format",
-    "rc-slider": "^3.6.0",
+    "rc-slider": "git+https://github.com/alfonsomunozpomer/slider.git",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-radio-group": "^1.1.0",
