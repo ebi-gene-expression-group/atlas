@@ -162,17 +162,21 @@ var Heatmap = React.createClass({
     },
 
     selectColumn: function (columnId) {
-        var selectedColumnId = (columnId === this.state.selectedColumnId) ? null : columnId;
-        this.setState({selectedColumnId: selectedColumnId}, function() {
-            this.props.ensemblEventEmitter.emit('onColumnSelectionChange', selectedColumnId);
-        });
+        if (this.props.ensemblEventEmitter) {
+            var selectedColumnId = (columnId === this.state.selectedColumnId) ? null : columnId;
+            this.setState({selectedColumnId: selectedColumnId}, function () {
+                this.props.ensemblEventEmitter.emit('onColumnSelectionChange', selectedColumnId);
+            });
+        }
     },
 
     selectGene: function (geneId) {
-        var selectedGeneId = (geneId === this.state.selectedGeneId) ? null : geneId;
-        this.setState({selectedGeneId: selectedGeneId}, function() {
-            this.props.ensemblEventEmitter.emit('onGeneSelectionChange', selectedGeneId);
-        });
+        if (this.props.ensemblEventEmitter) {
+            var selectedGeneId = (geneId === this.state.selectedGeneId) ? null : geneId;
+            this.setState({selectedGeneId: selectedGeneId}, function() {
+                this.props.ensemblEventEmitter.emit('onGeneSelectionChange', selectedGeneId);
+            });
+        }
     },
 
     toggleGeneSets: function () {
@@ -1023,7 +1027,7 @@ var GeneProfileRow = React.createClass({
         }
     },
 
-    geneNameLinked: function () {
+    _geneNameLinked: function () {
         var experimentURL = '/experiments/' + this.props.id + '?geneQuery=' + this.props.heatmapConfig.geneQuery + (this.props.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(this.props.serializedFilterFactors) : "");
         var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + this.props.heatmapConfig.isExactMatch : '/genes/' + this.props.id;
 
@@ -1044,13 +1048,6 @@ var GeneProfileRow = React.createClass({
     geneNameLinkClicked: function (event) {
         // prevent row from being selected
         event.stopPropagation();
-    },
-
-    geneNameNotLinked: function () {
-        // don't render id for gene sets to prevent tooltips
-        return (
-            <span style={{"float": "left"}} ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.id}>{this.props.name}</span>
-        );
     },
 
     displayLevelsRadio: function() {
@@ -1130,7 +1127,7 @@ var GeneProfileRow = React.createClass({
                 <th className={className} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick}>
                     <div style={{display: "table", width: "100%"}}>
                         <div style={{display: "table-row"}}>
-                            { this.props.heatmapConfig.enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked()}
+                            { this._geneNameLinked() }
                             { this.props.heatmapConfig.enableEnsemblLauncher ? showSelectTextOnHover : null }
                             { this.props.heatmapConfig.enableEnsemblLauncher ? showTickWhenSelected : null }
                         </div>
