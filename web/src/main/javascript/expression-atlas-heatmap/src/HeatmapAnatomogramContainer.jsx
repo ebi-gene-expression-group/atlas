@@ -43,7 +43,7 @@ var ExperimentDescription = React.createClass({
                 <div id="experimentDescription">
                     <a id="goto-experiment" className="gxaThickLink" title="Experiment Page" href={experimentURL}>{this.props.experiment.description}</a>
                 </div>
-                <div id="experimentOrganisms">Organism(s): <span style={{"fontStyle":"italic"}}>{this.props.experiment.species}</span></div>
+                <div id="experimentOrganisms">Organism: <span style={{"fontStyle":"italic"}}>{this.props.experiment.species}</span></div>
             </div>
         );
     }
@@ -63,9 +63,8 @@ var HeatmapAnatomogramContainer = React.createClass({
         disableGoogleAnalytics: React.PropTypes.bool.isRequired,
         fail: React.PropTypes.func,
         googleAnalyticsCallback: React.PropTypes.func,
-        ensemblEventEmitter : React.PropTypes.object.isRequired,
         anatomogramEventEmitter: React.PropTypes.object.isRequired,
-        eventEmitter: React.PropTypes.object.isRequired
+        facetsEventEmitter: React.PropTypes.object
     },
 
     render: function () {
@@ -119,7 +118,6 @@ var HeatmapAnatomogramContainer = React.createClass({
                                          columnHeaders={this.state.columnHeaders}
                                          profiles={this.state.profiles}
                                          geneSetProfiles={this.state.geneSetProfiles}
-                                         ensemblEventEmitter={this.props.ensemblEventEmitter}
                                          anatomogramEventEmitter={this.props.anatomogramEventEmitter}
                                          atlasBaseURL={this.props.atlasBaseURL}
                                          linksAtlasBaseURL={this.props.linksAtlasBaseURL}
@@ -181,33 +179,44 @@ var HeatmapAnatomogramContainer = React.createClass({
             experimentData: data.experiment
         });
 
-        if (this.state.anatomogramData) {
-            this.props.eventEmitter.emit('existAnatomogramData', true);
-        } else {
-            this.props.eventEmitter.emit('existAnatomogramData', false);
+        if (this.props.facetsEventEmitter) {
+            if (this.state.anatomogramData) {
+                this.props.facetsEventEmitter.emit('existAnatomogramData', true);
+            } else {
+                this.props.facetsEventEmitter.emit('existAnatomogramData', false);
+            }
         }
     },
 
     componentDidMount: function() {
+
+        var handleError = function(jqXHR, textStatus, errorThrown) {
+            if (this.props.fail) {
+                this.props.fail(jqXHR, textStatus, errorThrown);
+            } else if (textStatus === "parsererror") {
+                $(ReactDOM.findDOMNode(this.refs.this)).html('<div class="gxaError">Could not parse JSON response</div>');
+            } else {
+                $(ReactDOM.findDOMNode(this.refs.this)).html('<div class="gxaError">' + jqXHR.responseText + '</div>');
+            }
+        }.bind(this);
+
+        var handleSuccess = function(data) {
+            if ("error" in data) {
+                handleError({responseText: data.error});
+            } else {
+                this._updateStateAsynchronously(data);
+            }
+        }.bind(this);
+
         var httpRequest = {
             url: this.props.sourceURL,
             dataType: "json",
-            method: "GET"
+            method: "GET",
+            success: handleSuccess,
+            error: handleError
         };
 
-        this.serverRequest = $.ajax(httpRequest).done(
-             this._updateStateAsynchronously
-        ).fail(
-            function (jqXHR, textStatus, errorThrown) {
-                if (this.props.fail) {
-                    this.props.fail(jqXHR, textStatus, errorThrown);
-                } else if (textStatus === "parsererror") {
-                    $(ReactDOM.findDOMNode(this.refs.this)).html("<div class='gxaError'>Could not parse JSON response</div>");
-                } else {
-                    $(ReactDOM.findDOMNode(this.refs.this)).html(jqXHR.responseText);
-                }
-            }.bind(this)
-        );
+        this.serverRequest = $.ajax(httpRequest);
 
         if (!this.props.disableGoogleAnalytics) {
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -231,12 +240,6 @@ var HeatmapAnatomogramContainer = React.createClass({
         }
 
         $(window).trigger("gxaResizeHeatmapAnatomogramHeader");
-
-        if (this.state.anatomogramData) {
-            this.props.eventEmitter.emit('existAnatomogramData', true);
-        } else {
-            this.props.eventEmitter.emit('existAnatomogramData', false);
-        }
     },
     componentWillUnmount: function() {
         this.serverRequest.abort();
