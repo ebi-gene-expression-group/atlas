@@ -36,6 +36,10 @@
                 <c:set var="speciesIconCode" value="W"/>
                 <c:set var="speciesColorCode" value="red"/>
             </c:when>
+            <c:when test="${species == 'Equus caballus'}">
+                <c:set var="speciesIconCode" value="h"/>
+                <c:set var="speciesColorCode" value="red"/>
+            </c:when>
             <c:when test="${species == 'Gallus gallus'}">
                 <c:set var="speciesIconCode" value="k"/>
                 <c:set var="speciesColorCode" value="red"/>
