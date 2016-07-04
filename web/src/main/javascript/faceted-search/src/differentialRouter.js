@@ -6,7 +6,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var $ = require('jquery');
-require('jquery.browser');
 
 var URI = require('urijs');
 
@@ -27,9 +26,6 @@ var DifferentialResults = require('./DifferentialResults.jsx');
  * @param {string} options.atlasHost
  */
 module.exports = function (options) {
-
-    var ie9 = $.browser.msie && $.browser.version < 10;
-    !ie9 && window.addEventListener("popstate", backButtonListener, false);
 
     var facetsElement = document.getElementById(options.facetsContainer),
         resultsElement = document.getElementById(options.resultsContainer),
@@ -98,14 +94,6 @@ module.exports = function (options) {
         }
     });
 
-
-    function backButtonListener() {
-        if (window.location.hash === "#differential") {
-            parseSelectedFacetsFromLocation();
-            filterAndRenderResults();
-        }
-    }
-
     /**
      * Parse the `ds` search field in the URL and assign it to the `query` object
      */
@@ -146,12 +134,10 @@ module.exports = function (options) {
             data.ds = JSON.stringify(query.select);
         });
 
-        if (!ie9) {
-            if (replace) {
-                history.replaceState(null, "", newURL);
-            } else {
-                history.pushState(null, "", newURL);
-            }
+        if (replace) {
+            history.replaceState(null, "", newURL);
+        } else {
+            history.pushState(null, "", newURL);
         }
     }
 

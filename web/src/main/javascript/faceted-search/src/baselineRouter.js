@@ -5,9 +5,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var $ = require('jquery');
-require('jquery.browser');
-
 var URI = require('urijs');
 
 var EventEmitter = require('events');
@@ -31,9 +28,6 @@ var BaselineHeatmaps = require('./BaselineHeatmaps.jsx');
  * @param {string} options.queryType - "gene", "geneSet"
  */
 module.exports = function (options) {
-
-    var ie9 = $.browser.msie && $.browser.version < 10;
-    !ie9 && window.addEventListener("popstate", backButtonListener, false);
 
     var facetsElement = document.getElementById(options.facetsContainer),
         heatmapsElement = document.getElementById(options.resultsContainer),
@@ -68,13 +62,6 @@ module.exports = function (options) {
 
     pushQueryIntoBrowserHistory(true);
     renderQueryPage();
-
-    function backButtonListener() {
-        if (window.location.hash === "#baseline") {
-            parseSelectedFacetsFromLocation();
-            renderQueryPage();
-        }
-    }
 
     function parseSelectedFacetsFromLocation() {
         var currentURL = new URI(window.location);
@@ -125,13 +112,7 @@ module.exports = function (options) {
     }
 
     function triggerScrollEvent() {
-        if (ie9) {
-            var event = document.createEvent("Events");
-            event.initEvent("scroll", true, true);
-            window.dispatchEvent(event);
-        } else {
-            window.dispatchEvent(new Event("scroll"));
-        }
+        window.dispatchEvent(new CustomEvent("scroll"));
     }
 
     function initializeQuerySelect() {
@@ -181,12 +162,10 @@ module.exports = function (options) {
             data.bs = JSON.stringify(query.select);
         });
 
-        if (!ie9) {
-            if (replace) {
-                history.replaceState(null, "", newURL);
-            } else {
-                history.pushState(null, "", newURL);
-            }
+        if (replace) {
+            history.replaceState(null, "", newURL);
+        } else {
+            history.pushState(null, "", newURL);
         }
     }
 

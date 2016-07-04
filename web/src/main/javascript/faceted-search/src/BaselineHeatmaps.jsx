@@ -4,6 +4,7 @@
 
 var React = require('react');
 var $ = require('jquery');
+require('jquery.browser');
 
 //*------------------------------------------------------------------*
 
@@ -42,6 +43,14 @@ var BaselineHeatmaps = React.createClass({
     },
 
     render: function () {
+        var feedbackSmileys = $.browser.msie ? null
+            : <FeedbackSmileys collectionCallback= {
+                  function(score,comment){
+                    this.state.googleAnalyticsCallback(
+                      'send','event','BaselineHeatmaps', 'feedback',
+                      comment,score);
+                  }.bind(this)} />;
+        
         return (
             <div>
                 {this.props.heatmaps.map(function (heatmap) {
@@ -50,12 +59,7 @@ var BaselineHeatmaps = React.createClass({
                                                   showHeatmapLabel={this._hasMoreThanOneSpecies()} species={heatmap.species} factor={heatmap.factor}
                                                   atlasHost={this.props.atlasHost} geneQuery={this.props.geneQuery} anatomogramDataEventEmitter={this.props.anatomogramDataEventEmitter} />;
                 }.bind(this))}
-                <FeedbackSmileys collectionCallback= {
-                  function(score,comment){
-                    this.state.googleAnalyticsCallback(
-                      'send','event','BaselineHeatmaps', 'feedback',
-                      comment,score);
-                  }.bind(this)} />
+                {feedbackSmileys}
             </div>
         );
     },

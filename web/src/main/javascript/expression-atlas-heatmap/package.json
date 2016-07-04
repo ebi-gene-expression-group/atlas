@@ -23,6 +23,7 @@
     "jquery-highlight": "^3.2.2",
     "jquery-toolbar": "git+https://github.com/alfonsomunozpomer/jquery-toolbar.git",
     "jquery-ui-bundle": "^1.11.4",
+    "jquery.browser": "^0.1.0",
     "legend": "file:../atlas_modules/legend",
     "modernizr": "^3.3.1",
     "number-format": "file:../atlas_modules/number-format",

@@ -2,6 +2,9 @@
 
 //*------------------------------------------------------------------*
 
+var $ = require('jquery');
+require('jquery.browser');
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -103,6 +106,15 @@ var DifferentialResults = React.createClass({
             />;
         }.bind(this));
 
+        var feedbackSmileys = $.browser.msie ? null
+            : 
+            <div style={{marginTop:"50px"}}>
+                <FeedbackSmileys
+                    collectionCallback={function(score,comment) {
+                        this.state.googleAnalyticsCallback('send','event','DifferentialHeatmaps', 'feedback', comment, score);
+                    }.bind(this)}/>
+            </div>;
+
         return (
             <div>
                 <div style={{display: "inline-block", verticalAlign: "middle"}}>
@@ -134,12 +146,7 @@ var DifferentialResults = React.createClass({
                             {differentialResultRows}
                     </tbody>
                 </table>
-                <div style={{marginTop:"50px"}}>
-                    <FeedbackSmileys
-                        collectionCallback={function(score,comment) {
-                            this.state.googleAnalyticsCallback('send','event','DifferentialHeatmaps', 'feedback', comment, score);
-                        }.bind(this)}/>
-                </div>
+                {feedbackSmileys}
             </div>
         );
     }

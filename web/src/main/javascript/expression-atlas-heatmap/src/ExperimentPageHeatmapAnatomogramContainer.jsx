@@ -6,6 +6,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var $ = require('jquery');
+require('jquery.browser');
 require('jquery-hc-sticky');
 
 var EventEmitter = require('events');
@@ -150,6 +151,17 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
 
         var prefFormDisplayLevels = $('#displayLevels');
 
+        var feedbackSmileys = $.browser.msie ? null
+            :
+            <div className="gxaHeatmapPosition gxaFeedbackBoxWrapper">
+            <FeedbackSmileys collectionCallback= {
+                    function(score,comment){
+                      this.state.googleAnalyticsCallback(
+                        'send','event','HeatmapReact', 'feedback',
+                        comment,score);
+                    }.bind(this)} />
+            </div>;
+
         return (
             <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
@@ -185,15 +197,7 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                              linksAtlasBaseURL={this.props.linksAtlasBaseURL}
                              googleAnalyticsCallback={this.state.googleAnalyticsCallback}/>
                 </div>
-                <div className="gxaHeatmapPosition gxaFeedbackBoxWrapper">
-                  <FeedbackSmileys collectionCallback= {
-                    function(score,comment){
-                      this.state.googleAnalyticsCallback(
-                        'send','event','HeatmapReact', 'feedback',
-                        comment,score);
-                    }.bind(this)} />
-                </div>
-
+                {feedbackSmileys}
             </div>
         );
     },
