@@ -60,8 +60,6 @@
 
 <script>
 
-    var ie9 = $.browser.msie && $.browser.version < 10;
-
     var hasBaselineResults = ${hasBaselineResults},
         hasDifferentialResults = ${hasDifferentialResults};
 
@@ -84,26 +82,14 @@
 
     $baselineTabLink.on("shown.bs.tab", function() {
         // Hack to resize Highcharts heat maps to container width
-        if (ie9) {
-            function dispatchEvent(eventName) {
-                var evt = document.createEvent("CustomEvent");
-                evt.initCustomEvent(eventName, true, false, {});
-                window.dispatchEvent(evt);
-            }
-            dispatchEvent("resize");
-        } else {
-            window.dispatchEvent(new Event("resize"));
-        }
+        // Use CustomEvent instead of Event to be compatible with IE (we’re using a polyfill)
+        window.dispatchEvent(new CustomEvent("resize"));
     });
 
     setInitialHash();
     showTabOnHash();
 
-    if (ie9) {
-        window.onhashchange = showTabOnHash;
-    } else {
-        window.addEventListener("popstate", showTabOnHash);
-    }
+    window.addEventListener("popstate", showTabOnHash);
 
     function showTabOnHash() {
         if (window.location.hash === "#baseline") {
@@ -124,13 +110,6 @@
             }
             else if (hasDifferentialResults) {
                 hash = "#differential";
-            }
-
-            if (ie9) {
-                window.location.hash = hash;
-            } else {
-                var newURL = new URI(window.location).hash(hash);
-                history.replaceState(null, "", newURL);
             }
         }
     }
