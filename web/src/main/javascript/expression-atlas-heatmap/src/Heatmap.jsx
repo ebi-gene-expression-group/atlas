@@ -14,7 +14,6 @@ var DownloadProfilesButton =require('download-profiles-button');
 var $ = require('jquery');
 
 require('jquery-ui-bundle');
-require('jquery.browser');
 require('jquery-hc-sticky');
 require('atlas-modernizr');  // Leaks Modernizr to the global window namespace
 

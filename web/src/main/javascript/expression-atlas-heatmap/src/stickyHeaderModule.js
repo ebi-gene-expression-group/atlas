@@ -39,22 +39,9 @@ function StickyHeaderModule(table, stickyIntersect, stickyColumn, stickyHeadRow,
                 }
             );
 
-            // Set width of sticky header table and intersect. WebKit does it wrong...
-            if ($.browser.webkit) {
-                $stickyHeadRow
-                    .width($stickyWrap.width())
-                    .find("table")
-                    .width($t.outerWidth());
-                $stickyIntersect.find("table").width($t.find("thead th").eq(0).outerWidth() + 1);
-                $stickyColumn.find("table").width($t.find("thead th").eq(0).outerWidth() + 1);
-            } else {
-                $stickyHeadRow
-                    .width($stickyWrap.width())
-                    .find("table")
-                    .width($t.width());
-                $stickyIntersect.find("table").width($t.find("thead th").eq(0).outerWidth());
-                $stickyColumn.find("table").width($t.find("thead th").eq(0).outerWidth());
-            }
+            $stickyHeadRow.width($stickyWrap.width()).find("table").width($t.width());
+            $stickyIntersect.find("table").outerWidth($t.find("thead th").eq(0).outerWidth());
+            $stickyColumn.find("table").outerWidth($t.find("thead th").eq(0).outerWidth());
 
             // Set width of sticky table col
             $stickyIntersect.find("tr:nth-child(2) th").each(function (i) {
