@@ -228,7 +228,7 @@ var HighchartsHeatmap = React.createClass({
 
     getInitialState: function () {
         return ({
-            legendState: this.props.labels.map(function(e){return true;})
+            dataSeriesToShow: this.props.labels.map(function(e){return true;})
         })
     },
 
@@ -258,13 +258,31 @@ var HighchartsHeatmap = React.createClass({
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
         var heatmap = this.refs.chart.getChart();
-        this.state.legendState.map(function(e,ix){
+        this.state.dataSeriesToShow.map(function(e,ix){
           if(e){
             heatmap.series[ix].show();
           }else {
             heatmap.series[ix].hide();
           }
         })
+    },
+    _inferAmountOfColumnsShown: function() {
+      return (
+        this.props.data.dataSeries
+        .filter(function(e,ix){
+          return this.state.dataSeriesToShow[ix]
+        }.bind(this))
+        .reduce(function(l,r){
+          return l.concat(r);
+        },[])
+        .map(function(e){
+          return e[0]
+        })
+        .filter(function(e,ix,self){
+          return self.indexOf(e) ===ix ;
+        })
+        .length
+      );
     },
 
     _prepareDataSeries: function () {
@@ -285,7 +303,7 @@ var HighchartsHeatmap = React.createClass({
       return function(){
         this.setState(function(previousState){
           return {
-            legendState: previousState.legendState.map(
+            dataSeriesToShow: previousState.dataSeriesToShow.map(
               function(e,jx){
                 return ix===jx ? !e : e;
               })
@@ -303,7 +321,7 @@ var HighchartsHeatmap = React.createClass({
                 <HeatmapLegendBox key={e.name}
                   name={e.name}
                   colour={e.colour}
-                  on={this.state.legendState[ix]}
+                  on={this.state.dataSeriesToShow[ix]}
                   onClickCallback={this._makeLabelToggle(ix)} />
               );
             }.bind(this)
@@ -323,18 +341,11 @@ var HighchartsHeatmap = React.createClass({
       );
     },
 
-    render: function () {
-        var atlasBaseURL = this.props.atlasBaseURL;
+    _highchartsOptions: function(marginTop, marginRight){
+      var atlasBaseURL = this.props.atlasBaseURL;
 
-        var xAxisLongestHeaderLength =
-            Math.max.apply(null, this.props.data.xAxisCategories.map(function(category) {return category.label.length}));
-
-        var marginTop =
-            this.props.data.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
-                this.props.data.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
-                    Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5));   // labels at -90°
-
-        var highchartsOptions = {
+      return (
+        {
             plotOptions: {
                 heatmap: {
                     turboThreshold: 0
@@ -369,7 +380,7 @@ var HighchartsHeatmap = React.createClass({
             chart: {
                 type: 'heatmap',
                 marginTop: marginTop,
-                marginRight: this.props.marginRight, //leave space for tilted long headers
+                marginRight: marginRight, //leave space for tilted long headers
                 spacingTop: 0,
                 plotBorderWidth: 1,
                 height: Math.max(70, this.props.data.yAxisCategories.length * 30 + marginTop),
@@ -415,7 +426,7 @@ var HighchartsHeatmap = React.createClass({
                 opposite: 'true',
                 categories: this.props.data.xAxisCategories
             },
-            yAxis: { //experiments
+            yAxis: { //experiments or bioentities
                 useHTML: true,
                 reversed: true,
                 labels: {
@@ -436,18 +447,92 @@ var HighchartsHeatmap = React.createClass({
             tooltip: {
                 useHTML: true,
                 formatter: function() {
-                    return 'Sample name: <b>' + this.series.yAxis.categories[this.point.y].label + '</b><br>' +
-                        'Experimental condition: <b>' + this.series.xAxis.categories[this.point.x].label + '</b><br>' +
-                        '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';"></span>' +
-                        'Expression level: <b>' + this.point.value + '</b>';
+                    return (
+                      '<div style="white-space: pre">'+
+                        '<div>'+
+                          'Sample name: <b>' + this.series.yAxis.categories[this.point.y].label + '</b>'+
+                        '</div>'+
+                        '<div>'+
+                          'Experimental condition: '+(this.series.xAxis.categories[this.point.x].label.length > 50 ? '<br>':'')
+                            +'<b>' + this.series.xAxis.categories[this.point.x].label + '</b>'+
+                        '</div>'+
+                        '<div>'+
+                          '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';"></span>' +
+                          'Expression level: <b>' + this.point.value + '</b>'+
+                        '</div>'+
+                      '</div>'
+                      );
                 }
             },
             anatomogramEventEmitter: this.props.anatomogramEventEmitter,
             series: this._prepareDataSeries()
-        };
+        }
+      );
+    },
+
+    _renderHighchartsHeatmap: function(marginTop, maxWidth, marginRight){
+      return (
+        <div style={{maxWidth:maxWidth+"px"}}>
+          <ReactHighcharts config={this._highchartsOptions(marginTop, marginRight)} ref="chart"/>
+        </div>
+      );
+    },
+    _renderHighchartsHeatmapRelative: function(marginTop, maxWidthFraction, marginRight){
+      return (
+        <div style={{maxWidth:maxWidthFraction*100+"%"}}>
+          <ReactHighcharts config={this._highchartsOptions(marginTop, marginRight)} ref="chart"/>
+        </div>
+      );
+    },
+
+    render: function () {
+
+        var xAxisLongestHeaderLength =
+            Math.max.apply(null, this.props.data.xAxisCategories.map(function(category) {return category.label.length}));
+
+        var marginTop =
+            this.props.data.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
+                this.props.data.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
+                    Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5));   // labels at -90°
+
+
         return (
               <div id="highcharts_container">
-                  <ReactHighcharts config={highchartsOptions} ref="chart"/>
+                  <div>Full screen</div>
+                  <div>
+                    <ReactHighcharts config={this._highchartsOptions(marginTop, this.props.marginRight)} ref="chart"/>
+                  </div>
+                  <div>Half screen </div>
+                  {this._renderHighchartsHeatmapRelative(
+                    marginTop,
+                    0.5,
+                    this.props.marginRight
+                  )}
+                  <div>Formula-quadratic</div>
+                  {this._renderHighchartsHeatmapRelative(
+                    marginTop,
+                    1-1/Math.pow(0.2*this._inferAmountOfColumnsShown() +1.27,2),
+                    this.props.marginRight*(1+10/Math.pow(1+this._inferAmountOfColumnsShown(),2))
+                  )}
+                  <div>Formula-quadratic, tweaked</div>
+                  {this._renderHighchartsHeatmapRelative(
+                    marginTop,
+                    1-1/Math.pow(0.25*this._inferAmountOfColumnsShown() +1,2),
+                    this.props.marginRight*(1+10/Math.pow(1+this._inferAmountOfColumnsShown(),2))
+                  )}
+                  <div>Formula-power 4</div>
+                  {this._renderHighchartsHeatmapRelative(
+                    marginTop,
+                    1-1/Math.pow(0.2*this._inferAmountOfColumnsShown() +1,4),
+                    this.props.marginRight*(1+10/Math.pow(1+this._inferAmountOfColumnsShown(),2))
+                  )}
+                  <div>Formula-power 4, tweaked</div>
+                  {this._renderHighchartsHeatmapRelative(
+                    marginTop,
+                    1-1/Math.pow(0.1*this._inferAmountOfColumnsShown() +1,4),
+                    this.props.marginRight*(1+10/Math.pow(1+this._inferAmountOfColumnsShown(),2))
+                  )}
+
                   {this.renderLegend()}
               </div>
         );
