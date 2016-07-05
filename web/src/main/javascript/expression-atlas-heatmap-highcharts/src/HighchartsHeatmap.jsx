@@ -266,7 +266,7 @@ var HighchartsHeatmap = React.createClass({
           }
         })
     },
-    _inferAmountOfColumnsShown: function() {
+    _countColumnsToShow: function() {
       return (
         this.props.data.dataSeries
         .filter(function(e,ix){
@@ -470,14 +470,7 @@ var HighchartsHeatmap = React.createClass({
       );
     },
 
-    _renderHighchartsHeatmap: function(marginTop, maxWidth, marginRight){
-      return (
-        <div style={{maxWidth:maxWidth+"px"}}>
-          <ReactHighcharts config={this._highchartsOptions(marginTop, marginRight)} ref="chart"/>
-        </div>
-      );
-    },
-    _renderHighchartsHeatmapRelative: function(marginTop, maxWidthFraction, marginRight){
+    _boxedHeatmap: function(marginTop, maxWidthFraction, marginRight){
       return (
         <div style={{maxWidth:maxWidthFraction*100+"%"}}>
           <ReactHighcharts config={this._highchartsOptions(marginTop, marginRight)} ref="chart"/>
@@ -498,41 +491,11 @@ var HighchartsHeatmap = React.createClass({
 
         return (
               <div id="highcharts_container">
-                  <div>Full screen</div>
-                  <div>
-                    <ReactHighcharts config={this._highchartsOptions(marginTop, this.props.marginRight)} ref="chart"/>
-                  </div>
-                  <div>Half screen </div>
-                  {this._renderHighchartsHeatmapRelative(
+                  {this._boxedHeatmap(
                     marginTop,
-                    0.5,
-                    this.props.marginRight
+                    1-1/Math.pow(0.2*this._countColumnsToShow() +1,4),
+                    this.props.marginRight*(1+10/Math.pow(1+this._countColumnsToShow(),2))
                   )}
-                  <div>Formula-quadratic</div>
-                  {this._renderHighchartsHeatmapRelative(
-                    marginTop,
-                    1-1/Math.pow(0.2*this._inferAmountOfColumnsShown() +1.27,2),
-                    this.props.marginRight*(1+10/Math.pow(1+this._inferAmountOfColumnsShown(),2))
-                  )}
-                  <div>Formula-quadratic, tweaked</div>
-                  {this._renderHighchartsHeatmapRelative(
-                    marginTop,
-                    1-1/Math.pow(0.25*this._inferAmountOfColumnsShown() +1,2),
-                    this.props.marginRight*(1+10/Math.pow(1+this._inferAmountOfColumnsShown(),2))
-                  )}
-                  <div>Formula-power 4</div>
-                  {this._renderHighchartsHeatmapRelative(
-                    marginTop,
-                    1-1/Math.pow(0.2*this._inferAmountOfColumnsShown() +1,4),
-                    this.props.marginRight*(1+10/Math.pow(1+this._inferAmountOfColumnsShown(),2))
-                  )}
-                  <div>Formula-power 4, tweaked</div>
-                  {this._renderHighchartsHeatmapRelative(
-                    marginTop,
-                    1-1/Math.pow(0.1*this._inferAmountOfColumnsShown() +1,4),
-                    this.props.marginRight*(1+10/Math.pow(1+this._inferAmountOfColumnsShown(),2))
-                  )}
-
                   {this.renderLegend()}
               </div>
         );
