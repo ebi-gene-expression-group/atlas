@@ -111,6 +111,9 @@
             else if (hasDifferentialResults) {
                 hash = "#differential";
             }
+
+            var newURL = new URI(window.location).hash(hash);
+            history.replaceState(null, "", newURL);
         }
     }
 
