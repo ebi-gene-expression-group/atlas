@@ -254,49 +254,98 @@ var HighchartsHeatmap = React.createClass({
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
     },
 
+    _dataToShow: function () {
+      var all_s = function(indexToPickFromEachPoint){
+        return (
+          this.props.data.dataSeries
+            .filter(function(e, ix){
+              return (
+                this.state.dataSeriesToShow[ix]
+              );
+            }.bind(this))
+            .reduce(function(l,r){
+              return l.concat(r);
+            },[])
+            .map(function(e){
+              return e[indexToPickFromEachPoint];
+            })
+            .filter(function(e,ix,self){
+              return self.indexOf(e) ===ix ;
+            })
+            .sort(function(l,r){
+              return l-r;
+            })
+        );
+      }.bind(this);
+      var allXs = all_s(0);
+      var allYs = all_s(1);
+
+      var ds = this.props.data.dataSeries
+        .map(function(e, ix){
+          return (
+            this.state.dataSeriesToShow[ix] ? e : []
+          );
+        }.bind(this))
+        .map(function(series){
+          return (
+            series
+            .map(function(point){
+              return [
+                allXs.indexOf(point[0]),
+                allYs.indexOf(point[1]),
+                point[2]
+              ];
+            })
+            .filter(function(point){
+              return point[0]>-1 && point[1]>-1
+            })
+          );
+        });
+
+      return {
+        dataSeries: this.props.labels
+          .map(function(e, ix){
+              return {
+                name: e.name,
+                color: e.colour,
+                borderWidth: 1,
+                borderColor: "#fff",
+                data: ds[ix]
+              }
+          }.bind(this)),
+        xAxisCategories: this.props.data.xAxisCategories
+          .filter(function(e,ix){
+            return allXs.indexOf(ix)>-1
+        }),
+        yAxisCategories: this.props.data.yAxisCategories
+          .filter(function(e,ix){
+            return allYs.indexOf(ix)>-1
+        })
+
+      };
+    },
+
     componentDidUpdate: function () {
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
-        var heatmap = this.refs.chart.getChart();
-        this.state.dataSeriesToShow.map(function(e,ix){
-          if(e){
-            heatmap.series[ix].show();
-          }else {
-            heatmap.series[ix].hide();
-          }
-        })
     },
     _countColumnsToShow: function() {
       return (
         this.props.data.dataSeries
         .filter(function(e,ix){
-          return this.state.dataSeriesToShow[ix]
+          return this.state.dataSeriesToShow[ix];
         }.bind(this))
         .reduce(function(l,r){
           return l.concat(r);
         },[])
         .map(function(e){
-          return e[0]
+          return e[0];
         })
         .filter(function(e,ix,self){
-          return self.indexOf(e) ===ix ;
+          return self.indexOf(e) ===ix;
         })
         .length
       );
-    },
-
-    _prepareDataSeries: function () {
-      return (
-        this.props.labels.map(
-          function(e, ix){
-            return {
-              name: e.name,
-              color: e.colour,
-              borderWidth: 1,
-              borderColor: "#fff",
-              data: this.props.data.dataSeries[ix]
-            }
-        }.bind(this)));
     },
 
     _makeLabelToggle: function(ix){
@@ -344,6 +393,8 @@ var HighchartsHeatmap = React.createClass({
     _highchartsOptions: function(marginTop, marginRight){
       var atlasBaseURL = this.props.atlasBaseURL;
 
+      var data = this._dataToShow();
+
       return (
         {
             plotOptions: {
@@ -383,7 +434,7 @@ var HighchartsHeatmap = React.createClass({
                 marginRight: marginRight, //leave space for tilted long headers
                 spacingTop: 0,
                 plotBorderWidth: 1,
-                height: Math.max(70, this.props.data.yAxisCategories.length * 30 + marginTop),
+                height: Math.max(70, data.yAxisCategories.length * 30 + marginTop),
                 zoomType: 'x',
                 events: {
                   handleGxaAnatomogramTissueMouseEnter: function(e) {
@@ -424,7 +475,7 @@ var HighchartsHeatmap = React.createClass({
                     }
                 },
                 opposite: 'true',
-                categories: this.props.data.xAxisCategories
+                categories: data.xAxisCategories
             },
             yAxis: { //experiments or bioentities
                 useHTML: true,
@@ -438,7 +489,7 @@ var HighchartsHeatmap = React.createClass({
                         return '<a href="' + atlasBaseURL +'/experiments/' + this.value.id + '">' + this.value.label + '</a>';
                     }
                 },
-                categories: this.props.data.yAxisCategories,
+                categories: data.yAxisCategories,
                 title: null,
                 gridLineWidth: 0,
                 minorGridLineWidth: 0,
@@ -465,7 +516,7 @@ var HighchartsHeatmap = React.createClass({
                 }
             },
             anatomogramEventEmitter: this.props.anatomogramEventEmitter,
-            series: this._prepareDataSeries()
+            series: data.dataSeries
         }
       );
     },
