@@ -256,15 +256,39 @@
             <plugin>
                 <groupId>com.lazerycode.jmeter</groupId>
                 <artifactId>jmeter-maven-plugin</artifactId>
-                <version>1.10.1</version>
+                <version>2.0.1</version>
                 <executions>
                     <execution>
-                        <id>jmeter-tests</id>
                         <goals>
                             <goal>jmeter</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <!-- configure which test plans to use -->
+                    <testFilesIncluded>
+                        <testFilesIncluded>atlasLoadTest.jmx</testFilesIncluded>
+                        <testFilesIncluded>solrLoadTest.jmx</testFilesIncluded>
+                    </testFilesIncluded>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.lazerycode.jmeter</groupId>
+                <artifactId>jmeter-analysis-maven-plugin</artifactId>
+                <version>1.0.6</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>analyze</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <source>${project.build.directory}/jmeter/results/*</source>
+                    <targetDirectory>${project.build.directory}/reports</targetDirectory>
+                    <processAllFilesFound>true</processAllFilesFound>
+                </configuration>
             </plugin>
         </plugins>
 
@@ -830,6 +854,7 @@
                 <log.prudent>false</log.prudent>
             </properties>
         </profile>
+
     </profiles>
 
 </project>
