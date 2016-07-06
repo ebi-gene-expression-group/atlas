@@ -390,10 +390,8 @@ var HighchartsHeatmap = React.createClass({
       );
     },
 
-    _highchartsOptions: function(marginTop, marginRight){
+    _highchartsOptions: function(marginTop, marginRight, data){
       var atlasBaseURL = this.props.atlasBaseURL;
-
-      var data = this._dataToShow();
 
       return (
         {
@@ -521,32 +519,40 @@ var HighchartsHeatmap = React.createClass({
       );
     },
 
-    _boxedHeatmap: function(marginTop, maxWidthFraction, marginRight){
+    _boxedHeatmap: function(dataForTheChart){
+      var xAxisLongestHeaderLength =
+          Math.max.apply(null, this.props.data.xAxisCategories.map(function(category) {return category.label.length}));
+
+      var marginTop =
+          this.props.data.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
+              this.props.data.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
+                  Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5));   // labels at -90°
+
+      var maxWidthFraction = 1-1/Math.pow(0.2*this._countColumnsToShow() +1,4);
+      //TODO the marginRight value of props used to be the same here and in top legend.
+      //Probably it's time to get rid of this prop.
+      var marginRight = this.props.marginRight*(1+10/Math.pow(1+this._countColumnsToShow(),2));
+
       return (
         <div style={{maxWidth:maxWidthFraction*100+"%"}}>
-          <ReactHighcharts config={this._highchartsOptions(marginTop, marginRight)} ref="chart"/>
+          <ReactHighcharts config={this._highchartsOptions(marginTop, marginRight, dataForTheChart)} ref="chart"/>
         </div>
       );
     },
 
     render: function () {
 
-        var xAxisLongestHeaderLength =
-            Math.max.apply(null, this.props.data.xAxisCategories.map(function(category) {return category.label.length}));
-
-        var marginTop =
-            this.props.data.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
-                this.props.data.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
-                    Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5));   // labels at -90°
+        var data = this._dataToShow();
 
 
         return (
               <div id="highcharts_container">
-                  {this._boxedHeatmap(
-                    marginTop,
-                    1-1/Math.pow(0.2*this._countColumnsToShow() +1,4),
-                    this.props.marginRight*(1+10/Math.pow(1+this._countColumnsToShow(),2))
-                  )}
+                  {data.dataSeries
+                    .map(function(e){return e.data;})
+                    .reduce(function(l,r){return l.concat(r);}, [])
+                    .length
+                    ? this._boxedHeatmap(data)
+                    : <p> No data in the series currently selected. </p>}
                   {this.renderLegend()}
               </div>
         );
