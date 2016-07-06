@@ -252,44 +252,6 @@
                     <!--<fork>true</fork>-->
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>com.lazerycode.jmeter</groupId>
-                <artifactId>jmeter-maven-plugin</artifactId>
-                <version>2.0.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>jmeter</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- configure which test plans to use -->
-                    <testFilesIncluded>
-                        <testFilesIncluded>atlasLoadTest.jmx</testFilesIncluded>
-                        <testFilesIncluded>solrLoadTest.jmx</testFilesIncluded>
-                    </testFilesIncluded>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>com.lazerycode.jmeter</groupId>
-                <artifactId>jmeter-analysis-maven-plugin</artifactId>
-                <version>1.0.6</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>analyze</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <source>${project.build.directory}/jmeter/results/*</source>
-                    <targetDirectory>${project.build.directory}/reports</targetDirectory>
-                    <processAllFilesFound>true</processAllFilesFound>
-                </configuration>
-            </plugin>
         </plugins>
 
     </build>
@@ -853,6 +815,51 @@
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
             </properties>
+        </profile>
+
+        <profile>
+            <id>performance</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.lazerycode.jmeter</groupId>
+                        <artifactId>jmeter-maven-plugin</artifactId>
+                        <version>2.0.1</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>jmeter</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <!-- configure which test plans to use -->
+                            <testFilesIncluded>
+                                <testFilesIncluded>atlasLoadTest.jmx</testFilesIncluded>
+                                <testFilesIncluded>solrLoadTest.jmx</testFilesIncluded>
+                            </testFilesIncluded>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>com.lazerycode.jmeter</groupId>
+                        <artifactId>jmeter-analysis-maven-plugin</artifactId>
+                        <version>1.0.6</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>analyze</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <source>${project.build.directory}/jmeter/results/*</source>
+                            <targetDirectory>${project.build.directory}/reports</targetDirectory>
+                            <processAllFilesFound>true</processAllFilesFound>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
 
     </profiles>
