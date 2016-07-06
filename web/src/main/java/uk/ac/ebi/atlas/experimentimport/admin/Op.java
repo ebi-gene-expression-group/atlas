@@ -21,7 +21,7 @@ public enum Op {
     IMPORT_PUBLIC("Same as import but make experiment searchable and visible without an access key"),
     DELETE("Delete the analytics from database, if public delete from conditions and analytics index, and remove the " +
             "accession from experiment list in the database"),
-    SERIALIZE("Write out the kryo files"),
+    SERIALIZE("Write out the kryo files and make a baseline experiment load much faster"),
     COEXPRESSION_IMPORT("Assume there is no coexpression data in the database. Then load coexpressions"),
     COEXPRESSION_UPDATE("Delete coexpressions from database and then load coexpressions"),
     COEXPRESSION_DELETE("Delete coexpressions from database"),
