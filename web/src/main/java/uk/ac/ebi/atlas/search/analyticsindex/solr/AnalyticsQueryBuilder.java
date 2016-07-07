@@ -31,8 +31,6 @@ public class AnalyticsQueryBuilder {
     private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentityIdentifier";
     private static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
     private static final String SPECIES_FIELD = "species";
-    private static final String EXPERIMENT_ACCESSION_FIELD = "experimentAccession";
-    private Optional<String> experimentAccession = Optional.absent();
 
     private ArrayList<String> identifierSearchTerms = new ArrayList<>();
     private ArrayList<String> bioentityIdentifierTerms = new ArrayList<>();
@@ -65,13 +63,6 @@ public class AnalyticsQueryBuilder {
         solrQuery.setRows(rows);
         return this;
     }
-
-    public AnalyticsQueryBuilder queryByAccession(String accession) {
-        this.experimentAccession = Optional.of(accession);
-
-        return this;
-    }
-
 
     public AnalyticsQueryBuilder queryIdentifierSearch(GeneQuery geneQuery) {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
@@ -150,10 +141,6 @@ public class AnalyticsQueryBuilder {
             }
             stringBuilder.append(SPECIES_FIELD).append(":(").append(joinerOr.join(speciesTerms)).append(")");
         }
-        if (stringBuilder.length() > 0) {
-            stringBuilder.append(" AND ");
-        }
-        stringBuilder.append(EXPERIMENT_ACCESSION_FIELD).append(":(").append(experimentAccession.or("*")).append(")");
 
         solrQuery.setQuery(stringBuilder.toString());
         return solrQuery;

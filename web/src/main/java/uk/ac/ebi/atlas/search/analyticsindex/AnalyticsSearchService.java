@@ -37,10 +37,10 @@ public class AnalyticsSearchService {
         return Optional.of(SolrUtil.extractFirstFacetValues(queryResponse));
     }
 
-    public Collection<String> getBioentityIdentifiersForExperiment(String accession){
+    public Collection<String> getBioentityIdentifiersForSpecies(String species){
         List<FacetField> facetFields =  analyticsClient.query(
                 new AnalyticsQueryBuilder()
-                        .queryByAccession(accession)
+                        .ofSpecies(species)
                         .facetByBioentityIdentifier()
                         .setRows(0)
                         .setFacetLimit(45000)
@@ -49,11 +49,11 @@ public class AnalyticsSearchService {
         return facetFields.size() != 1
                 ? ImmutableSet.<String>of()
                 : Collections2.transform(facetFields.get(0).getValues(), new Function<FacetField.Count, String>() {
-                    @Override
-                    public String apply(FacetField.Count count) {
-                        return count.getName();
-                    }
-                });
+            @Override
+            public String apply(FacetField.Count count) {
+                return count.getName();
+            }
+        });
 
     }
 

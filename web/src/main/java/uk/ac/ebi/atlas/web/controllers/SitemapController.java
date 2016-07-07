@@ -6,8 +6,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.dao.OrganismEnsemblDAO;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.SitemapWriter;
 
 import javax.inject.Inject;
@@ -25,12 +26,12 @@ public class SitemapController {
     private SitemapWriter sitemapWriter = new SitemapWriter();
 
     private final AnalyticsSearchService solr;
-    private final ExperimentTrader experimentTrader;
+    private final OrganismEnsemblDAO organismEnsemblDAO;
 
     @Inject
-    public SitemapController(AnalyticsSearchService solr, ExperimentTrader experimentTrader){
+    public SitemapController(AnalyticsSearchService solr, OrganismEnsemblDAO organismEnsemblDAO){
         this.solr = solr;
-        this.experimentTrader = experimentTrader;
+        this.organismEnsemblDAO = organismEnsemblDAO;
     }
 
 
@@ -38,21 +39,23 @@ public class SitemapController {
     public void mainSitemap(HttpServletResponse response) throws
             ParserConfigurationException, IOException, XMLStreamException {
 
+
+
         response.setContentType(MediaType.TEXT_XML_VALUE);
 
-        sitemapWriter.writeSitemapIndex(response.getOutputStream(),experimentTrader.getPublicExperimentAccessions());
+        sitemapWriter.writeSitemapIndex(response.getOutputStream(),organismEnsemblDAO.getOrganismEnsemblMap().keySet());
 
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/sitemap.xml")
-    public void sitemapForExperiment(@PathVariable String experimentAccession, HttpServletResponse response) throws
+    @RequestMapping(value = "/species/{species}/sitemap.xml")
+    public void sitemapForSpecies(@PathVariable String species, HttpServletResponse response) throws
             ParserConfigurationException, IOException, XMLStreamException {
 
         response.setContentType(MediaType.TEXT_XML_VALUE);
         Collection<String> various = ImmutableList.of("/experiments","/plant/experiments");
 
-        sitemapWriter.writeGenes(response.getOutputStream(), various, solr.getBioentityIdentifiersForExperiment
-                (experimentAccession));
+        sitemapWriter.writeGenes(response.getOutputStream(), various, solr.getBioentityIdentifiersForSpecies
+                (Species.convertUnderscoreToSpaces(species)));
 
     }
 

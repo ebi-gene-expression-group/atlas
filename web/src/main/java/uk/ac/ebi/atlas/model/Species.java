@@ -34,4 +34,9 @@ public final class Species {
         return species.replaceAll(" ", "_");
     }
 
+    public static String convertUnderscoreToSpaces(String species) {
+        return species.replaceAll("_", " ");
+    }
+
+
 }
