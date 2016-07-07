@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.utils;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableMap;
 
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
@@ -11,6 +12,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class SitemapWriter {
 
@@ -19,15 +21,17 @@ public class SitemapWriter {
 
     private static final String ourAddress = "http://www.ebi.ac.uk/gxa";
 
-    public void writeGenes(OutputStream outputStream, Collection<String> genes) throws XMLStreamException {
-        writeUrls(outputStream,Collections2.transform(genes, new Function<String, String>() {
+    public void writeSitemapIndex(OutputStream outputStream, Collection<String> experiments) throws XMLStreamException {
+
+        writeDocument(outputStream,Collections2.transform(experiments, new Function<String, String>() {
             @Override
             public String apply(String s) {
-                return ourAddress+"/genes/"+s;
+                return ourAddress+"/experiments/"+s+"/sitemap.xml";
             }
-        }));
+        }), "sitemapindex", "sitemap", ImmutableMap.<String,String>of());
     }
-    public void writeExperiments(OutputStream outputStream,Collection<String> various, Collection<String> experiments)
+
+    public void writeGenes(OutputStream outputStream, Collection<String> various, Collection<String> genes)
             throws
             XMLStreamException {
         List<String> urls = new ArrayList<>();
@@ -37,43 +41,47 @@ public class SitemapWriter {
                 return ourAddress+s;
             }
         }));
-        urls.addAll(Collections2.transform(experiments, new Function<String, String>() {
+        urls.addAll(Collections2.transform(genes, new Function<String, String>() {
             @Override
             public String apply(String s) {
-                return ourAddress+"/experiments/"+s;
+                return ourAddress+"/genes/"+s;
             }
         }));
-        writeUrls(outputStream,urls);
+        writeDocument(outputStream,urls, "urlset", "url", ImmutableMap.of("changefreq","monthly"));
     }
 
-     void writeUrls(OutputStream outputStream, Collection<String> urls) throws XMLStreamException {
+
+
+     void writeDocument(OutputStream outputStream, Collection<String> urls, String rootName, String childName, Map<String, String> parametersForChildren) throws XMLStreamException {
 
         XMLEventWriter writer = outputFactory.createXMLEventWriter(outputStream);
 
         writer.add(eventFactory.createStartDocument());
 
-        writer.add(eventFactory.createStartElement("","", "urlset"));
+        writer.add(eventFactory.createStartElement("","", rootName));
         writer.add(eventFactory.createAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9"));
 
         for(String url: urls){
-            writeUrl(writer, url);
+            writeChild(writer, url, childName, parametersForChildren);
         }
 
-        writer.add(eventFactory.createEndElement("","", "urlset"));
+        writer.add(eventFactory.createEndElement("","", rootName));
         writer.add(eventFactory.createEndDocument());
         writer.close();
     }
 
 
-    private void writeUrl(XMLEventWriter writer, String url) throws XMLStreamException{
-        writer.add(eventFactory.createStartElement("","","url"));
+    private void writeChild(XMLEventWriter writer, String url, String childName, Map<String, String> parameters) throws XMLStreamException{
+        writer.add(eventFactory.createStartElement("","",childName));
         writer.add(eventFactory.createStartElement("","","loc"));
         writer.add(eventFactory.createCharacters(url));
         writer.add(eventFactory.createEndElement("","","loc"));
-        writer.add(eventFactory.createStartElement("","","changefreq"));
-        writer.add(eventFactory.createCharacters("monthly"));
-        writer.add(eventFactory.createEndElement("","","changefreq"));
-        writer.add(eventFactory.createEndElement("","","url"));
+        for(Map.Entry<String, String> e: parameters.entrySet()){
+            writer.add(eventFactory.createStartElement("","",e.getKey()));
+            writer.add(eventFactory.createCharacters(e.getValue()));
+            writer.add(eventFactory.createEndElement("","",e.getKey()));
+        }
+        writer.add(eventFactory.createEndElement("","",childName));
 
     }
 }

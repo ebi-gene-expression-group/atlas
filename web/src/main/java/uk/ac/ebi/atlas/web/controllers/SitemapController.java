@@ -40,10 +40,7 @@ public class SitemapController {
 
         response.setContentType(MediaType.TEXT_XML_VALUE);
 
-
-        Collection<String> various = ImmutableList.of("experiments","plant/experiments");
-
-        sitemapWriter.writeExperiments(response.getOutputStream(),various,experimentTrader.getPublicExperimentAccessions());
+        sitemapWriter.writeSitemapIndex(response.getOutputStream(),experimentTrader.getPublicExperimentAccessions());
 
     }
 
@@ -52,9 +49,10 @@ public class SitemapController {
             ParserConfigurationException, IOException, XMLStreamException {
 
         response.setContentType(MediaType.TEXT_XML_VALUE);
+        Collection<String> various = ImmutableList.of("/experiments","/plant/experiments");
 
-
-        sitemapWriter.writeGenes(response.getOutputStream(), solr.getBioentityIdentifiersForExperiment(experimentAccession));
+        sitemapWriter.writeGenes(response.getOutputStream(), various, solr.getBioentityIdentifiersForExperiment
+                (experimentAccession));
 
     }
 
