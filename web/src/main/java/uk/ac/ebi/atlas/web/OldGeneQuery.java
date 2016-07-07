@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
@@ -13,23 +12,23 @@ import java.util.Iterator;
 import java.util.Set;
 
 @AutoValue
-public abstract class GeneQuery implements Iterable<String> {
+public abstract class OldGeneQuery implements Iterable<String> {
 
-    public static final GeneQuery EMPTY = new AutoValue_GeneQuery(ImmutableList.<String>of());
+    public static final OldGeneQuery EMPTY = new AutoValue_OldGeneQuery(ImmutableList.<String>of());
 
     public abstract ImmutableList<String> terms();
 
-    public static GeneQuery create(String... geneQuery) {
+    public static OldGeneQuery create(String... geneQuery) {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         return create(builder.add(geneQuery).build());
     }
 
-    public static GeneQuery create(Set<String> terms) {
+    public static OldGeneQuery create(Set<String> terms) {
         return create(ImmutableList.copyOf(terms));
     }
 
-    public static GeneQuery create(ImmutableList<String> terms) {
-        return new AutoValue_GeneQuery(terms);
+    public static OldGeneQuery create(ImmutableList<String> terms) {
+        return new AutoValue_OldGeneQuery(terms);
     }
 
     public boolean isEmpty() {
@@ -50,7 +49,7 @@ public abstract class GeneQuery implements Iterable<String> {
         return BioentityPropertyValueTokenizer.joinQuotingPhrases(terms());
     }
 
-    public GeneQuery extend(String term, String... termsToAppend){
+    public OldGeneQuery extend(String term, String... termsToAppend){
         ImmutableList.Builder<String> b = ImmutableList.builder();
         for(String t: terms()) {
             b.add(t);
@@ -58,17 +57,17 @@ public abstract class GeneQuery implements Iterable<String> {
                 b.add(termsToAppend);
             }
         }
-        return GeneQuery.create(b.build());
+        return OldGeneQuery.create(b.build());
     }
 
-    public GeneQuery subtract(Collection<String> termsToSubtract){
+    public OldGeneQuery subtract(Collection<String> termsToSubtract){
         ImmutableList.Builder<String> b = ImmutableList.builder();
         for(String t: terms()) {
             if(!termsToSubtract.contains(t)){
                 b.add(t);
             }
         }
-        return GeneQuery.create(b.build());
+        return OldGeneQuery.create(b.build());
     }
 
     public String as1DNF() {

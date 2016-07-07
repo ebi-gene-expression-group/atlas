@@ -16,7 +16,7 @@ import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.TagEditorConverter;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
@@ -69,7 +69,7 @@ public class BaselineExperimentPageService {
             //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
             // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
             // instead of the current tab separated syntax for geneQuery
-            preferences.setGeneQuery(GeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
+            preferences.setGeneQuery(OldGeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
             preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
         } else {
             preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
@@ -148,7 +148,7 @@ public class BaselineExperimentPageService {
     }
 
     //used when external parties include our widget
-    private JsonElement prepareExperimentDescription(Experiment experiment, GeneQuery geneQuery, String serializedFilterFactors){
+    private JsonElement prepareExperimentDescription(Experiment experiment, OldGeneQuery geneQuery, String serializedFilterFactors){
         String additionalQueryOptionsString =
                 "?geneQuery="+geneQuery.asUrlQueryParameter()+
                         "&serializedFilterFactors="+serializedFilterFactors;

@@ -4,7 +4,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ attribute name="geneQuery" required="true" type="uk.ac.ebi.atlas.web.GeneQuery"%>
+<%@ attribute name="geneQuery" required="true" type="uk.ac.ebi.atlas.web.OldGeneQuery"%>
 <%@ attribute name="firstBaselineCounts" required="true" type="java.lang.Iterable"%>
 <%@ attribute name="remainingBaselineCounts" required="true" type="java.lang.Iterable"%>
 <%@ attribute name="hideSpecies" type="java.lang.Boolean"%>

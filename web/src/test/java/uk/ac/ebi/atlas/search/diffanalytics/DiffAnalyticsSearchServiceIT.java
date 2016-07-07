@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +18,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.utils.Visitor;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -88,7 +87,7 @@ public class DiffAnalyticsSearchServiceIT {
     @Test
     public void fetchTopKinaseNoSpecies()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("kinase"));
+        requestParameters.setGeneQuery(OldGeneQuery.create("kinase"));
 
         DiffAnalyticsList bioentityExpressions = fetch(requestParameters, "");
 
@@ -127,7 +126,7 @@ public class DiffAnalyticsSearchServiceIT {
     @Test
     public void weCanCheckAboutKinaseConnectedToCancer()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("kinase"));
+        requestParameters.setGeneQuery(OldGeneQuery.create("kinase"));
         requestParameters.setCondition("cancer");
 
         String species = "";

@@ -7,13 +7,11 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFilters;
-import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import java.io.Writer;
 import java.util.Map;
@@ -67,7 +65,7 @@ public class BaselineProfilesWriterService {
         return profilesWriter.write(writer, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(), geneQueryResponse);
     }
 
-    private String describe(GeneQuery gq, int coexpressedGenes) {
+    private String describe(OldGeneQuery gq, int coexpressedGenes) {
         return gq.description() + " with " + coexpressedGenes + " similarly expressed genes";
     }
 }

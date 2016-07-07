@@ -5,18 +5,18 @@ import com.google.common.base.Objects;
 
 public class SearchRequest {
 
-    private GeneQuery geneQuery = getDefaultGeneQuery();
+    private OldGeneQuery geneQuery = getDefaultGeneQuery();
     private SemanticQuery semanticQuery = getDefaultSemanticQuery();
 
-    protected GeneQuery getDefaultGeneQuery() {
-        return GeneQuery.EMPTY;
+    protected OldGeneQuery getDefaultGeneQuery() {
+        return OldGeneQuery.EMPTY;
     }
 
     protected SemanticQuery getDefaultSemanticQuery() {
-        return new SemanticQuery();
+        return SemanticQuery.create();
     }
 
-    public GeneQuery getGeneQuery() {
+    public OldGeneQuery getGeneQuery() {
         return this.geneQuery;
     }
 
@@ -24,7 +24,7 @@ public class SearchRequest {
         return this.semanticQuery;
     }
 
-    public void setGeneQuery(GeneQuery geneQuery) {
+    public void setGeneQuery(OldGeneQuery geneQuery) {
         this.geneQuery = geneQuery;
     }
 

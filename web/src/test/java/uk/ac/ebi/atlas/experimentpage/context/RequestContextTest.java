@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import java.util.SortedSet;
 
@@ -37,7 +37,7 @@ public class RequestContextTest {
         subject = new BaselineRequestContext();
         subject.setRequestPreferences(preferencesMock);
 
-        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.create("GENE_QUERY"));
+        when(preferencesMock.getGeneQuery()).thenReturn(OldGeneQuery.create("GENE_QUERY"));
         when(preferencesMock.getHeatmapMatrixSize()).thenReturn(42);
         when(preferencesMock.getCutoff()).thenReturn(0.05);
         when(preferencesMock.isSpecific()).thenReturn(true);
@@ -45,7 +45,7 @@ public class RequestContextTest {
 
     @Test
     public void testGetGeneQuery() throws Exception {
-        assertThat(subject.getGeneQuery(), is(GeneQuery.create(ImmutableList.of("GENE_QUERY"))));
+        assertThat(subject.getGeneQuery(), is(OldGeneQuery.create(ImmutableList.of("GENE_QUERY"))));
     }
 
     @Test

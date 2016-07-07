@@ -12,7 +12,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -60,13 +60,13 @@ public class GenePageController extends BioentityPageController {
     @RequestMapping(value ={"/json/genes/{identifier:.*}/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchDifferentialJsonFacets(@PathVariable String identifier) {
-        return differentialAnalyticsSearchService.fetchDifferentialFacetsForIdentifier(GeneQuery.create(identifier));
+        return differentialAnalyticsSearchService.fetchDifferentialFacetsForIdentifier(OldGeneQuery.create(identifier));
     }
 
     @RequestMapping(value ={"/json/genes/{identifier:.*}/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchDifferentialJsonResults(@PathVariable String identifier) {
-        return differentialAnalyticsSearchService.fetchDifferentialResultsForIdentifier(GeneQuery.create(identifier));
+        return differentialAnalyticsSearchService.fetchDifferentialResultsForIdentifier(OldGeneQuery.create(identifier));
     }
 
     private boolean isSingleGene(String identifier) {

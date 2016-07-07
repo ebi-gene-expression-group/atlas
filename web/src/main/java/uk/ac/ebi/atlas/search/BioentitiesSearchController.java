@@ -24,7 +24,7 @@ import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -64,7 +64,7 @@ public class BioentitiesSearchController {
         checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
 
         String geneQueryString = requestParameters.getGeneQuery().asString().trim();
-        GeneQuery geneQuery = requestParameters.getGeneQuery();
+        OldGeneQuery geneQuery = requestParameters.getGeneQuery();
 
         String selectedSpecies = "";
         if(requestParameters.hasOrganism()) {
@@ -121,7 +121,7 @@ public class BioentitiesSearchController {
         return "bioentities-search-results";
     }
 
-    private Optional<String> getGeneIdRedirectString(GeneQuery geneQuery, String species) {
+    private Optional<String> getGeneIdRedirectString(OldGeneQuery geneQuery, String species) {
 
         boolean singleTerm = geneQuery.size() == 1;
         if (singleTerm && GeneSetUtil.matchesGeneSetAccession(geneQuery.terms().get(0).toUpperCase())) {

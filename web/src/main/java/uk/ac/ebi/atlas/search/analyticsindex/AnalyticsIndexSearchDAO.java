@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsClient;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder;
 import uk.ac.ebi.atlas.solr.SolrUtil;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,7 +26,7 @@ public class AnalyticsIndexSearchDAO {
         this.analyticsClient = analyticsClient;
     }
 
-    public ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery) {
+    public ImmutableSet<String> fetchExperimentTypes(OldGeneQuery geneQuery) {
         SolrQuery solrQuery =
                new AnalyticsQueryBuilder()
                         .queryIdentifierSearch(geneQuery)

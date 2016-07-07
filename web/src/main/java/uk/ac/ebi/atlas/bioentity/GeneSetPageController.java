@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 @Controller
@@ -46,7 +46,7 @@ public class GeneSetPageController extends BioentityPageController {
         model.addAttribute("species", species);
         model.addAttribute("queryType", "geneSet");
 
-        ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(GeneQuery.create(identifier));
+        ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(OldGeneQuery.create(identifier));
         model.addAttribute("hasDifferentialResults", ExperimentType.containsDifferential(experimentTypes));
 
         return super.showBioentityPage(identifier, model, experimentTypes);
@@ -55,12 +55,12 @@ public class GeneSetPageController extends BioentityPageController {
     @RequestMapping(value = {"/json/genesets/{identifier:.*}/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchDifferentialJsonFacets(@PathVariable String identifier) {
-        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(GeneQuery.create(identifier));
+        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(OldGeneQuery.create(identifier));
     }
 
     @RequestMapping(value = {"/json/genesets/{identifier:.*}/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchDifferentialJsonResults(@PathVariable String identifier) {
-        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(GeneQuery.create(identifier));
+        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(OldGeneQuery.create(identifier));
     }
 }

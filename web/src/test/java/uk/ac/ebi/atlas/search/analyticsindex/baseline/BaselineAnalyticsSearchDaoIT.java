@@ -1,15 +1,13 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.ReadContext;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -50,7 +48,7 @@ public class BaselineAnalyticsSearchDaoIT {
         String species = "homo sapiens";
         String defaultQueryFactorType = "ORGANISM_PART";
         List<Map<String, Object>> result =
-                subject.fetchExpressionLevelFaceted(GeneQuery.create("kinase"),species,defaultQueryFactorType );
+                subject.fetchExpressionLevelFaceted(OldGeneQuery.create("kinase"),species,defaultQueryFactorType );
 
         assertThat(result.size(), greaterThan(0));
 

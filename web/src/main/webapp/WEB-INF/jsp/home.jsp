@@ -52,7 +52,7 @@
                 <tr>
                     <td>
                         <div id="geneQuerySection">
-                            <textarea id="geneQuery" name="geneQuery" rows="2" cols="36" tabindex="1"></textarea>
+                            <textarea title="Gene query" id="geneQuery" name="geneQuery" rows="2" cols="36" tabindex="1"></textarea>
 
                             <div  class="gxaSearchExamples">
                                 <span style="float:left">E.g.
@@ -70,7 +70,7 @@
                     </td>
                     <td>
                         <div id="conditionSection">
-                            <textarea id="condition" name="condition" maxlength="900" rows="2" cols="36" tabindex="3"></textarea>
+                            <textarea title="Sample properties" id="condition" name="condition" maxlength="900" rows="2" cols="36" tabindex="3"></textarea>
 
                             <div class="gxaSearchExamples">
                                 <span>E.g.
@@ -116,13 +116,13 @@
 
     <h3>Browse...</h3>
 
-    <h4><img src="resources/images/allup2_transparent_bkg.png" style="padding-right: 15px"><a href="baseline/experiments">Baseline Experiments</a></h4>
+    <h4><img src="/gxa/resources/images/allup2_transparent_bkg.png" style="padding-right: 15px"><a href="baseline/experiments">Baseline Experiments</a></h4>
     <p>See all baseline expression data sets in Expression Atlas.</p>
 
     <h4><span class="icon icon-species" data-icon="P"></span><a href="plant/experiments">Plant Experiments</a></h4>
     <p>See all expression data sets in plants in Expression Atlas.</p>
 
-    <h4><img src="resources/images/experiment_page_small.png" style="padding-right: 15px"><a href="experiments">All Experiments</a></h4>
+    <h4><img src="/gxa/resources/images/experiment_page_small.png" style="padding-right: 15px"><a href="experiments">All Experiments</a></h4>
     <p>Scroll through the complete list of all data sets in Expression Atlas.</p>
 </aside>
 
@@ -134,6 +134,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        // API defined by the onChange callback in JSON Tag Editor/jQuery Tag Editor
         function disableButtonsOnChange (field, editor, tags) {
             $buttons.button('option', 'disabled', tags.length == 0);
         }

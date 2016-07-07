@@ -1,11 +1,9 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.coexpression;
 
 import com.google.gson.Gson;
-import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import java.util.Set;

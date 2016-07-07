@@ -2,12 +2,9 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.Objects;
-import org.apache.commons.lang3.StringUtils;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 
-import java.util.Collections;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -24,7 +21,7 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         return queryDescription;
     }
 
-    public GeneQuery getGeneQuery() {
+    public OldGeneQuery getGeneQuery() {
         return getRequestPreferences().getGeneQuery();
     }
 

@@ -34,7 +34,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -109,7 +109,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     @RequestMapping(value = "/widgets/heatmap/multiExperiment")
     public String multiExperimentJson(
-            @RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
+            @RequestParam(value = "geneQuery", required = true) OldGeneQuery geneQuery,
             @RequestParam(value = "species", required = false) String species,
             @RequestParam(value = "propertyType", required = false) String propertyType,
             Model model,HttpServletRequest request, HttpServletResponse response) {
@@ -139,7 +139,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     @RequestMapping(value = "/widgets/heatmap/baselineAnalytics")
     public String analyticsJson(
-            @RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
+            @RequestParam(value = "geneQuery", required = true) OldGeneQuery geneQuery,
             @RequestParam(value = "species", required = false) String species,
             @RequestParam(value = "propertyType", required = false) String propertyType,
             @RequestParam(value = "source", required = false) String source,
@@ -160,7 +160,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         return "heatmap-data";
     }
 
-    private void populateModelWithMultiExperimentResults(String contextRoot,GeneQuery geneQuery, String ensemblSpecies,
+    private void populateModelWithMultiExperimentResults(String contextRoot, OldGeneQuery geneQuery, String ensemblSpecies,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
         SortedSet<Factor> orderedFactors = searchResult.getFactorsAcrossAllExperiments();
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);

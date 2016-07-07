@@ -16,7 +16,7 @@ import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -183,7 +183,7 @@ public class SolrQueryService {
         return fetchResponseBasedOnRequestContext(requestContext.getGeneQuery(), species);
     }
 
-    public GeneQueryResponse fetchResponseBasedOnRequestContext(GeneQuery geneQuery, String species)
+    public GeneQueryResponse fetchResponseBasedOnRequestContext(OldGeneQuery geneQuery, String species)
             throws GenesNotFoundException {
         return fetchResponseBasedOnRequestContext(geneQuery.asString(), species);
     }

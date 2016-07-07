@@ -1,13 +1,11 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
 import org.springframework.core.io.Resource;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -40,7 +38,7 @@ public abstract class DifferentialAnalyticsDAO {
         this.differentialGeneFacetsQuery = "&json.facet=" + encodeQueryParam(readPlainTextResource(differentialFacetsQueryJSON).replaceAll("\\s+",""));
     }
 
-    protected String buildSolrQuery(GeneQuery geneQuery, String searchField) {
+    protected String buildSolrQuery(OldGeneQuery geneQuery, String searchField) {
         return geneQuery.isEmpty() ? "" : String.format("%s:(%s)", searchField, geneQuery.as1DNF());
     }
 

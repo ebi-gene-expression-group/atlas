@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.strip;
 
-public class GeneQueryPropertyEditor extends PropertyEditorSupport {
+public class OldGeneQueryPropertyEditor extends PropertyEditorSupport {
 
     @Override
     public void setAsText(String text) {
@@ -16,7 +16,7 @@ public class GeneQueryPropertyEditor extends PropertyEditorSupport {
 
         List<String> terms = BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(geneQuery);
 
-        setValue(GeneQuery.create(removeSurroundingQuotes(terms)));
+        setValue(OldGeneQuery.create(removeSurroundingQuotes(terms)));
     }
 
     static ImmutableList<String> removeSurroundingQuotes(List<String> strings) {
@@ -32,7 +32,7 @@ public class GeneQueryPropertyEditor extends PropertyEditorSupport {
 
     @Override
     public String getAsText() {
-        return ((GeneQuery) this.getValue()).asUrlQueryParameter();
+        return ((OldGeneQuery) this.getValue()).asUrlQueryParameter();
     }
 
 }

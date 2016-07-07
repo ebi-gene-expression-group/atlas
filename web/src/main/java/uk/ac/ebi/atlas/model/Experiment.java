@@ -3,10 +3,7 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import org.apache.commons.lang.StringUtils;
-import uk.ac.ebi.atlas.web.GeneQuery;
 
 import java.io.Serializable;
 import java.util.*;

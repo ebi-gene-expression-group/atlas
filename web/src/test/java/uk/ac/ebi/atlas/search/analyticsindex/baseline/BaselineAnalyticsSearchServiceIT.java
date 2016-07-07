@@ -12,7 +12,7 @@ import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import javax.inject.Inject;
 import java.util.HashSet;
@@ -104,7 +104,7 @@ public class BaselineAnalyticsSearchServiceIT {
     @Test
     public void singleSpeciesGeneAccessionTissues() {
         //"ENSG00000006062" seems to be a famous enough gene
-        BaselineExperimentSearchResult result = subject.findExpressions(GeneQuery.create("ENSG00000006062"), "Homo sapiens", "ORGANISM_PART");
+        BaselineExperimentSearchResult result = subject.findExpressions(OldGeneQuery.create("ENSG00000006062"), "Homo sapiens", "ORGANISM_PART");
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
@@ -125,7 +125,7 @@ public class BaselineAnalyticsSearchServiceIT {
     @Test
     public void geneQueryCellLine() {
         BaselineExperimentSearchResult result = subject.findExpressions(
-                GeneQuery.create("protein_coding"), "homo sapiens",
+                OldGeneQuery.create("protein_coding"), "homo sapiens",
                 CELL_LINE);
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();

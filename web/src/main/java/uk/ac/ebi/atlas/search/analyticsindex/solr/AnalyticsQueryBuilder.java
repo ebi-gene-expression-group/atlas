@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.SemanticQuery;
 import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
@@ -59,7 +59,7 @@ public class AnalyticsQueryBuilder {
     }
 
 
-    public AnalyticsQueryBuilder queryIdentifierSearch(GeneQuery geneQuery) {
+    public AnalyticsQueryBuilder queryIdentifierSearch(OldGeneQuery geneQuery) {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for (String term : geneQuery) {
             if (!StringUtils.isBlank(term)) {
@@ -76,10 +76,10 @@ public class AnalyticsQueryBuilder {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for (SemanticQueryTerm term : semanticQuery) {
             if (term.hasValue()) {
-                if (term.hasNoSource()) {
+                if (term.hasNoCategory()) {
                     builder.add(wrap(term.value(), '"'));
                 } else {
-                    builder.add(wrap(String.format(IDENTIFIER_SEARCH_VALUE_TEMPLATE, term.source(), term.value()), '"'));
+                    builder.add(wrap(String.format(IDENTIFIER_SEARCH_VALUE_TEMPLATE, term.category(), term.value()), '"'));
                 }
             }
         }

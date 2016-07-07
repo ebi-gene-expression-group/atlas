@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,24 +27,24 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
         super(restTemplate, solrBaseUrl, differentialFacetsQueryJSON);  // settings of restTemplate in applicationContext.xml
     }
 
-    public String fetchDifferentialResultsAboveDefaultFoldChangeForSearch(GeneQuery geneQuery) {
+    public String fetchDifferentialResultsAboveDefaultFoldChangeForSearch(OldGeneQuery geneQuery) {
         String identifierSearch = buildSolrQuery(geneQuery, IDENTIFIER_SEARCH_FIELD);
         return fetchDifferentialResultsAboveDefaultFoldChange(identifierSearch);
     }
 
-    public String fetchDifferentialResultsAboveDefaultFoldChangeForSearch(GeneQuery geneQuery, List<String> species, List<String> experimentType, List<String> kingdom,
+    public String fetchDifferentialResultsAboveDefaultFoldChangeForSearch(OldGeneQuery geneQuery, List<String> species, List<String> experimentType, List<String> kingdom,
                                                                           List<String> factors, List<Integer> numReplicates, String regulation) {
         String identifierSearch = buildSolrQuery(geneQuery, IDENTIFIER_SEARCH_FIELD);
         return fetchDifferentialResultsAboveDefaultFoldChange(identifierSearch, species, experimentType, kingdom, factors, numReplicates, regulation);
     }
 
-    public String fetchDifferentialResultsAboveDefaultFoldChangeForIdentifier(GeneQuery geneQuery) {
+    public String fetchDifferentialResultsAboveDefaultFoldChangeForIdentifier(OldGeneQuery geneQuery) {
         String identifierSearch = buildSolrQuery(geneQuery, BIOENTITY_IDENTIFIER_FIELD);
         return fetchDifferentialResultsAboveDefaultFoldChange(identifierSearch);
     }
 
-    public String fetchDifferentialResultsAboveDefaultFoldChangeForIdentifier(GeneQuery geneQuery, List<String> species, List<String> experimentType, List<String> kingdom,
-                                                                          List<String> factors, List<Integer> numReplicates, String regulation) {
+    public String fetchDifferentialResultsAboveDefaultFoldChangeForIdentifier(OldGeneQuery geneQuery, List<String> species, List<String> experimentType, List<String> kingdom,
+                                                                              List<String> factors, List<Integer> numReplicates, String regulation) {
         String identifierSearch = buildSolrQuery(geneQuery, BIOENTITY_IDENTIFIER_FIELD);
         return fetchDifferentialResultsAboveDefaultFoldChange(identifierSearch, species, experimentType, kingdom, factors, numReplicates, regulation);
     }

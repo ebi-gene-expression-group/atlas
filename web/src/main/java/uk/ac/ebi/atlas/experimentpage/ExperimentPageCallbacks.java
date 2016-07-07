@@ -3,9 +3,8 @@ package uk.ac.ebi.atlas.experimentpage;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 
-import java.util.IllegalFormatException;
 import java.util.Map;
 
 public class ExperimentPageCallbacks {
@@ -30,7 +29,7 @@ public class ExperimentPageCallbacks {
         if(geneQueryTerms.size()==0){
             // pass
         } else if (geneQueryTerms.size()==1) {
-            preferences.setGeneQuery(GeneQuery.create(geneQueryTerms.get(0).split(GENE_QUERY_SEPARATOR)));
+            preferences.setGeneQuery(OldGeneQuery.create(geneQueryTerms.get(0).split(GENE_QUERY_SEPARATOR)));
         } else {
             throw new IllegalStateException("Expecting a single synthetic gene query term in a callback, " +
                     "received:"+geneQueryTerms.toString());

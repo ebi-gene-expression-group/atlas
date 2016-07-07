@@ -45,7 +45,7 @@ public class AutocompleteControllerIT {
         SemanticQueryTerm firstTerm = query.iterator().next();
         //then
         assertThat(firstTerm.value(), is("ASPA"));
-        assertThat(firstTerm.source(), is("symbol"));
+        assertThat(firstTerm.category(), is("symbol"));
         assertEquals(query.size(), 15);
 
     }

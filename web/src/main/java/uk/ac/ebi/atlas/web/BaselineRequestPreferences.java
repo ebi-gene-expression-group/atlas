@@ -8,16 +8,16 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
     private static final String DEFAULT_GENE_QUERY = "protein_coding";
 
     private static final String DEFAULT_GENE_QUERY_VALUE = "protein_coding";
-    private static final String DEFAULT_GENE_QUERY_SOURCE = "gene_biotype";
+    private static final String DEFAULT_GENE_QUERY_CATEGORY = "gene_biotype";
 
     @Override
-    protected GeneQuery getDefaultGeneQuery() {
-        return GeneQuery.create(DEFAULT_GENE_QUERY);
+    protected OldGeneQuery getDefaultGeneQuery() {
+        return OldGeneQuery.create(DEFAULT_GENE_QUERY);
     }
 
     @Override
     protected SemanticQuery getDefaultSemanticQuery() {
-        return new SemanticQuery(DEFAULT_GENE_QUERY_VALUE, DEFAULT_GENE_QUERY_SOURCE);
+        return SemanticQuery.create(SemanticQueryTerm.create(DEFAULT_GENE_QUERY_VALUE, DEFAULT_GENE_QUERY_CATEGORY));
     }
 
     @Override

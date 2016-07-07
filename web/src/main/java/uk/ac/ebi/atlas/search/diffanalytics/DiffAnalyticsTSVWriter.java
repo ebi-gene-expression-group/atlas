@@ -13,7 +13,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.utils.Visitor;
 import uk.ac.ebi.atlas.utils.VisitorException;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Named;
@@ -128,7 +128,7 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalyt
     }
 
     public String getTsvFileMasthead(GeneQuerySearchRequestParameters requestParameters) {
-        GeneQuery geneQuery = requestParameters.getGeneQuery();
+        OldGeneQuery geneQuery = requestParameters.getGeneQuery();
         String geneQueryHeader = !geneQuery.isEmpty() ? "Genes matching: '" + geneQuery.description() + "'" : "";
         String comma = !geneQuery.isEmpty() ? ", " : "";
 
