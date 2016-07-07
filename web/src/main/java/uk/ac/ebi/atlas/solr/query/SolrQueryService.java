@@ -110,13 +110,13 @@ public class SolrQueryService {
         return expandedIdentifiers;
     }
 
-    private GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(String geneQuery, boolean exactMatch, String species) {
+    private GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(String geneQuery, String species) {
 
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
         //associate gene ids with each token in the query string
         for (String queryToken : splitBySpacePreservingQuotes(geneQuery)) {
-            geneQueryResponse.addGeneIds(queryToken, fetchGeneIds(queryToken, exactMatch, species));
+            geneQueryResponse.addGeneIds(queryToken, fetchGeneIds(queryToken, species));
         }
         return geneQueryResponse;
 
@@ -127,7 +127,7 @@ public class SolrQueryService {
      * @param species empty string will search across all species, and return orthologs
      * @return Optional.absent if geneQuery is blank, empty Set if no genes found, otherwise Set of geneids found
      */
-    public Optional<Set<String>> expandGeneQueryIntoGeneIds(String geneQuery, String species, boolean isExactMatch) {
+    public Optional<Set<String>> expandGeneQueryIntoGeneIds(String geneQuery, String species) {
         if (StringUtils.isBlank(geneQuery)) {
             return Optional.absent();
         }
@@ -138,7 +138,7 @@ public class SolrQueryService {
         stopWatch.start();
 
         //resolve any gene keywords to identifiers
-        Set<String> geneIds = findGeneIdsOrSets(geneQuery, isExactMatch, species);
+        Set<String> geneIds = findGeneIdsOrSets(geneQuery, species);
 
         Set<String> matureRNAIds = findMatureRNAIds(Sets.newHashSet(splitBySpacePreservingQuotes(geneQuery)));
         geneIds.addAll(matureRNAIds);
@@ -151,23 +151,23 @@ public class SolrQueryService {
 
 
     // NB: if species = "" then will search across all species
-    Set<String> findGeneIdsOrSets(String geneQuery, boolean exactMatch, String species) {
+    Set<String> findGeneIdsOrSets(String geneQuery, String species) {
 
         checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
 
         species = Species.convertToEnsemblSpecies(species);
 
-        return fetchGeneIds(geneQuery, exactMatch, species);
+        return fetchGeneIds(geneQuery, species);
     }
 
-    Set<String> fetchGeneIds(String geneQuery, boolean exactMatch, String species) {
+    Set<String> fetchGeneIds(String geneQuery, String species) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         //eg: {!lucene q.op=OR df=property_value_lower}(property_value_lower:Q9NHV9) AND (bioentity_type:"mirna" OR bioentity_type:"ensgene")
         // fl=bioentity_identifier&group=true&group.field=bioentity_identifier&group.main=true
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
-                .forQueryString(geneQuery, true).withExactMatch(exactMatch)
+                .forQueryString(geneQuery, true)
                 .withSpecies(species).withBioentityTypes(GENE.getSolrAliases()).build();
 
         Set<String> geneIds = solrServer.query(solrQuery, false, BIOENTITY_IDENTIFIER_FIELD);
@@ -178,17 +178,16 @@ public class SolrQueryService {
         return geneIds;
     }
 
-    public GeneQueryResponse fetchResponseBasedOnRequestContext(RequestContext requestContext, String species) throws
-            GenesNotFoundException {
-        return fetchResponseBasedOnRequestContext(requestContext.getGeneQuery(), requestContext.isExactMatch(), species);
+    public GeneQueryResponse fetchResponseBasedOnRequestContext(RequestContext requestContext, String species)
+            throws GenesNotFoundException {
+        return fetchResponseBasedOnRequestContext(requestContext.getGeneQuery(), species);
     }
 
-    public GeneQueryResponse fetchResponseBasedOnRequestContext(GeneQuery geneQuery, boolean isExactMatch, String
-                                                                species) throws
-            GenesNotFoundException {
-        return fetchResponseBasedOnRequestContext(geneQuery.asString() ,isExactMatch, species);
+    public GeneQueryResponse fetchResponseBasedOnRequestContext(GeneQuery geneQuery, String species)
+            throws GenesNotFoundException {
+        return fetchResponseBasedOnRequestContext(geneQuery.asString(), species);
     }
-    public GeneQueryResponse fetchResponseBasedOnRequestContext(String geneQuery, boolean isExactMatch, String
+    public GeneQueryResponse fetchResponseBasedOnRequestContext(String geneQuery, String
             species) throws
             GenesNotFoundException {
 
@@ -197,7 +196,7 @@ public class SolrQueryService {
         }
 
         GeneQueryResponse geneQueryResponse =
-                fetchGeneIdsOrSetsGroupedByGeneQueryToken(geneQuery, isExactMatch,Species.convertToEnsemblSpecies(species));
+                fetchGeneIdsOrSetsGroupedByGeneQueryToken(geneQuery, Species.convertToEnsemblSpecies(species));
 
         if (geneQueryResponse.isEmpty()) {
             throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + species);

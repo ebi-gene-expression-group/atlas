@@ -55,7 +55,7 @@ public class BaselineProfilesWriterService {
         } else {
 
             GeneQueryResponse originalResponse = solrQueryService.fetchResponseBasedOnRequestContext(preferences
-                    .getGeneQuery(), preferences.isExactMatch(), BaselineRequestContext.createFor(experiment, preferences).getFilteredBySpecies());
+                    .getGeneQuery(), BaselineRequestContext.createFor(experiment, preferences).getFilteredBySpecies());
 
             geneQueryResponse = coexpressedGenesService
                     .extendGeneQueryResponseWithCoexpressions(experiment, originalResponse, coexpressionsRequested);
