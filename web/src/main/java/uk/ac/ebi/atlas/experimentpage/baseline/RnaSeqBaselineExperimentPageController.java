@@ -56,7 +56,6 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentCo
         baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(
                 (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, model, request, false
         );
-
         return "experiment";
     }
 

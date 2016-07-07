@@ -33,11 +33,13 @@
     <!-- compliance style start -->
 
     <meta name="description"
-          content="EMBL-EBI Expression Atlas- an open public repository of gene expression pattern data under different biological conditions ">
+          content="${ empty pageDescription ?
+          'EMBL-EBI Expression Atlas- an open public repository of gene expression pattern data under different biological conditions' : pageDescription} ">
     <!-- Describe what this page is about -->
+
     <meta name="keywords"
-          content="bioinformatics, atlas, gxa, ebi, functional, genomics, repository, public">
-    <!-- A few keywords that relate to the content of THIS PAGE (not the whol project) -->
+          content="${empty pageKeywords?'bioinformatics, atlas, gxa, ebi, functional, genomics, repository, public':pageKeywords}">
+    <!-- A few keywords that relate to the content of THIS PAGE (not the whole project) -->
     <meta name="author" content="EMBL-EBI Expression Atlas development team: github.com/gxa/atlas/graphs/contributors">
     <!-- Your [project-name] here -->
 

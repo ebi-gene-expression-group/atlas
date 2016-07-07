@@ -1,6 +1,8 @@
 
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
@@ -132,6 +134,19 @@ public class Experiment implements Serializable {
         result.put("hasExtraInfo", this.hasExtraInfoFile());
         result.put("pubMedIds", this.getPubMedIds());
         result.put("experimentAccession", this.getAccession());
+
+        //Internet says keywords are not that useful for SEO any more. Remove if it causes you problems.
+        List<String> keywords = ImmutableList.<String>builder()
+                .add("experiment")
+                .add(this.getAccession())
+                .addAll(Arrays.asList(this.getType().getDescription().split("_")))
+                .addAll(this.getExperimentDesign().getAssayHeaders())
+                .build();
+        result.put("pageKeywords", Joiner.on(',').join(keywords));
+
+        //We want this to show up in Google searches.
+        result.put("pageDescription", this.getDescription());
+
         return result;
     }
 }

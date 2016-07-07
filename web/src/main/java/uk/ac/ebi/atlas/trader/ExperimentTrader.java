@@ -123,8 +123,6 @@ public class ExperimentTrader {
         }
     }
 
-    //ToDo (NK): to get Experiment accession we go 4 times to the DB (for each experiment type)
-
     public Set<String> getBaselineExperimentAccessions() {
         return getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE);
     }
@@ -159,9 +157,8 @@ public class ExperimentTrader {
     }
 
 
-    // Making this method public is part of a work-around until https://www.pivotaltracker.com/story/show/88885788 gets implemented
     public Set<String> getPublicExperimentAccessions(ExperimentType... experimentType) {
-        return experimentDAO.findPublicExperimentAccessions(experimentType);
+        return experimentDAO.findPublicExperimentAccessions(experimentType.length == 0 ? ExperimentType.values() : experimentType);
     }
 
 }

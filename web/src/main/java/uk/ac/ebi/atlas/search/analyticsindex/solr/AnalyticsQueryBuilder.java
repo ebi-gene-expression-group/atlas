@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +31,8 @@ public class AnalyticsQueryBuilder {
     private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentityIdentifier";
     private static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
     private static final String SPECIES_FIELD = "species";
+    private static final String EXPERIMENT_ACCESSION_FIELD = "experimentAccession";
+    private Optional<String> experimentAccession = Optional.absent();
 
     private ArrayList<String> identifierSearchTerms = new ArrayList<>();
     private ArrayList<String> bioentityIdentifierTerms = new ArrayList<>();
@@ -52,9 +55,20 @@ public class AnalyticsQueryBuilder {
         return this;
     }
 
+    public AnalyticsQueryBuilder setFacetLimit(int limit){
+        solrQuery.setFacetLimit(limit);
+        return this;
+    }
+
 
     public AnalyticsQueryBuilder setRows(int rows) {
         solrQuery.setRows(rows);
+        return this;
+    }
+
+    public AnalyticsQueryBuilder queryByAccession(String accession) {
+        this.experimentAccession = Optional.of(accession);
+
         return this;
     }
 
@@ -136,6 +150,10 @@ public class AnalyticsQueryBuilder {
             }
             stringBuilder.append(SPECIES_FIELD).append(":(").append(joinerOr.join(speciesTerms)).append(")");
         }
+        if (stringBuilder.length() > 0) {
+            stringBuilder.append(" AND ");
+        }
+        stringBuilder.append(EXPERIMENT_ACCESSION_FIELD).append(":(").append(experimentAccession.or("*")).append(")");
 
         solrQuery.setQuery(stringBuilder.toString());
         return solrQuery;

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.bioentity;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
+import java.util.Map;
 
 @Controller
 @Scope("request")
@@ -46,13 +48,25 @@ public class GenePageController extends BioentityPageController {
 
         bioentityPropertyServiceInitializer.initForGenePage(bioEntityPropertyService, identifier, propertyNames);
 
-        model.addAttribute("mainTitle", "Expression summary for " + bioEntityPropertyService.getEntityName() + " - " + StringUtils.capitalize(bioEntityPropertyService.getSpecies()));
+
         model.addAttribute("queryType", "gene");
 
         ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(identifier);
         model.addAttribute("hasDifferentialResults", ExperimentType.containsDifferential(experimentTypes));
 
         return super.showBioentityPage(identifier, model, experimentTypes);
+    }
+
+    @Override
+    protected Map<String, Object> pageDescriptionAttributes(String identifier){
+        String s = "Expression summary for " + bioEntityPropertyService.getEntityName() + " - " +
+                StringUtils.capitalize(bioEntityPropertyService.getSpecies());
+
+        return ImmutableMap.<String, Object>of(
+                "mainTitle", s,
+                "pageDescription", s,
+                "pageKeywords", "gene,"+identifier+","+bioEntityPropertyService.getSpecies()
+        );
     }
 
     @RequestMapping(value ={"/json/genes/{identifier:.*}/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")

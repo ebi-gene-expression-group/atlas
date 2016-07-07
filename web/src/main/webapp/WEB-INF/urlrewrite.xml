@@ -21,19 +21,8 @@
         <to>/resources/das/types.xml</to>
     </rule>
     <rule>
-        <note>To catch people browsing to the old GXA gene URL from stale google cache - can be removed in Jan 2014</note>
-        <from>/gene/(.*)</from>
-        <to type="permanent-redirect">/gxa/genes/$1</to>
-    </rule>
-    <rule>
         <note>For development and testing of condition autocomplete, which is served by arrayexpress</note>
         <from>/arrayexpress/(.*)</from>
         <to type="proxy">http://www.ebi.ac.uk/arrayexpress/$1?%{query-string}</to>
     </rule>
-    <rule>
-        <note>For accessing europepmc endpoint during development and integration testing</note>
-        <from>/europepmc/(.*)</from>
-        <to type="proxy">http://www.ebi.ac.uk/europepmc/$1?%{query-string}</to>
-    </rule>
-
 </urlrewrite>

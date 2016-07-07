@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.bioentity;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -89,9 +90,19 @@ public abstract class BioentityPageController {
         }
 
         model.addAttribute("identifier", identifier);
+        model.addAllAttributes(pageDescriptionAttributes(identifier));
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 
         return "bioentities";
+    }
+
+    protected Map<String, Object> pageDescriptionAttributes(String identifier){
+        String s = "Expression summary for " + bioEntityPropertyService.getBioEntityDescription();
+        return ImmutableMap.<String, Object>of(
+                "mainTitle", s,
+                "pageDescription", s,
+                "pageKeywords", "bioentity,"+identifier
+        );
     }
 
     protected Map<String, String> buildPropertyNamesByTypeMap() {

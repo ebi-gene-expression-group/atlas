@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.bioentity;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
+
+import java.util.Map;
 
 @Controller
 @Scope("request")
@@ -34,15 +37,6 @@ public class GeneSetPageController extends BioentityPageController {
 
         String species = GeneSetUtil.matchesReactomeID(identifier) ? bioEntityPropertyService.getSpecies() : "";
 
-        model.addAttribute(
-            "mainTitle",
-
-            "Expression summary for " + bioEntityPropertyService.getBioEntityDescription() +
-                (StringUtils.isNotBlank(species) ?
-                    " - " + StringUtils.capitalize(species) :
-                    "")
-        );
-
         model.addAttribute("species", species);
         model.addAttribute("queryType", "geneSet");
 
@@ -50,6 +44,20 @@ public class GeneSetPageController extends BioentityPageController {
         model.addAttribute("hasDifferentialResults", ExperimentType.containsDifferential(experimentTypes));
 
         return super.showBioentityPage(identifier, model, experimentTypes);
+    }
+
+    @Override
+    protected Map<String, Object> pageDescriptionAttributes(String identifier){
+        String species = GeneSetUtil.matchesReactomeID(identifier) ? bioEntityPropertyService.getSpecies() : "";
+        String s = "Expression summary for " + bioEntityPropertyService.getBioEntityDescription() +
+                (StringUtils.isNotBlank(species) ?
+                        " - " + StringUtils.capitalize(species) :
+                        "");
+        return ImmutableMap.<String, Object>of(
+                "mainTitle", s,
+                "pageDescription", s,
+                "pageKeywords", "geneset,"+identifier
+        );
     }
 
     @RequestMapping(value = {"/json/genesets/{identifier:.*}/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
