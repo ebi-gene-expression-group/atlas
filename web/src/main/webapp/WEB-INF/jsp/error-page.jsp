@@ -5,19 +5,16 @@
 
 <c:set value="${requestScope['javax.servlet.error.status_code']}" var="statusCode"/>
 
-
 <section class="gxaSection">
-    <div id="error-content">
-        <div class="gxaError">
-            <c:choose>
-                <c:when test="${statusCode == '404'}">
-                    Resource not found.
-                </c:when>
-                <c:otherwise>
-                    We are sorry - an unexpected error occurred. If it persists, please contact <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a>
-                </c:otherwise>
-            </c:choose>
-        </div>
+    <div class="gxaError">
+        <c:choose>
+            <c:when test="${statusCode == '404'}">
+                <p>Resource not found.</p>
+            </c:when>
+            <c:otherwise>
+                <p>We are sorry - an unexpected error occurred. If it persists, please contact <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a></p>
+            </c:otherwise>
+        </c:choose>
     </div>
 </section>
 

@@ -17,8 +17,8 @@
 <c:choose>
 <c:when test="${not empty exceptionMessage}">
     <section class="gxaSection">
-        <div id="error-content">
-            <div class="gxaError">${exceptionMessage}</div>
+        <div class="gxaError">
+            <p>${exceptionMessage}</p>
         </div>
     </section>
 

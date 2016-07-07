@@ -7,17 +7,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>Experiment</title>
+    <title>Error retrieving experiment data</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css"/>
 </head>
 
 <body class="atlas-body">
-<%-- Log error on server side --%>
-<div class="gxaError">
-    An error occurred:
-</div>
-<div class="errorMessage">
-    ${requestScope['javax.servlet.error.exception']}
-</div>
+    <section class="gxaSection">
+        <%-- Log error on server side --%>
+        <div class="gxaError">
+            <p>An error occurred:</p>
+            <p>${requestScope['javax.servlet.error.exception']}</p>
+        </div>
+    </section>
+
+    <section class="gxaSection">
+        <a style="font-weight: bold" href="/gxa">Go to Expression Atlas home page</a>
+    </section>
 </body>
 </html>
