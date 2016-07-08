@@ -356,7 +356,7 @@ public class MicroarrayProfilesWriterIT {
     }
 
     private void setGeneQuery(String geneQuery) {
-        requestPreferences.setGeneQuery(GeneQuery.create(geneQuery));
+        requestPreferences.setGeneQuery(geneQuery);
     }
 
     private void setNotSpecific() {

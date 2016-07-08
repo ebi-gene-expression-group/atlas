@@ -4,7 +4,7 @@
 <section class="gxaSection">
     <div class="gxaError">
         <c:if test="${not empty errorMessage}">
-            <p>${errorMessage}</p>
+            <h5>${errorMessage}</h5>
         </c:if>
     </div>
 </section>

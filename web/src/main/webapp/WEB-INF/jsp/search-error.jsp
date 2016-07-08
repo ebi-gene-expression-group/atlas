@@ -2,10 +2,10 @@
 
 <section class="gxaSection">
     <div class="gxaError">
-        <p>${exceptionMessage}</p>
+        <h5>${exceptionMessage}</h5>
     </div>
 </section>
 
 <section class="gxaSection">
-    <a style="font-weight: bold" href="/gxa">Go to Expression Atlas home page</a>
+    <p><a style="font-weight: bold" href="/gxa">Go to Expression Atlas home page</a></p>
 </section>

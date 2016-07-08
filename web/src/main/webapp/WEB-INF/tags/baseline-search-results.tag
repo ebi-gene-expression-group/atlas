@@ -4,7 +4,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ attribute name="geneQuery" required="true" type="uk.ac.ebi.atlas.web.OldGeneQuery"%>
+<%@ attribute name="geneQuery" required="true" type="uk.ac.ebi.atlas.web.GeneQuery"%>
 <%@ attribute name="firstBaselineCounts" required="true" type="java.lang.Iterable"%>
 <%@ attribute name="remainingBaselineCounts" required="true" type="java.lang.Iterable"%>
 <%@ attribute name="hideSpecies" type="java.lang.Boolean"%>
@@ -20,7 +20,7 @@
             <tr>
                 <td>
                     <a class="gxaBioEntityCardLink"
-                       href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(baselineResult.serializedFilterFactors)}">
+                       href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.toUrlEncodedJson()}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(baselineResult.serializedFilterFactors)}">
                         <c:choose>
                             <c:when test="${hideSpecies}">
                                 ${baselineResult.description()}
@@ -44,7 +44,7 @@
                 <tr class="gxaAdditionalResultRow" style="display:none">
                     <td>
                         <a class="gxaBioEntityCardLink"
-                           href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(baselineResult.serializedFilterFactors)}"
+                           href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.toUrlEncodedJson()}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(baselineResult.serializedFilterFactors)}"
                            title="experiment">
                             <c:choose>
                                 <c:when test="${hideSpecies}">

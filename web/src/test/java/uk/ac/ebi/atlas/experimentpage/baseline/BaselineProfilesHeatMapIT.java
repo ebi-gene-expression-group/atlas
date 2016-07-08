@@ -81,8 +81,8 @@ public class BaselineProfilesHeatMapIT {
         assertThat(profiles.size(), greaterThan(0));
     }
 
-    private void setGeneQuery(String geneQuery) {
-        requestPreferences.setGeneQuery(GeneQuery.create(geneQuery));
+    private void setGeneQuery(String geneQueryString) {
+        requestPreferences.setGeneQuery(geneQueryString);
     }
 
     private void setNotSpecific() {

@@ -80,7 +80,7 @@
 
             <tr>
                 <td>
-                    <textarea id="geneQuery" name="geneQuery" rows="2" cols="36" >${preferences.geneQuery.asTags()}</textarea>
+                    <textarea id="geneQuery" name="geneQuery" rows="2" cols="36" >${preferences.geneQuery.toJson()}</textarea>
                 </td>
 
                 <c:if test="${selectedFilterFactorNamesAndValues.size() > 0}">

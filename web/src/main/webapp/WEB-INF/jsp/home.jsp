@@ -171,15 +171,15 @@
                 // Remove all tags
                 var $geneQuery = $('#geneQuery'),
                     geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
-                for (var i = 0; i < geneQueryTags.length; i++) {
-                    $geneQuery.jsonTagEditor('removeTag', geneQueryTags[i].tagValue);
-                }
+                geneQueryTags.forEach(function(geneQueryTag){
+                    $geneQuery.jsonTagEditor('removeTag', geneQueryTag.tagValue);
+                });
 
                 var $sampleProperties =  $('#condition'),
                     samplePropertiesTags = $sampleProperties.tagEditor('getTags')[0].tags;
-                for (var i = 0; i < samplePropertiesTags.length; i++) {
-                    $sampleProperties.tagEditor('removeTag', samplePropertiesTags[i]);
-                }
+                samplePropertiesTags.forEach(function(samplePropertiesTag) {
+                    $sampleProperties.tagEditor('removeTag', samplePropertiesTag);
+                });
 
                 selectHomoSapiens();
             });

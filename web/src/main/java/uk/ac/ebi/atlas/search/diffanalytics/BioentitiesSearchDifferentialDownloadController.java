@@ -51,7 +51,7 @@ public class BioentitiesSearchDifferentialDownloadController {
     public void downloadGeneDifferentialExpressions(@PathVariable String identifier, HttpServletResponse response) throws IOException {
 
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create(identifier));
+        requestParameters.setGeneQuery(identifier);
 
         LOGGER.info("downloadGeneDifferentialExpressions for {}", requestParameters);
 

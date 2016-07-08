@@ -1,6 +1,7 @@
 <%--@elvariable id="exceptionMessage" type="java.lang.String"--%>
 <%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
 <%--@elvariable id="bioEntityPropertyService" type="uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService"--%>
+<%--@elvariable id="geneQuery" type="uk.ac.ebi.atlas.web.GeneQuery"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,19 +13,11 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customized-bootstrap-3.3.5.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bioentities-search-results.css">
 
-<h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : geneQuery.asString()}"/>
+<h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : geneQuery.toJson()}"/>
 
 <c:choose>
 <c:when test="${not empty exceptionMessage}">
-    <section class="gxaSection">
-        <div class="gxaError">
-            <p>${exceptionMessage}</p>
-        </div>
-    </section>
-
-    <section class="gxaSection">
-        <a style="font-weight: bold" href="/gxa">Go to Expression Atlas home page</a>
-    </section>
+    <%@ include file="search-error.jsp" %>
 </c:when>
 <c:otherwise>
     <section>
@@ -208,7 +201,7 @@
                         <c:if test="${not empty firstBaselineCounts}">
                             <section>
                                 <h5 style="padding: 0px">Other baseline experiments</h5>
-                                <h:baseline-search-results firstBaselineCounts="${firstBaselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery}" hideSpecies="true"/>
+                                <h:baseline-search-results firstBaselineCounts="${firstBaselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery.toUrlEncodedJson()}" hideSpecies="true"/>
                             </section>
                         </c:if>
 
@@ -216,7 +209,7 @@
 
                     <c:otherwise>
                         <c:if test="${not empty firstBaselineCounts}">
-                            <h:baseline-search-results firstBaselineCounts="${firstBaselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery}"/>
+                            <h:baseline-search-results firstBaselineCounts="${firstBaselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery.toUrlEncodedJson()}"/>
                         </c:if>
                     </c:otherwise>
                 </c:choose>
@@ -322,7 +315,7 @@
             var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
             expressionAtlasHeatmapHighcharts.render({
                 atlasHost: window.location.host,
-                params: "geneQuery=${geneQuery.asUrlQueryParameter()}" + widgetParameters,
+                params: "geneQuery=${geneQuery.toUrlEncodedJson()}" + widgetParameters,
                 analyticsSearch: false,
                 isMultiExperiment: true,
                 target: "widgetBody",

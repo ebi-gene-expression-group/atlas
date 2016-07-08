@@ -1,4 +1,4 @@
-<%--@elvariable id="geneQuery" type="uk.ac.ebi.atlas.web.OldGeneQuery"--%>
+<%--@elvariable id="geneQuery" type="uk.ac.ebi.atlas.web.GeneQuery"--%>
 <%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
 <%--@elvariable id="species" type="java.lang.String"--%>
 <%--@elvariable id="jsonProfiles" type="java.lang.String"--%>
@@ -52,7 +52,7 @@
                 "atlasHost": "${applicationProperties.buildAtlasHostURL(pageContext.request)}",
                 "contextRoot": "${pageContext.request.contextPath}",
                 "experimentAccession": "${experimentAccession}",
-                "geneQuery": "${geneQuery.asUrlQueryParameter()}",
+                "geneQuery": "${geneQuery.toUrlEncodedJson()}",
                 "accessKey": "${param.accessKey}",
                 "species": "${species}",
                 "ensemblDB": "${ensemblDB}",

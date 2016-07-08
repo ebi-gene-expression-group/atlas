@@ -15,13 +15,13 @@
     <section class="gxaSection">
         <%-- Log error on server side --%>
         <div class="gxaError">
-            <p>An error occurred:</p>
+            <h5>An error occurred:</h5>
             <p>${requestScope['javax.servlet.error.exception']}</p>
         </div>
     </section>
 
     <section class="gxaSection">
-        <a style="font-weight: bold" href="/gxa">Go to Expression Atlas home page</a>
+        <p><a style="font-weight: bold" href="/gxa">Go to Expression Atlas home page</a></p>
     </section>
 </body>
 </html>

@@ -84,7 +84,7 @@ public class DiffAnalyticsSearchServiceIT {
     @Test
     public void fetchTopKinaseNoSpecies()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("kinase"));
+        requestParameters.setGeneQuery("kinase");
 
         DiffAnalyticsList bioentityExpressions = fetch(requestParameters, "");
 
@@ -123,7 +123,7 @@ public class DiffAnalyticsSearchServiceIT {
     @Test
     public void weCanCheckAboutKinaseConnectedToCancer()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("kinase"));
+        requestParameters.setGeneQuery("kinase");
         requestParameters.setCondition("cancer");
 
         String species = "";

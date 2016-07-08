@@ -2,12 +2,12 @@
 
 <section class="gxaSection">
     <div class="gxaError">
-        <p>The query is not well formed:</p>
+        <h5>The query is not well formed:</h5>
         <p>${exceptionMessage}</p>
-        <p>Please fix your query and try again.</p>
+        <h5>Please fix your query and try again.</h5>
     </div>
 </section>
 
 <section class="gxaSection">
-    <a style="font-weight: bold" href="/gxa">Go to Expression Atlas home page</a>
+    <p><a style="font-weight: bold" href="/gxa">Go to Expression Atlas home page</a></p>
 </section>

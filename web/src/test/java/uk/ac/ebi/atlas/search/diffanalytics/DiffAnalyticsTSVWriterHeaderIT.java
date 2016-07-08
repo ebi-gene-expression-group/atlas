@@ -43,7 +43,7 @@ public class DiffAnalyticsTSVWriterHeaderIT {
     @Test
     public void queryDescriptionWithGeneQuery(){
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("TEST"));
+        requestParameters.setGeneQuery("TEST");
 
         String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
 
@@ -84,7 +84,7 @@ public class DiffAnalyticsTSVWriterHeaderIT {
     @Test
     public void queryDescriptionWithGeneQueryAndCondition(){
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("TEST"));
+        requestParameters.setGeneQuery("TEST");
         requestParameters.setCondition("LIVER");
 
         String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");

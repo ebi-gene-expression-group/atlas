@@ -44,8 +44,8 @@
     <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
         <property name="customEditors">
             <map>
-                <entry key="uk.ac.ebi.atlas.web.OldGeneQuery">
-                    <bean class="uk.ac.ebi.atlas.web.OldGeneQueryPropertyEditor">
+                <entry key="uk.ac.ebi.atlas.web.GeneQuery">
+                    <bean class="uk.ac.ebi.atlas.web.GeneQueryPropertyEditor">
                     </bean>
                 </entry>
             </map>

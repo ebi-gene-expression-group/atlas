@@ -202,12 +202,12 @@ public class SolrQueryService {
 
     // NB: if species = "" then will search across all species
     Set<String> findGeneIdsOrSets(String geneQuery, String species) {
-        checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
+        checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query.");
         return fetchGeneIds(geneQuery, Species.convertToEnsemblSpecies(species));
     }
 
     Set<String> findGeneIdsOrSets(GeneQuery geneQuery, String species) {
-        checkArgument(!geneQuery.isEmpty(), "Please specify a gene query");
+        checkArgument(!geneQuery.isEmpty(), "Please specify a gene query.");
         return fetchGeneIds(geneQuery, Species.convertToEnsemblSpecies(species));
     }
 
