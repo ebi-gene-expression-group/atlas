@@ -20,7 +20,7 @@ public class ExperimentDesignFileWriterBuilder {
     public ExperimentDesignFileWriterBuilder(@Value("#{configuration['experiment.experiment-design.path.template']}") String targetFilePathTemplate,
                                              FileTsvWriterBuilder fileTsvWriterBuilder) {
         this.fileTsvWriterBuilder = fileTsvWriterBuilder;
-        this.fileTsvWriterBuilder.forTsvFilePathTemplate(targetFilePathTemplate).makeGroupWritable();
+        this.fileTsvWriterBuilder.forTsvFilePathTemplate(targetFilePathTemplate);
     }
 
     public ExperimentDesignFileWriterBuilder withExperimentAccession(String experimentAccession) {

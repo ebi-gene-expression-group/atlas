@@ -21,8 +21,6 @@ public class FileTsvWriterBuilder {
     private String experimentAccession;
     private String tsvFilePathTemplate;
     private boolean append = true;
-    private boolean groupWritable = false;
-    private String path;
 
     public FileTsvWriterBuilder() {
     }
@@ -41,25 +39,10 @@ public class FileTsvWriterBuilder {
         return this;
     }
 
-    public FileTsvWriterBuilder makeGroupWritable() {
-        this.groupWritable = true;
-        return this;
-    }
-
-    private void setFilePermissions() throws IOException {
-        Set<PosixFilePermission> perms = Files.getPosixFilePermissions(Paths.get(path));
-        if (this.groupWritable) {
-            perms.add(PosixFilePermission.GROUP_WRITE);
-        }
-        Files.setPosixFilePermissions(Paths.get(path), perms);
-    }
-
     public TsvWriter build() {
-        path = MessageFormat.format(tsvFilePathTemplate, experimentAccession);
+        String path = MessageFormat.format(tsvFilePathTemplate, experimentAccession);
         try {
-            TsvWriter tsvWriter = new TsvWriter(new OutputStreamWriter(new FileOutputStream(new File(path), append)));
-            setFilePermissions();
-            return tsvWriter;
+            return new TsvWriter(new OutputStreamWriter(new FileOutputStream(new File(path), append)));
         } catch (IOException e) {
             throw new IllegalStateException("Cannot write TSV file to path " + path, e);
         }
