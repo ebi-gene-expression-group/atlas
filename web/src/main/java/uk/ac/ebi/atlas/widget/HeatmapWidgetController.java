@@ -99,7 +99,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
             baselineExperimentPageService
                     .populateModelWithHeatmapData(experiment, preferences, model,request,true, disableGeneLinks);
         } catch (GenesNotFoundException e) {
-            throw new ResourceNotFoundException("No genes found matching query: '" + preferences.getGeneQuery() + "'");
+            throw new ResourceNotFoundException(String.format("No genes found matching query: %s", preferences.getGeneQuery().toJson()));
         }
 
         // set here instead of in JSP, because the JSP may be included elsewhere

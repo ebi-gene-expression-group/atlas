@@ -47,7 +47,7 @@ public final class GeneSetUtil {
         return source.equalsIgnoreCase(GO_CATEGORY) || source.equalsIgnoreCase(PO_CATEGORY) || source.equalsIgnoreCase(REACTOME_CATEGORY) || source.equalsIgnoreCase(INTERPRO_CATEGORY);
     }
 
-    public static boolean isGeneSetSourceOrMatchesGeneSetAccession(GeneQuery geneQuery) {
+    public static boolean isGeneSetCategoryOrMatchesGeneSetAccession(GeneQuery geneQuery) {
         for (SemanticQueryTerm term : geneQuery) {
             if (term.hasNoCategory()) {
                 if (!matchesGeneSetAccession(term.value())) {

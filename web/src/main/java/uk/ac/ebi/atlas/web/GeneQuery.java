@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.web;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -12,6 +13,8 @@ import java.util.Iterator;
 
 @AutoValue
 public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
+
+    private static final String OR_OPERATOR = " OR ";
 
     public abstract ImmutableSet<SemanticQueryTerm> terms();
 
@@ -28,18 +31,14 @@ public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
         return new AutoValue_GeneQuery(builder.add(queryTerms).build());
     }
 
+    public static GeneQuery create(String queryTermValue) {
+        return new AutoValue_GeneQuery(ImmutableSet.of(SemanticQueryTerm.create(queryTermValue)));
+    }
+
     @Override
     public Iterator<SemanticQueryTerm> iterator() {
         return terms().iterator();
     }
-
-//    public SemanticQuery(String value) {
-//        terms = ImmutableSet.of(SemanticQueryTerm.create(value));
-//    }
-//
-//    public SemanticQuery(String value, String source) {
-//        terms = ImmutableSet.of(SemanticQueryTerm.create(value, source));
-//    }
 
     public boolean isEmpty() {
         for (SemanticQueryTerm term : terms()) {
@@ -88,5 +87,14 @@ public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
     @Override
     public String toString() {
         return toJson();
+    }
+
+    public String asSolr1DNF() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (SemanticQueryTerm queryTerm : terms()) {
+            stringBuilder.append(String.format("\"%s:{%s}\"",queryTerm.category(), queryTerm.value())).append(OR_OPERATOR);
+        }
+        stringBuilder.delete(stringBuilder.lastIndexOf(OR_OPERATOR), stringBuilder.length());
+        return stringBuilder.toString();
     }
 }

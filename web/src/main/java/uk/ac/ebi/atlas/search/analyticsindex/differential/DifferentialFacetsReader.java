@@ -12,9 +12,6 @@ import javax.inject.Named;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 12/11/2015.
- */
 @Named
 public class DifferentialFacetsReader {
 

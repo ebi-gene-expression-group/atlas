@@ -16,8 +16,8 @@ public class GeneSetUtilTest {
 
     @Test
     public void testIsGeneSet() throws Exception {
-        assertTrue(GeneSetUtil.isGeneSetSourceOrMatchesGeneSetAccession(GENE_QUERY_WITH_GENE_SET_SOURCES));
-        assertTrue(GeneSetUtil.isGeneSetSourceOrMatchesGeneSetAccession(GENE_QUERY_WITH_GENE_SET_VALUES));
-        assertTrue(GeneSetUtil.isGeneSetSourceOrMatchesGeneSetAccession(GeneQuery.create(Sets.union(GENE_QUERY_WITH_GENE_SET_SOURCES.terms(), GENE_QUERY_WITH_GENE_SET_VALUES.terms()))));
+        assertTrue(GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession(GENE_QUERY_WITH_GENE_SET_SOURCES));
+        assertTrue(GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession(GENE_QUERY_WITH_GENE_SET_VALUES));
+        assertTrue(GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession(GeneQuery.create(Sets.union(GENE_QUERY_WITH_GENE_SET_SOURCES.terms(), GENE_QUERY_WITH_GENE_SET_VALUES.terms()))));
     }
 }

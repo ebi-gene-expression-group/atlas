@@ -36,22 +36,22 @@ public class BioentitiesNewSearchController {
         this.analyticsSearchService = analyticsSearchService;
     }
 
-    @RequestMapping(value = "/newquery")
+    @RequestMapping(value = "/query")
     public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model, RedirectAttributes redirectAttributes) {
 
-        checkArgument(requestParameters.hasSemanticQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
+        checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
 
         String selectedSpecies = requestParameters.hasOrganism() ? requestParameters.getOrganism().trim().toLowerCase() : "";
 
-        if (requestParameters.hasSemanticQuery() && !requestParameters.hasCondition()) {
+        if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
 
-            if (requestParameters.getSemanticQuery().size() == 1) {
-                return singleTermGeneQuery(requestParameters.getSemanticQuery(), selectedSpecies, model, redirectAttributes);
+            if (requestParameters.getGeneQuery().size() == 1) {
+                return singleTermGeneQuery(requestParameters.getGeneQuery(), selectedSpecies, model, redirectAttributes);
             } else {
-                return multiTermGeneQuery(requestParameters.getSemanticQuery(), selectedSpecies, model, redirectAttributes);
+                return multiTermGeneQuery(requestParameters.getGeneQuery(), selectedSpecies, model, redirectAttributes);
             }
 
-        } else if (!requestParameters.hasSemanticQuery() && requestParameters.hasCondition()) {
+        } else if (!requestParameters.hasGeneQuery() && requestParameters.hasCondition()) {
 
             // Only condition was specified
             // if (requestParameters.getConditionQuery().size() == 1) {
@@ -74,7 +74,7 @@ public class BioentitiesNewSearchController {
         redirectAttributes.addFlashAttribute("searchDescription", geneQuery.toString());
 
         // Gene set ID
-        if (GeneSetUtil.isGeneSetSourceOrMatchesGeneSetAccession(geneQuery)) {
+        if (GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession(geneQuery)) {
             return "redirect:/genesets/" + geneQuery.terms().iterator().next().value();
         }
 
@@ -130,19 +130,19 @@ public class BioentitiesNewSearchController {
     @RequestMapping(value ={"/newquery/results.json"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String newQueryAsJson(@Valid GeneQuerySearchRequestParameters requestParameters) {
-        checkArgument(requestParameters.hasSemanticQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
+        checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
 
         String selectedSpecies = requestParameters.hasOrganism() ? requestParameters.getOrganism().trim().toLowerCase() : "";
 
-        if (requestParameters.hasSemanticQuery() && !requestParameters.hasCondition()) {
+        if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
 
-            if (requestParameters.getSemanticQuery().size() == 1) {
-                return singleTermGeneQueryAsJson(requestParameters.getSemanticQuery(), selectedSpecies);
+            if (requestParameters.getGeneQuery().size() == 1) {
+                return singleTermGeneQueryAsJson(requestParameters.getGeneQuery(), selectedSpecies);
             } else {
-                return multiTermGeneQueryAsJson(requestParameters.getSemanticQuery(), selectedSpecies);
+                return multiTermGeneQueryAsJson(requestParameters.getGeneQuery(), selectedSpecies);
             }
 
-        } else if (!requestParameters.hasSemanticQuery() && requestParameters.hasCondition()) {
+        } else if (!requestParameters.hasGeneQuery() && requestParameters.hasCondition()) {
 
             // Only condition was specified
             // if (requestParameters.getConditionQuery().size() == 1) {
@@ -164,7 +164,7 @@ public class BioentitiesNewSearchController {
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
 
         // Gene set ID
-        if (GeneSetUtil.isGeneSetSourceOrMatchesGeneSetAccession(geneQuery)) {
+        if (GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession(geneQuery)) {
             return gson.toJson(Sets.newHashSet(geneQuery.terms().iterator().next().value()));
         }
 

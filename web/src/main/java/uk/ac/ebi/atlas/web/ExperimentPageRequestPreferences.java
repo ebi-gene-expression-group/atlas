@@ -37,7 +37,6 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
     private String rootContext;
 
     protected ExperimentPageRequestPreferences() {
-
     }
 
     public Set<String> getQueryFactorValues() {
@@ -111,7 +110,6 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
     public void setDisplayLevels(boolean displayLevels) {
         this.displayLevels = displayLevels;
     }
-
 
     public String getRootContext() {
         return rootContext;

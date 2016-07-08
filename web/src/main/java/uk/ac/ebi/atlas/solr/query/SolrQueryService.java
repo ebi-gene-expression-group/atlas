@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import javax.inject.Inject;
@@ -149,15 +150,38 @@ public class SolrQueryService {
         return Optional.of(geneIds);
     }
 
+    public Optional<Set<String>> expandGeneQueryIntoGeneIds(GeneQuery geneQuery, String species) {
+        if (geneQuery.isEmpty()) {
+            return Optional.absent();
+        }
+
+        LOGGER.info(String.format("<expandGeneQueryIntoGeneIds> geneQuery=%s", geneQuery.asSolr1DNF()));
+
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+        stopWatch.start();
+
+        //resolve any gene keywords to identifiers
+        Set<String> geneIds = findGeneIdsOrSets(geneQuery, species);
+
+        Set<String> matureRNAIds = findMatureRNAIds(Sets.newHashSet(splitBySpacePreservingQuotes(geneQuery)));
+        geneIds.addAll(matureRNAIds);
+
+        stopWatch.stop();
+        LOGGER.info(String.format("<expandGeneQueryIntoGeneIds> %s results, took %s seconds", geneIds.size(), stopWatch.getTotalTimeSeconds()));
+
+        return Optional.of(geneIds);
+    }
+
 
     // NB: if species = "" then will search across all species
     Set<String> findGeneIdsOrSets(String geneQuery, String species) {
-
         checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
+        return fetchGeneIds(geneQuery, Species.convertToEnsemblSpecies(species));
+    }
 
-        species = Species.convertToEnsemblSpecies(species);
-
-        return fetchGeneIds(geneQuery, species);
+    Set<String> findGeneIdsOrSets(GeneQuery geneQuery, String species) {
+        checkArgument(!geneQuery.isEmpty(), "Please specify a gene query");
+        return fetchGeneIds(geneQuery, Species.convertToEnsemblSpecies(species));
     }
 
     Set<String> fetchGeneIds(String geneQuery, String species) {
@@ -168,6 +192,24 @@ public class SolrQueryService {
         // fl=bioentity_identifier&group=true&group.field=bioentity_identifier&group.main=true
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
                 .forQueryString(geneQuery, true)
+                .withSpecies(species).withBioentityTypes(GENE.getSolrAliases()).build();
+
+        Set<String> geneIds = solrServer.query(solrQuery, false, BIOENTITY_IDENTIFIER_FIELD);
+
+        stopwatch.stop();
+        LOGGER.debug(String.format("Fetched gene ids for %s: returned %s results in %s secs", geneQuery, geneIds.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+
+        return geneIds;
+    }
+
+    Set<String> fetchGeneIds(GeneQuery geneQuery, String species) {
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
+        //eg: {!lucene q.op=OR df=property_value_lower}(property_value_lower:Q9NHV9) AND (bioentity_type:"mirna" OR bioentity_type:"ensgene")
+        // fl=bioentity_identifier&group=true&group.field=bioentity_identifier&group.main=true
+        SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
+                .forGeneQuery(geneQuery, true)
                 .withSpecies(species).withBioentityTypes(GENE.getSolrAliases()).build();
 
         Set<String> geneIds = solrServer.query(solrQuery, false, BIOENTITY_IDENTIFIER_FIELD);

@@ -4,6 +4,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import javax.inject.Named;
@@ -14,23 +15,21 @@ import java.text.MessageFormat;
 
 import static uk.ac.ebi.atlas.utils.ResourceUtils.readPlainTextResource;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 12/11/2015.
- */
 @Named
 public abstract class DifferentialAnalyticsDAO {
 
-    protected static final String FQ_TEMPLATE = "&fq=pValue:[* TO {0}]";
-    protected static final String QUERY_TEMPLATE = "query?q={0}&rows={1,number,#}&omitHeader=true";
+    protected final RestTemplate restTemplate;
+
+    protected final String solrBaseUrl;
+    protected final String differentialGeneFacetsQuery;
+
+    private static final String FQ_TEMPLATE = "&fq=pValue:[* TO {0}]";
+    private static final String QUERY_TEMPLATE = "query?q={0}&rows={1,number,#}&omitHeader=true";
     protected static final String DIFFERENTIAL_ONLY = "experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential)";
     protected static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
     protected static final String BIOENTITY_IDENTIFIER_FIELD = "bioentityIdentifier";
 
     protected static final double DEFAULT_P_VALUE = 0.05;
-
-    protected final RestTemplate restTemplate;
-    protected final String solrBaseUrl;
-    protected final String differentialGeneFacetsQuery;
 
     public DifferentialAnalyticsDAO(RestTemplate restTemplate, String solrBaseUrl, Resource differentialFacetsQueryJSON) {
         this.restTemplate = restTemplate;   // settings of restTemplate in applicationContext.xml
@@ -38,8 +37,12 @@ public abstract class DifferentialAnalyticsDAO {
         this.differentialGeneFacetsQuery = "&json.facet=" + encodeQueryParam(readPlainTextResource(differentialFacetsQueryJSON).replaceAll("\\s+",""));
     }
 
-    protected String buildSolrQuery(OldGeneQuery geneQuery, String searchField) {
-        return geneQuery.isEmpty() ? "" : String.format("%s:(%s)", searchField, geneQuery.as1DNF());
+    protected String buildSolrQuery(GeneQuery geneQuery, String searchField) {
+        return geneQuery.isEmpty() ? "" : String.format("%s:(%s)", searchField, geneQuery.asSolr1DNF());
+    }
+
+    protected String buildSolrQuery(String searchTerm, String searchField) {
+        return searchTerm.isEmpty() ? "" : String.format("%s:(%s)", searchField, searchTerm);
     }
 
     protected String buildQueryParameters(String q, int rows, double pValue) {
