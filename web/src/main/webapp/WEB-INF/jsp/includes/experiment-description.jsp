@@ -70,6 +70,18 @@
         </c:forEach>
     </div>
 </c:if>
+<c:if test="${not empty alternativeViews}">
+    <div id="alternativeViews">See also:
+        <c:forEach var="alternativeViewAccession" items="${alternativeViews}">
+            <a id="goto-alternativeView" class="thick-link" title="Alternative view"
+               href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${alternativeViewAccession}">
+                Alternative view
+            </a>
+
+        </c:forEach>
+    </div>
+</c:if>
+
 
 
 <script>
