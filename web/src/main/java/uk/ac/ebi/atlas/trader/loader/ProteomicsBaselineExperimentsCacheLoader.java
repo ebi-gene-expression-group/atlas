@@ -38,18 +38,29 @@ public class ProteomicsBaselineExperimentsCacheLoader extends BaselineExperiment
 
         String kingdom = speciesKingdomTrader.getKingdom(experimentDTO.getSpecies());
 
-        String[] orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
+        String ensemblDB = speciesKingdomTrader.getEnsemblDB(experimentDTO.getSpecies());
+
+        String[] orderedAssayGroupIds;
+        boolean orderCurated;
+
+        if(factorsConfig.getOrderFactor() != null && factorsConfig.getOrderFactor().equals("curated")) {
+            orderCurated = true;
+            orderedAssayGroupIds = assayGroups.getAssayGroupIds().toArray(new String[assayGroups.getAssayGroupIds().size()]);
+        } else {
+            orderCurated = false;
+            orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
+        }
 
         ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentAccession, experimentDesign,
-                factorsConfig, assayGroups, orderedAssayGroupIds, false);
+                factorsConfig, assayGroups, orderedAssayGroupIds, orderCurated);
 
         return new BaselineExperimentBuilder().forSpecies(experimentDTO.getSpecies())
                 .ofKingdom(kingdom)
+                .ofEnsemblDB(ensemblDB)
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)
                 .withExtraInfo(hasExtraInfoFile)
-                .withRData(hasRData)
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
                 .withSpeciesMapping(factorsConfig.getSpeciesMapping())
                 .withPubMedIds(experimentDTO.getPubmedIds())
@@ -58,6 +69,7 @@ public class ProteomicsBaselineExperimentsCacheLoader extends BaselineExperiment
                 .withExperimentalFactors(experimentalFactors)
                 .withDataProviderURL(factorsConfig.getDataProviderURL())
                 .withDataProviderDescription(factorsConfig.getDataProviderDescription())
+                .withRData(hasRData)
                 .createProteomics();
 
     }
