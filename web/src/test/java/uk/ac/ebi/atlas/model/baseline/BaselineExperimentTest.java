@@ -73,7 +73,7 @@ public class BaselineExperimentTest {
         subject = new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
                 experimentalFactorsMock,
                                          "description", "displayName", "species", "kingdom", "ensembl", speciesMapping,
-                                         true, true, Sets.newHashSet(PUBMEDID), experimentDesignMock, assayGroupsMock, Collections.<String>emptyList(), Collections.<String>emptyList());
+                                         true, true, Sets.newHashSet(PUBMEDID), experimentDesignMock, assayGroupsMock, Collections.<String>emptyList(), Collections.<String>emptyList(), Collections.<String>emptyList());
     }
 
 

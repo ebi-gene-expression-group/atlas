@@ -61,8 +61,8 @@ public class BaselineExperimentConfiguration {
         return defaultQueryFactorType;
     }
 
-    public String getOrderFactor() {
-        return config.getString("orderFactor");
+    public boolean orderCurated() {
+        return "curated".equals(config.getString("orderFactor"));
     }
 
     public Set<String> getMenuFilterFactorTypes() {
@@ -91,6 +91,17 @@ public class BaselineExperimentConfiguration {
         }
 
         return mapping;
+    }
+
+    public List<String> getAlternativeViews() {
+        List<String> result = new ArrayList<>();
+        for(Object o:  config.getList("alternativeView")){
+            if(o.toString().matches("E-\\w+-\\d+")){
+                result.add(o.toString());
+            }
+        }
+
+        return result;
     }
 
     public boolean isFortLauderdale() {

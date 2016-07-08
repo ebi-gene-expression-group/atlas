@@ -150,13 +150,6 @@ public class ExperimentConfiguration {
     }
 
     public boolean hasRData() {
-        Element configuration = document.getDocumentElement();
-        String rData = configuration.getAttribute(RDATA);
-
-        if (StringUtils.isEmpty(rData)) {
-            return false;
-        } else {
-            return rData.equals("1");
-        }
+        return "1".equals(document.getDocumentElement().getAttribute(RDATA));
     }
 }

@@ -85,7 +85,7 @@ public class BaselineExperimentPageService {
         model.addAttribute("allQueryFactors", requestContext.getOrderedAssayGroupFactors());
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
         model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
-        model.addAllAttributes(experiment.getBaselineAttributes());
+        model.addAllAttributes(experiment.getAttributes());
     }
 
     public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,
@@ -101,7 +101,7 @@ public class BaselineExperimentPageService {
         model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
         model.addAttribute("exactMatch", preferences.isExactMatch());
         model.addAttribute("geneQuery", preferences.getGeneQuery());
-        model.addAllAttributes(experiment.getBaselineAttributes());
+        model.addAllAttributes(experiment.getAttributes());
 
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
         model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());

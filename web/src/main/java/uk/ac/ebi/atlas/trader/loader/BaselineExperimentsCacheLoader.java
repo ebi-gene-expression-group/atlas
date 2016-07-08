@@ -49,16 +49,10 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 
-        boolean hasRData = configurationTrader.getExperimentConfiguration(experimentAccession).hasRData();
-
-        String kingdom = speciesKingdomTrader.getKingdom(experimentDTO.getSpecies());
-
-        String ensemblDB = speciesKingdomTrader.getEnsemblDB(experimentDTO.getSpecies());
-
         String[] orderedAssayGroupIds;
         boolean orderCurated;
 
-        if(factorsConfig.getOrderFactor() != null && factorsConfig.getOrderFactor().equals("curated")) {
+        if(factorsConfig.orderCurated()) {
             orderCurated = true;
             orderedAssayGroupIds = assayGroups.getAssayGroupIds().toArray(new String[assayGroups.getAssayGroupIds().size()]);
         } else {
@@ -66,12 +60,10 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
             orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
         }
 
-        ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentAccession, experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds, orderCurated);
-
         return new BaselineExperimentBuilder().forSpecies(experimentDTO.getSpecies())
                 .ofType(experimentType)
-                .ofKingdom(kingdom)
-                .ofEnsemblDB(ensemblDB)
+                .ofKingdom(speciesKingdomTrader.getKingdom(experimentDTO.getSpecies()))
+                .ofEnsemblDB(speciesKingdomTrader.getEnsemblDB(experimentDTO.getSpecies()))
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)
@@ -81,10 +73,11 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withPubMedIds(experimentDTO.getPubmedIds())
                 .withAssayGroups(assayGroups)
                 .withExperimentDesign(experimentDesign)
-                .withExperimentalFactors(experimentalFactors)
+                .withExperimentalFactors(createExperimentalFactors(experimentAccession, experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds, orderCurated))
                 .withDataProviderURL(factorsConfig.getDataProviderURL())
                 .withDataProviderDescription(factorsConfig.getDataProviderDescription())
-                .withRData(hasRData)
+                .withRData(configurationTrader.getExperimentConfiguration(experimentAccession).hasRData())
+                .withAlternativeViews(factorsConfig.getAlternativeViews())
                 .create();
 
     }

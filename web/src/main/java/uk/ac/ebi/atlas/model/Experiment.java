@@ -5,10 +5,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import org.apache.commons.lang.StringUtils;
-import uk.ac.ebi.atlas.web.GeneQuery;
 
 import java.io.Serializable;
 import java.util.*;
@@ -28,9 +25,12 @@ public class Experiment implements Serializable {
     private boolean hasExtraInfoFile;
     private boolean hasRData;
     private Date lastUpdate;
+    private List<String> dataProviderURL;
+    private List<String> dataProviderDescription;
+    private List<String> alternativeViews;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      boolean hasExtraInfoFile, boolean hasRData, String species, String kingdom, String ensemblDB, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
+                      boolean hasExtraInfoFile, boolean hasRData, String species, String kingdom, String ensemblDB, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign, List<String> dataProviderURL, List<String> dataProviderDescription, List<String> alternativeViews) {
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
@@ -44,11 +44,9 @@ public class Experiment implements Serializable {
         this.ensemblDB = ensemblDB;
         this.speciesMapping = speciesMapping;
         this.pubMedIds = Sets.newTreeSet(pubMedIds);
-    }
-
-    public Experiment(ExperimentType type, String accession, Date lastUpdate, String description, boolean hasExtraInfoFile, boolean hasRData,
-                      String species, String kingdom, String ensemblDB, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
-        this(type, accession, lastUpdate, null, description, hasExtraInfoFile, hasRData, species, kingdom, ensemblDB, speciesMapping, pubMedIds, experimentDesign);
+        this.dataProviderURL = dataProviderURL;
+        this.dataProviderDescription = dataProviderDescription;
+        this.alternativeViews = alternativeViews;
     }
 
     public ExperimentType getType() {
@@ -125,6 +123,14 @@ public class Experiment implements Serializable {
         return "";
     }
 
+    public List<String> getDataProviderURL() {
+        return dataProviderURL;
+    }
+
+    public List<String> getDataProviderDescription() {
+        return dataProviderDescription;
+    }
+
     public Map<String, ?> getAttributes(){
         Map<String, Object> result = new HashMap<>();
         result.put("type", this.getType());
@@ -139,6 +145,7 @@ public class Experiment implements Serializable {
         List<String> keywords = ImmutableList.<String>builder()
                 .add("experiment")
                 .add(this.getAccession())
+                .addAll(getDataProviderDescription())
                 .addAll(Arrays.asList(this.getType().getDescription().split("_")))
                 .addAll(this.getExperimentDesign().getAssayHeaders())
                 .build();
@@ -146,6 +153,11 @@ public class Experiment implements Serializable {
 
         //We want this to show up in Google searches.
         result.put("pageDescription", this.getDescription());
+
+        // Extra information to show on experiment page (if they were provided in <expAcc>-factors.xml file)
+        result.put("dataProviderURL", getDataProviderURL());
+        result.put("dataProviderDescription", getDataProviderDescription());
+        result.put("alternativeViews", alternativeViews);
 
         return result;
     }

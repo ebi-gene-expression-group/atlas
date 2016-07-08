@@ -9,10 +9,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Named;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -38,6 +35,7 @@ public class BaselineExperimentBuilder {
     private AssayGroups assayGroups;
     private ExperimentalFactors experimentalFactors;
     private ExperimentType experimentType;
+    private List<String> alternativeViews = Collections.emptyList();
 
     public BaselineExperimentBuilder forSpecies(String species) {
         this.species = species;
@@ -124,6 +122,11 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
+    public BaselineExperimentBuilder withAlternativeViews(List<String> alternativeViews) {
+        this.alternativeViews = alternativeViews;
+        return this;
+    }
+
 
 
     public BaselineExperiment create() {
@@ -131,7 +134,7 @@ public class BaselineExperimentBuilder {
 
         return new BaselineExperiment(experimentType, experimentAccession, lastUpdate, experimentalFactors, description,
                 displayName, species, kingdom, ensemblDB, speciesMapping, hasExtraInfoFile, hasRData,
-                pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
+                pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription, alternativeViews);
     }
 
     void validate() {

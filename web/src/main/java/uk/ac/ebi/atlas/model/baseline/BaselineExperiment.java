@@ -12,17 +12,14 @@ public class BaselineExperiment extends Experiment {
     private ExperimentalFactors experimentalFactors;
     private AssayGroups assayGroups;
 
-    private List<String> dataProviderURL;
-    private List<String> dataProviderDescription;
-
     BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
-                       String description, String displayName, String species, String kingdom, String ensemblDB, Map <String, String> speciesMapping,
-                       boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription) {
-        super(experimentType, accession, lastUpdate, displayName, description, hasExtraInfoFile, hasRData, species, kingdom, ensemblDB, speciesMapping, pubMedIds, experimentDesign);
+                       String description, String displayName, String species, String kingdom, String ensemblDB, Map<String, String> speciesMapping,
+                       boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription, List<String> alternativeViews) {
+        super(experimentType, accession, lastUpdate, displayName, description, hasExtraInfoFile, hasRData, species,
+                kingdom, ensemblDB, speciesMapping, pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
+                alternativeViews);
         this.experimentalFactors = experimentalFactors;
         this.assayGroups = assayGroups;
-        this.dataProviderURL = dataProviderURL;
-        this.dataProviderDescription = dataProviderDescription;
     }
 
     public Set<String> getExperimentRunAccessions() {
@@ -37,14 +34,6 @@ public class BaselineExperiment extends Experiment {
         return assayGroups;
     }
 
-    public List<String> getDataProviderURL() {
-        return dataProviderURL;
-    }
-
-    public List<String> getDataProviderDescription() {
-        return dataProviderDescription;
-    }
-
     public SortedSet<Factor> getAssayGroupFactors(Collection<String> assayGroupIds, String factorType) {
         return getExperimentalFactors().getFactors(assayGroupIds, factorType);
     }
@@ -53,14 +42,4 @@ public class BaselineExperiment extends Experiment {
         return getExperimentalFactors().getDefaultQueryFactorType().equals("ORGANISM_PART");
     }
 
-    public Map<String, ?> getBaselineAttributes(){
-        Map<String, Object> result = new HashMap<>();
-        result.putAll(super.getAttributes());
-
-        // required to show link to one or more data providers on baseline page (if they were provided in <expAcc>-factors.xml file)
-        result.put("dataProviderURL", getDataProviderURL());
-        result.put("dataProviderDescription", getDataProviderDescription());
-
-        return result;
-    }
 }

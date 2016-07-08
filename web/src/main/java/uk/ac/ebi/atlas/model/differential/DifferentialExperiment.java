@@ -21,7 +21,8 @@ public class DifferentialExperiment extends Experiment {
     }
 
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, boolean hasRData, String species, String kingdom, String ensemblDB, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
-        super(experimentType, accession, lastUpdate, description, hasExtraInfoFile, hasRData, species, kingdom, ensemblDB, null, pubMedIds, experimentDesign);
+        super(experimentType, accession, lastUpdate,null, description, hasExtraInfoFile, hasRData, species, kingdom,
+                ensemblDB, null, pubMedIds, experimentDesign,Collections.<String>emptyList(), Collections.<String>emptyList(),Collections.<String>emptyList());
         for (Contrast contrast : contrasts) {
             contrastsById.put(contrast.getId(), contrast);
         }
