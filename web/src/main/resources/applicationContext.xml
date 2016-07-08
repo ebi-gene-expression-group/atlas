@@ -27,16 +27,6 @@
     <util:properties id="bioEntityCardPropertyFile" location="classpath:bundles/bioEntityCard.properties"/>
     <util:properties id="speciesToExperimentPropertyFile" location="classpath:bundles/speciesToExperiment.properties"/>
 
-    <bean id="baselineExperimentLoader" class="uk.ac.ebi.atlas.trader.loader.BaselineExperimentsCacheLoader">
-        <lookup-method name="createExperimentBuilder" bean="baselineExperimentBuilder"/>
-        <lookup-method name="createExperimentalFactorsBuilder" bean="experimentalFactorsBuilder"/>
-    </bean>
-
-    <bean id="proteomicsbaselineExperimentLoader" class="uk.ac.ebi.atlas.trader.loader.ProteomicsBaselineExperimentsCacheLoader">
-        <lookup-method name="createExperimentBuilder" bean="baselineExperimentBuilder"/>
-        <lookup-method name="createExperimentalFactorsBuilder" bean="experimentalFactorsBuilder"/>
-    </bean>
-
     <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader">
         <lookup-method name="createBarChartTraderBuilder" bean="barChartTraderBuilder"/>
     </bean>

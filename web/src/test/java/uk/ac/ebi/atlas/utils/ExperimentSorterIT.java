@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.utils;
 
+import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,6 +62,6 @@ public class ExperimentSorterIT {
     @Ignore
     public void reverseSortExperimentsPerSizeContainsAllExperiments() {
         Collection<String> experimentAccessionsPerSizeDescending = subject.reverseSortAllExperimentsPerSize().values();
-        assertThat(experimentAccessionsPerSizeDescending.size(), is(NumberOfExperiments.ALL));
+        assertThat(experimentAccessionsPerSizeDescending.size(), Matchers.greaterThan(50));
     }
 }

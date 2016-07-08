@@ -35,17 +35,8 @@ public class ProteomicsBaselineExperimentsCacheLoaderFactory {
 
     public ProteomicsBaselineExperimentsCacheLoader create(ExperimentDAO experimentDao) {
 
-        ProteomicsBaselineExperimentsCacheLoader loader = new ProteomicsBaselineExperimentsCacheLoader(expressionLevelFile, configurationTrader, speciesKingdomTrader) {
-            @Override
-            protected BaselineExperimentBuilder createExperimentBuilder() {
-                return new BaselineExperimentBuilder();
-            }
-
-            @Override
-            protected ExperimentalFactorsBuilder createExperimentalFactorsBuilder() {
-                return new ExperimentalFactorsBuilder();
-            }
-        };
+        ProteomicsBaselineExperimentsCacheLoader loader = new ProteomicsBaselineExperimentsCacheLoader
+                (expressionLevelFile, configurationTrader, speciesKingdomTrader);
 
         loader.setExtraInfoPathTemplate(extraInfoPathTemplate);
         loader.setExperimentDAO(experimentDao);

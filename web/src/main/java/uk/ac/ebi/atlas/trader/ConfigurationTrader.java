@@ -35,7 +35,7 @@ public class ConfigurationTrader {
     @Value("#{configuration['experiment.configuration.path.template']}")
     private String configurationPathTemplate;
 
-    public BaselineExperimentConfiguration getFactorsConfiguration(String experimentAccession) {
+    public BaselineExperimentConfiguration getBaselineFactorsConfiguration(String experimentAccession) {
         XMLConfiguration xmlConfiguration = getXmlConfiguration(baselineFactorsConfigurationPathTemplate, experimentAccession, true);
         return new BaselineExperimentConfiguration(xmlConfiguration);
     }

@@ -68,21 +68,7 @@ public class BaselineExperimentsCacheLoaderTest {
         when(fileTsvReaderBuilderMock.forTsvFilePathTemplate(PATH_TEMPLATE_FAKE)).thenReturn(fileTsvReaderBuilderMock);
         when(fileTsvReaderBuilderMock.build()).thenReturn(experimentDataTsvReaderMock);
 
-        BaselineExperimentExpressionLevelFile baselineExperimentExpressionLevelFile = new BaselineExperimentExpressionLevelFile(fileTsvReaderBuilderMock, PATH_TEMPLATE_FAKE);
-
-        subject =
-                new BaselineExperimentsCacheLoader(baselineExperimentExpressionLevelFile, configurationTraderMock, speciesKingdomTraderMock) {
-
-                    @Override
-                    protected BaselineExperimentBuilder createExperimentBuilder() {
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    protected ExperimentalFactorsBuilder createExperimentalFactorsBuilder() {
-                        throw new UnsupportedOperationException();
-                    }
-                };
+        subject = new BaselineExperimentsCacheLoader(new BaselineExperimentExpressionLevelFile(fileTsvReaderBuilderMock, PATH_TEMPLATE_FAKE), configurationTraderMock, speciesKingdomTraderMock);
     }
 
 

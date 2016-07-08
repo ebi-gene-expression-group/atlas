@@ -35,16 +35,6 @@ public class BaselineExperiment extends Experiment {
     }
 
     BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
-                       String description, String displayName, String species, String kingdom, String ensemblDB,
-                       Map<String, String> speciesMapping, boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds,
-                       ExperimentDesign experimentDesign, AssayGroups assayGroups) {
-        this(
-                experimentType, accession, lastUpdate, experimentalFactors, description, displayName, species, kingdom,
-                ensemblDB, speciesMapping, hasExtraInfoFile, hasRData, pubMedIds, experimentDesign, assayGroups, Collections.<String>emptyList(),
-                Collections.<String>emptyList());
-    }
-
-    BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description, String displayName, String species, String kingdom, String ensemblDB, Map <String, String> speciesMapping,
                        boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription) {
         super(experimentType, accession, lastUpdate, displayName, description, hasExtraInfoFile, hasRData, species, kingdom, ensemblDB, speciesMapping, pubMedIds, experimentDesign);

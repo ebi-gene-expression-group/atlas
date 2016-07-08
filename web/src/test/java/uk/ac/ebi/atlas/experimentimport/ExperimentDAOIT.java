@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experiments.NumberOfExperiments;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -45,7 +44,7 @@ public class ExperimentDAOIT {
     @Test
     public void testFindExperiments() throws Exception {
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
-        assertThat(experimentDTOs, hasSize(NumberOfExperiments.ALL));
+        assertThat(experimentDTOs.size(), greaterThan(50));
         assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_513, TYPE_BASELINE, "", Sets.newHashSet(""), "", false)));
     }
 

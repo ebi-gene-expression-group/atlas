@@ -20,7 +20,7 @@ public class BaselineExperimentUtil {
 
     public boolean hasFortLauderdale(String experimentAccession) {
 
-        BaselineExperimentConfiguration factorsConfig = configurationTrader.getFactorsConfiguration(experimentAccession);
+        BaselineExperimentConfiguration factorsConfig = configurationTrader.getBaselineFactorsConfiguration(experimentAccession);
 
         return factorsConfig.isFortLauderdale();
     }

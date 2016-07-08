@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.Is.is;
 
@@ -29,7 +30,7 @@ public class ExperimentDescriptionDAOIT {
     @Test
     public void selectAllPublicExperimentDescriptions() {
         List<ExperimentDescription> experimentDescriptions = subject.selectAllPublicExperimentDescriptions();
-        assertThat(experimentDescriptions.size(), is(NumberOfExperiments.ALL));
+        assertThat(experimentDescriptions.size(), greaterThan(50));
         assertThat(experimentDescriptions, hasItem(E_MTAB_513));
     }
 

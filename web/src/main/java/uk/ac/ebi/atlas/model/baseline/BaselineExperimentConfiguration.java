@@ -62,8 +62,7 @@ public class BaselineExperimentConfiguration {
     }
 
     public String getOrderFactor() {
-        String orderFactor = config.getString("orderFactor");
-        return orderFactor;
+        return config.getString("orderFactor");
     }
 
     public Set<String> getMenuFilterFactorTypes() {
@@ -94,14 +93,7 @@ public class BaselineExperimentConfiguration {
         return mapping;
     }
 
-
     public boolean isFortLauderdale() {
-        String fla = config.getString("fortLauderdale");
-
-        if (StringUtils.isEmpty(fla)) {
-            return false;
-        } else {
-            return fla.equals("true");
-        }
+        return "true".equals(config.getString("fortLauderdale"));
     }
 }

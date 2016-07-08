@@ -77,9 +77,7 @@ public class ExperimentalFactorsBuilder {
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
 
-        LinkedHashMultimap<String, Factor> xmlFactorsByType = buildXmlFactorsByType();
-
-        return new ExperimentalFactors(xmlFactorsByType, factorNamesByType, orderedFactorGroups,
+        return new ExperimentalFactors(buildXmlFactorsByType(), factorNamesByType, orderedFactorGroups,
                 menuFilterFactorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
     }
 

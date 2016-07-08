@@ -14,24 +14,21 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-//This class is wired into CacheConfiguration. Guava CacheBuilder, that is the one only client of this class, is not spring managed and only accepts an initial instance
-//of BaselineExperimentsCacheLoader, hence BaselineExperimentsCacheLoader is a singleton. However BaselineExperimentsCacheLoader uses ExperimentBuilder and ExperimentalFactorsBuilder
-//which have a prototype scope. To get around this BaselineExperimentsCacheLoader uses lookup-method injection to get a new prototypical instance of
-//ExperimentBuilder/ExperimentalFactorsBuilder every time the load method is invoked
-//TODO - why don't we just use new here instead of getting a prototypical instance?
-public abstract class ProteomicsBaselineExperimentsCacheLoader extends ExperimentsCacheLoader<ProteomicsBaselineExperiment> {
+@Named
+public class ProteomicsBaselineExperimentsCacheLoader extends ExperimentsCacheLoader<ProteomicsBaselineExperiment> {
 
     private final ProteomicsBaselineExperimentExpressionLevelFile expressionLevelFile;
     private final ConfigurationTrader configurationTrader;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     @Inject
-    protected ProteomicsBaselineExperimentsCacheLoader(ProteomicsBaselineExperimentExpressionLevelFile expressionLevelFile,
+    public ProteomicsBaselineExperimentsCacheLoader(ProteomicsBaselineExperimentExpressionLevelFile expressionLevelFile,
                                                        ConfigurationTrader configurationTrader, SpeciesKingdomTrader speciesKingdomTrader) {
 
         this.configurationTrader = configurationTrader;
@@ -40,12 +37,12 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
     }
 
     @Override
-    protected ProteomicsBaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
+    public ProteomicsBaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
                                       boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
-        BaselineExperimentConfiguration factorsConfig = configurationTrader.getFactorsConfiguration(experimentAccession);
+        BaselineExperimentConfiguration factorsConfig = configurationTrader.getBaselineFactorsConfiguration(experimentAccession);
 
         AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 
@@ -57,7 +54,7 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
 
         ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentAccession, experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
 
-        return createExperimentBuilder().forSpecies(experimentDTO.getSpecies())
+        return new BaselineExperimentBuilder().forSpecies(experimentDTO.getSpecies())
                 .ofKingdom(kingdom)
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
@@ -86,9 +83,7 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
         List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(experimentAccession, orderedAssayGroupIds, assayGroups, experimentDesign);
         Map<String, FactorGroup> orderedFactorGroupsByAssayGroup = extractOrderedFactorGroupsByAssayGroup(orderedAssayGroupIds, assayGroups, experimentDesign);
 
-        ExperimentalFactorsBuilder experimentalFactorsBuilder = createExperimentalFactorsBuilder();
-
-        return experimentalFactorsBuilder
+        return new ExperimentalFactorsBuilder()
                 .withOrderedFactorGroups(orderedFactorGroups)
                 .withOrderedFactorGroupsByAssayGroupId(orderedFactorGroupsByAssayGroup)
                 .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
@@ -184,9 +179,5 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
         }
         return nbUpperCase;
     }
-
-    protected abstract BaselineExperimentBuilder createExperimentBuilder();
-
-    protected abstract ExperimentalFactorsBuilder createExperimentalFactorsBuilder();
 
 }
