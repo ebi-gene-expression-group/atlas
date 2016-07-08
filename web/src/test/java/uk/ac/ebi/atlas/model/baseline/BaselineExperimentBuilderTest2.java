@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Collections;
 import java.util.Map;
@@ -67,6 +68,7 @@ public class BaselineExperimentBuilderTest2 {
         when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newHashSet("g1", "g2"));
 
         subject = new BaselineExperimentBuilder()
+                .ofType(ExperimentType.RNASEQ_MRNA_BASELINE)
                 .forSpecies(SPECIES)
                 .withDescription(DESCRIPTION)
                 .withSpeciesMapping(Collections.EMPTY_MAP)

@@ -12,9 +12,7 @@ import org.springframework.validation.support.BindingAwareModelMap;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;

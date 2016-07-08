@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
@@ -53,7 +53,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
 
         baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(
-                (ProteomicsBaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,model, request,false
+                (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,model, request,false
         );
 
         return "experiment";
@@ -68,7 +68,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
 
         try {
             baselineExperimentPageService.populateModelWithHeatmapData(
-                    (ProteomicsBaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
+                    (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                     preferences, model, request, false, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));

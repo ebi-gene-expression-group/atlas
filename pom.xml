@@ -616,6 +616,7 @@
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
+                <solr.host>ves-hx-69</solr.host>
             </properties>
         </profile>
         <profile>

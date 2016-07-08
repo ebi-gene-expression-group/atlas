@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.*;
 
 import java.util.Collections;
@@ -80,6 +81,7 @@ public class SpeciesGrouperTest {
     public void buildSingleEnsemblSpeciesGroupedByAssayGroupId() throws Exception {
 
         BaselineExperiment experiment = subject.forSpecies(HOMO_SAPIENS)
+                .ofType(ExperimentType.RNASEQ_MRNA_BASELINE)
                 .withAccession(EXPERIMENT_ACCESSION)
                 .withSpeciesMapping(speciesMap)
                 .withExperimentDesign(experimentDesignMock)

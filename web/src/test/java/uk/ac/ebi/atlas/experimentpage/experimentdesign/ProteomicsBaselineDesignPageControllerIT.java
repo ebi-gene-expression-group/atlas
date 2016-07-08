@@ -13,11 +13,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
 import uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil;
-import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;

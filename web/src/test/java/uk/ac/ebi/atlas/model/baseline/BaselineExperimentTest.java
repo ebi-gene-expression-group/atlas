@@ -11,7 +11,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
@@ -68,9 +70,10 @@ public class BaselineExperimentTest {
         when(assayGroupsMock.getAssayAccessions()).thenReturn(Sets.newHashSet(RUN_ACCESSION1, RUN_ACCESSION2));
         when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newHashSet("g1", "g2"));
 
-        subject = new BaselineExperiment("accession", new Date(), experimentalFactorsMock,
+        subject = new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
+                experimentalFactorsMock,
                                          "description", "displayName", "species", "kingdom", "ensembl", speciesMapping,
-                                         true, true, Sets.newHashSet(PUBMEDID), experimentDesignMock, assayGroupsMock);
+                                         true, true, Sets.newHashSet(PUBMEDID), experimentDesignMock, assayGroupsMock, Collections.<String>emptyList(), Collections.<String>emptyList());
     }
 
 
