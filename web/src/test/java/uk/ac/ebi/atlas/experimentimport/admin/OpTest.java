@@ -51,4 +51,12 @@ public class OpTest {
         assertEquals(Op.opsForParameter("LIST,LOG"),Op.opsForParameter("LIST,loG"));
     }
 
+    @Test
+    public void synonymAsPartOfClauseWorks(){
+        List<Op> a = new ArrayList<>();
+        a.addAll(Op.opsForParameter("UPDATE"));
+        a.addAll(Op.opsForParameter("LIST"));
+        assertEquals(a,Op.opsForParameter("UPDATE,LIST"));
+    }
+
 }

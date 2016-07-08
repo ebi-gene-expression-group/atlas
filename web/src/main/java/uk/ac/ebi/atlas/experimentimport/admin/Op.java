@@ -72,7 +72,7 @@ public enum Op {
     private static List<Op> opsForUppercasedParameter(String parameter) throws IllegalArgumentException {
         List<Op> result = new ArrayList<>();
         for (String s : parameter.split(",")) {
-            List<Op> opsForShortcutName = synonyms.get(parameter);
+            List<Op> opsForShortcutName = synonyms.get(s);
             if (opsForShortcutName == null || opsForShortcutName.isEmpty()) {
                 result.add(Op.valueOf(s));
             } else {
