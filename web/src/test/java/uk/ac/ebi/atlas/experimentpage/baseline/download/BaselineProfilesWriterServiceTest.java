@@ -23,6 +23,7 @@ import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import java.io.Writer;
@@ -62,7 +63,7 @@ public class BaselineProfilesWriterServiceTest {
 
     private String geneName = "some_gene";
     private String geneId = "some_gene_id";
-    private OldGeneQuery geneQuery = OldGeneQuery.create(geneName);
+    private GeneQuery geneQuery = GeneQuery.create(geneName);
 
     @Before
     public void setUp() {

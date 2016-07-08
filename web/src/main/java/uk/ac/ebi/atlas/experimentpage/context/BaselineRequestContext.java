@@ -70,9 +70,8 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
                 .build();
     }
 
-    public static BaselineRequestContext createWithCustomGeneQueryDescription(BaselineExperiment experiment,
-                                                               BaselineRequestPreferences  preferences, String
-                                                                                      description){
+    public static BaselineRequestContext
+    createWithCustomGeneQueryDescription(BaselineExperiment experiment, BaselineRequestPreferences  preferences, String description){
         return new BaselineRequestContextBuilder(new FilterFactorsConverter())
                 .forExperiment(experiment)
                 .withPreferences(preferences)

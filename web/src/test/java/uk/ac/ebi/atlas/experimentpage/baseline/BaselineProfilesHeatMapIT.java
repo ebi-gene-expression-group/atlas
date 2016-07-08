@@ -17,7 +17,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -26,7 +26,6 @@ import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -83,7 +82,7 @@ public class BaselineProfilesHeatMapIT {
     }
 
     private void setGeneQuery(String geneQuery) {
-        requestPreferences.setGeneQuery(OldGeneQuery.create(geneQuery));
+        requestPreferences.setGeneQuery(GeneQuery.create(geneQuery));
     }
 
     private void setNotSpecific() {

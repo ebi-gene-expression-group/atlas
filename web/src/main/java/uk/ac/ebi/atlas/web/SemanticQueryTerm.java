@@ -31,4 +31,13 @@ public abstract class SemanticQueryTerm {
             return (String.format("\"%s\" (%s)", value(), category()));
         }
     }
+
+    @Override
+    public String toString() {
+        if (hasNoCategory()) {
+            return (String.format("\"%s\"", value()));
+        } else {
+            return (String.format("%s:{%s}", value(), category()));
+        }
+    }
 }

@@ -18,10 +18,12 @@ import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFac
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 @Controller
@@ -50,11 +52,16 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
                                      @RequestParam Map<String,String> allParameters,
                                      @RequestParam(required = false) String accessKey,
                                      Model model, HttpServletRequest request) {
-        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
 
-        baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(
-                (ProteomicsBaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,model, request,false
-        );
+        try {
+            model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
+
+            baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(
+                    (ProteomicsBaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,model, request,false
+            );
+        } catch (UnsupportedEncodingException e) {
+        return "error-page";
+        }
 
         return "experiment";
     }
@@ -64,7 +71,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
                                          @PathVariable String experimentAccession,
                                          @RequestParam(required = false) String accessKey,
                                          BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
-        experimentPageCallbacks.adjustReceivedObjects(preferences);
+//        experimentPageCallbacks.adjustReceivedObjects(preferences);
 
         try {
             baselineExperimentPageService.populateModelWithHeatmapData(
@@ -72,6 +79,8 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
                     preferences, model, request, false, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
+        } catch (UnsupportedEncodingException e) {
+            result.addError(new ObjectError("requestPreferences", "Error decoding gene query: '" + preferences.getGeneQuery().toJson()));
         }
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

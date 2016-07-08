@@ -108,7 +108,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
                 model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(request.getRequestURI()));
 
             } catch (GenesNotFoundException e) {
-                result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery().description() + "'"));
+                result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery().asSolr1DNF() + "'"));
             }
 
         }

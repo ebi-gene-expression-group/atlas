@@ -41,6 +41,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.Set;
 import java.util.SortedSet;
@@ -93,13 +94,16 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                                        HttpServletResponse response) {
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute("experiment");
 
-        baselineExperimentPageService
-                .prepareRequestPreferencesAndHeaderData(experiment, preferences, model,request,true);
         try {
+            baselineExperimentPageService
+                    .prepareRequestPreferencesAndHeaderData(experiment, preferences, model,request,true);
+
             baselineExperimentPageService
                     .populateModelWithHeatmapData(experiment, preferences, model,request,true, disableGeneLinks);
         } catch (GenesNotFoundException e) {
             throw new ResourceNotFoundException(String.format("No genes found matching query: %s", preferences.getGeneQuery().toJson()));
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalStateException(String.format("Unsupported encoding in gene query: %s", preferences.getGeneQuery().toJson()));
         }
 
         // set here instead of in JSP, because the JSP may be included elsewhere

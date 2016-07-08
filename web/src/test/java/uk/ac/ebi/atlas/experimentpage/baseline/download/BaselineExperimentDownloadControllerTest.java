@@ -24,6 +24,7 @@ import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import javax.servlet.http.HttpServletRequest;
@@ -107,7 +108,7 @@ public class BaselineExperimentDownloadControllerTest {
         when(preferencesMock.getQueryFactorType()).thenReturn("queryFactorType");
         when(preferencesMock.getSerializedFilterFactors()).thenReturn("TYPE:value");
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet("factorValues")));
-        when(preferencesMock.getGeneQuery()).thenReturn(OldGeneQuery.EMPTY);
+        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.create());
         when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newTreeSet(Sets.newHashSet("assayGroupIds")));
         when(baselineExperimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
         when(baselineExperimentMock.getAssayGroups()).thenReturn(assayGroupsMock);

@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import java.util.Set;
@@ -21,7 +22,7 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         return queryDescription;
     }
 
-    public OldGeneQuery getGeneQuery() {
+    public GeneQuery getGeneQuery() {
         return getRequestPreferences().getGeneQuery();
     }
 

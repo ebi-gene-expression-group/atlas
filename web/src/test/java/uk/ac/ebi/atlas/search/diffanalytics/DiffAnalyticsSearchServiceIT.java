@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
-
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import org.junit.Before;
@@ -18,7 +17,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.utils.Visitor;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -28,8 +27,6 @@ import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -79,7 +76,7 @@ public class DiffAnalyticsSearchServiceIT {
 
 
     private DiffAnalyticsList fetch(GeneQuerySearchRequestParameters requestParameters, String species){
-        Optional<Set<String>> geneIdsFromGeneQuery = solrQueryService.expandGeneQueryIntoGeneIds(requestParameters.getGeneQuery().asString(), species);
+        Optional<Set<String>> geneIdsFromGeneQuery = solrQueryService.expandGeneQueryIntoGeneIds(requestParameters.getGeneQuery(), species);
         return subject.fetchTop(requestParameters.getConditionQuery().asString(), species, geneIdsFromGeneQuery);
     }
 
@@ -87,7 +84,7 @@ public class DiffAnalyticsSearchServiceIT {
     @Test
     public void fetchTopKinaseNoSpecies()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(OldGeneQuery.create("kinase"));
+        requestParameters.setGeneQuery(GeneQuery.create("kinase"));
 
         DiffAnalyticsList bioentityExpressions = fetch(requestParameters, "");
 
@@ -103,7 +100,7 @@ public class DiffAnalyticsSearchServiceIT {
 
         final List<String> names = Lists.newArrayList();
 
-        int count = subject.visitEachExpression(requestParameters.getGeneQuery().asString(), requestParameters.getConditionQuery().asString(), requestParameters.getOrganism(), new Visitor<DiffAnalytics>() {
+        int count = subject.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getConditionQuery().asString(), requestParameters.getOrganism(), new Visitor<DiffAnalytics>() {
 
             @Override
             public void visit(DiffAnalytics value) {
@@ -113,20 +110,20 @@ public class DiffAnalyticsSearchServiceIT {
 
 
         assertThat(count, greaterThan(100));
-        assertEquals(count, names.size());
+        assertThat(count, is(names.size()));
 
         DiffAnalyticsList bioentityExpressions = subject.fetchTop(requestParameters.getConditionQuery().asString(), requestParameters.getOrganism(), Optional.<Set<String>>absent());
 
         assertThat(bioentityExpressions.size(), greaterThan(0));
         assertThat(bioentityExpressions.size(), lessThan(51));
-        assertEquals(count, bioentityExpressions.getTotalNumberOfResults());
+        assertThat(count, is(bioentityExpressions.getTotalNumberOfResults()));
     }
     
 
     @Test
     public void weCanCheckAboutKinaseConnectedToCancer()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(OldGeneQuery.create("kinase"));
+        requestParameters.setGeneQuery(GeneQuery.create("kinase"));
         requestParameters.setCondition("cancer");
 
         String species = "";

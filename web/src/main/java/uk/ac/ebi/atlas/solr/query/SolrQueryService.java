@@ -18,6 +18,7 @@ import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.OldGeneQuery;
+import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,7 +32,6 @@ import static uk.ac.ebi.atlas.solr.BioentityType.GENE;
 import static uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes;
 
 @Named
-@Scope("singleton")
 //can be singleton because HttpSolrClient is documented to be thread safe, please be careful not to add any other non thread safe state!
 public class SolrQueryService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SolrQueryService.class);
@@ -111,6 +111,23 @@ public class SolrQueryService {
         return expandedIdentifiers;
     }
 
+    private Set<String> findMatureRNAIds(GeneQuery geneQuery) {
+        Set<String> expandedIdentifiers = Sets.newHashSet();
+
+        for (SemanticQueryTerm queryTerm : geneQuery) {
+            Set<String> mirbaseIds = bioEntityPropertyDao.fetchPropertyValuesForGeneId(queryTerm.value(), "mirbase_id");
+            String mirbaseId = mirbaseIds.size() > 0 ? mirbaseIds.iterator().next() : null;
+            Set<String> matureRNAIds = fetchGeneIdentifiersFromSolr((mirbaseId != null) ? mirbaseId : queryTerm.value(), "mirna", false, "hairpin_id");
+            if (matureRNAIds.size() > 0) {
+                expandedIdentifiers.addAll(matureRNAIds);
+            } else if (mirbaseId != null) {
+                expandedIdentifiers.add(mirbaseId);
+            }
+
+        }
+        return expandedIdentifiers;
+    }
+
     private GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(String geneQuery, String species) {
 
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
@@ -163,7 +180,7 @@ public class SolrQueryService {
         //resolve any gene keywords to identifiers
         Set<String> geneIds = findGeneIdsOrSets(geneQuery, species);
 
-        Set<String> matureRNAIds = findMatureRNAIds(Sets.newHashSet(splitBySpacePreservingQuotes(geneQuery)));
+        Set<String> matureRNAIds = findMatureRNAIds(geneQuery);
         geneIds.addAll(matureRNAIds);
 
         stopWatch.stop();
@@ -225,13 +242,11 @@ public class SolrQueryService {
         return fetchResponseBasedOnRequestContext(requestContext.getGeneQuery(), species);
     }
 
-    public GeneQueryResponse fetchResponseBasedOnRequestContext(OldGeneQuery geneQuery, String species)
+    public GeneQueryResponse fetchResponseBasedOnRequestContext(GeneQuery geneQuery, String species)
             throws GenesNotFoundException {
-        return fetchResponseBasedOnRequestContext(geneQuery.asString(), species);
+        return fetchResponseBasedOnRequestContext(geneQuery.asSolr1DNF(), species);
     }
-    public GeneQueryResponse fetchResponseBasedOnRequestContext(String geneQuery, String
-            species) throws
-            GenesNotFoundException {
+    public GeneQueryResponse fetchResponseBasedOnRequestContext(String geneQuery, String species) throws  GenesNotFoundException {
 
         if (StringUtils.isBlank(geneQuery)) {
             return new GeneQueryResponse();

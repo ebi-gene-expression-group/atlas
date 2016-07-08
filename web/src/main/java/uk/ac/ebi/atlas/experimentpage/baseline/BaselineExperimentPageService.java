@@ -14,14 +14,12 @@ import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
-import uk.ac.ebi.atlas.web.TagEditorConverter;
+import uk.ac.ebi.atlas.web.*;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -61,15 +59,12 @@ public class BaselineExperimentPageService {
     }
 
     public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
-                                                       HttpServletRequest request, boolean isWidget) {
+                                                       HttpServletRequest request, boolean isWidget)
+                throws UnsupportedEncodingException {
 
 
         if (isWidget) {
-            // possibly we could always do this - investigate if it matters for not-a-widget
-            //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
-            // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
-            // instead of the current tab separated syntax for geneQuery
-            preferences.setGeneQuery(OldGeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
+            preferences.setGeneQuery(GeneQuery.fromUrlEncodedJson((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY)));
             preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
         } else {
             preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
@@ -89,7 +84,7 @@ public class BaselineExperimentPageService {
 
     public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,
                                              Model model, HttpServletRequest request, boolean isWidget,
-                                             boolean disableGeneLinks) throws GenesNotFoundException {
+                                             boolean disableGeneLinks) throws GenesNotFoundException, UnsupportedEncodingException {
         //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
         preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
@@ -148,9 +143,10 @@ public class BaselineExperimentPageService {
     }
 
     //used when external parties include our widget
-    private JsonElement prepareExperimentDescription(Experiment experiment, OldGeneQuery geneQuery, String serializedFilterFactors){
+    private JsonElement prepareExperimentDescription(Experiment experiment, GeneQuery geneQuery, String serializedFilterFactors)
+                        throws UnsupportedEncodingException {
         String additionalQueryOptionsString =
-                "?geneQuery="+geneQuery.asUrlQueryParameter()+
+                "?geneQuery="+geneQuery.toUrlEncodedJson()+
                         "&serializedFilterFactors="+serializedFilterFactors;
 
         JsonObject experimentDescription = new JsonObject();

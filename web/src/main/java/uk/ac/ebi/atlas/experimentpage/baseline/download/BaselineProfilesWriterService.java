@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import java.io.Writer;
@@ -58,14 +59,20 @@ public class BaselineProfilesWriterService {
             geneQueryResponse = coexpressedGenesService
                     .extendGeneQueryResponseWithCoexpressions(experiment, originalResponse, coexpressionsRequested);
 
-            requestContext = BaselineRequestContext.createWithCustomGeneQueryDescription(experiment,
-                    preferences, describe(preferences.getGeneQuery(), geneQueryResponse.getAllGeneIds().size() - originalResponse.getAllGeneIds().size()));
+            requestContext =
+                    BaselineRequestContext.createWithCustomGeneQueryDescription(
+                            experiment, preferences,
+                            describe(
+                                    preferences.getGeneQuery(),
+                                    geneQueryResponse.getAllGeneIds().size() - originalResponse.getAllGeneIds().size()
+                            )
+                    );
 
         }
         return profilesWriter.write(writer, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(), geneQueryResponse);
     }
 
-    private String describe(OldGeneQuery gq, int coexpressedGenes) {
-        return gq.description() + " with " + coexpressedGenes + " similarly expressed genes";
+    private String describe(GeneQuery geneQuery, int coexpressedGenes) {
+        return geneQuery.asSolr1DNF() + " with " + coexpressedGenes + " similarly expressed genes";
     }
 }
