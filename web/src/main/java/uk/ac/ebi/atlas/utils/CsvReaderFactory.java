@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.zip.GZIPInputStream;
 
@@ -35,14 +36,14 @@ public class CsvReaderFactory {
         }
     }
 
-    public CSVReader createTsvGzReader(String tsvGzFilePath) {
+    public CSVReader createTsvGzReader(String tsvGzFilePath) throws NoSuchFileException {
         try {
             Path filePath = FileSystems.getDefault().getPath(checkNotNull(tsvGzFilePath));
             Reader dataFileReader = new BufferedReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(filePath))));
             return createTsvReader(dataFileReader);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw Throwables.propagate(e);
+            throw new NoSuchFileException(e.getMessage());
         }
     }
 

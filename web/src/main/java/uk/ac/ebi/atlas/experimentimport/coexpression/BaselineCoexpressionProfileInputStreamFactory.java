@@ -35,6 +35,7 @@ import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.nio.file.NoSuchFileException;
 import java.text.MessageFormat;
 
 @Named
@@ -51,7 +52,7 @@ public class BaselineCoexpressionProfileInputStreamFactory {
         this.csvReaderFactory = csvReaderFactory;
     }
 
-    public BaselineCoexpressionProfileInputStream create(String experimentAccession) {
+    public BaselineCoexpressionProfileInputStream create(String experimentAccession) throws NoSuchFileException {
         String tsvGzFilePath = MessageFormat.format(fileTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvGzReader(tsvGzFilePath);
         return new BaselineCoexpressionProfileInputStream(csvReader, tsvGzFilePath);

@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.nio.file.NoSuchFileException;
 
 @Named
 @Scope("singleton")
@@ -59,8 +60,14 @@ public class BaselineCoexpressionProfileLoader {
 
     @Transactional
     public int loadBaselineCoexpressionsProfile(String experimentAccession) {
-        BaselineCoexpressionProfileInputStream baselineCoexpressionProfileInputStream = baselineCoexpressionProfileInputStreamFactory.create(experimentAccession);
-        return baselineCoexpressionProfileDAO.loadCoexpressionsProfile(experimentAccession, baselineCoexpressionProfileInputStream);
+        try {
+            BaselineCoexpressionProfileInputStream baselineCoexpressionProfileInputStream =
+                    baselineCoexpressionProfileInputStreamFactory.create(experimentAccession);
+            return baselineCoexpressionProfileDAO.loadCoexpressionsProfile(experimentAccession, baselineCoexpressionProfileInputStream);
+        } catch (NoSuchFileException e){
+            //it doesn't make sense to calculate coexpressions for all experiments and we allow the file to be missing
+            return 0;
+        }
     }
 
     @Transactional
