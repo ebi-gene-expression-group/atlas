@@ -47,7 +47,7 @@ sudo -u tc_fg02 ssh ves-hx-77 'rsync -irtpz --safe-links --delete ves-hx-76:/srv
 echo "============================================================"
 echo `date`
 echo "============================================================"
-echo "Syncing data from ves-hx-76 to ves-hx-77..."
+echo "Syncing magetab directory from experiments to experiments_test..."
 sudo -u fg_atlas sh -c 'rsync -irlpt --delete /nfs/public/ro/fg/atlas/experiments/* /nfs/public/ro/fg/atlas/experiments_test'
 
 echo "Refreshing VATLASTST to latest snapshot..."
