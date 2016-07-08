@@ -68,7 +68,7 @@ public class RnaSeqBaselineExperimentsCacheLoaderTest {
         when(fileTsvReaderBuilderMock.forTsvFilePathTemplate(PATH_TEMPLATE_FAKE)).thenReturn(fileTsvReaderBuilderMock);
         when(fileTsvReaderBuilderMock.build()).thenReturn(experimentDataTsvReaderMock);
 
-        subject = new RnaSeqBaselineExperimentsCacheLoader(new BaselineExperimentExpressionLevelFile(fileTsvReaderBuilderMock, PATH_TEMPLATE_FAKE), configurationTraderMock, speciesKingdomTraderMock);
+        subject = new RnaSeqBaselineExperimentsCacheLoader(new RnaSeqBaselineExperimentExpressionLevelFile(fileTsvReaderBuilderMock, PATH_TEMPLATE_FAKE), configurationTraderMock, speciesKingdomTraderMock);
     }
 
 

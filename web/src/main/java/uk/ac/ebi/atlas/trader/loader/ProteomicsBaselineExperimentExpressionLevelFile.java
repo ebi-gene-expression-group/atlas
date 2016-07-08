@@ -12,7 +12,7 @@ import static uk.ac.ebi.atlas.utils.StringArrayUtil.*;
 
 @Named
 @Scope("prototype")
-public class ProteomicsBaselineExperimentExpressionLevelFile {
+public class ProteomicsBaselineExperimentExpressionLevelFile implements BaselineExperimentExpressionLevelFile {
 
     private static final int HEADER_LINE_INDEX = 0;
     public static final String WITH_IN_SAMPLE_ABUNDANCE = "WithInSampleAbundance";
@@ -35,7 +35,7 @@ public class ProteomicsBaselineExperimentExpressionLevelFile {
 
     }
 
-    public static String[] extractAssayGroupIds(String[] tsvFileHeader) {
+    static String[] extractAssayGroupIds(String[] tsvFileHeader) {
         String[] filtered = filterBySubstring(tsvFileHeader, WITH_IN_SAMPLE_ABUNDANCE);
         return substringBefore(filtered, ".");
     }
