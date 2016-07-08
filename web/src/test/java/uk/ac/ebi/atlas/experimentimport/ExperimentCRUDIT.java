@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import com.google.common.io.Files;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Before;
@@ -14,7 +13,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
@@ -25,7 +23,6 @@ import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCond
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
@@ -76,9 +73,6 @@ public class ExperimentCRUDIT {
         DifferentialConditionsIndex differentialConditionIndex = new DifferentialConditionsIndex(solrClientMock, new DifferentialConditionsBuilder());
         ConditionsIndexTrader conditionsIndexTrader = new ConditionsIndexTrader(baselineConditionIndex, differentialConditionIndex);
         experimentMetadataCRUD.setConditionsIndexTrader(conditionsIndexTrader);
-        String tempTemplate = Files.createTempDir().getAbsolutePath();
-        experimentMetadataCRUD.setExperimentDesignFileWriterBuilder(new ExperimentDesignFileWriterBuilder
-                (tempTemplate+"/ExpDesign-{0}.tsv"));
 
         subject.setExperimentMetadataCRUD(experimentMetadataCRUD);
         subject.setExperimentChecker(experimentCheckerSpy);
