@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import com.google.common.collect.ImmutableMap;
@@ -25,7 +24,6 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

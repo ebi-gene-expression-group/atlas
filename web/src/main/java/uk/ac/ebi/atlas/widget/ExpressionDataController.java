@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.trader.cache.OrganismsCache;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 
@@ -33,7 +33,7 @@ public final class ExpressionDataController {
     @ResponseStatus(HttpStatus.OK)
     public ModelAndView existGeneIdentifier(@RequestParam(value = "geneId", required = true) String geneId ) {
         ModelAndView mav = new ModelAndView(new MappingJacksonJsonView());
-        boolean results = baselineAnalyticsSearchService.tissueExpressionAvailableFor(OldGeneQuery.create(geneId));
+        boolean results = baselineAnalyticsSearchService.tissueExpressionAvailableFor(GeneQuery.create(geneId));
         mav.addObject(geneId, results);
         return mav;
     }

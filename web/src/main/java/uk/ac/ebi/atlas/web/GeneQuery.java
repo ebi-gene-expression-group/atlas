@@ -97,4 +97,5 @@ public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
         stringBuilder.delete(stringBuilder.lastIndexOf(OR_OPERATOR), stringBuilder.length());
         return stringBuilder.toString();
     }
+
 }

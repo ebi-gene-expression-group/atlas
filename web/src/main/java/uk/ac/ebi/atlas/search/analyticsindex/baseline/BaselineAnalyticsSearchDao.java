@@ -2,14 +2,13 @@ package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.base.Stopwatch;
 import com.jayway.jsonpath.JsonPath;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,26 +46,22 @@ public class BaselineAnalyticsSearchDao {
         this.baselineHeatmapPivotQuery = "&json.facet=" + encodeQueryParam(baselineHeatmapPivotQuery.replaceAll("\\s+",""));
     }
 
-
-    public List<Map<String, Object>> fetchFacetsThatHaveExpression(OldGeneQuery geneQuery) {
+    public List<Map<String, Object>> fetchFacetsThatHaveExpression(GeneQuery geneQuery) {
         String response = fetchFacets(buildGeneIdentifierQuery(geneQuery));
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
-
-    String buildGeneIdentifierQuery(OldGeneQuery geneQuery) {
-        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(\"%s\")", StringUtils.join(geneQuery.terms(), "\" OR \""));
+    String buildGeneIdentifierQuery(GeneQuery geneQuery) {
+        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF());
     }
 
-
-    public List<Map<String, Object>> fetchExpressionLevelFaceted(OldGeneQuery geneQuery, String species, String defaultQueryFactorType) {
+    public List<Map<String, Object>> fetchExpressionLevelFaceted(GeneQuery geneQuery, String species, String defaultQueryFactorType) {
         String identifierSearch = buildGeneIdentifierQuery(geneQuery);
         String response = fetchFacets(String.format("%s AND defaultQueryFactorType:%s", identifierSearch,
                 defaultQueryFactorType));
 
         return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType));
     }
-
 
     private String fetchFacets(String q) {
 
@@ -82,17 +77,14 @@ public class BaselineAnalyticsSearchDao {
 
     }
 
-
     String buildQueryUrl(String q) {
         String query = q.isEmpty() ? "*:*" : q;
         return solrBaseUrl + buildQueryParameters(query) + baselineHeatmapPivotQuery;
     }
 
-
     String buildQueryParameters(String q) {
         return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q)) + encodeQuery(FQ_TEMPLATE);
     }
-
 
     String fetchResponseAsString(String url) {
         try {
@@ -102,7 +94,6 @@ public class BaselineAnalyticsSearchDao {
         }
     }
 
-
     private static String encodeQueryParam(String param) {
         try {
             return UriUtils.encodeQueryParam(param, "UTF-8");
@@ -110,7 +101,6 @@ public class BaselineAnalyticsSearchDao {
             throw new BaselineAnalyticsSearchDaoException(e);
         }
     }
-
 
     private static String encodeQuery(String s) {
         // doesn't encode =
@@ -121,10 +111,10 @@ public class BaselineAnalyticsSearchDao {
         }
     }
 
-
     private static class BaselineAnalyticsSearchDaoException extends RuntimeException {
         public BaselineAnalyticsSearchDaoException(Exception e) {
             super(e);
         }
     }
+
 }

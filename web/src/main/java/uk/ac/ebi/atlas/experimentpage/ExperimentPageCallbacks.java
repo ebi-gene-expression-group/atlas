@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import java.io.UnsupportedEncodingException;

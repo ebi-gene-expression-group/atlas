@@ -10,7 +10,6 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
 import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
 
 import javax.inject.Inject;
 
@@ -43,7 +42,7 @@ public class ExpressionDataControllerIT extends RestAssuredFixture {
 
     @Test
     public void geneExpressedInBaselineAndDifferentialExperimentsReturnsTrue() {
-        assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(OldGeneQuery.create(BASELINE_GENE)).matches(NON_EMPTY_JSON_OBJECT_REGEX), is(true));
+        assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(BASELINE_GENE)).matches(NON_EMPTY_JSON_OBJECT_REGEX), is(true));
 
         Response response = get("/json/expressionData?geneId=" + BASELINE_GENE);
 
@@ -54,7 +53,7 @@ public class ExpressionDataControllerIT extends RestAssuredFixture {
 
     @Test
     public void geneExpressedInDifferentialExperimentsOnlyReturnsFalse() {
-        assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(OldGeneQuery.create(DIFFERENTIAL_GENE)).equals(EMPTY_JSON_OBJECT), is(true));
+        assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(DIFFERENTIAL_GENE)).equals(EMPTY_JSON_OBJECT), is(true));
         assertThat(differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(GeneQuery.create(DIFFERENTIAL_GENE)).matches(NON_EMPTY_JSON_OBJECT_REGEX), is(true));
 
         Response response = get("/json/expressionData?geneId=" + DIFFERENTIAL_GENE);
@@ -66,7 +65,7 @@ public class ExpressionDataControllerIT extends RestAssuredFixture {
 
     @Test
     public void nonExistentGeneReturnsFalse() {
-        assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(OldGeneQuery.create(NON_EXISTENT_GENE)).equals(EMPTY_JSON_OBJECT), is(true));
+        assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(NON_EXISTENT_GENE)).equals(EMPTY_JSON_OBJECT), is(true));
         assertThat(differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(GeneQuery.create(NON_EXISTENT_GENE)).equals(EMPTY_JSON_ARRAY), is(true));
 
         Response response = get("/json/expressionData?geneId=" + NON_EXISTENT_GENE);

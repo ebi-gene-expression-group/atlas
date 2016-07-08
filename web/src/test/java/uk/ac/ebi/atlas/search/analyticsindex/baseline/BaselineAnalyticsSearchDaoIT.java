@@ -7,18 +7,13 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
@@ -48,7 +43,7 @@ public class BaselineAnalyticsSearchDaoIT {
         String species = "homo sapiens";
         String defaultQueryFactorType = "ORGANISM_PART";
         List<Map<String, Object>> result =
-                subject.fetchExpressionLevelFaceted(OldGeneQuery.create("kinase"),species,defaultQueryFactorType );
+                subject.fetchExpressionLevelFaceted(GeneQuery.create("kinase"),species,defaultQueryFactorType );
 
         assertThat(result.size(), greaterThan(0));
 

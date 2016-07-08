@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.widget;
 
 import com.google.common.base.Optional;
@@ -34,7 +33,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -113,17 +112,17 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     @RequestMapping(value = "/widgets/heatmap/multiExperiment")
     public String multiExperimentJson(
-            @RequestParam(value = "geneQuery", required = true) OldGeneQuery geneQuery,
+            @RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
             @RequestParam(value = "species", required = false) String species,
             @RequestParam(value = "propertyType", required = false) String propertyType,
             Model model,HttpServletRequest request, HttpServletResponse response) {
 
         String ensemblSpecies= StringUtils.isBlank(species)
-                ?speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString())
+                ?speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery)
                 : Species.convertToEnsemblSpecies(species);
 
 
-        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery.asString(), ensemblSpecies);
+        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, ensemblSpecies);
 
         BaselineExperimentSearchResult searchResult = geneIds.isPresent()
             ?   baselineExperimentProfileSearchService.query(geneIds.get())
@@ -131,10 +130,10 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
         if (searchResult.isEmpty()) {
             throw new ResourceNotFoundException("No baseline expression in tissues found for "
-                    + geneQuery.description());
+                    + geneQuery.asSolr1DNF());
         }
 
-        populateModelWithMultiExperimentResults(request.getContextPath(),geneQuery, ensemblSpecies, searchResult, model);
+        populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, ensemblSpecies, searchResult, model);
 
         // set here instead of in JSP, because the JSP may be included elsewhere
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
@@ -143,14 +142,14 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     @RequestMapping(value = "/widgets/heatmap/baselineAnalytics")
     public String analyticsJson(
-            @RequestParam(value = "geneQuery", required = true) OldGeneQuery geneQuery,
+            @RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
             @RequestParam(value = "species", required = false) String species,
             @RequestParam(value = "propertyType", required = false) String propertyType,
             @RequestParam(value = "source", required = false) String source,
             Model model,HttpServletRequest request, HttpServletResponse response) {
 
         String ensemblSpecies = StringUtils.isBlank(species) ?
-                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString())
+                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery)
                 : Species.convertToEnsemblSpecies(species);
 
         String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source.toUpperCase();
@@ -164,7 +163,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         return "heatmap-data";
     }
 
-    private void populateModelWithMultiExperimentResults(String contextRoot, OldGeneQuery geneQuery, String ensemblSpecies,
+    private void populateModelWithMultiExperimentResults(String contextRoot, GeneQuery geneQuery, String ensemblSpecies,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
         SortedSet<Factor> orderedFactors = searchResult.getFactorsAcrossAllExperiments();
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);

@@ -3,10 +3,8 @@ package uk.ac.ebi.atlas.search.analyticsindex.solr;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
@@ -59,12 +57,10 @@ public class AnalyticsQueryBuilder {
     }
 
 
-    public AnalyticsQueryBuilder queryIdentifierSearch(OldGeneQuery geneQuery) {
+    public AnalyticsQueryBuilder queryIdentifierSearch(GeneQuery geneQuery) {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
-        for (String term : geneQuery) {
-            if (!StringUtils.isBlank(term)) {
-                builder.add(wrap(term, '"'));
-            }
+        for (SemanticQueryTerm queryTerm : geneQuery) {
+            builder.add(queryTerm.toString());
         }
         identifierSearchTerms.addAll(builder.build());
 
@@ -72,21 +68,21 @@ public class AnalyticsQueryBuilder {
     }
 
 
-    public AnalyticsQueryBuilder queryIdentifierSearch(GeneQuery semanticQuery) {
-        ImmutableList.Builder<String> builder = ImmutableList.builder();
-        for (SemanticQueryTerm term : semanticQuery) {
-            if (term.hasValue()) {
-                if (term.hasNoCategory()) {
-                    builder.add(wrap(term.value(), '"'));
-                } else {
-                    builder.add(wrap(String.format(IDENTIFIER_SEARCH_VALUE_TEMPLATE, term.category(), term.value()), '"'));
-                }
-            }
-        }
-        identifierSearchTerms.addAll(builder.build());
-
-        return this;
-    }
+//    public AnalyticsQueryBuilder queryIdentifierSearch(GeneQuery semanticQuery) {
+//        ImmutableList.Builder<String> builder = ImmutableList.builder();
+//        for (SemanticQueryTerm term : semanticQuery) {
+//            if (term.hasValue()) {
+//                if (term.hasNoCategory()) {
+//                    builder.add(wrap(term.value(), '"'));
+//                } else {
+//                    builder.add(wrap(String.format(IDENTIFIER_SEARCH_VALUE_TEMPLATE, term.category(), term.value()), '"'));
+//                }
+//            }
+//        }
+//        identifierSearchTerms.addAll(builder.build());
+//
+//        return this;
+//    }
 
 
     public AnalyticsQueryBuilder queryBioentityIdentifier(String identifier) {

@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.search.diffanalytics;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -14,7 +13,6 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.utils.Visitor;
 import uk.ac.ebi.atlas.utils.VisitorException;
 import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Named;

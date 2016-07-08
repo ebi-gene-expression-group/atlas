@@ -8,7 +8,6 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
@@ -17,7 +16,6 @@ import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import javax.inject.Inject;
@@ -140,6 +138,18 @@ public class SolrQueryService {
 
     }
 
+    private GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(GeneQuery geneQuery, String species) {
+
+        GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
+
+        //associate gene ids with each token in the query string
+        for (SemanticQueryTerm queryTerm : geneQuery) {
+            geneQueryResponse.addGeneIds(queryTerm.toString(), fetchGeneIds(queryTerm, species));
+        }
+        return geneQueryResponse;
+
+    }
+
     /**
      *
      * @param species empty string will search across all species, and return orthologs
@@ -219,6 +229,24 @@ public class SolrQueryService {
         return geneIds;
     }
 
+    Set<String> fetchGeneIds(SemanticQueryTerm queryTerm, String species) {
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
+        //eg: {!lucene q.op=OR df=property_value_lower}(property_value_lower:Q9NHV9) AND (bioentity_type:"mirna" OR bioentity_type:"ensgene")
+        // fl=bioentity_identifier&group=true&group.field=bioentity_identifier&group.main=true
+        SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
+                .forQueryString(queryTerm.value(), true)
+                .withSpecies(species).withBioentityTypes(GENE.getSolrAliases()).build();
+
+        Set<String> geneIds = solrServer.query(solrQuery, false, BIOENTITY_IDENTIFIER_FIELD);
+
+        stopwatch.stop();
+        LOGGER.debug(String.format("Fetched gene ids for %s: returned %s results in %s secs", queryTerm.toString(), geneIds.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+
+        return geneIds;
+    }
+
     Set<String> fetchGeneIds(GeneQuery geneQuery, String species) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
@@ -244,8 +272,21 @@ public class SolrQueryService {
 
     public GeneQueryResponse fetchResponseBasedOnRequestContext(GeneQuery geneQuery, String species)
             throws GenesNotFoundException {
-        return fetchResponseBasedOnRequestContext(geneQuery.asSolr1DNF(), species);
+
+        if (geneQuery.isEmpty()) {
+            return new GeneQueryResponse();
+        }
+
+        GeneQueryResponse geneQueryResponse =
+                fetchGeneIdsOrSetsGroupedByGeneQueryToken(geneQuery, Species.convertToEnsemblSpecies(species));
+
+        if (geneQueryResponse.isEmpty()) {
+            throw new GenesNotFoundException("No genes found for searchText = " + geneQuery.toJson() + ", species = " + species);
+        }
+
+        return geneQueryResponse;
     }
+
     public GeneQueryResponse fetchResponseBasedOnRequestContext(String geneQuery, String species) throws  GenesNotFoundException {
 
         if (StringUtils.isBlank(geneQuery)) {

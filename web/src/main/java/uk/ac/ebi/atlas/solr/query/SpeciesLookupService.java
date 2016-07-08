@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.solr.SolrUtil;
+import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -55,6 +57,20 @@ public class SpeciesLookupService {
             }
         }
         throw new ResourceNotFoundException("Species can't be determined for " + fieldName + ":" + multiTermQuery);
+    }
+
+    public String fetchFirstSpeciesByField(String fieldName, GeneQuery geneQuery) {
+        if (StringUtils.isBlank(fieldName)) {
+            fieldName = PROPERTY_LOWER_FIELD;
+        }
+
+        for (SemanticQueryTerm queryTerm : geneQuery) {
+            Optional<String> species = fetchFirstSpecies(fieldName, encloseInQuotes(queryTerm.value()));
+            if (species.isPresent()) {
+                return species.get();
+            }
+        }
+        throw new ResourceNotFoundException("Species can't be determined for " + fieldName + ":" + geneQuery.toJson());
     }
 
     // surround in quotes, so queries with special chars work, eg: "GO:0003674"

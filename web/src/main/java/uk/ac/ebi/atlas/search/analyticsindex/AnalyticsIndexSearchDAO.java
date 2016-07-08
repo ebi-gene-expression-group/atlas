@@ -7,14 +7,11 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsClient;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder;
 import uk.ac.ebi.atlas.solr.SolrUtil;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 19/10/15.
- */
 @Named
 @Scope("singleton")
 public class AnalyticsIndexSearchDAO {
@@ -26,7 +23,7 @@ public class AnalyticsIndexSearchDAO {
         this.analyticsClient = analyticsClient;
     }
 
-    public ImmutableSet<String> fetchExperimentTypes(OldGeneQuery geneQuery) {
+    public ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery) {
         SolrQuery solrQuery =
                new AnalyticsQueryBuilder()
                         .queryIdentifierSearch(geneQuery)

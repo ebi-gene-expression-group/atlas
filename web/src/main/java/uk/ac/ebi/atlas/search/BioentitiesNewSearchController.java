@@ -127,38 +127,38 @@ public class BioentitiesNewSearchController {
         return "";
     }
 
-    @RequestMapping(value ={"/newquery/results.json"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String newQueryAsJson(@Valid GeneQuerySearchRequestParameters requestParameters) {
-        checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
-
-        String selectedSpecies = requestParameters.hasOrganism() ? requestParameters.getOrganism().trim().toLowerCase() : "";
-
-        if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
-
-            if (requestParameters.getGeneQuery().size() == 1) {
-                return singleTermGeneQueryAsJson(requestParameters.getGeneQuery(), selectedSpecies);
-            } else {
-                return multiTermGeneQueryAsJson(requestParameters.getGeneQuery(), selectedSpecies);
-            }
-
-        } else if (!requestParameters.hasGeneQuery() && requestParameters.hasCondition()) {
-
-            // Only condition was specified
-            // if (requestParameters.getConditionQuery().size() == 1) {
-            //     return singleTermConditionQuery(requestParameters.getConditionQuery(), selectedSpecies, requestParameters.isExactMatch(), model, redirectAttributes);
-            // } else {
-            //     return multiTermConditionQuery(requestParameters.getConditionQuery(), selectedSpecies, requestParameters.isExactMatch(), model, redirectAttributes);
-            // }
-            return "";
-
-        } else {
-
-            return "";
-            // Both gene query and condition were specified
-
-        }
-    }
+//    @RequestMapping(value ={"/query/results.json"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+//    @ResponseBody
+//    public String newQueryAsJson(@Valid GeneQuerySearchRequestParameters requestParameters) {
+//        checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
+//
+//        String selectedSpecies = requestParameters.hasOrganism() ? requestParameters.getOrganism().trim().toLowerCase() : "";
+//
+//        if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
+//
+//            if (requestParameters.getGeneQuery().size() == 1) {
+//                return singleTermGeneQueryAsJson(requestParameters.getGeneQuery(), selectedSpecies);
+//            } else {
+//                return multiTermGeneQueryAsJson(requestParameters.getGeneQuery(), selectedSpecies);
+//            }
+//
+//        } else if (!requestParameters.hasGeneQuery() && requestParameters.hasCondition()) {
+//
+//            // Only condition was specified
+//            // if (requestParameters.getConditionQuery().size() == 1) {
+//            //     return singleTermConditionQuery(requestParameters.getConditionQuery(), selectedSpecies, requestParameters.isExactMatch(), model, redirectAttributes);
+//            // } else {
+//            //     return multiTermConditionQuery(requestParameters.getConditionQuery(), selectedSpecies, requestParameters.isExactMatch(), model, redirectAttributes);
+//            // }
+//            return "";
+//
+//        } else {
+//
+//            return "";
+//            // Both gene query and condition were specified
+//
+//        }
+//    }
 
     private String singleTermGeneQueryAsJson(GeneQuery geneQuery, String species) {
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();

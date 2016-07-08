@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 @Controller
@@ -47,7 +46,7 @@ public class GeneSetPageController extends BioentityPageController {
         model.addAttribute("species", species);
         model.addAttribute("queryType", "geneSet");
 
-        ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(OldGeneQuery.create(identifier));
+        ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(GeneQuery.create(identifier));
         model.addAttribute("hasDifferentialResults", ExperimentType.containsDifferential(experimentTypes));
 
         return super.showBioentityPage(identifier, model, experimentTypes);

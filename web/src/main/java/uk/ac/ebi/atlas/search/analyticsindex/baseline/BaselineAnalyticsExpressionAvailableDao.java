@@ -1,14 +1,13 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.base.Stopwatch;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
-import uk.ac.ebi.atlas.web.OldGeneQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,14 +36,14 @@ public class BaselineAnalyticsExpressionAvailableDao {
         this.solrBaseUrl = solrBaseUrl;
     }
 
-    public String fetchGenesInTissuesAboveCutoff(OldGeneQuery geneQuery) {
+    public String fetchGenesInTissuesAboveCutoff(GeneQuery geneQuery) {
         String identifierSearchQuery = buildGeneIdentifierQuery(geneQuery);
         return fetchResults(identifierSearchQuery);
     }
 
 
-    String buildGeneIdentifierQuery(OldGeneQuery geneQuery) {
-        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(\"%s\")", StringUtils.join(geneQuery.terms(), "\" OR \""));
+    String buildGeneIdentifierQuery(GeneQuery geneQuery) {
+        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF());
     }
 
 
