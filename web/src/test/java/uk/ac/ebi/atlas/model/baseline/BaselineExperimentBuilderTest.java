@@ -83,6 +83,7 @@ public class BaselineExperimentBuilderTest {
     public void testCreate() throws Exception {
 
         BaselineExperiment experiment = subject.forSpecies(SPECIES)
+                .ofType(ExperimentType.RNASEQ_MRNA_BASELINE)
                 .withAccession(EXPERIMENT_ACCESSION)
                 .withDescription(DESCRIPTION)
                 .withDisplayName(DISPLAY_NAME)
@@ -94,20 +95,6 @@ public class BaselineExperimentBuilderTest {
                 .withAssayGroups(assayGroupsMock)
                 .withDataProviderURL(PROVIDER_URL)
                 .withDataProviderDescription(PROVIDER_DESCRIPTION)
-                .create();
-
-        BaselineExperiment experiment1 = subject.forSpecies(SPECIES)
-                .withAccession(EXPERIMENT_ACCESSION)
-                .withDescription(DESCRIPTION)
-                .withDisplayName(DISPLAY_NAME)
-                .withExtraInfo(false)
-                .withSpeciesMapping(speciesMap)
-                .withPubMedIds(Sets.newHashSet(PUBMEDID))
-                .withExperimentDesign(experimentDesignMock)
-                .withExperimentalFactors(experimentalFactors)
-                .withAssayGroups(assayGroupsMock)
-                .withDataProviderURL(null)
-                .withDataProviderDescription(null)
                 .create();
 
         assertThat(experiment.getAccession(), is(EXPERIMENT_ACCESSION));

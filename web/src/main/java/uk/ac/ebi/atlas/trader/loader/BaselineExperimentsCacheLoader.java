@@ -4,13 +4,16 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.velocity.util.StringUtils;
+import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,22 +21,72 @@ import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/*
-TODO: we could use composition instead of inheritance here but there's some potential to merge the "load" methods of the two children of this class, which are very similar.
- */
 public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
 
+
+    private final ExperimentType experimentType;
     protected final BaselineExperimentExpressionLevelFile expressionLevelFile;
     protected final ConfigurationTrader configurationTrader;
     protected final SpeciesKingdomTrader speciesKingdomTrader;
 
-    public BaselineExperimentsCacheLoader(BaselineExperimentExpressionLevelFile expressionLevelFile,
-                                                ConfigurationTrader configurationTrader,
-                                                SpeciesKingdomTrader speciesKingdomTrader) {
-
+    protected BaselineExperimentsCacheLoader(ExperimentType experimentType, BaselineExperimentExpressionLevelFile
+            expressionLevelFile,
+                                          ConfigurationTrader configurationTrader,
+                                          SpeciesKingdomTrader speciesKingdomTrader) {
+        this.experimentType = experimentType;
         this.configurationTrader = configurationTrader;
         this.expressionLevelFile = expressionLevelFile;
         this.speciesKingdomTrader = speciesKingdomTrader;
+    }
+
+    @Override
+    public BaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
+                                   boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException {
+
+        String experimentAccession = experimentDTO.getExperimentAccession();
+
+        BaselineExperimentConfiguration factorsConfig = configurationTrader.getBaselineFactorsConfiguration(experimentAccession);
+
+        AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
+
+        boolean hasRData = configurationTrader.getExperimentConfiguration(experimentAccession).hasRData();
+
+        String kingdom = speciesKingdomTrader.getKingdom(experimentDTO.getSpecies());
+
+        String ensemblDB = speciesKingdomTrader.getEnsemblDB(experimentDTO.getSpecies());
+
+        String[] orderedAssayGroupIds;
+        boolean orderCurated;
+
+        if(factorsConfig.getOrderFactor() != null && factorsConfig.getOrderFactor().equals("curated")) {
+            orderCurated = true;
+            orderedAssayGroupIds = assayGroups.getAssayGroupIds().toArray(new String[assayGroups.getAssayGroupIds().size()]);
+        } else {
+            orderCurated = false;
+            orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
+        }
+
+        ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentAccession, experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds, orderCurated);
+
+        return new BaselineExperimentBuilder().forSpecies(experimentDTO.getSpecies())
+                .ofType(experimentType)
+                .ofKingdom(kingdom)
+                .ofEnsemblDB(ensemblDB)
+                .withAccession(experimentAccession)
+                .withLastUpdate(experimentDTO.getLastUpdate())
+                .withDescription(experimentDescription)
+                .withExtraInfo(hasExtraInfoFile)
+                .withDisplayName(factorsConfig.getExperimentDisplayName())
+                .withSpeciesMapping(factorsConfig.getSpeciesMapping())
+                .withPubMedIds(experimentDTO.getPubmedIds())
+                .withAssayGroups(assayGroups)
+                .withExperimentDesign(experimentDesign)
+                .withExperimentalFactors(experimentalFactors)
+                .withDataProviderURL(factorsConfig.getDataProviderURL())
+                .withDataProviderDescription(factorsConfig.getDataProviderDescription())
+                .withRData(hasRData)
+                .create();
+
     }
 
     protected ExperimentalFactors createExperimentalFactors(String experimentAccession, ExperimentDesign

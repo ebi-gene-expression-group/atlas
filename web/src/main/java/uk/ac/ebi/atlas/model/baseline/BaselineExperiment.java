@@ -15,25 +15,6 @@ public class BaselineExperiment extends Experiment {
     private List<String> dataProviderURL;
     private List<String> dataProviderDescription;
 
-    BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
-                       String description, String displayName, String species, String kingdom, String ensemblDB,
-                       Map<String, String> speciesMapping, boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds,
-                       ExperimentDesign experimentDesign, AssayGroups assayGroups) {
-        this(
-                accession, lastUpdate, experimentalFactors, description, displayName, species, kingdom, ensemblDB, speciesMapping,
-                hasExtraInfoFile, hasRData, pubMedIds, experimentDesign,  assayGroups, Collections.<String>emptyList(), Collections.<String>emptyList());
-    }
-
-    BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
-                       String description, String displayName, String species, String kingdom, String ensemblDB,
-                       Map<String, String> speciesMapping, boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds,
-                       ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription) {
-        this(
-                ExperimentType.RNASEQ_MRNA_BASELINE, accession, lastUpdate, experimentalFactors,
-                description, displayName, species, kingdom, ensemblDB, speciesMapping,
-                hasExtraInfoFile, hasRData, pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
-    }
-
     BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description, String displayName, String species, String kingdom, String ensemblDB, Map <String, String> speciesMapping,
                        boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription) {

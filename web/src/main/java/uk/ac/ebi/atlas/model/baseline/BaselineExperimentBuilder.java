@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Named;
 import java.util.Date;
@@ -36,6 +37,7 @@ public class BaselineExperimentBuilder {
     private Date lastUpdate;
     private AssayGroups assayGroups;
     private ExperimentalFactors experimentalFactors;
+    private ExperimentType experimentType;
 
     public BaselineExperimentBuilder forSpecies(String species) {
         this.species = species;
@@ -117,23 +119,24 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
+    public BaselineExperimentBuilder ofType(ExperimentType experimentType) {
+        this.experimentType = experimentType;
+        return this;
+    }
+
+
+
     public BaselineExperiment create() {
         validate();
 
-        return new BaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
-                displayName, species, kingdom, ensemblDB, speciesMapping, hasExtraInfoFile, hasRData,
-                pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
-    }
-
-    public ProteomicsBaselineExperiment createProteomics() {
-        validate();
-
-        return new ProteomicsBaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
+        return new BaselineExperiment(experimentType, experimentAccession, lastUpdate, experimentalFactors, description,
                 displayName, species, kingdom, ensemblDB, speciesMapping, hasExtraInfoFile, hasRData,
                 pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
     }
 
     void validate() {
+        checkNotNull(experimentType);
+        checkState(experimentType.isBaseline());
         checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
         checkState(CollectionUtils.isNotEmpty(assayGroups.getAssayGroupIds()), "Please provide a non empty set of AssayGroup objects");
         checkState(speciesMapping != null, "Please provide a map of species mappings");
