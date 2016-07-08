@@ -23,3 +23,4 @@ tmp/**
 **/rebel.xml
 **/*op-log.tsv
 *.log
+web/src/test/resources/expdesign/ExpDesign-TEST-*.tsv
