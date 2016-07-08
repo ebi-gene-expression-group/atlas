@@ -13,13 +13,12 @@ import java.io.IOException;
 @Scope("prototype")
 public class ExperimentDesignFileWriterBuilder {
 
-    private FileTsvWriterBuilder fileTsvWriterBuilder;
+    private final FileTsvWriterBuilder fileTsvWriterBuilder;
     private ExperimentType experimentType;
 
     @Inject
-    public ExperimentDesignFileWriterBuilder(@Value("#{configuration['experiment.experiment-design.path.template']}") String targetFilePathTemplate,
-                                             FileTsvWriterBuilder fileTsvWriterBuilder) {
-        this.fileTsvWriterBuilder = fileTsvWriterBuilder;
+    public ExperimentDesignFileWriterBuilder(@Value("#{configuration['experiment.experiment-design.path.template']}") String targetFilePathTemplate) {
+        this.fileTsvWriterBuilder = new FileTsvWriterBuilder();
         this.fileTsvWriterBuilder.forTsvFilePathTemplate(targetFilePathTemplate);
     }
 
