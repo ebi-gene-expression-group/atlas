@@ -9,7 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AnatomogramType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Properties;
@@ -66,7 +66,7 @@ public class ApplicationPropertiesTest {
     private BaselineExperiment mouseExperimentMock;
 
     @Mock
-    private BaselineExperimentsCache experimentCacheMock;
+    private RnaSeqBaselineExperimentsCache experimentCacheMock;
 
     @Mock
     private Properties configurationPropertiesMock;

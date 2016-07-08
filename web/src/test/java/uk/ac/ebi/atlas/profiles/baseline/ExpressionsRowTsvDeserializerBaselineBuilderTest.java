@@ -11,7 +11,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
 import java.util.concurrent.ExecutionException;
 
@@ -26,7 +26,7 @@ public class ExpressionsRowTsvDeserializerBaselineBuilderTest {
     private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
 
     @Mock
-    private BaselineExperimentsCache experimentsCacheMock;
+    private RnaSeqBaselineExperimentsCache experimentsCacheMock;
 
     @Mock
     private Factor factorMock1;

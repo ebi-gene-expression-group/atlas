@@ -43,7 +43,7 @@ public class ExperimentInfoListBuilderTest {
     private ExperimentTrader experimentTraderMock;
 
     @Mock
-    private BaselineExperimentsCache baselineExperimentsCacheMock;
+    private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCacheMock;
 
     @Mock
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCacheMock;
@@ -96,7 +96,7 @@ public class ExperimentInfoListBuilderTest {
         when(experimentTraderMock.getRnaSeqDifferentialExperimentAccessions()).thenReturn(Sets.newHashSet(DIFFERENTIAL));
         when(experimentTraderMock.getMicroarrayExperimentAccessions()).thenReturn(Sets.newHashSet(MICROARRAY));
 
-        when(baselineExperimentsCacheMock.getExperiment(ACCESSION)).thenReturn(baselineExperimentMock);
+        when(rnaSeqBaselineExperimentsCacheMock.getExperiment(ACCESSION)).thenReturn(baselineExperimentMock);
         when(rnaSeqDiffExperimentsCacheMock.getExperiment(DIFFERENTIAL)).thenReturn(differentialExperimentMock);
         when(microarrayExperimentsCacheMock.getExperiment(MICROARRAY)).thenReturn(microarrayExperimentMock);
 
@@ -116,7 +116,7 @@ public class ExperimentInfoListBuilderTest {
         when(baselineExperimentMock.getExperimentRunAccessions()).thenReturn(Sets.newHashSet("RUN"));
 
         subject = new ExperimentInfoListBuilder(experimentTraderMock,
-                baselineExperimentsCacheMock,
+                rnaSeqBaselineExperimentsCacheMock,
                 proteomicsBaselineExperimentsCacheMock, rnaSeqDiffExperimentsCacheMock,
                 microarrayExperimentsCacheMock,
                 publicExperimentTypesCacheMock,

@@ -40,7 +40,7 @@ public class ExperimentTraderTest {
     @Mock
     private ApplicationProperties applicationPropertiesMock;
     @Mock
-    private BaselineExperimentsCache baselineExperimentsCacheMock;
+    private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCacheMock;
     @Mock
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCacheMock;
     @Mock
@@ -70,7 +70,7 @@ public class ExperimentTraderTest {
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE)).thenReturn(Sets.newHashSet(E_PROT_1));
 
         subject = new ExperimentTrader(experimentDAOMock,
-                                        baselineExperimentsCacheMock,
+                rnaSeqBaselineExperimentsCacheMock,
                                         rnaSeqDiffExperimentsCacheMock,
                                         microarrayExperimentsCacheMock,
                                         proteomicsBaselineExperimentsCacheMock,
@@ -96,7 +96,7 @@ public class ExperimentTraderTest {
     public void getExperimentShouldUseTheCache() throws ExecutionException {
         given(publicExperimentTypesCacheMock.getExperimentType(E_GEOD_21860)).willReturn(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
         subject.getPublicExperiment(E_GEOD_21860);
-        verify(baselineExperimentsCacheMock,times(0)).getExperiment(E_GEOD_21860);
+        verify(rnaSeqBaselineExperimentsCacheMock,times(0)).getExperiment(E_GEOD_21860);
         verify(rnaSeqDiffExperimentsCacheMock, times(0)).getExperiment(E_GEOD_21860);
         verify(microarrayExperimentsCacheMock).getExperiment(E_GEOD_21860);
     }

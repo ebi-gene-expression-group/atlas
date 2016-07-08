@@ -21,7 +21,7 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
-public class ProteomicsBaselineExperimentsCacheLoader extends ExperimentsCacheLoader<ProteomicsBaselineExperiment> {
+public class ProteomicsBaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
 
     private final ProteomicsBaselineExperimentExpressionLevelFile expressionLevelFile;
     private final ConfigurationTrader configurationTrader;
@@ -37,7 +37,7 @@ public class ProteomicsBaselineExperimentsCacheLoader extends ExperimentsCacheLo
     }
 
     @Override
-    public ProteomicsBaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
+    public BaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
                                       boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();

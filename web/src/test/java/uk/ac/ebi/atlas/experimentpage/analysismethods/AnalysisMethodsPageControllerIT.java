@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
@@ -52,7 +53,7 @@ public class AnalysisMethodsPageControllerIT {
     @Before
     public void initSubject() throws Exception {
         requestMock = mock(HttpServletRequest.class);
-        ProteomicsBaselineExperiment proteomicsBaselineExperiment = proteomicsBaselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+        BaselineExperiment proteomicsBaselineExperiment = proteomicsBaselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
         when(requestMock.getRequestURI()).thenReturn("/gxa/experiments/" + EXPERIMENT_ACCESSION + "/analysis-methods");
     }
 

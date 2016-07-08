@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -20,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 @Named
 public class ExperimentTrader {
 
-    private BaselineExperimentsCache baselineExperimentsCache;
+    private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
     private MicroarrayExperimentsCache microarrayExperimentsCache;
     private ExperimentDAO experimentDAO;
@@ -30,14 +29,14 @@ public class ExperimentTrader {
 
     @Inject
     public ExperimentTrader(ExperimentDAO experimentDAO,
-                            BaselineExperimentsCache baselineExperimentsCache,
+                            RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache,
                             RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                             MicroarrayExperimentsCache microarrayExperimentsCache,
                             ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache,
                             PublicExperimentTypesCache publicExperimentTypesCache) {
 
         this.experimentDAO = experimentDAO;
-        this.baselineExperimentsCache = baselineExperimentsCache;
+        this.rnaSeqBaselineExperimentsCache = rnaSeqBaselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
         this.proteomicsBaselineExperimentsCache = proteomicsBaselineExperimentsCache;
@@ -71,7 +70,7 @@ public class ExperimentTrader {
 
         switch (type) {
             case RNASEQ_MRNA_BASELINE:
-                baselineExperimentsCache.evictExperiment(experimentAccession);
+                rnaSeqBaselineExperimentsCache.evictExperiment(experimentAccession);
                 break;
             case RNASEQ_MRNA_DIFFERENTIAL:
                 rnaSeqDiffExperimentsCache.evictExperiment(experimentAccession);
@@ -93,7 +92,7 @@ public class ExperimentTrader {
 
 
     public void removeAllExperimentsFromCache() {
-        baselineExperimentsCache.evictAll();
+        rnaSeqBaselineExperimentsCache.evictAll();
         rnaSeqDiffExperimentsCache.evictAll();
         microarrayExperimentsCache.evictAll();
         proteomicsBaselineExperimentsCache.evictAll();
@@ -106,7 +105,7 @@ public class ExperimentTrader {
         try {
             switch (experimentType) {
                 case RNASEQ_MRNA_BASELINE:
-                    return baselineExperimentsCache.getExperiment(experimentAccession);
+                    return rnaSeqBaselineExperimentsCache.getExperiment(experimentAccession);
                 case RNASEQ_MRNA_DIFFERENTIAL:
                     return rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
                 case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:

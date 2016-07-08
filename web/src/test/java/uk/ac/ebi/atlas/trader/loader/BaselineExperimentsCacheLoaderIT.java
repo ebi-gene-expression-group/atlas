@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.is;
 public class BaselineExperimentsCacheLoaderIT {
 
     @Inject
-    private BaselineExperimentsCacheLoader subject;
+    private RnaSeqBaselineExperimentsCacheLoader subject;
 
 
     @Test

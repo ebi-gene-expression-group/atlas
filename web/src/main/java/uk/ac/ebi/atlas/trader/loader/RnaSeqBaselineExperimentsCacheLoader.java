@@ -21,16 +21,16 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
-public class BaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
+public class RnaSeqBaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
 
     private final BaselineExperimentExpressionLevelFile expressionLevelFile;
     private final ConfigurationTrader configurationTrader;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     @Inject
-    public BaselineExperimentsCacheLoader(BaselineExperimentExpressionLevelFile expressionLevelFile,
-                                             ConfigurationTrader configurationTrader,
-                                             SpeciesKingdomTrader speciesKingdomTrader) {
+    public RnaSeqBaselineExperimentsCacheLoader(BaselineExperimentExpressionLevelFile expressionLevelFile,
+                                                ConfigurationTrader configurationTrader,
+                                                SpeciesKingdomTrader speciesKingdomTrader) {
 
         this.configurationTrader = configurationTrader;
         this.expressionLevelFile = expressionLevelFile;

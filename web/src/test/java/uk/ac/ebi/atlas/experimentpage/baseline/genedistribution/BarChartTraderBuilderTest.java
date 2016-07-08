@@ -32,7 +32,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
 import java.util.*;
 
@@ -71,7 +71,7 @@ public class BarChartTraderBuilderTest {
 
 
     @Mock
-    private BaselineExperimentsCache experimentsCacheMock;
+    private RnaSeqBaselineExperimentsCache experimentsCacheMock;
 
     @Mock
     private BaselineExpressionsInputStreamFactory baselineExpressionsInputStreamFactory;

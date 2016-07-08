@@ -12,12 +12,12 @@ import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("singleton")
-public class BaselineExperimentsCache implements ExperimentsCache<BaselineExperiment> {
+public class RnaSeqBaselineExperimentsCache implements ExperimentsCache<BaselineExperiment> {
 
     private LoadingCache<String, BaselineExperiment> experiments;
 
     @Inject
-    public BaselineExperimentsCache(@Qualifier("baselineExperimentsLoadingCache") LoadingCache<String, BaselineExperiment> experiments) {
+    public RnaSeqBaselineExperimentsCache(@Qualifier("rnaSeqBaselineExperimentsLoadingCache") LoadingCache<String, BaselineExperiment> experiments) {
         this.experiments = experiments;
     }
 

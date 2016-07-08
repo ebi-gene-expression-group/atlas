@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializerBuilder;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,14 +19,14 @@ public class ExpressionsRowDeserializerBaselineBuilder implements ExpressionsRow
 
     private String experimentAccession;
 
-    private BaselineExperimentsCache experimentsCache;
+    private RnaSeqBaselineExperimentsCache experimentsCache;
 
     public ExpressionsRowDeserializerBaselineBuilder() {
         //for subclassing
     }
 
     @Inject
-    public ExpressionsRowDeserializerBaselineBuilder(BaselineExperimentsCache experimentsCache) {
+    public ExpressionsRowDeserializerBaselineBuilder(RnaSeqBaselineExperimentsCache experimentsCache) {
         this.experimentsCache = experimentsCache;
     }
 

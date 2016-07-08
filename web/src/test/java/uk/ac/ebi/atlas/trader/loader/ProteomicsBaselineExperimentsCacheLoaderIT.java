@@ -67,7 +67,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     @Test
     public void correctSpeciesReadFromDatabase() throws Exception {
         //given
-        ProteomicsBaselineExperiment experiment = subject.load(E_PROT_1);
+        BaselineExperiment experiment = subject.load(E_PROT_1);
         //then
         String species = experiment.getSpecies();
         assertThat(species, is("Homo sapiens"));

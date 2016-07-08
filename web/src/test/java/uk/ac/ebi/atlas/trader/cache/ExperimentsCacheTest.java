@@ -19,11 +19,11 @@ public class ExperimentsCacheTest {
     @Mock
     private LoadingCache<String, BaselineExperiment> loadingCacheMock;
 
-    private BaselineExperimentsCache subject;
+    private RnaSeqBaselineExperimentsCache subject;
 
     @Before
     public void init() throws Exception {
-        subject = new BaselineExperimentsCache(loadingCacheMock);
+        subject = new RnaSeqBaselineExperimentsCache(loadingCacheMock);
     }
 
     @Test(expected = ExecutionException.class)

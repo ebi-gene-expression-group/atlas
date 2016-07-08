@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutionException;
 @Scope("prototype")
 public class ExperimentInfoListBuilder {
 
-    private BaselineExperimentsCache baselineExperimentsCache;
+    private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
 
     private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache;
 
@@ -40,14 +40,14 @@ public class ExperimentInfoListBuilder {
 
     @Inject
     public ExperimentInfoListBuilder(ExperimentTrader experimentTrader,
-                                     BaselineExperimentsCache baselineExperimentsCache,
+                                     RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache,
                                      ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache,
                                      RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                                      MicroarrayExperimentsCache microarrayExperimentsCache,
                                      PublicExperimentTypesCache publicExperimentTypesCache,
                                      ArrayDesignTrader arrayDesignTrader) {
         this.experimentTrader = experimentTrader;
-        this.baselineExperimentsCache = baselineExperimentsCache;
+        this.rnaSeqBaselineExperimentsCache = rnaSeqBaselineExperimentsCache;
         this.proteomicsBaselineExperimentsCache = proteomicsBaselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
@@ -125,7 +125,7 @@ public class ExperimentInfoListBuilder {
         for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
             try {
 
-                BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
+                BaselineExperiment experiment = rnaSeqBaselineExperimentsCache.getExperiment(experimentAccession);
 
                 ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
                 experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());

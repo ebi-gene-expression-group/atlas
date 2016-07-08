@@ -2,9 +2,9 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParser;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
@@ -23,7 +23,7 @@ public class ExperimentMetadataCRUDFactory {
     ConfigurationTrader configurationTrader;
 
     @Inject
-    BaselineExperimentsCache baselineExperimentsCache;
+    RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
 
     @Inject
     RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
@@ -52,9 +52,10 @@ public class ExperimentMetadataCRUDFactory {
     public ExperimentMetadataCRUD create(ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder, ExperimentDAO experimentDao, ConditionsIndexTrader conditionsIndexTrader) {
 
         ProteomicsBaselineExperimentsCacheLoader loader = loaderFactory.create(experimentDao);
-        LoadingCache<String, ProteomicsBaselineExperiment> loadingCache = CacheBuilder.newBuilder().maximumSize(1).build(loader);
+        LoadingCache<String, BaselineExperiment> loadingCache = CacheBuilder.newBuilder().maximumSize(1).build(loader);
         ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache = new ProteomicsBaselineExperimentsCache(loadingCache);
-        ExperimentTrader experimentTrader = new ExperimentTrader(experimentDao, baselineExperimentsCache, rnaSeqDiffExperimentsCache, microarrayExperimentsCache, proteomicsBaselineExperimentsCache, publicExperimentTypesCache);
+        ExperimentTrader experimentTrader = new ExperimentTrader(experimentDao, rnaSeqBaselineExperimentsCache,
+                rnaSeqDiffExperimentsCache, microarrayExperimentsCache, proteomicsBaselineExperimentsCache, publicExperimentTypesCache);
 
         ExperimentMetadataCRUD experimentMetadataCRUD = new ExperimentMetadataCRUD(experimentDao, experimentTrader, experimentDTOBuilder, condensedSdrfParser, efoParentsLookupService);
         experimentMetadataCRUD.setConditionsIndexTrader(conditionsIndexTrader);

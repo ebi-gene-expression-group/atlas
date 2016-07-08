@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Inject;
@@ -23,11 +23,11 @@ import static org.junit.Assert.assertThat;
 public class PreferencesForBaselineExperimentsIT {
 
     @Inject
-    BaselineExperimentsCache baselineExperimentsCache;
+    RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
 
     @Test
     public void searchingForAllFactorsSetsSpecificToFalse_singleFactorExperiment() throws ExecutionException {
-        BaselineExperiment experiment = baselineExperimentsCache.getExperiment("E-MTAB-3827");
+        BaselineExperiment experiment = rnaSeqBaselineExperimentsCache.getExperiment("E-MTAB-3827");
         ImmutableSet<String> allFactors = ImmutableSet.of("cord blood", "venous blood");
 
         BaselineRequestPreferences preferences = new BaselineRequestPreferences();
@@ -41,7 +41,7 @@ public class PreferencesForBaselineExperimentsIT {
 
     @Test
     public void searchingForAllFactorsSetsSpecificToFalse_multiFactorExperiment() throws ExecutionException {
-        BaselineExperiment experiment = baselineExperimentsCache.getExperiment("E-MTAB-2812");
+        BaselineExperiment experiment = rnaSeqBaselineExperimentsCache.getExperiment("E-MTAB-2812");
         ImmutableSet<String> allFactors = ImmutableSet.of("hermaphrodite");
 
         BaselineRequestPreferences preferences = new BaselineRequestPreferences();

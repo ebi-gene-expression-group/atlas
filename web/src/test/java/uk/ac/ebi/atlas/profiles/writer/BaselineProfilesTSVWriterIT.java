@@ -10,9 +10,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Inject;
@@ -37,7 +36,7 @@ public class BaselineProfilesTSVWriterIT {
     private BaselineProfilesTSVWriter subject;
 
     @Inject
-    private BaselineExperimentsCache baselineExperimentsCache;
+    private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
 
     private BaselineRequestPreferences requestPreferences;
 
@@ -47,7 +46,7 @@ public class BaselineProfilesTSVWriterIT {
     public void setUp() throws Exception {
         requestPreferences = new BaselineRequestPreferences();
         requestPreferences.setQueryFactorType("ORGANISM_PART");
-        BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+        BaselineExperiment baselineExperiment = rnaSeqBaselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
         requestContext = BaselineRequestContext.createFor(baselineExperiment,requestPreferences);
     }
 
@@ -113,7 +112,7 @@ public class BaselineProfilesTSVWriterIT {
 
     @Test
     public void secondHeaderLineShouldIncludeBitsOfTheQuery() throws ExecutionException {
-        BaselineExperiment experiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+        BaselineExperiment experiment = rnaSeqBaselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
 
         String organismPart = "brain";
 

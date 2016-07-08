@@ -1,26 +1,20 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
 import javax.inject.Inject;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 
 import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -33,7 +27,7 @@ import static org.junit.Assert.*;
 public class ExperimentalFactorsIT {
 
     @Inject
-    private BaselineExperimentsCache experimentsCache;
+    private RnaSeqBaselineExperimentsCache experimentsCache;
 
     ExperimentalFactors subject;
 

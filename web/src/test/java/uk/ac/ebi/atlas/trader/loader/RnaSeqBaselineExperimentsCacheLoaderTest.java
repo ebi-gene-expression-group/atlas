@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineExperimentsCacheLoaderTest {
+public class RnaSeqBaselineExperimentsCacheLoaderTest {
 
     public static final String SPECIES = "species";
     public static final String DEFAULT_QUERY_FACTOR_TYPE = "defaultQueryFactorType";
@@ -58,7 +58,7 @@ public class BaselineExperimentsCacheLoaderTest {
     @Mock
     private AssayGroups assayGroupsMock;
 
-    private BaselineExperimentsCacheLoader subject;
+    private RnaSeqBaselineExperimentsCacheLoader subject;
 
     private final static String PATH_TEMPLATE_FAKE = "FAKE_PATH_TEMPLATE";
 
@@ -68,7 +68,7 @@ public class BaselineExperimentsCacheLoaderTest {
         when(fileTsvReaderBuilderMock.forTsvFilePathTemplate(PATH_TEMPLATE_FAKE)).thenReturn(fileTsvReaderBuilderMock);
         when(fileTsvReaderBuilderMock.build()).thenReturn(experimentDataTsvReaderMock);
 
-        subject = new BaselineExperimentsCacheLoader(new BaselineExperimentExpressionLevelFile(fileTsvReaderBuilderMock, PATH_TEMPLATE_FAKE), configurationTraderMock, speciesKingdomTraderMock);
+        subject = new RnaSeqBaselineExperimentsCacheLoader(new BaselineExperimentExpressionLevelFile(fileTsvReaderBuilderMock, PATH_TEMPLATE_FAKE), configurationTraderMock, speciesKingdomTraderMock);
     }
 
 

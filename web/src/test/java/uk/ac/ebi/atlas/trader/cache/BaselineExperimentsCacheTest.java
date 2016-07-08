@@ -26,12 +26,12 @@ public class BaselineExperimentsCacheTest {
     @Mock
     private BaselineExperiment baselineExperimentMock;
 
-    private BaselineExperimentsCache subject;
+    private RnaSeqBaselineExperimentsCache subject;
 
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineExperimentsCache(loadingCacheMock);
+        subject = new RnaSeqBaselineExperimentsCache(loadingCacheMock);
     }
 
     @Test

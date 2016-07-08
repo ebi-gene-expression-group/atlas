@@ -9,7 +9,6 @@ import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTrader;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.loader.*;
@@ -19,9 +18,9 @@ import javax.inject.Inject;
 @Configuration
 public class CacheConfiguration {
 
-    @Bean(name="baselineExperimentsLoadingCache")
+    @Bean(name="rnaSeqBaselineExperimentsLoadingCache")
     @Inject
-    public LoadingCache<String, BaselineExperiment> baselineExperimentsCache(BaselineExperimentsCacheLoader cacheLoader){
+    public LoadingCache<String, BaselineExperiment> baselineExperimentsCache(RnaSeqBaselineExperimentsCacheLoader cacheLoader){
 
         return CacheBuilder.newBuilder().build(cacheLoader);
 
@@ -29,7 +28,7 @@ public class CacheConfiguration {
 
     @Bean(name="proteomicsBaselineExperimentsLoadingCache")
     @Inject
-    public LoadingCache<String, ProteomicsBaselineExperiment> proteomicsBaselineExperimentsCache(ProteomicsBaselineExperimentsCacheLoader cacheLoader){
+    public LoadingCache<String, BaselineExperiment> proteomicsBaselineExperimentsCache(ProteomicsBaselineExperimentsCacheLoader cacheLoader){
 
         return CacheBuilder.newBuilder().build(cacheLoader);
 

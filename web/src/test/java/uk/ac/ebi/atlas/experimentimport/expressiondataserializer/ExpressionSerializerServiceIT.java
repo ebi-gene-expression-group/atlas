@@ -12,7 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
@@ -39,7 +39,7 @@ public class ExpressionSerializerServiceIT {
     public ExperimentTrader experimentTrader;
 
     @Inject
-    public BaselineExperimentsCache baselineExperimentsCache;
+    public RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
 
     @Mock
     ExperimentChecker experimentChecker;
@@ -63,7 +63,7 @@ public class ExpressionSerializerServiceIT {
                 new RnaSeqBaselineExpressionKryoSerializer(serializedExpressionsFileTemplate, tsvFileTemplate, new CsvReaderFactory()));
 
         subject = new ExpressionSerializerService(experimentTrader, expressionSerializerFactory,
-                baselineExperimentsCache,experimentChecker);
+                rnaSeqBaselineExperimentsCache,experimentChecker);
     }
 
     @Test

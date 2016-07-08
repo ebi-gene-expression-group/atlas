@@ -11,7 +11,7 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
 import javax.inject.Inject;
 import java.util.Set;
@@ -33,11 +33,11 @@ public class BaselineExpressionSearchResultIT {
     private static final String ORGANISM_PART = "ORGANISM_PART";
     private static final String CELL_LINE = "CELL_LINE";
     @Inject
-    private BaselineExperimentsCache baselineExperimentsCache;
+    private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
 
     @Test
     public void e_mtab_513_TwoSpecificAssayGroups() throws ExecutionException {
-        BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_MTAB_513);
+        BaselineExperiment experiment = rnaSeqBaselineExperimentsCache.getExperiment(E_MTAB_513);
 
         BaselineExperimentAssayGroup subject = new BaselineExperimentAssayGroup(E_MTAB_513, E_MTAB_513, "Homo sapiens", ORGANISM_PART, true);
 
@@ -55,7 +55,7 @@ public class BaselineExpressionSearchResultIT {
 
     @Test
     public void e_mtab_513_AllAssayGroups() throws ExecutionException {
-        BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_MTAB_513);
+        BaselineExperiment experiment = rnaSeqBaselineExperimentsCache.getExperiment(E_MTAB_513);
 
         BaselineExperimentAssayGroup subject = new BaselineExperimentAssayGroup(E_MTAB_513, E_MTAB_513, "Homo sapiens", ORGANISM_PART, true);
 
@@ -70,7 +70,7 @@ public class BaselineExpressionSearchResultIT {
     @Test
     @Ignore("This specific data is gone form the cache but its format serves as good documentation")
     public void multiFactor_TwoSpecificAssayGroups_InSlice() throws ExecutionException  {
-        BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_GEOD_26284);
+        BaselineExperiment experiment = rnaSeqBaselineExperimentsCache.getExperiment(E_GEOD_26284);
 
         BaselineExperimentAssayGroup subject = new BaselineExperimentAssayGroup(E_GEOD_26284, E_GEOD_26284, "Homo sapiens", CELL_LINE, true);
 
@@ -91,7 +91,7 @@ public class BaselineExpressionSearchResultIT {
     @Test
     @Ignore("This specific data is gone form the cache but its format serves as good documentation")
     public void multiFactor_AllAssayGroups_InSlice() throws ExecutionException {
-        BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_GEOD_26284);
+        BaselineExperiment experiment = rnaSeqBaselineExperimentsCache.getExperiment(E_GEOD_26284);
 
         BaselineExperimentAssayGroup subject = new BaselineExperimentAssayGroup(E_GEOD_26284, E_GEOD_26284, "Homo sapiens", CELL_LINE, true);
 
