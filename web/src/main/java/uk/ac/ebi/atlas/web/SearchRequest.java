@@ -1,35 +1,17 @@
-
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Objects;
 
 public class SearchRequest {
 
-    private OldGeneQuery geneQuery = getDefaultGeneQuery();
-    private SemanticQuery semanticQuery = getDefaultSemanticQuery();
+    private GeneQuery geneQuery = getDefaultGeneQuery();
 
-    protected OldGeneQuery getDefaultGeneQuery() {
-        return OldGeneQuery.EMPTY;
+    protected GeneQuery getDefaultGeneQuery() {
+        return GeneQuery.create();
     }
 
-    protected SemanticQuery getDefaultSemanticQuery() {
-        return SemanticQuery.create();
-    }
-
-    public OldGeneQuery getGeneQuery() {
-        return this.geneQuery;
-    }
-
-    public SemanticQuery getSemanticQuery() {
-        return this.semanticQuery;
-    }
-
-    public void setGeneQuery(OldGeneQuery geneQuery) {
+    public void setGeneQuery(GeneQuery geneQuery) {
         this.geneQuery = geneQuery;
-    }
-
-    public void setSemanticQuery(SemanticQuery semanticQuery) {
-        this.semanticQuery = semanticQuery;
     }
 
     public String toString() {
@@ -42,7 +24,4 @@ public class SearchRequest {
         return !geneQuery.isEmpty();
     }
 
-    public boolean hasSemanticQuery() {
-        return !semanticQuery.isEmpty();
-    }
 }

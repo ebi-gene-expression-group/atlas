@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.web.OldGeneQuery;
-import uk.ac.ebi.atlas.web.SemanticQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import javax.inject.Named;
@@ -72,7 +72,7 @@ public class AnalyticsQueryBuilder {
     }
 
 
-    public AnalyticsQueryBuilder queryIdentifierSearch(SemanticQuery semanticQuery) {
+    public AnalyticsQueryBuilder queryIdentifierSearch(GeneQuery semanticQuery) {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for (SemanticQueryTerm term : semanticQuery) {
             if (term.hasValue()) {

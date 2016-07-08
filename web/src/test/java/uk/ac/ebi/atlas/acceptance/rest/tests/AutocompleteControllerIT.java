@@ -6,7 +6,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
-import uk.ac.ebi.atlas.web.SemanticQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class AutocompleteControllerIT {
         ResponseBody responseBody = subject.getResponse().body();
         String jsonString = responseBody.asString();
         //when
-        SemanticQuery query = SemanticQuery.fromJson(jsonString);
+        GeneQuery query = GeneQuery.fromJson(jsonString);
         SemanticQueryTerm firstTerm = query.iterator().next();
         //then
         assertThat(firstTerm.value(), is("ASPA"));
@@ -57,7 +57,7 @@ public class AutocompleteControllerIT {
         ResponseBody responseBody = emptySpeciesRequest.getResponse().body();
         String jsonString = responseBody.asString();
         //when
-        SemanticQuery query = SemanticQuery.fromJson(jsonString);
+        GeneQuery query = GeneQuery.fromJson(jsonString);
         List<SemanticQueryTerm> suggestionList = Lists.newArrayList(query);
         //then
         assertThat(suggestionList, hasSize(15));

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 
@@ -10,24 +9,23 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
 
 @AutoValue
-public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
+public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
 
     public abstract ImmutableSet<SemanticQueryTerm> terms();
 
-    public static SemanticQuery create(Collection<SemanticQueryTerm> queryTerms) {
-        return new AutoValue_SemanticQuery(ImmutableSet.copyOf(queryTerms));
+    public static GeneQuery create(Collection<SemanticQueryTerm> queryTerms) {
+        return new AutoValue_GeneQuery(ImmutableSet.copyOf(queryTerms));
     }
 
-    public static SemanticQuery create() {
-        return new AutoValue_SemanticQuery(ImmutableSet.<SemanticQueryTerm>of());
+    public static GeneQuery create() {
+        return new AutoValue_GeneQuery(ImmutableSet.<SemanticQueryTerm>of());
     }
 
-    public static SemanticQuery create(SemanticQueryTerm... queryTerms) {
+    public static GeneQuery create(SemanticQueryTerm... queryTerms) {
         ImmutableSet.Builder<SemanticQueryTerm> builder = ImmutableSet.builder();
-        return new AutoValue_SemanticQuery(builder.add(queryTerms).build());
+        return new AutoValue_GeneQuery(builder.add(queryTerms).build());
     }
 
     @Override
@@ -66,14 +64,25 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return URLEncoder.encode(gson.toJson(terms()), "UTF-8");
     }
 
-    public static SemanticQuery fromJson(String json) {
+    public static GeneQuery fromJson(String json) {
         Gson gson = new Gson();
         return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(json, AutoValue_SemanticQueryTerm[].class)));
     }
 
-    public static SemanticQuery fromUrlEncodedJson(String json) throws UnsupportedEncodingException {
+    public static GeneQuery fromUrlEncodedJson(String json) throws UnsupportedEncodingException {
         Gson gson = new Gson();
         return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(URLDecoder.decode(json, "UTF-8"), AutoValue_SemanticQueryTerm[].class)));
+    }
+
+    public String prettyString() {
+        StringBuilder prettyStringBuilder = new StringBuilder();
+
+        for (SemanticQueryTerm queryTerm : terms()) {
+            prettyStringBuilder.append(String.format("Query term: \"%s\" - Category: \"%s\"", queryTerm.value(), queryTerm.category()));
+            prettyStringBuilder.append("\n");
+        }
+
+        return prettyStringBuilder.toString();
     }
 
     @Override

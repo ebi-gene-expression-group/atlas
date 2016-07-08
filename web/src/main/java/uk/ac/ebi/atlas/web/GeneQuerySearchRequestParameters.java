@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.search.ConditionQuery;
 
-
 //TODO: move TagEditor code to the frontend - ideally information about the format used by the tag editor to
 //represent multiple terms (ie: seperated by tabs) would be contained to the Tag editor JS and spread throughout
 //the code base

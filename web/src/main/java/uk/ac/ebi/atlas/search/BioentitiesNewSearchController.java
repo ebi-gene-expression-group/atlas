@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
-import uk.ac.ebi.atlas.web.SemanticQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -70,7 +70,7 @@ public class BioentitiesNewSearchController {
     }
 
 
-    private String singleTermGeneQuery(SemanticQuery geneQuery, String species, Model model, RedirectAttributes redirectAttributes) {
+    private String singleTermGeneQuery(GeneQuery geneQuery, String species, Model model, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("searchDescription", geneQuery.toString());
 
         // Gene set ID
@@ -123,7 +123,7 @@ public class BioentitiesNewSearchController {
 //        return "bioEntities";
     }
 
-    private String multiTermGeneQuery(SemanticQuery geneQuery, String species, Model model, RedirectAttributes redirectAttributes) {
+    private String multiTermGeneQuery(GeneQuery geneQuery, String species, Model model, RedirectAttributes redirectAttributes) {
         return "";
     }
 
@@ -160,7 +160,7 @@ public class BioentitiesNewSearchController {
         }
     }
 
-    private String singleTermGeneQueryAsJson(SemanticQuery geneQuery, String species) {
+    private String singleTermGeneQueryAsJson(GeneQuery geneQuery, String species) {
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
 
         // Gene set ID
@@ -178,7 +178,7 @@ public class BioentitiesNewSearchController {
         return gson.toJson(Sets.newHashSet());
     }
 
-    private String multiTermGeneQueryAsJson(SemanticQuery geneQuery, String species) {
+    private String multiTermGeneQueryAsJson(GeneQuery geneQuery, String species) {
         return "";
     }
 

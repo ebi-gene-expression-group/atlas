@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsClient;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder;
 import uk.ac.ebi.atlas.solr.SolrUtil;
-import uk.ac.ebi.atlas.web.SemanticQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,7 +26,7 @@ public class AnalyticsSearchService {
         this.analyticsClient = analyticsClient;
     }
 
-    public Optional<ImmutableSet<String>> searchBioentityIdentifiers(SemanticQuery geneQuery, String species) {
+    public Optional<ImmutableSet<String>> searchBioentityIdentifiers(GeneQuery geneQuery, String species) {
         QueryResponse queryResponse = analyticsClient.query(new AnalyticsQueryBuilder().queryIdentifierSearch(geneQuery).ofSpecies(species).setRows(0).facetByBioentityIdentifier().build());
         return Optional.of(SolrUtil.extractFirstFacetValues(queryResponse));
     }

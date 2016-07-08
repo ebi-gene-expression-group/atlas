@@ -3,13 +3,13 @@ package uk.ac.ebi.atlas.web;
 import java.beans.PropertyEditorSupport;
 import java.io.UnsupportedEncodingException;
 
-public class SemanticQueryPropertyEditor extends PropertyEditorSupport {
+public class GeneQueryPropertyEditor extends PropertyEditorSupport {
 
 
     @Override
     public void setAsText(String text)  {
         try {
-            setValue(SemanticQuery.fromUrlEncodedJson(text));
+            setValue(GeneQuery.fromUrlEncodedJson(text));
         } catch (UnsupportedEncodingException e) {
             throw new IllegalArgumentException(e);
         }
@@ -18,7 +18,7 @@ public class SemanticQueryPropertyEditor extends PropertyEditorSupport {
     @Override
     public String getAsText() {
         try {
-            return ((SemanticQuery) this.getValue()).toUrlEncodedJson();
+            return ((GeneQuery) this.getValue()).toUrlEncodedJson();
         } catch (UnsupportedEncodingException e) {
             return null;
         }
