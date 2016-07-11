@@ -111,11 +111,6 @@ var rankColumnsByExpression = function(expressions){
   );
 };
 
-
-var rankRowsByExpression = function(expressions){
-  return rankColumnsByExpression(_.zip.apply(_,expressions));
-};
-
 var rankColumnsByThreshold = function(threshold, expressions){
   return (
     expressions
@@ -141,10 +136,6 @@ var rankColumnsByThreshold = function(threshold, expressions){
       );
     })
   );
-};
-
-var rankRowsByThreshold = function(threshold, expressions){
-  return rankColumnsByThreshold(threshold, _.zip.apply(_,expressions));
 };
 
 var getXAxisCategories = function (columnHeaders, isDifferential) {
@@ -358,13 +349,14 @@ var calculateColumnRank = function(expressions){
 }
 
 var calculateRowRank = function (expressions, config){
+  var transposed = _.zip.apply(_,expressions);
   return (
     config.isMultiExperiment
-    ?   combineRanks([
-          [rankRowsByExpression(expressions), 1e3],
-          [rankRowsByThreshold(0.4,expressions), 1e6]
-        ])
-    : rankRowsByExpression(expressions)
+    ? combineRanks([
+      [rankColumnsByExpression(transposed), 1e3],
+      [rankColumnsByThreshold(0.4,transposed), 1e6]
+    ])
+    : rankColumnsByExpression(transposed)
   );
 }
 
