@@ -23,8 +23,8 @@ var createOrdering = function(rank, comparator, arr){
       return [e,ix];
     })
     .sort(function(e_ixLeft,e_ixRight){
-      return ( //higher ranks go to the beginning of series
-        rank[e_ixRight[1]] - rank[e_ixLeft[1]] || comparator(e_ixLeft[0],e_ixRight[0])
+      return ( //lower ranks go to the beginning of series
+        rank[e_ixLeft[1]] - rank[e_ixRight[1]] || comparator(e_ixLeft[0],e_ixRight[0])
       );
     }).map(function(e_ix){
       return e_ix[1];
@@ -46,39 +46,41 @@ var comparatorByProperty = _.curry(
 
 var rankColumnsByExpression = function(expressions){
   return (
-    expressions.map(
-      function(row){
-        var rowIndexed = row.map(
-          function(point, ix){
-              return [point,ix];
-          }
-        );
-        var indicesSortedByExpression =
-          rowIndexed
-            .filter(
-              function(e){
-                return e[0].hasOwnProperty("value")
-              })
-            .sort(
-              function(l,r){
-                return l[0].value - r[0].value;
-              })
-            .map(
-              function(p){
-                return p[1];
-              });
-        return (rowIndexed.map(
-          function(pointAndIndex){
-            return 1 + indicesSortedByExpression.indexOf(pointAndIndex[1]); //rank value zero means no expression
-          })
-        );
-      })
-  .reduce(function(r1,r2){
-    return r1.map(
-      function(el,ix){
-        return el + r2[ix];
-      });
+    _.chain(expressions)
+    .map(function(row){
+      var valuesInRow =
+        row
+        .filter(function(e) {
+        	return e.hasOwnProperty("value") && !isNaN(e.value);
+        })
+        .map(function(e) {
+        	return e.value;
+        })
+        .sort(function(l, r) {
+        	return r - l;
+        })
+        .filter(function(e, ix, self) {
+        	return self.indexOf(e) === ix;
+        });
+      return (
+        row.map(function(e){
+          return e.value === undefined ? "missing" : valuesInRow.indexOf(e.value);
+        })
+      );
     })
+    .thru(_.spread(_.zip))
+    .map(function(ranks){
+      return (
+        ranks
+        .filter(_.negate(isNaN))
+      );
+    })
+    .map(function(ranks){
+      return (
+        _.sum(ranks) / ranks.length
+      );
+    })
+    .value()
   );
 };
 
@@ -98,7 +100,7 @@ var rankColumnsByThreshold = function(threshold, expressions){
               return +point.hasOwnProperty("value");
             }
           )
-        )
+        );
       })
     .reduce(function(r1,r2){
       return r1.map(
@@ -108,8 +110,8 @@ var rankColumnsByThreshold = function(threshold, expressions){
       })
     .map(function(countOfExperimentsWhereTissueExpressed){
       return (
-        countOfExperimentsWhereTissueExpressed > expressions.length * threshold ? 10e6 : 0
-      )
+        countOfExperimentsWhereTissueExpressed > expressions.length * threshold ? 0 : 10e6
+      );
     })
   );
 };
