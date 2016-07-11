@@ -32,7 +32,7 @@ var geneQueryTagEditorModule = (function($) {
                                 return {
                                     label: obj.value,
                                     value: obj.value,
-                                    category: obj.source
+                                    category: obj.category
                                 };
                             });
                             response(category_data);
