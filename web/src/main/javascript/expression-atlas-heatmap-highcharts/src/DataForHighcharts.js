@@ -168,7 +168,7 @@ var _dataPointsFromRow = function(row, columnNumber){
     row.expressions
     .map(_.curry(__dataPointFromExpression,3)(columnNumber))
     .filter(function(el) {
-        return el;
+      return el;
     })
   );
 }
@@ -204,8 +204,7 @@ var _groupSingleExperiment = function(chain, config){
           ? "PROTEOMICS_BASELINE"
           : "RNASEQ_MRNA_BASELINE"
     );
-  }
-
+  };
   return (
     chain
     .map(_dataPointsFromRow)
@@ -262,12 +261,12 @@ var _getDataSeries = function (thresholds, names, colours, profilesRows, config)
     .map(_.spread(_experimentsIntoDataSeriesByThresholds(thresholds)))
     .flatten()
     .groupBy(_.spread(function(dataSeriesAssigned, point) {
-        return dataSeriesAssigned;
+      return dataSeriesAssigned;
     }))
     .mapValues(function(bucket) {
-        return bucket.map(_.spread(function(dataSeriesAssigned, point) {
-            return point;
-        }))
+      return bucket.map(_.spread(function(dataSeriesAssigned, point) {
+        return point;
+      }))
     })
     .transform(function(result, bucket, bucketNumber) {
         result[bucketNumber].data=bucket;
