@@ -172,7 +172,7 @@
                 var $geneQuery = $('#geneQuery'),
                     geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
                 geneQueryTags.forEach(function(geneQueryTag){
-                    $geneQuery.jsonTagEditor('removeTag', geneQueryTag.tagValue);
+                    $geneQuery.jsonTagEditor('removeTag', geneQueryTag.value);
                 });
 
                 var $sampleProperties =  $('#condition'),
