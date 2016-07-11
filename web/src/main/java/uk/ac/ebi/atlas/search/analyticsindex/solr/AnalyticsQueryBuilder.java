@@ -134,6 +134,7 @@ public class AnalyticsQueryBuilder {
         }
 
         solrQuery.setQuery(stringBuilder.toString());
+        solrQuery.setFacetLimit(-1);
         return solrQuery;
     }
 

@@ -12,9 +12,6 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 22/02/2016.
- */
 @Named
 @Scope("singleton")
 public class AnalyticsSearchService {
