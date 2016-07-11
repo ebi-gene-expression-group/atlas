@@ -9,29 +9,27 @@ var _ = require('lodash');
 //*------------------------------------------------------------------*
 
 var EMPTY = {
-  xAxisCategories: {},
-  columnOrderings: {},
-  yAxisCategories: {},
-  rowOrderings:{},
-  dataSeries: [[],[],[],[]],
+    xAxisCategories: {},
+    columnOrderings: {},
+    yAxisCategories: {},
+    rowOrderings:{},
+    dataSeries: [[],[],[],[]]
 };
 
 //apply rank first,use comparator to resolve ties
 var createOrdering = function(rank, comparator, arr){
-  return (
-    arr
-    .map(function(e,ix){
-      return [e,ix];
-    })
-    .sort(function(e_ixLeft,e_ixRight){
-      return ( //higher ranks go to the beginning of series
-        rank[e_ixRight[1]] - rank[e_ixLeft[1]] || comparator(e_ixLeft[0],e_ixRight[0])
-      );
-    })
-    .map(function(e_ix){
-      return e_ix[1];
-    })
-  );
+    return (
+        arr.map(function(e,ix){
+                return [e,ix];
+            })
+            .sort(function(e_ixLeft,e_ixRight){
+                return ( //higher ranks go to the beginning of series
+                    rank[e_ixRight[1]] - rank[e_ixLeft[1]] || comparator(e_ixLeft[0],e_ixRight[0])
+                );
+            }).map(function(e_ix){
+                return e_ix[1];
+            })
+    );
 };
 
 var createAlphabeticalOrdering= function(property, arr){
@@ -41,42 +39,40 @@ var createAlphabeticalOrdering= function(property, arr){
 }
 
 var comparatorByProperty = _.curry(
-  function (property,e1,e2){
-    return e1[property].localeCompare(e2[property]);
-  }
+    function (property,e1,e2){
+        return e1[property].localeCompare(e2[property]);
+    }
 );
 
 var rankColumnsByExpression = function(expressions){
-  return (
-    expressions
-    .map(
-      function(row){
-        var rowIndexed = row.map(
-          function(point, ix){
-            return [point,ix];
-          }
-        );
-        var indicesSortedByExpression =
-          rowIndexed
-          .filter(
-            function(e){
-              return e[0].hasOwnProperty("value")
+    return (
+        expressions.map(
+            function(row){
+                var rowIndexed = row.map(
+                    function(point, ix){
+                        return [point,ix];
+                    }
+                );
+                var indicesSortedByExpression =
+                    rowIndexed
+                        .filter(
+                            function(e){
+                                return e[0].hasOwnProperty("value")
+                            })
+                        .sort(
+                            function(l,r){
+                                return l[0].value - r[0].value;
+                            })
+                        .map(
+                            function(p){
+                                return p[1];
+                            });
+                return (rowIndexed.map(
+                    function(pointAndIndex){
+                        return 1 + indicesSortedByExpression.indexOf(pointAndIndex[1]); //rank value zero means no expression
+                    })
+                );
             })
-          .sort(
-              function(l,r){
-                return l[0].value - r[0].value;
-            })
-          .map(
-            function(p){
-              return p[1];
-            });
-        return (
-          rowIndexed.map(
-            function(pointAndIndex){
-              return 1+ indicesSortedByExpression.indexOf(pointAndIndex[1]); //rank value zero means no expression
-          })
-        );
-      })
   .reduce(function(r1,r2){
     return r1.map(
       function(el,ix){
@@ -112,9 +108,7 @@ var rankColumnsByThreshold = function(threshold, expressions){
       })
     .map(function(countOfExperimentsWhereTissueExpressed){
       return (
-        countOfExperimentsWhereTissueExpressed > expressions.length * threshold
-        ? 10e6
-        : 0
+        countOfExperimentsWhereTissueExpressed > expressions.length * threshold ? 10e6 : 0
       )
     })
   );
