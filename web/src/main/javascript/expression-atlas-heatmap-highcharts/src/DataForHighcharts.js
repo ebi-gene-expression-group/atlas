@@ -18,18 +18,18 @@ var EMPTY = {
 
 //apply rank first,use comparator to resolve ties
 var createOrdering = function(rank, comparator, arr){
-    return (
-        arr.map(function(e,ix){
-                return [e,ix];
-            })
-            .sort(function(e_ixLeft,e_ixRight){
-                return ( //higher ranks go to the beginning of series
-                    rank[e_ixRight[1]] - rank[e_ixLeft[1]] || comparator(e_ixLeft[0],e_ixRight[0])
-                );
-            }).map(function(e_ix){
-                return e_ix[1];
-            })
-    );
+  return (
+    arr.map(function(e,ix){
+      return [e,ix];
+    })
+    .sort(function(e_ixLeft,e_ixRight){
+      return ( //higher ranks go to the beginning of series
+        rank[e_ixRight[1]] - rank[e_ixLeft[1]] || comparator(e_ixLeft[0],e_ixRight[0])
+      );
+    }).map(function(e_ix){
+      return e_ix[1];
+    })
+  );
 };
 
 var createAlphabeticalOrdering= function(property, arr){
@@ -39,40 +39,40 @@ var createAlphabeticalOrdering= function(property, arr){
 }
 
 var comparatorByProperty = _.curry(
-    function (property,e1,e2){
-        return e1[property].localeCompare(e2[property]);
-    }
+  function (property,e1,e2){
+    return e1[property].localeCompare(e2[property]);
+  }
 );
 
 var rankColumnsByExpression = function(expressions){
-    return (
-        expressions.map(
-            function(row){
-                var rowIndexed = row.map(
-                    function(point, ix){
-                        return [point,ix];
-                    }
-                );
-                var indicesSortedByExpression =
-                    rowIndexed
-                        .filter(
-                            function(e){
-                                return e[0].hasOwnProperty("value")
-                            })
-                        .sort(
-                            function(l,r){
-                                return l[0].value - r[0].value;
-                            })
-                        .map(
-                            function(p){
-                                return p[1];
-                            });
-                return (rowIndexed.map(
-                    function(pointAndIndex){
-                        return 1 + indicesSortedByExpression.indexOf(pointAndIndex[1]); //rank value zero means no expression
-                    })
-                );
-            })
+  return (
+    expressions.map(
+      function(row){
+        var rowIndexed = row.map(
+          function(point, ix){
+              return [point,ix];
+          }
+        );
+        var indicesSortedByExpression =
+          rowIndexed
+            .filter(
+              function(e){
+                return e[0].hasOwnProperty("value")
+              })
+            .sort(
+              function(l,r){
+                return l[0].value - r[0].value;
+              })
+            .map(
+              function(p){
+                return p[1];
+              });
+        return (rowIndexed.map(
+          function(pointAndIndex){
+            return 1 + indicesSortedByExpression.indexOf(pointAndIndex[1]); //rank value zero means no expression
+          })
+        );
+      })
   .reduce(function(r1,r2){
     return r1.map(
       function(el,ix){
@@ -119,32 +119,32 @@ var rankRowsByThreshold = function(threshold, expressions){
 };
 
 var getXAxisCategories = function (columnHeaders, isDifferential) {
-    return columnHeaders.map(
-      isDifferential
-      ? function (columnHeader) {
-          return {"label": columnHeader.displayName,
-                  "id" : columnHeader.id};
-        }
-      : function (columnHeader) {
-          return {"label": columnHeader.factorValue,
-                  "id" : columnHeader.factorValueOntologyTermId};
-        }
-      );
+  return columnHeaders.map(
+    isDifferential
+    ? function (columnHeader) {
+        return {"label": columnHeader.displayName,
+                "id" : columnHeader.id};
+      }
+    : function (columnHeader) {
+        return {"label": columnHeader.factorValue,
+                "id" : columnHeader.factorValueOntologyTermId};
+      }
+    );
 };
 
 var getYAxisCategories = function (rows, config) {
-    return rows.map(
-      config.isDifferential
-      ? function (profile) {
-          return {"label": profile.name,
-                  "id": profile.id };
-        }
-      : function (profile) {
-          return {"label": profile.name,
-                  "id" : profile.id + "?geneQuery=" + config.geneQuery +
-                      "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) };
-        }
-      );
+  return rows.map(
+    config.isDifferential
+    ? function (profile) {
+        return {"label": profile.name,
+                "id": profile.id };
+      }
+    : function (profile) {
+        return {"label": profile.name,
+                "id" : profile.id + "?geneQuery=" + config.geneQuery +
+                    "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) };
+      }
+    );
 };
 
 var noOrdering = function(arr){
@@ -153,14 +153,14 @@ var noOrdering = function(arr){
 
 var __dataPointFromExpression = function(columnNumber, expression, rowNumber){
   return (
-      expression.hasOwnProperty("value") && expression.value !== "NT"
-      ? [rowNumber, columnNumber, expression.value || "Below cutoff"]
-      : (
-          expression.hasOwnProperty("foldChange")
-        ? [rowNumber, columnNumber, expression.foldChange || "Below cutoff"]
-        : null
-      )
-    );
+    expression.hasOwnProperty("value") && expression.value !== "NT"
+    ? [rowNumber, columnNumber, expression.value || "Below cutoff"]
+    : (
+        expression.hasOwnProperty("foldChange")
+      ? [rowNumber, columnNumber, expression.foldChange || "Below cutoff"]
+      : null
+    )
+  );
 }
 
 var _dataPointsFromRow = function(row, columnNumber){
@@ -177,18 +177,18 @@ var _groupByExperimentType = function(chain){
   return (
     chain
     .map(function(row, columnNumber) {
-        return [
-          row.experimentType,
-          _dataPointsFromRow(row, columnNumber)
-        ];
+      return [
+        row.experimentType,
+        _dataPointsFromRow(row, columnNumber)
+      ];
     })
     .groupBy(function(experimentTypeAndRow) {
-        return experimentTypeAndRow[0]
+      return experimentTypeAndRow[0]
     })
     .mapValues(function(rows) {
-        return rows.map(function(experimentTypeAndRow) {
-            return experimentTypeAndRow[1];
-        })
+      return rows.map(function(experimentTypeAndRow) {
+        return experimentTypeAndRow[1];
+      })
     })
     .mapValues(_.flatten)
     .toPairs()
@@ -220,14 +220,14 @@ var _groupSingleExperiment = function(chain, config){
 
 var _experimentsIntoDataSeriesByThresholds = function(thresholds){
   return function(experimentType, dataPoints) {
-      return dataPoints.map(
-          _.spread(function(xPosition, yPosition, value) {
-              return [
-                  _.sortedIndex(thresholds[experimentType] || thresholds.DEFAULT, value),
-                  [xPosition, yPosition, value]
-              ];
-          }.bind(this))
-      )
+    return dataPoints.map(
+      _.spread(function(xPosition, yPosition, value) {
+        return [
+          _.sortedIndex(thresholds[experimentType] || thresholds.DEFAULT, value),
+          [xPosition, yPosition, value]
+        ];
+      }.bind(this))
+    )
   };
 }
 
@@ -272,13 +272,13 @@ var _getDataSeries = function (thresholds, names, colours, profilesRows, config)
     .transform(function(result, bucket, bucketNumber) {
         result[bucketNumber].data=bucket;
     }, _.range(names.length).map(
-        function(i){
-          return {
-            name: names[i],
-            colour: colours[i],
-            data: []
-          };
-        })
+      function(i){
+        return {
+          name: names[i],
+          colour: colours[i],
+          data: []
+        };
+      })
     )
     .value()
   );
