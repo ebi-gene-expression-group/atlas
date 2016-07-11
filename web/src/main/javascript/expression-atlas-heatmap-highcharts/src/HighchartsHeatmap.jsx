@@ -103,7 +103,8 @@ var HeatmapContainer = React.createClass({
         atlasBaseURL: React.PropTypes.string.isRequired,
         anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
         googleAnalyticsCallback: React.PropTypes.func.isRequired,
-        heatmapData: HeatmapDataPropType
+        heatmapData: HeatmapDataPropType,
+        afterHeatmapRedrawn: React.PropTypes.func.isRequired
     },
 
     getInitialState: function() {
@@ -208,6 +209,7 @@ var HeatmapContainer = React.createClass({
                     anatomogramEventEmitter={this.props.anatomogramEventEmitter}
                     data={this._data()}
                     labels={this._labels()}
+                    afterHeatmapRedrawn={this.props.afterHeatmapRedrawn}
                 />
             </div>
         );
@@ -229,7 +231,8 @@ var HighchartsHeatmap = React.createClass({
         labels: React.PropTypes.arrayOf(React.PropTypes.shape({
             name: React.PropTypes.string,
             colour: React.PropTypes.string
-        })).isRequired
+        })).isRequired,
+        afterHeatmapRedrawn: React.PropTypes.func.isRequired
     },
 
     getInitialState: function () {
@@ -332,6 +335,7 @@ var HighchartsHeatmap = React.createClass({
     componentDidUpdate: function () {
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
         this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
+        this.props.afterHeatmapRedrawn();
     },
 
     _countColumnsToShow: function() {
