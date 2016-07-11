@@ -28,14 +28,14 @@ var geneQueryTagEditorModule = (function($) {
                             'species': species
                         },
                         success: function(data) {
-                            var source_data = $.map(data, function (obj) {
+                            var category_data = $.map(data, function (obj) {
                                 return {
                                     label: obj.value,
                                     value: obj.value,
-                                    source: obj.source
+                                    category: obj.source
                                 };
                             });
-                            response(source_data);
+                            response(category_data);
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             console.log('Error. Status: ' + textStatus + ', errorThrown: ' + errorThrown);
@@ -44,24 +44,24 @@ var geneQueryTagEditorModule = (function($) {
                     });
                 },
                 _renderItem: function(ul, item) {
-                    var source_des ='&nbsp;';
-                    if(item.source.length != 0) {
-                        source_des = item.source;
+                    var category_des ='&nbsp;';
+                    if(item.category.length != 0) {
+                        category_des = item.category;
                     }
 
                     return $('<li style="width: 280px;"></li>')
                         .attr('data-value', item.value )
-                        .attr('data-source', item.source )
+                        .attr('data-category', item.category )
                         .append(
                             '<a>' +
                                 '<span>' + item.label + '</span>' +
-                                '<span style="float: right"><small><strong>' + source_des + '</strong></small></span>' +
+                                '<span style="float: right"><small><strong>' + category_des + '</strong></small></span>' +
                             '</a>'
                         )
                         .appendTo(ul);
                 },
                 select: function(event, ui) {
-                    ui.item.value = '{"tagValue":"' + ui.item.value + '", "tagSource":"' + ui.item.source + '"}';
+                    ui.item.value = '{"value":"' + ui.item.value + '", "category":"' + ui.item.category + '"}';
                 }
             },
             onChange: onChange,
