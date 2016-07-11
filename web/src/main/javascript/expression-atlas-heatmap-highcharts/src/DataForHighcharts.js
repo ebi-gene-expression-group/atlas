@@ -110,7 +110,7 @@ var rankColumnsByThreshold = function(threshold, expressions){
       })
     .map(function(countOfExperimentsWhereTissueExpressed){
       return (
-        countOfExperimentsWhereTissueExpressed > expressions.length * threshold ? 0 : 10e6
+        countOfExperimentsWhereTissueExpressed > expressions.length * threshold ? 0 : 1
       );
     })
   );
@@ -305,22 +305,37 @@ var extractExpressionValues = function(rows, isDifferential){
   );
 }
 
+var combineRanks = function(ranksAndTheirWeighings){
+  return (
+    _
+    .chain(ranksAndTheirWeighings)
+    .map(_.spread(function(ranks, weighing){
+      return (
+        ranks.map(_.curry(_.multiply, 2)(weighing))
+      );
+    }))
+    .thru(_.spread(_.zip))
+    .map(_.sum)
+    .value()
+  );
+}
+
 var calculateColumnRank = function(expressions){
   return (
-    _.zip(
-      rankColumnsByExpression(expressions),
-      rankColumnsByThreshold(0.4,expressions)
-    ).map(_.sum)
+    combineRanks([
+      [rankColumnsByExpression(expressions), 1e3],
+      [rankColumnsByThreshold(0.4,expressions), 1e6]
+    ])
   );
 }
 
 var calculateRowRank = function (expressions, config){
   return (
     config.isMultiExperiment
-    ? _.zip(
-      rankRowsByExpression(expressions),
-      rankRowsByThreshold(0.4,expressions)
-      ).map(_.sum)
+    ?   combineRanks([
+          [rankRowsByExpression(expressions), 1e3],
+          [rankRowsByThreshold(0.4,expressions), 1e6]
+        ])
     : rankRowsByExpression(expressions)
   );
 }
