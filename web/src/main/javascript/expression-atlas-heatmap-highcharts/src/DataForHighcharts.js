@@ -44,6 +44,33 @@ var comparatorByProperty = _.curry(
   }
 );
 
+var rankColumnsByWhereTheyAppearFirst = function(expressions){
+  return (
+    _.chain(expressions)
+    .map(function(row){
+      return (
+        row.map(function(e){
+          return (
+            +e.hasOwnProperty("value")
+          );
+        })
+      );
+    })
+    .thru(_.spread(_.zip))
+    .map(function(column){
+      return (
+        column
+        .map(function(e,ix){
+          return e*(ix+1);
+        })
+        .filter(_.identity)
+      );
+    })
+    .map(_.min)
+    .value()
+  );
+};
+
 var rankColumnsByExpression = function(expressions){
   return (
     _.chain(expressions)
@@ -323,6 +350,7 @@ var combineRanks = function(ranksAndTheirWeighings){
 var calculateColumnRank = function(expressions){
   return (
     combineRanks([
+      [rankColumnsByWhereTheyAppearFirst(expressions), 1],
       [rankColumnsByExpression(expressions), 1e3],
       [rankColumnsByThreshold(0.4,expressions), 1e6]
     ])
