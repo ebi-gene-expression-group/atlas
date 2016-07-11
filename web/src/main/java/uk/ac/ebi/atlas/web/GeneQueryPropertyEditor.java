@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 
 public class GeneQueryPropertyEditor extends PropertyEditorSupport {
 
-
     @Override
     public void setAsText(String text)  {
         try {

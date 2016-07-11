@@ -63,7 +63,7 @@ public class BaselineProfilesHeatMapWranglerTest {
         when(experiment.getExperimentalFactors()).thenReturn(experimentalFactors);
 
         baselineRequestPreferences = new BaselineRequestPreferences();
-        baselineRequestPreferences.setGeneQuery(GENE_WE_ASK_FOR);
+        baselineRequestPreferences.setGeneQuery(GeneQuery.create(GENE_WE_ASK_FOR));
 
         TreeSet<Factor> ts = new TreeSet<>();
         ts.add(mock(Factor.class));

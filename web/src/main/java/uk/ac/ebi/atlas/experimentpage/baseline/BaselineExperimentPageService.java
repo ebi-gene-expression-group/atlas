@@ -64,7 +64,7 @@ public class BaselineExperimentPageService {
 
 
         if (isWidget) {
-            preferences.setGeneQuery((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY));
+            preferences.setGeneQuery(GeneQuery.fromJson((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY)));
             preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
         } else {
             preferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);

@@ -1,32 +1,40 @@
 package uk.ac.ebi.atlas.web;
 
-import com.google.common.base.Throwables;
-
-import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 public class SearchRequest {
 
-    protected GeneQuery geneQuery = getDefaultGeneQuery();
+    private GeneQuery geneQuery = getDefaultGeneQuery();
+    private Date blah;
 
     protected GeneQuery getDefaultGeneQuery() {
         return GeneQuery.create();
     }
 
     public GeneQuery getGeneQuery() {
-        return geneQuery;
+        return this.geneQuery;
     }
 
-    public void setGeneQuery(String geneQueryString) {
-        try {
-            this.geneQuery = GeneQuery.fromUrlEncodedJson(geneQueryString);
-        } catch (UnsupportedEncodingException e) {
-            throw Throwables.propagate(e);
-        }
-
+    public void setGeneQuery(GeneQuery geneQuery) {
+        this.geneQuery = geneQuery;
     }
+
+//    public String toString() {
+//        return Objects.toStringHelper(this.getClass())
+//                .add("geneQuery", geneQuery)
+//                .toString();
+//    }
 
     public boolean hasGeneQuery() {
         return !geneQuery.isEmpty();
+    }
+
+    public Date getBlah() {
+        return blah;
+    }
+
+    public void setBlah(String blahString) {
+        this.blah = new Date(blahString);
     }
 
 }

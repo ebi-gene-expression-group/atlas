@@ -49,7 +49,7 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
     public String getDescription() {
         StringBuilder stringBuilder = new StringBuilder();
         if (hasGeneQuery()) {
-            stringBuilder.append(String.format("(%s)", geneQuery.asSolr1DNF()));
+            stringBuilder.append(String.format("(%s)", getGeneQuery().asSolr1DNF()));
 
             if (hasCondition()) {
                 stringBuilder.append(" AND ");
