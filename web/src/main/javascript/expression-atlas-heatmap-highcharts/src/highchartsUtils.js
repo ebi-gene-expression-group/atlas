@@ -2,6 +2,27 @@
 
 //*------------------------------------------------------------------*
 
+function getXAxisCategories (columnHeaders) {
+    return columnHeaders.map(function (columnHeader) {
+        return {"label": columnHeader.factorValue, "id" : columnHeader.factorValueOntologyTermId};
+    });
+}
+
+var yAxisCategoriesLinks = {};
+
+function getYAxisCategories (profiles, heatmapConfig) {
+
+    return profiles.rows.map(function (profile) {
+        yAxisCategoriesLinks[profile.name] = profile.id + "?geneQuery=" + heatmapConfig.geneQuery +
+            "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors);
+        return profile.name;
+    });
+}
+
+function getYAxisCategoriesLinks () {
+    return yAxisCategoriesLinks;
+}
+
 function compareLevels(a,b) {
     var a1 = parseFloat( a.value );
     var b1 = parseFloat( b.value );
@@ -10,13 +31,10 @@ function compareLevels(a,b) {
     if( !isNaN(a1) && !isNaN(b1) ) return a1 > b1 ? -1: 1;
 
     //a IS number
-    if( !isNaN(a1) )  return -1;
+    if( !isNaN(a1) ) return -1;
 
     //b IS number
     if( !isNaN(b1) ) return 1;
-
-    return a.value.localeCompare(b.value);
-    // return a > b ? 1 : -1;
 }
 
 function initializeRanking(cols) {
@@ -89,7 +107,7 @@ function applyThresholdToColumns(rows, columns, threshold) {
         var count = 0;
         for (var j=0; j < rows.length; j++) {
             var value = rows[j].expressions[i].value;
-            if(value != "NT" && value != "") {
+            if(!isNaN(value) && value != 0) {
                 count++;
             }
         }
@@ -145,7 +163,7 @@ function applyThresholdToRows(rows, columns, threshold) {
         var count = 0;
         for (var j=0; j < columns.length; j++) {
             var value = rows[i].expressions[j].value;
-            if(value != "NT" && value != "") {
+            if(!isNaN(value) && value != 0) {
                 count++;
             }
         }
@@ -255,6 +273,9 @@ function rankExperiments(rows, columns) {
 
 //*------------------------------------------------------------------*
 
+exports.getXAxisCategories = getXAxisCategories;
+exports.getYAxisCategories = getYAxisCategories;
+exports.getYAxisCategoriesLinks = getYAxisCategoriesLinks;
 exports.rankColumns = rankColumns;
 exports.rankExperiments = rankExperiments;
 exports.applyThresholdtoColumns = applyThresholdToColumns;
