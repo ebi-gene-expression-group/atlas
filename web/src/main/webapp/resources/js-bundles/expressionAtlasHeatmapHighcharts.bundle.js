@@ -12161,26 +12161,24 @@ webpackJsonp_name_([4],[
 	//*------------------------------------------------------------------*
 	
 	var EMPTY = {
-	  xAxisCategories: {},
-	  columnOrderings: {},
-	  yAxisCategories: {},
-	  rowOrderings:{},
-	  dataSeries: [[],[],[],[]],
+	    xAxisCategories: {},
+	    columnOrderings: {},
+	    yAxisCategories: {},
+	    rowOrderings:{},
+	    dataSeries: [[],[],[],[]]
 	};
 	
 	//apply rank first,use comparator to resolve ties
 	var createOrdering = function(rank, comparator, arr){
 	  return (
-	    arr
-	    .map(function(e,ix){
+	    arr.map(function(e,ix){
 	      return [e,ix];
 	    })
 	    .sort(function(e_ixLeft,e_ixRight){
-	      return ( //higher ranks go to the beginning of series
-	        rank[e_ixRight[1]] - rank[e_ixLeft[1]] || comparator(e_ixLeft[0],e_ixRight[0])
+	      return ( //lower ranks go to the beginning of series
+	        rank[e_ixLeft[1]] - rank[e_ixRight[1]] || comparator(e_ixLeft[0],e_ixRight[0])
 	      );
-	    })
-	    .map(function(e_ix){
+	    }).map(function(e_ix){
 	      return e_ix[1];
 	    })
 	  );
@@ -12198,43 +12196,70 @@ webpackJsonp_name_([4],[
 	  }
 	);
 	
+	var rankColumnsByWhereTheyAppearFirst = function(expressions){
+	  return (
+	    _.chain(expressions)
+	    .map(function(row){
+	      return (
+	        row.map(function(e){
+	          return (
+	            +e.hasOwnProperty("value")
+	          );
+	        })
+	      );
+	    })
+	    .thru(_.spread(_.zip))
+	    .map(function(column){
+	      return (
+	        column
+	        .map(function(e,ix){
+	          return e*(ix+1);
+	        })
+	        .filter(_.identity)
+	      );
+	    })
+	    .map(_.min)
+	    .value()
+	  );
+	};
+	
 	var rankColumnsByExpression = function(expressions){
 	  return (
-	    expressions
-	    .map(
-	      function(row){
-	        var rowIndexed = row.map(
-	          function(point, ix){
-	            return [point,ix];
-	          }
-	        );
-	        var indicesSortedByExpression =
-	          rowIndexed
-	          .filter(
-	            function(e){
-	              return e[0].hasOwnProperty("value")
-	            })
-	          .sort(
-	              function(l,r){
-	                return l[0].value - r[0].value;
-	            })
-	          .map(
-	            function(p){
-	              return p[1];
-	            });
-	        return (
-	          rowIndexed.map(
-	            function(pointAndIndex){
-	              return 1+ indicesSortedByExpression.indexOf(pointAndIndex[1]); //rank value zero means no expression
-	          })
-	        );
-	      })
-	  .reduce(function(r1,r2){
-	    return r1.map(
-	      function(el,ix){
-	        return el + r2[ix];
-	      });
+	    _.chain(expressions)
+	    .map(function(row){
+	      var valuesInRow =
+	        row
+	        .filter(function(e) {
+	        	return e.hasOwnProperty("value") && !isNaN(e.value);
+	        })
+	        .map(function(e) {
+	        	return e.value;
+	        })
+	        .sort(function(l, r) {
+	        	return r - l;
+	        })
+	        .filter(function(e, ix, self) {
+	        	return self.indexOf(e) === ix;
+	        });
+	      return (
+	        row.map(function(e){
+	          return e.value === undefined ? "missing" : valuesInRow.indexOf(e.value);
+	        })
+	      );
 	    })
+	    .thru(_.spread(_.zip))
+	    .map(function(ranks){
+	      return (
+	        ranks
+	        .filter(_.negate(isNaN))
+	      );
+	    })
+	    .map(function(ranks){
+	      return (
+	        _.sum(ranks) / ranks.length
+	      );
+	    })
+	    .value()
 	  );
 	};
 	
@@ -12254,7 +12279,7 @@ webpackJsonp_name_([4],[
 	              return +point.hasOwnProperty("value");
 	            }
 	          )
-	        )
+	        );
 	      })
 	    .reduce(function(r1,r2){
 	      return r1.map(
@@ -12264,10 +12289,8 @@ webpackJsonp_name_([4],[
 	      })
 	    .map(function(countOfExperimentsWhereTissueExpressed){
 	      return (
-	        countOfExperimentsWhereTissueExpressed > expressions.length * threshold
-	        ? 10e6
-	        : 0
-	      )
+	        countOfExperimentsWhereTissueExpressed > expressions.length * threshold ? 0 : 1
+	      );
 	    })
 	  );
 	};
@@ -12277,32 +12300,32 @@ webpackJsonp_name_([4],[
 	};
 	
 	var getXAxisCategories = function (columnHeaders, isDifferential) {
-	    return columnHeaders.map(
-	      isDifferential
-	      ? function (columnHeader) {
-	          return {"label": columnHeader.displayName,
-	                  "id" : columnHeader.id};
-	        }
-	      : function (columnHeader) {
-	          return {"label": columnHeader.factorValue,
-	                  "id" : columnHeader.factorValueOntologyTermId};
-	        }
-	      );
+	  return columnHeaders.map(
+	    isDifferential
+	    ? function (columnHeader) {
+	        return {"label": columnHeader.displayName,
+	                "id" : columnHeader.id};
+	      }
+	    : function (columnHeader) {
+	        return {"label": columnHeader.factorValue,
+	                "id" : columnHeader.factorValueOntologyTermId};
+	      }
+	    );
 	};
 	
 	var getYAxisCategories = function (rows, config) {
-	    return rows.map(
-	      config.isDifferential
-	      ? function (profile) {
-	          return {"label": profile.name,
-	                  "id": profile.id };
-	        }
-	      : function (profile) {
-	          return {"label": profile.name,
-	                  "id" : profile.id + "?geneQuery=" + config.geneQuery +
-	                      "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) };
-	        }
-	      );
+	  return rows.map(
+	    config.isDifferential
+	    ? function (profile) {
+	        return {"label": profile.name,
+	                "id": profile.id };
+	      }
+	    : function (profile) {
+	        return {"label": profile.name,
+	                "id" : profile.id + "?geneQuery=" + config.geneQuery +
+	                    "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) };
+	      }
+	    );
 	};
 	
 	var noOrdering = function(arr){
@@ -12311,14 +12334,14 @@ webpackJsonp_name_([4],[
 	
 	var __dataPointFromExpression = function(columnNumber, expression, rowNumber){
 	  return (
-	      expression.hasOwnProperty("value") && expression.value !== "NT"
-	      ? [rowNumber, columnNumber, expression.value || "Below cutoff"]
-	      : (
-	          expression.hasOwnProperty("foldChange")
-	        ? [rowNumber, columnNumber, expression.foldChange || "Below cutoff"]
-	        : null
-	      )
-	    );
+	    expression.hasOwnProperty("value") && expression.value !== "NT"
+	    ? [rowNumber, columnNumber, expression.value || "Below cutoff"]
+	    : (
+	        expression.hasOwnProperty("foldChange")
+	      ? [rowNumber, columnNumber, expression.foldChange || "Below cutoff"]
+	      : null
+	    )
+	  );
 	}
 	
 	var _dataPointsFromRow = function(row, columnNumber){
@@ -12326,7 +12349,7 @@ webpackJsonp_name_([4],[
 	    row.expressions
 	    .map(_.curry(__dataPointFromExpression,3)(columnNumber))
 	    .filter(function(el) {
-	        return el;
+	      return el;
 	    })
 	  );
 	}
@@ -12335,18 +12358,18 @@ webpackJsonp_name_([4],[
 	  return (
 	    chain
 	    .map(function(row, columnNumber) {
-	        return [
-	          row.experimentType,
-	          _dataPointsFromRow(row, columnNumber)
-	        ];
+	      return [
+	        row.experimentType,
+	        _dataPointsFromRow(row, columnNumber)
+	      ];
 	    })
 	    .groupBy(function(experimentTypeAndRow) {
-	        return experimentTypeAndRow[0]
+	      return experimentTypeAndRow[0]
 	    })
 	    .mapValues(function(rows) {
-	        return rows.map(function(experimentTypeAndRow) {
-	            return experimentTypeAndRow[1];
-	        })
+	      return rows.map(function(experimentTypeAndRow) {
+	        return experimentTypeAndRow[1];
+	      })
 	    })
 	    .mapValues(_.flatten)
 	    .toPairs()
@@ -12362,8 +12385,7 @@ webpackJsonp_name_([4],[
 	          ? "PROTEOMICS_BASELINE"
 	          : "RNASEQ_MRNA_BASELINE"
 	    );
-	  }
-	
+	  };
 	  return (
 	    chain
 	    .map(_dataPointsFromRow)
@@ -12378,14 +12400,14 @@ webpackJsonp_name_([4],[
 	
 	var _experimentsIntoDataSeriesByThresholds = function(thresholds){
 	  return function(experimentType, dataPoints) {
-	      return dataPoints.map(
-	          _.spread(function(xPosition, yPosition, value) {
-	              return [
-	                  _.sortedIndex(thresholds[experimentType] || thresholds.DEFAULT, value),
-	                  [xPosition, yPosition, value]
-	              ];
-	          }.bind(this))
-	      )
+	    return dataPoints.map(
+	      _.spread(function(xPosition, yPosition, value) {
+	        return [
+	          _.sortedIndex(thresholds[experimentType] || thresholds.DEFAULT, value),
+	          [xPosition, yPosition, value]
+	        ];
+	      }.bind(this))
+	    )
 	  };
 	}
 	
@@ -12420,23 +12442,23 @@ webpackJsonp_name_([4],[
 	    .map(_.spread(_experimentsIntoDataSeriesByThresholds(thresholds)))
 	    .flatten()
 	    .groupBy(_.spread(function(dataSeriesAssigned, point) {
-	        return dataSeriesAssigned;
+	      return dataSeriesAssigned;
 	    }))
 	    .mapValues(function(bucket) {
-	        return bucket.map(_.spread(function(dataSeriesAssigned, point) {
-	            return point;
-	        }))
+	      return bucket.map(_.spread(function(dataSeriesAssigned, point) {
+	        return point;
+	      }))
 	    })
 	    .transform(function(result, bucket, bucketNumber) {
 	        result[bucketNumber].data=bucket;
 	    }, _.range(names.length).map(
-	        function(i){
-	          return {
-	            name: names[i],
-	            colour: colours[i],
-	            data: []
-	          };
-	        })
+	      function(i){
+	        return {
+	          name: names[i],
+	          colour: colours[i],
+	          data: []
+	        };
+	      })
 	    )
 	    .value()
 	  );
@@ -12462,22 +12484,38 @@ webpackJsonp_name_([4],[
 	  );
 	}
 	
+	var combineRanks = function(ranksAndTheirWeighings){
+	  return (
+	    _
+	    .chain(ranksAndTheirWeighings)
+	    .map(_.spread(function(ranks, weighing){
+	      return (
+	        ranks.map(_.curry(_.multiply, 2)(weighing))
+	      );
+	    }))
+	    .thru(_.spread(_.zip))
+	    .map(_.sum)
+	    .value()
+	  );
+	}
+	
 	var calculateColumnRank = function(expressions){
 	  return (
-	    _.zip(
-	      rankColumnsByExpression(expressions),
-	      rankColumnsByThreshold(0.4,expressions)
-	    ).map(_.sum)
+	    combineRanks([
+	      [rankColumnsByWhereTheyAppearFirst(expressions), 1],
+	      [rankColumnsByExpression(expressions), 1e3],
+	      [rankColumnsByThreshold(0.4,expressions), 1e6]
+	    ])
 	  );
 	}
 	
 	var calculateRowRank = function (expressions, config){
 	  return (
 	    config.isMultiExperiment
-	    ? _.zip(
-	      rankRowsByExpression(expressions),
-	      rankRowsByThreshold(0.4,expressions)
-	      ).map(_.sum)
+	    ?   combineRanks([
+	          [rankRowsByExpression(expressions), 1e3],
+	          [rankRowsByThreshold(0.4,expressions), 1e6]
+	        ])
 	    : rankRowsByExpression(expressions)
 	  );
 	}
@@ -12565,569 +12603,575 @@ webpackJsonp_name_([4],[
 	//*------------------------------------------------------------------*
 	
 	var DataSeriesPropType = React.PropTypes.arrayOf(React.PropTypes.arrayOf(React.PropTypes.arrayOf(function (series) {
-	  if (!Array.isArray(series) || series.length !== 3 || typeof series[0] !== 'number' || typeof series[1] !== 'number') {
-	    return new Error("Data series should be array of number, number, value to display");
-	  }
+	    if (!Array.isArray(series) || series.length !== 3 || typeof series[0] !== 'number' || typeof series[1] !== 'number') {
+	        return new Error("Data series should be array of number, number, value to display");
+	    }
 	}))).isRequired;
 	
 	var AxisCategoriesPropType = React.PropTypes.arrayOf(React.PropTypes.shape({
-	  id: React.PropTypes.string, // ontology ID can be missing for x axis
-	  label: React.PropTypes.string.isRequired
+	    id: React.PropTypes.string, // ontology ID can be missing for x axis
+	    label: React.PropTypes.string.isRequired
 	})).isRequired;
 	
 	var HeatmapDataPropType = React.PropTypes.objectOf(function (heatmapData) {
-	  var width = heatmapData.xAxisCategories.length;
-	  var height = heatmapData.yAxisCategories.length;
-	  for (var i = 0; i < heatmapData.dataSeries.length; i++) {
-	    for (var j = 0; j < heatmapData.dataSeries[i].length; j++) {
-	      var point = heatmapData.dataSeries[i].data[j];
-	      if (point.length !== 3) {
-	        return new Error("Each point in data series should be [x,y,value]:" + point.toString());
-	      }
-	      var x = point[0];
-	      var y = point[1];
-	      if (x < 0 || y < 0 || x >= width || y >= height) {
-	        return new Error("Point with coordinates outside range:" + point.toString());
-	      }
+	
+	    var width = heatmapData.xAxisCategories.length;
+	    var height = heatmapData.yAxisCategories.length;
+	
+	    for (var i = 0; i < heatmapData.dataSeries.length; i++) {
+	        for (var j = 0; j < heatmapData.dataSeries[i].length; j++) {
+	            var point = heatmapData.dataSeries[i].data[j];
+	            if (point.length !== 3) {
+	                return new Error("Each point in data series should be [x,y,value]:" + point.toString());
+	            }
+	
+	            var x = point[0];
+	            var y = point[1];
+	            if (x < 0 || y < 0 || x >= width || y >= height) {
+	                return new Error("Point with coordinates outside range:" + point.toString());
+	            }
+	        }
 	    }
-	  }
-	  var isPermutation = function (arr) {
-	    return [].concat(arr).sort(function (a, b) {
-	      return a - b;
-	    }).map(function (el, ix) {
-	      return el === ix;
-	    }).reduce(function (l, r) {
-	      return l && r;
-	    }, true);
-	  };
-	  if (!heatmapData.orderings.hasOwnProperty("Default")) {
-	    return new Error("Default ordering missing!");
-	  }
-	  for (var orderingName in heatmapData.orderings) {
-	    if (heatmapData.orderings.hasOwnProperty(orderingName)) {
-	      var ordering = heatmapData.orderings[orderingName];
-	      if (ordering.columns.length !== width || !isPermutation(ordering.columns)) {
-	        return new Error("Column ordering invalid in " + orderingName);
-	      }
-	      if (ordering.rows.length !== height || !isPermutation(ordering.rows)) {
-	        return new Error("Row ordering invalid in " + orderingName);
-	      }
+	
+	    var isPermutation = function (arr) {
+	        return [].concat(arr).sort(function (a, b) {
+	            return a - b;
+	        }).map(function (el, ix) {
+	            return el === ix;
+	        }).reduce(function (l, r) {
+	            return l && r;
+	        }, true);
+	    };
+	
+	    if (!heatmapData.orderings.hasOwnProperty("Default")) {
+	        return new Error("Default ordering missing!");
 	    }
-	  }
+	
+	    for (var orderingName in heatmapData.orderings) {
+	        if (heatmapData.orderings.hasOwnProperty(orderingName)) {
+	            var ordering = heatmapData.orderings[orderingName];
+	
+	            if (ordering.columns.length !== width || !isPermutation(ordering.columns)) {
+	                return new Error("Column ordering invalid in " + orderingName);
+	            }
+	            if (ordering.rows.length !== height || !isPermutation(ordering.rows)) {
+	                return new Error("Row ordering invalid in " + orderingName);
+	            }
+	        }
+	    }
 	});
 	
 	var HeatmapContainer = React.createClass({
-	  displayName: 'HeatmapContainer',
+	    displayName: 'HeatmapContainer',
 	
-	  propTypes: {
-	    isMultiExperiment: React.PropTypes.bool.isRequired,
-	    profiles: React.PropTypes.object.isRequired,
-	    atlasBaseURL: React.PropTypes.string.isRequired,
-	    anatomogramEventEmitter: React.PropTypes.instanceOf(EventEmitter).isRequired,
-	    googleAnalyticsCallback: React.PropTypes.func.isRequired,
-	    heatmapData: HeatmapDataPropType
-	  },
+	    propTypes: {
+	        isMultiExperiment: React.PropTypes.bool.isRequired,
+	        profiles: React.PropTypes.object.isRequired,
+	        atlasBaseURL: React.PropTypes.string.isRequired,
+	        anatomogramEventEmitter: React.PropTypes.instanceOf(EventEmitter).isRequired,
+	        googleAnalyticsCallback: React.PropTypes.func.isRequired,
+	        heatmapData: HeatmapDataPropType
+	    },
 	
-	  getInitialState: function () {
-	    return {
-	      ordering: "Default"
-	    };
-	  },
+	    getInitialState: function () {
+	        return {
+	            ordering: "Default"
+	        };
+	    },
 	
-	  _introductoryMessage: function () {
-	    var shownRows = this.props.profiles.rows.length,
-	        totalRows = this.props.profiles.searchResultTotal;
+	    _introductoryMessage: function () {
+	        var shownRows = this.props.profiles.rows.length,
+	            totalRows = this.props.profiles.searchResultTotal;
 	
-	    var what = (this.props.isMultiExperiment ? 'experiment' : 'gene') + (totalRows > 1 ? 's' : '');
+	        var what = (this.props.isMultiExperiment ? 'experiment' : 'gene') + (totalRows > 1 ? 's' : '');
 	
-	    return 'Showing ' + shownRows + ' ' + (totalRows === shownRows ? what + ':' : 'of ' + totalRows + ' ' + what + ' found:');
-	  },
+	        return 'Showing ' + shownRows + ' ' + (totalRows === shownRows ? what + ':' : 'of ' + totalRows + ' ' + what + ' found:');
+	    },
 	
-	  _data: function () {
-	    var permuteX = function (x) {
-	      return this.props.heatmapData.orderings[this.state.ordering].columns.indexOf(x);
-	    }.bind(this);
+	    _data: function () {
+	        var permuteX = function (x) {
+	            return this.props.heatmapData.orderings[this.state.ordering].columns.indexOf(x);
+	        }.bind(this);
 	
-	    var permuteY = function (y) {
-	      return this.props.heatmapData.orderings[this.state.ordering].rows.indexOf(y);
-	    }.bind(this);
+	        var permuteY = function (y) {
+	            return this.props.heatmapData.orderings[this.state.ordering].rows.indexOf(y);
+	        }.bind(this);
 	
-	    var permutePoint = function (point) {
-	      return [permuteX(point[0]), permuteY(point[1]), point[2]];
-	    };
+	        var permutePoint = function (point) {
+	            return [permuteX(point[0]), permuteY(point[1]), point[2]];
+	        };
 	
-	    var permuteArray = function (arr, permute) {
-	      return arr.map(function (el, ix) {
-	        return [el, permute(ix)];
-	      }).sort(function (l, r) {
-	        return l[1] - r[1];
-	      }).map(function (el) {
-	        return el[0];
-	      });
-	    };
+	        var permuteArray = function (arr, permute) {
+	            return arr.map(function (el, ix) {
+	                return [el, permute(ix)];
+	            }).sort(function (l, r) {
+	                return l[1] - r[1];
+	            }).map(function (el) {
+	                return el[0];
+	            });
+	        };
 	
-	    return {
-	      dataSeries: this.props.heatmapData.dataSeries.map(function (series) {
-	        return series.data.map(permutePoint);
-	      }),
-	      xAxisCategories: permuteArray(this.props.heatmapData.xAxisCategories, permuteX),
-	      yAxisCategories: permuteArray(this.props.heatmapData.yAxisCategories, permuteY)
-	    };
-	  },
+	        return {
+	            dataSeries: this.props.heatmapData.dataSeries.map(function (series) {
+	                return series.data.map(permutePoint);
+	            }),
+	            xAxisCategories: permuteArray(this.props.heatmapData.xAxisCategories, permuteX),
+	            yAxisCategories: permuteArray(this.props.heatmapData.yAxisCategories, permuteY)
+	        };
+	    },
 	
-	  _labels: function () {
-	    return this.props.heatmapData.dataSeries.map(function (e) {
-	      return {
-	        colour: e.colour,
-	        name: e.name
-	      };
-	    });
-	  },
+	    _labels: function () {
+	        return this.props.heatmapData.dataSeries.map(function (e) {
+	            return {
+	                colour: e.colour,
+	                name: e.name
+	            };
+	        });
+	    },
 	
-	  render: function () {
-	    var marginRight = 60;
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(HeatmapOptions, {
-	        marginRight: marginRight,
-	        introductoryMessage: this._introductoryMessage(),
-	        downloadOptions: {
-	          downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
-	          atlasBaseURL: this.props.atlasBaseURL,
-	          isFortLauderdale: this.props.heatmapConfig.isFortLauderdale },
-	        orderings: {
-	          available: Object.keys(this.props.heatmapData.orderings),
-	          current: this.state.ordering,
-	          onSelect: function (orderingChosen) {
-	            this.setState({ ordering: orderingChosen });
-	          }.bind(this)
-	        },
-	        googleAnalyticsCallback: this.props.googleAnalyticsCallback,
-	        showUsageMessage: this.props.heatmapData.xAxisCategories.length > 100 }),
-	      React.createElement(HighchartsHeatmap, {
-	        marginRight: marginRight,
-	        atlasBaseURL: this.props.atlasBaseURL,
-	        anatomogramEventEmitter: this.props.anatomogramEventEmitter,
-	        data: this._data(),
-	        labels: this._labels()
-	      })
-	    );
-	  }
+	    render: function () {
+	        var marginRight = 60;
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(HeatmapOptions, {
+	                marginRight: marginRight,
+	                introductoryMessage: this._introductoryMessage(),
+	                downloadOptions: {
+	                    downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
+	                    atlasBaseURL: this.props.atlasBaseURL,
+	                    isFortLauderdale: this.props.heatmapConfig.isFortLauderdale
+	                },
+	                orderings: {
+	                    available: Object.keys(this.props.heatmapData.orderings),
+	                    current: this.state.ordering,
+	                    onSelect: function (orderingChosen) {
+	                        this.setState({ ordering: orderingChosen });
+	                    }.bind(this)
+	                },
+	                googleAnalyticsCallback: this.props.googleAnalyticsCallback,
+	                showUsageMessage: this.props.heatmapData.xAxisCategories.length > 100 }),
+	            React.createElement(HighchartsHeatmap, {
+	                marginRight: marginRight,
+	                atlasBaseURL: this.props.atlasBaseURL,
+	                anatomogramEventEmitter: this.props.anatomogramEventEmitter,
+	                data: this._data(),
+	                labels: this._labels()
+	            })
+	        );
+	    }
 	
 	});
 	
 	var HighchartsHeatmap = React.createClass({
-	  displayName: 'HighchartsHeatmap',
+	    displayName: 'HighchartsHeatmap',
 	
 	
-	  propTypes: {
-	    marginRight: React.PropTypes.number.isRequired,
-	    atlasBaseURL: React.PropTypes.string.isRequired,
-	    anatomogramEventEmitter: React.PropTypes.instanceOf(EventEmitter).isRequired,
-	    data: React.PropTypes.shape({
-	      dataSeries: DataSeriesPropType,
-	      xAxisCategories: AxisCategoriesPropType,
-	      yAxisCategories: AxisCategoriesPropType
-	    }),
-	    labels: React.PropTypes.arrayOf(React.PropTypes.shape({
-	      name: React.PropTypes.string,
-	      colour: React.PropTypes.string
-	    })).isRequired
-	  },
+	    propTypes: {
+	        marginRight: React.PropTypes.number.isRequired,
+	        atlasBaseURL: React.PropTypes.string.isRequired,
+	        anatomogramEventEmitter: React.PropTypes.instanceOf(EventEmitter).isRequired,
+	        data: React.PropTypes.shape({
+	            dataSeries: DataSeriesPropType,
+	            xAxisCategories: AxisCategoriesPropType,
+	            yAxisCategories: AxisCategoriesPropType
+	        }),
+	        labels: React.PropTypes.arrayOf(React.PropTypes.shape({
+	            name: React.PropTypes.string,
+	            colour: React.PropTypes.string
+	        })).isRequired
+	    },
 	
-	  getInitialState: function () {
-	    return {
-	      dataSeriesToShow: this.props.labels.map(function (e) {
-	        return true;
-	      })
-	    };
-	  },
-	
-	  _anatomogramTissueMouseEnter: function (svgPathId) {
-	    Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseEnter', { svgPathId: svgPathId });
-	  },
-	
-	  _anatomogramTissueMouseLeave: function (svgPathId) {
-	    Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseLeave', { svgPathId: svgPathId });
-	  },
-	
-	  _registerListenerIfNecessary: function (name, fn) {
-	    if (this.props.anatomogramEventEmitter && this.props.anatomogramEventEmitter._events && !this.props.anatomogramEventEmitter._events.hasOwnProperty(name)) {
-	      this.props.anatomogramEventEmitter.addListener(name, fn);
-	    }
-	  },
-	
-	  componentDidMount: function () {
-	    this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
-	    this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
-	  },
-	
-	  _dataToShow: function () {
-	    var all_s = function (indexToPickFromEachPoint) {
-	      return this.props.data.dataSeries.filter(function (e, ix) {
-	        return this.state.dataSeriesToShow[ix];
-	      }.bind(this)).reduce(function (l, r) {
-	        return l.concat(r);
-	      }, []).map(function (e) {
-	        return e[indexToPickFromEachPoint];
-	      }).filter(function (e, ix, self) {
-	        return self.indexOf(e) === ix;
-	      }).sort(function (l, r) {
-	        return l - r;
-	      });
-	    }.bind(this);
-	    var allXs = all_s(0);
-	    var allYs = all_s(1);
-	
-	    var ds = this.props.data.dataSeries.map(function (e, ix) {
-	      return this.state.dataSeriesToShow[ix] ? e : [];
-	    }.bind(this)).map(function (series) {
-	      return series.map(function (point) {
-	        return [allXs.indexOf(point[0]), allYs.indexOf(point[1]), point[2]];
-	      }).filter(function (point) {
-	        return point[0] > -1 && point[1] > -1;
-	      });
-	    });
-	
-	    return {
-	      dataSeries: this.props.labels.map(function (e, ix) {
+	    getInitialState: function () {
 	        return {
-	          name: e.name,
-	          color: e.colour,
-	          borderWidth: 1,
-	          borderColor: "#fff",
-	          data: ds[ix]
+	            dataSeriesToShow: this.props.labels.map(function (e) {
+	                return true;
+	            })
 	        };
-	      }.bind(this)),
-	      xAxisCategories: this.props.data.xAxisCategories.filter(function (e, ix) {
-	        return allXs.indexOf(ix) > -1;
-	      }),
-	      yAxisCategories: this.props.data.yAxisCategories.filter(function (e, ix) {
-	        return allYs.indexOf(ix) > -1;
-	      })
+	    },
 	
-	    };
-	  },
+	    _anatomogramTissueMouseEnter: function (svgPathId) {
+	        Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseEnter', { svgPathId: svgPathId });
+	    },
 	
-	  componentDidUpdate: function () {
-	    this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
-	    this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
-	  },
-	  _countColumnsToShow: function () {
-	    return this.props.data.dataSeries.filter(function (e, ix) {
-	      return this.state.dataSeriesToShow[ix];
-	    }.bind(this)).reduce(function (l, r) {
-	      return l.concat(r);
-	    }, []).map(function (e) {
-	      return e[0];
-	    }).filter(function (e, ix, self) {
-	      return self.indexOf(e) === ix;
-	    }).length;
-	  },
+	    _anatomogramTissueMouseLeave: function (svgPathId) {
+	        Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseLeave', { svgPathId: svgPathId });
+	    },
 	
-	  _makeLabelToggle: function (ix) {
-	    return function () {
-	      this.setState(function (previousState) {
-	        return {
-	          dataSeriesToShow: previousState.dataSeriesToShow.map(function (e, jx) {
-	            return ix === jx ? !e : e;
-	          })
-	        };
-	      });
-	    }.bind(this);
-	  },
-	
-	  renderLegend: function () {
-	    return React.createElement(
-	      'div',
-	      { id: 'barcharts_legend_list_items', ref: 'barcharts_legend_items' },
-	      this.props.labels.map(function (e, ix) {
-	        return React.createElement(HeatmapLegendBox, { key: e.name,
-	          name: e.name,
-	          colour: e.colour,
-	          on: this.state.dataSeriesToShow[ix],
-	          onClickCallback: this._makeLabelToggle(ix) });
-	      }.bind(this)),
-	      React.createElement(
-	        'div',
-	        { className: 'legend-item special' },
-	        React.createElement('span', { className: 'icon icon-generic', 'data-icon': 'i', 'data-toggle': 'tooltip', 'data-placement': 'bottom',
-	          title: 'This range of values indicates gene expression level across different experimental conditions (e.g. tissues). It is calculated differently between RNA and proteomics experiments.' })
-	      ),
-	      React.createElement(HeatmapLegendBox, { key: "No data available",
-	        name: "No data available",
-	        colour: "white",
-	        on: true,
-	        onClickCallback: function () {} })
-	    );
-	  },
-	
-	  _highchartsOptions: function (marginTop, marginRight, data) {
-	    var atlasBaseURL = this.props.atlasBaseURL;
-	
-	    return {
-	      plotOptions: {
-	        heatmap: {
-	          turboThreshold: 0
-	        },
-	        series: {
-	          point: {
-	            events: {
-	              mouseOver: function () {
-	                this.series.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', this.series.xAxis.categories[this.x].id);
-	              }
-	            }
-	          },
-	          events: {
-	            mouseOut: function () {
-	              this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', null);
-	            }
-	          },
-	
-	          states: {
-	            hover: {
-	              color: '#eeec38' //#edab12 color cell on mouse over
-	            },
-	            select: {
-	              color: '#eeec38'
-	            }
-	          }
+	    _registerListenerIfNecessary: function (name, fn) {
+	        if (this.props.anatomogramEventEmitter && this.props.anatomogramEventEmitter._events && !this.props.anatomogramEventEmitter._events.hasOwnProperty(name)) {
+	            this.props.anatomogramEventEmitter.addListener(name, fn);
 	        }
-	      },
-	      credits: {
-	        enabled: false //remove Highcharts text in the bottom right corner
-	      },
-	      chart: {
-	        type: 'heatmap',
-	        marginTop: marginTop,
-	        marginRight: marginRight, //leave space for tilted long headers
-	        spacingTop: 0,
-	        plotBorderWidth: 1,
-	        height: Math.max(70, data.yAxisCategories.length * 30 + marginTop),
-	        zoomType: 'x',
-	        events: {
-	          handleGxaAnatomogramTissueMouseEnter: function (e) {
-	            Highcharts.each(this.series, function (series) {
-	              Highcharts.each(series.points, function (point) {
-	                if (point.series.xAxis.categories[point.x].id === e.svgPathId) {
-	                  point.select(true, true);
-	                }
-	              });
+	    },
+	
+	    componentDidMount: function () {
+	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
+	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
+	    },
+	
+	    _dataToShow: function () {
+	        var all_s = function (indexToPickFromEachPoint) {
+	            return this.props.data.dataSeries.filter(function (e, ix) {
+	                return this.state.dataSeriesToShow[ix];
+	            }.bind(this)).reduce(function (l, r) {
+	                return l.concat(r);
+	            }, []).map(function (e) {
+	                return e[indexToPickFromEachPoint];
+	            }).filter(function (e, ix, self) {
+	                return self.indexOf(e) === ix;
+	            }).sort(function (l, r) {
+	                return l - r;
 	            });
-	          },
-	          handleGxaAnatomogramTissueMouseLeave: function (e) {
-	            var points = this.getSelectedPoints();
-	            if (points.length > 0) {
-	              Highcharts.each(points, function (point) {
-	                point.select(false);
-	              });
-	            }
-	          }
-	        }
-	      },
-	      legend: {
-	        enabled: false
-	      },
-	      title: null,
-	      xAxis: { //tissues
-	        tickLength: 5,
-	        tickColor: 'rgb(192, 192, 192)',
-	        lineColor: 'rgb(192, 192, 192)',
-	        labels: {
-	          style: {
-	            fontSize: '9px',
-	            textOverflow: 'ellipsis'
-	          },
-	          autoRotation: [-45, -90],
-	          formatter: function () {
-	            return this.value.label;
-	          }
-	        },
-	        opposite: 'true',
-	        categories: data.xAxisCategories
-	      },
-	      yAxis: { //experiments or bioentities
-	        useHTML: true,
-	        reversed: true,
-	        labels: {
-	          style: {
-	            fontSize: '10px',
-	            color: '#148ff3'
-	          },
-	          formatter: function () {
-	            return '<a href="' + atlasBaseURL + '/experiments/' + this.value.id + '">' + this.value.label + '</a>';
-	          }
-	        },
-	        categories: data.yAxisCategories,
-	        title: null,
-	        gridLineWidth: 0,
-	        minorGridLineWidth: 0,
-	        endOnTick: false
-	      },
-	      tooltip: {
-	        useHTML: true,
-	        formatter: function () {
-	          return '<div style="white-space: pre">' + '<div>' + 'Sample name: <b>' + this.series.yAxis.categories[this.point.y].label + '</b>' + '</div>' + '<div>' + 'Experimental condition: ' + (this.series.xAxis.categories[this.point.x].label.length > 50 ? '<br>' : '') + '<b>' + this.series.xAxis.categories[this.point.x].label + '</b>' + '</div>' + '<div>' + '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';"></span>' + 'Expression level: <b>' + this.point.value + '</b>' + '</div>' + '</div>';
-	        }
-	      },
-	      anatomogramEventEmitter: this.props.anatomogramEventEmitter,
-	      series: data.dataSeries
-	    };
-	  },
+	        }.bind(this);
 	
-	  _boxedHeatmap: function (dataForTheChart) {
-	    var xAxisLongestHeaderLength = Math.max.apply(null, this.props.data.xAxisCategories.map(function (category) {
-	      return category.label.length;
-	    }));
+	        var allXs = all_s(0);
+	        var allYs = all_s(1);
 	
-	    var marginTop = this.props.data.xAxisCategories.length < 10 ? 30 : // labels aren’t tilted
-	    this.props.data.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
-	    Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5)); // labels at -90°
+	        var ds = this.props.data.dataSeries.map(function (e, ix) {
+	            return this.state.dataSeriesToShow[ix] ? e : [];
+	        }.bind(this)).map(function (series) {
+	            return series.map(function (point) {
+	                return [allXs.indexOf(point[0]), allYs.indexOf(point[1]), point[2]];
+	            }).filter(function (point) {
+	                return point[0] > -1 && point[1] > -1;
+	            });
+	        });
 	
-	    var maxWidthFraction = 1 - 1 / Math.pow(0.2 * this._countColumnsToShow() + 1, 4);
-	    //TODO the marginRight value of props used to be the same here and in top legend.
-	    //Probably it's time to get rid of this prop.
-	    var marginRight = this.props.marginRight * (1 + 10 / Math.pow(1 + this._countColumnsToShow(), 2));
+	        return {
+	            dataSeries: this.props.labels.map(function (e, ix) {
+	                return {
+	                    name: e.name,
+	                    color: e.colour,
+	                    borderWidth: 1,
+	                    borderColor: "#fff",
+	                    data: ds[ix]
+	                };
+	            }.bind(this)),
+	            xAxisCategories: this.props.data.xAxisCategories.filter(function (e, ix) {
+	                return allXs.indexOf(ix) > -1;
+	            }),
+	            yAxisCategories: this.props.data.yAxisCategories.filter(function (e, ix) {
+	                return allYs.indexOf(ix) > -1;
+	            })
 	
-	    return React.createElement(
-	      'div',
-	      { style: { maxWidth: maxWidthFraction * 100 + "%" } },
-	      React.createElement(ReactHighcharts, { config: this._highchartsOptions(marginTop, marginRight, dataForTheChart), ref: 'chart' })
-	    );
-	  },
+	        };
+	    },
 	
-	  render: function () {
+	    componentDidUpdate: function () {
+	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
+	        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
+	    },
 	
-	    var data = this._dataToShow();
+	    _countColumnsToShow: function () {
+	        return this.props.data.dataSeries.filter(function (e, ix) {
+	            return this.state.dataSeriesToShow[ix];
+	        }.bind(this)).reduce(function (l, r) {
+	            return l.concat(r);
+	        }, []).map(function (e) {
+	            return e[0];
+	        }).filter(function (e, ix, self) {
+	            return self.indexOf(e) === ix;
+	        }).length;
+	    },
 	
-	    return React.createElement(
-	      'div',
-	      { id: 'highcharts_container' },
-	      data.dataSeries.map(function (e) {
-	        return e.data;
-	      }).reduce(function (l, r) {
-	        return l.concat(r);
-	      }, []).length ? this._boxedHeatmap(data) : React.createElement(
-	        'p',
-	        null,
-	        ' No data in the series currently selected. '
-	      ),
-	      this.renderLegend()
-	    );
-	  }
+	    _makeLabelToggle: function (ix) {
+	        return function () {
+	            this.setState(function (previousState) {
+	                return {
+	                    dataSeriesToShow: previousState.dataSeriesToShow.map(function (e, jx) {
+	                        return ix === jx ? !e : e;
+	                    })
+	                };
+	            });
+	        }.bind(this);
+	    },
+	
+	    renderLegend: function () {
+	        return React.createElement(
+	            'div',
+	            { id: 'barcharts_legend_list_items', ref: 'barcharts_legend_items' },
+	            this.props.labels.map(function (e, ix) {
+	                return React.createElement(HeatmapLegendBox, { key: e.name,
+	                    name: e.name,
+	                    colour: e.colour,
+	                    on: this.state.dataSeriesToShow[ix],
+	                    onClickCallback: this._makeLabelToggle(ix) });
+	            }.bind(this)),
+	            React.createElement(
+	                'div',
+	                { className: 'legend-item special' },
+	                React.createElement('span', { className: 'icon icon-generic', 'data-icon': 'i', 'data-toggle': 'tooltip', 'data-placement': 'bottom',
+	                    title: 'This range of values indicates gene expression level across different experimental conditions (e.g. tissues). It is calculated differently between RNA and proteomics experiments.' })
+	            ),
+	            React.createElement(HeatmapLegendBox, { key: "No data available",
+	                name: "No data available",
+	                colour: "white",
+	                on: true,
+	                onClickCallback: function () {} })
+	        );
+	    },
+	
+	    _highchartsOptions: function (marginTop, marginRight, data) {
+	        var atlasBaseURL = this.props.atlasBaseURL;
+	
+	        return {
+	            plotOptions: {
+	                heatmap: {
+	                    turboThreshold: 0
+	                },
+	                series: {
+	                    point: {
+	                        events: {
+	                            mouseOver: function () {
+	                                this.series.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', this.series.xAxis.categories[this.x].id);
+	                            }
+	                        }
+	                    },
+	                    events: {
+	                        mouseOut: function () {
+	                            this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', null);
+	                        }
+	                    },
+	
+	                    states: {
+	                        hover: {
+	                            color: '#eeec38' //#edab12 color cell on mouse over
+	                        },
+	                        select: {
+	                            color: '#eeec38'
+	                        }
+	                    }
+	                }
+	            },
+	            credits: {
+	                enabled: false //remove Highcharts text in the bottom right corner
+	            },
+	            chart: {
+	                type: 'heatmap',
+	                marginTop: marginTop,
+	                marginRight: marginRight, //leave space for tilted long headers
+	                spacingTop: 0,
+	                plotBorderWidth: 1,
+	                height: Math.max(70, data.yAxisCategories.length * 30 + marginTop),
+	                zoomType: 'x',
+	                events: {
+	                    handleGxaAnatomogramTissueMouseEnter: function (e) {
+	                        Highcharts.each(this.series, function (series) {
+	                            Highcharts.each(series.points, function (point) {
+	                                if (point.series.xAxis.categories[point.x].id === e.svgPathId) {
+	                                    point.select(true, true);
+	                                }
+	                            });
+	                        });
+	                    },
+	                    handleGxaAnatomogramTissueMouseLeave: function (e) {
+	                        var points = this.getSelectedPoints();
+	                        if (points.length > 0) {
+	                            Highcharts.each(points, function (point) {
+	                                point.select(false);
+	                            });
+	                        }
+	                    }
+	                }
+	            },
+	            legend: {
+	                enabled: false
+	            },
+	            title: null,
+	            xAxis: { //tissues
+	                tickLength: 5,
+	                tickColor: 'rgb(192, 192, 192)',
+	                lineColor: 'rgb(192, 192, 192)',
+	                labels: {
+	                    style: {
+	                        fontSize: '9px',
+	                        textOverflow: 'ellipsis'
+	                    },
+	                    autoRotation: [-45, -90],
+	                    formatter: function () {
+	                        return this.value.label;
+	                    }
+	                },
+	                opposite: 'true',
+	                categories: data.xAxisCategories
+	            },
+	            yAxis: { //experiments or bioentities
+	                useHTML: true,
+	                reversed: true,
+	                labels: {
+	                    style: {
+	                        fontSize: '10px',
+	                        color: '#148ff3'
+	                    },
+	                    formatter: function () {
+	                        return '<a href="' + atlasBaseURL + '/experiments/' + this.value.id + '">' + this.value.label + '</a>';
+	                    }
+	                },
+	                categories: data.yAxisCategories,
+	                title: null,
+	                gridLineWidth: 0,
+	                minorGridLineWidth: 0,
+	                endOnTick: false
+	            },
+	            tooltip: {
+	                useHTML: true,
+	                formatter: function () {
+	                    return '<div style="white-space: pre">' + '<div>' + 'Sample name: <b>' + this.series.yAxis.categories[this.point.y].label + '</b>' + '</div>' + '<div>' + 'Experimental condition: ' + (this.series.xAxis.categories[this.point.x].label.length > 50 ? '<br>' : '') + '<b>' + this.series.xAxis.categories[this.point.x].label + '</b>' + '</div>' + '<div>' + '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';"></span>' + 'Expression level: <b>' + this.point.value + '</b>' + '</div>' + '</div>';
+	                }
+	            },
+	            anatomogramEventEmitter: this.props.anatomogramEventEmitter,
+	            series: data.dataSeries
+	        };
+	    },
+	
+	    _boxedHeatmap: function (dataForTheChart) {
+	        var xAxisLongestHeaderLength = Math.max.apply(null, this.props.data.xAxisCategories.map(function (category) {
+	            return category.label.length;
+	        }));
+	
+	        var marginTop = this.props.data.xAxisCategories.length < 10 ? 30 : // labels aren’t tilted
+	        this.props.data.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
+	        Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5)); // labels at -90°
+	
+	        var maxWidthFraction = 1 - 1 / Math.pow(0.2 * this._countColumnsToShow() + 1, 4);
+	        //TODO the marginRight value of props used to be the same here and in top legend.
+	        //Probably it's time to get rid of this prop.
+	        var marginRight = this.props.marginRight * (1 + 10 / Math.pow(1 + this._countColumnsToShow(), 2));
+	
+	        return React.createElement(
+	            'div',
+	            { style: { maxWidth: maxWidthFraction * 100 + "%" } },
+	            React.createElement(ReactHighcharts, { config: this._highchartsOptions(marginTop, marginRight, dataForTheChart), ref: 'chart' })
+	        );
+	    },
+	
+	    render: function () {
+	
+	        var data = this._dataToShow();
+	        return React.createElement(
+	            'div',
+	            { id: 'highcharts_container' },
+	            data.dataSeries.map(function (e) {
+	                return e.data;
+	            }).reduce(function (l, r) {
+	                return l.concat(r);
+	            }, []).length ? this._boxedHeatmap(data) : React.createElement(
+	                'p',
+	                null,
+	                ' No data in the series currently selected. '
+	            ),
+	            this.renderLegend()
+	        );
+	    }
 	
 	});
 	
 	var HeatmapLegendBox = React.createClass({
-	  displayName: 'HeatmapLegendBox',
+	    displayName: 'HeatmapLegendBox',
 	
-	  propTypes: {
-	    name: React.PropTypes.string.isRequired,
-	    colour: React.PropTypes.string.isRequired,
-	    on: React.PropTypes.bool.isRequired,
-	    onClickCallback: React.PropTypes.func.isRequired
-	  },
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: "legend-item " + (this.props.on ? "special" : "legend-item-off"), onClick: this.props.onClickCallback },
-	      React.createElement('div', { style: { background: this.props.colour }, className: 'legend-rectangle' }),
-	      React.createElement(
-	        'span',
-	        { style: { verticalAlign: "middle" } },
-	        this.props.name
-	      )
-	    );
-	  }
+	    propTypes: {
+	        name: React.PropTypes.string.isRequired,
+	        colour: React.PropTypes.string.isRequired,
+	        on: React.PropTypes.bool.isRequired,
+	        onClickCallback: React.PropTypes.func.isRequired
+	    },
 	
+	    render: function () {
+	        return React.createElement(
+	            'div',
+	            { className: "legend-item " + (this.props.on ? "special" : "legend-item-off"), onClick: this.props.onClickCallback },
+	            React.createElement('div', { style: { background: this.props.colour }, className: 'legend-rectangle' }),
+	            React.createElement(
+	                'span',
+	                { style: { verticalAlign: "middle" } },
+	                this.props.name
+	            )
+	        );
+	    }
 	});
 	
 	var propsForOrderingDropdown = {
-	  available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-	  current: React.PropTypes.string.isRequired,
-	  onSelect: React.PropTypes.func.isRequired
+	    available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+	    current: React.PropTypes.string.isRequired,
+	    onSelect: React.PropTypes.func.isRequired
 	};
 	
 	var OrderingDropdown = React.createClass({
-	  displayName: 'OrderingDropdown',
+	    displayName: 'OrderingDropdown',
 	
-	  propTypes: propsForOrderingDropdown,
+	    propTypes: propsForOrderingDropdown,
 	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: 'btn-group' },
-	      React.createElement(
-	        DropdownButton,
-	        {
-	          bsStyle: "primary",
-	          bsSize: "xs",
-	          title: "Order by",
-	          onSelect: this.props.onSelect,
-	          id: "ordering-dropdown" },
-	        this.props.available.map(function (option) {
-	          return React.createElement(
-	            MenuItem,
-	            {
-	              key: option,
-	              eventKey: option,
-	              active: option === this.props.current },
-	            option
-	          );
-	        }.bind(this))
-	      )
-	    );
-	  }
+	    render: function () {
+	        return React.createElement(
+	            'div',
+	            { className: 'btn-group' },
+	            React.createElement(
+	                DropdownButton,
+	                { bsStyle: "primary",
+	                    bsSize: "xs",
+	                    title: "Order by",
+	                    onSelect: this.props.onSelect,
+	                    id: "ordering-dropdown" },
+	                this.props.available.map(function (option) {
+	                    return React.createElement(
+	                        MenuItem,
+	                        { key: option,
+	                            eventKey: option,
+	                            active: option === this.props.current },
+	                        option
+	                    );
+	                }.bind(this))
+	            )
+	        );
+	    }
 	});
 	
 	var HeatmapOptions = React.createClass({
-	  displayName: 'HeatmapOptions',
+	    displayName: 'HeatmapOptions',
 	
-	  propTypes: {
-	    marginRight: React.PropTypes.number.isRequired,
-	    downloadOptions: React.PropTypes.object.isRequired,
-	    googleAnalyticsCallback: React.PropTypes.func.isRequired,
-	    showUsageMessage: React.PropTypes.bool.isRequired,
-	    orderings: React.PropTypes.shape(propsForOrderingDropdown)
-	  },
+	    propTypes: {
+	        marginRight: React.PropTypes.number.isRequired,
+	        downloadOptions: React.PropTypes.object.isRequired,
+	        googleAnalyticsCallback: React.PropTypes.func.isRequired,
+	        showUsageMessage: React.PropTypes.bool.isRequired,
+	        orderings: React.PropTypes.shape(propsForOrderingDropdown)
+	    },
 	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { ref: 'countAndLegend', className: 'gxaHeatmapCountAndLegend', style: { paddingBottom: '15px', position: 'sticky' } },
-	      React.createElement(
-	        'div',
-	        { style: { display: 'inline-block', verticalAlign: 'top' } },
-	        this.props.introductoryMessage
-	      ),
-	      React.createElement(
-	        'div',
-	        { style: { display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight } },
-	        React.createElement(
-	          'div',
-	          { className: 'btn-group' },
-	          this.props.orderings.available.length > 1 ? React.createElement(OrderingDropdown, {
-	            available: this.props.orderings.available,
-	            current: this.props.orderings.current,
-	            onSelect: this.props.orderings.onSelect }) : null,
-	          React.createElement(DownloadProfilesButton, {
-	            ref: 'downloadProfilesButton',
-	            downloadProfilesURL: this.props.downloadOptions.downloadProfilesURL,
-	            atlasBaseURL: this.props.downloadOptions.atlasBaseURL,
-	            isFortLauderdale: this.props.downloadOptions.isFortLauderdale,
-	            onDownloadCallbackForAnalytics: function () {
-	              this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData');
-	            }.bind(this) })
-	        )
-	      ),
-	      this.props.showUsageMessage ? React.createElement(
-	        'div',
-	        { style: { fontSize: 'small', color: 'grey' } },
-	        'To zoom in, click and drag left/right, or tap with two fingers and pinch'
-	      ) : null
-	    );
-	  }
+	    render: function () {
+	        return React.createElement(
+	            'div',
+	            { ref: 'countAndLegend', className: 'gxaHeatmapCountAndLegend', style: { paddingBottom: '15px', position: 'sticky' } },
+	            React.createElement(
+	                'div',
+	                { style: { display: 'inline-block', verticalAlign: 'top' } },
+	                this.props.introductoryMessage
+	            ),
+	            React.createElement(
+	                'div',
+	                { style: { display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight } },
+	                React.createElement(
+	                    'div',
+	                    { className: 'btn-group' },
+	                    this.props.orderings.available.length > 1 ? React.createElement(OrderingDropdown, {
+	                        available: this.props.orderings.available,
+	                        current: this.props.orderings.current,
+	                        onSelect: this.props.orderings.onSelect }) : null,
+	                    React.createElement(DownloadProfilesButton, { ref: 'downloadProfilesButton',
+	                        downloadProfilesURL: this.props.downloadOptions.downloadProfilesURL,
+	                        atlasBaseURL: this.props.downloadOptions.atlasBaseURL,
+	                        isFortLauderdale: this.props.downloadOptions.isFortLauderdale,
+	                        onDownloadCallbackForAnalytics: function () {
+	                            this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData');
+	                        }.bind(this) })
+	                )
+	            ),
+	            this.props.showUsageMessage ? React.createElement(
+	                'div',
+	                { style: { fontSize: 'small', color: 'grey' } },
+	                'To zoom in, click and drag left/right, or tap with two fingers and pinch'
+	            ) : null
+	        );
+	    }
 	});
 	
 	//*------------------------------------------------------------------*
