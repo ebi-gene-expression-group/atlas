@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.collect.ImmutableSet;
