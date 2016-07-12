@@ -29,11 +29,12 @@ public class AnalyticsQueryBuilder {
     private static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
     private static final String SPECIES_FIELD = "species";
 
-    private ArrayList<String> identifierSearchTerms = new ArrayList<>();
+    private GeneQuery geneQuery = GeneQuery.create();
     private ArrayList<String> bioentityIdentifierTerms = new ArrayList<>();
     private ArrayList<String> speciesTerms = new ArrayList<>();
 
     private SolrQuery solrQuery = new SolrQuery();
+
 
     public AnalyticsQueryBuilder facetByExperimentType() {
         solrQuery.setFacet(true);
@@ -58,31 +59,9 @@ public class AnalyticsQueryBuilder {
 
 
     public AnalyticsQueryBuilder queryIdentifierSearch(GeneQuery geneQuery) {
-        ImmutableList.Builder<String> builder = ImmutableList.builder();
-        for (SemanticQueryTerm queryTerm : geneQuery) {
-            builder.add(queryTerm.toString());
-        }
-        identifierSearchTerms.addAll(builder.build());
-
+        this.geneQuery = GeneQuery.create(geneQuery.terms());
         return this;
     }
-
-
-//    public AnalyticsQueryBuilder queryIdentifierSearch(GeneQuery semanticQuery) {
-//        ImmutableList.Builder<String> builder = ImmutableList.builder();
-//        for (SemanticQueryTerm term : semanticQuery) {
-//            if (term.hasValue()) {
-//                if (term.hasNoCategory()) {
-//                    builder.add(wrap(term.value(), '"'));
-//                } else {
-//                    builder.add(wrap(String.format(IDENTIFIER_SEARCH_VALUE_TEMPLATE, term.category(), term.value()), '"'));
-//                }
-//            }
-//        }
-//        identifierSearchTerms.addAll(builder.build());
-//
-//        return this;
-//    }
 
 
     public AnalyticsQueryBuilder queryBioentityIdentifier(String identifier) {
@@ -111,12 +90,12 @@ public class AnalyticsQueryBuilder {
         StringBuilder stringBuilder = new StringBuilder();
         Joiner joinerOr = Joiner.on(" OR ");
 
-        if (identifierSearchTerms.size() == 0 && bioentityIdentifierTerms.size() == 0) {
+        if (geneQuery.isEmpty() && bioentityIdentifierTerms.size() == 0) {
             stringBuilder.append(BIOENTITY_IDENTIFIER_FIELD).append(":*");
         }
 
-        if (identifierSearchTerms.size() > 0) {
-            stringBuilder.append(IDENTIFIER_SEARCH_FIELD).append(":(").append(joinerOr.join(identifierSearchTerms)).append(")");
+        if (geneQuery.size() > 0) {
+            stringBuilder.append(IDENTIFIER_SEARCH_FIELD).append(":(").append(geneQuery.asSolr1DNF()).append(")");
         }
 
         if (bioentityIdentifierTerms.size() > 0) {
