@@ -13,7 +13,7 @@ public abstract class HeatmapWidgetErrorHandler {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ModelAndView widgetSpecific404(Exception e) {
         ModelAndView mav = new ModelAndView("widget-error");
-        mav.addObject("errorMessage", e.getMessage());
+        mav.addObject("exceptionMessage", e.getMessage());
 
         return mav;
     }
@@ -22,7 +22,7 @@ public abstract class HeatmapWidgetErrorHandler {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ModelAndView blah(Exception e) {
         ModelAndView mav = new ModelAndView("widget-error");
-        mav.addObject("errorMessage", e.getMessage());
+        mav.addObject("exceptionMessage", e.getMessage());
 
         return mav;
     }
