@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.web;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -70,7 +71,12 @@ public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
 
     public static GeneQuery fromUrlEncodedJson(String json) throws UnsupportedEncodingException {
         Gson gson = new Gson();
-        return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(URLDecoder.decode(json, "UTF-8"), AutoValue_SemanticQueryTerm[].class)));
+        try {
+            return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(URLDecoder.decode(json, "UTF-8"), AutoValue_SemanticQueryTerm[].class)));
+        } catch (JsonSyntaxException e1) {
+            String geneQueryString = gson.fromJson(URLDecoder.decode(StringUtils.wrap(json, "\""), "UTF-8"), String.class);
+            return create(ImmutableSet.of(SemanticQueryTerm.create(geneQueryString)));
+        }
     }
 
     public String prettyString() {
