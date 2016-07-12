@@ -1,8 +1,12 @@
+<%--@elvariable id="exceptionMessage" type="java.lang.String"--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <section class="gxaSection">
     <div class="gxaError">
-        <h5>${exceptionMessage}</h5>
+        <c:if test="${not empty exceptionMessage}">
+            <p>${exceptionMessage}</p>
+        </c:if>
     </div>
 </section>
 
