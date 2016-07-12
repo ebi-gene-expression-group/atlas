@@ -84,6 +84,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/search-error.jsp"/>
     </definition>
 
+    <definition name="empty-search-page" extends="base.definition">
+        <put-attribute name="header" value=""/>
+        <put-attribute name="body" value="/WEB-INF/jsp/empty-search-page.jsp"/>
+    </definition>
+
     <!-- static pages, eg: about, help -->
     <definition name="static-template" extends="base.definition">
         <put-attribute name="header" value=""/>
