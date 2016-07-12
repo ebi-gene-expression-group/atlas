@@ -17,7 +17,6 @@ var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
  * @param {boolean=}        options.disableGoogleAnalytics - Disable Google Analytics: required by CTTV
  * @param {string=}         options.atlasHost - Atlas host with port (note: don’t include port)
  * @param {string}          options.params
- * @param {boolean}         options.analyticsSearch
  * @param {boolean=}        options.isMultiExperiment
  * @param {boolean=}        options.showAnatomogram
  * @param {boolean=}        options.isWidget

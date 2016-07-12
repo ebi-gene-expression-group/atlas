@@ -316,7 +316,6 @@
             expressionAtlasHeatmapHighcharts.render({
                 atlasHost: window.location.host,
                 params: "geneQuery=${geneQuery.toUrlEncodedJson()}" + widgetParameters,
-                analyticsSearch: false,
                 isMultiExperiment: true,
                 target: "widgetBody",
                 isWidget: false
