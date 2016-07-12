@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.web.controllers;
 
 import org.springframework.http.HttpStatus;

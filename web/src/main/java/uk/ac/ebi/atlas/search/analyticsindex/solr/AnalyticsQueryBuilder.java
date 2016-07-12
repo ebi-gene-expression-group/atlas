@@ -137,5 +137,4 @@ public class AnalyticsQueryBuilder {
         solrQuery.setFacetLimit(-1);
         return solrQuery;
     }
-
 }
