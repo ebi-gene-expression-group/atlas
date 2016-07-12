@@ -26,10 +26,6 @@ public class GeneSetPageController extends BioentityPageController {
     @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showGeneSetPage(@PathVariable String identifier, Model model) {
 
-        if (!GeneSetUtil.matchesGeneSetAccession(identifier)) {
-            throw new ResourceNotFoundException("No gene set matching " + identifier);
-        }
-
         bioentityPropertyServiceInitializer.initForGeneSetPage(bioEntityPropertyService, identifier);
 
         String species = GeneSetUtil.matchesReactomeID(identifier) ? bioEntityPropertyService.getSpecies() : "";
@@ -47,7 +43,6 @@ public class GeneSetPageController extends BioentityPageController {
         model.addAttribute("queryType", "geneSet");
 
         ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(GeneQuery.create(identifier));
-        model.addAttribute("hasDifferentialResults", ExperimentType.containsDifferential(experimentTypes));
 
         return super.showBioentityPage(identifier, model, experimentTypes);
     }
