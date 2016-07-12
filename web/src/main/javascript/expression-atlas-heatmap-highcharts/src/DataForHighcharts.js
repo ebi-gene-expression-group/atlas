@@ -174,10 +174,10 @@ var noOrdering = function(arr){
 var __dataPointFromExpression = function(columnNumber, expression, rowNumber){
   return (
     expression.hasOwnProperty("value") && expression.value !== "NT"
-    ? [rowNumber, columnNumber, expression.value || "Below cutoff"]
+    ? [rowNumber, columnNumber, expression.value ]
     : (
         expression.hasOwnProperty("foldChange")
-      ? [rowNumber, columnNumber, expression.foldChange || "Below cutoff"]
+      ? [rowNumber, columnNumber, expression.foldChange]
       : null
     )
   );

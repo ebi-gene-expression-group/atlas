@@ -16,6 +16,7 @@ var MenuItem = require('react-bootstrap/lib/MenuItem');
 var DownloadProfilesButton = require('download-profiles-button');
 
 var EventEmitter = require('events');
+var TooltipFormatterFactory = require('./TooltipFormatter.jsx');
 
 //*------------------------------------------------------------------*
 
@@ -100,6 +101,7 @@ var HeatmapContainer = React.createClass({
     propTypes: {
         isMultiExperiment: React.PropTypes.bool.isRequired,
         profiles: React.PropTypes.object.isRequired,
+        heatmapConfig: React.PropTypes.object.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
         anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
         googleAnalyticsCallback: React.PropTypes.func.isRequired,
@@ -210,6 +212,7 @@ var HeatmapContainer = React.createClass({
                     data={this._data()}
                     labels={this._labels()}
                     afterHeatmapRedrawn={this.props.afterHeatmapRedrawn}
+                    tooltipFormatter={TooltipFormatterFactory(this.props.heatmapConfig)}
                 />
             </div>
         );
@@ -232,7 +235,15 @@ var HighchartsHeatmap = React.createClass({
             name: React.PropTypes.string,
             colour: React.PropTypes.string
         })).isRequired,
-        afterHeatmapRedrawn: React.PropTypes.func.isRequired
+        afterHeatmapRedrawn: React.PropTypes.func.isRequired,
+        tooltipFormatter :function(props,propName){
+          var f = props[propName];
+          if(typeof f === 'undefined'){
+            return new Error("Tooltip formatter missing");
+          } else if (typeof f !== 'function' || f.name !== 'Formatter'){
+            return new Error("Tooltip formatter not correctly created. See the main method of TooltipFormatter.jsx .");
+          }
+        }
     },
 
     getInitialState: function () {
@@ -319,7 +330,7 @@ var HighchartsHeatmap = React.createClass({
                     color: e.colour,
                     borderWidth: 1,
                     borderColor: "#fff",
-                    data: ds[ix]
+                    data: ds[ix].map(function(e){return {x: e[0], y: e[1], value: e[2], info: {unit: ""}}}) //TODO
                   }
             }.bind(this)),
             xAxisCategories: this.props.data.xAxisCategories.filter(function(e,ix){
@@ -503,23 +514,7 @@ var HighchartsHeatmap = React.createClass({
             },
             tooltip: {
                 useHTML: true,
-                formatter: function() {
-                    return (
-                        '<div style="white-space: pre">'+
-                            '<div>'+
-                              'Sample name: <b>' + this.series.yAxis.categories[this.point.y].label + '</b>'+
-                            '</div>'+
-                            '<div>'+
-                              'Experimental condition: '+ (this.series.xAxis.categories[this.point.x].label.length > 50 ? '<br>':'')
-                                +'<b>' + this.series.xAxis.categories[this.point.x].label + '</b>'+
-                            '</div>'+
-                            '<div>'+
-                              '<span style="border:1px rgb(192, 192, 192) solid; margin-right: 2px; width:6px; height:6px; display:inline-block; background-color:' + this.point.color + ';"></span>' +
-                              'Expression level: <b>' + this.point.value + '</b>'+
-                            '</div>'+
-                        '</div>'
-                      );
-                }
+                formatter: (function() { var f =this.props.tooltipFormatter; return function(){return f(this.series,this.point);};}.bind(this))()
             },
             anatomogramEventEmitter: this.props.anatomogramEventEmitter,
             series: data.dataSeries

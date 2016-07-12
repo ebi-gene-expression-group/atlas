@@ -89,7 +89,7 @@ var Container = React.createClass({
                   : null
               }
 
-              { this.state.heatmapConfig ?
+              { this.state.ajaxCompleted ?
                   <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
                       <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
@@ -173,7 +173,8 @@ var Container = React.createClass({
 
     getInitialState: function() {
         return {
-            heatmapConfig: '',
+            ajaxCompleted: false,
+            heatmapConfig: {},
             profiles: {
                 rows: [],
                 minExpressionLevel: 0,
@@ -205,9 +206,16 @@ var Container = React.createClass({
                       isReferenceExperiment: !this.props.isMultiExperiment && this.props.sourceURL.indexOf("/json/experiments/") === -1,
                       isDifferential: this.props.isDifferential
                     };
+                    //See in heatmap-data.jsp which thirteen properties this config is populated with.
+                    for(var key in data.config){
+                      if(data.config.hasOwnProperty(key)){
+                        config[key]=data.config[key];
+                      }
+                    }
 
                     this.setState({
-                        heatmapConfig: data.config,
+                        ajaxCompleted: true,
+                        heatmapConfig: config,
                         columnHeaders: data.columnHeaders,
                         profiles: data.profiles,
                         jsonCoexpressions : data.jsonCoexpressions,
