@@ -23,8 +23,8 @@ public class AnalyticsSearchService {
         this.analyticsClient = analyticsClient;
     }
 
-    public Optional<ImmutableSet<String>> searchBioentityIdentifiers(GeneQuery geneQuery, String species) {
+    public ImmutableSet<String> searchBioentityIdentifiers(GeneQuery geneQuery, String species) {
         QueryResponse queryResponse = analyticsClient.query(new AnalyticsQueryBuilder().queryIdentifierSearch(geneQuery).ofSpecies(species).setRows(0).facetByBioentityIdentifier().build());
-        return Optional.of(SolrUtil.extractFirstFacetValues(queryResponse));
+        return SolrUtil.extractFirstFacetValues(queryResponse);
     }
 }
