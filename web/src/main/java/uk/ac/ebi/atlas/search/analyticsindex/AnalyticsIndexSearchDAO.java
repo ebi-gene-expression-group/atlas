@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.search.analyticsindex;
 import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsClient;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder;
 import uk.ac.ebi.atlas.solr.SolrUtil;
@@ -13,7 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@Scope("singleton")
 public class AnalyticsIndexSearchDAO {
 
     private AnalyticsClient analyticsClient;
@@ -23,7 +21,7 @@ public class AnalyticsIndexSearchDAO {
         this.analyticsClient = analyticsClient;
     }
 
-    public ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery) {
+    ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery) {
         SolrQuery solrQuery =
                new AnalyticsQueryBuilder()
                         .queryIdentifierSearch(geneQuery)
@@ -35,13 +33,38 @@ public class AnalyticsIndexSearchDAO {
         return SolrUtil.extractFirstFacetValues(queryResponse);
     }
 
-    public ImmutableSet<String> fetchExperimentTypes(String bioentityIdentifier) {
+    ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery, String species) {
+        SolrQuery solrQuery =
+                new AnalyticsQueryBuilder()
+                        .queryIdentifierSearch(geneQuery)
+                        .ofSpecies(species)
+                        .facetByExperimentType()
+                        .filterAboveDefaultCutoff()
+                        .setRows(0)
+                        .build();
+        QueryResponse queryResponse = analyticsClient.query(solrQuery);
+        return SolrUtil.extractFirstFacetValues(queryResponse);
+    }
+
+    ImmutableSet<String> fetchExperimentTypes(String bioentityIdentifier) {
         SolrQuery solrQuery =
                 new AnalyticsQueryBuilder()
                         .queryBioentityIdentifier(bioentityIdentifier)
                         .facetByExperimentType()
                         .filterAboveDefaultCutoff()
                         .setRows(0)
+                        .build();
+        QueryResponse queryResponse = analyticsClient.query(solrQuery);
+        return SolrUtil.extractFirstFacetValues(queryResponse);
+    }
+
+    ImmutableSet<String> searchBioentityIdentifiers(GeneQuery geneQuery, String species) {
+        SolrQuery solrQuery =
+                new AnalyticsQueryBuilder()
+                        .queryIdentifierSearch(geneQuery)
+                        .ofSpecies(species)
+                        .setRows(0)
+                        .facetByBioentityIdentifier()
                         .build();
         QueryResponse queryResponse = analyticsClient.query(solrQuery);
         return SolrUtil.extractFirstFacetValues(queryResponse);
