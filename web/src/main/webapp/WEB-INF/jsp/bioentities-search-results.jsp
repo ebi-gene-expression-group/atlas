@@ -30,131 +30,10 @@
 
     <section class="gxaSection">
         <div id="accordion" class="grid_24">
-            <c:if test="${showBioentityPropertiesPane}">
-                <ul id="infoHeader" class="gxaBioEntityCardHeader">
-                    <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
-                         src="/gxa/resources/images/bioentity_info_transparent_bkg.png"/>
-                            <span class="gxaBioEntityCardBioentityName">
-                                <c:forEach var="entityName" varStatus="loopStatus"
-                                           items="${bioEntityPropertyService.entityNames}">
-                                    ${entityName}<c:if test="${not loopStatus.last}">, </c:if>
-                                    <c:set var="entityNamesList" value="${entityNamesList} ${entityName}"/>
-                                </c:forEach>
-                            </span>
-                    <c:set var="species" value="${bioEntityPropertyService.species}"/>
-                    <span class="gxaBioEntityCardSpecies">${fn:toUpperCase(fn:substring(species, 0, 1))}${fn:substring(species, 1,fn:length(species))}</span>
-                    <span class="gxaBioEntityCardDescription">${bioEntityPropertyService.bioEntityDescription}</span>
-                </ul>
-
-                <div id="infoBody" class="gxaBioEntityCard">
-                    <table id="bioEntityCardTable">
-                        <c:forEach var="propertyType" items="${propertyNames.keySet()}">
-                            <c:choose>
-                                <c:when test="${propertyType == 'go' || propertyType == 'po'}">
-
-                                    <c:set var="relevantGoPoLinks"
-                                           value="${bioEntityPropertyService.fetchRelevantGoPoLinks(propertyType, 3)}"/>
-                                    <c:set var="allGoPoLinks"
-                                           value="${bioEntityPropertyService.fetchGoPoLinksOrderedByDepth(propertyType)}"/>
-
-                                    <c:if test="${relevantGoPoLinks.size() > 0}">
-                                        <tr>
-                                            <td class="gxaBioEntityCardPropertyType">${propertyNames.get(propertyType)}</td>
-                                            <td class="gxaBioEntityCardPropertyValue">
-                                                <div id="${propertyType}RelevantLinks">
-                                                    <c:set var="count" value="0"/>
-                                                    <c:forEach var="goLink" items="${relevantGoPoLinks}">
-
-                                                        <c:set var="count" value="${count + 1}"/>
-                                                        <c:set var="comma" value=""/>
-                                                        <c:if test="${count < relevantGoPoLinks.size()}">
-                                                            <c:set var="comma" value=","/>
-                                                        </c:if>
-
-                                                        <c:set var="preLinkHTML" value=""/>
-                                                        <c:set var="postLinkHTML" value=""/>
-                                                        <c:if test="${not goLink.getUrl().isEmpty()}">
-                                                            <c:set var="preLinkHTML"
-                                                                   value="<a class=\"bioEntityCardLink\" href=\"${goLink.getUrl()}\" target=\"_blank\">"/>
-                                                            <c:set var="postLinkHTML" value="</a>"/>
-                                                        </c:if>
-                                                        <span>${preLinkHTML}${goLink.getText()}${postLinkHTML}${comma}</span>
-                                                    </c:forEach>
-
-                                                    <c:if test="${allGoPoLinks.size() > relevantGoPoLinks.size()}">
-                                                        <a id="${propertyType}MoreLinks" href="">(... and ${allGoPoLinks.size() - relevantGoPoLinks.size()} more)</a>
-                                                    </c:if>
-                                                </div>
-
-                                                <c:if test="${allGoPoLinks.size() > relevantGoPoLinks.size()}">
-                                                    <div id="${propertyType}AllLinks" style="display:none">
-                                                        <c:set var="count" value="0"/>
-                                                        <c:forEach var="goLink" items="${allGoPoLinks}">
-
-                                                            <c:set var="count" value="${count + 1}"/>
-                                                            <c:set var="comma" value=""/>
-                                                            <c:if test="${count < allGoPoLinks.size()}">
-                                                                <c:set var="comma" value=","/>
-                                                            </c:if>
-
-                                                            <c:set var="preLinkHTML" value=""/>
-                                                            <c:set var="postLinkHTML" value=""/>
-                                                            <c:if test="${not goLink.getUrl().isEmpty()}">
-                                                                <c:set var="preLinkHTML"
-                                                                       value="<a class=\"bioEntityCardLink\" href=\"${goLink.getUrl()}\" target=\"_blank\">"/>
-                                                                <c:set var="postLinkHTML" value="</a>"/>
-                                                            </c:if>
-                                                            <span>${preLinkHTML}${goLink.getText()}${postLinkHTML}${comma}</span>
-                                                        </c:forEach>
-                                                        <a id="${propertyType}LessLinks" href="">(show less)</a>
-                                                    </div>
-                                                </c:if>
-                                            </td>
-                                        </tr>
-                                    </c:if>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="propertyLinks"
-                                           value="${bioEntityPropertyService.fetchPropertyLinks(propertyType)}"/>
-                                    <c:if test="${propertyLinks.size() > 0}">
-                                        <tr>
-                                            <td class="gxaBioEntityCardPropertyType">${propertyNames.get(propertyType)}</td>
-                                            <td class="gxaBioEntityCardPropertyValue">
-                                                <c:set var="count" value="0"/>
-                                                <c:forEach var="propertyLink" items="${propertyLinks}">
-
-                                                    <c:set var="count" value="${count + 1}"/>
-                                                    <c:set var="comma" value=""/>
-                                                    <c:if test="${count < propertyLinks.size()}">
-                                                        <c:set var="comma" value=","/>
-                                                    </c:if>
-
-                                                    <c:set var="preLinkHTML" value=""/>
-                                                    <c:set var="postLinkHTML" value=""/>
-                                                    <c:if test="${not propertyLink.getUrl().isEmpty()}">
-                                                        <c:set var="preLinkHTML"
-                                                               value="<a class=\"bioEntityCardLink\" href=\"${propertyLink.getUrl()}\" target=\"_blank\">"/>
-                                                        <c:set var="postLinkHTML" value="</a>"/>
-                                                    </c:if>
-
-                                                    <span>${preLinkHTML}${propertyLink.getText()}${postLinkHTML}${comma}</span>
-                                                </c:forEach>
-                                            </td>
-                                        </tr>
-                                    </c:if>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </table>
-                </div>
-
-            </c:if>
-
             <c:set var="showWidget" value="${widgetHasBaselineProfiles}"/>
 
             <ul id="baselineProfileHeader" class="gxaBioEntityCardHeader">
-                <img id="baseline-info-image" title="Baseline Expression"
-                     src="/gxa/resources/images/allup2_transparent_bkg.png"/>
+                <img id="baseline-info-image" title="Baseline Expression" src="/gxa/resources/images/allup2_transparent_bkg.png"/>
                 <span class="gxaBioEntityCardBioentityName">Baseline Expression</span>
                 <c:choose>
                     <c:when test="${showWidget}">
@@ -293,15 +172,6 @@
 
     <c:set var="hasBaselineResults" value="${showWidget || not empty firstBaselineCounts}"/>
 
-    <%--@elvariable id="showBioentityPropertiesPane" type="boolean"--%>
-    <c:choose>
-        <c:when test="${showBioentityPropertiesPane}">
-            <c:set var="defaultPanelIndex" value="${hasBaselineResults ? 1 : (not empty bioentities ? 2 : 0)}"/>
-        </c:when>
-        <c:otherwise>
-            <c:set var="defaultPanelIndex" value="${hasBaselineResults ? 0 : (not empty bioentities ? 1 : false)}"/>
-        </c:otherwise>
-    </c:choose>
     <c:set var="initialPanelIndex" value="${defaultPanelIndex}"/>
 
     <%-- hide expand/collapse icons when accordion sections don't have enough results --%>

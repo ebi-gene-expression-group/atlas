@@ -57,6 +57,12 @@
         <put-attribute name="body" value="/WEB-INF/jsp/bioentities-search-results.jsp"/>
     </definition>
 
+    <definition name="new-bioentities-search-results" extends="base.definition">
+        <put-attribute name="title" value="Expression Atlas"/>
+        <put-attribute name="header" value=""/>
+        <put-attribute name="body" value="/WEB-INF/jsp/bioentities/new-bioentities-search-results.jsp"/>
+    </definition>
+
     <definition name="bioentities" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas > Gene information"/>
         <put-attribute name="header" value=""/>
