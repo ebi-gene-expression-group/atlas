@@ -24,7 +24,7 @@ var Tooltip = React.createClass({
         {
           <div>
             {this._tinySquare()}
-            {this.props.config.isDifferential? "Fold change: ": "Expression level: "}{this._bold((this.props.value ||"Below cutoff")+" "+(this.props.unit||""))}
+            {this.props.config.isDifferential? "Fold change: ": "Expression level: "}{this._bold(this.props.value ? (this.props.value+" "+(this.props.unit||"") ):"Below cutoff")}
           </div>
         }
       </div>

@@ -119,7 +119,7 @@ var rankColumnsByThreshold = function(threshold, expressions){
         return (
           row.map(
             function(point){
-              return +point.hasOwnProperty("value");
+              return +(point.hasOwnProperty("value") && point.value!==0);
             }
           )
         );
@@ -130,9 +130,9 @@ var rankColumnsByThreshold = function(threshold, expressions){
           return el + r2[ix];
         });
       })
-    .map(function(countOfExperimentsWhereTissueExpressed){
+    .map(function(countOfExperimentsWhereTissueExpressedAboveCutoff){
       return (
-        countOfExperimentsWhereTissueExpressed > expressions.length * threshold ? 0 : 1
+          countOfExperimentsWhereTissueExpressedAboveCutoff > expressions.length * threshold ? 0 : 1
       );
     })
   );
@@ -174,7 +174,7 @@ var noOrdering = function(arr){
 var __dataPointFromExpression = function(infoCommonForTheRow, columnNumber, expression, rowNumber){
   //TODO make this function more complicated and determine the info to pass about each point here.
   return (
-    expression.hasOwnProperty("value") && expression.value !== "NT"
+        expression.hasOwnProperty("value")
     ? {x: rowNumber, y:columnNumber, value:expression.value ,info:infoCommonForTheRow}
     : (
         expression.hasOwnProperty("foldChange")
@@ -195,8 +195,17 @@ var _dataPointsFromRow = _.curry(function(config,row, columnNumber){
 },3);
 
 var unitForThisRowOfData = function(row,config){
-  //TODO add a function that determines units that are being used in this row
-  return "";
+    if (config.isMultiExperiment) {
+        if (row.experimentType === "RNASEQ_MRNA_BASELINE"){
+            return row.name.indexOf("FANTOM") > -1 ? "TPM": "FPKM";
+        } else {
+            return "";
+        }
+    }
+    //TODO: We need to pass also the p-value option here, so this will need to be modified
+    else if (config.isDifferential) {
+        return "Log2-fold change";
+    }
 };
 
 var _groupByExperimentType = function(chain, config){
