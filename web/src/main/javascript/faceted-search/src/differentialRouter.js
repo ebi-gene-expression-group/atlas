@@ -53,6 +53,8 @@ module.exports = function (options) {
             differentialResultsPath = "gxa/json/genesets/" + query.geneQuery + "/differentialResults";
             break;
         default:
+            differentialFacetsPath = "gxa/json/query/" + query.geneQuery + "/differentialFacets";
+            differentialResultsPath = "gxa/json/query/" + query.geneQuery + "/differentialResults";
             break;
     }
 
