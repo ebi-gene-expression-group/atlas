@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsIndexSearchDAO;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
 import uk.ac.ebi.atlas.web.GeneQuery;
@@ -28,7 +28,7 @@ public abstract class BioentityPageController {
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private BioEntityCardProperties bioEntityCardProperties;
 
-    protected AnalyticsIndexSearchDAO analyticsIndexSearchDAO;
+    protected AnalyticsSearchService analyticsSearchService;
     protected BioentityPropertyServiceInitializer bioentityPropertyServiceInitializer;
     protected BioEntityPropertyService bioEntityPropertyService;
     protected DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
@@ -36,8 +36,8 @@ public abstract class BioentityPageController {
     protected String[] propertyNames;
 
     @Inject
-    public void setAnalyticsIndexSearchDAO(AnalyticsIndexSearchDAO analyticsIndexSearchDAO) {
-        this.analyticsIndexSearchDAO = analyticsIndexSearchDAO;
+    public void setAnalyticsIndexSearchDAO(AnalyticsSearchService analyticsSearchService) {
+        this.analyticsSearchService = analyticsSearchService;
     }
 
     @Inject

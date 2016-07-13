@@ -24,7 +24,7 @@ public class GenePageController extends BioentityPageController {
         model.addAttribute("mainTitle", "Expression summary for " + bioEntityPropertyService.getEntityName() + " - " + StringUtils.capitalize(bioEntityPropertyService.getSpecies()));
         model.addAttribute("queryType", "gene");
 
-        ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(identifier);
+        ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
         return super.showBioentityPage(identifier, model, experimentTypes);
     }

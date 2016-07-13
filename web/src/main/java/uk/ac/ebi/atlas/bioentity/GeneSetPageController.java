@@ -39,7 +39,7 @@ public class GeneSetPageController extends BioentityPageController {
         model.addAttribute("species", species);
         model.addAttribute("queryType", "geneSet");
 
-        ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(GeneQuery.create(identifier));
+        ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(GeneQuery.create(identifier));
 
         return super.showBioentityPage(identifier, model, experimentTypes);
     }
