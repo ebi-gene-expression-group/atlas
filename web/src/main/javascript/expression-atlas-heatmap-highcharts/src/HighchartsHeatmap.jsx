@@ -92,10 +92,8 @@ var HeatmapDataPropType = React.PropTypes.objectOf(
 
 var HeatmapContainer = React.createClass({
     propTypes: {
-        isMultiExperiment: React.PropTypes.bool.isRequired,
         profiles: React.PropTypes.object.isRequired,
         heatmapConfig: React.PropTypes.object.isRequired,
-        atlasBaseURL: React.PropTypes.string.isRequired,
         anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
         googleAnalyticsCallback: React.PropTypes.func.isRequired,
         heatmapData: HeatmapDataPropType,
@@ -113,7 +111,7 @@ var HeatmapContainer = React.createClass({
             totalRows = this.props.profiles.searchResultTotal;
 
         var what =
-            (this.props.isMultiExperiment ? 'experiment' : 'gene') +
+            (this.props.heatmapConfig.isMultiExperiment ? 'experiment' : 'gene') +
             (totalRows > 1 ? 's' : '');
 
         return 'Showing ' + shownRows + ' ' +
@@ -187,7 +185,7 @@ var HeatmapContainer = React.createClass({
                     introductoryMessage={this._introductoryMessage()}
                     downloadOptions={{
                         downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
-                        atlasBaseURL: this.props.atlasBaseURL,
+                        atlasBaseURL: this.props.heatmapConfig.atlasBaseURL,
                         isFortLauderdale: this.props.heatmapConfig.isFortLauderdale
                     }}
                     orderings={{
@@ -202,12 +200,11 @@ var HeatmapContainer = React.createClass({
 
                 <HighchartsHeatmap
                     marginRight={marginRight}
-                    atlasBaseURL={this.props.atlasBaseURL}
                     anatomogramEventEmitter={this.props.anatomogramEventEmitter}
                     data={this._data()}
                     labels={this._labels()}
                     afterHeatmapRedrawn={this.props.afterHeatmapRedrawn}
-                    tooltipFormatter={FormattersFactory(this.props.heatmapConfig)}
+                    formatters={FormattersFactory(this.props.heatmapConfig)}
                 />
             </div>
         );
@@ -215,11 +212,19 @@ var HeatmapContainer = React.createClass({
 
 });
 
+var FormatterPropType = function(props,propName){
+  var f = props[propName];
+  if(typeof f === 'undefined'){
+    return new Error(propName+" formatter missing");
+  } else if (typeof f !== 'function' || f.name !== 'Formatter'){
+    return new Error(propName+" formatter not correctly created. See the main method of TooltipFormatter.jsx .");
+  }
+}
+
 var HighchartsHeatmap = React.createClass({
 
     propTypes: {
         marginRight: React.PropTypes.number.isRequired,
-        atlasBaseURL: React.PropTypes.string.isRequired,
         anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
         data: React.PropTypes.shape({
             dataSeries: DataSeriesPropType,
@@ -231,14 +236,11 @@ var HighchartsHeatmap = React.createClass({
             colour: React.PropTypes.string
         })).isRequired,
         afterHeatmapRedrawn: React.PropTypes.func.isRequired,
-        tooltipFormatter :function(props,propName){
-          var f = props[propName];
-          if(typeof f === 'undefined'){
-            return new Error("Tooltip formatter missing");
-          } else if (typeof f !== 'function' || f.name !== 'Formatter'){
-            return new Error("Tooltip formatter not correctly created. See the main method of TooltipFormatter.jsx .");
-          }
-        }
+        formatters : React.PropTypes.shape({
+          xAxis: FormatterPropType,
+          yAxis: FormatterPropType,
+          tooltip: FormatterPropType
+        }).isRequired
     },
 
     getInitialState: function () {
@@ -406,8 +408,6 @@ var HighchartsHeatmap = React.createClass({
     },
 
     _highchartsOptions: function(marginTop, marginRight, data){
-      var atlasBaseURL = this.props.atlasBaseURL;
-
       return (
         {
             plotOptions: {
@@ -473,7 +473,7 @@ var HighchartsHeatmap = React.createClass({
                 enabled: false
             },
             title: null,
-            xAxis: { //tissues
+            xAxis: { //assays
                 tickLength: 5,
                 tickColor: 'rgb(192, 192, 192)',
                 lineColor: 'rgb(192, 192, 192)',
@@ -483,9 +483,7 @@ var HighchartsHeatmap = React.createClass({
                         textOverflow: 'ellipsis'
                     },
                     autoRotation: [-45, -90],
-                    formatter: function() {
-                        return this.value.label;
-                    }
+                    formatter: (function() { var f =this.props.formatters.xAxis; return function(){return f(this.value);};}.bind(this))()
                 },
                 opposite: 'true',
                 categories: data.xAxisCategories
@@ -498,9 +496,7 @@ var HighchartsHeatmap = React.createClass({
                         fontSize: '10px',
                         color: '#148ff3'
                     },
-                    formatter: function() {
-                        return '<a href="' + atlasBaseURL +'/experiments/' + this.value.id + '">' + this.value.label + '</a>';
-                    }
+                    formatter: (function() { var f =this.props.formatters.yAxis; return function(){return f(this.value);};}.bind(this))()
                 },
                 categories: data.yAxisCategories,
                 title: null,
@@ -510,7 +506,7 @@ var HighchartsHeatmap = React.createClass({
             },
             tooltip: {
                 useHTML: true,
-                formatter: (function() { var f =this.props.tooltipFormatter; return function(){return f(this.series,this.point);};}.bind(this))()
+                formatter: (function() { var f =this.props.formatters.tooltip; return function(){return f(this.series,this.point);};}.bind(this))()
             },
             anatomogramEventEmitter: this.props.anatomogramEventEmitter,
             series: data.dataSeries

@@ -178,7 +178,7 @@ var __dataPointFromExpression = function(infoCommonForTheRow, columnNumber, expr
     ? {x: rowNumber, y:columnNumber, value:expression.value ,info:infoCommonForTheRow}
     : (
         expression.hasOwnProperty("foldChange")
-      ? {x: rowNumber, y: columnNumber, value: expression.foldChange,info:{unit: infoCommonForTheRow.unit, pValue: expression.pValue, foldChange: expression.foldChange}}
+      ? {x: rowNumber, y: columnNumber, value: expression.foldChange,info:{pValue: expression.pValue, foldChange: expression.foldChange}}
       : null
     )
   );
@@ -195,17 +195,15 @@ var _dataPointsFromRow = _.curry(function(config,row, columnNumber){
 },3);
 
 var unitForThisRowOfData = function(row,config){
-    if (config.isMultiExperiment) {
-        if (row.experimentType === "RNASEQ_MRNA_BASELINE"){
-            return row.name.indexOf("FANTOM") > -1 ? "TPM": "FPKM";
-        } else {
-            return "";
-        }
-    }
-    //TODO: We need to pass also the p-value option here, so this will need to be modified
-    else if (config.isDifferential) {
-        return "Log2-fold change";
-    }
+    return (
+      config.isDifferential
+      ? "Log2Fold change" //this is what we use for point.value, but we don't actually use this unit for display. See Formatters.jsx.
+      : (config.isMultiExperiment
+        ? row.experimentType === "RNASEQ_MRNA_BASELINE"
+          ? row.name.indexOf("FANTOM") > -1 ? "TPM": "FPKM"
+          : ""
+        : "") //TODO determine the units on the experiment page as well
+    );
 };
 
 var _groupByExperimentType = function(chain, config){

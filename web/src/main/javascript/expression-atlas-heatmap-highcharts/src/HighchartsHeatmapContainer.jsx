@@ -103,11 +103,9 @@ var Container = React.createClass({
 
                       <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
                           <HighchartsHeatmap
-                              isMultiExperiment={this.props.isMultiExperiment}
                               profiles={this.state.profiles}
                               heatmapConfig={this.state.heatmapConfig}
                               anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-                              atlasBaseURL={this.props.atlasBaseURL}
                               googleAnalyticsCallback={this.state.googleAnalyticsCallback}
                               heatmapData={this.state.heatmapData}
                               afterHeatmapRedrawn={this._attachListenersToLabels}
@@ -201,6 +199,7 @@ var Container = React.createClass({
 
                     var config = {
                       geneQuery: data.config.geneQuery,
+                      atlasBaseURL: this.props.atlasBaseURL,
                       isExperimentPage: this.props.sourceURL.indexOf("/json/experiments/") >-1,
                       isMultiExperiment: this.props.isMultiExperiment,
                       isReferenceExperiment: !this.props.isMultiExperiment && this.props.sourceURL.indexOf("/json/experiments/") === -1,
