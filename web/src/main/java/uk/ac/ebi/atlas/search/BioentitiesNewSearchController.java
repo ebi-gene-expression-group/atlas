@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
-import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
 import uk.ac.ebi.atlas.web.GeneQuery;
@@ -20,6 +20,8 @@ import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+
+import java.io.UnsupportedEncodingException;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -38,7 +40,8 @@ public class BioentitiesNewSearchController {
     }
 
     @RequestMapping(value = "/query")
-    public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model, RedirectAttributes redirectAttributes) {
+    public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model, RedirectAttributes redirectAttributes)
+    throws UnsupportedEncodingException {
 
         checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or a condition.");
 
@@ -66,8 +69,19 @@ public class BioentitiesNewSearchController {
             }
             // Resolves to multiple IDs
             else {
-                model.addAttribute("queryType", "search");
-                model.addAttribute("identifier", "");
+                model.addAttribute("identifier", geneQuery.toUrlEncodedJson());
+                ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(geneQuery, species);
+
+                boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
+                boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
+
+                if (!hasDifferentialResults && !hasBaselineResults) {
+                    return "empty-search-page";
+                }
+
+                model.addAttribute("hasDifferentialResults", hasDifferentialResults);
+                model.addAttribute("hasBaselineResults", hasBaselineResults);
+
                 return "new-bioentities-search-results";
             }
 
