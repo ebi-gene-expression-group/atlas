@@ -98,7 +98,7 @@ public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
     public String asSolr1DNF() {
         StringBuilder stringBuilder = new StringBuilder();
         for (SemanticQueryTerm queryTerm : terms()) {
-            stringBuilder.append(String.format("\"%s:{%s}\"",queryTerm.category(), queryTerm.value())).append(OR_OPERATOR);
+            stringBuilder.append(queryTerm.toString()).append(OR_OPERATOR);
         }
         stringBuilder.delete(stringBuilder.lastIndexOf(OR_OPERATOR), stringBuilder.length());
         return stringBuilder.toString();
