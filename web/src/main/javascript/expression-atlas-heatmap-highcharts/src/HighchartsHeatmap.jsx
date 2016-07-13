@@ -20,19 +20,15 @@ var TooltipFormatterFactory = require('./TooltipFormatter.jsx');
 
 //*------------------------------------------------------------------*
 
+var PointPropType = React.PropTypes.shape({
+  x: React.PropTypes.number.isRequired,
+  y: React.PropTypes.number.isRequired,
+  value: React.PropTypes.number.isRequired,
+  info: React.PropTypes.object.isRequired
+});
+
 var DataSeriesPropType = React.PropTypes.arrayOf(
-    React.PropTypes.arrayOf(
-      React.PropTypes.arrayOf(
-        function(series){
-          if (! Array.isArray(series)
-              || series.length !== 3
-              || typeof series[0] !== 'number'
-              || typeof series[1] !== 'number'){
-            return new Error("Data series should be array of number, number, value to display")
-          }
-        }
-      )
-    )
+      React.PropTypes.arrayOf(PointPropType)
   ).isRequired;
 
 var AxisCategoriesPropType = React.PropTypes.arrayOf(
@@ -42,6 +38,7 @@ var AxisCategoriesPropType = React.PropTypes.arrayOf(
     })
   ).isRequired;
 
+
 var HeatmapDataPropType = React.PropTypes.objectOf(
     function(heatmapData){
 
@@ -49,16 +46,12 @@ var HeatmapDataPropType = React.PropTypes.objectOf(
         var height = heatmapData.yAxisCategories.length;
 
         for(var i = 0; i < heatmapData.dataSeries.length; i++){
-            for(var j = 0; j < heatmapData.dataSeries[i].length; j++){
+            for(var j = 0; j < heatmapData.dataSeries[i].data.length; j++){
                 var point = heatmapData.dataSeries[i].data[j];
-                if(point.length !==3){
-                    return new Error("Each point in data series should be [x,y,value]:"+ point.toString());
-                }
-
-                var x = point[0];
-                var y = point[1];
+                var x = point.x;
+                var y = point.y;
                 if(x < 0 || y < 0 || x >= width || y >= height){
-                    return new Error("Point with coordinates outside range:" + point.toString());
+                    return new Error("Point with coordinates outside range:" + x+","+y);
                 }
             }
         }
@@ -137,10 +130,12 @@ var HeatmapContainer = React.createClass({
         }.bind(this);
 
         var permutePoint = function(point){
-            return [
-                permuteX(point[0]),
-                permuteY(point[1]),
-                point[2]];
+            return {
+              x: permuteX(point.x),
+              y: permuteY(point.y),
+              value: point.value,
+              info: point.info
+            };
         };
 
         var permuteArray = function(arr, permute){
@@ -275,7 +270,7 @@ var HighchartsHeatmap = React.createClass({
     },
 
     _dataToShow: function () {
-        var all_s = function(indexToPickFromEachPoint){
+        var all_s = function(propertyToPickFromEachPoint){
             return (
                 this.props.data.dataSeries
                 .filter(function(e, ix){
@@ -287,7 +282,7 @@ var HighchartsHeatmap = React.createClass({
                     return l.concat(r);
                 },[])
                 .map(function(e){
-                    return e[indexToPickFromEachPoint];
+                    return e[propertyToPickFromEachPoint];
                 })
                 .filter(function(e,ix,self){
                     return self.indexOf(e) ===ix ;
@@ -298,8 +293,8 @@ var HighchartsHeatmap = React.createClass({
             );
         }.bind(this);
 
-        var allXs = all_s(0);
-        var allYs = all_s(1);
+        var allXs = all_s("x");
+        var allYs = all_s("y");
 
         var ds = this.props.data.dataSeries
         .map(function(e, ix){
@@ -311,14 +306,15 @@ var HighchartsHeatmap = React.createClass({
             return (
                 series
                     .map(function(point){
-                        return [
-                            allXs.indexOf(point[0]),
-                            allYs.indexOf(point[1]),
-                            point[2]
-                        ];
+                        return {
+                            x: allXs.indexOf(point.x),
+                            y: allYs.indexOf(point.y),
+                            value: point.value,
+                            info: point.info
+                        };
                     })
                     .filter(function(point){
-                        return point[0]>-1 && point[1]>-1
+                        return point.x>-1 && point.y>-1
                     })
                 );
         });
@@ -330,7 +326,7 @@ var HighchartsHeatmap = React.createClass({
                     color: e.colour,
                     borderWidth: 1,
                     borderColor: "#fff",
-                    data: ds[ix].map(function(e){return {x: e[0], y: e[1], value: e[2], info: {unit: ""}}}) //TODO
+                    data: ds[ix]
                   }
             }.bind(this)),
             xAxisCategories: this.props.data.xAxisCategories.filter(function(e,ix){
@@ -359,7 +355,7 @@ var HighchartsHeatmap = React.createClass({
                     return l.concat(r);
                 },[])
                 .map(function(e){
-                    return e[0];
+                    return e.x;
                 })
                 .filter(function(e,ix,self){
                     return self.indexOf(e) ===ix;

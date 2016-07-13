@@ -171,35 +171,41 @@ var noOrdering = function(arr){
   return arr.map(function(el,ix){return ix;})
 };
 
-var __dataPointFromExpression = function(columnNumber, expression, rowNumber){
+var __dataPointFromExpression = function(infoCommonForTheRow, columnNumber, expression, rowNumber){
+  //TODO make this function more complicated and determine the info to pass about each point here.
   return (
     expression.hasOwnProperty("value") && expression.value !== "NT"
-    ? [rowNumber, columnNumber, expression.value ]
+    ? {x: rowNumber, y:columnNumber, value:expression.value ,info:infoCommonForTheRow}
     : (
         expression.hasOwnProperty("foldChange")
-      ? [rowNumber, columnNumber, expression.foldChange]
+      ? {x: rowNumber, y: columnNumber, value: expression.foldChange,info:{unit: infoCommonForTheRow.unit, pValue: expression.pValue, foldChange: expression.foldChange}}
       : null
     )
   );
-}
+};
 
-var _dataPointsFromRow = function(row, columnNumber){
+var _dataPointsFromRow = _.curry(function(config,row, columnNumber){
   return (
     row.expressions
-    .map(_.curry(__dataPointFromExpression,3)(columnNumber))
+    .map(_.curry(__dataPointFromExpression,4)({unit: unitForThisRowOfData(row,config)}, columnNumber))
     .filter(function(el) {
       return el;
     })
   );
-}
+},3);
 
-var _groupByExperimentType = function(chain){
+var unitForThisRowOfData = function(row,config){
+  //TODO add a function that determines units that are being used in this row
+  return "";
+};
+
+var _groupByExperimentType = function(chain, config){
   return (
     chain
     .map(function(row, columnNumber) {
       return [
         row.experimentType,
-        _dataPointsFromRow(row, columnNumber)
+        _dataPointsFromRow(config,row, columnNumber)
       ];
     })
     .groupBy(function(experimentTypeAndRow) {
@@ -213,7 +219,7 @@ var _groupByExperimentType = function(chain){
     .mapValues(_.flatten)
     .toPairs()
   );
-}
+};
 
 var _groupSingleExperiment = function(chain, config){
   var _inferExperimentType = function(config){
@@ -227,7 +233,7 @@ var _groupSingleExperiment = function(chain, config){
   };
   return (
     chain
-    .map(_dataPointsFromRow)
+    .map(_dataPointsFromRow(config))
     .flatten()
     .thru(function(value){
       return [
@@ -235,20 +241,20 @@ var _groupSingleExperiment = function(chain, config){
       ];
     })
   );
-}
+};
 
 var _experimentsIntoDataSeriesByThresholds = function(thresholds){
   return function(experimentType, dataPoints) {
     return dataPoints.map(
-      _.spread(function(xPosition, yPosition, value) {
+      function(dataPoint) {
         return [
-          _.sortedIndex(thresholds[experimentType] || thresholds.DEFAULT, value),
-          [xPosition, yPosition, value]
+          _.sortedIndex(thresholds[experimentType] || thresholds.DEFAULT, dataPoint.value),
+          dataPoint
         ];
-      }.bind(this))
+      }.bind(this)
     )
   };
-}
+};
 
 var getDataSeries = function(profilesRows, config) {
   return (
@@ -270,12 +276,12 @@ var getDataSeries = function(profilesRows, config) {
       ["#eaeaea", "#45affd", "#1E74CA", "#024990"],
       profilesRows, config)
   );
-}
+};
 
 var _getDataSeries = function (thresholds, names, colours, profilesRows, config) {
   return (
     (config.isMultiExperiment
-      ? _groupByExperimentType
+      ? _.curryRight(_groupByExperimentType,2)(config)
       : _.curryRight(_groupSingleExperiment,2)(config)
     )(_.chain(profilesRows))
     .map(_.spread(_experimentsIntoDataSeriesByThresholds(thresholds)))
@@ -321,7 +327,7 @@ var extractExpressionValues = function(rows, isDifferential){
       );
     }
   );
-}
+};
 
 var combineRanks = function(ranksAndTheirWeighings){
   return (
@@ -336,7 +342,7 @@ var combineRanks = function(ranksAndTheirWeighings){
     .map(_.sum)
     .value()
   );
-}
+};
 
 var calculateColumnRank = function(expressions){
   return (
@@ -346,7 +352,7 @@ var calculateColumnRank = function(expressions){
       [rankColumnsByThreshold(0.4,expressions), 1e6]
     ])
   );
-}
+};
 
 var calculateRowRank = function (expressions, config){
   var transposed = _.zip.apply(_,expressions);
@@ -358,7 +364,7 @@ var calculateRowRank = function (expressions, config){
     ])
     : rankColumnsByExpression(transposed)
   );
-}
+};
 
 var createOrderings = function (columnRank, rowRank, columnHeaders, rows, config){
   return (
@@ -386,7 +392,7 @@ var createOrderings = function (columnRank, rowRank, columnHeaders, rows, config
         }
       }
   );
-}
+};
 
 var getTheWholeDataObject = function(rows, columnHeaders, config){
   var expressions = extractExpressionValues(rows,config.isDifferential);
