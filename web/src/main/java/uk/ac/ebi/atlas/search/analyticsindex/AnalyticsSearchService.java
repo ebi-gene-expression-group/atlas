@@ -1,9 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsClient;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder;
 import uk.ac.ebi.atlas.solr.SolrUtil;
@@ -13,7 +11,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@Scope("singleton")
 public class AnalyticsSearchService {
 
     private AnalyticsClient analyticsClient;
