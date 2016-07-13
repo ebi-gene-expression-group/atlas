@@ -16,7 +16,7 @@ var MenuItem = require('react-bootstrap/lib/MenuItem');
 var DownloadProfilesButton = require('download-profiles-button');
 
 var EventEmitter = require('events');
-var TooltipFormatterFactory = require('./TooltipFormatter.jsx');
+var FormattersFactory = require('./Formatters.jsx');
 
 //*------------------------------------------------------------------*
 
@@ -207,7 +207,7 @@ var HeatmapContainer = React.createClass({
                     data={this._data()}
                     labels={this._labels()}
                     afterHeatmapRedrawn={this.props.afterHeatmapRedrawn}
-                    tooltipFormatter={TooltipFormatterFactory(this.props.heatmapConfig)}
+                    tooltipFormatter={FormattersFactory(this.props.heatmapConfig)}
                 />
             </div>
         );
