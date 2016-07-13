@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
+import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
+import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
@@ -26,10 +28,13 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class BioentitiesNewSearchController {
 
     private AnalyticsSearchService analyticsSearchService;
+    private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
 
     @Inject
-    public BioentitiesNewSearchController(AnalyticsSearchService analyticsSearchService) {
+    public BioentitiesNewSearchController(AnalyticsSearchService analyticsSearchService,
+                                          DifferentialAnalyticsSearchService differentialAnalyticsSearchService) {
         this.analyticsSearchService = analyticsSearchService;
+        this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
     }
 
     @RequestMapping(value = "/query")
@@ -39,6 +44,7 @@ public class BioentitiesNewSearchController {
 
         model.addAttribute("isSearch", true);
         model.addAttribute("searchDescription", requestParameters.getDescription());
+        redirectAttributes.addFlashAttribute("searchDescription", requestParameters.getDescription());
 
         if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
 
@@ -47,7 +53,6 @@ public class BioentitiesNewSearchController {
 
             // TODO We decide it’s a gene set because of how the query *looks*, and things like GO:FOOBAR will be incorrectly redirected to /genesets/GO:FOOBAR
             if (GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession(geneQuery)) {
-                setRedirectAttributes(redirectAttributes, requestParameters);
                 return "redirect:/genesets/" + geneQuery.terms().iterator().next().value();
             }
 
@@ -57,12 +62,13 @@ public class BioentitiesNewSearchController {
                 return "empty-search-page";
             }
             if (geneIds.size() == 1) {
-                setRedirectAttributes(redirectAttributes, requestParameters);
                 return "redirect:/genes/" + geneIds.iterator().next();
             }
             // Resolves to multiple IDs
             else {
-                return "";
+                model.addAttribute("queryType", "search");
+                model.addAttribute("identifier", "");
+                return "new-bioentities-search-results";
             }
 
         } else if (!requestParameters.hasGeneQuery() && requestParameters.hasCondition()) {
@@ -83,10 +89,24 @@ public class BioentitiesNewSearchController {
         }
     }
 
-    private void setRedirectAttributes(RedirectAttributes redirectAttributes, GeneQuerySearchRequestParameters requestParameters) {
-        redirectAttributes.addFlashAttribute("isSearch", true);
-        redirectAttributes.addFlashAttribute("searchDescription", requestParameters.getDescription());
+    @RequestMapping(value = {"/json/query/{geneQuery:.*}/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String fetchDifferentialJsonFacets(@PathVariable GeneQuery geneQuery) {
+        if (geneQuery.isEmpty()) {
+            return "{}";
+        }
+        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(geneQuery);
     }
+
+    @RequestMapping(value = {"/json/query/{geneQuery:.*}/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String fetchDifferentialJsonResults(@PathVariable GeneQuery geneQuery) {
+        if (geneQuery.isEmpty()) {
+            return "{}";
+        }
+        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(geneQuery);
+    }
+
 
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
