@@ -1,0 +1,31 @@
+{
+  "name": "expression-atlas-heatmap-highcharts-old",
+  "version": "1.0.0",
+  "description": "Expression Atlas Highcharts heatmap of baseline and differential expression experiments from the Expression Atlas project (https://www.ebi.ac.uk/gxa)",
+  "main": "index.js",
+  "author": "Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "anatomogram": "file:../atlas_modules/anatomogram",
+    "highcharts-heatmap": "^0.1.2",
+    "jQuery-ajaxTransport-XDomainRequest": "git+https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git",
+    "jquery": "^2.2.1",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-highcharts": "^8.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-react-display-name": "^6.5.0",
+    "babel-plugin-transform-react-jsx": "^6.6.5",
+    "clean-webpack-plugin": "^0.1.8",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.4",
+    "image-webpack-loader": "^1.6.3",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  }
+}

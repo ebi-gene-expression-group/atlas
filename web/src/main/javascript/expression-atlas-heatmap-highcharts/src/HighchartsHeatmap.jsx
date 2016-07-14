@@ -197,7 +197,9 @@ var HeatmapContainer = React.createClass({
                     }}
                     googleAnalyticsCallback={this.props.googleAnalyticsCallback}
                     showUsageMessage={this.props.heatmapData.xAxisCategories.length > 100} />
-
+                <div style={{height:"300px", display:"block", backgroundColor:"powderblue"}}>
+                  Padding for testing
+                </div>
                 <HighchartsHeatmap
                     marginRight={marginRight}
                     anatomogramEventEmitter={this.props.anatomogramEventEmitter}

@@ -138,6 +138,28 @@ var rankColumnsByThreshold = function(threshold, expressions){
   );
 };
 
+var rankColumnsByCountOfExperimentsExpressed = function(expressions){
+  return (
+    expressions
+    .map(
+      function(row){
+        return (
+          row.map(
+            function(point){
+              return +(point.hasOwnProperty("value") && point.value!==0);
+            }
+          )
+        );
+      })
+    .reduce(function(r1,r2){
+      return r1.map(
+        function(el,ix){
+          return el + r2[ix];
+        });
+      })
+  );
+};
+
 var getXAxisCategories = function (columnHeaders, isDifferential) {
   return columnHeaders.map(
     isDifferential
@@ -351,7 +373,7 @@ var combineRanks = function(ranksAndTheirWeighings){
   );
 };
 
-var calculateColumnRank = function(expressions){
+var geneExpressionColumnRank = function(expressions){
   return (
     combineRanks([
       [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -361,7 +383,7 @@ var calculateColumnRank = function(expressions){
   );
 };
 
-var calculateRowRank = function (expressions, config){
+var geneExpressionRowRank = function (expressions, config){
   var transposed = _.zip.apply(_,expressions);
   return (
     config.isMultiExperiment
@@ -373,7 +395,31 @@ var calculateRowRank = function (expressions, config){
   );
 };
 
-var createOrderings = function (columnRank, rowRank, columnHeaders, rows, config){
+var geneExpressionMovingThresholdsColumnRank = function(expressions){
+  return (
+    combineRanks([
+      [rankColumnsByWhereTheyAppearFirst(expressions), 1],
+      [rankColumnsByExpression(expressions), 1e3],
+      [rankColumnsByThreshold(0.25 + 0.2/Math.pow(1+expressions.length/10,0.2),expressions), 1e6],
+      [rankColumnsByThreshold(0.02,expressions), 1.05e3]
+    ])
+  );
+};
+
+var geneExpressionMovingThresholdsRowRank = function (expressions, config){
+  var transposed = _.zip.apply(_,expressions);
+  return (
+    config.isMultiExperiment
+    ? combineRanks([
+      [rankColumnsByExpression(transposed), 1e3],
+      [rankColumnsByThreshold(0.25 + 0.2/Math.pow(1+transposed.length/10,0.2),transposed), 1e6],
+      [rankColumnsByThreshold(0.02,transposed), 1.05e3]
+    ])
+    : rankColumnsByExpression(transposed)
+  );
+};
+
+var createOrderings = function (expressions, columnHeaders, rows, config){
   return (
     config.isMultiExperiment || config.isReferenceExperiment
     ?
@@ -382,13 +428,25 @@ var createOrderings = function (columnRank, rowRank, columnHeaders, rows, config
           columns: createAlphabeticalOrdering("factorValue", columnHeaders),
           rows: noOrdering(rows)
         },
-        "Gene expression" : {
-          columns: createOrdering(columnRank,comparatorByProperty("factorValue"),columnHeaders),
-          rows: createOrdering(rowRank,comparatorByProperty("name"),rows)
+        "No ordering" : {
+          columns: noOrdering(columnHeaders),
+          rows: noOrdering(rows)
         },
         "Alphabetical" : {
           columns: createAlphabeticalOrdering("factorValue", columnHeaders),
           rows: createAlphabeticalOrdering("name", rows)
+        },
+        "Gene expression" : {
+          columns: createOrdering(geneExpressionColumnRank(expressions),comparatorByProperty("factorValue"),columnHeaders),
+          rows: createOrdering(geneExpressionRowRank(expressions,config),comparatorByProperty("name"),rows)
+        },
+        "Gene expression- moving thresholds" : {
+          columns: createOrdering(geneExpressionMovingThresholdsColumnRank(expressions),comparatorByProperty("factorValue"),columnHeaders),
+          rows: createOrdering(geneExpressionMovingThresholdsRowRank(expressions,config),comparatorByProperty("name"),rows)
+        },
+        "By fraction of expression" : {
+          columns: createOrdering(combineRanks([[rankColumnsByCountOfExperimentsExpressed(expressions),-1]]),_.constant(0),columnHeaders),
+          rows: createOrdering(combineRanks([[rankColumnsByCountOfExperimentsExpressed(_.zip.apply(_,expressions)),-1]]),_.constant(0),rows)
         }
       }
     :
@@ -407,7 +465,7 @@ var getTheWholeDataObject = function(rows, columnHeaders, config){
   return {
     xAxisCategories: getXAxisCategories(columnHeaders, config.isDifferential),
     yAxisCategories: getYAxisCategories(rows, config),
-    orderings: createOrderings(calculateColumnRank(expressions),calculateRowRank(expressions,config),columnHeaders, rows, config),
+    orderings: createOrderings(expressions,columnHeaders, rows, config),
     dataSeries: getDataSeries(rows, config)
   };
 };
