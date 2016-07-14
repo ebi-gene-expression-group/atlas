@@ -66,27 +66,27 @@
     <!-- error pages -->
     <definition name="error-page" extends="base.definition">
         <put-attribute name="header" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/error-page.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/error/error-page.jsp"/>
     </definition>
 
     <definition name="experiment-not-found-page" extends="base.definition">
         <put-attribute name="header" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/experiment-not-found-page.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/error/experiment-not-found-page.jsp"/>
     </definition>
 
     <definition name="query-error-page" extends="base.definition">
         <put-attribute name="header" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/query-error-page.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/error/query-error-page.jsp"/>
     </definition>
 
     <definition name="search-error" extends="base.definition">
         <put-attribute name="header" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/search-error.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/error/search-error.jsp"/>
     </definition>
 
     <definition name="empty-search-page" extends="base.definition">
         <put-attribute name="header" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/empty-search-page.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/error/empty-search-page.jsp"/>
     </definition>
 
     <!-- static pages, eg: about, help -->
@@ -108,12 +108,9 @@
     <definition name="heatmap-data" template="/WEB-INF/jsp/includes/heatmap-data.jsp">
     </definition>
 
-    <definition name="widget-error" template="/WEB-INF/jsp/widget-error.jsp">
-
+    <definition name="widget-error" template="/WEB-INF/jsp/error/widget-error.jsp">
     </definition>
 
     <definition name="das-features" template="/WEB-INF/jsp/das-features.jsp">
-
     </definition>
-
 </tiles-definitions>

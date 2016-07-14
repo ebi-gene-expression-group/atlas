@@ -9,12 +9,15 @@
     <div class="gxaError">
         <c:choose>
             <c:when test="${statusCode == '404'}">
-                <h5>Resource not found.</h5>
+                <h4><strong>404</strong> Page not found</h4>
             </c:when>
             <c:otherwise>
-                <h5>We are sorry - an unexpected error occurred. If it persists, please contact <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a></h5>
+                <h4>We are sorry - an unexpected error occurred. If it persists, please contact <a href="mailto:arrayexpress@ebi.ac.uk">arrayexpress@ebi.ac.uk</a></h4>
             </c:otherwise>
         </c:choose>
+        <c:if test="${not empty exceptionMessage}">
+            <h5>${exceptionMessage}</h5>
+        </c:if>
     </div>
 </section>
 
