@@ -53,8 +53,12 @@ module.exports = function (options) {
             differentialResultsPath = "gxa/json/genesets/" + query.geneQuery + "/differentialResults";
             break;
         default:
-            differentialFacetsPath = "gxa/json/query/" + query.geneQuery + "/differentialFacets";
-            differentialResultsPath = "gxa/json/query/" + query.geneQuery + "/differentialResults";
+            differentialFacetsPath =
+                "gxa/json/query/differentialFacets?geneQuery=" + query.geneQuery +
+                "&organism=" + options.species;
+            differentialResultsPath =
+                "gxa/json/query/differentialResults?geneQuery=" + query.geneQuery +
+                "&organism=" + options.species;
             break;
     }
 
@@ -62,7 +66,7 @@ module.exports = function (options) {
         resultsData;
     $.ajaxSetup({ traditional:true });
     $.ajax({
-        url: new URI({protocol: URI(window.location).protocol(), hostname: host, path: differentialFacetsPath}).normalize(),
+        url: new URI({protocol: URI(window.location).protocol(), hostname: host, path: differentialFacetsPath}).toString(),
         dataType: "json",
         success: function(response) {
             facetsTreeData = response;
@@ -79,7 +83,7 @@ module.exports = function (options) {
             pushQueryIntoBrowserHistory(true);
 
             $.ajax({
-                url: new URI({protocol: URI(window.location).protocol(), hostname: host, path: differentialResultsPath}).normalize(),
+                url: new URI({protocol: URI(window.location).protocol(), hostname: host, path: differentialResultsPath}).toString(),
                 dataType: "json",
                 success: function(response) {
                     resultsData = response;
