@@ -39,7 +39,7 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <%--<div role="tabpanel" class="tab-pane fade" id="base"><%@ include file="baseline-expression.jsp" %></div>--%>
+        <div role="tabpanel" class="tab-pane fade" id="base"><%@ include file="baseline-expression.jsp" %></div>
         <div role="tabpanel" class="tab-pane fade" id="diff"><%@ include file="differential-expression.jsp" %></div>
     </div>
 </section>
