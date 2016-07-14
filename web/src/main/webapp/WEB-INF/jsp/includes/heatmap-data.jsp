@@ -11,7 +11,6 @@
 <%--@elvariable id="downloadURL" type="java.lang.String"--%>
 <%--@elvariable id="jsonColumnHeaders" type="java.lang.String"--%>
 <%--@elvariable id="jsonNonExpressedColumnHeaders" type="java.lang.String"--%>
-<%--@elvariable id="jsonMultipleColumnHeaders" type="java.lang.String"--%>
 <%--@elvariable id="jsonGeneSetProfiles" type="java.lang.String"--%>
 <%--@elvariable id="hasAnatomogram" type="boolean"--%>
 <%--@elvariable id="maleAnatomogramFile" type="java.lang.String"--%>
@@ -37,7 +36,7 @@
 <c:choose>
     <c:when test="${empty jsonProfiles}">
         {
-            "error" : "No expression found for ${geneQuery.description()}"
+            "error" : "No expression found for ${geneQuery.toJson()}"
         }
     </c:when>
     <c:otherwise>
@@ -66,7 +65,6 @@
             },
             "columnHeaders": ${not empty jsonColumnHeaders ? jsonColumnHeaders : "null"},
             "nonExpressedColumnHeaders": ${not empty jsonNonExpressedColumnHeaders ? jsonNonExpressedColumnHeaders : "[]"},
-            "multipleColumnHeaders": ${not empty jsonMultipleColumnHeaders ? jsonMultipleColumnHeaders : "null"},
             "profiles": ${not empty jsonProfiles ? jsonProfiles : "null"},
             "geneSetProfiles": ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : "null"},
             "jsonCoexpressions" :${not empty jsonCoexpressions ? jsonCoexpressions : "[]"},
