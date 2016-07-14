@@ -1,6 +1,4 @@
 <%--@elvariable id="hasBaselineResults" type="boolean"--%>
-<%--@elvariable id="hasSelectedSpecies" type="boolean"--%>
-<%--@elvariable id="selectedSpecies" type="java.lang.String"--%>
 <%--@elvariable id="jsonFacets" type="java.lang.String"--%>
 <%--@elvariable id="identifier" type="java.lang.String"--%>
 <%--@elvariable id="queryType" type="java.lang.String"--%>
@@ -13,7 +11,6 @@
 
 <script>
     <c:if test="${hasBaselineResults}">
-    var selectedSpecies = "${hasSelectedSpecies ? selectedSpecies : ''}";
 
     var baselineFacetsData = ${jsonFacets};
 
@@ -21,10 +18,9 @@
         facetsContainer: "gxaBaselineFacetsContainerDiv",
         resultsContainer: "gxaBaselineResultsContainerDiv",
         showAnatomogramsInput: "showAnatomogramsCheckbox",
-        selectedSpecies: selectedSpecies,
+        selectedSpecies: "${species}",
         facetsTreeData: baselineFacetsData,
-        identifier: "${identifier}",
-        queryType: "${queryType}"
+        identifier: "${identifier}"
     });
     </c:if>
 </script>

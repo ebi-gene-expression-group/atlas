@@ -28,7 +28,6 @@ var BaselineHeatmaps = require('./BaselineHeatmaps.jsx');
  * @param {string} options.atlasHost
  * @param {string} options.selectedSpecies
  * @param {string} options.identifier
- * @param {string} options.queryType - "gene", "geneSet"
  */
 module.exports = function (options) {
 
@@ -41,7 +40,6 @@ module.exports = function (options) {
 
     var query = {
         geneQuery : options.identifier,
-        queryType : options.queryType,
         select    : {}
     };
 
