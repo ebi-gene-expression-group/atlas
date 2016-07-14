@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
+import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
@@ -31,12 +32,15 @@ public class BioentitiesNewSearchController {
 
     private AnalyticsSearchService analyticsSearchService;
     private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
+    private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
     @Inject
     public BioentitiesNewSearchController(AnalyticsSearchService analyticsSearchService,
-                                          DifferentialAnalyticsSearchService differentialAnalyticsSearchService) {
+                                          DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
+                                          BaselineAnalyticsSearchService baselineAnalyticsSearchService) {
         this.analyticsSearchService = analyticsSearchService;
         this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
+        this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
     }
 
     @RequestMapping(value = "/query")
@@ -52,22 +56,28 @@ public class BioentitiesNewSearchController {
         if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
 
             String species = requestParameters.hasOrganism() ? requestParameters.getOrganism().trim().toLowerCase() : "";
+            model.addAttribute("species", species);
+            redirectAttributes.addFlashAttribute("species", species);
+
             GeneQuery geneQuery = requestParameters.getGeneQuery();
 
+            // Matches gene set ID -> Gene set page
             // TODO We decide it’s a gene set because of how the query *looks*, and things like GO:FOOBAR will be incorrectly redirected to /genesets/GO:FOOBAR
             if (GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession(geneQuery)) {
                 return "redirect:/genesets/" + geneQuery.terms().iterator().next().value();
             }
 
-            // Resolves to one gene ID
+            // No gene IDs -> empty results page
             ImmutableSet<String> geneIds = analyticsSearchService.searchBioentityIdentifiers(geneQuery, species);
             if (geneIds.size() == 0) {
                 return "empty-search-page";
             }
+
+            // Resolves to a single Gene ID -> Gene page
             if (geneIds.size() == 1) {
                 return "redirect:/genes/" + geneIds.iterator().next();
             }
-            // Resolves to multiple IDs
+            // Resolves to multiple IDs -> General results page
             else {
                 model.addAttribute("identifier", geneQuery.toUrlEncodedJson());
                 ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(geneQuery, species);
@@ -77,6 +87,10 @@ public class BioentitiesNewSearchController {
 
                 if (!hasDifferentialResults && !hasBaselineResults) {
                     return "empty-search-page";
+                }
+
+                if (hasBaselineResults) {
+                    model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(geneQuery, species));
                 }
 
                 model.addAttribute("hasDifferentialResults", hasDifferentialResults);
@@ -103,34 +117,27 @@ public class BioentitiesNewSearchController {
         }
     }
 
-    @RequestMapping(value = {"/json/query/{geneQuery:.*}/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = {"/json/query/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String fetchDifferentialJsonFacets(@PathVariable GeneQuery geneQuery) {
-        if (geneQuery.isEmpty()) {
-            return "{}";
-        }
-        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(geneQuery);
+    public String fetchDifferentialJsonFacets(@Valid GeneQuerySearchRequestParameters requestParameters) {
+        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(requestParameters.getGeneQuery(), requestParameters.getOrganism());
     }
 
-    @RequestMapping(value = {"/json/query/{geneQuery:.*}/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = {"/json/query/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String fetchDifferentialJsonResults(@PathVariable GeneQuery geneQuery) {
-        if (geneQuery.isEmpty()) {
-            return "{}";
-        }
-        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(geneQuery);
+    public String fetchDifferentialJsonResults(@Valid GeneQuerySearchRequestParameters requestParameters) {
+        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(requestParameters.getGeneQuery(), requestParameters.getOrganism());
     }
-
 
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     public ModelAndView handleException(Exception e) {
-        ModelAndView mav = new ModelAndView("search-error-page");
+        ModelAndView mav = new ModelAndView("search-error");
         mav.addObject("exceptionMessage", e.getMessage());
         return mav;
     }
 
-    @ExceptionHandler(value = {SolrException.class})
+    @ExceptionHandler(value = {SolrException.class, })
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView handleSolrException(Exception e) {
         ModelAndView mav = new ModelAndView("query-error-page");
