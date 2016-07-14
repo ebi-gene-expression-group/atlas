@@ -19,7 +19,6 @@ var ExperimentTypes = require('./experimentTypes.js');
  * @param {boolean=}        options.disableGoogleAnalytics - Disable Google Analytics: required by CTTV
  * @param {string=}         options.atlasHost - Atlas host with port (note: don’t include port)
  * @param {string}          options.params
- * @param {boolean}         options.analyticsSearch
  * @param {boolean=}        options.isMultiExperiment
  * @param {boolean=}        options.showAnatomogram
  * @param {boolean=}        options.isWidget
@@ -39,9 +38,7 @@ exports.render = function(options) {
 
     var atlasBaseURL = options.proxyPrefix ? options.proxyPrefix + "/" + atlasHost + atlasPath : linksAtlasBaseURL;
 
-    var endpointPath =
-        options.analyticsSearch ? "/widgets/heatmap/baselineAnalytics" :
-            options.isMultiExperiment ? "/widgets/heatmap/multiExperiment" : "/widgets/heatmap/referenceExperiment";
+    var endpointPath = options.isMultiExperiment ? "/widgets/heatmap/baselineAnalytics" : "/widgets/heatmap/referenceExperiment";
 
     var sourceURL = atlasBaseURL + endpointPath + "?" + options.params;
 
