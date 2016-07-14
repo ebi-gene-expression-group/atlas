@@ -12291,7 +12291,7 @@ webpackJsonp_name_([4],[
 	      return r1.map(
 	        function(el,ix){
 	          return el + r2[ix];
-	        });
+	        },_.fill(Array(expressions.length? expressions[0].length :0), 0));
 	      })
 	    .map(function(countOfExperimentsWhereTissueExpressedAboveCutoff){
 	      return (
@@ -12587,7 +12587,7 @@ webpackJsonp_name_([4],[
 	          columns: createOrdering(rankColumnsByExpression(expressions),comparatorByProperty("factorValue"),columnHeaders),
 	          rows: createOrdering(rankColumnsByExpression(expressions,config),comparatorByProperty("name"),rows)
 	        },
-	        "Gene expression- threshold 0.4" : {
+	        "Threshold 0.4" : {
 	          columns: createOrdering(
 	            combineRanks([
 	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -12600,7 +12600,7 @@ webpackJsonp_name_([4],[
 	              [rankColumnsByThreshold(0.4,transposed), 1e6]
 	            ]),comparatorByProperty("name"),rows)
 	        },
-	        "Gene expression- threshold 0.1" : {
+	        "Threshold 0.1" : {
 	          columns: createOrdering(
 	            combineRanks([
 	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -12613,7 +12613,7 @@ webpackJsonp_name_([4],[
 	              [rankColumnsByThreshold(0.1,transposed), 1e5]
 	            ]),comparatorByProperty("name"),rows)
 	        },
-	        "Gene expression- moving thresholds for experiments and tissues" : {
+	        "Moving thresholds for experiments and tissues" : {
 	          columns: createOrdering(
 	            combineRanks([
 	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -12626,7 +12626,7 @@ webpackJsonp_name_([4],[
 	              [rankColumnsByThreshold(0.05 + 0.4/(1+expressions.length/5),transposed), 1e6]
 	            ]),comparatorByProperty("name"),rows)
 	        },
-	        "Gene expression- 0.15 for experiments, responsive thresholds for tissues" : {
+	        "0.15 threshold for experiments, responsive thresholds for tissues" : {
 	          columns: createOrdering(
 	            combineRanks([
 	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -12639,7 +12639,7 @@ webpackJsonp_name_([4],[
 	              [rankColumnsByThreshold(0.15,transposed), 1e6]
 	            ]),comparatorByProperty("name"),rows)
 	        },
-	        "Gene expression- 0.2 for tissues, responsive thresholds for experiments" : {
+	        "0.2 threshold for tissues, responsive threshold for experiments" : {
 	          columns: createOrdering(
 	            combineRanks([
 	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -12652,7 +12652,7 @@ webpackJsonp_name_([4],[
 	              [rankColumnsByExpressionInHighlightedSet(rankColumnsByThreshold(0.2,expressions), transposed), -1e6]
 	            ]),comparatorByProperty("name"),rows)
 	        },
-	        "Gene expression- moving for experiments, responsive threshold for tissues" : {
+	        "Moving threshold for experiments, responsive threshold for tissues" : {
 	          columns: createOrdering(
 	            combineRanks([
 	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -12665,7 +12665,7 @@ webpackJsonp_name_([4],[
 	              [rankColumnsByThreshold(0.05 + 0.4/(1+expressions.length/5),transposed), 1e6]
 	            ]),comparatorByProperty("name"),rows)
 	        },
-	        "(Proposed) Gene expression- moving for tissues, responsive threshold for experiments" : {
+	        "Moving threshold for tissues, responsive threshold for experiments" : {
 	          columns: createOrdering(
 	            combineRanks([
 	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -12883,7 +12883,7 @@ webpackJsonp_name_([4],[
 	        var marginRight = 60;
 	        return React.createElement(
 	            'div',
-	            null,
+	            { style: { "minHeight": "400px" } },
 	            React.createElement(HeatmapOptions, {
 	                marginRight: marginRight,
 	                introductoryMessage: this._introductoryMessage(),
@@ -12901,11 +12901,6 @@ webpackJsonp_name_([4],[
 	                },
 	                googleAnalyticsCallback: this.props.googleAnalyticsCallback,
 	                showUsageMessage: this.props.heatmapData.xAxisCategories.length > 100 }),
-	            React.createElement(
-	                'div',
-	                { style: { height: "300px", display: "block", backgroundColor: "powderblue" } },
-	                'Padding for testing'
-	            ),
 	            React.createElement(HighchartsHeatmap, {
 	                marginRight: marginRight,
 	                anatomogramEventEmitter: this.props.anatomogramEventEmitter,
@@ -13328,7 +13323,7 @@ webpackJsonp_name_([4],[
 	            ),
 	            React.createElement(
 	                'div',
-	                { style: { display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight } },
+	                { style: { display: "inline-block", verticalAlign: "top", marginRight: this.props.marginRight } },
 	                React.createElement(
 	                    'div',
 	                    { className: 'btn-group' },
@@ -13418,7 +13413,7 @@ webpackJsonp_name_([4],[
 	
 	
 	// module
-	exports.push([module.id, ".gene_title {\n    text-align: center;\n    font-size: 70%;\n    border: 0 red solid;\n}\n\n#container {\n    min-width: 410px;\n    min-height: 210px;\n    margin: 0 auto; /*avoid line overlap*/\n    border: 0 red solid;\n}\n\n#barcharts_legend_list_items {\n    color: #606060;\n    margin-left: 180px;\n    border: 0 solid olive;\n}\n\n#barcharts_legend_list_items .legend-text {\n    display: inline-block;\n    padding: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item {\n    cursor: pointer;\n    display: inline-block;\n    padding: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item:hover {\n    color: black;\n}\n\n#barcharts_legend_list_items .legend-item.legend-item-off {\n    color: #ccc;\n}\n\n#barcharts_legend_list_items .legend-item.legend-item-off div {\n    background-color: #f7f7f7;\n}\n\n#barcharts_legend_list_items .legend-item.special {\n    cursor: default;\n    margin-left: 8px;\n    color: black;\n}\n\n#barcharts_legend_list_items .legend-item .legend-rectangle {\n    width: 12px;\n    height: 12px;\n    border: 1px rgba(0, 0, 0, 0.2) solid;\n    display: inline-block;\n    margin-right: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item .icon-generic:before {\n    font-size: 180%;\n    color: #7e7e7e;\n}\n\n#barcharts_legend_list_items .legend-item:hover .icon-generic:before {\n    color: #353535;\n}\n\n/*****************************************EBI font*******************************************************/\n@font-face {\n    font-family: 'EBI-Conceptual';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Functional';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Generic';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Species';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-SocialMedia';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-Species') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n.icon-socialmedia:before {\n    font-family: 'EBI-SocialMedia';\n    margin: 0 0.3em 0 0;\n    content: attr(data-icon);\n    color: white;\n    font-size: 100%;\n}\n\n.icon-conceptual:before {\n    font-family: 'EBI-Conceptual';\n    margin: 0 0.3em 0 0;\n    content: attr(data-icon);\n    color: #7e7e7e;\n    font-size: 180%;\n}\n\n.icon-species:before {\n    font-family: 'EBI-Species';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon {\n    text-decoration: none;\n    font-style: normal;\n}\n\n.icon-static:before, .icon-generic:before {\n    font-family: 'EBI-Generic';\n    font-size: 100%;\n    color: #BBB;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon-functional:before {\n    font-family: 'EBI-Functional';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0.3em 0 0;\n}\n\n/*****************************************END EBI font*******************************************************/\n", ""]);
+	exports.push([module.id, ".gene_title {\n    text-align: center;\n    font-size: 70%;\n    border: 0 red solid;\n}\n\n#container {\n    min-width: 410px;\n    min-height: 400px;\n}\n\n#barcharts_legend_list_items {\n    color: #606060;\n    margin-left: 180px;\n    border: 0 solid olive;\n}\n\n#barcharts_legend_list_items .legend-text {\n    display: inline-block;\n    padding: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item {\n    cursor: pointer;\n    display: inline-block;\n    padding: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item:hover {\n    color: black;\n}\n\n#barcharts_legend_list_items .legend-item.legend-item-off {\n    color: #ccc;\n}\n\n#barcharts_legend_list_items .legend-item.legend-item-off div {\n    background-color: #f7f7f7;\n}\n\n#barcharts_legend_list_items .legend-item.special {\n    cursor: default;\n    margin-left: 8px;\n    color: black;\n}\n\n#barcharts_legend_list_items .legend-item .legend-rectangle {\n    width: 12px;\n    height: 12px;\n    border: 1px rgba(0, 0, 0, 0.2) solid;\n    display: inline-block;\n    margin-right: 4px;\n    vertical-align: middle;\n}\n\n#barcharts_legend_list_items .legend-item .icon-generic:before {\n    font-size: 180%;\n    color: #7e7e7e;\n}\n\n#barcharts_legend_list_items .legend-item:hover .icon-generic:before {\n    color: #353535;\n}\n\n/*****************************************EBI font*******************************************************/\n@font-face {\n    font-family: 'EBI-Conceptual';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Functional';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Generic';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-Species';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n@font-face {\n    font-family: 'EBI-SocialMedia';\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');\n    src: url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),\n    local('\\263A'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-Species') format('svg'),\n    url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n.icon-socialmedia:before {\n    font-family: 'EBI-SocialMedia';\n    margin: 0 0.3em 0 0;\n    content: attr(data-icon);\n    color: white;\n    font-size: 100%;\n}\n\n.icon-conceptual:before {\n    font-family: 'EBI-Conceptual';\n    margin: 0 0.3em 0 0;\n    content: attr(data-icon);\n    color: #7e7e7e;\n    font-size: 180%;\n}\n\n.icon-species:before {\n    font-family: 'EBI-Species';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon {\n    text-decoration: none;\n    font-style: normal;\n}\n\n.icon-static:before, .icon-generic:before {\n    font-family: 'EBI-Generic';\n    font-size: 100%;\n    color: #BBB;\n    content: attr(data-icon);\n    margin: 0 0 0 0;\n}\n\n.icon-functional:before {\n    font-family: 'EBI-Functional';\n    font-size: 100%;\n    color: white;\n    content: attr(data-icon);\n    margin: 0 0.3em 0 0;\n}\n\n/*****************************************END EBI font*******************************************************/\n", ""]);
 	
 	// exports
 

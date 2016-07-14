@@ -128,7 +128,7 @@ var rankColumnsByThreshold = function(threshold, expressions){
       return r1.map(
         function(el,ix){
           return el + r2[ix];
-        });
+        },_.fill(Array(expressions.length? expressions[0].length :0), 0));
       })
     .map(function(countOfExperimentsWhereTissueExpressedAboveCutoff){
       return (
@@ -424,7 +424,7 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
           columns: createOrdering(rankColumnsByExpression(expressions),comparatorByProperty("factorValue"),columnHeaders),
           rows: createOrdering(rankColumnsByExpression(expressions,config),comparatorByProperty("name"),rows)
         },
-        "Gene expression- threshold 0.4" : {
+        "Threshold 0.4" : {
           columns: createOrdering(
             combineRanks([
               [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -437,7 +437,7 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
               [rankColumnsByThreshold(0.4,transposed), 1e6]
             ]),comparatorByProperty("name"),rows)
         },
-        "Gene expression- threshold 0.1" : {
+        "Threshold 0.1" : {
           columns: createOrdering(
             combineRanks([
               [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -450,7 +450,7 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
               [rankColumnsByThreshold(0.1,transposed), 1e5]
             ]),comparatorByProperty("name"),rows)
         },
-        "Gene expression- moving thresholds for experiments and tissues" : {
+        "Moving thresholds for experiments and tissues" : {
           columns: createOrdering(
             combineRanks([
               [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -463,7 +463,7 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
               [rankColumnsByThreshold(0.05 + 0.4/(1+expressions.length/5),transposed), 1e6]
             ]),comparatorByProperty("name"),rows)
         },
-        "Gene expression- 0.15 for experiments, responsive thresholds for tissues" : {
+        "0.15 threshold for experiments, responsive thresholds for tissues" : {
           columns: createOrdering(
             combineRanks([
               [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -476,7 +476,7 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
               [rankColumnsByThreshold(0.15,transposed), 1e6]
             ]),comparatorByProperty("name"),rows)
         },
-        "Gene expression- 0.2 for tissues, responsive thresholds for experiments" : {
+        "0.2 threshold for tissues, responsive threshold for experiments" : {
           columns: createOrdering(
             combineRanks([
               [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -489,7 +489,7 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
               [rankColumnsByExpressionInHighlightedSet(rankColumnsByThreshold(0.2,expressions), transposed), -1e6]
             ]),comparatorByProperty("name"),rows)
         },
-        "Gene expression- moving for experiments, responsive threshold for tissues" : {
+        "Moving threshold for experiments, responsive threshold for tissues" : {
           columns: createOrdering(
             combineRanks([
               [rankColumnsByWhereTheyAppearFirst(expressions), 1],
@@ -502,7 +502,7 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
               [rankColumnsByThreshold(0.05 + 0.4/(1+expressions.length/5),transposed), 1e6]
             ]),comparatorByProperty("name"),rows)
         },
-        "(Proposed) Gene expression- moving for tissues, responsive threshold for experiments" : {
+        "Moving threshold for tissues, responsive threshold for experiments" : {
           columns: createOrdering(
             combineRanks([
               [rankColumnsByWhereTheyAppearFirst(expressions), 1],

@@ -6,9 +6,7 @@
 
 #container {
     min-width: 410px;
-    min-height: 210px;
-    margin: 0 auto; /*avoid line overlap*/
-    border: 0 red solid;
+    min-height: 400px;
 }
 
 #barcharts_legend_list_items {
