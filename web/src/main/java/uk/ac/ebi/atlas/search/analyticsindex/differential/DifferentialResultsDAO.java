@@ -25,10 +25,11 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
         super(restTemplate, solrBaseUrl, differentialFacetsQueryJSON);  // settings of restTemplate in applicationContext.xml
     }
 
-    public String fetchDifferentialResultsAboveDefaultFoldChangeForSearch(GeneQuery geneQuery) {
-        String identifierSearch = buildSolrQuery(geneQuery, IDENTIFIER_SEARCH_FIELD);
+    public String fetchDifferentialResultsAboveDefaultFoldChangeForSearch(GeneQuery geneQuery, String species) {
+        String identifierSearch = buildSolrQuery(geneQuery, IDENTIFIER_SEARCH_FIELD, species);
         return fetchDifferentialResultsAboveDefaultFoldChange(identifierSearch);
     }
+
 
     public String fetchDifferentialResultsAboveDefaultFoldChangeForIdentifier(String identifier) {
         String identifierSearch = buildSolrQuery(identifier, BIOENTITY_IDENTIFIER_FIELD);

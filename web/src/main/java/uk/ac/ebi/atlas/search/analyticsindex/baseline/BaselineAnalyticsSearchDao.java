@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Named
 public class BaselineAnalyticsSearchDao {
 
@@ -51,8 +53,29 @@ public class BaselineAnalyticsSearchDao {
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
+    public List<Map<String, Object>> fetchFacetsThatHaveExpression(GeneQuery geneQuery, String species) {
+        String response = fetchFacets(buildGeneIdentifierQuery(geneQuery, species));
+        return JsonPath.read(response, FACET_TREE_PATH);
+    }
+
+
     String buildGeneIdentifierQuery(GeneQuery geneQuery) {
         return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF());
+    }
+
+    String buildGeneIdentifierQuery(GeneQuery geneQuery, String species) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (!geneQuery.isEmpty()) {
+            stringBuilder.append(String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF()));
+        }
+        if (!geneQuery.isEmpty() && !isBlank(species)) {
+            stringBuilder.append(" AND ");
+        }
+        if (!isBlank(species)) {
+            stringBuilder.append(String.format("species:\"%s\"", species));
+        }
+
+        return stringBuilder.toString();
     }
 
     public List<Map<String, Object>> fetchExpressionLevelFaceted(GeneQuery geneQuery, String species, String defaultQueryFactorType) {

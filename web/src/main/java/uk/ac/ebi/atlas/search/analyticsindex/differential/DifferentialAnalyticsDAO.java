@@ -12,6 +12,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static uk.ac.ebi.atlas.utils.ResourceUtils.readPlainTextResource;
 
 @Named
@@ -27,6 +28,7 @@ public abstract class DifferentialAnalyticsDAO {
     protected static final String DIFFERENTIAL_ONLY = "experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential)";
     protected static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
     protected static final String BIOENTITY_IDENTIFIER_FIELD = "bioentityIdentifier";
+    private static final String SPECIES_FIELD = "species";
 
     protected static final double DEFAULT_P_VALUE = 0.05;
 
@@ -37,8 +39,24 @@ public abstract class DifferentialAnalyticsDAO {
     }
 
     protected String buildSolrQuery(GeneQuery geneQuery, String searchField) {
-        return geneQuery.isEmpty() ? "" : String.format("%s:(%s)", searchField, geneQuery.asSolr1DNF());
+        return buildSolrQuery(geneQuery, searchField, "");
     }
+
+    protected String buildSolrQuery(GeneQuery geneQuery, String searchField, String species) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (!geneQuery.isEmpty()) {
+            stringBuilder.append(String.format("%s:(%s)", searchField, geneQuery.asSolr1DNF()));
+        }
+        if (!geneQuery.isEmpty() && !isBlank(species)) {
+            stringBuilder.append(" AND ");
+        }
+        if (!isBlank(species)) {
+            stringBuilder.append(String.format("%s:\"%s\"", SPECIES_FIELD, species));
+        }
+
+        return stringBuilder.toString();
+    }
+
 
     protected String buildSolrQuery(String searchTerm, String searchField) {
         return searchTerm.isEmpty() ? "" : String.format("%s:(%s)", searchField, searchTerm);
@@ -48,7 +66,7 @@ public abstract class DifferentialAnalyticsDAO {
         return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q), rows) + encodeQuery(MessageFormat.format(FQ_TEMPLATE, pValue));
     }
 
-    protected static String encodeQueryParam(String param) {
+    private static String encodeQueryParam(String param) {
         try {
             return UriUtils.encodeQueryParam(param, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -73,8 +91,8 @@ public abstract class DifferentialAnalyticsDAO {
         }
     }
 
-    protected static class DifferentialAnalyticsDAOException extends RuntimeException {
-        public DifferentialAnalyticsDAOException(Exception e) {
+    private static class DifferentialAnalyticsDAOException extends RuntimeException {
+        private DifferentialAnalyticsDAOException(Exception e) {
             super(e);
         }
     }
