@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Heatmap demo</title>
+
+    <link rel="stylesheet" href="/gxa/resources/css/jquery-ui-1.11.4.custom/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/gxa/resources/css/customized-bootstrap-3.3.5.css">
+
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendorCommons.bundle.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/expressionAtlasHeatmap.bundle.js"></script>
+</head>
+<body>
+    <div>
+        <h2>Bundles loaded locally, request done to <code>http://www.ebi.ac.uk/gxa</code></h2>
+    </div>
+
+    <div id="heatmapContainer"></div>
+</body>
+
+<script language="JavaScript" type="text/javascript">
+    expressionAtlasHeatmap.render({
+        atlasHost: "10.0.2.2:8080",
+        params: "geneQuery=CALCR&species=homo%20sapiens",
+        isMultiExperiment: false,
+        target: "heatmapContainer"
+    });
+</script>
+
+</html>
