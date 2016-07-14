@@ -4,6 +4,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.MalformedJsonException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -11,6 +12,8 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Iterator;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @AutoValue
 public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
@@ -65,29 +68,26 @@ public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
     }
 
     public static GeneQuery fromJson(String json) {
+        if (isBlank(json)) {
+            return create();
+        }
+
         Gson gson = new Gson();
         return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(json, AutoValue_SemanticQueryTerm[].class)));
     }
 
-    public static GeneQuery fromUrlEncodedJson(String json) throws UnsupportedEncodingException {
+    public static GeneQuery fromUrlEncodedJson(String json) throws UnsupportedEncodingException, MalformedJsonException {
+        if (isBlank(json)) {
+            return create();
+        }
+
         Gson gson = new Gson();
         try {
             return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(URLDecoder.decode(json, "UTF-8"), AutoValue_SemanticQueryTerm[].class)));
-        } catch (JsonSyntaxException e1) {
+        } catch (NullPointerException | JsonSyntaxException e) {
             String geneQueryString = gson.fromJson(URLDecoder.decode(StringUtils.wrap(json, "\""), "UTF-8"), String.class);
             return create(ImmutableSet.of(SemanticQueryTerm.create(geneQueryString)));
         }
-    }
-
-    public String prettyString() {
-        StringBuilder prettyStringBuilder = new StringBuilder();
-
-        for (SemanticQueryTerm queryTerm : terms()) {
-            prettyStringBuilder.append(String.format("Query term: \"%s\" - Category: \"%s\"", queryTerm.value(), queryTerm.category()));
-            prettyStringBuilder.append("\n");
-        }
-
-        return prettyStringBuilder.toString();
     }
 
     @Override
