@@ -12301,6 +12301,34 @@ webpackJsonp_name_([4],[
 	  );
 	};
 	
+	var rankColumnsByExpressionInHighlightedSet = function(expressionsToSkip, expressions){
+	  return (
+	    expressions
+	    .filter(function(e,ix){
+	      return !expressionsToSkip[ix]
+	    })
+	    .map(
+	      function(row){
+	        return (
+	          row.map(
+	            function(point){
+	              return +(point.hasOwnProperty("value") && point.value!==0);
+	            }
+	          )
+	        );
+	      })
+	    .reduce(function(r1,r2){
+	      return r1.map(
+	        function(el,ix){
+	          return el + r2[ix];
+	        });
+	      })
+	    .map(function(e){
+	      return (+!!e);
+	    })
+	  );
+	};
+	
 	var rankColumnsByCountOfExperimentsExpressed = function(expressions){
 	  return (
 	    expressions
@@ -12536,53 +12564,9 @@ webpackJsonp_name_([4],[
 	  );
 	};
 	
-	var geneExpressionColumnRank = function(expressions){
-	  return (
-	    combineRanks([
-	      [rankColumnsByWhereTheyAppearFirst(expressions), 1],
-	      [rankColumnsByExpression(expressions), 1e3],
-	      [rankColumnsByThreshold(0.4,expressions), 1e6]
-	    ])
-	  );
-	};
-	
-	var geneExpressionRowRank = function (expressions, config){
-	  var transposed = _.zip.apply(_,expressions);
-	  return (
-	    config.isMultiExperiment
-	    ? combineRanks([
-	      [rankColumnsByExpression(transposed), 1e3],
-	      [rankColumnsByThreshold(0.4,transposed), 1e6]
-	    ])
-	    : rankColumnsByExpression(transposed)
-	  );
-	};
-	
-	var geneExpressionMovingThresholdsColumnRank = function(expressions){
-	  return (
-	    combineRanks([
-	      [rankColumnsByWhereTheyAppearFirst(expressions), 1],
-	      [rankColumnsByExpression(expressions), 1e3],
-	      [rankColumnsByThreshold(0.25 + 0.2/Math.pow(1+expressions.length/10,0.2),expressions), 1e6],
-	      [rankColumnsByThreshold(0.02,expressions), 1.05e3]
-	    ])
-	  );
-	};
-	
-	var geneExpressionMovingThresholdsRowRank = function (expressions, config){
-	  var transposed = _.zip.apply(_,expressions);
-	  return (
-	    config.isMultiExperiment
-	    ? combineRanks([
-	      [rankColumnsByExpression(transposed), 1e3],
-	      [rankColumnsByThreshold(0.25 + 0.2/Math.pow(1+transposed.length/10,0.2),transposed), 1e6],
-	      [rankColumnsByThreshold(0.02,transposed), 1.05e3]
-	    ])
-	    : rankColumnsByExpression(transposed)
-	  );
-	};
-	
 	var createOrderings = function (expressions, columnHeaders, rows, config){
+	  var transposed = _.zip.apply(_,expressions);
+	  console.log("width: "+transposed.length+", height: "+expressions.length);
 	  return (
 	    config.isMultiExperiment || config.isReferenceExperiment
 	    ?
@@ -12599,13 +12583,100 @@ webpackJsonp_name_([4],[
 	          columns: createAlphabeticalOrdering("factorValue", columnHeaders),
 	          rows: createAlphabeticalOrdering("name", rows)
 	        },
-	        "Gene expression" : {
-	          columns: createOrdering(geneExpressionColumnRank(expressions),comparatorByProperty("factorValue"),columnHeaders),
-	          rows: createOrdering(geneExpressionRowRank(expressions,config),comparatorByProperty("name"),rows)
+	        "Ranks only" : {
+	          columns: createOrdering(rankColumnsByExpression(expressions),comparatorByProperty("factorValue"),columnHeaders),
+	          rows: createOrdering(rankColumnsByExpression(expressions,config),comparatorByProperty("name"),rows)
 	        },
-	        "Gene expression- moving thresholds" : {
-	          columns: createOrdering(geneExpressionMovingThresholdsColumnRank(expressions),comparatorByProperty("factorValue"),columnHeaders),
-	          rows: createOrdering(geneExpressionMovingThresholdsRowRank(expressions,config),comparatorByProperty("name"),rows)
+	        "Gene expression- threshold 0.4" : {
+	          columns: createOrdering(
+	            combineRanks([
+	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
+	              [rankColumnsByExpression(expressions), 1e3],
+	              [rankColumnsByThreshold(0.4,expressions), 1e6]
+	            ]),comparatorByProperty("factorValue"),columnHeaders),
+	          rows: createOrdering(
+	            combineRanks([
+	              [rankColumnsByExpression(transposed), 1e3],
+	              [rankColumnsByThreshold(0.4,transposed), 1e6]
+	            ]),comparatorByProperty("name"),rows)
+	        },
+	        "Gene expression- threshold 0.1" : {
+	          columns: createOrdering(
+	            combineRanks([
+	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
+	              [rankColumnsByExpression(expressions), 1e3],
+	              [rankColumnsByThreshold(0.1,expressions), 1e5]
+	            ]),comparatorByProperty("factorValue"),columnHeaders),
+	          rows: createOrdering(
+	              combineRanks([
+	              [rankColumnsByExpression(transposed), 1e3],
+	              [rankColumnsByThreshold(0.1,transposed), 1e5]
+	            ]),comparatorByProperty("name"),rows)
+	        },
+	        "Gene expression- moving thresholds for experiments and tissues" : {
+	          columns: createOrdering(
+	            combineRanks([
+	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
+	              [rankColumnsByExpression(expressions), 1e3],
+	              [rankColumnsByThreshold(0.05 + 0.4/Math.pow(1+transposed.length/8,0.4),expressions), 1e6]
+	            ]),comparatorByProperty("factorValue"),columnHeaders),
+	          rows: createOrdering(
+	              combineRanks([
+	              [rankColumnsByExpression(transposed), 1e3],
+	              [rankColumnsByThreshold(0.05 + 0.4/(1+expressions.length/5),transposed), 1e6]
+	            ]),comparatorByProperty("name"),rows)
+	        },
+	        "Gene expression- 0.15 for experiments, responsive thresholds for tissues" : {
+	          columns: createOrdering(
+	            combineRanks([
+	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
+	              [rankColumnsByExpression(expressions), 1e3],
+	              [rankColumnsByExpressionInHighlightedSet(rankColumnsByThreshold(0.15,transposed), expressions), -1e6],
+	            ]),comparatorByProperty("factorValue"),columnHeaders),
+	          rows: createOrdering(
+	              combineRanks([
+	              [rankColumnsByExpression(transposed), 1e3],
+	              [rankColumnsByThreshold(0.15,transposed), 1e6]
+	            ]),comparatorByProperty("name"),rows)
+	        },
+	        "Gene expression- 0.2 for tissues, responsive thresholds for experiments" : {
+	          columns: createOrdering(
+	            combineRanks([
+	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
+	              [rankColumnsByExpression(expressions), 1e3],
+	              [rankColumnsByThreshold(0.2,expressions), 1e6]
+	            ]),comparatorByProperty("factorValue"),columnHeaders),
+	          rows: createOrdering(
+	              combineRanks([
+	              [rankColumnsByExpression(transposed), 1e3],
+	              [rankColumnsByExpressionInHighlightedSet(rankColumnsByThreshold(0.2,expressions), transposed), -1e6]
+	            ]),comparatorByProperty("name"),rows)
+	        },
+	        "Gene expression- moving for experiments, responsive threshold for tissues" : {
+	          columns: createOrdering(
+	            combineRanks([
+	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
+	              [rankColumnsByExpression(expressions), 1e3],
+	              [rankColumnsByExpressionInHighlightedSet(rankColumnsByThreshold(0.05 + 0.4/(1+expressions.length/5),transposed), expressions), -1e6],
+	            ]),comparatorByProperty("factorValue"),columnHeaders),
+	          rows: createOrdering(
+	              combineRanks([
+	              [rankColumnsByExpression(transposed), 1e3],
+	              [rankColumnsByThreshold(0.05 + 0.4/(1+expressions.length/5),transposed), 1e6]
+	            ]),comparatorByProperty("name"),rows)
+	        },
+	        "(Proposed) Gene expression- moving for tissues, responsive threshold for experiments" : {
+	          columns: createOrdering(
+	            combineRanks([
+	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
+	              [rankColumnsByExpression(expressions), 1e3],
+	              [rankColumnsByThreshold(0.05 + 0.4/Math.pow(1+transposed.length/8,0.4),expressions), 1e6]
+	            ]),comparatorByProperty("factorValue"),columnHeaders),
+	          rows: createOrdering(
+	              combineRanks([
+	              [rankColumnsByExpression(transposed), 1e3],
+	              [rankColumnsByExpressionInHighlightedSet(rankColumnsByThreshold(0.05 + 0.4/Math.pow(1+transposed.length/8,0.4),expressions), transposed), -1e6]
+	            ]),comparatorByProperty("name"),rows)
 	        },
 	        "By fraction of expression" : {
 	          columns: createOrdering(combineRanks([[rankColumnsByCountOfExperimentsExpressed(expressions),-1]]),_.constant(0),columnHeaders),
