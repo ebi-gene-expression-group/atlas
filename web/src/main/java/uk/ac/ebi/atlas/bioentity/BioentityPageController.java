@@ -87,10 +87,6 @@ public abstract class BioentityPageController {
             model.addAttribute("isSearch", true);
         }
 
-        if (model.containsAttribute("selectedSpecies")) {
-            model.addAttribute("hasSelectedSpecies", true);
-        }
-
         model.addAttribute("identifier", identifier);
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 
