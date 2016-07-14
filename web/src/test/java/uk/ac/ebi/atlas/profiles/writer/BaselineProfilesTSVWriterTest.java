@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Sets;
@@ -58,7 +57,7 @@ public class BaselineProfilesTSVWriterTest {
 
         when(requestContextMock.getExperiment()).thenReturn(experimentMock);
         when(requestContextMock.getAllQueryFactors()).thenReturn(organismParts);
-        when(requestContextMock.getGeneQuery()).thenReturn(GeneQuery.create(ImmutableList.of("geneQuery")));
+        when(requestContextMock.getGeneQuery()).thenReturn(GeneQuery.create("geneQuery"));
         when(requestContextMock.getSelectedQueryFactors()).thenReturn(
                 Sets.newHashSet(new Factor("type1", "value1"), new Factor("type2", "value2")));
         when(requestContextMock.getCutoff()).thenReturn(0.5D);

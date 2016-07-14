@@ -1,11 +1,7 @@
 
 package uk.ac.ebi.atlas.search;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.apache.solr.common.SolrException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -16,12 +12,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
-import uk.ac.ebi.atlas.web.SemanticQuery;
+import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
+import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+
+import java.io.UnsupportedEncodingException;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -30,28 +31,75 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class BioentitiesNewSearchController {
 
     private AnalyticsSearchService analyticsSearchService;
+    private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
+    private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
     @Inject
-    public BioentitiesNewSearchController(AnalyticsSearchService analyticsSearchService) {
+    public BioentitiesNewSearchController(AnalyticsSearchService analyticsSearchService,
+                                          DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
+                                          BaselineAnalyticsSearchService baselineAnalyticsSearchService) {
         this.analyticsSearchService = analyticsSearchService;
+        this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
+        this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
     }
 
-    @RequestMapping(value = "/newquery")
-    public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/query")
+    public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model, RedirectAttributes redirectAttributes)
+    throws UnsupportedEncodingException {
 
-        checkArgument(requestParameters.hasSemanticQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
+        checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or a condition.");
 
-        String selectedSpecies = requestParameters.hasOrganism() ? requestParameters.getOrganism().trim().toLowerCase() : "";
+        model.addAttribute("isSearch", true);
+        model.addAttribute("searchDescription", requestParameters.getDescription());
+        redirectAttributes.addFlashAttribute("searchDescription", requestParameters.getDescription());
 
-        if (requestParameters.hasSemanticQuery() && !requestParameters.hasCondition()) {
+        if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
 
-            if (requestParameters.getSemanticQuery().size() == 1) {
-                return singleTermGeneQuery(requestParameters.getSemanticQuery(), selectedSpecies, model, redirectAttributes);
-            } else {
-                return multiTermGeneQuery(requestParameters.getSemanticQuery(), selectedSpecies, model, redirectAttributes);
+            String species = requestParameters.hasOrganism() ? requestParameters.getOrganism().trim().toLowerCase() : "";
+            model.addAttribute("species", species);
+            redirectAttributes.addFlashAttribute("species", species);
+
+            GeneQuery geneQuery = requestParameters.getGeneQuery();
+
+            // Matches gene set ID -> Gene set page
+            // TODO We decide it’s a gene set because of how the query *looks*, and things like GO:FOOBAR will be incorrectly redirected to /genesets/GO:FOOBAR
+            if (GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession(geneQuery)) {
+                return "redirect:/genesets/" + geneQuery.terms().iterator().next().value();
             }
 
-        } else if (!requestParameters.hasSemanticQuery() && requestParameters.hasCondition()) {
+            // No gene IDs -> empty results page
+            ImmutableSet<String> geneIds = analyticsSearchService.searchBioentityIdentifiers(geneQuery, species);
+            if (geneIds.size() == 0) {
+                return "empty-search-page";
+            }
+
+            // Resolves to a single Gene ID -> Gene page
+            if (geneIds.size() == 1) {
+                return "redirect:/genes/" + geneIds.iterator().next();
+            }
+            // Resolves to multiple IDs -> General results page
+            else {
+                model.addAttribute("identifier", geneQuery.toUrlEncodedJson());
+                ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(geneQuery, species);
+
+                boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
+                boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
+
+                if (!hasDifferentialResults && !hasBaselineResults) {
+                    return "empty-search-page";
+                }
+
+                if (hasBaselineResults) {
+                    model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(geneQuery, species));
+                }
+
+                model.addAttribute("hasDifferentialResults", hasDifferentialResults);
+                model.addAttribute("hasBaselineResults", hasBaselineResults);
+
+                return "new-bioentities-search-results";
+            }
+
+        } else if (!requestParameters.hasGeneQuery() && requestParameters.hasCondition()) {
 
             // Only condition was specified
             // if (requestParameters.getConditionQuery().size() == 1) {
@@ -69,128 +117,27 @@ public class BioentitiesNewSearchController {
         }
     }
 
-
-    private String singleTermGeneQuery(SemanticQuery geneQuery, String species, Model model, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("searchDescription", geneQuery.toString());
-
-        // Gene set ID
-        if (GeneSetUtil.isGeneSetSourceOrMatchesGeneSetAccession(geneQuery)) {
-            return "redirect:/genesets/" + geneQuery.terms().iterator().next().value();
-        }
-
-        // Resolves to one gene ID
-        Optional<ImmutableSet<String>> geneIds = analyticsSearchService.searchBioentityIdentifiers(geneQuery, species);
-        if (geneIds.isPresent() && geneIds.get().size() == 1) {
-            return "redirect:/genes/" + geneIds.get().iterator().next();
-        }
-
-        // Resolves to more than one gene ID
-        return "";
-
-
-//        model.addAttribute("geneQuery", requestParameters.getGeneQueryDeprecated());
-//        model.addAttribute("searchDescription", requestParameters.getDescription());
-//        model.addAttribute("mainTitle", "Expression summary for " + requestParameters.getDescription());
-//
-//        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQuery, species, isExactMatch);
-//
-//        boolean showWidget = hasAllSameSpecies(baselineExperimentAssayGroups) && hasAnyTissueExperiment(baselineExperimentAssayGroups);
-//
-//        if (showWidget) {
-//            model.addAttribute("widgetHasBaselineProfiles", true);
-//            model.addAttribute("species", baselineExperimentAssayGroups.iterator().next().getSpecies());
-//
-//            SortedSet<BaselineExperimentAssayGroup> nonTissueExperimentAssayGroups = selectNonTissueExperiments(baselineExperimentAssayGroups);
-//            model.addAttribute("firstBaselineCounts", removeFirstAssayGroups(nonTissueExperimentAssayGroups, DEFAULT_BASELINE_SPLIT));
-//            model.addAttribute("remainingBaselineCounts", nonTissueExperimentAssayGroups);
-//        } else {
-//            model.addAttribute("firstBaselineCounts", removeFirstAssayGroups(baselineExperimentAssayGroups, DEFAULT_BASELINE_SPLIT));
-//            model.addAttribute("remainingBaselineCounts", baselineExperimentAssayGroups);
-//        }
-//
-//        // used to populate diff-heatmap-table
-//        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(geneQuery, species, isExactMatch);
-//
-//        model.addAttribute("bioentities", bioentityExpressions);
-//        model.addAttribute("preferences", new DifferentialRequestPreferences());
-//        model.addAttribute("requestParameters", requestParameters);
-//        model.addAttribute("exactMatch", requestParameters.isExactMatch());
-//
-//        String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQueryString, requestParameters.getConditionQuery());
-//
-//        model.addAttribute("globalSearchTerm", globalSearchTerm);
-//
-//        return "bioEntities";
-    }
-
-    private String multiTermGeneQuery(SemanticQuery geneQuery, String species, Model model, RedirectAttributes redirectAttributes) {
-        return "";
-    }
-
-    @RequestMapping(value ={"/newquery/results.json"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = {"/json/query/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String newQueryAsJson(@Valid GeneQuerySearchRequestParameters requestParameters) {
-        checkArgument(requestParameters.hasSemanticQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
-
-        String selectedSpecies = requestParameters.hasOrganism() ? requestParameters.getOrganism().trim().toLowerCase() : "";
-
-        if (requestParameters.hasSemanticQuery() && !requestParameters.hasCondition()) {
-
-            if (requestParameters.getSemanticQuery().size() == 1) {
-                return singleTermGeneQueryAsJson(requestParameters.getSemanticQuery(), selectedSpecies);
-            } else {
-                return multiTermGeneQueryAsJson(requestParameters.getSemanticQuery(), selectedSpecies);
-            }
-
-        } else if (!requestParameters.hasSemanticQuery() && requestParameters.hasCondition()) {
-
-            // Only condition was specified
-            // if (requestParameters.getConditionQuery().size() == 1) {
-            //     return singleTermConditionQuery(requestParameters.getConditionQuery(), selectedSpecies, requestParameters.isExactMatch(), model, redirectAttributes);
-            // } else {
-            //     return multiTermConditionQuery(requestParameters.getConditionQuery(), selectedSpecies, requestParameters.isExactMatch(), model, redirectAttributes);
-            // }
-            return "";
-
-        } else {
-
-            return "";
-            // Both gene query and condition were specified
-
-        }
+    public String fetchDifferentialJsonFacets(@Valid GeneQuerySearchRequestParameters requestParameters) {
+        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(requestParameters.getGeneQuery(), requestParameters.getOrganism());
     }
 
-    private String singleTermGeneQueryAsJson(SemanticQuery geneQuery, String species) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
-
-        // Gene set ID
-        if (GeneSetUtil.isGeneSetSourceOrMatchesGeneSetAccession(geneQuery)) {
-            return gson.toJson(Sets.newHashSet(geneQuery.terms().iterator().next().value()));
-        }
-
-        // Resolves to one gene ID
-        Optional<ImmutableSet<String>> geneIds = analyticsSearchService.searchBioentityIdentifiers(geneQuery, species);
-        if (geneIds.isPresent()) {
-            return gson.toJson(geneIds.get());
-        }
-
-        // Resolves to more than one gene ID
-        return gson.toJson(Sets.newHashSet());
-    }
-
-    private String multiTermGeneQueryAsJson(SemanticQuery geneQuery, String species) {
-        return "";
+    @RequestMapping(value = {"/json/query/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String fetchDifferentialJsonResults(@Valid GeneQuerySearchRequestParameters requestParameters) {
+        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(requestParameters.getGeneQuery(), requestParameters.getOrganism());
     }
 
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     public ModelAndView handleException(Exception e) {
-        ModelAndView mav = new ModelAndView("bioentities-search-results");
+        ModelAndView mav = new ModelAndView("search-error");
         mav.addObject("exceptionMessage", e.getMessage());
         return mav;
     }
 
-    @ExceptionHandler(value = {SolrException.class})
+    @ExceptionHandler(value = {SolrException.class, })
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView handleSolrException(Exception e) {
         ModelAndView mav = new ModelAndView("query-error-page");

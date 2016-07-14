@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.baseline.coexpression;
 
 import com.google.gson.Gson;
 import com.jayway.restassured.response.Response;
-import org.apache.commons.lang.StringUtils;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -12,11 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
-import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
-import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
-import uk.ac.ebi.atlas.web.GeneQuery;
-
-import javax.inject.Inject;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,9 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.jayway.restassured.RestAssured.get;
-import static org.apache.commons.lang.StringUtils.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.Is.is;
 
 

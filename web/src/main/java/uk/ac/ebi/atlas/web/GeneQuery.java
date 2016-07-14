@@ -1,94 +1,107 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.MalformedJsonException;
 import org.apache.commons.lang3.StringUtils;
-import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @AutoValue
-public abstract class GeneQuery implements Iterable<String> {
+public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
 
-    public static final GeneQuery EMPTY = new AutoValue_GeneQuery(ImmutableList.<String>of());
+    private static final String OR_OPERATOR = " OR ";
 
-    public abstract ImmutableList<String> terms();
+    public abstract ImmutableSet<SemanticQueryTerm> terms();
 
-    public static GeneQuery create(String... geneQuery) {
-        ImmutableList.Builder<String> builder = ImmutableList.builder();
-        return create(builder.add(geneQuery).build());
+    public static GeneQuery create(Collection<SemanticQueryTerm> queryTerms) {
+        return new AutoValue_GeneQuery(ImmutableSet.copyOf(queryTerms));
     }
 
-    public static GeneQuery create(Set<String> terms) {
-        return create(ImmutableList.copyOf(terms));
+    public static GeneQuery create() {
+        return new AutoValue_GeneQuery(ImmutableSet.<SemanticQueryTerm>of());
     }
 
-    public static GeneQuery create(ImmutableList<String> terms) {
-        return new AutoValue_GeneQuery(terms);
+    public static GeneQuery create(SemanticQueryTerm... queryTerms) {
+        ImmutableSet.Builder<SemanticQueryTerm> builder = ImmutableSet.builder();
+        return new AutoValue_GeneQuery(builder.add(queryTerms).build());
+    }
+
+    public static GeneQuery create(String queryTermValue) {
+        return new AutoValue_GeneQuery(ImmutableSet.of(SemanticQueryTerm.create(queryTermValue)));
+    }
+
+    @Override
+    public Iterator<SemanticQueryTerm> iterator() {
+        return terms().iterator();
     }
 
     public boolean isEmpty() {
-        return terms().isEmpty();
+        for (SemanticQueryTerm term : terms()) {
+            if (term.hasValue()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public int size() {
         return terms().size();
     }
 
-    @Override
-    public Iterator<String> iterator() {
-        return terms().iterator();
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(terms());
     }
 
-    @Deprecated // use terms() instead
-    public String asString() {
-        return BioentityPropertyValueTokenizer.joinQuotingPhrases(terms());
+    public String toUrlEncodedJson() throws UnsupportedEncodingException{
+        Gson gson = new Gson();
+        return URLEncoder.encode(gson.toJson(terms()), "UTF-8");
     }
 
-    public GeneQuery extend(String term, String... termsToAppend){
-        ImmutableList.Builder<String> b = ImmutableList.builder();
-        for(String t: terms()) {
-            b.add(t);
-            if (t.equals(term)) {
-                b.add(termsToAppend);
-            }
+    public static GeneQuery fromJson(String json) {
+        if (isBlank(json)) {
+            return create();
         }
-        return GeneQuery.create(b.build());
+
+        Gson gson = new Gson();
+        return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(json, AutoValue_SemanticQueryTerm[].class)));
     }
 
-    public GeneQuery subtract(Collection<String> termsToSubtract){
-        ImmutableList.Builder<String> b = ImmutableList.builder();
-        for(String t: terms()) {
-            if(!termsToSubtract.contains(t)){
-                b.add(t);
-            }
+    public static GeneQuery fromUrlEncodedJson(String json) throws UnsupportedEncodingException, MalformedJsonException {
+        if (isBlank(json)) {
+            return create();
         }
-        return GeneQuery.create(b.build());
-    }
 
-    public String as1DNF() {
-        return "\"" + StringUtils.join(terms(), "\" OR \"") + "\"";
-    }
-
-    public String description() {
-        return BioentityPropertyValueTokenizer.joinQuotingPhrases(terms());
-    }
-
-    public String asUrlQueryParameter() {
+        Gson gson = new Gson();
         try {
-            return URLEncoder.encode(asTags(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(URLDecoder.decode(json, "UTF-8"), AutoValue_SemanticQueryTerm[].class)));
+        } catch (NullPointerException | JsonSyntaxException e) {
+            String geneQueryString = gson.fromJson(URLDecoder.decode(StringUtils.wrap(json, "\""), "UTF-8"), String.class);
+            return create(ImmutableSet.of(SemanticQueryTerm.create(geneQueryString)));
         }
     }
 
-    public String asTags() {
-        return TagEditorConverter.queryStringToTags(BioentityPropertyValueTokenizer.joinQuotingPhrases(this));
+    @Override
+    public String toString() {
+        return toJson();
+    }
+
+    public String asSolr1DNF() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (SemanticQueryTerm queryTerm : terms()) {
+            stringBuilder.append(queryTerm.toString()).append(OR_OPERATOR);
+        }
+        stringBuilder.delete(stringBuilder.lastIndexOf(OR_OPERATOR), stringBuilder.length());
+        return stringBuilder.toString();
     }
 
 }

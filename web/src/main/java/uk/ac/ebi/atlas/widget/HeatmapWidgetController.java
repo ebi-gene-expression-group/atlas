@@ -1,11 +1,9 @@
-
 package uk.ac.ebi.atlas.widget;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.Lists;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonNull;
+import com.google.common.collect.Sets;
+import com.google.gson.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -28,10 +26,9 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineExperimentProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -45,6 +42,8 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Controller
 @Scope("request")
 public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
@@ -52,13 +51,10 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     public static final String ORIGINAL_GENEQUERY = "geneQuery";
 
     private AnatomogramFactory anatomogramFactory;
-
     private SpeciesLookupService speciesLookupService;
 
     private final BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder;
-
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
-
     private final BaselineExperimentPageService baselineExperimentPageService;
 
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -83,11 +79,19 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                                        HttpServletResponse response) {
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute("experiment");
 
+        try {
+            baselineExperimentPageService
+                    .prepareRequestPreferencesAndHeaderData(experiment, preferences, model,request,true);
+
+            baselineExperimentPageService
+                    .populateModelWithHeatmapData(experiment, preferences, model,request,true, disableGeneLinks);
         baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(experiment, preferences, model,request,true);
         try {
             baselineExperimentPageService.populateModelWithHeatmapData(experiment, preferences, model,request,true, disableGeneLinks);
         } catch (GenesNotFoundException e) {
-            throw new ResourceNotFoundException("No genes found matching query: '" + preferences.getGeneQuery() + "'");
+            throw new ResourceNotFoundException(String.format("No genes found matching query: %s", preferences.getGeneQuery().toJson()));
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalStateException(String.format("Unsupported encoding in gene query: %s", preferences.getGeneQuery().toJson()));
         }
 
         // set here instead of in JSP, because the JSP may be included elsewhere
@@ -102,14 +106,18 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                 @RequestParam(value = "source", required = false) String source,
                                 Model model, HttpServletRequest request, HttpServletResponse response) {
 
-        String ensemblSpecies = StringUtils.isBlank(species) ?
-                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString())
-                : Species.convertToEnsemblSpecies(species);
+        if (isBlank(species)) {
+            species = speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery);
+        }
 
-        String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source.toUpperCase();
-        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, ensemblSpecies, defaultFactorQueryType);
+        String defaultQueryFactorType =
+                StringUtils.isBlank(source) ?
+                        ("caenorhabditis elegans".equalsIgnoreCase(species) ?
+                                "DEVELOPMENTAL_STAGE" :
+                                "ORGANISM_PART") :
+                        source.toUpperCase();
 
-        populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, ensemblSpecies, searchResult, model);
+        populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, Species.convertToEnsemblSpecies(species), searchResult, model);
 
         // set here instead of in JSP, because the JSP may be included elsewhere
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

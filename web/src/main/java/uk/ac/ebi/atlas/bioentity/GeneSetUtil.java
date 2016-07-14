@@ -1,22 +1,22 @@
 package uk.ac.ebi.atlas.bioentity;
 
-import uk.ac.ebi.atlas.web.SemanticQuery;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import java.util.regex.Pattern;
 
 public final class GeneSetUtil {
 
-    static final Pattern GO_REGEX = Pattern.compile("GO:\\d+", Pattern.CASE_INSENSITIVE);
-    static final Pattern PO_REGEX = Pattern.compile("PO:\\d+", Pattern.CASE_INSENSITIVE);
-    static final Pattern REACTOME_REGEX = Pattern.compile("R-[A-Z]{3}-\\d+", Pattern.CASE_INSENSITIVE);
-    static final Pattern INTER_PRO_REGEX = Pattern.compile("IPR" + "(\\d)+", Pattern.CASE_INSENSITIVE);
-    static final Pattern PLANT_REACTOME_REGEX = Pattern.compile("[\\d]+", Pattern.CASE_INSENSITIVE);
+    private static final Pattern GO_REGEX = Pattern.compile("GO:\\d+", Pattern.CASE_INSENSITIVE);
+    private static final Pattern PO_REGEX = Pattern.compile("PO:\\d+", Pattern.CASE_INSENSITIVE);
+    private static final Pattern REACTOME_REGEX = Pattern.compile("R-[A-Z]{3}-\\d+", Pattern.CASE_INSENSITIVE);
+    private static final Pattern INTER_PRO_REGEX = Pattern.compile("IPR" + "(\\d)+", Pattern.CASE_INSENSITIVE);
+    private static final Pattern PLANT_REACTOME_REGEX = Pattern.compile("[\\d]+", Pattern.CASE_INSENSITIVE);
 
-    static final String GO_SOURCE = "go";
-    static final String PO_SOURCE = "po";
-    static final String REACTOME_SOURCE = "pathwayid";
-    static final String INTER_PRO_SOURCE = "interpro";
+    private static final String GO_CATEGORY = "go";
+    private static final String PO_CATEGORY = "po";
+    private static final String REACTOME_CATEGORY = "pathwayid";
+    private static final String INTERPRO_CATEGORY = "interpro";
 
 
     public static boolean matchesInterProAccession(String identifier) {
@@ -44,16 +44,16 @@ public final class GeneSetUtil {
     }
 
     private static boolean isGeneSetSource(String source) {
-        return source.equalsIgnoreCase(GO_SOURCE) || source.equalsIgnoreCase(PO_SOURCE) || source.equalsIgnoreCase(REACTOME_SOURCE) || source.equalsIgnoreCase(INTER_PRO_SOURCE);
+        return source.equalsIgnoreCase(GO_CATEGORY) || source.equalsIgnoreCase(PO_CATEGORY) || source.equalsIgnoreCase(REACTOME_CATEGORY) || source.equalsIgnoreCase(INTERPRO_CATEGORY);
     }
 
-    public static boolean isGeneSetSourceOrMatchesGeneSetAccession(SemanticQuery geneQuery) {
+    public static boolean isGeneSetCategoryOrMatchesGeneSetAccession(GeneQuery geneQuery) {
         for (SemanticQueryTerm term : geneQuery) {
-            if (term.hasNoSource()) {
+            if (term.hasNoCategory()) {
                 if (!matchesGeneSetAccession(term.value())) {
                     return false;
                 }
-            } else if (!isGeneSetSource(term.source())) {
+            } else if (!isGeneSetSource(term.category())) {
                 return false;
             }
 

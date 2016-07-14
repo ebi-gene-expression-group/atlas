@@ -34,7 +34,7 @@ public class GeneIdSuggestionServiceIT {
 
         assertThat(properties.size(), is(2));
         assertThat(properties.get(0).value().toLowerCase(), startsWith("mt-at"));
-        assertThat(properties.get(0).source(), is("symbol"));
+        assertThat(properties.get(0).category(), is("symbol"));
 
         properties = subject.fetchGeneIdSuggestionsInIdentifier("mt-at", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(0));
@@ -47,13 +47,13 @@ public class GeneIdSuggestionServiceIT {
 
         assertThat(properties.size(), is(1));
         assertThat(properties.get(0).value().toLowerCase(), startsWith("mt-atp6"));
-        assertThat(properties.get(0).source(), is("symbol"));
+        assertThat(properties.get(0).category(), is("symbol"));
 
         properties = subject.fetchGeneIdSuggestionsInName("mt-atp8", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(1));
         assertThat(properties.get(0).value(), is("MT-ATP8"));
-        assertThat(properties.get(0).source(), is("symbol"));
+        assertThat(properties.get(0).category(), is("symbol"));
 
     }
 
@@ -64,7 +64,7 @@ public class GeneIdSuggestionServiceIT {
 
         assertThat(properties.size(), is(1));
         assertThat(properties.get(0).value(), is("protein_coding"));
-        assertThat(properties.get(0).source(), is("gene_biotype"));
+        assertThat(properties.get(0).category(), is("gene_biotype"));
     }
 
     @Test
@@ -74,21 +74,21 @@ public class GeneIdSuggestionServiceIT {
 
         assertThat(properties.size(), is(15));
         assertThat(properties.get(7).value(), startsWith("GO:0016"));
-        assertThat(properties.get(7).source(), is("go"));
+        assertThat(properties.get(7).category(), is("go"));
         assertThat(properties.get(5).value(), startsWith("GO:0016"));
-        assertThat(properties.get(5).source(), is("go"));
+        assertThat(properties.get(5).category(), is("go"));
         assertThat(properties.get(10).value(), startsWith("GO:0016"));
-        assertThat(properties.get(10).source(), is("go"));
+        assertThat(properties.get(10).category(), is("go"));
 
         properties = subject.fetchGeneIdSuggestionsInIdentifier("GO:001602", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(5));
         assertThat(properties.get(1).value(), startsWith("GO:0016"));
-        assertThat(properties.get(1).source(), is("go"));
+        assertThat(properties.get(1).category(), is("go"));
         assertThat(properties.get(0).value(), startsWith("GO:0016"));
-        assertThat(properties.get(0).source(), is("go"));
+        assertThat(properties.get(0).category(), is("go"));
         assertThat(properties.get(4).value(), startsWith("GO:0016"));
-        assertThat(properties.get(4).source(), is("go"));
+        assertThat(properties.get(4).category(), is("go"));
     }
 
     @Test
@@ -98,17 +98,17 @@ public class GeneIdSuggestionServiceIT {
 
         assertThat(properties.size(), is(15));
         assertThat(properties.get(0).value(), is("Hs2Affx.1.6.S1_3p_s_at"));
-        assertThat(properties.get(0).source(), is("design_element"));
+        assertThat(properties.get(0).category(), is("design_element"));
         assertThat(properties.get(4).value(), is("Hs2Affx.1.212.S1_3p_s_at"));
-        assertThat(properties.get(4).source(), is("design_element"));
+        assertThat(properties.get(4).category(), is("design_element"));
         assertThat(properties.get(14).value(), is("Hs2Affx.1.414.S1_3p_at"));
-        assertThat(properties.get(14).source(), is("design_element"));
+        assertThat(properties.get(14).category(), is("design_element"));
 
         properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx.1.41", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(7));
         assertThat(properties.get(0).value(), is("Hs2Affx.1.413.S1_3p_at"));
-        assertThat(properties.get(0).source(), is("design_element"));
+        assertThat(properties.get(0).category(), is("design_element"));
     }
 
     @Test
@@ -127,19 +127,19 @@ public class GeneIdSuggestionServiceIT {
         List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInSynonym("atpase-", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(1));
         assertThat(properties.get(0).value(), is("ATPase-6"));
-        assertThat(properties.get(0).source(), is("synonym"));
+        assertThat(properties.get(0).category(), is("synonym"));
 
         properties = subject.fetchGeneIdSuggestionsInSynonym("mtatp", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(2));
         assertThat(properties.get(0).value().toLowerCase(), startsWith("mtatp"));
-        assertThat(properties.get(0).source(), is("synonym"));
+        assertThat(properties.get(0).category(), is("synonym"));
         assertThat(properties.get(1).value().toLowerCase(), startsWith("mtatp"));
-        assertThat(properties.get(1).source(), is("synonym"));
+        assertThat(properties.get(1).category(), is("synonym"));
 
         properties = subject.fetchGeneIdSuggestionsInSynonym("su6", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(1));
         assertThat(properties.get(0).value(), is("Su6m"));
-        assertThat(properties.get(0).source(), is("synonym"));
+        assertThat(properties.get(0).category(), is("synonym"));
 
     }
 
@@ -150,9 +150,9 @@ public class GeneIdSuggestionServiceIT {
 
         assertThat(properties.size(), is(15));
         assertThat(properties.get(0).value().toLowerCase(), startsWith("p"));
-        assertThat(properties.get(0).source(), is("symbol"));
+        assertThat(properties.get(0).category(), is("symbol"));
         assertThat(properties.get(1).value().toLowerCase(), startsWith("p"));
-        assertThat(properties.get(1).source(), is("symbol"));
+        assertThat(properties.get(1).category(), is("symbol"));
     }
 
     @Test
@@ -163,11 +163,11 @@ public class GeneIdSuggestionServiceIT {
         assertThat(properties.size(), is(3));
 
         assertThat(properties.get(0).value(), is("Musk"));
-        assertThat(properties.get(0).source(), is("symbol"));
+        assertThat(properties.get(0).category(), is("symbol"));
         assertThat(properties.get(1).value(), is("Mustn1"));
-        assertThat(properties.get(1).source(), is("symbol"));
+        assertThat(properties.get(1).category(), is("symbol"));
         assertThat(properties.get(2).value(), is("Mus81"));
-        assertThat(properties.get(2).source(), is("symbol"));
+        assertThat(properties.get(2).category(), is("symbol"));
     }
 
     @Test
@@ -184,7 +184,7 @@ public class GeneIdSuggestionServiceIT {
         List<SemanticQueryTerm> geneNames = subject.fetchGeneIdSuggestionsInName("aspm", "homo sapiens");
 
         assertThat(geneNames.get(0).value(), is("ASPM"));
-        assertThat(geneNames.get(0).source(), is("symbol"));
+        assertThat(geneNames.get(0).category(), is("symbol"));
 
     }
 

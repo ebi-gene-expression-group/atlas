@@ -41,12 +41,12 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT e
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Tissues - 6"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=&exactMatch=true"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery="));
 
         assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-GEOD-30352"));
         assertThat(baselineCounts.get(1).getExperimentName(), is("Vertebrate tissues"));
         assertThat(baselineCounts.get(1).getSpecies(), is("Mus musculus"));
-        assertThat(baselineCounts.get(1).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=brain,cerebellum,heart,kidney,liver,testis&geneQuery=&exactMatch=true&serializedFilterFactors=ORGANISM:Mus%20musculus"));
+        assertThat(baselineCounts.get(1).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=brain,cerebellum,heart,kidney,liver,testis&geneQuery=&serializedFilterFactors=ORGANISM:Mus%20musculus"));
     }
 
 }

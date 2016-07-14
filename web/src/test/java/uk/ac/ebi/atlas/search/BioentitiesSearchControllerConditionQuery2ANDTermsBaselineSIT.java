@@ -30,7 +30,7 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsBaselineSIT exten
         BaselineBioEntitiesSearchResult result = selectResult(baselineCounts, "E-MTAB-1733");
         assertThat(result.getExperimentName(), is("Twenty seven tissues"));
         assertThat(result.getSpecies(), is("Homo sapiens"));
-        assertThat(result.getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=heart&geneQuery=&exactMatch=true"));
+        assertThat(result.getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=heart&geneQuery="));
     }
 
 }

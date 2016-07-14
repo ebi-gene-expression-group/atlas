@@ -18,12 +18,12 @@
 
 <c:if test="${isWidget && not empty param.accessKey}">
     <c:set var="additionalQueryOptionsString"
-           value="&geneQuery=${preferences.geneQuery.asUrlQueryParameter()}&serializedFilterFactors=${preferences.serializedFilterFactors}"/>
+           value="&geneQuery=${preferences.geneQuery.toUrlEncodedJson()}&serializedFilterFactors=${preferences.serializedFilterFactors}"/>
 </c:if>
 
 <c:if test="${isWidget && empty param.accessKey}">
     <c:set var="additionalQueryOptionsString"
-           value="?geneQuery=${preferences.geneQuery.asUrlQueryParameter()}&serializedFilterFactors=${preferences.serializedFilterFactors}"/>
+           value="?geneQuery=${preferences.geneQuery.toUrlEncodedJson()}&serializedFilterFactors=${preferences.serializedFilterFactors}"/>
 </c:if>
 
 <c:set var="experimentURL" value="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}${accessKeyQueryString}${additionalQueryOptionsString}"/>

@@ -1,9 +1,6 @@
-/**
- * Created by barrera on 18/06/2014.
- */
+"use strict";
 
 var conditionAutocompleteModule = (function ($) {
-    "use strict";
 
     function initConditionAutocomplete (contextPath, onChange) {
 

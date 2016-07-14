@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import org.junit.Before;
@@ -30,7 +29,7 @@ public class RnaSeqRequestContextBuilderTest {
     @Before
     public void setUp() throws Exception {
         when(experimentMock.getSpecies()).thenReturn(SPECIES);
-        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.EMPTY);
+        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.create());
         subject = new RnaSeqRequestContextBuilder(new RnaSeqRequestContext());
     }
 

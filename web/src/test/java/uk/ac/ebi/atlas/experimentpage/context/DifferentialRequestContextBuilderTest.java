@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.collect.Sets;
@@ -55,7 +54,7 @@ public class DifferentialRequestContextBuilderTest {
 
         when(experimentMock.getContrasts()).thenReturn(sortedSet);
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet("a")));
-        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.EMPTY);
+        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.create());
         when(experimentMock.getContrast(CONTRAST_NAME1)).thenReturn(contrastMock1);
 
     }

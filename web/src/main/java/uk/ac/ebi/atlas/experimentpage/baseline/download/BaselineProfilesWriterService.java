@@ -7,8 +7,6 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFilters;
-import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -55,19 +53,25 @@ public class BaselineProfilesWriterService {
         } else {
 
             GeneQueryResponse originalResponse = solrQueryService.fetchResponseBasedOnRequestContext(preferences
-                    .getGeneQuery(), preferences.isExactMatch(), BaselineRequestContext.createFor(experiment, preferences).getFilteredBySpecies());
+                    .getGeneQuery(), BaselineRequestContext.createFor(experiment, preferences).getFilteredBySpecies());
 
             geneQueryResponse = coexpressedGenesService
                     .extendGeneQueryResponseWithCoexpressions(experiment, originalResponse, coexpressionsRequested);
 
-            requestContext = BaselineRequestContext.createWithCustomGeneQueryDescription(experiment,
-                    preferences, describe(preferences.getGeneQuery(), geneQueryResponse.getAllGeneIds().size() - originalResponse.getAllGeneIds().size()));
+            requestContext =
+                    BaselineRequestContext.createWithCustomGeneQueryDescription(
+                            experiment, preferences,
+                            describe(
+                                    preferences.getGeneQuery(),
+                                    geneQueryResponse.getAllGeneIds().size() - originalResponse.getAllGeneIds().size()
+                            )
+                    );
 
         }
         return profilesWriter.write(writer, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(), geneQueryResponse);
     }
 
-    private String describe(GeneQuery gq, int coexpressedGenes) {
-        return gq.description() + " with " + coexpressedGenes + " similarly expressed genes";
+    private String describe(GeneQuery geneQuery, int coexpressedGenes) {
+        return geneQuery.asSolr1DNF() + " with " + coexpressedGenes + " similarly expressed genes";
     }
 }

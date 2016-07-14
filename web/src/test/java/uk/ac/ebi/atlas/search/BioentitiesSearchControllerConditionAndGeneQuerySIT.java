@@ -29,7 +29,7 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-2812"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Developmental stages - hermaphrodite, NSM"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Caenorhabditis elegans"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-2812?_specific=on&queryFactorType=DEVELOPMENTAL_STAGE&queryFactorValues=L1%20larva%20Ce&geneQuery=apoptotic+process&exactMatch=true&serializedFilterFactors=SEX:hermaphrodite,ORGANISM_PART:NSM"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-2812?_specific=on&queryFactorType=DEVELOPMENTAL_STAGE&queryFactorValues=L1%20larva%20Ce&geneQuery=apoptotic+process&serializedFilterFactors=SEX:hermaphrodite,ORGANISM_PART:NSM"));
     }
 
     @Test

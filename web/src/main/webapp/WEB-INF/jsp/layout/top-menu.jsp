@@ -1,8 +1,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<header>
+<style>
+    /* Override ebi-global.css */
+    #local-search ul {
+        background-color: white !important;
+    }
+</style>
 
+<header>
     <div id="global-masthead" class="masthead grid_24">
         <!--This has to be one line and no newline characters-->
         <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img
@@ -40,31 +46,26 @@
             </h1>
 
         </div>
-
         <!-- /local-title -->
 
         <!-- local-search -->
         <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
-
         <div class="grid_12 omega">
             <form method="get" action="query" name="local-search" id="local-search">
-
                 <fieldset>
-
                     <div class="left">
                         <label>
-                            <input id="local-searchbox" name="geneQuery" value="${param.queryString}" maxlength="900" placeholder="(enter gene query)"/>
+                            <input id="local-searchbox" name="geneQuery" maxlength="900"/>
                         </label>
                     </div>
                     <div class="left">
                         <!-- Include some example searchterms - keep them short and few! -->
                         <span class="examples">Examples:
-                                        <a href="${pageContext.request.contextPath}/query?geneQuery=ASPM">ASPM</a>,
-                                        <a href="${pageContext.request.contextPath}/query?geneQuery=apoptosis">Apoptosis</a>,
-                                        <a href="${pageContext.request.contextPath}/query?geneQuery=ENSMUSG00000021789">ENSMUSG00000021789</a>,
-                                        <a href="${pageContext.request.contextPath}/query?geneQuery=%22zinc+finger%22">"zinc finger"</a></span>
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=%5B%7B%22value%22%3A%22ASPM%22%7D%5D">ASPM</a>,
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=%5B%7B%22value%22%3A%22apoptosis%22%7D%5D">Apoptosis</a>,
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=%5B%7B%22value%22%3A%22ENSMUSG00000021789%22%7D%5D">ENSMUSG00000021789</a>,
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=%5B%7B%22value%22%3A%22zinc%20finger%22%7D%5D">zinc finger</a></span>
                     </div>
-
                     <div class="right" style="position: relative; top: -30px;">
                         <input id="submit-searchbox" class="submit" type="submit" value="Search"/>
                         <!-- If your search is more complex than just a keyword search, you can link to an Advanced Search,
@@ -73,16 +74,12 @@
                         <span class="adv"><a title="Advanced" id="adv-search" href="../search">Advanced</a></span>
                         -->
                     </div>
-
                 </fieldset>
-
             </form>
         </div>
-
         <!-- /local-search -->
 
         <!-- gxaLocalNav -->
-
         <nav>
             <ul class="grid_24" id="gxaLocalNav">
                 <li id="gxaLocalNavHome" class="first active">
@@ -120,31 +117,11 @@
                                                data-icon="\">Feedback</a></li>
             </ul>
         </nav>
-
         <!-- /gxaLocalNav -->
-
     </div>
 </header>
 
-<style>
-    fieldset {
-        padding: 0;
-        border: 0;
-        margin-top: 0px;
-    }
-
-    .ui-dialog .ui-state-error {
-        padding: 0px;
-    }
-
-    .validateTips {
-        border: 1px solid transparent;
-        padding: 0em;
-    }
-</style>
-
 <div style="display: none;" id="dialog-form" title="Send us feedback - we really appreciate it !">
-
     <div id="feedback-tips" class="validateTips">Please fill this form and click the Send button.</div>
 
     <form id="form">

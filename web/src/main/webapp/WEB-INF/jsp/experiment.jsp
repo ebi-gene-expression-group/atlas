@@ -115,10 +115,10 @@
 
         // Populate gene query tag-editor
         var geneQueryStr = new URI(window.location).search(true)["geneQuery"];
-        if(geneQueryStr) {
-            var geneTerms = geneQueryStr.split("\t");
-            geneTerms.forEach(function(geneTerm) {
-                $('#geneQuery').tagEditor('addTag', geneTerm);
+        if (geneQueryStr) {
+            var geneQueryTags = JSON.parse(geneQueryStr);
+            geneQueryTags.forEach(function(geneQueryTag) {
+                $('#geneQuery').jsonTagEditor('addTag', geneQueryTag);
             });
         }
     });

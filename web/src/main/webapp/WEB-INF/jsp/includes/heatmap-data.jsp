@@ -35,7 +35,7 @@
 <c:choose>
     <c:when test="${empty jsonProfiles}">
         {
-            "error" : "No expression found for ${geneQuery.description()}"
+            "error" : "No expression found for ${geneQuery.toJson()}"
         }
     </c:when>
     <c:otherwise>
@@ -49,12 +49,11 @@
                 "atlasHost": "${applicationProperties.buildAtlasHostURL(pageContext.request)}",
                 "contextRoot": "${pageContext.request.contextPath}",
                 "experimentAccession": "${experimentAccession}",
-                "geneQuery": "${geneQuery.asUrlQueryParameter()}",
+                "geneQuery": "${geneQuery.toUrlEncodedJson()}",
                 "accessKey": "${param.accessKey}",
                 "species": "${species}",
                 "ensemblDB": "${ensemblDB}",
                 "columnType": "${fn:toLowerCase(queryFactorName)}",
-                "isExactMatch": ${empty exactMatch ? "true": exactMatch},
                 "enableEnsemblLauncher": ${empty enableEnsemblLauncher ? "false" : enableEnsemblLauncher},
                 "showMaPlotButton": true,
                 "gseaPlots": ${empty gseaPlots ? "null" : gseaPlots},

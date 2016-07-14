@@ -60,9 +60,9 @@ public class BaselineProfilesWriterServiceTest {
     @Mock
     private ExperimentalFactors experimentalFactorsMock;
 
-    String geneName = "some_gene";
-    String geneId = "some_gene_id";
-    GeneQuery geneQuery = GeneQuery.create(geneName);
+    private String geneName = "some_gene";
+    private String geneId = "some_gene_id";
+    private GeneQuery geneQuery = GeneQuery.create(geneName);
 
     @Before
     public void setUp() {
@@ -112,8 +112,7 @@ public class BaselineProfilesWriterServiceTest {
         extendedResponse.addGeneIds(geneName+":coexpressions", range);
 
 
-        when(solrQueryService.fetchResponseBasedOnRequestContext(eq(geneQuery),anyBoolean(),anyString()))
-                .thenReturn(response);
+        when(solrQueryService.fetchResponseBasedOnRequestContext(eq(geneQuery), anyString())).thenReturn(response);
 
 
         when(coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(baselineExperimentMock, response,
@@ -149,7 +148,7 @@ public class BaselineProfilesWriterServiceTest {
         }
 
 
-        when(solrQueryService.fetchResponseBasedOnRequestContext(eq(geneQuery),anyBoolean(),anyString()))
+        when(solrQueryService.fetchResponseBasedOnRequestContext(eq(geneQuery), anyString()))
                 .thenReturn(response);
 
 

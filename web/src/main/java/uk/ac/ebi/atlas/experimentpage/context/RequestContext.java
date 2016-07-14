@@ -1,17 +1,10 @@
-
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.Objects;
-import org.apache.commons.lang3.StringUtils;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
-import java.util.Collections;
 import java.util.Set;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-
 
 public abstract class RequestContext<T, K extends ExperimentPageRequestPreferences> {
     private K requestPreferences;
@@ -48,10 +41,6 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
 
     public boolean isSpecific() {
         return getRequestPreferences().isSpecific();
-    }
-
-    public boolean isExactMatch() {
-        return getRequestPreferences().isExactMatch();
     }
 
     public Set<T> getAllQueryFactors() {

@@ -1028,7 +1028,7 @@ var GeneProfileRow = React.createClass({
 
     _geneNameLinked: function () {
         var experimentURL = '/experiments/' + this.props.id + '?geneQuery=' + this.props.heatmapConfig.geneQuery + (this.props.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(this.props.serializedFilterFactors) : "");
-        var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + this.props.heatmapConfig.isExactMatch : '/genes/' + this.props.id;
+        var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name : '/genes/' + this.props.id;
 
         var titleTooltip = this.props.type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "Protein Expression" : "RNA Expression" ) : "";
 

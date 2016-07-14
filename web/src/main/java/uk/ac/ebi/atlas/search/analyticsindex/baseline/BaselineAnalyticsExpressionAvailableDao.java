@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.base.Stopwatch;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,7 +43,7 @@ public class BaselineAnalyticsExpressionAvailableDao {
 
 
     String buildGeneIdentifierQuery(GeneQuery geneQuery) {
-        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(\"%s\")", StringUtils.join(geneQuery.terms(), "\" OR \""));
+        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF());
     }
 
 

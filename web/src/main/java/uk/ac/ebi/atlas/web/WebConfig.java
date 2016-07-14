@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.web;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +12,6 @@ import uk.ac.ebi.atlas.web.interceptors.AdminInterceptor;
 import uk.ac.ebi.atlas.web.interceptors.TimingInterceptor;
 
 import javax.inject.Inject;
-
 
 @EnableWebMvc //equivalent to mvc:annotation-driven
 @Configuration

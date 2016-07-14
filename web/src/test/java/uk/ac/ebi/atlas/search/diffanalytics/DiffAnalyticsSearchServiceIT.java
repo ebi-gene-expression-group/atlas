@@ -1,9 +1,7 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
-
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,8 +27,6 @@ import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -39,7 +35,7 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class DiffAnalyticsSearchServiceIT {
 
-    DiffAnalyticsSearchService diffAnalyticsSearchService;
+    private DiffAnalyticsSearchService subject;
 
     @Inject
     DifferentialConditionsSearchService differentialConditionsSearchService;
@@ -67,7 +63,7 @@ public class DiffAnalyticsSearchServiceIT {
         when(contrastTraderMock.getContrast(anyString(), anyString())).thenReturn(contrastMock);
         DiffAnalyticsRowMapper dbeRowMapper = new DiffAnalyticsRowMapper(contrastTraderMock);
         DiffAnalyticsDao diffAnalyticsDao = new DiffAnalyticsDao(dataSource, dbeRowMapper, oracleObjectFactory);
-        diffAnalyticsSearchService = new DiffAnalyticsSearchService(diffAnalyticsDao, differentialConditionsSearchService, solrQueryService);
+        subject = new DiffAnalyticsSearchService(diffAnalyticsDao, differentialConditionsSearchService, solrQueryService);
     }
 
     private static List<String> getBioentityNames(DiffAnalyticsList bioentityExpressions) {
@@ -79,45 +75,21 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
 
-    @Test
-    public void weHaveSomeResultsAfterAGeneralInexactGeneQueryWhenConditionQueryIsEmpty()  {
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setExactMatch(false);
-        requestParameters.setGeneQuery(GeneQuery.create("Os"));
-
-        assertTrue(StringUtils.isBlank(requestParameters.getConditionQuery().asString()));
-
-        String species = "";
-        DiffAnalyticsList bioentityExpressions1 = fetch(requestParameters, species);
-
-        assertThat(bioentityExpressions1.size(), greaterThan(0));
-
-
-        requestParameters.setExactMatch(true);
-        DiffAnalyticsList bioentityExpressions2 = fetch(requestParameters, species);
-
-        assertEquals(new DiffAnalyticsList(), bioentityExpressions2);
-    }
-
     private DiffAnalyticsList fetch(GeneQuerySearchRequestParameters requestParameters, String species){
-        Optional<Set<String>> geneIdsFromGeneQuery = solrQueryService.expandGeneQueryIntoGeneIds
-                (requestParameters.getGeneQuery().asString(), species, requestParameters.isExactMatch());
-        return diffAnalyticsSearchService.fetchTop(requestParameters.getConditionQuery().asString(), species,
-                geneIdsFromGeneQuery);
+        Optional<Set<String>> geneIdsFromGeneQuery = solrQueryService.expandGeneQueryIntoGeneIds(requestParameters.getGeneQuery(), species);
+        return subject.fetchTop(requestParameters.getConditionQuery().asString(), species, geneIdsFromGeneQuery);
     }
 
 
     @Test
-    public void kinaseIsAPopularKindOfProteinAndWeHaveSomeDifferentialResultsForIt()  {
+    public void fetchTopKinaseNoSpecies()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery(GeneQuery.create("kinase"));
-        requestParameters.setExactMatch(false);
 
-        String species = "";
-        DiffAnalyticsList bioentityExpressions = fetch(requestParameters,species);
+        DiffAnalyticsList bioentityExpressions = fetch(requestParameters, "");
 
-        assertThat(bioentityExpressions, hasSize(50)); //Max
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), greaterThan(100));
+        assertThat(bioentityExpressions, hasSize(greaterThan(0)));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), greaterThan(0));
     }
 
 
@@ -128,7 +100,7 @@ public class DiffAnalyticsSearchServiceIT {
 
         final List<String> names = Lists.newArrayList();
 
-        int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery().asString(), requestParameters.getConditionQuery().asString(), requestParameters.getOrganism(), requestParameters.isExactMatch(), new Visitor<DiffAnalytics>() {
+        int count = subject.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getConditionQuery().asString(), requestParameters.getOrganism(), new Visitor<DiffAnalytics>() {
 
             @Override
             public void visit(DiffAnalytics value) {
@@ -138,13 +110,13 @@ public class DiffAnalyticsSearchServiceIT {
 
 
         assertThat(count, greaterThan(100));
-        assertEquals(count, names.size());
+        assertThat(count, is(names.size()));
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getConditionQuery().asString(), requestParameters.getOrganism(), Optional.<Set<String>>absent());
+        DiffAnalyticsList bioentityExpressions = subject.fetchTop(requestParameters.getConditionQuery().asString(), requestParameters.getOrganism(), Optional.<Set<String>>absent());
 
         assertThat(bioentityExpressions.size(), greaterThan(0));
         assertThat(bioentityExpressions.size(), lessThan(51));
-        assertEquals(count, bioentityExpressions.getTotalNumberOfResults());
+        assertThat(count, is(bioentityExpressions.getTotalNumberOfResults()));
     }
     
 
@@ -152,11 +124,10 @@ public class DiffAnalyticsSearchServiceIT {
     public void weCanCheckAboutKinaseConnectedToCancer()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery(GeneQuery.create("kinase"));
-        requestParameters.setExactMatch(false);
         requestParameters.setCondition("cancer");
 
         String species = "";
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getConditionQuery().asString(), species, Optional.<Set<String>>absent());
+        DiffAnalyticsList bioentityExpressions = subject.fetchTop(requestParameters.getConditionQuery().asString(), species, Optional.<Set<String>>absent());
         List<String> names = getBioentityNames(bioentityExpressions);
 
         assertThat(bioentityExpressions.size(), greaterThan(10));

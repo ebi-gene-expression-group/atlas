@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import org.junit.Before;
@@ -30,7 +29,7 @@ public class MicroarrayRequestContextBuilderTest {
     @Before
     public void setUp() throws Exception {
         when(preferencesMock.getArrayDesignAccession()).thenReturn(ACCESSION);
-        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.EMPTY);
+        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.create());
         when(experimentMock.getSpecies()).thenReturn(SPECIES);
         subject = new MicroarrayRequestContextBuilder(new MicroarrayRequestContext());
     }

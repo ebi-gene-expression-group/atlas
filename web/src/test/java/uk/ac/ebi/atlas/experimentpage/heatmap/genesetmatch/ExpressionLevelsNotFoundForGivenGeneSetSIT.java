@@ -22,7 +22,7 @@ public class ExpressionLevelsNotFoundForGivenGeneSetSIT extends SeleniumFixture 
     public void givenThatGeneSetTermIsValidButThereAreNoGeneProfilesAboveCutoffThenHeatmapShouldNotBeDisplayed() {
         String cytoplasmWithCutoffHigherThanMaxLevel = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART" +
                 "&heatmapMatrixSize=50&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22+react_1619" +
-                "&_exactMatch=on&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=20000";
+                "&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=20000";
         //given
         subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, cytoplasmWithCutoffHigherThanMaxLevel);
         //when

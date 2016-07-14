@@ -27,6 +27,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,7 +68,12 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
                                    @RequestParam Map<String, String> allParameters,
                                    @RequestParam(required = false) String accessKey,
                                    @PathVariable String experimentAccession, Model model, HttpServletRequest request) {
-        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
+        try {
+            model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
+        } catch (UnsupportedEncodingException e) {
+            return "error-page";
+        }
+
 
         super.prepareRequestPreferencesAndHeaderData(
                 (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, model,request
@@ -81,7 +87,7 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
                                        @PathVariable String experimentAccession,
                                        @RequestParam(required = false) String accessKey,
                                        BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
-        experimentPageCallbacks.adjustReceivedObjects(preferences);
+//        experimentPageCallbacks.adjustReceivedObjects(preferences);
 
         super.populateModelWithHeatmapData(
                 (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, result, model, request

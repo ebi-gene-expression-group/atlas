@@ -49,7 +49,7 @@ public class MultiTermSuggestionServiceIT {
         List<SemanticQueryTerm> suggestions = subject.fetchMultiTermSuggestions("apop");
 
         assertThat(suggestions.get(0).value(), is("apoptotic process"));
-        assertThat(suggestions.get(0).source(), is(""));
+        assertThat(suggestions.get(0).category(), is(""));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class MultiTermSuggestionServiceIT {
         List<SemanticQueryTerm> suggestions = subject.fetchMultiTermSuggestions("apoptotic p");
 
         assertThat(suggestions.get(0).value(), is("apoptotic process"));
-        assertThat(suggestions.get(0).source(), is(""));
+        assertThat(suggestions.get(0).category(), is(""));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class MultiTermSuggestionServiceIT {
         List<SemanticQueryTerm> suggestions = subject.fetchMultiTermSuggestions("mitochondrial enc");
 
         assertThat(suggestions.get(0).value(), is("Mitochondrial-encoded proline-accepting tRNA. [Source:TAIR;Acc:ATMG00350]"));
-        assertThat(suggestions.get(0).source(), is(""));
+        assertThat(suggestions.get(0).category(), is(""));
 
     }
 
@@ -81,7 +81,7 @@ public class MultiTermSuggestionServiceIT {
         assertThat(properties.size(), is(30));
 
         assertThat(properties.get(0).value(), is("G-protein coupled receptor signaling pathway"));
-        assertThat(properties.get(0).source(), is(""));
+        assertThat(properties.get(0).category(), is(""));
     }
 
 }

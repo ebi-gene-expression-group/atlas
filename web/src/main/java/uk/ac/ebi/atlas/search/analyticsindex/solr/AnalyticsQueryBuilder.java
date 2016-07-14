@@ -4,11 +4,9 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.SemanticQuery;
 import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import javax.inject.Named;
@@ -32,11 +30,12 @@ public class AnalyticsQueryBuilder {
     private static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
     private static final String SPECIES_FIELD = "species";
 
-    private ArrayList<String> identifierSearchTerms = new ArrayList<>();
+    private GeneQuery geneQuery = GeneQuery.create();
     private ArrayList<String> bioentityIdentifierTerms = new ArrayList<>();
     private ArrayList<String> speciesTerms = new ArrayList<>();
 
     private SolrQuery solrQuery = new SolrQuery();
+
 
     public AnalyticsQueryBuilder facetByExperimentType() {
         solrQuery.setFacet(true);
@@ -65,31 +64,7 @@ public class AnalyticsQueryBuilder {
     }
 
     public AnalyticsQueryBuilder queryIdentifierSearch(GeneQuery geneQuery) {
-        ImmutableList.Builder<String> builder = ImmutableList.builder();
-        for (String term : geneQuery) {
-            if (!StringUtils.isBlank(term)) {
-                builder.add(wrap(term, '"'));
-            }
-        }
-        identifierSearchTerms.addAll(builder.build());
-
-        return this;
-    }
-
-
-    public AnalyticsQueryBuilder queryIdentifierSearch(SemanticQuery semanticQuery) {
-        ImmutableList.Builder<String> builder = ImmutableList.builder();
-        for (SemanticQueryTerm term : semanticQuery) {
-            if (term.hasValue()) {
-                if (term.hasNoSource()) {
-                    builder.add(wrap(term.value(), '"'));
-                } else {
-                    builder.add(wrap(String.format(IDENTIFIER_SEARCH_VALUE_TEMPLATE, term.source(), term.value()), '"'));
-                }
-            }
-        }
-        identifierSearchTerms.addAll(builder.build());
-
+        this.geneQuery = GeneQuery.create(geneQuery.terms());
         return this;
     }
 
@@ -120,12 +95,12 @@ public class AnalyticsQueryBuilder {
         StringBuilder stringBuilder = new StringBuilder();
         Joiner joinerOr = Joiner.on(" OR ");
 
-        if (identifierSearchTerms.size() == 0 && bioentityIdentifierTerms.size() == 0) {
+        if (geneQuery.isEmpty() && bioentityIdentifierTerms.size() == 0) {
             stringBuilder.append(BIOENTITY_IDENTIFIER_FIELD).append(":*");
         }
 
-        if (identifierSearchTerms.size() > 0) {
-            stringBuilder.append(IDENTIFIER_SEARCH_FIELD).append(":(").append(joinerOr.join(identifierSearchTerms)).append(")");
+        if (geneQuery.size() > 0) {
+            stringBuilder.append(IDENTIFIER_SEARCH_FIELD).append(":(").append(geneQuery.asSolr1DNF()).append(")");
         }
 
         if (bioentityIdentifierTerms.size() > 0) {
@@ -143,7 +118,7 @@ public class AnalyticsQueryBuilder {
         }
 
         solrQuery.setQuery(stringBuilder.toString());
+        solrQuery.setFacetLimit(-1);
         return solrQuery;
     }
-
 }

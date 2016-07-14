@@ -4,7 +4,6 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.List;
 
 @Named
 public class DifferentialAnalyticsSearchService {
@@ -24,34 +23,32 @@ public class DifferentialAnalyticsSearchService {
     }
 
     public String fetchDifferentialFacetsForSearch(GeneQuery geneQuery) {
-        String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForSearch(geneQuery);
+        return fetchDifferentialFacetsForSearch(geneQuery, "");
+    }
+
+    public String fetchDifferentialFacetsForSearch(GeneQuery geneQuery, String species) {
+        String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForSearch(geneQuery, species);
         return differentialFacetsReader.generateFacetsTreeJson(jsonResponse);
     }
+
 
     public String fetchDifferentialResultsForSearch(GeneQuery geneQuery) {
-        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForSearch(geneQuery);
+        return fetchDifferentialResultsForSearch(geneQuery, "");
+    }
+
+    public String fetchDifferentialResultsForSearch(GeneQuery geneQuery, String species) {
+        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForSearch(geneQuery, species);
         return differentialResultsReader.extractResultsAsJson(differentialResults);
     }
 
-    public String fetchDifferentialResultsForSearch(GeneQuery geneQuery, List<String> species, List<String> experimentType, List<String> kingdoms, List<String> factors, List<Integer> numReplicates, String regulation) {
-        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForSearch(geneQuery, species, experimentType, kingdoms, factors, numReplicates, regulation);
-        return differentialResultsReader.extractResultsAsJson(differentialResults);
-    }
 
-    public String fetchDifferentialFacetsForIdentifier(GeneQuery geneQuery) {
-        String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForIdentifier(geneQuery);
+    public String fetchDifferentialFacetsForIdentifier(String identifier) {
+        String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForIdentifier(identifier);
         return differentialFacetsReader.generateFacetsTreeJson(jsonResponse);
     }
 
-    public String fetchDifferentialResultsForIdentifier(GeneQuery geneQuery) {
-        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForIdentifier(geneQuery);
+    public String fetchDifferentialResultsForIdentifier(String identifier) {
+        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForIdentifier(identifier);
         return differentialResultsReader.extractResultsAsJson(differentialResults);
     }
-
-    public String fetchDifferentialResultsForIdentifier(GeneQuery geneQuery, List<String> species, List<String> experimentType, List<String> kingdoms, List<String> factors, List<Integer> numReplicates, String regulation) {
-        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForIdentifier(geneQuery, species, experimentType, kingdoms, factors, numReplicates, regulation);
-        return differentialResultsReader.extractResultsAsJson(differentialResults);
-    }
-
-
 }

@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.ReadContext;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,12 +13,7 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 

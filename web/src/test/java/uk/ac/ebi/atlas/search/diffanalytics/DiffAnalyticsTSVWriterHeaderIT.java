@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -42,20 +41,9 @@ public class DiffAnalyticsTSVWriterHeaderIT {
     }
 
     @Test
-    public void queryDescriptionWithGeneQueryExactMatch(){
+    public void queryDescriptionWithGeneQuery(){
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery(GeneQuery.create("TEST"));
-
-        String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
-
-        assertThat(headerRows[1], is("# Query: Genes matching: 'TEST' exactly, specifically up/down differentially expressed, given the False Discovery Rate cutoff: 0.05"));
-    }
-
-    @Test
-    public void queryDescriptionWithGeneQueryInexactMatch(){
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("TEST"));
-        requestParameters.setExactMatch(false);
 
         String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
 
@@ -101,7 +89,7 @@ public class DiffAnalyticsTSVWriterHeaderIT {
 
         String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
 
-        assertThat(headerRows[1], is("# Query: Genes matching: 'TEST' exactly, specifically up/down differentially expressed in condition matching 'LIVER', given the False Discovery Rate cutoff: 0.05"));
+        assertThat(headerRows[1], is("# Query: Genes matching: 'TEST', specifically up/down differentially expressed in condition matching 'LIVER', given the False Discovery Rate cutoff: 0.05"));
     }
 
     @Test

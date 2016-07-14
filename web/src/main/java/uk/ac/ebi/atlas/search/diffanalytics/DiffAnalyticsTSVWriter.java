@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.search.diffanalytics;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -129,15 +128,14 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalyt
 
     public String getTsvFileMasthead(GeneQuerySearchRequestParameters requestParameters) {
         GeneQuery geneQuery = requestParameters.getGeneQuery();
-        String geneQueryHeader = !geneQuery.isEmpty() ? "Genes matching: '" + geneQuery.description() + "'" : "";
-        String exactMatch = !geneQuery.isEmpty() && requestParameters.isExactMatch() ? " exactly" : "";
+        String geneQueryHeader = !geneQuery.isEmpty() ? "Genes matching: '" + geneQuery.asSolr1DNF() + "'" : "";
         String comma = !geneQuery.isEmpty() ? ", " : "";
 
         boolean hasCondition = requestParameters.hasCondition();
         String condition = hasCondition ? " in condition matching '" + requestParameters.getConditionQuery().asString() + "'": "";
         String organism = StringUtils.isNotEmpty(requestParameters.getOrganism()) ? (hasCondition ? " and" : "")  + " in organism '" + requestParameters.getOrganism() + "'": "";
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
-        return MessageFormat.format(tsvFileMastheadTemplate, geneQueryHeader, exactMatch, comma, condition, organism, timeStamp);
+        return MessageFormat.format(tsvFileMastheadTemplate, geneQueryHeader, comma, condition, organism, timeStamp);
     }
 
     @Override

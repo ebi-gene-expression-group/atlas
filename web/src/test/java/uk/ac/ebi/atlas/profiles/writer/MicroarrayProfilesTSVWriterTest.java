@@ -1,7 +1,5 @@
-
 package uk.ac.ebi.atlas.profiles.writer;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -70,7 +68,7 @@ public class MicroarrayProfilesTSVWriterTest {
     @Before
     public void initMocks() throws Exception {
         when(geneProfileMock.getExpression(any(Contrast.class))).thenReturn(expressionMock);
-        when(microarrayRequestContextMock.getGeneQuery()).thenReturn(GeneQuery.create(ImmutableList.of("")));
+        when(microarrayRequestContextMock.getGeneQuery()).thenReturn(GeneQuery.create(""));
         when(microarrayRequestContextMock.getQueryDescription()).thenReturn("");
         when(microarrayRequestContextMock.getSelectedQueryFactors()).thenReturn(Collections.EMPTY_SET);
         when(microarrayRequestContextMock.getRegulation()).thenReturn(Regulation.UP);

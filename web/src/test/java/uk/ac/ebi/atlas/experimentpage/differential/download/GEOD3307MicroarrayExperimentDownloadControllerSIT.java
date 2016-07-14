@@ -21,7 +21,7 @@ public class GEOD3307MicroarrayExperimentDownloadControllerSIT {
     private static final String EXPRESSION_ATLAS_VERSION = "# Expression Atlas version:";
     private static final String QUERY_DESCRIPTION = "# Query: Genes matching: '', specifically up/down differentially expressed in any contrast given the p-value cutoff 0.05 and log2-fold change cutoff 0 in experiment E-GEOD-3307";
     private static final String TIMESTAMP = "# Timestamp:";
-    private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-3307.tsv?geneQuery=&exactMatch=false&foldChangeCutOff=0");
+    private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-3307.tsv?geneQuery=&foldChangeCutOff=0");
 
     @Test
     public void verifyHeader() {

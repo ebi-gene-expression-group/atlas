@@ -3,27 +3,41 @@ package uk.ac.ebi.atlas.web;
 import com.google.auto.value.AutoValue;
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 12/02/2016.
- */
 @AutoValue
 public abstract class SemanticQueryTerm {
+    public abstract String value();
+    public abstract String category();
+
     public static SemanticQueryTerm create(String value) {
         return create(value, "");
     }
 
-    public static SemanticQueryTerm create(String value, String source) {
-        return new AutoValue_SemanticQueryTerm(value, source);
+    public static SemanticQueryTerm create(String value, String category) {
+        return new AutoValue_SemanticQueryTerm(value, category);
     }
 
-    public abstract String value();
-    public abstract String source();
-
-    public boolean hasNoSource() {
-        return StringUtils.isBlank(source());
+    public boolean hasNoCategory() {
+        return StringUtils.isBlank(category());
     }
 
     public boolean hasValue() {
         return !StringUtils.isBlank(value());
+    }
+
+    public String description() {
+        if (hasNoCategory()) {
+            return (String.format("\"%s\"", value()));
+        } else {
+            return (String.format("\"%s\" (%s)", value(), category()));
+        }
+    }
+
+    @Override
+    public String toString() {
+        if (hasNoCategory()) {
+            return (String.format("\"%s\"", value()));
+        } else {
+            return (String.format("%s:{%s}", category(), value()));
+        }
     }
 }

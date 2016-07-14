@@ -42,7 +42,6 @@ public class BioentityIdentifierQueryBuilderTest {
     @Test
     public void shouldBuildQueryStringAndSetQueryParameters(){
         SolrQuery solrQuery = subject.forQueryString(QUERY_STRING, false)
-                .withExactMatch(false)
                 .withPropertyNames(PROPERTY_NAME_1, PROPERTY_NAME_2)
                 .withSpecies(SPECIES)
                 .withBioentityTypes(BIOENTITY_TYPES)
@@ -61,7 +60,6 @@ public class BioentityIdentifierQueryBuilderTest {
     @Test
     public void shouldApplyOrOperatorOnQueryStringContent(){
         SolrQuery solrQuery = subject.forQueryString(QUERY_STRING, true)
-                .withExactMatch(false)
                 .withPropertyNames(PROPERTY_NAME_1, PROPERTY_NAME_2)
                 .withSpecies(SPECIES)
                 .withBioentityTypes(BIOENTITY_TYPES)

@@ -1,13 +1,8 @@
 package uk.ac.ebi.atlas.web;
 
-import com.google.common.base.Objects;
 import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.search.ConditionQuery;
 
-
-//TODO: move TagEditor code to the frontend - ideally information about the format used by the tag editor to
-//represent multiple terms (ie: seperated by tabs) would be contained to the Tag editor JS and spread throughout
-//the code base
 public class GeneQuerySearchRequestParameters extends SearchRequest {
     private String condition;
     private String organism;
@@ -39,7 +34,7 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
         }
     }
 
-    public String trimCondition(String condition) {
+    private String trimCondition(String condition) {
         if(StringUtils.isNotBlank(condition)) {
             String trimmedCondition = condition.trim();
             return trimmedCondition.replace("\"", "");
@@ -54,7 +49,7 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
     public String getDescription() {
         StringBuilder stringBuilder = new StringBuilder();
         if (hasGeneQuery()) {
-            stringBuilder.append(getGeneQuery().description());
+            stringBuilder.append(String.format("(%s)", getGeneQuery().asSolr1DNF()));
 
             if (hasCondition()) {
                 stringBuilder.append(" AND ");
@@ -63,7 +58,7 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
 
             if (hasOrganism()) {
                 stringBuilder.append(" AND ");
-                stringBuilder.append(getOrganism());
+                stringBuilder.append(organism);
             }
         }
 
@@ -71,20 +66,10 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
             stringBuilder.append(getCondition());
             if (hasOrganism()) {
                 stringBuilder.append(" AND ");
-                stringBuilder.append(getOrganism());
+                stringBuilder.append(organism);
             }
         }
 
         return stringBuilder.toString();
-    }
-
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("geneQuery", getGeneQuery())
-                .add("exactMatch", isExactMatch())
-                .add("condition", condition)
-                .add("organism", organism)
-                .toString();
     }
 }

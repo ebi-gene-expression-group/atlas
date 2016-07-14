@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsIndexSearchDAO;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
 import uk.ac.ebi.atlas.web.GeneQuery;
@@ -26,18 +26,19 @@ public abstract class BioentityPageController {
     private static final String BIOENTITY_PROPERTY_NAME = "symbol";
     private static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
-    protected AnalyticsIndexSearchDAO analyticsIndexSearchDAO;
+    private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
+    private BioEntityCardProperties bioEntityCardProperties;
+
+    protected AnalyticsSearchService analyticsSearchService;
     protected BioentityPropertyServiceInitializer bioentityPropertyServiceInitializer;
     protected BioEntityPropertyService bioEntityPropertyService;
-    protected BioEntityCardProperties bioEntityCardProperties;
     protected DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
-    protected BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
     protected String[] propertyNames;
 
     @Inject
-    public void setAnalyticsIndexSearchDAO(AnalyticsIndexSearchDAO analyticsIndexSearchDAO) {
-        this.analyticsIndexSearchDAO = analyticsIndexSearchDAO;
+    public void setAnalyticsSearchService(AnalyticsSearchService analyticsSearchService) {
+        this.analyticsSearchService = analyticsSearchService;
     }
 
     @Inject
@@ -67,26 +68,24 @@ public abstract class BioentityPageController {
 
     // identifier (gene) = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
     // identifier (gene set) = a Reactome id, Plant Ontology or Gene Ontology accession or an InterPro term
-    // If it is a MGI term, then will redirect to the gene query page
     public String showBioentityPage(String identifier, Model model, Set<String> experimentTypes) {
 
-        if(identifier.startsWith("MGI:")){
-            return "forward:/query?geneQuery=" + identifier;
+        boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
+        boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
+
+        if (!hasDifferentialResults && !hasBaselineResults) {
+            return "empty-search-page";
         }
 
-        if (ExperimentType.containsBaseline(experimentTypes)) {
-            model.addAttribute("hasBaselineResults", true);
+        model.addAttribute("hasBaselineResults", hasBaselineResults);
+        model.addAttribute("hasDifferentialResults", hasDifferentialResults);
+
+        if (hasBaselineResults) {
             model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(identifier)));
-        } else {
-            model.addAttribute("hasBaselineResults", false);
         }
 
         if (model.containsAttribute("searchDescription")) {
             model.addAttribute("isSearch", true);
-        }
-
-        if (model.containsAttribute("selectedSpecies")) {
-            model.addAttribute("hasSelectedSpecies", true);
         }
 
         model.addAttribute("identifier", identifier);

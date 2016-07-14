@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import uk.ac.ebi.atlas.utils.CountingVisitor;
 import uk.ac.ebi.atlas.utils.Visitor;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,13 +37,13 @@ public class DiffAnalyticsSearchService {
     }
 
 
-    public int visitEachExpression(String geneQuery, String condition, String specie, boolean isExactMatch, Visitor<DiffAnalytics> visitor) {
+    public int visitEachExpression(GeneQuery geneQuery, String condition, String specie, Visitor<DiffAnalytics> visitor) {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(condition);
 
         String species = StringUtils.isNotBlank(specie) ? specie : "";
 
-        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
+        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species);
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
                  || contrastsResult.isPresent() && contrastsResult.get().isEmpty()) {

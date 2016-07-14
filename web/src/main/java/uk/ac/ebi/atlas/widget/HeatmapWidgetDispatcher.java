@@ -37,7 +37,7 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
 
     @RequestMapping(value = {"/widgets/heatmap/referenceExperiment"})
     public String dispatchWidget(HttpServletRequest request,
-                                 @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
+                                 @RequestParam(value = "geneQuery", required = true) String geneQueryString,
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
                                  @RequestParam(value = "species", required = false) String species,
                                  @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks,
@@ -46,10 +46,10 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
 
         try {
             if (StringUtils.isBlank(species)) {
-                species = speciesLookupService.fetchFirstSpeciesByField(propertyType, bioEntityAccession);
+                species = speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQueryString);
             }
         } catch (ResourceNotFoundException e) {
-            throw new ResourceNotFoundException( "No genes found matching query: " + bioEntityAccession);
+            throw new ResourceNotFoundException( "No genes found matching query: " + geneQueryString);
         }
 
         String experimentAccession = applicationProperties.getBaselineReferenceExperimentAccession(species);
@@ -63,7 +63,7 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
         request.setAttribute("experiment", experiment);
 
         //TODO: hacky, fix this, see RnaSeqBaselineExperimentPageController
-        request.setAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY, bioEntityAccession);
+        request.setAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY, geneQueryString);
 
         // forward to /widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE in BaselineExperimentPageService
         // eg: forward:/widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE&serializedFilterFactors=ORGANISM:Monodelphis domestica&disableGeneLinks=true

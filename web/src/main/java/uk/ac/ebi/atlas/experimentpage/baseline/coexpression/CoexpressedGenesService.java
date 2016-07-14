@@ -4,7 +4,6 @@ import com.google.common.base.Optional;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
-import uk.ac.ebi.atlas.web.GeneQuery;
 
 import java.util.*;
 

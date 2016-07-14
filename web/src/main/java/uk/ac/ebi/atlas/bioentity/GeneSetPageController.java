@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import java.util.Map;
 
@@ -28,11 +26,6 @@ public class GeneSetPageController extends BioentityPageController {
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showGeneSetPage(@PathVariable String identifier, Model model) {
-
-        if (!GeneSetUtil.matchesGeneSetAccession(identifier)) {
-            throw new ResourceNotFoundException("No gene set matching " + identifier);
-        }
-
         bioentityPropertyServiceInitializer.initForGeneSetPage(bioEntityPropertyService, identifier);
 
         String species = GeneSetUtil.matchesReactomeID(identifier) ? bioEntityPropertyService.getSpecies() : "";
@@ -40,8 +33,7 @@ public class GeneSetPageController extends BioentityPageController {
         model.addAttribute("species", species);
         model.addAttribute("queryType", "geneSet");
 
-        ImmutableSet<String> experimentTypes = analyticsIndexSearchDAO.fetchExperimentTypes(GeneQuery.create(identifier));
-        model.addAttribute("hasDifferentialResults", ExperimentType.containsDifferential(experimentTypes));
+        ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(GeneQuery.create(identifier));
 
         return super.showBioentityPage(identifier, model, experimentTypes);
     }

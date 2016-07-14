@@ -30,8 +30,6 @@ public class BaselineProfilesTSVWriterIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    /*/in factor value(s)*/
-
     @Inject
     private BaselineProfilesTSVWriter subject;
 
@@ -50,28 +48,19 @@ public class BaselineProfilesTSVWriterIT {
         requestContext = BaselineRequestContext.createFor(baselineExperiment,requestPreferences);
     }
 
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
     @Test
     public void headerTextShouldContainThreeRows(){
-
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows.length, is(3));
-
     }
 
     @Test
     public void thirdHeaderLineShouldDescribeTimestamp(){
-
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
         assertThat(headerRows[2], startsWith("# Timestamp: "));
         assertThat(headerRows[2].length(), greaterThan("# Timestamp: ".length()));
-
     }
 
     @Test
@@ -81,34 +70,13 @@ public class BaselineProfilesTSVWriterIT {
 
         assertThat(headerRows[0], startsWith("# Expression Atlas version: "));
         assertThat(headerRows[0].length(), greaterThan("# Expression Atlas version: ".length()));
-
     }
 
     @Test
     public void secondHeaderLineShouldDescribeQuery(){
-
-        requestPreferences.setExactMatch(false);
-
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
-
         assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding', specifically expressed in any Organism part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
-
     }
-
-
-    @Test
-    public void secondHeaderLineShouldDescribeExactMatchQuery(){
-
-        requestPreferences.setExactMatch(true);
-        requestPreferences.setSpecific(false);
-
-        String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
-
-        assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, expressed in any Organism part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
-        assertThat(headerRows[2], startsWith("# Timestamp: "));
-
-    }
-
 
     @Test
     public void secondHeaderLineShouldIncludeBitsOfTheQuery() throws ExecutionException {
@@ -126,4 +94,5 @@ public class BaselineProfilesTSVWriterIT {
         assertTrue(Pattern.matches("# Query: Genes.*expressed.*Organism part.*", headerRows[1]));
         assertTrue(headerRows[1].contains(organismPart));
     }
+
 }

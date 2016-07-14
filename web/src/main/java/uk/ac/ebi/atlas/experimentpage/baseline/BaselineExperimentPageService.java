@@ -20,14 +20,16 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.TagEditorConverter;
+import uk.ac.ebi.atlas.web.*;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.*;
 
 public class BaselineExperimentPageService {
@@ -62,7 +64,8 @@ public class BaselineExperimentPageService {
     }
 
     public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
-                                                       HttpServletRequest request, boolean isWidget) {
+                                                       HttpServletRequest request, boolean isWidget)
+                throws UnsupportedEncodingException {
 
 
         if (isWidget) {
@@ -70,7 +73,7 @@ public class BaselineExperimentPageService {
             //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
             // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
             // instead of the current tab separated syntax for geneQuery
-            preferences.setGeneQuery(GeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
+            preferences.setGeneQuery(GeneQuery.fromJson((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY)));
         }
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
         BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
@@ -90,7 +93,7 @@ public class BaselineExperimentPageService {
 
     public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,
                                              Model model, HttpServletRequest request, boolean isWidget,
-                                             boolean disableGeneLinks) throws GenesNotFoundException {
+                                             boolean disableGeneLinks) throws GenesNotFoundException, UnsupportedEncodingException {
         //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
@@ -99,7 +102,6 @@ public class BaselineExperimentPageService {
         String contextRoot = request.getContextPath();
         /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
         model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
-        model.addAttribute("exactMatch", preferences.isExactMatch());
         model.addAttribute("geneQuery", preferences.getGeneQuery());
         model.addAllAttributes(experiment.getAttributes());
 
@@ -149,9 +151,10 @@ public class BaselineExperimentPageService {
     }
 
     //used when external parties include our widget
-    private JsonElement prepareExperimentDescription(Experiment experiment, GeneQuery geneQuery, String serializedFilterFactors){
+    private JsonElement prepareExperimentDescription(Experiment experiment, GeneQuery geneQuery, String serializedFilterFactors)
+                        throws UnsupportedEncodingException {
         String additionalQueryOptionsString =
-                "?geneQuery="+geneQuery.asUrlQueryParameter()+
+                "?geneQuery="+geneQuery.toUrlEncodedJson()+
                         "&serializedFilterFactors="+serializedFilterFactors;
 
         JsonObject experimentDescription = new JsonObject();
@@ -169,7 +172,7 @@ public class BaselineExperimentPageService {
                 ? gson.toJson(viewModel)
                 : "";
     }
-    
+
     private String constructColumnHeaders(List<AssayGroupFactor> filteredAssayGroupFactors){
         return gson.toJson(AssayGroupFactorViewModel.createList(filteredAssayGroupFactors));
     }

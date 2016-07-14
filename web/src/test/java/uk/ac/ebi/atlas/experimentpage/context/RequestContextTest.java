@@ -1,7 +1,6 @@
-
 package uk.ac.ebi.atlas.experimentpage.context;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.SemanticQueryTerm;
 
 import java.util.SortedSet;
 
@@ -41,12 +41,11 @@ public class RequestContextTest {
         when(preferencesMock.getHeatmapMatrixSize()).thenReturn(42);
         when(preferencesMock.getCutoff()).thenReturn(0.05);
         when(preferencesMock.isSpecific()).thenReturn(true);
-        when(preferencesMock.isExactMatch()).thenReturn(false);
     }
 
     @Test
     public void testGetGeneQuery() throws Exception {
-        assertThat(subject.getGeneQuery(), is(GeneQuery.create(ImmutableList.of("GENE_QUERY"))));
+        assertThat(subject.getGeneQuery(), is(GeneQuery.create(ImmutableSet.of(SemanticQueryTerm.create("GENE_QUERY")))));
     }
 
     @Test
@@ -72,11 +71,6 @@ public class RequestContextTest {
     @Test
     public void testIsSpecific() throws Exception {
         assertThat(subject.isSpecific(), is(true));
-    }
-
-    @Test
-    public void testIsExactMatch() throws Exception {
-        assertThat(subject.isExactMatch(), is(false));
     }
 
     @Test

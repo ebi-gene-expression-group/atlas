@@ -73,14 +73,13 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
         DifferentialRequestContext requestContext = getRequestContext();
         String geneQuery = requestContext.getQueryDescription();
         String specific = requestContext.isSpecific() ? " specifically" : "";
-        String exactMatch = requestContext.isExactMatch() ? " exactly" : "";
         String regulation = " " + requestContext.getRegulation().getLabel();
         String selectedContrasts = formatSelectedContrasts(requestContext);
         double pValueCutoff = requestContext.getCutoff();
         double foldChangeCutoff = requestContext.getFoldChangeCutOff();
         String experimentAccession = requestContext.getExperiment().getAccession();
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
-        return MessageFormat.format(tsvFileMastheadTemplate, geneQuery, exactMatch, specific, regulation, selectedContrasts, pValueCutoff, foldChangeCutoff,
+        return MessageFormat.format(tsvFileMastheadTemplate, geneQuery, specific, regulation, selectedContrasts, pValueCutoff, foldChangeCutoff,
                 experimentAccession, timeStamp);
 
     }

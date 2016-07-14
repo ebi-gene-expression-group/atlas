@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.context.annotation.Scope;
@@ -18,24 +19,32 @@ import javax.inject.Named;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 22/02/2016.
- */
 @Named
-@Scope("singleton")
 public class AnalyticsSearchService {
 
-    private AnalyticsClient analyticsClient;
+    private AnalyticsIndexSearchDAO analyticsIndexSearchDAO;
 
     @Inject
-    public AnalyticsSearchService(AnalyticsClient analyticsClient) {
-        this.analyticsClient = analyticsClient;
+    public AnalyticsSearchService(AnalyticsIndexSearchDAO analyticsIndexSearchDAO) {
+        this.analyticsIndexSearchDAO= analyticsIndexSearchDAO;
     }
 
-    public Optional<ImmutableSet<String>> searchBioentityIdentifiers(SemanticQuery geneQuery, String species) {
-        QueryResponse queryResponse = analyticsClient.query(new AnalyticsQueryBuilder().queryIdentifierSearch(geneQuery).ofSpecies(species).setRows(0).facetByBioentityIdentifier().build());
-        return Optional.of(SolrUtil.extractFirstFacetValues(queryResponse));
+    public ImmutableSet<String> fetchExperimentTypes(String bioentityIdentifier) {
+        return analyticsIndexSearchDAO.fetchExperimentTypes(bioentityIdentifier);
     }
+
+    public ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery) {
+        return analyticsIndexSearchDAO.fetchExperimentTypes(geneQuery, "");
+    }
+
+    public ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery, String species) {
+        return analyticsIndexSearchDAO.fetchExperimentTypes(geneQuery, species);
+    }
+
+    public ImmutableSet<String> searchBioentityIdentifiers(GeneQuery geneQuery, String species) {
+        return analyticsIndexSearchDAO.searchBioentityIdentifiers(geneQuery, species);
+    }
+
 
     public Collection<String> getBioentityIdentifiersForSpecies(String species){
         List<FacetField> facetFields =  analyticsClient.query(

@@ -23,7 +23,7 @@ public class GeneSetExpressionLevelsSIT extends SeleniumFixture {
     @Test
     public void shouldHaveAGeneHeader() {
         String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50" +
-                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22&_exactMatch=on&geneSetMatch=true" +
+                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22&geneSetMatch=true" +
                 "&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
         subject = new HeatmapTableWithSearchFormPageAsGeneSets(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
@@ -38,7 +38,7 @@ public class GeneSetExpressionLevelsSIT extends SeleniumFixture {
     @Test
     public void shouldFindExpressionLevelsForTermInDoubleQuotes() {
         String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50" +
-                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22&_exactMatch=on&geneSetMatch=true" +
+                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22&geneSetMatch=true" +
                 "&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
         subject = new HeatmapTableWithSearchFormPageAsGeneSets(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
@@ -55,8 +55,8 @@ public class GeneSetExpressionLevelsSIT extends SeleniumFixture {
     @Ignore
     public void shouldFindExpressionLevelsForReactomeTerm() { //This react_1619 does not exist anymore
         String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&" +
-                "displayLevels=true&displayGeneDistribution=true&geneQuery=react_1619&" +
-                "_exactMatch=on&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
+                "displayLevels=true&displayGeneDistribution=true&geneQuery=react_1619" +
+                "&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
         subject = new HeatmapTableWithSearchFormPageAsGeneSets(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
         //when
@@ -71,7 +71,7 @@ public class GeneSetExpressionLevelsSIT extends SeleniumFixture {
     @Test
     public void shouldFindExpressionLevelsForMultipleTerms() {
         String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50" +
-                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22+react_1619&_exactMatch=on" +
+                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22+react_1619" +
                 "&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
         subject = new HeatmapTableWithSearchFormPageAsGeneSets(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
@@ -86,7 +86,7 @@ public class GeneSetExpressionLevelsSIT extends SeleniumFixture {
     @Test
     public void shouldDisplayNumberOfGeneSetsFound(){
         String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50" +
-                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22+react_1619&_exactMatch=on" +
+                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22+react_1619" +
                 "&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
         subject = new HeatmapTableWithSearchFormPageAsGeneSets(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);

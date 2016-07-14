@@ -27,6 +27,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.SortedSet;
 
@@ -67,7 +68,13 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
                                    @RequestParam Map<String, String> allParameters,
                                    @RequestParam(required = false) String accessKey,
                                    @PathVariable String experimentAccession, Model model, HttpServletRequest request) {
-        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
+
+        try {
+            model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
+        } catch (UnsupportedEncodingException e) {
+            return "error-page";
+        }
+
 
         super.prepareRequestPreferencesAndHeaderData(
                 (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
@@ -82,7 +89,7 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
                                        @PathVariable String experimentAccession,
                                        @RequestParam(required = false) String accessKey,
                                        BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
-        experimentPageCallbacks.adjustReceivedObjects(preferences);
+//        experimentPageCallbacks.adjustReceivedObjects(preferences);
 
         super.populateModelWithHeatmapData(
                 (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),

@@ -75,7 +75,6 @@ var HeatmapAnatomogramContainer = React.createClass({
         var geneURL =
             this.props.linksAtlasBaseURL + "/query" +
             "?geneQuery=" + this.state.heatmapConfig.geneQuery +
-            "&exactMatch=" + this.state.heatmapConfig.isExactMatch +
             "&organism=" + this.state.heatmapConfig.species;
 
         var display;

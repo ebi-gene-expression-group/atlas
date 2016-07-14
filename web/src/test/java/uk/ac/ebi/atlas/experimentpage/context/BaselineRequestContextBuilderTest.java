@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.collect.ImmutableSortedSet;
@@ -25,14 +24,14 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineRequestContextBuilderTest {
 
-    public static final String QUERY_FACTOR1 = "a";
-    public static final String QUERY_FACTOR2 = "b";
-    public static final String QUERY_FACTOR3 = "c";
-    public static final String FACTOR_TYPE = "organism";
-    public static final String FACTOR_VALUE = "homo sapiens";
-    public static final String factorTypeSelectedToFilterBy = "ORGANISM_PART";
-    public static final String factorValueSelectedToFilterBy = "lung";
-    public static final String SERIALIZED_FACTORS = factorTypeSelectedToFilterBy+":"+factorValueSelectedToFilterBy;
+    private static final String QUERY_FACTOR1 = "a";
+    private static final String QUERY_FACTOR2 = "b";
+    private static final String QUERY_FACTOR3 = "c";
+    private static final String FACTOR_TYPE = "organism";
+    private static final String FACTOR_VALUE = "homo sapiens";
+    private static final String factorTypeSelectedToFilterBy = "ORGANISM_PART";
+    private static final String factorValueSelectedToFilterBy = "lung";
+    private static final String SERIALIZED_FACTORS = factorTypeSelectedToFilterBy+":"+factorValueSelectedToFilterBy;
 
     BaselineRequestContextBuilder subject;
 
@@ -52,7 +51,7 @@ public class BaselineRequestContextBuilderTest {
         when(preferencesMock.getSerializedFilterFactors()).thenReturn(SERIALIZED_FACTORS);
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet(QUERY_FACTOR1, QUERY_FACTOR2, QUERY_FACTOR3)));
         when(preferencesMock.getQueryFactorType()).thenReturn(FACTOR_TYPE);
-        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.EMPTY);
+        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.create());
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
         when(experimentMock.getSpecies()).thenReturn("homo sapiens");
         when(experimentalFactorsMock.getComplementFactors(anySet())).thenReturn(Sets.newTreeSet(Sets.newHashSet(new Factor(FACTOR_TYPE, FACTOR_VALUE))));

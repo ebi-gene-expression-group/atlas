@@ -53,7 +53,7 @@ public class BaselineRequestContextBuilder {
 
         requestContext.setRequestPreferences(preferences);
 
-        requestContext.setQueryDescription(queryDescription.or(preferences.getGeneQuery().description()));
+        requestContext.setQueryDescription(queryDescription.or(preferences.getGeneQuery().asSolr1DNF()));
 
 
 

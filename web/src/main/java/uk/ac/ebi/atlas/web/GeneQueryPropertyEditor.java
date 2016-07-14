@@ -1,38 +1,29 @@
 package uk.ac.ebi.atlas.web;
 
-import com.google.common.collect.ImmutableList;
-import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
+import autovalue.shaded.com.google.common.common.base.Throwables;
+import com.google.gson.stream.MalformedJsonException;
 
 import java.beans.PropertyEditorSupport;
-import java.util.List;
-
-import static org.apache.commons.lang3.StringUtils.strip;
+import java.io.UnsupportedEncodingException;
 
 public class GeneQueryPropertyEditor extends PropertyEditorSupport {
 
     @Override
-    public void setAsText(String text) {
-        String geneQuery = TagEditorConverter.tagsToQueryString(text);
-
-        List<String> terms = BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(geneQuery);
-
-        setValue(GeneQuery.create(removeSurroundingQuotes(terms)));
-    }
-
-    static ImmutableList<String> removeSurroundingQuotes(List<String> strings) {
-        ImmutableList.Builder<String> builder = ImmutableList.builder();
-
-        for (String s : strings) {
-            builder.add(strip(s, "\""));
-
+    public void setAsText(String text)  {
+        try {
+            setValue(GeneQuery.fromUrlEncodedJson(text));
+        } catch (UnsupportedEncodingException | MalformedJsonException e) {
+            throw Throwables.propagate(e);
         }
-
-        return builder.build();
     }
 
     @Override
     public String getAsText() {
-        return ((GeneQuery) this.getValue()).asUrlQueryParameter();
+        try {
+            return ((GeneQuery) this.getValue()).toUrlEncodedJson();
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
     }
 
 }

@@ -74,7 +74,7 @@ public class BioentitiesSearchDifferentialDownloadController {
             String condition = efoExpander.addEfoAccessions(requestParameters.getConditionQuery()).asString();
             //String condition = requestParameters.getConditionQuery().asString();
 
-            int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery().asString(), condition, requestParameters.getOrganism(), requestParameters.isExactMatch(), writer);
+            int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), condition, requestParameters.getOrganism(), writer);
             LOGGER.info("downloadGeneQueryResults streamed {} differential gene expressions", count);
         } catch (VisitorException e) {
             LOGGER.warn("downloadGeneQueryResults aborted, connection may have been lost with the client: {}", e.getMessage());

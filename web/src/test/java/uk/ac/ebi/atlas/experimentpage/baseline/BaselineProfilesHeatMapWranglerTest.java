@@ -23,7 +23,6 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 
 import java.util.*;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.anySet;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;

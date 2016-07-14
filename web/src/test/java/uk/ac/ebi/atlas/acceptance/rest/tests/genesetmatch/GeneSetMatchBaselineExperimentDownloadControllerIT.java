@@ -18,7 +18,7 @@ public class GeneSetMatchBaselineExperimentDownloadControllerIT {
 
     private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-30352.tsv?serializedFilterFactors=ORGANISM:Homo sapiens" +
             "&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=true&displayGeneDistribution=true" +
-            "&geneQuery=\"Alpha-1-acid glycoprotein\" react_1619&_exactMatch=on&geneSetMatch=true" +
+            "&geneQuery=\"Alpha-1-acid glycoprotein\" react_1619&geneSetMatch=true" +
             "&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5");
 
 

@@ -52,19 +52,12 @@
                 <tr>
                     <td>
                         <div id="geneQuerySection">
-                            <textarea id="geneQuery" name="geneQuery" rows="2" cols="36" placeholder="(all genes)" tabindex="1"></textarea>
+                            <textarea title="Gene query" id="geneQuery" name="geneQuery" rows="2" cols="36" tabindex="1"></textarea>
 
                             <div  class="gxaSearchExamples">
                                 <span style="float:left">E.g.
-                                    <a href="query?geneQuery=REG1B&organism=Homo+sapiens">REG1B</a>,
-                                    <a href="query?geneQuery=%22zinc+finger%22">zinc finger</a>
-                                </span>
-
-                                <span style="float:right">
-                                    <input style="vertical-align: middle" id="exactMatch" name="exactMatch" type="checkbox" value="true"
-                                           checked="checked" tabindex="2">
-                                    <label for="exactMatch">Exact match</label>
-                                    <input type="hidden" name="_exactMatch" value="on">
+                                    <a href="query?geneQuery=%5B%7B%22value%22%3A%22REG1B%22%7D%5D&organism=Homo+sapiens">REG1B</a>,
+                                    <a href="query?geneQuery=%5B%7B%22value%22%3A%22zinc%20finger%22%7D%5D">zinc finger</a>
                                 </span>
                             </div>
                         </div>
@@ -77,7 +70,7 @@
                     </td>
                     <td>
                         <div id="conditionSection">
-                            <textarea id="condition" name="condition" maxlength="900" rows="2" cols="36" placeholder="(all conditions)" tabindex="3"></textarea>
+                            <textarea title="Sample properties" id="condition" name="condition" maxlength="900" rows="2" cols="36" tabindex="3"></textarea>
 
                             <div class="gxaSearchExamples">
                                 <span>E.g.
@@ -115,24 +108,23 @@
 
         </div>
 
-	</div>
+    </div>
 </section>
 
-	<%-- Browse... menu --%>
-	<aside class="grid_6">
+<%-- Browse... menu --%>
+<aside class="grid_6">
 
-		<h3>Browse...</h3>
+    <h3>Browse...</h3>
 
-        <h4><img src="resources/images/allup2_transparent_bkg.png" style="padding-right: 15px"><a href="baseline/experiments">Baseline Experiments</a></h4>
-        <p>See all baseline expression data sets in Expression Atlas.</p>
+    <h4><img src="/gxa/resources/images/allup2_transparent_bkg.png" style="padding-right: 15px"><a href="baseline/experiments">Baseline Experiments</a></h4>
+    <p>See all baseline expression data sets in Expression Atlas.</p>
 
-        <h4><span class="icon icon-species" data-icon="P"></span><a href="plant/experiments">Plant Experiments</a></h4>
-        <p>See all expression data sets in plants in Expression Atlas.</p>
+    <h4><span class="icon icon-species" data-icon="P"></span><a href="plant/experiments">Plant Experiments</a></h4>
+    <p>See all expression data sets in plants in Expression Atlas.</p>
 
-		<h4><img src="resources/images/experiment_page_small.png" style="padding-right: 15px"><a href="experiments">All Experiments</a></h4>
-		<p>Scroll through the complete list of all data sets in Expression Atlas.</p>
-	</aside>
-
+    <h4><img src="/gxa/resources/images/experiment_page_small.png" style="padding-right: 15px"><a href="experiments">All Experiments</a></h4>
+    <p>Scroll through the complete list of all data sets in Expression Atlas.</p>
+</aside>
 
 <%-- placeholder which is loaded with tooltip text --%>
 <div id="help-placeholder" style="display: none"></div>
@@ -141,77 +133,74 @@
 <%@ include file="includes/condition-autocomplete-js.jsp" %>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        // API defined by the onChange callback in JSON Tag Editor/jQuery Tag Editor
+        function disableButtonsOnChange (field, editor, tags) {
+            $buttons.button('option', 'disabled', tags.length == 0);
+        }
 
-    (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+        var $buttons = $('#submit-button, #reset-button'), $searchFields = $('#geneQuery, #condition');
 
-        $(document).ready(function () {
-            var $buttons = $('#submit-button, #reset-button'), $searchFields = $('#geneQuery, #condition');
+        geneQueryTagEditorModule.init('#geneQuery', undefined, disableButtonsOnChange);
+        conditionAutocompleteModule.init('${arrayexpressUrl}', disableButtonsOnChange);
 
-            geneQueryTagEditorModule.init("#geneQuery", undefined, disableButtonsOnChange);
+        searchFormModule.searchBoxEnterEventHandler('#submit-button');
+        searchFormModule.disableCarriageReturn('#condition');
 
-            conditionAutocompleteModule.init("${arrayexpressUrl}", disableButtonsOnChange);
+        helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
-            searchFormModule.searchBoxEnterEventHandler("#submit-button");
-            searchFormModule.disableCarriageReturn("#condition");
+        initButtons();
+        selectHomoSapiens();
+        disableButtonsWhenAllSearchFieldsAreEmpty();
+        onResetButtonRemoveAllTagsAndSelectHomoSapiens();
 
-            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
+        function initButtons() {
+            $buttons.each(function () {
+                $(this).button({disabled: true});
 
-            initButtons();
-
-            disableButtonsWhenAllSearchFieldsAreEmpty();
-
-            selectDefaultOrganism();
-
-            onResetButtonEventHandler();
-
-            function initButtons() {
-                $buttons.each(function () {
-                    $(this).button({ disabled: true });
+                $('#searchForm').submit(function() {
+                    var $geneQuery = $('#geneQuery'),
+                        geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
+                    $geneQuery.val(JSON.stringify(geneQueryTags));
                 });
-            }
+            });
+        }
 
-            function onResetButtonEventHandler() {
-                $('#reset-button').on('click' , function () {
-                    // Remove all tags
-                    var tags = $('#geneQuery').tagEditor('getTags')[0].tags;
-                    for (i = 0; i < tags.length; i++) {
-                        $('#geneQuery').tagEditor('removeTag', tags[i]);
-                    }
-
-                    var tags = $('#condition').tagEditor('getTags')[0].tags;
-                    for (i = 0; i < tags.length; i++) {
-                        $('#condition').tagEditor('removeTag', tags[i]);
-                    }
-
-                    selectDefaultOrganism();
+        function onResetButtonRemoveAllTagsAndSelectHomoSapiens() {
+            $('#reset-button').on('click' , function () {
+                // Remove all tags
+                var $geneQuery = $('#geneQuery'),
+                    geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
+                geneQueryTags.forEach(function(geneQueryTag){
+                    $geneQuery.jsonTagEditor('removeTag', geneQueryTag.value);
                 });
+
+                var $sampleProperties =  $('#condition'),
+                    samplePropertiesTags = $sampleProperties.tagEditor('getTags')[0].tags;
+                samplePropertiesTags.forEach(function(samplePropertiesTag) {
+                    $sampleProperties.tagEditor('removeTag', samplePropertiesTag);
+                });
+
+                selectHomoSapiens();
+            });
+        }
+
+        function disableButtonsWhenAllSearchFieldsAreEmpty() {
+            $searchFields.on('keyup',function () {
+                $buttons.button('option', 'disabled', allFieldsEmpty());
+            }).keyup();
+
+            function allFieldsEmpty() {
+                var atLeastOneValue = false;
+                $searchFields.each(function () {
+                    atLeastOneValue = atLeastOneValue || ($.trim(this.value).length > 0);
+                });
+                return !atLeastOneValue;
             }
+        }
 
-            function disableButtonsWhenAllSearchFieldsAreEmpty() {
-                $searchFields.on('keyup',function () {
-                    $buttons.button("option", "disabled", allFieldsEmpty());
-                }).keyup();
-
-                function allFieldsEmpty() {
-                    var atLeastOneValue = false;
-                    $searchFields.each(function () {
-                        atLeastOneValue = atLeastOneValue || ($.trim(this.value).length > 0);
-                    });
-                    return !atLeastOneValue;
-                }
-            }
-
-            function disableButtonsOnChange (field, editor, tags) {
-                $buttons.button("option", "disabled", tags.length == 0);
-            }
-
-            function selectDefaultOrganism(){
-                $('select[id="organism"] option[value="Homo sapiens"]').attr("selected","selected");
-
-            }
-
-        });
-
-    })(jQuery);
-
+        function selectHomoSapiens(){
+            $('select[id="organism"] option[value="Homo sapiens"]').attr('selected', 'selected');
+        }
+    });
 </script>

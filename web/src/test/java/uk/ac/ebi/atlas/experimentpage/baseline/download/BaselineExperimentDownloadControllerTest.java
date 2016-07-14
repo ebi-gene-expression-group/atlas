@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import com.google.common.collect.ImmutableMap;
@@ -107,7 +106,7 @@ public class BaselineExperimentDownloadControllerTest {
         when(preferencesMock.getQueryFactorType()).thenReturn("queryFactorType");
         when(preferencesMock.getSerializedFilterFactors()).thenReturn("TYPE:value");
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet("factorValues")));
-        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.EMPTY);
+        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.create());
         when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newTreeSet(Sets.newHashSet("assayGroupIds")));
         when(baselineExperimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
         when(baselineExperimentMock.getAssayGroups()).thenReturn(assayGroupsMock);

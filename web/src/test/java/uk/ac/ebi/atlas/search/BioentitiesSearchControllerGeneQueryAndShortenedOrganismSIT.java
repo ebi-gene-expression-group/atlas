@@ -29,7 +29,7 @@ public class BioentitiesSearchControllerGeneQueryAndShortenedOrganismSIT extends
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-2809"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Tissues - 8 Mayer"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Hordeum vulgare subsp. vulgare"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-2809?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=caryopsis%20(15%20dpa),caryopsis%20(5%20dpa)&geneQuery=&exactMatch=true"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-2809?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=caryopsis%20(15%20dpa),caryopsis%20(5%20dpa)&geneQuery="));
 
     }
 

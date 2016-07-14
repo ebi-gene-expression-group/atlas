@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.widget;
 
 import com.google.common.base.Joiner;
@@ -32,8 +31,6 @@ import java.util.Set;
 @Scope("request")
 public final class HeatmapWidgetDownloadController {
 
-    public static final String EXPERIMENT_ATTRIBUTE = "experiment";
-
     private final BaselineExperimentProfileSearchService baselineExperimentProfileSearchService;
     private final String tsvFileMastheadTemplate;
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
@@ -55,7 +52,7 @@ public final class HeatmapWidgetDownloadController {
                                         @RequestParam(value = "species", required = true) String species,
                                         HttpServletResponse response) throws IOException {
 
-        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(bioEntityAccession, species, true);
+        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(bioEntityAccession, species);
 
         BaselineExperimentSearchResult searchResult = geneIds.isPresent()
                 ?   baselineExperimentProfileSearchService.query(geneIds.get())

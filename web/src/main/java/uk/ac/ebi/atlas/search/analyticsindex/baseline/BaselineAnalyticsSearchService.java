@@ -32,17 +32,22 @@ public class BaselineAnalyticsSearchService {
         this.baselineExperimentSearchResultProducer = baselineExperimentSearchResultProducer;
     }
 
-    public BaselineExperimentSearchResult findExpressions(GeneQuery geneQuery, String species, String defaultQueryFactorType) {
-        List<Map<String, Object>> response = baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(geneQuery,Species.convertToEnsemblSpecies(species),defaultQueryFactorType);
+    public BaselineExperimentSearchResult findExpressions(GeneQuery geneQuery, String species, String queryFactorType) {
+        List<Map<String, Object>> response = baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(geneQuery, Species.convertToEnsemblSpecies(species), queryFactorType);
         ImmutableList<BaselineExperimentExpression> expressions = baselineAnalyticsFacetsReader.extractAverageExpressionLevel(response);
-        return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, defaultQueryFactorType);
+        return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, queryFactorType);
     }
 
     public String findFacetsForTreeSearch(GeneQuery geneQuery) {
         List<Map<String, Object>> results = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery);
-
         return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(results);
     }
+
+    public String findFacetsForTreeSearch(GeneQuery geneQuery, String species) {
+        List<Map<String, Object>> results = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery, species);
+        return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(results);
+    }
+
 
     public boolean tissueExpressionAvailableFor(GeneQuery geneQuery) {
         int numFound = baselineAnalyticsExpressionAvailableReader.extractResultCount(baselineAnalyticsExpressionAvailableDao.fetchGenesInTissuesAboveCutoff(geneQuery));

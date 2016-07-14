@@ -4,6 +4,7 @@ package uk.ac.ebi.atlas.solr.query.builders;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 /**
  * This is a builder, keep always in mind that builders are potentially stateful.
@@ -13,19 +14,12 @@ import org.slf4j.LoggerFactory;
 public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityIdentifierQueryBuilder>{
     private static final Logger LOGGER = LoggerFactory.getLogger(BioentityIdentifierQueryBuilder.class);
 
-    public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
-    public static final String PROPERTY_SEARCH_FIELD = "property_value_search";
-    public static final String PROPERTY_LOWER_FIELD = "property_value_lower";
+    private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
+    private static final String PROPERTY_SEARCH_FIELD = "property_value_search";
     private static final int MAX_GENE_IDS_TO_FETCH = 1000000;
 
     private boolean applyOrOnQueryStringContent;
     private String queryString;
-    private String propertyName = PROPERTY_LOWER_FIELD; //by default we want exact match
-
-    public BioentityIdentifierQueryBuilder withExactMatch(boolean exactMatch){
-        propertyName = exactMatch ? PROPERTY_LOWER_FIELD : PROPERTY_SEARCH_FIELD;
-        return this;
-    }
 
     public BioentityIdentifierQueryBuilder forQueryString(String queryString, boolean applyOrOnQueryStringContent){
         this.queryString = queryString.replace(":", "\\:").replace("[", "\\[").replace("]", "\\]");
@@ -33,8 +27,14 @@ public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityI
         return this;
     }
 
-    public SolrQuery build() {
+    public BioentityIdentifierQueryBuilder forGeneQuery(GeneQuery geneQuery, boolean applyOrOnQueryStringContent){
+        this.queryString = geneQuery.asSolr1DNF();
+        this.applyOrOnQueryStringContent = applyOrOnQueryStringContent;
+        return this;
+    }
 
+    public SolrQuery build() {
+        String propertyName = PROPERTY_SEARCH_FIELD;
         StringBuilder queryConditionBuilder = new StringBuilder(propertyName).append(":");
 
         if (applyOrOnQueryStringContent){
@@ -50,7 +50,6 @@ public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityI
     }
 
     private SolrQuery buildQueryObject(String queryString) {
-
         SolrQuery solrQuery = new SolrQuery(queryString);
         solrQuery.setFields(BIOENTITY_IDENTIFIER_FIELD);
         solrQuery.setParam("group", true);
