@@ -61,10 +61,10 @@
                     <div class="left">
                         <!-- Include some example searchterms - keep them short and few! -->
                         <span class="examples">Examples:
-                                        <a href="${pageContext.request.contextPath}/query?geneQuery=ASPM">ASPM</a>,
-                                        <a href="${pageContext.request.contextPath}/query?geneQuery=apoptosis">Apoptosis</a>,
-                                        <a href="${pageContext.request.contextPath}/query?geneQuery=ENSMUSG00000021789">ENSMUSG00000021789</a>,
-                                        <a href="${pageContext.request.contextPath}/query?geneQuery=%22zinc+finger%22">"zinc finger"</a></span>
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=%5B%7B%22value%22%3A%22ASPM%22%7D%5D">ASPM</a>,
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=%5B%7B%22value%22%3A%22apoptosis%22%7D%5D">Apoptosis</a>,
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=%5B%7B%22value%22%3A%22ENSMUSG00000021789%22%7D%5D">ENSMUSG00000021789</a>,
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=%5B%7B%22value%22%3A%22zinc%20finger%22%7D%5D">zinc finger</a></span>
                     </div>
                     <div class="right" style="position: relative; top: -30px;">
                         <input id="submit-searchbox" class="submit" type="submit" value="Search"/>

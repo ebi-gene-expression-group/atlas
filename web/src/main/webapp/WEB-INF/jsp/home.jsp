@@ -56,8 +56,8 @@
 
                             <div  class="gxaSearchExamples">
                                 <span style="float:left">E.g.
-                                    <a href="query?geneQuery=REG1B&organism=Homo+sapiens">REG1B</a>,
-                                    <a href="query?geneQuery=%22zinc+finger%22">zinc finger</a>
+                                    <a href="query?geneQuery=%5B%7B%22value%22%3A%22REG1B%22%7D%5D&organism=Homo+sapiens">REG1B</a>,
+                                    <a href="query?geneQuery=%5B%7B%22value%22%3A%22zinc%20finger%22%7D%5D">zinc finger</a>
                                 </span>
                             </div>
                         </div>
