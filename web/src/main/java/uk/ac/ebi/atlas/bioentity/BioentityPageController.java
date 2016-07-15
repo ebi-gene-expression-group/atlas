@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.bioentity;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -68,7 +67,7 @@ public abstract class BioentityPageController {
 
     // identifier (gene) = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
     // identifier (gene set) = a Reactome id, Plant Ontology or Gene Ontology accession or an InterPro term
-    public String showBioentityPage(String identifier, Model model, Set<String> experimentTypes) {
+    public String showBioentityPage(String identifier, String species, Model model, Set<String> experimentTypes) {
 
         boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
         boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
@@ -81,30 +80,23 @@ public abstract class BioentityPageController {
         model.addAttribute("hasDifferentialResults", hasDifferentialResults);
 
         if (hasBaselineResults) {
-            model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(identifier)));
+            model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(identifier), species));
         }
 
         if (model.containsAttribute("searchDescription")) {
             model.addAttribute("isSearch", true);
         }
 
-        model.addAttribute("identifier", identifier);
         model.addAllAttributes(pageDescriptionAttributes(identifier));
+        model.addAttribute("identifier", identifier);
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 
         return "bioentities";
     }
 
-    protected Map<String, Object> pageDescriptionAttributes(String identifier){
-        String s = "Expression summary for " + bioEntityPropertyService.getBioEntityDescription();
-        return ImmutableMap.<String, Object>of(
-                "mainTitle", s,
-                "pageDescription", s,
-                "pageKeywords", "bioentity,"+identifier
-        );
-    }
+    protected abstract Map<String, Object> pageDescriptionAttributes(String identifier);
 
-    protected Map<String, String> buildPropertyNamesByTypeMap() {
+    private Map<String, String> buildPropertyNamesByTypeMap() {
         LinkedHashMap<String, String> result = Maps.newLinkedHashMap();
         for (String propertyName : propertyNames) {
             if (isDisplayedInPropertyList(propertyName)) {

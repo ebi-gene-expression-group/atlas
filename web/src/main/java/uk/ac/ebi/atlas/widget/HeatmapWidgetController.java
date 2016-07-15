@@ -1,8 +1,7 @@
 package uk.ac.ebi.atlas.widget;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 import com.google.gson.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,7 +25,6 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineExperimentProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
@@ -39,6 +37,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,24 +73,16 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE")
     public String fetchReferenceExperimentProfilesJson(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
-                                                       @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks,
-                                                       BindingResult result, Model model, HttpServletRequest request,
-                                                       HttpServletResponse response) {
+                                                       Model model, HttpServletRequest request, HttpServletResponse response) {
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute("experiment");
 
+        baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(experiment, preferences, model, request,true);
         try {
-            baselineExperimentPageService
-                    .prepareRequestPreferencesAndHeaderData(experiment, preferences, model,request,true);
-
-            baselineExperimentPageService
-                    .populateModelWithHeatmapData(experiment, preferences, model,request,true, disableGeneLinks);
-        baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(experiment, preferences, model,request,true);
-        try {
-            baselineExperimentPageService.populateModelWithHeatmapData(experiment, preferences, model,request,true, disableGeneLinks);
+            baselineExperimentPageService.populateModelWithHeatmapData(experiment, preferences, model,request, true);
         } catch (GenesNotFoundException e) {
-            throw new ResourceNotFoundException(String.format("No genes found matching query: %s", preferences.getGeneQuery().toJson()));
+            throw new ResourceNotFoundException("No genes found matching query: '" + preferences.getGeneQuery() + "'");
         } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException(String.format("Unsupported encoding in gene query: %s", preferences.getGeneQuery().toJson()));
+            e.printStackTrace();
         }
 
         // set here instead of in JSP, because the JSP may be included elsewhere
@@ -116,6 +107,8 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                 "DEVELOPMENTAL_STAGE" :
                                 "ORGANISM_PART") :
                         source.toUpperCase();
+
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, species, defaultQueryFactorType);
 
         populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, Species.convertToEnsemblSpecies(species), searchResult, model);
 

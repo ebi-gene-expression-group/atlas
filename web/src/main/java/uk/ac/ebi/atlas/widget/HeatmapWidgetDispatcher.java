@@ -40,9 +40,7 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
                                  @RequestParam(value = "geneQuery", required = true) String geneQueryString,
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
                                  @RequestParam(value = "species", required = false) String species,
-                                 @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks,
-                                 @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
-                                 Model model, HttpServletResponse response) {
+                                 @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences) {
 
         try {
             if (StringUtils.isBlank(species)) {
@@ -66,13 +64,13 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
         request.setAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY, geneQueryString);
 
         // forward to /widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE in BaselineExperimentPageService
-        // eg: forward:/widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE&serializedFilterFactors=ORGANISM:Monodelphis domestica&disableGeneLinks=true
+        // eg: forward:/widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE&serializedFilterFactors=ORGANISM:Monodelphis domestica
         // existing request parameters to this method (ie: geneQuery, propertyType, rootContext) are also passed along by the forward,
         // plus type and serializedFilterFactors
         // the model attributes are also preserved by a forward TODO wrong I think this means
         // BaselineRequestPreferences
         // preferences only I think so why do we populate model still
-        return "forward:" + getRequestURL(request) + buildQueryString(species, experiment, disableGeneLinks);
+        return "forward:" + getRequestURL(request) + buildQueryString(species, experiment);
     }
 
     private String getRequestURL(HttpServletRequest request) {
@@ -82,10 +80,10 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
         return StringUtils.substringAfter(requestURI, contextPath);
     }
 
-    private String buildQueryString(String species, Experiment experiment, boolean disableGeneLinks) {
+    private String buildQueryString(String species, Experiment experiment) {
         String mappedSpecies = experiment.getRequestSpeciesName(species);
         String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
-        return "?type=" + experiment.getType().getParent() + organismParameters + (disableGeneLinks ? "&disableGeneLinks=true" : "");
+        return "?type=" + experiment.getType().getParent() + organismParameters;
     }
 
 }

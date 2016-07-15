@@ -45,8 +45,8 @@ module.exports = function (options) {
             differentialResultsPath = "gxa/json/genes/" + query.geneQuery + "/differentialResults";
             break;
         case "geneSet":
-            differentialFacetsPath = "gxa/json/genesets/" + query.geneQuery + "/differentialFacets";
-            differentialResultsPath = "gxa/json/genesets/" + query.geneQuery + "/differentialResults";
+            differentialFacetsPath = "gxa/json/genesets/" + query.geneQuery + "/differentialFacets" + (options.species ? "&organism=" + options.species : "");
+            differentialResultsPath = "gxa/json/genesets/" + query.geneQuery + "/differentialResults" + (options.species ? "&organism=" + options.species : "");
             break;
         default:
             differentialFacetsPath =

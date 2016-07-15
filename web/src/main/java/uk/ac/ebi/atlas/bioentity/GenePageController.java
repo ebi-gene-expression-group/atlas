@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Controller
 @Scope("request")
 public class GenePageController extends BioentityPageController {
@@ -22,23 +24,22 @@ public class GenePageController extends BioentityPageController {
     public String showGenePage(@PathVariable String identifier, Model model) {
         bioentityPropertyServiceInitializer.initForGenePage(bioEntityPropertyService, identifier, propertyNames);
 
-
         model.addAttribute("queryType", "gene");
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
-        return super.showBioentityPage(identifier, model, experimentTypes);
+        return super.showBioentityPage(identifier, "", model, experimentTypes);
     }
 
     @Override
-    protected Map<String, Object> pageDescriptionAttributes(String identifier){
+    protected Map<String, Object> pageDescriptionAttributes(String identifier) {
         String s = "Expression summary for " + bioEntityPropertyService.getEntityName() + " - " +
                 StringUtils.capitalize(bioEntityPropertyService.getSpecies());
 
         return ImmutableMap.<String, Object>of(
                 "mainTitle", s,
                 "pageDescription", s,
-                "pageKeywords", "gene,"+identifier+","+bioEntityPropertyService.getSpecies()
+                "pageKeywords", "gene," + identifier + "," + bioEntityPropertyService.getSpecies()
         );
     }
 

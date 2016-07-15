@@ -71,12 +71,12 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
                                          @PathVariable String experimentAccession,
                                          @RequestParam(required = false) String accessKey,
                                          BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
-        experimentPageCallbacks.adjustReceivedObjects(preferences);
+//        experimentPageCallbacks.adjustReceivedObjects(preferences);
 
         try {
             baselineExperimentPageService.populateModelWithHeatmapData(
                     (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                    preferences, model, request, false, false);
+                    preferences, model, request, false);
         } catch (GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
         } catch (UnsupportedEncodingException e) {

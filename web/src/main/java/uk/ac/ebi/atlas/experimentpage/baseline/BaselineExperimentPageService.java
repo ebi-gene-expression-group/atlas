@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-
 import com.google.common.base.Optional;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -64,10 +63,7 @@ public class BaselineExperimentPageService {
     }
 
     public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
-                                                       HttpServletRequest request, boolean isWidget)
-                throws UnsupportedEncodingException {
-
-
+                                                       HttpServletRequest request, boolean isWidget) {
         if (isWidget) {
             // possibly we could always do this - investigate if it matters for not-a-widget
             //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
@@ -92,8 +88,7 @@ public class BaselineExperimentPageService {
     }
 
     public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,
-                                             Model model, HttpServletRequest request, boolean isWidget,
-                                             boolean disableGeneLinks) throws GenesNotFoundException, UnsupportedEncodingException {
+                                             Model model, HttpServletRequest request, boolean isWidget) throws GenesNotFoundException, UnsupportedEncodingException {
         //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
@@ -138,7 +133,6 @@ public class BaselineExperimentPageService {
         if (!isWidget) {
             addFactorMenu(model, experiment, requestContext);
         } else {
-            model.addAttribute("disableGeneLinks", disableGeneLinks);
             model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
             model.addAttribute("enableEnsemblLauncher", false);
         }

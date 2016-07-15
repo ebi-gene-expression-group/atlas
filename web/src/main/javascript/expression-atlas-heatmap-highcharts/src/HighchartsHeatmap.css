@@ -11,6 +11,10 @@
     border: 0 red solid;
 }
 
+.highcharts-container {
+    position: unset !important;
+}
+
 #barcharts_legend_list_items {
     color: #606060;
     margin-left: 180px;

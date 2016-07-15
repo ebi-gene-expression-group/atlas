@@ -1,7 +1,10 @@
 package uk.ac.ebi.atlas.search.analyticsindex;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsClient;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder;
@@ -10,6 +13,8 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Collection;
+import java.util.List;
 
 @Named
 public class AnalyticsIndexSearchDAO {
@@ -68,6 +73,25 @@ public class AnalyticsIndexSearchDAO {
                         .build();
         QueryResponse queryResponse = analyticsClient.query(solrQuery);
         return SolrUtil.extractFirstFacetValues(queryResponse);
+    }
+
+    Collection<String> getBioentityIdentifiersForSpecies(String species) {
+        List<FacetField> facetFields = analyticsClient.query(
+                new AnalyticsQueryBuilder()
+                        .ofSpecies(species)
+                        .facetByBioentityIdentifier()
+                        .setRows(0)
+                        .setFacetLimit(45000)   // Something less than 50k because of sitemap limitations, plus some wiggle room for extra data
+                        .build()).getFacetFields();
+
+        return facetFields.size() != 1
+                ? ImmutableSet.<String>of()
+                : Collections2.transform(facetFields.get(0).getValues(), new Function<FacetField.Count, String>() {
+            @Override
+            public String apply(FacetField.Count count) {
+                return count.getName();
+            }
+        });
     }
 
 }

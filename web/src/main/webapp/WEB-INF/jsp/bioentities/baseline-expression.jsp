@@ -18,7 +18,7 @@
         facetsContainer: "gxaBaselineFacetsContainerDiv",
         resultsContainer: "gxaBaselineResultsContainerDiv",
         showAnatomogramsInput: "showAnatomogramsCheckbox",
-        selectedSpecies: "${species}",
+        species: "${species}",
         facetsTreeData: baselineFacetsData,
         identifier: "${identifier}"
     });

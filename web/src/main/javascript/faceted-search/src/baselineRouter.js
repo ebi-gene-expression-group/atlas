@@ -23,7 +23,7 @@ var BaselineHeatmaps = require('./BaselineHeatmaps.jsx');
  * @param {string} options.showAnatomogramsInput - id of the show/hide anatomograms control, i.e. an <input> id
  * @param {Object} options.facetsTreeData
  * @param {string} options.atlasHost
- * @param {string} options.selectedSpecies
+ * @param {string} options.species
  * @param {string} options.identifier
  */
 module.exports = function (options) {
@@ -37,17 +37,17 @@ module.exports = function (options) {
         select    : {}
     };
 
-    var selectedSpecies = options.selectedSpecies,
+    var species = options.species,
         facetsTreeData = options.facetsTreeData;
 
     var anatomogramDataEventEmitter = new EventEmitter();
     anatomogramDataEventEmitter.setMaxListeners(0);
 
-    if (selectedSpecies && facetsTreeData.hasOwnProperty(selectedSpecies)) {
-        var selectedSpeciesFactors = facetsTreeData[selectedSpecies];
-        for(var selectedSpeciesFactor in selectedSpeciesFactors) {
-            if (selectedSpeciesFactors.hasOwnProperty(selectedSpeciesFactor)) {
-                addSelection(query.select, selectedSpecies, selectedSpeciesFactors[selectedSpeciesFactor].name);
+    if (species && facetsTreeData.hasOwnProperty(species)) {
+        var speciesFactors = facetsTreeData[species];
+        for(var speciesFactor in speciesFactors) {
+            if (speciesFactors.hasOwnProperty(speciesFactor)) {
+                addSelection(query.select, species, speciesFactors[speciesFactor].name);
             }
         }
     } else {
