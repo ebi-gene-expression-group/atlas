@@ -42,6 +42,7 @@ public class AnalyticsSearchService {
                 new AnalyticsQueryBuilder()
                         .ofSpecies(species)
                         .facetByBioentityIdentifier()
+                        .filterAboveDefaultCutoff()
                         .setRows(0)
                         .setFacetLimit(45000)
                         .build()).getFacetFields();
