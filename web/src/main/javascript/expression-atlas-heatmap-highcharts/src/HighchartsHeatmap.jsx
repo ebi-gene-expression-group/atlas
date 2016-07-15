@@ -179,7 +179,7 @@ var HeatmapContainer = React.createClass({
     render: function () {
         var marginRight = 60;
         return (
-            <div>
+            <div style={{"minHeight":"400px"}}>
                 <HeatmapOptions
                     marginRight={marginRight}
                     introductoryMessage={this._introductoryMessage()}
@@ -197,9 +197,6 @@ var HeatmapContainer = React.createClass({
                     }}
                     googleAnalyticsCallback={this.props.googleAnalyticsCallback}
                     showUsageMessage={this.props.heatmapData.xAxisCategories.length > 100} />
-                <div style={{height:"300px", display:"block", backgroundColor:"powderblue"}}>
-                  Padding for testing
-                </div>
                 <HighchartsHeatmap
                     marginRight={marginRight}
                     anatomogramEventEmitter={this.props.anatomogramEventEmitter}
@@ -620,7 +617,7 @@ var HeatmapOptions = React.createClass({
                 <div style={{display: 'inline-block', verticalAlign: 'top'}}>
                   {this.props.introductoryMessage}
                 </div>
-                <div style={{display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight}}>
+                <div style={{display: "inline-block", verticalAlign: "top", marginRight: this.props.marginRight}}>
                 <div className="btn-group">
                     { this.props.orderings.available.length > 1
                         ?
