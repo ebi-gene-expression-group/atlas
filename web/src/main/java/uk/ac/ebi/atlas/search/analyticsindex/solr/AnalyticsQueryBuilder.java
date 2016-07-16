@@ -1,13 +1,10 @@
 package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.SemanticQueryTerm;
+import uk.ac.ebi.atlas.search.GeneQuery;
 
 import javax.inject.Named;
 

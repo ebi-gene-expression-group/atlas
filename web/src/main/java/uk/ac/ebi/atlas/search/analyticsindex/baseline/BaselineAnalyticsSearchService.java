@@ -5,7 +5,7 @@ import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResultProducer;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.search.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.collect.Lists;
@@ -11,14 +10,13 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
-import uk.ac.ebi.atlas.web.SemanticQueryTerm;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
 @Named
-@Scope("singleton")
 public class GeneIdSuggestionService {
 
     @Value("#{configuration['index.property_names.bioentity_name']}")

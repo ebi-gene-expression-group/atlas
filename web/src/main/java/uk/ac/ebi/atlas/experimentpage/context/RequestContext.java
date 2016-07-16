@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.search.GeneQuery;
 
 import java.util.Set;
 

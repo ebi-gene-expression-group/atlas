@@ -9,7 +9,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsClient;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder;
 import uk.ac.ebi.atlas.solr.SolrUtil;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.search.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.solr.query.SuggestionService;
-import uk.ac.ebi.atlas.web.SemanticQueryTerm;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import javax.inject.Inject;
 import java.util.List;

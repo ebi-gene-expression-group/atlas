@@ -4,7 +4,7 @@ package uk.ac.ebi.atlas.solr.query.builders;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.search.GeneQuery;
 
 /**
  * This is a builder, keep always in mind that builders are potentially stateful.

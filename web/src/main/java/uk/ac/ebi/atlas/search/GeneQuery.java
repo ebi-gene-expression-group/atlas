@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web;
+package uk.ac.ebi.atlas.search;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;

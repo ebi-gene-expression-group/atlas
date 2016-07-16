@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web;
+package uk.ac.ebi.atlas.search;
 
 import autovalue.shaded.com.google.common.common.base.Throwables;
 import com.google.gson.stream.MalformedJsonException;

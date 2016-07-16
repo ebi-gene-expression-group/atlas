@@ -13,10 +13,11 @@ import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.search.ConditionQuery;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
-import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.SemanticQueryTerm;
+import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -177,7 +178,7 @@ public class SolrQueryService {
         return Optional.of(geneIds);
     }
 
-    public Optional<Set<String>> expandGeneQueryIntoGeneIds(GeneQuery geneQuery, String species) {
+    public Optional<Set<String>> expandGeneQueryIntoGeneIds(GeneQuery geneQuery, ConditionQuery conditionQuery, String species) {
         if (geneQuery.isEmpty()) {
             return Optional.absent();
         }

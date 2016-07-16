@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
+import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.*;
