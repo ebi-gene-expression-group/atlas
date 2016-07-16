@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.bioentity;
 
-import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.SemanticQueryTerm;
+import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import java.util.regex.Pattern;
 

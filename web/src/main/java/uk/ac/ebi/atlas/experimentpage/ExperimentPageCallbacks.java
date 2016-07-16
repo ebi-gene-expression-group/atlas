@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.experimentpage;
 
 //import com.google.common.collect.ImmutableList;
 //import com.google.common.collect.ImmutableSet;
-//import uk.ac.ebi.atlas.web.GeneQuery;
-//import uk.ac.ebi.atlas.web.SemanticQueryTerm;
+//import uk.ac.ebi.atlas.search.GeneQuery;
+//import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.io.UnsupportedEncodingException;
