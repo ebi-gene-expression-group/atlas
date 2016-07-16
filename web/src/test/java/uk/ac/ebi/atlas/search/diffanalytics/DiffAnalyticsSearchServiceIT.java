@@ -12,13 +12,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.search.ConditionQuery;
 import uk.ac.ebi.atlas.search.OracleObjectFactory;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.utils.Visitor;
-import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
+import uk.ac.ebi.atlas.search.GeneQuery;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -75,18 +75,17 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
 
-    private DiffAnalyticsList fetch(GeneQuerySearchRequestParameters requestParameters, String species){
-        Optional<Set<String>> geneIdsFromGeneQuery = solrQueryService.expandGeneQueryIntoGeneIds(requestParameters.getGeneQuery(), species);
-        return subject.fetchTop(requestParameters.getConditionQuery().asString(), species, geneIdsFromGeneQuery);
+    private DiffAnalyticsList fetch(GeneQuery geneQuery, ConditionQuery conditionQuery, String species){
+        Optional<Set<String>> geneIdsFromGeneQuery = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, conditionQuery, species);
+        return subject.fetchTop(conditionQuery.asString(), species, geneIdsFromGeneQuery);
     }
 
 
     @Test
     public void fetchTopKinaseNoSpecies()  {
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("kinase"));
+        GeneQuery geneQuery = GeneQuery.create("kinase");
 
-        DiffAnalyticsList bioentityExpressions = fetch(requestParameters, "");
+        DiffAnalyticsList bioentityExpressions = fetch(geneQuery, ConditionQuery.create(""), "");
 
         assertThat(bioentityExpressions, hasSize(greaterThan(0)));
         assertThat(bioentityExpressions.getTotalNumberOfResults(), greaterThan(0));
@@ -95,12 +94,13 @@ public class DiffAnalyticsSearchServiceIT {
 
     @Test
     public void weHaveSomeDataAboutCancerAndCanAccessItInTwoDifferentWays()  {
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setCondition("cancer");
+        GeneQuery geneQuery = GeneQuery.create();
+        ConditionQuery conditionQuery = ConditionQuery.create("cancer");
+        String species = "";
 
         final List<String> names = Lists.newArrayList();
 
-        int count = subject.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getConditionQuery().asString(), requestParameters.getOrganism(), new Visitor<DiffAnalytics>() {
+        int count = subject.visitEachExpression(geneQuery, conditionQuery, "", new Visitor<DiffAnalytics>() {
 
             @Override
             public void visit(DiffAnalytics value) {
@@ -112,7 +112,7 @@ public class DiffAnalyticsSearchServiceIT {
         assertThat(count, greaterThan(100));
         assertThat(count, is(names.size()));
 
-        DiffAnalyticsList bioentityExpressions = subject.fetchTop(requestParameters.getConditionQuery().asString(), requestParameters.getOrganism(), Optional.<Set<String>>absent());
+        DiffAnalyticsList bioentityExpressions = subject.fetchTop(conditionQuery.asString(), species, Optional.<Set<String>>absent());
 
         assertThat(bioentityExpressions.size(), greaterThan(0));
         assertThat(bioentityExpressions.size(), lessThan(51));
@@ -122,12 +122,11 @@ public class DiffAnalyticsSearchServiceIT {
 
     @Test
     public void weCanCheckAboutKinaseConnectedToCancer()  {
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("kinase"));
-        requestParameters.setCondition("cancer");
-
+        GeneQuery geneQuery = GeneQuery.create("kinase");
+        ConditionQuery conditionQuery = ConditionQuery.create("cancer");
         String species = "";
-        DiffAnalyticsList bioentityExpressions = subject.fetchTop(requestParameters.getConditionQuery().asString(), species, Optional.<Set<String>>absent());
+
+        DiffAnalyticsList bioentityExpressions = subject.fetchTop(conditionQuery.asString(), species, Optional.<Set<String>>absent());
         List<String> names = getBioentityNames(bioentityExpressions);
 
         assertThat(bioentityExpressions.size(), greaterThan(10));

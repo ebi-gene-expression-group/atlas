@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.search.ConditionQuery;
 import uk.ac.ebi.atlas.utils.Visitor;
 import uk.ac.ebi.atlas.utils.VisitorException;
-import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
+import uk.ac.ebi.atlas.search.GeneQuery;
 
 import javax.inject.Named;
 import java.io.IOException;
@@ -61,8 +61,8 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalyt
         csvWriter = new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER, NO_ESCAPE_CHARACTER);
     }
 
-    public void writeHeader(GeneQuerySearchRequestParameters requestParameters) {
-        responseWriter.write(getTsvFileMasthead(requestParameters) + "\n");
+    public void writeHeader(GeneQuery geneQuery, ConditionQuery conditionQuery, String species) {
+        responseWriter.write(getTsvFileMasthead(geneQuery, conditionQuery, species) + "\n");
         csvWriter.writeNext(HEADERS);
         responseWriter.flush();
     }
@@ -126,14 +126,13 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalyt
         return Double.toString(expressionValue);
     }
 
-    public String getTsvFileMasthead(GeneQuerySearchRequestParameters requestParameters) {
-        GeneQuery geneQuery = requestParameters.getGeneQuery();
+    public String getTsvFileMasthead(GeneQuery geneQuery, ConditionQuery conditionQuery, String species) {
         String geneQueryHeader = !geneQuery.isEmpty() ? "Genes matching: '" + geneQuery.asSolr1DNF() + "'" : "";
         String comma = !geneQuery.isEmpty() ? ", " : "";
 
-        boolean hasCondition = requestParameters.hasCondition();
-        String condition = hasCondition ? " in condition matching '" + requestParameters.getConditionQuery().asString() + "'": "";
-        String organism = StringUtils.isNotEmpty(requestParameters.getOrganism()) ? (hasCondition ? " and" : "")  + " in organism '" + requestParameters.getOrganism() + "'": "";
+        boolean hasCondition = !conditionQuery.isEmpty();
+        String condition = hasCondition ? " in condition matching '" + conditionQuery.asString() + "'": "";
+        String organism = StringUtils.isNotEmpty(species) ? (hasCondition ? " and" : "")  + " in organism '" + species + "'": "";
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
         return MessageFormat.format(tsvFileMastheadTemplate, geneQueryHeader, comma, condition, organism, timeStamp);
     }

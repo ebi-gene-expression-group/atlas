@@ -5,8 +5,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
+import uk.ac.ebi.atlas.search.ConditionQuery;
+import uk.ac.ebi.atlas.search.GeneQuery;
 
 import javax.inject.Inject;
 
@@ -23,18 +23,22 @@ public class DiffAnalyticsTSVWriterHeaderIT {
 
     @Test
     public void headerTextShouldContainThreeRows(){
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        GeneQuery geneQuery = GeneQuery.create();
+        ConditionQuery conditionQuery = ConditionQuery.create("");
+        String species = "";
 
-        String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
 
         assertThat(headerRows.length, is(3));
     }
 
     @Test
     public void thirdHeaderLineShouldDescribeTimestamp(){
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        GeneQuery geneQuery = GeneQuery.create();
+        ConditionQuery conditionQuery = ConditionQuery.create("");
+        String species = "";
 
-        String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
 
         assertThat(headerRows[2], startsWith("# Timestamp: "));
         assertThat(headerRows[2].length(), greaterThan("# Timestamp: ".length()));
@@ -42,61 +46,66 @@ public class DiffAnalyticsTSVWriterHeaderIT {
 
     @Test
     public void queryDescriptionWithGeneQuery(){
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("TEST"));
+        GeneQuery geneQuery = GeneQuery.create("TEST");
+        ConditionQuery conditionQuery = ConditionQuery.create("");
+        String species = "";
 
-        String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: 'TEST', specifically up/down differentially expressed, given the False Discovery Rate cutoff: 0.05"));
     }
 
     @Test
     public void queryDescriptionWithCondition(){
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setCondition("LIVER");
+        GeneQuery geneQuery = GeneQuery.create();
+        ConditionQuery conditionQuery = ConditionQuery.create("LIVER");
+        String species = "";
 
-        String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
 
         assertThat(headerRows[1], is("# Query: specifically up/down differentially expressed in condition matching 'LIVER', given the False Discovery Rate cutoff: 0.05"));
     }
 
     @Test
     public void queryDescriptionWithOrganism(){
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setOrganism("Mus musculus");
+        GeneQuery geneQuery = GeneQuery.create();
+        ConditionQuery conditionQuery = ConditionQuery.create("");
+        String species = "Mus musculus";
 
-        String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
 
         assertThat(headerRows[1], is("# Query: specifically up/down differentially expressed in organism 'Mus musculus', given the False Discovery Rate cutoff: 0.05"));
     }
 
     @Test
     public void queryDescriptionWithOrganismAndCondition(){
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setCondition("LIVER");
-        requestParameters.setOrganism("Mus musculus");
+        GeneQuery geneQuery = GeneQuery.create();
+        ConditionQuery conditionQuery = ConditionQuery.create("LIVER");
+        String species = "Mus musculus";
 
-        String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
 
         assertThat(headerRows[1], is("# Query: specifically up/down differentially expressed in condition matching 'LIVER' and in organism 'Mus musculus', given the False Discovery Rate cutoff: 0.05"));
     }
 
     @Test
     public void queryDescriptionWithGeneQueryAndCondition(){
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("TEST"));
-        requestParameters.setCondition("LIVER");
+        GeneQuery geneQuery = GeneQuery.create("TEST");
+        ConditionQuery conditionQuery = ConditionQuery.create("LIVER");
+        String species = "";
 
-        String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: 'TEST', specifically up/down differentially expressed in condition matching 'LIVER', given the False Discovery Rate cutoff: 0.05"));
     }
 
     @Test
     public void firstHeaderLineShouldDescribeAtlasVersion(){
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        GeneQuery geneQuery = GeneQuery.create("TEST");
+        ConditionQuery conditionQuery = ConditionQuery.create("LIVER");
+        String species = "";
 
-        String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
 
         assertThat(headerRows[0], startsWith("# Expression Atlas version: "));
         assertThat(headerRows[0].length(), greaterThan("# Expression Atlas version: ".length()));

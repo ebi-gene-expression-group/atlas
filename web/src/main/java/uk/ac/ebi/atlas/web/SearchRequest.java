@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.web;
 
+import uk.ac.ebi.atlas.search.GeneQuery;
+
 public class SearchRequest {
 
     private GeneQuery geneQuery = getDefaultGeneQuery();
@@ -16,7 +18,4 @@ public class SearchRequest {
         this.geneQuery = geneQuery;
     }
 
-    public boolean hasGeneQuery() {
-        return !geneQuery.isEmpty();
-    }
 }
