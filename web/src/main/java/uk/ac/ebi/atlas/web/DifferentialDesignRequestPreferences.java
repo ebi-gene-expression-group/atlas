@@ -1,6 +1,7 @@
 
 package uk.ac.ebi.atlas.web;
 
+
 public class DifferentialDesignRequestPreferences {
 
     private String selectedContrast;
@@ -15,6 +16,7 @@ public class DifferentialDesignRequestPreferences {
         this.selectedContrast = selectedContrast;
     }
 
+    //I'm not sure if this is used for anything, I think not. TODO try remove
     public String getRootContext() {
         return rootContext;
     }

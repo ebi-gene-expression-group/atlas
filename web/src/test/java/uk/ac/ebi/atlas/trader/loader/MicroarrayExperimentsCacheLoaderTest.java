@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -25,7 +26,8 @@ import static org.mockito.Mockito.when;
 public class MicroarrayExperimentsCacheLoaderTest {
 
     private static final String ACCESSION = "accession";
-    private static final String ARRAYDESIGNS = "arraydesigns";
+    private static final String ARRAYDESIGN_ID = "arraydesignId";
+    private static final String ARRAYDESIGN_NAME = "arraydesignName";
     private static final String SPECIES = "species";
     private static final String ACCESS_KEY = "AN_UUID";
 
@@ -50,11 +52,14 @@ public class MicroarrayExperimentsCacheLoaderTest {
     @Mock
     private ExperimentDesign experimentDesignMock;
 
+    @Mock
+    private ArrayDesignTrader arrayDesignTraderMock;
+
     private MicroarrayExperimentsCacheLoader subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, speciesKingdomTraderMock);
+        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, speciesKingdomTraderMock, arrayDesignTraderMock);
 
         when(experimentDTOMock.getExperimentAccession()).thenReturn(ACCESSION);
         when(experimentDTOMock.getExperimentType()).thenReturn(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
@@ -65,7 +70,9 @@ public class MicroarrayExperimentsCacheLoaderTest {
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
         when(speciesKingdomTraderMock.getKingdom(experimentDTOMock.getSpecies())).thenReturn("kingdom");
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
-        when(experimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGNS)));
+        when(experimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_ID)));
+        when(arrayDesignTraderMock.getArrayDesignNames(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_ID)))).thenReturn
+                (Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_NAME)));
 
         when(experimentDAOMock.findPublicExperiment(ACCESSION)).thenReturn(experimentDTOMock);
     }
@@ -75,8 +82,9 @@ public class MicroarrayExperimentsCacheLoaderTest {
         MicroarrayExperiment microarrayExperiment = subject.load(experimentDTOMock, "description",
                 false, experimentDesignMock);
         assertThat(microarrayExperiment.getAccession(), is(ACCESSION));
-        assertThat(microarrayExperiment.getArrayDesignAccessions(), hasItem(ARRAYDESIGNS));
+        assertThat(microarrayExperiment.getArrayDesignAccessions(), hasItem(ARRAYDESIGN_ID));
         assertThat(microarrayExperiment.getSpecies(), is(SPECIES));
         assertThat(microarrayExperiment.getExperimentDesign(), is(experimentDesignMock));
+        assertThat(microarrayExperiment.getArrayDesignNames(), hasItem(ARRAYDESIGN_NAME));
     }
 }

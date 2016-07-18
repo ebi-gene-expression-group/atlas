@@ -1,15 +1,9 @@
 
 package uk.ac.ebi.atlas.web.controllers;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.ui.Model;
-
-import javax.inject.Named;
 import java.util.HashMap;
 import java.util.Map;
 
-@Named
-@Scope("request")
 public class DownloadURLBuilder {
 
     private static final String TSV_RAW_FILE_NAME = "/raw-counts.tsv";
@@ -20,9 +14,8 @@ public class DownloadURLBuilder {
 
     private String experimentAccession;
 
-    public DownloadURLBuilder withExperimentAccession(String experimentAccession) {
+    public DownloadURLBuilder(String experimentAccession) {
         this.experimentAccession = experimentAccession;
-        return this;
     }
 
     public Map<String,String> dataDownloadUrls(String requestURI){

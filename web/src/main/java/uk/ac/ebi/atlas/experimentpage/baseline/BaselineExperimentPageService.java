@@ -24,7 +24,6 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.TagEditorConverter;
-import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
 import javax.servlet.http.HttpServletRequest;

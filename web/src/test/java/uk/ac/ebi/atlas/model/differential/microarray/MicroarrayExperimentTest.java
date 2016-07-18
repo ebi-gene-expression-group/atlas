@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import java.util.Date;
+import java.util.TreeSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -36,7 +37,7 @@ public class MicroarrayExperimentTest {
     public void setUp() throws Exception {
         subject = new MicroarrayExperiment(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, "accession", new Date(), Sets.newHashSet(contrastMock),
                 "description", false, true, "species", "kingdom", "ensembl", Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSIONS)),
-                Sets.newHashSet(PUBMEDID), experimentDesignMock);
+                new TreeSet<String>(), experimentDesignMock, Sets.newHashSet(PUBMEDID));
     }
 
     @Test

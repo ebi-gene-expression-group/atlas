@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -14,6 +15,7 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Named
 public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<MicroarrayExperiment> {
@@ -22,10 +24,13 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
     private SpeciesKingdomTrader speciesKingdomTrader;
 
+    private final ArrayDesignTrader arrayDesignTrader;
+
     @Inject
-    public MicroarrayExperimentsCacheLoader(ConfigurationTrader configurationTrader, SpeciesKingdomTrader speciesKingdomTrader) {
+    public MicroarrayExperimentsCacheLoader(ConfigurationTrader configurationTrader, SpeciesKingdomTrader speciesKingdomTrader, ArrayDesignTrader arrayDesignTrader) {
         this.configurationTrader = configurationTrader;
         this.speciesKingdomTrader = speciesKingdomTrader;
+        this.arrayDesignTrader = arrayDesignTrader;
     }
 
     @Override
@@ -46,7 +51,7 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
         return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession, experimentDTO.getLastUpdate(),
                                         contrasts, experimentDescription, hasExtraInfoFile, hasRData, experimentDTO.getSpecies(), kingdom, ensemblDB, arrayDesignAccessions,
-                                        experimentDTO.getPubmedIds(), experimentDesign);
+                arrayDesignTrader.getArrayDesignNames(arrayDesignAccessions), experimentDesign, experimentDTO.getPubmedIds());
 
     }
 }

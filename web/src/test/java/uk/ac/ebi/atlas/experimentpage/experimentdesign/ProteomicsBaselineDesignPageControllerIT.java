@@ -46,10 +46,8 @@ public class ProteomicsBaselineDesignPageControllerIT {
 
     private static final Set<String> runSet = Sets.newLinkedHashSet();
 
-    BaselineDesignPageController subject;
+    ExperimentDesignPageRequestHandler subject;
 
-    @Inject
-    DownloadURLBuilder downloadURLBuilder;
     @Inject
     ArrayDesignTrader arrayDesignTrader;
     @Inject
@@ -63,8 +61,7 @@ public class ProteomicsBaselineDesignPageControllerIT {
 
     @Before
     public void initSubject() throws Exception {
-        subject = new BaselineDesignPageController(downloadURLBuilder,arrayDesignTrader,experimentTrader,
-                fastQCReportUtil);
+        subject = new ExperimentDesignPageRequestHandler(experimentTrader);
         requestMock = mock(HttpServletRequest.class);
         when(requestMock.getRequestURI()).thenReturn("/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design");
 
@@ -74,7 +71,7 @@ public class ProteomicsBaselineDesignPageControllerIT {
     public void testExtractProteomicsExperimentDesign() throws IOException {
 
         //given
-        subject.showProteomicsExperimentDesign(EXPERIMENT_ACCESSION,model,"", requestMock);
+        subject.handleRequest(EXPERIMENT_ACCESSION,model,requestMock,"","");
 
         Gson gson = new Gson();
         runSet.addAll(RUNS);

@@ -12,13 +12,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -43,30 +40,23 @@ public class DifferentialDesignPageControllerIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-25185";
 
-    private DifferentialDesignPageController subject;
+    private ExperimentDesignPageRequestHandler subject;
 
-    @Inject
-    DownloadURLBuilder downloadURLBuilder;
     @Inject
     ArrayDesignTrader arrayDesignTrader;
     @Inject
     ExperimentTrader experimentTrader;
 
-    @Inject
-    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
-
     private HttpServletRequest requestMock;
-    private DifferentialDesignRequestPreferences preferencesMock;
 
     Model model = new BindingAwareModelMap();
 
 
     @Before
     public void initSubject() throws Exception {
-        subject = new DifferentialDesignPageController(downloadURLBuilder,arrayDesignTrader,experimentTrader);
+        subject = new ExperimentDesignPageRequestHandler(experimentTrader);
 
         requestMock = mock(HttpServletRequest.class);
-        preferencesMock = mock(DifferentialDesignRequestPreferences.class);
         when(requestMock.getRequestURI()).thenReturn("/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design");
 
         assertNotNull(experimentTrader.getExperiment(EXPERIMENT_ACCESSION, ""));
@@ -76,7 +66,7 @@ public class DifferentialDesignPageControllerIT {
     public void testExtractExperimentDesign() throws IOException {
 
         // given
-        subject.showRnaSeqExperimentDesign(EXPERIMENT_ACCESSION,"",preferencesMock, model, requestMock);
+        subject.handleRequest(EXPERIMENT_ACCESSION,model,requestMock,"","");
 
         Gson gson = new Gson();
 

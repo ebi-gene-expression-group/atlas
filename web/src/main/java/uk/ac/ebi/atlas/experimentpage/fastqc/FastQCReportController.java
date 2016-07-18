@@ -56,13 +56,7 @@ public class FastQCReportController {
         }
 
         // will generate 404 here for private experiments without access key
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-
-        prepareModel(request, model, experiment);
-
-        model.addAttribute("fastQCReports", preferences.fastQCReportsList());
-
-        model.addAttribute("species", experiment.getSpecies());
+        prepareModel(model, preferences, experimentAccession, accessKey);
 
         String reportSelected = preferences.getSelectedReport();
 
@@ -130,12 +124,7 @@ public class FastQCReportController {
             return forwardToMappingQcResource(experimentAccession, species, resource);
         }
 
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-        prepareModel(request, model, experiment);
-
-        model.addAttribute("fastQCReports", preferences.fastQCReportsList());
-
-        model.addAttribute("species", experiment.getSpecies());
+        prepareModel(model, preferences, experimentAccession, accessKey);
 
         String reportSelected = preferences.getSelectedReport();
 
@@ -249,12 +238,7 @@ public class FastQCReportController {
         //NB: by looking up the experiment at the end, we improve performance the other resources (eg: images)
         // that don't need the experiment, however we made it possible for those resources from private experiments
         // to become accessible publically - an acceptable tradeoff for now.
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-        prepareModel(request, model, experiment);
-
-        model.addAttribute("fastQCReports", preferences.fastQCReportsList());
-
-        model.addAttribute("species", experiment.getSpecies());
+        prepareModel(model, preferences, experimentAccession, accessKey);
 
         request.setAttribute("contentPath", path);
 
@@ -273,10 +257,10 @@ public class FastQCReportController {
         return "forward:" + path;
     }
 
-    private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) {
-        request.setAttribute("experiment", experiment);
-
+    private void prepareModel(Model model, FastQCReportRequestPreferences preferences, String experimentAccession, String accessKey) {
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         model.addAllAttributes(experiment.getAttributes());
+        model.addAttribute("fastQCReports", preferences.fastQCReportsList());
     }
 
     private String splitSpecies(String species) {
@@ -299,6 +283,5 @@ public class FastQCReportController {
         LOGGER.error(e.getMessage(), e);
         return new ModelAndView("error-page");
     }
-
 
 }

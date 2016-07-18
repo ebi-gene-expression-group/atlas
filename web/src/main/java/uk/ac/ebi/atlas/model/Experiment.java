@@ -5,13 +5,15 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class Experiment implements Serializable {
+public abstract class Experiment implements Serializable {
 
+    private static final Gson gson = new Gson();
     private ExperimentType type;
     private ExperimentDesign experimentDesign;
     private String species;
@@ -131,6 +133,8 @@ public class Experiment implements Serializable {
         return dataProviderDescription;
     }
 
+    protected abstract Set<String> getAnalysedRowsAccessions();
+
     public Map<String, ?> getAttributes(){
         Map<String, Object> result = new HashMap<>();
         result.put("type", this.getType());
@@ -158,6 +162,10 @@ public class Experiment implements Serializable {
         result.put("dataProviderURL", getDataProviderURL());
         result.put("dataProviderDescription", getDataProviderDescription());
         result.put("alternativeViews", alternativeViews);
+
+        //Experiment design related
+        result.put("runAccessions", gson.toJson(getAnalysedRowsAccessions()));
+        result.putAll(experimentDesign.getAttributes());
 
         return result;
     }
