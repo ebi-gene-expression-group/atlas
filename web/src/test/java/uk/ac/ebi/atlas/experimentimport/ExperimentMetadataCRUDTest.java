@@ -15,6 +15,7 @@ import org.mockito.Captor;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
@@ -104,7 +105,7 @@ public class ExperimentMetadataCRUDTest {
     private CondensedSdrfParserOutput condensedSdrfParserOutputMock;
 
     @Mock
-    private EFOParentsLookupService efoParentsLookupServiceMock;
+    private EFOLookupService efoParentsLookupServiceMock;
 
     @Mock
     private AnalyticsIndexerManager analyticsIndexerManagerMock;

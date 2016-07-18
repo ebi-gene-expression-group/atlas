@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableSetMultimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
@@ -40,7 +41,7 @@ public class ExperimentMetadataCRUD {
     private ExperimentDTOBuilder experimentDTOBuilder;
     private final CondensedSdrfParser condensedSdrfParser;
     private ConditionsIndexTrader conditionsIndexTrader;
-    private EFOParentsLookupService efoParentsLookupService;
+    private EFOLookupService efoParentsLookupService;
     private AnalyticsIndexerManager analyticsIndexerManager;
 
     //TODO: refactor this class - it has too many collaborators
@@ -49,7 +50,7 @@ public class ExperimentMetadataCRUD {
                                   ExperimentTrader experimentTrader,
                                   ExperimentDTOBuilder experimentDTOBuilder,
                                   CondensedSdrfParser condensedSdrfParser,
-                                  EFOParentsLookupService efoParentsLookupService) {
+                                  EFOLookupService efoParentsLookupService) {
         this.experimentDAO = experimentDAO;
         this.experimentTrader = experimentTrader;
         this.experimentDTOBuilder = experimentDTOBuilder;

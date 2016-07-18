@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
-import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
+import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.SpeciesGrouper;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -20,12 +20,12 @@ import java.util.*;
 @Named
 public class MicroArrayDiffAnalyticsIndexerService {
 
-    private final EFOParentsLookupService efoParentsLookupService;
+    private final EFOLookupService efoParentsLookupService;
     private final DifferentialConditionsBuilder diffConditionsBuilder;
     private final MicroArrayDiffAnalyticsDocumentStreamIndexer microArrayDiffAnalyticsDocumentStreamIndexer;
 
     @Inject
-    public MicroArrayDiffAnalyticsIndexerService(EFOParentsLookupService efoParentsLookupService, DifferentialConditionsBuilder diffConditionsBuilder, MicroArrayDiffAnalyticsDocumentStreamIndexer microArrayDiffAnalyticsDocumentStreamIndexer) {
+    public MicroArrayDiffAnalyticsIndexerService(EFOLookupService efoParentsLookupService, DifferentialConditionsBuilder diffConditionsBuilder, MicroArrayDiffAnalyticsDocumentStreamIndexer microArrayDiffAnalyticsDocumentStreamIndexer) {
         this.efoParentsLookupService = efoParentsLookupService;
         this.diffConditionsBuilder = diffConditionsBuilder;
         this.microArrayDiffAnalyticsDocumentStreamIndexer = microArrayDiffAnalyticsDocumentStreamIndexer;

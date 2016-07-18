@@ -1,9 +1,8 @@
-package uk.ac.ebi.atlas.experimentimport;
+package uk.ac.ebi.atlas.experimentimport.efo;
 
 import com.google.common.collect.ImmutableMap;
-import org.springframework.context.annotation.Scope;
+import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
-import uk.ac.ebi.atlas.commons.efo.EFOTreeNodesTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,18 +13,17 @@ import java.util.Set;
 import static uk.ac.ebi.atlas.utils.StringUtil.splitAtLastSlash;
 
 @Named
-@Scope("singleton")
-public class EFOParentsLookupService {
+public class EFOLookupService {
 
     private EFOTreeNodesTrader efoTreeNodesTrader;
     private ImmutableMap<String, EFONode> idToEFONode;
 
     @Inject
-    public EFOParentsLookupService(EFOTreeNodesTrader efoTreeNodesTrader) {
+    public EFOLookupService(EFOTreeNodesTrader efoTreeNodesTrader) {
         this.efoTreeNodesTrader = efoTreeNodesTrader;
     }
 
-    public Set<String> getAllParents(String id)
+    private Set<String> getAllParents(String id)
     {
         if (idToEFONode == null) {
             buildIdToEFONodeMap();
@@ -57,6 +55,18 @@ public class EFOParentsLookupService {
         }
 
         return parentIds;
+    }
+
+    public ImmutableSet<String> getLabels(Set<String> ids) {
+        if (idToEFONode == null) {
+            buildIdToEFONodeMap();
+        }
+
+        ImmutableSet.Builder<String> builder = ImmutableSet.builder();
+        for (String id : ids) {
+            builder.add(idToEFONode.get(id).getTerm());
+        }
+        return builder.build();
     }
 
 

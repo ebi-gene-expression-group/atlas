@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
+import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.ProteomicsBaselineAnalyticsInputStreamFactory;
@@ -37,14 +37,14 @@ public class BaselineAnalyticsIndexerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineAnalyticsIndexerService.class);
 
     private final BaselineAnalyticsDocumentStreamFactory streamFactory;
-    private final EFOParentsLookupService efoParentsLookupService;
+    private final EFOLookupService efoParentsLookupService;
     private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
     private final ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
     private final AnalyticsIndexDAO analyticsIndexDAO;
     private final BaselineConditionsBuilder baselineConditionsBuilder;
 
     @Inject
-    public BaselineAnalyticsIndexerService(BaselineAnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory, AnalyticsIndexDAO analyticsIndexDAO,  BaselineConditionsBuilder baselineConditionsBuilder) {
+    public BaselineAnalyticsIndexerService(BaselineAnalyticsDocumentStreamFactory streamFactory, EFOLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory, AnalyticsIndexDAO analyticsIndexDAO, BaselineConditionsBuilder baselineConditionsBuilder) {
         this.streamFactory = streamFactory;
         this.efoParentsLookupService = efoParentsLookupService;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
@@ -61,7 +61,7 @@ public class BaselineAnalyticsIndexerService {
 
         ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId = SpeciesGrouper.buildEnsemblSpeciesGroupedByAssayGroupId(experiment);
         ImmutableSetMultimap<String, String> ontologyTermIdsByAssayAccession = expandOntologyTerms(experimentDesign.getAllOntologyTermIdsByAssayAccession());
-        ImmutableSetMultimap<String, String> conditionSearchTermsByAssayGroupId = buildConditionSearchTermsByAssayGroupId(experiment, ontologyTermIdsByAssayAccession);
+        ImmutableSetMultimap<String, String> conditionSearchTermsByAssayGroupId = buildAssayGroupIdToConditionsSearchTerms(experiment, ontologyTermIdsByAssayAccession);
 
         checkArgument(StringUtils.isNotBlank(defaultQueryFactorType));
 
@@ -99,8 +99,8 @@ public class BaselineAnalyticsIndexerService {
         return builder.build();
     }
 
-    private ImmutableSetMultimap<String, String> buildConditionSearchTermsByAssayGroupId(BaselineExperiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
-        Collection<Condition> conditions = baselineConditionsBuilder.buildProperties(experiment, ontologyTermIdsByAssayAccession);
+    private ImmutableSetMultimap<String, String> buildAssayGroupIdToConditionsSearchTerms(BaselineExperiment experiment, SetMultimap<String, String> AssayIdToOntologyAccessions) {
+        Collection<Condition> conditions = baselineConditionsBuilder.buildProperties(experiment, AssayIdToOntologyAccessions);
         ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
 
         for (Condition condition : conditions) {

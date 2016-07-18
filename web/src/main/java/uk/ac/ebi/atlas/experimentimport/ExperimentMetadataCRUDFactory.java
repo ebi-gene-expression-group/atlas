@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
+import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -46,7 +47,7 @@ public class ExperimentMetadataCRUDFactory {
     CacheConfiguration cacheConfiguration;
 
     @Inject
-    EFOParentsLookupService efoParentsLookupService;
+    EFOLookupService efoParentsLookupService;
 
     public ExperimentMetadataCRUD create(ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder, ExperimentDAO experimentDao, ConditionsIndexTrader conditionsIndexTrader) {
 

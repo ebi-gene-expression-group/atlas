@@ -14,7 +14,7 @@ import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
+import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.ProteomicsBaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
@@ -31,7 +31,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -44,7 +43,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     BaselineAnalyticsDocumentStreamFactory streamFactory;
 
     @Inject
-    EFOParentsLookupService efoParentsLookupService;
+    EFOLookupService efoLookupService;
 
     @Inject
     BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
@@ -67,7 +66,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     public void before() {
         MockitoAnnotations.initMocks(this);
         given(analyticsIndexDAOMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), anyInt())).willAnswer(storeDocuments());
-        subject = new BaselineAnalyticsIndexerService(streamFactory, efoParentsLookupService, baselineAnalyticsInputStreamFactory, proteomicsBaselineAnalyticsInputStreamFactory, analyticsIndexDAOMock, baselineConditionsBuilder);
+        subject = new BaselineAnalyticsIndexerService(streamFactory, efoLookupService, baselineAnalyticsInputStreamFactory, proteomicsBaselineAnalyticsInputStreamFactory, analyticsIndexDAOMock, baselineConditionsBuilder);
     }
 
     private Answer<Integer> storeDocuments() {
