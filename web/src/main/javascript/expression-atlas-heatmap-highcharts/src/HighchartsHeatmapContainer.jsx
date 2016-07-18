@@ -186,6 +186,56 @@ var Container = React.createClass({
         }
     },
 
+    handleAjaxFailure: function (jqXHR, textStatus, errorThrown) {
+      if (this.props.fail) {
+          this.props.fail(jqXHR, textStatus, errorThrown);
+      } else if (textStatus === "parsererror") {
+          $(this.refs.this.getDOMNode()).html("<div class='gxaError'>Could not parse JSON response</div>");
+      } else {
+          $(this.refs.this.getDOMNode()).html(jqXHR.responseText);
+      }
+      //git this.setState({ajaxCompleted: true});
+    },
+
+    onAjaxDone: function (data, textStatus, jqXHR){
+      if(! this.isMounted()){
+        this.handleAjaxFailure(jqXHR, textStatus, "DOM element not mounted!");
+      } else if (data.hasOwnProperty('error')) {
+        this.handleAjaxFailure(jqXHR, textStatus, data.error);
+      } else {
+        this.onAjaxSuccessful(data);
+      }
+    },
+
+    onAjaxSuccessful: function(data){
+      var config = {
+        geneQuery: data.config.geneQuery,
+        atlasBaseURL: this.props.atlasBaseURL,
+        isExperimentPage: this.props.sourceURL.indexOf("/json/experiments/") >-1,
+        isMultiExperiment: this.props.isMultiExperiment,
+        isReferenceExperiment: !this.props.isMultiExperiment && this.props.sourceURL.indexOf("/json/experiments/") === -1,
+        isDifferential: this.props.isDifferential
+      };
+      //See in heatmap-data.jsp which thirteen properties this config is populated with.
+      for(var key in data.config){
+        if(data.config.hasOwnProperty(key)){
+          config[key]=data.config[key];
+        }
+      }
+
+      this.setState({
+          ajaxCompleted: true,
+          heatmapConfig: config,
+          columnHeaders: data.columnHeaders,
+          profiles: data.profiles,
+          jsonCoexpressions : data.jsonCoexpressions,
+          geneSetProfiles: data.geneSetProfiles,
+          anatomogramData: data.anatomogram,
+          experimentData: data.experiment,
+          heatmapData: HeatmapData.get(data.profiles.rows, data.columnHeaders, config)
+      });
+    },
+
     componentDidMount: function() {
         var httpRequest = {
             url: this.props.sourceURL,
@@ -193,49 +243,7 @@ var Container = React.createClass({
             method: "GET"
         };
 
-        $.ajax(httpRequest).done(
-            function (data) {
-                if (this.isMounted()) {
-
-                    var config = {
-                      geneQuery: data.config.geneQuery,
-                      atlasBaseURL: this.props.atlasBaseURL,
-                      isExperimentPage: this.props.sourceURL.indexOf("/json/experiments/") >-1,
-                      isMultiExperiment: this.props.isMultiExperiment,
-                      isReferenceExperiment: !this.props.isMultiExperiment && this.props.sourceURL.indexOf("/json/experiments/") === -1,
-                      isDifferential: this.props.isDifferential
-                    };
-                    //See in heatmap-data.jsp which thirteen properties this config is populated with.
-                    for(var key in data.config){
-                      if(data.config.hasOwnProperty(key)){
-                        config[key]=data.config[key];
-                      }
-                    }
-
-                    this.setState({
-                        ajaxCompleted: true,
-                        heatmapConfig: config,
-                        columnHeaders: data.columnHeaders,
-                        profiles: data.profiles,
-                        jsonCoexpressions : data.jsonCoexpressions,
-                        geneSetProfiles: data.geneSetProfiles,
-                        anatomogramData: data.anatomogram,
-                        experimentData: data.experiment,
-                        heatmapData: HeatmapData.get(data.profiles.rows, data.columnHeaders, config)
-                    });
-                }
-            }.bind(this)
-        ).fail(
-            function (jqXHR, textStatus, errorThrown) {
-                if (this.props.fail) {
-                    this.props.fail(jqXHR, textStatus, errorThrown);
-                } else if (textStatus === "parsererror") {
-                    $(this.refs.this.getDOMNode()).html("<div class='gxaError'>Could not parse JSON response</div>");
-                } else {
-                    $(this.refs.this.getDOMNode()).html(jqXHR.responseText);
-                }
-            }.bind(this)
-        );
+        $.ajax(httpRequest).done(this.onAjaxDone).fail(this.handleAjaxFailure);
 
         if (!this.props.disableGoogleAnalytics) {
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
