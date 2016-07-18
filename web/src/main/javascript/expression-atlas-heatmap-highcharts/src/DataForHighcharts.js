@@ -159,7 +159,7 @@ var rankColumnsByExpressionInHighlightedSet = function(expressionsToSkip, expres
         function(el,ix){
           return el + r2[ix];
         });
-      })
+      },_.fill(Array(expressions.length), 0))
     .map(function(e){
       return (+!!e);
     })
