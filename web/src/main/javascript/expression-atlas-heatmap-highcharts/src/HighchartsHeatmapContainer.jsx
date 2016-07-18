@@ -90,28 +90,33 @@ var Container = React.createClass({
               }
 
               { this.state.ajaxCompleted ?
-                  <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
+                  this.state.error ?
+                    <div ref="gxaError">
+                        {this.state.error}
+                    </div>
+                  :
+                    <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
-                      <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
-                          { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
-                            ? <Anatomogram anatomogramData={this.state.anatomogramData}
-                                 expressedTissueColour={"gray"} hoveredTissueColour={"red"}
-                                 profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
-                            : null
-                          }
-                      </div>
+                        <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
+                            { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
+                              ? <Anatomogram anatomogramData={this.state.anatomogramData}
+                                   expressedTissueColour={"gray"} hoveredTissueColour={"red"}
+                                   profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
+                              : null
+                            }
+                        </div>
 
-                      <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
-                          <HighchartsHeatmap
-                              profiles={this.state.profiles}
-                              heatmapConfig={this.state.heatmapConfig}
-                              anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-                              googleAnalyticsCallback={this.state.googleAnalyticsCallback}
-                              heatmapData={this.state.heatmapData}
-                              afterHeatmapRedrawn={this._attachListenersToLabels}
-                          />
-                      </div>
-                  </div>
+                        <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
+                            <HighchartsHeatmap
+                                profiles={this.state.profiles}
+                                heatmapConfig={this.state.heatmapConfig}
+                                anatomogramEventEmitter={this.props.anatomogramEventEmitter}
+                                googleAnalyticsCallback={this.state.googleAnalyticsCallback}
+                                heatmapData={this.state.heatmapData}
+                                afterHeatmapRedrawn={this._attachListenersToLabels}
+                            />
+                        </div>
+                    </div>
                   :
                   <div ref="loadingImagePlaceholder">
                       <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
@@ -172,6 +177,7 @@ var Container = React.createClass({
     getInitialState: function() {
         return {
             ajaxCompleted: false,
+            error: false,
             heatmapConfig: {},
             profiles: {
                 rows: [],
@@ -188,13 +194,16 @@ var Container = React.createClass({
 
     handleAjaxFailure: function (jqXHR, textStatus, errorThrown) {
       if (this.props.fail) {
-          this.props.fail(jqXHR, textStatus, errorThrown);
-      } else if (textStatus === "parsererror") {
-          $(this.refs.this.getDOMNode()).html("<div class='gxaError'>Could not parse JSON response</div>");
+        this.props.fail(jqXHR, textStatus, errorThrown);
       } else {
-          $(this.refs.this.getDOMNode()).html(jqXHR.responseText);
+        this.setState({
+          ajaxCompleted: true,
+          error:
+            textStatus === "parsererror"
+            ? "Could not parse JSON response"
+            : errorThrown
+        });
       }
-      //git this.setState({ajaxCompleted: true});
     },
 
     onAjaxDone: function (data, textStatus, jqXHR){
