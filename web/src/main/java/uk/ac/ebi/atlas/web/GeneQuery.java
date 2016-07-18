@@ -50,33 +50,12 @@ public abstract class GeneQuery implements Iterable<String> {
         return BioentityPropertyValueTokenizer.joinQuotingPhrases(terms());
     }
 
-    public GeneQuery extend(String term, String... termsToAppend){
-        ImmutableList.Builder<String> b = ImmutableList.builder();
-        for(String t: terms()) {
-            b.add(t);
-            if (t.equals(term)) {
-                b.add(termsToAppend);
-            }
-        }
-        return GeneQuery.create(b.build());
-    }
-
-    public GeneQuery subtract(Collection<String> termsToSubtract){
-        ImmutableList.Builder<String> b = ImmutableList.builder();
-        for(String t: terms()) {
-            if(!termsToSubtract.contains(t)){
-                b.add(t);
-            }
-        }
-        return GeneQuery.create(b.build());
-    }
-
     public String as1DNF() {
         return "\"" + StringUtils.join(terms(), "\" OR \"") + "\"";
     }
 
     public String description() {
-        return BioentityPropertyValueTokenizer.joinQuotingPhrases(terms());
+        return terms().isEmpty()? "default gene query": BioentityPropertyValueTokenizer.joinQuotingPhrases(terms());
     }
 
     public String asUrlQueryParameter() {
