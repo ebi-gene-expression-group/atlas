@@ -20,7 +20,6 @@
     "fancybox": "^3.0.0",
     "expression-atlas-heatmap": "file:../expression-atlas-heatmap",
     "expression-atlas-heatmap-highcharts": "file:../expression-atlas-heatmap-highcharts",
-    "expression-atlas-heatmap-highcharts-old": "file:../expression-atlas-heatmap-highcharts-old",
     "highcharts-more": "^0.1.2",
     "jQuery-ajaxTransport-XDomainRequest": "git+https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git",
     "jquery": "^2.2.1",

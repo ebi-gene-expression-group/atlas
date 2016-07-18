@@ -20,8 +20,7 @@ public class FastQCReportUtil {
     @Inject
     public FastQCReportUtil(@Value("#{configuration['rnaseq.mrna.fast.qc.path.template']}") String qcFilePathTemplate,
                             @Value("#{configuration['rnaseq.mrna.fast.mapping.qc.path.template']}") String mappingQCFilePathTemplate,
-                            @Value("#{configuration['rnaseq.mrna.fastqreport.path.template']}") String fastQCFilePathTemplate,
-                            ExperimentTrader experimentTrader) {
+                            @Value("#{configuration['rnaseq.mrna.fastqreport.path.template']}") String fastQCFilePathTemplate) {
         this.qcFilePathTemplate = qcFilePathTemplate;
         this.mappingQCFilePathTemplate = mappingQCFilePathTemplate;
         this.fastQCFilePathTemplate = fastQCFilePathTemplate;

@@ -21,7 +21,6 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -48,19 +47,13 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
     @Inject
     public RnaSeqExperimentPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
                                           RnaSeqProfilesHeatMap profilesHeatMap,
-                                          DownloadURLBuilder downloadURLBuilder,
                                           DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                           SpeciesKingdomTrader speciesKingdomTrader,
                                           TracksUtil tracksUtil,
                                           GseaPlotsBuilder gseaPlotsBuilder,
                                           ApplicationProperties applicationProperties) {
-        super(rnaSeqRequestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder,
+        super(rnaSeqRequestContextBuilder, profilesHeatMap, differentialProfilesViewModelBuilder,
                 speciesKingdomTrader, tracksUtil, gseaPlotsBuilder,applicationProperties);
-    }
-
-    @Override
-    protected void initExtraPageConfigurations(Model model, DifferentialRequestPreferences requestPreferences, DifferentialExperiment experiment) {
-        //No extra initalizations required
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})

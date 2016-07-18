@@ -25,10 +25,6 @@ import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
 import java.util.*;
 
 public class BaselineExperimentPageService {
@@ -166,7 +162,7 @@ public class BaselineExperimentPageService {
                 ? gson.toJson(viewModel)
                 : "";
     }
-
+    
     private String constructColumnHeaders(List<AssayGroupFactor> filteredAssayGroupFactors){
         return gson.toJson(AssayGroupFactorViewModel.createList(filteredAssayGroupFactors));
     }

@@ -90,7 +90,6 @@ public class QCReportController {
 
         String path = qcReportUtil.buildQCReportIndexHtmlPath(experimentAccession, arrayDesign);
         request.setAttribute("contentPath", FileSystems.getDefault().getPath(path));
-        extendModel(request, experiment);
 
         return "qc-template";
     }
@@ -106,14 +105,6 @@ public class QCReportController {
         request.setAttribute("experiment", experiment);
 
         model.addAllAttributes(experiment.getAttributes());
-    }
-
-    private void extendModel(HttpServletRequest request, MicroarrayExperiment experiment) {
-
-        SortedSet<String> arrayDesignNames = arrayDesignTrader.getArrayDesignNames(experiment.getArrayDesignAccessions());
-
-        request.setAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, arrayDesignNames);
-
     }
 
 }

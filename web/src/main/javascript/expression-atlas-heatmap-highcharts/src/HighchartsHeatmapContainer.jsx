@@ -90,28 +90,33 @@ var Container = React.createClass({
               }
 
               { this.state.ajaxCompleted ?
-                  <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
+                  this.state.error ?
+                    <div ref="gxaError">
+                        {this.state.error}
+                    </div>
+                  :
+                    <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
-                      <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
-                          { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
-                            ? <Anatomogram anatomogramData={this.state.anatomogramData}
-                                 expressedTissueColour={"gray"} hoveredTissueColour={"red"}
-                                 profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
-                            : null
-                          }
-                      </div>
+                        <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
+                            { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
+                              ? <Anatomogram anatomogramData={this.state.anatomogramData}
+                                   expressedTissueColour={"gray"} hoveredTissueColour={"red"}
+                                   profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
+                              : null
+                            }
+                        </div>
 
-                      <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
-                          <HighchartsHeatmap
-                              profiles={this.state.profiles}
-                              heatmapConfig={this.state.heatmapConfig}
-                              anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-                              googleAnalyticsCallback={this.state.googleAnalyticsCallback}
-                              heatmapData={this.state.heatmapData}
-                              afterHeatmapRedrawn={this._attachListenersToLabels}
-                          />
-                      </div>
-                  </div>
+                        <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
+                            <HighchartsHeatmap
+                                profiles={this.state.profiles}
+                                heatmapConfig={this.state.heatmapConfig}
+                                anatomogramEventEmitter={this.props.anatomogramEventEmitter}
+                                googleAnalyticsCallback={this.state.googleAnalyticsCallback}
+                                heatmapData={this.state.heatmapData}
+                                afterHeatmapRedrawn={this._attachListenersToLabels}
+                            />
+                        </div>
+                    </div>
                   :
                   <div ref="loadingImagePlaceholder">
                       <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
@@ -172,6 +177,7 @@ var Container = React.createClass({
     getInitialState: function() {
         return {
             ajaxCompleted: false,
+            error: false,
             heatmapConfig: {},
             profiles: {
                 rows: [],
@@ -186,6 +192,59 @@ var Container = React.createClass({
         }
     },
 
+    handleAjaxFailure: function (jqXHR, textStatus, errorThrown) {
+      if (this.props.fail) {
+        this.props.fail(jqXHR, textStatus, errorThrown);
+      } else {
+        this.setState({
+          ajaxCompleted: true,
+          error:
+            textStatus === "parsererror"
+            ? "Could not parse JSON response"
+            : errorThrown
+        });
+      }
+    },
+
+    onAjaxDone: function (data, textStatus, jqXHR){
+      if(! this.isMounted()){
+        this.handleAjaxFailure(jqXHR, textStatus, "DOM element not mounted!");
+      } else if (data.hasOwnProperty('error')) {
+        this.handleAjaxFailure(jqXHR, textStatus, data.error);
+      } else {
+        this.onAjaxSuccessful(data);
+      }
+    },
+
+    onAjaxSuccessful: function(data){
+      var config = {
+        geneQuery: data.config.geneQuery,
+        atlasBaseURL: this.props.atlasBaseURL,
+        isExperimentPage: this.props.sourceURL.indexOf("/json/experiments/") >-1,
+        isMultiExperiment: this.props.isMultiExperiment,
+        isReferenceExperiment: !this.props.isMultiExperiment && this.props.sourceURL.indexOf("/json/experiments/") === -1,
+        isDifferential: this.props.isDifferential
+      };
+      //See in heatmap-data.jsp which thirteen properties this config is populated with.
+      for(var key in data.config){
+        if(data.config.hasOwnProperty(key)){
+          config[key]=data.config[key];
+        }
+      }
+
+      this.setState({
+          ajaxCompleted: true,
+          heatmapConfig: config,
+          columnHeaders: data.columnHeaders,
+          profiles: data.profiles,
+          jsonCoexpressions : data.jsonCoexpressions,
+          geneSetProfiles: data.geneSetProfiles,
+          anatomogramData: data.anatomogram,
+          experimentData: data.experiment,
+          heatmapData: HeatmapData.get(data.profiles.rows, data.columnHeaders, config)
+      });
+    },
+
     componentDidMount: function() {
         var httpRequest = {
             url: this.props.sourceURL,
@@ -193,49 +252,7 @@ var Container = React.createClass({
             method: "GET"
         };
 
-        $.ajax(httpRequest).done(
-            function (data) {
-                if (this.isMounted()) {
-
-                    var config = {
-                      geneQuery: data.config.geneQuery,
-                      atlasBaseURL: this.props.atlasBaseURL,
-                      isExperimentPage: this.props.sourceURL.indexOf("/json/experiments/") >-1,
-                      isMultiExperiment: this.props.isMultiExperiment,
-                      isReferenceExperiment: !this.props.isMultiExperiment && this.props.sourceURL.indexOf("/json/experiments/") === -1,
-                      isDifferential: this.props.isDifferential
-                    };
-                    //See in heatmap-data.jsp which thirteen properties this config is populated with.
-                    for(var key in data.config){
-                      if(data.config.hasOwnProperty(key)){
-                        config[key]=data.config[key];
-                      }
-                    }
-
-                    this.setState({
-                        ajaxCompleted: true,
-                        heatmapConfig: config,
-                        columnHeaders: data.columnHeaders,
-                        profiles: data.profiles,
-                        jsonCoexpressions : data.jsonCoexpressions,
-                        geneSetProfiles: data.geneSetProfiles,
-                        anatomogramData: data.anatomogram,
-                        experimentData: data.experiment,
-                        heatmapData: HeatmapData.get(data.profiles.rows, data.columnHeaders, config)
-                    });
-                }
-            }.bind(this)
-        ).fail(
-            function (jqXHR, textStatus, errorThrown) {
-                if (this.props.fail) {
-                    this.props.fail(jqXHR, textStatus, errorThrown);
-                } else if (textStatus === "parsererror") {
-                    $(this.refs.this.getDOMNode()).html("<div class='gxaError'>Could not parse JSON response</div>");
-                } else {
-                    $(this.refs.this.getDOMNode()).html(jqXHR.responseText);
-                }
-            }.bind(this)
-        );
+        $.ajax(httpRequest).done(this.onAjaxDone).fail(this.handleAjaxFailure);
 
         if (!this.props.disableGoogleAnalytics) {
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

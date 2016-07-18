@@ -47,16 +47,6 @@ public class SpeciesKingdomTrader {
         return speciesEnsemblMap.get(Species.convertToEnsemblSpecies(species));
     }
 
-    public String getEnsemblDB(Set<String> species) {
-        for (String s : species) {
-            String ensemblDb = getEnsemblDB(s.toLowerCase());
-            if (ensemblDb != null) {
-                return ensemblDb;
-            }
-        }
-        return "";
-    }
-
     public Map<String, ?> getAttributesFor(String species) {
         Map<String, String> result = new HashMap<>();
         //required by autocomplete and heatmap

@@ -81,7 +81,6 @@ public class AnalyticsQueryBuilder {
         return this;
     }
 
-
     public AnalyticsQueryBuilder filterAboveDefaultCutoff() {
         solrQuery.addFilterQuery(BASELINE_ABOVE_CUTOFF + " OR " + DIFFERENTIAL_ABOVE_CUTOFF);
         return this;

@@ -15,7 +15,6 @@ import org.springframework.validation.support.BindingAwareModelMap;
 import uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -43,10 +42,8 @@ public class BaselineDesignPageControllerIT {
     private static final Set<String> runSet = Sets.newLinkedHashSet();
 
 
-    BaselineDesignPageController subject;
+    ExperimentDesignPageRequestHandler subject;
 
-    @Inject
-    DownloadURLBuilder downloadURLBuilder;
     @Inject
     ArrayDesignTrader arrayDesignTrader;
     @Inject
@@ -61,7 +58,7 @@ public class BaselineDesignPageControllerIT {
 
     @Before
     public void initSubject() throws Exception {
-        subject = new BaselineDesignPageController(downloadURLBuilder,arrayDesignTrader,experimentTrader,fastQCReportUtil);
+        subject = new ExperimentDesignPageRequestHandler(experimentTrader);
         requestMock = mock(HttpServletRequest.class);
         when(requestMock.getRequestURI()).thenReturn("/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design");
 
@@ -70,7 +67,7 @@ public class BaselineDesignPageControllerIT {
     @Test
     public void testExtractBaselineExperimentDesign() throws IOException {
         //given
-        subject.showRnaSeqExperimentDesign(EXPERIMENT_ACCESSION,"",model, requestMock);
+        subject.handleRequest(EXPERIMENT_ACCESSION,model,requestMock,"","");
 
         Gson gson = new Gson();
         runSet.addAll(RUNS);

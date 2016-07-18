@@ -16,12 +16,10 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
-import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -29,16 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
-import java.util.SortedSet;
 
 @Controller
 @Scope("request")
 public class MicroarrayExperimentPageController extends DifferentialExperimentPageController<MicroarrayExperiment, MicroarrayRequestPreferences, MicroarrayProfile> {
-
-    private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
-    private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
-
-    private ArrayDesignTrader arrayDesignTrader;
 
     private ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
 
@@ -53,14 +45,11 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     @Inject
     public MicroarrayExperimentPageController(MicroarrayRequestContextBuilder requestContextBuilder,
                                               MicroarrayProfilesHeatMap profilesHeatMap,
-                                              DownloadURLBuilder downloadURLBuilder,
-                                              ArrayDesignTrader arrayDesignTrader,
                                               DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesKingdomTrader speciesKingdomTrader,
                                               TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder, ApplicationProperties applicationProperties) {
-        super(requestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder,
+        super(requestContextBuilder, profilesHeatMap, differentialProfilesViewModelBuilder,
               speciesKingdomTrader, tracksUtil, gseaPlotsBuilder,applicationProperties);
 
-        this.arrayDesignTrader = arrayDesignTrader;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
@@ -99,16 +88,4 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }
-
-
-    //needed in experiment-header.jsp
-    @Override
-    protected void initExtraPageConfigurations(Model model, MicroarrayRequestPreferences requestPreferences, MicroarrayExperiment experiment) {
-        SortedSet<String> arrayDesignNames = arrayDesignTrader.getArrayDesignNames(experiment.getArrayDesignAccessions());
-        model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, arrayDesignNames);
-
-        //For showing the QC REPORTS button in the header
-        model.addAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
-    }
-
 }

@@ -20,7 +20,7 @@ require("./gxaFeedback.css");
 var FeedbackPersistence = function createFeedbackComponent(FeedbackUIComponent){
   return (
     React.createClass({
-      displayName: 'AtlasGXAFeedbackForm',
+      displayName: 'ExpressionAtlasFeedbackForm',
       mixins: [LocalStorageMixin],
 
       propTypes: {
@@ -48,7 +48,7 @@ var FeedbackPersistence = function createFeedbackComponent(FeedbackUIComponent){
 
       _complete : function (userResponse, optionalUserComment) {
         this.setState({show: false});
-        this.props.collectionCallback.apply(this, arguments);
+        this.props.collectionCallback(userResponse, new Date().toISOString()+(optionalUserComment||""));
       },
 
 

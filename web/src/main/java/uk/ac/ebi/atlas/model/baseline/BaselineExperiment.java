@@ -42,4 +42,8 @@ public class BaselineExperiment extends Experiment {
         return getExperimentalFactors().getDefaultQueryFactorType().equals("ORGANISM_PART");
     }
 
+    @Override
+    protected Set<String> getAnalysedRowsAccessions() {
+        return getExperimentRunAccessions();
+    }
 }

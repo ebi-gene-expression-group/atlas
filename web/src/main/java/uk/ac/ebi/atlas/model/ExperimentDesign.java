@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.*;
+import com.google.gson.Gson;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
@@ -25,6 +26,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  */
 public class ExperimentDesign implements Serializable {
+
+    private static final Gson gson = new Gson();
 
     private SortedSet<String> sampleHeaders = Sets.newTreeSet();
     private SortedSet<String> factorHeaders = Sets.newTreeSet();
@@ -272,5 +275,19 @@ public class ExperimentDesign implements Serializable {
         }
 
         return "";
+    }
+
+    public Map<String, ?> getAttributes(){
+        Map<String, Object> result = new HashMap<>();
+
+        // does the serialisation to JSON
+        // add table data to model
+        List<String> assayHeaders = getAssayHeaders();
+        result.put("assayHeaders", gson.toJson(assayHeaders));
+        result.put("sampleHeaders", gson.toJson(getSampleHeaders()));
+        result.put("factorHeaders", gson.toJson(getFactorHeaders()));
+        result.put("tableData", gson.toJson(asTableData()));
+
+        return result;
     }
 }

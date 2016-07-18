@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.atlas.experimentpage.ExperimentDispatcher;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
@@ -38,7 +37,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
     private final SpeciesKingdomTrader speciesKingdomTrader;
     private final GseaPlotsBuilder gseaPlotsBuilder;
-    private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
     private DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap;
     private TracksUtil tracksUtil;
@@ -51,12 +49,11 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder
                                                            differentialRequestContextBuilder,
                                                    DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap,
-                                                   DownloadURLBuilder downloadURLBuilder, DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
+                                                   DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                                    SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil,
-                                                   GseaPlotsBuilder gseaPlotsBuilder,ApplicationProperties applicationProperties) {
+                                                   GseaPlotsBuilder gseaPlotsBuilder, ApplicationProperties applicationProperties) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.profilesHeatMap = profilesHeatMap;
-        this.downloadURLBuilder = downloadURLBuilder;
         this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
         this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
@@ -76,6 +73,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
         model.addAttribute("queryFactorName", "Comparison");
         model.addAttribute("allQueryFactors", experiment.getContrasts());
+        model.addAllAttributes(experiment.getAttributes());
         model.addAllAttributes(experiment.getDifferentialAttributes());
     }
 
@@ -86,6 +84,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         Set<Contrast> contrasts = experiment.getContrasts();
         model.addAttribute("queryFactorName", "Comparison");
         model.addAttribute("geneQuery", requestPreferences.getGeneQuery());
+        model.addAllAttributes(experiment.getAttributes());
         model.addAllAttributes(experiment.getDifferentialAttributes());
         model.addAllAttributes(speciesKingdomTrader.getAttributesFor(species));
 
@@ -105,7 +104,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
                     model.addAttribute("jsonProfiles", gson.toJson(differentialProfilesViewModelBuilder.build
                             (differentialProfiles, contrasts)));
                 }
-                model.addAllAttributes(downloadURLBuilder.dataDownloadUrls(request.getRequestURI()));
+                model.addAllAttributes(new DownloadURLBuilder(experiment.getAccession()).dataDownloadUrls(request.getRequestURI()));
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery().asSolr1DNF() + "'"));
@@ -119,11 +118,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         if (experiment.getContrasts().size() == 1) {
             requestPreferences.setQueryFactorValues(experiment.getContrastIds());
         }
-        initExtraPageConfigurations(model, requestPreferences, experiment);
-
     }
-
-    protected abstract void initExtraPageConfigurations(Model model, K requestPreferences, T experiment);
 
     private DifferentialRequestContext initRequestContext(T experiment, DifferentialRequestPreferences requestPreferences) {
         return differentialRequestContextBuilder.forExperiment(experiment)

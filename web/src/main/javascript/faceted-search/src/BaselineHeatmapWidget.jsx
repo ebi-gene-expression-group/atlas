@@ -8,8 +8,6 @@ var ReactDOM = require('react-dom');
 //*------------------------------------------------------------------*
 
 var highchartsHeatmapRenderer = require('expression-atlas-heatmap-highcharts');
-var highchartsHeatmapRendererOld = require('expression-atlas-heatmap-highcharts-old');
-
 
 //*------------------------------------------------------------------*
 
@@ -25,7 +23,7 @@ var BaselineHeatmapWidget = React.createClass({
     },
 
     _renderHeatmap: function() {
-      (window.location.href.indexOf("oldHeatmap") >-1 ? highchartsHeatmapRendererOld : highchartsHeatmapRenderer).render({
+      highchartsHeatmapRenderer.render({
           atlasHost: this.props.atlasHost,
           params: "geneQuery=" + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
           isMultiExperiment: true,

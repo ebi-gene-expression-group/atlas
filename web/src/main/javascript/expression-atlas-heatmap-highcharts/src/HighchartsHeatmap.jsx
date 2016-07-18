@@ -11,8 +11,7 @@ require('highcharts-heatmap')(Highcharts);
 //*------------------------------------------------------------------*
 
 require('./HighchartsHeatmap.css');
-var DropdownButton = require('react-bootstrap/lib/DropdownButton');
-var MenuItem = require('react-bootstrap/lib/MenuItem');
+var Button = require('react-bootstrap/lib/Button');
 var DownloadProfilesButton = require('download-profiles-button');
 
 var EventEmitter = require('events');
@@ -179,7 +178,7 @@ var HeatmapContainer = React.createClass({
     render: function () {
         var marginRight = 60;
         return (
-            <div style={{"minHeight":"400px"}}>
+            <div>
                 <HeatmapOptions
                     marginRight={marginRight}
                     introductoryMessage={this._introductoryMessage()}
@@ -197,6 +196,7 @@ var HeatmapContainer = React.createClass({
                     }}
                     googleAnalyticsCallback={this.props.googleAnalyticsCallback}
                     showUsageMessage={this.props.heatmapData.xAxisCategories.length > 100} />
+
                 <HighchartsHeatmap
                     marginRight={marginRight}
                     anatomogramEventEmitter={this.props.anatomogramEventEmitter}
@@ -579,24 +579,28 @@ var propsForOrderingDropdown = {
 var OrderingDropdown = React.createClass({
     propTypes: propsForOrderingDropdown,
 
+    getInitialState: function () {
+        return {selected: this.props.current}
+    },
+
+    handleChange: function (e) {
+        this.state.selected = e.target.value;
+        this.props.onSelect(this.state.selected);
+        this.forceUpdate();
+    },
+
     render: function () {
+
+        var createOption = function (option, key) {
+            return <option key={key} value={option}>{option}</option>;
+        };
+
         return (
-            <div className="btn-group">
-                <DropdownButton bsStyle={"primary"}
-                                bsSize={"xs"}
-                                title={"Order by"}
-                                onSelect={this.props.onSelect}
-                                id={"ordering-dropdown"}>
-                    {this.props.available.map(
-                        function(option){
-                            return (
-                                  <MenuItem key={option}
-                                            eventKey={option}
-                                            active={option === this.props.current}>
-                                            {option}
-                                 </MenuItem>);
-                    }.bind(this))}
-                </DropdownButton>
+            <div style={{float: "left", marginRight: "10px"}}>
+                <span>Sort by: </span>
+                <select onChange={this.handleChange} value={this.state.selected}>
+                    {this.props.available.map(createOption)}
+                </select>
             </div>
         );
     }
@@ -617,8 +621,9 @@ var HeatmapOptions = React.createClass({
                 <div style={{display: 'inline-block', verticalAlign: 'top'}}>
                   {this.props.introductoryMessage}
                 </div>
-                <div style={{display: "inline-block", verticalAlign: "top", marginRight: this.props.marginRight}}>
-                <div className="btn-group">
+                <div style={{display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight}}>
+                    
+                <div>
                     { this.props.orderings.available.length > 1
                         ?
                           <OrderingDropdown
@@ -637,6 +642,7 @@ var HeatmapOptions = React.createClass({
                                                     this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')
                                                 }.bind(this)}/>
                 </div>
+
                 </div>
                     {this.props.showUsageMessage
                       ?
