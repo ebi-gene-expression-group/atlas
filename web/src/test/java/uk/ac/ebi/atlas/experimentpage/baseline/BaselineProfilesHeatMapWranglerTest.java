@@ -19,7 +19,7 @@ import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuil
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import java.util.*;
 
@@ -63,7 +63,7 @@ public class BaselineProfilesHeatMapWranglerTest {
         when(experiment.getExperimentalFactors()).thenReturn(experimentalFactors);
 
         baselineRequestPreferences = new BaselineRequestPreferences();
-        baselineRequestPreferences.setGeneQuery(GeneQuery.create(GENE_WE_ASK_FOR));
+        baselineRequestPreferences.setGeneQuery(SemanticQuery.create(GENE_WE_ASK_FOR));
 
         TreeSet<Factor> ts = new TreeSet<>();
         ts.add(mock(Factor.class));

@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.web;
 
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 public class BaselineRequestPreferences extends ExperimentPageRequestPreferences{
@@ -12,8 +12,8 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
     private static final String DEFAULT_GENE_QUERY_CATEGORY = "gene_biotype";
 
     @Override
-    protected GeneQuery getDefaultGeneQuery() {
-        return GeneQuery.create(SemanticQueryTerm.create(DEFAULT_GENE_QUERY_VALUE, DEFAULT_GENE_QUERY_CATEGORY));
+    protected SemanticQuery getDefaultGeneQuery() {
+        return SemanticQuery.create(SemanticQueryTerm.create(DEFAULT_GENE_QUERY_VALUE, DEFAULT_GENE_QUERY_CATEGORY));
     }
 
     @Override

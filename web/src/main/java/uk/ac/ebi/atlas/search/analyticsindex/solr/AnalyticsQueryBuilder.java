@@ -4,7 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Named;
 
@@ -27,7 +27,7 @@ public class AnalyticsQueryBuilder {
     private static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
     private static final String SPECIES_FIELD = "species";
 
-    private GeneQuery geneQuery = GeneQuery.create();
+    private SemanticQuery geneQuery = SemanticQuery.create();
     private ArrayList<String> bioentityIdentifierTerms = new ArrayList<>();
     private ArrayList<String> speciesTerms = new ArrayList<>();
 
@@ -60,8 +60,8 @@ public class AnalyticsQueryBuilder {
         return this;
     }
 
-    public AnalyticsQueryBuilder queryIdentifierSearch(GeneQuery geneQuery) {
-        this.geneQuery = GeneQuery.create(geneQuery.terms());
+    public AnalyticsQueryBuilder queryIdentifierSearch(SemanticQuery geneQuery) {
+        this.geneQuery = SemanticQuery.create(geneQuery.terms());
         return this;
     }
 

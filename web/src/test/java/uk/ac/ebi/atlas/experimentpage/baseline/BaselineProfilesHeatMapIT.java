@@ -17,7 +17,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -82,7 +82,7 @@ public class BaselineProfilesHeatMapIT {
     }
 
     private void setGeneQuery(String geneQueryString) {
-        requestPreferences.setGeneQuery(GeneQuery.create(geneQueryString));
+        requestPreferences.setGeneQuery(SemanticQuery.create(geneQueryString));
     }
 
     private void setNotSpecific() {

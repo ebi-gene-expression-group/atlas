@@ -34,8 +34,8 @@
     <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
         <property name="customEditors">
             <map>
-                <entry key="uk.ac.ebi.atlas.search.GeneQuery">
-                    <bean class="uk.ac.ebi.atlas.search.GeneQueryPropertyEditor">
+                <entry key="uk.ac.ebi.atlas.search.SemanticQuery">
+                    <bean class="uk.ac.ebi.atlas.search.SemanticQueryPropertyEditor">
                     </bean>
                 </entry>
             </map>

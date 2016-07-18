@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,7 +29,7 @@ public class MicroarrayRequestContextBuilderTest {
     @Before
     public void setUp() throws Exception {
         when(preferencesMock.getArrayDesignAccession()).thenReturn(ACCESSION);
-        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.create());
+        when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
         when(experimentMock.getSpecies()).thenReturn(SPECIES);
         subject = new MicroarrayRequestContextBuilder(new MicroarrayRequestContext());
     }

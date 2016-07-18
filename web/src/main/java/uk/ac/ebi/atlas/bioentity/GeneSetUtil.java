@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.bioentity;
 
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import java.util.regex.Pattern;
@@ -47,7 +47,7 @@ public final class GeneSetUtil {
         return source.equalsIgnoreCase(GO_CATEGORY) || source.equalsIgnoreCase(PO_CATEGORY) || source.equalsIgnoreCase(REACTOME_CATEGORY) || source.equalsIgnoreCase(INTERPRO_CATEGORY);
     }
 
-    public static boolean isGeneSetCategoryOrMatchesGeneSetAccession(GeneQuery geneQuery) {
+    public static boolean isGeneSetCategoryOrMatchesGeneSetAccession(SemanticQuery geneQuery) {
         for (SemanticQueryTerm term : geneQuery) {
             if (term.hasNoCategory()) {
                 if (!matchesGeneSetAccession(term.value())) {

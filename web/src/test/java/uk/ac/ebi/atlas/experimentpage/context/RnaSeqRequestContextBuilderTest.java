@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -29,7 +29,7 @@ public class RnaSeqRequestContextBuilderTest {
     @Before
     public void setUp() throws Exception {
         when(experimentMock.getSpecies()).thenReturn(SPECIES);
-        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.create());
+        when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
         subject = new RnaSeqRequestContextBuilder(new RnaSeqRequestContext());
     }
 

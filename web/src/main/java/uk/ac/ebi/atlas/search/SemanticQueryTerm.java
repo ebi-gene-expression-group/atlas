@@ -1,7 +1,9 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.auto.value.AutoValue;
-import org.apache.commons.lang3.StringUtils;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @AutoValue
 public abstract class SemanticQueryTerm {
@@ -17,11 +19,11 @@ public abstract class SemanticQueryTerm {
     }
 
     public boolean hasNoCategory() {
-        return StringUtils.isBlank(category());
+        return isBlank(category());
     }
 
     public boolean hasValue() {
-        return !StringUtils.isBlank(value());
+        return isNotBlank(value());
     }
 
     public String description() {

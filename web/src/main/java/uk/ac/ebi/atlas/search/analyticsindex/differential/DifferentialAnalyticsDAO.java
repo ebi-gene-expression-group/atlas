@@ -4,7 +4,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Named;
 import java.io.UnsupportedEncodingException;
@@ -12,7 +12,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static uk.ac.ebi.atlas.utils.ResourceUtils.readPlainTextResource;
 
 @Named
@@ -38,19 +38,15 @@ public abstract class DifferentialAnalyticsDAO {
         this.differentialGeneFacetsQuery = "&json.facet=" + encodeQueryParam(readPlainTextResource(differentialFacetsQueryJSON).replaceAll("\\s+",""));
     }
 
-    protected String buildSolrQuery(GeneQuery geneQuery, String searchField) {
-        return buildSolrQuery(geneQuery, searchField, "");
-    }
-
-    protected String buildSolrQuery(GeneQuery geneQuery, String searchField, String species) {
+    protected String buildSolrQuery(SemanticQuery geneQuery, String searchField, String species) {
         StringBuilder stringBuilder = new StringBuilder();
-        if (!geneQuery.isEmpty()) {
+        if (geneQuery.isNotEmpty()) {
             stringBuilder.append(String.format("%s:(%s)", searchField, geneQuery.asSolr1DNF()));
         }
-        if (!geneQuery.isEmpty() && !isBlank(species)) {
+        if (geneQuery.isNotEmpty() && isNotBlank(species)) {
             stringBuilder.append(" AND ");
         }
-        if (!isBlank(species)) {
+        if (isNotBlank(species)) {
             stringBuilder.append(String.format("%s:\"%s\"", SPECIES_FIELD, species));
         }
 

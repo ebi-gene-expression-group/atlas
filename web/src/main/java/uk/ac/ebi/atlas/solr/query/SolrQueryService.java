@@ -13,10 +13,9 @@ import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.search.ConditionQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
-import uk.ac.ebi.atlas.search.GeneQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import javax.inject.Inject;
@@ -110,7 +109,7 @@ public class SolrQueryService {
         return expandedIdentifiers;
     }
 
-    private Set<String> findMatureRNAIds(GeneQuery geneQuery) {
+    private Set<String> findMatureRNAIds(SemanticQuery geneQuery) {
         Set<String> expandedIdentifiers = Sets.newHashSet();
 
         for (SemanticQueryTerm queryTerm : geneQuery) {
@@ -139,7 +138,7 @@ public class SolrQueryService {
 
     }
 
-    private GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(GeneQuery geneQuery, String species) {
+    private GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(SemanticQuery geneQuery, String species) {
 
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
@@ -178,7 +177,7 @@ public class SolrQueryService {
         return Optional.of(geneIds);
     }
 
-    public Optional<Set<String>> expandGeneQueryIntoGeneIds(GeneQuery geneQuery, ConditionQuery conditionQuery, String species) {
+    public Optional<Set<String>> expandGeneQueryIntoGeneIds(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         if (geneQuery.isEmpty()) {
             return Optional.absent();
         }
@@ -207,8 +206,8 @@ public class SolrQueryService {
         return fetchGeneIds(geneQuery, Species.convertToEnsemblSpecies(species));
     }
 
-    Set<String> findGeneIdsOrSets(GeneQuery geneQuery, String species) {
-        checkArgument(!geneQuery.isEmpty(), "Please specify a gene query.");
+    private Set<String> findGeneIdsOrSets(SemanticQuery geneQuery, String species) {
+        checkArgument(geneQuery.isNotEmpty(), "Please specify a gene query.");
         return fetchGeneIds(geneQuery, Species.convertToEnsemblSpecies(species));
     }
 
@@ -230,7 +229,7 @@ public class SolrQueryService {
         return geneIds;
     }
 
-    Set<String> fetchGeneIds(SemanticQueryTerm queryTerm, String species) {
+    private Set<String> fetchGeneIds(SemanticQueryTerm queryTerm, String species) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -248,7 +247,7 @@ public class SolrQueryService {
         return geneIds;
     }
 
-    Set<String> fetchGeneIds(GeneQuery geneQuery, String species) {
+    private Set<String> fetchGeneIds(SemanticQuery geneQuery, String species) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -271,7 +270,7 @@ public class SolrQueryService {
         return fetchResponseBasedOnRequestContext(requestContext.getGeneQuery(), species);
     }
 
-    public GeneQueryResponse fetchResponseBasedOnRequestContext(GeneQuery geneQuery, String species)
+    public GeneQueryResponse fetchResponseBasedOnRequestContext(SemanticQuery geneQuery, String species)
             throws GenesNotFoundException {
 
         if (geneQuery.isEmpty()) {

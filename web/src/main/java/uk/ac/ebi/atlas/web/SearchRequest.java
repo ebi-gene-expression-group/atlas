@@ -1,20 +1,20 @@
 package uk.ac.ebi.atlas.web;
 
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 public class SearchRequest {
 
-    private GeneQuery geneQuery = getDefaultGeneQuery();
+    private SemanticQuery geneQuery = getDefaultGeneQuery();
 
-    protected GeneQuery getDefaultGeneQuery() {
-        return GeneQuery.create();
+    protected SemanticQuery getDefaultGeneQuery() {
+        return SemanticQuery.create();
     }
 
-    public GeneQuery getGeneQuery() {
+    public SemanticQuery getGeneQuery() {
         return this.geneQuery;
     }
 
-    public void setGeneQuery(GeneQuery geneQuery) {
+    public void setGeneQuery(SemanticQuery geneQuery) {
         this.geneQuery = geneQuery;
     }
 

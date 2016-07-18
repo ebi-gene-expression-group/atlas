@@ -25,7 +25,7 @@ import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesTSVWriter;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
@@ -356,7 +356,7 @@ public class MicroarrayProfilesWriterIT {
     }
 
     private void setGeneQuery(String geneQuery) {
-        requestPreferences.setGeneQuery(GeneQuery.create(geneQuery));
+        requestPreferences.setGeneQuery(SemanticQuery.create(geneQuery));
     }
 
     private void setNotSpecific() {

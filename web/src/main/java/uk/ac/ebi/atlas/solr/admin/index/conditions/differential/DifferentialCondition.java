@@ -11,7 +11,7 @@ public class DifferentialCondition extends Condition {
     @Field("contrast_id")
     private String contrastId;
 
-    //Required by solr
+    // No-arg constructor required by Solr to instantiate document beans
     public DifferentialCondition() {
     }
 

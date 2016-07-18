@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,21 +22,21 @@ public class DifferentialAnalyticsSearchService {
         this.differentialResultsReader = differentialResultsReader;
     }
 
-    public String fetchDifferentialFacetsForSearch(GeneQuery geneQuery) {
+    public String fetchDifferentialFacetsForSearch(SemanticQuery geneQuery) {
         return fetchDifferentialFacetsForSearch(geneQuery, "");
     }
 
-    public String fetchDifferentialFacetsForSearch(GeneQuery geneQuery, String species) {
+    public String fetchDifferentialFacetsForSearch(SemanticQuery geneQuery, String species) {
         String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForSearch(geneQuery, species);
         return differentialFacetsReader.generateFacetsTreeJson(jsonResponse);
     }
 
 
-    public String fetchDifferentialResultsForSearch(GeneQuery geneQuery) {
+    public String fetchDifferentialResultsForSearch(SemanticQuery geneQuery) {
         return fetchDifferentialResultsForSearch(geneQuery, "");
     }
 
-    public String fetchDifferentialResultsForSearch(GeneQuery geneQuery, String species) {
+    public String fetchDifferentialResultsForSearch(SemanticQuery geneQuery, String species) {
         String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForSearch(geneQuery, species);
         return differentialResultsReader.extractResultsAsJson(differentialResults);
     }

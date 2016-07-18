@@ -7,11 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.search.ConditionQuery;
-import uk.ac.ebi.atlas.search.EFO.ConditionSearchEFOExpander;
 import uk.ac.ebi.atlas.search.QueryDescription;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.utils.VisitorException;
-import uk.ac.ebi.atlas.search.GeneQuery;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -27,22 +25,20 @@ public class BioentitiesSearchDifferentialDownloadController {
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private DiffAnalyticsTSVWriter tsvWriter;
-    private ConditionSearchEFOExpander efoExpander;
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMdd-HHmmss");
 
 
     @Inject
-    public BioentitiesSearchDifferentialDownloadController(DiffAnalyticsSearchService diffAnalyticsSearchService, DiffAnalyticsTSVWriter tsvWriter, ConditionSearchEFOExpander efoExpander) {
+    public BioentitiesSearchDifferentialDownloadController(DiffAnalyticsSearchService diffAnalyticsSearchService, DiffAnalyticsTSVWriter tsvWriter) {
         this.diffAnalyticsSearchService = diffAnalyticsSearchService;
         this.tsvWriter = tsvWriter;
-        this.efoExpander = efoExpander;
     }
 
 
     @RequestMapping(value = "/query.tsv")
-    public void downloadGeneQueryDifferentialExpressions(@RequestParam(value = "geneQuery", required = false, defaultValue = "[]") GeneQuery geneQuery,
-                                                         @RequestParam(value = "conditionQuery", required = false, defaultValue = "") ConditionQuery conditionQuery,
+    public void downloadGeneQueryDifferentialExpressions(@RequestParam(value = "geneQuery", required = false, defaultValue = "[]") SemanticQuery geneQuery,
+                                                         @RequestParam(value = "conditionQuery", required = false, defaultValue = "[]") SemanticQuery conditionQuery,
                                                          @RequestParam(value = "organism", required = false, defaultValue = "") String species,
                                                          HttpServletResponse response) throws IOException {
         LOGGER.info("downloadGeneQueryDifferentialExpressions for {}", QueryDescription.getRaw(geneQuery, conditionQuery, species));
@@ -54,8 +50,8 @@ public class BioentitiesSearchDifferentialDownloadController {
     @RequestMapping(value = {"/genes/{identifier:.*}.tsv", "/genesets/{identifier:.*}.tsv"})
     public void downloadGeneDifferentialExpressions(@PathVariable String identifier, HttpServletResponse response) throws IOException {
 
-        GeneQuery geneQuery = GeneQuery.create(identifier);
-        ConditionQuery emptyConditionQuery = ConditionQuery.create("");
+        SemanticQuery geneQuery = SemanticQuery.create(identifier);
+        SemanticQuery emptyConditionQuery = SemanticQuery.create("");
         String noSpecies = "";
 
         LOGGER.info("downloadGeneDifferentialExpressions for {}", QueryDescription.getRaw(geneQuery, emptyConditionQuery, noSpecies));
@@ -64,7 +60,7 @@ public class BioentitiesSearchDifferentialDownloadController {
     }
 
 
-    private void downloadExpressions(HttpServletResponse response, GeneQuery geneQuery, ConditionQuery conditionQuery, String species) throws IOException {
+    private void downloadExpressions(HttpServletResponse response, SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) throws IOException {
 
         if (geneQuery.size() > 1) {
             setDownloadHeaders(response, "expression_atlas-differential_results-" + dateFormat.format(new Date()) + ".tsv");
@@ -76,7 +72,9 @@ public class BioentitiesSearchDifferentialDownloadController {
             writer.setResponseWriter(response.getWriter());
             writer.writeHeader(geneQuery, conditionQuery, species);
 
-            ConditionQuery expandedConditionQuery = efoExpander.addEfoAccessions(conditionQuery);
+//            SemanticQuery expandedConditionQuery = efoExpander.addEfoAccessions(conditionQuery);
+            SemanticQuery expandedConditionQuery = conditionQuery;
+
             //String condition = requestParameters.getConditionQuery().asString();
 
             int count = diffAnalyticsSearchService.visitEachExpression(geneQuery, expandedConditionQuery, species, writer);

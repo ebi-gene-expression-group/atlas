@@ -1,40 +1,40 @@
 package uk.ac.ebi.atlas.search;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public class QueryDescription {
-    public static String get(GeneQuery geneQuery, ConditionQuery conditionQuery, String species) {
+    public static String get(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        if (!geneQuery.isEmpty()) {
+        if (geneQuery.isNotEmpty()) {
             stringBuilder.append(geneQuery.toJson());
         }
 
-        if (!geneQuery.isEmpty() && !conditionQuery.isEmpty()) {
+        if (geneQuery.isNotEmpty() && conditionQuery.isNotEmpty()) {
             stringBuilder.append(" OR ");
         }
 
-        if (!conditionQuery.isEmpty()) {
-            stringBuilder.append(conditionQuery.asString());
+        if (conditionQuery.isNotEmpty()) {
+            stringBuilder.append(conditionQuery.toJson());
         }
 
-        if (!geneQuery.isEmpty() && !conditionQuery.isEmpty() && !isBlank(species)) {
+        if (geneQuery.isNotEmpty() && conditionQuery.isNotEmpty() && isNotBlank(species)) {
             stringBuilder.insert(0, "(");
             stringBuilder.append(") AND ");
         }
 
-        if (!isBlank(species)) {
+        if (isNotBlank(species)) {
             stringBuilder.append(species);
         }
 
         return stringBuilder.toString();
     }
 
-    public static String getRaw(GeneQuery geneQuery, ConditionQuery conditionQuery, String species) {
+    public static String getRaw(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("geneQuery = ").append(geneQuery.toJson()).append(", ");
-        stringBuilder.append("conditionQuery = ").append(conditionQuery.asString()).append(", ");
+        stringBuilder.append("conditionQuery = ").append(conditionQuery.toJson()).append(", ");
         stringBuilder.append("species = ").append(species);
 
         return stringBuilder.toString();

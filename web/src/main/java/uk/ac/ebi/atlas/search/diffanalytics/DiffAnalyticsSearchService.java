@@ -5,13 +5,12 @@ import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.search.ConditionQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import uk.ac.ebi.atlas.utils.CountingVisitor;
 import uk.ac.ebi.atlas.utils.Visitor;
-import uk.ac.ebi.atlas.search.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,9 +37,9 @@ public class DiffAnalyticsSearchService {
     }
 
 
-    public int visitEachExpression(GeneQuery geneQuery, ConditionQuery conditionQuery, String specie, Visitor<DiffAnalytics> visitor) {
+    public int visitEachExpression(SemanticQuery geneQuery, SemanticQuery conditionQuery, String specie, Visitor<DiffAnalytics> visitor) {
 
-        Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(conditionQuery.asString());
+        Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(conditionQuery.asSolr1DNF());
 
         String species = StringUtils.isNotBlank(specie) ? specie : "";
 

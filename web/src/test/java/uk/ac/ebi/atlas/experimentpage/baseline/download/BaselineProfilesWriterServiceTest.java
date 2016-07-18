@@ -20,10 +20,10 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.search.GeneQuery;
 
 import java.io.Writer;
 import java.util.*;
@@ -62,7 +62,7 @@ public class BaselineProfilesWriterServiceTest {
 
     private String geneName = "some_gene";
     private String geneId = "some_gene_id";
-    private GeneQuery geneQuery = GeneQuery.create(geneName);
+    private SemanticQuery geneQuery = SemanticQuery.create(geneName);
 
     @Before
     public void setUp() {

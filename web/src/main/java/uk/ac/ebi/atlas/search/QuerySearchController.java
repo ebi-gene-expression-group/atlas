@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableSet;
@@ -24,29 +23,29 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 @Controller
 @Scope("prototype")
-public class BioentitiesNewSearchController {
+public class QuerySearchController {
 
     private AnalyticsSearchService analyticsSearchService;
     private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
     @Inject
-    public BioentitiesNewSearchController(AnalyticsSearchService analyticsSearchService,
-                                          DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
-                                          BaselineAnalyticsSearchService baselineAnalyticsSearchService) {
+    public QuerySearchController(AnalyticsSearchService analyticsSearchService,
+                                 DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
+                                 BaselineAnalyticsSearchService baselineAnalyticsSearchService) {
         this.analyticsSearchService = analyticsSearchService;
         this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
     }
 
     @RequestMapping(value = "/query")
-    public String showGeneQueryResultPage(@RequestParam(value = "geneQuery", required = false, defaultValue = "[]") GeneQuery geneQuery,
-                                          @RequestParam(value = "conditionQuery", required = false, defaultValue = "") String conditionQuery,
+    public String showGeneQueryResultPage(@RequestParam(value = "geneQuery", required = false, defaultValue = "[]") SemanticQuery geneQuery,
+                                          @RequestParam(value = "conditionQuery", required = false, defaultValue = "[]") SemanticQuery conditionQuery,
                                           @RequestParam(value = "organism", required = false, defaultValue = "") String species,
                                           Model model, RedirectAttributes redirectAttributes)
     throws UnsupportedEncodingException {
 
-        checkArgument(!geneQuery.isEmpty() || !conditionQuery.isEmpty(), "Please specify a gene query or a condition.");
+        checkArgument(geneQuery.isNotEmpty() || conditionQuery.isNotEmpty(), "Please specify a gene query or a condition.");
 
 //        model.addAttribute("searchDescription", String.format("%s OR %s AND %s", geneQuery.toJson(), conditionQuery, species));
 //        redirectAttributes.addFlashAttribute("searchDescription", requestParameters.getDescription());
@@ -96,7 +95,7 @@ public class BioentitiesNewSearchController {
 
     @RequestMapping(value = {"/json/query/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String fetchDifferentialJsonFacets(@RequestParam(value = "geneQuery", required = false, defaultValue = "[]") GeneQuery geneQuery,
+    public String fetchDifferentialJsonFacets(@RequestParam(value = "geneQuery", required = false, defaultValue = "[]") SemanticQuery geneQuery,
                                               @RequestParam(value = "conditionQuery", required = false, defaultValue = "") String conditionQuery,
                                               @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
         return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(geneQuery, species);
@@ -104,7 +103,7 @@ public class BioentitiesNewSearchController {
 
     @RequestMapping(value = {"/json/query/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String fetchDifferentialJsonResults(@RequestParam(value = "geneQuery", required = false, defaultValue = "[]") GeneQuery geneQuery,
+    public String fetchDifferentialJsonResults(@RequestParam(value = "geneQuery", required = false, defaultValue = "[]") SemanticQuery geneQuery,
                                                @RequestParam(value = "conditionQuery", required = false, defaultValue = "") String conditionQuery,
                                                @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
         return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(geneQuery, species);
@@ -126,14 +125,4 @@ public class BioentitiesNewSearchController {
         return mav;
     }
 
-//    private String searchDescription(GeneQuery geneQuery, String conditionQuery, String species) {
-//        String geneQueryString = "";
-//        String conditionQueryString = "";
-//        String speciesString = "";
-//
-//        if (geneQuery != null && !geneQuery.isEmpty()) {
-//            geneQueryString = geneQuery.toJson();
-//        }
-//
-//    }
 }

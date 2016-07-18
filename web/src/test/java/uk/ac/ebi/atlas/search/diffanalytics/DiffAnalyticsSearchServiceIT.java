@@ -12,13 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.search.ConditionQuery;
 import uk.ac.ebi.atlas.search.OracleObjectFactory;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.utils.Visitor;
-import uk.ac.ebi.atlas.search.GeneQuery;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -75,17 +74,17 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
 
-    private DiffAnalyticsList fetch(GeneQuery geneQuery, ConditionQuery conditionQuery, String species){
+    private DiffAnalyticsList fetch(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species){
         Optional<Set<String>> geneIdsFromGeneQuery = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, conditionQuery, species);
-        return subject.fetchTop(conditionQuery.asString(), species, geneIdsFromGeneQuery);
+        return subject.fetchTop(conditionQuery.asSolr1DNF(), species, geneIdsFromGeneQuery);
     }
 
 
     @Test
     public void fetchTopKinaseNoSpecies()  {
-        GeneQuery geneQuery = GeneQuery.create("kinase");
+        SemanticQuery geneQuery = SemanticQuery.create("kinase");
 
-        DiffAnalyticsList bioentityExpressions = fetch(geneQuery, ConditionQuery.create(""), "");
+        DiffAnalyticsList bioentityExpressions = fetch(geneQuery, SemanticQuery.create(""), "");
 
         assertThat(bioentityExpressions, hasSize(greaterThan(0)));
         assertThat(bioentityExpressions.getTotalNumberOfResults(), greaterThan(0));
@@ -94,8 +93,8 @@ public class DiffAnalyticsSearchServiceIT {
 
     @Test
     public void weHaveSomeDataAboutCancerAndCanAccessItInTwoDifferentWays()  {
-        GeneQuery geneQuery = GeneQuery.create();
-        ConditionQuery conditionQuery = ConditionQuery.create("cancer");
+        SemanticQuery geneQuery = SemanticQuery.create();
+        SemanticQuery conditionQuery = SemanticQuery.create("cancer");
         String species = "";
 
         final List<String> names = Lists.newArrayList();
@@ -112,7 +111,7 @@ public class DiffAnalyticsSearchServiceIT {
         assertThat(count, greaterThan(100));
         assertThat(count, is(names.size()));
 
-        DiffAnalyticsList bioentityExpressions = subject.fetchTop(conditionQuery.asString(), species, Optional.<Set<String>>absent());
+        DiffAnalyticsList bioentityExpressions = subject.fetchTop(conditionQuery.asSolr1DNF(), species, Optional.<Set<String>>absent());
 
         assertThat(bioentityExpressions.size(), greaterThan(0));
         assertThat(bioentityExpressions.size(), lessThan(51));
@@ -122,11 +121,11 @@ public class DiffAnalyticsSearchServiceIT {
 
     @Test
     public void weCanCheckAboutKinaseConnectedToCancer()  {
-        GeneQuery geneQuery = GeneQuery.create("kinase");
-        ConditionQuery conditionQuery = ConditionQuery.create("cancer");
+        SemanticQuery geneQuery = SemanticQuery.create("kinase");
+        SemanticQuery conditionQuery = SemanticQuery.create("cancer");
         String species = "";
 
-        DiffAnalyticsList bioentityExpressions = subject.fetchTop(conditionQuery.asString(), species, Optional.<Set<String>>absent());
+        DiffAnalyticsList bioentityExpressions = subject.fetchTop(conditionQuery.asSolr1DNF(), species, Optional.<Set<String>>absent());
         List<String> names = getBioentityNames(bioentityExpressions);
 
         assertThat(bioentityExpressions.size(), greaterThan(10));

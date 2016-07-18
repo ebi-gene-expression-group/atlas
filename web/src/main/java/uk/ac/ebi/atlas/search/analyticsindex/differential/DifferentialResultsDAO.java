@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,7 +25,7 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
         super(restTemplate, solrBaseUrl, differentialFacetsQueryJSON);  // settings of restTemplate in applicationContext.xml
     }
 
-    public String fetchDifferentialResultsAboveDefaultFoldChangeForSearch(GeneQuery geneQuery, String species) {
+    public String fetchDifferentialResultsAboveDefaultFoldChangeForSearch(SemanticQuery geneQuery, String species) {
         String identifierSearch = buildSolrQuery(geneQuery, IDENTIFIER_SEARCH_FIELD, species);
         return fetchDifferentialResultsAboveDefaultFoldChange(identifierSearch);
     }

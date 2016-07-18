@@ -5,8 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.search.ConditionQuery;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 
@@ -23,8 +22,8 @@ public class DiffAnalyticsTSVWriterHeaderIT {
 
     @Test
     public void headerTextShouldContainThreeRows(){
-        GeneQuery geneQuery = GeneQuery.create();
-        ConditionQuery conditionQuery = ConditionQuery.create("");
+        SemanticQuery geneQuery = SemanticQuery.create();
+        SemanticQuery conditionQuery = SemanticQuery.create("");
         String species = "";
 
         String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
@@ -34,8 +33,8 @@ public class DiffAnalyticsTSVWriterHeaderIT {
 
     @Test
     public void thirdHeaderLineShouldDescribeTimestamp(){
-        GeneQuery geneQuery = GeneQuery.create();
-        ConditionQuery conditionQuery = ConditionQuery.create("");
+        SemanticQuery geneQuery = SemanticQuery.create();
+        SemanticQuery conditionQuery = SemanticQuery.create("");
         String species = "";
 
         String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
@@ -46,8 +45,8 @@ public class DiffAnalyticsTSVWriterHeaderIT {
 
     @Test
     public void queryDescriptionWithGeneQuery(){
-        GeneQuery geneQuery = GeneQuery.create("TEST");
-        ConditionQuery conditionQuery = ConditionQuery.create("");
+        SemanticQuery geneQuery = SemanticQuery.create("TEST");
+        SemanticQuery conditionQuery = SemanticQuery.create("");
         String species = "";
 
         String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
@@ -57,8 +56,8 @@ public class DiffAnalyticsTSVWriterHeaderIT {
 
     @Test
     public void queryDescriptionWithCondition(){
-        GeneQuery geneQuery = GeneQuery.create();
-        ConditionQuery conditionQuery = ConditionQuery.create("LIVER");
+        SemanticQuery geneQuery = SemanticQuery.create();
+        SemanticQuery conditionQuery = SemanticQuery.create("LIVER");
         String species = "";
 
         String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
@@ -68,8 +67,8 @@ public class DiffAnalyticsTSVWriterHeaderIT {
 
     @Test
     public void queryDescriptionWithOrganism(){
-        GeneQuery geneQuery = GeneQuery.create();
-        ConditionQuery conditionQuery = ConditionQuery.create("");
+        SemanticQuery geneQuery = SemanticQuery.create();
+        SemanticQuery conditionQuery = SemanticQuery.create("");
         String species = "Mus musculus";
 
         String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
@@ -79,8 +78,8 @@ public class DiffAnalyticsTSVWriterHeaderIT {
 
     @Test
     public void queryDescriptionWithOrganismAndCondition(){
-        GeneQuery geneQuery = GeneQuery.create();
-        ConditionQuery conditionQuery = ConditionQuery.create("LIVER");
+        SemanticQuery geneQuery = SemanticQuery.create();
+        SemanticQuery conditionQuery = SemanticQuery.create("LIVER");
         String species = "Mus musculus";
 
         String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
@@ -90,8 +89,8 @@ public class DiffAnalyticsTSVWriterHeaderIT {
 
     @Test
     public void queryDescriptionWithGeneQueryAndCondition(){
-        GeneQuery geneQuery = GeneQuery.create("TEST");
-        ConditionQuery conditionQuery = ConditionQuery.create("LIVER");
+        SemanticQuery geneQuery = SemanticQuery.create("TEST");
+        SemanticQuery conditionQuery = SemanticQuery.create("LIVER");
         String species = "";
 
         String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");
@@ -101,8 +100,8 @@ public class DiffAnalyticsTSVWriterHeaderIT {
 
     @Test
     public void firstHeaderLineShouldDescribeAtlasVersion(){
-        GeneQuery geneQuery = GeneQuery.create("TEST");
-        ConditionQuery conditionQuery = ConditionQuery.create("LIVER");
+        SemanticQuery geneQuery = SemanticQuery.create("TEST");
+        SemanticQuery conditionQuery = SemanticQuery.create("LIVER");
         String species = "";
 
         String[] headerRows = subject.getTsvFileMasthead(geneQuery, conditionQuery, species).split("\n");

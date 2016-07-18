@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,13 +36,13 @@ public class BaselineAnalyticsExpressionAvailableDao {
         this.solrBaseUrl = solrBaseUrl;
     }
 
-    public String fetchGenesInTissuesAboveCutoff(GeneQuery geneQuery) {
+    public String fetchGenesInTissuesAboveCutoff(SemanticQuery geneQuery) {
         String identifierSearchQuery = buildGeneIdentifierQuery(geneQuery);
         return fetchResults(identifierSearchQuery);
     }
 
 
-    String buildGeneIdentifierQuery(GeneQuery geneQuery) {
+    String buildGeneIdentifierQuery(SemanticQuery geneQuery) {
         return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF());
     }
 

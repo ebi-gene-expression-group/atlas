@@ -23,13 +23,13 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineExperimentProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.search.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -90,7 +90,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     }
 
     @RequestMapping(value = "/widgets/heatmap/baselineAnalytics")
-    public String analyticsJson(@RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
+    public String analyticsJson(@RequestParam(value = "geneQuery", required = true) SemanticQuery geneQuery,
                                 @RequestParam(value = "species", required = false) String species,
                                 @RequestParam(value = "propertyType", required = false) String propertyType,
                                 @RequestParam(value = "source", required = false) String source,
@@ -116,7 +116,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         return "heatmap-data";
     }
 
-    private void populateModelWithMultiExperimentResults(String contextRoot, GeneQuery geneQuery, String ensemblSpecies,
+    private void populateModelWithMultiExperimentResults(String contextRoot, SemanticQuery geneQuery, String ensemblSpecies,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
         List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
 

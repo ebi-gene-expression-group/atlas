@@ -1,8 +1,7 @@
 package uk.ac.ebi.atlas.thirdpartyintegration;
 
 import com.google.common.base.Joiner;
-import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.search.ConditionQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
 import javax.inject.Named;
@@ -12,11 +11,11 @@ import java.util.List;
 import static uk.ac.ebi.atlas.utils.StringUtil.quoteIfMoreThanOneWord;
 
 @Named
-@Scope("singleton")
 public class EBIGlobalSearchQueryBuilder {
 
-    public String buildGlobalSearchTerm(String geneQuery, ConditionQuery condition) {
-        return buildGlobalSearchTerm(BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(geneQuery), condition.terms());
+    public String buildGlobalSearchTerm(String geneQuery, SemanticQuery condition) {
+//        return buildGlobalSearchTerm(BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(geneQuery), condition.terms());
+        return "dummy";
     }
 
     private String buildGlobalSearchTerm(List<String> geneQueryTerms, List<String> condition) {

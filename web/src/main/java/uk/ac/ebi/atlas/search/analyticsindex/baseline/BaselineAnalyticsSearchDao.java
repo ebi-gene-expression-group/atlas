@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Named
 public class BaselineAnalyticsSearchDao {
@@ -48,37 +48,37 @@ public class BaselineAnalyticsSearchDao {
         this.baselineHeatmapPivotQuery = "&json.facet=" + encodeQueryParam(baselineHeatmapPivotQuery.replaceAll("\\s+",""));
     }
 
-    public List<Map<String, Object>> fetchFacetsThatHaveExpression(GeneQuery geneQuery) {
+    public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery) {
         String response = fetchFacets(buildGeneIdentifierQuery(geneQuery));
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
-    public List<Map<String, Object>> fetchFacetsThatHaveExpression(GeneQuery geneQuery, String species) {
+    public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery, String species) {
         String response = fetchFacets(buildGeneIdentifierQuery(geneQuery, species));
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
 
-    String buildGeneIdentifierQuery(GeneQuery geneQuery) {
+    private String buildGeneIdentifierQuery(SemanticQuery geneQuery) {
         return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF());
     }
 
-    String buildGeneIdentifierQuery(GeneQuery geneQuery, String species) {
+    private String buildGeneIdentifierQuery(SemanticQuery geneQuery, String species) {
         StringBuilder stringBuilder = new StringBuilder();
-        if (!geneQuery.isEmpty()) {
+        if (geneQuery.isNotEmpty()) {
             stringBuilder.append(String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF()));
         }
-        if (!geneQuery.isEmpty() && !isBlank(species)) {
+        if (geneQuery.isNotEmpty() && isNotBlank(species)) {
             stringBuilder.append(" AND ");
         }
-        if (!isBlank(species)) {
+        if (isNotBlank(species)) {
             stringBuilder.append(String.format("species:\"%s\"", species));
         }
 
         return stringBuilder.toString();
     }
 
-    public List<Map<String, Object>> fetchExpressionLevelFaceted(GeneQuery geneQuery, String species, String defaultQueryFactorType) {
+    public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery geneQuery, String species, String defaultQueryFactorType) {
         String identifierSearch = buildGeneIdentifierQuery(geneQuery);
         String response = fetchFacets(String.format("%s AND defaultQueryFactorType:%s", identifierSearch,
                 defaultQueryFactorType));

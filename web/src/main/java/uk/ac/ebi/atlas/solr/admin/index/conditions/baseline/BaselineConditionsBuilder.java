@@ -20,14 +20,15 @@ import java.util.Set;
 public class BaselineConditionsBuilder extends ConditionsBuilder {
 
     @Override
-    public Collection<Condition> buildProperties(Experiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
+    public Collection<Condition> buildProperties(Experiment experiment, SetMultimap<String, String> assayIdToOntologyTermAccessions) {
+
         Collection<Condition> conditions = Lists.newLinkedList();
 
         BaselineExperiment baselineExperiment = (BaselineExperiment)experiment;
 
         AssayGroups assayGroups = baselineExperiment.getAssayGroups();
         for (AssayGroup assayGroup : assayGroups) {
-            conditions.addAll(buildPropertiesForAssayGroup(baselineExperiment, assayGroup, ontologyTermIdsByAssayAccession));
+            conditions.addAll(buildPropertiesForAssayGroup(baselineExperiment, assayGroup, assayIdToOntologyTermAccessions));
         }
 
         return conditions;
@@ -39,10 +40,8 @@ public class BaselineConditionsBuilder extends ConditionsBuilder {
         Collection<Condition> conditions = Sets.newHashSet();
 
         for (String assayAccession : assayGroup) {
-
             Set<String> values = collectAssayProperties(experiment.getExperimentDesign(), assayAccession, ontologyTermIdsByAssayAccession);
-            Condition condition = new Condition(experiment.getAccession(),
-                    assayGroup.getId(), values);
+            Condition condition = new Condition(experiment.getAccession(), assayGroup.getId(), values);
             conditions.add(condition);
         }
 

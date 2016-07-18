@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex;
 
 import com.google.common.collect.ImmutableSet;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,15 +21,11 @@ public class AnalyticsSearchService {
         return analyticsIndexSearchDAO.fetchExperimentTypes(bioentityIdentifier);
     }
 
-    public ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery) {
-        return analyticsIndexSearchDAO.fetchExperimentTypes(geneQuery, "");
-    }
-
-    public ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery, String species) {
+    public ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, String species) {
         return analyticsIndexSearchDAO.fetchExperimentTypes(geneQuery, species);
     }
 
-    public ImmutableSet<String> searchBioentityIdentifiers(GeneQuery geneQuery, String species) {
+    public ImmutableSet<String> searchBioentityIdentifiers(SemanticQuery geneQuery, String species) {
         return analyticsIndexSearchDAO.searchBioentityIdentifiers(geneQuery, species);
     }
 

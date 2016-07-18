@@ -11,12 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResultFormatter;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.search.GeneQuery;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -73,7 +73,7 @@ public final class HeatmapWidgetDownloadController {
                                    HttpServletResponse response) throws IOException {
 
         String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source;
-        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(GeneQuery.create(geneQuery), species, defaultFactorQueryType);
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(SemanticQuery.create(geneQuery), species, defaultFactorQueryType);
 
         if (!searchResult.isEmpty()) {
             setHttpHeaders(response, geneQuery + "_baseline.tsv");

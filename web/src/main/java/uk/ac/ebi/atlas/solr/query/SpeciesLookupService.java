@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.base.Optional;
@@ -8,9 +7,8 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.solr.SolrUtil;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -20,7 +18,6 @@ import java.util.Collection;
 import java.util.List;
 
 @Named
-@Scope("singleton")
 //can be singleton because HttpSolrClient is documented to be thread safe, please be careful not to add any other non thread safe state!
 public class SpeciesLookupService {
 
@@ -59,7 +56,7 @@ public class SpeciesLookupService {
         throw new ResourceNotFoundException("Species can't be determined for " + fieldName + ":" + multiTermQuery);
     }
 
-    public String fetchFirstSpeciesByField(String fieldName, GeneQuery geneQuery) {
+    public String fetchFirstSpeciesByField(String fieldName, SemanticQuery geneQuery) {
         if (StringUtils.isBlank(fieldName)) {
             fieldName = PROPERTY_LOWER_FIELD;
         }

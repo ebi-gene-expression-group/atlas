@@ -9,7 +9,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsClient;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder;
 import uk.ac.ebi.atlas.solr.SolrUtil;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,7 +26,7 @@ public class AnalyticsIndexSearchDAO {
         this.analyticsClient = analyticsClient;
     }
 
-    ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery) {
+    ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery) {
         SolrQuery solrQuery =
                new AnalyticsQueryBuilder()
                         .queryIdentifierSearch(geneQuery)
@@ -38,7 +38,7 @@ public class AnalyticsIndexSearchDAO {
         return SolrUtil.extractFirstFacetValues(queryResponse);
     }
 
-    ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery, String species) {
+    ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, String species) {
         SolrQuery solrQuery =
                 new AnalyticsQueryBuilder()
                         .queryIdentifierSearch(geneQuery)
@@ -63,7 +63,7 @@ public class AnalyticsIndexSearchDAO {
         return SolrUtil.extractFirstFacetValues(queryResponse);
     }
 
-    ImmutableSet<String> searchBioentityIdentifiers(GeneQuery geneQuery, String species) {
+    ImmutableSet<String> searchBioentityIdentifiers(SemanticQuery geneQuery, String species) {
         SolrQuery solrQuery =
                 new AnalyticsQueryBuilder()
                         .queryIdentifierSearch(geneQuery)

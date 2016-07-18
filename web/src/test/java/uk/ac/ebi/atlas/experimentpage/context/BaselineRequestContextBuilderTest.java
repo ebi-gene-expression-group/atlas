@@ -9,8 +9,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.search.GeneQuery;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -49,7 +49,7 @@ public class BaselineRequestContextBuilderTest {
         when(preferencesMock.getSerializedFilterFactors()).thenReturn(SERIALIZED_FACTORS);
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet(QUERY_FACTOR1, QUERY_FACTOR2, QUERY_FACTOR3)));
         when(preferencesMock.getQueryFactorType()).thenReturn(FACTOR_TYPE);
-        when(preferencesMock.getGeneQuery()).thenReturn(GeneQuery.create());
+        when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
         when(experimentMock.getSpecies()).thenReturn("homo sapiens");
         when(experimentalFactorsMock.getComplementFactors(anySet())).thenReturn(Sets.newTreeSet(Sets.newHashSet(new Factor(FACTOR_TYPE, FACTOR_VALUE))));

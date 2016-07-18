@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import java.util.Set;
 
@@ -17,7 +17,7 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         return queryDescription;
     }
 
-    public GeneQuery getGeneQuery() {
+    public SemanticQuery getGeneQuery() {
         return getRequestPreferences().getGeneQuery();
     }
 

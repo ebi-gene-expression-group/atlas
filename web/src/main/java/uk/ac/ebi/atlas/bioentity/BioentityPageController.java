@@ -9,10 +9,10 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
-import uk.ac.ebi.atlas.search.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -80,7 +80,7 @@ public abstract class BioentityPageController {
         model.addAttribute("hasDifferentialResults", hasDifferentialResults);
 
         if (hasBaselineResults) {
-            model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(identifier), species));
+            model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(identifier), species));
         }
 
         if (model.containsAttribute("searchDescription")) {

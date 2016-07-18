@@ -1,4 +1,4 @@
-<%--@elvariable id="geneQuery" type="uk.ac.ebi.atlas.search.GeneQuery"--%>
+<%--@elvariable id="geneQuery" type="uk.ac.ebi.atlas.search.SemanticQuery"--%>
 <%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
 <%--@elvariable id="species" type="java.lang.String"--%>
 <%--@elvariable id="jsonProfiles" type="java.lang.String"--%>

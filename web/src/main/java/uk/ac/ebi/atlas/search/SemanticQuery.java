@@ -16,27 +16,27 @@ import java.util.Iterator;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @AutoValue
-public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
+public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
 
     private static final String OR_OPERATOR = " OR ";
 
     public abstract ImmutableSet<SemanticQueryTerm> terms();
 
-    public static GeneQuery create(Collection<SemanticQueryTerm> queryTerms) {
-        return new AutoValue_GeneQuery(ImmutableSet.copyOf(queryTerms));
+    public static SemanticQuery create(Collection<SemanticQueryTerm> queryTerms) {
+        return new AutoValue_SemanticQuery(ImmutableSet.copyOf(queryTerms));
     }
 
-    public static GeneQuery create() {
-        return new AutoValue_GeneQuery(ImmutableSet.<SemanticQueryTerm>of());
+    public static SemanticQuery create() {
+        return new AutoValue_SemanticQuery(ImmutableSet.<SemanticQueryTerm>of());
     }
 
-    public static GeneQuery create(SemanticQueryTerm... queryTerms) {
+    public static SemanticQuery create(SemanticQueryTerm... queryTerms) {
         ImmutableSet.Builder<SemanticQueryTerm> builder = ImmutableSet.builder();
-        return new AutoValue_GeneQuery(builder.add(queryTerms).build());
+        return new AutoValue_SemanticQuery(builder.add(queryTerms).build());
     }
 
-    public static GeneQuery create(String queryTermValue) {
-        return new AutoValue_GeneQuery(ImmutableSet.of(SemanticQueryTerm.create(queryTermValue)));
+    public static SemanticQuery create(String queryTermValue) {
+        return new AutoValue_SemanticQuery(ImmutableSet.of(SemanticQueryTerm.create(queryTermValue)));
     }
 
     @Override
@@ -53,6 +53,15 @@ public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
         return true;
     }
 
+    public boolean isNotEmpty() {
+        for (SemanticQueryTerm term : terms()) {
+            if (term.hasValue()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int size() {
         return terms().size();
     }
@@ -67,7 +76,7 @@ public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
         return URLEncoder.encode(gson.toJson(terms()), "UTF-8");
     }
 
-    public static GeneQuery fromJson(String json) {
+    public static SemanticQuery fromJson(String json) {
         if (isBlank(json)) {
             return create();
         }
@@ -76,7 +85,7 @@ public abstract class GeneQuery implements Iterable<SemanticQueryTerm> {
         return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(json, AutoValue_SemanticQueryTerm[].class)));
     }
 
-    public static GeneQuery fromUrlEncodedJson(String json) throws UnsupportedEncodingException, MalformedJsonException {
+    public static SemanticQuery fromUrlEncodedJson(String json) throws UnsupportedEncodingException, MalformedJsonException {
         if (isBlank(json)) {
             return create();
         }

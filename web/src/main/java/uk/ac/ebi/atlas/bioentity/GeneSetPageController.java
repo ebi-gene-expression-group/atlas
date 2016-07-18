@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.search.GeneQuery;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import java.util.Map;
 
@@ -35,7 +35,7 @@ public class GeneSetPageController extends BioentityPageController {
 
         model.addAttribute("queryType", "geneSet");
 
-        ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(GeneQuery.create(identifier), species);
+        ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(SemanticQuery.create(identifier), species);
 
         return super.showBioentityPage(identifier, species, model, experimentTypes);
     }
@@ -59,7 +59,7 @@ public class GeneSetPageController extends BioentityPageController {
     public String fetchDifferentialJsonFacets(@PathVariable String identifier,
                                               @RequestParam(value = "conditionQuery", required = false, defaultValue = "") String conditionQuery,
                                               @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
-        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(GeneQuery.create(identifier), species);
+        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(SemanticQuery.create(identifier), species);
     }
 
     @RequestMapping(value = {"/json/genesets/{identifier:.*}/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
@@ -67,6 +67,6 @@ public class GeneSetPageController extends BioentityPageController {
     public String fetchDifferentialJsonResults(@PathVariable String identifier,
                                                @RequestParam(value = "conditionQuery", required = false, defaultValue = "") String conditionQuery,
                                                @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
-        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(GeneQuery.create(identifier), species);
+        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(SemanticQuery.create(identifier), species);
     }
 }
