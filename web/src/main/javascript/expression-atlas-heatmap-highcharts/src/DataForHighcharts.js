@@ -71,15 +71,35 @@ var rankColumnsByWhereTheyAppearFirst = function(expressions){
   );
 };
 
-var rankColumnsByExpression = function(expressions){
+var highestColumnRankPossible = function(expressions){
+  return expressions.length? expressions[0].length : Number.MAX_VALUE;
+}
+
+var thresholdColumnsByExpressionAboveCutoff = function(expressions){
+  return (
+    rankColumnsByExpression(expressions, 0)
+    .map(function(e){
+      //check if the function assigned the rank value corresponding to everything filtered off
+      return e === highestColumnRankPossible(expressions) ? 1 : 0;
+    })
+  );
+}
+
+var rankColumnsByExpression = function(expressions, minimalExpression){
+  var includeInRanking =
+    typeof minimalExpression=== 'number'
+    ? function(e) {
+      return e.hasOwnProperty("value") && !isNaN(e.value) && Math.abs(e.value)> minimalExpression;
+    }
+    : function(e) {
+      return e.hasOwnProperty("value") && !isNaN(e.value);
+    };
   return (
     _.chain(expressions)
     .map(function(row){
       var valuesInRow =
         row
-        .filter(function(e) {
-        	return e.hasOwnProperty("value") && !isNaN(e.value);
-        })
+        .filter(includeInRanking)
         .map(function(e) {
         	return e.value;
         })
@@ -91,7 +111,7 @@ var rankColumnsByExpression = function(expressions){
         });
       return (
         row.map(function(e){
-          return e.value === undefined ? "missing" : valuesInRow.indexOf(e.value);
+          return includeInRanking(e) ? valuesInRow.indexOf(e.value) : "missing";
         })
       );
     })
@@ -104,12 +124,13 @@ var rankColumnsByExpression = function(expressions){
     })
     .map(function(ranks){
       return (
-        _.sum(ranks) / ranks.length
+        ranks.length ? _.sum(ranks) / ranks.length : highestColumnRankPossible(expressions)
       );
     })
     .value()
   );
 };
+
 
 var rankColumnsByThreshold = function(threshold, expressions){
   return (
@@ -393,7 +414,9 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
             combineRanks([
               [rankColumnsByWhereTheyAppearFirst(expressions), 1],
               [rankColumnsByExpression(expressions), 1e3],
-              [rankColumnsByThreshold(0.05 + 0.4/Math.pow(1+transposed.length/8,0.4),expressions), 1e6]
+              [rankColumnsByThreshold(0.05 + 0.4/Math.pow(1+transposed.length/8,0.4),expressions), 1e6],
+              [thresholdColumnsByExpressionAboveCutoff(expressions),1e7],
+
             ]),comparatorByProperty("factorValue"),columnHeaders),
           rows: createOrdering(
               combineRanks([
