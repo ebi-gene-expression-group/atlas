@@ -51,11 +51,13 @@ var DownloadProfilesButton = React.createClass({
     },
 
     render: function() {
-        //<Button bsStyle="primary" bsSize="xsmall"><Glyphicon style={{verticalAlign: 'middle', paddingBottom: '2px'}} glyph="download-alt"/><span style={{verticalAlign: 'middle', paddingTop: '2px'}}> Download all results</span></--Button>
 
         return (
             <a ref="downloadProfilesLink" onClick={this._afterDownloadButtonClicked}>
-                <button type="button" onclick={this.state.showModal}>Download all results</button>
+                <Button bsSize="xsmall">
+                    <Glyphicon style={{verticalAlign: 'middle', paddingBottom: '2px'}} glyph="download-alt"/>
+                    <span style={{verticalAlign: 'middle', paddingTop: '2px'}}> Download all results</span>
+                </Button>
 
                 <Modal show={this.state.showModal} onHide={this._closeModal} bsSize="large">
                     <Modal.Header closeButton>

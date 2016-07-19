@@ -16867,7 +16867,7 @@ webpackJsonp_name_([5],[
 	
 	        return React.createElement(
 	            'div',
-	            { style: { float: "left", marginRight: "10px" } },
+	            { style: { float: "left", marginRight: "10px", marginTop: "1px" } },
 	            React.createElement(
 	                'span',
 	                null,
@@ -16905,21 +16905,17 @@ webpackJsonp_name_([5],[
 	            React.createElement(
 	                'div',
 	                { style: { display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight } },
-	                React.createElement(
-	                    'div',
-	                    null,
-	                    this.props.orderings.available.length > 1 ? React.createElement(OrderingDropdown, {
-	                        available: this.props.orderings.available,
-	                        current: this.props.orderings.current,
-	                        onSelect: this.props.orderings.onSelect }) : null,
-	                    React.createElement(DownloadProfilesButton, { ref: 'downloadProfilesButton',
-	                        downloadProfilesURL: this.props.downloadOptions.downloadProfilesURL,
-	                        atlasBaseURL: this.props.downloadOptions.atlasBaseURL,
-	                        isFortLauderdale: this.props.downloadOptions.isFortLauderdale,
-	                        onDownloadCallbackForAnalytics: function () {
-	                            this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData');
-	                        }.bind(this) })
-	                )
+	                this.props.orderings.available.length > 1 ? React.createElement(OrderingDropdown, {
+	                    available: this.props.orderings.available,
+	                    current: this.props.orderings.current,
+	                    onSelect: this.props.orderings.onSelect }) : null,
+	                React.createElement(DownloadProfilesButton, { ref: 'downloadProfilesButton',
+	                    downloadProfilesURL: this.props.downloadOptions.downloadProfilesURL,
+	                    atlasBaseURL: this.props.downloadOptions.atlasBaseURL,
+	                    isFortLauderdale: this.props.downloadOptions.isFortLauderdale,
+	                    onDownloadCallbackForAnalytics: function () {
+	                        this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData');
+	                    }.bind(this) })
 	            ),
 	            this.props.showUsageMessage ? React.createElement(
 	                'div',
@@ -17273,15 +17269,19 @@ webpackJsonp_name_([5],[
 	    },
 	
 	    render: function () {
-	        //<Button bsStyle="primary" bsSize="xsmall"><Glyphicon style={{verticalAlign: 'middle', paddingBottom: '2px'}} glyph="download-alt"/><span style={{verticalAlign: 'middle', paddingTop: '2px'}}> Download all results</span></--Button>
 	
 	        return React.createElement(
 	            'a',
 	            { ref: 'downloadProfilesLink', onClick: this._afterDownloadButtonClicked },
 	            React.createElement(
-	                'button',
-	                { type: 'button', onclick: this.state.showModal },
-	                'Download all results'
+	                Button,
+	                { bsSize: 'xsmall' },
+	                React.createElement(Glyphicon, { style: { verticalAlign: 'middle', paddingBottom: '2px' }, glyph: 'download-alt' }),
+	                React.createElement(
+	                    'span',
+	                    { style: { verticalAlign: 'middle', paddingTop: '2px' } },
+	                    ' Download all results'
+	                )
 	            ),
 	            React.createElement(
 	                Modal,
