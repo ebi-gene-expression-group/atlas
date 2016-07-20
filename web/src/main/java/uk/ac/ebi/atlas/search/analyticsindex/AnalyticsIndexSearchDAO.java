@@ -79,6 +79,7 @@ public class AnalyticsIndexSearchDAO {
         List<FacetField> facetFields = analyticsClient.query(
                 new AnalyticsQueryBuilder()
                         .ofSpecies(species)
+                        .filterAboveDefaultCutoff()
                         .facetByBioentityIdentifier()
                         .setRows(0)
                         .setFacetLimit(45000)   // Something less than 50k because of sitemap limitations, plus some wiggle room for extra data
