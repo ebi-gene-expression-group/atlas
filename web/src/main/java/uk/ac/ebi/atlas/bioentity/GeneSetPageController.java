@@ -12,6 +12,8 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import java.util.Map;
 
+import static uk.ac.ebi.atlas.bioentity.GeneSetUtil.matchesReactomeID;
+
 @Controller
 @Scope("request")
 public class GeneSetPageController extends BioentityPageController {
@@ -22,17 +24,15 @@ public class GeneSetPageController extends BioentityPageController {
     }
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
-    public String showGeneSetPage(@PathVariable String identifier, Model model) {
+    public String showGeneSetPage(@PathVariable String identifier, Model model,
+                                  @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
         bioentityPropertyServiceInitializer.initForGeneSetPage(bioEntityPropertyService, identifier);
 
-        String species;
-        if (!model.containsAttribute("species")) {
-            species = GeneSetUtil.matchesReactomeID(identifier) ? bioEntityPropertyService.getSpecies() : "";
-            model.addAttribute("species", species);
-        } else {
-            species = (String) model.asMap().get("species");
+        if (matchesReactomeID(identifier)) {
+            species = bioEntityPropertyService.getSpecies();
         }
 
+        model.addAttribute("species", species);
         model.addAttribute("queryType", "geneSet");
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(SemanticQuery.create(identifier), species);
@@ -42,7 +42,7 @@ public class GeneSetPageController extends BioentityPageController {
 
     @Override
     protected Map<String, Object> pageDescriptionAttributes(String identifier){
-        String species = GeneSetUtil.matchesReactomeID(identifier) ? bioEntityPropertyService.getSpecies() : "";
+        String species = matchesReactomeID(identifier) ? bioEntityPropertyService.getSpecies() : "";
         String s = "Expression summary for " + bioEntityPropertyService.getBioEntityDescription() +
                 (StringUtils.isNotBlank(species) ?
                         " - " + StringUtils.capitalize(species) :
