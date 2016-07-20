@@ -2,11 +2,13 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.Serializable;
 import java.util.*;
@@ -30,9 +32,10 @@ public abstract class Experiment implements Serializable {
     private List<String> dataProviderURL;
     private List<String> dataProviderDescription;
     private List<String> alternativeViews;
+    private List<String> alternativeViewDescriptions;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      boolean hasExtraInfoFile, boolean hasRData, String species, String kingdom, String ensemblDB, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign, List<String> dataProviderURL, List<String> dataProviderDescription, List<String> alternativeViews) {
+                      boolean hasExtraInfoFile, boolean hasRData, String species, String kingdom, String ensemblDB, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign, List<String> dataProviderURL, List<String> dataProviderDescription, List<String> alternativeViews, List<String> alternativeViewDescriptions) {
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
@@ -49,6 +52,7 @@ public abstract class Experiment implements Serializable {
         this.dataProviderURL = dataProviderURL;
         this.dataProviderDescription = dataProviderDescription;
         this.alternativeViews = alternativeViews;
+        this.alternativeViewDescriptions = alternativeViewDescriptions;
     }
 
     public ExperimentType getType() {
@@ -125,6 +129,15 @@ public abstract class Experiment implements Serializable {
         return "";
     }
 
+    public List<Pair<String, String>> alternativeViews(){
+        List<Pair<String, String>> result = new ArrayList<>();
+        Preconditions.checkState(alternativeViews.size() == alternativeViewDescriptions.size());
+        for(int i = 0; i<alternativeViews.size(); i++){
+            result.add(Pair.of(alternativeViews.get(i), alternativeViewDescriptions.get(i)));
+        }
+        return result;
+    }
+
     public List<String> getDataProviderURL() {
         return dataProviderURL;
     }
@@ -162,6 +175,7 @@ public abstract class Experiment implements Serializable {
         result.put("dataProviderURL", getDataProviderURL());
         result.put("dataProviderDescription", getDataProviderDescription());
         result.put("alternativeViews", alternativeViews);
+        result.put("alternativeViewDescriptions", alternativeViewDescriptions);
 
         //Experiment design related
         result.put("runAccessions", gson.toJson(getAnalysedRowsAccessions()));

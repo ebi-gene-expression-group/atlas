@@ -78,7 +78,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
     protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription,
                               boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException;
 
-    final String fetchExperimentNameFromArrayExpress(String experimentAccession, ExperimentDTO experimentDTO) {
+    private final String fetchExperimentNameFromArrayExpress(String experimentAccession, ExperimentDTO experimentDTO) {
         try {
             return arrayExpressClient.fetchExperimentName(experimentAccession);
         } catch (Exception e) {

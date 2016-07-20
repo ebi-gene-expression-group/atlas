@@ -54,6 +54,7 @@ public class BaselineExperimentConfigurationTest {
         assertThat(subject.getSpeciesMapping().entrySet(), Matchers.<Map.Entry<String,String>>empty());
         assertEquals(true,subject.orderCurated());
         assertThat(subject.getAlternativeViews(), Matchers.hasSize(1));
+
     }
 
 

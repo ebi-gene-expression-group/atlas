@@ -14,10 +14,10 @@ public class BaselineExperiment extends Experiment {
 
     BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description, String displayName, String species, String kingdom, String ensemblDB, Map<String, String> speciesMapping,
-                       boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription, List<String> alternativeViews) {
+                       boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription, List<String> alternativeViews, List<String> alternativeViewDescriptions) {
         super(experimentType, accession, lastUpdate, displayName, description, hasExtraInfoFile, hasRData, species,
                 kingdom, ensemblDB, speciesMapping, pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
-                alternativeViews);
+                alternativeViews, alternativeViewDescriptions);
         this.experimentalFactors = experimentalFactors;
         this.assayGroups = assayGroups;
     }

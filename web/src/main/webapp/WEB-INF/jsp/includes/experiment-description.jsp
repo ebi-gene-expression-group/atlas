@@ -70,12 +70,12 @@
         </c:forEach>
     </div>
 </c:if>
-<c:if test="${not empty alternativeViews}">
+<c:if test="${not empty alternativeViews and not empty alternativeViewDescriptions}">
     <div id="alternativeViews">See also:
-        <c:forEach var="alternativeViewAccession" items="${alternativeViews}">
+        <c:forEach var="alternativeViewAccession" items="${alternativeViews}" varStatus="i">
             <a id="goto-alternativeView" class="thick-link" title="Alternative view"
                href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${alternativeViewAccession}">
-                Alternative view
+                    ${alternativeViewDescriptions.get(i.index)}
             </a>
 
         </c:forEach>
