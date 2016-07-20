@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.search.QueryDescription;
+import uk.ac.ebi.atlas.search.SearchDescription;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.utils.VisitorException;
 
@@ -41,7 +41,7 @@ public class BioentitiesSearchDifferentialDownloadController {
                                                          @RequestParam(value = "conditionQuery", required = false, defaultValue = "[]") SemanticQuery conditionQuery,
                                                          @RequestParam(value = "organism", required = false, defaultValue = "") String species,
                                                          HttpServletResponse response) throws IOException {
-        LOGGER.info("downloadGeneQueryDifferentialExpressions for {}", QueryDescription.getRaw(geneQuery, conditionQuery, species));
+        LOGGER.info("downloadGeneQueryDifferentialExpressions for {}", SearchDescription.getRaw(geneQuery, conditionQuery, species));
 
         downloadExpressions(response, geneQuery, conditionQuery, species);
     }
@@ -54,7 +54,7 @@ public class BioentitiesSearchDifferentialDownloadController {
         SemanticQuery emptyConditionQuery = SemanticQuery.create("");
         String noSpecies = "";
 
-        LOGGER.info("downloadGeneDifferentialExpressions for {}", QueryDescription.getRaw(geneQuery, emptyConditionQuery, noSpecies));
+        LOGGER.info("downloadGeneDifferentialExpressions for {}", SearchDescription.getRaw(geneQuery, emptyConditionQuery, noSpecies));
 
         downloadExpressions(response, geneQuery, emptyConditionQuery, noSpecies);
     }
@@ -65,7 +65,7 @@ public class BioentitiesSearchDifferentialDownloadController {
         if (geneQuery.size() > 1) {
             setDownloadHeaders(response, "expression_atlas-differential_results-" + dateFormat.format(new Date()) + ".tsv");
         } else {
-            setDownloadHeaders(response, "expression_atlas-" + QueryDescription.get(geneQuery, conditionQuery, species).replaceAll(" ", "_") + ".tsv");
+            setDownloadHeaders(response, "expression_atlas-" + SearchDescription.get(geneQuery, conditionQuery, species).replaceAll(" ", "_") + ".tsv");
         }
 
         try (DiffAnalyticsTSVWriter writer = tsvWriter) {
