@@ -159,28 +159,6 @@ var rankColumnsByThreshold = function(threshold, expressions){
   );
 };
 
-var rankColumnsByCountOfExperimentsExpressed = function(expressions){
-  return (
-    expressions
-    .map(
-      function(row){
-        return (
-          row.map(
-            function(point){
-              return +(point.hasOwnProperty("value") && point.value!==0);
-            }
-          )
-        );
-      })
-    .reduce(function(r1,r2){
-      return r1.map(
-        function(el,ix){
-          return el + r2[ix];
-        });
-      })
-  );
-};
-
 var getXAxisCategories = function (columnHeaders, isDifferential) {
   return columnHeaders.map(
     isDifferential
@@ -423,10 +401,6 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
               [rankColumnsByExpression(transposed), 1e3],
               [rankColumnsByThreshold(0.05 + 0.4/(1+expressions.length/5),transposed), 1e6]
             ]),comparatorByProperty("name"),rows)
-        },
-        "By fraction of expression" : {
-          columns: createOrdering(combineRanks([[rankColumnsByCountOfExperimentsExpressed(expressions),-1]]),_.constant(0),columnHeaders),
-          rows: createOrdering(combineRanks([[rankColumnsByCountOfExperimentsExpressed(_.zip.apply(_,expressions)),-1]]),_.constant(0),rows)
         }
       }
     :
