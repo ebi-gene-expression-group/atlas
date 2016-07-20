@@ -383,11 +383,11 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
           columns: createAlphabeticalOrdering("factorValue", columnHeaders),
           rows: noOrdering(rows)
         },
-        "Alphabetical" : {
+        "Alphabetical order" : {
           columns: createAlphabeticalOrdering("factorValue", columnHeaders),
           rows: createAlphabeticalOrdering("name", rows)
         },
-        "Gene Expression" : {
+        "Gene expression" : {
           columns: createOrdering(
             combineRanks([
               [rankColumnsByWhereTheyAppearFirst(expressions), 1],
