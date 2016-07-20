@@ -21,6 +21,7 @@ import java.util.Collections;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
@@ -138,7 +139,7 @@ public class BaselineExperimentCacheLoaderTest {
         BaselineExperiment e = subject.load(dto, "description from array express", false, experimentDesign);
 
         assertThat(e.alternativeViews(), hasSize(1));
-        assertEquals(alternativeViewAccession,e.alternativeViews().get(0).getLeft());
+        assertThat(e.alternativeViews().get(0).getLeft(), is(alternativeViewAccession));
         assertThat(e.alternativeViews().get(0).getRight(), containsString(s));
         verifyCollaborators();
         verify(baselineConfiguration, atLeastOnce()).getAlternativeViews();
@@ -147,7 +148,5 @@ public class BaselineExperimentCacheLoaderTest {
         noMoreInteractionsWithCollaborators();
 
     }
-
-
-
+    
 }
