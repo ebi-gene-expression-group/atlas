@@ -59,7 +59,7 @@
     </definition>
 
     <definition name="bioentities-search-results" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/jsp/bioentities-search-results.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/bioentities/new-bioentities-search-results.jsp"/>
     </definition>
 
     <definition name="bioentities" extends="base.definition">

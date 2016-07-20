@@ -40,13 +40,13 @@
 
 <section class="gxaSection">
     <ul class="nav nav-tabs" role="tablist">
-        <c:if test="${hasBaselineResults}"><li title="Baseline experiments" role="presentation"><a href="genes/${identifier}#base" data-toggle="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
+        <c:if test="${hasBaselineResults}"><li title="Baseline experiments" role="presentation"><a href="${requestScope['javax.servlet.forward.request_uri']}#base" data-toggle="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
         <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" role="presentation" class="disabled noBorderTab">Baseline expression</li></c:if>
 
-        <c:if test="${hasDifferentialResults}"><li title="Differential experiments" role="presentation"><a href="genes/${identifier}#diff" data-toggle="tab" id="differentialTabLink">Differential expression</a></li></c:if>
+        <c:if test="${hasDifferentialResults}"><li title="Differential experiments" role="presentation"><a href="${requestScope['javax.servlet.forward.request_uri']}#diff" data-toggle="tab" id="differentialTabLink">Differential expression</a></li></c:if>
         <c:if test="${!hasDifferentialResults}"><li title="Differential experiments" role="presentation" class="disabled noBorderTab">Differential expression</li></c:if>
 
-        <li role="presentation" title="Bioentity information"><a href="genes/${identifier}#info" data-toggle="tab" id="informationTabLink">Bioentity information</a></li>
+        <li role="presentation" title="Bioentity information"><a href="${requestScope['javax.servlet.forward.request_uri']}#info" data-toggle="tab" id="informationTabLink">Bioentity information</a></li>
     </ul>
 
     <!-- Tab panes -->
