@@ -12427,15 +12427,35 @@ webpackJsonp_name_([4],[
 	  );
 	};
 	
-	var rankColumnsByExpression = function(expressions){
+	var highestColumnRankPossible = function(expressions){
+	  return expressions.length? expressions[0].length : Number.MAX_VALUE;
+	}
+	
+	var thresholdColumnsByExpressionAboveCutoff = function(expressions){
+	  return (
+	    rankColumnsByExpression(expressions, 0)
+	    .map(function(e){
+	      //check if the function assigned the rank value corresponding to everything filtered off
+	      return e === highestColumnRankPossible(expressions) ? 1 : 0;
+	    })
+	  );
+	}
+	
+	var rankColumnsByExpression = function(expressions, minimalExpression){
+	  var includeInRanking =
+	    typeof minimalExpression=== 'number'
+	    ? function(e) {
+	      return e.hasOwnProperty("value") && !isNaN(e.value) && Math.abs(e.value)> minimalExpression;
+	    }
+	    : function(e) {
+	      return e.hasOwnProperty("value") && !isNaN(e.value);
+	    };
 	  return (
 	    _.chain(expressions)
 	    .map(function(row){
 	      var valuesInRow =
 	        row
-	        .filter(function(e) {
-	        	return e.hasOwnProperty("value") && !isNaN(e.value);
-	        })
+	        .filter(includeInRanking)
 	        .map(function(e) {
 	        	return e.value;
 	        })
@@ -12447,7 +12467,7 @@ webpackJsonp_name_([4],[
 	        });
 	      return (
 	        row.map(function(e){
-	          return e.value === undefined ? "missing" : valuesInRow.indexOf(e.value);
+	          return includeInRanking(e) ? valuesInRow.indexOf(e.value) : "missing";
 	        })
 	      );
 	    })
@@ -12460,12 +12480,13 @@ webpackJsonp_name_([4],[
 	    })
 	    .map(function(ranks){
 	      return (
-	        _.sum(ranks) / ranks.length
+	        ranks.length ? _.sum(ranks) / ranks.length : highestColumnRankPossible(expressions)
 	      );
 	    })
 	    .value()
 	  );
 	};
+	
 	
 	var rankColumnsByThreshold = function(threshold, expressions){
 	  return (
@@ -12749,7 +12770,9 @@ webpackJsonp_name_([4],[
 	            combineRanks([
 	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
 	              [rankColumnsByExpression(expressions), 1e3],
-	              [rankColumnsByThreshold(0.05 + 0.4/Math.pow(1+transposed.length/8,0.4),expressions), 1e6]
+	              [rankColumnsByThreshold(0.05 + 0.4/Math.pow(1+transposed.length/8,0.4),expressions), 1e6],
+	              [thresholdColumnsByExpressionAboveCutoff(expressions),1e7],
+	
 	            ]),comparatorByProperty("factorValue"),columnHeaders),
 	          rows: createOrdering(
 	              combineRanks([
@@ -13376,7 +13399,7 @@ webpackJsonp_name_([4],[
 	
 	        return React.createElement(
 	            'div',
-	            { style: { float: "left", marginRight: "10px" } },
+	            { style: { float: "left", marginRight: "10px", marginTop: "1px" } },
 	            React.createElement(
 	                'span',
 	                null,
@@ -13414,21 +13437,17 @@ webpackJsonp_name_([4],[
 	            React.createElement(
 	                'div',
 	                { style: { display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight } },
-	                React.createElement(
-	                    'div',
-	                    null,
-	                    this.props.orderings.available.length > 1 ? React.createElement(OrderingDropdown, {
-	                        available: this.props.orderings.available,
-	                        current: this.props.orderings.current,
-	                        onSelect: this.props.orderings.onSelect }) : null,
-	                    React.createElement(DownloadProfilesButton, { ref: 'downloadProfilesButton',
-	                        downloadProfilesURL: this.props.downloadOptions.downloadProfilesURL,
-	                        atlasBaseURL: this.props.downloadOptions.atlasBaseURL,
-	                        isFortLauderdale: this.props.downloadOptions.isFortLauderdale,
-	                        onDownloadCallbackForAnalytics: function () {
-	                            this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData');
-	                        }.bind(this) })
-	                )
+	                this.props.orderings.available.length > 1 ? React.createElement(OrderingDropdown, {
+	                    available: this.props.orderings.available,
+	                    current: this.props.orderings.current,
+	                    onSelect: this.props.orderings.onSelect }) : null,
+	                React.createElement(DownloadProfilesButton, { ref: 'downloadProfilesButton',
+	                    downloadProfilesURL: this.props.downloadOptions.downloadProfilesURL,
+	                    atlasBaseURL: this.props.downloadOptions.atlasBaseURL,
+	                    isFortLauderdale: this.props.downloadOptions.isFortLauderdale,
+	                    onDownloadCallbackForAnalytics: function () {
+	                        this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData');
+	                    }.bind(this) })
 	            ),
 	            this.props.showUsageMessage ? React.createElement(
 	                'div',
@@ -14042,15 +14061,19 @@ webpackJsonp_name_([4],[
 	    },
 	
 	    render: function () {
-	        //<Button bsStyle="primary" bsSize="xsmall"><Glyphicon style={{verticalAlign: 'middle', paddingBottom: '2px'}} glyph="download-alt"/><span style={{verticalAlign: 'middle', paddingTop: '2px'}}> Download all results</span></--Button>
 	
 	        return React.createElement(
 	            'a',
 	            { ref: 'downloadProfilesLink', onClick: this._afterDownloadButtonClicked },
 	            React.createElement(
-	                'button',
-	                { type: 'button', onclick: this.state.showModal },
-	                'Download all results'
+	                Button,
+	                { bsSize: 'xsmall' },
+	                React.createElement(Glyphicon, { style: { verticalAlign: 'middle', paddingBottom: '2px' }, glyph: 'download-alt' }),
+	                React.createElement(
+	                    'span',
+	                    { style: { verticalAlign: 'middle', paddingTop: '2px' } },
+	                    ' Download all results'
+	                )
 	            ),
 	            React.createElement(
 	                Modal,

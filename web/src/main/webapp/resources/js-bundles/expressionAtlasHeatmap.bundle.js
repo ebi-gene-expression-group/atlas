@@ -15642,15 +15642,19 @@ webpackJsonp_name_([3],[
 	    },
 	
 	    render: function () {
-	        //<Button bsStyle="primary" bsSize="xsmall"><Glyphicon style={{verticalAlign: 'middle', paddingBottom: '2px'}} glyph="download-alt"/><span style={{verticalAlign: 'middle', paddingTop: '2px'}}> Download all results</span></--Button>
 	
 	        return React.createElement(
 	            'a',
 	            { ref: 'downloadProfilesLink', onClick: this._afterDownloadButtonClicked },
 	            React.createElement(
-	                'button',
-	                { type: 'button', onclick: this.state.showModal },
-	                'Download all results'
+	                Button,
+	                { bsSize: 'xsmall' },
+	                React.createElement(Glyphicon, { style: { verticalAlign: 'middle', paddingBottom: '2px' }, glyph: 'download-alt' }),
+	                React.createElement(
+	                    'span',
+	                    { style: { verticalAlign: 'middle', paddingTop: '2px' } },
+	                    ' Download all results'
+	                )
 	            ),
 	            React.createElement(
 	                Modal,

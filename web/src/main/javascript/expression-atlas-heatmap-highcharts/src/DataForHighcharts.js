@@ -71,15 +71,35 @@ var rankColumnsByWhereTheyAppearFirst = function(expressions){
   );
 };
 
-var rankColumnsByExpression = function(expressions){
+var highestColumnRankPossible = function(expressions){
+  return expressions.length? expressions[0].length : Number.MAX_VALUE;
+}
+
+var thresholdColumnsByExpressionAboveCutoff = function(expressions){
+  return (
+    rankColumnsByExpression(expressions, 0)
+    .map(function(e){
+      //check if the function assigned the rank value corresponding to everything filtered off
+      return e === highestColumnRankPossible(expressions) ? 1 : 0;
+    })
+  );
+}
+
+var rankColumnsByExpression = function(expressions, minimalExpression){
+  var includeInRanking =
+    typeof minimalExpression=== 'number'
+    ? function(e) {
+      return e.hasOwnProperty("value") && !isNaN(e.value) && Math.abs(e.value)> minimalExpression;
+    }
+    : function(e) {
+      return e.hasOwnProperty("value") && !isNaN(e.value);
+    };
   return (
     _.chain(expressions)
     .map(function(row){
       var valuesInRow =
         row
-        .filter(function(e) {
-        	return e.hasOwnProperty("value") && !isNaN(e.value);
-        })
+        .filter(includeInRanking)
         .map(function(e) {
         	return e.value;
         })
@@ -91,7 +111,7 @@ var rankColumnsByExpression = function(expressions){
         });
       return (
         row.map(function(e){
-          return e.value === undefined ? "missing" : valuesInRow.indexOf(e.value);
+          return includeInRanking(e) ? valuesInRow.indexOf(e.value) : "missing";
         })
       );
     })
@@ -104,12 +124,13 @@ var rankColumnsByExpression = function(expressions){
     })
     .map(function(ranks){
       return (
-        _.sum(ranks) / ranks.length
+        ranks.length ? _.sum(ranks) / ranks.length : highestColumnRankPossible(expressions)
       );
     })
     .value()
   );
 };
+
 
 var rankColumnsByThreshold = function(threshold, expressions){
   return (
@@ -135,28 +156,6 @@ var rankColumnsByThreshold = function(threshold, expressions){
           countOfExperimentsWhereTissueExpressedAboveCutoff > expressions.length * threshold ? 0 : 1
       );
     })
-  );
-};
-
-var rankColumnsByCountOfExperimentsExpressed = function(expressions){
-  return (
-    expressions
-    .map(
-      function(row){
-        return (
-          row.map(
-            function(point){
-              return +(point.hasOwnProperty("value") && point.value!==0);
-            }
-          )
-        );
-      })
-    .reduce(function(r1,r2){
-      return r1.map(
-        function(el,ix){
-          return el + r2[ix];
-        });
-      })
   );
 };
 
@@ -384,26 +383,24 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
           columns: createAlphabeticalOrdering("factorValue", columnHeaders),
           rows: noOrdering(rows)
         },
-        "Alphabetical" : {
+        "Alphabetical order" : {
           columns: createAlphabeticalOrdering("factorValue", columnHeaders),
           rows: createAlphabeticalOrdering("name", rows)
         },
-        "Gene Expression" : {
+        "Gene expression" : {
           columns: createOrdering(
             combineRanks([
               [rankColumnsByWhereTheyAppearFirst(expressions), 1],
               [rankColumnsByExpression(expressions), 1e3],
-              [rankColumnsByThreshold(0.05 + 0.4/Math.pow(1+transposed.length/8,0.4),expressions), 1e6]
+              [rankColumnsByThreshold(0.05 + 0.4/Math.pow(1+transposed.length/8,0.4),expressions), 1e6],
+              [thresholdColumnsByExpressionAboveCutoff(expressions),1e7],
+
             ]),comparatorByProperty("factorValue"),columnHeaders),
           rows: createOrdering(
               combineRanks([
               [rankColumnsByExpression(transposed), 1e3],
               [rankColumnsByThreshold(0.05 + 0.4/(1+expressions.length/5),transposed), 1e6]
             ]),comparatorByProperty("name"),rows)
-        },
-        "By fraction of expression" : {
-          columns: createOrdering(combineRanks([[rankColumnsByCountOfExperimentsExpressed(expressions),-1]]),_.constant(0),columnHeaders),
-          rows: createOrdering(combineRanks([[rankColumnsByCountOfExperimentsExpressed(_.zip.apply(_,expressions)),-1]]),_.constant(0),rows)
         }
       }
     :

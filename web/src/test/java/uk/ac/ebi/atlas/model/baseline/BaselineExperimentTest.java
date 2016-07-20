@@ -13,14 +13,14 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -73,7 +73,7 @@ public class BaselineExperimentTest {
         subject = new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
                 experimentalFactorsMock,
                                          "description", "displayName", "species", "kingdom", "ensembl", speciesMapping,
-                                         true, true, Sets.newHashSet(PUBMEDID), experimentDesignMock, assayGroupsMock, Collections.<String>emptyList(), Collections.<String>emptyList(), Collections.<String>emptyList());
+                                         true, true, Sets.newHashSet(PUBMEDID), experimentDesignMock, assayGroupsMock, Collections.<String>emptyList(), Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>());
     }
 
 
@@ -100,10 +100,10 @@ public class BaselineExperimentTest {
     @Test
     public void isTissue(){
         when(experimentalFactorsMock.getDefaultQueryFactorType()).thenReturn("ORGANISM_PART");
-        assertTrue(subject.isTissueExperiment());
+        assertEquals(true, subject.isTissueExperiment());
 
         when(experimentalFactorsMock.getDefaultQueryFactorType()).thenReturn("CELL_LINE");
-        assertFalse(subject.isTissueExperiment());
+        assertEquals(false, subject.isTissueExperiment());
     }
 
 }

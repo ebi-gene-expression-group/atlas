@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -36,6 +37,7 @@ public class BaselineExperimentBuilder {
     private ExperimentalFactors experimentalFactors;
     private ExperimentType experimentType;
     private List<String> alternativeViews = Collections.emptyList();
+    private List<String> alternativeViewDescriptions = Collections.emptyList();
 
     public BaselineExperimentBuilder forSpecies(String species) {
         this.species = species;
@@ -122,8 +124,9 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
-    public BaselineExperimentBuilder withAlternativeViews(List<String> alternativeViews) {
-        this.alternativeViews = alternativeViews;
+    public BaselineExperimentBuilder withAlternativeViews(Pair<List<String>, List<String>> p) {
+        this.alternativeViews = p.getLeft();
+        this.alternativeViewDescriptions = p.getRight();
         return this;
     }
 
@@ -134,7 +137,8 @@ public class BaselineExperimentBuilder {
 
         return new BaselineExperiment(experimentType, experimentAccession, lastUpdate, experimentalFactors, description,
                 displayName, species, kingdom, ensemblDB, speciesMapping, hasExtraInfoFile, hasRData,
-                pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription, alternativeViews);
+                pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription, alternativeViews,
+                alternativeViewDescriptions);
     }
 
     void validate() {

@@ -30,7 +30,7 @@ public class    StaticPageController {
         String path = String.format("/resources/html/%s.html", pageName);
 
         request.setAttribute("contentResource", fetchResource(path));
-        request.setAttribute("nav", pageName);
+        request.setAttribute("nav", pageName.replace(" ","_").replace("-","_").toLowerCase());
         return "static-template";
     }
 

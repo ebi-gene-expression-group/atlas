@@ -596,7 +596,7 @@ var OrderingDropdown = React.createClass({
         };
 
         return (
-            <div style={{float: "left", marginRight: "10px"}}>
+            <div style={{float: "left", marginRight: "10px", marginTop: "1px"}}>
                 <span>Sort by: </span>
                 <select onChange={this.handleChange} value={this.state.selected}>
                     {this.props.available.map(createOption)}
@@ -622,8 +622,7 @@ var HeatmapOptions = React.createClass({
                   {this.props.introductoryMessage}
                 </div>
                 <div style={{display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight}}>
-                    
-                <div>
+
                     { this.props.orderings.available.length > 1
                         ?
                           <OrderingDropdown
@@ -641,7 +640,6 @@ var HeatmapOptions = React.createClass({
                                                 function() {
                                                     this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')
                                                 }.bind(this)}/>
-                </div>
 
                 </div>
                     {this.props.showUsageMessage
