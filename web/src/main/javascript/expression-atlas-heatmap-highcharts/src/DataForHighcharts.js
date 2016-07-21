@@ -52,7 +52,7 @@ var __dataPointFromExpression = function(infoCommonForTheRow, columnNumber, expr
     ? {x: rowNumber, y:columnNumber, value:expression.value ,info:infoCommonForTheRow}
     : (
         expression.hasOwnProperty("foldChange")
-      ? {x: rowNumber, y: columnNumber, value: expression.foldChange,info:{pValue: expression.pValue, foldChange: expression.foldChange}}
+      ? {x: rowNumber, y: columnNumber, value: +expression.foldChange,info:{pValue: expression.pValue, foldChange: expression.foldChange}}
       : null
     )
   );
@@ -102,28 +102,6 @@ var _groupByExperimentType = function(chain, config){
   );
 };
 
-var _groupSingleExperiment = function(chain, config){
-  var _inferExperimentType = function(config){
-    return (
-      config.isDifferential
-        ? "DIFFERENTIAL"
-        : config.isProteomics
-          ? "PROTEOMICS_BASELINE"
-          : "RNASEQ_MRNA_BASELINE"
-    );
-  };
-  return (
-    chain
-    .map(_dataPointsFromRow(config))
-    .flatten()
-    .thru(function(value){
-      return [
-        [_inferExperimentType(config), value]
-      ];
-    })
-  );
-};
-
 var _experimentsIntoDataSeriesByThresholds = function(thresholds){
   return function(experimentType, dataPoints) {
     return dataPoints.map(
@@ -138,16 +116,10 @@ var _experimentsIntoDataSeriesByThresholds = function(thresholds){
 };
 
 var getDataSeries = function(profilesRows, config) {
+  var _fns = [_.lt, _.eq,_.gt].map(function(f){return function(point){return f(point.value,0);};});
   return (
-    config.isDifferential
-    ? _getDataSeries(
-      {
-        DIFFERENTIAL : [-1,-0.01,0.01, 1]
-      },
-      ["High down", "Down", "Below cutoff", "Up", "High up"],
-      ["blue", "lightblue", "grey", "darkSalmon","fireBrick"],
-      profilesRows, config)
-    : _getDataSeries(
+    config.isMultiExperiment
+    ? _dataSplitByThresholds(
       {
         RNASEQ_MRNA_BASELINE : [0,10,1000],
         PROTEOMICS_BASELINE : [0,0.001,8],
@@ -156,17 +128,44 @@ var getDataSeries = function(profilesRows, config) {
       ["Below cutoff", "Low", "Medium", "High"],
       ["#eaeaea", "#45affd", "#1E74CA", "#024990"],
       profilesRows, config)
-  );
-};
+    : config.isDifferential
+      ? _dataProportionallyInEachSeries(profilesRows, config,
+          _fns,
+          [["High down", "Down"], ["Below cutoff"], ["Up", "High up"]],
+          [["blue", "lightBlue"], ["grey"], ["darkSalmon","fireBrick"]])
+      : _dataProportionallyInEachSeries(profilesRows, config,
+          [_fns[1],_.negate(_fns[1])],
+          [["Below cutoff"],["Low", "Medium", "High"]],
+          [["grey"],["lightBlue","blue","darkBlue"]])
 
-var _getDataSeries = function (thresholds, names, colours, profilesRows, config) {
+  )
+};
+var _splitDataSetByProportion = function(data,names,colours){
+  var sortedValues = data.map(function(point){return point.value}).sort(function(l,r){return l-r;});
+  var howManyPointsInTotal = data.length;
+  var howManyDataSetsToSplitIn = names.length;
   return (
-    (config.isMultiExperiment
-      ? _.curryRight(_groupByExperimentType,2)(config)
-      : _.curryRight(_groupSingleExperiment,2)(config)
-    )(_.chain(profilesRows))
-    .map(_.spread(_experimentsIntoDataSeriesByThresholds(thresholds)))
-    .flatten()
+    _bucketsIntoSeries(names,colours)(
+      _.chain(data)
+      .map(function(point){
+        return [
+          Math.floor(_.sortedIndex(sortedValues, point.value)/howManyPointsInTotal *howManyDataSetsToSplitIn)
+         , point]
+      })
+    ).value()
+  );
+}
+
+var _dataProportionallyInEachSeries = function(profilesRows, config, filters, names, colors){
+  var points = _.flatten(profilesRows.map(_dataPointsFromRow(config)));
+  return _.flatten(_.range(filters.length).map(function(i){
+    return _splitDataSetByProportion(points.filter(filters[i]), names[i], colors[i]);
+  }));
+}
+
+var _bucketsIntoSeries = _.curry(function(names,colours,chain){
+  return (
+    chain
     .groupBy(_.spread(function(dataSeriesAssigned, point) {
       return dataSeriesAssigned;
     }))
@@ -186,25 +185,34 @@ var _getDataSeries = function (thresholds, names, colours, profilesRows, config)
         };
       })
     )
-    .value()
+  );
+},3);
+
+var _dataSplitByThresholds = function (thresholds, names, colours, profilesRows, config) {
+  return (
+    _bucketsIntoSeries(names,colours)(
+      _groupByExperimentType(_.chain(profilesRows),config)
+      .map(_.spread(_experimentsIntoDataSeriesByThresholds(thresholds)))
+      .flatten()
+    ).value()
   );
 };
 
 var extractExpressionValues = function(rows, isDifferential){
-  var extractor = function(valueField){
+  var _valueFieldExtractor = function(valueField){
     return (
       function(expression){
         return (
           expression.hasOwnProperty(valueField)
-          ? {value : expression[valueField]}
+          ? {value : +expression[valueField]}
           : {}
         );
       });
-  }
+  };
   return rows.map(
     function(row){
       return row.expressions.map(
-        extractor(isDifferential ? "foldChange": "value")
+        _valueFieldExtractor(isDifferential ? "foldChange": "value")
       );
     }
   );
