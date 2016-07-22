@@ -1,17 +1,14 @@
-
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import org.springframework.context.annotation.Scope;
+import com.google.common.collect.ImmutableMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.trader.cache.OrganismsCache;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 
 @Controller
-@Scope("singleton")
 public class HomeController {
 
     private OrganismsCache organismsCache;
@@ -21,14 +18,15 @@ public class HomeController {
         this.organismsCache = organismsCache;
     }
 
-    @RequestMapping(value = "/home"
-                   )
+    @RequestMapping(value = "/home")
     public String getHomePage(Model model) {
-        model.addAttribute("dummyPath", "");
-
-        ArrayList<String> organismSelection =  new ArrayList<>();
-        organismSelection.add("Any"); organismSelection.addAll(organismsCache.getOrganismsList());
-        model.addAttribute("organisms", organismSelection);
+        ImmutableMap.Builder<String, String> organismSelectBuilder = ImmutableMap.builder();
+        organismSelectBuilder.put("", "Any");
+        for (String organism : organismsCache.getOrganismsList()) {
+            organismSelectBuilder.put(organism, organism);
+        }
+        model.addAttribute("organisms", organismSelectBuilder.build());
+        model.addAttribute("organismPath", ""); // Required by Spring form tag
         return "home";
     }
 }

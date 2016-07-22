@@ -64,20 +64,20 @@
                     </td>
 
                     <td>
-                        <form:select id="organism" name="organism" path="dummyPath">
+                        <form:select id="organism" name="organism" path="organismPath">
                             <form:options items="${organisms}" />
                         </form:select>
                     </td>
                     <td>
                         <div id="conditionSection">
-                            <textarea title="Sample properties" id="condition" name="condition" maxlength="900" rows="2" cols="36" tabindex="3"></textarea>
+                            <textarea title="Sample properties" id="conditionQuery" name="conditionQuery" maxlength="900" rows="2" cols="36" tabindex="3"></textarea>
 
                             <div class="gxaSearchExamples">
                                 <span>E.g.
-                                    <a href="query?condition=lung">lung</a>,
-                                    <a href="query?condition=leaf">leaf</a>,
-                                    <a href="query?condition=&quot;valproic+acid&quot;">"valproic acid"</a>,
-                                    <a href="query?condition=cancer">cancer</a>
+                                    <a href="query?conditionQuery=%5B%7B%22value%22%3A%22lung%22%7D%5D">lung</a>,
+                                    <a href="query?conditionQuery=%5B%7B%22value%22%3A%22leaf%22%7D%5D">leaf</a>,
+                                    <a href="query?conditionQuery=%5B%7B%22value%22%3A%22valproic%20acid%22%7D%5D">valproic acid</a>,
+                                    <a href="query?conditionQuery=%5B%7B%22value%22%3A%22cancer%22%7D%5D">cancer</a>
                                 </span>
                             </div>
                         </div>
@@ -139,13 +139,13 @@
             $buttons.button('option', 'disabled', tags.length == 0);
         }
 
-        var $buttons = $('#submit-button, #reset-button'), $searchFields = $('#geneQuery, #condition');
+        var $buttons = $('#submit-button, #reset-button'), $searchFields = $('#geneQuery, #conditionQuery');
 
-        geneQueryTagEditorModule.init('#geneQuery', undefined, disableButtonsOnChange);
+        geneQueryTagEditorModule.init('#geneQuery', '', disableButtonsOnChange);
         conditionAutocompleteModule.init('${arrayexpressUrl}', disableButtonsOnChange);
 
         searchFormModule.searchBoxEnterEventHandler('#submit-button');
-        searchFormModule.disableCarriageReturn('#condition');
+        searchFormModule.disableCarriageReturn('#conditionQuery');
 
         helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
@@ -162,6 +162,10 @@
                     var $geneQuery = $('#geneQuery'),
                         geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
                     $geneQuery.val(JSON.stringify(geneQueryTags));
+
+                    var $conditionQuery = $('#conditionQuery'),
+                        conditionQueryTags = $conditionQuery.jsonTagEditor('getTags')[0].tags;
+                    $conditionQuery.val(JSON.stringify(conditionQueryTags));
                 });
             });
         }
@@ -175,10 +179,10 @@
                     $geneQuery.jsonTagEditor('removeTag', geneQueryTag.value);
                 });
 
-                var $sampleProperties =  $('#condition'),
-                    samplePropertiesTags = $sampleProperties.tagEditor('getTags')[0].tags;
-                samplePropertiesTags.forEach(function(samplePropertiesTag) {
-                    $sampleProperties.tagEditor('removeTag', samplePropertiesTag);
+                var $conditionQuery =  $('#conditionQuery'),
+                    conditionQueryTags = $conditionQuery.tagEditor('getTags')[0].tags;
+                conditionQueryTags.forEach(function(conditionQueryTag) {
+                    $conditionQuery.tagEditor('removeTag', conditionQueryTag);
                 });
 
                 selectHomoSapiens();
