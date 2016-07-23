@@ -48,15 +48,17 @@ public final class GeneSetUtil {
     }
 
     public static boolean isGeneSetCategoryOrMatchesGeneSetAccession(SemanticQuery geneQuery) {
-        for (SemanticQueryTerm term : geneQuery) {
-            if (term.hasNoCategory()) {
-                if (!matchesGeneSetAccession(term.value())) {
-                    return false;
-                }
-            } else if (!isGeneSetSource(term.category())) {
+        if (geneQuery.isEmpty() || geneQuery.size() > 1) {
+            return false;
+        }
+
+        SemanticQueryTerm term = geneQuery.iterator().next();
+        if (term.hasNoCategory()) {
+            if (!matchesGeneSetAccession(term.value())) {
                 return false;
             }
-
+        } else if (!isGeneSetSource(term.category())) {
+            return false;
         }
 
         return true;
