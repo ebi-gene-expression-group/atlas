@@ -9,10 +9,6 @@
     min-height: 210px;
 }
 
-.highcharts-container {
-    position: unset !important;
-}
-
 #barcharts_legend_list_items {
     color: #606060;
     margin-left: 180px;
