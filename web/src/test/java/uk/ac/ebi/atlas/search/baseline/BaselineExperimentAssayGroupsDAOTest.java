@@ -66,8 +66,7 @@ public class BaselineExperimentAssayGroupsDAOTest {
 
 
 
-        SetMultimap<String,String> result = subject.fetchExperimentAssayGroupsWithNonSpecificExpression(Optional.of
-                (ImmutableList.of(E_MTAB_599_g6)), Optional.<Collection<String>>absent());
+        SetMultimap<String,String> result = subject.fetchExperimentAssayGroupsWithNonSpecificExpression(ImmutableList.of(E_MTAB_599_g6), ImmutableList.<String>of());
 
         assertEquals(expected,result);
 

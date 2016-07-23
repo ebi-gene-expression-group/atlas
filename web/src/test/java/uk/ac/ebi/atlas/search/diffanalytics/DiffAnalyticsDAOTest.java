@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import oracle.sql.ARRAY;
 import static org.junit.Assert.*;
@@ -8,12 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowCallbackHandler;
-import uk.ac.ebi.atlas.search.DatabaseQuery;
 import uk.ac.ebi.atlas.search.OracleObjectFactory;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
-import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -59,7 +55,6 @@ public class DiffAnalyticsDAOTest {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         Mockito.when(jdbcTemplate.query(captor.capture(), eq(dbeRowMapper),  any())).thenReturn(new ArrayList<DiffAnalytics>());
 
-
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
         Collection<IndexedAssayGroup> contrasts = Lists.newArrayList(indexedContrast1);
@@ -67,10 +62,9 @@ public class DiffAnalyticsDAOTest {
 
         String species = "";
 
-        List<DiffAnalytics> expressions = subject.fetchTopExpressions(Optional.of(contrasts), Optional.of(geneIds), species);
+        List<DiffAnalytics> expressions = subject.fetchTopExpressions(contrasts, geneIds, species);
 
         String v = captor.getValue();
-
 
         assertTrue(Pattern.matches("SELECT.*FROM.*", v.toUpperCase()));
         assertTrue(v.toUpperCase().contains("PRIVATE = 'F'"));
@@ -89,7 +83,7 @@ public class DiffAnalyticsDAOTest {
 
         String species = "";
 
-        int expressions = subject.fetchResultCount(Optional.of(contrasts), Optional.of(geneIds), species);
+        int expressions = subject.fetchResultCount(contrasts, geneIds, species);
 
         String v = captor.getValue();
 

@@ -52,7 +52,7 @@ public class BaselineExperimentAssayGroupsDaoIT {
     @Test
     public void doesNotFindNonExistentExperimentAssayGroupButGoesAndQueries() throws Exception {
         IndexedAssayGroup E_MTAB_599_g6 = new IndexedAssayGroup("E-MTAB-599", "DOES_NOT_EXIST");
-        SetMultimap<String, String> multimap = subject.fetchExperimentAssayGroupsWithNonSpecificExpression(Optional.of(ImmutableList.of(E_MTAB_599_g6)), Optional.<Collection<String>>absent());
+        SetMultimap<String, String> multimap = subject.fetchExperimentAssayGroupsWithNonSpecificExpression(ImmutableList.of(E_MTAB_599_g6), ImmutableList.<String>of());
         assertThat(multimap.entries(), is(empty()));
 
         verify(jdbcTemplateSpy).query(anyString(), any(Object [] .class),  any(ResultSetExtractor.class));
@@ -62,7 +62,7 @@ public class BaselineExperimentAssayGroupsDaoIT {
 
     @Test
     public void doesNotFindNonExistentGenes() throws Exception {
-        SetMultimap<String, String> results = subject.fetchExperimentAssayGroupsWithNonSpecificExpression(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.<Collection<String>>of(ImmutableList.of("DOES_NOT_EXIST")));
+        SetMultimap<String, String> results = subject.fetchExperimentAssayGroupsWithNonSpecificExpression(ImmutableList.<IndexedAssayGroup>of(), ImmutableList.of("DOES_NOT_EXIST"));
         assertThat(results.entries(), is(empty()));
 
         verify(jdbcTemplateSpy).query(anyString(), any(Object [] .class),  any(ResultSetExtractor.class));

@@ -1,7 +1,5 @@
-
 package uk.ac.ebi.atlas.search.diffanalytics;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.mutable.MutableInt;
@@ -33,14 +31,11 @@ import java.util.concurrent.TimeUnit;
 public class DiffAnalyticsDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DiffAnalyticsDao.class);
-
-    static final int RESULT_SIZE = 50;
+    private static final int RESULT_SIZE = 50;
 
     private final JdbcTemplate jdbcTemplate;
-
-    private DiffAnalyticsRowMapper dbeRowMapper;
-
-    private OracleObjectFactory oracleObjectFactory;
+    private final DiffAnalyticsRowMapper dbeRowMapper;
+    private final OracleObjectFactory oracleObjectFactory;
 
     @Inject
     public DiffAnalyticsDao(@Qualifier("dataSourceOracle") DataSource dataSource, DiffAnalyticsRowMapper dbeRowMapper, OracleObjectFactory oracleObjectFactory) {
@@ -53,8 +48,8 @@ public class DiffAnalyticsDao {
         this.oracleObjectFactory = oracleObjectFactory;
     }
 
-    public List<DiffAnalytics> fetchTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, String species) {
-        Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
+    public List<DiffAnalytics> fetchTopExpressions(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, String species) {
+        ImmutableSet<IndexedAssayGroup> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
 
         log("fetchTopExpressions", uniqueIndexedContrasts, geneIds);
 
@@ -85,16 +80,15 @@ public class DiffAnalyticsDao {
     }
 
     // get uniques, as we get contrasts multiple times for each assay group in the contrast
-    private Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts) {
-        if (!indexedContrasts.isPresent()) {
-            return Optional.absent();
+    private ImmutableSet<IndexedAssayGroup> uniqueIndexedContrasts(Collection<IndexedAssayGroup> indexedContrasts) {
+        if (indexedContrasts.isEmpty()) {
+            return ImmutableSet.of();
         }
-        return Optional.of(ImmutableSet.copyOf(indexedContrasts.get()));
+        return ImmutableSet.copyOf(indexedContrasts);
     }
 
-    public void visitEachExpression(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, final Visitor<DiffAnalytics> visitor,
-                                    String specie)  {
-        Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
+    public void visitEachExpression(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, final Visitor<DiffAnalytics> visitor, String specie)  {
+        ImmutableSet<IndexedAssayGroup> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
 
         log("visitEachExpression", uniqueIndexedContrasts, geneIds);
 
@@ -145,8 +139,8 @@ public class DiffAnalyticsDao {
     }
 
 
-    public int  fetchResultCount(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, String specie) {
-        Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
+    public int  fetchResultCount(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, String specie) {
+        ImmutableSet<IndexedAssayGroup> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
 
         log("fetchResultCount", uniqueIndexedContrasts, geneIds);
 
@@ -160,38 +154,39 @@ public class DiffAnalyticsDao {
         return count;
     }
 
-    DatabaseQuery<Object> buildCount(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, String species) {
+    private DatabaseQuery<Object> buildCount(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, String species) {
         DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds, species);
         return builder.buildCount();
     }
 
-    DatabaseQuery<Object> buildSelect(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, String species) {
+    private DatabaseQuery<Object> buildSelect(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, String species) {
         DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds, species);
         return builder.buildSelect();
     }
 
-    DiffAnalyticsQueryBuilder createDifferentialGeneQueryBuilder(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds,
+    private DiffAnalyticsQueryBuilder createDifferentialGeneQueryBuilder(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds,
                                                                  String species) {
 
         DiffAnalyticsQueryBuilder builder = new DiffAnalyticsQueryBuilder();
 
-        if (indexedContrasts.isPresent() && !indexedContrasts.get().isEmpty()) {
-            builder.withExperimentContrasts(oracleObjectFactory.createOracleArrayForIndexedAssayGroup(indexedContrasts.get()))
-                    .withSpecies(species);
+        if (!indexedContrasts.isEmpty()) {
+            builder.withExperimentContrasts(oracleObjectFactory.createOracleArrayForIndexedAssayGroup(indexedContrasts)).withSpecies(species);
         }
 
-        if (geneIds.isPresent() && !geneIds.get().isEmpty()) {
-            builder.withGeneIds(oracleObjectFactory.createOracleArrayForIdentifiers(geneIds.get()))
-                    .withSpecies(species);
+        if (!geneIds.isEmpty()) {
+            builder.withGeneIds(oracleObjectFactory.createOracleArrayForIdentifiers(geneIds)).withSpecies(species);
         }
 
         return builder;
 
     }
 
-    private void log(final String methodName, Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
-        LOGGER.debug(String.format(methodName + " for %s unique contrasts and %s genes", (indexedContrasts.isPresent()) ? indexedContrasts.get().size() : 0,
-                (geneIds.isPresent()) ? geneIds.get().size() : 0));
+    private void log(final String methodName, Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds) {
+        LOGGER.debug(
+                String.format(
+                        methodName + " for %s unique contrasts and %s genes",
+                        (!indexedContrasts.isEmpty()) ? indexedContrasts.size() : 0,
+                        (!geneIds.isEmpty()) ? geneIds.size() : 0));
     }
 
 }

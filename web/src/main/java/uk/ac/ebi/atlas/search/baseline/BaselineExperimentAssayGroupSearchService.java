@@ -40,8 +40,8 @@ public class BaselineExperimentAssayGroupSearchService {
         this.baselineConditionsSearchService = baselineConditionsSearchService;
     }
 
-    boolean isEmpty(Optional<? extends Collection<?>> coll) {
-        return (!coll.isPresent() || coll.get().isEmpty());
+    boolean isEmpty(Collection<?> coll) {
+        return (coll == null || coll.isEmpty());
     }
 
     public SortedSet<BaselineExperimentAssayGroup> queryAnySpecies(Set<String> geneIds) {
@@ -52,10 +52,10 @@ public class BaselineExperimentAssayGroupSearchService {
         String conditionString = "";
         String speciesString = "";
 
-        Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups = fetchAssayGroupsForCondition(conditionString);
+        ImmutableSet<IndexedAssayGroup> indexedAssayGroups = fetchAssayGroupsForCondition(conditionString);
 
         SetMultimap<String, String> assayGroupsWithExpressionByExperiment =
-                baselineExperimentAssayGroupsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, Optional.of(geneIds));
+                baselineExperimentAssayGroupsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, geneIds);
 
         SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups =
                 searchedForConditionButGotNoResults(conditionString, indexedAssayGroups)
@@ -68,20 +68,20 @@ public class BaselineExperimentAssayGroupSearchService {
         return baselineExperimentAssayGroups;
     }
 
-    private boolean searchedForConditionButGotNoResults(String condition, Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups) {
-        return (!StringUtils.isBlank(condition) && isEmpty(indexedAssayGroups));
+    private boolean searchedForConditionButGotNoResults(String condition, ImmutableSet<IndexedAssayGroup> indexedAssayGroups) {
+        return (!StringUtils.isBlank(condition) && indexedAssayGroups.isEmpty());
     }
 
-    public SortedSet<BaselineExperimentAssayGroup> query(String geneQuery, String condition, String species, Optional<Set<String>> geneIds) {
+    public SortedSet<BaselineExperimentAssayGroup> query(String geneQuery, String condition, String species, Set<String> geneIds) {
         LOGGER.info("<query> geneQuery={}, condition={}", geneQuery, condition);
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups = fetchAssayGroupsForCondition(condition);
+        ImmutableSet<IndexedAssayGroup> indexedAssayGroups = fetchAssayGroupsForCondition(condition);
 
         SetMultimap<String, String> assayGroupsWithExpressionByExperiment = baselineExperimentAssayGroupsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, geneIds);
 
-        boolean conditionSearch = !isEmpty(indexedAssayGroups);
+        boolean conditionSearch = !indexedAssayGroups.isEmpty();
 
         SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = Sets.newTreeSet();
         if (conditionSearch || StringUtils.isNotEmpty(geneQuery) && StringUtils.isEmpty(condition)) {
@@ -128,16 +128,16 @@ public class BaselineExperimentAssayGroupSearchService {
         return results;
     }
 
-    private Optional<ImmutableSet<IndexedAssayGroup>> fetchAssayGroupsForCondition(String condition) {
+    private ImmutableSet<IndexedAssayGroup> fetchAssayGroupsForCondition(String condition) {
         if (StringUtils.isBlank(condition)) {
-            return Optional.absent();
+            return ImmutableSet.of();
         }
 
         SetMultimap<String, String> assayGroupsPerExperiment = baselineConditionsSearchService.findAssayGroupsPerExperiment(condition);
 
         ImmutableSet<IndexedAssayGroup> indexedAssayGroups = createSetOfIndexedAssayGroups(assayGroupsPerExperiment);
 
-        return Optional.of(indexedAssayGroups);
+        return indexedAssayGroups;
     }
 
     static ImmutableSet<IndexedAssayGroup> createSetOfIndexedAssayGroups(SetMultimap<String, String> assayGroupsPerExperiment) {

@@ -1,7 +1,6 @@
 
 package uk.ac.ebi.atlas.search.baseline;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
@@ -38,17 +37,13 @@ public class BaselineExperimentAssayGroupsDao {
         this.oracleObjectFactory = oracleObjectFactory;
     }
 
-    boolean isEmpty(Optional<? extends Collection<?>> coll) {
-        return (!coll.isPresent() || coll.get().isEmpty());
-    }
-
-    // results SetMultimap of experimentAccession, assaygroupids
-    public SetMultimap<String, String> fetchExperimentAssayGroupsWithNonSpecificExpression(Optional<? extends Collection<IndexedAssayGroup>> indexedAssayGroups, Optional<? extends Collection<String>> geneIds) {
-        if (isEmpty(indexedAssayGroups) && isEmpty(geneIds)) {
+    // results SetMultimap of experimentAccession, assayGroup IDs
+    public SetMultimap<String, String> fetchExperimentAssayGroupsWithNonSpecificExpression(Collection<IndexedAssayGroup> indexedAssayGroups, Collection<String> geneIds) {
+        if (indexedAssayGroups.isEmpty() && geneIds.isEmpty()) {
             return ImmutableSetMultimap.<String, String>builder().build();
         }
 
-        Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedAssayGroups = uniqueIndexedContrasts(indexedAssayGroups);
+        ImmutableSet<IndexedAssayGroup> uniqueIndexedAssayGroups = uniqueIndexedContrasts(indexedAssayGroups);
 
         log("fetchExperimentAssayGroupsWithNonSpecificExpression", uniqueIndexedAssayGroups, geneIds);
 
@@ -90,31 +85,29 @@ public class BaselineExperimentAssayGroupsDao {
     }
 
     // get uniques, as we get contrasts multiple times for each assay group in the contrast
-    private Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts) {
-        if (!indexedContrasts.isPresent()) {
-            return Optional.absent();
+    private ImmutableSet<IndexedAssayGroup> uniqueIndexedContrasts(Collection<IndexedAssayGroup> indexedContrasts) {
+        if (indexedContrasts.isEmpty()) {
+            return ImmutableSet.of();
         }
-        return Optional.of(ImmutableSet.copyOf(indexedContrasts.get()));
+        return ImmutableSet.copyOf(indexedContrasts);
     }
 
 
-    DatabaseQuery<Object> buildSelect(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts,
-                                           Optional<? extends Collection<String>> geneIds) {
+    private DatabaseQuery<Object> buildSelect(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds) {
         BaselineExperimentAssayGroupQueryBuilder builder = createBaselineExpressionsQueryBuilder(indexedContrasts, geneIds);
         return builder.build();
     }
 
-    private BaselineExperimentAssayGroupQueryBuilder createBaselineExpressionsQueryBuilder(Optional<? extends
-            Collection<IndexedAssayGroup>> indexedAssayGroups, Optional<? extends Collection<String>> geneIds) {
+    private BaselineExperimentAssayGroupQueryBuilder createBaselineExpressionsQueryBuilder(Collection<IndexedAssayGroup> indexedAssayGroups, Collection<String> geneIds) {
 
         BaselineExperimentAssayGroupQueryBuilder builder = new BaselineExperimentAssayGroupQueryBuilder();
 
-        if (indexedAssayGroups.isPresent() && !indexedAssayGroups.get().isEmpty()) {
-            builder.withExperimentAssayGroups(oracleObjectFactory.createOracleArrayForIndexedAssayGroup(indexedAssayGroups.get()));
+        if (!indexedAssayGroups.isEmpty()) {
+            builder.withExperimentAssayGroups(oracleObjectFactory.createOracleArrayForIndexedAssayGroup(indexedAssayGroups));
         }
 
-        if (geneIds.isPresent() && !geneIds.get().isEmpty()) {
-            builder.withGeneIds(oracleObjectFactory.createOracleArrayForIdentifiers(geneIds.get()));
+        if (!geneIds.isEmpty()) {
+            builder.withGeneIds(oracleObjectFactory.createOracleArrayForIdentifiers(geneIds));
         }
 
         return builder;
@@ -122,10 +115,10 @@ public class BaselineExperimentAssayGroupsDao {
     }
 
 
-    private void log(final String methodName, Optional<? extends Collection<IndexedAssayGroup>> indexedAssayGroups, Optional<? extends Collection<String>> geneIds) {
+    private void log(final String methodName, Collection<IndexedAssayGroup> indexedAssayGroups, Collection<String> geneIds) {
         LOGGER.debug(
             "{} for {} unique contrasts and {} genes",
-            methodName, indexedAssayGroups.isPresent() ? indexedAssayGroups.get().size() : 0, geneIds.isPresent() ? geneIds.get().size() : 0);
+            methodName, !indexedAssayGroups.isEmpty() ? indexedAssayGroups.size() : 0, !geneIds.isEmpty() ? geneIds.size() : 0);
     }
 
 }
