@@ -7,7 +7,8 @@ var ReactDOM = require('react-dom');
 
 var $ = require('jquery');
 
-var URI = require('urijs');
+var url = require('url');
+var querystring = require('querystring');
 
 //*------------------------------------------------------------------*
 
@@ -20,10 +21,11 @@ var DifferentialResults = require('./DifferentialResults.jsx');
  * @param {Object} options
  * @param {string} options.facetsContainer - id of the facets container, i.e. a <div> id
  * @param {string} options.resultsContainer - id of the results container, i.e. a <div> id
- * @param {string} options.identifier
- * @param {string} options.queryType - "gene", "geneSet"
- * @param {string} options.species
  * @param {string} options.atlasHost
+ * @param {string} options.identifier
+ * @param {string} options.geneQuery
+ * @param {string} options.conditionQuery
+ * @param {string} options.species
  */
 module.exports = function (options) {
 
@@ -31,38 +33,33 @@ module.exports = function (options) {
         resultsElement = document.getElementById(options.resultsContainer),
         host = options.atlasHost ? options.atlasHost : window.location.host;
 
-    var query = {
-        geneQuery : options.identifier,
-        queryType : options.queryType,
-        select    : {}
-    };
+    var query = {select: {}};
 
-    var differentialFacetsPath = "";
-    var differentialResultsPath = "";
-    switch (query.queryType) {
-        case "gene":
-            differentialFacetsPath = "gxa/json/genes/" + query.geneQuery + "/differentialFacets";
-            differentialResultsPath = "gxa/json/genes/" + query.geneQuery + "/differentialResults";
-            break;
-        case "geneSet":
-            differentialFacetsPath = "gxa/json/genesets/" + query.geneQuery + "/differentialFacets" + (options.species ? "?organism=" + options.species : "");
-            differentialResultsPath = "gxa/json/genesets/" + query.geneQuery + "/differentialResults" + (options.species ? "?organism=" + options.species : "");
-            break;
-        default:
-            differentialFacetsPath =
-                "gxa/json/query/differentialFacets?geneQuery=" + query.geneQuery +
-                (options.species ? "?organism=" + options.species : "");
-            differentialResultsPath =
-                "gxa/json/query/differentialResults?geneQuery=" + query.geneQuery +
-                (options.species ? "?organism=" + options.species : "");
-            break;
+    var differentialFacetsUrlObject = {protocol: window.location.protocol, host: host},
+        differentialResultsUrlObject = {protocol: window.location.protocol, host: host};
+
+    if (window.location.pathname.match(/\/genes\//)) {
+        differentialFacetsUrlObject.pathname = 'gxa/json/genes/' + options.identifier + '/differentialFacets';
+        differentialResultsUrlObject.pathname = 'gxa/json/genes/' + options.identifier + '/differentialResults';
+    } else if (window.location.pathname.match(/\/genesets\//)) {
+        queryParams = {conditionQuery: options.conditionQuery, species: options.species};
+        differentialFacetsUrlObject.pathname = 'gxa/json/genesets/' + options.identifier + '/differentialFacets';
+        differentialFacetsUrlObject.query = queryParams;
+        differentialResultsUrlObject.pathname = 'gxa/json/genesets/' + options.identifier + '/differentialResults';
+        differentialFacetsUrlObject.query = queryParams;
+    } else {
+        var queryParams = {geneQuery: options.geneQuery, conditionQuery: options.conditionQuery, species: options.species};
+        differentialFacetsUrlObject.pathname = 'gxa/json/query/differentialFacets';
+        differentialFacetsUrlObject.query = queryParams;
+        differentialResultsUrlObject.pathname = 'gxa/json/query/differentialResults';
+        differentialResultsUrlObject.query = queryParams;
     }
 
     var facetsTreeData,
         resultsData;
     $.ajaxSetup({ traditional:true });
     $.ajax({
-        url: new URI({protocol: URI(window.location).protocol(), hostname: host, path: differentialFacetsPath}).toString(),
+        url: url.format(differentialFacetsUrlObject),
         dataType: "json",
         success: function(response) {
             facetsTreeData = response;
@@ -79,7 +76,7 @@ module.exports = function (options) {
             pushQueryIntoBrowserHistory(true);
 
             $.ajax({
-                url: new URI({protocol: URI(window.location).protocol(), hostname: host, path: differentialResultsPath}).toString(),
+                url: url.format(differentialResultsUrlObject),
                 dataType: "json",
                 success: function(response) {
                     resultsData = response;
@@ -104,8 +101,8 @@ module.exports = function (options) {
      * Parse the `ds` search field in the URL and assign it to the `query` object
      */
     function parseSelectedFacetsFromLocation() {
-        var currentURL = new URI(window.location);
-        var selectString = currentURL.search(true)["ds"];
+        var currentURL = url.parse(window.location.toString());
+        var selectString = querystring.parse(currentURL.query)["ds"];
         query.select = selectString ? JSON.parse(selectString) : {};
     }
 
@@ -136,14 +133,23 @@ module.exports = function (options) {
      * @param {boolean} replace - use `replaceState` instead of `pushState`
      */
     function pushQueryIntoBrowserHistory(replace) {
-        var newURL = new URI(window.location).search(function(data) {
-            data.ds = JSON.stringify(query.select);
-        });
+        var currentUrlObject = url.parse(window.location.toString());
+
+        var newUrlQueryParams = querystring.parse(currentUrlObject.query);
+        newUrlQueryParams.ds = JSON.stringify(query.select);
+
+        var newUrlObject = {
+            protocol: currentUrlObject.protocol,
+            host: currentUrlObject.host,
+            hash: currentUrlObject.hash,
+            pathname: currentUrlObject.pathname,
+            query: newUrlQueryParams
+        };
 
         if (replace) {
-            history.replaceState(null, "", newURL);
+            history.replaceState(null, "", url.format(newUrlObject));
         } else {
-            history.pushState(null, "", newURL);
+            history.pushState(null, "", url.format(newUrlObject));
         }
     }
 

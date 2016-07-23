@@ -18,16 +18,25 @@ public class AnalyticsSearchService {
     }
 
     public ImmutableSet<String> fetchExperimentTypes(String bioentityIdentifier) {
-        return analyticsIndexSearchDAO.fetchExperimentTypes(bioentityIdentifier);
+        return fetchExperimentTypes(SemanticQuery.create(bioentityIdentifier), SemanticQuery.create(), "");
     }
 
     public ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, String species) {
-        return analyticsIndexSearchDAO.fetchExperimentTypes(geneQuery, species);
+        return fetchExperimentTypes(geneQuery, SemanticQuery.create(), species);
     }
 
-    public ImmutableSet<String> searchBioentityIdentifiers(SemanticQuery geneQuery, String species) {
-        return analyticsIndexSearchDAO.searchBioentityIdentifiers(geneQuery, species);
+    public ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        return analyticsIndexSearchDAO.fetchExperimentTypes(geneQuery, conditionQuery, species);
     }
+
+    public ImmutableSet<String> searchMoreThanOneBioentityIdentifier(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        return analyticsIndexSearchDAO.searchBioentityIdentifiers(geneQuery, conditionQuery, species, 2);
+    }
+
+    public ImmutableSet<String> searchBioentityIdentifiers(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        return analyticsIndexSearchDAO.searchBioentityIdentifiers(geneQuery, conditionQuery, species, -1);
+    }
+
 
     public Collection<String> getBioentityIdentifiersForSpecies(String species){
         return analyticsIndexSearchDAO.getBioentityIdentifiersForSpecies(species);

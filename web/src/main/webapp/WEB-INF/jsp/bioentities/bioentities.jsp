@@ -1,5 +1,4 @@
 <%--@elvariable id="bioEntityPropertyService" type="uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService"--%>
-<%--@elvariable id="isSearch" type="boolean"--%>
 <%--@elvariable id="searchDescription" type="java.lang.String"--%>
 <%--@elvariable id="identifier" type="java.lang.String"--%>
 <%--@elvariable id="species" type="java.lang.String"--%>
@@ -21,7 +20,7 @@
 
 <h:ebiGlobalSearch ebiSearchTerm="${not empty searchDescription ? applicationProperties.urlParamEncode(searchDescription) : searchDescription}"/>
 
-<c:if test="${isSearch}">
+<c:if test="${not empty searchDescription}">
 <section>
     <h2 class="strapline">
         Results for <span class="searchterm">${searchDescription}</span>

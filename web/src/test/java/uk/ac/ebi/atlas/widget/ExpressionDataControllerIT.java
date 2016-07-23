@@ -42,7 +42,9 @@ public class ExpressionDataControllerIT extends RestAssuredFixture {
 
     @Test
     public void geneExpressedInBaselineAndDifferentialExperimentsReturnsTrue() {
-        assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(BASELINE_GENE)).matches(NON_EMPTY_JSON_OBJECT_REGEX), is(true));
+        assertThat(
+                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(BASELINE_GENE), SemanticQuery.create(), ""),
+                is(NON_EMPTY_JSON_OBJECT_REGEX));
 
         Response response = get("/json/expressionData?geneId=" + BASELINE_GENE);
 
@@ -53,8 +55,12 @@ public class ExpressionDataControllerIT extends RestAssuredFixture {
 
     @Test
     public void geneExpressedInDifferentialExperimentsOnlyReturnsFalse() {
-        assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(DIFFERENTIAL_GENE)).equals(EMPTY_JSON_OBJECT), is(true));
-        assertThat(differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(SemanticQuery.create(DIFFERENTIAL_GENE)).matches(NON_EMPTY_JSON_OBJECT_REGEX), is(true));
+        assertThat(
+                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(DIFFERENTIAL_GENE), SemanticQuery.create(), ""),
+                is(EMPTY_JSON_OBJECT));
+        assertThat(
+                differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(SemanticQuery.create(DIFFERENTIAL_GENE))
+                .matches(NON_EMPTY_JSON_OBJECT_REGEX), is(true));
 
         Response response = get("/json/expressionData?geneId=" + DIFFERENTIAL_GENE);
 
@@ -65,8 +71,12 @@ public class ExpressionDataControllerIT extends RestAssuredFixture {
 
     @Test
     public void nonExistentGeneReturnsFalse() {
-        assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(NON_EXISTENT_GENE)).equals(EMPTY_JSON_OBJECT), is(true));
-        assertThat(differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(SemanticQuery.create(NON_EXISTENT_GENE)).equals(EMPTY_JSON_ARRAY), is(true));
+        assertThat(
+                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(NON_EXISTENT_GENE), SemanticQuery.create(), ""),
+                is(EMPTY_JSON_OBJECT));
+        assertThat(
+                differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(SemanticQuery.create(NON_EXISTENT_GENE)),
+                is(EMPTY_JSON_ARRAY));
 
         Response response = get("/json/expressionData?geneId=" + NON_EXISTENT_GENE);
 

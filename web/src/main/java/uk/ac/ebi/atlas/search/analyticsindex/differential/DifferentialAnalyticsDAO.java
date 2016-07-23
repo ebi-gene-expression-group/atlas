@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -28,7 +29,8 @@ public abstract class DifferentialAnalyticsDAO {
     protected static final String DIFFERENTIAL_ONLY = "experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential)";
     protected static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
     protected static final String BIOENTITY_IDENTIFIER_FIELD = "bioentityIdentifier";
-    private static final String SPECIES_FIELD = "species";
+    protected static final String CONDITION_SEARCH_FIELD = "conditionsSearch";
+    protected static final String SPECIES_FIELD = "species";
 
     protected static final double DEFAULT_P_VALUE = 0.05;
 
@@ -48,6 +50,23 @@ public abstract class DifferentialAnalyticsDAO {
         }
         if (isNotBlank(species)) {
             stringBuilder.append(String.format("%s:\"%s\"", SPECIES_FIELD, species));
+        }
+
+        return stringBuilder.toString();
+    }
+
+    protected String buildSolrQuery(Iterable<Pair<String, SemanticQuery>> searchQueries) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Pair<String, SemanticQuery> searchQuery : searchQueries) {
+            if (searchQuery.getRight().isNotEmpty()) {
+                stringBuilder.append(String.format("%s:(%s)", searchQuery.getLeft(), searchQuery.getRight().asSolr1DNF()));
+                stringBuilder.append(" AND ");
+            }
+        }
+
+        if (stringBuilder.lastIndexOf(" AND ") > 0) {
+            stringBuilder.delete(stringBuilder.lastIndexOf(" AND "), stringBuilder.length());
         }
 
         return stringBuilder.toString();

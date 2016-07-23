@@ -24,8 +24,10 @@ public class GeneSetPageController extends BioentityPageController {
     }
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
-    public String showGeneSetPage(@PathVariable String identifier, Model model,
-                                  @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
+    public String showGeneSetPage(@PathVariable String identifier,
+                                  @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
+                                  @RequestParam(value = "organism", required = false, defaultValue = "") String species,
+                                  Model model) {
         bioentityPropertyServiceInitializer.initForGeneSetPage(bioEntityPropertyService, identifier);
 
         if (matchesReactomeID(identifier)) {
@@ -33,11 +35,11 @@ public class GeneSetPageController extends BioentityPageController {
         }
 
         model.addAttribute("species", species);
-        model.addAttribute("queryType", "geneSet");
+        model.addAttribute("conditionQuery", conditionQuery);
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(SemanticQuery.create(identifier), species);
 
-        return super.showBioentityPage(identifier, species, model, experimentTypes);
+        return super.showBioentityPage(identifier, conditionQuery, species, model, experimentTypes);
     }
 
     @Override

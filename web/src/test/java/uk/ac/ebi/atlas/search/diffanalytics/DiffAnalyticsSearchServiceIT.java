@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,15 +13,15 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.search.OracleObjectFactory;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.utils.Visitor;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -40,7 +39,7 @@ public class DiffAnalyticsSearchServiceIT {
     DifferentialConditionsSearchService differentialConditionsSearchService;
 
     @Inject
-    SolrQueryService solrQueryService;
+    AnalyticsSearchService analyticsSearchService;
 
     @Inject
     @Qualifier("dataSourceOracle")
@@ -62,7 +61,7 @@ public class DiffAnalyticsSearchServiceIT {
         when(contrastTraderMock.getContrast(anyString(), anyString())).thenReturn(contrastMock);
         DiffAnalyticsRowMapper dbeRowMapper = new DiffAnalyticsRowMapper(contrastTraderMock);
         DiffAnalyticsDao diffAnalyticsDao = new DiffAnalyticsDao(dataSource, dbeRowMapper, oracleObjectFactory);
-        subject = new DiffAnalyticsSearchService(diffAnalyticsDao, differentialConditionsSearchService, solrQueryService);
+        subject = new DiffAnalyticsSearchService(diffAnalyticsDao, differentialConditionsSearchService, analyticsSearchService);
     }
 
     private static List<String> getBioentityNames(DiffAnalyticsList bioentityExpressions) {
@@ -71,74 +70,6 @@ public class DiffAnalyticsSearchServiceIT {
             names.add(bioentityExpression.getBioentityName());
         }
         return names;
-    }
-
-
-    private DiffAnalyticsList fetch(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species){
-        Optional<Set<String>> geneIdsFromGeneQuery = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, conditionQuery, species);
-        return subject.fetchTop(conditionQuery.asSolr1DNF(), species, geneIdsFromGeneQuery);
-    }
-
-
-    @Test
-    public void fetchTopKinaseNoSpecies()  {
-        SemanticQuery geneQuery = SemanticQuery.create("kinase");
-
-        DiffAnalyticsList bioentityExpressions = fetch(geneQuery, SemanticQuery.create(""), "");
-
-        assertThat(bioentityExpressions, hasSize(greaterThan(0)));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), greaterThan(0));
-    }
-
-
-    @Test
-    public void weHaveSomeDataAboutCancerAndCanAccessItInTwoDifferentWays()  {
-        SemanticQuery geneQuery = SemanticQuery.create();
-        SemanticQuery conditionQuery = SemanticQuery.create("cancer");
-        String species = "";
-
-        final List<String> names = Lists.newArrayList();
-
-        int count = subject.visitEachExpression(geneQuery, conditionQuery, "", new Visitor<DiffAnalytics>() {
-
-            @Override
-            public void visit(DiffAnalytics value) {
-                names.add(value.getBioentityName());
-            }
-        });
-
-
-        assertThat(count, greaterThan(100));
-        assertThat(count, is(names.size()));
-
-        DiffAnalyticsList bioentityExpressions = subject.fetchTop(conditionQuery.asSolr1DNF(), species, Optional.<Set<String>>absent());
-
-        assertThat(bioentityExpressions.size(), greaterThan(0));
-        assertThat(bioentityExpressions.size(), lessThan(51));
-        assertThat(count, is(bioentityExpressions.getTotalNumberOfResults()));
-    }
-    
-
-    @Test
-    public void weCanCheckAboutKinaseConnectedToCancer()  {
-        SemanticQuery geneQuery = SemanticQuery.create("kinase");
-        SemanticQuery conditionQuery = SemanticQuery.create("cancer");
-        String species = "";
-
-        DiffAnalyticsList bioentityExpressions = subject.fetchTop(conditionQuery.asSolr1DNF(), species, Optional.<Set<String>>absent());
-        List<String> names = getBioentityNames(bioentityExpressions);
-
-        assertThat(bioentityExpressions.size(), greaterThan(10));
-        int matches = 0;
-        for(String s: Lists.newArrayList(
-                "Inmt","Egfl6","Napsa","Pon1","Clec2g","Cd36","Vsig2","St8sia6","Ctse","Sox9","Sgce","Wfdc18",
-                "Esam","Pon1","Pax9","Syt5","Slfn4","Sox9","Phyhip","Irx2","Slc2a3","Syt5","S100a6","Mx1","Man1a","Gpa33","Slc9a3r2","Sema4f","Ssbp2","Txnrd3","Alox12","Vpreb3","Tspan33","Mmp14","Scnn1g","Sec14l2","Acp5","Col6a1","Kcnn3","Ndrg1","Stard3nl","Cp","Sema4f","Epdr1","S100a6","Cyp51","Ccdc65","Vpreb3","Gstt1"
-                )){
-            if(names.contains(s)){
-                matches++;
-            }
-        }
-        assertThat(matches, greaterThan(9));
     }
 
 }

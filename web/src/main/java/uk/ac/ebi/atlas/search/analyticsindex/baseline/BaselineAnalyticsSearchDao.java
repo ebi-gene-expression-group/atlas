@@ -1,7 +1,9 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.ImmutableList;
 import com.jayway.jsonpath.JsonPath;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +40,10 @@ public class BaselineAnalyticsSearchDao {
     static final String EXPERIMENTS_PATH = "$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline' || @.val=='proteomics_baseline')].species.buckets[?(@.val=='%s')].defaultQueryFactorType.buckets[?(@.val=='%s')].experimentAccession.buckets[*]";
     static final String FACET_TREE_PATH = "$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline' || @.val=='proteomics_baseline')].species.buckets[*]";
 
+    private static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
+    private static final String CONDITION_SEARCH_FIELD = "conditionsSearch";
+    private static final String SPECIES_FIELD = "species";
+    private static final String DEFAULT_QUERY_FACTOR_TYPE_FIELD = "defaultQueryFactorType";
 
     private final String baselineHeatmapPivotQuery;
 
@@ -53,35 +59,44 @@ public class BaselineAnalyticsSearchDao {
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
-    public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery, String species) {
-        String response = fetchFacets(buildGeneIdentifierQuery(geneQuery, species));
+    public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        ImmutableList.Builder<Pair<String, SemanticQuery>> searchQueriesBuilder = ImmutableList.builder();
+        searchQueriesBuilder.add(Pair.of(IDENTIFIER_SEARCH_FIELD, geneQuery));
+        searchQueriesBuilder.add(Pair.of(CONDITION_SEARCH_FIELD, conditionQuery));
+        searchQueriesBuilder.add(Pair.of(SPECIES_FIELD, SemanticQuery.create(species)));
+        String response = fetchFacets(buildSolrQuery(searchQueriesBuilder.build()));
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
-
-    private String buildGeneIdentifierQuery(SemanticQuery geneQuery) {
-        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF());
-    }
-
-    private String buildGeneIdentifierQuery(SemanticQuery geneQuery, String species) {
+    protected String buildSolrQuery(Iterable<Pair<String, SemanticQuery>> searchQueries) {
         StringBuilder stringBuilder = new StringBuilder();
-        if (geneQuery.isNotEmpty()) {
-            stringBuilder.append(String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF()));
+
+        for (Pair<String, SemanticQuery> searchQuery : searchQueries) {
+            if (searchQuery.getRight().isNotEmpty()) {
+                stringBuilder.append(String.format("%s:(%s)", searchQuery.getLeft(), searchQuery.getRight().asSolr1DNF()));
+                stringBuilder.append(" AND ");
+            }
         }
-        if (geneQuery.isNotEmpty() && isNotBlank(species)) {
-            stringBuilder.append(" AND ");
-        }
-        if (isNotBlank(species)) {
-            stringBuilder.append(String.format("species:\"%s\"", species));
+
+        if (stringBuilder.lastIndexOf(" AND ") > 0) {
+            stringBuilder.delete(stringBuilder.lastIndexOf(" AND "), stringBuilder.length());
         }
 
         return stringBuilder.toString();
     }
 
-    public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery geneQuery, String species, String defaultQueryFactorType) {
-        String identifierSearch = buildGeneIdentifierQuery(geneQuery);
-        String response = fetchFacets(String.format("%s AND defaultQueryFactorType:%s", identifierSearch,
-                defaultQueryFactorType));
+    private String buildGeneIdentifierQuery(SemanticQuery geneQuery) {
+        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF());
+    }
+
+    public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, String defaultQueryFactorType) {
+        ImmutableList.Builder<Pair<String, SemanticQuery>> searchQueriesBuilder = ImmutableList.builder();
+        searchQueriesBuilder.add(Pair.of(IDENTIFIER_SEARCH_FIELD, geneQuery));
+        searchQueriesBuilder.add(Pair.of(CONDITION_SEARCH_FIELD, conditionQuery));
+        searchQueriesBuilder.add(Pair.of(SPECIES_FIELD, SemanticQuery.create(species)));
+        searchQueriesBuilder.add(Pair.of(DEFAULT_QUERY_FACTOR_TYPE_FIELD, SemanticQuery.create(defaultQueryFactorType)));
+
+        String response = fetchFacets(buildSolrQuery(searchQueriesBuilder.build()));
 
         return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType));
     }

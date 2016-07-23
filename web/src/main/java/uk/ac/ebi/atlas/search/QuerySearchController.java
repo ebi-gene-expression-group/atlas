@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static uk.ac.ebi.atlas.bioentity.GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession;
 import static uk.ac.ebi.atlas.bioentity.GeneSetUtil.matchesReactomeID;
 
@@ -40,8 +41,8 @@ public class QuerySearchController {
     }
 
     @RequestMapping(value = "/query")
-    public String showGeneQueryResultPage(@RequestParam(value = "geneQuery", required = false, defaultValue = "[]") SemanticQuery geneQuery,
-                                          @RequestParam(value = "conditionQuery", required = false, defaultValue = "[]") SemanticQuery conditionQuery,
+    public String showGeneQueryResultPage(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
+                                          @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                           @RequestParam(value = "organism", required = false, defaultValue = "") String species,
                                           Model model, RedirectAttributes redirectAttributes)
     throws UnsupportedEncodingException {
@@ -51,35 +52,50 @@ public class QuerySearchController {
         String searchDescription = SearchDescription.get(geneQuery, conditionQuery, species);
         model.addAttribute("searchDescription", searchDescription);
         model.addAttribute("species", species);
-        model.addAttribute("identifier", geneQuery.toUrlEncodedJson());
+        model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());
+        model.addAttribute("conditionQuery", conditionQuery.toUrlEncodedJson());
 
         // Matches gene set ID -> Gene set page
         // TODO We decide it’s a gene set because of how the query *looks*, and things like GO:FOOBAR will be incorrectly redirected to /genesets/GO:FOOBAR
         if (isGeneSetCategoryOrMatchesGeneSetAccession(geneQuery)) {
-            copyModelAttributesToFlashAttributes(model, redirectAttributes);
             String geneSetId = geneQuery.terms().iterator().next().value();
-            if (matchesReactomeID(geneSetId)) {
-                return "redirect:/genesets/" + geneQuery.terms().iterator().next().value();
-            } else {
-                return "redirect:/genesets/" + geneQuery.terms().iterator().next().value() + (species.isEmpty() ? "" : "?organism=" + species);
+
+            StringBuilder stringBuilder = new StringBuilder("redirect:/genesets/" + geneSetId);
+            if (conditionQuery.isNotEmpty() || (!matchesReactomeID(geneSetId) && isNotBlank(species))) {
+                String delimiter = "?";
+
+                if (conditionQuery.isNotEmpty()) {
+                    stringBuilder.append(delimiter).append("conditionQuery=").append(conditionQuery.toUrlEncodedJson());
+                    delimiter = "&";
+                }
+
+                if (!matchesReactomeID(geneSetId) && isNotBlank(species)) {
+                    stringBuilder.append(delimiter).append("organism=").append(species);
+                    // delimiter = "&";
+                }
             }
 
+            copyModelAttributesToFlashAttributes(model, redirectAttributes);
+            return stringBuilder.toString();
         }
 
         // No gene IDs -> empty results page
-        ImmutableSet<String> geneIds = analyticsSearchService.searchBioentityIdentifiers(geneQuery, species);
+        ImmutableSet<String> geneIds = analyticsSearchService.searchMoreThanOneBioentityIdentifier(geneQuery, conditionQuery, species);
         if (geneIds.size() == 0) {
             return "empty-search-page";
         }
 
         // Resolves to a single Gene ID -> Gene page
         if (geneIds.size() == 1) {
+            StringBuilder stringBuilder = new StringBuilder("redirect:/genes/" + geneIds.iterator().next());
+            stringBuilder.append(conditionQuery.isEmpty() ? "" : "?conditionQuery=" + conditionQuery.toUrlEncodedJson());
+
             copyModelAttributesToFlashAttributes(model, redirectAttributes);
-            return "redirect:/genes/" + geneIds.iterator().next();
+            return stringBuilder.toString();
         }
         // Resolves to multiple IDs -> General results page
         else {
-            ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(geneQuery, species);
+            ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(geneQuery, conditionQuery, species);
 
             boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
             boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
@@ -89,7 +105,7 @@ public class QuerySearchController {
             }
 
             if (hasBaselineResults) {
-                model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(geneQuery, species));
+                model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(geneQuery, conditionQuery, species));
             }
 
             model.addAttribute("hasDifferentialResults", hasDifferentialResults);
@@ -108,18 +124,18 @@ public class QuerySearchController {
 
     @RequestMapping(value = {"/json/query/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String fetchDifferentialJsonFacets(@RequestParam(value = "geneQuery", required = false, defaultValue = "[]") SemanticQuery geneQuery,
-                                              @RequestParam(value = "conditionQuery", required = false, defaultValue = "[]") SemanticQuery conditionQuery,
+    public String fetchDifferentialJsonFacets(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
+                                              @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                               @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
-        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(geneQuery, species);
+        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(geneQuery, conditionQuery, species);
     }
 
     @RequestMapping(value = {"/json/query/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String fetchDifferentialJsonResults(@RequestParam(value = "geneQuery", required = false, defaultValue = "[]") SemanticQuery geneQuery,
-                                               @RequestParam(value = "conditionQuery", required = false, defaultValue = "[]") SemanticQuery conditionQuery,
+    public String fetchDifferentialJsonResults(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
+                                               @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                                @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
-        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(geneQuery, species);
+        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(geneQuery, conditionQuery, species);
     }
 
     @ExceptionHandler(value = {IllegalArgumentException.class})

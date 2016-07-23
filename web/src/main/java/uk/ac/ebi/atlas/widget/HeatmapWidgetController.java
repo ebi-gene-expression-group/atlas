@@ -90,24 +90,21 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     }
 
     @RequestMapping(value = "/widgets/heatmap/baselineAnalytics")
-    public String analyticsJson(@RequestParam(value = "geneQuery", required = true) SemanticQuery geneQuery,
-                                @RequestParam(value = "species", required = false) String species,
+    public String analyticsJson(@RequestParam(value = "geneQuery") SemanticQuery geneQuery,
+                                @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
+                                @RequestParam(value = "species", required = false, defaultValue = "") String species,
                                 @RequestParam(value = "propertyType", required = false) String propertyType,
-                                @RequestParam(value = "source", required = false) String source,
+                                @RequestParam(value = "source", required = false, defaultValue = "ORGANISM_PART") String defaultQueryFactorType,
                                 Model model, HttpServletRequest request, HttpServletResponse response) {
 
         if (isBlank(species)) {
             species = speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery);
         }
 
-        String defaultQueryFactorType =
-                StringUtils.isBlank(source) ?
-                        ("caenorhabditis elegans".equalsIgnoreCase(species) ?
-                                "DEVELOPMENTAL_STAGE" :
-                                "ORGANISM_PART") :
-                        source.toUpperCase();
+        defaultQueryFactorType =
+                "caenorhabditis elegans".equalsIgnoreCase(species) ? "DEVELOPMENTAL_STAGE" : defaultQueryFactorType;
 
-        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, species, defaultQueryFactorType);
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, conditionQuery, species, defaultQueryFactorType);
 
         populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, Species.convertToEnsemblSpecies(species), searchResult, model);
 

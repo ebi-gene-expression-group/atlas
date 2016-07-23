@@ -23,24 +23,31 @@ public class DifferentialAnalyticsSearchService {
     }
 
     public String fetchDifferentialFacetsForSearch(SemanticQuery geneQuery) {
-        return fetchDifferentialFacetsForSearch(geneQuery, "");
+        return fetchDifferentialFacetsForSearch(geneQuery, SemanticQuery.create(), "");
     }
 
     public String fetchDifferentialFacetsForSearch(SemanticQuery geneQuery, String species) {
-        String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForSearch(geneQuery, species);
+        return fetchDifferentialFacetsForSearch(geneQuery, SemanticQuery.create(), species);
+    }
+
+    public String fetchDifferentialFacetsForSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForSearch(geneQuery, conditionQuery, species);
         return differentialFacetsReader.generateFacetsTreeJson(jsonResponse);
     }
 
 
     public String fetchDifferentialResultsForSearch(SemanticQuery geneQuery) {
-        return fetchDifferentialResultsForSearch(geneQuery, "");
+        return fetchDifferentialResultsForSearch(geneQuery, SemanticQuery.create(), "");
     }
 
     public String fetchDifferentialResultsForSearch(SemanticQuery geneQuery, String species) {
-        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForSearch(geneQuery, species);
-        return differentialResultsReader.extractResultsAsJson(differentialResults);
+        return fetchDifferentialResultsForSearch(geneQuery, SemanticQuery.create(), species);
     }
 
+    public String fetchDifferentialResultsForSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForSearch(geneQuery, conditionQuery, species);
+        return differentialResultsReader.extractResultsAsJson(differentialResults);
+    }
 
     public String fetchDifferentialFacetsForIdentifier(String identifier) {
         String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForIdentifier(identifier);

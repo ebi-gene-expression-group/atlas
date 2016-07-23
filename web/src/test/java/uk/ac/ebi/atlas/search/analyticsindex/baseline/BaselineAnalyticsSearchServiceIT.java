@@ -104,7 +104,7 @@ public class BaselineAnalyticsSearchServiceIT {
     @Test
     public void singleSpeciesGeneAccessionTissues() {
         //"ENSG00000006062" seems to be a famous enough gene
-        BaselineExperimentSearchResult result = subject.findExpressions(SemanticQuery.create("ENSG00000006062"), "Homo sapiens", "ORGANISM_PART");
+        BaselineExperimentSearchResult result = subject.findExpressions(SemanticQuery.create("ENSG00000006062"), SemanticQuery.create(), "Homo sapiens", "ORGANISM_PART");
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
@@ -124,9 +124,7 @@ public class BaselineAnalyticsSearchServiceIT {
 
     @Test
     public void geneQueryCellLine() {
-        BaselineExperimentSearchResult result = subject.findExpressions(
-                SemanticQuery.create("protein_coding"), "homo sapiens",
-                CELL_LINE);
+        BaselineExperimentSearchResult result = subject.findExpressions(SemanticQuery.create("protein_coding"), SemanticQuery.create(), "homo sapiens", CELL_LINE);
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 

@@ -72,12 +72,7 @@ public class BioentitiesSearchDifferentialDownloadController {
             writer.setResponseWriter(response.getWriter());
             writer.writeHeader(geneQuery, conditionQuery, species);
 
-//            SemanticQuery expandedConditionQuery = efoExpander.addEfoAccessions(conditionQuery);
-            SemanticQuery expandedConditionQuery = conditionQuery;
-
-            //String condition = requestParameters.getConditionQuery().asString();
-
-            int count = diffAnalyticsSearchService.visitEachExpression(geneQuery, expandedConditionQuery, species, writer);
+            int count = diffAnalyticsSearchService.visitEachExpression(geneQuery, conditionQuery, species, writer);
             LOGGER.info("downloadGeneQueryResults streamed {} differential gene expressions", count);
         } catch (VisitorException e) {
             LOGGER.warn("downloadGeneQueryResults aborted, connection may have been lost with the client: {}", e.getMessage());

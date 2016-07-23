@@ -27,7 +27,8 @@ public class AutoCompleteController {
     @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String fetchTopSuggestions(@RequestParam(value = "query") String query, @RequestParam(value = "species", required = false) String species) {
+    public String fetchTopSuggestions(@RequestParam(value = "query") String query,
+                                      @RequestParam(value = "species", required = false, defaultValue="") String species) {
         if (StringUtils.isBlank(query)) {
             return StringUtils.EMPTY;
         }

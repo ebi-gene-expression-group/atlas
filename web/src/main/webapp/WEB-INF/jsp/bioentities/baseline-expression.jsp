@@ -1,7 +1,8 @@
 <%--@elvariable id="hasBaselineResults" type="boolean"--%>
 <%--@elvariable id="jsonFacets" type="java.lang.String"--%>
 <%--@elvariable id="identifier" type="java.lang.String"--%>
-<%--@elvariable id="queryType" type="java.lang.String"--%>
+<%--@elvariable id="geneQuery" type="java.lang.String"--%>
+<%--@elvariable id="conditionQuery" type="java.lang.String"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -18,9 +19,11 @@
         facetsContainer: "gxaBaselineFacetsContainerDiv",
         resultsContainer: "gxaBaselineResultsContainerDiv",
         showAnatomogramsInput: "showAnatomogramsCheckbox",
-        species: "${species}",
         facetsTreeData: baselineFacetsData,
-        identifier: "${identifier}"
+        identifier: "${identifier}",
+        geneQuery: "${geneQuery}",
+        conditionQuery: "${conditionQuery}",
+        species: "${species}"
     });
     </c:if>
 </script>

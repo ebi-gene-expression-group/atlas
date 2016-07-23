@@ -55,9 +55,16 @@ public class SemanticQueryTest {
 
     @Test
     public void differentOrderAndTypeOfInitializingParametersProduceTheSameObject() throws Exception {
-        SemanticQueryTerm semanticQueyTerm1 = SemanticQueryTerm.create("value1", "caregory1");
-        SemanticQueryTerm semanticQueyTerm2 = SemanticQueryTerm.create("value2", "caregory2");
+        SemanticQueryTerm semanticQueyTerm1 = SemanticQueryTerm.create("value1", "category1");
+        SemanticQueryTerm semanticQueyTerm2 = SemanticQueryTerm.create("value2", "category2");
         assertThat(SemanticQuery.create(ImmutableSet.of(semanticQueyTerm1, semanticQueyTerm2)), is(SemanticQuery.create(ImmutableSet.of(semanticQueyTerm2, semanticQueyTerm1))));
         assertThat(SemanticQuery.create(semanticQueyTerm1, semanticQueyTerm2), is(SemanticQuery.create(ImmutableSet.of(semanticQueyTerm2, semanticQueyTerm1))));
+    }
+
+    @Test
+    public void parsesJsonWithoutCategories() throws Exception {
+        SemanticQuery subject = SemanticQuery.fromJson("[{\"value\":\"zinc finger\"},{\"value\":\"BRCA2B\"}]");
+        assertThat(subject.isNotEmpty(), is(true));
+        assertThat(subject.size(), is(2));
     }
 }

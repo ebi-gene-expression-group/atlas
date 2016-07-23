@@ -1,33 +1,21 @@
 package uk.ac.ebi.atlas.search.baseline;
 
-import com.google.common.collect.Sets;
-import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import com.google.common.collect.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -39,7 +27,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     BaselineExperimentAssayGroupSearchService subject;
 
     @Inject
-    SolrQueryService solrQueryService;
+    AnalyticsSearchService analyticsSearchService;
     
     public void kinaseIsAPopularProtein()  {
         List<String> results = resultsFor("kinase","","");
@@ -53,7 +41,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String condition = "adipose thymus";
         String species = "";
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, Optional.<Set<String>>absent());
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, ImmutableSet.<String>of());
         assertTrue(results.size()>0);
         for(BaselineExperimentAssayGroup result: results){
             Set<String> factorValues = result.getDefaultFactorValuesForSpecificAssayGroupsWithCondition();
@@ -119,21 +107,6 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void justGeneQueryNeedsExpansionIntoGeneIds(){
-        String geneQuery = "ASPM";
-        String condition = "";
-        String species = "";
-
-        List<String> fullResults = getExperimentAccessions(subject.query(geneQuery, condition, species, solrQueryService
-                .expandGeneQueryIntoGeneIds(geneQuery, species.toLowerCase())));
-
-        List<String> resultsWithoutExpansion = getExperimentAccessions(subject.query(geneQuery, condition, species, Optional.<Set<String>>absent()));
-
-        assertTrue(fullResults.size()>0);
-        assertEquals(Lists.newArrayList(),resultsWithoutExpansion);
-    }
-
-    @Test
     public void someResultsForAdult(){
         List<String> r0 = resultsFor("","adult","");
         List<String> r1 = resultsFor("","adult","homo sapiens");
@@ -145,7 +118,11 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
 
     private List<String> resultsFor(String geneQuery, String condition, String species){
-        return getExperimentAccessions(subject.query(geneQuery, condition, species, solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species.toLowerCase())));
+        return getExperimentAccessions(
+                subject.query(
+                        geneQuery, condition, species, analyticsSearchService.searchBioentityIdentifiers(SemanticQuery.create(geneQuery), SemanticQuery.create(), species)
+                )
+        );
     }
 
     private static List<String> getExperimentAccessions(Set<BaselineExperimentAssayGroup> results) {

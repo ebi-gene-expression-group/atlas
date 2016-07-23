@@ -1,6 +1,9 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,11 +27,14 @@ public class DifferentialFacetsDAO extends DifferentialAnalyticsDAO {
         super(restTemplate, solrBaseUrl, differentialFacetsQueryJSON);  // settings of restTemplate in applicationContext.xml
     }
 
-    public String fetchFacetsAboveDefaultFoldChangeForSearch(SemanticQuery geneQuery, String species) {
-        String identifierSearch = buildSolrQuery(geneQuery, IDENTIFIER_SEARCH_FIELD, species);
+    public String fetchFacetsAboveDefaultFoldChangeForSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        ImmutableList.Builder<Pair<String, SemanticQuery>> searchQueriesBuilder = ImmutableList.builder();
+        searchQueriesBuilder.add(Pair.of(IDENTIFIER_SEARCH_FIELD, geneQuery));
+        searchQueriesBuilder.add(Pair.of(CONDITION_SEARCH_FIELD, conditionQuery));
+        searchQueriesBuilder.add(Pair.of(SPECIES_FIELD, SemanticQuery.create(species)));
+        String identifierSearch = buildSolrQuery(searchQueriesBuilder.build());
         return fetchFacetsAboveFoldChange(identifierSearch, DEFAULT_P_VALUE);
     }
-
 
     public String fetchFacetsAboveDefaultFoldChangeForIdentifier(String identifier) {
         String identifierSearch = buildSolrQuery(identifier, BIOENTITY_IDENTIFIER_FIELD);

@@ -43,7 +43,7 @@ public class BaselineAnalyticsSearchDaoIT {
         String species = "homo sapiens";
         String defaultQueryFactorType = "ORGANISM_PART";
         List<Map<String, Object>> result =
-                subject.fetchExpressionLevelFaceted(SemanticQuery.create("kinase"),species,defaultQueryFactorType );
+                subject.fetchExpressionLevelFaceted(SemanticQuery.create("kinase"), SemanticQuery.create(), species, defaultQueryFactorType);
 
         assertThat(result.size(), greaterThan(0));
 

@@ -1,6 +1,7 @@
 <%--@elvariable id="hasDifferentialResults" type="boolean"--%>
 <%--@elvariable id="identifier" type="java.lang.String"--%>
-<%--@elvariable id="queryType" type="java.lang.String"--%>
+<%--@elvariable id="geneQuery" type="java.lang.String"--%>
+<%--@elvariable id="conditionQuery" type="java.lang.String"--%>
 <%--@elvariable id="species" type="java.lang.String"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -20,7 +21,8 @@
         facetsContainer: "gxaDifferentialFacetsContainerDiv",
         resultsContainer: "gxaDifferentialResultsContainerDiv",
         identifier: "${identifier}",
-        queryType: "${queryType}",
+        geneQuery: "${geneQuery}",
+        conditionQuery: "${conditionQuery}",
         species: "${species}"
     });
     </c:if>

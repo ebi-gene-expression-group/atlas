@@ -1,3 +1,3 @@
 # Expression Atlas version: ${project.version}
-# Query: Experiments with expression for {0} exactly, given the False Discovery Rate cutoff: 0.05
+# Query: Experiments with expression for {0}, given the False Discovery Rate cutoff: 0.05
 # Timestamp: {1}

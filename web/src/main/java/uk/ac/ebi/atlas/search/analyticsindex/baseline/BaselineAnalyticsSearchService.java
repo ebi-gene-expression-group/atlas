@@ -32,22 +32,16 @@ public class BaselineAnalyticsSearchService {
         this.baselineExperimentSearchResultProducer = baselineExperimentSearchResultProducer;
     }
 
-    public BaselineExperimentSearchResult findExpressions(SemanticQuery geneQuery, String species, String queryFactorType) {
-        List<Map<String, Object>> response = baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(geneQuery, Species.convertToEnsemblSpecies(species), queryFactorType);
+    public BaselineExperimentSearchResult findExpressions(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, String queryFactorType) {
+        List<Map<String, Object>> response = baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(geneQuery, conditionQuery, Species.convertToEnsemblSpecies(species), queryFactorType);
         ImmutableList<BaselineExperimentExpression> expressions = baselineAnalyticsFacetsReader.extractAverageExpressionLevel(response);
         return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, queryFactorType);
     }
 
-    public String findFacetsForTreeSearch(SemanticQuery geneQuery) {
-        List<Map<String, Object>> results = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery);
+    public String findFacetsForTreeSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        List<Map<String, Object>> results = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery, conditionQuery, species);
         return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(results);
     }
-
-    public String findFacetsForTreeSearch(SemanticQuery geneQuery, String species) {
-        List<Map<String, Object>> results = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery, species);
-        return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(results);
-    }
-
 
     public boolean tissueExpressionAvailableFor(SemanticQuery geneQuery) {
         int numFound = baselineAnalyticsExpressionAvailableReader.extractResultCount(baselineAnalyticsExpressionAvailableDao.fetchGenesInTissuesAboveCutoff(geneQuery));

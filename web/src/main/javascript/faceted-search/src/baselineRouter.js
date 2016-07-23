@@ -5,8 +5,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var URI = require('urijs');
-
 var EventEmitter = require('events');
 
 //*------------------------------------------------------------------*
@@ -25,6 +23,7 @@ var BaselineHeatmaps = require('./BaselineHeatmaps.jsx');
  * @param {string} options.atlasHost
  * @param {string} options.species
  * @param {string} options.identifier
+ * @param {string} options.conditionQuery
  */
 module.exports = function (options) {
 

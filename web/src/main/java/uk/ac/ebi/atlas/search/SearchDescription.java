@@ -7,7 +7,13 @@ public class SearchDescription {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (geneQuery.isNotEmpty()) {
-            stringBuilder.append(geneQuery.asSolr1DNF());
+            String geneQueryString = geneQuery.asSolr1DNF();
+
+            if (geneQuery.size() > 1 && conditionQuery.isNotEmpty()) {
+                stringBuilder.append("(").append(geneQueryString).append(")");
+            } else {
+                stringBuilder.append(geneQueryString);
+            }
         }
 
         if (geneQuery.isNotEmpty() && conditionQuery.isNotEmpty()) {
@@ -15,7 +21,13 @@ public class SearchDescription {
         }
 
         if (conditionQuery.isNotEmpty()) {
-            stringBuilder.append(conditionQuery.asSolr1DNF());
+            String conditionQueryString = conditionQuery.asSolr1DNF();
+
+            if (conditionQuery.size() > 1 && geneQuery.isNotEmpty()) {
+                stringBuilder.append("(").append(conditionQueryString).append(")");
+            } else {
+                stringBuilder.append(conditionQueryString);
+            }
         }
 
         if ((geneQuery.isNotEmpty() || conditionQuery.isNotEmpty()) && isNotBlank(species)) {

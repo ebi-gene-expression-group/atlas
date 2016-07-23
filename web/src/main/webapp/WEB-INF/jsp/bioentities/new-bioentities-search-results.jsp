@@ -1,5 +1,4 @@
 <%--@elvariable id="bioEntityPropertyService" type="uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService"--%>
-<%--@elvariable id="isSearch" type="boolean"--%>
 <%--@elvariable id="searchDescription" type="java.lang.String"--%>
 <%--@elvariable id="identifier" type="java.lang.String"--%>
 <%--@elvariable id="species" type="java.lang.String"--%>

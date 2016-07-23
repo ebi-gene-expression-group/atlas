@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import java.util.Map;
 
@@ -21,14 +22,14 @@ public class GenePageController extends BioentityPageController {
     }
 
     @RequestMapping(value = "/genes/{identifier:.*}")
-    public String showGenePage(@PathVariable String identifier, Model model) {
+    public String showGenePage(@PathVariable String identifier,
+                               @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
+                               Model model) {
         bioentityPropertyServiceInitializer.initForGenePage(bioEntityPropertyService, identifier, propertyNames);
-
-        model.addAttribute("queryType", "gene");
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
-        return super.showBioentityPage(identifier, "", model, experimentTypes);
+        return super.showBioentityPage(identifier, conditionQuery, "", model, experimentTypes);
     }
 
     @Override

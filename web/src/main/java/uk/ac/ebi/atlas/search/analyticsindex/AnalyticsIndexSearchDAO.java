@@ -26,22 +26,11 @@ public class AnalyticsIndexSearchDAO {
         this.analyticsClient = analyticsClient;
     }
 
-    ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery) {
-        SolrQuery solrQuery =
-               new AnalyticsQueryBuilder()
-                        .queryIdentifierSearch(geneQuery)
-                        .facetByExperimentType()
-                        .filterAboveDefaultCutoff()
-                        .setRows(0)
-                        .build();
-        QueryResponse queryResponse = analyticsClient.query(solrQuery);
-        return SolrUtil.extractFirstFacetValues(queryResponse);
-    }
-
-    ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, String species) {
+    ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         SolrQuery solrQuery =
                 new AnalyticsQueryBuilder()
                         .queryIdentifierSearch(geneQuery)
+                        .queryConditionsSearch(conditionQuery)
                         .ofSpecies(species)
                         .facetByExperimentType()
                         .filterAboveDefaultCutoff()
@@ -51,25 +40,15 @@ public class AnalyticsIndexSearchDAO {
         return SolrUtil.extractFirstFacetValues(queryResponse);
     }
 
-    ImmutableSet<String> fetchExperimentTypes(String bioentityIdentifier) {
-        SolrQuery solrQuery =
-                new AnalyticsQueryBuilder()
-                        .queryBioentityIdentifier(bioentityIdentifier)
-                        .facetByExperimentType()
-                        .filterAboveDefaultCutoff()
-                        .setRows(0)
-                        .build();
-        QueryResponse queryResponse = analyticsClient.query(solrQuery);
-        return SolrUtil.extractFirstFacetValues(queryResponse);
-    }
-
-    ImmutableSet<String> searchBioentityIdentifiers(SemanticQuery geneQuery, String species) {
+    ImmutableSet<String> searchBioentityIdentifiers(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, int facetLimit) {
         SolrQuery solrQuery =
                 new AnalyticsQueryBuilder()
                         .queryIdentifierSearch(geneQuery)
+                        .queryConditionsSearch(conditionQuery)
                         .ofSpecies(species)
                         .setRows(0)
                         .facetByBioentityIdentifier()
+                        .setFacetLimit(facetLimit)
                         .build();
         QueryResponse queryResponse = analyticsClient.query(solrQuery);
         return SolrUtil.extractFirstFacetValues(queryResponse);
