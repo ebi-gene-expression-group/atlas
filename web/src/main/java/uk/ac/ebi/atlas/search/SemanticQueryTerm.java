@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.auto.value.AutoValue;
-import com.sun.istack.internal.Nullable;
+import javax.annotation.Nullable;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -9,7 +9,8 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 @AutoValue
 public abstract class SemanticQueryTerm {
     public abstract String value();
-    @Nullable public abstract String category();
+    @Nullable
+    public abstract String category();
 
     public static SemanticQueryTerm create(String value) {
         return create(value, "");
