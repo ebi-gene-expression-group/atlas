@@ -158,4 +158,30 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        initForm();
+        onResetButtonRemoveAllTagsAndSelectHomoSapiens();
+
+        function initForm() {
+            $('#prefForm').submit(function() {
+                var $geneQuery = $('#geneQuery'),
+                    geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
+                $geneQuery.val(JSON.stringify(geneQueryTags));
+            });
+        }
+
+        function onResetButtonRemoveAllTagsAndSelectHomoSapiens() {
+            $('#reset-button').on('click' , function () {
+                // Remove all tags
+                var $geneQuery = $('#geneQuery'),
+                    geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
+                geneQueryTags.forEach(function(geneQueryTag){
+                    $geneQuery.jsonTagEditor('removeTag', geneQueryTag.value);
+                });
+            });
+        }
+    });
+</script>
+
 

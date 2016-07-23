@@ -114,11 +114,17 @@
         helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', $('[data-help-loc]').not('#heatmap-react [data-help-loc]'));
 
         // Populate gene query tag-editor
+        var $geneQuery = $('#geneQuery'),
+            geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
+        geneQueryTags.forEach(function(geneQueryTag){
+            $geneQuery.jsonTagEditor('removeTag', geneQueryTag.value);
+        });
+
         var geneQueryStr = new URI(window.location).search(true)["geneQuery"];
         if (geneQueryStr) {
-            var geneQueryTags = JSON.parse(geneQueryStr);
+            geneQueryTags = JSON.parse(geneQueryStr);
             geneQueryTags.forEach(function(geneQueryTag) {
-                $('#geneQuery').jsonTagEditor('addTag', geneQueryTag);
+                $geneQuery.jsonTagEditor('addTag', JSON.stringify(geneQueryTag));
             });
         }
     });

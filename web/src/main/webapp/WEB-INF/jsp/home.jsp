@@ -157,16 +157,16 @@
         function initButtons() {
             $buttons.each(function () {
                 $(this).button({disabled: true});
+            });
 
-                $('#searchForm').submit(function() {
-                    var $geneQuery = $('#geneQuery'),
-                        geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
-                    $geneQuery.val(JSON.stringify(geneQueryTags));
+            $('#searchForm').submit(function() {
+                var $geneQuery = $('#geneQuery'),
+                    geneQueryTags = $geneQuery.jsonTagEditor('getTags')[0].tags;
+                $geneQuery.val(JSON.stringify(geneQueryTags));
 
-                    var $conditionQuery = $('#conditionQuery'),
-                        conditionQueryTags = $conditionQuery.jsonTagEditor('getTags')[0].tags;
-                    $conditionQuery.val(JSON.stringify(conditionQueryTags));
-                });
+                var $conditionQuery = $('#conditionQuery'),
+                    conditionQueryTags = $conditionQuery.jsonTagEditor('getTags')[0].tags;
+                $conditionQuery.val(JSON.stringify(conditionQueryTags));
             });
         }
 
