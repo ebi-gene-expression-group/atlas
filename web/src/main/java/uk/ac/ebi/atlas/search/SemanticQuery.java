@@ -109,7 +109,11 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         for (SemanticQueryTerm queryTerm : terms()) {
             stringBuilder.append(queryTerm.toString()).append(OR_OPERATOR);
         }
-        stringBuilder.delete(stringBuilder.lastIndexOf(OR_OPERATOR), stringBuilder.length());
+
+        if (stringBuilder.lastIndexOf(OR_OPERATOR) > 0) {
+            stringBuilder.delete(stringBuilder.lastIndexOf(OR_OPERATOR), stringBuilder.length());
+        }
+
         return stringBuilder.toString();
     }
 
