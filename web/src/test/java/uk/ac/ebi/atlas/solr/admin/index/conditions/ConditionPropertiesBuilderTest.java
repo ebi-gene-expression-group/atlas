@@ -1,14 +1,12 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
-import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.Maps;
-import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -20,8 +18,10 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Mockito.mock;
 
 
@@ -32,6 +32,9 @@ public class ConditionPropertiesBuilderTest {
 
     @Mock
     private DifferentialExperiment experimentMock;
+
+    @Mock
+    private EFOLookupService efoLookupService;
 
     @Before
     public void setup(){
@@ -65,7 +68,10 @@ public class ConditionPropertiesBuilderTest {
         given(experimentMock.getContrasts()).willReturn(Sets.newHashSet(contrastMock));
         given(experimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
 
+        given(efoLookupService.getLabels(anySetOf(String.class))).willReturn(ImmutableSet.<String>of());
+
         subject = new DifferentialConditionsBuilder();
+        subject.setEfoLookupService(efoLookupService);
     }
 
     @Test

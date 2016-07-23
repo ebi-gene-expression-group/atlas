@@ -36,8 +36,8 @@ import static org.mockito.Mockito.*;
 public class MicroarrayProfilesTSVWriterTest {
 
     private static final String HEADER_TEMPLATE = "# Expression Atlas version: 0.1.4-SNAPSHOT\n" +
-            "# Query: Genes matching: ''{0}''{1},{2}{3} differentially expressed in {4} given the p-value cutoff {5} and log2-fold change cutoff {6} in experiment {7}\n" +
-            "# Timestamp: {8}";
+            "# Query: Genes matching: ''{0}''{1},{2} differentially expressed in {3} given the p-value cutoff {4} and log2-fold change cutoff {5} in experiment {6}\n" +
+            "# Timestamp: {7}";
 
     @Mock
     private MicroarrayProfile geneProfileMock;
