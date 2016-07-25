@@ -30,9 +30,9 @@ public abstract class SemanticQueryTerm {
 
     public String description() {
         if (hasNoCategory()) {
-            return (String.format("\"%s\"", value()));
+            return (String.format("%s", value()));
         } else {
-            return (String.format("\"%s\" (%s)", value(), category()));
+            return (String.format("%s (%s)", value(), category()));
         }
     }
 

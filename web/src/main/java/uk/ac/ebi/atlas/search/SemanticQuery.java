@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.MalformedJsonException;
+import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -117,4 +118,16 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return stringBuilder.toString();
     }
 
+    public String description() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (SemanticQueryTerm queryTerm : terms()) {
+            stringBuilder.append(queryTerm.description()).append(OR_OPERATOR);
+        }
+
+        if (stringBuilder.lastIndexOf(OR_OPERATOR) > 0) {
+            stringBuilder.delete(stringBuilder.lastIndexOf(OR_OPERATOR), stringBuilder.length());
+        }
+
+        return stringBuilder.toString();
+    }
 }
