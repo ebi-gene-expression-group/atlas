@@ -17,6 +17,7 @@ import static com.jayway.restassured.RestAssured.get;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
+import static uk.ac.ebi.atlas.utils.RegexMatcher.matches;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -44,7 +45,7 @@ public class ExpressionDataControllerIT extends RestAssuredFixture {
     public void geneExpressedInBaselineAndDifferentialExperimentsReturnsTrue() {
         assertThat(
                 baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(BASELINE_GENE), SemanticQuery.create(), ""),
-                is(NON_EMPTY_JSON_OBJECT_REGEX));
+                matches(NON_EMPTY_JSON_OBJECT_REGEX));
 
         Response response = get("/json/expressionData?geneId=" + BASELINE_GENE);
 

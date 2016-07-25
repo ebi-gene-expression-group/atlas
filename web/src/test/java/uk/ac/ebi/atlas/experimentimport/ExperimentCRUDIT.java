@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport;
 
+import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Before;
@@ -13,6 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
@@ -30,9 +32,7 @@ import java.util.Collection;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -53,6 +53,9 @@ public class ExperimentCRUDIT {
     private ExperimentMetadataCRUD experimentMetadataCRUD;
 
     @Mock
+    EFOLookupService efoLookupServiceMock;
+
+    @Mock
     private SolrClient solrClientMock;
 
     @Captor
@@ -69,8 +72,16 @@ public class ExperimentCRUDIT {
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
 
-        BaselineConditionsIndex baselineConditionIndex = new BaselineConditionsIndex(solrClientMock, new BaselineConditionsBuilder());
-        DifferentialConditionsIndex differentialConditionIndex = new DifferentialConditionsIndex(solrClientMock, new DifferentialConditionsBuilder());
+        when(efoLookupServiceMock.getLabels(anySetOf(String.class))).thenReturn(ImmutableSet.<String>of());
+
+        BaselineConditionsBuilder baselineConditionsBuilder = new BaselineConditionsBuilder();
+        baselineConditionsBuilder.setEfoLookupService(efoLookupServiceMock);
+        BaselineConditionsIndex baselineConditionIndex = new BaselineConditionsIndex(solrClientMock, baselineConditionsBuilder);
+
+        DifferentialConditionsBuilder differentialConditionsBuilder = new DifferentialConditionsBuilder();
+        differentialConditionsBuilder.setEfoLookupService(efoLookupServiceMock);
+        DifferentialConditionsIndex differentialConditionIndex = new DifferentialConditionsIndex(solrClientMock, differentialConditionsBuilder);
+
         ConditionsIndexTrader conditionsIndexTrader = new ConditionsIndexTrader(baselineConditionIndex, differentialConditionIndex);
         experimentMetadataCRUD.setConditionsIndexTrader(conditionsIndexTrader);
 

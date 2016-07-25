@@ -1,8 +1,6 @@
-
 package uk.ac.ebi.atlas.profiles.writer;
 
 import com.google.common.collect.Sets;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,7 +73,7 @@ public class BaselineProfilesTSVWriterIT {
     @Test
     public void secondHeaderLineShouldDescribeQuery(){
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
-        assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding', specifically expressed in any Organism part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
+        assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding (gene_biotype)', specifically expressed in any Organism part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
     }
 
     @Test

@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.writer;
 
 import com.google.common.collect.Sets;
@@ -16,12 +15,9 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 
-import java.util.regex.Pattern;
-
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static uk.ac.ebi.atlas.utils.RegexMatcher.matches;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -60,10 +56,7 @@ public class MicroarrayProfilesTSVWriterIT {
 
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
-        assertTrue("Get a vaguely correct line back",
-                Pattern.matches("# Query: Genes.*differentially.*"+MICROARRAY_EXPERIMENT_ACCESSION,headerRows[1]));
+        assertThat(headerRows[1], matches("# Query: Genes.*differentially.*"+MICROARRAY_EXPERIMENT_ACCESSION));
         assertThat(headerRows[2], startsWith("# Timestamp: "));
     }
-
-
 }
