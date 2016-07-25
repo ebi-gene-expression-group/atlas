@@ -1,12 +1,9 @@
-
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -14,10 +11,7 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
 @Scope("request")
@@ -71,9 +65,7 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
                 .build();
     }
 
-    public static BaselineRequestContext createWithCustomGeneQueryDescription(BaselineExperiment experiment,
-                                                               BaselineRequestPreferences  preferences, String
-                                                                                      description){
+    public static BaselineRequestContext createWithCustomGeneQueryDescription(BaselineExperiment experiment, BaselineRequestPreferences  preferences, String description){
         return new BaselineRequestContextBuilder()
                 .forExperiment(experiment)
                 .withPreferences(preferences)

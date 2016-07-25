@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.search.SearchDescription;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -37,7 +38,7 @@ public class DifferentialRequestContextBuilder<T extends DifferentialRequestCont
 
         requestContext.setRequestPreferences(getRequestPreferences());
 
-        requestContext.setQueryDescription(getRequestPreferences().getGeneQuery().asSolr1DNF());
+        requestContext.setQueryDescription(SearchDescription.getSimple(getRequestPreferences().getGeneQuery()));
 
         requestContext.setSelectedQueryFactors(getSelectedQueryContrasts(experiment));
 

@@ -4,6 +4,7 @@ import com.google.common.base.Optional;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.search.SearchDescription;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
@@ -50,12 +51,8 @@ public class BaselineRequestContextBuilder {
         checkState(experiment != null, "Please invoke forExperiment before build");
 
         requestContext.setExperiment(experiment);
-
         requestContext.setRequestPreferences(preferences);
-
-        requestContext.setQueryDescription(queryDescription.or(preferences.getGeneQuery().asSolr1DNF()));
-
-
+        requestContext.setQueryDescription(queryDescription.or(SearchDescription.getSimple(preferences.getGeneQuery())));
 
         SortedSet<Factor> selectedFilterFactors = FilterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
         requestContext.setSelectedFilterFactors(selectedFilterFactors);

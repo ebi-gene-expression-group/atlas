@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.search.SearchDescription;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.utils.Visitor;
 import uk.ac.ebi.atlas.utils.VisitorException;
@@ -126,11 +127,11 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalyt
     }
 
     public String getTsvFileMasthead(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        String geneQueryHeader = geneQuery.isNotEmpty() ? "Genes matching: '" + geneQuery.asSolr1DNF() + "'" : "";
+        String geneQueryHeader = geneQuery.isNotEmpty() ? "Genes matching: '" + SearchDescription.getSimple(geneQuery) + "'" : "";
         String comma = geneQuery.isNotEmpty() ? ", " : "";
 
         boolean hasCondition = conditionQuery.isNotEmpty();
-        String condition = hasCondition ? " in condition matching '" + conditionQuery.asSolr1DNF() + "'": "";
+        String condition = hasCondition ? " in condition matching '" + SearchDescription.getSimple(conditionQuery) + "'": "";
         String organism = StringUtils.isNotEmpty(species) ? (hasCondition ? " and" : "")  + " in organism '" + species + "'": "";
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
         return MessageFormat.format(tsvFileMastheadTemplate, geneQueryHeader, comma, condition, organism, timeStamp);
