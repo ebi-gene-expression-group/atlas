@@ -34,10 +34,10 @@ public abstract class ConditionsIndex {
         addConditions(experiment, ontologyTerms);
     }
 
-    public void addConditions(Experiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
+    public void addConditions(Experiment experiment, SetMultimap<String, String> assayGroupIdToOntologyTermIds) {
         try {
 
-            Collection propertiesBeans = propertiesBuilder.buildProperties(experiment, ontologyTermIdsByAssayAccession);
+            Collection propertiesBeans = propertiesBuilder.buildProperties(experiment, assayGroupIdToOntologyTermIds);
 
             solrClient.addBeans(propertiesBeans);
             solrClient.commit();
