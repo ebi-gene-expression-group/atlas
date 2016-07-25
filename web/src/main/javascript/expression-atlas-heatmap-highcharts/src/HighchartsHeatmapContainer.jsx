@@ -100,7 +100,7 @@ var Container = React.createClass({
                         <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
                             { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
                               ? <Anatomogram anatomogramData={this.state.anatomogramData}
-                                   expressedTissueColour={"gray"} hoveredTissueColour={"red"}
+                                   expressedTissueColour={"red"} hoveredTissueColour={"purple"}
                                    profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
                               : null
                             }
