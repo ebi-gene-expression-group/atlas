@@ -1,3 +1,3 @@
 # Expression Atlas version: ${project.version}
-# Yeah! Query: Genes matching: ''{0}''{1},{2} differentially expressed in {3} given the p-value cutoff {4} and log2-fold change cutoff {5} in experiment {6}
+# Query: Genes matching: ''{0}'',{1}{2} differentially expressed in {3} given the p-value cutoff {4} and log2-fold change cutoff {5} in experiment {6}
 # Timestamp: {7}
