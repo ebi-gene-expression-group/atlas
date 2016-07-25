@@ -7,6 +7,8 @@ var ReactDOM = require('react-dom');
 
 var EventEmitter = require('events');
 
+var URI = require('urijs');
+
 //*------------------------------------------------------------------*
 
 var FacetsTree = require('./BaselineFacetsTree.jsx');

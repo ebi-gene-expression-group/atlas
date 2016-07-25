@@ -9,7 +9,6 @@ var Snap = require('imports-loader?this=>window,fix=>module.exports=0!snapsvg/di
 var $ = require('jquery');
 
 var HeatmapData= require('./DataForHighcharts.js');
-require('jQuery-ajaxTransport-XDomainRequest');
 
 //*------------------------------------------------------------------*
 

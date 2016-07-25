@@ -6,7 +6,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var $ = require('jquery');
-require('jQuery-ajaxTransport-XDomainRequest');
 require('jquery-hc-sticky');
 
 var URI = require('urijs');

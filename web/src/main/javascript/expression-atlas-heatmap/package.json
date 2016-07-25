@@ -17,7 +17,6 @@
     "fancybox": "^3.0.0",
     "heatmap-baseline-cell-variance": "file:../atlas_modules/heatmap-baseline-cell-variance",
     "help-tooltips": "file:../atlas_modules/help-tooltips",
-    "jQuery-ajaxTransport-XDomainRequest": "git+https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git",
     "jquery": "^2.2.1",
     "jquery-hc-sticky": "git+https://github.com/alfonsomunozpomer/hc-sticky.git",
     "jquery-highlight": "^3.2.2",

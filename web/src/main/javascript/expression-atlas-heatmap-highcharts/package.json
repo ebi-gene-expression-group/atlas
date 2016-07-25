@@ -10,7 +10,6 @@
     "anatomogram": "file:../atlas_modules/anatomogram",
     "download-profiles-button": "file:../atlas_modules/download-profiles-button",
     "highcharts-heatmap": "^0.1.2",
-    "jQuery-ajaxTransport-XDomainRequest": "git+https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git",
     "jquery": "^2.2.1",
     "lodash": "^4.13.1",
     "react": "^0.14.7",

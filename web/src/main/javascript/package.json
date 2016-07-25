@@ -35,7 +35,6 @@
     "fancybox": "^3.0.0",
     "highcharts-heatmap": "^0.1.2",
     "highcharts-more": "^0.1.2",
-    "jQuery-ajaxTransport-XDomainRequest": "git+https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git",
     "jquery": "^2.2.1",
     "jquery-hc-sticky": "git+https://github.com/alfonsomunozpomer/hc-sticky.git",
     "jquery-toolbar": "git+https://github.com/alfonsomunozpomer/jquery-toolbar.git",

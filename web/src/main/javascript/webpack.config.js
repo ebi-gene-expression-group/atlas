@@ -14,7 +14,7 @@ module.exports = {
                        'react-bootstrap/lib/DropdownButton', 'react-bootstrap/lib/MenuItem', 'react-bootstrap/lib/FormGroup',
                        'react-bootstrap/lib/FormControl', 'react-bootstrap', 'react-bootstrap/lib/Button',
                        'rc-slider',
-                       'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jQuery-ajaxTransport-XDomainRequest', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
+                       'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
                        'urijs', 'query-string', 'atlas-modernizr',
                        'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
                        'highcharts-more', 'react-highcharts', 'react-addons-css-transition-group', 'react-emojione',

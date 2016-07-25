@@ -7,7 +7,6 @@ var ReactDOMServer = require('react-dom/server');
 
 var $ = require('jquery');
 require('jquery-ui-bundle');
-require('jQuery-ajaxTransport-XDomainRequest');
 
 //*------------------------------------------------------------------*
 
