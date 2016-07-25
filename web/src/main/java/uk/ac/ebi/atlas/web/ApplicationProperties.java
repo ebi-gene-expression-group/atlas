@@ -127,12 +127,7 @@ public class ApplicationProperties {
                 .join(new String[]{"/experiments/" + experimentAccession + TSV_FILE_EXTENSION, queryString});
     }
 
-    // eg: "red,green,blue"
-    public <T> String encodeMultiValues(Iterable<T> iterable) {
-        return Joiner.on(",").join(iterable);
-    }
-
-    /* Used in bioentities-search-results.jsp */
+    /* Used in bioentities.jsp and bioentities-search-results.jsp */
     public String urlParamEncode(String value) throws UnsupportedEncodingException {
         return URLEncoder.encode(value, "UTF-8");
     }
