@@ -1544,6 +1544,7 @@ webpackJsonp_name_([5],[
 	 * @param {string} options.atlasHost
 	 * @param {string} options.species
 	 * @param {string} options.identifier
+	 * @param {string} options.geneQuery
 	 * @param {string} options.conditionQuery
 	 */
 	module.exports = function (options) {
@@ -1622,7 +1623,7 @@ webpackJsonp_name_([5],[
 	
 	        ReactDOM.render(
 	            React.createElement(
-	                BaselineHeatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms: showAnatomograms, atlasHost: host,
+	                BaselineHeatmaps, {geneQuery: query.geneQuery, conditionQuery: options.conditionQuery, heatmaps: queryToHeatmaps(query), showAnatomograms: showAnatomograms, atlasHost: host,
 	                    anatomogramDataEventEmitter: anatomogramDataEventEmitter}
 	            ),
 	            heatmapsElement, triggerScrollEvent
@@ -5426,6 +5427,7 @@ webpackJsonp_name_([5],[
 	
 	    propTypes: {
 	        geneQuery: React.PropTypes.string.isRequired,
+	        conditionQuery: React.PropTypes.string,
 	        atlasHost: React.PropTypes.string.isRequired,
 	        /*
 	         [{"geneQuery":"GO:0001234","species":"Homo sapiens","factor":"CELL_LINE"},
@@ -5462,7 +5464,8 @@ webpackJsonp_name_([5],[
 	                return React.createElement(BaselineHeatmapWidget, { key: heatmap.species + "_" + heatmap.factor,
 	                    showAnatomogram: this.props.showAnatomograms,
 	                    showHeatmapLabel: this._hasMoreThanOneSpecies(), species: heatmap.species, factor: heatmap.factor,
-	                    atlasHost: this.props.atlasHost, geneQuery: this.props.geneQuery, anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter });
+	                    atlasHost: this.props.atlasHost, geneQuery: this.props.geneQuery, conditionQuery: this.props.conditionQuery,
+	                    anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter });
 	            }.bind(this)),
 	            feedbackSmileys
 	        );
@@ -15365,6 +15368,7 @@ webpackJsonp_name_([5],[
 	    propTypes: {
 	        atlasHost: React.PropTypes.string.isRequired,
 	        geneQuery: React.PropTypes.string.isRequired,
+	        conditionQuery: React.PropTypes.string,
 	        species: React.PropTypes.string.isRequired,
 	        factor: React.PropTypes.string.isRequired,
 	        showAnatomogram: React.PropTypes.bool.isRequired,
@@ -15375,7 +15379,7 @@ webpackJsonp_name_([5],[
 	    _renderHeatmap: function () {
 	        highchartsHeatmapRenderer.render({
 	            atlasHost: this.props.atlasHost,
-	            params: "geneQuery=" + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
+	            params: "geneQuery=" + this.props.geneQuery + "&conditionQuery=" + this.props.conditionQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
 	            isMultiExperiment: true,
 	            target: ReactDOM.findDOMNode(this.refs.widgetBody),
 	            isWidget: false,
@@ -15608,7 +15612,7 @@ webpackJsonp_name_([5],[
 	
 	    render: function () {
 	
-	        var geneURL = this.props.linksAtlasBaseURL + "/query" + "?geneQuery=" + this.state.heatmapConfig.geneQuery + "&exactMatch=" + this.state.heatmapConfig.isExactMatch + "&organism=" + this.state.heatmapConfig.species;
+	        var geneURL = this.props.linksAtlasBaseURL + "/query" + "?geneQuery=" + this.state.heatmapConfig.geneQuery + "&conditionQuery=" + this.state.heatmapConfig.conditionQuery + "&organism=" + this.state.heatmapConfig.species;
 	
 	        var display;
 	        var marginLeft;
@@ -35907,13 +35911,13 @@ webpackJsonp_name_([5],[
 	        differentialFacetsUrlObject.pathname = 'gxa/json/genes/' + options.identifier + '/differentialFacets';
 	        differentialResultsUrlObject.pathname = 'gxa/json/genes/' + options.identifier + '/differentialResults';
 	    } else if (window.location.pathname.match(/\/genesets\//)) {
-	        queryParams = {conditionQuery: options.conditionQuery, species: options.species};
+	        queryParams = {organism: options.species};
 	        differentialFacetsUrlObject.pathname = 'gxa/json/genesets/' + options.identifier + '/differentialFacets';
 	        differentialFacetsUrlObject.query = queryParams;
 	        differentialResultsUrlObject.pathname = 'gxa/json/genesets/' + options.identifier + '/differentialResults';
 	        differentialFacetsUrlObject.query = queryParams;
 	    } else {
-	        var queryParams = {geneQuery: options.geneQuery, conditionQuery: options.conditionQuery, species: options.species};
+	        var queryParams = {geneQuery: options.geneQuery, conditionQuery: options.conditionQuery, organism: options.species};
 	        differentialFacetsUrlObject.pathname = 'gxa/json/query/differentialFacets';
 	        differentialFacetsUrlObject.query = queryParams;
 	        differentialResultsUrlObject.pathname = 'gxa/json/query/differentialResults';

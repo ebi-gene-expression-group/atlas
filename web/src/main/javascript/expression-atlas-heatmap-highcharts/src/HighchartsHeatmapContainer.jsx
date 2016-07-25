@@ -67,7 +67,7 @@ var Container = React.createClass({
         var geneURL =
             this.props.linksAtlasBaseURL + "/query" +
             "?geneQuery=" + this.state.heatmapConfig.geneQuery +
-            "&exactMatch=" + this.state.heatmapConfig.isExactMatch +
+            "&conditionQuery=" + this.state.heatmapConfig.conditionQuery +
             "&organism=" + this.state.heatmapConfig.species;
 
             var display;

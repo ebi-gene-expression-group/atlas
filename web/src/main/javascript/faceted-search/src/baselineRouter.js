@@ -25,6 +25,7 @@ var BaselineHeatmaps = require('./BaselineHeatmaps.jsx');
  * @param {string} options.atlasHost
  * @param {string} options.species
  * @param {string} options.identifier
+ * @param {string} options.geneQuery
  * @param {string} options.conditionQuery
  */
 module.exports = function (options) {
@@ -103,7 +104,7 @@ module.exports = function (options) {
 
         ReactDOM.render(
             React.createElement(
-                BaselineHeatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), showAnatomograms: showAnatomograms, atlasHost: host,
+                BaselineHeatmaps, {geneQuery: query.geneQuery, conditionQuery: options.conditionQuery, heatmaps: queryToHeatmaps(query), showAnatomograms: showAnatomograms, atlasHost: host,
                     anatomogramDataEventEmitter: anatomogramDataEventEmitter}
             ),
             heatmapsElement, triggerScrollEvent

@@ -17,6 +17,7 @@ var FeedbackSmileys = require('atlas-feedback');
 var BaselineHeatmaps = React.createClass({
     propTypes: {
         geneQuery: React.PropTypes.string.isRequired,
+        conditionQuery: React.PropTypes.string,
         atlasHost: React.PropTypes.string.isRequired,
         /*
          [{"geneQuery":"GO:0001234","species":"Homo sapiens","factor":"CELL_LINE"},
@@ -57,7 +58,8 @@ var BaselineHeatmaps = React.createClass({
                     return <BaselineHeatmapWidget key={heatmap.species + "_" + heatmap.factor}
                                                   showAnatomogram={this.props.showAnatomograms}
                                                   showHeatmapLabel={this._hasMoreThanOneSpecies()} species={heatmap.species} factor={heatmap.factor}
-                                                  atlasHost={this.props.atlasHost} geneQuery={this.props.geneQuery} anatomogramDataEventEmitter={this.props.anatomogramDataEventEmitter} />;
+                                                  atlasHost={this.props.atlasHost} geneQuery={this.props.geneQuery} conditionQuery={this.props.conditionQuery}
+                                                  anatomogramDataEventEmitter={this.props.anatomogramDataEventEmitter} />;
                 }.bind(this))}
                 {feedbackSmileys}
             </div>

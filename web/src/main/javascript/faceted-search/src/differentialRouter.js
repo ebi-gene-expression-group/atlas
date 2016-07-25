@@ -42,13 +42,13 @@ module.exports = function (options) {
         differentialFacetsUrlObject.pathname = 'gxa/json/genes/' + options.identifier + '/differentialFacets';
         differentialResultsUrlObject.pathname = 'gxa/json/genes/' + options.identifier + '/differentialResults';
     } else if (window.location.pathname.match(/\/genesets\//)) {
-        queryParams = {conditionQuery: options.conditionQuery, species: options.species};
+        queryParams = {organism: options.species};
         differentialFacetsUrlObject.pathname = 'gxa/json/genesets/' + options.identifier + '/differentialFacets';
         differentialFacetsUrlObject.query = queryParams;
         differentialResultsUrlObject.pathname = 'gxa/json/genesets/' + options.identifier + '/differentialResults';
         differentialFacetsUrlObject.query = queryParams;
     } else {
-        var queryParams = {geneQuery: options.geneQuery, conditionQuery: options.conditionQuery, species: options.species};
+        var queryParams = {geneQuery: options.geneQuery, conditionQuery: options.conditionQuery, organism: options.species};
         differentialFacetsUrlObject.pathname = 'gxa/json/query/differentialFacets';
         differentialFacetsUrlObject.query = queryParams;
         differentialResultsUrlObject.pathname = 'gxa/json/query/differentialResults';

@@ -15,6 +15,7 @@ var BaselineHeatmapWidget = React.createClass({
     propTypes: {
         atlasHost: React.PropTypes.string.isRequired,
         geneQuery: React.PropTypes.string.isRequired,
+        conditionQuery: React.PropTypes.string,
         species: React.PropTypes.string.isRequired,
         factor: React.PropTypes.string.isRequired,
         showAnatomogram: React.PropTypes.bool.isRequired,
@@ -25,7 +26,7 @@ var BaselineHeatmapWidget = React.createClass({
     _renderHeatmap: function() {
       highchartsHeatmapRenderer.render({
           atlasHost: this.props.atlasHost,
-          params: "geneQuery=" + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
+          params: "geneQuery=" + this.props.geneQuery + "&conditionQuery=" + this.props.conditionQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
           isMultiExperiment: true,
           target: ReactDOM.findDOMNode(this.refs.widgetBody),
           isWidget: false,

@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.widget;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Lists;
 import com.google.gson.*;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
@@ -106,14 +105,14 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
         BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, conditionQuery, species, defaultQueryFactorType);
 
-        populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, Species.convertToEnsemblSpecies(species), searchResult, model);
+        populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, conditionQuery, Species.convertToEnsemblSpecies(species), searchResult, model);
 
         // set here instead of in JSP, because the JSP may be included elsewhere
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }
 
-    private void populateModelWithMultiExperimentResults(String contextRoot, SemanticQuery geneQuery, String ensemblSpecies,
+    private void populateModelWithMultiExperimentResults(String contextRoot, SemanticQuery geneQuery, SemanticQuery conditionQuery, String ensemblSpecies,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
         List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
 
@@ -130,6 +129,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         model.addAttribute("isWidget", true);
         model.addAttribute("experiment", gson.toJson(JsonNull.INSTANCE));
         model.addAttribute("geneQuery", geneQuery);
+        model.addAttribute("conditionQuery", conditionQuery);
     }
 
     private List<AssayGroupFactor> convert(List<Factor> orderedFactors) {
