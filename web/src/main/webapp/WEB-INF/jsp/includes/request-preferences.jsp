@@ -179,6 +179,14 @@
                 geneQueryTags.forEach(function(geneQueryTag){
                     $geneQuery.jsonTagEditor('removeTag', geneQueryTag.value);
                 });
+
+                $('#regulation3').prop('checked', true);
+
+                $('#queryFactorValues').val('').trigger('chosen:updated');
+                $('#specific').prop('checked', true)
+
+                $('#cutoff').val(${type.baseline ? '0.5' : '0.05'});
+                $('#foldChangeCutOff').val(1.0);
             });
         }
     });
