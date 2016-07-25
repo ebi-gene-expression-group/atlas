@@ -38,6 +38,10 @@ public class BaselineAnalyticsSearchService {
         return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, queryFactorType);
     }
 
+    public String findFacetsForTreeSearch(SemanticQuery geneQuery, String species) {
+        return findFacetsForTreeSearch(geneQuery, SemanticQuery.create(), species);
+    }
+
     public String findFacetsForTreeSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         List<Map<String, Object>> results = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery, conditionQuery, species);
         return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(results);

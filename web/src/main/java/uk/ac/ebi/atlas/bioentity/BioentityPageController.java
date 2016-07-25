@@ -67,7 +67,7 @@ public abstract class BioentityPageController {
 
     // identifier (gene) = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
     // identifier (gene set) = a Reactome id, Plant Ontology or Gene Ontology accession or an InterPro term
-    public String showBioentityPage(String identifier, SemanticQuery conditionQuery, String species, Model model, Set<String> experimentTypes) {
+    public String showBioentityPage(String identifier, String species, Model model, Set<String> experimentTypes) {
 
         boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
         boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
@@ -80,7 +80,7 @@ public abstract class BioentityPageController {
         model.addAttribute("hasDifferentialResults", hasDifferentialResults);
 
         if (hasBaselineResults) {
-            model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(identifier), conditionQuery, species));
+            model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(identifier), species));
         }
 
         model.addAllAttributes(pageDescriptionAttributes(identifier));

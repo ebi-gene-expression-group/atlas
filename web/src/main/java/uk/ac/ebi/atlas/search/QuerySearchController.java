@@ -57,22 +57,12 @@ public class QuerySearchController {
 
         // Matches gene set ID -> Gene set page
         // TODO We decide it’s a gene set because of how the query *looks*, and things like GO:FOOBAR will be incorrectly redirected to /genesets/GO:FOOBAR
-        if (isGeneSetCategoryOrMatchesGeneSetAccession(geneQuery)) {
+        if (conditionQuery.isEmpty() && isGeneSetCategoryOrMatchesGeneSetAccession(geneQuery)) {
             String geneSetId = geneQuery.terms().iterator().next().value();
 
             StringBuilder stringBuilder = new StringBuilder("redirect:/genesets/" + geneSetId);
-            if (conditionQuery.isNotEmpty() || (!matchesReactomeID(geneSetId) && isNotBlank(species))) {
-                String delimiter = "?";
-
-                if (conditionQuery.isNotEmpty()) {
-                    stringBuilder.append(delimiter).append("conditionQuery=").append(conditionQuery.toUrlEncodedJson());
-                    delimiter = "&";
-                }
-
-                if (!matchesReactomeID(geneSetId) && isNotBlank(species)) {
-                    stringBuilder.append(delimiter).append("organism=").append(species);
-                    // delimiter = "&";
-                }
+            if (!matchesReactomeID(geneSetId) && isNotBlank(species)) {
+                stringBuilder.append("?").append("organism=").append(species);
             }
 
             copyModelAttributesToFlashAttributes(model, redirectAttributes);
@@ -86,14 +76,11 @@ public class QuerySearchController {
         }
 
         // Resolves to a single Gene ID -> Gene page
-        if (geneIds.size() == 1) {
-            StringBuilder stringBuilder = new StringBuilder("redirect:/genes/" + geneIds.iterator().next());
-            stringBuilder.append(conditionQuery.isEmpty() ? "" : "?conditionQuery=" + conditionQuery.toUrlEncodedJson());
-
+        if (conditionQuery.isEmpty() && geneIds.size() == 1) {
             copyModelAttributesToFlashAttributes(model, redirectAttributes);
-            return stringBuilder.toString();
+            return "redirect:/genes/" + geneIds.iterator().next();
         }
-        // Resolves to multiple IDs -> General results page
+        // Resolves to multiple IDs or the query includes a condition -> General results page
         else {
             ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(geneQuery, conditionQuery, species);
 

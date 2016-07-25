@@ -25,7 +25,6 @@ public class GeneSetPageController extends BioentityPageController {
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showGeneSetPage(@PathVariable String identifier,
-                                  @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                   @RequestParam(value = "organism", required = false, defaultValue = "") String species,
                                   Model model) {
         bioentityPropertyServiceInitializer.initForGeneSetPage(bioEntityPropertyService, identifier);
@@ -35,11 +34,10 @@ public class GeneSetPageController extends BioentityPageController {
         }
 
         model.addAttribute("species", species);
-        model.addAttribute("conditionQuery", conditionQuery);
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(SemanticQuery.create(identifier), species);
 
-        return super.showBioentityPage(identifier, conditionQuery, species, model, experimentTypes);
+        return super.showBioentityPage(identifier, species, model, experimentTypes);
     }
 
     @Override
@@ -59,7 +57,6 @@ public class GeneSetPageController extends BioentityPageController {
     @RequestMapping(value = {"/json/genesets/{identifier:.*}/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchDifferentialJsonFacets(@PathVariable String identifier,
-                                              @RequestParam(value = "conditionQuery", required = false, defaultValue = "") String conditionQuery,
                                               @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
         return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(SemanticQuery.create(identifier), species);
     }
@@ -67,7 +64,6 @@ public class GeneSetPageController extends BioentityPageController {
     @RequestMapping(value = {"/json/genesets/{identifier:.*}/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchDifferentialJsonResults(@PathVariable String identifier,
-                                               @RequestParam(value = "conditionQuery", required = false, defaultValue = "") String conditionQuery,
                                                @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
         return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(SemanticQuery.create(identifier), species);
     }
