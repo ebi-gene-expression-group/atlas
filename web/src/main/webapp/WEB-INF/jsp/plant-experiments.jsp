@@ -44,7 +44,7 @@
                     </c:when>
                     <c:when test="${species == 'Hordeum vulgare'}">
                         <c:set var="speciesIconCode" value="5"/>
-                                            <c:set var="speciesColorCode" value="green" />
+                        <c:set var="speciesColorCode" value="green" />
                     </c:when>
                     <c:when test="${species == 'Oryza sativa Indica Group'}">
                         <c:set var="speciesIconCode" value="6"/>
@@ -68,8 +68,8 @@
                     </c:when>
 
                     <c:otherwise>
-                        <c:set var="speciesIconCode" value="×"/>
-                        <c:set var="speciesColorCode" value="grey" />
+                        <c:set var="speciesIconCode" value="P"/>
+                        <c:set var="speciesColorCode" value="green" />
                     </c:otherwise>
                 </c:choose>
 
@@ -134,8 +134,8 @@
                         <c:set var="speciesColorCode" value="green"/>
                     </c:when>
                     <c:otherwise>
-                        <c:set var="speciesIconCode" value="×"/>
-                        <c:set var="speciesColorCode" value="grey" />
+                        <c:set var="speciesIconCode" value="P"/>
+                        <c:set var="speciesColorCode" value="green" />
                     </c:otherwise>
                 </c:choose>
 

@@ -32,8 +32,16 @@
                 <c:set var="speciesIconCode" value="C"/>
                 <c:set var="speciesColorCode" value="red"/>
             </c:when>
+            <c:when test="${species == 'Brachypodium distachyon'}">
+                <c:set var="speciesIconCode" value="P"/>
+                <c:set var="speciesColorCode" value="green"/>
+            </c:when>
             <c:when test="${species == 'Caenorhabditis elegans'}">
                 <c:set var="speciesIconCode" value="W"/>
+                <c:set var="speciesColorCode" value="red"/>
+            </c:when>
+            <c:when test="${species == 'Danio rerio'}">
+                <c:set var="speciesIconCode" value="Z"/>
                 <c:set var="speciesColorCode" value="red"/>
             </c:when>
             <c:when test="${species == 'Equus caballus'}">
@@ -43,6 +51,10 @@
             <c:when test="${species == 'Gallus gallus'}">
                 <c:set var="speciesIconCode" value="k"/>
                 <c:set var="speciesColorCode" value="red"/>
+            </c:when>
+            <c:when test="${species == 'Glycine max'}">
+                <c:set var="speciesIconCode" value="P"/>
+                <c:set var="speciesColorCode" value="green"/>
             </c:when>
             <c:when test="${species == 'Gorilla gorilla'}">
                 <c:set var="speciesIconCode" value="G"/>
@@ -100,6 +112,18 @@
                 <c:set var="speciesIconCode" value="R"/>
                 <c:set var="speciesColorCode" value="red"/>
             </c:when>
+            <c:when test="${species == 'Schistosoma mansoni'}">
+                <c:set var="speciesIconCode" value="W"/>
+                <c:set var="speciesColorCode" value="red"/>
+            </c:when>
+            <c:when test="${species == 'Solanum lycopersicum'}">
+                <c:set var="speciesIconCode" value="P"/>
+                <c:set var="speciesColorCode" value="green"/>
+            </c:when>
+            <c:when test="${species == 'Sorghum bicolor'}">
+                <c:set var="speciesIconCode" value="P"/>
+                <c:set var="speciesColorCode" value="green"/>
+            </c:when>
             <c:when test="${species == 'Tetraodon nigroviridis'}">
                 <c:set var="speciesIconCode" value="E"/>
                 <c:set var="speciesColorCode" value="red"/>
@@ -121,11 +145,11 @@
                 <c:set var="speciesColorCode" value="green"/>
             </c:when>
             <c:when test="${species == 'Sorghum bicolor'}">
-                <c:set var="speciesIconCode" value="×"/>
+                <c:set var="speciesIconCode" value="P"/>
                 <c:set var="speciesColorCode" value="green"/>
             </c:when>
             <c:when test="${species == 'Vitis vinifera'}">
-                <c:set var="speciesIconCode" value="×"/>
+                <c:set var="speciesIconCode" value="P"/>
                 <c:set var="speciesColorCode" value="green"/>
             </c:when>
             <c:otherwise>
