@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
 import com.google.common.collect.ImmutableList;
@@ -6,21 +5,24 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrClient;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsIndex;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsIndex;
 
@@ -38,10 +40,13 @@ public class ConditionsIndexTest {
     private static final String EXPERIMENT_ACCESSION = "AN_ACCESSION";
 
     @Mock
-    private SolrServer solrServerMock;
+    private SolrClient solrClientMock;
 
     @Mock
     private DifferentialConditionsBuilder conditionsPropertiesBuilderMock;
+
+    @Mock
+    private BaselineConditionsBuilder baselineConditionsBuilderMock;
 
     @Mock
     private DifferentialExperiment differentialExperimentMock;
@@ -56,23 +61,24 @@ public class ConditionsIndexTest {
     public void setUp() throws Exception {
         given(differentialExperimentMock.getAccession()).willReturn(EXPERIMENT_ACCESSION);
         given(baselineExperimentMock.getAccession()).willReturn(EXPERIMENT_ACCESSION);
+        given(baselineConditionsBuilderMock.buildProperties(Mockito.eq(differentialExperimentMock), Matchers.<SetMultimap<String, String>>any())).willReturn(ImmutableList.<Condition>of());
     }
 
     @Test
     public void updateConditionsShouldReindexDiffExperiment() throws Exception {
-        given(conditionsPropertiesBuilderMock.buildProperties(Mockito.eq(differentialExperimentMock), Mockito.any(SetMultimap.class))).willReturn(CollectionUtils.EMPTY_COLLECTION);
-        DifferentialConditionsIndex subject = new DifferentialConditionsIndex(solrServerMock, conditionsPropertiesBuilderMock);
+        given(conditionsPropertiesBuilderMock.buildProperties(Mockito.eq(differentialExperimentMock), Matchers.<SetMultimap<String, String>>any())).willReturn(ImmutableList.<DifferentialCondition>of());
+        DifferentialConditionsIndex subject = new DifferentialConditionsIndex(solrClientMock, conditionsPropertiesBuilderMock);
 
         subject.updateConditions(differentialExperimentMock, null);
 
         ArgumentCaptor<String> deleteQueryCaptor = ArgumentCaptor.forClass(String.class);
 
-        verify(solrServerMock).deleteByQuery(deleteQueryCaptor.capture());
+        verify(solrClientMock).deleteByQuery(deleteQueryCaptor.capture());
         assertThat(deleteQueryCaptor.getValue(), endsWith(EXPERIMENT_ACCESSION));
 
-        verify(conditionsPropertiesBuilderMock).buildProperties(Mockito.eq(differentialExperimentMock), Mockito.any(SetMultimap.class));
+        verify(conditionsPropertiesBuilderMock).buildProperties(Mockito.eq(differentialExperimentMock), Matchers.<SetMultimap<String, String>>any());
 
-        verify(solrServerMock).addBeans(CollectionUtils.EMPTY_COLLECTION);
+        verify(solrClientMock).addBeans(CollectionUtils.EMPTY_COLLECTION);
     }
 
     @Test
@@ -81,15 +87,17 @@ public class ConditionsIndexTest {
         given(baselineExperimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
         given(experimentDesignMock.getFactorValues("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
         given(experimentDesignMock.getSampleCharacteristicsValues("a1")).willReturn(ImmutableMap.of("sex", "female"));
+        given(baselineConditionsBuilderMock.buildProperties(Mockito.any(Experiment.class), Matchers.<SetMultimap<String, String>>any()))
+            .willReturn(ImmutableList.of(new Condition(EXPERIMENT_ACCESSION, "g1", ImmutableList.of("female", "brain"))));
 
-        BaselineConditionsIndex subject = new BaselineConditionsIndex(solrServerMock, new BaselineConditionsBuilder());
+        BaselineConditionsIndex subject = new BaselineConditionsIndex(solrClientMock, baselineConditionsBuilderMock);
 
         SetMultimap<String, String> emptyOntologyTerms = ImmutableSetMultimap.of();
         subject.addConditions(baselineExperimentMock, emptyOntologyTerms);
 
         ArgumentCaptor<Collection> addBeansQueryCaptor = ArgumentCaptor.forClass(Collection.class);
 
-        verify(solrServerMock).addBeans(addBeansQueryCaptor.capture());
+        verify(solrClientMock).addBeans(addBeansQueryCaptor.capture());
 
         Collection<Condition> beans = addBeansQueryCaptor.getValue();
 
@@ -103,19 +111,21 @@ public class ConditionsIndexTest {
         given(baselineExperimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
         given(experimentDesignMock.getFactorValues("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
         given(experimentDesignMock.getSampleCharacteristicsValues("a1")).willReturn(ImmutableMap.of("sex", "female"));
+        given(baselineConditionsBuilderMock.buildProperties(Mockito.any(Experiment.class), Matchers.<SetMultimap<String, String>>any()))
+                .willReturn(ImmutableList.of(new Condition(EXPERIMENT_ACCESSION, "g1", ImmutableList.of("brain", "female", "obo", "efo"))));
 
         SetMultimap<String, String> ontologyTerms =
                 new ImmutableSetMultimap.Builder<String, String>()
                         .putAll("a1", "obo", "efo")
                         .build();
 
-        BaselineConditionsIndex subject = new BaselineConditionsIndex(solrServerMock, new BaselineConditionsBuilder());
+        BaselineConditionsIndex subject = new BaselineConditionsIndex(solrClientMock, baselineConditionsBuilderMock);
 
         subject.addConditions(baselineExperimentMock, ontologyTerms);
 
         ArgumentCaptor<Collection> addBeansQueryCaptor = ArgumentCaptor.forClass(Collection.class);
 
-        verify(solrServerMock).addBeans(addBeansQueryCaptor.capture());
+        verify(solrClientMock).addBeans(addBeansQueryCaptor.capture());
 
         Collection<Condition> beans = addBeansQueryCaptor.getValue();
         Condition condition = beans.iterator().next();
