@@ -166,7 +166,7 @@ $.Autocompleter = function(input, options) {
                     select.expandTree() ? config.isTreeControlHit = true : config.isTreeControlHit = false;
                     input.click();
 
-                    ed = $('#conditionSection .tag-editor');
+                    ed = $('#conditionSection .json-tag-editor');
                     ed.click();
 
 					return false;
@@ -199,7 +199,7 @@ $.Autocompleter = function(input, options) {
             onChange(0, true);
         }
 
-        ed = $('#conditionSection .tag-editor');
+        ed = $('#conditionSection .json-tag-editor');
 
 		if(!config.isTreeControlHit) {
             ed.trigger('onTreeNoExpansionHit');
@@ -239,7 +239,7 @@ $.Autocompleter = function(input, options) {
 		$(input.form).unbind(".arrayExpressAutocomplete");
 	});
 
-    ed = $('#conditionSection .tag-editor');
+    ed = $('#conditionSection .json-tag-editor');
     ed.on('onBlurHideResults', function (e) {
         if (!config.mouseDownOnSelect && !config.isTreeControlHit) {
             hideResults();

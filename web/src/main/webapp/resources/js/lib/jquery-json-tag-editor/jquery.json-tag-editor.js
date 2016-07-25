@@ -351,9 +351,15 @@
                                 ed.trigger('click', [$('.active', ed).find('input').closest('li').next('li').find('.json-tag-editor-tag')]);
                             }, 20);
                         };
-                        input.autocomplete(aco);
-                        if (aco._renderItem) {
-                            input.autocomplete('instance')._renderItem = aco._renderItem;
+
+                        // Inject ArrayExpress plugin
+                        if (aco.plugin) {
+                            input[aco.plugin](aco);
+                        } else {
+                            input.autocomplete(aco);
+                            if (aco._renderItem) {
+                                input.autocomplete( "instance" )._renderItem = aco._renderItem;
+                            }
                         }
                     }
                 }
@@ -414,6 +420,15 @@
                 updateGlobals();
             }
 
+            // Events emitted by ArrayExpress autocomplete plugin navigation
+            var isTreeExpansionHit = false;
+            ed.on('onTreeExpansionHit', function (e) {
+                isTreeExpansionHit = true;
+            });
+            ed.on('onTreeNoExpansionHit', function (e) {
+                isTreeExpansionHit = false;
+            });
+
             ed.on('blur', 'input', function(e) {
                 e.stopPropagation();
 
@@ -464,7 +479,7 @@
                 var $tagEditorTag = input.parent(),
                     tagObject = validate(tag);
 
-                if (tagObject) {
+                if (tagObject && !isTreeExpansionHit) {
                     var tagProperties = Object.keys(tagObject);
                     for (var i = 0 ; i < tagProperties.length ; i++) {
                         $tagEditorTag.get(0).dataset[tagProperties[i]] = tagObject[tagProperties[i]];
@@ -531,7 +546,7 @@
                     if (nextTag.length) {
                         nextTag.click().find('input').caret(0);
                     }
-                    else if ($this.val()) {
+                    else if ($this.val() && !isTreeExpansionHit) {
                         ed.click();
                     }
 
