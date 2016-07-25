@@ -38,10 +38,10 @@ public class AutoCompleteControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        SemanticQueryTerm termSource1 = SemanticQueryTerm.create("Value1");
-        SemanticQueryTerm termSource2 = SemanticQueryTerm.create("Value2");
+        SemanticQueryTerm queryTerm1 = SemanticQueryTerm.create("Value1");
+        SemanticQueryTerm queryTerm2 = SemanticQueryTerm.create("Value2");
 
-        List<SemanticQueryTerm> suggestions = Lists.newArrayList(termSource1, termSource2);
+        List<SemanticQueryTerm> suggestions = Lists.newArrayList(queryTerm1, queryTerm2);
 
         when(suggestionServiceMock.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS)).thenReturn(suggestions);
 
@@ -57,25 +57,27 @@ public class AutoCompleteControllerTest {
         String jsonResponse = subject.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS);
 
         //then
-        assertThat(jsonResponse, is("[{\"value\":\"Value1\",\"source\":\"\"},{\"value\":\"Value2\",\"source\":\"\"}]"));
+        assertThat(jsonResponse, is("[{\"value\":\"Value1\",\"category\":\"\"},{\"value\":\"Value2\",\"category\":\"\"}]"));
     }
 
     @Test
     public void fetchTermSource() throws Exception {
 
-        SemanticQueryTerm termSource1 = SemanticQueryTerm.create("TERM1", "SOURCE1");
-        SemanticQueryTerm termSource2 = SemanticQueryTerm.create("TERM2", "SOURCE2");
+        SemanticQueryTerm queryTerm1 = SemanticQueryTerm.create("TERM1", "CATEGORY1");
+        SemanticQueryTerm queryTerm2 = SemanticQueryTerm.create("TERM2", "CATEGORY2");
 
-        SemanticQueryTerm termSource3 = SemanticQueryTerm.create("TERM3", "SOURCE3");
-        SemanticQueryTerm termSource4 = SemanticQueryTerm.create("TERM4", "SOURCE4");
+        SemanticQueryTerm queryTerm3 = SemanticQueryTerm.create("TERM3", "CATEGORY3");
+        SemanticQueryTerm queryTerm4 = SemanticQueryTerm.create("TERM4", "CATEGORY4");
 
-        List<SemanticQueryTerm> termSourceList = Lists.newArrayList(termSource1,termSource2,termSource3,termSource4);
+        List<SemanticQueryTerm> termSourceList = Lists.newArrayList(queryTerm1, queryTerm2, queryTerm3, queryTerm4);
 
         Gson gson = new Gson();
 
         String suggestions = gson.toJson(termSourceList);
 
-        assertThat(suggestions, is("[{\"value\":\"TERM1\",\"source\":\"SOURCE1\"},{\"value\":\"TERM2\",\"source\":\"SOURCE2\"},{\"value\":\"TERM3\",\"source\":\"SOURCE3\"},{\"value\":\"TERM4\",\"source\":\"SOURCE4\"}]"));
+        assertThat(suggestions, is(
+                "[{\"value\":\"TERM1\",\"category\":\"CATEGORY1\"},{\"value\":\"TERM2\",\"category\":\"CATEGORY2\"}," +
+                 "{\"value\":\"TERM3\",\"category\":\"CATEGORY3\"},{\"value\":\"TERM4\",\"category\":\"CATEGORY4\"}]"));
     }
 
 }
