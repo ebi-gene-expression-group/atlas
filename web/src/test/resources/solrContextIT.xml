@@ -4,10 +4,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <!--<bean scope="singleton" id="solrClient" class="org.apache.solr.client.solrj.impl.HttpSolrServer">-->
-    <!--<constructor-arg value="http://lime.ebi.ac.uk:8983/solr"/>-->
-    <!--</bean>-->
-
     <bean id="solrClient" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
         <constructor-arg value="http://${solr.test.host}:8983/solr/gxa"/>
     </bean>
