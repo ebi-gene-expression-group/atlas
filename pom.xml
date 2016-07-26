@@ -21,6 +21,8 @@
         they are set to local development machine defaults
         and are overridden in profiles for specific deployment environments-->
         <solr.data.location>${user.home}/ATLAS3.TEST/solr</solr.data.location>
+        <solr.host>localhost</solr.host>
+        <solr.test.host>lime.ebi.ac.uk</solr.test.host>
         <arrayexpress.ac.url>/gxa/arrayexpress</arrayexpress.ac.url>
         <europepmc.base.url>/gxa/europepmc</europepmc.base.url>
 
@@ -84,9 +86,8 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <excludes>
-                    <exclude>
-                        oracleContext.xml
-                    </exclude>
+                    <exclude>oracleContext.xml</exclude>
+                    <exclude>solrContext.xml</exclude>
                 </excludes>
             </resource>
         </resources>
