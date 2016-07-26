@@ -25,9 +25,6 @@ public class BioentityIndexAdmin {
     private String bioentityPropertiesDirectory;
     private ExecutorService executorService;
 
-    @Value("#{configuration['solr.data.location']}")
-    private String solrDataLocation;
-
     private BioentityIndex bioentityIndex;
 
     // Injecting the ExecutorService allows us to inject a sameThreadExecutor in our unit tests,

@@ -20,9 +20,6 @@
         <!-- default values for configuration properties,
         they are set to local development machine defaults
         and are overridden in profiles for specific deployment environments-->
-        <solr.data.location>${user.home}/ATLAS3.TEST/solr</solr.data.location>
-        <solr.host>localhost</solr.host>
-        <solr.test.host>lime.ebi.ac.uk</solr.test.host>
         <arrayexpress.ac.url>/gxa/arrayexpress</arrayexpress.ac.url>
         <europepmc.base.url>/gxa/europepmc</europepmc.base.url>
 
@@ -86,9 +83,7 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <excludes>
-                    <exclude>
-                        oracleContext.xml
-                    </exclude>
+                    <exclude>oracleContext.xml</exclude>
                 </excludes>
             </resource>
         </resources>
@@ -616,7 +611,6 @@
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
-                <solr.host>ves-hx-69.ebi.ac.uk</solr.host>
             </properties>
         </profile>
         <profile>
@@ -639,17 +633,13 @@
                     <resource>
                         <directory>src/main/resources</directory>
                         <includes>
-                            <include>
-                                oracleContext.xml
-                            </include>
+                            <include>oracleContext.xml</include>
                         </includes>
                     </resource>
                 </resources>
             </build>
             <!-- Embedded tomcat started by mvn in Bamboo plan -->
             <properties>
-                <solr.host>localhost</solr.host>
-                <solr.test.host>lime</solr.test.host>
                 <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
@@ -669,41 +659,12 @@
                     <resource>
                         <directory>src/main/resources</directory>
                         <includes>
-                            <include>
-                                oracleContext.xml
-                            </include>
+                            <include>oracleContext.xml</include>
                         </includes>
                     </resource>
                 </resources>
             </build>
             <properties>
-                <solr.host>lime</solr.host>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
-                <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
-                <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
-                <log.level.root>info</log.level.root>
-                <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
-            </properties>
-        </profile>
-        <profile>
-            <id>dev.local.solr</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <includes>
-                            <include>
-                                oracleContext.xml
-                            </include>
-                        </includes>
-                    </resource>
-                </resources>
-            </build>
-            <properties>
-                <solr.host>localhost</solr.host>
-                <solr.test.host>localhost</solr.test.host>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
@@ -720,16 +681,12 @@
                     <resource>
                         <directory>src/main/resources</directory>
                         <includes>
-                            <include>
-                                oracleContext.xml
-                            </include>
+                            <include>oracleContext.xml</include>
                         </includes>
                     </resource>
                 </resources>
             </build>
             <properties>
-                <solr.host>localhost</solr.host>
-                <solr.test.host>localhost</solr.test.host>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <oracle.jdbc.url>jdbc:oracle:thin:@localhost:1521:orcl</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
@@ -747,15 +704,12 @@
                     <resource>
                         <directory>src/main/resources</directory>
                         <includes>
-                            <include>
-                                oracleContext.xml
-                            </include>
+                            <include>oracleContext.xml</include>
                         </includes>
                     </resource>
                 </resources>
             </build>
             <properties>
-                <solr.host>lime</solr.host>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3it</oracle.jdbc.username>
@@ -773,15 +727,12 @@
                     <resource>
                         <directory>src/main/resources</directory>
                         <includes>
-                            <include>
-                                oracleContext.xml
-                            </include>
+                            <include>oracleContext.xml</include>
                         </includes>
                     </resource>
                 </resources>
             </build>
             <properties>
-                <solr.host>ves-hx-77</solr.host>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-dlvm-039.ebi.ac.uk:1521:VATLASTST</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3</oracle.jdbc.username>
@@ -792,22 +743,19 @@
             </properties>
         </profile>
         <profile>
-            <!-- Access Solr and Oracle via localhost ssh tunnel -->
+            <!-- Access Oracle via localhost ssh tunnel -->
             <id>dev.via.tunnel</id>
             <build>
                 <resources>
                     <resource>
                         <directory>src/main/resources</directory>
                         <includes>
-                            <include>
-                                oracleContext.xml
-                            </include>
+                            <include>oracleContext.xml</include>
                         </includes>
                     </resource>
                 </resources>
             </build>
             <properties>
-                <solr.host>localhost</solr.host>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <oracle.jdbc.url>jdbc:oracle:thin:@localhost:5205:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>

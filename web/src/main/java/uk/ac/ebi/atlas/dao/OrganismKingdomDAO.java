@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.dao;
 
-
 import com.google.common.collect.ImmutableMap;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 @Named
-@Scope("singleton")
 public class OrganismKingdomDAO {
 
     private static final String SELECT_KINGDOM = "SELECT ORGANISM_KINGDOM.KINGDOM, BIOENTITY_ORGANISM.NAME FROM ORGANISM_KINGDOM" +

@@ -7,13 +7,13 @@
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
            http://www.springframework.org/schema/tx
            http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
            http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/context/spring-context-3.2.xsd
            http://www.springframework.org/schema/util
-           http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+           http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
 
     <!-- enables annotation-based dependency injection -->
@@ -21,6 +21,10 @@
 
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
+
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations" value="classpath:jdbc.properties"/>
+    </bean>
 
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
@@ -42,19 +46,18 @@
         </property>
     </bean>
 
-    <bean id="singleThreadExecutorService" class="java.util.concurrent.Executors" scope="prototype"
-          factory-method="newSingleThreadExecutor"/>
+    <bean id="singleThreadExecutorService" class="java.util.concurrent.Executors" scope="prototype" factory-method="newSingleThreadExecutor"/>
 
-    <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
-        <constructor-arg ref="httpClientConnectionManager"/>
+    <bean id="requestConfigBuilder" class="org.apache.http.client.config.RequestConfig" factory-method="custom"/>
+    <bean id="requestConfig" factory-bean="requestConfigBuilder" factory-method="build" />
+    <bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" destroy-method="shutdown"/>
+    <bean id="httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder" factory-method="create">
+        <property name="defaultRequestConfig" ref="requestConfig" />
+        <property name="connectionManager" ref="httpClientConnectionManager"/>
     </bean>
+    <bean id="httpClient" factory-bean="httpClientBuilder" factory-method="build" />
 
-    <bean id="efoLoader" class="uk.ac.ebi.arrayexpress.utils.efo.EFOLoader">
-    </bean>
-
-    <bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.PoolingClientConnectionManager"
-          destroy-method="shutdown">
-    </bean>
+    <bean id="efoLoader" class="uk.ac.ebi.arrayexpress.utils.efo.EFOLoader" />
 
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
         <constructor-arg>

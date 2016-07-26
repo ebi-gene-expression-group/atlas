@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-           http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-    <!-- do not place bean definitions here, as this file is substituted for local variations
-         in different environments -->
-
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!--jdbc.properties read in applicationContext.xml-->
 
     <bean id="dataSourceOracle" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
         <property name="URL" value="${oracle.jdbc.url}"/>

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.solr.query;
 
-
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +44,7 @@ public class MultiTermSuggestionServiceTest {
 
         given(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).willReturn(jsonAutoCompleteResponse);
 
-        subject = new MultiTermSuggestionService(restTemplateMock);
+        subject = new MultiTermSuggestionService(restTemplateMock, "");
     }
 
     @Test

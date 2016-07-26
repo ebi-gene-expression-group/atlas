@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestClientException;
@@ -29,8 +30,6 @@ public class MultiTermSuggestionService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MultiTermSuggestionService.class);
 
     private RestTemplate restTemplate;
-
-    @Value("#{configuration['solr.suggester.base.url']}")
     private String serverURL;
 
     private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w -]|_");
@@ -38,7 +37,8 @@ public class MultiTermSuggestionService {
     private static final String SOLR_SPELLING_SUGGESTER_TEMPLATE = "suggest_properties?spellcheck.q={0}&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
     @Inject
-    public MultiTermSuggestionService(RestTemplate restTemplate) {
+    public MultiTermSuggestionService(RestTemplate restTemplate, @Qualifier("solrSuggestionServerURL") String serverURL) {
+        this.serverURL = serverURL;
         this.restTemplate = restTemplate;
     }
 

@@ -6,6 +6,7 @@ import com.jayway.jsonpath.JsonPath;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -48,15 +49,10 @@ public class BaselineAnalyticsSearchDao {
     private final String baselineHeatmapPivotQuery;
 
     @Inject
-    public BaselineAnalyticsSearchDao(RestTemplate restTemplate, @Value("#{configuration['solr.analytics.base.url']}") String solrBaseUrl, String baselineHeatmapPivotQuery) {
+    public BaselineAnalyticsSearchDao(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl, String baselineHeatmapPivotQuery) {
         this.restTemplate = restTemplate;   // settings of restTemplate in applicationContext.xml
         this.solrBaseUrl = solrBaseUrl;
         this.baselineHeatmapPivotQuery = "&json.facet=" + encodeQueryParam(baselineHeatmapPivotQuery.replaceAll("\\s+",""));
-    }
-
-    public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery) {
-        String response = fetchFacets(buildGeneIdentifierQuery(geneQuery));
-        return JsonPath.read(response, FACET_TREE_PATH);
     }
 
     public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
@@ -83,10 +79,6 @@ public class BaselineAnalyticsSearchDao {
         }
 
         return stringBuilder.toString();
-    }
-
-    private String buildGeneIdentifierQuery(SemanticQuery geneQuery) {
-        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF());
     }
 
     public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, String defaultQueryFactorType) {

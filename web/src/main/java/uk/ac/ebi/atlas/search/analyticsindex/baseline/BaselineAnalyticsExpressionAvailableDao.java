@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 import com.google.common.base.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -31,7 +32,7 @@ public class BaselineAnalyticsExpressionAvailableDao {
 
     //TODO This class is very similar to BaselineAnalyticsSearchDao, maybe they could be refactored
     @Inject
-    public BaselineAnalyticsExpressionAvailableDao(RestTemplate restTemplate, @Value("#{configuration['solr.analytics.base.url']}") String solrBaseUrl) {
+    public BaselineAnalyticsExpressionAvailableDao(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl) {
         this.restTemplate = restTemplate;
         this.solrBaseUrl = solrBaseUrl;
     }
