@@ -71,7 +71,7 @@ echo `date`
 echo "============================================================"
 echo "Warm server caches..."
 cd ~/atlas_scripts
-./warm_server.sh ves-hx-77
+./warm_experiment_cache.sh ves-hx-77
 
 echo "============================================================"
 echo `date`
