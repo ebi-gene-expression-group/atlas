@@ -60,7 +60,7 @@ public final class HeatmapWidgetDownloadController {
                 : new BaselineExperimentSearchResult();
 
         if (!searchResult.isEmpty()) {
-            setHttpHeaders(response, geneQuery + "_baseline.tsv");
+            setHttpHeaders(response, "Expression_Atlas_results_baseline.tsv");
             PrintWriter writer = response.getWriter();
             writer.write(formatFileHeader(geneQuery, conditionQuery, species));
             writeTsv(searchResult, writer);
@@ -77,7 +77,7 @@ public final class HeatmapWidgetDownloadController {
         BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, conditionQuery, species, defaultFactorQueryType);
 
         if (!searchResult.isEmpty()) {
-            setHttpHeaders(response, geneQuery + "_baseline.tsv");
+            setHttpHeaders(response, "Expression_Atlas_results_baseline.tsv");
             PrintWriter writer = response.getWriter();
             writer.write(formatFileHeader(geneQuery, conditionQuery, species));
             writeTsv(searchResult, writer);

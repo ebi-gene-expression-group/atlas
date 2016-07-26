@@ -62,11 +62,7 @@ public class BioentitiesSearchDifferentialDownloadController {
 
     private void downloadExpressions(HttpServletResponse response, SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) throws IOException {
 
-        if (geneQuery.size() > 1) {
-            setDownloadHeaders(response, "expression_atlas-differential_results-" + dateFormat.format(new Date()) + ".tsv");
-        } else {
-            setDownloadHeaders(response, "expression_atlas-" + SearchDescription.get(geneQuery, conditionQuery, species).replaceAll(" ", "_") + ".tsv");
-        }
+        setDownloadHeaders(response, "Expression_Atlas_results_differential.tsv");
 
         try (DiffAnalyticsTSVWriter writer = tsvWriter) {
             writer.setResponseWriter(response.getWriter());
