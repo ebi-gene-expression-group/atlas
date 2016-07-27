@@ -48,7 +48,7 @@ public class BaselineExperimentSearchResultProducer {
 
         for (Map.Entry<BaselineExperimentSlice, Collection<BaselineExperimentExpression>> baselineExperimentSliceCollectionEntry : expressionsByExperimentSlice.asMap().entrySet()) {
             BaselineExperiment experiment = baselineExperimentSliceCollectionEntry.getKey().experiment();
-            if (experiment.getExperimentalFactors().getDefaultQueryFactorType().equals(defaultQueryFactorType)) {
+            if (experiment.getExperimentalFactors().getDefaultQueryFactorType().equalsIgnoreCase(defaultQueryFactorType)) {
                 builder.putAll(baselineExperimentSliceCollectionEntry.getKey(), baselineExperimentSliceCollectionEntry.getValue());
             }
         }
