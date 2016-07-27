@@ -21,6 +21,7 @@ public class AssayGroup implements Iterable<String>{
 
     public AssayGroup(String id, int replicates, String... assayAccessions) {
         checkArgument(StringUtils.isNotBlank(id));
+        checkArgument(assayAccessions.length > 0 );
 
         this.id = id;
         this.replicates = replicates;

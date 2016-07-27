@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsBuilder;
 
 import javax.inject.Named;
 import java.util.Collection;
-import java.util.Set;
 
 @Named
 @Scope("prototype")
@@ -40,9 +39,7 @@ public class BaselineConditionsBuilder extends ConditionsBuilder {
         Collection<Condition> conditions = Sets.newHashSet();
 
         for (String assayAccession : assayGroup) {
-            Set<String> values = collectAssayProperties(experiment.getExperimentDesign(), assayAccession, assayGroupIdToOntologyTermIds);
-            Condition condition = new Condition(experiment.getAccession(), assayGroup.getId(), values);
-            conditions.add(condition);
+            conditions.add(new Condition(experiment.getAccession(), assayGroup.getId(),  collectAssayProperties(experiment.getExperimentDesign(), assayAccession, assayGroupIdToOntologyTermIds)));
         }
 
         return conditions;
