@@ -96,7 +96,7 @@
         <field name="kingdom" type="text_lower" indexed="true" stored="true" required="true" />
         <field name="experimentAccession" type="string" indexed="true" stored="true" required="true"/>
         <field name="experimentType" type="text_lower" indexed="true" stored="true" required="true"/>
-        <field name="defaultQueryFactorType" type="string" indexed="true" stored="true"/>
+        <field name="defaultQueryFactorType" type="text_lower" indexed="true" stored="true"/>
         <field name="conditionsSearch" type="text_en" indexed="true" stored="false"/>
         <field name="assayGroupId" type="string" indexed="true" stored="true"/>
         <field name="expressionLevel" type="tdouble4" indexed="true" stored="true"/>
