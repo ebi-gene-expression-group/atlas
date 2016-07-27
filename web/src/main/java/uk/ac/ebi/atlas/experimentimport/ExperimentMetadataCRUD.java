@@ -104,28 +104,13 @@ public class ExperimentMetadataCRUD {
     private void addPublicExperimentToConditionsIndex(String accession, ExperimentDesign experimentDesign) {
         Experiment experiment = experimentTrader.getPublicExperiment(accession);
         ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
-        conditionsIndexTrader.getIndex(experiment.getType()).addConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
+        conditionsIndexTrader.getIndex(experiment.getType()).addConditions(experiment, efoParentsLookupService.expandOntologyTerms(termIdsByAssayAccession));
     }
 
     private void updatePublicExperimentInConditionsIndex(String accession, ExperimentDesign experimentDesign) {
         Experiment experiment = experimentTrader.getPublicExperiment(accession);
         ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
-        conditionsIndexTrader.getIndex(experiment.getType()).updateConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
-    }
-
-    private ImmutableSetMultimap<String, String> expandOntologyTerms(ImmutableSetMultimap<String, String> termIdsByAssayAccession) {
-
-        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
-        for (String assayAccession : termIdsByAssayAccession.keys()) {
-            Set<String> expandedOntologyTerms = new HashSet<>();
-
-            expandedOntologyTerms.addAll(efoParentsLookupService.getAllParents(termIdsByAssayAccession.get(assayAccession)));
-            expandedOntologyTerms.addAll(termIdsByAssayAccession.get(assayAccession));
-
-            builder.putAll(assayAccession, expandedOntologyTerms);
-        }
-
-        return builder.build();
+        conditionsIndexTrader.getIndex(experiment.getType()).updateConditions(experiment, efoParentsLookupService.expandOntologyTerms(termIdsByAssayAccession));
     }
 
     private ExperimentDTO buildExperimentDTO(CondensedSdrfParserOutput condensedSdrfParserOutput, String species, boolean isPrivate) {

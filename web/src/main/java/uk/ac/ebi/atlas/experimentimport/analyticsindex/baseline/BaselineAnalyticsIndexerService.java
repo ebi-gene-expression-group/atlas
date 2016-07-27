@@ -60,7 +60,8 @@ public class BaselineAnalyticsIndexerService {
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
 
         ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId = SpeciesGrouper.buildEnsemblSpeciesGroupedByAssayGroupId(experiment);
-        ImmutableSetMultimap<String, String> ontologyTermIdsByAssayAccession = expandOntologyTerms(experimentDesign.getAllOntologyTermIdsByAssayAccession());
+        ImmutableSetMultimap<String, String> ontologyTermIdsByAssayAccession = efoParentsLookupService
+                .expandOntologyTerms(experimentDesign.getAllOntologyTermIdsByAssayAccession());
         ImmutableSetMultimap<String, String> conditionSearchTermsByAssayGroupId = buildAssayGroupIdToConditionsSearchTerms(experiment, ontologyTermIdsByAssayAccession);
 
         checkArgument(StringUtils.isNotBlank(defaultQueryFactorType));
@@ -82,21 +83,6 @@ public class BaselineAnalyticsIndexerService {
         LOGGER.info("Done indexing {}, indexed {} documents in {} seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
 
         return count;
-    }
-
-    private ImmutableSetMultimap<String, String> expandOntologyTerms(ImmutableSetMultimap<String, String> termIdsByAssayAccession) {
-        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
-
-        for (String assayAccession : termIdsByAssayAccession.keys()) {
-            Set<String> expandedOntologyTerms = new HashSet<>();
-
-            expandedOntologyTerms.addAll(efoParentsLookupService.getAllParents(termIdsByAssayAccession.get(assayAccession)));
-            expandedOntologyTerms.addAll(termIdsByAssayAccession.get(assayAccession));
-
-            builder.putAll(assayAccession, expandedOntologyTerms);
-        }
-
-        return builder.build();
     }
 
     private ImmutableSetMultimap<String, String> buildAssayGroupIdToConditionsSearchTerms(BaselineExperiment experiment, SetMultimap<String, String> AssayIdToOntologyAccessions) {

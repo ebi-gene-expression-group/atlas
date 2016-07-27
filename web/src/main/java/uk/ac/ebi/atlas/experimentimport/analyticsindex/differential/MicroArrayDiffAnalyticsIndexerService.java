@@ -42,7 +42,8 @@ public class MicroArrayDiffAnalyticsIndexerService {
 
         ImmutableMap<String, String> ensemblSpeciesGroupedByContrastId = SpeciesGrouper.buildEnsemblSpeciesGroupedByContrastId(experiment);
 
-        ImmutableSetMultimap<String, String> ontologyTermIdsByAssayAccession = expandOntologyTerms(experimentDesign.getAllOntologyTermIdsByAssayAccession());
+        ImmutableSetMultimap<String, String> ontologyTermIdsByAssayAccession = efoParentsLookupService
+                .expandOntologyTerms(experimentDesign.getAllOntologyTermIdsByAssayAccession());
 
         ImmutableSetMultimap<String, String> conditionSearchTermsByContrastId = buildConditionSearchTermsByAssayGroupId(experiment, ontologyTermIdsByAssayAccession);
 
@@ -60,21 +61,6 @@ public class MicroArrayDiffAnalyticsIndexerService {
         for (Contrast contrast : experiment.getContrasts()) {
             int numReplicates = Math.min(contrast.getReferenceAssayGroup().getReplicates(), contrast.getTestAssayGroup().getReplicates());
             builder.put(contrast.getId(), numReplicates);
-        }
-
-        return builder.build();
-    }
-
-    private ImmutableSetMultimap<String, String> expandOntologyTerms(ImmutableSetMultimap<String, String> termIdsByAssayAccession) {
-
-        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
-        for (String assayAccession : termIdsByAssayAccession.keys()) {
-            Set<String> expandedOntologyTerms = new HashSet<>();
-
-            expandedOntologyTerms.addAll(efoParentsLookupService.getAllParents(termIdsByAssayAccession.get(assayAccession)));
-            expandedOntologyTerms.addAll(termIdsByAssayAccession.get(assayAccession));
-
-            builder.putAll(assayAccession, expandedOntologyTerms);
         }
 
         return builder.build();

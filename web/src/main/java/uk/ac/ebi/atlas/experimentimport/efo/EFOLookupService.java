@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.efo;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSetMultimap;
 import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
 
 import javax.inject.Inject;
@@ -81,5 +82,21 @@ public class EFOLookupService {
             builder.put(id, efoNode);
         }
         idToEFONode = builder.build();
+    }
+
+    public ImmutableSetMultimap<String, String> expandOntologyTerms(ImmutableSetMultimap<String, String>
+                                                                       termIdsByAssayAccession) {
+        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
+
+        for (String assayAccession : termIdsByAssayAccession.keys()) {
+            Set<String> expandedOntologyTerms = new HashSet<>();
+
+            expandedOntologyTerms.addAll(getAllParents(termIdsByAssayAccession.get(assayAccession)));
+            expandedOntologyTerms.addAll(termIdsByAssayAccession.get(assayAccession));
+
+            builder.putAll(assayAccession, expandedOntologyTerms);
+        }
+
+        return builder.build();
     }
 }
