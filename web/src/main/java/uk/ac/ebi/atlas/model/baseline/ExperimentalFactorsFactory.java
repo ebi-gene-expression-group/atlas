@@ -105,6 +105,8 @@ public class ExperimentalFactorsFactory {
             checkNotNull(assayGroup, String.format("%s: No assay group \"%s\"", experimentAccession, groupId));
 
             FactorGroup factorGroup = experimentDesign.getFactors(assayGroup.getFirstAssayAccession());
+            checkNotNull(factorGroup, String.format("%s: Factors not found for \"%s\" - \"%s\"", experimentAccession,
+                    groupId, assayGroup.getFirstAssayAccession()));
             factorGroups.add(factorGroup);
 
         }

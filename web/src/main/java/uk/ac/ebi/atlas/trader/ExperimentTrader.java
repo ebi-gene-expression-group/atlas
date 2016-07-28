@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -19,6 +20,7 @@ import java.util.concurrent.ExecutionException;
 @Named
 public class ExperimentTrader {
 
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ExperimentTrader.class);
     private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
     private MicroarrayExperimentsCache microarrayExperimentsCache;
@@ -49,6 +51,7 @@ public class ExperimentTrader {
         try {
             experimentType = publicExperimentTypesCache.getExperimentType(experimentAccession);
         } catch (UncheckedExecutionException | NullPointerException e) {
+            LOGGER.error(e.getMessage());
             throw new ResourceNotFoundException("Experiment: " + experimentAccession + " not found");
         }
 
