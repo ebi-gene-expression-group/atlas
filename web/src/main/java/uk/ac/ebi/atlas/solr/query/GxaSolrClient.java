@@ -40,7 +40,7 @@ public class GxaSolrClient {
         try {
             QueryResponse queryResponse = solrClient.query(solrQuery);
 
-            LOGGER.debug("<query> Solr query time: {} ms, status code: {}", queryResponse.getStatus(), queryResponse.getQTime() );
+//            LOGGER.debug("<query> Solr query time: {} ms, status code: {}", queryResponse.getStatus(), queryResponse.getQTime() );
 
             return queryResponse;
         } catch (SolrServerException | IOException e) {

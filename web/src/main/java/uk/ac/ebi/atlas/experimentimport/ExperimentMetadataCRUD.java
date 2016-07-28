@@ -182,15 +182,13 @@ public class ExperimentMetadataCRUD {
         try {
             experimentTrader.removeExperimentFromCache(accession, type);
 
-            CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(accession, type);
-
-            ExperimentDesign experimentDesign = condensedSdrfParserOutput.getExperimentDesign();
-            writeExperimentDesignFile(accession, type, experimentDesign);
+            ExperimentDesign newDesign = condensedSdrfParser.parse(accession, type).getExperimentDesign();
+            writeExperimentDesignFile(accession, type, newDesign);
 
             LOGGER.info("updated design for experiment {}", accession);
 
             if (!experimentDTO.isPrivate()) {
-                updatePublicExperimentInConditionsIndex(accession,experimentDesign);
+                updatePublicExperimentInConditionsIndex(accession,newDesign);
             }
 
         } catch (IOException e) {
