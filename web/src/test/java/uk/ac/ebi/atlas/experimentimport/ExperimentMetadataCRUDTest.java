@@ -116,8 +116,8 @@ public class ExperimentMetadataCRUDTest {
     @Captor
     private ArgumentCaptor<String> experimentAccessionCaptor;
 
-    @Captor
-    private ArgumentCaptor<ImmutableSetMultimap<String, String>> termIdsByAssayAccessionCaptor;
+    private ImmutableSetMultimap<String,String> allOntologyTermIdsByAssayAccession = ImmutableSetMultimap.of
+            (EXPERIMENT_ASSAY,EFO_0000761);
 
     @Before
     public void setUp() throws Exception {
@@ -155,10 +155,7 @@ public class ExperimentMetadataCRUDTest {
         given(condensedSdrfParserOutputMock.getPubmedIds()).willReturn(new ImmutableSet.Builder<String>().build());
         given(condensedSdrfParserOutputMock.getTitle()).willReturn("");
 
-
-        ImmutableSetMultimap.Builder<String, String> builder = new ImmutableSetMultimap.Builder<>();
-        builder.put(EXPERIMENT_ASSAY, EFO_0000761);
-        when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(builder.build());
+        when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(allOntologyTermIdsByAssayAccession);
         when(efoParentsLookupServiceMock.getAllParents(anySetOf(String.class))).thenReturn(EXPANDED_EFO_TERMS);
 
         subject = new ExperimentMetadataCRUD(experimentDAOMock, experimentTraderMock, experimentDTOBuilderMock, condensedSdrfParserMock, efoParentsLookupServiceMock);
@@ -212,19 +209,13 @@ public class ExperimentMetadataCRUDTest {
     @Test
     public void importExperimentExpandsOntologyTerms() throws Exception {
         subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfigurationMock, false, Optional.<String>absent());
-        verify(conditionsIndexMock).addConditions(any(Experiment.class), termIdsByAssayAccessionCaptor.capture());
-
-        ImmutableSetMultimap<String, String> termIdsByAssayAccession =  termIdsByAssayAccessionCaptor.getValue();
-        assertThat(termIdsByAssayAccession.get(EXPERIMENT_ASSAY), containsInAnyOrder(EFO_0000001, EFO_0000761, EFO_0001438, EFO_0001443));
+        verify(efoParentsLookupServiceMock).expandOntologyTerms(allOntologyTermIdsByAssayAccession);
     }
 
     @Test
     public void updateExperimentExpandsOntologyTerms() throws Exception {
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
-        verify(conditionsIndexMock).updateConditions(any(Experiment.class), termIdsByAssayAccessionCaptor.capture());
-
-        ImmutableSetMultimap<String, String> termIdsByAssayAccession =  termIdsByAssayAccessionCaptor.getValue();
-        assertThat(termIdsByAssayAccession.get(EXPERIMENT_ASSAY), containsInAnyOrder(EFO_0000001, EFO_0000761, EFO_0001438, EFO_0001443));
+        verify(efoParentsLookupServiceMock).expandOntologyTerms(allOntologyTermIdsByAssayAccession);
     }
 
     @Test
