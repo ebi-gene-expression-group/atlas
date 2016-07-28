@@ -19,7 +19,7 @@ import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterFactory;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.*;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
@@ -72,7 +72,7 @@ public class ExperimentMetadataCRUDTest {
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
 
     @Mock
-    private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilderMock;
+    private ExperimentDesignFileWriterFactory experimentDesignFileWriterFactoryMock;
 
     @Mock
     private ExperimentDAO experimentDAOMock;
@@ -119,16 +119,16 @@ public class ExperimentMetadataCRUDTest {
     private ImmutableSetMultimap<String,String> allOntologyTermIdsByAssayAccession = ImmutableSetMultimap.of
             (EXPERIMENT_ASSAY,EFO_0000761);
 
+    ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
+
     @Before
     public void setUp() throws Exception {
 
         when(microarrayExperimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
-        when(experimentConfigurationMock.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
+        when(experimentConfigurationMock.getExperimentType()).thenReturn(experimentType);
 
-        given(experimentDesignFileWriterBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDesignFileWriterBuilderMock);
-        given(experimentDesignFileWriterBuilderMock.withExperimentType(any(ExperimentType.class))).willReturn
-                (experimentDesignFileWriterBuilderMock);
-        given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
+        given(experimentDesignFileWriterFactoryMock.create(EXPERIMENT_ACCESSION, experimentType))
+                .willReturn(experimentDesignFileWriterMock);
 
         given(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).willReturn(conditionsIndexMock);
         given(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).willReturn(conditionsIndexMock);
@@ -146,6 +146,7 @@ public class ExperimentMetadataCRUDTest {
         when(experimentDAOMock.findExperiment(anyString(), anyBoolean())).thenReturn(experimentDTOMock);
 
         given(experimentDTOMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
+        given(experimentDTOMock.getExperimentType()).willReturn(experimentType);
 
         given(condensedSdrfParserMock.parse(anyString(), any(ExperimentType.class))).willReturn(condensedSdrfParserOutputMock);
         given(condensedSdrfParserOutputMock.getExperimentDesign()).willReturn(experimentDesignMock);
@@ -160,7 +161,7 @@ public class ExperimentMetadataCRUDTest {
 
         subject = new ExperimentMetadataCRUD(experimentDAOMock, experimentTraderMock, experimentDTOBuilderMock, condensedSdrfParserMock, efoParentsLookupServiceMock);
         subject.setConditionsIndexTrader(conditionsIndexTraderMock);
-        subject.setExperimentDesignFileWriterBuilder(experimentDesignFileWriterBuilderMock);
+        subject.setExperimentDesignFileWriterFactory(experimentDesignFileWriterFactoryMock);
         subject.setAnalyticsIndexerManager(analyticsIndexerManagerMock);
     }
 
@@ -168,9 +169,7 @@ public class ExperimentMetadataCRUDTest {
     public void generateExperimentDesignShouldUseTheExperimentDesignWriter() throws Exception {
 
         subject.writeExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, experimentDesignMock);
-        verify(experimentDesignFileWriterBuilderMock).withExperimentAccession(EXPERIMENT_ACCESSION);
-        verify(experimentDesignFileWriterBuilderMock).withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(experimentDesignFileWriterBuilderMock).build();
+        verify(experimentDesignFileWriterFactoryMock).create(EXPERIMENT_ACCESSION,experimentType);
         verify(experimentDesignFileWriterMock).write(experimentDesignMock);
     }
 

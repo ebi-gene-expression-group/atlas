@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterFactory;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -21,7 +21,6 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -36,7 +35,7 @@ public class ExperimentMetadataCRUD {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentMetadataCRUD.class);
 
     private ExperimentDAO experimentDAO;
-    private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
+    private ExperimentDesignFileWriterFactory experimentDesignFileWriterFactory;
     private ExperimentTrader experimentTrader;
     private ExperimentDTOBuilder experimentDTOBuilder;
     private final CondensedSdrfParser condensedSdrfParser;
@@ -71,8 +70,8 @@ public class ExperimentMetadataCRUD {
     }
 
     @Inject
-    public void setExperimentDesignFileWriterBuilder(ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder) {
-        this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
+    public void setExperimentDesignFileWriterFactory(ExperimentDesignFileWriterFactory experimentDesignFileWriterFactory) {
+        this.experimentDesignFileWriterFactory = experimentDesignFileWriterFactory;
     }
 
     public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate, Optional<String> accessKey) throws IOException {
@@ -126,10 +125,7 @@ public class ExperimentMetadataCRUD {
 
     void writeExperimentDesignFile(String accession, ExperimentType experimentType, ExperimentDesign experimentDesign) throws IOException {
         try (ExperimentDesignFileWriter experimentDesignFileWriter =
-                     experimentDesignFileWriterBuilder
-                             .withExperimentAccession(accession)
-                             .withExperimentType(experimentType)
-                             .build()) {
+                     experimentDesignFileWriterFactory.create(accession,experimentType)) {
             experimentDesignFileWriter.write(experimentDesign);
         }
     }
