@@ -179,7 +179,6 @@ public class ExperimentalFactors implements Serializable {
         }
 
         return filteredFactors;
-
     }
 
     // match each FactorGroup with the filterFactors, and for each match return the remaining single factor
