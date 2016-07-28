@@ -64,6 +64,16 @@ public class BaselineProfileStreamOptionsWidgetQuery implements BaselineProfileS
     }
 
     @Override
+    public Double getThresholdForPremium() {
+        return null;
+    }
+
+    @Override
+    public Double getFractionForPremium() {
+        return null;
+    }
+
+    @Override
     public Integer getHeatmapMatrixSize() {
         return ExperimentPageRequestPreferences.DEFAULT_NUMBER_OF_RANKED_GENES;
     }

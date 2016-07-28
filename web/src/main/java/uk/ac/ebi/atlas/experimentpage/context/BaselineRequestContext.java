@@ -28,6 +28,15 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
         return selectedFilterFactors;
     }
 
+    @Override
+    public Double getThresholdForPremium() {
+        return getRequestPreferences().getThresholdForPremium();
+    }
+
+    @Override
+    public Double getFractionForPremium() {
+        return getRequestPreferences().getFractionForPremium();
+    }
 
     @Override
     public String getExperimentAccession() {

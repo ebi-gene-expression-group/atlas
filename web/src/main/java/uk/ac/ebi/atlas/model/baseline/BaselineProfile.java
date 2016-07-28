@@ -6,6 +6,8 @@ import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -64,6 +66,17 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
             }
         }
         return expressionLevel;
+    }
+
+    public Set<Factor> getFactorsWithExpressionLevelAtLeast(double threshold){
+        Set<Factor> result = new HashSet<>();
+        for(Factor condition : expressionsByCondition.keySet()){
+            Double level = getKnownExpressionLevel(condition);
+            if (level != null && level >= threshold) {
+                result.add(condition);
+            }
+        }
+        return result;
     }
 
 

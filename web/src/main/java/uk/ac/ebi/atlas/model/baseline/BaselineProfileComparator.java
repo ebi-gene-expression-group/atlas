@@ -1,6 +1,7 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import org.springframework.util.CollectionUtils;
@@ -20,54 +21,54 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     private Set<Factor> selectedQueryFactors;
     private Set<Factor> allQueryFactors;
     private double cutoffDivisor;
+    private Double minimumExpressionLevelToQualifyAsGoodForOurRule = null;
+    private Double minimumFractionOfExpressionToQualifyAsGoodForOurRule = null;
 
 
-    public static BaselineProfileComparator create(BaselineProfileStreamOptions options) {
+    public static Comparator<BaselineProfile> create(BaselineProfileStreamOptions options) {
         return new BaselineProfileComparator(options.isSpecific(),
                 options.getSelectedQueryFactors(),
                 options.getAllQueryFactors(),
-                options.getCutoff());
+                options.getCutoff(), options.getThresholdForPremium(), options.getFractionForPremium());
     }
 
-    public BaselineProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
+    BaselineProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
                                      Set<Factor> allQueryFactors, double cutoff) {
+        this(isSpecific,selectedQueryFactors,allQueryFactors,cutoff,null,null);
+    }
+    BaselineProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
+                              Set<Factor> allQueryFactors, double cutoff,Double
+                                      minimumExpressionLevelToQualifyAsGoodForOurRule,Double minimumFractionOfExpressionToQualifyAsGoodForOurRule ) {
         this.isSpecific = isSpecific;
         this.selectedQueryFactors = selectedQueryFactors;
         this.allQueryFactors = allQueryFactors;
 
         cutoffDivisor = cutoff != 0 ? cutoff : CUTOFF_DIVISOR_DEFAULT_VALUE;
+        this.minimumExpressionLevelToQualifyAsGoodForOurRule=minimumExpressionLevelToQualifyAsGoodForOurRule;
+        this.minimumFractionOfExpressionToQualifyAsGoodForOurRule = minimumFractionOfExpressionToQualifyAsGoodForOurRule;
     }
 
     @Override
     public int compare(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile) {
 
-        //ToDo: we are using reverse comparison logic everywhere in this method.
-        //ToDo: This reduces readability, every time I read it I spend hours to understand it.
-        //ToDo: We should have the comparator use normal natural (ascending) logic as standard in every Java library
-        //ToDo: and then require the client to revert it (because the client needs to sort a priority queue in descending order).
-        //ToDo: this would make also the client implementation more explicit.
-
-        /*
-        *  maybe Guava ComparisonChain reads better:
-        *  ....
-        *  return ComparisonChain.start()
-        *                        .compare(x,y)
-        *                        .compare(x,y,Ordering.natural().reverse())
-        *                        .result()
-        */
-
         // A1:
         if (isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
-            int order = Integer.compare(firstBaselineProfile.getSpecificity(), otherBaselineProfile.getSpecificity());
+            int order = ComparisonChain
+                    .start()
+                    .compareTrueFirst(ourRule(firstBaselineProfile), ourRule(otherBaselineProfile))
+                    .compare(firstBaselineProfile.getSpecificity(),otherBaselineProfile.getSpecificity() )
+                    .result();
             return 0 != order ? order : compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, allQueryFactors);
         }
 
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedQueryFactors)) {
             // reverse because we want lower values to come first
-            return Ordering.natural().reverse().compare(getExpressionLevelFoldChange(firstBaselineProfile),
+            return Ordering.natural().reverse().compare(
+                    getExpressionLevelFoldChange(firstBaselineProfile),
                     getExpressionLevelFoldChange(otherBaselineProfile));
         }
+
 
         // A2
         if (!isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
@@ -77,6 +78,16 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         //B2 - !isSpecific && !CollectionUtils.isEmpty(selectedQueryFactors)
         return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, selectedQueryFactors);
 
+    }
+
+    boolean ourRule(BaselineProfile baselineProfile){
+        if(minimumExpressionLevelToQualifyAsGoodForOurRule == null ||
+                minimumFractionOfExpressionToQualifyAsGoodForOurRule == null){
+            return false;
+        } else {
+            return baselineProfile.getFactorsWithExpressionLevelAtLeast(minimumExpressionLevelToQualifyAsGoodForOurRule).size()
+                    >= minimumFractionOfExpressionToQualifyAsGoodForOurRule * allQueryFactors.size();
+        }
     }
 
     int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile,
