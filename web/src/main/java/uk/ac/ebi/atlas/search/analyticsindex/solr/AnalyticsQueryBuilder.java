@@ -21,13 +21,20 @@ public class AnalyticsQueryBuilder {
             "(experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential) " +
             "AND pValue:[* TO 0.05])";
 
-    private static final String IDENTIFIER_SEARCH_VALUE_TEMPLATE = "%s:{%s}";
+    public enum Field {
+        EXPERIMENT_TYPE("experimentType"),
+        BIOENTITY_IDENTIFIER("bioentityIdentifier"),
+        SPECIES("species");
+        final String name;
 
-    private static final String EXPERIMENT_TYPE_FIELD = "experimentType";
-    private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentityIdentifier";
+        Field(String name){
+            this.name = name;
+        }
+
+    }
+
     private static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
     private static final String CONDITIONS_SEARCH_FIELD = "conditionsSearch";
-    private static final String SPECIES_FIELD = "species";
 
     private SemanticQuery geneQuery = SemanticQuery.create();
     private SemanticQuery conditionQuery = SemanticQuery.create();
@@ -38,21 +45,13 @@ public class AnalyticsQueryBuilder {
     private SolrQuery solrQuery = new SolrQuery();
 
 
-    public AnalyticsQueryBuilder facetByExperimentType() {
+    public AnalyticsQueryBuilder facetBy(Field f){
         solrQuery.setFacet(true);
         solrQuery.setFacetMinCount(1);
-        solrQuery.addFacetField(EXPERIMENT_TYPE_FIELD);
+        solrQuery.addFacetField(f.name);
         return this;
     }
-
-
-    public AnalyticsQueryBuilder facetByBioentityIdentifier() {
-        solrQuery.setFacet(true);
-        solrQuery.setFacetMinCount(1);
-        solrQuery.addFacetField(BIOENTITY_IDENTIFIER_FIELD);
-        return this;
-    }
-
+    
     public AnalyticsQueryBuilder setFacetLimit(int facetLimit){
         this.facetLimit = facetLimit;
         return this;
@@ -92,7 +91,7 @@ public class AnalyticsQueryBuilder {
         Joiner joinerOr = Joiner.on(" OR ");
 
         if (geneQuery.isEmpty() && bioentityIdentifierTerms.size() == 0) {
-            stringBuilder.append(BIOENTITY_IDENTIFIER_FIELD).append(":*");
+            stringBuilder.append(Field.BIOENTITY_IDENTIFIER.name).append(":*");
         }
 
         if (geneQuery.isNotEmpty()) {
@@ -103,7 +102,7 @@ public class AnalyticsQueryBuilder {
             if (stringBuilder.length() > 0) {
                 stringBuilder.append(" OR ");
             }
-            stringBuilder.append(BIOENTITY_IDENTIFIER_FIELD).append(":(").append(joinerOr.join(bioentityIdentifierTerms)).append(")");
+            stringBuilder.append(Field.BIOENTITY_IDENTIFIER.name).append(":(").append(joinerOr.join(bioentityIdentifierTerms)).append(")");
         }
 
         if (conditionQuery.isNotEmpty()) {
@@ -117,7 +116,7 @@ public class AnalyticsQueryBuilder {
             if (stringBuilder.length() > 0) {
                 stringBuilder.append(" AND ");
             }
-            stringBuilder.append(SPECIES_FIELD).append(":(").append(joinerOr.join(speciesTerms)).append(")");
+            stringBuilder.append(Field.SPECIES.name).append(":(").append(joinerOr.join(speciesTerms)).append(")");
         }
 
         solrQuery.setQuery(stringBuilder.toString());

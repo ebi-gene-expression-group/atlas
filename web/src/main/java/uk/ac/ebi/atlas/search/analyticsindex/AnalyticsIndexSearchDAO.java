@@ -32,7 +32,7 @@ public class AnalyticsIndexSearchDAO {
                         .queryIdentifierSearch(geneQuery)
                         .queryConditionsSearch(conditionQuery)
                         .ofSpecies(species)
-                        .facetByExperimentType()
+                        .facetBy(AnalyticsQueryBuilder.Field.EXPERIMENT_TYPE)
                         .filterAboveDefaultCutoff()
                         .setRows(0)
                         .build();
@@ -47,7 +47,7 @@ public class AnalyticsIndexSearchDAO {
                         .queryConditionsSearch(conditionQuery)
                         .ofSpecies(species)
                         .setRows(0)
-                        .facetByBioentityIdentifier()
+                        .facetBy(AnalyticsQueryBuilder.Field.BIOENTITY_IDENTIFIER)
                         .setFacetLimit(facetLimit)
                         .build();
         QueryResponse queryResponse = analyticsClient.query(solrQuery);
@@ -59,7 +59,7 @@ public class AnalyticsIndexSearchDAO {
                 new AnalyticsQueryBuilder()
                         .ofSpecies(species)
                         .filterAboveDefaultCutoff()
-                        .facetByBioentityIdentifier()
+                        .facetBy(AnalyticsQueryBuilder.Field.BIOENTITY_IDENTIFIER)
                         .setRows(0)
                         .setFacetLimit(45000)   // Something less than 50k because of sitemap limitations, plus some wiggle room for extra data
                         .build()).getFacetFields();
