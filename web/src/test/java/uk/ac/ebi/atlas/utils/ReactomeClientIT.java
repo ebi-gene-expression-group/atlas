@@ -26,10 +26,6 @@ public class ReactomeClientIT {
     @Test
     public void parseReactomeId() {
         assertThat(subject.fetchPathwayNameFailSafe("REACT_1698"), is("Metabolism of nucleotides"));
-    }
-
-    @Test
-    public void reactomeIsUp() {
         assertThat(subject.fetchPathwayNameFailSafe("REACT_1619"), is("Death Receptor Signalling"));
     }
 }

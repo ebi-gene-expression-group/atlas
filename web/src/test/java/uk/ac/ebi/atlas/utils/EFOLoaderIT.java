@@ -12,7 +12,7 @@ import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
 import uk.ac.ebi.arrayexpress.utils.efo.IEFO;
 
 import java.io.FileInputStream;
-import java.util.*;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -47,30 +47,34 @@ public class EFOLoaderIT {
     }
 
     @Test
+    public void testWithSharedSetup() throws Exception {
+        rootTermHasNoParents();
+        leafTermHasNoChildren();
+        termParents();
+        termChildren();
+    }
+
+
     public void rootTermHasNoParents()
     {
         assertThat(efoMap.get(EFO_0000001).getParents().isEmpty(), is(true));
     }
 
-    @Test
     public void leafTermHasNoChildren()
     {
         assertThat(efoMap.get(EFO_0002719).getChildren().isEmpty(), is(true));
     }
 
-    @Test
     public void leafTermHasParents()
     {
         assertThat(efoMap.get(EFO_0002719).getParents().isEmpty(), is(false));
     }
 
-    @Test
     public void termParents()
     {
         assertThat(efoMap.get(EFO_0000469).getParents(), contains(efoMap.get(BFO_0000040)));
     }
 
-    @Test
     public void termChildren()
     {
         assertThat(efoMap.get(EFO_0000469).getChildren(), contains(efoMap.get(EFO_0000273), efoMap.get(EFO_0000534), efoMap.get(EFO_0000568)));
