@@ -33881,7 +33881,7 @@ webpackJsonp_name_([5],[
 	            React.createElement(
 	                'span',
 	                null,
-	                'Sort by: '
+	                'Gene Expression Rank: '
 	            ),
 	            React.createElement(
 	                'select',

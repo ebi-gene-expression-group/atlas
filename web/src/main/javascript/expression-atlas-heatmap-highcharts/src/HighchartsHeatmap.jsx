@@ -597,7 +597,7 @@ var OrderingDropdown = React.createClass({
 
         return (
             <div style={{float: "left", marginRight: "10px", marginTop: "1px"}}>
-                <span>Sort by: </span>
+                <span>Gene Expression Rank: </span>
                 <select onChange={this.handleChange} value={this.state.selected}>
                     {this.props.available.map(createOption)}
                 </select>
