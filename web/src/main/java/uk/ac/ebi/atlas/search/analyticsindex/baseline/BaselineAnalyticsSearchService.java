@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
@@ -33,7 +33,7 @@ public class BaselineAnalyticsSearchService {
     }
 
     public BaselineExperimentSearchResult findExpressions(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, String queryFactorType) {
-        List<Map<String, Object>> response = baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(geneQuery, conditionQuery, Species.convertToEnsemblSpecies(species), queryFactorType);
+        List<Map<String, Object>> response = baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(geneQuery, conditionQuery, SpeciesUtils.convertToEnsemblSpecies(species), queryFactorType);
         ImmutableList<BaselineExperimentExpression> expressions = baselineAnalyticsFacetsReader.extractAverageExpressionLevel(response);
         return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, queryFactorType);
     }

@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
 
@@ -37,7 +37,7 @@ public class AutocompleteGroupedPropertyValueQueryBuilderIT {
         String species = "homo sapiens";
         String propertyNames = "symbol";
         SolrQuery solrQuery = solrQueryBuilderFactory.createAutocompleteGroupedPropertyValueQueryBuilder()
-                .withSpecies(Species.convertToEnsemblSpecies(species))
+                .withSpecies(SpeciesUtils.convertToEnsemblSpecies(species))
                 .withBioentityTypes(BioentityType.getAllSolrAliases())
                 .withPropertyNames(propertyNames)
                 .build("asp");

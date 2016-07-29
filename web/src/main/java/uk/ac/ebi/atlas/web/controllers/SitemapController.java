@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.dao.OrganismEnsemblDAO;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.utils.SitemapWriter;
 
@@ -55,7 +55,7 @@ public class SitemapController {
         Collection<String> various = ImmutableList.of("/experiments","/plant/experiments");
 
         sitemapWriter.writeGenes(response.getOutputStream(), various, solr.getBioentityIdentifiersForSpecies
-                (Species.convertUnderscoreToSpaces(species)));
+                (SpeciesUtils.convertUnderscoreToSpaces(species)));
 
     }
 

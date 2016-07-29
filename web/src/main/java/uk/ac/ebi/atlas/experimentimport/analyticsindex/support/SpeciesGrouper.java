@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.support;
 
 import com.google.common.collect.ImmutableMap;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
@@ -16,7 +16,7 @@ public final class SpeciesGrouper {
 
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
 
-        String ensemblSpecies = Species.convertToEnsemblSpecies(experiment.getSpeciesToEnsemblMapping(), experiment.getSpecies());
+        String ensemblSpecies = SpeciesUtils.convertToEnsemblSpecies(experiment.getSpeciesToEnsemblMapping(), experiment.getSpecies());
 
         for (String assayGroupId : assayGroupIds)  {
             builder.put(assayGroupId, ensemblSpecies);
@@ -30,7 +30,7 @@ public final class SpeciesGrouper {
 
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
 
-        String ensemblSpecies = Species.convertToEnsemblSpecies(experiment.getSpecies());
+        String ensemblSpecies = SpeciesUtils.convertToEnsemblSpecies(experiment.getSpecies());
 
         for (String contrastId : contrastIds)  {
             builder.put(contrastId, ensemblSpecies);

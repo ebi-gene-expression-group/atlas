@@ -15,7 +15,7 @@ import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -105,7 +105,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
         BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, conditionQuery, species, defaultQueryFactorType);
 
-        populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, conditionQuery, Species.convertToEnsemblSpecies(species), searchResult, model);
+        populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, conditionQuery, SpeciesUtils.convertToEnsemblSpecies(species), searchResult, model);
 
         // set here instead of in JSP, because the JSP may be included elsewhere
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

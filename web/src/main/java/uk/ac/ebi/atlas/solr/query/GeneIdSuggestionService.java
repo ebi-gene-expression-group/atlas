@@ -6,8 +6,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
@@ -55,7 +54,7 @@ public class GeneIdSuggestionService {
 
     List<SemanticQueryTerm> fetchAutoCompleteSuggestions(String queryString, String species, String[] propertyNames) {
         SolrQuery solrQuery = solrQueryBuilderFactory.createAutocompleteGroupedPropertyValueQueryBuilder()
-                .withSpecies(Species.convertToEnsemblSpecies(species))
+                .withSpecies(SpeciesUtils.convertToEnsemblSpecies(species))
                 .withBioentityTypes(BioentityType.getAllSolrAliases())
                 .withPropertyNames(propertyNames)
                 .build(queryString);

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.OrganismEnsemblDAO;
 import uk.ac.ebi.atlas.dao.OrganismKingdomDAO;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.SpeciesUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,7 +35,7 @@ public class SpeciesKingdomTrader {
     }
 
     public String getKingdom(String species) {
-        species = Species.convertToEnsemblSpecies(species);
+        species = SpeciesUtils.convertToEnsemblSpecies(species);
         String kingdom= speciesKingdomMap.get(species);
         if(kingdom==null){
             LOGGER.warn("Missing kingdom for "+species);
@@ -56,7 +56,7 @@ public class SpeciesKingdomTrader {
     }
 
     public String getEnsemblDB(String species) {
-        return speciesEnsemblMap.get(Species.convertToEnsemblSpecies(species));
+        return speciesEnsemblMap.get(SpeciesUtils.convertToEnsemblSpecies(species));
     }
 
     public Map<String, ?> getAttributesFor(String species) {

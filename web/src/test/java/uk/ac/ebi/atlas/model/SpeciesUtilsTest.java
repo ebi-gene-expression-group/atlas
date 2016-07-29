@@ -6,10 +6,10 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class SpeciesTest {
+public class SpeciesUtilsTest {
 
     @Test
     public void handleNullSpecies() {
-        assertThat(Species.convertToEnsemblSpecies(null), is(nullValue()));
+        assertThat(SpeciesUtils.convertToEnsemblSpecies(null), is(nullValue()));
     }
 }

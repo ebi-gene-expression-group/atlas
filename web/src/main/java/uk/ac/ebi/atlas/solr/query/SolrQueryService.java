@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
@@ -84,7 +84,7 @@ public class SolrQueryService {
         }
 
         GeneQueryResponse geneQueryResponse =
-                fetchGeneIdsOrSetsGroupedByGeneQueryToken(geneQuery, Species.convertToEnsemblSpecies(species));
+                fetchGeneIdsOrSetsGroupedByGeneQueryToken(geneQuery, SpeciesUtils.convertToEnsemblSpecies(species));
 
         if (geneQueryResponse.isEmpty()) {
             throw new GenesNotFoundException("No genes found for searchText = " + geneQuery.toJson() + ", species = " + species);

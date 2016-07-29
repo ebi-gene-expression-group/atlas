@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.SetMultimap;
@@ -11,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.solr.query.conditions.BaselineConditionsSearchService;
@@ -112,7 +111,7 @@ public class BaselineExperimentAssayGroupSearchService {
 
                 String experimentSpecies = experiment.getSpecies();
 
-                if (StringUtils.isBlank(searchSpecies) || Species.sameSpecies(experimentSpecies, searchSpecies)) {
+                if (StringUtils.isBlank(searchSpecies) || SpeciesUtils.sameSpecies(experimentSpecies, searchSpecies)) {
                     BaselineExperimentAssayGroup result = new BaselineExperimentAssayGroup(experiment.getAccession(), experiment.getDisplayName(),
                             experimentSpecies, experiment.getExperimentalFactors().getDefaultQueryFactorType(), experiment.isTissueExperiment());
                     result.setFilterFactors(filterFactor);

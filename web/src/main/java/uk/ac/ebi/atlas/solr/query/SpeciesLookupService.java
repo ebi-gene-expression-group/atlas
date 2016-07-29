@@ -53,7 +53,7 @@ public class SpeciesLookupService {
                 return species.get();
             }
         }
-        throw new ResourceNotFoundException("Species can't be determined for " + fieldName + ":" + multiTermQuery);
+        throw new ResourceNotFoundException("SpeciesUtils can't be determined for " + fieldName + ":" + multiTermQuery);
     }
 
     public String fetchFirstSpeciesByField(String fieldName, SemanticQuery geneQuery) {
@@ -67,7 +67,7 @@ public class SpeciesLookupService {
                 return species.get();
             }
         }
-        throw new ResourceNotFoundException("Species can't be determined for " + fieldName + ":" + geneQuery.toJson());
+        throw new ResourceNotFoundException("SpeciesUtils can't be determined for " + fieldName + ":" + geneQuery.toJson());
     }
 
     // surround in quotes, so queries with special chars work, eg: "GO:0003674"

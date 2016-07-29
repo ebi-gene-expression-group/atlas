@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.utils;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableMap;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.SpeciesUtils;
 
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
@@ -27,7 +27,7 @@ public class SitemapWriter {
         writeDocument(outputStream,Collections2.transform(species, new Function<String, String>() {
             @Override
             public String apply(String s) {
-                return ourAddress+"/species/"+ Species.convertSpacesToUnderscore(s)+"/sitemap.xml";
+                return ourAddress+"/species/"+ SpeciesUtils.convertSpacesToUnderscore(s)+"/sitemap.xml";
             }
         }), "sitemapindex", "sitemap", ImmutableMap.<String,String>of());
     }
