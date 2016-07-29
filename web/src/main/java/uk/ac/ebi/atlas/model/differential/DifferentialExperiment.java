@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
 
 import java.util.*;
 
@@ -19,13 +20,16 @@ public class DifferentialExperiment extends Experiment {
 
     private LinkedHashMap<String, Contrast> contrastsById = Maps.newLinkedHashMap();
 
-    public DifferentialExperiment(String accession, Date lastUpdate, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, boolean hasRData, String species, String kingdom, String ensemblDB, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
-        this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasExtraInfoFile, hasRData, species, kingdom, ensemblDB, pubMedIds, experimentDesign);
+    public DifferentialExperiment(String accession, Date lastUpdate, Set<Contrast> contrasts, String description,
+                                  boolean hasExtraInfoFile, boolean hasRData, Species species, Set<String> pubMedIds,
+                                  ExperimentDesign experimentDesign) {
+        this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasExtraInfoFile, hasRData, species, pubMedIds, experimentDesign);
     }
 
-    protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, boolean hasRData, String species, String kingdom, String ensemblDB, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
-        super(experimentType, accession, lastUpdate,null, description, hasExtraInfoFile, hasRData, species, kingdom,
-                ensemblDB, null, pubMedIds, experimentDesign,Collections.<String>emptyList(), Collections.<String>emptyList(),Collections.<String>emptyList(), Collections.<String>emptyList());
+    protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate, Set<Contrast>
+            contrasts, String description, boolean hasExtraInfoFile, boolean hasRData, Species species, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
+        super(experimentType, accession, lastUpdate,null, description, hasExtraInfoFile, hasRData, species,
+                 pubMedIds, experimentDesign,Collections.<String>emptyList(), Collections.<String>emptyList(),Collections.<String>emptyList(), Collections.<String>emptyList());
         for (Contrast contrast : contrasts) {
             contrastsById.put(contrast.getId(), contrast);
         }

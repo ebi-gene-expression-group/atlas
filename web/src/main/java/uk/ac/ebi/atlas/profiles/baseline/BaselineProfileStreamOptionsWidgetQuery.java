@@ -17,6 +17,7 @@ import java.util.Set;
  * This is used by BioEntityPageController to check the number of gene profiles that
  * will be loaded by the widget.
  */
+//TODO delete no longer needed and went out of use after Alfonso's change - July 2016
 public class BaselineProfileStreamOptionsWidgetQuery implements BaselineProfileStreamOptions {
 
     private final BaselineExperiment baselineExperiment;
@@ -24,7 +25,7 @@ public class BaselineProfileStreamOptionsWidgetQuery implements BaselineProfileS
 
     public BaselineProfileStreamOptionsWidgetQuery(BaselineExperiment baselineExperiment, String species) {
         this.baselineExperiment = baselineExperiment;
-        String mappedSpecies = baselineExperiment.getRequestSpeciesName(species);
+        String mappedSpecies = baselineExperiment.getSpecies().mappedName;
         this.selectedFilterFactors = StringUtils.isBlank(mappedSpecies) ? Collections.<Factor>emptySet() : ImmutableSet.of(new Factor("ORGANISM", mappedSpecies));
     }
 

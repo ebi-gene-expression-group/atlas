@@ -27,6 +27,10 @@ public class SpeciesFactory {
         return create(inputName, SpeciesUtils.convertToEnsemblSpecies(factorsConfig.getSpeciesMapping(), inputName));
     }
 
+    public Species create(ExperimentDTO experimentDTO){
+        return create(experimentDTO.getSpecies());
+    }
+
     public Species create(String inputName){
         return create( inputName, SpeciesUtils.convertToEnsemblSpecies(inputName));
     }

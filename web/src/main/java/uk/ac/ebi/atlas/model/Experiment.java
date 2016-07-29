@@ -4,7 +4,6 @@ package uk.ac.ebi.atlas.model;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
@@ -12,7 +11,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -21,11 +19,8 @@ public abstract class Experiment implements Serializable {
     private static final Gson gson = new Gson();
     private ExperimentType type;
     private ExperimentDesign experimentDesign;
-    private String species;
-    private String kingdom;
-    private String ensemblDB;
+    private Species species;
     private SortedSet<String> pubMedIds;
-    private Map<String, String> speciesMapping;
     private String accession;
     private String description;
     private String displayName;
@@ -38,7 +33,8 @@ public abstract class Experiment implements Serializable {
     private List<String> alternativeViewDescriptions;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      boolean hasExtraInfoFile, boolean hasRData, String species, String kingdom, String ensemblDB, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign, List<String> dataProviderURL, List<String> dataProviderDescription, List<String> alternativeViews, List<String> alternativeViewDescriptions) {
+                      boolean hasExtraInfoFile, boolean hasRData, Species species,
+                      Set<String> pubMedIds, ExperimentDesign experimentDesign, List<String> dataProviderURL, List<String> dataProviderDescription, List<String> alternativeViews, List<String> alternativeViewDescriptions) {
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
@@ -48,9 +44,6 @@ public abstract class Experiment implements Serializable {
         this.hasExtraInfoFile = hasExtraInfoFile;
         this.hasRData = hasRData;
         this.species = species;
-        this.kingdom = kingdom;
-        this.ensemblDB = ensemblDB;
-        this.speciesMapping = speciesMapping;
         this.pubMedIds = Sets.newTreeSet(pubMedIds);
         this.dataProviderURL = dataProviderURL;
         this.dataProviderDescription = dataProviderDescription;
@@ -81,31 +74,13 @@ public abstract class Experiment implements Serializable {
         return accession;
     }
 
-    public String getSpecies() {
+    @Deprecated
+    public String getSpeciesString() {
+        return species.originalName;
+    }
+
+    public Species getSpecies(){
         return species;
-    }
-
-    /*
-        Maps an organism value used in the SDRF to an Ensembl species. Loaded from the <speciesMapping> section in factors.xml
-        Usually this is the same, however for some experiments there are no corresponding sample species in Ensembl,
-        so the mapping points to a similar species,
-        eg: for E-GEOD-30352 the SDRF/sample species pongo pygmaeus is mapped to the closely related Ensembl species
-        pongo abelii.
-        The Ensembl species is what is used to look up genes in Solr
-     */
-
-    //TODO: this should be moved to BaselineExperiment, because speciesMapping is always null for differentialExperiment
-    // (see DifferentialExperiment constructor)
-    public Map<String, String> getSpeciesToEnsemblMapping() {
-        return Collections.unmodifiableMap(speciesMapping);
-    }
-
-    public String getRequestSpeciesName(String organism) {
-        String speciesName = speciesMapping.get(organism);
-        if (speciesName != null) {
-            return Character.toUpperCase(speciesName.charAt(0)) + speciesName.substring(1);
-        }
-        return "";
     }
 
     public List<Pair<String, String>> alternativeViews(){
@@ -123,7 +98,7 @@ public abstract class Experiment implements Serializable {
         Map<String, Object> result = new HashMap<>();
         result.put("type", type);
         result.put("experimentHasRData", hasRData);
-        result.put("species", species);
+        result.put("species", species.originalName);
         result.put("experimentDescription", description);
         result.put("hasExtraInfo", hasExtraInfoFile);
         result.put("pubMedIds", pubMedIds);
@@ -161,9 +136,9 @@ public abstract class Experiment implements Serializable {
         experimentInfo.setExperimentAccession(accession);
         experimentInfo.setLastUpdate(new SimpleDateFormat("dd-MM-yyyy").format(lastUpdate));
         experimentInfo.setExperimentDescription(description);
-        experimentInfo.setSpecies(species);
-        experimentInfo.setKingdom(kingdom);
-        experimentInfo.setEnsemblDB(ensemblDB);
+        experimentInfo.setSpecies(species.originalName);
+        experimentInfo.setKingdom(species.kingdom);
+        experimentInfo.setEnsemblDB(species.ensemblDb);
         experimentInfo.setExperimentType(type.getParent());
         experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
 

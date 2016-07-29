@@ -28,7 +28,7 @@ public class RnaSeqRequestContextBuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        when(experimentMock.getSpecies()).thenReturn(SPECIES);
+        when(experimentMock.getSpeciesString()).thenReturn(SPECIES);
         when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
         subject = new RnaSeqRequestContextBuilder(new RnaSeqRequestContext());
     }

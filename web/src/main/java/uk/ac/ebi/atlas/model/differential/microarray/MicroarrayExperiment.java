@@ -4,6 +4,7 @@ package uk.ac.ebi.atlas.model.differential.microarray;
 
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
@@ -16,10 +17,11 @@ public class MicroarrayExperiment extends DifferentialExperiment {
 
     public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate, Set<Contrast> contrasts,
                                 String description, boolean hasExtraInfoFile, boolean hasRData,
-                                String species, String kingdom, String ensemblDB, SortedSet<String> arrayDesignAccessions,
+                                Species species, SortedSet<String>
+                                        arrayDesignAccessions,
                                 SortedSet<String> arrayDesignNames, ExperimentDesign experimentDesign, Set<String> pubMedIds) {
 
-        super(type, accession, lastUpdate, contrasts, description, hasExtraInfoFile, hasRData, species, kingdom, ensemblDB, pubMedIds, experimentDesign);
+        super(type, accession, lastUpdate, contrasts, description, hasExtraInfoFile, hasRData, species,pubMedIds, experimentDesign);
         this.arrayDesignAccessions = arrayDesignAccessions;
         this.arrayDesignNames = arrayDesignNames;
     }

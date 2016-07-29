@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesServ
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.AssayGroups;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
@@ -77,7 +78,7 @@ public class BaselineProfilesWriterServiceTest {
         when(baselineExperimentMock.getAccession()).thenReturn("ACCESSION");
         when(baselineExperimentMock.getAssayGroups()).thenReturn(assayGroupsMock);
         when(baselineExperimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
-        when(baselineExperimentMock.getSpecies()).thenReturn("some_species");
+        when(baselineExperimentMock.getSpecies()).thenReturn(new Species("some species", "some species", "ensembldb", "animals"));
         TreeSet<Factor> t = new TreeSet<>();
         t.add(new Factor("h1", "p1"));
         when(experimentalFactorsMock.getComplementFactors(anySet())).thenReturn(t);

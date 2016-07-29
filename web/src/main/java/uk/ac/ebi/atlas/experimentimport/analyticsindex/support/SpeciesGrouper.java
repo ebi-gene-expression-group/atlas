@@ -7,6 +7,11 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import java.util.Set;
 
+/*
+TODO this shows that the concepts of an assay group and contrast are parallel, and could have a common name/marker
+interface/common getter in Experiment.
+I'm not sure how to name them now.
+ */
 public final class SpeciesGrouper {
 
     private SpeciesGrouper() {}
@@ -16,7 +21,7 @@ public final class SpeciesGrouper {
 
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
 
-        String ensemblSpecies = SpeciesUtils.convertToEnsemblSpecies(experiment.getSpeciesToEnsemblMapping(), experiment.getSpecies());
+        String ensemblSpecies = experiment.getSpecies().mappedName;
 
         for (String assayGroupId : assayGroupIds)  {
             builder.put(assayGroupId, ensemblSpecies);
@@ -30,7 +35,7 @@ public final class SpeciesGrouper {
 
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
 
-        String ensemblSpecies = SpeciesUtils.convertToEnsemblSpecies(experiment.getSpecies());
+        String ensemblSpecies = experiment.getSpecies().mappedName;
 
         for (String contrastId : contrastIds)  {
             builder.put(contrastId, ensemblSpecies);

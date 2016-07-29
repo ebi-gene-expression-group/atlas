@@ -3,23 +3,18 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.AssayGroups;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.*;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -58,8 +53,6 @@ public class BaselineExperimentBuilderTest {
 
     private Map<String, String> nameMap = Maps.newHashMap();
 
-    private Map<String, String> speciesMap = Maps.newHashMap();
-
     @Mock
     private AssayGroups assayGroupsMock;
 
@@ -68,8 +61,6 @@ public class BaselineExperimentBuilderTest {
         subject = new BaselineExperimentBuilder();
 
         nameMap.put(FACTOR_TYPE, FACTOR_NAME);
-
-        speciesMap.put(SPECIES, SPECIES_NAME);
 
         when(runMock1.getFactorGroup()).thenReturn(factorGroupMock);
         when(runMock1.getAccession()).thenReturn(RUN_ACCESSION1);
@@ -84,13 +75,13 @@ public class BaselineExperimentBuilderTest {
     @Test
     public void testCreate() throws Exception {
 
-        BaselineExperiment experiment = subject.forSpecies(SPECIES)
+        BaselineExperiment experiment = subject
+                .forSpecies(new Species(SPECIES_NAME,SPECIES,"kingdom","ensembl_db"))
                 .ofType(ExperimentType.RNASEQ_MRNA_BASELINE)
                 .withAccession(EXPERIMENT_ACCESSION)
                 .withDescription(DESCRIPTION)
                 .withDisplayName(DISPLAY_NAME)
                 .withExtraInfo(false)
-                .withSpeciesMapping(speciesMap)
                 .withPubMedIds(Sets.newHashSet(PUBMEDID))
                 .withExperimentDesign(experimentDesignMock)
                 .withExperimentalFactors(experimentalFactors)

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.trader.loader;
 
-import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.AssayGroups;
@@ -9,12 +8,12 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
 
@@ -22,24 +21,23 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
     private final ExperimentType experimentType;
     private final BaselineExperimentExpressionLevelFile expressionLevelFile;
     private final ConfigurationTrader configurationTrader;
-    private final SpeciesKingdomTrader speciesKingdomTrader;
     private final ExperimentalFactorsFactory experimentalFactorsFactory;
+    private final SpeciesFactory speciesFactory;
 
     protected BaselineExperimentsCacheLoader(ExperimentType experimentType, BaselineExperimentExpressionLevelFile
-            expressionLevelFile, ConfigurationTrader configurationTrader,
-                                             SpeciesKingdomTrader speciesKingdomTrader) {
-        this(new ExperimentalFactorsFactory(), experimentType, expressionLevelFile, configurationTrader,speciesKingdomTrader);
+            expressionLevelFile, ConfigurationTrader configurationTrader,SpeciesFactory speciesFactory) {
+        this(new ExperimentalFactorsFactory(), experimentType, expressionLevelFile, configurationTrader,speciesFactory);
     }
 
     BaselineExperimentsCacheLoader(ExperimentalFactorsFactory experimentalFactorsFactory, ExperimentType
             experimentType, BaselineExperimentExpressionLevelFile expressionLevelFile,
                                    ConfigurationTrader configurationTrader,
-                                   SpeciesKingdomTrader speciesKingdomTrader) {
+                                   SpeciesFactory speciesFactory) {
         this.experimentalFactorsFactory = experimentalFactorsFactory;
         this.experimentType = experimentType;
         this.configurationTrader = configurationTrader;
         this.expressionLevelFile = expressionLevelFile;
-        this.speciesKingdomTrader = speciesKingdomTrader;
+        this.speciesFactory = speciesFactory;
     }
 
 
@@ -65,16 +63,14 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
             orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
         }
 
-        return new BaselineExperimentBuilder().forSpecies(experimentDTO.getSpecies())
+        return new BaselineExperimentBuilder()
                 .ofType(experimentType)
-                .ofKingdom(speciesKingdomTrader.getKingdom(experimentDTO.getSpecies()))
-                .ofEnsemblDB(speciesKingdomTrader.getEnsemblDB(experimentDTO.getSpecies()))
+                .forSpecies(speciesFactory.create(experimentDTO, factorsConfig))
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)
                 .withExtraInfo(hasExtraInfoFile)
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
-                .withSpeciesMapping(factorsConfig.getSpeciesMapping())
                 .withPubMedIds(experimentDTO.getPubmedIds())
                 .withAssayGroups(assayGroups)
                 .withExperimentDesign(experimentDesign)

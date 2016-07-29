@@ -95,7 +95,7 @@ public class PlantExperimentsController {
                 String displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
                 experimentDisplayNames.put(experimentAccession, displayName + " (" + numberOfAssays + " assays)");
 
-                String species = experiment.getSpecies();
+                String species = experiment.getSpeciesString();
                 if (speciesKingdomTrader.getKingdom(species).equals("plants")) {
                     baselineExperimentAccessionsBySpecies.put(species, experimentAccession);
                     experimentLinks.put(experimentAccession + species, "");
@@ -126,7 +126,7 @@ public class PlantExperimentsController {
         for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
             try {
                 DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getExperimentFromCache(experimentAccession, experimentType);
-                String species = experiment.getSpecies();
+                String species = experiment.getSpeciesString();
 
                 if (speciesKingdomTrader.getKingdom(species) == null) {
                     LOGGER.warn(species + " has no kingdom (maybe it is missing in BIOENTITY_ORGANISM ot it has been mis-spelled)");

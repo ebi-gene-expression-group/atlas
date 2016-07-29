@@ -150,7 +150,7 @@ public class BaselineExperimentPageService {
         JsonObject experimentDescription = new JsonObject();
         experimentDescription.addProperty("URL", "/experiments/"+experiment.getAccession()+additionalQueryOptionsString);
         experimentDescription.addProperty("description", experiment.getDescription());
-        experimentDescription.addProperty("species", experiment.getSpecies());
+        experimentDescription.addProperty("species", experiment.getSpeciesString());
         return experimentDescription;
     }
 

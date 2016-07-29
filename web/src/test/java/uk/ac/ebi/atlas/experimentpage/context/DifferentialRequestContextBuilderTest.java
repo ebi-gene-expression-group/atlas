@@ -43,7 +43,7 @@ public class DifferentialRequestContextBuilderTest {
     public void setUp() throws Exception {
         subject = new MicroarrayRequestContextBuilder(new MicroarrayRequestContext());
 
-        when(experimentMock.getSpecies()).thenReturn(SPECIES);
+        when(experimentMock.getSpeciesString()).thenReturn(SPECIES);
 
         when(contrastMock1.getDisplayName()).thenReturn(CONTRAST_NAME1);
         when(contrastMock2.getDisplayName()).thenReturn(CONTRAST_NAME2);

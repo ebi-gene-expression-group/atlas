@@ -10,10 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.AssayGroups;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperimentBuilder;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
@@ -89,14 +86,13 @@ public class ExperimentInfoListBuilderTest {
         when(assayGroups.getAssayGroupIds()).thenReturn(Sets.newHashSet("RUN"));
 
         baselineExperiment = Mockito.spy(new BaselineExperimentBuilder()
-                .forSpecies(SPECIES)
+                .forSpecies(new Species(SPECIES,SPECIES,"kingdom","ensembl_db"))
                 .withAccession(BASELINE_ACCESSION)
                 .withLastUpdate(lastUpdateStub)
                 .withDescription(DESCRIPTION)
                 .ofType(ExperimentType.RNASEQ_MRNA_BASELINE)
                 .withExperimentDesign(experimentDesignMock)
                 .withAssayGroups(assayGroups)
-                .withSpeciesMapping(ImmutableMap.<String, String>of())
                 .withExperimentalFactors(mock(ExperimentalFactors.class))
                 .withPubMedIds(ImmutableSet.<String>of())
                 .create());
@@ -110,13 +106,13 @@ public class ExperimentInfoListBuilderTest {
         differentialExperimentMock = Mockito.spy(
                 new DifferentialExperiment(DIFFERENTIAL_ACCESSION,
                 lastUpdateStub, contrasts,
-                "description", false, false, SPECIES, "kingdom", "ensemblDb",
+                "description", false, false, new Species(SPECIES,SPECIES, "kingdom", "ensemblDb"),
                 new HashSet<String>(),experimentDesignMock));
 
         microarrayExperimentMock = Mockito.spy(new MicroarrayExperiment(ExperimentType
                 .MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, MICROARRAY_ACCESSION,
                 lastUpdateStub ,contrasts,
-                "description", false, false, SPECIES, "kingdom", "ensemblDb", Sets.newTreeSet(Sets.newHashSet(ARRAY)),
+                "description", false, false, new Species(SPECIES,SPECIES, "kingdom", "ensemblDb"), Sets.newTreeSet(Sets.newHashSet(ARRAY)),
                 Sets.newTreeSet(Sets.newHashSet("ARRAY_NAME")), experimentDesignMock, new HashSet<String>()));
 
 

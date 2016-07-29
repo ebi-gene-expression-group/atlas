@@ -30,7 +30,7 @@ public class MicroarrayRequestContextBuilderTest {
     public void setUp() throws Exception {
         when(preferencesMock.getArrayDesignAccession()).thenReturn(ACCESSION);
         when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
-        when(experimentMock.getSpecies()).thenReturn(SPECIES);
+        when(experimentMock.getSpeciesString()).thenReturn(SPECIES);
         subject = new MicroarrayRequestContextBuilder(new MicroarrayRequestContext());
     }
 

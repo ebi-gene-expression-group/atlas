@@ -8,10 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.AssayGroups;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,9 +47,7 @@ public class BaselineExperimentTest {
 
     @Mock
     private ExperimentDesign experimentDesignMock;
-
-    private Map<String, String> speciesMapping = Maps.newHashMap();
-
+    
     @Mock
     private AssayGroups assayGroupsMock;
 
@@ -72,8 +67,8 @@ public class BaselineExperimentTest {
 
         subject = new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
                 experimentalFactorsMock,
-                                         "description", "displayName", "species", "kingdom", "ensembl", speciesMapping,
-                                         true, true, Sets.newHashSet(PUBMEDID), experimentDesignMock, assayGroupsMock, Collections.<String>emptyList(), Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>());
+                                         "description", "displayName", new Species("species","species", "kingdom",
+                "ensembl"),true, true, Sets.newHashSet(PUBMEDID), experimentDesignMock, assayGroupsMock, Collections.<String>emptyList(), Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>());
     }
 
 

@@ -1,9 +1,6 @@
 package uk.ac.ebi.atlas.model.baseline;
 
-import uk.ac.ebi.atlas.model.AssayGroups;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.*;
 
 import java.util.*;
 
@@ -13,10 +10,10 @@ public class BaselineExperiment extends Experiment {
     private AssayGroups assayGroups;
 
     BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
-                       String description, String displayName, String species, String kingdom, String ensemblDB, Map<String, String> speciesMapping,
+                       String description, String displayName, Species species,
                        boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription, List<String> alternativeViews, List<String> alternativeViewDescriptions) {
         super(experimentType, accession, lastUpdate, displayName, description, hasExtraInfoFile, hasRData, species,
-                kingdom, ensemblDB, speciesMapping, pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
+                pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
                 alternativeViews, alternativeViewDescriptions);
         this.experimentalFactors = experimentalFactors;
         this.assayGroups = assayGroups;

@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -51,7 +52,8 @@ public class BaselineRequestContextBuilderTest {
         when(preferencesMock.getQueryFactorType()).thenReturn(FACTOR_TYPE);
         when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
-        when(experimentMock.getSpecies()).thenReturn("homo sapiens");
+        when(experimentMock.getSpecies()).thenReturn(new Species("Homo sapiens", "homo sapiens", "ensembldb",
+                "animals"));
         when(experimentalFactorsMock.getComplementFactors(anySet())).thenReturn(Sets.newTreeSet(Sets.newHashSet(new Factor(FACTOR_TYPE, FACTOR_VALUE))));
     }
 

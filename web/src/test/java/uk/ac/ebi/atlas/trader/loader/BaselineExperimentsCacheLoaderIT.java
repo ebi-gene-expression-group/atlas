@@ -29,7 +29,7 @@ public class BaselineExperimentsCacheLoaderIT {
         //given
         BaselineExperiment experiment = subject.load("E-MTAB-513");
         //then
-        String species = experiment.getSpecies();
+        String species = experiment.getSpeciesString();
         assertThat(species, is("Homo sapiens"));
     }
 

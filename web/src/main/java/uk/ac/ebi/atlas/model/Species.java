@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 
 public class Species {
 
-    private final String originalName;
+    public final String originalName; //TODO make private again
     public final String mappedName;
     public final String ensemblDb;
     public final String kingdom;

@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.widget;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +15,6 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -70,7 +68,7 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
         // the model attributes are also preserved by a forward TODO wrong I think this means
         // BaselineRequestPreferences
         // preferences only I think so why do we populate model still
-        return "forward:" + getRequestURL(request) + buildQueryString(species, experiment);
+        return "forward:" + getRequestURL(request) + buildQueryString(experiment);
     }
 
     private String getRequestURL(HttpServletRequest request) {
@@ -80,8 +78,8 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
         return StringUtils.substringAfter(requestURI, contextPath);
     }
 
-    private String buildQueryString(String species, Experiment experiment) {
-        String mappedSpecies = experiment.getRequestSpeciesName(species);
+    private String buildQueryString(Experiment experiment) {
+        String mappedSpecies = experiment.getSpecies().mappedName;
         String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
         return "?type=" + experiment.getType().getParent() + organismParameters;
     }

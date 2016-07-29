@@ -7,6 +7,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import javax.inject.Inject;
@@ -19,12 +20,12 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
 
     private ConfigurationTrader configurationTrader;
 
-    private SpeciesKingdomTrader speciesKingdomTrader;
+    private SpeciesFactory speciesFactory;
 
     @Inject
-    public DifferentialExperimentsCacheLoader(ConfigurationTrader configurationTrader, SpeciesKingdomTrader speciesKingdomTrader) {
+    public DifferentialExperimentsCacheLoader(ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory) {
         this.configurationTrader = configurationTrader;
-        this.speciesKingdomTrader = speciesKingdomTrader;
+        this.speciesFactory = speciesFactory;
     }
 
     @Override
@@ -38,11 +39,9 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
 
         boolean hasRData = experimentConfiguration.hasRData();
 
-        String kingdom = speciesKingdomTrader.getKingdom(experimentDTO.getSpecies());
-        String ensemblDB = speciesKingdomTrader.getEnsemblDB(experimentDTO.getSpecies());
-
         return new DifferentialExperiment(experimentAccession, experimentDTO.getLastUpdate(), contrasts,
-                experimentDescription, hasExtraInfoFile, hasRData, experimentDTO.getSpecies(), kingdom, ensemblDB, experimentDTO.getPubmedIds(), experimentDesign);
+                experimentDescription, hasExtraInfoFile, hasRData, speciesFactory.create(experimentDTO),
+                experimentDTO.getPubmedIds(), experimentDesign);
 
     }
 }

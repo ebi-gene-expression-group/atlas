@@ -10,6 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import java.util.Date;
@@ -45,7 +46,9 @@ public class MicroarrayExperimentTest {
         when(contrast.getTestAssayGroup()).thenReturn(new AssayGroup("test","assay 1"));
 
         subject = new MicroarrayExperiment(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, "accession", new Date(), Sets.newHashSet(contrast),
-                "description", false, true, "species", "kingdom", "ensembl", Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSIONS)),
+                "description", false, true, new Species("species","species", "kingdom", "ensembl"), Sets.newTreeSet(Sets
+                .newHashSet
+                (ARRAY_DESIGN_ACCESSIONS)),
                 new TreeSet<String>(), experimentDesignMock, Sets.newHashSet(PUBMEDID));
     }
 

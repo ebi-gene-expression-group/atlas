@@ -8,10 +8,7 @@ import uk.ac.ebi.atlas.search.SearchDescription;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -76,20 +73,14 @@ public class BaselineRequestContextBuilder {
     }
 
     private String getFilteredBySpecies(Set<Factor> selectedFilterFactors) {
-        String filteredBySpecies = null;
+        List<String> candidateAnswers = new ArrayList<>();
         for (Factor selectedFilterFactor : selectedFilterFactors) {
             if (selectedFilterFactor.getType().equalsIgnoreCase("organism")) {
-                filteredBySpecies = selectedFilterFactor.getValue().toLowerCase();
+                candidateAnswers.add(selectedFilterFactor.getValue().toLowerCase());
             }
         }
-        if (filteredBySpecies == null) {
-            filteredBySpecies = experiment.getSpecies().toLowerCase();
-        }
-        Map<String, String> speciesMapping = experiment.getSpeciesToEnsemblMapping();
-        if (speciesMapping.containsKey(filteredBySpecies)) {
-            filteredBySpecies = speciesMapping.get(filteredBySpecies);
-        }
-        return filteredBySpecies;
+        candidateAnswers.add(experiment.getSpecies().mappedName);
+        return candidateAnswers.get(0);
     }
 
 }

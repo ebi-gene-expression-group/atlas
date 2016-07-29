@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.Species;
 
 import java.util.Date;
 
@@ -59,7 +60,7 @@ public class DifferentialExperimentTest {
         when(contrastMock2.getTestAssayGroup()).thenReturn(assayGroupMock1);
 
         subject = new DifferentialExperiment("accession", new Date(), Sets.newHashSet(contrastMock1, contrastMock2),
-                "description", false, true, "species", "kingdom", "ensembl", Sets.newHashSet(PUBMEDID), experimentDesignMock);
+                "description", false, true, new Species("species","species name", "kingdom", "ensembl"), Sets.newHashSet(PUBMEDID), experimentDesignMock);
     }
 
     @Test

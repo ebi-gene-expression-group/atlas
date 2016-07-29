@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
 
 import javax.inject.Named;
 import java.util.*;
@@ -19,9 +20,10 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class BaselineExperimentBuilder {
 
-    private String species;
+    private String speciesString;
     private String kingdom;
     private String ensemblDB;
+    private Species species;
     private String description;
     private List<String> dataProviderURL;
     private List<String> dataProviderDescription;
@@ -39,18 +41,8 @@ public class BaselineExperimentBuilder {
     private List<String> alternativeViews = Collections.emptyList();
     private List<String> alternativeViewDescriptions = Collections.emptyList();
 
-    public BaselineExperimentBuilder forSpecies(String species) {
+    public BaselineExperimentBuilder forSpecies(Species species){
         this.species = species;
-        return this;
-    }
-
-    public BaselineExperimentBuilder ofKingdom(String kingdom) {
-        this.kingdom = kingdom;
-        return this;
-    }
-
-    public BaselineExperimentBuilder ofEnsemblDB(String ensemblDB) {
-        this.ensemblDB = ensemblDB;
         return this;
     }
 
@@ -86,11 +78,6 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withDisplayName(String displayName) {
         this.displayName = displayName;
-        return this;
-    }
-
-    public BaselineExperimentBuilder withSpeciesMapping(Map<String, String> speciesMapping) {
-        this.speciesMapping = speciesMapping;
         return this;
     }
 
@@ -136,7 +123,7 @@ public class BaselineExperimentBuilder {
         validate();
 
         return new BaselineExperiment(experimentType, experimentAccession, lastUpdate, experimentalFactors, description,
-                displayName, species, kingdom, ensemblDB, speciesMapping, hasExtraInfoFile, hasRData,
+                displayName, species, hasExtraInfoFile, hasRData,
                 pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription, alternativeViews,
                 alternativeViewDescriptions);
     }
@@ -146,7 +133,6 @@ public class BaselineExperimentBuilder {
         checkState(experimentType.isBaseline());
         checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
         checkState(CollectionUtils.isNotEmpty(assayGroups.getAssayGroupIds()), "Please provide a non empty set of AssayGroup objects");
-        checkState(speciesMapping != null, "Please provide a map of species mappings");
         checkState(experimentalFactors != null, "Please provide a ExperimentFactors object");
         checkState(experimentDesign != null, "Please provide a ExperimentDesign object");
         checkState(pubMedIds != null, "Please provide a pubMedIds object");

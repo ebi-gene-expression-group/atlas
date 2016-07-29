@@ -1,10 +1,7 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.model.SampleCharacteristic;
+import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
@@ -75,7 +72,9 @@ public class DifferentialExperimentContrastLinesTest {
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
 
         Set<Contrast> contrasts = Collections.singleton(contrast1);
-        DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", false, true, "", "", "", Collections.EMPTY_SET, experimentDesign);
+        DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts,
+                "description", false, true, new Species("species","species name", "kingdom", "ensemblDb"), Collections
+                .EMPTY_SET, experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 
@@ -113,7 +112,7 @@ public class DifferentialExperimentContrastLinesTest {
         //Adding the contrasts
         Set<Contrast> contrasts = Collections.singleton(contrast1);
         DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts,
-                "description", false, true, "", "", "", Collections.EMPTY_SET, experimentDesign);
+                "description", false, true, new Species("species","species name", "kingdom", "ensemblDb"), Collections.EMPTY_SET, experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 
@@ -150,7 +149,7 @@ public class DifferentialExperimentContrastLinesTest {
         //Adding the contrasts
         Set<Contrast> contrasts = Collections.singleton(contrast1);
         DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts,
-                "description", false, true, "", "", "", Collections.EMPTY_SET, experimentDesign);
+                "description", false, true, new Species("species","species name", "kingdom", "ensemblDb"), Collections.EMPTY_SET, experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 

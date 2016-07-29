@@ -10,11 +10,13 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,7 +30,8 @@ public class MicroarrayExperimentsCacheLoaderTest {
     private static final String ACCESSION = "accession";
     private static final String ARRAYDESIGN_ID = "arraydesignId";
     private static final String ARRAYDESIGN_NAME = "arraydesignName";
-    private static final String SPECIES = "species";
+    private static final String SPECIES_STRING = "species";
+    private static final Species SPECIES = new Species(SPECIES_STRING, SPECIES_STRING, "ensembl","kingdom");
     private static final String ACCESS_KEY = "AN_UUID";
 
     @Mock
@@ -36,6 +39,9 @@ public class MicroarrayExperimentsCacheLoaderTest {
 
     @Mock
     private SpeciesKingdomTrader speciesKingdomTraderMock;
+
+    @Mock
+    private SpeciesFactory speciesFactory;
 
     @Mock
     private MicroarrayExperimentConfiguration experimentConfigurationMock;
@@ -59,16 +65,16 @@ public class MicroarrayExperimentsCacheLoaderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, speciesKingdomTraderMock, arrayDesignTraderMock);
+        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, speciesFactory, arrayDesignTraderMock);
 
         when(experimentDTOMock.getExperimentAccession()).thenReturn(ACCESSION);
         when(experimentDTOMock.getExperimentType()).thenReturn(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
         when(experimentDTOMock.getAccessKey()).thenReturn(ACCESS_KEY);
         when(experimentDTOMock.getPubmedIds()).thenReturn(Sets.newHashSet("pubmed1"));
-        when(experimentDTOMock.getSpecies()).thenReturn(SPECIES);
+
+        when(speciesFactory.create(experimentDTOMock)).thenReturn(SPECIES);
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
-        when(speciesKingdomTraderMock.getKingdom(experimentDTOMock.getSpecies())).thenReturn("kingdom");
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
         when(experimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_ID)));
         when(arrayDesignTraderMock.getArrayDesignNames(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_ID)))).thenReturn

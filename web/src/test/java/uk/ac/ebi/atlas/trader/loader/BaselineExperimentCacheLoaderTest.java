@@ -15,14 +15,11 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperimentConfiguration;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactorsFactory;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
-import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import java.util.Collections;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
@@ -36,8 +33,8 @@ public class BaselineExperimentCacheLoaderTest {
 
         protected Loader(ExperimentalFactorsFactory experimentalFactorsFactory, ExperimentType experimentType,
                          BaselineExperimentExpressionLevelFile expressionLevelFile,
-                         ConfigurationTrader configurationTrader, SpeciesKingdomTrader speciesKingdomTrader) {
-            super(experimentalFactorsFactory, experimentType, expressionLevelFile, configurationTrader,speciesKingdomTrader);
+                         ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory) {
+            super(experimentalFactorsFactory, experimentType, expressionLevelFile, configurationTrader,speciesFactory);
         }
     }
 
@@ -54,7 +51,7 @@ public class BaselineExperimentCacheLoaderTest {
     @Mock
     ConfigurationTrader configurationTrader ;
     @Mock
-    SpeciesKingdomTrader speciesKingdomTrader;
+    SpeciesFactory speciesFactory;
     @Mock
     ExperimentConfiguration configuration;
     @Mock
@@ -71,14 +68,13 @@ public class BaselineExperimentCacheLoaderTest {
     @Before
     public void setUp(){
         subject = new Loader(experimentalFactorsFactory,experimentType,expressionLevelFile,configurationTrader,
-                speciesKingdomTrader);
+                speciesFactory);
         when(configurationTrader.getExperimentConfiguration(experimentAccession)).thenReturn(configuration);
         when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession)).thenReturn(baselineConfiguration);
         when(configuration.getAssayGroups()).thenReturn(assayGroups);
         when(assayGroups.getAssayGroupIds()).thenReturn(ImmutableSet.of("assay group id 1"));
-        when(speciesKingdomTrader.getKingdom(dto.getSpecies())).thenReturn("kingdom");
-        when(speciesKingdomTrader.getEnsemblDB(dto.getSpecies())).thenReturn("ensembl_db");
-
+        when(speciesFactory.create(dto,baselineConfiguration)).thenReturn(new Species("homo_sapiens","homo_sapiens","kingdom",
+                "ensembl_db"));
 
         when(experimentalFactorsFactory.createExperimentalFactors(eq(experimentAccession),eq(experimentDesign),
                 eq(baselineConfiguration), eq(assayGroups), any(String [] .class), anyBoolean())).thenReturn
@@ -91,8 +87,7 @@ public class BaselineExperimentCacheLoaderTest {
         verify(configuration).getAssayGroups();
         verify(experimentalFactorsFactory).createExperimentalFactors(eq(experimentAccession),eq(experimentDesign),
                 eq(baselineConfiguration), eq(assayGroups), any(String [] .class), anyBoolean());
-        verify(speciesKingdomTrader).getKingdom(dto.getSpecies());
-        verify(speciesKingdomTrader).getEnsemblDB(dto.getSpecies());
+        verify(speciesFactory).create(dto,baselineConfiguration);
         if(!baselineConfiguration.orderCurated()){
             verify(expressionLevelFile).readOrderedAssayGroupIds(experimentAccession);
         }
@@ -100,7 +95,7 @@ public class BaselineExperimentCacheLoaderTest {
 
     private void noMoreInteractionsWithCollaborators() {
         verifyNoMoreInteractions(experimentalFactorsFactory, expressionLevelFile, configurationTrader,
-                speciesKingdomTrader);
+                speciesFactory);
     }
 
     @Test(expected=IllegalStateException.class)

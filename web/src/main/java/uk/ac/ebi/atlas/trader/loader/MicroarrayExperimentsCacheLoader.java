@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import javax.inject.Inject;
@@ -22,14 +23,14 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
     private ConfigurationTrader configurationTrader;
 
-    private SpeciesKingdomTrader speciesKingdomTrader;
+    private SpeciesFactory speciesFactory;
 
     private final ArrayDesignTrader arrayDesignTrader;
 
     @Inject
-    public MicroarrayExperimentsCacheLoader(ConfigurationTrader configurationTrader, SpeciesKingdomTrader speciesKingdomTrader, ArrayDesignTrader arrayDesignTrader) {
+    public MicroarrayExperimentsCacheLoader(ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory, ArrayDesignTrader arrayDesignTrader) {
         this.configurationTrader = configurationTrader;
-        this.speciesKingdomTrader = speciesKingdomTrader;
+        this.speciesFactory = speciesFactory;
         this.arrayDesignTrader = arrayDesignTrader;
     }
 
@@ -46,11 +47,9 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
         boolean hasRData = microarrayExperimentConfiguration.hasRData();
 
-        String kingdom = speciesKingdomTrader.getKingdom(experimentDTO.getSpecies());
-        String ensemblDB = speciesKingdomTrader.getEnsemblDB(experimentDTO.getSpecies());
-
         return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession, experimentDTO.getLastUpdate(),
-                                        contrasts, experimentDescription, hasExtraInfoFile, hasRData, experimentDTO.getSpecies(), kingdom, ensemblDB, arrayDesignAccessions,
+                                        contrasts, experimentDescription, hasExtraInfoFile, hasRData,
+                speciesFactory.create(experimentDTO),arrayDesignAccessions,
                 arrayDesignTrader.getArrayDesignNames(arrayDesignAccessions), experimentDesign, experimentDTO.getPubmedIds());
 
     }

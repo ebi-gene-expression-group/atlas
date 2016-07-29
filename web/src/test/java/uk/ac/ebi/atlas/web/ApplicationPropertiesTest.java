@@ -97,8 +97,8 @@ public class ApplicationPropertiesTest {
         when(configurationPropertiesMock.getProperty(EXPERIMENT_PUBMED_URL_TEMPLATE)).thenReturn(PUBMED_URL + "{0}");
         when(configurationPropertiesMock.getProperty(EXPERIMENT_ATLAS_URL_TEMPLATE)).thenReturn(ATLAS_URL + "{0}");
 
-        when(homoSapiensExperimentMock.getSpecies()).thenReturn(HOMO_SAPIENS_SPECIES);
-        when(mouseExperimentMock.getSpecies()).thenReturn(MOUSE_SPECIES);
+        when(homoSapiensExperimentMock.getSpeciesString()).thenReturn(HOMO_SAPIENS_SPECIES);
+        when(mouseExperimentMock.getSpeciesString()).thenReturn(MOUSE_SPECIES);
 
         //given
         when(httpServletRequestMock.getAttribute("javax.servlet.forward.request_uri")).thenReturn(EXPERIMENT_URL);
