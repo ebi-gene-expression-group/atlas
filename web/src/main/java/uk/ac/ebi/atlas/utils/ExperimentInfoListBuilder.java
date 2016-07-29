@@ -79,7 +79,7 @@ public class ExperimentInfoListBuilder {
 
                 MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
 
-                ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
+                ExperimentInfo experimentInfo = experiment.getExperimentInfo();
                 experimentInfo.setNumberOfAssays(experiment.getAssayAccessions().size());
                 experimentInfo.setNumberOfContrasts(experiment.getContrastIds().size());
                 experimentInfo.setArrayDesigns(experiment.getArrayDesignAccessions());
@@ -104,7 +104,8 @@ public class ExperimentInfoListBuilder {
 
                 DifferentialExperiment experiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
 
-                ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
+                ExperimentInfo experimentInfo = experiment.getExperimentInfo();
+                experimentInfo.setNumberOfAssays(experiment.getAssayAccessions().size());
                 experimentInfo.setNumberOfAssays(experiment.getAssayAccessions().size());
                 experimentInfo.setNumberOfContrasts(experiment.getContrastIds().size());
 
@@ -127,7 +128,7 @@ public class ExperimentInfoListBuilder {
 
                 BaselineExperiment experiment = rnaSeqBaselineExperimentsCache.getExperiment(experimentAccession);
 
-                ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
+                ExperimentInfo experimentInfo = experiment.getExperimentInfo();
                 experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());
 
                 experimentInfos.add(experimentInfo);
@@ -149,7 +150,7 @@ public class ExperimentInfoListBuilder {
 
                   BaselineExperiment experiment = proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
 
-                ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
+                ExperimentInfo experimentInfo = experiment.getExperimentInfo();
                 experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());
 
                 experimentInfos.add(experimentInfo);
@@ -160,23 +161,6 @@ public class ExperimentInfoListBuilder {
         }
 
         return experimentInfos;
-    }
-
-    protected ExperimentInfo extractBasicExperimentInfo(Experiment experiment) {
-        ExperimentDesign experimentDesign = experiment.getExperimentDesign();
-
-        ExperimentInfo experimentInfo = new ExperimentInfo();
-        experimentInfo.setExperimentAccession(experiment.getAccession());
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        experimentInfo.setLastUpdate(dateFormat.format(experiment.getLastUpdate()));
-        experimentInfo.setExperimentDescription(experiment.getDescription());
-        experimentInfo.setSpecies(experiment.getSpecies());
-        experimentInfo.setKingdom(experiment.getKingdom());
-        experimentInfo.setEnsemblDB(experiment.getEnsemblDB());
-        experimentInfo.setExperimentType(experiment.getType().getParent());
-        experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
-
-        return experimentInfo;
     }
 
 }

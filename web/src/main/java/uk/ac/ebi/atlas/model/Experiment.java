@@ -9,8 +9,11 @@ import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public abstract class Experiment implements Serializable {
@@ -182,5 +185,20 @@ public abstract class Experiment implements Serializable {
         result.putAll(experimentDesign.getAttributes());
 
         return result;
+    }
+
+    public ExperimentInfo getExperimentInfo(){
+
+        ExperimentInfo experimentInfo = new ExperimentInfo();
+        experimentInfo.setExperimentAccession(accession);
+        experimentInfo.setLastUpdate(new SimpleDateFormat("dd-MM-yyyy").format(lastUpdate));
+        experimentInfo.setExperimentDescription(description);
+        experimentInfo.setSpecies(species);
+        experimentInfo.setKingdom(kingdom);
+        experimentInfo.setEnsemblDB(ensemblDB);
+        experimentInfo.setExperimentType(type.getParent());
+        experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
+
+        return experimentInfo;
     }
 }
