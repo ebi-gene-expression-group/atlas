@@ -89,7 +89,7 @@ public class BaselineExperimentTest {
 
     @Test
     public void testGetPubMedIds() throws Exception {
-        assertThat(subject.getPubMedIds(), contains(PUBMEDID));
+        assertThat((Iterable<String>) subject.getAttributes().get("pubMedIds"), contains(PUBMEDID));
     }
 
     @Test

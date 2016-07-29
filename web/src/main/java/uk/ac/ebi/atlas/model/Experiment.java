@@ -61,11 +61,7 @@ public abstract class Experiment implements Serializable {
     public ExperimentType getType() {
         return type;
     }
-
-    public Date getLastUpdate() {
-        return lastUpdate;
-    }
-
+    
     public ExperimentDesign getExperimentDesign() {
         return experimentDesign;
     }
@@ -81,28 +77,8 @@ public abstract class Experiment implements Serializable {
         return description;
     }
 
-    public boolean hasExtraInfoFile() {
-        return hasExtraInfoFile;
-    }
-
-    public boolean hasRData() {
-        return hasRData;
-    }
-
     public String getAccession() {
         return accession;
-    }
-
-    public String getKingdom() {
-        return kingdom;
-    }
-
-    public String getEnsemblDB() {
-        return ensemblDB;
-    }
-
-    public List<String> getPubMedIds() {
-        return Lists.newArrayList(pubMedIds);
     }
 
     public String getSpecies() {
@@ -141,42 +117,34 @@ public abstract class Experiment implements Serializable {
         return result;
     }
 
-    public List<String> getDataProviderURL() {
-        return dataProviderURL;
-    }
-
-    public List<String> getDataProviderDescription() {
-        return dataProviderDescription;
-    }
-
     protected abstract Set<String> getAnalysedRowsAccessions();
 
     public Map<String, ?> getAttributes(){
         Map<String, Object> result = new HashMap<>();
-        result.put("type", this.getType());
-        result.put("experimentHasRData", this.hasRData());
-        result.put("species", this.getSpecies());
-        result.put("experimentDescription", this.getDescription());
-        result.put("hasExtraInfo", this.hasExtraInfoFile());
-        result.put("pubMedIds", this.getPubMedIds());
-        result.put("experimentAccession", this.getAccession());
+        result.put("type", type);
+        result.put("experimentHasRData", hasRData);
+        result.put("species", species);
+        result.put("experimentDescription", description);
+        result.put("hasExtraInfo", hasExtraInfoFile);
+        result.put("pubMedIds", pubMedIds);
+        result.put("experimentAccession", accession);
 
         //Internet says keywords are not that useful for SEO any more. Remove if it causes you problems.
         List<String> keywords = ImmutableList.<String>builder()
                 .add("experiment")
-                .add(this.getAccession())
-                .addAll(getDataProviderDescription())
-                .addAll(Arrays.asList(this.getType().getDescription().split("_")))
-                .addAll(this.getExperimentDesign().getAssayHeaders())
+                .add(accession)
+                .addAll(dataProviderDescription)
+                .addAll(Arrays.asList(type.getDescription().split("_")))
+                .addAll(experimentDesign.getAssayHeaders())
                 .build();
         result.put("pageKeywords", Joiner.on(',').join(keywords));
 
         //We want this to show up in Google searches.
-        result.put("pageDescription", this.getDescription());
+        result.put("pageDescription", description);
 
         // Extra information to show on experiment page (if they were provided in <expAcc>-factors.xml file)
-        result.put("dataProviderURL", getDataProviderURL());
-        result.put("dataProviderDescription", getDataProviderDescription());
+        result.put("dataProviderURL", dataProviderURL);
+        result.put("dataProviderDescription", dataProviderDescription);
         result.put("alternativeViews", alternativeViews);
         result.put("alternativeViewDescriptions", alternativeViewDescriptions);
 

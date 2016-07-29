@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -97,18 +99,13 @@ public class BaselineExperimentBuilderTest {
                 .withDataProviderDescription(PROVIDER_DESCRIPTION)
                 .create();
 
-        assertThat(experiment.getAccession(), is(EXPERIMENT_ACCESSION));
-        assertThat(experiment.getExperimentRunAccessions(), hasItems(RUN_ACCESSION1, RUN_ACCESSION2));
-        assertThat(experiment.getDescription(), is(DESCRIPTION));
-        assertThat(experiment.getDisplayName(), is(DISPLAY_NAME));
-        assertThat(experiment.hasExtraInfoFile(), is(false));
-        assertThat(experiment.getSpecies(), is(SPECIES));
-        assertThat(experiment.getSpeciesToEnsemblMapping(), is(speciesMap));
-        assertThat(experiment.getType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
-        assertThat(experiment.getPubMedIds(), contains(PUBMEDID));
-        assertThat(experiment.getExperimentDesign(), is(experimentDesignMock));
-        assertThat(experiment.getExperimentalFactors(), is(experimentalFactors));
-        assertThat(experiment.getDataProviderURL(), is(PROVIDER_URL));
-        assertThat(experiment.getDataProviderDescription(), is(PROVIDER_DESCRIPTION));
+        Map<String, ?> attributes = experiment.getAttributes();
+
+        assertEquals(EXPERIMENT_ACCESSION,attributes.get("experimentAccession"));
+        assertEquals(DESCRIPTION,attributes.get("pageDescription"));
+        assertEquals(PROVIDER_URL,attributes.get("dataProviderURL"));
+        assertEquals(PROVIDER_DESCRIPTION,attributes.get("dataProviderDescription"));
+        assertEquals(Sets.newHashSet(PUBMEDID), attributes.get("pubMedIds"));
+
     }
 }

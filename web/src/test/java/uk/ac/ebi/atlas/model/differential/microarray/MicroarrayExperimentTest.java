@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -18,6 +19,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MicroarrayExperimentTest {
@@ -25,8 +28,7 @@ public class MicroarrayExperimentTest {
     private static final String ARRAY_DESIGN_ACCESSIONS = "arrayDesignAccessions";
     private static final String PUBMEDID = "PUBMEDID";
 
-    @Mock
-    private Contrast contrastMock;
+    private Contrast contrast;
 
     @Mock
     private ExperimentDesign experimentDesignMock;
@@ -35,7 +37,14 @@ public class MicroarrayExperimentTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperiment(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, "accession", new Date(), Sets.newHashSet(contrastMock),
+
+        contrast = mock(Contrast.class);
+        when(contrast.getId()).thenReturn("contrast");
+
+        when(contrast.getReferenceAssayGroup()).thenReturn(new AssayGroup("id", "assay 1","assay 2"));
+        when(contrast.getTestAssayGroup()).thenReturn(new AssayGroup("test","assay 1"));
+
+        subject = new MicroarrayExperiment(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, "accession", new Date(), Sets.newHashSet(contrast),
                 "description", false, true, "species", "kingdom", "ensembl", Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSIONS)),
                 new TreeSet<String>(), experimentDesignMock, Sets.newHashSet(PUBMEDID));
     }
@@ -47,7 +56,7 @@ public class MicroarrayExperimentTest {
 
     @Test
     public void testGetPubMedIds() throws Exception {
-        assertThat(subject.getPubMedIds(), contains(PUBMEDID));
+        assertThat((Iterable<String>) subject.getAttributes().get("pubMedIds"), contains(PUBMEDID));
     }
 
     @Test

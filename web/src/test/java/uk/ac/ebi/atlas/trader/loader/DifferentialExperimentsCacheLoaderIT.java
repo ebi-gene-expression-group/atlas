@@ -72,7 +72,7 @@ public class DifferentialExperimentsCacheLoaderIT {
 
         //then
         assertThat(experiment.getDisplayName(), is(EXPERIMENT_ACCESSION));
-        assertThat(experiment.hasExtraInfoFile(), is(false));
+        assertThat((Boolean) experiment.getAttributes().get("hasExtraInfo"), is(false));
         assertThat(experiment.getDescription(), startsWith(""));
     }
 
