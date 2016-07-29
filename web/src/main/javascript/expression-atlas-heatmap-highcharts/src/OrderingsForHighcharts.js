@@ -185,7 +185,7 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
           columns: createAlphabeticalOrdering("factorValue", columnHeaders),
           rows: createAlphabeticalOrdering("name", rows)
         },
-        "Gene expression" : {
+        "Gene expression rank" : {
           columns: createOrdering(
             combineRanks([
               [rankColumnsByWhereTheyAppearFirst(expressions), 1],

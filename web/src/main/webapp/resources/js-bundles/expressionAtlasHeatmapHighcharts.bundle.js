@@ -12777,7 +12777,7 @@ webpackJsonp_name_([4],[
 	          columns: createAlphabeticalOrdering("factorValue", columnHeaders),
 	          rows: createAlphabeticalOrdering("name", rows)
 	        },
-	        "Gene expression" : {
+	        "Gene expression rank" : {
 	          columns: createOrdering(
 	            combineRanks([
 	              [rankColumnsByWhereTheyAppearFirst(expressions), 1],
