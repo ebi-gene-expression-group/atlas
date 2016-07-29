@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 
-public class UrlTsvReaderBuilderIT {
+public class UrlTsvReaderBuilderEIT {
 
     private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_FOOBAR = "E-FOOBAR";
