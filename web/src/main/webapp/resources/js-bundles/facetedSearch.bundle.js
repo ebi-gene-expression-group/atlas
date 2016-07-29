@@ -33930,7 +33930,7 @@ webpackJsonp_name_([5],[
 	            this.props.showUsageMessage ? React.createElement(
 	                'div',
 	                { style: { fontSize: 'small', color: 'grey' } },
-	                'To zoom in, click and drag left/right, or tap with two fingers and pinch'
+	                'Select a section of the heatmap to zoom in'
 	            ) : null
 	        );
 	    }
