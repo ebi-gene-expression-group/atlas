@@ -11,7 +11,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class EGEOD22351RnaSeqExperimentDownloadControllerIT {
+public class EGEOD22351RnaSeqExperimentDownloadControllerEIT {
 
     private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-22351.tsv");
 

@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 
-public class DASStaticResourcesIT {
+public class DASStaticResourcesEIT {
 
     public static final int HTTP_OK = 200;
 

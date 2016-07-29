@@ -12,7 +12,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class EGEOD22351ExperimentDesignDownloadControllerIT {
+public class EGEOD22351ExperimentDesignDownloadControllerEIT {
 
     private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-22351/experiment-design.tsv");
 

@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.startsWith;
 
-public class DASFeaturesControllerIT {
+public class DASFeaturesControllerEIT {
 
     private static final int HTTP_OK = 200;
 

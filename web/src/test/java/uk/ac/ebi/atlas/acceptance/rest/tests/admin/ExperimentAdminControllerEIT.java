@@ -13,7 +13,7 @@ import static com.jayway.restassured.RestAssured.expect;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture {
+public class ExperimentAdminControllerEIT extends RestAssuredAuthenticatedFixture {
 
     private static final String EXISTING_EXPERIMENT_ACCESSION = "E-MTAB-2706";
     private static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";

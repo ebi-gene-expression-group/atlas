@@ -22,7 +22,7 @@ import static uk.ac.ebi.atlas.utils.RegexMatcher.matches;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class ExpressionDataControllerIT extends RestAssuredFixture {
+public class ExpressionDataControllerEIT extends RestAssuredFixture {
 
     private static final String BASELINE_GENE = "ENSG00000000003";
     private static final String DIFFERENTIAL_GENE = "AT2G06310";

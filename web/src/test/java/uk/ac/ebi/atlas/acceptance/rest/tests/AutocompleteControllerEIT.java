@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 
-public class AutocompleteControllerIT {
+public class AutocompleteControllerEIT {
 
     private static final String END_POINT_URL = "/gxa/json/suggestions";
 

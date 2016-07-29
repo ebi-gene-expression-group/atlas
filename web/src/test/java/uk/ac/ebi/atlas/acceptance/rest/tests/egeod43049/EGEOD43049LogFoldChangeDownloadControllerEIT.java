@@ -10,7 +10,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class EGEOD43049LogFoldChangeDownloadControllerIT {
+public class EGEOD43049LogFoldChangeDownloadControllerEIT {
 
     private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-43049/logFold.tsv");
 

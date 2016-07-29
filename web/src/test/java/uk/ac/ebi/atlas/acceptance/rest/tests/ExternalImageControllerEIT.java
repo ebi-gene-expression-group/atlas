@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
 
-public class ExternalImageControllerIT {
+public class ExternalImageControllerEIT {
 
     private static final String EXTRA_INFO_EXPERIMENT_ACCESSION = "E-MTAB-2812";
     private static final String RNASEQ_EXPERIMENT_ACCESSION = "E-GEOD-54705";

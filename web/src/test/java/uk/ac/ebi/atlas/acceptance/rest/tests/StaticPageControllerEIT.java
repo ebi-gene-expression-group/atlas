@@ -8,7 +8,7 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import static com.jayway.restassured.RestAssured.get;
 import static org.hamcrest.Matchers.containsString;
 
-public class StaticPageControllerIT extends RestAssuredFixture {
+public class StaticPageControllerEIT extends RestAssuredFixture {
 
     @Test
     public void about() {

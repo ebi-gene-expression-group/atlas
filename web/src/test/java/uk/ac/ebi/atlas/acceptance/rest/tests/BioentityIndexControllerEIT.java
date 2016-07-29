@@ -7,7 +7,7 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
 import static com.jayway.restassured.RestAssured.expect;
 import static org.hamcrest.Matchers.is;
 
-public class BioentityIndexControllerIT extends RestAssuredAuthenticatedFixture {
+public class BioentityIndexControllerEIT extends RestAssuredAuthenticatedFixture {
 
     @Test
     public void statusShouldBeInitialized() {

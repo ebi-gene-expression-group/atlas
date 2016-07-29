@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
 @Ignore
-public class GeneSetMatchBaselineExperimentDownloadControllerIT {
+public class GeneSetMatchBaselineExperimentDownloadControllerEIT {
 
     private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-30352.tsv?serializedFilterFactors=ORGANISM:Homo sapiens" +
             "&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=true&displayGeneDistribution=true" +
