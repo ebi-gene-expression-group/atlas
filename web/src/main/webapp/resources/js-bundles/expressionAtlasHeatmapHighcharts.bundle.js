@@ -13160,7 +13160,7 @@ webpackJsonp_name_([4],[
 	                'div',
 	                { className: 'legend-item special' },
 	                React.createElement('span', { className: 'icon icon-generic', 'data-icon': 'i', 'data-toggle': 'tooltip', 'data-placement': 'bottom',
-	                    title: 'This range of values indicates gene expression level across different experimental conditions (e.g. tissues). It is calculated differently between RNA and proteomics experiments.' })
+	                    title: 'Baseline expression levels in RNA-seq experiments are in FPKM or TPM. Low: 0-10, Medium: 11-1000,  High: >1000. Proteomics expression levels are mapped to low, medium, high on per experiment basis.' })
 	            ),
 	            React.createElement(HeatmapLegendBox, { key: "No data available",
 	                name: "No data available",
