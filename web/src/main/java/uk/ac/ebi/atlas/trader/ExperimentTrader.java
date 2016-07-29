@@ -120,7 +120,7 @@ public class ExperimentTrader {
                 default:
                     throw new IllegalStateException("Invalid enum value: " + experimentType);
             }
-        } catch (ExecutionException e) {
+        } catch (ExecutionException | UncheckedExecutionException e) {
             throw new IllegalStateException("Failed to load experiment from cache: " + experimentAccession, e);
         }
     }
