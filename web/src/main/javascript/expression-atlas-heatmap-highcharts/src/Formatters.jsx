@@ -2,6 +2,8 @@
 //*------------------------------------------------------------------*
 var React = require('react');
 var ReactDOMServer = require('react-dom/server')
+var escapedHtmlDecoder = require('he');
+
 //*------------------------------------------------------------------*
 
 var Tooltip = React.createClass({
@@ -91,6 +93,9 @@ var YAxisLabel = React.createClass({
   }
 });
 
+var reactToHtml = function(component){
+  return escapedHtmlDecoder.decode(ReactDOMServer.renderToStaticMarkup(component));
+}
 
 var makeFormatter = function(config){
   return {
@@ -98,12 +103,11 @@ var makeFormatter = function(config){
       return value.label;
     },
     yAxis: function Formatter(value){
-      return ReactDOMServer.renderToStaticMarkup(
+      return reactToHtml(
         <YAxisLabel
           config={config}
           labelText={value.label}
-          resourceId={value.id}
-          />
+          resourceId={value.id}/>
       );
     },
     tooltip: function Formatter (series, point) {
@@ -118,7 +122,7 @@ var makeFormatter = function(config){
           o[key] = point.options.info[key];
         }
       }
-      return ReactDOMServer.renderToStaticMarkup(
+      return reactToHtml(
         <Tooltip {...o} config={config}/>
       );
     }

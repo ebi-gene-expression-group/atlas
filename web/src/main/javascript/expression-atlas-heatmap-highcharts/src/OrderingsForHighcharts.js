@@ -172,7 +172,6 @@ var combineRanks = function(ranksAndTheirWeighings){
 
 var createOrderings = function (expressions, columnHeaders, rows, config){
   var transposed = _.zip.apply(_,expressions);
-  console.log("width: "+transposed.length+", height: "+expressions.length);
   return (
     config.isMultiExperiment || config.isReferenceExperiment
     ?
