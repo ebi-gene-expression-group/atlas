@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.trader;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
@@ -17,6 +18,8 @@ public class SpeciesFactory {
 
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
+    public final static Species NULL = new AnySpecies();
+
     @Inject
     public SpeciesFactory(SpeciesKingdomTrader speciesKingdomTrader){
         this.speciesKingdomTrader=speciesKingdomTrader;
@@ -32,7 +35,8 @@ public class SpeciesFactory {
     }
 
     public Species create(String inputName){
-        return create( inputName, SpeciesUtils.convertToEnsemblSpecies(inputName));
+        return StringUtils.isNotEmpty(inputName) ? create( inputName, SpeciesUtils.convertToEnsemblSpecies(inputName)
+        ) : NULL;
     }
 
     private Species create(String inputName, String canonicalName){
@@ -47,6 +51,17 @@ public class SpeciesFactory {
             kingdom = "";
         }
         return new Species(inputName,canonicalName,ensemblDb,kingdom);
+    }
+
+    static class AnySpecies extends Species{
+        AnySpecies(){
+            super("","","","");
+        }
+
+        @Override
+        public boolean isBlank(){
+            return true;
+        }
     }
 
 }

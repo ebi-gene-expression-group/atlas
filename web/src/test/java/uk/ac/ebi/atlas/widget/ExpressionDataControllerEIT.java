@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import javax.inject.Inject;
 
@@ -44,7 +45,8 @@ public class ExpressionDataControllerEIT extends RestAssuredFixture {
     @Test
     public void geneExpressedInBaselineAndDifferentialExperimentsReturnsTrue() {
         assertThat(
-                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(BASELINE_GENE), SemanticQuery.create(), ""),
+                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(BASELINE_GENE),
+                        SemanticQuery.create(), SpeciesFactory.NULL),
                 matches(NON_EMPTY_JSON_OBJECT_REGEX));
 
         Response response = get("/json/expressionData?geneId=" + BASELINE_GENE);
@@ -57,7 +59,7 @@ public class ExpressionDataControllerEIT extends RestAssuredFixture {
     @Test
     public void geneExpressedInDifferentialExperimentsOnlyReturnsFalse() {
         assertThat(
-                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(DIFFERENTIAL_GENE), SemanticQuery.create(), ""),
+                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(DIFFERENTIAL_GENE), SemanticQuery.create(), SpeciesFactory.NULL),
                 is(EMPTY_JSON_OBJECT));
         assertThat(
                 differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(SemanticQuery.create(DIFFERENTIAL_GENE))
@@ -73,7 +75,7 @@ public class ExpressionDataControllerEIT extends RestAssuredFixture {
     @Test
     public void nonExistentGeneReturnsFalse() {
         assertThat(
-                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(NON_EXISTENT_GENE), SemanticQuery.create(), ""),
+                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(NON_EXISTENT_GENE), SemanticQuery.create(), SpeciesFactory.NULL),
                 is(EMPTY_JSON_OBJECT));
         assertThat(
                 differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(SemanticQuery.create(NON_EXISTENT_GENE)),

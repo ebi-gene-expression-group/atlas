@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 
 public class SpeciesTest {
 
+    public static final Species HUMAN = new Species("Homo sapiens", "homo sapiens", "ensembldb","animals");
+
     @Test
     public void toStringWorks(){
         assertThat(new Species("homo sapiens","homo sapiens", "ensembldb","animals").toString(), is("homo sapiens " +

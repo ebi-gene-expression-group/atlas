@@ -115,7 +115,7 @@ public class SpeciesLookupService {
         return new Result(species);
     }
 
-    public class Result {
+    public static class Result {
         public final ImmutableSet<String> species;
 
         public Result(ImmutableSet<String> species) {

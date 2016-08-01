@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -41,13 +42,10 @@ public class DiffAnalyticsSearchService {
     }
 
 
-    public int visitEachExpression(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, Visitor<DiffAnalytics> visitor) {
+    public int visitEachExpression(SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species,
+                                   Visitor<DiffAnalytics> visitor) {
 
         Collection<IndexedAssayGroup> contrastsResult = findContrasts(conditionQuery.asSolr1DNF());
-
-        if (isBlank(species)) {
-            species = "";
-        }
 
         ImmutableSet<String> geneIdsResult = analyticsSearchService.searchBioentityIdentifiers(geneQuery, conditionQuery, species);
 
@@ -58,7 +56,7 @@ public class DiffAnalyticsSearchService {
 
         CountingVisitor<DiffAnalytics> counter = new CountingVisitor<>(visitor);
 
-        diffAnalyticsDao.visitEachExpression(contrastsResult, geneIdsResult, counter, species);
+        diffAnalyticsDao.visitEachExpression(contrastsResult, geneIdsResult, counter, species.mappedName);
 
         return counter.getCount();
 

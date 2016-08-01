@@ -2,7 +2,9 @@ package uk.ac.ebi.atlas.widget;
 
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Lists;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonNull;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
@@ -15,7 +17,7 @@ import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.SpeciesUtils;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -27,6 +29,7 @@ import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchSer
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -53,6 +56,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     private final BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder;
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private final BaselineExperimentPageService baselineExperimentPageService;
+    private final SpeciesFactory speciesFactory;
 
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -61,12 +65,15 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                     BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder,
                                     BaselineAnalyticsSearchService baselineAnalyticsSearchService,
                                     BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
-                                    @Qualifier ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory baselineProfileInputStreamFactory) {
+                                    @Qualifier ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory
+                                                baselineProfileInputStreamFactory,
+                                    SpeciesFactory speciesFactory) {
         this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
         this.speciesLookupService = speciesLookupService;
         this.baselineExperimentProfilesViewModelBuilder = baselineExperimentProfilesViewModelBuilder;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileInputStreamFactory);
+        this.speciesFactory = speciesFactory;
     }
 
     @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE")
@@ -91,33 +98,35 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     @RequestMapping(value = "/widgets/heatmap/baselineAnalytics")
     public String analyticsJson(@RequestParam(value = "geneQuery") SemanticQuery geneQuery,
                                 @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
-                                @RequestParam(value = "species", required = false, defaultValue = "") String species,
+                                @RequestParam(value = "species", required = false, defaultValue = "") String
+                                            speciesString,
                                 @RequestParam(value = "propertyType", required = false) String propertyType,
-                                @RequestParam(value = "source", required = false, defaultValue = "ORGANISM_PART") String defaultQueryFactorType,
+                                @RequestParam(value = "source", required = false) String defaultQueryFactorType,
                                 Model model, HttpServletRequest request, HttpServletResponse response) {
 
-        if (isBlank(species)) {
-            species = speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery);
-        }
+        Species species = speciesFactory.create(isBlank(speciesString) ? speciesLookupService
+                .fetchFirstSpeciesByField(propertyType, geneQuery) : speciesString);
 
-        defaultQueryFactorType =
-                "caenorhabditis elegans".equalsIgnoreCase(species) ? "DEVELOPMENTAL_STAGE" : defaultQueryFactorType;
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery,
+                conditionQuery, species, defaultQueryFactorType);
 
-        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, conditionQuery, species, defaultQueryFactorType);
-
-        populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, conditionQuery, SpeciesUtils.convertToEnsemblSpecies(species), searchResult, model);
+        populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, conditionQuery,species,
+                searchResult, model);
 
         // set here instead of in JSP, because the JSP may be included elsewhere
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }
 
-    private void populateModelWithMultiExperimentResults(String contextRoot, SemanticQuery geneQuery, SemanticQuery conditionQuery, String ensemblSpecies,
+    private void populateModelWithMultiExperimentResults(String contextRoot, SemanticQuery geneQuery, SemanticQuery
+            conditionQuery, Species species,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
         List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
 
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
-            model.addAttribute("anatomogram", anatomogramFactory.get("ORGANISM_PART", ensemblSpecies, convert(orderedFactors), contextRoot));
+            model.addAttribute("anatomogram", anatomogramFactory.get("ORGANISM_PART", species.mappedName, convert
+                    (orderedFactors),
+                    contextRoot));
         } else {
             model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
         }
@@ -125,7 +134,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
         addJsonForHeatMap(experimentProfiles, orderedFactors, model);
 
-        model.addAttribute("species", ensemblSpecies);
+        model.addAttribute("species", species.mappedName);
         model.addAttribute("isWidget", true);
         model.addAttribute("experiment", gson.toJson(JsonNull.INSTANCE));
         model.addAttribute("geneQuery", geneQuery);

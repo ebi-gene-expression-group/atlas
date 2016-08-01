@@ -45,5 +45,13 @@ public class Species {
         }
     }
 
+    public boolean isBlank(){
+        return false;
+    }
+
+    public String defaultQueryFactorType(){
+        return "caenorhabditis elegans".equalsIgnoreCase(mappedName) ? "DEVELOPMENTAL_STAGE" : "ORGANISM_PART";
+    }
+
 
 }

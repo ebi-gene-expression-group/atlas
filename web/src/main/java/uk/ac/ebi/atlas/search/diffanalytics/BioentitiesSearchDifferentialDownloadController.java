@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.search.SearchDescription;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import uk.ac.ebi.atlas.utils.VisitorException;
 
 import javax.inject.Inject;
@@ -25,14 +27,17 @@ public class BioentitiesSearchDifferentialDownloadController {
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private DiffAnalyticsTSVWriter tsvWriter;
+    private SpeciesFactory speciesFactory;
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMdd-HHmmss");
 
 
     @Inject
-    public BioentitiesSearchDifferentialDownloadController(DiffAnalyticsSearchService diffAnalyticsSearchService, DiffAnalyticsTSVWriter tsvWriter) {
+    public BioentitiesSearchDifferentialDownloadController(DiffAnalyticsSearchService diffAnalyticsSearchService,
+                                                           DiffAnalyticsTSVWriter tsvWriter,SpeciesFactory speciesFactory) {
         this.diffAnalyticsSearchService = diffAnalyticsSearchService;
         this.tsvWriter = tsvWriter;
+        this.speciesFactory = speciesFactory;
     }
 
 
@@ -43,7 +48,7 @@ public class BioentitiesSearchDifferentialDownloadController {
                                                          HttpServletResponse response) throws IOException {
         LOGGER.info("downloadGeneQueryDifferentialExpressions for {}", SearchDescription.getRaw(geneQuery, conditionQuery, species));
 
-        downloadExpressions(response, geneQuery, conditionQuery, species);
+        downloadExpressions(response, geneQuery, conditionQuery, speciesFactory.create(species));
     }
 
 
@@ -52,21 +57,21 @@ public class BioentitiesSearchDifferentialDownloadController {
 
         SemanticQuery geneQuery = SemanticQuery.create(identifier);
         SemanticQuery emptyConditionQuery = SemanticQuery.create("");
-        String noSpecies = "";
 
-        LOGGER.info("downloadGeneDifferentialExpressions for {}", SearchDescription.getRaw(geneQuery, emptyConditionQuery, noSpecies));
+        LOGGER.info("downloadGeneDifferentialExpressions for {}", SearchDescription.getRaw(geneQuery, emptyConditionQuery, ""));
 
-        downloadExpressions(response, geneQuery, emptyConditionQuery, noSpecies);
+        downloadExpressions(response, geneQuery, emptyConditionQuery, SpeciesFactory.NULL);
     }
 
 
-    private void downloadExpressions(HttpServletResponse response, SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) throws IOException {
+    private void downloadExpressions(HttpServletResponse response, SemanticQuery geneQuery, SemanticQuery
+            conditionQuery, Species species) throws IOException {
 
         setDownloadHeaders(response, "Expression_Atlas_results_differential.tsv");
 
         try (DiffAnalyticsTSVWriter writer = tsvWriter) {
             writer.setResponseWriter(response.getWriter());
-            writer.writeHeader(geneQuery, conditionQuery, species);
+            writer.writeHeader(geneQuery, conditionQuery, species.originalName);
 
             int count = diffAnalyticsSearchService.visitEachExpression(geneQuery, conditionQuery, species, writer);
             LOGGER.info("downloadGeneQueryResults streamed {} differential gene expressions", count);

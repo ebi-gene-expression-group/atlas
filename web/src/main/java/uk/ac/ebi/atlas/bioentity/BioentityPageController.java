@@ -9,10 +9,12 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -32,6 +34,8 @@ public abstract class BioentityPageController {
     protected BioentityPropertyServiceInitializer bioentityPropertyServiceInitializer;
     protected BioEntityPropertyService bioEntityPropertyService;
     protected DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
+
+    protected SpeciesFactory speciesFactory;
 
     protected String[] propertyNames;
 
@@ -64,10 +68,15 @@ public abstract class BioentityPageController {
     public void setBaselineAnalyticsSearchService(BaselineAnalyticsSearchService baselineAnalyticsSearchService) {
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
     }
+    @Inject
+    public void setSpeciesFactory(SpeciesFactory speciesFactory) {
+        this.speciesFactory = speciesFactory;
+    }
 
     // identifier (gene) = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
     // identifier (gene set) = a Reactome id, Plant Ontology or Gene Ontology accession or an InterPro term
-    public String showBioentityPage(String identifier, String species, Model model, Set<String> experimentTypes) {
+    public String showBioentityPage(String identifier, Species species, Model model, Set<String>
+            experimentTypes) {
 
         boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
         boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);

@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import javax.inject.Inject;
 
@@ -30,28 +32,31 @@ public class QuerySearchController {
     private AnalyticsSearchService analyticsSearchService;
     private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
+    private SpeciesFactory speciesFactory;
 
     @Inject
     public QuerySearchController(AnalyticsSearchService analyticsSearchService,
                                  DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
-                                 BaselineAnalyticsSearchService baselineAnalyticsSearchService) {
+                                 BaselineAnalyticsSearchService baselineAnalyticsSearchService, SpeciesFactory speciesFactory) {
         this.analyticsSearchService = analyticsSearchService;
         this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
+        this.speciesFactory = speciesFactory;
     }
 
     @RequestMapping(value = "/query")
     public String showGeneQueryResultPage(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
                                           @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
-                                          @RequestParam(value = "organism", required = false, defaultValue = "") String species,
+                                          @RequestParam(value = "organism", required = false, defaultValue = "")
+                                              String speciesString,
                                           Model model, RedirectAttributes redirectAttributes)
     throws UnsupportedEncodingException {
-
+        Species species = speciesFactory.create(speciesString);
         checkArgument(geneQuery.isNotEmpty() || conditionQuery.isNotEmpty(), "Please specify a gene query or a condition.");
 
-        String searchDescription = SearchDescription.get(geneQuery, conditionQuery, species);
+        String searchDescription = SearchDescription.get(geneQuery, conditionQuery, species.originalName);
         model.addAttribute("searchDescription", searchDescription);
-        model.addAttribute("species", species);
+        model.addAttribute("species", species.mappedName);
         model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());
         model.addAttribute("conditionQuery", conditionQuery.toUrlEncodedJson());
 
@@ -61,8 +66,8 @@ public class QuerySearchController {
             String geneSetId = geneQuery.terms().iterator().next().value();
 
             StringBuilder stringBuilder = new StringBuilder("redirect:/genesets/" + geneSetId);
-            if (!matchesReactomeID(geneSetId) && isNotBlank(species)) {
-                stringBuilder.append("?").append("organism=").append(species);
+            if (!matchesReactomeID(geneSetId) && !species.isBlank()) {
+                stringBuilder.append("?").append("organism=").append(species.originalName);
             }
 
             copyModelAttributesToFlashAttributes(model, redirectAttributes);
@@ -70,7 +75,8 @@ public class QuerySearchController {
         }
 
         // No gene IDs -> empty results page
-        ImmutableSet<String> geneIds = analyticsSearchService.searchMoreThanOneBioentityIdentifier(geneQuery, conditionQuery, species);
+        ImmutableSet<String> geneIds = analyticsSearchService.searchMoreThanOneBioentityIdentifier(geneQuery,
+                conditionQuery, species);
         if (geneIds.size() == 0) {
             return "empty-search-page";
         }
@@ -82,7 +88,8 @@ public class QuerySearchController {
         }
         // Resolves to multiple IDs or the query includes a condition -> General results page
         else {
-            ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(geneQuery, conditionQuery, species);
+            ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(geneQuery,
+                    conditionQuery, species);
 
             boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
             boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
@@ -11,6 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.Map;
+
+import static org.apache.commons.lang.StringUtils.isBlank;
 
 @Named
 public class BaselineAnalyticsSearchService {
@@ -32,18 +35,23 @@ public class BaselineAnalyticsSearchService {
         this.baselineExperimentSearchResultProducer = baselineExperimentSearchResultProducer;
     }
 
-    public BaselineExperimentSearchResult findExpressions(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, String queryFactorType) {
-        List<Map<String, Object>> response = baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(geneQuery, conditionQuery, SpeciesUtils.convertToEnsemblSpecies(species), queryFactorType);
+    public BaselineExperimentSearchResult findExpressions(SemanticQuery geneQuery, SemanticQuery conditionQuery,
+                                                          Species species, String queryFactorTypeOrBlank) {
+        String queryFactorType = isBlank(queryFactorTypeOrBlank)? species.defaultQueryFactorType() :
+                queryFactorTypeOrBlank;
+        List<Map<String, Object>> response = baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(geneQuery,
+                conditionQuery, species.mappedName, queryFactorType);
         ImmutableList<BaselineExperimentExpression> expressions = baselineAnalyticsFacetsReader.extractAverageExpressionLevel(response);
         return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, queryFactorType);
     }
 
-    public String findFacetsForTreeSearch(SemanticQuery geneQuery, String species) {
+    public String findFacetsForTreeSearch(SemanticQuery geneQuery, Species species) {
         return findFacetsForTreeSearch(geneQuery, SemanticQuery.create(), species);
     }
 
-    public String findFacetsForTreeSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        List<Map<String, Object>> results = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery, conditionQuery, species);
+    public String findFacetsForTreeSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species) {
+        List<Map<String, Object>> results = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery,
+                conditionQuery, species.mappedName);
         return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(results);
     }
 

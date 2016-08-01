@@ -23,7 +23,7 @@ import java.util.*;
 
 @Named
 @Scope("request")
-//TODO: merge this class with BaselineExperimentProfileSearchService, by adding the ability to search conditions to BaselineExperimentProfileSearchService
+//TODO: delete, this is dead code for "old" bioentities page
 public class BaselineExperimentAssayGroupSearchService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentAssayGroupSearchService.class);

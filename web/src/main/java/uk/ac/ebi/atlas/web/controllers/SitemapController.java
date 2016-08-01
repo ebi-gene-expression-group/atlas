@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.dao.OrganismEnsemblDAO;
 import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import uk.ac.ebi.atlas.utils.SitemapWriter;
 
 import javax.inject.Inject;
@@ -27,11 +28,13 @@ public class SitemapController {
 
     private final AnalyticsSearchService solr;
     private final OrganismEnsemblDAO organismEnsemblDAO;
+    private final SpeciesFactory speciesFactory;
 
     @Inject
-    public SitemapController(AnalyticsSearchService solr, OrganismEnsemblDAO organismEnsemblDAO){
+    public SitemapController(AnalyticsSearchService solr, OrganismEnsemblDAO organismEnsemblDAO, SpeciesFactory speciesFactory){
         this.solr = solr;
         this.organismEnsemblDAO = organismEnsemblDAO;
+        this.speciesFactory = speciesFactory;
     }
 
 
@@ -55,7 +58,7 @@ public class SitemapController {
         Collection<String> various = ImmutableList.of("/experiments","/plant/experiments");
 
         sitemapWriter.writeGenes(response.getOutputStream(), various, solr.getBioentityIdentifiersForSpecies
-                (SpeciesUtils.convertUnderscoreToSpaces(species)));
+                (speciesFactory.create((SpeciesUtils.convertUnderscoreToSpaces(species)))));
 
     }
 

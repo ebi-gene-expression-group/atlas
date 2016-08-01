@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.SpeciesTest;
 
 import javax.inject.Inject;
 
@@ -24,7 +25,7 @@ public class AnalyticsSearchServiceIT {
 
     @Test
     public void testGetBioentityIdentifiersForSpecies() throws Exception {
-        Collection<String> response = subject.getBioentityIdentifiersForSpecies("homo sapiens");
+        Collection<String> response = subject.getBioentityIdentifiersForSpecies(SpeciesTest.HUMAN);
 
         assertThat(response.size(), Matchers.greaterThan(100));
     }

@@ -1,7 +1,9 @@
 package uk.ac.ebi.atlas.search.analyticsindex;
 
 import com.google.common.collect.ImmutableSet;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,28 +20,28 @@ public class AnalyticsSearchService {
     }
 
     public ImmutableSet<String> fetchExperimentTypes(String bioentityIdentifier) {
-        return fetchExperimentTypes(SemanticQuery.create(bioentityIdentifier), SemanticQuery.create(), "");
+        return fetchExperimentTypes(SemanticQuery.create(bioentityIdentifier), SemanticQuery.create(), SpeciesFactory.NULL);
     }
 
-    public ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, String species) {
+    public ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, Species species) {
         return fetchExperimentTypes(geneQuery, SemanticQuery.create(), species);
     }
 
-    public ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        return analyticsIndexSearchDAO.fetchExperimentTypes(geneQuery, conditionQuery, species);
+    public ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species) {
+        return analyticsIndexSearchDAO.fetchExperimentTypes(geneQuery, conditionQuery, species.mappedName);
     }
 
-    public ImmutableSet<String> searchMoreThanOneBioentityIdentifier(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        return analyticsIndexSearchDAO.searchBioentityIdentifiers(geneQuery, conditionQuery, species, 2);
+    public ImmutableSet<String> searchMoreThanOneBioentityIdentifier(SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species) {
+        return analyticsIndexSearchDAO.searchBioentityIdentifiers(geneQuery, conditionQuery, species.mappedName, 2);
     }
 
-    public ImmutableSet<String> searchBioentityIdentifiers(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        return analyticsIndexSearchDAO.searchBioentityIdentifiers(geneQuery, conditionQuery, species, -1);
+    public ImmutableSet<String> searchBioentityIdentifiers(SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species) {
+        return analyticsIndexSearchDAO.searchBioentityIdentifiers(geneQuery, conditionQuery, species.mappedName, -1);
     }
 
 
-    public Collection<String> getBioentityIdentifiersForSpecies(String species){
-        return analyticsIndexSearchDAO.getBioentityIdentifiersForSpecies(species);
+    public Collection<String> getBioentityIdentifiersForSpecies(Species species){
+        return analyticsIndexSearchDAO.getBioentityIdentifiersForSpecies(species.mappedName);
     }
 
 }

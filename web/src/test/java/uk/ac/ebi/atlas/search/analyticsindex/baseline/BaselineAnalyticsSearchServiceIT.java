@@ -6,6 +6,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.SpeciesTest;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
@@ -21,6 +22,7 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -104,7 +106,8 @@ public class BaselineAnalyticsSearchServiceIT {
     @Test
     public void singleSpeciesGeneAccessionTissues() {
         //"ENSG00000006062" seems to be a famous enough gene
-        BaselineExperimentSearchResult result = subject.findExpressions(SemanticQuery.create("ENSG00000006062"), SemanticQuery.create(), "Homo sapiens", "ORGANISM_PART");
+        BaselineExperimentSearchResult result = subject.findExpressions(SemanticQuery.create("ENSG00000006062"),
+                SemanticQuery.create(), SpeciesTest.HUMAN, "ORGANISM_PART");
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
@@ -120,11 +123,18 @@ public class BaselineAnalyticsSearchServiceIT {
             assertThat(profile.isExpressedOnAnyOf(organismPartFactors), is(true));
             assertThat(profile.isExpressedOnAnyOf(cellLineFactors), is(false));
         }
+
+        // test organism part is the default
+        BaselineExperimentSearchResult result2 = subject.findExpressions(SemanticQuery.create("ENSG00000006062"),
+                SemanticQuery.create(), SpeciesTest.HUMAN, "");
+
+        assertEquals(result.getExperimentProfiles(), result2.getExperimentProfiles());
+
     }
 
     @Test
     public void geneQueryCellLine() {
-        BaselineExperimentSearchResult result = subject.findExpressions(SemanticQuery.create("protein_coding"), SemanticQuery.create(), "homo sapiens", CELL_LINE);
+        BaselineExperimentSearchResult result = subject.findExpressions(SemanticQuery.create("protein_coding"), SemanticQuery.create(),  SpeciesTest.HUMAN, CELL_LINE);
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 

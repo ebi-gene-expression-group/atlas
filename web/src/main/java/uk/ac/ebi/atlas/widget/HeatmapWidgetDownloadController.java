@@ -17,6 +17,7 @@ import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchSer
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResultFormatter;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -34,17 +35,20 @@ public final class HeatmapWidgetDownloadController {
     private final String tsvFileMastheadTemplate;
     private final AnalyticsSearchService analyticsSearchService;
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
+    private final SpeciesFactory speciesFactory;
 
     @Inject
     private HeatmapWidgetDownloadController(BaselineExperimentProfileSearchService baselineExperimentProfileSearchService,
                                             @Value("classpath:/file-templates/download-headers-baseline-widget.txt") Resource tsvFileMastheadResource,
                                             BaselineAnalyticsSearchService baselineAnalyticsSearchService,
-                                            AnalyticsSearchService analyticsSearchService)
+                                            AnalyticsSearchService analyticsSearchService,
+                                            SpeciesFactory speciesFactory)
             throws IOException {
         this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.analyticsSearchService = analyticsSearchService;
         this.tsvFileMastheadTemplate = IOUtils.toString(tsvFileMastheadResource.getInputStream());
+        this.speciesFactory = speciesFactory;
     }
 
     @RequestMapping(value = {"/widgets/heatmap/bioentity.tsv", "/widgets/heatmap/multiExperiment.tsv"}, method = RequestMethod.GET)
@@ -53,7 +57,8 @@ public final class HeatmapWidgetDownloadController {
                                         @RequestParam(value = "species") String species,
                                         HttpServletResponse response) throws IOException {
 
-        ImmutableSet<String> geneIds = analyticsSearchService.searchBioentityIdentifiers(geneQuery, conditionQuery, species);
+        ImmutableSet<String> geneIds = analyticsSearchService.searchBioentityIdentifiers(geneQuery, conditionQuery,
+                speciesFactory.create(species));
 
         BaselineExperimentSearchResult searchResult = !geneIds.isEmpty()
                 ? baselineExperimentProfileSearchService.query(geneIds)
@@ -71,10 +76,11 @@ public final class HeatmapWidgetDownloadController {
     public void baselineAnalytics (@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
                                    @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                    @RequestParam(value = "species") String species,
-                                   @RequestParam(value = "source", required = false, defaultValue = "ORGANISM_PART") String defaultFactorQueryType,
+                                   @RequestParam(value = "source", required = false) String defaultFactorQueryType,
                                    HttpServletResponse response) throws IOException {
 
-        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, conditionQuery, species, defaultFactorQueryType);
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery,
+                conditionQuery, speciesFactory.create(species), defaultFactorQueryType);
 
         if (!searchResult.isEmpty()) {
             setHttpHeaders(response, "Expression_Atlas_results_baseline.tsv");

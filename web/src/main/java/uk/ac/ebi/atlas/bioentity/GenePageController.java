@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class GenePageController extends BioentityPageController {
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
-        return super.showBioentityPage(identifier, "", model, experimentTypes);
+        return super.showBioentityPage(identifier, SpeciesFactory.NULL, model, experimentTypes);
     }
 
     @Override

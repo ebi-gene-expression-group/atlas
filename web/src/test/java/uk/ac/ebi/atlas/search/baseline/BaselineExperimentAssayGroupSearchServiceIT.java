@@ -6,8 +6,11 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.SpeciesTest;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -23,6 +26,9 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class BaselineExperimentAssayGroupSearchServiceIT {
 
+    private static final Species MADE_UP_SPECIES = new Species("definitely not real species", "large yeti",
+            "ensembldb","animals");
+
     @Inject
     BaselineExperimentAssayGroupSearchService subject;
 
@@ -30,7 +36,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     AnalyticsSearchService analyticsSearchService;
     
     public void kinaseIsAPopularProtein()  {
-        List<String> results = resultsFor("kinase","","");
+        List<String> results = resultsFor("kinase","",SpeciesFactory.NULL);
 
         assertTrue(Sets.newHashSet(results).size() > 2);
     }
@@ -53,9 +59,9 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
     @Test
     public void conditionsAND()  {
-        List<String> r0 = resultsFor("", "heart","");
-        List<String> r1 = resultsFor("", "heart AND heart","");
-        List<String> r2 = resultsFor("", "heart AND surely_nonexistent_organism_part","");
+        List<String> r0 = resultsFor("", "heart",SpeciesFactory.NULL);
+        List<String> r1 = resultsFor("", "heart AND heart",SpeciesFactory.NULL);
+        List<String> r2 = resultsFor("", "heart AND surely_nonexistent_organism_part",SpeciesFactory.NULL);
         assertEquals(r0,r1);
         assertEquals(Lists.newArrayList(), r2);
     }
@@ -76,13 +82,13 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
     @Test
     public void wildTypeIsAValidConditionForThatWormExperiment(){
-        List<String> results = resultsFor("","wild type genotype", "");
+        List<String> results = resultsFor("","wild type genotype", SpeciesFactory.NULL);
         assertTrue(results.contains("E-MTAB-2812"));
     }
 
     @Test
     public void weHaveAnMTABExperimentAboutASPM(){
-        for(String name: resultsFor("ASPM","","")){
+        for(String name: resultsFor("ASPM","",SpeciesFactory.NULL)){
             if (Pattern.matches(".*MTAB.*", name)){
                 return;
             }
@@ -92,9 +98,9 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
     @Test
     public void madeUpParametersYieldNoResults(){
-        assertEquals(Lists.newArrayList(), resultsFor("such_a_wrong_gene_query","",""));
-        assertEquals(Lists.newArrayList(), resultsFor("","totally_made_up_condition",""));
-        assertEquals(Lists.newArrayList(), resultsFor("","","species_that_definitely_doesnt_exist"));
+        assertEquals(Lists.newArrayList(), resultsFor("such_a_wrong_gene_query","",SpeciesFactory.NULL));
+        assertEquals(Lists.newArrayList(), resultsFor("","totally_made_up_condition",SpeciesFactory.NULL));
+        assertEquals(Lists.newArrayList(), resultsFor("","",MADE_UP_SPECIES));
     }
 
     @Test
@@ -102,14 +108,14 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         /* interestingly that doesn't hold
         assertEquals(Lists.newArrayList(), resultsFor("Such_a_wrong_gene_query", "adult",""));
         */
-        assertEquals(Lists.newArrayList(), resultsFor("","totally_made_up_condition","homo_sapiens"));
-        assertEquals(Lists.newArrayList(), resultsFor("protein_coding","","species_yeti"));
+        assertEquals(Lists.newArrayList(), resultsFor("","totally_made_up_condition",SpeciesTest.HUMAN));
+        assertEquals(Lists.newArrayList(), resultsFor("protein_coding","",MADE_UP_SPECIES));
     }
 
     @Test
     public void someResultsForAdult(){
-        List<String> r0 = resultsFor("","adult","");
-        List<String> r1 = resultsFor("","adult","homo sapiens");
+        List<String> r0 = resultsFor("","adult", SpeciesFactory.NULL);
+        List<String> r1 = resultsFor("","adult", SpeciesTest.HUMAN);
         assertTrue(r0.size()>10);
         assertTrue(r1.size()>0);
         assertTrue(r0.containsAll(r1));
@@ -117,10 +123,11 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
 
-    private List<String> resultsFor(String geneQuery, String condition, String species){
+    private List<String> resultsFor(String geneQuery, String condition, Species species){
         return getExperimentAccessions(
                 subject.query(
-                        geneQuery, condition, species, analyticsSearchService.searchBioentityIdentifiers(SemanticQuery.create(geneQuery), SemanticQuery.create(), species)
+                        geneQuery, condition, species.mappedName, analyticsSearchService.searchBioentityIdentifiers
+                                (SemanticQuery.create(geneQuery), SemanticQuery.create(), species)
                 )
         );
     }
