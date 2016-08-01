@@ -35,7 +35,7 @@ module.exports = function (options) {
         host = options.atlasHost ? options.atlasHost : window.location.host;
 
     var query = {
-        geneQuery : options.identifier,
+        geneQuery : options.geneQuery,
         select    : {}
     };
 
@@ -224,4 +224,3 @@ module.exports = function (options) {
     }
 
 };
-

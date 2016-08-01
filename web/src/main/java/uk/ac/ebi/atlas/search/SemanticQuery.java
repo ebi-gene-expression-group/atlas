@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search;
 
+import autovalue.shaded.com.google.common.common.base.Throwables;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
@@ -72,9 +73,13 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return gson.toJson(terms());
     }
 
-    public String toUrlEncodedJson() throws UnsupportedEncodingException{
+    public String toUrlEncodedJson(){
         Gson gson = new Gson();
-        return URLEncoder.encode(gson.toJson(terms()), "UTF-8");
+        try {
+            return URLEncoder.encode(gson.toJson(terms()), "UTF-8");
+        } catch(UnsupportedEncodingException e){
+            throw Throwables.propagate(e);
+        }
     }
 
     public static SemanticQuery fromJson(String json) {

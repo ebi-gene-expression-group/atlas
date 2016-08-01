@@ -38,7 +38,7 @@ public class BaselineAnalyticsSearchService {
     public BaselineExperimentSearchResult findExpressions(SemanticQuery geneQuery, SemanticQuery conditionQuery,
                                                           Species species, String queryFactorTypeOrBlank) {
         String queryFactorType = isBlank(queryFactorTypeOrBlank)? species.defaultQueryFactorType() :
-                queryFactorTypeOrBlank;
+                queryFactorTypeOrBlank.toUpperCase();
         List<Map<String, Object>> response = baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(geneQuery,
                 conditionQuery, species.mappedName, queryFactorType);
         ImmutableList<BaselineExperimentExpression> expressions = baselineAnalyticsFacetsReader.extractAverageExpressionLevel(response);

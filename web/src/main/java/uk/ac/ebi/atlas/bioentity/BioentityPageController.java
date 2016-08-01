@@ -75,8 +75,7 @@ public abstract class BioentityPageController {
 
     // identifier (gene) = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
     // identifier (gene set) = a Reactome id, Plant Ontology or Gene Ontology accession or an InterPro term
-    public String showBioentityPage(String identifier, Species species, Model model, Set<String>
-            experimentTypes) {
+    public String showBioentityPage(String identifier, Species species, Model model, Set<String> experimentTypes){
 
         boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
         boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
@@ -93,7 +92,11 @@ public abstract class BioentityPageController {
         }
 
         model.addAllAttributes(pageDescriptionAttributes(identifier));
-        model.addAttribute("identifier", identifier);
+        /*
+	    TODO write a geneQuery that uniquely identifies the resource - I think it will be category:symbol or so
+	    . For now the callback might match slightly too much which is a bug.
+         */
+        model.addAttribute("geneQuery", SemanticQuery.create(identifier).toUrlEncodedJson());
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 
         return "bioentities";

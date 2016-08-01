@@ -19,11 +19,7 @@ public class SemanticQueryPropertyEditor extends PropertyEditorSupport {
 
     @Override
     public String getAsText() {
-        try {
-            return ((SemanticQuery) this.getValue()).toUrlEncodedJson();
-        } catch (UnsupportedEncodingException e) {
-            return null;
-        }
+        return ((SemanticQuery) this.getValue()).toUrlEncodedJson();
     }
 
 }

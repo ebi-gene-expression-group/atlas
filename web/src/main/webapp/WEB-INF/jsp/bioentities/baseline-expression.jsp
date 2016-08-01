@@ -20,7 +20,7 @@
         resultsContainer: "gxaBaselineResultsContainerDiv",
         showAnatomogramsInput: "showAnatomogramsCheckbox",
         facetsTreeData: baselineFacetsData,
-        identifier: "${identifier}",
+        identifier: "${geneQuery}", //DEPRECATED and added so our bundles are backwards compatible - see this commit for the change in  baselineRouter.js
         geneQuery: "${geneQuery}",
         conditionQuery: "${conditionQuery}",
         species: "${species}"
