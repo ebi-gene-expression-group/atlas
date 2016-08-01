@@ -1513,7 +1513,7 @@ webpackJsonp_name_([5],[
 	        host = options.atlasHost ? options.atlasHost : window.location.host;
 	
 	    var query = {
-	        geneQuery : options.identifier,
+	        geneQuery : options.geneQuery,
 	        select    : {}
 	    };
 	
@@ -1702,7 +1702,6 @@ webpackJsonp_name_([5],[
 	    }
 	
 	};
-	
 
 
 /***/ },
