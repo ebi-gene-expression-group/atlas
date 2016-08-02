@@ -62,6 +62,10 @@ public class SpeciesFactory {
         public boolean isBlank(){
             return true;
         }
+        @Override
+        public String toString(){
+            return "BLANK SPECIES";
+        }
     }
 
 }
