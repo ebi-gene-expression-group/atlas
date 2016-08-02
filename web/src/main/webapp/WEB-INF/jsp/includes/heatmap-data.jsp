@@ -26,6 +26,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 
 <%--TODO Remove when anatomogram without brains are no longer supported https://www.pivotaltracker.com/story/show/101029574--%>
 <c:set var="toggleButtonImage" value="/resources/images/male_selected.png"/>
@@ -36,7 +38,8 @@
 <c:choose>
     <c:when test="${empty jsonProfiles}">
         {
-            "error" : "No expression found for ${geneQuery.toJson()}"
+            "error" : "No expression found for <spring:eval
+            expression="T(org.apache.commons.lang3.StringEscapeUtils).escapeEcmaScript(geneQuery.toJson())"/> "
         }
     </c:when>
     <c:otherwise>
