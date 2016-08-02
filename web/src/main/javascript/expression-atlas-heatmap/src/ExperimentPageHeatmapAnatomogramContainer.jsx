@@ -116,8 +116,9 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
         multipleColumnHeaders: React.PropTypes.object,
         profiles: React.PropTypes.object.isRequired,
         jsonCoexpressions: React.PropTypes.arrayOf(React.PropTypes.shape({
+          geneId: React.PropTypes.string.isRequired,
           geneName: React.PropTypes.string.isRequired,
-          jsonProfiles: React.PropTypes.object.isRequired
+          jsonProfiles: React.PropTypes.object
         })),
         geneSetProfiles: React.PropTypes.object,
         heatmapConfig: React.PropTypes.object.isRequired,

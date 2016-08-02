@@ -90,19 +90,18 @@ public class BaselineProfilesHeatMapWrangler {
 
             Optional<Pair<GeneQueryResponse, List<String>>> coexpressedStuff =
                     coexpressedGenesService.tryGetRelatedCoexpressions(experiment, getGeneQueryResponseForProfiles(), ImmutableMap.of(baselineProfile.getId().toUpperCase(), 49));
+            JsonObject o = new JsonObject();
+            o.addProperty("geneName", baselineProfile.getName());
+            o.addProperty("geneId", baselineProfile.getId());
             if (coexpressedStuff.isPresent()) {
-
-                JsonObject o = new JsonObject();
-                o.addProperty("geneName", baselineProfile.getName());
-                o.addProperty("geneId", baselineProfile.getId());
                 o.add("jsonProfiles", baselineProfilesViewModelBuilder.build
                         (baselineProfilesHeatMap.fetchInPrescribedOrder(coexpressedStuff.get().getRight(),
                                 requestContext,
                                 coexpressedStuff.get().getLeft(), false),
                                 requestContext
                                         .getFilterFactorsInTheSameOrderAsTheExperimentHeader()));
-                result.add(o);
             }
+            result.add(o);
         }
 
         return result;

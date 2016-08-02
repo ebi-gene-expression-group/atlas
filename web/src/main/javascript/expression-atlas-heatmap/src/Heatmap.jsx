@@ -82,8 +82,9 @@ var Heatmap = React.createClass({
         ]).isRequired,
         profiles: React.PropTypes.object.isRequired,
         jsonCoexpressions: React.PropTypes.arrayOf(React.PropTypes.shape({
+          geneId: React.PropTypes.string.isRequired,
           geneName: React.PropTypes.string.isRequired,
-          jsonProfiles: React.PropTypes.object.isRequired
+          jsonProfiles: React.PropTypes.object
         })),
         geneSetProfiles: React.PropTypes.object,
         prefFormDisplayLevels: React.PropTypes.object,
@@ -320,7 +321,7 @@ var Heatmap = React.createClass({
       return ! this.props.jsonCoexpressions
              ? []
              : this.props.jsonCoexpressions.map(function(value){
-        return {name: value.geneName, id: value.geneId, amount: value.jsonProfiles.rows.length}
+        return {name: value.geneName, id: value.geneId, amount: value.jsonProfiles && value.jsonProfiles.rows? value.jsonProfiles.rows.length : 0}
       });
     },
 
@@ -1355,9 +1356,12 @@ var CoexpressionOption = React.createClass({
 
     render: function () {
         return <div className="gxaDisplayCoexpressionOffer">
-            {this.state.visible
-                ? this._showSlider()
-                : this._showOfferToDisplay()}
+            {this.props.numCoexpressionsAvailable
+              ? this.state.visible
+                  ? this._showSlider()
+                  : this._showOfferToDisplay()
+              : <span>{"No genes with similar expressions to "+this.props.geneName+" available for display"}</span>
+            }
         </div>
     },
 
