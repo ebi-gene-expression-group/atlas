@@ -83,6 +83,8 @@ public class AnalyticsIndexerManager extends Observable {
         setChangedAndNotifyObservers(descendingFileSizeToExperimentAccessions);
 
         ImmutableMap<String, String> bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap();
+        setChangedAndNotifyObservers("Extracted "+bioentityIdToIdentifierSearch.size()+" bioentityIds from experiments");
+
         indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), bioentityIdToIdentifierSearch, threads, batchSize, timeout);
 
         deleteObserver(analyticsIndexerMonitor);
@@ -96,6 +98,8 @@ public class AnalyticsIndexerManager extends Observable {
         setChangedAndNotifyObservers(descendingFileSizeToExperimentAccessions);
 
         ImmutableMap<String, String> bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap(experimentType);
+        setChangedAndNotifyObservers("Extracted "+bioentityIdToIdentifierSearch.size()+" bioentityIds from experiments");
+
         indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), bioentityIdToIdentifierSearch, threads, batchSize, timeout);
 
         deleteObserver(analyticsIndexerMonitor);

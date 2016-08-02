@@ -26,7 +26,8 @@ public enum Op {
     COEXPRESSION_UPDATE("Delete coexpressions from database and then load coexpressions"),
     COEXPRESSION_DELETE("Delete coexpressions from database"),
     ANALYTICS_IMPORT("Fetch file content, extract bioentity identifiers to serve as keywords, " +
-            "and upload to Solr analytics index"),
+            "and upload to Solr analytics index. If you skip this op, searching on the main page will not reach " +
+            "the identifiers from the experiment, but searching on the main page will still work."),
     ANALYTICS_DELETE("Tell Solr to delete all data with this experiment accession");
 
     static ImmutableMap<String, ImmutableList<Op>> synonyms = ImmutableMap.of(

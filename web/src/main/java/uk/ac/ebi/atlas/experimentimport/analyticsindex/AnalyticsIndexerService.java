@@ -38,9 +38,7 @@ public class AnalyticsIndexerService {
     public int index(Experiment experiment, Map<String, String> bioentityIdToIdentifierSearch, int batchSize) {
        ExperimentType experimentType = experiment.getType();
 
-        if (experimentType == ExperimentType.RNASEQ_MRNA_BASELINE) {
-            return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);
-        } else if (experimentType == ExperimentType.PROTEOMICS_BASELINE) {
+        if (experimentType.isBaseline()) {
             return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);
         } else if (experimentType == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
             return diffAnalyticsIndexerService.index((DifferentialExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);

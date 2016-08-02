@@ -60,57 +60,6 @@ public class AnalyticsIndexerController {
         return analyticsIndexerMonitor.toString();
     }
 
-    @Deprecated //moved to ExperimentAdminController
-    @RequestMapping(value = "/analyticsIndex/indexExperiment", produces = "text/plain;charset=UTF-8")
-    @ResponseBody
-    public String indexExperiment(@RequestParam("accession") String experimentAccession) {
-        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-        stopWatch.start();
-
-        int count = analyticsIndexerManager.addToAnalyticsIndex(experimentAccession);
-
-        stopWatch.stop();
-
-        return String.format("Experiment %s (re)indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
-    }
-
-    @Deprecated //moved to ExperimentAdminController
-    @RequestMapping(value = "/analyticsIndex/deleteExperiment", produces = "text/plain;charset=UTF-8")
-    @ResponseBody
-    public String unindexExperiment(@RequestParam("accession") String experimentAccession) {
-        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-        stopWatch.start();
-
-        analyticsIndexerManager.deleteFromAnalyticsIndex(experimentAccession);
-
-        stopWatch.stop();
-
-        return String.format("Experiment %s removed from index in %s seconds", experimentAccession, stopWatch.getTotalTimeSeconds());
-    }
-
-    @RequestMapping(value = "/analyticsIndex/updateIdentifierSearchTerms", produces = "text/plain;charset=UTF-8")
-    @ResponseBody
-    public String updateIdentifierSearchTerms(@RequestParam(value = "accession", required = false) String experimentAccession) {
-        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-        stopWatch.start();
-//
-//        int updatedIdentifiers = 0;
-//        if (Strings.isNullOrEmpty(experimentAccession)) {
-//            identifierSearchTermsTrader.init();
-//        } else {
-//            updatedIdentifiers = identifierSearchTermsManager.updateSearchTerms(experimentAccession);
-//        }
-//
-        stopWatch.stop();
-//
-//        String message = Strings.isNullOrEmpty(experimentAccession) ?
-//                String.format("All experiments search terms added for %,d identifiers in %s seconds", updatedIdentifiers, stopWatch.getTotalTimeSeconds()) :
-//                String.format("Experiment %s search terms added for %,d identifiers in %s seconds", experimentAccession, updatedIdentifiers, stopWatch.getTotalTimeSeconds());
-//        return message;
-
-        return "Operation not supported";
-    }
-
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody

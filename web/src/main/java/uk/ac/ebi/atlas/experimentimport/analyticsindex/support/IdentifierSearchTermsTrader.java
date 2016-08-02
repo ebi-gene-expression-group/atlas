@@ -36,7 +36,7 @@ public class IdentifierSearchTermsTrader {
     }
 
     public ImmutableMap<String, String> getBioentityIdToIdentifierSearchMap() {
-        return getMap(bioentityIdentifiersReader.getBioentityIdsFromAllExperiments());
+        return getMap(bioentityIdentifiersReader.getBioentityIdsFromExperiments(ExperimentType.all()));
     }
 
     public ImmutableMap<String, String> getBioentityIdToIdentifierSearchMap(String experimentAccession) {

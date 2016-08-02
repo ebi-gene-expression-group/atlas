@@ -22,7 +22,9 @@ import java.io.IOException;
 import java.util.HashSet;
 
 /**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 16/10/15.
+ * TODO: this code could be much shorter. Make the DifferentialAnalytics and BaselineAnalytics inherit from
+ * Analytics,with has a method getGeneId(), make the analytics input streams inherit from a common parent, and write
+ * one method that gets all gene ids for an experiment accession.
  */
 @Named
 @Scope("singleton")
@@ -55,15 +57,6 @@ public class BioentityIdentifiersReader {
     before flattening the set when we call builder.build() and therefore using up much more memory than needed in this case, where the number
     of repeated elements is very high.
      */
-
-    public HashSet<String> getBioentityIdsFromAllExperiments() {
-        return getBioentityIdsFromExperiments(
-                ExperimentType.MICROARRAY_ANY,
-                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL,
-                ExperimentType.RNASEQ_MRNA_BASELINE,
-                ExperimentType.PROTEOMICS_BASELINE);
-    }
-
     public HashSet<String> getBioentityIdsFromExperiments(ExperimentType... experimentTypes) {
 
         HashSet<String> bioentityIds = new HashSet<>();
@@ -124,7 +117,7 @@ public class BioentityIdentifiersReader {
             try {
                 inputStream.close();
             } catch (IOException exception) {
-                exception.printStackTrace();
+                LOGGER.error(exception.getMessage());
             }
         }
 
@@ -147,7 +140,7 @@ public class BioentityIdentifiersReader {
             try {
                 inputStream.close();
             } catch (IOException exception) {
-                exception.printStackTrace();
+                LOGGER.error(exception.getMessage());
             }
         }
 
@@ -172,7 +165,7 @@ public class BioentityIdentifiersReader {
                 try {
                     inputStream.close();
                 } catch (IOException exception) {
-                    exception.printStackTrace();
+                    LOGGER.error(exception.getMessage());
                 }
             }
         }
@@ -195,7 +188,7 @@ public class BioentityIdentifiersReader {
             try {
                 inputStream.close();
             } catch (IOException exception) {
-                exception.printStackTrace();
+                LOGGER.error(exception.getMessage());
             }
         }
 
@@ -222,7 +215,7 @@ public class BioentityIdentifiersReader {
             try {
                 inputStream.close();
             } catch (IOException exception) {
-                exception.printStackTrace();
+                LOGGER.error(exception.getMessage());
             }
 
         } else {  //if (experimentType.isDifferential()) {
@@ -239,7 +232,7 @@ public class BioentityIdentifiersReader {
                     try {
                         inputStream.close();
                     } catch (IOException exception) {
-                        exception.printStackTrace();
+                        LOGGER.error(exception.getMessage());
                     }
                 }
 
@@ -254,7 +247,7 @@ public class BioentityIdentifiersReader {
                 try {
                     inputStream.close();
                 } catch (IOException exception) {
-                    exception.printStackTrace();
+                    LOGGER.error(exception.getMessage());
                 }
             }
 
