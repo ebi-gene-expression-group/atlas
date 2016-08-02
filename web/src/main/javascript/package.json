@@ -52,7 +52,7 @@
     "react-localstorage": "^0.2.9",
     "react-radio-group": "^1.1.0",
     "react-timer-mixin": "^0.13.3",
-    "rc-slider": "^3.6.0",
+    "rc-slider": "~3.6.0",
     "snapsvg": "^0.4.0",
     "urijs": "^1.16.0"
   }
