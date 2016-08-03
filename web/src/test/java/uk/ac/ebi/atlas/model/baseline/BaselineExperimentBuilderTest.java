@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,11 +12,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.*;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -96,7 +99,7 @@ public class BaselineExperimentBuilderTest {
         assertEquals(DESCRIPTION,attributes.get("pageDescription"));
         assertEquals(PROVIDER_URL,attributes.get("dataProviderURL"));
         assertEquals(PROVIDER_DESCRIPTION,attributes.get("dataProviderDescription"));
-        assertEquals(Sets.newHashSet(PUBMEDID), attributes.get("pubMedIds"));
+        assertThat((Collection<String>) attributes.get("pubMedIds"), Matchers.contains(PUBMEDID));
 
     }
 }
