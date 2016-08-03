@@ -11,7 +11,8 @@ public class BaselineExperiment extends Experiment {
 
     BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description, String displayName, Species species,
-                       boolean hasExtraInfoFile, boolean hasRData, Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription, List<String> alternativeViews, List<String> alternativeViewDescriptions) {
+                       boolean hasExtraInfoFile, boolean hasRData, Collection<String> pubMedIds, ExperimentDesign
+                               experimentDesign, AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription, List<String> alternativeViews, List<String> alternativeViewDescriptions) {
         super(experimentType, accession, lastUpdate, displayName, description, hasExtraInfoFile, hasRData, species,
                 pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
                 alternativeViews, alternativeViewDescriptions);

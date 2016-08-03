@@ -20,7 +20,7 @@ public abstract class Experiment implements Serializable {
     private ExperimentType type;
     private ExperimentDesign experimentDesign;
     private Species species;
-    private SortedSet<String> pubMedIds;
+    private List<String> pubMedIds;
     private String accession;
     private String description;
     private String displayName;
@@ -34,7 +34,8 @@ public abstract class Experiment implements Serializable {
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
                       boolean hasExtraInfoFile, boolean hasRData, Species species,
-                      Set<String> pubMedIds, ExperimentDesign experimentDesign, List<String> dataProviderURL, List<String> dataProviderDescription, List<String> alternativeViews, List<String> alternativeViewDescriptions) {
+                      Collection<String> pubMedIds, ExperimentDesign experimentDesign, List<String> dataProviderURL,
+                      List<String> dataProviderDescription, List<String> alternativeViews, List<String> alternativeViewDescriptions) {
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
@@ -44,7 +45,7 @@ public abstract class Experiment implements Serializable {
         this.hasExtraInfoFile = hasExtraInfoFile;
         this.hasRData = hasRData;
         this.species = species;
-        this.pubMedIds = Sets.newTreeSet(pubMedIds);
+        this.pubMedIds = ImmutableList.copyOf(Sets.newTreeSet(pubMedIds));
         this.dataProviderURL = dataProviderURL;
         this.dataProviderDescription = dataProviderDescription;
         this.alternativeViews = alternativeViews;
