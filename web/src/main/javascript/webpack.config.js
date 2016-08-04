@@ -5,7 +5,6 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     // define the bundles we want
     entry: {
-        expressionAtlasAnatomogram: './expression-atlas-anatomogram',
         expressionAtlasHeatmap: './expression-atlas-heatmap',
         expressionAtlasHeatmapHighcharts:'./expression-atlas-heatmap-highcharts',
         experimentPageHeatmap: './expression-atlas-heatmap/src/experimentPageHeatmapAnatomogramRenderer.js',
