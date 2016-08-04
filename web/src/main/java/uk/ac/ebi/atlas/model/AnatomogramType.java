@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.model;
 /**
  * Created by barrera on 08/07/2015.
  */
+@Deprecated /*Does not support plant anatomograms, choice happens on client side now.*/
 public enum AnatomogramType {
 
     MALE("male"),

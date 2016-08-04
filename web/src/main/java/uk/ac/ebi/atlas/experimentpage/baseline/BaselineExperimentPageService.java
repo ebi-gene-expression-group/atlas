@@ -122,7 +122,8 @@ public class BaselineExperimentPageService {
                 ? viewModelAsJson(geneSets.get())
                 : "null");
 
-        model.addAttribute("anatomogram", gson.toJson(anatomogramFactory.get(requestContext.getQueryFactorType(), species,
+        model.addAttribute("anatomogram", gson.toJson(anatomogramFactory.get(requestContext.getQueryFactorType(),
+                experiment.getSpecies(),
                 filteredAssayGroupFactors, contextRoot)));
 
         model.addAttribute("isWidget", isWidget);

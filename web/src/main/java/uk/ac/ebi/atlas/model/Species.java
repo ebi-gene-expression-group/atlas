@@ -44,7 +44,7 @@ public class Species {
             return String.format("%s->%s (ensemblDb: %s,kingdom: %s)", originalName, mappedName, ensemblDb, kingdom);
         }
     }
-
+    
     public boolean isBlank(){
         return false;
     }

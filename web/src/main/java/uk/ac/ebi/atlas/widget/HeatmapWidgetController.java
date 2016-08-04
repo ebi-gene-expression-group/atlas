@@ -124,7 +124,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
 
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
-            model.addAttribute("anatomogram", anatomogramFactory.get("ORGANISM_PART", species.mappedName, convert
+            model.addAttribute("anatomogram", anatomogramFactory.get("ORGANISM_PART", species, convert
                     (orderedFactors),
                     contextRoot));
         } else {
