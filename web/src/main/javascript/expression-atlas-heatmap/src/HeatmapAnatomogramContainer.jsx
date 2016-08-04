@@ -51,6 +51,7 @@ var ExperimentDescription = React.createClass({
 
 var HeatmapAnatomogramContainer = React.createClass({
     propTypes: {
+        pathToFolderWithBundledResources: React.PropTypes.string.isRequired,
         sourceURL: React.PropTypes.string.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
         linksAtlasBaseURL: React.PropTypes.string.isRequired,
@@ -102,9 +103,11 @@ var HeatmapAnatomogramContainer = React.createClass({
 
                         <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
                             { this.state.anatomogramData ?
-                                <Anatomogram anatomogramData={this.state.anatomogramData}
-                                             expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
-                                             profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
+                                <Anatomogram
+                                  pathToFolderWithBundledResources={this.props.pathToFolderWithBundledResources}
+                                  anatomogramData={this.state.anatomogramData}
+                                  expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
+                                  profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
                                 : null
                             }
                         </div>

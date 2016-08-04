@@ -48,6 +48,7 @@ var ExperimentDescription = React.createClass({
 
 var Container = React.createClass({
     propTypes: {
+        pathToFolderWithBundledResources: React.PropTypes.string.isRequired,
         sourceURL: React.PropTypes.string.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
         linksAtlasBaseURL: React.PropTypes.string.isRequired,
@@ -98,8 +99,10 @@ var Container = React.createClass({
 
                         <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
                             { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
-                              ? <Anatomogram anatomogramData={this.state.anatomogramData}
-                                   expressedTissueColour={"red"} hoveredTissueColour={"purple"}
+                              ? <Anatomogram
+                                  pathToFolderWithBundledResources={this.props.pathToFolderWithBundledResources}
+                                  anatomogramData={this.state.anatomogramData}
+                                   expressedTissueColour={this._isExperimentPage()? "gray":"red"} hoveredTissueColour={this._isExperimentPage()? "red" :"purple"}
                                    profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
                               : null
                             }
@@ -215,11 +218,15 @@ var Container = React.createClass({
       }
     },
 
+    _isExperimentPage: function(){
+      return this.props.sourceURL.indexOf("/json/experiments/") >-1;
+    },
+
     onAjaxSuccessful: function(data){
       var config = {
         geneQuery: data.config.geneQuery,
         atlasBaseURL: this.props.atlasBaseURL,
-        isExperimentPage: this.props.sourceURL.indexOf("/json/experiments/") >-1,
+        isExperimentPage: this._isExperimentPage(),
         isMultiExperiment: this.props.isMultiExperiment,
         isReferenceExperiment: !this.props.isMultiExperiment && this.props.sourceURL.indexOf("/json/experiments/") === -1,
         isDifferential: this.props.isDifferential

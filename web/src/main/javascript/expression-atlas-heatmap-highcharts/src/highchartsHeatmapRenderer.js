@@ -55,6 +55,7 @@ exports.render = function(options) {
                 sourceURL: sourceURL,
                 atlasBaseURL: atlasBaseURL,
                 linksAtlasBaseURL: linksAtlasBaseURL,
+                pathToFolderWithBundledResources:linksAtlasBaseURL+"/resources/js-bundles",
                 showAnatomogram: options.showAnatomogram === undefined || options.showAnatomogram,
                 isDifferential: !!options.isDifferential,
                 isMultiExperiment: sourceURL.indexOf("/baselineAnalytics")>-1,

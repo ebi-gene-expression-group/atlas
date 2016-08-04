@@ -33,7 +33,8 @@ var AsynchronouslyLoadedInternalHeatmapAnatomogramContainer = React.createClass(
         ExperimentTypes.BASELINE, ExperimentTypes.MULTIEXPERIMENT, ExperimentTypes.DIFFERENTIAL, ExperimentTypes.PROTEOMICS_BASELINE
     ]).isRequired,
     atlasBaseURL: React.PropTypes.string.isRequired,
-    linksAtlasBaseURL: React.PropTypes.string.isRequired
+    linksAtlasBaseURL: React.PropTypes.string.isRequired,
+    pathToFolderWithBundledResources: React.PropTypes.string.isRequired
   },
   getInitialState: function() {
     return {
@@ -82,6 +83,7 @@ var AsynchronouslyLoadedInternalHeatmapAnatomogramContainer = React.createClass(
             geneSetProfiles={this.state.heatmapData.geneSetProfiles}
             atlasBaseURL={this.state.heatmapData.config.atlasHost+this.state.heatmapData.config.contextRoot}
             linksAtlasBaseURL={this.props.linksAtlasBaseURL}
+            pathToFolderWithBundledResources={this.props.pathToFolderWithBundledResources}
           />
       : <div ref="loadingImagePlaceholder">
           <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
@@ -91,6 +93,7 @@ var AsynchronouslyLoadedInternalHeatmapAnatomogramContainer = React.createClass(
 
 var InternalHeatmapAnatomogramContainer = React.createClass({
     propTypes: {
+        pathToFolderWithBundledResources: React.PropTypes.string.isRequired,
         anatomogram: React.PropTypes.object,
         columnHeaders: React.PropTypes.oneOfType([
             React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -168,9 +171,11 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
 
                 <div ref="anatomogramEnsembl" className="gxaAside">
                     { this.props.anatomogram ?
-                        <Anatomogram anatomogramData={this.props.anatomogram}
-                                     expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
-                                     profileRows={this.props.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL} />
+                        <Anatomogram
+                          pathToFolderWithBundledResources={this.props.pathToFolderWithBundledResources}
+                          anatomogramData={this.props.anatomogram}
+                          expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
+                          profileRows={this.props.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL} />
                         : null}
                     { this.props.heatmapConfig.enableEnsemblLauncher ?
                         <EnsemblLauncher isBaseline={this.props.type === ExperimentTypes.BASELINE || this.props.type === ExperimentTypes.PROTEOMICS_BASELINE}
