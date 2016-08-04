@@ -22,6 +22,8 @@
     "file-loader": "^0.8.5",
     "image-webpack-loader": "^1.6.3",
     "imports-loader": "^0.6.5",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
@@ -31,7 +33,6 @@
     "cell-differential": "file:./atlas_modules/cell-differential",
     "contrast-tooltips": "file:./atlas_modules/contrast-tooltips",
     "display-levels-button": "file:./atlas_modules/display-levels-button",
-    "expression-atlas-heatmap": "file:./expression-atlas-heatmap",
     "fancybox": "^3.0.0",
     "highcharts-heatmap": "^0.1.2",
     "highcharts-more": "^0.1.2",
