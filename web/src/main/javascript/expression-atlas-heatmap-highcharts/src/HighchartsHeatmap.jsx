@@ -325,8 +325,12 @@ var HighchartsHeatmap = React.createClass({
                 return {
                     name: e.name,
                     color: e.colour,
-                    borderWidth: 1,
-                    borderColor: "#fff",
+                    /*For smaller experiments, separate the cells so that they look easier to distinguish
+                      For large experiments this would make it show up as one big white block so don't do it.
+                      Change the magic number 200 if you feel like it.
+                      */
+                    borderWidth: this.props.data.xAxisCategories.length > 200 ? 0 :1 ,
+                    borderColor: "white",
                     data: ds[ix]
                   }
             }.bind(this)),

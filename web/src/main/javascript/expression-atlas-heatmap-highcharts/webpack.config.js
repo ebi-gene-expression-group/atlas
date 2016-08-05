@@ -5,7 +5,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     entry: {
         heatmapHighcharts: './index.js',
-        dependencies: ['react', 'react-dom', 'jquery', 'react-highcharts', 'highcharts-heatmap', 'jQuery-ajaxTransport-XDomainRequest']
+        dependencies: ['react', 'react-dom', 'jquery', 'react-highcharts', 'highcharts-heatmap']
     },
 
     output: {
