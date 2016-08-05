@@ -83,8 +83,7 @@ var AsynchronouslyLoadedInternalHeatmapAnatomogramContainer = React.createClass(
             geneSetProfiles={this.state.heatmapData.geneSetProfiles}
             atlasBaseURL={this.state.heatmapData.config.atlasHost+this.state.heatmapData.config.contextRoot}
             linksAtlasBaseURL={this.props.linksAtlasBaseURL}
-            pathToFolderWithBundledResources={this.props.pathToFolderWithBundledResources}
-          />
+            pathToFolderWithBundledResources={this.props.pathToFolderWithBundledResources}/>
       : <div ref="loadingImagePlaceholder">
           <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
       </div>
@@ -171,11 +170,15 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
 
                 <div ref="anatomogramEnsembl" className="gxaAside">
                     { this.props.anatomogram ?
-                        <Anatomogram
-                          pathToFolderWithBundledResources={this.props.pathToFolderWithBundledResources}
-                          anatomogramData={this.props.anatomogram}
-                          expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
-                          profileRows={this.props.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL} />
+                        Anatomogram.create({
+                          pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
+                          anatomogramData: this.props.anatomogram,
+                          expressedTissueColour: anatomogramExpressedTissueColour,
+                          hoveredTissueColour: anatomogramHoveredTissueColour,
+                          profileRows: this.props.profiles.rows,
+                          eventEmitter: this.props.anatomogramEventEmitter,
+                          atlasBaseURL: this.props.atlasBaseURL
+                        })
                         : null}
                     { this.props.heatmapConfig.enableEnsemblLauncher ?
                         <EnsemblLauncher isBaseline={this.props.type === ExperimentTypes.BASELINE || this.props.type === ExperimentTypes.PROTEOMICS_BASELINE}

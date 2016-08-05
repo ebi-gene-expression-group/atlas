@@ -99,11 +99,15 @@ var Container = React.createClass({
 
                         <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
                             { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
-                              ? <Anatomogram
-                                  pathToFolderWithBundledResources={this.props.pathToFolderWithBundledResources}
-                                  anatomogramData={this.state.anatomogramData}
-                                   expressedTissueColour={this._isExperimentPage()? "gray":"red"} hoveredTissueColour={this._isExperimentPage()? "red" :"purple"}
-                                   profileRows={this.state.profiles.rows} eventEmitter={this.props.anatomogramEventEmitter} atlasBaseURL={this.props.atlasBaseURL}/>
+                              ? Anatomogram.create({
+                                pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
+                                anatomogramData: this.state.anatomogramData,
+                                expressedTissueColour: this._isExperimentPage()? "gray":"red",
+                                hoveredTissueColour: this._isExperimentPage()? "red" :"purple",
+                                profileRows: this.state.profiles.rows,
+                                eventEmitter: this.props.anatomogramEventEmitter,
+                                atlasBaseURL: this.props.atlasBaseURL
+                              })
                               : null
                             }
                         </div>
