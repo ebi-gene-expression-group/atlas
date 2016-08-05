@@ -71,24 +71,24 @@ var Container = React.createClass({
             "&conditionQuery=" + this.state.heatmapConfig.conditionQuery +
             "&organism=" + this.state.heatmapConfig.species;
 
-            var display;
-            var marginLeft;
-
-            if (this.state.anatomogramData) {
-                display = this.props.showAnatomogram ? "block" : "none";
-                marginLeft = this.props.showAnatomogram ? "270px" : "0";
-            } else {
-                display = "none";
-                marginLeft = "0";
-            }
-
+        var anatomogram =
+          (this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length)
+          ? Anatomogram.create({
+            pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
+            anatomogramData: this.state.anatomogramData,
+            expressedTissueColour: this._isExperimentPage()? "gray":"red",
+            hoveredTissueColour: this._isExperimentPage()? "red" :"purple",
+            profileRows: this.state.profiles.rows,
+            eventEmitter: this.props.anatomogramEventEmitter,
+            atlasBaseURL: this.props.atlasBaseURL
+          })
+          : null;
         return (
           <div ref="this">
               { this.state.experimentData ?
                   <ExperimentDescription experiment={this.state.experimentData} linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>
                   : null
               }
-
               { this.state.ajaxCompleted ?
                   this.state.error ?
                     <div ref="gxaError">
@@ -96,31 +96,17 @@ var Container = React.createClass({
                     </div>
                   :
                     <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
-
-                        <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
-                            { this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length
-                              ? Anatomogram.create({
-                                pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
-                                anatomogramData: this.state.anatomogramData,
-                                expressedTissueColour: this._isExperimentPage()? "gray":"red",
-                                hoveredTissueColour: this._isExperimentPage()? "red" :"purple",
-                                profileRows: this.state.profiles.rows,
-                                eventEmitter: this.props.anatomogramEventEmitter,
-                                atlasBaseURL: this.props.atlasBaseURL
-                              })
-                              : null
-                            }
+                        <div ref="anatomogramEnsembl" className="gxaAside" style={{display: anatomogram ? "block": "none"}}>
+                            {anatomogram}
                         </div>
-
-                        <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft, display:"block"}}>
+                        <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: anatomogram ? "270px" : "0", display:"block"}}>
                             <HighchartsHeatmap
                                 profiles={this.state.profiles}
                                 heatmapConfig={this.state.heatmapConfig}
                                 anatomogramEventEmitter={this.props.anatomogramEventEmitter}
                                 googleAnalyticsCallback={this.state.googleAnalyticsCallback}
                                 heatmapData={this.state.heatmapData}
-                                afterHeatmapRedrawn={this._attachListenersToLabels}
-                            />
+                                afterHeatmapRedrawn={this._attachListenersToLabels}/>
                         </div>
                     </div>
                   :
@@ -128,7 +114,6 @@ var Container = React.createClass({
                       <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
                   </div>
               }
-
               { this.props.isWidget ?
                   <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
                       <br/>This expression view is provided by <a href={this.props.linksAtlasBaseURL}>Expression Atlas</a>.
