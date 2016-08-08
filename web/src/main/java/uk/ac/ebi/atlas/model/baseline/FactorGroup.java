@@ -7,7 +7,8 @@ import java.util.Set;
 
 
 /*
-    A group of factors. Will be associated with an assay group
+    A group of factors. Will be associated with an assay group.
+    Backed by a map, type -> factor.
  */
 public interface FactorGroup extends Iterable<Factor>, Comparable<FactorGroup> {
 
@@ -19,8 +20,6 @@ public interface FactorGroup extends Iterable<Factor>, Comparable<FactorGroup> {
 
     List<Factor> remove(Collection<Factor> factors);
 
-    List<Factor> remove(Factor factor);
-
     boolean contains(Factor factor);
 
     FactorGroup removeType(String factorType);
@@ -29,7 +28,5 @@ public interface FactorGroup extends Iterable<Factor>, Comparable<FactorGroup> {
 
     boolean isEmpty();
 
-    String getOrganismFactorValue();
-
-    public boolean containsOnlyOrganism();
+    boolean containsOnlyOrganism();
 }

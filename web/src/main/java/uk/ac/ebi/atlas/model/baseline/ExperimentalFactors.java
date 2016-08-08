@@ -140,18 +140,6 @@ public class ExperimentalFactors implements Serializable {
         return builder.build();
     }
 
-    //TODO: move this into BaselineExperimentAssayGroupSearchService
-    public Multimap<FactorGroup, String> getAssayGroupIdsGroupedByNonDefaultFactors(Iterable<String> assayGroupIds) {
-        Function<String, FactorGroup> groupByFunction = new Function<String, FactorGroup>() {
-            @Nullable
-            @Override
-            public FactorGroup apply(@Nullable String assayGroupId) {
-                return getNonDefaultFactors(assayGroupId);
-            }
-        };
-        return Multimaps.index(assayGroupIds, groupByFunction);
-    }
-
     public FactorGroup getNonDefaultFactors(String assayGroupId) {
         FactorGroup factorGroup = orderedFactorGroupsByAssayGroupId.get(assayGroupId);
         return factorGroup.removeType(getDefaultQueryFactorType());

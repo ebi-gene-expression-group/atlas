@@ -122,14 +122,6 @@ public class FactorSet implements FactorGroup {
         return allFactors;
     }
 
-    public List<Factor> remove(Factor factor) {
-        ArrayList<Factor> allFactors = Lists.newArrayList(factorsByType.values());
-
-        allFactors.remove(factor);
-
-        return allFactors;
-    }
-
     @Override
     public FactorSet removeType(String factorType) {
         HashMap<String, Factor> factorsByTypeClone = new HashMap<>(factorsByType);
@@ -160,13 +152,6 @@ public class FactorSet implements FactorGroup {
     @Override
     public boolean isEmpty() {
         return size() == 0;
-    }
-
-    @Override
-    public String getOrganismFactorValue() {
-        Factor organism = getFactorByType("ORGANISM");
-        checkNotNull(organism, "Could not determine organism for " + this);
-        return organism.getValue();
     }
 
     @Override

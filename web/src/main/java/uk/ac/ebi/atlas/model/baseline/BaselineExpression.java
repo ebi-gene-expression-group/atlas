@@ -127,11 +127,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
         return factorGroup.containsAll(factors);
     }
 
-    public boolean containsAllMultiheaderFactors(Set<ImmutableSet<Factor>> allMultiHeaderFactors) {
-        return true;
-
-    }
-
     static String removeTrailingZero(double value) {
         return FOUR_DP.format(value);
     }
