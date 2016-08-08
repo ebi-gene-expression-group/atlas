@@ -36,7 +36,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                                      Set<Factor> allQueryFactors, double cutoff) {
         this(isSpecific,selectedQueryFactors,allQueryFactors,cutoff,null,null);
     }
-    BaselineProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
+    protected BaselineProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
                               Set<Factor> allQueryFactors, double cutoff,Double
                                       minimumExpressionLevelToQualifyAsGoodForOurRule,Double minimumFractionOfExpressionToQualifyAsGoodForOurRule ) {
         this.isSpecific = isSpecific;
@@ -90,7 +90,8 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         }
     }
 
-    int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile,
+    protected int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile, BaselineProfile
+            otherBaselineProfile,
                                         Set<Factor> factors) {
 
         return Ordering.natural().reverse().
