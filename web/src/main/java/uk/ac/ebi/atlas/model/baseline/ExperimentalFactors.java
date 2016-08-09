@@ -1,10 +1,8 @@
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.base.Function;
 import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
 
-import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.*;
 
@@ -92,8 +90,8 @@ public class ExperimentalFactors implements Serializable {
         return coOccurringFactors;
     }
 
-    private boolean orderingSpecifiedByCuratorsInConfigurationFile(){
-        return xmlFactorsByType!=null && !xmlFactorsByType.isEmpty();
+    private boolean orderingSpecifiedByCuratorsInConfigurationFile() {
+        return xmlFactorsByType != null && !xmlFactorsByType.isEmpty();
     }
 
     public String getDefaultQueryFactorType() {
@@ -175,7 +173,7 @@ public class ExperimentalFactors implements Serializable {
 
         Set<AssayGroupFactor> result =
                 orderingSpecifiedByCuratorsInConfigurationFile() ? Sets.<AssayGroupFactor>newLinkedHashSet() :
-                Sets.<AssayGroupFactor>newTreeSet();
+                        Sets.<AssayGroupFactor>newTreeSet();
 
         for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
             List<Factor> remainingFactors;
@@ -223,8 +221,7 @@ public class ExperimentalFactors implements Serializable {
     public SortedSet<Factor> getAllFactors() {
         if (orderingSpecifiedByCuratorsInConfigurationFile()) {
             return ImmutableSortedSet.copyOf(xmlFactorsByType.values());
-        }
-        else {
+        } else {
             return ImmutableSortedSet.copyOf(factorsByType.values());
         }
     }

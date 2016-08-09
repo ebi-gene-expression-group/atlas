@@ -2,6 +2,7 @@
 package uk.ac.ebi.atlas.model.baseline.impl;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -13,36 +14,24 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class FactorSet implements FactorGroup {
 
-    private Map<String, Factor> factorsByType = new HashMap<>();
+    private final Map<String, Factor> factorsByType;
 
-    // No-arg constructor required by Kryo. Can be private because Kryo uses reflection.
-    private FactorSet() {}
+    public FactorSet() {
+        this(new HashMap<String, Factor>());
+    }
 
-    FactorSet(Map<String, Factor> factorsByType) {
+    private FactorSet(Map<String, Factor> factorsByType) {
         this.factorsByType = factorsByType;
     }
 
-    public FactorSet(Collection<Factor> factors) {
-        addAll(factors);
-    }
-
-    public FactorSet(Factor... factors) {
-        addAll(Arrays.asList(factors));
-    }
-
     public FactorSet(Factor factor) {
+        this(new HashMap<String, Factor>());
         add(factor);
     }
 
     public FactorSet add(Factor factor) {
+        Preconditions.checkArgument(!factorsByType.containsKey(factor.getType()));
         factorsByType.put(factor.getType(), factor);
-        return this;
-    }
-
-    public FactorSet addAll(Iterable<Factor> factors) {
-        for (Factor factor : factors){
-            add(factor);
-        }
         return this;
     }
 

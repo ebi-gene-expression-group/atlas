@@ -106,8 +106,10 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         //ImmutableList<FactorGroup> allFactors = experiment.getExperimentalFactors().getFactorGroupsInOrder();
         //System.out.println("\"" + Joiner.on("\", \"").join(allFactors));
 
-        FactorGroup adultAdrenal = new FactorSet(new Factor(DEVELOPMENTAL_STAGE, "adult"), new Factor(ORGANISM_PART, "adrenal gland"));
-        FactorGroup fetusTestis = new FactorSet(new Factor(DEVELOPMENTAL_STAGE, "fetus"), new Factor(ORGANISM_PART, "testis"));
+        FactorGroup adultAdrenal = new FactorSet().add(new Factor(DEVELOPMENTAL_STAGE, "adult")).add( new Factor
+                (ORGANISM_PART, "adrenal gland"));
+        FactorGroup fetusTestis = new FactorSet().add(new Factor(DEVELOPMENTAL_STAGE, "fetus")).add( new Factor
+                (ORGANISM_PART, "testis"));
         assertThat(experiment.getExperimentalFactors().getFactorGroup("g1"), is(adultAdrenal));
         assertThat(experiment.getExperimentalFactors().getFactorGroup("g30"), is(fetusTestis));
     }

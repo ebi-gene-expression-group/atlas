@@ -78,7 +78,7 @@ public class BaselineExpressionSearchResultIT {
         Factor factor1 = new Factor("RNA", "total RNA");
         Factor factor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
-        FactorSet filterFactors = new FactorSet(ImmutableSet.of(factor1, factor2));
+        FactorSet filterFactors = new FactorSet().add(factor1).add(factor2);
 
         subject.setAssayGroupsWithCondition(assayGroupIdsWithExpression, experiment);
         subject.setFilterFactors(filterFactors);
@@ -99,7 +99,7 @@ public class BaselineExpressionSearchResultIT {
         Factor factor1 = new Factor("RNA", "total RNA");
         Factor factor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
-        FactorSet filterFactors = new FactorSet(ImmutableSet.of(factor1, factor2));
+        FactorSet filterFactors = new FactorSet().add(factor1).add(factor2);
 
         subject.setAssayGroupsWithCondition(assayGroupIdsWithExpression, experiment);
         subject.setFilterFactors(filterFactors);
