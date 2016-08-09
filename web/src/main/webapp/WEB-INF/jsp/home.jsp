@@ -150,9 +150,9 @@
         helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
         initButtons();
-        selectHomoSapiens();
+        selectDefaultOptionFromMenu();
         disableButtonsWhenAllSearchFieldsAreEmpty();
-        onResetButtonRemoveAllTagsAndSelectHomoSapiens();
+        onResetButtonRemoveAllTagsAndselectDefaultOptionFromMenu();
 
         function initButtons() {
             $buttons.each(function () {
@@ -170,7 +170,7 @@
             });
         }
 
-        function onResetButtonRemoveAllTagsAndSelectHomoSapiens() {
+        function onResetButtonRemoveAllTagsAndselectDefaultOptionFromMenu() {
             $('#reset-button').on('click' , function () {
                 // Remove all tags
                 var $geneQuery = $('#geneQuery'),
@@ -180,12 +180,12 @@
                 });
 
                 var $conditionQuery =  $('#conditionQuery'),
-                    conditionQueryTags = $conditionQuery.tagEditor('getTags')[0].tags;
+                    conditionQueryTags = $conditionQuery.jsonTagEditor('getTags')[0].tags;
                 conditionQueryTags.forEach(function(conditionQueryTag) {
-                    $conditionQuery.tagEditor('removeTag', conditionQueryTag);
+                    $conditionQuery.jsonTagEditor('removeTag', conditionQueryTag.value);
                 });
 
-                selectHomoSapiens();
+                selectDefaultOptionFromMenu();
             });
         }
 
@@ -203,8 +203,8 @@
             }
         }
 
-        function selectHomoSapiens(){
-            $('select[id="organism"] option[value="Homo sapiens"]').attr('selected', 'selected');
+        function selectDefaultOptionFromMenu(){
+            $('select[id="organism"] option[value=""]').attr('selected', 'selected');
         }
     });
 </script>
