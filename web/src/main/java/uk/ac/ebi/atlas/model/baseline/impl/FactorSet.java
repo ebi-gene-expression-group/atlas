@@ -30,7 +30,9 @@ public class FactorSet implements FactorGroup {
     }
 
     public FactorSet add(Factor factor) {
-        Preconditions.checkArgument(!factorsByType.containsKey(factor.getType()));
+        /*Preconditions.checkArgument(!factorsByType.containsKey(factor.getType()));
+        Sadly this does sometimes happen.
+         */
         factorsByType.put(factor.getType(), factor);
         return this;
     }

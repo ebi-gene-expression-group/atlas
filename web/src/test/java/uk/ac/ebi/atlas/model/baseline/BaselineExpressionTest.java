@@ -16,13 +16,9 @@ public class BaselineExpressionTest {
     @Test
     public void expressionLevel0 () {
         Factor factor1 = new Factor("ORGANISM_PART", "lung");
-        Factor factor2 = new Factor("ORGANISM_PART", "liver");
-        Factor factor3 = new Factor("ORGANISM_PART", "longue");
 
         FactorSet factorGroup = new FactorSet();
         factorGroup.add(factor1);
-        factorGroup.add(factor2);
-        factorGroup.add(factor3);
 
         subject = new BaselineExpression(EXPRESSION_LEVEL_1, factorGroup);
 
@@ -34,13 +30,9 @@ public class BaselineExpressionTest {
     @Test
     public void expressionLevelNA () {
         Factor factor1 = new Factor("ORGANISM_PART", "lung");
-        Factor factor2 = new Factor("ORGANISM_PART", "liver");
-        Factor factor3 = new Factor("ORGANISM_PART", "longue");
 
         FactorSet factorGroup = new FactorSet();
         factorGroup.add(factor1);
-        factorGroup.add(factor2);
-        factorGroup.add(factor3);
 
         subject = new BaselineExpression(EXPRESSION_LEVEL_2, factorGroup);
 

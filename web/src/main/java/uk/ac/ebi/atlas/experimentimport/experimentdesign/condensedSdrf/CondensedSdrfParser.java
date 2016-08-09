@@ -133,26 +133,23 @@ public class CondensedSdrfParser {
                     compoundFactorValue = factorValue;
                     compoundFactorValueOntologyTermAsString = factorValueOntologyTermAsString;
 
-                } else {
-                    if (isDoseFactor(factorType)) {
+                } else if (isDoseFactor(factorType)) {
 
-                        if (!Strings.isNullOrEmpty(compoundFactorValue)) {
-                            factorValue = Joiner.on(" ").join(compoundFactorValue, factorValue);
-                            factorType = compoundFactorType;
-                            factorValueOntologyTermAsString = compoundFactorValueOntologyTermAsString;
+                    if (!Strings.isNullOrEmpty(compoundFactorValue)) {
+                        factorValue = Joiner.on(" ").join(compoundFactorValue, factorValue);
+                        factorType = compoundFactorType;
+                        factorValueOntologyTermAsString = compoundFactorValueOntologyTermAsString;
 
-                            compoundFactorType = null;
-                            compoundFactorValue = null;
-                            compoundFactorValueOntologyTermAsString = null;
-                        } else {
-                            throw new CondensedSdrfParserException(DOSE + " : " + factorValue + " has no corresponding value for any of the following factors: " + FACTORS_NEEDING_DOSE);
-                        }
-
+                        compoundFactorType = null;
+                        compoundFactorValue = null;
+                        compoundFactorValueOntologyTermAsString = null;
+                    } else {
+                        throw new CondensedSdrfParserException(DOSE + " : " + factorValue + " has no corresponding value for any of the following factors: " + FACTORS_NEEDING_DOSE);
                     }
 
-                    experimentDesign.putFactor(runOrAssay, factorType, factorValue, parseOntologyTerms
-                            (factorValueOntologyTermAsString));
                 }
+
+                experimentDesign.putFactor(runOrAssay, factorType, factorValue, parseOntologyTerms(factorValueOntologyTermAsString));
             }
 
             //Add compound factor in a case there was no dose corresponding to it
