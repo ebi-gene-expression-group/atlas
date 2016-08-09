@@ -29,13 +29,13 @@ public class FactorSetTest {
 
     @Test
     public void factorByTypeShouldSucceed() throws Exception {
-        assertThat(subject.getFactorByType("TYPE2"), is(factorTwo));
+        assertThat(subject.factorOfType("TYPE2"), is(factorTwo));
     }
 
     @Test
     public void factorByTypeShouldFail() throws Exception {
-        assertThat(subject.getFactorByType("type2"), is(nullValue()));
-        assertThat(subject.getFactorByType("typeX"), is(nullValue()));
+        assertThat(subject.factorOfType("type2"), is(nullValue()));
+        assertThat(subject.factorOfType("typeX"), is(nullValue()));
     }
 
     @Test
@@ -120,7 +120,7 @@ public class FactorSetTest {
     @Test
     public void testRemove() throws Exception {
         List<Factor> afterRemoval = Lists.newArrayList(factorThree);
-        assertThat(subject.remove(Lists.newArrayList(factorOne, factorTwo)), is(afterRemoval));
+        assertThat(subject.without(Lists.newArrayList(factorOne, factorTwo)), is(afterRemoval));
     }
 
     @Test

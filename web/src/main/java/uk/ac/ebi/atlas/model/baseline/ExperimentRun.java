@@ -33,7 +33,7 @@ public class ExperimentRun implements Comparable<ExperimentRun>, Serializable {
     }
 
     public Factor getFactorByType(String type) {
-        return factorGroup.getFactorByType(type);
+        return factorGroup.factorOfType(type);
     }
 
     public boolean containsAll(Set<Factor> factors){

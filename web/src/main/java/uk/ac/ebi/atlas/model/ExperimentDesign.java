@@ -122,7 +122,7 @@ public class ExperimentDesign implements Serializable {
         if (factorSet == null) {
             return null;
         }
-        return factorSet.getFactorByType(Factor.normalize(factorHeader));
+        return factorSet.factorOfType(Factor.normalize(factorHeader));
     }
 
 
@@ -130,7 +130,7 @@ public class ExperimentDesign implements Serializable {
         FactorSet factorSet = factorSetMap.get(runOrAssay);
         if (factorSet != null) {
 
-            Factor factor = factorSet.getFactorByType(Factor.normalize(factorHeader));
+            Factor factor = factorSet.factorOfType(Factor.normalize(factorHeader));
             return factor == null ? null : factor.getValue();
         }
         return null;

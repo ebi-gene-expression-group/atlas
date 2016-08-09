@@ -18,6 +18,11 @@ import javax.inject.Named;
 import java.util.List;
 import java.util.Set;
 
+/*
+Crazy, but it's how it goes. If you're working with this code, consider removing FactorSet and replacing it with
+immutable map, type -> Factor. The intent is kind of captured by hiding FactorSet behind the immutable FactorGroup
+interface, but there's lots of test code looking very confused about adding factors to a "set".
+ */
 @Named
 @Scope("singleton")
 public class CondensedSdrfParser {
@@ -106,7 +111,6 @@ public class CondensedSdrfParser {
             }
         }
     }
-
 
     private void addFactorValuesToExperimentDesign(ExperimentDesign experimentDesign, Multimap<String, String[]> factorsByAssayRun) {
 

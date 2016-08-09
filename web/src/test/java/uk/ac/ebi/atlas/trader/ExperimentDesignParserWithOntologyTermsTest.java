@@ -4,7 +4,6 @@ package uk.ac.ebi.atlas.trader;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +18,6 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -112,7 +110,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
         FactorSet factors = experimentDesign.getFactors(ASSAY_ACCESSION_2);
         assertThat(factors, contains(FACTOR2));
 
-        Factor factor = factors.getFactorByType(GENOTYPE);
+        Factor factor = factors.factorOfType(GENOTYPE);
         assertThat(factor.getValueOntologyTerms().iterator().next().accession(), is(UBERON_0002107));
     }
 

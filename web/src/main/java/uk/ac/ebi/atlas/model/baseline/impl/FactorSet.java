@@ -42,7 +42,7 @@ public class FactorSet implements FactorGroup {
 
 
     @Override
-    public Factor getFactorByType(String type) {
+    public Factor factorOfType(String type) {
         return factorsByType.get(type);
     }
 
@@ -103,7 +103,7 @@ public class FactorSet implements FactorGroup {
     }
 
     @Override
-    public List<Factor> remove(Collection<Factor> factors) {
+    public List<Factor> without(Collection<Factor> factors) {
         ArrayList<Factor> allFactors = Lists.newArrayList(factorsByType.values());
 
         allFactors.removeAll(factors);
@@ -112,7 +112,7 @@ public class FactorSet implements FactorGroup {
     }
 
     @Override
-    public FactorSet removeType(String factorType) {
+    public FactorSet withoutType(String factorType) {
         HashMap<String, Factor> factorsByTypeClone = new HashMap<>(factorsByType);
         factorsByTypeClone.remove(factorType);
         return new FactorSet(factorsByTypeClone);
@@ -145,7 +145,7 @@ public class FactorSet implements FactorGroup {
 
     @Override
     public boolean containsOnlyOrganism() {
-        return size() == 1 && getFactorByType("ORGANISM") != null;
+        return size() == 1 && factorOfType("ORGANISM") != null;
     }
 
 }

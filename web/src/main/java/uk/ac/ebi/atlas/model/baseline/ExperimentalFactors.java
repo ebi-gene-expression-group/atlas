@@ -130,7 +130,7 @@ public class ExperimentalFactors implements Serializable {
     public ImmutableMap<String, Factor> getFactorGroupedByAssayGroupId(String factorType) {
         ImmutableMap.Builder<String, Factor> builder = ImmutableMap.builder();
         for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
-            Factor factor = orderedFactorGroupsByAssayGroupId.get(groupId).getFactorByType(factorType);
+            Factor factor = orderedFactorGroupsByAssayGroupId.get(groupId).factorOfType(factorType);
             checkNotNull(factor, String.format("No factor of type %s for assay group %s", factorType, groupId));
             builder.put(groupId, factor);
         }
@@ -140,7 +140,7 @@ public class ExperimentalFactors implements Serializable {
 
     public FactorGroup getNonDefaultFactors(String assayGroupId) {
         FactorGroup factorGroup = orderedFactorGroupsByAssayGroupId.get(assayGroupId);
-        return factorGroup.removeType(getDefaultQueryFactorType());
+        return factorGroup.withoutType(getDefaultQueryFactorType());
     }
 
     // return factors for the slice specified
@@ -158,7 +158,7 @@ public class ExperimentalFactors implements Serializable {
 
         for (FactorGroup factorGroup : orderedFactorGroups) {
 
-            List<Factor> remainingFactors = factorGroup.remove(filterFactors);
+            List<Factor> remainingFactors = factorGroup.without(filterFactors);
             if (remainingFactors.size() == 1) {
                 filteredFactors.add(remainingFactors.get(0));
             }
@@ -179,7 +179,7 @@ public class ExperimentalFactors implements Serializable {
             List<Factor> remainingFactors;
 
             if (CollectionUtils.isNotEmpty(filterFactors)) {
-                remainingFactors = orderedFactorGroupsByAssayGroupId.get(groupId).remove(filterFactors);
+                remainingFactors = orderedFactorGroupsByAssayGroupId.get(groupId).without(filterFactors);
             } else {
                 remainingFactors = Lists.newArrayList(orderedFactorGroupsByAssayGroupId.get(groupId).iterator());
             }
@@ -199,7 +199,7 @@ public class ExperimentalFactors implements Serializable {
         SortedSet<Factor> factors = Sets.newTreeSet();
         for (String assayGroupId : assayGroupIds) {
             FactorGroup factorGroupForAssay = getFactorGroup(assayGroupId);
-            Factor defaultFactorForAssay = factorGroupForAssay.getFactorByType(factorType);
+            Factor defaultFactorForAssay = factorGroupForAssay.factorOfType(factorType);
             factors.add(defaultFactorForAssay);
         }
         return factors;
