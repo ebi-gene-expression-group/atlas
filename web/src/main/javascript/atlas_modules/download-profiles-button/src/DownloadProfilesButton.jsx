@@ -10,7 +10,7 @@ var Glyphicon = require('react-bootstrap/lib/Glyphicon');
 var Tooltip = require('react-bootstrap/lib/Tooltip');
 var OverlayTrigger = require('react-bootstrap/lib/OverlayTrigger');
 
-var BlueprintText = require('./BlueprintText.jsx');
+var Disclaimers = require('./Disclaimers.jsx');
 
 //*------------------------------------------------------------------*
 
@@ -21,7 +21,7 @@ var DownloadProfilesButton = React.createClass({
     propTypes: {
         atlasBaseURL: React.PropTypes.string.isRequired,
         downloadProfilesURL: React.PropTypes.string.isRequired,
-        isFortLauderdale: React.PropTypes.bool.isRequired,
+        disclaimer: React.PropTypes.string.isRequired,
         onDownloadCallbackForAnalytics: React.PropTypes.func.isRequired
     },
     getInitialState: function() {
@@ -32,8 +32,12 @@ var DownloadProfilesButton = React.createClass({
         this.setState({ showModal: false });
     },
 
+    _disclaimer: function() {
+      return this.props.disclaimer && Disclaimers[this.props.disclaimer] || null;
+    },
+
     _afterDownloadButtonClicked: function() {
-        if(!this.props.isFortLauderdale) {
+        if(!this._disclaimer()) {
             this._commenceDownload();
         } else {
             this.setState({ showModal: true });
@@ -63,7 +67,7 @@ var DownloadProfilesButton = React.createClass({
                     <Modal.Header closeButton>
                     </Modal.Header>
                     <Modal.Body style={{maxHeight: '360px'}}>
-                        <BlueprintText/>
+                      {this._disclaimer()}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this._closeModal}>Close</Button>
