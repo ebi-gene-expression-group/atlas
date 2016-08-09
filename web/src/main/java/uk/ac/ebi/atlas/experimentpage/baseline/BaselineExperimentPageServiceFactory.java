@@ -50,7 +50,7 @@ public class BaselineExperimentPageServiceFactory {
         return new BaselineExperimentPageService(new BaselineProfilesHeatMapWranglerFactory(rankProfilesFactory,
                 inputStreamFactory,baselineProfilesViewModelBuilder, solrQueryService, coexpressedGenesService),
                 applicationProperties,
-                speciesKingdomTrader, tracksUtil, bslnUtil
+                speciesKingdomTrader, tracksUtil
         );
     }
 }

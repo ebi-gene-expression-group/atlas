@@ -20,17 +20,14 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class BaselineExperimentBuilder {
 
-    private String speciesString;
-    private String kingdom;
-    private String ensemblDB;
     private Species species;
     private String description;
+    private String disclaimer;
     private List<String> dataProviderURL;
     private List<String> dataProviderDescription;
     private String displayName;
     private boolean hasExtraInfoFile;
     private boolean hasRData;
-    private Map<String, String> speciesMapping;
     private String experimentAccession;
     private Set<String> pubMedIds;
     private ExperimentDesign experimentDesign;
@@ -48,6 +45,11 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public BaselineExperimentBuilder withDisclaimer(String disclaimer) {
+        this.disclaimer = disclaimer;
         return this;
     }
 
@@ -123,7 +125,7 @@ public class BaselineExperimentBuilder {
         validate();
 
         return new BaselineExperiment(experimentType, experimentAccession, lastUpdate, experimentalFactors, description,
-                displayName, species, hasExtraInfoFile, hasRData,
+                displayName, disclaimer, species, hasExtraInfoFile, hasRData,
                 pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription, alternativeViews,
                 alternativeViewDescriptions);
     }

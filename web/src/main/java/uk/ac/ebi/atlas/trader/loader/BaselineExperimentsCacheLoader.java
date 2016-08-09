@@ -69,6 +69,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)
+                .withDisclaimer(factorsConfig.disclaimer())
                 .withExtraInfo(hasExtraInfoFile)
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
                 .withPubMedIds(experimentDTO.getPubmedIds())
