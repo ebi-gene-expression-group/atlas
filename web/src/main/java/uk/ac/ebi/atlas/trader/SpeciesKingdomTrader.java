@@ -10,15 +10,8 @@ import uk.ac.ebi.atlas.model.SpeciesUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 
-/**
- * Created with IntelliJ IDEA.
- * User: barrera
- */
 @Named
 @Scope("singleton")
 public class SpeciesKingdomTrader {
@@ -45,28 +38,8 @@ public class SpeciesKingdomTrader {
         }
     }
 
-    public String getKingdom(Set<String> species) {
-        for (String s : species) {
-            String kingdom = getKingdom(s.toLowerCase());
-            if (kingdom != null) {
-                return kingdom;
-            }
-        }
-        return "";
-    }
-
     public String getEnsemblDB(String species) {
         return speciesEnsemblMap.get(SpeciesUtils.convertToEnsemblSpecies(species));
-    }
-
-    public Map<String, ?> getAttributesFor(String species) {
-        Map<String, String> result = new HashMap<>();
-        //required by autocomplete and heatmap
-        result.put("species", species);
-        //required for genome track browser in ensembl
-        result.put("ensemblDB", getEnsemblDB(species));
-        result.put("kingdom", getKingdom(species));
-        return result;
     }
 
 }

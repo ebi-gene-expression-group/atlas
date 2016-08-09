@@ -93,11 +93,7 @@ public class BaselineExperimentPageService {
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
         model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
 
-        String species = requestContext.getFilteredBySpecies();
-
-        model.addAllAttributes(speciesKingdomTrader.getAttributesFor(species));
-
-        model.addAttribute("enableEnsemblLauncher", !filteredAssayGroupFactors.isEmpty()
+        model.addAttribute("enableEnsemblLauncher", !isWidget&& !filteredAssayGroupFactors.isEmpty()
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
                 filteredAssayGroupFactors.get(0).getAssayGroupId()));
 
@@ -125,7 +121,6 @@ public class BaselineExperimentPageService {
             addFactorMenu(model, experiment, requestContext);
         } else {
             model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
-            model.addAttribute("enableEnsemblLauncher", false);
         }
 
         //note this should only happen for single experiment - see HeatmapWidgetController.populateModelWithMultiExperimentResults
@@ -145,7 +140,7 @@ public class BaselineExperimentPageService {
         JsonObject experimentDescription = new JsonObject();
         experimentDescription.addProperty("URL", "/experiments/"+experiment.getAccession()+additionalQueryOptionsString);
         experimentDescription.addProperty("description", experiment.getDescription());
-        experimentDescription.addProperty("species", experiment.getSpeciesString());
+        experimentDescription.addProperty("species", experiment.getSpecies().originalName);
         return experimentDescription;
     }
 

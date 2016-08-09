@@ -69,7 +69,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     // called from sub classes
     public void prepareRequestPreferencesAndHeaderData(T experiment, K requestPreferences, Model model,HttpServletRequest request) {
 
-        initRequestPreferences(model, requestPreferences, experiment);
+        initRequestPreferences(requestPreferences, experiment);
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
         model.addAttribute("queryFactorName", "Comparison");
         model.addAttribute("allQueryFactors", experiment.getContrasts());
@@ -80,13 +80,11 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     public void populateModelWithHeatmapData(T experiment, K requestPreferences, BindingResult result, Model model,
                                              HttpServletRequest request) {
         DifferentialRequestContext requestContext = initRequestContext(experiment, requestPreferences);
-        String species = requestContext.getFilteredBySpecies();
         Set<Contrast> contrasts = experiment.getContrasts();
         model.addAttribute("queryFactorName", "Comparison");
         model.addAttribute("geneQuery", requestPreferences.getGeneQuery());
         model.addAllAttributes(experiment.getAttributes());
         model.addAllAttributes(experiment.getDifferentialAttributes());
-        model.addAllAttributes(speciesKingdomTrader.getAttributesFor(species));
 
         model.addAttribute("enableEnsemblLauncher", tracksUtil.hasDiffTracksPath(experiment.getAccession(), contrasts.iterator().next().getId()));
 
@@ -113,7 +111,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         }
     }
 
-    private void initRequestPreferences(Model model, K requestPreferences, T experiment) {
+    private void initRequestPreferences(K requestPreferences, T experiment) {
         //if there is only one contrast we want to preselect it... from Robert feedback
         if (experiment.getContrasts().size() == 1) {
             requestPreferences.setQueryFactorValues(experiment.getContrastIds());
