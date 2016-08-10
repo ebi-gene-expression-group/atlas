@@ -370,7 +370,7 @@ var Heatmap = React.createClass({
                         <DownloadProfilesButton ref="downloadProfilesButton"
                                                 downloadProfilesURL={this._constructDownloadProfilesURL()}
                                                 atlasBaseURL={this.props.atlasBaseURL}
-                                                isFortLauderdale={this.props.heatmapConfig.isFortLauderdale}
+                                                disclaimer={this.props.heatmapConfig.disclaimer}
                                                 onDownloadCallbackForAnalytics={function() {this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'downloadData')}.bind(this)}/>
                     </div>
                     <div style={{display: "inline-block", "paddingLeft": "20px"}}>
