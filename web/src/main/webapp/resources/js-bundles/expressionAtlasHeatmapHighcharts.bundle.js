@@ -2743,6 +2743,8 @@ webpackJsonp_name_([3],[
 	
 	//*------------------------------------------------------------------*
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var React = __webpack_require__(/*! react */ 1086);
 	
 	var ReactHighcharts = __webpack_require__(/*! react-highcharts */ 1249);
@@ -2902,7 +2904,7 @@ webpackJsonp_name_([3],[
 	                downloadOptions: {
 	                    downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
 	                    atlasBaseURL: this.props.heatmapConfig.atlasBaseURL,
-	                    isFortLauderdale: this.props.heatmapConfig.isFortLauderdale
+	                    disclaimer: this.props.heatmapConfig.disclaimer
 	                },
 	                orderings: {
 	                    available: Object.keys(this.props.heatmapData.orderings),
@@ -3356,13 +3358,11 @@ webpackJsonp_name_([3],[
 	                    available: this.props.orderings.available,
 	                    current: this.props.orderings.current,
 	                    onSelect: this.props.orderings.onSelect }) : null,
-	                React.createElement(DownloadProfilesButton, { ref: 'downloadProfilesButton',
-	                    downloadProfilesURL: this.props.downloadOptions.downloadProfilesURL,
-	                    atlasBaseURL: this.props.downloadOptions.atlasBaseURL,
-	                    isFortLauderdale: this.props.downloadOptions.isFortLauderdale,
+	                React.createElement(DownloadProfilesButton, _extends({ ref: 'downloadProfilesButton'
+	                }, this.props.downloadOptions, {
 	                    onDownloadCallbackForAnalytics: function () {
 	                        this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData');
-	                    }.bind(this) })
+	                    }.bind(this) }))
 	            ),
 	            this.props.showUsageMessage ? React.createElement(
 	                'div',
@@ -3681,7 +3681,7 @@ webpackJsonp_name_([3],[
 	var Tooltip = __webpack_require__(/*! react-bootstrap/lib/Tooltip */ 1376);
 	var OverlayTrigger = __webpack_require__(/*! react-bootstrap/lib/OverlayTrigger */ 1378);
 	
-	var BlueprintText = __webpack_require__(/*! ./BlueprintText.jsx */ 1390);
+	var Disclaimers = __webpack_require__(/*! ./Disclaimers.jsx */ 1390);
 	
 	//*------------------------------------------------------------------*
 	
@@ -3693,7 +3693,7 @@ webpackJsonp_name_([3],[
 	    propTypes: {
 	        atlasBaseURL: React.PropTypes.string.isRequired,
 	        downloadProfilesURL: React.PropTypes.string.isRequired,
-	        isFortLauderdale: React.PropTypes.bool.isRequired,
+	        disclaimer: React.PropTypes.string.isRequired,
 	        onDownloadCallbackForAnalytics: React.PropTypes.func.isRequired
 	    },
 	    getInitialState: function () {
@@ -3704,8 +3704,12 @@ webpackJsonp_name_([3],[
 	        this.setState({ showModal: false });
 	    },
 	
+	    _disclaimer: function () {
+	        return this.props.disclaimer && Disclaimers[this.props.disclaimer] || null;
+	    },
+	
 	    _afterDownloadButtonClicked: function () {
-	        if (!this.props.isFortLauderdale) {
+	        if (!this._disclaimer()) {
 	            this._commenceDownload();
 	        } else {
 	            this.setState({ showModal: true });
@@ -3744,7 +3748,7 @@ webpackJsonp_name_([3],[
 	                React.createElement(
 	                    Modal.Body,
 	                    { style: { maxHeight: '360px' } },
-	                    React.createElement(BlueprintText, null)
+	                    this._disclaimer()
 	                ),
 	                React.createElement(
 	                    Modal.Footer,
@@ -4229,9 +4233,9 @@ webpackJsonp_name_([3],[
   \*******************************************************************************************************************/
 292,
 /* 1390 */
-/*!**********************************************************************************************!*\
-  !*** ./expression-atlas-heatmap-highcharts/~/download-profiles-button/src/BlueprintText.jsx ***!
-  \**********************************************************************************************/
+/*!********************************************************************************************!*\
+  !*** ./expression-atlas-heatmap-highcharts/~/download-profiles-button/src/Disclaimers.jsx ***!
+  \********************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4240,92 +4244,135 @@ webpackJsonp_name_([3],[
 	
 	var React = __webpack_require__(/*! react */ 1086);
 	
-	var BlueprintText = React.createClass({
-	    displayName: "BlueprintText",
+	var BlueprintText = React.createElement(
+	    "div",
+	    null,
+	    React.createElement("meta", { charSet: "UTF-8" }),
+	    React.createElement(
+	        "title",
+	        null,
+	        "The Blueprint project Data Reuse statement"
+	    ),
+	    React.createElement(
+	        "h3",
+	        null,
+	        "The Blueprint project Data Reuse statement"
+	    ),
+	    React.createElement("br", null),
+	    React.createElement(
+	        "p",
+	        null,
+	        "This document refers to the reuse of data generated by the EC funded FP7 High Impact Project, Blueprint."
+	    ),
+	    React.createElement(
+	        "p",
+	        null,
+	        "Blueprint regularly released analysis results via its ftp site and makes the raw sequence data available through the sequence archives at the EMBL-EBI. Much Blueprint data is generated from samples whose data must be released through a managed access process. For these data sets external users must apply for permission to access the data from the European Genome-phenome Archive (EGA) through the Blueprint Data Access Committee.",
+	        React.createElement("br", null),
+	        "The Blueprint consortium expects this data to be valuable to other researchers and in keeping with Fort Lauderdale principles data users may use the data for many studies, but are expected to allow the data producers to make the first presentations and to publish the first paper with global analyses of the data."
+	    ),
+	    React.createElement(
+	        "h5",
+	        null,
+	        "Global analyses of Project data"
+	    ),
+	    React.createElement(
+	        "p",
+	        null,
+	        "Blueprint plans to publish global analyses of the sequencing data, epigenetic marks, expression levels and variation both in the context of normal hematopoietic cells and of those neoplastic and non-neoplastic diseases studied within th econsortium. Talks, posters, and papers on all such analyses are to be published first by the Blueprint project, by approved presenters on behalf of the Project, with the Project as author. When the first major Project paper on these analyses is published, then researchers inside and outside the Project are free to present and publish using the Project data for these and other analyses."
+	    ),
+	    React.createElement(
+	        "h5",
+	        null,
+	        "Large-scale analyses of Project data"
+	    ),
+	    React.createElement(
+	        "p",
+	        null,
+	        "Groups within the Project may make presentations and publish papers on more extensive analyses of topics to be included in the main analysis presentations and papers, coincident with the main project analysis presentations and papers. The major points would be included in the main Project presentations and papers, but these additional presentations and papers allow more focused discussion of methods and results. The author list would include the Consortium."
+	    ),
+	    React.createElement(
+	        "h5",
+	        null,
+	        "Methods development using Project data"
+	    ),
+	    React.createElement(
+	        "p",
+	        null,
+	        "Researchers who have used small amounts of Project data (<= one chromosome) may present methods development posters, talks, and papers that include these data prior to the first major Project paper, without needing Project approval or authorship, although the Project should be acknowledged. Methods presentations or papers on global analyses or analyses using large amounts of Project data, on topics that the Consortium plans to examine, would be similar to large-scale analyses of Project data: researchers within the Project may make presentations or submit papers at the same time as the main Project presentations and papers, and others could do so after the Project publishes the first major analysis paper."
+	    ),
+	    React.createElement(
+	        "h5",
+	        null,
+	        "Disease studies using Project data"
+	    ),
+	    React.createElement(
+	        "p",
+	        null,
+	        "Researchers may present and publish on use of Project data in specific chromosome regions (that are not of general interest) or as summaries (such as number of differentially expressed genes in cell types assayed by Blueprint) for studies on diseases not studied by BLUEPRINT without Project approval, prior to the first major Project paper being published. The Project should not be listed as an author."
+	    ),
+	    React.createElement(
+	        "h5",
+	        null,
+	        "Authors who use data from the project must acknowledge Blueprint using the following wording"
+	    ),
+	    React.createElement(
+	        "p",
+	        null,
+	        "This study makes use of data generated by the Blueprint Consortium. A full list of the investigators who contributed to the generation of the data is available from www.blueprint-epigenome.eu. Funding for the project was provided by the European Union's Seventh Framework Programme (FP7/2007-2013) under grant agreement no 282510 BLUEPRINT."
+	    )
+	);
 	
-	    render: function () {
-	        return React.createElement(
-	            "div",
-	            null,
-	            React.createElement("meta", { charSet: "UTF-8" }),
-	            React.createElement(
-	                "title",
-	                null,
-	                "The Blueprint project Data Reuse statement"
-	            ),
-	            React.createElement(
-	                "h3",
-	                null,
-	                "The Blueprint project Data Reuse statement"
-	            ),
-	            React.createElement("br", null),
-	            React.createElement(
-	                "p",
-	                null,
-	                "This document refers to the reuse of data generated by the EC funded FP7 High Impact Project, Blueprint."
-	            ),
-	            React.createElement(
-	                "p",
-	                null,
-	                "Blueprint regularly released analysis results via its ftp site and makes the raw sequence data available through the sequence archives at the EMBL-EBI. Much Blueprint data is generated from samples whose data must be released through a managed access process. For these data sets external users must apply for permission to access the data from the European Genome-phenome Archive (EGA) through the Blueprint Data Access Committee.",
-	                React.createElement("br", null),
-	                "The Blueprint consortium expects this data to be valuable to other researchers and in keeping with Fort Lauderdale principles data users may use the data for many studies, but are expected to allow the data producers to make the first presentations and to publish the first paper with global analyses of the data."
-	            ),
-	            React.createElement(
-	                "h5",
-	                null,
-	                "Global analyses of Project data"
-	            ),
-	            React.createElement(
-	                "p",
-	                null,
-	                "Blueprint plans to publish global analyses of the sequencing data, epigenetic marks, expression levels and variation both in the context of normal hematopoietic cells and of those neoplastic and non-neoplastic diseases studied within th econsortium. Talks, posters, and papers on all such analyses are to be published first by the Blueprint project, by approved presenters on behalf of the Project, with the Project as author. When the first major Project paper on these analyses is published, then researchers inside and outside the Project are free to present and publish using the Project data for these and other analyses."
-	            ),
-	            React.createElement(
-	                "h5",
-	                null,
-	                "Large-scale analyses of Project data"
-	            ),
-	            React.createElement(
-	                "p",
-	                null,
-	                "Groups within the Project may make presentations and publish papers on more extensive analyses of topics to be included in the main analysis presentations and papers, coincident with the main project analysis presentations and papers. The major points would be included in the main Project presentations and papers, but these additional presentations and papers allow more focused discussion of methods and results. The author list would include the Consortium."
-	            ),
-	            React.createElement(
-	                "h5",
-	                null,
-	                "Methods development using Project data"
-	            ),
-	            React.createElement(
-	                "p",
-	                null,
-	                "Researchers who have used small amounts of Project data (<= one chromosome) may present methods development posters, talks, and papers that include these data prior to the first major Project paper, without needing Project approval or authorship, although the Project should be acknowledged. Methods presentations or papers on global analyses or analyses using large amounts of Project data, on topics that the Consortium plans to examine, would be similar to large-scale analyses of Project data: researchers within the Project may make presentations or submit papers at the same time as the main Project presentations and papers, and others could do so after the Project publishes the first major analysis paper."
-	            ),
-	            React.createElement(
-	                "h5",
-	                null,
-	                "Disease studies using Project data"
-	            ),
-	            React.createElement(
-	                "p",
-	                null,
-	                "Researchers may present and publish on use of Project data in specific chromosome regions (that are not of general interest) or as summaries (such as number of differentially expressed genes in cell types assayed by Blueprint) for studies on diseases not studied by BLUEPRINT without Project approval, prior to the first major Project paper being published. The Project should not be listed as an author."
-	            ),
-	            React.createElement(
-	                "h5",
-	                null,
-	                "Authors who use data from the project must acknowledge Blueprint using the following wording"
-	            ),
-	            React.createElement(
-	                "p",
-	                null,
-	                "This study makes use of data generated by the Blueprint Consortium. A full list of the investigators who contributed to the generation of the data is available from www.blueprint-epigenome.eu. Funding for the project was provided by the European Union's Seventh Framework Programme (FP7/2007-2013) under grant agreement no 282510 BLUEPRINT."
-	            )
-	        );
-	    }
-	});
+	var ZebrafishText = React.createElement(
+	    "div",
+	    null,
+	    React.createElement("meta", { charSet: "UTF-8" }),
+	    React.createElement(
+	        "title",
+	        null,
+	        "Data Reuse Statement"
+	    ),
+	    React.createElement(
+	        "h3",
+	        null,
+	        "Data Reuse Statement"
+	    ),
+	    React.createElement("br", null),
+	    React.createElement(
+	        "p",
+	        null,
+	        "This is a pre-publication release in accordance with ",
+	        React.createElement(
+	            "a",
+	            { href: "http://www.sanger.ac.uk/datasharing/" },
+	            " the Fort Lauderdale Agreement "
+	        ),
+	        ". Feel free to search and download data on your genes of interest."
+	    ),
+	    React.createElement(
+	        "p",
+	        null,
+	        "Equally, you can use the dataset to show developmental expression profiles for specific genes in your publications."
+	    ),
+	    React.createElement(
+	        "p",
+	        null,
+	        "However, we ask that you refrain from publishing larger scale or genome-wide analyses of this dataset for 12 months from the time of deposition in Expression Atlas or until we have published our transcriptional time-course paper, whichever comes first."
+	    ),
+	    React.createElement(
+	        "p",
+	        null,
+	        "For citations in publications before the paper is out please use this link to the Expression Atlas site (",
+	        React.createElement(
+	            "a",
+	            { href: "http://www.ebi.ac.uk/gxa/experiments/E-ERAD-475" },
+	            "http://www.ebi.ac.uk/gxa/experiments/E-ERAD-475"
+	        ),
+	        ") and acknowledge us: “We would like to thank the Busch-Nentwich lab for providing RNA-seq data.”"
+	    )
+	);
 	
-	module.exports = BlueprintText;
+	module.exports = { "fortLauderdale": BlueprintText, "zebrafish": ZebrafishText };
 
 /***/ },
 /* 1391 */
