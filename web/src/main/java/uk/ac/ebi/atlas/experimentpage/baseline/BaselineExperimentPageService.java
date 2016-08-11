@@ -31,20 +31,17 @@ public class BaselineExperimentPageService {
     private final TracksUtil tracksUtil;
     private final BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory;
     private final ApplicationProperties applicationProperties;
-    private final SpeciesKingdomTrader speciesKingdomTrader;
     private final AnatomogramFactory anatomogramFactory;
     private Gson gson = new GsonBuilder()
             .create();
 
     public BaselineExperimentPageService(BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory,
                                          ApplicationProperties applicationProperties,
-                                         SpeciesKingdomTrader speciesKingdomTrader,
                                          TracksUtil tracksUtil) {
 
         this.applicationProperties = applicationProperties;
         this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
         this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
-        this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
     }
 

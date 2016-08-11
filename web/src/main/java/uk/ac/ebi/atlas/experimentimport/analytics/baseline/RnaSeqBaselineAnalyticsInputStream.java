@@ -31,9 +31,9 @@ import static com.google.common.base.Preconditions.checkArgument;
  *
  * NB: the following expression levels are skipped: 0, LOWDATA, FAIL, NA
  */
-public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineAnalytics> {
+public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<BaselineAnalytics> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineAnalyticsInputStream.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RnaSeqBaselineAnalyticsInputStream.class);
 
     private static final int GENE_ID_COLUMN_INDEX = 0;
     private static final int FIRST_EXPRESSION_LEVEL_INDEX = 2;
@@ -45,7 +45,7 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
     private int lineNumber = 0;
 
 
-    public BaselineAnalyticsInputStream(CSVReader csvReader, String name) {
+    public RnaSeqBaselineAnalyticsInputStream(CSVReader csvReader, String name) {
         this.name = name;
         this.csvReader = csvReader;
         String[] headers = readCsvLine();

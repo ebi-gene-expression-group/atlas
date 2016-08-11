@@ -3,29 +3,34 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsTrader;
+import uk.ac.ebi.atlas.model.AssayGroupsFake;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperimentBuilder;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineAnalyticsDocumentStreamTest {
 
-    private static final String EXPERIMENT_ACCESSION = "EXP1";
-    private static final ExperimentType EXPERIMENT_TYPE = ExperimentType.RNASEQ_MRNA_BASELINE;
-    private static final String HOMO_SAPIENS = "homo sapiens";
     private static final String DEFAULT_QUERY_FACTOR_TYPE = "ORGANISM_PART";
 
     private static final String GENEID1 = "GENE1";
@@ -46,10 +51,29 @@ public class BaselineAnalyticsDocumentStreamTest {
 
     public static final String GENE_2_SEARCHTERM_1 = "gene2_searchterm_1";
     public static final String GENE_2_SEARCHTERM_2 = "gene2_searchterm_2";
-    private static final String MUS_MUSCULUS = "mus musculus";
 
-    private static final String ANIMAL_KINGDOM = "animals";
-    private static final String ENSEMBL_ENSEMBLDB = "ensembl";
+    BaselineExperiment experiment ;
+
+    @Mock
+    ExperimentalFactors experimentalFactors;
+
+    @Before
+    public void setUp() throws Exception {
+        when(experimentalFactors.getDefaultQueryFactorType()).thenReturn(DEFAULT_QUERY_FACTOR_TYPE);
+
+        experiment = new BaselineExperimentBuilder()
+                .forSpecies(new Species("homo sapiens", "homo sapiens", "ensembl", "animals"))
+                .ofType(ExperimentType.RNASEQ_MRNA_BASELINE)
+                .withAccession("EXP1")
+                .withDescription("")
+                .withDisplayName("")
+                .withExtraInfo(false)
+                .withPubMedIds(new HashSet<String>())
+                .withExperimentDesign(mock(ExperimentDesign.class))
+                .withExperimentalFactors(experimentalFactors)
+                .withAssayGroups(AssayGroupsFake.get())
+                .create();
+    }
 
     @Mock
     private SpeciesKingdomTrader speciesKingdomTraderMock;
@@ -60,16 +84,8 @@ public class BaselineAnalyticsDocumentStreamTest {
                     GENEID2, GENE_2_SEARCHTERM_1 + " " + GENE_2_SEARCHTERM_2,
                     UNKNOWN_GENEID, "");
 
-    private ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId = ImmutableMap.of(ASSAY_GROUP_ID1, HOMO_SAPIENS, ASSAY_GROUP_ID2, MUS_MUSCULUS);
-
     @Test
     public void test() {
-
-        when(speciesKingdomTraderMock.getKingdom(HOMO_SAPIENS)).thenReturn(ANIMAL_KINGDOM);
-        when(speciesKingdomTraderMock.getKingdom(MUS_MUSCULUS)).thenReturn(ANIMAL_KINGDOM);
-
-        when(speciesKingdomTraderMock.getEnsemblDB(HOMO_SAPIENS)).thenReturn(ENSEMBL_ENSEMBLDB);
-        when(speciesKingdomTraderMock.getEnsemblDB(MUS_MUSCULUS)).thenReturn(ENSEMBL_ENSEMBLDB);
 
         ImmutableSetMultimap.Builder<String, String> conditionSearchBuilder = ImmutableSetMultimap.builder();
 
@@ -79,14 +95,9 @@ public class BaselineAnalyticsDocumentStreamTest {
         ImmutableSetMultimap<String, String> conditionSearchTermByAssayAccessionId = conditionSearchBuilder.build();
 
         BaselineAnalyticsDocumentStream stream =
-                new BaselineAnalyticsDocumentStreamFactory(speciesKingdomTraderMock)
-                        .create(EXPERIMENT_ACCESSION,
-                                EXPERIMENT_TYPE,
-                                ensemblSpeciesGroupedByAssayGroupId,
-                                DEFAULT_QUERY_FACTOR_TYPE,
-                                ImmutableSet.of(BASELINE_ANALYTICS1, BASELINE_ANALYTICS2, BASELINE_ANALYTICS3),
-                                conditionSearchTermByAssayAccessionId,
-                                bioentityIdToIdentifierSearch);
+                new BaselineAnalyticsDocumentStream(experiment, ImmutableSet.of(BASELINE_ANALYTICS1,
+                        BASELINE_ANALYTICS2, BASELINE_ANALYTICS3),conditionSearchTermByAssayAccessionId,
+                        bioentityIdToIdentifierSearch);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = stream.iterator();
 
@@ -97,10 +108,7 @@ public class BaselineAnalyticsDocumentStreamTest {
         assertThat(analyticsDocumentIterator.hasNext(), is(false));
 
         assertThat(analyticsDocument1.getBioentityIdentifier(), is(GENEID1));
-        assertThat(analyticsDocument1.getSpecies(), is(HOMO_SAPIENS));
-        assertThat(analyticsDocument1.getKingdom(), is(ANIMAL_KINGDOM));
-        assertThat(analyticsDocument1.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
-        assertThat(analyticsDocument1.getExperimentType(), is(EXPERIMENT_TYPE));
+        assertDataFromExperiment(analyticsDocument1);
         assertThat(analyticsDocument1.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));
         assertThat(analyticsDocument1.getIdentifierSearch(), is(GENEID1 + " " + GENE_1_SEARCHTERM_1));
         assertThat(analyticsDocument1.getConditionsSearch(), is(G1_SEARCH_TERM_1));
@@ -108,10 +116,7 @@ public class BaselineAnalyticsDocumentStreamTest {
         assertThat(analyticsDocument1.getExpressionLevel(), is(1.1));
 
         assertThat(analyticsDocument2.getBioentityIdentifier(), is(GENEID2));
-        assertThat(analyticsDocument2.getSpecies(), is(MUS_MUSCULUS));
-        assertThat(analyticsDocument2.getKingdom(), is(ANIMAL_KINGDOM));
-        assertThat(analyticsDocument2.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
-        assertThat(analyticsDocument2.getExperimentType(), is(EXPERIMENT_TYPE));
+        assertDataFromExperiment(analyticsDocument2);
         assertThat(analyticsDocument2.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));
         assertThat(analyticsDocument2.getIdentifierSearch(), is(GENEID2 + " " + GENE_2_SEARCHTERM_1 + " " + GENE_2_SEARCHTERM_2));
         assertThat(analyticsDocument2.getConditionsSearch(), is(G2_SEARCH_TERM_1 + " " + G2_SEARCH_TERM_2));
@@ -119,16 +124,20 @@ public class BaselineAnalyticsDocumentStreamTest {
         assertThat(analyticsDocument2.getExpressionLevel(), is(2.2));
 
         assertThat(analyticsDocument3.getBioentityIdentifier(), is(UNKNOWN_GENEID));
-        assertThat(analyticsDocument3.getSpecies(), is(MUS_MUSCULUS));
-        assertThat(analyticsDocument3.getKingdom(), is(ANIMAL_KINGDOM));
-        assertThat(analyticsDocument3.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
-        assertThat(analyticsDocument3.getExperimentType(), is(EXPERIMENT_TYPE));
+        assertDataFromExperiment(analyticsDocument3);
         assertThat(analyticsDocument3.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));
         assertThat(analyticsDocument3.getIdentifierSearch(), is(UNKNOWN_GENEID));
         assertThat(analyticsDocument3.getConditionsSearch(), is(G2_SEARCH_TERM_1 + " " + G2_SEARCH_TERM_2));
         assertThat(analyticsDocument3.getAssayGroupId(), is(ASSAY_GROUP_ID2));
         assertThat(analyticsDocument3.getExpressionLevel(), is(3.3));
 
+    }
+
+    private void assertDataFromExperiment(AnalyticsDocument analyticsDocument){
+        assertThat(analyticsDocument.getSpecies(), is(experiment.getSpecies().mappedName));
+        assertThat(analyticsDocument.getKingdom(), is(experiment.getSpecies().kingdom));
+        assertThat(analyticsDocument.getExperimentAccession(), is(experiment.getAccession()));
+        assertThat(analyticsDocument.getExperimentType(), is(experiment.getType()));
     }
 
 }

@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import java.util.Iterator;
@@ -23,12 +27,11 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
 
     private final String experimentAccession;
     private final ExperimentType experimentType;
-    private final Map<String, String> ensemblSpeciesGroupedByAssayGroupId;
+    private final Species species;
     private final String defaultQueryFactorType;
     private final Iterable<BaselineAnalytics> inputStream;
     private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
     private final Map<String, String> bioentityIdToIdentifierSearch;
-    private final SpeciesKingdomTrader speciesKingdomTrader;
 
     public BaselineAnalyticsDocumentStream(String experimentAccession,
                                            ExperimentType experimentType,
@@ -38,14 +41,25 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
                                            SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
                                            Map<String, String> bioentityIdToIdentifierSearch,
                                            SpeciesKingdomTrader speciesKingdomTrader) {
+        this.species = SpeciesFactory.NULL; //TODO
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
-        this.ensemblSpeciesGroupedByAssayGroupId = ensemblSpeciesGroupedByAssayGroupId;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.inputStream = inputStream;
         this.conditionSearchTermsByAssayAccessionId = conditionSearchTermsByAssayAccessionId;
         this.bioentityIdToIdentifierSearch = bioentityIdToIdentifierSearch;
-        this.speciesKingdomTrader = speciesKingdomTrader;
+    }
+    public BaselineAnalyticsDocumentStream(BaselineExperiment experiment,
+                                           Iterable<BaselineAnalytics> inputStream,
+                                           SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
+                                           Map<String, String> bioentityIdToIdentifierSearch) {
+        this.experimentAccession = experiment.getAccession();
+        this.experimentType = experiment.getType();
+        this.species = experiment.getSpecies();
+        this.defaultQueryFactorType = experiment.getExperimentalFactors().getDefaultQueryFactorType();
+        this.inputStream = inputStream;
+        this.conditionSearchTermsByAssayAccessionId = conditionSearchTermsByAssayAccessionId;
+        this.bioentityIdToIdentifierSearch = bioentityIdToIdentifierSearch;
     }
 
     @Override
@@ -86,8 +100,8 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
             builder.experimentAccession(experimentAccession)
                     .experimentType(experimentType)
                     .defaultQueryFactorType(defaultQueryFactorType)
-                    .species(getEnsemblSpecies(assayGroupId))
-                    .kingdom(speciesKingdomTrader.getKingdom(getEnsemblSpecies(assayGroupId)))
+                    .species(species.mappedName)
+                    .kingdom(species.kingdom)
                     .bioentityIdentifier(geneId)
                     .expressionLevel(baselineAnalytics.getExpressionLevel())
                     .identifierSearch(identifierSearch)
@@ -95,12 +109,6 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
                     .conditionsSearch(conditionSearch);
 
             return builder.build();
-        }
-
-        private String getEnsemblSpecies(String assayGroupId) {
-            String ensemblSpecies = ensemblSpeciesGroupedByAssayGroupId.get(assayGroupId);
-            checkNotNull(ensemblSpecies, "No species for assay group " + assayGroupId);
-            return ensemblSpecies;
         }
 
         private String getConditionSearchTerms(String assayGroupId) {

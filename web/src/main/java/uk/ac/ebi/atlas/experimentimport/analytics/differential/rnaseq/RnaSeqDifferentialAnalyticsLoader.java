@@ -7,13 +7,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 
-@Named
 public class RnaSeqDifferentialAnalyticsLoader implements AnalyticsLoader {
 
     private final RnaSeqDifferentialAnalyticsDao analyticsDao;
     private final RnaSeqDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory;
 
-    @Inject
     public RnaSeqDifferentialAnalyticsLoader(RnaSeqDifferentialAnalyticsDao analyticsDao,
                                              RnaSeqDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory) {
         this.analyticsDao = analyticsDao;

@@ -35,19 +35,16 @@ public class BioentityIdentifiersReader {
     private ExperimentTrader experimentTrader;
 
     private BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
-    private ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
     private MicroarrayDifferentialAnalyticsInputStreamFactory microarrayDifferentialAnalyticsInputStreamFactory;
     private RnaSeqDifferentialAnalyticsInputStreamFactory rnaSeqDifferentialAnalyticsInputStreamFactory;
 
     @Inject
     public BioentityIdentifiersReader(ExperimentTrader experimentTrader,
                                       BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory,
-                                      ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory,
                                       MicroarrayDifferentialAnalyticsInputStreamFactory microarrayDifferentialAnalyticsInputStreamFactory,
                                       RnaSeqDifferentialAnalyticsInputStreamFactory rnaSeqDifferentialAnalyticsInputStreamFactory) {
         this.experimentTrader = experimentTrader;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
-        this.proteomicsBaselineAnalyticsInputStreamFactory = proteomicsBaselineAnalyticsInputStreamFactory;
         this.microarrayDifferentialAnalyticsInputStreamFactory = microarrayDifferentialAnalyticsInputStreamFactory;
         this.rnaSeqDifferentialAnalyticsInputStreamFactory = rnaSeqDifferentialAnalyticsInputStreamFactory;
     }
@@ -108,7 +105,7 @@ public class BioentityIdentifiersReader {
 
             LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
 
-            BaselineAnalyticsInputStream inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession);
+            ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession, ExperimentType.RNASEQ_MRNA_BASELINE);
             BaselineAnalytics analytics = inputStream.readNext();
             while (analytics != null) {
                 bioentityIdentifiers.add(analytics.getGeneId());
@@ -131,7 +128,8 @@ public class BioentityIdentifiersReader {
 
             LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
 
-            ProteomicsBaselineAnalyticsInputStream inputStream = proteomicsBaselineAnalyticsInputStreamFactory.create(experimentAccession);
+            ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create
+                    (experimentAccession, ExperimentType.PROTEOMICS_BASELINE);
             BaselineAnalytics analytics = inputStream.readNext();
             while (analytics != null) {
                 bioentityIdentifiers.add(analytics.getGeneId());
@@ -201,12 +199,8 @@ public class BioentityIdentifiersReader {
         HashSet<String> bioentityIdentifiers = new HashSet<>();
 
         if (experiment.getType().isBaseline()) {
-            ObjectInputStream<BaselineAnalytics> inputStream;
-            if (experiment.getType().isProteomicsBaseline()) {
-                inputStream = proteomicsBaselineAnalyticsInputStreamFactory.create(experimentAccession);
-            } else {
-                inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession);
-            }
+            ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create
+                    (experimentAccession, experiment.getType());
             BaselineAnalytics analytics = inputStream.readNext();
             while (analytics != null) {
                 bioentityIdentifiers.add(analytics.getGeneId());

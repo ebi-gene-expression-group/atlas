@@ -1,20 +1,20 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 
-@Named
-public class BaselineAnalyticsLoader implements AnalyticsLoader {
+public class RnaSeqBaselineAnalyticsLoader implements AnalyticsLoader {
 
     private final BaselineAnalyticsDAO baselineAnalyticsDAO;
     private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
 
-    @Inject
-    public BaselineAnalyticsLoader(BaselineAnalyticsDAO baselineAnalyticsDAO, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory) {
+    public RnaSeqBaselineAnalyticsLoader(BaselineAnalyticsDAO baselineAnalyticsDAO, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory) {
         this.baselineAnalyticsDAO = baselineAnalyticsDAO;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
     }
@@ -26,7 +26,8 @@ public class BaselineAnalyticsLoader implements AnalyticsLoader {
     }
 
     private void loadBaselineExpressions(String accession) {
-        BaselineAnalyticsInputStream baselineAnalyticsInputStream = baselineAnalyticsInputStreamFactory.create(accession);
+        ObjectInputStream<BaselineAnalytics> baselineAnalyticsInputStream = baselineAnalyticsInputStreamFactory.create
+                (accession, ExperimentType.RNASEQ_MRNA_BASELINE);
         baselineAnalyticsDAO.loadAnalytics(accession, baselineAnalyticsInputStream);
     }
 

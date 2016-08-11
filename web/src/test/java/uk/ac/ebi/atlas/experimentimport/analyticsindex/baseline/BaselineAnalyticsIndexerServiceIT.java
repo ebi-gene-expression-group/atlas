@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
-import uk.ac.ebi.atlas.experimentimport.analytics.baseline.ProteomicsBaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -48,9 +47,6 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Inject
     BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
 
-    @Inject
-    ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
-
     @Mock
     AnalyticsIndexDAO analyticsIndexDAOMock;
 
@@ -66,7 +62,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     public void before() {
         MockitoAnnotations.initMocks(this);
         given(analyticsIndexDAOMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), anyInt())).willAnswer(storeDocuments());
-        subject = new BaselineAnalyticsIndexerService(streamFactory, efoLookupService, baselineAnalyticsInputStreamFactory, proteomicsBaselineAnalyticsInputStreamFactory, analyticsIndexDAOMock, baselineConditionsBuilder);
+        subject = new BaselineAnalyticsIndexerService(efoLookupService, baselineAnalyticsInputStreamFactory, analyticsIndexDAOMock, baselineConditionsBuilder);
     }
 
     private Answer<Integer> storeDocuments() {

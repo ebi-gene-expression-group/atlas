@@ -30,7 +30,7 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RnaSeqBaselineExpressionKryoSerializer.class);
 
-    // TODO Refactor constants here and in BaselineAnalyticsInputStream to something like ExperimentTsvFileFormat and maybe some parsing utilities (?)
+    // TODO Refactor constants here and in RnaSeqBaselineAnalyticsInputStream to something like ExperimentTsvFileFormat and maybe some parsing utilities (?)
     private static final int GENE_ID_COLUMN_INDEX = 0;
     private static final int GENE_NAME_COLUMN_INDEX = 1;
     private static final int FIRST_EXPRESSION_LEVEL_INDEX = 2;
