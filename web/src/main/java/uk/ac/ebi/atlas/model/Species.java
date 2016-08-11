@@ -52,6 +52,10 @@ public class Species {
         return false;
     }
 
+    public boolean isPlant() {
+        return kingdom.equalsIgnoreCase("plants");
+    }
+
     public String defaultQueryFactorType(){
         return "caenorhabditis elegans".equalsIgnoreCase(mappedName) ? "DEVELOPMENTAL_STAGE" : "ORGANISM_PART";
     }
