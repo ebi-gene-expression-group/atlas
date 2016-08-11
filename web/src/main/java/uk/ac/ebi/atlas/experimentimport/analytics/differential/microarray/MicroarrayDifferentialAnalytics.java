@@ -47,7 +47,8 @@ public class MicroarrayDifferentialAnalytics implements DifferentialAnalytics {
         return foldChange;
     }
 
-    public double getTstatistic() {
+    @Override
+    public double getTStatistic() {
         return tstatistic;
     }
 

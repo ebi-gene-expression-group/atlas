@@ -61,7 +61,7 @@ public class MicroarrayDifferentialAnalyticsDao {
 
                     ps.setDouble(PVAL, pValue);
                     ps.setDouble(LOG2FOLD, analytics.getFoldChange());
-                    ps.setDouble(TSTAT, analytics.getTstatistic());
+                    ps.setDouble(TSTAT, analytics.getTStatistic());
 
                     return true;
                 }
