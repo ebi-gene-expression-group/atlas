@@ -11,15 +11,15 @@ var DownloadProfilesButton = require('../src/DownloadProfilesButton.jsx');
 
 //*------------------------------------------------------------------*
 
-module.exports = function(mountNode,atlasBaseURL,downloadProfilesURL, isFortLauderdale,googleAnalyticsCallback) {
+module.exports = function(mountNode,atlasBaseURL,downloadProfilesURL, disclaimer,googleAnalyticsCallback) {
     ReactDOM.render(
         React.createElement(
             DownloadProfilesButton,
             {
                 atlasBaseURL:atlasBaseURL,
                 downloadProfilesURL: downloadProfilesURL,
-                isFortLauderdale: isFortLauderdale,
-                onDownloadCallbackForAnalytics: typeof googleAnalyticsCallback ==='undefined' ? console.log : googleAnalyticsCallback
+                disclaimer: disclaimer,
+                onDownloadCallbackForAnalytics: typeof googleAnalyticsCallback ==='undefined' ? console.log || function(){} : googleAnalyticsCallback
             }
         ),
         mountNode

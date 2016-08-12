@@ -63,7 +63,7 @@
                 "showMaPlotButton": true,
                 "gseaPlots": ${empty gseaPlots ? "null" : gseaPlots},
                 "downloadProfilesURL": "${not empty downloadURL ? downloadURL : applicationProperties.buildDownloadURL(pageContext.request)}",
-                "isFortLauderdale": ${empty isFortLauderdale ? "false" : isFortLauderdale}
+                "disclaimer": "${disclaimer}"
             },
             "columnHeaders": ${not empty jsonColumnHeaders ? jsonColumnHeaders : "null"},
             "profiles": ${not empty jsonProfiles ? jsonProfiles : "null"},

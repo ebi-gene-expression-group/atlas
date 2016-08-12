@@ -4,9 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.SpeciesGrouper;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
@@ -15,7 +12,8 @@ import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCond
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
 
 @Named
 public class MicroArrayDiffAnalyticsIndexerService {
@@ -32,27 +30,17 @@ public class MicroArrayDiffAnalyticsIndexerService {
     }
 
     public int index(MicroarrayExperiment experiment, Map<String, String> bioentityIdToIdentifierSearch, int batchSize) {
-        String experimentAccession = experiment.getAccession();
 
-        ExperimentType experimentType = experiment.getType();
-
-        SortedSet<String> arrayDesignAccessions = experiment.getArrayDesignAccessions();
-
-        ExperimentDesign experimentDesign = experiment.getExperimentDesign();
-
-        ImmutableMap<String, String> ensemblSpeciesGroupedByContrastId = SpeciesGrouper.buildEnsemblSpeciesGroupedByContrastId(experiment);
 
         ImmutableSetMultimap<String, String> ontologyTermIdsByAssayAccession = efoParentsLookupService
-                .expandOntologyTerms(experimentDesign.getAllOntologyTermIdsByAssayAccession());
+                .expandOntologyTerms(experiment.getExperimentDesign().getAllOntologyTermIdsByAssayAccession());
 
         ImmutableSetMultimap<String, String> conditionSearchTermsByContrastId = buildConditionSearchTermsByAssayGroupId(experiment, ontologyTermIdsByAssayAccession);
 
-        Set<String> factors = experimentDesign.getFactorHeaders();
 
         Map<String, Integer> numReplicatesByContrastId = buildNumReplicatesByContrastId(experiment);
 
-        return  microArrayDiffAnalyticsDocumentStreamIndexer.index(experimentAccession, arrayDesignAccessions, experimentType, factors,
-                conditionSearchTermsByContrastId, ensemblSpeciesGroupedByContrastId, numReplicatesByContrastId, bioentityIdToIdentifierSearch, batchSize);
+        return  microArrayDiffAnalyticsDocumentStreamIndexer.index(experiment, conditionSearchTermsByContrastId, numReplicatesByContrastId, bioentityIdToIdentifierSearch, batchSize);
     }
 
     private Map<String, Integer> buildNumReplicatesByContrastId(DifferentialExperiment experiment) {

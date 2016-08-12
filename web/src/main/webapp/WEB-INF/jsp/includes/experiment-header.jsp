@@ -128,9 +128,11 @@
                     <c:if test="${rDataViewHelper.hasFile(experimentAccession)}">
                         <td>
                             <c:choose>
-                                <c:when test="${isFortLauderdale}">
+                                <c:when test="${not empty disclaimer}">
                                     <a id="download-r-modal" title="Download experiment data ready to load into R"
-                                       role="button" data-load-url="${pageContext.request.contextPath}/resources/html/blueprint.html" data-toggle="modal" data-target="#download-modal">
+                                       role="button"
+                                       data-load-url="${pageContext.request.contextPath}/resources/html/disclaimer/${disclaimer}.html"
+                                       data-toggle="modal" data-target="#download-modal">
                                         <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
                                     </a>
                                 </c:when>
@@ -175,9 +177,11 @@
                         <c:when test="${type.baseline}">
                             <td>
                                 <c:choose>
-                                    <c:when test="${isFortLauderdale}">
+                                    <c:when test="${not empty disclaimer}">
                                         <a id="download-expressions-modal" title="Download all expressions for the experiment"
-                                           role="button" data-load-url="${pageContext.request.contextPath}/resources/html/blueprint.html" data-toggle="modal" data-target="#download-modal">
+                                           role="button"
+                                           data-load-url="${pageContext.request.contextPath}/resources/html/disclaimer/${disclaimer}.html"
+                                           data-toggle="modal" data-target="#download-modal">
                                             <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/>
                                         </a>
                                     </c:when>
@@ -219,7 +223,7 @@
 
                 <div class="modal-footer">
                     <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
-                        <c:if test="${type.baseline && isFortLauderdale}">
+                        <c:if test="${type.baseline && not empty disclaimer}">
                             <button class="btn btn-primary" id="continue-download-expressions"
                                onclick="location.href='${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=-0.1'">
                                 Continue downloading

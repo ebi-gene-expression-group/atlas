@@ -4,8 +4,6 @@ package uk.ac.ebi.atlas.model.baseline;
 import java.util.HashSet;
 import java.util.Set;
 
-//Not Spring managed because actually requires initialization parameters
-//and Spring doesn't support assisted constructor injection
 public class GeneSet{
 
     private Set<BaselineProfile> baselineProfiles = new HashSet<>();

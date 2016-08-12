@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -102,6 +103,15 @@ public class BaselineExperimentConfiguration {
         }
 
         return result;
+    }
+    public String disclaimer(){
+        if("true".equals(config.getString("fortLauderdale"))){
+            return "fortLauderdale";
+        } else if (StringUtils.isNotEmpty(config.getString("disclaimer"))){
+            return config.getString("disclaimer");
+        } else {
+            return "";
+        }
     }
 
     public boolean isFortLauderdale() {

@@ -1,7 +1,6 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +12,6 @@ import uk.ac.ebi.atlas.model.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -67,7 +65,7 @@ public class BaselineExperimentTest {
 
         subject = new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
                 experimentalFactorsMock,
-                                         "description", "displayName", new Species("species","species", "kingdom",
+                                         "description", "displayName", "", new Species("species","species", "kingdom",
                 "ensembl"),true, true, Sets.newHashSet(PUBMEDID), experimentDesignMock, assayGroupsMock, Collections.<String>emptyList(), Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>());
     }
 

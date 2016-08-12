@@ -35,19 +35,19 @@ public class BaselineAnalyticsDaoIT {
     private JdbcTemplate jdbcTemplate;
 
     @Mock
-    private BaselineAnalyticsInputStream baselineAnalyticsInputStream;
+    private RnaSeqBaselineAnalyticsInputStream rnaSeqBaselineAnalyticsInputStream;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        when(baselineAnalyticsInputStream.readNext()).thenReturn(new BaselineAnalytics("gene1", "g1", 1.0), new BaselineAnalytics("gene2", "g1", 1.0), null);
+        when(rnaSeqBaselineAnalyticsInputStream.readNext()).thenReturn(new BaselineAnalytics("gene1", "g1", 1.0), new BaselineAnalytics("gene2", "g1", 1.0), null);
     }
 
     @Test
     public void insertAndDeleteBaselineExpressions() throws IOException {
         assertThat(getCount(), is(0));
 
-        baselineAnalyticsDAO.loadAnalytics(EXPERIMENT_ACCESSION, baselineAnalyticsInputStream);
+        baselineAnalyticsDAO.loadAnalytics(EXPERIMENT_ACCESSION, rnaSeqBaselineAnalyticsInputStream);
 
         assertThat(getCount(), is(2));
 
@@ -55,7 +55,7 @@ public class BaselineAnalyticsDaoIT {
 
         assertThat(getCount(), is(0));
 
-        verify(baselineAnalyticsInputStream).close();
+        verify(rnaSeqBaselineAnalyticsInputStream).close();
     }
 
     private int getCount() {

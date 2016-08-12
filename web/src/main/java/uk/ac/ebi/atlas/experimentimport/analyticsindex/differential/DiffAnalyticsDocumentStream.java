@@ -9,6 +9,9 @@ import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnaly
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import java.util.Iterator;
@@ -24,32 +27,26 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
 
     private final String experimentAccession;
     private final ExperimentType experimentType;
-    private final Map<String, String> ensemblSpeciesByContrastId;
+    private final Species species;
     private final Map<String, Integer> numReplicatesByContrastId;
     private final Iterable<? extends DifferentialAnalytics> inputStream;
     private final SetMultimap<String, String> conditionSearchTermsByContrastId;
     private final Set<String> factors;
     private final Map<String, String> bioentityIdToIdentifierSearch;
-    private final SpeciesKingdomTrader speciesKingdomTrader;
 
-    public DiffAnalyticsDocumentStream(String experimentAccession,
-                                       ExperimentType experimentType,
-                                       Set<String> factors,
-                                       Map<String, String> ensemblSpeciesByContrastId,
+    public DiffAnalyticsDocumentStream(DifferentialExperiment experiment,
                                        Iterable<? extends DifferentialAnalytics> inputStream,
                                        SetMultimap<String, String> conditionSearchTermsByContrastId,
                                        Map<String, Integer> numReplicatesByContrastId,
-                                       Map<String, String> bioentityIdToIdentifierSearch,
-                                       SpeciesKingdomTrader speciesKingdomTrader) {
-        this.experimentAccession = experimentAccession;
-        this.experimentType = experimentType;
-        this.factors = factors;
-        this.ensemblSpeciesByContrastId = ensemblSpeciesByContrastId;
+                                       Map<String, String> bioentityIdToIdentifierSearch) {
+        this.experimentAccession = experiment.getAccession();
+        this.experimentType = experiment.getType();
+        this.factors = experiment.getExperimentDesign().getFactorHeaders();
+        this.species = experiment.getSpecies();
         this.inputStream = inputStream;
         this.conditionSearchTermsByContrastId = conditionSearchTermsByContrastId;
         this.numReplicatesByContrastId = numReplicatesByContrastId;
         this.bioentityIdToIdentifierSearch = bioentityIdToIdentifierSearch;
-        this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
     @Override
@@ -85,16 +82,11 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
             String contrastId = analytics.getContrastId();
             String conditionSearch = getConditionSearchTerms(contrastId);
 
-            double tStatistics = 0;
-            if(analytics.getClass().isAssignableFrom(MicroarrayDifferentialAnalytics.class)) {
-                tStatistics = ((MicroarrayDifferentialAnalytics) analytics).getTstatistic();
-            }
-
-            AnalyticsDocument.Builder builder = AnalyticsDocument.builder();
-            builder.experimentAccession(experimentAccession)
+            return AnalyticsDocument.builder()
+                    .experimentAccession(experimentAccession)
                     .experimentType(experimentType)
-                    .species(getEnsemblSpecies(contrastId))
-                    .kingdom(speciesKingdomTrader.getKingdom(getEnsemblSpecies(contrastId)))
+                    .species(species.mappedName)
+                    .kingdom(species.kingdom)
                     .bioentityIdentifier(geneId)
                     .identifierSearch(identifierSearch)
                     .contrastId(contrastId)
@@ -102,25 +94,15 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
                     .foldChange(analytics.getFoldChange())
                     .pValue(analytics.getpValue())
                     .numReplicates(getNumReplicates(contrastId))
-                    .conditionsSearch(conditionSearch);
-
-            if(tStatistics != 0) {
-                builder.tStatistics(tStatistics);
-            }
-
-            return builder.build();
+                    .conditionsSearch(conditionSearch)
+                    .tStatistics(analytics.getTStatistic())
+                    .build();
         }
 
         private int getNumReplicates(String contrastId) {
             int numReplicates = numReplicatesByContrastId.get(contrastId);
             checkNotNull(numReplicates, "No replicates for contrast " + contrastId);
             return numReplicates;
-        }
-
-        private String getEnsemblSpecies(String contrastId) {
-            String ensemblSpecies = ensemblSpeciesByContrastId.get(contrastId);
-            checkNotNull(ensemblSpecies, "No species for contrast " + contrastId);
-            return ensemblSpecies;
         }
 
         private String getConditionSearchTerms(String contrastId) {

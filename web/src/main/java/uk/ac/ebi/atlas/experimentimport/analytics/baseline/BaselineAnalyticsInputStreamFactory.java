@@ -1,7 +1,10 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
@@ -22,9 +25,12 @@ public class BaselineAnalyticsInputStreamFactory {
         this.csvReaderFactory = csvReaderFactory;
     }
 
-    public BaselineAnalyticsInputStream create(String experimentAccession) {
+    public ObjectInputStream<BaselineAnalytics> create(String experimentAccession, ExperimentType experimentType) {
+        Preconditions.checkArgument(experimentType.isBaseline());
         String tsvFilePath = MessageFormat.format(fileTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFilePath);
-        return new BaselineAnalyticsInputStream(csvReader, tsvFilePath);
+        return experimentType.isProteomicsBaseline()
+                ? new ProteomicsBaselineAnalyticsInputStream(csvReader, tsvFilePath)
+                : new RnaSeqBaselineAnalyticsInputStream(csvReader, tsvFilePath);
     }
 }

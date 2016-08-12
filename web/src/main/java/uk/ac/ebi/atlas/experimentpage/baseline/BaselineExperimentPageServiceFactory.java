@@ -5,7 +5,6 @@ import uk.ac.ebi.atlas.dao.OrganismEnsemblDAO;
 import uk.ac.ebi.atlas.dao.OrganismKingdomDAO;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
-import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
@@ -23,8 +22,6 @@ public class BaselineExperimentPageServiceFactory {
     private final TracksUtil tracksUtil;
     private final ApplicationProperties applicationProperties;
     private final BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
-    private final SpeciesKingdomTrader speciesKingdomTrader;
-    private final BaselineExperimentUtil bslnUtil;
     private final CoexpressedGenesService coexpressedGenesService;
     private final SolrQueryService solrQueryService;
     private final RankBaselineProfilesFactory rankProfilesFactory;
@@ -32,14 +29,11 @@ public class BaselineExperimentPageServiceFactory {
     @Inject
     public BaselineExperimentPageServiceFactory(TracksUtil tracksUtil, ApplicationProperties applicationProperties,
                                                 BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
-                                                JdbcTemplate jdbcTemplate,BaselineExperimentUtil bslnUtil,
-                                                SolrQueryService solrQueryService,RankBaselineProfilesFactory rankProfilesFactory) {
+                                                JdbcTemplate jdbcTemplate,
+                                                SolrQueryService solrQueryService, RankBaselineProfilesFactory rankProfilesFactory) {
         this.tracksUtil = tracksUtil;
         this.applicationProperties = applicationProperties;
         this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
-        this.speciesKingdomTrader = new SpeciesKingdomTrader(new OrganismKingdomDAO(jdbcTemplate), new
-                OrganismEnsemblDAO(jdbcTemplate));
-        this.bslnUtil = bslnUtil;
         this.coexpressedGenesService = new CoexpressedGenesService(new CoexpressedGenesDao(jdbcTemplate));
         this.solrQueryService = solrQueryService;
         this.rankProfilesFactory = rankProfilesFactory;
@@ -50,7 +44,7 @@ public class BaselineExperimentPageServiceFactory {
         return new BaselineExperimentPageService(new BaselineProfilesHeatMapWranglerFactory(rankProfilesFactory,
                 inputStreamFactory,baselineProfilesViewModelBuilder, solrQueryService, coexpressedGenesService),
                 applicationProperties,
-                speciesKingdomTrader, tracksUtil, bslnUtil
+                tracksUtil
         );
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -28,7 +29,6 @@ public class PlantExperimentsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlantExperimentsController.class);
 
     private ExperimentTrader experimentTrader;
-    private SpeciesKingdomTrader speciesKingdomTrader;
 
     private Integer numberOfPlantExperiments;
 
@@ -39,9 +39,8 @@ public class PlantExperimentsController {
     private Map<String, String> experimentDisplayNames = new HashMap<>();
 
     @Inject
-    public PlantExperimentsController(ExperimentTrader experimentTrader, SpeciesKingdomTrader speciesKingdomTrader) {
+    public PlantExperimentsController(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
-        this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
     @RequestMapping("/plant/experiments")
@@ -91,14 +90,12 @@ public class PlantExperimentsController {
                 else if (experiment.getType() == ExperimentType.MICROARRAY_ANY || experiment.getType() == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
                     numberOfAssays = ((DifferentialExperiment) experiment).getAssayAccessions().size();
                 }
+                experimentDisplayNames.put(experimentAccession, experiment.getDisplayName() + " (" + numberOfAssays + " assays)");
 
-                String displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
-                experimentDisplayNames.put(experimentAccession, displayName + " (" + numberOfAssays + " assays)");
-
-                String species = experiment.getSpeciesString();
-                if (speciesKingdomTrader.getKingdom(species).equals("plants")) {
-                    baselineExperimentAccessionsBySpecies.put(species, experimentAccession);
-                    experimentLinks.put(experimentAccession + species, "");
+                Species species = experiment.getSpecies();
+                if (species.isPlant()) {
+                    baselineExperimentAccessionsBySpecies.put(species.originalName, experimentAccession);
+                    experimentLinks.put(experimentAccession + species.originalName, "");
                     numberOfPlantExperiments++;
                 }
 
@@ -125,21 +122,11 @@ public class PlantExperimentsController {
     private void populateExperimentAccessionToSpecies(ExperimentType experimentType) {
         for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
             try {
-                DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getExperimentFromCache(experimentAccession, experimentType);
-                String species = experiment.getSpeciesString();
+                Species species = experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getSpecies();
 
-                if (speciesKingdomTrader.getKingdom(species) == null) {
-                    LOGGER.warn(species + " has no kingdom (maybe it is missing in BIOENTITY_ORGANISM ot it has been mis-spelled)");
-                    continue;
-                }
-
-                if (speciesKingdomTrader.getKingdom(species).equals("plants")) {
-                    Integer numSoFar = numDifferentialExperimentsBySpecies.get(species);
-                    if (numDifferentialExperimentsBySpecies.get(species) == null) {
-                        numDifferentialExperimentsBySpecies.put(species, 1);
-                    } else {
-                        numDifferentialExperimentsBySpecies.put(species, ++numSoFar);
-                    }
+                if (species.isPlant()) {
+                    Integer numSoFar = numDifferentialExperimentsBySpecies.get(species.originalName);
+                    numDifferentialExperimentsBySpecies.put(species.originalName,numSoFar == null ? 1: ++numSoFar);
                     numberOfPlantExperiments++;
                 }
 

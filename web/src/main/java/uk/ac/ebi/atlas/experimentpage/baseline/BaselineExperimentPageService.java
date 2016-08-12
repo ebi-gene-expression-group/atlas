@@ -8,7 +8,6 @@ import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineExperimentUtil;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -32,24 +31,18 @@ public class BaselineExperimentPageService {
     private final TracksUtil tracksUtil;
     private final BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory;
     private final ApplicationProperties applicationProperties;
-    private final SpeciesKingdomTrader speciesKingdomTrader;
-    private BaselineExperimentUtil bslnUtil;
     private final AnatomogramFactory anatomogramFactory;
     private Gson gson = new GsonBuilder()
             .create();
 
     public BaselineExperimentPageService(BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory,
                                          ApplicationProperties applicationProperties,
-                                         SpeciesKingdomTrader speciesKingdomTrader,
-                                         TracksUtil tracksUtil,
-                                         BaselineExperimentUtil bslnUtil) {
+                                         TracksUtil tracksUtil) {
 
         this.applicationProperties = applicationProperties;
         this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
         this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
-        this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
-        this.bslnUtil = bslnUtil;
     }
 
     //TODO I got misplaced when refactoring, I belong in a controller, not here
@@ -79,7 +72,6 @@ public class BaselineExperimentPageService {
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
         model.addAttribute("allQueryFactors", requestContext.getOrderedAssayGroupFactors());
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
-        model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
         model.addAllAttributes(experiment.getAttributes());
     }
 
@@ -92,18 +84,13 @@ public class BaselineExperimentPageService {
         List<AssayGroupFactor> filteredAssayGroupFactors =requestContext.getOrderedAssayGroupFactors();
         String contextRoot = request.getContextPath();
         /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
-        model.addAttribute("isFortLauderdale", bslnUtil.hasFortLauderdale(experiment.getAccession()));
         model.addAttribute("geneQuery", preferences.getGeneQuery());
         model.addAllAttributes(experiment.getAttributes());
 
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
         model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
 
-        String species = requestContext.getFilteredBySpecies();
-
-        model.addAllAttributes(speciesKingdomTrader.getAttributesFor(species));
-
-        model.addAttribute("enableEnsemblLauncher", !filteredAssayGroupFactors.isEmpty()
+        model.addAttribute("enableEnsemblLauncher", !isWidget&& !filteredAssayGroupFactors.isEmpty()
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
                 filteredAssayGroupFactors.get(0).getAssayGroupId()));
 
@@ -131,7 +118,6 @@ public class BaselineExperimentPageService {
             addFactorMenu(model, experiment, requestContext);
         } else {
             model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
-            model.addAttribute("enableEnsemblLauncher", false);
         }
 
         //note this should only happen for single experiment - see HeatmapWidgetController.populateModelWithMultiExperimentResults
@@ -151,7 +137,7 @@ public class BaselineExperimentPageService {
         JsonObject experimentDescription = new JsonObject();
         experimentDescription.addProperty("URL", "/experiments/"+experiment.getAccession()+additionalQueryOptionsString);
         experimentDescription.addProperty("description", experiment.getDescription());
-        experimentDescription.addProperty("species", experiment.getSpeciesString());
+        experimentDescription.addProperty("species", experiment.getSpecies().originalName);
         return experimentDescription;
     }
 

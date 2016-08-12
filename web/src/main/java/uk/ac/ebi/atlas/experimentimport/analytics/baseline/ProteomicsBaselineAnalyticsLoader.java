@@ -1,21 +1,21 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 
-@Named
 public class ProteomicsBaselineAnalyticsLoader implements AnalyticsLoader {
 
     private final BaselineAnalyticsDAO baselineAnalyticsDAO;
-    private final ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
+    private final BaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
 
-    @Inject
     public ProteomicsBaselineAnalyticsLoader(BaselineAnalyticsDAO baselineAnalyticsDAO,
-                                             ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory) {
+                                            BaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory) {
         this.baselineAnalyticsDAO = baselineAnalyticsDAO;
         this.proteomicsBaselineAnalyticsInputStreamFactory = proteomicsBaselineAnalyticsInputStreamFactory;
     }
@@ -27,8 +27,8 @@ public class ProteomicsBaselineAnalyticsLoader implements AnalyticsLoader {
     }
 
     private void loadBaselineExpressions(String accession) {
-        ProteomicsBaselineAnalyticsInputStream proteomicsBaselineAnalyticsInputStream =
-                proteomicsBaselineAnalyticsInputStreamFactory.create(accession);
+        ObjectInputStream<BaselineAnalytics> proteomicsBaselineAnalyticsInputStream =
+                proteomicsBaselineAnalyticsInputStreamFactory.create(accession, ExperimentType.PROTEOMICS_BASELINE);
         baselineAnalyticsDAO.loadAnalytics(accession, proteomicsBaselineAnalyticsInputStream);
     }
 

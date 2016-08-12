@@ -2,9 +2,12 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Objects;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Species {
 
-    public final String originalName; //TODO make private again
+    public final String originalName;
     public final String mappedName;
     public final String ensemblDb;
     public final String kingdom;
@@ -49,8 +52,22 @@ public class Species {
         return false;
     }
 
+    public boolean isPlant() {
+        return kingdom.equalsIgnoreCase("plants");
+    }
+
     public String defaultQueryFactorType(){
         return "caenorhabditis elegans".equalsIgnoreCase(mappedName) ? "DEVELOPMENTAL_STAGE" : "ORGANISM_PART";
+    }
+
+    public Map<String, ?> getAttributes(){
+        Map<String, Object> result = new HashMap<>();
+        //required by autocomplete and heatmap
+        result.put("species", originalName);
+        //required for genome track browser in ensembl
+        result.put("ensemblDB", ensemblDb);
+        result.put("kingdom", kingdom);
+        return result;
     }
 
 

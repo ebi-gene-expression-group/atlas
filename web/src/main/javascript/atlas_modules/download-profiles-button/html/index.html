@@ -13,17 +13,19 @@
 </head>
 <body>
     <div id="main">
-        <p>Fort lauderdale button- should open modal on click</p>
-        <div style="margin-bottom: 10px" id="button1"></div>
-        <p>Just a button- check image, tooltip</p>
-        <div id="button2"></div>
+      <p>Just a button- check image, tooltip</p>
+      <div id="button0"></div>
+      <p>Fort lauderdale button- should open modal on click</p>
+      <div style="margin-bottom: 10px" id="button1"></div>
+      <p>Zebrafish button- should open modal on click</p>
+      <div style="margin-bottom: 10px" id="button2"></div>
     </div>
 </body>
 
 <script>
-    renderer(document.getElementById("button1"), "http://www.ebi.ac.uk/gxa",":void", true);
-    renderer(document.getElementById("button2"), "http://www.ebi.ac.uk/gxa",":void", false);
-
+  renderer(document.getElementById("button0"), "http://www.ebi.ac.uk/gxa",":void", "");
+  renderer(document.getElementById("button1"), "http://www.ebi.ac.uk/gxa",":void", "fortLauderdale");
+  renderer(document.getElementById("button2"), "http://www.ebi.ac.uk/gxa",":void", "zebrafish");
 </script>
 
 </html>

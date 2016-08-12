@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,14 +9,16 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesEMTab513React71;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.GeneSet;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
@@ -50,5 +54,63 @@ public class BaselineProfileStreamFiltersTest {
             genesOut.add(profile.getName());
         }
         assertEquals(Sets.newHashSet("SRSF2", "SNRPA"), genesOut);
+    }
+
+    @Test
+    public void averageProfilesWithMultipleFactorsIntoGeneSets() throws
+            Exception {
+        ImmutableSetMultimap<String,String> genesByGeneSet =
+                ImmutableSetMultimap
+                        .<String,String>builder()
+                        .put("gene_set","gene_1")
+                        .put("gene_set","gene_2")
+                        .build();
+        BaselineProfile p1 = new BaselineProfile("gene_1","gene_1");
+        p1.add("ORGANISM_PART",new BaselineExpression(
+                10, new FactorSet()
+                .add(new Factor("ORGANISM_PART","seed"))
+                ));
+        BaselineProfile p2 = new BaselineProfile("gene_2","gene_2");
+        p2.add("ORGANISM_PART",new BaselineExpression(
+                20, new FactorSet()
+                .add(new Factor("ORGANISM_PART","seed"))
+                ));
+
+        List<BaselineProfile> result = ImmutableList.<BaselineProfile>builder().addAll(subject.averageIntoGeneSets(ImmutableList.of(p1,
+                p2),genesByGeneSet)).build();
+
+        assertThat(result.size(),is(1));
+        assertThat(result.get(0).getName(), is("gene_set"));
+        assertThat(result.get(0).getMaxExpressionLevel(),
+                is (new Double((10+20)/2)));
+        assertThat(result.get(0).getMinExpressionLevel(),
+                is (new Double((10+20)/2)));
+    }
+
+    /*
+    This represents quite a fragile case that happened when we change the condensed sdrf file to include another
+     factor, but do not change factors.xml to account for it.
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void averageProfilesWithMultipleFactorsIntoGeneSetsWillNotWorkIfTheFactorGroupsDoNotAlign() throws
+            Exception {
+        ImmutableSetMultimap<String,String> genesByGeneSet =
+                ImmutableSetMultimap
+                        .<String,String>builder()
+                        .put("gene_set","gene_1")
+                        .put("gene_set","gene_2")
+                        .build();
+        BaselineProfile p1 = new BaselineProfile("gene_1","gene_1");
+        p1.add("ORGANISM_PART",new BaselineExpression(
+                Math.random(), new FactorSet()
+                    .add(new Factor("ORGANISM_PART","seed"))
+                    .add(new Factor("AGE","20"))));
+        BaselineProfile p2 = new BaselineProfile("gene_2","gene_2");
+        p2.add("ORGANISM_PART",new BaselineExpression(
+                Math.random(), new FactorSet()
+                .add(new Factor("ORGANISM_PART","seed"))
+                .add(new Factor("AGE","25"))));
+
+        subject.averageIntoGeneSets(ImmutableList.of(p1, p2),genesByGeneSet);
     }
 }

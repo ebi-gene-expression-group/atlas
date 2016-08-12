@@ -246,7 +246,9 @@ public class AnalyticsDocument {
         }
 
         public Builder tStatistics(double tStatistics) {
-            build.tStatistics = tStatistics;
+            if(tStatistics!=0) {
+                build.tStatistics = tStatistics;
+            }
             return this;
         }
 

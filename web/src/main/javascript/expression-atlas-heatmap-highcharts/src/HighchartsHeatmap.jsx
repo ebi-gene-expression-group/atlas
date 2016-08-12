@@ -185,7 +185,7 @@ var HeatmapContainer = React.createClass({
                     downloadOptions={{
                         downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
                         atlasBaseURL: this.props.heatmapConfig.atlasBaseURL,
-                        isFortLauderdale: this.props.heatmapConfig.isFortLauderdale
+                        disclaimer: this.props.heatmapConfig.disclaimer
                     }}
                     orderings={{
                         available: Object.keys(this.props.heatmapData.orderings),
@@ -637,13 +637,11 @@ var HeatmapOptions = React.createClass({
                           null
                       }
                     <DownloadProfilesButton ref="downloadProfilesButton"
-                                            downloadProfilesURL={this.props.downloadOptions.downloadProfilesURL}
-                                            atlasBaseURL={this.props.downloadOptions.atlasBaseURL}
-                                            isFortLauderdale={this.props.downloadOptions.isFortLauderdale}
-                                            onDownloadCallbackForAnalytics={
-                                                function() {
-                                                    this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')
-                                                }.bind(this)}/>
+                      {...this.props.downloadOptions}
+                      onDownloadCallbackForAnalytics={
+                          function() {
+                              this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')
+                          }.bind(this)}/>
 
                 </div>
                     {this.props.showUsageMessage

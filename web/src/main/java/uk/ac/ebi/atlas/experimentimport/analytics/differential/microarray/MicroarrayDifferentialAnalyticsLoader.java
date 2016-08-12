@@ -9,14 +9,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 
-@Named
 public class MicroarrayDifferentialAnalyticsLoader implements AnalyticsLoader {
 
     private final MicroarrayDifferentialAnalyticsDao analyticsDao;
     private final MicroarrayDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory;
     private final ConfigurationTrader configurationTrader;
 
-    @Inject
     public MicroarrayDifferentialAnalyticsLoader(MicroarrayDifferentialAnalyticsDao analyticsDao, MicroarrayDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory, ConfigurationTrader configurationTrader) {
         this.analyticsDao = analyticsDao;
         this.analyticsInputStreamFactory = analyticsInputStreamFactory;

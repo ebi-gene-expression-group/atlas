@@ -55,7 +55,7 @@ public class BaselineAnalyticsDAO {
                 }
             });
         } catch (IOException e) {
-            LOGGER.warn("Cannot close BaselineAnalyticsInputStream: {}", e.getMessage());
+            LOGGER.warn("Cannot close RnaSeqBaselineAnalyticsInputStream: {}", e.getMessage());
         }
 
         LOGGER.info("loadAnalytics for experiment {} complete", experimentAccession);
