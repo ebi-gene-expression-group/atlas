@@ -39,9 +39,6 @@ public class BaselineAnalyticsIndexerServiceIT {
     private BaselineAnalyticsIndexerService subject;
 
     @Inject
-    BaselineAnalyticsDocumentStreamFactory streamFactory;
-
-    @Inject
     EFOLookupService efoLookupService;
 
     @Inject
@@ -85,38 +82,30 @@ public class BaselineAnalyticsIndexerServiceIT {
         };
     }
 
-    @Test
-    public void indexRnaSeqBaselineExperiment() {
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-MTAB-513");
-        subject.index(experiment, ImmutableMap.of("", ""), 0);
 
-        assertThat(documents, hasSize(greaterThan(10000)));
-
-        // This Matcher cast shouldn’t be necessary and I’m not sure why it is :/
-        assertThat(documents, everyItem((Matcher)hasProperty("species", is("homo sapiens"))));
-        assertThat(documents, everyItem((Matcher)hasProperty("experimentAccession", is("E-MTAB-513"))));
-        assertThat(documents, everyItem((Matcher)hasProperty("experimentType", is(ExperimentType.RNASEQ_MRNA_BASELINE))));
-        assertThat(documents, everyItem((Matcher)hasProperty("defaultQueryFactorType", is("ORGANISM_PART"))));
-        assertThat(documents, everyItem((Matcher)hasProperty("expressionLevel")));
-        assertThat(documents, everyItem((Matcher)hasProperty("bioentityIdentifier")));
-        assertThat(documents, everyItem((Matcher)hasProperty("assayGroupId")));
-    }
-
-    @Test
-    public void indexProteomicsBaselineExperiment() {
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1");
+    private void indexExperiment(String accession){
+        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(accession);
         subject.index(experiment, ImmutableMap.of("", ""), 1024);
+        assertAboutDocuments(accession,experiment.getType());
+    }
 
+    @Test
+    public void testSomeExperiments() {
+        indexExperiment("E-MTAB-513");
+        indexExperiment("E-PROT-1");
+    }
+
+    private void assertAboutDocuments(String accession, ExperimentType type) {
         assertThat(documents, hasSize(greaterThan(10000)));
-
         // This Matcher cast shouldn’t be necessary and I’m not sure why it is :/
         assertThat(documents, everyItem((Matcher)hasProperty("species", is("homo sapiens"))));
-        assertThat(documents, everyItem((Matcher)hasProperty("experimentAccession", is("E-PROT-1"))));
-        assertThat(documents, everyItem((Matcher)hasProperty("experimentType", is(ExperimentType.PROTEOMICS_BASELINE))));
+        assertThat(documents, everyItem((Matcher)hasProperty("experimentAccession", is(accession))));
+        assertThat(documents, everyItem((Matcher)hasProperty("experimentType", is(type))));
         assertThat(documents, everyItem((Matcher)hasProperty("defaultQueryFactorType", is("ORGANISM_PART"))));
         assertThat(documents, everyItem((Matcher)hasProperty("expressionLevel")));
         assertThat(documents, everyItem((Matcher)hasProperty("bioentityIdentifier")));
         assertThat(documents, everyItem((Matcher)hasProperty("assayGroupId")));
     }
+
 
 }

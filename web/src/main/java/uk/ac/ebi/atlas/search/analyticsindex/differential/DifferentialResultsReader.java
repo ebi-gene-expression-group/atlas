@@ -4,10 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.TreeMultimap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jayway.jsonpath.Configuration;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.Option;
-import com.jayway.jsonpath.ReadContext;
+import com.jayway.jsonpath.*;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.FoldChangeRounder;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
@@ -31,6 +28,8 @@ public class DifferentialResultsReader {
     private static final String CONTRAST_ID_FIELD          = "contrastId";
     private static final String LOG2_FOLD_CHANGE_FIELD     = "foldChange";
 
+    private static final ParseContext parser = JsonPath.using(Configuration.defaultConfiguration().addOptions(Option.ALWAYS_RETURN_LIST));
+
     private final ColourGradient colourGradient;
 
     @Inject
@@ -43,7 +42,7 @@ public class DifferentialResultsReader {
 
 
     public String extractResultsAsJson(String solrResponseAsJson) {
-        Map<String, Object> resultsWithLevels = new HashMap<>(3);
+        Map<String, Object> resultsWithLevels = new HashMap<>(5);
 
         double minUpLevel = Double.POSITIVE_INFINITY;
         double maxUpLevel = 0.0;
@@ -53,9 +52,7 @@ public class DifferentialResultsReader {
         List<Map<String, Object>> filteredDocuments = Lists.newArrayList();
         TreeMultimap<String, String> experimentContrastMap = TreeMultimap.create();
 
-        Configuration jsonPathConfiguration = Configuration.defaultConfiguration().addOptions(Option.ALWAYS_RETURN_LIST);
-        ReadContext jsonReadContext = JsonPath.using(jsonPathConfiguration).parse(solrResponseAsJson);
-        List<Map<String, Object>> documents = jsonReadContext.read(DOCS_PATH);
+        List<Map<String, Object>> documents = parser.parse(solrResponseAsJson).read(DOCS_PATH);
 
         if(!documents.isEmpty()) {
             for (Map<String, Object> document : documents) {

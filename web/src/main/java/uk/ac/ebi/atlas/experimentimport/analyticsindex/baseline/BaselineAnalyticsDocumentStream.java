@@ -33,22 +33,6 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
     private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
     private final Map<String, String> bioentityIdToIdentifierSearch;
 
-    public BaselineAnalyticsDocumentStream(String experimentAccession,
-                                           ExperimentType experimentType,
-                                           Map<String, String> ensemblSpeciesGroupedByAssayGroupId,
-                                           String defaultQueryFactorType,
-                                           Iterable<BaselineAnalytics> inputStream,
-                                           SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
-                                           Map<String, String> bioentityIdToIdentifierSearch,
-                                           SpeciesKingdomTrader speciesKingdomTrader) {
-        this.species = SpeciesFactory.NULL; //TODO
-        this.experimentAccession = experimentAccession;
-        this.experimentType = experimentType;
-        this.defaultQueryFactorType = defaultQueryFactorType;
-        this.inputStream = inputStream;
-        this.conditionSearchTermsByAssayAccessionId = conditionSearchTermsByAssayAccessionId;
-        this.bioentityIdToIdentifierSearch = bioentityIdToIdentifierSearch;
-    }
     public BaselineAnalyticsDocumentStream(BaselineExperiment experiment,
                                            Iterable<BaselineAnalytics> inputStream,
                                            SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,

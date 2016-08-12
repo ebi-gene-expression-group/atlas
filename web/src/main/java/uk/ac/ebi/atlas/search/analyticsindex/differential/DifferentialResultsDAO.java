@@ -20,7 +20,7 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialResultsDAO.class);
 
-    private static final int ROWS = 1000000;
+    private static final int ROWS = 1000;
     private static final String SORT_FIELD = "&sort=abs(foldChange)desc";
 
     @Inject
@@ -33,13 +33,11 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
         searchQueriesBuilder.add(Pair.of(IDENTIFIER_SEARCH_FIELD, geneQuery));
         searchQueriesBuilder.add(Pair.of(CONDITION_SEARCH_FIELD, conditionQuery));
         searchQueriesBuilder.add(Pair.of(SPECIES_FIELD, SemanticQuery.create(species)));
-        String identifierSearch = buildSolrQuery(searchQueriesBuilder.build());
-        return fetchDifferentialResultsAboveDefaultFoldChange(identifierSearch);
+        return fetchDifferentialResultsAboveDefaultFoldChange(buildSolrQuery(searchQueriesBuilder.build()));
     }
 
     public String fetchDifferentialResultsAboveDefaultFoldChangeForIdentifier(String identifier) {
-        String identifierSearch = buildSolrQuery(identifier, BIOENTITY_IDENTIFIER_FIELD);
-        return fetchDifferentialResultsAboveDefaultFoldChange(identifierSearch);
+        return fetchDifferentialResultsAboveDefaultFoldChange(buildSolrQuery(identifier, BIOENTITY_IDENTIFIER_FIELD));
     }
 
     private String fetchDifferentialResultsAboveDefaultFoldChange(String q) {
