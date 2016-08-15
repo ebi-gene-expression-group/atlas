@@ -116,7 +116,8 @@ var _experimentsIntoDataSeriesByThresholds = function(thresholds){
 };
 
 var getDataSeries = function(profilesRows, config) {
-  var _fns = [_.lt, _.eq,_.gt].map(function(f){return function(point){return f(point.value,0);};});
+  var _fns = [_.lt, _.eq,_.gt].map(function(f){return function(point){return f(0, point.value);};});
+  var _belowCutoff = _fns[1];
   return (
     config.isMultiExperiment
     ? _dataSplitByThresholds(
@@ -134,7 +135,7 @@ var getDataSeries = function(profilesRows, config) {
           [["High down", "Down"], ["Below cutoff"], ["Up", "High up"]],
           [["blue", "lightBlue"], ["grey"], ["darkSalmon","fireBrick"]])
       : _dataProportionallyInEachSeries(profilesRows, config,
-          [_fns[1],_.negate(_fns[1])],
+          [_belowCutoff,_.negate(_belowCutoff)],
           [["Below cutoff"],["Low", "Medium", "High"]],
           [["grey"],["lightBlue","blue","darkBlue"]])
 

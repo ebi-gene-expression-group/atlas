@@ -16,78 +16,10 @@ var DownloadProfilesButton = require('download-profiles-button');
 
 var EventEmitter = require('events');
 var FormattersFactory = require('./Formatters.jsx');
+var PropTypes = require('./PropTypes.js');
+var createColorAxis = require('./ColoursForHighcharts.js');
 
 //*------------------------------------------------------------------*
-
-var PointPropType = React.PropTypes.shape({
-  x: React.PropTypes.number.isRequired,
-  y: React.PropTypes.number.isRequired,
-  value: React.PropTypes.number.isRequired,
-  info: React.PropTypes.object.isRequired
-});
-
-var DataSeriesPropType = React.PropTypes.arrayOf(
-      React.PropTypes.arrayOf(PointPropType)
-  ).isRequired;
-
-var AxisCategoriesPropType = React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      id: React.PropTypes.string, // ontology ID can be missing for x axis
-      label: React.PropTypes.string.isRequired
-    })
-  ).isRequired;
-
-
-var HeatmapDataPropType = React.PropTypes.objectOf(
-    function(heatmapData){
-
-        var width = heatmapData.xAxisCategories.length;
-        var height = heatmapData.yAxisCategories.length;
-
-        for(var i = 0; i < heatmapData.dataSeries.length; i++){
-            for(var j = 0; j < heatmapData.dataSeries[i].data.length; j++){
-                var point = heatmapData.dataSeries[i].data[j];
-                var x = point.x;
-                var y = point.y;
-                if(x < 0 || y < 0 || x >= width || y >= height){
-                    return new Error("Point with coordinates outside range:" + x+","+y);
-                }
-            }
-        }
-
-    var isPermutation = function(arr){
-        return (
-            [].concat(arr)
-            .sort(function(a,b){
-                return a-b;
-            })
-            .map(function(el,ix){
-                return el===ix;
-            })
-            .reduce(function(l,r){
-                return l&&r;
-            },true)
-        );
-    };
-
-    if(!heatmapData.orderings.hasOwnProperty("Default")){
-        return new Error("Default ordering missing!");
-    }
-
-    for(var orderingName in heatmapData.orderings){
-        if(heatmapData.orderings.hasOwnProperty(orderingName)){
-            var ordering = heatmapData.orderings[orderingName];
-
-            if(ordering.columns.length!== width || !isPermutation(ordering.columns)){
-                return new Error("Column ordering invalid in "+orderingName);
-            }
-            if(ordering.rows.length!==height || ! isPermutation(ordering.rows)){
-                return new Error("Row ordering invalid in "+orderingName);
-            }
-        }
-    }
-
-  });
 
 var HeatmapContainer = React.createClass({
     propTypes: {
@@ -95,7 +27,7 @@ var HeatmapContainer = React.createClass({
         heatmapConfig: React.PropTypes.object.isRequired,
         anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
         googleAnalyticsCallback: React.PropTypes.func.isRequired,
-        heatmapData: HeatmapDataPropType,
+        heatmapData: PropTypes.HeatmapData,
         afterHeatmapRedrawn: React.PropTypes.func.isRequired
     },
 
@@ -197,11 +129,12 @@ var HeatmapContainer = React.createClass({
                     googleAnalyticsCallback={this.props.googleAnalyticsCallback}
                     showUsageMessage={this.props.heatmapData.xAxisCategories.length > 100} />
 
-                <HighchartsHeatmap
+                <HeatmapCanvas
                     marginRight={marginRight}
                     anatomogramEventEmitter={this.props.anatomogramEventEmitter}
                     data={this._data()}
                     labels={this._labels()}
+                    colorAxis={this.props.heatmapConfig.isExperimentPage ? createColorAxis(this.props.heatmapData.dataSeries) : undefined}
                     afterHeatmapRedrawn={this.props.afterHeatmapRedrawn}
                     formatters={FormattersFactory(this.props.heatmapConfig)}
                 />
@@ -211,34 +144,25 @@ var HeatmapContainer = React.createClass({
 
 });
 
-var FormatterPropType = function(props,propName){
-  var f = props[propName];
-  if(typeof f === 'undefined'){
-    return new Error(propName+" formatter missing");
-  } else if (typeof f !== 'function' || f.name !== 'Formatter'){
-    return new Error(propName+" formatter not correctly created. See the main method of TooltipFormatter.jsx .");
-  }
-}
-
-var HighchartsHeatmap = React.createClass({
-
+var HeatmapCanvas = React.createClass({
     propTypes: {
         marginRight: React.PropTypes.number.isRequired,
         anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
         data: React.PropTypes.shape({
-            dataSeries: DataSeriesPropType,
-            xAxisCategories: AxisCategoriesPropType,
-            yAxisCategories: AxisCategoriesPropType
+            dataSeries: PropTypes.PointsInDataSeries,
+            xAxisCategories: PropTypes.AxisCategories,
+            yAxisCategories: PropTypes.AxisCategories
         }),
         labels: React.PropTypes.arrayOf(React.PropTypes.shape({
             name: React.PropTypes.string,
             colour: React.PropTypes.string
         })).isRequired,
+        colorAxis: React.PropTypes.object,
         afterHeatmapRedrawn: React.PropTypes.func.isRequired,
         formatters : React.PropTypes.shape({
-          xAxis: FormatterPropType,
-          yAxis: FormatterPropType,
-          tooltip: FormatterPropType
+          xAxis: PropTypes.Formatter,
+          yAxis: PropTypes.Formatter,
+          tooltip: PropTypes.Formatter
         }).isRequired
     },
 
@@ -476,6 +400,7 @@ var HighchartsHeatmap = React.createClass({
                 enabled: false
             },
             title: null,
+            colorAxis: this.props.colorAxis || undefined,
             xAxis: { //assays
                 tickLength: 5,
                 tickColor: 'rgb(192, 192, 192)',

@@ -16,7 +16,8 @@
     "react": "^0.14.7",
     "react-bootstrap": "^0.29.5",
     "react-dom": "^0.14.7",
-    "react-highcharts": "^8.3.2"
+    "react-highcharts": "^8.3.2",
+    "react-prop-types-check": "0.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.7.0",

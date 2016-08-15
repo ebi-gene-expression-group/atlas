@@ -9,7 +9,7 @@ module.exports = {
         expressionAtlasHeatmapHighcharts:'./expression-atlas-heatmap-highcharts',
         experimentPageHeatmap: './expression-atlas-heatmap/src/experimentPageHeatmapAnatomogramRenderer.js',
         facetedSearch: './faceted-search',
-        dependencies: ['react', 'react-dom', 'react-radio-group',
+        dependencies: ['react', 'react-dom', 'react-radio-group','react-prop-types-check',
                        'react-bootstrap/lib/DropdownButton', 'react-bootstrap/lib/MenuItem', 'react-bootstrap/lib/FormGroup',
                        'react-bootstrap/lib/FormControl', 'react-bootstrap', 'react-bootstrap/lib/Button',
                        'rc-slider',
