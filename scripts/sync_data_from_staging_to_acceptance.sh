@@ -16,8 +16,8 @@ sudo -u fg_atlas ssh ves-hx-77 '/nfs/public/rw/fg/atlas/solr_production.sh stop'
 echo "============================================================"
 echo `date`
 echo "============================================================"
-echo "Syncing Solr indexes from ves-hx-76 to ves-hx-77..."
-sudo -u fg_atlas ssh ves-hx-77 'rsync -irltpz --delete ves-hx-76:/srv/gxa/solr/* /srv/gxa/solr'
+echo "Syncing Solr indexes from ves-hx-69 to ves-hx-77..."
+sudo -u fg_atlas ssh ves-hx-77 'rsync -irltpz --delete ves-hx-69:/srv/gxa/solr/* /srv/gxa/solr'
 
 echo "============================================================"
 echo `date`
