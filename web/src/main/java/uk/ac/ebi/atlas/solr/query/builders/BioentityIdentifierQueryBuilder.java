@@ -1,10 +1,8 @@
-
 package uk.ac.ebi.atlas.solr.query.builders;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 
 /**
  * This is a builder, keep always in mind that builders are potentially stateful.
@@ -23,12 +21,6 @@ public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityI
 
     public BioentityIdentifierQueryBuilder forQueryString(String queryString, boolean applyOrOnQueryStringContent){
         this.queryString = queryString.replace(":", "\\:").replace("[", "\\[").replace("]", "\\]");
-        this.applyOrOnQueryStringContent = applyOrOnQueryStringContent;
-        return this;
-    }
-
-    public BioentityIdentifierQueryBuilder forGeneQuery(SemanticQuery geneQuery, boolean applyOrOnQueryStringContent){
-        this.queryString = geneQuery.asSolr1DNF();
         this.applyOrOnQueryStringContent = applyOrOnQueryStringContent;
         return this;
     }
