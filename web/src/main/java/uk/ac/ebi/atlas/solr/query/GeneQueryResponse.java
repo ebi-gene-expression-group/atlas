@@ -1,11 +1,12 @@
-
 package uk.ac.ebi.atlas.solr.query;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -58,16 +59,6 @@ public class GeneQueryResponse {
 
     public Collection<String> getIds(String queryTerm) {
         return geneIdsByQueryTerm.get(queryTerm);
-    }
-
-    public Set<String> getRelatedQueryTerms(String geneId){
-        Set<String> relatedQueryTerms = Sets.newHashSet();
-        for (Map.Entry<String,Collection<String>> geneSet: geneIdsByQueryTerm.asMap().entrySet()){
-            if(geneSet.getValue().contains(geneId)){
-                relatedQueryTerms.add(geneSet.getKey());
-            }
-        }
-        return relatedQueryTerms;
     }
 
 }

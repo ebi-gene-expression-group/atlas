@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.collect.Sets;
@@ -8,7 +7,9 @@ import org.junit.Test;
 import java.util.HashSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
 
 public class GeneQueryResponseTest {
 
@@ -90,14 +91,4 @@ public class GeneQueryResponseTest {
         assertThat(subject.containsEntry(ANOTHER_TERM, "G3"), is(false));
     }
 
-    @Test
-    public void relatedTermsShouldDoReverseMapping() throws Exception {
-        assertThat(subject.getRelatedQueryTerms("G2"), contains(A_QUERY_TERM));
-        assertThat(subject.getRelatedQueryTerms("G3"), is(empty()));
-        subject.addGeneIds(anotherQueryTerm, Sets.newHashSet("G1","G4"));
-        assertThat(subject.getRelatedQueryTerms("G1"), containsInAnyOrder(A_QUERY_TERM, ANOTHER_TERM));
-        assertThat(subject.getRelatedQueryTerms("G2"), contains(A_QUERY_TERM));
-        assertThat(subject.getRelatedQueryTerms("G3"), is(empty()));
-        assertThat(subject.getRelatedQueryTerms("G4"), contains(ANOTHER_TERM));
-    }
 }
