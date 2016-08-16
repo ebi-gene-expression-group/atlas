@@ -8,6 +8,7 @@
   "private": true,
   "dependencies": {
     "anatomogram": "file:../atlas_modules/anatomogram",
+    "color": "^0.11.3",
     "download-profiles-button": "file:../atlas_modules/download-profiles-button",
     "he": "^1.1.0",
     "highcharts-heatmap": "^0.1.2",

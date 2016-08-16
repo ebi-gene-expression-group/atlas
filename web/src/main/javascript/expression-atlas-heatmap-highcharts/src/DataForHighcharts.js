@@ -116,7 +116,7 @@ var _experimentsIntoDataSeriesByThresholds = function(thresholds){
 };
 
 var getDataSeries = function(profilesRows, config) {
-  var _fns = [_.lt, _.eq,_.gt].map(function(f){return function(point){return f(0, point.value);};});
+  var _fns = [_.lt, _.eq,_.gt].map(function(f){return function(point){return f(point.value,0);};});
   var _belowCutoff = _fns[1];
   return (
     config.isMultiExperiment
@@ -133,11 +133,11 @@ var getDataSeries = function(profilesRows, config) {
       ? _dataProportionallyInEachSeries(profilesRows, config,
           _fns,
           [["High down", "Down"], ["Below cutoff"], ["Up", "High up"]],
-          [["blue", "lightBlue"], ["grey"], ["darkSalmon","fireBrick"]])
+          [["#0000ff", "#8cc6ff"], ["#808080"], ["#e9967a","#b22222"]])
       : _dataProportionallyInEachSeries(profilesRows, config,
           [_belowCutoff,_.negate(_belowCutoff)],
           [["Below cutoff"],["Low", "Medium", "High"]],
-          [["grey"],["lightBlue","blue","darkBlue"]])
+          [["#808080"],["#8cc6ff","#0000ff","#0000b3"]])
 
   )
 };

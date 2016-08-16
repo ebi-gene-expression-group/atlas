@@ -3,68 +3,114 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
-var validate = require('react-prop-types-check');
+var validateDataSeries = require('./PropTypes.js').validateDataSeries;
+var Colour = require("color");
 
 //*------------------------------------------------------------------*
 
 //*------------------------------------------------------------------*
 
-var colourStopsPropType = React.PropTypes.arrayOf(function(colourStops){
-  return colourStops.map(function(stop){
-    if(! (typeof stop[0] === 'number' && stop[0]>=0 && stop[0]<=1)){
-      return new Error("Stop values should be floats between 0 and 1: http://api.highcharts.com/highmaps#colorAxis.stops");
-    }
-    if (! (typeof stop[1] === "string")){
-      return new Error("Stop names should be colours,not: "+stop[1]);
-    }
-    return null;
-  })
-  .filter(function(e){return e})
-  .concat([null])
-  [0];
-});
-
-
-var _colourStops = function(){
-  var sortfn = function(l,r){return l-r};
-  var values = this.props.heatmapData.dataSeries.map(
-    function(series){
-      return series.data.map(function(point){
-        return point.value;
-      })
-    }
-  );
-  var sorted = [].concat.apply([], values);
-  sorted.sort(sortfn);
-  var min = sorted[0];
-  var range = sorted[sorted.length -1]-min;
-  var medians = values.map(
-    function(seriesValues){
-      return seriesValues.sort(sortfn)[Math.floor(seriesValues.length/2)];
-    }
-  );
-  values = undefined;
+var highlightColour = function(c){
   return (
-    this.props.heatmapData.dataSeries
-    .map(function(e,ix,self){
-        return [(medians[ix]-min)/range || (ix==0? 0 :ix ==self.length-1 ? 1: (medians[ix-1]+medians[ix+1] - 2*min)/(2*range)), e.colour]
-      })
-    .map(function(e,ix,self){
+    c.light()
+    ? c.lighten(0.5)
+    : c.saturate(0.3).darken(0.5)
+  );
+}
+
+var dataClassesFromSeries = function(dataSeries){
+  validateDataSeries(dataSeries);
+  var xs =
+    dataSeries
+    .map(function(series){
       return (
-        ix===self.length -1 && ! e[0]? [1,e[1]] : e
-      )
+        series.data.length === 0 && series.name === "Below cutoff"
+        ? {
+          data: [{value: 0.0}],
+          colour: series.colour
+        }
+        : series
+      );
+    })
+    .filter(function(series){
+      return series.data.length>0;
+    })
+    .map(function(series,ix,self){
+      var theseSeriesValuesSorted =
+        series.data.map(function(point){
+          return point.value;
+        });
+      theseSeriesValuesSorted.sort(function(l,r){return l-r});
+      return {
+        min: theseSeriesValuesSorted[0],
+        minColour: ix ==0? highlightColour(Colour(self[ix].colour)): Colour(self[ix-1].colour),
+        max: theseSeriesValuesSorted[theseSeriesValuesSorted.length-1],
+        maxColour: ix ==self.length-1 ? highlightColour(Colour(self[ix].colour)): Colour(self[ix+1].colour),
+        median: theseSeriesValuesSorted[Math.floor(series.data.length/2)],
+        medianColour: Colour(self[ix].colour),
+        sortedValues: theseSeriesValuesSorted
+      }
+    }
+  );
+  var needToSplit = function(x){
+    return (
+      x.sortedValues.length>3
+      && x.sortedValues[0]!=x.sortedValues[x.sortedValues.length-1]
+      && x.minColour.rgb()!==x.maxColour.rgb()
+    );
+  };
+
+  var splitInHalf = function(x){
+    return [
+      {
+        min:x.min,
+        minColour: x.minColour,
+        max:x.median,
+        maxColour: x.medianColour,
+        median: x.sortedValues[Math.floor(x.sortedValues.length/4)],
+        medianColour: x.minColour.mix(x.medianColour),
+        sortedValues: x.sortedValues.slice(0, Math.floor(x.sortedValues.length/2))
+      },
+      {
+        min:x.median,
+        minColour: x.medianColour,
+        max:x.max,
+        maxColour: x.maxColour,
+        median: x.sortedValues[Math.floor(3* x.sortedValues.length/4)],
+        medianColour: x.medianColour.mix(x.maxColour),
+        sortedValues: x.sortedValues.slice(Math.floor(x.sortedValues.length/2))
+      }
+    ];
+  };
+  var l = Number.MIN_VALUE;
+  var L = xs.length;
+  while(l<L){
+    xs = [].concat.apply([], xs.map(function(x){
+      if(needToSplit(x)){
+        return splitInHalf(x);
+      } else {
+        return [x];
+      }
+    }));
+    l = L;
+    L = xs.length;
+  }
+
+  return (
+    xs.map(function(x){
+      return {
+        from: x.min,
+        to: x.max,
+        color: x.medianColour.hexString()
+      };
     })
   );
 };
 
 var getColorAxisFromDataSeries = function(dataSeries){
   return {
-            stops: [
-                [0, '#3060cf'],
-                [0.5, '#fffbbc'],
-                [0.99, '#c4463a']
-            ]
-        };
+    dataClasses: dataClassesFromSeries(dataSeries)
+  };
 }
 
 module.exports = getColorAxisFromDataSeries;

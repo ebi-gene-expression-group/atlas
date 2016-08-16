@@ -20,10 +20,16 @@ var PointPropType = React.PropTypes.shape({
 var PointsInDataSeriesPropType = React.PropTypes.arrayOf(React.PropTypes.arrayOf(PointPropType));
 
 var DataSeriesProps = {
-      colour: React.PropTypes.string.isRequired,
-      name: React.PropTypes.string.isRequired,
-      data: React.PropTypes.arrayOf(PointPropType).isRequired
-    };
+  colour: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string.isRequired,
+  data: React.PropTypes.arrayOf(PointPropType).isRequired
+};
+
+var validateDataSeries = function(dataSeries){
+  dataSeries.forEach(function(series){
+    validate(series, DataSeriesProps);
+  });
+};
 
 var AxisCategoriesPropType = React.PropTypes.arrayOf(
     React.PropTypes.shape({
@@ -35,9 +41,7 @@ var AxisCategoriesPropType = React.PropTypes.arrayOf(
 
 var HeatmapDataPropType = React.PropTypes.objectOf(
     function(heatmapData){
-    heatmapData.dataSeries.forEach(function(series){
-      validate(series, DataSeriesProps);
-    });
+    validateDataSeries(heatmapData.dataSeries);
 
     var width = heatmapData.xAxisCategories.length;
     var height = heatmapData.yAxisCategories.length;
@@ -84,7 +88,8 @@ var HeatmapDataPropType = React.PropTypes.objectOf(
             }
         }
     }
-  });
+  }
+);
 
 var FormatterPropType = function(props,propName){
   var f = props[propName];
@@ -95,6 +100,7 @@ var FormatterPropType = function(props,propName){
   }
 }
 
+exports.validateDataSeries = validateDataSeries;
 exports.PointsInDataSeries = PointsInDataSeriesPropType;
 exports.HeatmapData = HeatmapDataPropType;
 exports.AxisCategories = AxisCategoriesPropType;
