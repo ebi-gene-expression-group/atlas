@@ -10,9 +10,9 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	exports.baseline = __webpack_require__(/*! ./src/baselineRouter.js */ 1448);
+	exports.baseline = __webpack_require__(/*! ./src/baselineRouter.js */ 1463);
 	
-	exports.differential = __webpack_require__(/*! ./src/differentialRouter.js */ 1895);
+	exports.differential = __webpack_require__(/*! ./src/differentialRouter.js */ 1920);
 
 
 /***/ },
@@ -1415,10 +1415,1804 @@ webpackJsonp_name_([4],[
 /* 1397 */,
 /* 1398 */,
 /* 1399 */,
-/* 1400 */,
-/* 1401 */,
-/* 1402 */,
-/* 1403 */,
+/* 1400 */
+/*!*******************************************************!*\
+  !*** (webpack)/~/node-libs-browser/~/buffer/index.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Buffer, global) {/*!
+	 * The buffer module from node.js, for the browser.
+	 *
+	 * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+	 * @license  MIT
+	 */
+	/* eslint-disable no-proto */
+	
+	'use strict'
+	
+	var base64 = __webpack_require__(/*! base64-js */ 1401)
+	var ieee754 = __webpack_require__(/*! ieee754 */ 1402)
+	var isArray = __webpack_require__(/*! isarray */ 1403)
+	
+	exports.Buffer = Buffer
+	exports.SlowBuffer = SlowBuffer
+	exports.INSPECT_MAX_BYTES = 50
+	Buffer.poolSize = 8192 // not used by this implementation
+	
+	var rootParent = {}
+	
+	/**
+	 * If `Buffer.TYPED_ARRAY_SUPPORT`:
+	 *   === true    Use Uint8Array implementation (fastest)
+	 *   === false   Use Object implementation (most compatible, even IE6)
+	 *
+	 * Browsers that support typed arrays are IE 10+, Firefox 4+, Chrome 7+, Safari 5.1+,
+	 * Opera 11.6+, iOS 4.2+.
+	 *
+	 * Due to various browser bugs, sometimes the Object implementation will be used even
+	 * when the browser supports typed arrays.
+	 *
+	 * Note:
+	 *
+	 *   - Firefox 4-29 lacks support for adding new properties to `Uint8Array` instances,
+	 *     See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438.
+	 *
+	 *   - Safari 5-7 lacks support for changing the `Object.prototype.constructor` property
+	 *     on objects.
+	 *
+	 *   - Chrome 9-10 is missing the `TypedArray.prototype.subarray` function.
+	 *
+	 *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
+	 *     incorrect length in some situations.
+	
+	 * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
+	 * get the Object implementation, which is slower but behaves correctly.
+	 */
+	Buffer.TYPED_ARRAY_SUPPORT = global.TYPED_ARRAY_SUPPORT !== undefined
+	  ? global.TYPED_ARRAY_SUPPORT
+	  : typedArraySupport()
+	
+	function typedArraySupport () {
+	  function Bar () {}
+	  try {
+	    var arr = new Uint8Array(1)
+	    arr.foo = function () { return 42 }
+	    arr.constructor = Bar
+	    return arr.foo() === 42 && // typed array instances can be augmented
+	        arr.constructor === Bar && // constructor can be set
+	        typeof arr.subarray === 'function' && // chrome 9-10 lack `subarray`
+	        arr.subarray(1, 1).byteLength === 0 // ie10 has broken `subarray`
+	  } catch (e) {
+	    return false
+	  }
+	}
+	
+	function kMaxLength () {
+	  return Buffer.TYPED_ARRAY_SUPPORT
+	    ? 0x7fffffff
+	    : 0x3fffffff
+	}
+	
+	/**
+	 * Class: Buffer
+	 * =============
+	 *
+	 * The Buffer constructor returns instances of `Uint8Array` that are augmented
+	 * with function properties for all the node `Buffer` API functions. We use
+	 * `Uint8Array` so that square bracket notation works as expected -- it returns
+	 * a single octet.
+	 *
+	 * By augmenting the instances, we can avoid modifying the `Uint8Array`
+	 * prototype.
+	 */
+	function Buffer (arg) {
+	  if (!(this instanceof Buffer)) {
+	    // Avoid going through an ArgumentsAdaptorTrampoline in the common case.
+	    if (arguments.length > 1) return new Buffer(arg, arguments[1])
+	    return new Buffer(arg)
+	  }
+	
+	  if (!Buffer.TYPED_ARRAY_SUPPORT) {
+	    this.length = 0
+	    this.parent = undefined
+	  }
+	
+	  // Common case.
+	  if (typeof arg === 'number') {
+	    return fromNumber(this, arg)
+	  }
+	
+	  // Slightly less common case.
+	  if (typeof arg === 'string') {
+	    return fromString(this, arg, arguments.length > 1 ? arguments[1] : 'utf8')
+	  }
+	
+	  // Unusual.
+	  return fromObject(this, arg)
+	}
+	
+	function fromNumber (that, length) {
+	  that = allocate(that, length < 0 ? 0 : checked(length) | 0)
+	  if (!Buffer.TYPED_ARRAY_SUPPORT) {
+	    for (var i = 0; i < length; i++) {
+	      that[i] = 0
+	    }
+	  }
+	  return that
+	}
+	
+	function fromString (that, string, encoding) {
+	  if (typeof encoding !== 'string' || encoding === '') encoding = 'utf8'
+	
+	  // Assumption: byteLength() return value is always < kMaxLength.
+	  var length = byteLength(string, encoding) | 0
+	  that = allocate(that, length)
+	
+	  that.write(string, encoding)
+	  return that
+	}
+	
+	function fromObject (that, object) {
+	  if (Buffer.isBuffer(object)) return fromBuffer(that, object)
+	
+	  if (isArray(object)) return fromArray(that, object)
+	
+	  if (object == null) {
+	    throw new TypeError('must start with number, buffer, array or string')
+	  }
+	
+	  if (typeof ArrayBuffer !== 'undefined') {
+	    if (object.buffer instanceof ArrayBuffer) {
+	      return fromTypedArray(that, object)
+	    }
+	    if (object instanceof ArrayBuffer) {
+	      return fromArrayBuffer(that, object)
+	    }
+	  }
+	
+	  if (object.length) return fromArrayLike(that, object)
+	
+	  return fromJsonObject(that, object)
+	}
+	
+	function fromBuffer (that, buffer) {
+	  var length = checked(buffer.length) | 0
+	  that = allocate(that, length)
+	  buffer.copy(that, 0, 0, length)
+	  return that
+	}
+	
+	function fromArray (that, array) {
+	  var length = checked(array.length) | 0
+	  that = allocate(that, length)
+	  for (var i = 0; i < length; i += 1) {
+	    that[i] = array[i] & 255
+	  }
+	  return that
+	}
+	
+	// Duplicate of fromArray() to keep fromArray() monomorphic.
+	function fromTypedArray (that, array) {
+	  var length = checked(array.length) | 0
+	  that = allocate(that, length)
+	  // Truncating the elements is probably not what people expect from typed
+	  // arrays with BYTES_PER_ELEMENT > 1 but it's compatible with the behavior
+	  // of the old Buffer constructor.
+	  for (var i = 0; i < length; i += 1) {
+	    that[i] = array[i] & 255
+	  }
+	  return that
+	}
+	
+	function fromArrayBuffer (that, array) {
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    // Return an augmented `Uint8Array` instance, for best performance
+	    array.byteLength
+	    that = Buffer._augment(new Uint8Array(array))
+	  } else {
+	    // Fallback: Return an object instance of the Buffer class
+	    that = fromTypedArray(that, new Uint8Array(array))
+	  }
+	  return that
+	}
+	
+	function fromArrayLike (that, array) {
+	  var length = checked(array.length) | 0
+	  that = allocate(that, length)
+	  for (var i = 0; i < length; i += 1) {
+	    that[i] = array[i] & 255
+	  }
+	  return that
+	}
+	
+	// Deserialize { type: 'Buffer', data: [1,2,3,...] } into a Buffer object.
+	// Returns a zero-length buffer for inputs that don't conform to the spec.
+	function fromJsonObject (that, object) {
+	  var array
+	  var length = 0
+	
+	  if (object.type === 'Buffer' && isArray(object.data)) {
+	    array = object.data
+	    length = checked(array.length) | 0
+	  }
+	  that = allocate(that, length)
+	
+	  for (var i = 0; i < length; i += 1) {
+	    that[i] = array[i] & 255
+	  }
+	  return that
+	}
+	
+	if (Buffer.TYPED_ARRAY_SUPPORT) {
+	  Buffer.prototype.__proto__ = Uint8Array.prototype
+	  Buffer.__proto__ = Uint8Array
+	} else {
+	  // pre-set for values that may exist in the future
+	  Buffer.prototype.length = undefined
+	  Buffer.prototype.parent = undefined
+	}
+	
+	function allocate (that, length) {
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    // Return an augmented `Uint8Array` instance, for best performance
+	    that = Buffer._augment(new Uint8Array(length))
+	    that.__proto__ = Buffer.prototype
+	  } else {
+	    // Fallback: Return an object instance of the Buffer class
+	    that.length = length
+	    that._isBuffer = true
+	  }
+	
+	  var fromPool = length !== 0 && length <= Buffer.poolSize >>> 1
+	  if (fromPool) that.parent = rootParent
+	
+	  return that
+	}
+	
+	function checked (length) {
+	  // Note: cannot use `length < kMaxLength` here because that fails when
+	  // length is NaN (which is otherwise coerced to zero.)
+	  if (length >= kMaxLength()) {
+	    throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
+	                         'size: 0x' + kMaxLength().toString(16) + ' bytes')
+	  }
+	  return length | 0
+	}
+	
+	function SlowBuffer (subject, encoding) {
+	  if (!(this instanceof SlowBuffer)) return new SlowBuffer(subject, encoding)
+	
+	  var buf = new Buffer(subject, encoding)
+	  delete buf.parent
+	  return buf
+	}
+	
+	Buffer.isBuffer = function isBuffer (b) {
+	  return !!(b != null && b._isBuffer)
+	}
+	
+	Buffer.compare = function compare (a, b) {
+	  if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
+	    throw new TypeError('Arguments must be Buffers')
+	  }
+	
+	  if (a === b) return 0
+	
+	  var x = a.length
+	  var y = b.length
+	
+	  var i = 0
+	  var len = Math.min(x, y)
+	  while (i < len) {
+	    if (a[i] !== b[i]) break
+	
+	    ++i
+	  }
+	
+	  if (i !== len) {
+	    x = a[i]
+	    y = b[i]
+	  }
+	
+	  if (x < y) return -1
+	  if (y < x) return 1
+	  return 0
+	}
+	
+	Buffer.isEncoding = function isEncoding (encoding) {
+	  switch (String(encoding).toLowerCase()) {
+	    case 'hex':
+	    case 'utf8':
+	    case 'utf-8':
+	    case 'ascii':
+	    case 'binary':
+	    case 'base64':
+	    case 'raw':
+	    case 'ucs2':
+	    case 'ucs-2':
+	    case 'utf16le':
+	    case 'utf-16le':
+	      return true
+	    default:
+	      return false
+	  }
+	}
+	
+	Buffer.concat = function concat (list, length) {
+	  if (!isArray(list)) throw new TypeError('list argument must be an Array of Buffers.')
+	
+	  if (list.length === 0) {
+	    return new Buffer(0)
+	  }
+	
+	  var i
+	  if (length === undefined) {
+	    length = 0
+	    for (i = 0; i < list.length; i++) {
+	      length += list[i].length
+	    }
+	  }
+	
+	  var buf = new Buffer(length)
+	  var pos = 0
+	  for (i = 0; i < list.length; i++) {
+	    var item = list[i]
+	    item.copy(buf, pos)
+	    pos += item.length
+	  }
+	  return buf
+	}
+	
+	function byteLength (string, encoding) {
+	  if (typeof string !== 'string') string = '' + string
+	
+	  var len = string.length
+	  if (len === 0) return 0
+	
+	  // Use a for loop to avoid recursion
+	  var loweredCase = false
+	  for (;;) {
+	    switch (encoding) {
+	      case 'ascii':
+	      case 'binary':
+	      // Deprecated
+	      case 'raw':
+	      case 'raws':
+	        return len
+	      case 'utf8':
+	      case 'utf-8':
+	        return utf8ToBytes(string).length
+	      case 'ucs2':
+	      case 'ucs-2':
+	      case 'utf16le':
+	      case 'utf-16le':
+	        return len * 2
+	      case 'hex':
+	        return len >>> 1
+	      case 'base64':
+	        return base64ToBytes(string).length
+	      default:
+	        if (loweredCase) return utf8ToBytes(string).length // assume utf8
+	        encoding = ('' + encoding).toLowerCase()
+	        loweredCase = true
+	    }
+	  }
+	}
+	Buffer.byteLength = byteLength
+	
+	function slowToString (encoding, start, end) {
+	  var loweredCase = false
+	
+	  start = start | 0
+	  end = end === undefined || end === Infinity ? this.length : end | 0
+	
+	  if (!encoding) encoding = 'utf8'
+	  if (start < 0) start = 0
+	  if (end > this.length) end = this.length
+	  if (end <= start) return ''
+	
+	  while (true) {
+	    switch (encoding) {
+	      case 'hex':
+	        return hexSlice(this, start, end)
+	
+	      case 'utf8':
+	      case 'utf-8':
+	        return utf8Slice(this, start, end)
+	
+	      case 'ascii':
+	        return asciiSlice(this, start, end)
+	
+	      case 'binary':
+	        return binarySlice(this, start, end)
+	
+	      case 'base64':
+	        return base64Slice(this, start, end)
+	
+	      case 'ucs2':
+	      case 'ucs-2':
+	      case 'utf16le':
+	      case 'utf-16le':
+	        return utf16leSlice(this, start, end)
+	
+	      default:
+	        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+	        encoding = (encoding + '').toLowerCase()
+	        loweredCase = true
+	    }
+	  }
+	}
+	
+	Buffer.prototype.toString = function toString () {
+	  var length = this.length | 0
+	  if (length === 0) return ''
+	  if (arguments.length === 0) return utf8Slice(this, 0, length)
+	  return slowToString.apply(this, arguments)
+	}
+	
+	Buffer.prototype.equals = function equals (b) {
+	  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+	  if (this === b) return true
+	  return Buffer.compare(this, b) === 0
+	}
+	
+	Buffer.prototype.inspect = function inspect () {
+	  var str = ''
+	  var max = exports.INSPECT_MAX_BYTES
+	  if (this.length > 0) {
+	    str = this.toString('hex', 0, max).match(/.{2}/g).join(' ')
+	    if (this.length > max) str += ' ... '
+	  }
+	  return '<Buffer ' + str + '>'
+	}
+	
+	Buffer.prototype.compare = function compare (b) {
+	  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+	  if (this === b) return 0
+	  return Buffer.compare(this, b)
+	}
+	
+	Buffer.prototype.indexOf = function indexOf (val, byteOffset) {
+	  if (byteOffset > 0x7fffffff) byteOffset = 0x7fffffff
+	  else if (byteOffset < -0x80000000) byteOffset = -0x80000000
+	  byteOffset >>= 0
+	
+	  if (this.length === 0) return -1
+	  if (byteOffset >= this.length) return -1
+	
+	  // Negative offsets start from the end of the buffer
+	  if (byteOffset < 0) byteOffset = Math.max(this.length + byteOffset, 0)
+	
+	  if (typeof val === 'string') {
+	    if (val.length === 0) return -1 // special case: looking for empty string always fails
+	    return String.prototype.indexOf.call(this, val, byteOffset)
+	  }
+	  if (Buffer.isBuffer(val)) {
+	    return arrayIndexOf(this, val, byteOffset)
+	  }
+	  if (typeof val === 'number') {
+	    if (Buffer.TYPED_ARRAY_SUPPORT && Uint8Array.prototype.indexOf === 'function') {
+	      return Uint8Array.prototype.indexOf.call(this, val, byteOffset)
+	    }
+	    return arrayIndexOf(this, [ val ], byteOffset)
+	  }
+	
+	  function arrayIndexOf (arr, val, byteOffset) {
+	    var foundIndex = -1
+	    for (var i = 0; byteOffset + i < arr.length; i++) {
+	      if (arr[byteOffset + i] === val[foundIndex === -1 ? 0 : i - foundIndex]) {
+	        if (foundIndex === -1) foundIndex = i
+	        if (i - foundIndex + 1 === val.length) return byteOffset + foundIndex
+	      } else {
+	        foundIndex = -1
+	      }
+	    }
+	    return -1
+	  }
+	
+	  throw new TypeError('val must be string, number or Buffer')
+	}
+	
+	// `get` is deprecated
+	Buffer.prototype.get = function get (offset) {
+	  console.log('.get() is deprecated. Access using array indexes instead.')
+	  return this.readUInt8(offset)
+	}
+	
+	// `set` is deprecated
+	Buffer.prototype.set = function set (v, offset) {
+	  console.log('.set() is deprecated. Access using array indexes instead.')
+	  return this.writeUInt8(v, offset)
+	}
+	
+	function hexWrite (buf, string, offset, length) {
+	  offset = Number(offset) || 0
+	  var remaining = buf.length - offset
+	  if (!length) {
+	    length = remaining
+	  } else {
+	    length = Number(length)
+	    if (length > remaining) {
+	      length = remaining
+	    }
+	  }
+	
+	  // must be an even number of digits
+	  var strLen = string.length
+	  if (strLen % 2 !== 0) throw new Error('Invalid hex string')
+	
+	  if (length > strLen / 2) {
+	    length = strLen / 2
+	  }
+	  for (var i = 0; i < length; i++) {
+	    var parsed = parseInt(string.substr(i * 2, 2), 16)
+	    if (isNaN(parsed)) throw new Error('Invalid hex string')
+	    buf[offset + i] = parsed
+	  }
+	  return i
+	}
+	
+	function utf8Write (buf, string, offset, length) {
+	  return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length)
+	}
+	
+	function asciiWrite (buf, string, offset, length) {
+	  return blitBuffer(asciiToBytes(string), buf, offset, length)
+	}
+	
+	function binaryWrite (buf, string, offset, length) {
+	  return asciiWrite(buf, string, offset, length)
+	}
+	
+	function base64Write (buf, string, offset, length) {
+	  return blitBuffer(base64ToBytes(string), buf, offset, length)
+	}
+	
+	function ucs2Write (buf, string, offset, length) {
+	  return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length)
+	}
+	
+	Buffer.prototype.write = function write (string, offset, length, encoding) {
+	  // Buffer#write(string)
+	  if (offset === undefined) {
+	    encoding = 'utf8'
+	    length = this.length
+	    offset = 0
+	  // Buffer#write(string, encoding)
+	  } else if (length === undefined && typeof offset === 'string') {
+	    encoding = offset
+	    length = this.length
+	    offset = 0
+	  // Buffer#write(string, offset[, length][, encoding])
+	  } else if (isFinite(offset)) {
+	    offset = offset | 0
+	    if (isFinite(length)) {
+	      length = length | 0
+	      if (encoding === undefined) encoding = 'utf8'
+	    } else {
+	      encoding = length
+	      length = undefined
+	    }
+	  // legacy write(string, encoding, offset, length) - remove in v0.13
+	  } else {
+	    var swap = encoding
+	    encoding = offset
+	    offset = length | 0
+	    length = swap
+	  }
+	
+	  var remaining = this.length - offset
+	  if (length === undefined || length > remaining) length = remaining
+	
+	  if ((string.length > 0 && (length < 0 || offset < 0)) || offset > this.length) {
+	    throw new RangeError('attempt to write outside buffer bounds')
+	  }
+	
+	  if (!encoding) encoding = 'utf8'
+	
+	  var loweredCase = false
+	  for (;;) {
+	    switch (encoding) {
+	      case 'hex':
+	        return hexWrite(this, string, offset, length)
+	
+	      case 'utf8':
+	      case 'utf-8':
+	        return utf8Write(this, string, offset, length)
+	
+	      case 'ascii':
+	        return asciiWrite(this, string, offset, length)
+	
+	      case 'binary':
+	        return binaryWrite(this, string, offset, length)
+	
+	      case 'base64':
+	        // Warning: maxLength not taken into account in base64Write
+	        return base64Write(this, string, offset, length)
+	
+	      case 'ucs2':
+	      case 'ucs-2':
+	      case 'utf16le':
+	      case 'utf-16le':
+	        return ucs2Write(this, string, offset, length)
+	
+	      default:
+	        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+	        encoding = ('' + encoding).toLowerCase()
+	        loweredCase = true
+	    }
+	  }
+	}
+	
+	Buffer.prototype.toJSON = function toJSON () {
+	  return {
+	    type: 'Buffer',
+	    data: Array.prototype.slice.call(this._arr || this, 0)
+	  }
+	}
+	
+	function base64Slice (buf, start, end) {
+	  if (start === 0 && end === buf.length) {
+	    return base64.fromByteArray(buf)
+	  } else {
+	    return base64.fromByteArray(buf.slice(start, end))
+	  }
+	}
+	
+	function utf8Slice (buf, start, end) {
+	  end = Math.min(buf.length, end)
+	  var res = []
+	
+	  var i = start
+	  while (i < end) {
+	    var firstByte = buf[i]
+	    var codePoint = null
+	    var bytesPerSequence = (firstByte > 0xEF) ? 4
+	      : (firstByte > 0xDF) ? 3
+	      : (firstByte > 0xBF) ? 2
+	      : 1
+	
+	    if (i + bytesPerSequence <= end) {
+	      var secondByte, thirdByte, fourthByte, tempCodePoint
+	
+	      switch (bytesPerSequence) {
+	        case 1:
+	          if (firstByte < 0x80) {
+	            codePoint = firstByte
+	          }
+	          break
+	        case 2:
+	          secondByte = buf[i + 1]
+	          if ((secondByte & 0xC0) === 0x80) {
+	            tempCodePoint = (firstByte & 0x1F) << 0x6 | (secondByte & 0x3F)
+	            if (tempCodePoint > 0x7F) {
+	              codePoint = tempCodePoint
+	            }
+	          }
+	          break
+	        case 3:
+	          secondByte = buf[i + 1]
+	          thirdByte = buf[i + 2]
+	          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
+	            tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | (thirdByte & 0x3F)
+	            if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
+	              codePoint = tempCodePoint
+	            }
+	          }
+	          break
+	        case 4:
+	          secondByte = buf[i + 1]
+	          thirdByte = buf[i + 2]
+	          fourthByte = buf[i + 3]
+	          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
+	            tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | (fourthByte & 0x3F)
+	            if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
+	              codePoint = tempCodePoint
+	            }
+	          }
+	      }
+	    }
+	
+	    if (codePoint === null) {
+	      // we did not generate a valid codePoint so insert a
+	      // replacement char (U+FFFD) and advance only 1 byte
+	      codePoint = 0xFFFD
+	      bytesPerSequence = 1
+	    } else if (codePoint > 0xFFFF) {
+	      // encode to utf16 (surrogate pair dance)
+	      codePoint -= 0x10000
+	      res.push(codePoint >>> 10 & 0x3FF | 0xD800)
+	      codePoint = 0xDC00 | codePoint & 0x3FF
+	    }
+	
+	    res.push(codePoint)
+	    i += bytesPerSequence
+	  }
+	
+	  return decodeCodePointsArray(res)
+	}
+	
+	// Based on http://stackoverflow.com/a/22747272/680742, the browser with
+	// the lowest limit is Chrome, with 0x10000 args.
+	// We go 1 magnitude less, for safety
+	var MAX_ARGUMENTS_LENGTH = 0x1000
+	
+	function decodeCodePointsArray (codePoints) {
+	  var len = codePoints.length
+	  if (len <= MAX_ARGUMENTS_LENGTH) {
+	    return String.fromCharCode.apply(String, codePoints) // avoid extra slice()
+	  }
+	
+	  // Decode in chunks to avoid "call stack size exceeded".
+	  var res = ''
+	  var i = 0
+	  while (i < len) {
+	    res += String.fromCharCode.apply(
+	      String,
+	      codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
+	    )
+	  }
+	  return res
+	}
+	
+	function asciiSlice (buf, start, end) {
+	  var ret = ''
+	  end = Math.min(buf.length, end)
+	
+	  for (var i = start; i < end; i++) {
+	    ret += String.fromCharCode(buf[i] & 0x7F)
+	  }
+	  return ret
+	}
+	
+	function binarySlice (buf, start, end) {
+	  var ret = ''
+	  end = Math.min(buf.length, end)
+	
+	  for (var i = start; i < end; i++) {
+	    ret += String.fromCharCode(buf[i])
+	  }
+	  return ret
+	}
+	
+	function hexSlice (buf, start, end) {
+	  var len = buf.length
+	
+	  if (!start || start < 0) start = 0
+	  if (!end || end < 0 || end > len) end = len
+	
+	  var out = ''
+	  for (var i = start; i < end; i++) {
+	    out += toHex(buf[i])
+	  }
+	  return out
+	}
+	
+	function utf16leSlice (buf, start, end) {
+	  var bytes = buf.slice(start, end)
+	  var res = ''
+	  for (var i = 0; i < bytes.length; i += 2) {
+	    res += String.fromCharCode(bytes[i] + bytes[i + 1] * 256)
+	  }
+	  return res
+	}
+	
+	Buffer.prototype.slice = function slice (start, end) {
+	  var len = this.length
+	  start = ~~start
+	  end = end === undefined ? len : ~~end
+	
+	  if (start < 0) {
+	    start += len
+	    if (start < 0) start = 0
+	  } else if (start > len) {
+	    start = len
+	  }
+	
+	  if (end < 0) {
+	    end += len
+	    if (end < 0) end = 0
+	  } else if (end > len) {
+	    end = len
+	  }
+	
+	  if (end < start) end = start
+	
+	  var newBuf
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    newBuf = Buffer._augment(this.subarray(start, end))
+	  } else {
+	    var sliceLen = end - start
+	    newBuf = new Buffer(sliceLen, undefined)
+	    for (var i = 0; i < sliceLen; i++) {
+	      newBuf[i] = this[i + start]
+	    }
+	  }
+	
+	  if (newBuf.length) newBuf.parent = this.parent || this
+	
+	  return newBuf
+	}
+	
+	/*
+	 * Need to make sure that buffer isn't trying to write out of bounds.
+	 */
+	function checkOffset (offset, ext, length) {
+	  if ((offset % 1) !== 0 || offset < 0) throw new RangeError('offset is not uint')
+	  if (offset + ext > length) throw new RangeError('Trying to access beyond buffer length')
+	}
+	
+	Buffer.prototype.readUIntLE = function readUIntLE (offset, byteLength, noAssert) {
+	  offset = offset | 0
+	  byteLength = byteLength | 0
+	  if (!noAssert) checkOffset(offset, byteLength, this.length)
+	
+	  var val = this[offset]
+	  var mul = 1
+	  var i = 0
+	  while (++i < byteLength && (mul *= 0x100)) {
+	    val += this[offset + i] * mul
+	  }
+	
+	  return val
+	}
+	
+	Buffer.prototype.readUIntBE = function readUIntBE (offset, byteLength, noAssert) {
+	  offset = offset | 0
+	  byteLength = byteLength | 0
+	  if (!noAssert) {
+	    checkOffset(offset, byteLength, this.length)
+	  }
+	
+	  var val = this[offset + --byteLength]
+	  var mul = 1
+	  while (byteLength > 0 && (mul *= 0x100)) {
+	    val += this[offset + --byteLength] * mul
+	  }
+	
+	  return val
+	}
+	
+	Buffer.prototype.readUInt8 = function readUInt8 (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 1, this.length)
+	  return this[offset]
+	}
+	
+	Buffer.prototype.readUInt16LE = function readUInt16LE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 2, this.length)
+	  return this[offset] | (this[offset + 1] << 8)
+	}
+	
+	Buffer.prototype.readUInt16BE = function readUInt16BE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 2, this.length)
+	  return (this[offset] << 8) | this[offset + 1]
+	}
+	
+	Buffer.prototype.readUInt32LE = function readUInt32LE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 4, this.length)
+	
+	  return ((this[offset]) |
+	      (this[offset + 1] << 8) |
+	      (this[offset + 2] << 16)) +
+	      (this[offset + 3] * 0x1000000)
+	}
+	
+	Buffer.prototype.readUInt32BE = function readUInt32BE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 4, this.length)
+	
+	  return (this[offset] * 0x1000000) +
+	    ((this[offset + 1] << 16) |
+	    (this[offset + 2] << 8) |
+	    this[offset + 3])
+	}
+	
+	Buffer.prototype.readIntLE = function readIntLE (offset, byteLength, noAssert) {
+	  offset = offset | 0
+	  byteLength = byteLength | 0
+	  if (!noAssert) checkOffset(offset, byteLength, this.length)
+	
+	  var val = this[offset]
+	  var mul = 1
+	  var i = 0
+	  while (++i < byteLength && (mul *= 0x100)) {
+	    val += this[offset + i] * mul
+	  }
+	  mul *= 0x80
+	
+	  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+	
+	  return val
+	}
+	
+	Buffer.prototype.readIntBE = function readIntBE (offset, byteLength, noAssert) {
+	  offset = offset | 0
+	  byteLength = byteLength | 0
+	  if (!noAssert) checkOffset(offset, byteLength, this.length)
+	
+	  var i = byteLength
+	  var mul = 1
+	  var val = this[offset + --i]
+	  while (i > 0 && (mul *= 0x100)) {
+	    val += this[offset + --i] * mul
+	  }
+	  mul *= 0x80
+	
+	  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+	
+	  return val
+	}
+	
+	Buffer.prototype.readInt8 = function readInt8 (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 1, this.length)
+	  if (!(this[offset] & 0x80)) return (this[offset])
+	  return ((0xff - this[offset] + 1) * -1)
+	}
+	
+	Buffer.prototype.readInt16LE = function readInt16LE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 2, this.length)
+	  var val = this[offset] | (this[offset + 1] << 8)
+	  return (val & 0x8000) ? val | 0xFFFF0000 : val
+	}
+	
+	Buffer.prototype.readInt16BE = function readInt16BE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 2, this.length)
+	  var val = this[offset + 1] | (this[offset] << 8)
+	  return (val & 0x8000) ? val | 0xFFFF0000 : val
+	}
+	
+	Buffer.prototype.readInt32LE = function readInt32LE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 4, this.length)
+	
+	  return (this[offset]) |
+	    (this[offset + 1] << 8) |
+	    (this[offset + 2] << 16) |
+	    (this[offset + 3] << 24)
+	}
+	
+	Buffer.prototype.readInt32BE = function readInt32BE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 4, this.length)
+	
+	  return (this[offset] << 24) |
+	    (this[offset + 1] << 16) |
+	    (this[offset + 2] << 8) |
+	    (this[offset + 3])
+	}
+	
+	Buffer.prototype.readFloatLE = function readFloatLE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 4, this.length)
+	  return ieee754.read(this, offset, true, 23, 4)
+	}
+	
+	Buffer.prototype.readFloatBE = function readFloatBE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 4, this.length)
+	  return ieee754.read(this, offset, false, 23, 4)
+	}
+	
+	Buffer.prototype.readDoubleLE = function readDoubleLE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 8, this.length)
+	  return ieee754.read(this, offset, true, 52, 8)
+	}
+	
+	Buffer.prototype.readDoubleBE = function readDoubleBE (offset, noAssert) {
+	  if (!noAssert) checkOffset(offset, 8, this.length)
+	  return ieee754.read(this, offset, false, 52, 8)
+	}
+	
+	function checkInt (buf, value, offset, ext, max, min) {
+	  if (!Buffer.isBuffer(buf)) throw new TypeError('buffer must be a Buffer instance')
+	  if (value > max || value < min) throw new RangeError('value is out of bounds')
+	  if (offset + ext > buf.length) throw new RangeError('index out of range')
+	}
+	
+	Buffer.prototype.writeUIntLE = function writeUIntLE (value, offset, byteLength, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  byteLength = byteLength | 0
+	  if (!noAssert) checkInt(this, value, offset, byteLength, Math.pow(2, 8 * byteLength), 0)
+	
+	  var mul = 1
+	  var i = 0
+	  this[offset] = value & 0xFF
+	  while (++i < byteLength && (mul *= 0x100)) {
+	    this[offset + i] = (value / mul) & 0xFF
+	  }
+	
+	  return offset + byteLength
+	}
+	
+	Buffer.prototype.writeUIntBE = function writeUIntBE (value, offset, byteLength, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  byteLength = byteLength | 0
+	  if (!noAssert) checkInt(this, value, offset, byteLength, Math.pow(2, 8 * byteLength), 0)
+	
+	  var i = byteLength - 1
+	  var mul = 1
+	  this[offset + i] = value & 0xFF
+	  while (--i >= 0 && (mul *= 0x100)) {
+	    this[offset + i] = (value / mul) & 0xFF
+	  }
+	
+	  return offset + byteLength
+	}
+	
+	Buffer.prototype.writeUInt8 = function writeUInt8 (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0)
+	  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
+	  this[offset] = (value & 0xff)
+	  return offset + 1
+	}
+	
+	function objectWriteUInt16 (buf, value, offset, littleEndian) {
+	  if (value < 0) value = 0xffff + value + 1
+	  for (var i = 0, j = Math.min(buf.length - offset, 2); i < j; i++) {
+	    buf[offset + i] = (value & (0xff << (8 * (littleEndian ? i : 1 - i)))) >>>
+	      (littleEndian ? i : 1 - i) * 8
+	  }
+	}
+	
+	Buffer.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value & 0xff)
+	    this[offset + 1] = (value >>> 8)
+	  } else {
+	    objectWriteUInt16(this, value, offset, true)
+	  }
+	  return offset + 2
+	}
+	
+	Buffer.prototype.writeUInt16BE = function writeUInt16BE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value >>> 8)
+	    this[offset + 1] = (value & 0xff)
+	  } else {
+	    objectWriteUInt16(this, value, offset, false)
+	  }
+	  return offset + 2
+	}
+	
+	function objectWriteUInt32 (buf, value, offset, littleEndian) {
+	  if (value < 0) value = 0xffffffff + value + 1
+	  for (var i = 0, j = Math.min(buf.length - offset, 4); i < j; i++) {
+	    buf[offset + i] = (value >>> (littleEndian ? i : 3 - i) * 8) & 0xff
+	  }
+	}
+	
+	Buffer.prototype.writeUInt32LE = function writeUInt32LE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset + 3] = (value >>> 24)
+	    this[offset + 2] = (value >>> 16)
+	    this[offset + 1] = (value >>> 8)
+	    this[offset] = (value & 0xff)
+	  } else {
+	    objectWriteUInt32(this, value, offset, true)
+	  }
+	  return offset + 4
+	}
+	
+	Buffer.prototype.writeUInt32BE = function writeUInt32BE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value >>> 24)
+	    this[offset + 1] = (value >>> 16)
+	    this[offset + 2] = (value >>> 8)
+	    this[offset + 3] = (value & 0xff)
+	  } else {
+	    objectWriteUInt32(this, value, offset, false)
+	  }
+	  return offset + 4
+	}
+	
+	Buffer.prototype.writeIntLE = function writeIntLE (value, offset, byteLength, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) {
+	    var limit = Math.pow(2, 8 * byteLength - 1)
+	
+	    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+	  }
+	
+	  var i = 0
+	  var mul = 1
+	  var sub = value < 0 ? 1 : 0
+	  this[offset] = value & 0xFF
+	  while (++i < byteLength && (mul *= 0x100)) {
+	    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+	  }
+	
+	  return offset + byteLength
+	}
+	
+	Buffer.prototype.writeIntBE = function writeIntBE (value, offset, byteLength, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) {
+	    var limit = Math.pow(2, 8 * byteLength - 1)
+	
+	    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+	  }
+	
+	  var i = byteLength - 1
+	  var mul = 1
+	  var sub = value < 0 ? 1 : 0
+	  this[offset + i] = value & 0xFF
+	  while (--i >= 0 && (mul *= 0x100)) {
+	    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+	  }
+	
+	  return offset + byteLength
+	}
+	
+	Buffer.prototype.writeInt8 = function writeInt8 (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80)
+	  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
+	  if (value < 0) value = 0xff + value + 1
+	  this[offset] = (value & 0xff)
+	  return offset + 1
+	}
+	
+	Buffer.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value & 0xff)
+	    this[offset + 1] = (value >>> 8)
+	  } else {
+	    objectWriteUInt16(this, value, offset, true)
+	  }
+	  return offset + 2
+	}
+	
+	Buffer.prototype.writeInt16BE = function writeInt16BE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value >>> 8)
+	    this[offset + 1] = (value & 0xff)
+	  } else {
+	    objectWriteUInt16(this, value, offset, false)
+	  }
+	  return offset + 2
+	}
+	
+	Buffer.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value & 0xff)
+	    this[offset + 1] = (value >>> 8)
+	    this[offset + 2] = (value >>> 16)
+	    this[offset + 3] = (value >>> 24)
+	  } else {
+	    objectWriteUInt32(this, value, offset, true)
+	  }
+	  return offset + 4
+	}
+	
+	Buffer.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) {
+	  value = +value
+	  offset = offset | 0
+	  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+	  if (value < 0) value = 0xffffffff + value + 1
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    this[offset] = (value >>> 24)
+	    this[offset + 1] = (value >>> 16)
+	    this[offset + 2] = (value >>> 8)
+	    this[offset + 3] = (value & 0xff)
+	  } else {
+	    objectWriteUInt32(this, value, offset, false)
+	  }
+	  return offset + 4
+	}
+	
+	function checkIEEE754 (buf, value, offset, ext, max, min) {
+	  if (value > max || value < min) throw new RangeError('value is out of bounds')
+	  if (offset + ext > buf.length) throw new RangeError('index out of range')
+	  if (offset < 0) throw new RangeError('index out of range')
+	}
+	
+	function writeFloat (buf, value, offset, littleEndian, noAssert) {
+	  if (!noAssert) {
+	    checkIEEE754(buf, value, offset, 4, 3.4028234663852886e+38, -3.4028234663852886e+38)
+	  }
+	  ieee754.write(buf, value, offset, littleEndian, 23, 4)
+	  return offset + 4
+	}
+	
+	Buffer.prototype.writeFloatLE = function writeFloatLE (value, offset, noAssert) {
+	  return writeFloat(this, value, offset, true, noAssert)
+	}
+	
+	Buffer.prototype.writeFloatBE = function writeFloatBE (value, offset, noAssert) {
+	  return writeFloat(this, value, offset, false, noAssert)
+	}
+	
+	function writeDouble (buf, value, offset, littleEndian, noAssert) {
+	  if (!noAssert) {
+	    checkIEEE754(buf, value, offset, 8, 1.7976931348623157E+308, -1.7976931348623157E+308)
+	  }
+	  ieee754.write(buf, value, offset, littleEndian, 52, 8)
+	  return offset + 8
+	}
+	
+	Buffer.prototype.writeDoubleLE = function writeDoubleLE (value, offset, noAssert) {
+	  return writeDouble(this, value, offset, true, noAssert)
+	}
+	
+	Buffer.prototype.writeDoubleBE = function writeDoubleBE (value, offset, noAssert) {
+	  return writeDouble(this, value, offset, false, noAssert)
+	}
+	
+	// copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
+	Buffer.prototype.copy = function copy (target, targetStart, start, end) {
+	  if (!start) start = 0
+	  if (!end && end !== 0) end = this.length
+	  if (targetStart >= target.length) targetStart = target.length
+	  if (!targetStart) targetStart = 0
+	  if (end > 0 && end < start) end = start
+	
+	  // Copy 0 bytes; we're done
+	  if (end === start) return 0
+	  if (target.length === 0 || this.length === 0) return 0
+	
+	  // Fatal error conditions
+	  if (targetStart < 0) {
+	    throw new RangeError('targetStart out of bounds')
+	  }
+	  if (start < 0 || start >= this.length) throw new RangeError('sourceStart out of bounds')
+	  if (end < 0) throw new RangeError('sourceEnd out of bounds')
+	
+	  // Are we oob?
+	  if (end > this.length) end = this.length
+	  if (target.length - targetStart < end - start) {
+	    end = target.length - targetStart + start
+	  }
+	
+	  var len = end - start
+	  var i
+	
+	  if (this === target && start < targetStart && targetStart < end) {
+	    // descending copy from end
+	    for (i = len - 1; i >= 0; i--) {
+	      target[i + targetStart] = this[i + start]
+	    }
+	  } else if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
+	    // ascending copy from start
+	    for (i = 0; i < len; i++) {
+	      target[i + targetStart] = this[i + start]
+	    }
+	  } else {
+	    target._set(this.subarray(start, start + len), targetStart)
+	  }
+	
+	  return len
+	}
+	
+	// fill(value, start=0, end=buffer.length)
+	Buffer.prototype.fill = function fill (value, start, end) {
+	  if (!value) value = 0
+	  if (!start) start = 0
+	  if (!end) end = this.length
+	
+	  if (end < start) throw new RangeError('end < start')
+	
+	  // Fill 0 bytes; we're done
+	  if (end === start) return
+	  if (this.length === 0) return
+	
+	  if (start < 0 || start >= this.length) throw new RangeError('start out of bounds')
+	  if (end < 0 || end > this.length) throw new RangeError('end out of bounds')
+	
+	  var i
+	  if (typeof value === 'number') {
+	    for (i = start; i < end; i++) {
+	      this[i] = value
+	    }
+	  } else {
+	    var bytes = utf8ToBytes(value.toString())
+	    var len = bytes.length
+	    for (i = start; i < end; i++) {
+	      this[i] = bytes[i % len]
+	    }
+	  }
+	
+	  return this
+	}
+	
+	/**
+	 * Creates a new `ArrayBuffer` with the *copied* memory of the buffer instance.
+	 * Added in Node 0.12. Only available in browsers that support ArrayBuffer.
+	 */
+	Buffer.prototype.toArrayBuffer = function toArrayBuffer () {
+	  if (typeof Uint8Array !== 'undefined') {
+	    if (Buffer.TYPED_ARRAY_SUPPORT) {
+	      return (new Buffer(this)).buffer
+	    } else {
+	      var buf = new Uint8Array(this.length)
+	      for (var i = 0, len = buf.length; i < len; i += 1) {
+	        buf[i] = this[i]
+	      }
+	      return buf.buffer
+	    }
+	  } else {
+	    throw new TypeError('Buffer.toArrayBuffer not supported in this browser')
+	  }
+	}
+	
+	// HELPER FUNCTIONS
+	// ================
+	
+	var BP = Buffer.prototype
+	
+	/**
+	 * Augment a Uint8Array *instance* (not the Uint8Array class!) with Buffer methods
+	 */
+	Buffer._augment = function _augment (arr) {
+	  arr.constructor = Buffer
+	  arr._isBuffer = true
+	
+	  // save reference to original Uint8Array set method before overwriting
+	  arr._set = arr.set
+	
+	  // deprecated
+	  arr.get = BP.get
+	  arr.set = BP.set
+	
+	  arr.write = BP.write
+	  arr.toString = BP.toString
+	  arr.toLocaleString = BP.toString
+	  arr.toJSON = BP.toJSON
+	  arr.equals = BP.equals
+	  arr.compare = BP.compare
+	  arr.indexOf = BP.indexOf
+	  arr.copy = BP.copy
+	  arr.slice = BP.slice
+	  arr.readUIntLE = BP.readUIntLE
+	  arr.readUIntBE = BP.readUIntBE
+	  arr.readUInt8 = BP.readUInt8
+	  arr.readUInt16LE = BP.readUInt16LE
+	  arr.readUInt16BE = BP.readUInt16BE
+	  arr.readUInt32LE = BP.readUInt32LE
+	  arr.readUInt32BE = BP.readUInt32BE
+	  arr.readIntLE = BP.readIntLE
+	  arr.readIntBE = BP.readIntBE
+	  arr.readInt8 = BP.readInt8
+	  arr.readInt16LE = BP.readInt16LE
+	  arr.readInt16BE = BP.readInt16BE
+	  arr.readInt32LE = BP.readInt32LE
+	  arr.readInt32BE = BP.readInt32BE
+	  arr.readFloatLE = BP.readFloatLE
+	  arr.readFloatBE = BP.readFloatBE
+	  arr.readDoubleLE = BP.readDoubleLE
+	  arr.readDoubleBE = BP.readDoubleBE
+	  arr.writeUInt8 = BP.writeUInt8
+	  arr.writeUIntLE = BP.writeUIntLE
+	  arr.writeUIntBE = BP.writeUIntBE
+	  arr.writeUInt16LE = BP.writeUInt16LE
+	  arr.writeUInt16BE = BP.writeUInt16BE
+	  arr.writeUInt32LE = BP.writeUInt32LE
+	  arr.writeUInt32BE = BP.writeUInt32BE
+	  arr.writeIntLE = BP.writeIntLE
+	  arr.writeIntBE = BP.writeIntBE
+	  arr.writeInt8 = BP.writeInt8
+	  arr.writeInt16LE = BP.writeInt16LE
+	  arr.writeInt16BE = BP.writeInt16BE
+	  arr.writeInt32LE = BP.writeInt32LE
+	  arr.writeInt32BE = BP.writeInt32BE
+	  arr.writeFloatLE = BP.writeFloatLE
+	  arr.writeFloatBE = BP.writeFloatBE
+	  arr.writeDoubleLE = BP.writeDoubleLE
+	  arr.writeDoubleBE = BP.writeDoubleBE
+	  arr.fill = BP.fill
+	  arr.inspect = BP.inspect
+	  arr.toArrayBuffer = BP.toArrayBuffer
+	
+	  return arr
+	}
+	
+	var INVALID_BASE64_RE = /[^+\/0-9A-Za-z-_]/g
+	
+	function base64clean (str) {
+	  // Node strips out invalid characters like \n and \t from the string, base64-js does not
+	  str = stringtrim(str).replace(INVALID_BASE64_RE, '')
+	  // Node converts strings with length < 2 to ''
+	  if (str.length < 2) return ''
+	  // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
+	  while (str.length % 4 !== 0) {
+	    str = str + '='
+	  }
+	  return str
+	}
+	
+	function stringtrim (str) {
+	  if (str.trim) return str.trim()
+	  return str.replace(/^\s+|\s+$/g, '')
+	}
+	
+	function toHex (n) {
+	  if (n < 16) return '0' + n.toString(16)
+	  return n.toString(16)
+	}
+	
+	function utf8ToBytes (string, units) {
+	  units = units || Infinity
+	  var codePoint
+	  var length = string.length
+	  var leadSurrogate = null
+	  var bytes = []
+	
+	  for (var i = 0; i < length; i++) {
+	    codePoint = string.charCodeAt(i)
+	
+	    // is surrogate component
+	    if (codePoint > 0xD7FF && codePoint < 0xE000) {
+	      // last char was a lead
+	      if (!leadSurrogate) {
+	        // no lead yet
+	        if (codePoint > 0xDBFF) {
+	          // unexpected trail
+	          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+	          continue
+	        } else if (i + 1 === length) {
+	          // unpaired lead
+	          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+	          continue
+	        }
+	
+	        // valid lead
+	        leadSurrogate = codePoint
+	
+	        continue
+	      }
+	
+	      // 2 leads in a row
+	      if (codePoint < 0xDC00) {
+	        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+	        leadSurrogate = codePoint
+	        continue
+	      }
+	
+	      // valid surrogate pair
+	      codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000
+	    } else if (leadSurrogate) {
+	      // valid bmp char, but last char was a lead
+	      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+	    }
+	
+	    leadSurrogate = null
+	
+	    // encode utf8
+	    if (codePoint < 0x80) {
+	      if ((units -= 1) < 0) break
+	      bytes.push(codePoint)
+	    } else if (codePoint < 0x800) {
+	      if ((units -= 2) < 0) break
+	      bytes.push(
+	        codePoint >> 0x6 | 0xC0,
+	        codePoint & 0x3F | 0x80
+	      )
+	    } else if (codePoint < 0x10000) {
+	      if ((units -= 3) < 0) break
+	      bytes.push(
+	        codePoint >> 0xC | 0xE0,
+	        codePoint >> 0x6 & 0x3F | 0x80,
+	        codePoint & 0x3F | 0x80
+	      )
+	    } else if (codePoint < 0x110000) {
+	      if ((units -= 4) < 0) break
+	      bytes.push(
+	        codePoint >> 0x12 | 0xF0,
+	        codePoint >> 0xC & 0x3F | 0x80,
+	        codePoint >> 0x6 & 0x3F | 0x80,
+	        codePoint & 0x3F | 0x80
+	      )
+	    } else {
+	      throw new Error('Invalid code point')
+	    }
+	  }
+	
+	  return bytes
+	}
+	
+	function asciiToBytes (str) {
+	  var byteArray = []
+	  for (var i = 0; i < str.length; i++) {
+	    // Node's code seems to be doing this and not & 0x7F..
+	    byteArray.push(str.charCodeAt(i) & 0xFF)
+	  }
+	  return byteArray
+	}
+	
+	function utf16leToBytes (str, units) {
+	  var c, hi, lo
+	  var byteArray = []
+	  for (var i = 0; i < str.length; i++) {
+	    if ((units -= 2) < 0) break
+	
+	    c = str.charCodeAt(i)
+	    hi = c >> 8
+	    lo = c % 256
+	    byteArray.push(lo)
+	    byteArray.push(hi)
+	  }
+	
+	  return byteArray
+	}
+	
+	function base64ToBytes (str) {
+	  return base64.toByteArray(base64clean(str))
+	}
+	
+	function blitBuffer (src, dst, offset, length) {
+	  for (var i = 0; i < length; i++) {
+	    if ((i + offset >= dst.length) || (i >= src.length)) break
+	    dst[i + offset] = src[i]
+	  }
+	  return i
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/buffer/index.js */ 1400).Buffer, (function() { return this; }())))
+
+/***/ },
+/* 1401 */
+/*!*********************************************************************!*\
+  !*** (webpack)/~/node-libs-browser/~/buffer/~/base64-js/lib/b64.js ***!
+  \*********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+	
+	;(function (exports) {
+		'use strict';
+	
+	  var Arr = (typeof Uint8Array !== 'undefined')
+	    ? Uint8Array
+	    : Array
+	
+		var PLUS   = '+'.charCodeAt(0)
+		var SLASH  = '/'.charCodeAt(0)
+		var NUMBER = '0'.charCodeAt(0)
+		var LOWER  = 'a'.charCodeAt(0)
+		var UPPER  = 'A'.charCodeAt(0)
+		var PLUS_URL_SAFE = '-'.charCodeAt(0)
+		var SLASH_URL_SAFE = '_'.charCodeAt(0)
+	
+		function decode (elt) {
+			var code = elt.charCodeAt(0)
+			if (code === PLUS ||
+			    code === PLUS_URL_SAFE)
+				return 62 // '+'
+			if (code === SLASH ||
+			    code === SLASH_URL_SAFE)
+				return 63 // '/'
+			if (code < NUMBER)
+				return -1 //no match
+			if (code < NUMBER + 10)
+				return code - NUMBER + 26 + 26
+			if (code < UPPER + 26)
+				return code - UPPER
+			if (code < LOWER + 26)
+				return code - LOWER + 26
+		}
+	
+		function b64ToByteArray (b64) {
+			var i, j, l, tmp, placeHolders, arr
+	
+			if (b64.length % 4 > 0) {
+				throw new Error('Invalid string. Length must be a multiple of 4')
+			}
+	
+			// the number of equal signs (place holders)
+			// if there are two placeholders, than the two characters before it
+			// represent one byte
+			// if there is only one, then the three characters before it represent 2 bytes
+			// this is just a cheap hack to not do indexOf twice
+			var len = b64.length
+			placeHolders = '=' === b64.charAt(len - 2) ? 2 : '=' === b64.charAt(len - 1) ? 1 : 0
+	
+			// base64 is 4/3 + up to two characters of the original data
+			arr = new Arr(b64.length * 3 / 4 - placeHolders)
+	
+			// if there are placeholders, only get up to the last complete 4 chars
+			l = placeHolders > 0 ? b64.length - 4 : b64.length
+	
+			var L = 0
+	
+			function push (v) {
+				arr[L++] = v
+			}
+	
+			for (i = 0, j = 0; i < l; i += 4, j += 3) {
+				tmp = (decode(b64.charAt(i)) << 18) | (decode(b64.charAt(i + 1)) << 12) | (decode(b64.charAt(i + 2)) << 6) | decode(b64.charAt(i + 3))
+				push((tmp & 0xFF0000) >> 16)
+				push((tmp & 0xFF00) >> 8)
+				push(tmp & 0xFF)
+			}
+	
+			if (placeHolders === 2) {
+				tmp = (decode(b64.charAt(i)) << 2) | (decode(b64.charAt(i + 1)) >> 4)
+				push(tmp & 0xFF)
+			} else if (placeHolders === 1) {
+				tmp = (decode(b64.charAt(i)) << 10) | (decode(b64.charAt(i + 1)) << 4) | (decode(b64.charAt(i + 2)) >> 2)
+				push((tmp >> 8) & 0xFF)
+				push(tmp & 0xFF)
+			}
+	
+			return arr
+		}
+	
+		function uint8ToBase64 (uint8) {
+			var i,
+				extraBytes = uint8.length % 3, // if we have 1 byte left, pad 2 bytes
+				output = "",
+				temp, length
+	
+			function encode (num) {
+				return lookup.charAt(num)
+			}
+	
+			function tripletToBase64 (num) {
+				return encode(num >> 18 & 0x3F) + encode(num >> 12 & 0x3F) + encode(num >> 6 & 0x3F) + encode(num & 0x3F)
+			}
+	
+			// go through the array every three bytes, we'll deal with trailing stuff later
+			for (i = 0, length = uint8.length - extraBytes; i < length; i += 3) {
+				temp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
+				output += tripletToBase64(temp)
+			}
+	
+			// pad the end with zeros, but make sure to not forget the extra bytes
+			switch (extraBytes) {
+				case 1:
+					temp = uint8[uint8.length - 1]
+					output += encode(temp >> 2)
+					output += encode((temp << 4) & 0x3F)
+					output += '=='
+					break
+				case 2:
+					temp = (uint8[uint8.length - 2] << 8) + (uint8[uint8.length - 1])
+					output += encode(temp >> 10)
+					output += encode((temp >> 4) & 0x3F)
+					output += encode((temp << 2) & 0x3F)
+					output += '='
+					break
+			}
+	
+			return output
+		}
+	
+		exports.toByteArray = b64ToByteArray
+		exports.fromByteArray = uint8ToBase64
+	}( false ? (this.base64js = {}) : exports))
+
+
+/***/ },
+/* 1402 */
+/*!*****************************************************************!*\
+  !*** (webpack)/~/node-libs-browser/~/buffer/~/ieee754/index.js ***!
+  \*****************************************************************/
+/***/ function(module, exports) {
+
+	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+	  var e, m
+	  var eLen = nBytes * 8 - mLen - 1
+	  var eMax = (1 << eLen) - 1
+	  var eBias = eMax >> 1
+	  var nBits = -7
+	  var i = isLE ? (nBytes - 1) : 0
+	  var d = isLE ? -1 : 1
+	  var s = buffer[offset + i]
+	
+	  i += d
+	
+	  e = s & ((1 << (-nBits)) - 1)
+	  s >>= (-nBits)
+	  nBits += eLen
+	  for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+	
+	  m = e & ((1 << (-nBits)) - 1)
+	  e >>= (-nBits)
+	  nBits += mLen
+	  for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+	
+	  if (e === 0) {
+	    e = 1 - eBias
+	  } else if (e === eMax) {
+	    return m ? NaN : ((s ? -1 : 1) * Infinity)
+	  } else {
+	    m = m + Math.pow(2, mLen)
+	    e = e - eBias
+	  }
+	  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+	}
+	
+	exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+	  var e, m, c
+	  var eLen = nBytes * 8 - mLen - 1
+	  var eMax = (1 << eLen) - 1
+	  var eBias = eMax >> 1
+	  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+	  var i = isLE ? 0 : (nBytes - 1)
+	  var d = isLE ? 1 : -1
+	  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+	
+	  value = Math.abs(value)
+	
+	  if (isNaN(value) || value === Infinity) {
+	    m = isNaN(value) ? 1 : 0
+	    e = eMax
+	  } else {
+	    e = Math.floor(Math.log(value) / Math.LN2)
+	    if (value * (c = Math.pow(2, -e)) < 1) {
+	      e--
+	      c *= 2
+	    }
+	    if (e + eBias >= 1) {
+	      value += rt / c
+	    } else {
+	      value += rt * Math.pow(2, 1 - eBias)
+	    }
+	    if (value * c >= 2) {
+	      e++
+	      c /= 2
+	    }
+	
+	    if (e + eBias >= eMax) {
+	      m = 0
+	      e = eMax
+	    } else if (e + eBias >= 1) {
+	      m = (value * c - 1) * Math.pow(2, mLen)
+	      e = e + eBias
+	    } else {
+	      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+	      e = 0
+	    }
+	  }
+	
+	  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+	
+	  e = (e << mLen) | m
+	  eLen += mLen
+	  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+	
+	  buffer[offset + i - d] |= s * 128
+	}
+
+
+/***/ },
+/* 1403 */
+/*!*****************************************************************!*\
+  !*** (webpack)/~/node-libs-browser/~/buffer/~/isarray/index.js ***!
+  \*****************************************************************/
+/***/ function(module, exports) {
+
+	var toString = {}.toString;
+	
+	module.exports = Array.isArray || function (arr) {
+	  return toString.call(arr) == '[object Array]';
+	};
+
+
+/***/ },
 /* 1404 */,
 /* 1405 */,
 /* 1406 */,
@@ -1463,7 +3257,22 @@ webpackJsonp_name_([4],[
 /* 1445 */,
 /* 1446 */,
 /* 1447 */,
-/* 1448 */
+/* 1448 */,
+/* 1449 */,
+/* 1450 */,
+/* 1451 */,
+/* 1452 */,
+/* 1453 */,
+/* 1454 */,
+/* 1455 */,
+/* 1456 */,
+/* 1457 */,
+/* 1458 */,
+/* 1459 */,
+/* 1460 */,
+/* 1461 */,
+/* 1462 */,
+/* 1463 */
 /*!**********************************************!*\
   !*** ./faceted-search/src/baselineRouter.js ***!
   \**********************************************/
@@ -1473,17 +3282,17 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 1605);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1620);
 	
-	var EventEmitter = __webpack_require__(/*! events */ 499);
+	var EventEmitter = __webpack_require__(/*! events */ 500);
 	
-	var URI = __webpack_require__(/*! urijs */ 1606);
+	var URI = __webpack_require__(/*! urijs */ 1621);
 	
 	//*------------------------------------------------------------------*
 	
-	var FacetsTree = __webpack_require__(/*! ./BaselineFacetsTree.jsx */ 1610);
-	var BaselineHeatmaps = __webpack_require__(/*! ./BaselineHeatmaps.jsx */ 1615);
+	var FacetsTree = __webpack_require__(/*! ./BaselineFacetsTree.jsx */ 1625);
+	var BaselineHeatmaps = __webpack_require__(/*! ./BaselineHeatmaps.jsx */ 1630);
 	
 	//*------------------------------------------------------------------*
 	
@@ -1698,812 +3507,812 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1449 */
+/* 1464 */
 /*!*****************************************!*\
   !*** ./faceted-search/~/react/react.js ***!
   \*****************************************/
-[1944, 1450],
-/* 1450 */
+[1969, 1465],
+/* 1465 */
 /*!*********************************************!*\
   !*** ./faceted-search/~/react/lib/React.js ***!
   \*********************************************/
-[1945, 1451, 1595, 1599, 1486, 1604],
-/* 1451 */
+[1970, 1466, 1610, 1614, 1501, 1619],
+/* 1466 */
 /*!************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOM.js ***!
   \************************************************/
-[1946, 1452, 1453, 1518, 1492, 1475, 1465, 1497, 1501, 1593, 1538, 1594, 1472, 1456],
-/* 1452 */
+[1971, 1467, 1468, 1533, 1507, 1490, 1480, 1512, 1516, 1608, 1553, 1609, 1487, 1471],
+/* 1467 */
 /*!*********************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactCurrentOwner.js ***!
   \*********************************************************/
 5,
-/* 1453 */
+/* 1468 */
 /*!*************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOMTextComponent.js ***!
   \*************************************************************/
-[1947, 1454, 1469, 1473, 1475, 1486, 1468, 1467, 1517],
-/* 1454 */
+[1972, 1469, 1484, 1488, 1490, 1501, 1483, 1482, 1532],
+/* 1469 */
 /*!*************************************************************!*\
   !*** ./faceted-search/~/react/lib/DOMChildrenOperations.js ***!
   \*************************************************************/
-[1948, 1455, 1463, 1465, 1466, 1467, 1460],
-/* 1455 */
+[1973, 1470, 1478, 1480, 1481, 1482, 1475],
+/* 1470 */
 /*!**********************************************!*\
   !*** ./faceted-search/~/react/lib/Danger.js ***!
   \**********************************************/
-[1949, 1456, 1457, 1462, 1461, 1460],
-/* 1456 */
+[1974, 1471, 1472, 1477, 1476, 1475],
+/* 1471 */
 /*!*******************************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/ExecutionEnvironment.js ***!
   \*******************************************************************/
 9,
-/* 1457 */
+/* 1472 */
 /*!********************************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/createNodesFromMarkup.js ***!
   \********************************************************************/
-[1950, 1456, 1458, 1461, 1460],
-/* 1458 */
+[1975, 1471, 1473, 1476, 1475],
+/* 1473 */
 /*!*******************************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/createArrayFromMixed.js ***!
   \*******************************************************************/
-[1951, 1459],
-/* 1459 */
+[1976, 1474],
+/* 1474 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/toArray.js ***!
   \******************************************************/
-[1952, 1460],
-/* 1460 */
+[1977, 1475],
+/* 1475 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/invariant.js ***!
   \********************************************************/
 13,
-/* 1461 */
+/* 1476 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/getMarkupWrap.js ***!
   \************************************************************/
-[1953, 1456, 1460],
-/* 1462 */
+[1978, 1471, 1475],
+/* 1477 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/emptyFunction.js ***!
   \************************************************************/
 15,
-/* 1463 */
+/* 1478 */
 /*!******************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactMultiChildUpdateTypes.js ***!
   \******************************************************************/
-[1954, 1464],
-/* 1464 */
+[1979, 1479],
+/* 1479 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/keyMirror.js ***!
   \********************************************************/
-[1955, 1460],
-/* 1465 */
+[1980, 1475],
+/* 1480 */
 /*!*************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactPerf.js ***!
   \*************************************************/
 18,
-/* 1466 */
+/* 1481 */
 /*!****************************************************!*\
   !*** ./faceted-search/~/react/lib/setInnerHTML.js ***!
   \****************************************************/
-[1956, 1456],
-/* 1467 */
+[1981, 1471],
+/* 1482 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/setTextContent.js ***!
   \******************************************************/
-[1957, 1456, 1468, 1466],
-/* 1468 */
+[1982, 1471, 1483, 1481],
+/* 1483 */
 /*!*******************************************************************!*\
   !*** ./faceted-search/~/react/lib/escapeTextContentForBrowser.js ***!
   \*******************************************************************/
 21,
-/* 1469 */
+/* 1484 */
 /*!*************************************************************!*\
   !*** ./faceted-search/~/react/lib/DOMPropertyOperations.js ***!
   \*************************************************************/
-[1958, 1470, 1465, 1471, 1472],
-/* 1470 */
+[1983, 1485, 1480, 1486, 1487],
+/* 1485 */
 /*!***************************************************!*\
   !*** ./faceted-search/~/react/lib/DOMProperty.js ***!
   \***************************************************/
-[1959, 1460],
-/* 1471 */
+[1984, 1475],
+/* 1486 */
 /*!*********************************************************************!*\
   !*** ./faceted-search/~/react/lib/quoteAttributeValueForBrowser.js ***!
   \*********************************************************************/
-[1960, 1468],
-/* 1472 */
+[1985, 1483],
+/* 1487 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/warning.js ***!
   \******************************************************/
-[1961, 1462],
-/* 1473 */
+[1986, 1477],
+/* 1488 */
 /*!************************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactComponentBrowserEnvironment.js ***!
   \************************************************************************/
-[1962, 1474, 1475],
-/* 1474 */
+[1987, 1489, 1490],
+/* 1489 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOMIDOperations.js ***!
   \************************************************************/
-[1963, 1454, 1469, 1475, 1465, 1460],
-/* 1475 */
+[1988, 1469, 1484, 1490, 1480, 1475],
+/* 1490 */
 /*!**************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactMount.js ***!
   \**************************************************/
-[1964, 1470, 1476, 1452, 1488, 1489, 1491, 1492, 1494, 1495, 1465, 1497, 1500, 1501, 1486, 1505, 1506, 1509, 1460, 1466, 1514, 1517, 1472],
-/* 1476 */
+[1989, 1485, 1491, 1467, 1503, 1504, 1506, 1507, 1509, 1510, 1480, 1512, 1515, 1516, 1501, 1520, 1521, 1524, 1475, 1481, 1529, 1532, 1487],
+/* 1491 */
 /*!****************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactBrowserEventEmitter.js ***!
   \****************************************************************/
-[1965, 1477, 1478, 1479, 1484, 1465, 1485, 1486, 1487],
-/* 1477 */
+[1990, 1492, 1493, 1494, 1499, 1480, 1500, 1501, 1502],
+/* 1492 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/EventConstants.js ***!
   \******************************************************/
-[1966, 1464],
-/* 1478 */
+[1991, 1479],
+/* 1493 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/EventPluginHub.js ***!
   \******************************************************/
-[1967, 1479, 1480, 1481, 1482, 1483, 1460, 1472],
-/* 1479 */
+[1992, 1494, 1495, 1496, 1497, 1498, 1475, 1487],
+/* 1494 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/lib/EventPluginRegistry.js ***!
   \***********************************************************/
-[1968, 1460],
-/* 1480 */
+[1993, 1475],
+/* 1495 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/lib/EventPluginUtils.js ***!
   \********************************************************/
-[1969, 1477, 1481, 1460, 1472],
-/* 1481 */
+[1994, 1492, 1496, 1475, 1487],
+/* 1496 */
 /*!*******************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactErrorUtils.js ***!
   \*******************************************************/
 34,
-/* 1482 */
+/* 1497 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/accumulateInto.js ***!
   \******************************************************/
-[1970, 1460],
-/* 1483 */
+[1995, 1475],
+/* 1498 */
 /*!**********************************************************!*\
   !*** ./faceted-search/~/react/lib/forEachAccumulated.js ***!
   \**********************************************************/
 36,
-/* 1484 */
+/* 1499 */
 /*!**************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactEventEmitterMixin.js ***!
   \**************************************************************/
-[1971, 1478],
-/* 1485 */
+[1996, 1493],
+/* 1500 */
 /*!*******************************************************!*\
   !*** ./faceted-search/~/react/lib/ViewportMetrics.js ***!
   \*******************************************************/
 38,
-/* 1486 */
+/* 1501 */
 /*!*****************************************************!*\
   !*** ./faceted-search/~/react/lib/Object.assign.js ***!
   \*****************************************************/
 39,
-/* 1487 */
+/* 1502 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/lib/isEventSupported.js ***!
   \********************************************************/
-[1972, 1456],
-/* 1488 */
+[1997, 1471],
+/* 1503 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOMFeatureFlags.js ***!
   \************************************************************/
 41,
-/* 1489 */
+/* 1504 */
 /*!****************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactElement.js ***!
   \****************************************************/
-[1973, 1452, 1486, 1490],
-/* 1490 */
+[1998, 1467, 1501, 1505],
+/* 1505 */
 /*!*********************************************************!*\
   !*** ./faceted-search/~/react/lib/canDefineProperty.js ***!
   \*********************************************************/
 43,
-/* 1491 */
+/* 1506 */
 /*!*******************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactEmptyComponentRegistry.js ***!
   \*******************************************************************/
 44,
-/* 1492 */
+/* 1507 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactInstanceHandles.js ***!
   \************************************************************/
-[1974, 1493, 1460],
-/* 1493 */
+[1999, 1508, 1475],
+/* 1508 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactRootIndex.js ***!
   \******************************************************/
 46,
-/* 1494 */
+/* 1509 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactInstanceMap.js ***!
   \********************************************************/
 47,
-/* 1495 */
+/* 1510 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactMarkupChecksum.js ***!
   \***********************************************************/
-[1975, 1496],
-/* 1496 */
+[2000, 1511],
+/* 1511 */
 /*!***********************************************!*\
   !*** ./faceted-search/~/react/lib/adler32.js ***!
   \***********************************************/
 49,
-/* 1497 */
+/* 1512 */
 /*!*******************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactReconciler.js ***!
   \*******************************************************/
-[1976, 1498],
-/* 1498 */
+[2001, 1513],
+/* 1513 */
 /*!************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactRef.js ***!
   \************************************************/
-[1977, 1499],
-/* 1499 */
+[2002, 1514],
+/* 1514 */
 /*!**************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactOwner.js ***!
   \**************************************************/
-[1978, 1460],
-/* 1500 */
+[2003, 1475],
+/* 1515 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactUpdateQueue.js ***!
   \********************************************************/
-[1979, 1452, 1489, 1494, 1501, 1486, 1460, 1472],
-/* 1501 */
+[2004, 1467, 1504, 1509, 1516, 1501, 1475, 1487],
+/* 1516 */
 /*!****************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactUpdates.js ***!
   \****************************************************/
-[1980, 1502, 1503, 1465, 1497, 1504, 1486, 1460],
-/* 1502 */
+[2005, 1517, 1518, 1480, 1512, 1519, 1501, 1475],
+/* 1517 */
 /*!*****************************************************!*\
   !*** ./faceted-search/~/react/lib/CallbackQueue.js ***!
   \*****************************************************/
-[1981, 1503, 1486, 1460],
-/* 1503 */
+[2006, 1518, 1501, 1475],
+/* 1518 */
 /*!***************************************************!*\
   !*** ./faceted-search/~/react/lib/PooledClass.js ***!
   \***************************************************/
-[1982, 1460],
-/* 1504 */
+[2007, 1475],
+/* 1519 */
 /*!***************************************************!*\
   !*** ./faceted-search/~/react/lib/Transaction.js ***!
   \***************************************************/
-[1983, 1460],
-/* 1505 */
+[2008, 1475],
+/* 1520 */
 /*!**********************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/emptyObject.js ***!
   \**********************************************************/
 58,
-/* 1506 */
+/* 1521 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/containsNode.js ***!
   \***********************************************************/
-[1984, 1507],
-/* 1507 */
+[2009, 1522],
+/* 1522 */
 /*!*********************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/isTextNode.js ***!
   \*********************************************************/
-[1985, 1508],
-/* 1508 */
+[2010, 1523],
+/* 1523 */
 /*!*****************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/isNode.js ***!
   \*****************************************************/
 61,
-/* 1509 */
+/* 1524 */
 /*!*****************************************************************!*\
   !*** ./faceted-search/~/react/lib/instantiateReactComponent.js ***!
   \*****************************************************************/
-[1986, 1510, 1515, 1516, 1486, 1460, 1472],
-/* 1510 */
+[2011, 1525, 1530, 1531, 1501, 1475, 1487],
+/* 1525 */
 /*!***************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactCompositeComponent.js ***!
   \***************************************************************/
-[1987, 1511, 1452, 1489, 1494, 1465, 1512, 1513, 1497, 1500, 1486, 1505, 1460, 1514, 1472],
-/* 1511 */
+[2012, 1526, 1467, 1504, 1509, 1480, 1527, 1528, 1512, 1515, 1501, 1520, 1475, 1529, 1487],
+/* 1526 */
 /*!*****************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactComponentEnvironment.js ***!
   \*****************************************************************/
-[1988, 1460],
-/* 1512 */
+[2013, 1475],
+/* 1527 */
 /*!**************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactPropTypeLocations.js ***!
   \**************************************************************/
-[1989, 1464],
-/* 1513 */
+[2014, 1479],
+/* 1528 */
 /*!******************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactPropTypeLocationNames.js ***!
   \******************************************************************/
 66,
-/* 1514 */
+/* 1529 */
 /*!******************************************************************!*\
   !*** ./faceted-search/~/react/lib/shouldUpdateReactComponent.js ***!
   \******************************************************************/
 67,
-/* 1515 */
+/* 1530 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactEmptyComponent.js ***!
   \***********************************************************/
-[1990, 1489, 1491, 1497, 1486],
-/* 1516 */
+[2015, 1504, 1506, 1512, 1501],
+/* 1531 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactNativeComponent.js ***!
   \************************************************************/
-[1991, 1486, 1460],
-/* 1517 */
+[2016, 1501, 1475],
+/* 1532 */
 /*!**********************************************************!*\
   !*** ./faceted-search/~/react/lib/validateDOMNesting.js ***!
   \**********************************************************/
-[1992, 1486, 1462, 1472],
-/* 1518 */
+[2017, 1501, 1477, 1487],
+/* 1533 */
 /*!*************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDefaultInjection.js ***!
   \*************************************************************/
-[1993, 1519, 1527, 1530, 1531, 1532, 1456, 1536, 1537, 1473, 1539, 1540, 1453, 1565, 1568, 1492, 1475, 1572, 1577, 1578, 1579, 1588, 1589],
-/* 1519 */
+[2018, 1534, 1542, 1545, 1546, 1547, 1471, 1551, 1552, 1488, 1554, 1555, 1468, 1580, 1583, 1507, 1490, 1587, 1592, 1593, 1594, 1603, 1604],
+/* 1534 */
 /*!**************************************************************!*\
   !*** ./faceted-search/~/react/lib/BeforeInputEventPlugin.js ***!
   \**************************************************************/
-[1994, 1477, 1520, 1456, 1521, 1523, 1525, 1526],
-/* 1520 */
+[2019, 1492, 1535, 1471, 1536, 1538, 1540, 1541],
+/* 1535 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/lib/EventPropagators.js ***!
   \********************************************************/
-[1995, 1477, 1478, 1472, 1482, 1483],
-/* 1521 */
+[2020, 1492, 1493, 1487, 1497, 1498],
+/* 1536 */
 /*!****************************************************************!*\
   !*** ./faceted-search/~/react/lib/FallbackCompositionState.js ***!
   \****************************************************************/
-[1996, 1503, 1486, 1522],
-/* 1522 */
+[2021, 1518, 1501, 1537],
+/* 1537 */
 /*!**************************************************************!*\
   !*** ./faceted-search/~/react/lib/getTextContentAccessor.js ***!
   \**************************************************************/
-[1997, 1456],
-/* 1523 */
+[2022, 1471],
+/* 1538 */
 /*!*****************************************************************!*\
   !*** ./faceted-search/~/react/lib/SyntheticCompositionEvent.js ***!
   \*****************************************************************/
-[1998, 1524],
-/* 1524 */
+[2023, 1539],
+/* 1539 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/SyntheticEvent.js ***!
   \******************************************************/
-[1999, 1503, 1486, 1462, 1472],
-/* 1525 */
+[2024, 1518, 1501, 1477, 1487],
+/* 1540 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/lib/SyntheticInputEvent.js ***!
   \***********************************************************/
-[2000, 1524],
-/* 1526 */
+[2025, 1539],
+/* 1541 */
 /*!****************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/keyOf.js ***!
   \****************************************************/
 79,
-/* 1527 */
+/* 1542 */
 /*!*********************************************************!*\
   !*** ./faceted-search/~/react/lib/ChangeEventPlugin.js ***!
   \*********************************************************/
-[2001, 1477, 1478, 1520, 1456, 1501, 1524, 1528, 1487, 1529, 1526],
-/* 1528 */
+[2026, 1492, 1493, 1535, 1471, 1516, 1539, 1543, 1502, 1544, 1541],
+/* 1543 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/getEventTarget.js ***!
   \******************************************************/
 81,
-/* 1529 */
+/* 1544 */
 /*!**********************************************************!*\
   !*** ./faceted-search/~/react/lib/isTextInputElement.js ***!
   \**********************************************************/
 82,
-/* 1530 */
+/* 1545 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/lib/ClientReactRootIndex.js ***!
   \************************************************************/
 83,
-/* 1531 */
+/* 1546 */
 /*!***************************************************************!*\
   !*** ./faceted-search/~/react/lib/DefaultEventPluginOrder.js ***!
   \***************************************************************/
-[2002, 1526],
-/* 1532 */
+[2027, 1541],
+/* 1547 */
 /*!*************************************************************!*\
   !*** ./faceted-search/~/react/lib/EnterLeaveEventPlugin.js ***!
   \*************************************************************/
-[2003, 1477, 1520, 1533, 1475, 1526],
-/* 1533 */
+[2028, 1492, 1535, 1548, 1490, 1541],
+/* 1548 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/lib/SyntheticMouseEvent.js ***!
   \***********************************************************/
-[2004, 1534, 1485, 1535],
-/* 1534 */
+[2029, 1549, 1500, 1550],
+/* 1549 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/lib/SyntheticUIEvent.js ***!
   \********************************************************/
-[2005, 1524, 1528],
-/* 1535 */
+[2030, 1539, 1543],
+/* 1550 */
 /*!*************************************************************!*\
   !*** ./faceted-search/~/react/lib/getEventModifierState.js ***!
   \*************************************************************/
 88,
-/* 1536 */
+/* 1551 */
 /*!*************************************************************!*\
   !*** ./faceted-search/~/react/lib/HTMLDOMPropertyConfig.js ***!
   \*************************************************************/
-[2006, 1470, 1456],
-/* 1537 */
+[2031, 1485, 1471],
+/* 1552 */
 /*!******************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactBrowserComponentMixin.js ***!
   \******************************************************************/
-[2007, 1494, 1538, 1472],
-/* 1538 */
+[2032, 1509, 1553, 1487],
+/* 1553 */
 /*!***************************************************!*\
   !*** ./faceted-search/~/react/lib/findDOMNode.js ***!
   \***************************************************/
-[2008, 1452, 1494, 1475, 1460, 1472],
-/* 1539 */
+[2033, 1467, 1509, 1490, 1475, 1487],
+/* 1554 */
 /*!********************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDefaultBatchingStrategy.js ***!
   \********************************************************************/
-[2009, 1501, 1504, 1486, 1462],
-/* 1540 */
+[2034, 1516, 1519, 1501, 1477],
+/* 1555 */
 /*!*********************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOMComponent.js ***!
   \*********************************************************/
-[2010, 1541, 1543, 1470, 1469, 1477, 1476, 1473, 1551, 1552, 1556, 1559, 1560, 1475, 1561, 1465, 1500, 1486, 1490, 1468, 1460, 1487, 1526, 1466, 1467, 1564, 1517, 1472],
-/* 1541 */
+[2035, 1556, 1558, 1485, 1484, 1492, 1491, 1488, 1566, 1567, 1571, 1574, 1575, 1490, 1576, 1480, 1515, 1501, 1505, 1483, 1475, 1502, 1541, 1481, 1482, 1579, 1532, 1487],
+/* 1556 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/AutoFocusUtils.js ***!
   \******************************************************/
-[2011, 1475, 1538, 1542],
-/* 1542 */
+[2036, 1490, 1553, 1557],
+/* 1557 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/focusNode.js ***!
   \********************************************************/
 95,
-/* 1543 */
+/* 1558 */
 /*!*************************************************************!*\
   !*** ./faceted-search/~/react/lib/CSSPropertyOperations.js ***!
   \*************************************************************/
-[2012, 1544, 1456, 1465, 1545, 1547, 1548, 1550, 1472],
-/* 1544 */
+[2037, 1559, 1471, 1480, 1560, 1562, 1563, 1565, 1487],
+/* 1559 */
 /*!***************************************************!*\
   !*** ./faceted-search/~/react/lib/CSSProperty.js ***!
   \***************************************************/
 97,
-/* 1545 */
+/* 1560 */
 /*!****************************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/camelizeStyleName.js ***!
   \****************************************************************/
-[2013, 1546],
-/* 1546 */
+[2038, 1561],
+/* 1561 */
 /*!*******************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/camelize.js ***!
   \*******************************************************/
 99,
-/* 1547 */
+/* 1562 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/lib/dangerousStyleValue.js ***!
   \***********************************************************/
-[2014, 1544],
-/* 1548 */
+[2039, 1559],
+/* 1563 */
 /*!*****************************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/hyphenateStyleName.js ***!
   \*****************************************************************/
-[2015, 1549],
-/* 1549 */
+[2040, 1564],
+/* 1564 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/hyphenate.js ***!
   \********************************************************/
 102,
-/* 1550 */
+/* 1565 */
 /*!****************************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/memoizeStringOnly.js ***!
   \****************************************************************/
 103,
-/* 1551 */
+/* 1566 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOMButton.js ***!
   \******************************************************/
 104,
-/* 1552 */
+/* 1567 */
 /*!*****************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOMInput.js ***!
   \*****************************************************/
-[2016, 1474, 1553, 1475, 1501, 1486, 1460],
-/* 1553 */
+[2041, 1489, 1568, 1490, 1516, 1501, 1475],
+/* 1568 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/lib/LinkedValueUtils.js ***!
   \********************************************************/
-[2017, 1554, 1512, 1460, 1472],
-/* 1554 */
+[2042, 1569, 1527, 1475, 1487],
+/* 1569 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactPropTypes.js ***!
   \******************************************************/
-[2018, 1489, 1513, 1462, 1555],
-/* 1555 */
+[2043, 1504, 1528, 1477, 1570],
+/* 1570 */
 /*!*****************************************************!*\
   !*** ./faceted-search/~/react/lib/getIteratorFn.js ***!
   \*****************************************************/
 108,
-/* 1556 */
+/* 1571 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOMOption.js ***!
   \******************************************************/
-[2019, 1557, 1559, 1486, 1472],
-/* 1557 */
+[2044, 1572, 1574, 1501, 1487],
+/* 1572 */
 /*!*****************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactChildren.js ***!
   \*****************************************************/
-[2020, 1503, 1489, 1462, 1558],
-/* 1558 */
+[2045, 1518, 1504, 1477, 1573],
+/* 1573 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/lib/traverseAllChildren.js ***!
   \***********************************************************/
-[2021, 1452, 1489, 1492, 1555, 1460, 1472],
-/* 1559 */
+[2046, 1467, 1504, 1507, 1570, 1475, 1487],
+/* 1574 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOMSelect.js ***!
   \******************************************************/
-[2022, 1553, 1475, 1501, 1486, 1472],
-/* 1560 */
+[2047, 1568, 1490, 1516, 1501, 1487],
+/* 1575 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOMTextarea.js ***!
   \********************************************************/
-[2023, 1553, 1474, 1501, 1486, 1460, 1472],
-/* 1561 */
+[2048, 1568, 1489, 1516, 1501, 1475, 1487],
+/* 1576 */
 /*!*******************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactMultiChild.js ***!
   \*******************************************************/
-[2024, 1511, 1463, 1452, 1497, 1562, 1563],
-/* 1562 */
+[2049, 1526, 1478, 1467, 1512, 1577, 1578],
+/* 1577 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactChildReconciler.js ***!
   \************************************************************/
-[2025, 1497, 1509, 1514, 1558, 1472],
-/* 1563 */
+[2050, 1512, 1524, 1529, 1573, 1487],
+/* 1578 */
 /*!*******************************************************!*\
   !*** ./faceted-search/~/react/lib/flattenChildren.js ***!
   \*******************************************************/
-[2026, 1558, 1472],
-/* 1564 */
+[2051, 1573, 1487],
+/* 1579 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/shallowEqual.js ***!
   \***********************************************************/
 117,
-/* 1565 */
+/* 1580 */
 /*!**********************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactEventListener.js ***!
   \**********************************************************/
-[2027, 1566, 1456, 1503, 1492, 1475, 1501, 1486, 1528, 1567],
-/* 1566 */
+[2052, 1581, 1471, 1518, 1507, 1490, 1516, 1501, 1543, 1582],
+/* 1581 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/EventListener.js ***!
   \************************************************************/
-[2028, 1462],
-/* 1567 */
+[2053, 1477],
+/* 1582 */
 /*!*************************************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/getUnboundedScrollPosition.js ***!
   \*************************************************************************/
 120,
-/* 1568 */
+/* 1583 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactInjection.js ***!
   \******************************************************/
-[2029, 1470, 1478, 1511, 1569, 1515, 1476, 1516, 1465, 1493, 1501],
-/* 1569 */
+[2054, 1485, 1493, 1526, 1584, 1530, 1491, 1531, 1480, 1508, 1516],
+/* 1584 */
 /*!**************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactClass.js ***!
   \**************************************************/
-[2030, 1570, 1489, 1512, 1513, 1571, 1486, 1505, 1460, 1464, 1526, 1472],
-/* 1570 */
+[2055, 1585, 1504, 1527, 1528, 1586, 1501, 1520, 1475, 1479, 1541, 1487],
+/* 1585 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactComponent.js ***!
   \******************************************************/
-[2031, 1571, 1490, 1505, 1460, 1472],
-/* 1571 */
+[2056, 1586, 1505, 1520, 1475, 1487],
+/* 1586 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactNoopUpdateQueue.js ***!
   \************************************************************/
-[2032, 1472],
-/* 1572 */
+[2057, 1487],
+/* 1587 */
 /*!*****************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactReconcileTransaction.js ***!
   \*****************************************************************/
-[2033, 1502, 1503, 1476, 1488, 1573, 1504, 1486],
-/* 1573 */
+[2058, 1517, 1518, 1491, 1503, 1588, 1519, 1501],
+/* 1588 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactInputSelection.js ***!
   \***********************************************************/
-[2034, 1574, 1506, 1542, 1576],
-/* 1574 */
+[2059, 1589, 1521, 1557, 1591],
+/* 1589 */
 /*!*********************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOMSelection.js ***!
   \*********************************************************/
-[2035, 1456, 1575, 1522],
-/* 1575 */
+[2060, 1471, 1590, 1537],
+/* 1590 */
 /*!*****************************************************************!*\
   !*** ./faceted-search/~/react/lib/getNodeForCharacterOffset.js ***!
   \*****************************************************************/
 128,
-/* 1576 */
+/* 1591 */
 /*!***************************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/getActiveElement.js ***!
   \***************************************************************/
 129,
-/* 1577 */
+/* 1592 */
 /*!*********************************************************!*\
   !*** ./faceted-search/~/react/lib/SelectEventPlugin.js ***!
   \*********************************************************/
-[2036, 1477, 1520, 1456, 1573, 1524, 1576, 1529, 1526, 1564],
-/* 1578 */
+[2061, 1492, 1535, 1471, 1588, 1539, 1591, 1544, 1541, 1579],
+/* 1593 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/lib/ServerReactRootIndex.js ***!
   \************************************************************/
 131,
-/* 1579 */
+/* 1594 */
 /*!*********************************************************!*\
   !*** ./faceted-search/~/react/lib/SimpleEventPlugin.js ***!
   \*********************************************************/
-[2037, 1477, 1566, 1520, 1475, 1580, 1524, 1581, 1582, 1533, 1585, 1586, 1534, 1587, 1462, 1583, 1460, 1526],
-/* 1580 */
+[2062, 1492, 1581, 1535, 1490, 1595, 1539, 1596, 1597, 1548, 1600, 1601, 1549, 1602, 1477, 1598, 1475, 1541],
+/* 1595 */
 /*!***************************************************************!*\
   !*** ./faceted-search/~/react/lib/SyntheticClipboardEvent.js ***!
   \***************************************************************/
-[2038, 1524],
-/* 1581 */
+[2063, 1539],
+/* 1596 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/lib/SyntheticFocusEvent.js ***!
   \***********************************************************/
-[2039, 1534],
-/* 1582 */
+[2064, 1549],
+/* 1597 */
 /*!**************************************************************!*\
   !*** ./faceted-search/~/react/lib/SyntheticKeyboardEvent.js ***!
   \**************************************************************/
-[2040, 1534, 1583, 1584, 1535],
-/* 1583 */
+[2065, 1549, 1598, 1599, 1550],
+/* 1598 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/lib/getEventCharCode.js ***!
   \********************************************************/
 136,
-/* 1584 */
+/* 1599 */
 /*!***************************************************!*\
   !*** ./faceted-search/~/react/lib/getEventKey.js ***!
   \***************************************************/
-[2041, 1583],
-/* 1585 */
+[2066, 1598],
+/* 1600 */
 /*!**********************************************************!*\
   !*** ./faceted-search/~/react/lib/SyntheticDragEvent.js ***!
   \**********************************************************/
-[2042, 1533],
-/* 1586 */
+[2067, 1548],
+/* 1601 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/lib/SyntheticTouchEvent.js ***!
   \***********************************************************/
-[2043, 1534, 1535],
-/* 1587 */
+[2068, 1549, 1550],
+/* 1602 */
 /*!***********************************************************!*\
   !*** ./faceted-search/~/react/lib/SyntheticWheelEvent.js ***!
   \***********************************************************/
-[2044, 1533],
-/* 1588 */
+[2069, 1548],
+/* 1603 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/lib/SVGDOMPropertyConfig.js ***!
   \************************************************************/
-[2045, 1470],
-/* 1589 */
+[2070, 1485],
+/* 1604 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDefaultPerf.js ***!
   \********************************************************/
-[2046, 1470, 1590, 1475, 1465, 1591],
-/* 1590 */
+[2071, 1485, 1605, 1490, 1480, 1606],
+/* 1605 */
 /*!****************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDefaultPerfAnalysis.js ***!
   \****************************************************************/
-[2047, 1486],
-/* 1591 */
+[2072, 1501],
+/* 1606 */
 /*!*************************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/performanceNow.js ***!
   \*************************************************************/
-[2048, 1592],
-/* 1592 */
+[2073, 1607],
+/* 1607 */
 /*!**********************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/performance.js ***!
   \**********************************************************/
-[2049, 1456],
-/* 1593 */
+[2074, 1471],
+/* 1608 */
 /*!****************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactVersion.js ***!
   \****************************************************/
 146,
-/* 1594 */
+/* 1609 */
 /*!******************************************************************!*\
   !*** ./faceted-search/~/react/lib/renderSubtreeIntoContainer.js ***!
   \******************************************************************/
-[2050, 1475],
-/* 1595 */
+[2075, 1490],
+/* 1610 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOMServer.js ***!
   \******************************************************/
-[2051, 1518, 1596, 1593],
-/* 1596 */
+[2076, 1533, 1611, 1608],
+/* 1611 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactServerRendering.js ***!
   \************************************************************/
-[2052, 1539, 1489, 1492, 1495, 1597, 1598, 1501, 1505, 1509, 1460],
-/* 1597 */
+[2077, 1554, 1504, 1507, 1510, 1612, 1613, 1516, 1520, 1524, 1475],
+/* 1612 */
 /*!*******************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactServerBatchingStrategy.js ***!
   \*******************************************************************/
 150,
-/* 1598 */
+/* 1613 */
 /*!***********************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactServerRenderingTransaction.js ***!
   \***********************************************************************/
-[2053, 1503, 1502, 1504, 1486, 1462],
-/* 1599 */
+[2078, 1518, 1517, 1519, 1501, 1477],
+/* 1614 */
 /*!*******************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactIsomorphic.js ***!
   \*******************************************************/
-[2054, 1557, 1570, 1569, 1600, 1489, 1601, 1554, 1593, 1486, 1603],
-/* 1600 */
+[2079, 1572, 1585, 1584, 1615, 1504, 1616, 1569, 1608, 1501, 1618],
+/* 1615 */
 /*!*********************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactDOMFactories.js ***!
   \*********************************************************/
-[2055, 1489, 1601, 1602],
-/* 1601 */
+[2080, 1504, 1616, 1617],
+/* 1616 */
 /*!*************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactElementValidator.js ***!
   \*************************************************************/
-[2056, 1489, 1512, 1513, 1452, 1490, 1555, 1460, 1472],
-/* 1602 */
+[2081, 1504, 1527, 1528, 1467, 1505, 1570, 1475, 1487],
+/* 1617 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/mapObject.js ***!
   \********************************************************/
 155,
-/* 1603 */
+/* 1618 */
 /*!*************************************************!*\
   !*** ./faceted-search/~/react/lib/onlyChild.js ***!
   \*************************************************/
-[2057, 1489, 1460],
-/* 1604 */
+[2082, 1504, 1475],
+/* 1619 */
 /*!**************************************************!*\
   !*** ./faceted-search/~/react/lib/deprecated.js ***!
   \**************************************************/
-[2058, 1486, 1472],
-/* 1605 */
+[2083, 1501, 1487],
+/* 1620 */
 /*!*********************************************!*\
   !*** ./faceted-search/~/react-dom/index.js ***!
   \*********************************************/
-[2059, 1451],
-/* 1606 */
+[2084, 1466],
+/* 1621 */
 /*!*******************************************!*\
   !*** ./faceted-search/~/urijs/src/URI.js ***!
   \*******************************************/
-[2189, 1607, 1608, 1609],
-/* 1607 */
+[2214, 1622, 1623, 1624],
+/* 1622 */
 /*!************************************************!*\
   !*** ./faceted-search/~/urijs/src/punycode.js ***!
   \************************************************/
-492,
-/* 1608 */
+493,
+/* 1623 */
 /*!********************************************!*\
   !*** ./faceted-search/~/urijs/src/IPv6.js ***!
   \********************************************/
-494,
-/* 1609 */
+495,
+/* 1624 */
 /*!**********************************************************!*\
   !*** ./faceted-search/~/urijs/src/SecondLevelDomains.js ***!
   \**********************************************************/
-495,
-/* 1610 */
+496,
+/* 1625 */
 /*!***************************************************!*\
   !*** ./faceted-search/src/BaselineFacetsTree.jsx ***!
   \***************************************************/
@@ -2513,11 +4322,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
+	var React = __webpack_require__(/*! react */ 1464);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./FacetsTree.css */ 1611);
+	__webpack_require__(/*! ./FacetsTree.css */ 1626);
 	
 	//*------------------------------------------------------------------*
 	
@@ -2677,7 +4486,7 @@ webpackJsonp_name_([4],[
 	module.exports = BaselineFacetsTree;
 
 /***/ },
-/* 1611 */
+/* 1626 */
 /*!*******************************************!*\
   !*** ./faceted-search/src/FacetsTree.css ***!
   \*******************************************/
@@ -2686,10 +4495,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./FacetsTree.css */ 1612);
+	var content = __webpack_require__(/*! !./../~/css-loader!./FacetsTree.css */ 1627);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -2706,13 +4515,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1612 */
+/* 1627 */
 /*!*************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./faceted-search/src/FacetsTree.css ***!
   \*************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -2723,17 +4532,17 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1613 */
+/* 1628 */
 /*!*****************************************************!*\
   !*** ./faceted-search/~/css-loader/lib/css-base.js ***!
   \*****************************************************/
-527,
-/* 1614 */
+528,
+/* 1629 */
 /*!****************************************************!*\
   !*** ./faceted-search/~/style-loader/addStyles.js ***!
   \****************************************************/
-528,
-/* 1615 */
+529,
+/* 1630 */
 /*!*************************************************!*\
   !*** ./faceted-search/src/BaselineHeatmaps.jsx ***!
   \*************************************************/
@@ -2743,15 +4552,15 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var $ = __webpack_require__(/*! jquery */ 1616);
-	__webpack_require__(/*! jquery.browser */ 1617);
+	var React = __webpack_require__(/*! react */ 1464);
+	var $ = __webpack_require__(/*! jquery */ 1631);
+	__webpack_require__(/*! jquery.browser */ 1632);
 	
 	//*------------------------------------------------------------------*
 	
-	var BaselineHeatmapWidget = __webpack_require__(/*! ./BaselineHeatmapWidget.jsx */ 1618);
+	var BaselineHeatmapWidget = __webpack_require__(/*! ./BaselineHeatmapWidget.jsx */ 1633);
 	
-	var FeedbackSmileys = __webpack_require__(/*! atlas-feedback */ 1823);
+	var FeedbackSmileys = __webpack_require__(/*! atlas-feedback */ 1848);
 	
 	//*------------------------------------------------------------------*
 	
@@ -2820,17 +4629,17 @@ webpackJsonp_name_([4],[
 	module.exports = BaselineHeatmaps;
 
 /***/ },
-/* 1616 */
+/* 1631 */
 /*!************************************************!*\
   !*** ./faceted-search/~/jquery/dist/jquery.js ***!
   \************************************************/
-485,
-/* 1617 */
+486,
+/* 1632 */
 /*!****************************************************************!*\
   !*** ./faceted-search/~/jquery.browser/dist/jquery.browser.js ***!
   \****************************************************************/
-[2186, 1616],
-/* 1618 */
+[2211, 1631],
+/* 1633 */
 /*!******************************************************!*\
   !*** ./faceted-search/src/BaselineHeatmapWidget.jsx ***!
   \******************************************************/
@@ -2840,12 +4649,12 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 1605);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1620);
 	
 	//*------------------------------------------------------------------*
 	
-	var highchartsHeatmapRenderer = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 1619);
+	var highchartsHeatmapRenderer = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 1634);
 	
 	//*------------------------------------------------------------------*
 	
@@ -2916,7 +4725,7 @@ webpackJsonp_name_([4],[
 	module.exports = BaselineHeatmapWidget;
 
 /***/ },
-/* 1619 */
+/* 1634 */
 /*!***********************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/index.js ***!
   \***********************************************************************/
@@ -2926,11 +4735,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	module.exports = __webpack_require__(/*! ./src/highchartsHeatmapRenderer.js */ 1620);
+	module.exports = __webpack_require__(/*! ./src/highchartsHeatmapRenderer.js */ 1635);
 
 
 /***/ },
-/* 1620 */
+/* 1635 */
 /*!***********************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/src/highchartsHeatmapRenderer.js ***!
   \***********************************************************************************************/
@@ -2938,14 +4747,14 @@ webpackJsonp_name_([4],[
 
 	"use strict";
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 1605);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1620);
 	
 	//*------------------------------------------------------------------*
 	
-	var EventEmitter = __webpack_require__(/*! events */ 499);
+	var EventEmitter = __webpack_require__(/*! events */ 500);
 	
-	var HighchartsHeatmapContainer = __webpack_require__(/*! ./HighchartsHeatmapContainer.jsx */ 1621);
+	var HighchartsHeatmapContainer = __webpack_require__(/*! ./HighchartsHeatmapContainer.jsx */ 1636);
 	
 	//*------------------------------------------------------------------*
 	
@@ -3010,7 +4819,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1621 */
+/* 1636 */
 /*!*************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/src/HighchartsHeatmapContainer.jsx ***!
   \*************************************************************************************************/
@@ -3020,20 +4829,20 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
+	var React = __webpack_require__(/*! react */ 1464);
 	
-	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 1622);
+	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 1637);
 	
-	var $ = __webpack_require__(/*! jquery */ 1616);
+	var $ = __webpack_require__(/*! jquery */ 1631);
 	
-	var HeatmapData = __webpack_require__(/*! ./DataForHighcharts.js */ 1623);
+	var HeatmapData = __webpack_require__(/*! ./DataForHighcharts.js */ 1638);
 	
 	//*------------------------------------------------------------------*
 	
-	var HighchartsHeatmap = __webpack_require__(/*! ./HighchartsHeatmap.jsx */ 1626);
-	__webpack_require__(/*! ./HighchartsHeatmapContainer.css */ 1770);
+	var HighchartsHeatmap = __webpack_require__(/*! ./HighchartsHeatmap.jsx */ 1641);
+	__webpack_require__(/*! ./HighchartsHeatmapContainer.css */ 1796);
 	
-	var Anatomogram = __webpack_require__(/*! anatomogram */ 1772);
+	var Anatomogram = __webpack_require__(/*! anatomogram */ 1798);
 	
 	//*------------------------------------------------------------------*
 	
@@ -3311,12 +5120,12 @@ webpackJsonp_name_([4],[
 	module.exports = Container;
 
 /***/ },
-/* 1622 */
+/* 1637 */
 /*!************************************************************************************************************************!*\
   !*** ./faceted-search/~/imports-loader?this=>window,fix=>module.exports=0!./faceted-search/~/snapsvg/dist/snap.svg.js ***!
   \************************************************************************************************************************/
-500,
-/* 1623 */
+501,
+/* 1638 */
 /*!***************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/src/DataForHighcharts.js ***!
   \***************************************************************************************/
@@ -3325,10 +5134,10 @@ webpackJsonp_name_([4],[
 	"use strict";
 	
 	//*------------------------------------------------------------------*
-	var _ = __webpack_require__(/*! lodash */ 1624);
+	var _ = __webpack_require__(/*! lodash */ 1639);
 	
 	//*------------------------------------------------------------------*
-	var Orderings = __webpack_require__(/*! ./OrderingsForHighcharts.js */ 1625);
+	var Orderings = __webpack_require__(/*! ./OrderingsForHighcharts.js */ 1640);
 	
 	//*------------------------------------------------------------------*
 	
@@ -3376,7 +5185,7 @@ webpackJsonp_name_([4],[
 	    ? {x: rowNumber, y:columnNumber, value:expression.value ,info:infoCommonForTheRow}
 	    : (
 	        expression.hasOwnProperty("foldChange")
-	      ? {x: rowNumber, y: columnNumber, value: expression.foldChange,info:{pValue: expression.pValue, foldChange: expression.foldChange}}
+	      ? {x: rowNumber, y: columnNumber, value: +expression.foldChange,info:{pValue: expression.pValue, foldChange: expression.foldChange}}
 	      : null
 	    )
 	  );
@@ -3426,28 +5235,6 @@ webpackJsonp_name_([4],[
 	  );
 	};
 	
-	var _groupSingleExperiment = function(chain, config){
-	  var _inferExperimentType = function(config){
-	    return (
-	      config.isDifferential
-	        ? "DIFFERENTIAL"
-	        : config.isProteomics
-	          ? "PROTEOMICS_BASELINE"
-	          : "RNASEQ_MRNA_BASELINE"
-	    );
-	  };
-	  return (
-	    chain
-	    .map(_dataPointsFromRow(config))
-	    .flatten()
-	    .thru(function(value){
-	      return [
-	        [_inferExperimentType(config), value]
-	      ];
-	    })
-	  );
-	};
-	
 	var _experimentsIntoDataSeriesByThresholds = function(thresholds){
 	  return function(experimentType, dataPoints) {
 	    return dataPoints.map(
@@ -3462,16 +5249,11 @@ webpackJsonp_name_([4],[
 	};
 	
 	var getDataSeries = function(profilesRows, config) {
+	  var _fns = [_.lt, _.eq,_.gt].map(function(f){return function(point){return f(point.value,0);};});
+	  var _belowCutoff = _fns[1];
 	  return (
-	    config.isDifferential
-	    ? _getDataSeries(
-	      {
-	        DIFFERENTIAL : [-1,-0.01,0.01, 1]
-	      },
-	      ["High down", "Down", "Below cutoff", "Up", "High up"],
-	      ["blue", "lightblue", "grey", "darkSalmon","fireBrick"],
-	      profilesRows, config)
-	    : _getDataSeries(
+	    config.isMultiExperiment
+	    ? _dataSplitByThresholds(
 	      {
 	        RNASEQ_MRNA_BASELINE : [0,10,1000],
 	        PROTEOMICS_BASELINE : [0,0.001,8],
@@ -3480,17 +5262,44 @@ webpackJsonp_name_([4],[
 	      ["Below cutoff", "Low", "Medium", "High"],
 	      ["#eaeaea", "#45affd", "#1E74CA", "#024990"],
 	      profilesRows, config)
-	  );
-	};
+	    : config.isDifferential
+	      ? _dataProportionallyInEachSeries(profilesRows, config,
+	          _fns,
+	          [["High down", "Down"], ["Below cutoff"], ["Up", "High up"]],
+	          [["#0000ff", "#8cc6ff"], ["#808080"], ["#e9967a","#b22222"]])
+	      : _dataProportionallyInEachSeries(profilesRows, config,
+	          [_belowCutoff,_.negate(_belowCutoff)],
+	          [["Below cutoff"],["Low", "Medium", "High"]],
+	          [["#808080"],["#8cc6ff","#0000ff","#0000b3"]])
 	
-	var _getDataSeries = function (thresholds, names, colours, profilesRows, config) {
+	  )
+	};
+	var _splitDataSetByProportion = function(data,names,colours){
+	  var sortedValues = data.map(function(point){return point.value}).sort(function(l,r){return l-r;});
+	  var howManyPointsInTotal = data.length;
+	  var howManyDataSetsToSplitIn = names.length;
 	  return (
-	    (config.isMultiExperiment
-	      ? _.curryRight(_groupByExperimentType,2)(config)
-	      : _.curryRight(_groupSingleExperiment,2)(config)
-	    )(_.chain(profilesRows))
-	    .map(_.spread(_experimentsIntoDataSeriesByThresholds(thresholds)))
-	    .flatten()
+	    _bucketsIntoSeries(names,colours)(
+	      _.chain(data)
+	      .map(function(point){
+	        return [
+	          Math.floor(_.sortedIndex(sortedValues, point.value)/howManyPointsInTotal *howManyDataSetsToSplitIn)
+	         , point]
+	      })
+	    ).value()
+	  );
+	}
+	
+	var _dataProportionallyInEachSeries = function(profilesRows, config, filters, names, colors){
+	  var points = _.flatten(profilesRows.map(_dataPointsFromRow(config)));
+	  return _.flatten(_.range(filters.length).map(function(i){
+	    return _splitDataSetByProportion(points.filter(filters[i]), names[i], colors[i]);
+	  }));
+	}
+	
+	var _bucketsIntoSeries = _.curry(function(names,colours,chain){
+	  return (
+	    chain
 	    .groupBy(_.spread(function(dataSeriesAssigned, point) {
 	      return dataSeriesAssigned;
 	    }))
@@ -3510,25 +5319,34 @@ webpackJsonp_name_([4],[
 	        };
 	      })
 	    )
-	    .value()
+	  );
+	},3);
+	
+	var _dataSplitByThresholds = function (thresholds, names, colours, profilesRows, config) {
+	  return (
+	    _bucketsIntoSeries(names,colours)(
+	      _groupByExperimentType(_.chain(profilesRows),config)
+	      .map(_.spread(_experimentsIntoDataSeriesByThresholds(thresholds)))
+	      .flatten()
+	    ).value()
 	  );
 	};
 	
 	var extractExpressionValues = function(rows, isDifferential){
-	  var extractor = function(valueField){
+	  var _valueFieldExtractor = function(valueField){
 	    return (
 	      function(expression){
 	        return (
 	          expression.hasOwnProperty(valueField)
-	          ? {value : expression[valueField]}
+	          ? {value : +expression[valueField]}
 	          : {}
 	        );
 	      });
-	  }
+	  };
 	  return rows.map(
 	    function(row){
 	      return row.expressions.map(
-	        extractor(isDifferential ? "foldChange": "value")
+	        _valueFieldExtractor(isDifferential ? "foldChange": "value")
 	      );
 	    }
 	  );
@@ -3551,7 +5369,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1624 */
+/* 1639 */
 /*!*********************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/lodash/lodash.js ***!
   \*********************************************************************************/
@@ -3571,7 +5389,7 @@ webpackJsonp_name_([4],[
 	  var undefined;
 	
 	  /** Used as the semantic version number. */
-	  var VERSION = '4.14.2';
+	  var VERSION = '4.15.0';
 	
 	  /** Used as the size to enable large array optimizations. */
 	  var LARGE_ARRAY_SIZE = 200;
@@ -3708,8 +5526,8 @@ webpackJsonp_name_([4],[
 	      reWrapDetails = /\{\n\/\* \[wrapped with (.+)\] \*/,
 	      reSplitDetails = /,? & /;
 	
-	  /** Used to match non-compound words composed of alphanumeric characters. */
-	  var reBasicWord = /[a-zA-Z0-9]+/g;
+	  /** Used to match words composed of alphanumeric characters. */
+	  var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
 	
 	  /** Used to match backslashes in property paths. */
 	  var reEscapeChar = /\\(\\)?/g;
@@ -3741,8 +5559,8 @@ webpackJsonp_name_([4],[
 	  /** Used to detect unsigned integer values. */
 	  var reIsUint = /^(?:0|[1-9]\d*)$/;
 	
-	  /** Used to match latin-1 supplementary letters (excluding mathematical operators). */
-	  var reLatin1 = /[\xc0-\xd6\xd8-\xde\xdf-\xf6\xf8-\xff]/g;
+	  /** Used to match Latin Unicode letters (excluding mathematical operators). */
+	  var reLatin = /[\xc0-\xd6\xd8-\xf6\xf8-\xff\u0100-\u017f]/g;
 	
 	  /** Used to ensure capturing order of template delimiters. */
 	  var reNoMatch = /($^)/;
@@ -3803,10 +5621,10 @@ webpackJsonp_name_([4],[
 	  var reComboMark = RegExp(rsCombo, 'g');
 	
 	  /** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-	  var reComplexSymbol = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
+	  var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
 	
 	  /** Used to match complex or compound words. */
-	  var reComplexWord = RegExp([
+	  var reUnicodeWord = RegExp([
 	    rsUpper + '?' + rsLower + '+' + rsOptLowerContr + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
 	    rsUpperMisc + '+' + rsOptUpperContr + '(?=' + [rsBreak, rsUpper + rsLowerMisc, '$'].join('|') + ')',
 	    rsUpper + '?' + rsLowerMisc + '+' + rsOptLowerContr,
@@ -3816,18 +5634,18 @@ webpackJsonp_name_([4],[
 	  ].join('|'), 'g');
 	
 	  /** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
-	  var reHasComplexSymbol = RegExp('[' + rsZWJ + rsAstralRange  + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + ']');
+	  var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + ']');
 	
 	  /** Used to detect strings that need a more robust regexp to match words. */
-	  var reHasComplexWord = /[a-z][A-Z]|[A-Z]{2,}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
+	  var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2,}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
 	
 	  /** Used to assign default `context` object properties. */
 	  var contextProps = [
 	    'Array', 'Buffer', 'DataView', 'Date', 'Error', 'Float32Array', 'Float64Array',
 	    'Function', 'Int8Array', 'Int16Array', 'Int32Array', 'Map', 'Math', 'Object',
 	    'Promise', 'RegExp', 'Set', 'String', 'Symbol', 'TypeError', 'Uint8Array',
-	    'Uint8ClampedArray', 'Uint16Array', 'Uint32Array', 'WeakMap', '_', 'clearTimeout',
-	    'isFinite', 'parseInt', 'setTimeout'
+	    'Uint8ClampedArray', 'Uint16Array', 'Uint32Array', 'WeakMap',
+	    '_', 'clearTimeout', 'isFinite', 'parseInt', 'setTimeout'
 	  ];
 	
 	  /** Used to make template sourceURLs easier to identify. */
@@ -3865,16 +5683,17 @@ webpackJsonp_name_([4],[
 	  cloneableTags[errorTag] = cloneableTags[funcTag] =
 	  cloneableTags[weakMapTag] = false;
 	
-	  /** Used to map latin-1 supplementary letters to basic latin letters. */
+	  /** Used to map Latin Unicode letters to basic Latin letters. */
 	  var deburredLetters = {
+	    // Latin-1 Supplement block.
 	    '\xc0': 'A',  '\xc1': 'A', '\xc2': 'A', '\xc3': 'A', '\xc4': 'A', '\xc5': 'A',
 	    '\xe0': 'a',  '\xe1': 'a', '\xe2': 'a', '\xe3': 'a', '\xe4': 'a', '\xe5': 'a',
 	    '\xc7': 'C',  '\xe7': 'c',
 	    '\xd0': 'D',  '\xf0': 'd',
 	    '\xc8': 'E',  '\xc9': 'E', '\xca': 'E', '\xcb': 'E',
 	    '\xe8': 'e',  '\xe9': 'e', '\xea': 'e', '\xeb': 'e',
-	    '\xcC': 'I',  '\xcd': 'I', '\xce': 'I', '\xcf': 'I',
-	    '\xeC': 'i',  '\xed': 'i', '\xee': 'i', '\xef': 'i',
+	    '\xcc': 'I',  '\xcd': 'I', '\xce': 'I', '\xcf': 'I',
+	    '\xec': 'i',  '\xed': 'i', '\xee': 'i', '\xef': 'i',
 	    '\xd1': 'N',  '\xf1': 'n',
 	    '\xd2': 'O',  '\xd3': 'O', '\xd4': 'O', '\xd5': 'O', '\xd6': 'O', '\xd8': 'O',
 	    '\xf2': 'o',  '\xf3': 'o', '\xf4': 'o', '\xf5': 'o', '\xf6': 'o', '\xf8': 'o',
@@ -3883,7 +5702,43 @@ webpackJsonp_name_([4],[
 	    '\xdd': 'Y',  '\xfd': 'y', '\xff': 'y',
 	    '\xc6': 'Ae', '\xe6': 'ae',
 	    '\xde': 'Th', '\xfe': 'th',
-	    '\xdf': 'ss'
+	    '\xdf': 'ss',
+	    // Latin Extended-A block.
+	    '\u0100': 'A',  '\u0102': 'A', '\u0104': 'A',
+	    '\u0101': 'a',  '\u0103': 'a', '\u0105': 'a',
+	    '\u0106': 'C',  '\u0108': 'C', '\u010a': 'C', '\u010c': 'C',
+	    '\u0107': 'c',  '\u0109': 'c', '\u010b': 'c', '\u010d': 'c',
+	    '\u010e': 'D',  '\u0110': 'D', '\u010f': 'd', '\u0111': 'd',
+	    '\u0112': 'E',  '\u0114': 'E', '\u0116': 'E', '\u0118': 'E', '\u011a': 'E',
+	    '\u0113': 'e',  '\u0115': 'e', '\u0117': 'e', '\u0119': 'e', '\u011b': 'e',
+	    '\u011c': 'G',  '\u011e': 'G', '\u0120': 'G', '\u0122': 'G',
+	    '\u011d': 'g',  '\u011f': 'g', '\u0121': 'g', '\u0123': 'g',
+	    '\u0124': 'H',  '\u0126': 'H', '\u0125': 'h', '\u0127': 'h',
+	    '\u0128': 'I',  '\u012a': 'I', '\u012c': 'I', '\u012e': 'I', '\u0130': 'I',
+	    '\u0129': 'i',  '\u012b': 'i', '\u012d': 'i', '\u012f': 'i', '\u0131': 'i',
+	    '\u0134': 'J',  '\u0135': 'j',
+	    '\u0136': 'K',  '\u0137': 'k', '\u0138': 'k',
+	    '\u0139': 'L',  '\u013b': 'L', '\u013d': 'L', '\u013f': 'L', '\u0141': 'L',
+	    '\u013a': 'l',  '\u013c': 'l', '\u013e': 'l', '\u0140': 'l', '\u0142': 'l',
+	    '\u0143': 'N',  '\u0145': 'N', '\u0147': 'N', '\u014a': 'N',
+	    '\u0144': 'n',  '\u0146': 'n', '\u0148': 'n', '\u014b': 'n',
+	    '\u014c': 'O',  '\u014e': 'O', '\u0150': 'O',
+	    '\u014d': 'o',  '\u014f': 'o', '\u0151': 'o',
+	    '\u0154': 'R',  '\u0156': 'R', '\u0158': 'R',
+	    '\u0155': 'r',  '\u0157': 'r', '\u0159': 'r',
+	    '\u015a': 'S',  '\u015c': 'S', '\u015e': 'S', '\u0160': 'S',
+	    '\u015b': 's',  '\u015d': 's', '\u015f': 's', '\u0161': 's',
+	    '\u0162': 'T',  '\u0164': 'T', '\u0166': 'T',
+	    '\u0163': 't',  '\u0165': 't', '\u0167': 't',
+	    '\u0168': 'U',  '\u016a': 'U', '\u016c': 'U', '\u016e': 'U', '\u0170': 'U', '\u0172': 'U',
+	    '\u0169': 'u',  '\u016b': 'u', '\u016d': 'u', '\u016f': 'u', '\u0171': 'u', '\u0173': 'u',
+	    '\u0174': 'W',  '\u0175': 'w',
+	    '\u0176': 'Y',  '\u0177': 'y', '\u0178': 'Y',
+	    '\u0179': 'Z',  '\u017b': 'Z', '\u017d': 'Z',
+	    '\u017a': 'z',  '\u017c': 'z', '\u017e': 'z',
+	    '\u0132': 'IJ', '\u0133': 'ij',
+	    '\u0152': 'Oe', '\u0153': 'oe',
+	    '\u0149': "'n", '\u017f': 'ss'
 	  };
 	
 	  /** Used to map characters to HTML entities. */
@@ -4119,7 +5974,7 @@ webpackJsonp_name_([4],[
 	   * specifying an index to search from.
 	   *
 	   * @private
-	   * @param {Array} [array] The array to search.
+	   * @param {Array} [array] The array to inspect.
 	   * @param {*} target The value to search for.
 	   * @returns {boolean} Returns `true` if `target` is found, else `false`.
 	   */
@@ -4132,7 +5987,7 @@ webpackJsonp_name_([4],[
 	   * This function is like `arrayIncludes` except that it accepts a comparator.
 	   *
 	   * @private
-	   * @param {Array} [array] The array to search.
+	   * @param {Array} [array] The array to inspect.
 	   * @param {*} target The value to search for.
 	   * @param {Function} comparator The comparator invoked per element.
 	   * @returns {boolean} Returns `true` if `target` is found, else `false`.
@@ -4259,12 +6114,43 @@ webpackJsonp_name_([4],[
 	  }
 	
 	  /**
+	   * Gets the size of an ASCII `string`.
+	   *
+	   * @private
+	   * @param {string} string The string inspect.
+	   * @returns {number} Returns the string size.
+	   */
+	  var asciiSize = baseProperty('length');
+	
+	  /**
+	   * Converts an ASCII `string` to an array.
+	   *
+	   * @private
+	   * @param {string} string The string to convert.
+	   * @returns {Array} Returns the converted array.
+	   */
+	  function asciiToArray(string) {
+	    return string.split('');
+	  }
+	
+	  /**
+	   * Splits an ASCII `string` into an array of its words.
+	   *
+	   * @private
+	   * @param {string} The string to inspect.
+	   * @returns {Array} Returns the words of `string`.
+	   */
+	  function asciiWords(string) {
+	    return string.match(reAsciiWord) || [];
+	  }
+	
+	  /**
 	   * The base implementation of methods like `_.findKey` and `_.findLastKey`,
 	   * without support for iteratee shorthands, which iterates over `collection`
 	   * using `eachFunc`.
 	   *
 	   * @private
-	   * @param {Array|Object} collection The collection to search.
+	   * @param {Array|Object} collection The collection to inspect.
 	   * @param {Function} predicate The function invoked per iteration.
 	   * @param {Function} eachFunc The function to iterate over `collection`.
 	   * @returns {*} Returns the found element or its key, else `undefined`.
@@ -4285,7 +6171,7 @@ webpackJsonp_name_([4],[
 	   * support for iteratee shorthands.
 	   *
 	   * @private
-	   * @param {Array} array The array to search.
+	   * @param {Array} array The array to inspect.
 	   * @param {Function} predicate The function invoked per iteration.
 	   * @param {number} fromIndex The index to search from.
 	   * @param {boolean} [fromRight] Specify iterating from right to left.
@@ -4307,7 +6193,7 @@ webpackJsonp_name_([4],[
 	   * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
 	   *
 	   * @private
-	   * @param {Array} array The array to search.
+	   * @param {Array} array The array to inspect.
 	   * @param {*} value The value to search for.
 	   * @param {number} fromIndex The index to search from.
 	   * @returns {number} Returns the index of the matched value, else `-1`.
@@ -4331,7 +6217,7 @@ webpackJsonp_name_([4],[
 	   * This function is like `baseIndexOf` except that it accepts a comparator.
 	   *
 	   * @private
-	   * @param {Array} array The array to search.
+	   * @param {Array} array The array to inspect.
 	   * @param {*} value The value to search for.
 	   * @param {number} fromIndex The index to search from.
 	   * @param {Function} comparator The comparator invoked per element.
@@ -4594,7 +6480,8 @@ webpackJsonp_name_([4],[
 	  }
 	
 	  /**
-	   * Used by `_.deburr` to convert latin-1 supplementary letters to basic latin letters.
+	   * Used by `_.deburr` to convert Latin-1 Supplement and Latin Extended-A
+	   * letters to basic Latin letters.
 	   *
 	   * @private
 	   * @param {string} letter The matched letter to deburr.
@@ -4632,6 +6519,28 @@ webpackJsonp_name_([4],[
 	   */
 	  function getValue(object, key) {
 	    return object == null ? undefined : object[key];
+	  }
+	
+	  /**
+	   * Checks if `string` contains Unicode symbols.
+	   *
+	   * @private
+	   * @param {string} string The string to inspect.
+	   * @returns {boolean} Returns `true` if a symbol is found, else `false`.
+	   */
+	  function hasUnicode(string) {
+	    return reHasUnicode.test(string);
+	  }
+	
+	  /**
+	   * Checks if `string` contains a word composed of Unicode symbols.
+	   *
+	   * @private
+	   * @param {string} string The string to inspect.
+	   * @returns {boolean} Returns `true` if a word is found, else `false`.
+	   */
+	  function hasUnicodeWord(string) {
+	    return reHasUnicodeWord.test(string);
 	  }
 	
 	  /**
@@ -4768,14 +6677,9 @@ webpackJsonp_name_([4],[
 	   * @returns {number} Returns the string size.
 	   */
 	  function stringSize(string) {
-	    if (!(string && reHasComplexSymbol.test(string))) {
-	      return string.length;
-	    }
-	    var result = reComplexSymbol.lastIndex = 0;
-	    while (reComplexSymbol.test(string)) {
-	      result++;
-	    }
-	    return result;
+	    return hasUnicode(string)
+	      ? unicodeSize(string)
+	      : asciiSize(string);
 	  }
 	
 	  /**
@@ -4786,7 +6690,9 @@ webpackJsonp_name_([4],[
 	   * @returns {Array} Returns the converted array.
 	   */
 	  function stringToArray(string) {
-	    return string.match(reComplexSymbol);
+	    return hasUnicode(string)
+	      ? unicodeToArray(string)
+	      : asciiToArray(string);
 	  }
 	
 	  /**
@@ -4797,6 +6703,43 @@ webpackJsonp_name_([4],[
 	   * @returns {string} Returns the unescaped character.
 	   */
 	  var unescapeHtmlChar = basePropertyOf(htmlUnescapes);
+	
+	  /**
+	   * Gets the size of a Unicode `string`.
+	   *
+	   * @private
+	   * @param {string} string The string inspect.
+	   * @returns {number} Returns the string size.
+	   */
+	  function unicodeSize(string) {
+	    var result = reUnicode.lastIndex = 0;
+	    while (reUnicode.test(string)) {
+	      result++;
+	    }
+	    return result;
+	  }
+	
+	  /**
+	   * Converts a Unicode `string` to an array.
+	   *
+	   * @private
+	   * @param {string} string The string to convert.
+	   * @returns {Array} Returns the converted array.
+	   */
+	  function unicodeToArray(string) {
+	    return string.match(reUnicode) || [];
+	  }
+	
+	  /**
+	   * Splits a Unicode `string` into an array of its words.
+	   *
+	   * @private
+	   * @param {string} The string to inspect.
+	   * @returns {Array} Returns the words of `string`.
+	   */
+	  function unicodeWords(string) {
+	    return string.match(reUnicodeWord) || [];
+	  }
 	
 	  /*--------------------------------------------------------------------------*/
 	
@@ -4837,19 +6780,23 @@ webpackJsonp_name_([4],[
 	   * var defer = _.runInContext({ 'setTimeout': setImmediate }).defer;
 	   */
 	  function runInContext(context) {
-	    context = context ? _.defaults({}, context, _.pick(root, contextProps)) : root;
+	    context = context ? _.defaults(root.Object(), context, _.pick(root, contextProps)) : root;
 	
 	    /** Built-in constructor references. */
 	    var Array = context.Array,
+	        Date = context.Date,
 	        Error = context.Error,
+	        Function = context.Function,
 	        Math = context.Math,
+	        Object = context.Object,
 	        RegExp = context.RegExp,
+	        String = context.String,
 	        TypeError = context.TypeError;
 	
 	    /** Used for built-in method references. */
-	    var arrayProto = context.Array.prototype,
-	        objectProto = context.Object.prototype,
-	        stringProto = context.String.prototype;
+	    var arrayProto = Array.prototype,
+	        funcProto = Function.prototype,
+	        objectProto = Object.prototype;
 	
 	    /** Used to detect overreaching core-js shims. */
 	    var coreJsData = context['__core-js_shared__'];
@@ -4861,7 +6808,7 @@ webpackJsonp_name_([4],[
 	    }());
 	
 	    /** Used to resolve the decompiled source of functions. */
-	    var funcToString = context.Function.prototype.toString;
+	    var funcToString = funcProto.toString;
 	
 	    /** Used to check objects for own properties. */
 	    var hasOwnProperty = objectProto.hasOwnProperty;
@@ -4894,14 +6841,14 @@ webpackJsonp_name_([4],[
 	        Uint8Array = context.Uint8Array,
 	        getPrototype = overArg(Object.getPrototypeOf, Object),
 	        iteratorSymbol = Symbol ? Symbol.iterator : undefined,
-	        objectCreate = context.Object.create,
+	        objectCreate = Object.create,
 	        propertyIsEnumerable = objectProto.propertyIsEnumerable,
 	        splice = arrayProto.splice,
 	        spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
 	
 	    /** Mocked built-ins. */
 	    var ctxClearTimeout = context.clearTimeout !== root.clearTimeout && context.clearTimeout,
-	        ctxNow = context.Date && context.Date.now !== root.Date.now && context.Date.now,
+	        ctxNow = Date && Date.now !== root.Date.now && Date.now,
 	        ctxSetTimeout = context.setTimeout !== root.setTimeout && context.setTimeout;
 	
 	    /* Built-in method references for those with the same name as other `lodash` methods. */
@@ -4916,9 +6863,7 @@ webpackJsonp_name_([4],[
 	        nativeMin = Math.min,
 	        nativeParseInt = context.parseInt,
 	        nativeRandom = Math.random,
-	        nativeReplace = stringProto.replace,
-	        nativeReverse = arrayProto.reverse,
-	        nativeSplit = stringProto.split;
+	        nativeReverse = arrayProto.reverse;
 	
 	    /* Built-in method references that are verified to be native. */
 	    var DataView = getNative(context, 'DataView'),
@@ -4926,11 +6871,11 @@ webpackJsonp_name_([4],[
 	        Promise = getNative(context, 'Promise'),
 	        Set = getNative(context, 'Set'),
 	        WeakMap = getNative(context, 'WeakMap'),
-	        nativeCreate = getNative(context.Object, 'create');
+	        nativeCreate = getNative(Object, 'create');
 	
 	    /* Used to set `toString` methods. */
 	    var defineProperty = (function() {
-	      var func = getNative(context.Object, 'defineProperty'),
+	      var func = getNative(Object, 'defineProperty'),
 	          name = getNative.name;
 	
 	      return (name && name.length > 2) ? func : undefined;
@@ -5767,7 +7712,9 @@ webpackJsonp_name_([4],[
 	     * @returns {Array} Returns the array of property names.
 	     */
 	    function arrayLikeKeys(value, inherited) {
-	      var result = (isArray(value) || isString(value) || isArguments(value))
+	      // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+	      // Safari 9 makes `arguments.length` enumerable in strict mode.
+	      var result = (isArray(value) || isArguments(value))
 	        ? baseTimes(value.length, String)
 	        : [];
 	
@@ -5839,7 +7786,7 @@ webpackJsonp_name_([4],[
 	     * Gets the index at which the `key` is found in `array` of key-value pairs.
 	     *
 	     * @private
-	     * @param {Array} array The array to search.
+	     * @param {Array} array The array to inspect.
 	     * @param {*} key The key to search for.
 	     * @returns {number} Returns the index of the matched value, else `-1`.
 	     */
@@ -7264,7 +9211,7 @@ webpackJsonp_name_([4],[
 	     * The base implementation of `_.set`.
 	     *
 	     * @private
-	     * @param {Object} object The object to query.
+	     * @param {Object} object The object to modify.
 	     * @param {Array|string} path The path of the property to set.
 	     * @param {*} value The value to set.
 	     * @param {Function} [customizer] The function to customize path creation.
@@ -7594,7 +9541,7 @@ webpackJsonp_name_([4],[
 	     * The base implementation of `_.update`.
 	     *
 	     * @private
-	     * @param {Object} object The object to query.
+	     * @param {Object} object The object to modify.
 	     * @param {Array|string} path The path of the property to update.
 	     * @param {Function} updater The function to produce the updated value.
 	     * @param {Function} [customizer] The function to customize path creation.
@@ -8205,7 +10152,7 @@ webpackJsonp_name_([4],[
 	      return function(string) {
 	        string = toString(string);
 	
-	        var strSymbols = reHasComplexSymbol.test(string)
+	        var strSymbols = hasUnicode(string)
 	          ? stringToArray(string)
 	          : undefined;
 	
@@ -8548,7 +10495,7 @@ webpackJsonp_name_([4],[
 	        return charsLength ? baseRepeat(chars, length) : chars;
 	      }
 	      var result = baseRepeat(chars, nativeCeil(length / stringSize(chars)));
-	      return reHasComplexSymbol.test(chars)
+	      return hasUnicode(chars)
 	        ? castSlice(stringToArray(result), 0, length).join('')
 	        : result.slice(0, length);
 	    }
@@ -9215,7 +11162,7 @@ webpackJsonp_name_([4],[
 	    var getTag = baseGetTag;
 	
 	    // Fallback for data views, maps, sets, and weak maps in IE 11,
-	    // for data views in Edge, and promises in Node.js.
+	    // for data views in Edge < 14, and promises in Node.js.
 	    if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
 	        (Map && getTag(new Map) != mapTag) ||
 	        (Promise && getTag(Promise.resolve()) != promiseTag) ||
@@ -9307,7 +11254,7 @@ webpackJsonp_name_([4],[
 	      }
 	      var length = object ? object.length : 0;
 	      return !!length && isLength(length) && isIndex(key, length) &&
-	        (isArray(object) || isString(object) || isArguments(object));
+	        (isArray(object) || isArguments(object));
 	    }
 	
 	    /**
@@ -10288,7 +12235,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 1.1.0
 	     * @category Array
-	     * @param {Array} array The array to search.
+	     * @param {Array} array The array to inspect.
 	     * @param {Function} [predicate=_.identity]
 	     *  The function invoked per iteration.
 	     * @param {number} [fromIndex=0] The index to search from.
@@ -10336,7 +12283,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 2.0.0
 	     * @category Array
-	     * @param {Array} array The array to search.
+	     * @param {Array} array The array to inspect.
 	     * @param {Function} [predicate=_.identity]
 	     *  The function invoked per iteration.
 	     * @param {number} [fromIndex=array.length-1] The index to search from.
@@ -10505,7 +12452,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 0.1.0
 	     * @category Array
-	     * @param {Array} array The array to search.
+	     * @param {Array} array The array to inspect.
 	     * @param {*} value The value to search for.
 	     * @param {number} [fromIndex=0] The index to search from.
 	     * @returns {number} Returns the index of the matched value, else `-1`.
@@ -10690,7 +12637,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 0.1.0
 	     * @category Array
-	     * @param {Array} array The array to search.
+	     * @param {Array} array The array to inspect.
 	     * @param {*} value The value to search for.
 	     * @param {number} [fromIndex=array.length-1] The index to search from.
 	     * @returns {number} Returns the index of the matched value, else `-1`.
@@ -11068,7 +13015,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 4.0.0
 	     * @category Array
-	     * @param {Array} array The array to search.
+	     * @param {Array} array The array to inspect.
 	     * @param {*} value The value to search for.
 	     * @returns {number} Returns the index of the matched value, else `-1`.
 	     * @example
@@ -11147,7 +13094,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 4.0.0
 	     * @category Array
-	     * @param {Array} array The array to search.
+	     * @param {Array} array The array to inspect.
 	     * @param {*} value The value to search for.
 	     * @returns {number} Returns the index of the matched value, else `-1`.
 	     * @example
@@ -12276,7 +14223,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 0.1.0
 	     * @category Collection
-	     * @param {Array|Object} collection The collection to search.
+	     * @param {Array|Object} collection The collection to inspect.
 	     * @param {Function} [predicate=_.identity]
 	     *  The function invoked per iteration.
 	     * @param {number} [fromIndex=0] The index to search from.
@@ -12314,7 +14261,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 2.0.0
 	     * @category Collection
-	     * @param {Array|Object} collection The collection to search.
+	     * @param {Array|Object} collection The collection to inspect.
 	     * @param {Function} [predicate=_.identity]
 	     *  The function invoked per iteration.
 	     * @param {number} [fromIndex=collection.length-1] The index to search from.
@@ -12509,7 +14456,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 0.1.0
 	     * @category Collection
-	     * @param {Array|Object|string} collection The collection to search.
+	     * @param {Array|Object|string} collection The collection to inspect.
 	     * @param {*} value The value to search for.
 	     * @param {number} [fromIndex=0] The index to search from.
 	     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
@@ -12942,7 +14889,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 0.1.0
 	     * @category Collection
-	     * @param {Array|Object} collection The collection to inspect.
+	     * @param {Array|Object|string} collection The collection to inspect.
 	     * @returns {number} Returns the collection size.
 	     * @example
 	     *
@@ -12960,14 +14907,11 @@ webpackJsonp_name_([4],[
 	        return 0;
 	      }
 	      if (isArrayLike(collection)) {
-	        var result = collection.length;
-	        return (result && isString(collection)) ? stringSize(collection) : result;
+	        return isString(collection) ? stringSize(collection) : collection.length;
 	      }
-	      if (isObjectLike(collection)) {
-	        var tag = getTag(collection);
-	        if (tag == mapTag || tag == setTag) {
-	          return collection.size;
-	        }
+	      var tag = getTag(collection);
+	      if (tag == mapTag || tag == setTag) {
+	        return collection.size;
 	      }
 	      return baseKeys(collection).length;
 	    }
@@ -14376,7 +16320,7 @@ webpackJsonp_name_([4],[
 	     * // => false
 	     */
 	    function isArguments(value) {
-	      // Safari 8.1 incorrectly makes `arguments.callee` enumerable in strict mode.
+	      // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
 	      return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
 	        (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
 	    }
@@ -14599,24 +16543,23 @@ webpackJsonp_name_([4],[
 	     */
 	    function isEmpty(value) {
 	      if (isArrayLike(value) &&
-	          (isArray(value) || isString(value) || isFunction(value.splice) ||
-	            isArguments(value) || isBuffer(value))) {
+	          (isArray(value) || typeof value == 'string' ||
+	            typeof value.splice == 'function' || isBuffer(value) || isArguments(value))) {
 	        return !value.length;
 	      }
-	      if (isObjectLike(value)) {
-	        var tag = getTag(value);
-	        if (tag == mapTag || tag == setTag) {
-	          return !value.size;
-	        }
+	      var tag = getTag(value);
+	      if (tag == mapTag || tag == setTag) {
+	        return !value.size;
 	      }
-	      var isProto = isPrototype(value);
+	      if (nonEnumShadows || isPrototype(value)) {
+	        return !nativeKeys(value).length;
+	      }
 	      for (var key in value) {
-	        if (hasOwnProperty.call(value, key) &&
-	            !(isProto && key == 'constructor')) {
+	        if (hasOwnProperty.call(value, key)) {
 	          return false;
 	        }
 	      }
-	      return !(nonEnumShadows && nativeKeys(value).length);
+	      return true;
 	    }
 	
 	    /**
@@ -14764,8 +16707,7 @@ webpackJsonp_name_([4],[
 	     */
 	    function isFunction(value) {
 	      // The use of `Object#toString` avoids issues with the `typeof` operator
-	      // in Safari 8 which returns 'object' for typed array and weak map constructors,
-	      // and PhantomJS 1.9 which returns 'function' for `NodeList` instances.
+	      // in Safari 8-9 which returns 'object' for typed array and other constructors.
 	      var tag = isObject(value) ? objectToString.call(value) : '';
 	      return tag == funcTag || tag == genTag;
 	    }
@@ -15579,7 +17521,7 @@ webpackJsonp_name_([4],[
 	        return NAN;
 	      }
 	      if (isObject(value)) {
-	        var other = isFunction(value.valueOf) ? value.valueOf() : value;
+	        var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
 	        value = isObject(other) ? (other + '') : other;
 	      }
 	      if (typeof value != 'string') {
@@ -15937,7 +17879,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 1.1.0
 	     * @category Object
-	     * @param {Object} object The object to search.
+	     * @param {Object} object The object to inspect.
 	     * @param {Function} [predicate=_.identity] The function invoked per iteration.
 	     * @returns {string|undefined} Returns the key of the matched element,
 	     *  else `undefined`.
@@ -15976,7 +17918,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 2.0.0
 	     * @category Object
-	     * @param {Object} object The object to search.
+	     * @param {Object} object The object to inspect.
 	     * @param {Function} [predicate=_.identity] The function invoked per iteration.
 	     * @returns {string|undefined} Returns the key of the matched element,
 	     *  else `undefined`.
@@ -17218,8 +19160,9 @@ webpackJsonp_name_([4],[
 	
 	    /**
 	     * Deburrs `string` by converting
-	     * [latin-1 supplementary letters](https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)#Character_table)
-	     * to basic latin letters and removing
+	     * [Latin-1 Supplement](https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)#Character_table)
+	     * and [Latin Extended-A](https://en.wikipedia.org/wiki/Latin_Extended-A)
+	     * letters to basic Latin letters and removing
 	     * [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks).
 	     *
 	     * @static
@@ -17235,7 +19178,7 @@ webpackJsonp_name_([4],[
 	     */
 	    function deburr(string) {
 	      string = toString(string);
-	      return string && string.replace(reLatin1, deburrLetter).replace(reComboMark, '');
+	      return string && string.replace(reLatin, deburrLetter).replace(reComboMark, '');
 	    }
 	
 	    /**
@@ -17245,7 +19188,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 3.0.0
 	     * @category String
-	     * @param {string} [string=''] The string to search.
+	     * @param {string} [string=''] The string to inspect.
 	     * @param {string} [target] The string to search for.
 	     * @param {number} [position=string.length] The position to search up to.
 	     * @returns {boolean} Returns `true` if `string` ends with `target`,
@@ -17601,7 +19544,7 @@ webpackJsonp_name_([4],[
 	      var args = arguments,
 	          string = toString(args[0]);
 	
-	      return args.length < 3 ? string : nativeReplace.call(string, args[1], args[2]);
+	      return args.length < 3 ? string : string.replace(args[1], args[2]);
 	    }
 	
 	    /**
@@ -17662,11 +19605,11 @@ webpackJsonp_name_([4],[
 	            (separator != null && !isRegExp(separator))
 	          )) {
 	        separator = baseToString(separator);
-	        if (separator == '' && reHasComplexSymbol.test(string)) {
+	        if (!separator && hasUnicode(string)) {
 	          return castSlice(stringToArray(string), 0, limit);
 	        }
 	      }
-	      return nativeSplit.call(string, separator, limit);
+	      return string.split(separator, limit);
 	    }
 	
 	    /**
@@ -17701,7 +19644,7 @@ webpackJsonp_name_([4],[
 	     * @memberOf _
 	     * @since 3.0.0
 	     * @category String
-	     * @param {string} [string=''] The string to search.
+	     * @param {string} [string=''] The string to inspect.
 	     * @param {string} [target] The string to search for.
 	     * @param {number} [position=0] The position to search from.
 	     * @returns {boolean} Returns `true` if `string` starts with `target`,
@@ -18138,7 +20081,7 @@ webpackJsonp_name_([4],[
 	      string = toString(string);
 	
 	      var strLength = string.length;
-	      if (reHasComplexSymbol.test(string)) {
+	      if (hasUnicode(string)) {
 	        var strSymbols = stringToArray(string);
 	        strLength = strSymbols.length;
 	      }
@@ -18275,7 +20218,7 @@ webpackJsonp_name_([4],[
 	      pattern = guard ? undefined : pattern;
 	
 	      if (pattern === undefined) {
-	        pattern = reHasComplexWord.test(string) ? reComplexWord : reBasicWord;
+	        return hasUnicodeWord(string) ? unicodeWords(string) : asciiWords(string);
 	      }
 	      return string.match(pattern) || [];
 	    }
@@ -20166,10 +22109,10 @@ webpackJsonp_name_([4],[
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./../../../../../~/webpack/buildin/module.js */ 493)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./../../../../../~/webpack/buildin/module.js */ 494)(module)))
 
 /***/ },
-/* 1625 */
+/* 1640 */
 /*!********************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/src/OrderingsForHighcharts.js ***!
   \********************************************************************************************/
@@ -20178,7 +22121,7 @@ webpackJsonp_name_([4],[
 	"use strict";
 	
 	//*------------------------------------------------------------------*
-	var _ = __webpack_require__(/*! lodash */ 1624);
+	var _ = __webpack_require__(/*! lodash */ 1639);
 	
 	//*------------------------------------------------------------------*
 	
@@ -20393,7 +22336,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1626 */
+/* 1641 */
 /*!****************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/src/HighchartsHeatmap.jsx ***!
   \****************************************************************************************/
@@ -20405,80 +22348,24 @@ webpackJsonp_name_([4],[
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var React = __webpack_require__(/*! react */ 1449);
+	var React = __webpack_require__(/*! react */ 1464);
 	
-	var ReactHighcharts = __webpack_require__(/*! react-highcharts */ 1627);
+	var ReactHighcharts = __webpack_require__(/*! react-highcharts */ 1642);
 	var Highcharts = ReactHighcharts.Highcharts;
-	__webpack_require__(/*! highcharts-heatmap */ 1629)(Highcharts);
+	__webpack_require__(/*! highcharts-heatmap */ 1644)(Highcharts);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./HighchartsHeatmap.css */ 1630);
-	var Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 1632);
-	var DownloadProfilesButton = __webpack_require__(/*! download-profiles-button */ 1672);
+	__webpack_require__(/*! ./HighchartsHeatmap.css */ 1645);
+	var Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 1647);
+	var DownloadProfilesButton = __webpack_require__(/*! download-profiles-button */ 1687);
 	
-	var EventEmitter = __webpack_require__(/*! events */ 499);
-	var FormattersFactory = __webpack_require__(/*! ./Formatters.jsx */ 1767);
+	var EventEmitter = __webpack_require__(/*! events */ 500);
+	var FormattersFactory = __webpack_require__(/*! ./Formatters.jsx */ 1782);
+	var PropTypes = __webpack_require__(/*! ./PropTypes.js */ 1785);
+	var createColorAxis = __webpack_require__(/*! ./ColoursForHighcharts.js */ 1787);
 	
 	//*------------------------------------------------------------------*
-	
-	var PointPropType = React.PropTypes.shape({
-	    x: React.PropTypes.number.isRequired,
-	    y: React.PropTypes.number.isRequired,
-	    value: React.PropTypes.number.isRequired,
-	    info: React.PropTypes.object.isRequired
-	});
-	
-	var DataSeriesPropType = React.PropTypes.arrayOf(React.PropTypes.arrayOf(PointPropType)).isRequired;
-	
-	var AxisCategoriesPropType = React.PropTypes.arrayOf(React.PropTypes.shape({
-	    id: React.PropTypes.string, // ontology ID can be missing for x axis
-	    label: React.PropTypes.string.isRequired
-	})).isRequired;
-	
-	var HeatmapDataPropType = React.PropTypes.objectOf(function (heatmapData) {
-	
-	    var width = heatmapData.xAxisCategories.length;
-	    var height = heatmapData.yAxisCategories.length;
-	
-	    for (var i = 0; i < heatmapData.dataSeries.length; i++) {
-	        for (var j = 0; j < heatmapData.dataSeries[i].data.length; j++) {
-	            var point = heatmapData.dataSeries[i].data[j];
-	            var x = point.x;
-	            var y = point.y;
-	            if (x < 0 || y < 0 || x >= width || y >= height) {
-	                return new Error("Point with coordinates outside range:" + x + "," + y);
-	            }
-	        }
-	    }
-	
-	    var isPermutation = function (arr) {
-	        return [].concat(arr).sort(function (a, b) {
-	            return a - b;
-	        }).map(function (el, ix) {
-	            return el === ix;
-	        }).reduce(function (l, r) {
-	            return l && r;
-	        }, true);
-	    };
-	
-	    if (!heatmapData.orderings.hasOwnProperty("Default")) {
-	        return new Error("Default ordering missing!");
-	    }
-	
-	    for (var orderingName in heatmapData.orderings) {
-	        if (heatmapData.orderings.hasOwnProperty(orderingName)) {
-	            var ordering = heatmapData.orderings[orderingName];
-	
-	            if (ordering.columns.length !== width || !isPermutation(ordering.columns)) {
-	                return new Error("Column ordering invalid in " + orderingName);
-	            }
-	            if (ordering.rows.length !== height || !isPermutation(ordering.rows)) {
-	                return new Error("Row ordering invalid in " + orderingName);
-	            }
-	        }
-	    }
-	});
 	
 	var HeatmapContainer = React.createClass({
 	    displayName: 'HeatmapContainer',
@@ -20488,7 +22375,7 @@ webpackJsonp_name_([4],[
 	        heatmapConfig: React.PropTypes.object.isRequired,
 	        anatomogramEventEmitter: React.PropTypes.instanceOf(EventEmitter).isRequired,
 	        googleAnalyticsCallback: React.PropTypes.func.isRequired,
-	        heatmapData: HeatmapDataPropType,
+	        heatmapData: PropTypes.HeatmapData,
 	        afterHeatmapRedrawn: React.PropTypes.func.isRequired
 	    },
 	
@@ -20575,11 +22462,12 @@ webpackJsonp_name_([4],[
 	                },
 	                googleAnalyticsCallback: this.props.googleAnalyticsCallback,
 	                showUsageMessage: this.props.heatmapData.xAxisCategories.length > 100 }),
-	            React.createElement(HighchartsHeatmap, {
+	            React.createElement(HeatmapCanvas, {
 	                marginRight: marginRight,
 	                anatomogramEventEmitter: this.props.anatomogramEventEmitter,
 	                data: this._data(),
 	                labels: this._labels(),
+	                colorAxis: this.props.heatmapConfig.isExperimentPage ? createColorAxis(this.props.heatmapData.dataSeries) : undefined,
 	                afterHeatmapRedrawn: this.props.afterHeatmapRedrawn,
 	                formatters: FormattersFactory(this.props.heatmapConfig)
 	            })
@@ -20588,36 +22476,27 @@ webpackJsonp_name_([4],[
 	
 	});
 	
-	var FormatterPropType = function (props, propName) {
-	    var f = props[propName];
-	    if (typeof f === 'undefined') {
-	        return new Error(propName + " formatter missing");
-	    } else if (typeof f !== 'function' || f.name !== 'Formatter') {
-	        return new Error(propName + " formatter not correctly created. See the main method of TooltipFormatter.jsx .");
-	    }
-	};
-	
-	var HighchartsHeatmap = React.createClass({
-	    displayName: 'HighchartsHeatmap',
-	
+	var HeatmapCanvas = React.createClass({
+	    displayName: 'HeatmapCanvas',
 	
 	    propTypes: {
 	        marginRight: React.PropTypes.number.isRequired,
 	        anatomogramEventEmitter: React.PropTypes.instanceOf(EventEmitter).isRequired,
 	        data: React.PropTypes.shape({
-	            dataSeries: DataSeriesPropType,
-	            xAxisCategories: AxisCategoriesPropType,
-	            yAxisCategories: AxisCategoriesPropType
+	            dataSeries: PropTypes.PointsInDataSeries,
+	            xAxisCategories: PropTypes.AxisCategories,
+	            yAxisCategories: PropTypes.AxisCategories
 	        }),
 	        labels: React.PropTypes.arrayOf(React.PropTypes.shape({
 	            name: React.PropTypes.string,
 	            colour: React.PropTypes.string
 	        })).isRequired,
+	        colorAxis: React.PropTypes.object,
 	        afterHeatmapRedrawn: React.PropTypes.func.isRequired,
 	        formatters: React.PropTypes.shape({
-	            xAxis: FormatterPropType,
-	            yAxis: FormatterPropType,
-	            tooltip: FormatterPropType
+	            xAxis: PropTypes.Formatter,
+	            yAxis: PropTypes.Formatter,
+	            tooltip: PropTypes.Formatter
 	        }).isRequired
 	    },
 	
@@ -20825,6 +22704,7 @@ webpackJsonp_name_([4],[
 	                enabled: false
 	            },
 	            title: null,
+	            colorAxis: this.props.colorAxis || undefined,
 	            xAxis: { //assays
 	                tickLength: 5,
 	                tickColor: 'rgb(192, 192, 192)',
@@ -21038,22 +22918,22 @@ webpackJsonp_name_([4],[
 	module.exports = HeatmapContainer;
 
 /***/ },
-/* 1627 */
+/* 1642 */
 /*!*******************************************************************!*\
   !*** ./faceted-search/~/react-highcharts/dist/ReactHighcharts.js ***!
   \*******************************************************************/
-[2190, 1449, 1628],
-/* 1628 */
+[2215, 1464, 1643],
+/* 1643 */
 /*!**********************************************************************!*\
   !*** ./faceted-search/~/react-highcharts/~/highcharts/highcharts.js ***!
   \**********************************************************************/
-503,
-/* 1629 */
+504,
+/* 1644 */
 /*!**********************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/highcharts-heatmap/heatmap.js ***!
   \**********************************************************************************************/
-524,
-/* 1630 */
+525,
+/* 1645 */
 /*!****************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/src/HighchartsHeatmap.css ***!
   \****************************************************************************************/
@@ -21062,10 +22942,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../css-loader!./HighchartsHeatmap.css */ 1631);
+	var content = __webpack_require__(/*! !./../../css-loader!./HighchartsHeatmap.css */ 1646);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -21082,13 +22962,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1631 */
+/* 1646 */
 /*!**********************************************************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./faceted-search/~/expression-atlas-heatmap-highcharts/src/HighchartsHeatmap.css ***!
   \**********************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -21099,207 +22979,207 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1632 */
+/* 1647 */
 /*!**********************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/Button.js ***!
   \**********************************************************************************************/
-[2106, 1633, 1648, 1649, 1659, 1660, 1449, 1661, 1663, 1668, 1670],
-/* 1633 */
+[2131, 1648, 1663, 1664, 1674, 1675, 1464, 1676, 1678, 1683, 1685],
+/* 1648 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/helpers/inherits.js ***!
   \********************************************************************************************************************/
-[2061, 1634, 1637],
-/* 1634 */
+[2086, 1649, 1652],
+/* 1649 */
 /*!*************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/core-js/object/create.js ***!
   \*************************************************************************************************************************/
-[2062, 1635],
-/* 1635 */
+[2087, 1650],
+/* 1650 */
 /*!**************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/create.js ***!
   \**************************************************************************************************************************************/
-[2063, 1636],
-/* 1636 */
+[2088, 1651],
+/* 1651 */
 /*!*******************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.js ***!
   \*******************************************************************************************************************************/
-164,
-/* 1637 */
+165,
+/* 1652 */
 /*!***********************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/core-js/object/set-prototype-of.js ***!
   \***********************************************************************************************************************************/
-[2064, 1638],
-/* 1638 */
+[2089, 1653],
+/* 1653 */
 /*!************************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/set-prototype-of.js ***!
   \************************************************************************************************************************************************/
-[2065, 1639, 1642],
-/* 1639 */
+[2090, 1654, 1657],
+/* 1654 */
 /*!*********************************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.set-prototype-of.js ***!
   \*********************************************************************************************************************************************************/
-[2066, 1640, 1645],
-/* 1640 */
+[2091, 1655, 1660],
+/* 1655 */
 /*!**************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.export.js ***!
   \**************************************************************************************************************************************/
-[2067, 1641, 1642, 1643],
-/* 1641 */
+[2092, 1656, 1657, 1658],
+/* 1656 */
 /*!**************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.global.js ***!
   \**************************************************************************************************************************************/
-169,
-/* 1642 */
+170,
+/* 1657 */
 /*!************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.core.js ***!
   \************************************************************************************************************************************/
-170,
-/* 1643 */
+171,
+/* 1658 */
 /*!***********************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.ctx.js ***!
   \***********************************************************************************************************************************/
-[2068, 1644],
-/* 1644 */
+[2093, 1659],
+/* 1659 */
 /*!******************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.a-function.js ***!
   \******************************************************************************************************************************************/
-172,
-/* 1645 */
+173,
+/* 1660 */
 /*!*****************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.set-proto.js ***!
   \*****************************************************************************************************************************************/
-[2069, 1636, 1646, 1647, 1643],
-/* 1646 */
+[2094, 1651, 1661, 1662, 1658],
+/* 1661 */
 /*!*****************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.is-object.js ***!
   \*****************************************************************************************************************************************/
-174,
-/* 1647 */
+175,
+/* 1662 */
 /*!*****************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.an-object.js ***!
   \*****************************************************************************************************************************************/
-[2070, 1646],
-/* 1648 */
+[2095, 1661],
+/* 1663 */
 /*!****************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/helpers/class-call-check.js ***!
   \****************************************************************************************************************************/
-176,
-/* 1649 */
+177,
+/* 1664 */
 /*!*******************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/helpers/extends.js ***!
   \*******************************************************************************************************************/
-[2071, 1650],
-/* 1650 */
+[2096, 1665],
+/* 1665 */
 /*!*************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/core-js/object/assign.js ***!
   \*************************************************************************************************************************/
-[2072, 1651],
-/* 1651 */
+[2097, 1666],
+/* 1666 */
 /*!**************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/assign.js ***!
   \**************************************************************************************************************************************/
-[2073, 1652, 1642],
-/* 1652 */
+[2098, 1667, 1657],
+/* 1667 */
 /*!***********************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.assign.js ***!
   \***********************************************************************************************************************************************/
-[2074, 1640, 1653],
-/* 1653 */
+[2099, 1655, 1668],
+/* 1668 */
 /*!*********************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.object-assign.js ***!
   \*********************************************************************************************************************************************/
-[2075, 1636, 1654, 1656, 1658],
-/* 1654 */
+[2100, 1651, 1669, 1671, 1673],
+/* 1669 */
 /*!*****************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.to-object.js ***!
   \*****************************************************************************************************************************************/
-[2076, 1655],
-/* 1655 */
+[2101, 1670],
+/* 1670 */
 /*!***************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.defined.js ***!
   \***************************************************************************************************************************************/
-183,
-/* 1656 */
+184,
+/* 1671 */
 /*!***************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.iobject.js ***!
   \***************************************************************************************************************************************/
-[2077, 1657],
-/* 1657 */
+[2102, 1672],
+/* 1672 */
 /*!***********************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.cof.js ***!
   \***********************************************************************************************************************************/
-185,
-/* 1658 */
+186,
+/* 1673 */
 /*!*************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.fails.js ***!
   \*************************************************************************************************************************************/
-186,
-/* 1659 */
+187,
+/* 1674 */
 /*!***********************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/helpers/interop-require-default.js ***!
   \***********************************************************************************************************************************/
-192,
-/* 1660 */
+193,
+/* 1675 */
 /*!******************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/classnames/index.js ***!
   \******************************************************************************************************/
-194,
-/* 1661 */
+195,
+/* 1676 */
 /*!**********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-prop-types/lib/elementType.js ***!
   \**********************************************************************************************************************/
-[2102, 1449, 1662],
-/* 1662 */
+[2127, 1464, 1677],
+/* 1677 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-prop-types/lib/common.js ***!
   \*****************************************************************************************************************/
-270,
-/* 1663 */
+271,
+/* 1678 */
 /*!*************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/styleMaps.js ***!
   \*************************************************************************************************/
-[2104, 1650, 1634, 1664],
-/* 1664 */
+[2129, 1665, 1649, 1679],
+/* 1679 */
 /*!***********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/core-js/object/keys.js ***!
   \***********************************************************************************************************************/
-[2078, 1665],
-/* 1665 */
+[2103, 1680],
+/* 1680 */
 /*!************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/keys.js ***!
   \************************************************************************************************************************************/
-[2079, 1666, 1642],
-/* 1666 */
+[2104, 1681, 1657],
+/* 1681 */
 /*!*********************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.keys.js ***!
   \*********************************************************************************************************************************************/
-[2080, 1654, 1667],
-/* 1667 */
+[2105, 1669, 1682],
+/* 1682 */
 /*!******************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.object-sap.js ***!
   \******************************************************************************************************************************************/
-[2081, 1640, 1642, 1658],
-/* 1668 */
+[2106, 1655, 1657, 1673],
+/* 1683 */
 /*!************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/utils/bootstrapUtils.js ***!
   \************************************************************************************************************/
-[2103, 1649, 1659, 1449, 1663, 1669],
-/* 1669 */
+[2128, 1664, 1674, 1464, 1678, 1684],
+/* 1684 */
 /*!*******************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/invariant/browser.js ***!
   \*******************************************************************************************************/
-275,
-/* 1670 */
+276,
+/* 1685 */
 /*!**************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/SafeAnchor.js ***!
   \**************************************************************************************************/
-[2107, 1633, 1648, 1649, 1671, 1659, 1449, 1661],
-/* 1671 */
+[2132, 1648, 1663, 1664, 1686, 1674, 1464, 1676],
+/* 1686 */
 /*!*************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/helpers/object-without-properties.js ***!
   \*************************************************************************************************************************************/
-187,
-/* 1672 */
+188,
+/* 1687 */
 /*!**************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/download-profiles-button/index.js ***!
   \**************************************************************************************************/
@@ -21309,11 +23189,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	module.exports = __webpack_require__(/*! ./src/DownloadProfilesButton.jsx */ 1673);
+	module.exports = __webpack_require__(/*! ./src/DownloadProfilesButton.jsx */ 1688);
 
 
 /***/ },
-/* 1673 */
+/* 1688 */
 /*!************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/download-profiles-button/src/DownloadProfilesButton.jsx ***!
   \************************************************************************************************************************/
@@ -21323,15 +23203,15 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
+	var React = __webpack_require__(/*! react */ 1464);
 	
-	var Modal = __webpack_require__(/*! react-bootstrap/lib/Modal */ 1674);
-	var Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 1632);
-	var Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 1751);
-	var Tooltip = __webpack_require__(/*! react-bootstrap/lib/Tooltip */ 1752);
-	var OverlayTrigger = __webpack_require__(/*! react-bootstrap/lib/OverlayTrigger */ 1754);
+	var Modal = __webpack_require__(/*! react-bootstrap/lib/Modal */ 1689);
+	var Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 1647);
+	var Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 1766);
+	var Tooltip = __webpack_require__(/*! react-bootstrap/lib/Tooltip */ 1767);
+	var OverlayTrigger = __webpack_require__(/*! react-bootstrap/lib/OverlayTrigger */ 1769);
 	
-	var Disclaimers = __webpack_require__(/*! ./Disclaimers.jsx */ 1766);
+	var Disclaimers = __webpack_require__(/*! ./Disclaimers.jsx */ 1781);
 	
 	//*------------------------------------------------------------------*
 	
@@ -21422,467 +23302,467 @@ webpackJsonp_name_([4],[
 	module.exports = DownloadProfilesButton;
 
 /***/ },
-/* 1674 */
+/* 1689 */
 /*!*********************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/Modal.js ***!
   \*********************************************************************************************/
-[2127, 1649, 1671, 1664, 1659, 1660, 1675, 1682, 1677, 1683, 1684, 1449, 1605, 1713, 1734, 1740, 1661, 1663, 1668, 1742, 1745, 1746, 1747, 1749, 1750],
-/* 1675 */
+[2152, 1664, 1686, 1679, 1674, 1675, 1690, 1697, 1692, 1698, 1699, 1464, 1620, 1728, 1749, 1755, 1676, 1678, 1683, 1757, 1760, 1761, 1762, 1764, 1765],
+/* 1690 */
 /*!**************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/events/index.js ***!
   \**************************************************************************************************************/
-[2128, 1676, 1678, 1679],
-/* 1676 */
+[2153, 1691, 1693, 1694],
+/* 1691 */
 /*!***********************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/events/on.js ***!
   \***********************************************************************************************************/
-[2110, 1677],
-/* 1677 */
+[2135, 1692],
+/* 1692 */
 /*!************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/util/inDOM.js ***!
   \************************************************************************************************************/
-199,
-/* 1678 */
+200,
+/* 1693 */
 /*!************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/events/off.js ***!
   \************************************************************************************************************/
-[2111, 1677],
-/* 1679 */
+[2136, 1692],
+/* 1694 */
 /*!***************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/events/filter.js ***!
   \***************************************************************************************************************/
-[2129, 1680, 1681],
-/* 1680 */
+[2154, 1695, 1696],
+/* 1695 */
 /*!****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/query/contains.js ***!
   \****************************************************************************************************************/
-[2083, 1677],
-/* 1681 */
+[2108, 1692],
+/* 1696 */
 /*!************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/query/querySelectorAll.js ***!
   \************************************************************************************************************************/
-361,
-/* 1682 */
+362,
+/* 1697 */
 /*!***************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/ownerDocument.js ***!
   \***************************************************************************************************************/
-197,
-/* 1683 */
+198,
+/* 1698 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/util/scrollbarSize.js ***!
   \********************************************************************************************************************/
-[2130, 1677],
-/* 1684 */
+[2155, 1692],
+/* 1699 */
 /*!***************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/object/pick.js ***!
   \***************************************************************************************************************/
-[2113, 1685, 1702, 1704, 1705, 1712],
-/* 1685 */
+[2138, 1700, 1717, 1719, 1720, 1727],
+/* 1700 */
 /*!************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/baseFlatten.js ***!
   \************************************************************************************************************************/
-[2098, 1686, 1687, 1697, 1688, 1694],
-/* 1686 */
+[2123, 1701, 1702, 1712, 1703, 1709],
+/* 1701 */
 /*!**********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/arrayPush.js ***!
   \**********************************************************************************************************************/
-264,
-/* 1687 */
+265,
+/* 1702 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/lang/isArguments.js ***!
   \********************************************************************************************************************/
-[2094, 1688, 1694],
-/* 1688 */
+[2119, 1703, 1709],
+/* 1703 */
 /*!************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/isArrayLike.js ***!
   \************************************************************************************************************************/
-[2091, 1689, 1696],
-/* 1689 */
+[2116, 1704, 1711],
+/* 1704 */
 /*!**********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/getLength.js ***!
   \**********************************************************************************************************************/
-[2092, 1690],
-/* 1690 */
+[2117, 1705],
+/* 1705 */
 /*!*************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/baseProperty.js ***!
   \*************************************************************************************************************************/
-[2093, 1691],
-/* 1691 */
+[2118, 1706],
+/* 1706 */
 /*!*********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/toObject.js ***!
   \*********************************************************************************************************************/
-[2086, 1692, 1693, 1695],
-/* 1692 */
+[2111, 1707, 1708, 1710],
+/* 1707 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/lang/isObject.js ***!
   \*****************************************************************************************************************/
-207,
-/* 1693 */
+208,
+/* 1708 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/lang/isString.js ***!
   \*****************************************************************************************************************/
-[2087, 1694],
-/* 1694 */
+[2112, 1709],
+/* 1709 */
 /*!*************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/isObjectLike.js ***!
   \*************************************************************************************************************************/
-209,
-/* 1695 */
+210,
+/* 1710 */
 /*!***********************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/support.js ***!
   \***********************************************************************************************************/
-210,
-/* 1696 */
+211,
+/* 1711 */
 /*!*********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/isLength.js ***!
   \*********************************************************************************************************************/
-219,
-/* 1697 */
+220,
+/* 1712 */
 /*!****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/lang/isArray.js ***!
   \****************************************************************************************************************/
-[2095, 1698, 1696, 1694],
-/* 1698 */
+[2120, 1713, 1711, 1709],
+/* 1713 */
 /*!**********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/getNative.js ***!
   \**********************************************************************************************************************/
-[2088, 1699],
-/* 1699 */
+[2113, 1714],
+/* 1714 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/lang/isNative.js ***!
   \*****************************************************************************************************************/
-[2089, 1700, 1701, 1694],
-/* 1700 */
+[2114, 1715, 1716, 1709],
+/* 1715 */
 /*!*******************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/lang/isFunction.js ***!
   \*******************************************************************************************************************/
-[2090, 1692],
-/* 1701 */
+[2115, 1707],
+/* 1716 */
 /*!*************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/isHostObject.js ***!
   \*************************************************************************************************************************/
-215,
-/* 1702 */
+216,
+/* 1717 */
 /*!*************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/bindCallback.js ***!
   \*************************************************************************************************************************/
-[2097, 1703],
-/* 1703 */
+[2122, 1718],
+/* 1718 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/utility/identity.js ***!
   \********************************************************************************************************************/
-249,
-/* 1704 */
+250,
+/* 1719 */
 /*!************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/pickByArray.js ***!
   \************************************************************************************************************************/
-[2099, 1691],
-/* 1705 */
+[2124, 1706],
+/* 1720 */
 /*!***************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/pickByCallback.js ***!
   \***************************************************************************************************************************/
-[2100, 1706],
-/* 1706 */
+[2125, 1721],
+/* 1721 */
 /*!**********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/baseForIn.js ***!
   \**********************************************************************************************************************/
-[2101, 1707, 1709],
-/* 1707 */
+[2126, 1722, 1724],
+/* 1722 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/baseFor.js ***!
   \********************************************************************************************************************/
-[2084, 1708],
-/* 1708 */
+[2109, 1723],
+/* 1723 */
 /*!**************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/createBaseFor.js ***!
   \**************************************************************************************************************************/
-[2085, 1691],
-/* 1709 */
+[2110, 1706],
+/* 1724 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/object/keysIn.js ***!
   \*****************************************************************************************************************/
-[2096, 1710, 1687, 1697, 1700, 1711, 1696, 1692, 1693, 1695],
-/* 1710 */
+[2121, 1725, 1702, 1712, 1715, 1726, 1711, 1707, 1708, 1710],
+/* 1725 */
 /*!**********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/arrayEach.js ***!
   \**********************************************************************************************************************/
-225,
-/* 1711 */
+226,
+/* 1726 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/internal/isIndex.js ***!
   \********************************************************************************************************************/
-223,
-/* 1712 */
+224,
+/* 1727 */
 /*!**********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/lodash-compat/function/restParam.js ***!
   \**********************************************************************************************************************/
-268,
-/* 1713 */
+269,
+/* 1728 */
 /*!**************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/Modal.js ***!
   \**************************************************************************************************************/
-[2131, 1449, 1714, 1715, 1717, 1718, 1721, 1719, 1737, 1738, 1677, 1739, 1680, 1720],
-/* 1714 */
+[2156, 1464, 1729, 1730, 1732, 1733, 1736, 1734, 1752, 1753, 1692, 1754, 1695, 1735],
+/* 1729 */
 /*!**********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/warning/browser.js ***!
   \**********************************************************************************************************************/
-277,
-/* 1715 */
+278,
+/* 1730 */
 /*!**********************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/react-prop-types/lib/componentOrElement.js ***!
   \**********************************************************************************************************************************************/
-[2132, 1449, 1716],
-/* 1716 */
+[2157, 1464, 1731],
+/* 1731 */
 /*!************************************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/react-prop-types/lib/utils/createChainableTypeChecker.js ***!
   \************************************************************************************************************************************************************/
-366,
-/* 1717 */
+367,
+/* 1732 */
 /*!***************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/react-prop-types/lib/elementType.js ***!
   \***************************************************************************************************************************************/
-[2133, 1449, 1716],
-/* 1718 */
+[2158, 1464, 1731],
+/* 1733 */
 /*!***************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/Portal.js ***!
   \***************************************************************************************************************/
-[2134, 1449, 1605, 1715, 1719, 1720],
-/* 1719 */
+[2159, 1464, 1620, 1730, 1734, 1735],
+/* 1734 */
 /*!****************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/ownerDocument.js ***!
   \****************************************************************************************************************************/
-[2112, 1605, 1682],
-/* 1720 */
+[2137, 1620, 1697],
+/* 1735 */
 /*!***************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/getContainer.js ***!
   \***************************************************************************************************************************/
-[2135, 1605],
-/* 1721 */
+[2160, 1620],
+/* 1736 */
 /*!*********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/ModalManager.js ***!
   \*********************************************************************************************************************/
-[2136, 1722, 1730, 1683, 1734, 1736],
-/* 1722 */
+[2161, 1737, 1745, 1698, 1749, 1751],
+/* 1737 */
 /*!*************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/style/index.js ***!
   \*************************************************************************************************************/
-[2120, 1723, 1725, 1727, 1729],
-/* 1723 */
+[2145, 1738, 1740, 1742, 1744],
+/* 1738 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/util/camelizeStyle.js ***!
   \********************************************************************************************************************/
-[2121, 1724],
-/* 1724 */
+[2146, 1739],
+/* 1739 */
 /*!***************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/util/camelize.js ***!
   \***************************************************************************************************************/
-328,
-/* 1725 */
+329,
+/* 1740 */
 /*!*********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/util/hyphenateStyle.js ***!
   \*********************************************************************************************************************/
-[2122, 1726],
-/* 1726 */
+[2147, 1741],
+/* 1741 */
 /*!****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/util/hyphenate.js ***!
   \****************************************************************************************************************/
-330,
-/* 1727 */
+331,
+/* 1742 */
 /*!************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/style/getComputedStyle.js ***!
   \************************************************************************************************************************/
-[2123, 1728, 1723],
-/* 1728 */
+[2148, 1743, 1738],
+/* 1743 */
 /*!*******************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/util/babelHelpers.js ***!
   \*******************************************************************************************************************/
-196,
-/* 1729 */
+197,
+/* 1744 */
 /*!*******************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/style/removeStyle.js ***!
   \*******************************************************************************************************************/
-332,
-/* 1730 */
+333,
+/* 1745 */
 /*!*************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/class/index.js ***!
   \*************************************************************************************************************/
-[2137, 1731, 1733, 1732],
-/* 1731 */
+[2162, 1746, 1748, 1747],
+/* 1746 */
 /*!****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/class/addClass.js ***!
   \****************************************************************************************************************/
-[2138, 1732],
-/* 1732 */
+[2163, 1747],
+/* 1747 */
 /*!****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/class/hasClass.js ***!
   \****************************************************************************************************************/
-373,
-/* 1733 */
+374,
+/* 1748 */
 /*!*******************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/class/removeClass.js ***!
   \*******************************************************************************************************************/
-374,
-/* 1734 */
+375,
+/* 1749 */
 /*!****************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/isOverflowing.js ***!
   \****************************************************************************************************************************/
-[2139, 1735, 1682],
-/* 1735 */
+[2164, 1750, 1697],
+/* 1750 */
 /*!****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/query/isWindow.js ***!
   \****************************************************************************************************************/
-376,
-/* 1736 */
+377,
+/* 1751 */
 /*!*******************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/manageAriaHidden.js ***!
   \*******************************************************************************************************************************/
-377,
-/* 1737 */
+378,
+/* 1752 */
 /*!*******************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/addEventListener.js ***!
   \*******************************************************************************************************************************/
-[2109, 1676, 1678],
-/* 1738 */
+[2134, 1691, 1693],
+/* 1753 */
 /*!*******************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/addFocusListener.js ***!
   \*******************************************************************************************************************************/
-378,
-/* 1739 */
+379,
+/* 1754 */
 /*!***************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/activeElement.js ***!
   \***************************************************************************************************************/
-[2082, 1728, 1682],
-/* 1740 */
+[2107, 1743, 1697],
+/* 1755 */
 /*!*********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-prop-types/lib/deprecated.js ***!
   \*********************************************************************************************************************/
-[2115, 1741],
-/* 1741 */
+[2140, 1756],
+/* 1756 */
 /*!*****************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/warning/browser.js ***!
   \*****************************************************************************************************/
-277,
-/* 1742 */
+278,
+/* 1757 */
 /*!********************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/Fade.js ***!
   \********************************************************************************************/
-[2126, 1633, 1648, 1649, 1659, 1449, 1660, 1743],
-/* 1743 */
+[2151, 1648, 1663, 1664, 1674, 1464, 1675, 1758],
+/* 1758 */
 /*!*******************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/Transition.js ***!
   \*******************************************************************************************************************/
-[2124, 1449, 1605, 1744, 1676, 1660],
-/* 1744 */
+[2149, 1464, 1620, 1759, 1691, 1675],
+/* 1759 */
 /*!***********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/transition/properties.js ***!
   \***********************************************************************************************************************/
-[2125, 1677],
-/* 1745 */
+[2150, 1692],
+/* 1760 */
 /*!***************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/ModalDialog.js ***!
   \***************************************************************************************************/
-[2140, 1649, 1659, 1660, 1449, 1663, 1668],
-/* 1746 */
+[2165, 1664, 1674, 1675, 1464, 1678, 1683],
+/* 1761 */
 /*!*************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/ModalBody.js ***!
   \*************************************************************************************************/
-[2141, 1633, 1648, 1649, 1659, 1660, 1449, 1668],
-/* 1747 */
+[2166, 1648, 1663, 1664, 1674, 1675, 1464, 1683],
+/* 1762 */
 /*!***************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/ModalHeader.js ***!
   \***************************************************************************************************/
-[2142, 1633, 1648, 1671, 1649, 1659, 1660, 1449, 1668, 1748],
-/* 1748 */
+[2167, 1648, 1663, 1686, 1664, 1674, 1675, 1464, 1683, 1763],
+/* 1763 */
 /*!*******************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/utils/createChainedFunction.js ***!
   \*******************************************************************************************************************/
-280,
-/* 1749 */
+281,
+/* 1764 */
 /*!**************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/ModalTitle.js ***!
   \**************************************************************************************************/
-[2143, 1633, 1648, 1649, 1659, 1660, 1449, 1668],
-/* 1750 */
+[2168, 1648, 1663, 1664, 1674, 1675, 1464, 1683],
+/* 1765 */
 /*!***************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/ModalFooter.js ***!
   \***************************************************************************************************/
-[2144, 1633, 1648, 1649, 1659, 1660, 1449, 1668],
-/* 1751 */
+[2169, 1648, 1663, 1664, 1674, 1675, 1464, 1683],
+/* 1766 */
 /*!*************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/Glyphicon.js ***!
   \*************************************************************************************************/
-[2118, 1649, 1659, 1660, 1449, 1740],
-/* 1752 */
+[2143, 1664, 1674, 1675, 1464, 1755],
+/* 1767 */
 /*!***********************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/Tooltip.js ***!
   \***********************************************************************************************/
-[2155, 1649, 1659, 1660, 1449, 1753, 1668],
-/* 1753 */
+[2180, 1664, 1674, 1675, 1464, 1768, 1683],
+/* 1768 */
 /*!****************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-prop-types/lib/isRequiredForA11y.js ***!
   \****************************************************************************************************************************/
-272,
-/* 1754 */
+273,
+/* 1769 */
 /*!******************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/OverlayTrigger.js ***!
   \******************************************************************************************************/
-[2154, 1649, 1664, 1659, 1680, 1684, 1449, 1605, 1741, 1755, 1748],
-/* 1755 */
+[2179, 1664, 1679, 1674, 1695, 1699, 1464, 1620, 1756, 1770, 1763],
+/* 1770 */
 /*!***********************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/Overlay.js ***!
   \***********************************************************************************************/
-[2145, 1633, 1648, 1649, 1671, 1659, 1449, 1756, 1661, 1742, 1660],
-/* 1756 */
+[2170, 1648, 1663, 1664, 1686, 1674, 1464, 1771, 1676, 1757, 1675],
+/* 1771 */
 /*!****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/Overlay.js ***!
   \****************************************************************************************************************/
-[2146, 1449, 1718, 1757, 1764, 1717],
-/* 1757 */
+[2171, 1464, 1733, 1772, 1779, 1732],
+/* 1772 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/Position.js ***!
   \*****************************************************************************************************************/
-[2147, 1660, 1449, 1605, 1715, 1758, 1720, 1719],
-/* 1758 */
+[2172, 1675, 1464, 1620, 1730, 1773, 1735, 1734],
+/* 1773 */
 /*!********************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/calculatePosition.js ***!
   \********************************************************************************************************************************/
-[2148, 1759, 1760, 1762, 1719],
-/* 1759 */
+[2173, 1774, 1775, 1777, 1734],
+/* 1774 */
 /*!**************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/query/offset.js ***!
   \**************************************************************************************************************/
-[2149, 1680, 1735, 1682],
-/* 1760 */
+[2174, 1695, 1750, 1697],
+/* 1775 */
 /*!****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/query/position.js ***!
   \****************************************************************************************************************/
-[2150, 1728, 1759, 1761, 1762, 1763, 1722],
-/* 1761 */
+[2175, 1743, 1774, 1776, 1777, 1778, 1737],
+/* 1776 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/query/offsetParent.js ***!
   \********************************************************************************************************************/
-[2151, 1728, 1682, 1722],
-/* 1762 */
+[2176, 1743, 1697, 1737],
+/* 1777 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/query/scrollTop.js ***!
   \*****************************************************************************************************************/
-[2152, 1735],
-/* 1763 */
+[2177, 1750],
+/* 1778 */
 /*!******************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/query/scrollLeft.js ***!
   \******************************************************************************************************************/
-[2153, 1735],
-/* 1764 */
+[2178, 1750],
+/* 1779 */
 /*!*************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/RootCloseWrapper.js ***!
   \*************************************************************************************************************************/
-[2108, 1449, 1605, 1737, 1765, 1719],
-/* 1765 */
+[2133, 1464, 1620, 1752, 1780, 1734],
+/* 1780 */
 /*!************************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/createChainedFunction.js ***!
   \************************************************************************************************************************************/
-292,
-/* 1766 */
+293,
+/* 1781 */
 /*!*************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/download-profiles-button/src/Disclaimers.jsx ***!
   \*************************************************************************************************************/
@@ -21892,7 +23772,7 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
+	var React = __webpack_require__(/*! react */ 1464);
 	
 	var BlueprintText = React.createElement(
 	    "div",
@@ -22025,7 +23905,7 @@ webpackJsonp_name_([4],[
 	module.exports = { "fortLauderdale": BlueprintText, "zebrafish": ZebrafishText };
 
 /***/ },
-/* 1767 */
+/* 1782 */
 /*!*********************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/src/Formatters.jsx ***!
   \*********************************************************************************/
@@ -22036,9 +23916,9 @@ webpackJsonp_name_([4],[
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 1768);
-	var escapedHtmlDecoder = __webpack_require__(/*! he */ 1769);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 1783);
+	var escapedHtmlDecoder = __webpack_require__(/*! he */ 1784);
 	
 	//*------------------------------------------------------------------*
 	
@@ -22170,7 +24050,7 @@ webpackJsonp_name_([4],[
 	module.exports = makeFormatter;
 
 /***/ },
-/* 1768 */
+/* 1783 */
 /*!**********************************************!*\
   !*** ./faceted-search/~/react-dom/server.js ***!
   \**********************************************/
@@ -22178,11 +24058,11 @@ webpackJsonp_name_([4],[
 
 	'use strict';
 	
-	module.exports = __webpack_require__(/*! react/lib/ReactDOMServer */ 1595);
+	module.exports = __webpack_require__(/*! react/lib/ReactDOMServer */ 1610);
 
 
 /***/ },
-/* 1769 */
+/* 1784 */
 /*!*************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/he/he.js ***!
   \*************************************************************************/
@@ -22529,10 +24409,2409 @@ webpackJsonp_name_([4],[
 	
 	}(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../~/webpack/buildin/module.js */ 493)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../~/webpack/buildin/module.js */ 494)(module), (function() { return this; }())))
 
 /***/ },
-/* 1770 */
+/* 1785 */
+/*!*******************************************************************************!*\
+  !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/src/PropTypes.js ***!
+  \*******************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var React = __webpack_require__(/*! react */ 1464);
+	var validate = __webpack_require__(/*! react-prop-types-check */ 1786);
+	
+	//*------------------------------------------------------------------*
+	
+	//*------------------------------------------------------------------*
+	
+	
+	var PointPropType = React.PropTypes.shape({
+	  x: React.PropTypes.number.isRequired,
+	  y: React.PropTypes.number.isRequired,
+	  value: React.PropTypes.number.isRequired,
+	  info: React.PropTypes.object.isRequired
+	});
+	
+	var PointsInDataSeriesPropType = React.PropTypes.arrayOf(React.PropTypes.arrayOf(PointPropType));
+	
+	var DataSeriesProps = {
+	  colour: React.PropTypes.string.isRequired,
+	  name: React.PropTypes.string.isRequired,
+	  data: React.PropTypes.arrayOf(PointPropType).isRequired
+	};
+	
+	var validateDataSeries = function(dataSeries){
+	  dataSeries.forEach(function(series){
+	    validate(series, DataSeriesProps);
+	  });
+	};
+	
+	var AxisCategoriesPropType = React.PropTypes.arrayOf(
+	    React.PropTypes.shape({
+	      id: React.PropTypes.string, // ontology ID can be missing for x axis
+	      label: React.PropTypes.string.isRequired
+	    })
+	  ).isRequired;
+	
+	
+	var HeatmapDataPropType = React.PropTypes.objectOf(
+	    function(heatmapData){
+	    validateDataSeries(heatmapData.dataSeries);
+	
+	    var width = heatmapData.xAxisCategories.length;
+	    var height = heatmapData.yAxisCategories.length;
+	
+	    for(var i = 0; i < heatmapData.dataSeries.length; i++){
+	        for(var j = 0; j < heatmapData.dataSeries[i].data.length; j++){
+	            var point = heatmapData.dataSeries[i].data[j];
+	            var x = point.x;
+	            var y = point.y;
+	            if(x < 0 || y < 0 || x >= width || y >= height){
+	                return new Error("Point with coordinates outside range:" + x+","+y);
+	            }
+	        }
+	    }
+	
+	    var isPermutation = function(arr){
+	        return (
+	            [].concat(arr)
+	            .sort(function(a,b){
+	                return a-b;
+	            })
+	            .map(function(el,ix){
+	                return el===ix;
+	            })
+	            .reduce(function(l,r){
+	                return l&&r;
+	            },true)
+	        );
+	    };
+	
+	    if(!heatmapData.orderings.hasOwnProperty("Default")){
+	        return new Error("Default ordering missing!");
+	    }
+	
+	    for(var orderingName in heatmapData.orderings){
+	        if(heatmapData.orderings.hasOwnProperty(orderingName)){
+	            var ordering = heatmapData.orderings[orderingName];
+	
+	            if(ordering.columns.length!== width || !isPermutation(ordering.columns)){
+	                return new Error("Column ordering invalid in "+orderingName);
+	            }
+	            if(ordering.rows.length!==height || ! isPermutation(ordering.rows)){
+	                return new Error("Row ordering invalid in "+orderingName);
+	            }
+	        }
+	    }
+	  }
+	);
+	
+	var FormatterPropType = function(props,propName){
+	  var f = props[propName];
+	  if(typeof f === 'undefined'){
+	    return new Error(propName+" formatter missing");
+	  } else if (typeof f !== 'function' || f.name !== 'Formatter'){
+	    return new Error(propName+" formatter not correctly created. See the main method of TooltipFormatter.jsx .");
+	  }
+	}
+	
+	exports.validateDataSeries = validateDataSeries;
+	exports.PointsInDataSeries = PointsInDataSeriesPropType;
+	exports.HeatmapData = HeatmapDataPropType;
+	exports.AxisCategories = AxisCategoriesPropType;
+	exports.Formatter = FormatterPropType;
+
+
+/***/ },
+/* 1786 */
+/*!*************************************************************************************************************************!*\
+  !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/react-prop-types-check/package/react_prop_types_check.js ***!
+  \*************************************************************************************************************************/
+160,
+/* 1787 */
+/*!******************************************************************************************!*\
+  !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/src/ColoursForHighcharts.js ***!
+  \******************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var React = __webpack_require__(/*! react */ 1464);
+	var validateDataSeries = __webpack_require__(/*! ./PropTypes.js */ 1785).validateDataSeries;
+	var Colour = __webpack_require__(/*! color */ 1788);
+	
+	//*------------------------------------------------------------------*
+	
+	//*------------------------------------------------------------------*
+	
+	var highlightColour = function(c){
+	  return (
+	    c.light()
+	    ? c.lighten(0.5)
+	    : c.saturate(0.3).darken(0.5)
+	  );
+	}
+	
+	var dataClassesFromSeries = function(dataSeries){
+	  validateDataSeries(dataSeries);
+	  var xs =
+	    dataSeries
+	    .map(function(series){
+	      return (
+	        series.data.length === 0 && series.name === "Below cutoff"
+	        ? {
+	          data: [{value: 0.0}],
+	          colour: series.colour
+	        }
+	        : series
+	      );
+	    })
+	    .filter(function(series){
+	      return series.data.length>0;
+	    })
+	    .map(function(series,ix,self){
+	      var theseSeriesValuesSorted =
+	        series.data.map(function(point){
+	          return point.value;
+	        });
+	      theseSeriesValuesSorted.sort(function(l,r){return l-r});
+	      return {
+	        min: theseSeriesValuesSorted[0],
+	        minColour: ix ==0? highlightColour(Colour(self[ix].colour)): Colour(self[ix-1].colour),
+	        max: theseSeriesValuesSorted[theseSeriesValuesSorted.length-1],
+	        maxColour: ix ==self.length-1 ? highlightColour(Colour(self[ix].colour)): Colour(self[ix+1].colour),
+	        median: theseSeriesValuesSorted[Math.floor(series.data.length/2)],
+	        medianColour: Colour(self[ix].colour),
+	        sortedValues: theseSeriesValuesSorted
+	      }
+	    }
+	  );
+	  var needToSplit = function(x){
+	    return (
+	      x.sortedValues.length>3
+	      && x.sortedValues[0]!=x.sortedValues[x.sortedValues.length-1]
+	      && x.minColour.rgb()!==x.maxColour.rgb()
+	    );
+	  };
+	
+	  var splitInHalf = function(x){
+	    return [
+	      {
+	        min:x.min,
+	        minColour: x.minColour,
+	        max:x.median,
+	        maxColour: x.medianColour,
+	        median: x.sortedValues[Math.floor(x.sortedValues.length/4)],
+	        medianColour: x.minColour.mix(x.medianColour),
+	        sortedValues: x.sortedValues.slice(0, Math.floor(x.sortedValues.length/2))
+	      },
+	      {
+	        min:x.median,
+	        minColour: x.medianColour,
+	        max:x.max,
+	        maxColour: x.maxColour,
+	        median: x.sortedValues[Math.floor(3* x.sortedValues.length/4)],
+	        medianColour: x.medianColour.mix(x.maxColour),
+	        sortedValues: x.sortedValues.slice(Math.floor(x.sortedValues.length/2))
+	      }
+	    ];
+	  };
+	  var l = Number.MIN_VALUE;
+	  var L = xs.length;
+	  while(l<L){
+	    xs = [].concat.apply([], xs.map(function(x){
+	      if(needToSplit(x)){
+	        return splitInHalf(x);
+	      } else {
+	        return [x];
+	      }
+	    }));
+	    l = L;
+	    L = xs.length;
+	  }
+	
+	  return (
+	    xs.map(function(x){
+	      return {
+	        from: x.min,
+	        to: x.max,
+	        color: x.medianColour.hexString()
+	      };
+	    })
+	  );
+	};
+	
+	var getColorAxisFromDataSeries = function(dataSeries){
+	  return {
+	    dataClasses: dataClassesFromSeries(dataSeries)
+	  };
+	}
+	
+	module.exports = getColorAxisFromDataSeries;
+
+
+/***/ },
+/* 1788 */
+/*!*******************************************************************************!*\
+  !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/color/index.js ***!
+  \*******************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* MIT license */
+	var clone = __webpack_require__(/*! clone */ 1789);
+	var convert = __webpack_require__(/*! color-convert */ 1790);
+	var string = __webpack_require__(/*! color-string */ 1794);
+	
+	var Color = function (obj) {
+		if (obj instanceof Color) {
+			return obj;
+		}
+		if (!(this instanceof Color)) {
+			return new Color(obj);
+		}
+	
+		this.values = {
+			rgb: [0, 0, 0],
+			hsl: [0, 0, 0],
+			hsv: [0, 0, 0],
+			hwb: [0, 0, 0],
+			cmyk: [0, 0, 0, 0],
+			alpha: 1
+		};
+	
+		// parse Color() argument
+		var vals;
+		if (typeof obj === 'string') {
+			vals = string.getRgba(obj);
+			if (vals) {
+				this.setValues('rgb', vals);
+			} else if (vals = string.getHsla(obj)) {
+				this.setValues('hsl', vals);
+			} else if (vals = string.getHwb(obj)) {
+				this.setValues('hwb', vals);
+			} else {
+				throw new Error('Unable to parse color from string "' + obj + '"');
+			}
+		} else if (typeof obj === 'object') {
+			vals = obj;
+			if (vals.r !== undefined || vals.red !== undefined) {
+				this.setValues('rgb', vals);
+			} else if (vals.l !== undefined || vals.lightness !== undefined) {
+				this.setValues('hsl', vals);
+			} else if (vals.v !== undefined || vals.value !== undefined) {
+				this.setValues('hsv', vals);
+			} else if (vals.w !== undefined || vals.whiteness !== undefined) {
+				this.setValues('hwb', vals);
+			} else if (vals.c !== undefined || vals.cyan !== undefined) {
+				this.setValues('cmyk', vals);
+			} else {
+				throw new Error('Unable to parse color from object ' + JSON.stringify(obj));
+			}
+		}
+	};
+	
+	Color.prototype = {
+		rgb: function () {
+			return this.setSpace('rgb', arguments);
+		},
+		hsl: function () {
+			return this.setSpace('hsl', arguments);
+		},
+		hsv: function () {
+			return this.setSpace('hsv', arguments);
+		},
+		hwb: function () {
+			return this.setSpace('hwb', arguments);
+		},
+		cmyk: function () {
+			return this.setSpace('cmyk', arguments);
+		},
+	
+		rgbArray: function () {
+			return this.values.rgb;
+		},
+		hslArray: function () {
+			return this.values.hsl;
+		},
+		hsvArray: function () {
+			return this.values.hsv;
+		},
+		hwbArray: function () {
+			if (this.values.alpha !== 1) {
+				return this.values.hwb.concat([this.values.alpha]);
+			}
+			return this.values.hwb;
+		},
+		cmykArray: function () {
+			return this.values.cmyk;
+		},
+		rgbaArray: function () {
+			var rgb = this.values.rgb;
+			return rgb.concat([this.values.alpha]);
+		},
+		hslaArray: function () {
+			var hsl = this.values.hsl;
+			return hsl.concat([this.values.alpha]);
+		},
+		alpha: function (val) {
+			if (val === undefined) {
+				return this.values.alpha;
+			}
+			this.setValues('alpha', val);
+			return this;
+		},
+	
+		red: function (val) {
+			return this.setChannel('rgb', 0, val);
+		},
+		green: function (val) {
+			return this.setChannel('rgb', 1, val);
+		},
+		blue: function (val) {
+			return this.setChannel('rgb', 2, val);
+		},
+		hue: function (val) {
+			if (val) {
+				val %= 360;
+				val = val < 0 ? 360 + val : val;
+			}
+			return this.setChannel('hsl', 0, val);
+		},
+		saturation: function (val) {
+			return this.setChannel('hsl', 1, val);
+		},
+		lightness: function (val) {
+			return this.setChannel('hsl', 2, val);
+		},
+		saturationv: function (val) {
+			return this.setChannel('hsv', 1, val);
+		},
+		whiteness: function (val) {
+			return this.setChannel('hwb', 1, val);
+		},
+		blackness: function (val) {
+			return this.setChannel('hwb', 2, val);
+		},
+		value: function (val) {
+			return this.setChannel('hsv', 2, val);
+		},
+		cyan: function (val) {
+			return this.setChannel('cmyk', 0, val);
+		},
+		magenta: function (val) {
+			return this.setChannel('cmyk', 1, val);
+		},
+		yellow: function (val) {
+			return this.setChannel('cmyk', 2, val);
+		},
+		black: function (val) {
+			return this.setChannel('cmyk', 3, val);
+		},
+	
+		hexString: function () {
+			return string.hexString(this.values.rgb);
+		},
+		rgbString: function () {
+			return string.rgbString(this.values.rgb, this.values.alpha);
+		},
+		rgbaString: function () {
+			return string.rgbaString(this.values.rgb, this.values.alpha);
+		},
+		percentString: function () {
+			return string.percentString(this.values.rgb, this.values.alpha);
+		},
+		hslString: function () {
+			return string.hslString(this.values.hsl, this.values.alpha);
+		},
+		hslaString: function () {
+			return string.hslaString(this.values.hsl, this.values.alpha);
+		},
+		hwbString: function () {
+			return string.hwbString(this.values.hwb, this.values.alpha);
+		},
+		keyword: function () {
+			return string.keyword(this.values.rgb, this.values.alpha);
+		},
+	
+		rgbNumber: function () {
+			return (this.values.rgb[0] << 16) | (this.values.rgb[1] << 8) | this.values.rgb[2];
+		},
+	
+		luminosity: function () {
+			// http://www.w3.org/TR/WCAG20/#relativeluminancedef
+			var rgb = this.values.rgb;
+			var lum = [];
+			for (var i = 0; i < rgb.length; i++) {
+				var chan = rgb[i] / 255;
+				lum[i] = (chan <= 0.03928) ? chan / 12.92 : Math.pow(((chan + 0.055) / 1.055), 2.4);
+			}
+			return 0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2];
+		},
+	
+		contrast: function (color2) {
+			// http://www.w3.org/TR/WCAG20/#contrast-ratiodef
+			var lum1 = this.luminosity();
+			var lum2 = color2.luminosity();
+			if (lum1 > lum2) {
+				return (lum1 + 0.05) / (lum2 + 0.05);
+			}
+			return (lum2 + 0.05) / (lum1 + 0.05);
+		},
+	
+		level: function (color2) {
+			var contrastRatio = this.contrast(color2);
+			if (contrastRatio >= 7.1) {
+				return 'AAA';
+			}
+	
+			return (contrastRatio >= 4.5) ? 'AA' : '';
+		},
+	
+		dark: function () {
+			// YIQ equation from http://24ways.org/2010/calculating-color-contrast
+			var rgb = this.values.rgb;
+			var yiq = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+			return yiq < 128;
+		},
+	
+		light: function () {
+			return !this.dark();
+		},
+	
+		negate: function () {
+			var rgb = [];
+			for (var i = 0; i < 3; i++) {
+				rgb[i] = 255 - this.values.rgb[i];
+			}
+			this.setValues('rgb', rgb);
+			return this;
+		},
+	
+		lighten: function (ratio) {
+			this.values.hsl[2] += this.values.hsl[2] * ratio;
+			this.setValues('hsl', this.values.hsl);
+			return this;
+		},
+	
+		darken: function (ratio) {
+			this.values.hsl[2] -= this.values.hsl[2] * ratio;
+			this.setValues('hsl', this.values.hsl);
+			return this;
+		},
+	
+		saturate: function (ratio) {
+			this.values.hsl[1] += this.values.hsl[1] * ratio;
+			this.setValues('hsl', this.values.hsl);
+			return this;
+		},
+	
+		desaturate: function (ratio) {
+			this.values.hsl[1] -= this.values.hsl[1] * ratio;
+			this.setValues('hsl', this.values.hsl);
+			return this;
+		},
+	
+		whiten: function (ratio) {
+			this.values.hwb[1] += this.values.hwb[1] * ratio;
+			this.setValues('hwb', this.values.hwb);
+			return this;
+		},
+	
+		blacken: function (ratio) {
+			this.values.hwb[2] += this.values.hwb[2] * ratio;
+			this.setValues('hwb', this.values.hwb);
+			return this;
+		},
+	
+		greyscale: function () {
+			var rgb = this.values.rgb;
+			// http://en.wikipedia.org/wiki/Grayscale#Converting_color_to_grayscale
+			var val = rgb[0] * 0.3 + rgb[1] * 0.59 + rgb[2] * 0.11;
+			this.setValues('rgb', [val, val, val]);
+			return this;
+		},
+	
+		clearer: function (ratio) {
+			this.setValues('alpha', this.values.alpha - (this.values.alpha * ratio));
+			return this;
+		},
+	
+		opaquer: function (ratio) {
+			this.setValues('alpha', this.values.alpha + (this.values.alpha * ratio));
+			return this;
+		},
+	
+		rotate: function (degrees) {
+			var hue = this.values.hsl[0];
+			hue = (hue + degrees) % 360;
+			hue = hue < 0 ? 360 + hue : hue;
+			this.values.hsl[0] = hue;
+			this.setValues('hsl', this.values.hsl);
+			return this;
+		},
+	
+		/**
+		 * Ported from sass implementation in C
+		 * https://github.com/sass/libsass/blob/0e6b4a2850092356aa3ece07c6b249f0221caced/functions.cpp#L209
+		 */
+		mix: function (mixinColor, weight) {
+			var color1 = this;
+			var color2 = mixinColor;
+			var p = weight === undefined ? 0.5 : weight;
+	
+			var w = 2 * p - 1;
+			var a = color1.alpha() - color2.alpha();
+	
+			var w1 = (((w * a === -1) ? w : (w + a) / (1 + w * a)) + 1) / 2.0;
+			var w2 = 1 - w1;
+	
+			return this
+				.rgb(
+					w1 * color1.red() + w2 * color2.red(),
+					w1 * color1.green() + w2 * color2.green(),
+					w1 * color1.blue() + w2 * color2.blue()
+				)
+				.alpha(color1.alpha() * p + color2.alpha() * (1 - p));
+		},
+	
+		toJSON: function () {
+			return this.rgb();
+		},
+	
+		clone: function () {
+			var col = new Color();
+			col.values = clone(this.values);
+			return col;
+		}
+	};
+	
+	Color.prototype.getValues = function (space) {
+		var vals = {};
+	
+		for (var i = 0; i < space.length; i++) {
+			vals[space.charAt(i)] = this.values[space][i];
+		}
+	
+		if (this.values.alpha !== 1) {
+			vals.a = this.values.alpha;
+		}
+	
+		// {r: 255, g: 255, b: 255, a: 0.4}
+		return vals;
+	};
+	
+	Color.prototype.setValues = function (space, vals) {
+		var spaces = {
+			rgb: ['red', 'green', 'blue'],
+			hsl: ['hue', 'saturation', 'lightness'],
+			hsv: ['hue', 'saturation', 'value'],
+			hwb: ['hue', 'whiteness', 'blackness'],
+			cmyk: ['cyan', 'magenta', 'yellow', 'black']
+		};
+	
+		var maxes = {
+			rgb: [255, 255, 255],
+			hsl: [360, 100, 100],
+			hsv: [360, 100, 100],
+			hwb: [360, 100, 100],
+			cmyk: [100, 100, 100, 100]
+		};
+	
+		var i;
+		var alpha = 1;
+		if (space === 'alpha') {
+			alpha = vals;
+		} else if (vals.length) {
+			// [10, 10, 10]
+			this.values[space] = vals.slice(0, space.length);
+			alpha = vals[space.length];
+		} else if (vals[space.charAt(0)] !== undefined) {
+			// {r: 10, g: 10, b: 10}
+			for (i = 0; i < space.length; i++) {
+				this.values[space][i] = vals[space.charAt(i)];
+			}
+	
+			alpha = vals.a;
+		} else if (vals[spaces[space][0]] !== undefined) {
+			// {red: 10, green: 10, blue: 10}
+			var chans = spaces[space];
+	
+			for (i = 0; i < space.length; i++) {
+				this.values[space][i] = vals[chans[i]];
+			}
+	
+			alpha = vals.alpha;
+		}
+	
+		this.values.alpha = Math.max(0, Math.min(1, (alpha === undefined ? this.values.alpha : alpha)));
+	
+		if (space === 'alpha') {
+			return false;
+		}
+	
+		var capped;
+	
+		// cap values of the space prior converting all values
+		for (i = 0; i < space.length; i++) {
+			capped = Math.max(0, Math.min(maxes[space][i], this.values[space][i]));
+			this.values[space][i] = Math.round(capped);
+		}
+	
+		// convert to all the other color spaces
+		for (var sname in spaces) {
+			if (sname !== space) {
+				this.values[sname] = convert[space][sname](this.values[space]);
+			}
+	
+			// cap values
+			for (i = 0; i < sname.length; i++) {
+				capped = Math.max(0, Math.min(maxes[sname][i], this.values[sname][i]));
+				this.values[sname][i] = Math.round(capped);
+			}
+		}
+	
+		return true;
+	};
+	
+	Color.prototype.setSpace = function (space, args) {
+		var vals = args[0];
+	
+		if (vals === undefined) {
+			// color.rgb()
+			return this.getValues(space);
+		}
+	
+		// color.rgb(10, 10, 10)
+		if (typeof vals === 'number') {
+			vals = Array.prototype.slice.call(args);
+		}
+	
+		this.setValues(space, vals);
+		return this;
+	};
+	
+	Color.prototype.setChannel = function (space, index, val) {
+		if (val === undefined) {
+			// color.red()
+			return this.values[space][index];
+		} else if (val === this.values[space][index]) {
+			// color.red(color.red())
+			return this;
+		}
+	
+		// color.red(100)
+		this.values[space][index] = val;
+		this.setValues(space, this.values[space]);
+	
+		return this;
+	};
+	
+	module.exports = Color;
+
+
+/***/ },
+/* 1789 */
+/*!***************************************************************************************!*\
+  !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/color/~/clone/clone.js ***!
+  \***************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var clone = (function() {
+	'use strict';
+	
+	/**
+	 * Clones (copies) an Object using deep copying.
+	 *
+	 * This function supports circular references by default, but if you are certain
+	 * there are no circular references in your object, you can save some CPU time
+	 * by calling clone(obj, false).
+	 *
+	 * Caution: if `circular` is false and `parent` contains circular references,
+	 * your program may enter an infinite loop and crash.
+	 *
+	 * @param `parent` - the object to be cloned
+	 * @param `circular` - set to true if the object to be cloned may contain
+	 *    circular references. (optional - true by default)
+	 * @param `depth` - set to a number if the object is only to be cloned to
+	 *    a particular depth. (optional - defaults to Infinity)
+	 * @param `prototype` - sets the prototype to be used when cloning an object.
+	 *    (optional - defaults to parent prototype).
+	*/
+	function clone(parent, circular, depth, prototype) {
+	  var filter;
+	  if (typeof circular === 'object') {
+	    depth = circular.depth;
+	    prototype = circular.prototype;
+	    filter = circular.filter;
+	    circular = circular.circular
+	  }
+	  // maintain two arrays for circular references, where corresponding parents
+	  // and children have the same index
+	  var allParents = [];
+	  var allChildren = [];
+	
+	  var useBuffer = typeof Buffer != 'undefined';
+	
+	  if (typeof circular == 'undefined')
+	    circular = true;
+	
+	  if (typeof depth == 'undefined')
+	    depth = Infinity;
+	
+	  // recurse this function so we don't reset allParents and allChildren
+	  function _clone(parent, depth) {
+	    // cloning null always returns null
+	    if (parent === null)
+	      return null;
+	
+	    if (depth == 0)
+	      return parent;
+	
+	    var child;
+	    var proto;
+	    if (typeof parent != 'object') {
+	      return parent;
+	    }
+	
+	    if (clone.__isArray(parent)) {
+	      child = [];
+	    } else if (clone.__isRegExp(parent)) {
+	      child = new RegExp(parent.source, __getRegExpFlags(parent));
+	      if (parent.lastIndex) child.lastIndex = parent.lastIndex;
+	    } else if (clone.__isDate(parent)) {
+	      child = new Date(parent.getTime());
+	    } else if (useBuffer && Buffer.isBuffer(parent)) {
+	      child = new Buffer(parent.length);
+	      parent.copy(child);
+	      return child;
+	    } else {
+	      if (typeof prototype == 'undefined') {
+	        proto = Object.getPrototypeOf(parent);
+	        child = Object.create(proto);
+	      }
+	      else {
+	        child = Object.create(prototype);
+	        proto = prototype;
+	      }
+	    }
+	
+	    if (circular) {
+	      var index = allParents.indexOf(parent);
+	
+	      if (index != -1) {
+	        return allChildren[index];
+	      }
+	      allParents.push(parent);
+	      allChildren.push(child);
+	    }
+	
+	    for (var i in parent) {
+	      var attrs;
+	      if (proto) {
+	        attrs = Object.getOwnPropertyDescriptor(proto, i);
+	      }
+	
+	      if (attrs && attrs.set == null) {
+	        continue;
+	      }
+	      child[i] = _clone(parent[i], depth - 1);
+	    }
+	
+	    return child;
+	  }
+	
+	  return _clone(parent, depth);
+	}
+	
+	/**
+	 * Simple flat clone using prototype, accepts only objects, usefull for property
+	 * override on FLAT configuration object (no nested props).
+	 *
+	 * USE WITH CAUTION! This may not behave as you wish if you do not know how this
+	 * works.
+	 */
+	clone.clonePrototype = function clonePrototype(parent) {
+	  if (parent === null)
+	    return null;
+	
+	  var c = function () {};
+	  c.prototype = parent;
+	  return new c();
+	};
+	
+	// private utility functions
+	
+	function __objToStr(o) {
+	  return Object.prototype.toString.call(o);
+	};
+	clone.__objToStr = __objToStr;
+	
+	function __isDate(o) {
+	  return typeof o === 'object' && __objToStr(o) === '[object Date]';
+	};
+	clone.__isDate = __isDate;
+	
+	function __isArray(o) {
+	  return typeof o === 'object' && __objToStr(o) === '[object Array]';
+	};
+	clone.__isArray = __isArray;
+	
+	function __isRegExp(o) {
+	  return typeof o === 'object' && __objToStr(o) === '[object RegExp]';
+	};
+	clone.__isRegExp = __isRegExp;
+	
+	function __getRegExpFlags(re) {
+	  var flags = '';
+	  if (re.global) flags += 'g';
+	  if (re.ignoreCase) flags += 'i';
+	  if (re.multiline) flags += 'm';
+	  return flags;
+	};
+	clone.__getRegExpFlags = __getRegExpFlags;
+	
+	return clone;
+	})();
+	
+	if (typeof module === 'object' && module.exports) {
+	  module.exports = clone;
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/buffer/index.js */ 1400).Buffer))
+
+/***/ },
+/* 1790 */
+/*!***********************************************************************************************!*\
+  !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/color/~/color-convert/index.js ***!
+  \***********************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var conversions = __webpack_require__(/*! ./conversions */ 1791);
+	var route = __webpack_require__(/*! ./route */ 1793);
+	
+	var convert = {};
+	
+	var models = Object.keys(conversions);
+	
+	function wrapRaw(fn) {
+		var wrappedFn = function (args) {
+			if (args === undefined || args === null) {
+				return args;
+			}
+	
+			if (arguments.length > 1) {
+				args = Array.prototype.slice.call(arguments);
+			}
+	
+			return fn(args);
+		};
+	
+		// preserve .conversion property if there is one
+		if ('conversion' in fn) {
+			wrappedFn.conversion = fn.conversion;
+		}
+	
+		return wrappedFn;
+	}
+	
+	function wrapRounded(fn) {
+		var wrappedFn = function (args) {
+			if (args === undefined || args === null) {
+				return args;
+			}
+	
+			if (arguments.length > 1) {
+				args = Array.prototype.slice.call(arguments);
+			}
+	
+			var result = fn(args);
+	
+			// we're assuming the result is an array here.
+			// see notice in conversions.js; don't use box types
+			// in conversion functions.
+			if (typeof result === 'object') {
+				for (var len = result.length, i = 0; i < len; i++) {
+					result[i] = Math.round(result[i]);
+				}
+			}
+	
+			return result;
+		};
+	
+		// preserve .conversion property if there is one
+		if ('conversion' in fn) {
+			wrappedFn.conversion = fn.conversion;
+		}
+	
+		return wrappedFn;
+	}
+	
+	models.forEach(function (fromModel) {
+		convert[fromModel] = {};
+	
+		Object.defineProperty(convert[fromModel], 'channels', {value: conversions[fromModel].channels});
+	
+		var routes = route(fromModel);
+		var routeModels = Object.keys(routes);
+	
+		routeModels.forEach(function (toModel) {
+			var fn = routes[toModel];
+	
+			convert[fromModel][toModel] = wrapRounded(fn);
+			convert[fromModel][toModel].raw = wrapRaw(fn);
+		});
+	});
+	
+	module.exports = convert;
+
+
+/***/ },
+/* 1791 */
+/*!*****************************************************************************************************!*\
+  !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/color/~/color-convert/conversions.js ***!
+  \*****************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* MIT license */
+	var cssKeywords = __webpack_require__(/*! ./css-keywords */ 1792);
+	
+	// NOTE: conversions should only return primitive values (i.e. arrays, or
+	//       values that give correct `typeof` results).
+	//       do not use box values types (i.e. Number(), String(), etc.)
+	
+	var reverseKeywords = {};
+	for (var key in cssKeywords) {
+		if (cssKeywords.hasOwnProperty(key)) {
+			reverseKeywords[cssKeywords[key].join()] = key;
+		}
+	}
+	
+	var convert = module.exports = {
+		rgb: {channels: 3},
+		hsl: {channels: 3},
+		hsv: {channels: 3},
+		hwb: {channels: 3},
+		cmyk: {channels: 4},
+		xyz: {channels: 3},
+		lab: {channels: 3},
+		lch: {channels: 3},
+		hex: {channels: 1},
+		keyword: {channels: 1},
+		ansi16: {channels: 1},
+		ansi256: {channels: 1},
+		hcg: {channels: 3},
+		apple: {channels: 3}
+	};
+	
+	// hide .channels property
+	for (var model in convert) {
+		if (convert.hasOwnProperty(model)) {
+			if (!('channels' in convert[model])) {
+				throw new Error('missing channels property: ' + model);
+			}
+	
+			var channels = convert[model].channels;
+			delete convert[model].channels;
+			Object.defineProperty(convert[model], 'channels', {value: channels});
+		}
+	}
+	
+	convert.rgb.hsl = function (rgb) {
+		var r = rgb[0] / 255;
+		var g = rgb[1] / 255;
+		var b = rgb[2] / 255;
+		var min = Math.min(r, g, b);
+		var max = Math.max(r, g, b);
+		var delta = max - min;
+		var h;
+		var s;
+		var l;
+	
+		if (max === min) {
+			h = 0;
+		} else if (r === max) {
+			h = (g - b) / delta;
+		} else if (g === max) {
+			h = 2 + (b - r) / delta;
+		} else if (b === max) {
+			h = 4 + (r - g) / delta;
+		}
+	
+		h = Math.min(h * 60, 360);
+	
+		if (h < 0) {
+			h += 360;
+		}
+	
+		l = (min + max) / 2;
+	
+		if (max === min) {
+			s = 0;
+		} else if (l <= 0.5) {
+			s = delta / (max + min);
+		} else {
+			s = delta / (2 - max - min);
+		}
+	
+		return [h, s * 100, l * 100];
+	};
+	
+	convert.rgb.hsv = function (rgb) {
+		var r = rgb[0];
+		var g = rgb[1];
+		var b = rgb[2];
+		var min = Math.min(r, g, b);
+		var max = Math.max(r, g, b);
+		var delta = max - min;
+		var h;
+		var s;
+		var v;
+	
+		if (max === 0) {
+			s = 0;
+		} else {
+			s = (delta / max * 1000) / 10;
+		}
+	
+		if (max === min) {
+			h = 0;
+		} else if (r === max) {
+			h = (g - b) / delta;
+		} else if (g === max) {
+			h = 2 + (b - r) / delta;
+		} else if (b === max) {
+			h = 4 + (r - g) / delta;
+		}
+	
+		h = Math.min(h * 60, 360);
+	
+		if (h < 0) {
+			h += 360;
+		}
+	
+		v = ((max / 255) * 1000) / 10;
+	
+		return [h, s, v];
+	};
+	
+	convert.rgb.hwb = function (rgb) {
+		var r = rgb[0];
+		var g = rgb[1];
+		var b = rgb[2];
+		var h = convert.rgb.hsl(rgb)[0];
+		var w = 1 / 255 * Math.min(r, Math.min(g, b));
+	
+		b = 1 - 1 / 255 * Math.max(r, Math.max(g, b));
+	
+		return [h, w * 100, b * 100];
+	};
+	
+	convert.rgb.cmyk = function (rgb) {
+		var r = rgb[0] / 255;
+		var g = rgb[1] / 255;
+		var b = rgb[2] / 255;
+		var c;
+		var m;
+		var y;
+		var k;
+	
+		k = Math.min(1 - r, 1 - g, 1 - b);
+		c = (1 - r - k) / (1 - k) || 0;
+		m = (1 - g - k) / (1 - k) || 0;
+		y = (1 - b - k) / (1 - k) || 0;
+	
+		return [c * 100, m * 100, y * 100, k * 100];
+	};
+	
+	convert.rgb.keyword = function (rgb) {
+		return reverseKeywords[rgb.join()];
+	};
+	
+	convert.keyword.rgb = function (keyword) {
+		return cssKeywords[keyword];
+	};
+	
+	convert.rgb.xyz = function (rgb) {
+		var r = rgb[0] / 255;
+		var g = rgb[1] / 255;
+		var b = rgb[2] / 255;
+	
+		// assume sRGB
+		r = r > 0.04045 ? Math.pow(((r + 0.055) / 1.055), 2.4) : (r / 12.92);
+		g = g > 0.04045 ? Math.pow(((g + 0.055) / 1.055), 2.4) : (g / 12.92);
+		b = b > 0.04045 ? Math.pow(((b + 0.055) / 1.055), 2.4) : (b / 12.92);
+	
+		var x = (r * 0.4124) + (g * 0.3576) + (b * 0.1805);
+		var y = (r * 0.2126) + (g * 0.7152) + (b * 0.0722);
+		var z = (r * 0.0193) + (g * 0.1192) + (b * 0.9505);
+	
+		return [x * 100, y * 100, z * 100];
+	};
+	
+	convert.rgb.lab = function (rgb) {
+		var xyz = convert.rgb.xyz(rgb);
+		var x = xyz[0];
+		var y = xyz[1];
+		var z = xyz[2];
+		var l;
+		var a;
+		var b;
+	
+		x /= 95.047;
+		y /= 100;
+		z /= 108.883;
+	
+		x = x > 0.008856 ? Math.pow(x, 1 / 3) : (7.787 * x) + (16 / 116);
+		y = y > 0.008856 ? Math.pow(y, 1 / 3) : (7.787 * y) + (16 / 116);
+		z = z > 0.008856 ? Math.pow(z, 1 / 3) : (7.787 * z) + (16 / 116);
+	
+		l = (116 * y) - 16;
+		a = 500 * (x - y);
+		b = 200 * (y - z);
+	
+		return [l, a, b];
+	};
+	
+	convert.hsl.rgb = function (hsl) {
+		var h = hsl[0] / 360;
+		var s = hsl[1] / 100;
+		var l = hsl[2] / 100;
+		var t1;
+		var t2;
+		var t3;
+		var rgb;
+		var val;
+	
+		if (s === 0) {
+			val = l * 255;
+			return [val, val, val];
+		}
+	
+		if (l < 0.5) {
+			t2 = l * (1 + s);
+		} else {
+			t2 = l + s - l * s;
+		}
+	
+		t1 = 2 * l - t2;
+	
+		rgb = [0, 0, 0];
+		for (var i = 0; i < 3; i++) {
+			t3 = h + 1 / 3 * -(i - 1);
+			if (t3 < 0) {
+				t3++;
+			}
+			if (t3 > 1) {
+				t3--;
+			}
+	
+			if (6 * t3 < 1) {
+				val = t1 + (t2 - t1) * 6 * t3;
+			} else if (2 * t3 < 1) {
+				val = t2;
+			} else if (3 * t3 < 2) {
+				val = t1 + (t2 - t1) * (2 / 3 - t3) * 6;
+			} else {
+				val = t1;
+			}
+	
+			rgb[i] = val * 255;
+		}
+	
+		return rgb;
+	};
+	
+	convert.hsl.hsv = function (hsl) {
+		var h = hsl[0];
+		var s = hsl[1] / 100;
+		var l = hsl[2] / 100;
+		var smin = s;
+		var lmin = Math.max(l, 0.01);
+		var sv;
+		var v;
+	
+		l *= 2;
+		s *= (l <= 1) ? l : 2 - l;
+		smin *= lmin <= 1 ? lmin : 2 - lmin;
+		v = (l + s) / 2;
+		sv = l === 0 ? (2 * smin) / (lmin + smin) : (2 * s) / (l + s);
+	
+		return [h, sv * 100, v * 100];
+	};
+	
+	convert.hsv.rgb = function (hsv) {
+		var h = hsv[0] / 60;
+		var s = hsv[1] / 100;
+		var v = hsv[2] / 100;
+		var hi = Math.floor(h) % 6;
+	
+		var f = h - Math.floor(h);
+		var p = 255 * v * (1 - s);
+		var q = 255 * v * (1 - (s * f));
+		var t = 255 * v * (1 - (s * (1 - f)));
+		v *= 255;
+	
+		switch (hi) {
+			case 0:
+				return [v, t, p];
+			case 1:
+				return [q, v, p];
+			case 2:
+				return [p, v, t];
+			case 3:
+				return [p, q, v];
+			case 4:
+				return [t, p, v];
+			case 5:
+				return [v, p, q];
+		}
+	};
+	
+	convert.hsv.hsl = function (hsv) {
+		var h = hsv[0];
+		var s = hsv[1] / 100;
+		var v = hsv[2] / 100;
+		var vmin = Math.max(v, 0.01);
+		var lmin;
+		var sl;
+		var l;
+	
+		l = (2 - s) * v;
+		lmin = (2 - s) * vmin;
+		sl = s * vmin;
+		sl /= (lmin <= 1) ? lmin : 2 - lmin;
+		sl = sl || 0;
+		l /= 2;
+	
+		return [h, sl * 100, l * 100];
+	};
+	
+	// http://dev.w3.org/csswg/css-color/#hwb-to-rgb
+	convert.hwb.rgb = function (hwb) {
+		var h = hwb[0] / 360;
+		var wh = hwb[1] / 100;
+		var bl = hwb[2] / 100;
+		var ratio = wh + bl;
+		var i;
+		var v;
+		var f;
+		var n;
+	
+		// wh + bl cant be > 1
+		if (ratio > 1) {
+			wh /= ratio;
+			bl /= ratio;
+		}
+	
+		i = Math.floor(6 * h);
+		v = 1 - bl;
+		f = 6 * h - i;
+	
+		if ((i & 0x01) !== 0) {
+			f = 1 - f;
+		}
+	
+		n = wh + f * (v - wh); // linear interpolation
+	
+		var r;
+		var g;
+		var b;
+		switch (i) {
+			default:
+			case 6:
+			case 0: r = v; g = n; b = wh; break;
+			case 1: r = n; g = v; b = wh; break;
+			case 2: r = wh; g = v; b = n; break;
+			case 3: r = wh; g = n; b = v; break;
+			case 4: r = n; g = wh; b = v; break;
+			case 5: r = v; g = wh; b = n; break;
+		}
+	
+		return [r * 255, g * 255, b * 255];
+	};
+	
+	convert.cmyk.rgb = function (cmyk) {
+		var c = cmyk[0] / 100;
+		var m = cmyk[1] / 100;
+		var y = cmyk[2] / 100;
+		var k = cmyk[3] / 100;
+		var r;
+		var g;
+		var b;
+	
+		r = 1 - Math.min(1, c * (1 - k) + k);
+		g = 1 - Math.min(1, m * (1 - k) + k);
+		b = 1 - Math.min(1, y * (1 - k) + k);
+	
+		return [r * 255, g * 255, b * 255];
+	};
+	
+	convert.xyz.rgb = function (xyz) {
+		var x = xyz[0] / 100;
+		var y = xyz[1] / 100;
+		var z = xyz[2] / 100;
+		var r;
+		var g;
+		var b;
+	
+		r = (x * 3.2406) + (y * -1.5372) + (z * -0.4986);
+		g = (x * -0.9689) + (y * 1.8758) + (z * 0.0415);
+		b = (x * 0.0557) + (y * -0.2040) + (z * 1.0570);
+	
+		// assume sRGB
+		r = r > 0.0031308
+			? ((1.055 * Math.pow(r, 1.0 / 2.4)) - 0.055)
+			: r * 12.92;
+	
+		g = g > 0.0031308
+			? ((1.055 * Math.pow(g, 1.0 / 2.4)) - 0.055)
+			: g * 12.92;
+	
+		b = b > 0.0031308
+			? ((1.055 * Math.pow(b, 1.0 / 2.4)) - 0.055)
+			: b * 12.92;
+	
+		r = Math.min(Math.max(0, r), 1);
+		g = Math.min(Math.max(0, g), 1);
+		b = Math.min(Math.max(0, b), 1);
+	
+		return [r * 255, g * 255, b * 255];
+	};
+	
+	convert.xyz.lab = function (xyz) {
+		var x = xyz[0];
+		var y = xyz[1];
+		var z = xyz[2];
+		var l;
+		var a;
+		var b;
+	
+		x /= 95.047;
+		y /= 100;
+		z /= 108.883;
+	
+		x = x > 0.008856 ? Math.pow(x, 1 / 3) : (7.787 * x) + (16 / 116);
+		y = y > 0.008856 ? Math.pow(y, 1 / 3) : (7.787 * y) + (16 / 116);
+		z = z > 0.008856 ? Math.pow(z, 1 / 3) : (7.787 * z) + (16 / 116);
+	
+		l = (116 * y) - 16;
+		a = 500 * (x - y);
+		b = 200 * (y - z);
+	
+		return [l, a, b];
+	};
+	
+	convert.lab.xyz = function (lab) {
+		var l = lab[0];
+		var a = lab[1];
+		var b = lab[2];
+		var x;
+		var y;
+		var z;
+	
+		y = (l + 16) / 116;
+		x = a / 500 + y;
+		z = y - b / 200;
+	
+		var y2 = Math.pow(y, 3);
+		var x2 = Math.pow(x, 3);
+		var z2 = Math.pow(z, 3);
+		y = y2 > 0.008856 ? y2 : (y - 16 / 116) / 7.787;
+		x = x2 > 0.008856 ? x2 : (x - 16 / 116) / 7.787;
+		z = z2 > 0.008856 ? z2 : (z - 16 / 116) / 7.787;
+	
+		x *= 95.047;
+		y *= 100;
+		z *= 108.883;
+	
+		return [x, y, z];
+	};
+	
+	convert.lab.lch = function (lab) {
+		var l = lab[0];
+		var a = lab[1];
+		var b = lab[2];
+		var hr;
+		var h;
+		var c;
+	
+		hr = Math.atan2(b, a);
+		h = hr * 360 / 2 / Math.PI;
+	
+		if (h < 0) {
+			h += 360;
+		}
+	
+		c = Math.sqrt(a * a + b * b);
+	
+		return [l, c, h];
+	};
+	
+	convert.lch.lab = function (lch) {
+		var l = lch[0];
+		var c = lch[1];
+		var h = lch[2];
+		var a;
+		var b;
+		var hr;
+	
+		hr = h / 360 * 2 * Math.PI;
+		a = c * Math.cos(hr);
+		b = c * Math.sin(hr);
+	
+		return [l, a, b];
+	};
+	
+	convert.rgb.ansi16 = function (args) {
+		var r = args[0];
+		var g = args[1];
+		var b = args[2];
+		var value = 1 in arguments ? arguments[1] : convert.rgb.hsv(args)[2]; // hsv -> ansi16 optimization
+	
+		value = Math.round(value / 50);
+	
+		if (value === 0) {
+			return 30;
+		}
+	
+		var ansi = 30
+			+ ((Math.round(b / 255) << 2)
+			| (Math.round(g / 255) << 1)
+			| Math.round(r / 255));
+	
+		if (value === 2) {
+			ansi += 60;
+		}
+	
+		return ansi;
+	};
+	
+	convert.hsv.ansi16 = function (args) {
+		// optimization here; we already know the value and don't need to get
+		// it converted for us.
+		return convert.rgb.ansi16(convert.hsv.rgb(args), args[2]);
+	};
+	
+	convert.rgb.ansi256 = function (args) {
+		var r = args[0];
+		var g = args[1];
+		var b = args[2];
+	
+		// we use the extended greyscale palette here, with the exception of
+		// black and white. normal palette only has 4 greyscale shades.
+		if (r === g && g === b) {
+			if (r < 8) {
+				return 16;
+			}
+	
+			if (r > 248) {
+				return 231;
+			}
+	
+			return Math.round(((r - 8) / 247) * 24) + 232;
+		}
+	
+		var ansi = 16
+			+ (36 * Math.round(r / 255 * 5))
+			+ (6 * Math.round(g / 255 * 5))
+			+ Math.round(b / 255 * 5);
+	
+		return ansi;
+	};
+	
+	convert.ansi16.rgb = function (args) {
+		var color = args % 10;
+	
+		// handle greyscale
+		if (color === 0 || color === 7) {
+			if (args > 50) {
+				color += 3.5;
+			}
+	
+			color = color / 10.5 * 255;
+	
+			return [color, color, color];
+		}
+	
+		var mult = (~~(args > 50) + 1) * 0.5;
+		var r = ((color & 1) * mult) * 255;
+		var g = (((color >> 1) & 1) * mult) * 255;
+		var b = (((color >> 2) & 1) * mult) * 255;
+	
+		return [r, g, b];
+	};
+	
+	convert.ansi256.rgb = function (args) {
+		// handle greyscale
+		if (args >= 232) {
+			var c = (args - 232) * 10 + 8;
+			return [c, c, c];
+		}
+	
+		args -= 16;
+	
+		var rem;
+		var r = Math.floor(args / 36) / 5 * 255;
+		var g = Math.floor((rem = args % 36) / 6) / 5 * 255;
+		var b = (rem % 6) / 5 * 255;
+	
+		return [r, g, b];
+	};
+	
+	convert.rgb.hex = function (args) {
+		var integer = ((Math.round(args[0]) & 0xFF) << 16)
+			+ ((Math.round(args[1]) & 0xFF) << 8)
+			+ (Math.round(args[2]) & 0xFF);
+	
+		var string = integer.toString(16).toUpperCase();
+		return '000000'.substring(string.length) + string;
+	};
+	
+	convert.hex.rgb = function (args) {
+		var match = args.toString(16).match(/[a-f0-9]{6}/i);
+		if (!match) {
+			return [0, 0, 0];
+		}
+	
+		var integer = parseInt(match[0], 16);
+		var r = (integer >> 16) & 0xFF;
+		var g = (integer >> 8) & 0xFF;
+		var b = integer & 0xFF;
+	
+		return [r, g, b];
+	};
+	
+	convert.rgb.hcg = function (rgb) {
+		var r = rgb[0] / 255;
+		var g = rgb[1] / 255;
+		var b = rgb[2] / 255;
+		var max = Math.max(Math.max(r, g), b);
+		var min = Math.min(Math.min(r, g), b);
+		var chroma = (max - min);
+		var grayscale;
+		var hue;
+	
+		if (chroma < 1) {
+			grayscale = min / (1 - chroma);
+		} else {
+			grayscale = 0;
+		}
+	
+		if (chroma <= 0) {
+			hue = 0;
+		} else
+		if (max === r) {
+			hue = ((g - b) / chroma) % 6;
+		} else
+		if (max === g) {
+			hue = 2 + (b - r) / chroma;
+		} else {
+			hue = 4 + (r - g) / chroma + 4;
+		}
+	
+		hue /= 6;
+		hue %= 1;
+	
+		return [hue * 360, chroma * 100, grayscale * 100];
+	};
+	
+	convert.hsl.hcg = function (hsl) {
+		var s = hsl[1] / 100;
+		var l = hsl[2] / 100;
+		var c = 1;
+		var f = 0;
+	
+		if (l < 0.5) {
+			c = 2.0 * s * l;
+		} else {
+			c = 2.0 * s * (1.0 - l);
+		}
+	
+		if (c < 1.0) {
+			f = (l - 0.5 * c) / (1.0 - c);
+		}
+	
+		return [hsl[0], c * 100, f * 100];
+	};
+	
+	convert.hsv.hcg = function (hsv) {
+		var s = hsv[1] / 100;
+		var v = hsv[2] / 100;
+	
+		var c = s * v;
+		var f = 0;
+	
+		if (c < 1.0) {
+			f = (v - c) / (1 - c);
+		}
+	
+		return [hsv[0], c * 100, f * 100];
+	};
+	
+	convert.hcg.rgb = function (hcg) {
+		var h = hcg[0] / 360;
+		var c = hcg[1] / 100;
+		var g = hcg[2] / 100;
+	
+		if (c === 0.0) {
+			return [g * 255, g * 255, g * 255];
+		}
+	
+		var pure = [0, 0, 0];
+		var hi = (h % 1) * 6;
+		var v = hi % 1;
+		var w = 1 - v;
+		var mg = 0;
+	
+		switch (Math.floor(hi)) {
+			case 0:
+				pure[0] = 1; pure[1] = v; pure[2] = 0; break;
+			case 1:
+				pure[0] = w; pure[1] = 1; pure[2] = 0; break;
+			case 2:
+				pure[0] = 0; pure[1] = 1; pure[2] = v; break;
+			case 3:
+				pure[0] = 0; pure[1] = w; pure[2] = 1; break;
+			case 4:
+				pure[0] = v; pure[1] = 0; pure[2] = 1; break;
+			default:
+				pure[0] = 1; pure[1] = 0; pure[2] = w;
+		}
+	
+		mg = (1.0 - c) * g;
+	
+		return [
+			(c * pure[0] + mg) * 255,
+			(c * pure[1] + mg) * 255,
+			(c * pure[2] + mg) * 255
+		];
+	};
+	
+	convert.hcg.hsv = function (hcg) {
+		var c = hcg[1] / 100;
+		var g = hcg[2] / 100;
+	
+		var v = c + g * (1.0 - c);
+		var f = 0;
+	
+		if (v > 0.0) {
+			f = c / v;
+		}
+	
+		return [hcg[0], f * 100, v * 100];
+	};
+	
+	convert.hcg.hsl = function (hcg) {
+		var c = hcg[1] / 100;
+		var g = hcg[2] / 100;
+	
+		var l = g * (1.0 - c) + 0.5 * c;
+		var s = 0;
+	
+		if (l > 0.0 && l < 0.5) {
+			s = c / (2 * l);
+		} else
+		if (l >= 0.5 && l < 1.0) {
+			s = c / (2 * (1 - l));
+		}
+	
+		return [hcg[0], s * 100, l * 100];
+	};
+	
+	convert.hcg.hwb = function (hcg) {
+		var c = hcg[1] / 100;
+		var g = hcg[2] / 100;
+		var v = c + g * (1.0 - c);
+		return [hcg[0], (v - c) * 100, (1 - v) * 100];
+	};
+	
+	convert.hwb.hcg = function (hwb) {
+		var w = hwb[1] / 100;
+		var b = hwb[2] / 100;
+		var v = 1 - b;
+		var c = v - w;
+		var g = 0;
+	
+		if (c < 1) {
+			g = (v - c) / (1 - c);
+		}
+	
+		return [hwb[0], c * 100, g * 100];
+	};
+	
+	convert.apple.rgb = function (apple) {
+		return [(apple[0] / 65535) * 255, (apple[1] / 65535) * 255, (apple[2] / 65535) * 255];
+	};
+	
+	convert.rgb.apple = function (rgb) {
+		return [(rgb[0] / 255) * 65535, (rgb[1] / 255) * 65535, (rgb[2] / 255) * 65535];
+	};
+
+
+/***/ },
+/* 1792 */
+/*!******************************************************************************************************!*\
+  !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/color/~/color-convert/css-keywords.js ***!
+  \******************************************************************************************************/
+/***/ function(module, exports) {
+
+	module.exports = {
+		aliceblue: [240, 248, 255],
+		antiquewhite: [250, 235, 215],
+		aqua: [0, 255, 255],
+		aquamarine: [127, 255, 212],
+		azure: [240, 255, 255],
+		beige: [245, 245, 220],
+		bisque: [255, 228, 196],
+		black: [0, 0, 0],
+		blanchedalmond: [255, 235, 205],
+		blue: [0, 0, 255],
+		blueviolet: [138, 43, 226],
+		brown: [165, 42, 42],
+		burlywood: [222, 184, 135],
+		cadetblue: [95, 158, 160],
+		chartreuse: [127, 255, 0],
+		chocolate: [210, 105, 30],
+		coral: [255, 127, 80],
+		cornflowerblue: [100, 149, 237],
+		cornsilk: [255, 248, 220],
+		crimson: [220, 20, 60],
+		cyan: [0, 255, 255],
+		darkblue: [0, 0, 139],
+		darkcyan: [0, 139, 139],
+		darkgoldenrod: [184, 134, 11],
+		darkgray: [169, 169, 169],
+		darkgreen: [0, 100, 0],
+		darkgrey: [169, 169, 169],
+		darkkhaki: [189, 183, 107],
+		darkmagenta: [139, 0, 139],
+		darkolivegreen: [85, 107, 47],
+		darkorange: [255, 140, 0],
+		darkorchid: [153, 50, 204],
+		darkred: [139, 0, 0],
+		darksalmon: [233, 150, 122],
+		darkseagreen: [143, 188, 143],
+		darkslateblue: [72, 61, 139],
+		darkslategray: [47, 79, 79],
+		darkslategrey: [47, 79, 79],
+		darkturquoise: [0, 206, 209],
+		darkviolet: [148, 0, 211],
+		deeppink: [255, 20, 147],
+		deepskyblue: [0, 191, 255],
+		dimgray: [105, 105, 105],
+		dimgrey: [105, 105, 105],
+		dodgerblue: [30, 144, 255],
+		firebrick: [178, 34, 34],
+		floralwhite: [255, 250, 240],
+		forestgreen: [34, 139, 34],
+		fuchsia: [255, 0, 255],
+		gainsboro: [220, 220, 220],
+		ghostwhite: [248, 248, 255],
+		gold: [255, 215, 0],
+		goldenrod: [218, 165, 32],
+		gray: [128, 128, 128],
+		green: [0, 128, 0],
+		greenyellow: [173, 255, 47],
+		grey: [128, 128, 128],
+		honeydew: [240, 255, 240],
+		hotpink: [255, 105, 180],
+		indianred: [205, 92, 92],
+		indigo: [75, 0, 130],
+		ivory: [255, 255, 240],
+		khaki: [240, 230, 140],
+		lavender: [230, 230, 250],
+		lavenderblush: [255, 240, 245],
+		lawngreen: [124, 252, 0],
+		lemonchiffon: [255, 250, 205],
+		lightblue: [173, 216, 230],
+		lightcoral: [240, 128, 128],
+		lightcyan: [224, 255, 255],
+		lightgoldenrodyellow: [250, 250, 210],
+		lightgray: [211, 211, 211],
+		lightgreen: [144, 238, 144],
+		lightgrey: [211, 211, 211],
+		lightpink: [255, 182, 193],
+		lightsalmon: [255, 160, 122],
+		lightseagreen: [32, 178, 170],
+		lightskyblue: [135, 206, 250],
+		lightslategray: [119, 136, 153],
+		lightslategrey: [119, 136, 153],
+		lightsteelblue: [176, 196, 222],
+		lightyellow: [255, 255, 224],
+		lime: [0, 255, 0],
+		limegreen: [50, 205, 50],
+		linen: [250, 240, 230],
+		magenta: [255, 0, 255],
+		maroon: [128, 0, 0],
+		mediumaquamarine: [102, 205, 170],
+		mediumblue: [0, 0, 205],
+		mediumorchid: [186, 85, 211],
+		mediumpurple: [147, 112, 219],
+		mediumseagreen: [60, 179, 113],
+		mediumslateblue: [123, 104, 238],
+		mediumspringgreen: [0, 250, 154],
+		mediumturquoise: [72, 209, 204],
+		mediumvioletred: [199, 21, 133],
+		midnightblue: [25, 25, 112],
+		mintcream: [245, 255, 250],
+		mistyrose: [255, 228, 225],
+		moccasin: [255, 228, 181],
+		navajowhite: [255, 222, 173],
+		navy: [0, 0, 128],
+		oldlace: [253, 245, 230],
+		olive: [128, 128, 0],
+		olivedrab: [107, 142, 35],
+		orange: [255, 165, 0],
+		orangered: [255, 69, 0],
+		orchid: [218, 112, 214],
+		palegoldenrod: [238, 232, 170],
+		palegreen: [152, 251, 152],
+		paleturquoise: [175, 238, 238],
+		palevioletred: [219, 112, 147],
+		papayawhip: [255, 239, 213],
+		peachpuff: [255, 218, 185],
+		peru: [205, 133, 63],
+		pink: [255, 192, 203],
+		plum: [221, 160, 221],
+		powderblue: [176, 224, 230],
+		purple: [128, 0, 128],
+		rebeccapurple: [102, 51, 153],
+		red: [255, 0, 0],
+		rosybrown: [188, 143, 143],
+		royalblue: [65, 105, 225],
+		saddlebrown: [139, 69, 19],
+		salmon: [250, 128, 114],
+		sandybrown: [244, 164, 96],
+		seagreen: [46, 139, 87],
+		seashell: [255, 245, 238],
+		sienna: [160, 82, 45],
+		silver: [192, 192, 192],
+		skyblue: [135, 206, 235],
+		slateblue: [106, 90, 205],
+		slategray: [112, 128, 144],
+		slategrey: [112, 128, 144],
+		snow: [255, 250, 250],
+		springgreen: [0, 255, 127],
+		steelblue: [70, 130, 180],
+		tan: [210, 180, 140],
+		teal: [0, 128, 128],
+		thistle: [216, 191, 216],
+		tomato: [255, 99, 71],
+		turquoise: [64, 224, 208],
+		violet: [238, 130, 238],
+		wheat: [245, 222, 179],
+		white: [255, 255, 255],
+		whitesmoke: [245, 245, 245],
+		yellow: [255, 255, 0],
+		yellowgreen: [154, 205, 50]
+	};
+	
+
+
+/***/ },
+/* 1793 */
+/*!***********************************************************************************************!*\
+  !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/color/~/color-convert/route.js ***!
+  \***********************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var conversions = __webpack_require__(/*! ./conversions */ 1791);
+	
+	/*
+		this function routes a model to all other models.
+	
+		all functions that are routed have a property `.conversion` attached
+		to the returned synthetic function. This property is an array
+		of strings, each with the steps in between the 'from' and 'to'
+		color models (inclusive).
+	
+		conversions that are not possible simply are not included.
+	*/
+	
+	// https://jsperf.com/object-keys-vs-for-in-with-closure/3
+	var models = Object.keys(conversions);
+	
+	function buildGraph() {
+		var graph = {};
+	
+		for (var len = models.length, i = 0; i < len; i++) {
+			graph[models[i]] = {
+				// http://jsperf.com/1-vs-infinity
+				// micro-opt, but this is simple.
+				distance: -1,
+				parent: null
+			};
+		}
+	
+		return graph;
+	}
+	
+	// https://en.wikipedia.org/wiki/Breadth-first_search
+	function deriveBFS(fromModel) {
+		var graph = buildGraph();
+		var queue = [fromModel]; // unshift -> queue -> pop
+	
+		graph[fromModel].distance = 0;
+	
+		while (queue.length) {
+			var current = queue.pop();
+			var adjacents = Object.keys(conversions[current]);
+	
+			for (var len = adjacents.length, i = 0; i < len; i++) {
+				var adjacent = adjacents[i];
+				var node = graph[adjacent];
+	
+				if (node.distance === -1) {
+					node.distance = graph[current].distance + 1;
+					node.parent = current;
+					queue.unshift(adjacent);
+				}
+			}
+		}
+	
+		return graph;
+	}
+	
+	function link(from, to) {
+		return function (args) {
+			return to(from(args));
+		};
+	}
+	
+	function wrapConversion(toModel, graph) {
+		var path = [graph[toModel].parent, toModel];
+		var fn = conversions[graph[toModel].parent][toModel];
+	
+		var cur = graph[toModel].parent;
+		while (graph[cur].parent) {
+			path.unshift(graph[cur].parent);
+			fn = link(conversions[graph[cur].parent][cur], fn);
+			cur = graph[cur].parent;
+		}
+	
+		fn.conversion = path;
+		return fn;
+	}
+	
+	module.exports = function (fromModel) {
+		var graph = deriveBFS(fromModel);
+		var conversion = {};
+	
+		var models = Object.keys(graph);
+		for (var len = models.length, i = 0; i < len; i++) {
+			var toModel = models[i];
+			var node = graph[toModel];
+	
+			if (node.parent === null) {
+				// no possible conversion, or this node is the source model.
+				continue;
+			}
+	
+			conversion[toModel] = wrapConversion(toModel, graph);
+		}
+	
+		return conversion;
+	};
+	
+
+
+/***/ },
+/* 1794 */
+/*!*****************************************************************************************************!*\
+  !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/color/~/color-string/color-string.js ***!
+  \*****************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* MIT license */
+	var colorNames = __webpack_require__(/*! color-name */ 1795);
+	
+	module.exports = {
+	   getRgba: getRgba,
+	   getHsla: getHsla,
+	   getRgb: getRgb,
+	   getHsl: getHsl,
+	   getHwb: getHwb,
+	   getAlpha: getAlpha,
+	
+	   hexString: hexString,
+	   rgbString: rgbString,
+	   rgbaString: rgbaString,
+	   percentString: percentString,
+	   percentaString: percentaString,
+	   hslString: hslString,
+	   hslaString: hslaString,
+	   hwbString: hwbString,
+	   keyword: keyword
+	}
+	
+	function getRgba(string) {
+	   if (!string) {
+	      return;
+	   }
+	   var abbr =  /^#([a-fA-F0-9]{3})$/,
+	       hex =  /^#([a-fA-F0-9]{6})$/,
+	       rgba = /^rgba?\(\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/,
+	       per = /^rgba?\(\s*([+-]?[\d\.]+)\%\s*,\s*([+-]?[\d\.]+)\%\s*,\s*([+-]?[\d\.]+)\%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/,
+	       keyword = /(\D+)/;
+	
+	   var rgb = [0, 0, 0],
+	       a = 1,
+	       match = string.match(abbr);
+	   if (match) {
+	      match = match[1];
+	      for (var i = 0; i < rgb.length; i++) {
+	         rgb[i] = parseInt(match[i] + match[i], 16);
+	      }
+	   }
+	   else if (match = string.match(hex)) {
+	      match = match[1];
+	      for (var i = 0; i < rgb.length; i++) {
+	         rgb[i] = parseInt(match.slice(i * 2, i * 2 + 2), 16);
+	      }
+	   }
+	   else if (match = string.match(rgba)) {
+	      for (var i = 0; i < rgb.length; i++) {
+	         rgb[i] = parseInt(match[i + 1]);
+	      }
+	      a = parseFloat(match[4]);
+	   }
+	   else if (match = string.match(per)) {
+	      for (var i = 0; i < rgb.length; i++) {
+	         rgb[i] = Math.round(parseFloat(match[i + 1]) * 2.55);
+	      }
+	      a = parseFloat(match[4]);
+	   }
+	   else if (match = string.match(keyword)) {
+	      if (match[1] == "transparent") {
+	         return [0, 0, 0, 0];
+	      }
+	      rgb = colorNames[match[1]];
+	      if (!rgb) {
+	         return;
+	      }
+	   }
+	
+	   for (var i = 0; i < rgb.length; i++) {
+	      rgb[i] = scale(rgb[i], 0, 255);
+	   }
+	   if (!a && a != 0) {
+	      a = 1;
+	   }
+	   else {
+	      a = scale(a, 0, 1);
+	   }
+	   rgb[3] = a;
+	   return rgb;
+	}
+	
+	function getHsla(string) {
+	   if (!string) {
+	      return;
+	   }
+	   var hsl = /^hsla?\(\s*([+-]?\d+)(?:deg)?\s*,\s*([+-]?[\d\.]+)%\s*,\s*([+-]?[\d\.]+)%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)/;
+	   var match = string.match(hsl);
+	   if (match) {
+	      var alpha = parseFloat(match[4]);
+	      var h = scale(parseInt(match[1]), 0, 360),
+	          s = scale(parseFloat(match[2]), 0, 100),
+	          l = scale(parseFloat(match[3]), 0, 100),
+	          a = scale(isNaN(alpha) ? 1 : alpha, 0, 1);
+	      return [h, s, l, a];
+	   }
+	}
+	
+	function getHwb(string) {
+	   if (!string) {
+	      return;
+	   }
+	   var hwb = /^hwb\(\s*([+-]?\d+)(?:deg)?\s*,\s*([+-]?[\d\.]+)%\s*,\s*([+-]?[\d\.]+)%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)/;
+	   var match = string.match(hwb);
+	   if (match) {
+	    var alpha = parseFloat(match[4]);
+	      var h = scale(parseInt(match[1]), 0, 360),
+	          w = scale(parseFloat(match[2]), 0, 100),
+	          b = scale(parseFloat(match[3]), 0, 100),
+	          a = scale(isNaN(alpha) ? 1 : alpha, 0, 1);
+	      return [h, w, b, a];
+	   }
+	}
+	
+	function getRgb(string) {
+	   var rgba = getRgba(string);
+	   return rgba && rgba.slice(0, 3);
+	}
+	
+	function getHsl(string) {
+	  var hsla = getHsla(string);
+	  return hsla && hsla.slice(0, 3);
+	}
+	
+	function getAlpha(string) {
+	   var vals = getRgba(string);
+	   if (vals) {
+	      return vals[3];
+	   }
+	   else if (vals = getHsla(string)) {
+	      return vals[3];
+	   }
+	   else if (vals = getHwb(string)) {
+	      return vals[3];
+	   }
+	}
+	
+	// generators
+	function hexString(rgb) {
+	   return "#" + hexDouble(rgb[0]) + hexDouble(rgb[1])
+	              + hexDouble(rgb[2]);
+	}
+	
+	function rgbString(rgba, alpha) {
+	   if (alpha < 1 || (rgba[3] && rgba[3] < 1)) {
+	      return rgbaString(rgba, alpha);
+	   }
+	   return "rgb(" + rgba[0] + ", " + rgba[1] + ", " + rgba[2] + ")";
+	}
+	
+	function rgbaString(rgba, alpha) {
+	   if (alpha === undefined) {
+	      alpha = (rgba[3] !== undefined ? rgba[3] : 1);
+	   }
+	   return "rgba(" + rgba[0] + ", " + rgba[1] + ", " + rgba[2]
+	           + ", " + alpha + ")";
+	}
+	
+	function percentString(rgba, alpha) {
+	   if (alpha < 1 || (rgba[3] && rgba[3] < 1)) {
+	      return percentaString(rgba, alpha);
+	   }
+	   var r = Math.round(rgba[0]/255 * 100),
+	       g = Math.round(rgba[1]/255 * 100),
+	       b = Math.round(rgba[2]/255 * 100);
+	
+	   return "rgb(" + r + "%, " + g + "%, " + b + "%)";
+	}
+	
+	function percentaString(rgba, alpha) {
+	   var r = Math.round(rgba[0]/255 * 100),
+	       g = Math.round(rgba[1]/255 * 100),
+	       b = Math.round(rgba[2]/255 * 100);
+	   return "rgba(" + r + "%, " + g + "%, " + b + "%, " + (alpha || rgba[3] || 1) + ")";
+	}
+	
+	function hslString(hsla, alpha) {
+	   if (alpha < 1 || (hsla[3] && hsla[3] < 1)) {
+	      return hslaString(hsla, alpha);
+	   }
+	   return "hsl(" + hsla[0] + ", " + hsla[1] + "%, " + hsla[2] + "%)";
+	}
+	
+	function hslaString(hsla, alpha) {
+	   if (alpha === undefined) {
+	      alpha = (hsla[3] !== undefined ? hsla[3] : 1);
+	   }
+	   return "hsla(" + hsla[0] + ", " + hsla[1] + "%, " + hsla[2] + "%, "
+	           + alpha + ")";
+	}
+	
+	// hwb is a bit different than rgb(a) & hsl(a) since there is no alpha specific syntax
+	// (hwb have alpha optional & 1 is default value)
+	function hwbString(hwb, alpha) {
+	   if (alpha === undefined) {
+	      alpha = (hwb[3] !== undefined ? hwb[3] : 1);
+	   }
+	   return "hwb(" + hwb[0] + ", " + hwb[1] + "%, " + hwb[2] + "%"
+	           + (alpha !== undefined && alpha !== 1 ? ", " + alpha : "") + ")";
+	}
+	
+	function keyword(rgb) {
+	  return reverseNames[rgb.slice(0, 3)];
+	}
+	
+	// helpers
+	function scale(num, min, max) {
+	   return Math.min(Math.max(min, num), max);
+	}
+	
+	function hexDouble(num) {
+	  var str = num.toString(16).toUpperCase();
+	  return (str.length < 2) ? "0" + str : str;
+	}
+	
+	
+	//create a list of reverse color names
+	var reverseNames = {};
+	for (var name in colorNames) {
+	   reverseNames[colorNames[name]] = name;
+	}
+
+
+/***/ },
+/* 1795 */
+/*!***********************************************************************************************************!*\
+  !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/color/~/color-string/~/color-name/index.js ***!
+  \***********************************************************************************************************/
+/***/ function(module, exports) {
+
+	module.exports = {
+		"aliceblue": [240, 248, 255],
+		"antiquewhite": [250, 235, 215],
+		"aqua": [0, 255, 255],
+		"aquamarine": [127, 255, 212],
+		"azure": [240, 255, 255],
+		"beige": [245, 245, 220],
+		"bisque": [255, 228, 196],
+		"black": [0, 0, 0],
+		"blanchedalmond": [255, 235, 205],
+		"blue": [0, 0, 255],
+		"blueviolet": [138, 43, 226],
+		"brown": [165, 42, 42],
+		"burlywood": [222, 184, 135],
+		"cadetblue": [95, 158, 160],
+		"chartreuse": [127, 255, 0],
+		"chocolate": [210, 105, 30],
+		"coral": [255, 127, 80],
+		"cornflowerblue": [100, 149, 237],
+		"cornsilk": [255, 248, 220],
+		"crimson": [220, 20, 60],
+		"cyan": [0, 255, 255],
+		"darkblue": [0, 0, 139],
+		"darkcyan": [0, 139, 139],
+		"darkgoldenrod": [184, 134, 11],
+		"darkgray": [169, 169, 169],
+		"darkgreen": [0, 100, 0],
+		"darkgrey": [169, 169, 169],
+		"darkkhaki": [189, 183, 107],
+		"darkmagenta": [139, 0, 139],
+		"darkolivegreen": [85, 107, 47],
+		"darkorange": [255, 140, 0],
+		"darkorchid": [153, 50, 204],
+		"darkred": [139, 0, 0],
+		"darksalmon": [233, 150, 122],
+		"darkseagreen": [143, 188, 143],
+		"darkslateblue": [72, 61, 139],
+		"darkslategray": [47, 79, 79],
+		"darkslategrey": [47, 79, 79],
+		"darkturquoise": [0, 206, 209],
+		"darkviolet": [148, 0, 211],
+		"deeppink": [255, 20, 147],
+		"deepskyblue": [0, 191, 255],
+		"dimgray": [105, 105, 105],
+		"dimgrey": [105, 105, 105],
+		"dodgerblue": [30, 144, 255],
+		"firebrick": [178, 34, 34],
+		"floralwhite": [255, 250, 240],
+		"forestgreen": [34, 139, 34],
+		"fuchsia": [255, 0, 255],
+		"gainsboro": [220, 220, 220],
+		"ghostwhite": [248, 248, 255],
+		"gold": [255, 215, 0],
+		"goldenrod": [218, 165, 32],
+		"gray": [128, 128, 128],
+		"green": [0, 128, 0],
+		"greenyellow": [173, 255, 47],
+		"grey": [128, 128, 128],
+		"honeydew": [240, 255, 240],
+		"hotpink": [255, 105, 180],
+		"indianred": [205, 92, 92],
+		"indigo": [75, 0, 130],
+		"ivory": [255, 255, 240],
+		"khaki": [240, 230, 140],
+		"lavender": [230, 230, 250],
+		"lavenderblush": [255, 240, 245],
+		"lawngreen": [124, 252, 0],
+		"lemonchiffon": [255, 250, 205],
+		"lightblue": [173, 216, 230],
+		"lightcoral": [240, 128, 128],
+		"lightcyan": [224, 255, 255],
+		"lightgoldenrodyellow": [250, 250, 210],
+		"lightgray": [211, 211, 211],
+		"lightgreen": [144, 238, 144],
+		"lightgrey": [211, 211, 211],
+		"lightpink": [255, 182, 193],
+		"lightsalmon": [255, 160, 122],
+		"lightseagreen": [32, 178, 170],
+		"lightskyblue": [135, 206, 250],
+		"lightslategray": [119, 136, 153],
+		"lightslategrey": [119, 136, 153],
+		"lightsteelblue": [176, 196, 222],
+		"lightyellow": [255, 255, 224],
+		"lime": [0, 255, 0],
+		"limegreen": [50, 205, 50],
+		"linen": [250, 240, 230],
+		"magenta": [255, 0, 255],
+		"maroon": [128, 0, 0],
+		"mediumaquamarine": [102, 205, 170],
+		"mediumblue": [0, 0, 205],
+		"mediumorchid": [186, 85, 211],
+		"mediumpurple": [147, 112, 219],
+		"mediumseagreen": [60, 179, 113],
+		"mediumslateblue": [123, 104, 238],
+		"mediumspringgreen": [0, 250, 154],
+		"mediumturquoise": [72, 209, 204],
+		"mediumvioletred": [199, 21, 133],
+		"midnightblue": [25, 25, 112],
+		"mintcream": [245, 255, 250],
+		"mistyrose": [255, 228, 225],
+		"moccasin": [255, 228, 181],
+		"navajowhite": [255, 222, 173],
+		"navy": [0, 0, 128],
+		"oldlace": [253, 245, 230],
+		"olive": [128, 128, 0],
+		"olivedrab": [107, 142, 35],
+		"orange": [255, 165, 0],
+		"orangered": [255, 69, 0],
+		"orchid": [218, 112, 214],
+		"palegoldenrod": [238, 232, 170],
+		"palegreen": [152, 251, 152],
+		"paleturquoise": [175, 238, 238],
+		"palevioletred": [219, 112, 147],
+		"papayawhip": [255, 239, 213],
+		"peachpuff": [255, 218, 185],
+		"peru": [205, 133, 63],
+		"pink": [255, 192, 203],
+		"plum": [221, 160, 221],
+		"powderblue": [176, 224, 230],
+		"purple": [128, 0, 128],
+		"rebeccapurple": [102, 51, 153],
+		"red": [255, 0, 0],
+		"rosybrown": [188, 143, 143],
+		"royalblue": [65, 105, 225],
+		"saddlebrown": [139, 69, 19],
+		"salmon": [250, 128, 114],
+		"sandybrown": [244, 164, 96],
+		"seagreen": [46, 139, 87],
+		"seashell": [255, 245, 238],
+		"sienna": [160, 82, 45],
+		"silver": [192, 192, 192],
+		"skyblue": [135, 206, 235],
+		"slateblue": [106, 90, 205],
+		"slategray": [112, 128, 144],
+		"slategrey": [112, 128, 144],
+		"snow": [255, 250, 250],
+		"springgreen": [0, 255, 127],
+		"steelblue": [70, 130, 180],
+		"tan": [210, 180, 140],
+		"teal": [0, 128, 128],
+		"thistle": [216, 191, 216],
+		"tomato": [255, 99, 71],
+		"turquoise": [64, 224, 208],
+		"violet": [238, 130, 238],
+		"wheat": [245, 222, 179],
+		"white": [255, 255, 255],
+		"whitesmoke": [245, 245, 245],
+		"yellow": [255, 255, 0],
+		"yellowgreen": [154, 205, 50]
+	};
+
+/***/ },
+/* 1796 */
 /*!*************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/src/HighchartsHeatmapContainer.css ***!
   \*************************************************************************************************/
@@ -22541,10 +26820,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../css-loader!./HighchartsHeatmapContainer.css */ 1771);
+	var content = __webpack_require__(/*! !./../../css-loader!./HighchartsHeatmapContainer.css */ 1797);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -22561,13 +26840,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1771 */
+/* 1797 */
 /*!*******************************************************************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./faceted-search/~/expression-atlas-heatmap-highcharts/src/HighchartsHeatmapContainer.css ***!
   \*******************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -22578,7 +26857,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1772 */
+/* 1798 */
 /*!*************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/index.js ***!
   \*************************************************************************************/
@@ -22588,11 +26867,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	module.exports = __webpack_require__(/*! ./src/AnatomogramFactory.jsx */ 1773);
+	module.exports = __webpack_require__(/*! ./src/AnatomogramFactory.jsx */ 1799);
 
 
 /***/ },
-/* 1773 */
+/* 1799 */
 /*!*******************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/AnatomogramFactory.jsx ***!
   \*******************************************************************************************************/
@@ -22601,12 +26880,12 @@ webpackJsonp_name_([4],[
 	"use strict";
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var EventEmitter = __webpack_require__(/*! events */ 499);
-	var validate = __webpack_require__(/*! react-prop-types-check */ 1774);
+	var React = __webpack_require__(/*! react */ 1464);
+	var EventEmitter = __webpack_require__(/*! events */ 500);
+	var validate = __webpack_require__(/*! react-prop-types-check */ 1786);
 	
-	var Anatomogram = __webpack_require__(/*! ./Anatomogram.jsx */ 1775);
-	var imagesAvailableForSpecies = __webpack_require__(/*! ./imagesAvailable.js */ 1791);
+	var Anatomogram = __webpack_require__(/*! ./Anatomogram.jsx */ 1800);
+	var imagesAvailableForSpecies = __webpack_require__(/*! ./imagesAvailable.js */ 1816);
 	
 	//*------------------------------------------------------------------*
 	
@@ -22676,45 +26955,7 @@ webpackJsonp_name_([4],[
 	module.exports = { "create": create };
 
 /***/ },
-/* 1774 */
-/*!***************************************************************************************************************************************!*\
-  !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react-prop-types-check/package/react_prop_types_check.js ***!
-  \***************************************************************************************************************************************/
-/***/ function(module, exports) {
-
-	/**
-	 * @param {Object} object to be validated
-	 * @param {Object} propTypes object with defined prop types
-	 * @param {Boolean} _throw if set to true, invalid prop types will throw
-	 */
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-	exports['default'] = check;
-	
-	function check(object, propTypes, _throw) {
-	    var propName = undefined;
-	
-	    for (propName in propTypes) {
-	        if (propTypes.hasOwnProperty(propName)) {
-	            var error = propTypes[propName](object, propName, JSON.stringify(object), 'prop');
-	            if (error) {
-	                if (_throw) {
-	                    throw error;
-	                } else {
-	                    console.error(error.message);
-	                }
-	            }
-	        }
-	    }
-	}
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 1775 */
+/* 1800 */
 /*!************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/Anatomogram.jsx ***!
   \************************************************************************************************/
@@ -22726,13 +26967,13 @@ webpackJsonp_name_([4],[
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 1605);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1620);
 	
-	var AnatomogramImage = __webpack_require__(/*! ./AnatomogramImage.jsx */ 1776);
-	var SelectionIcon = __webpack_require__(/*! ./SelectionIcon.jsx */ 1777);
+	var AnatomogramImage = __webpack_require__(/*! ./AnatomogramImage.jsx */ 1801);
+	var SelectionIcon = __webpack_require__(/*! ./SelectionIcon.jsx */ 1802);
 	
-	var EventEmitter = __webpack_require__(/*! events */ 499);
+	var EventEmitter = __webpack_require__(/*! events */ 500);
 	
 	//*------------------------------------------------------------------*
 	
@@ -22843,7 +27084,7 @@ webpackJsonp_name_([4],[
 	module.exports = Anatomogram;
 
 /***/ },
-/* 1776 */
+/* 1801 */
 /*!*****************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/AnatomogramImage.jsx ***!
   \*****************************************************************************************************/
@@ -22853,10 +27094,10 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 1605);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1620);
 	
-	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 1622);
+	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 1637);
 	
 	//*------------------------------------------------------------------*
 	
@@ -23133,7 +27374,7 @@ webpackJsonp_name_([4],[
 	module.exports = AnatomogramImage;
 
 /***/ },
-/* 1777 */
+/* 1802 */
 /*!**************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/SelectionIcon.jsx ***!
   \**************************************************************************************************/
@@ -23142,9 +27383,9 @@ webpackJsonp_name_([4],[
 	"use strict";
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
+	var React = __webpack_require__(/*! react */ 1464);
 	
-	__webpack_require__(/*! style!css!less!./SelectionIcon.less */ 1778);
+	__webpack_require__(/*! style!css!less!./SelectionIcon.less */ 1803);
 	
 	//*------------------------------------------------------------------*
 	
@@ -23168,7 +27409,7 @@ webpackJsonp_name_([4],[
 	    return React.createElement('img', { className: "selection-icon", onClick: this.props.onClick, src: this._selectionIcon() });
 	  },
 	  _selectionIcon: function () {
-	    return (this.props.pathToFolderWithBundledResources ? this.props.pathToFolderWithBundledResources + "/" : "") + __webpack_require__(/*! ../assets/icons */ 1780)("./" + this.props.anatomogramType + "_" + (this.props.selected ? "selected" : "unselected") + ".png");
+	    return (this.props.pathToFolderWithBundledResources ? this.props.pathToFolderWithBundledResources + "/" : "") + __webpack_require__(/*! ../assets/icons */ 1805)("./" + this.props.anatomogramType + "_" + (this.props.selected ? "selected" : "unselected") + ".png");
 	  }
 	});
 	
@@ -23177,7 +27418,7 @@ webpackJsonp_name_([4],[
 	module.exports = SelectionIcon;
 
 /***/ },
-/* 1778 */
+/* 1803 */
 /*!*********************************************************************************************************************************************************************************!*\
   !*** ./faceted-search/~/style-loader!./faceted-search/~/css-loader!./~/less-loader!./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/SelectionIcon.less ***!
   \*********************************************************************************************************************************************************************************/
@@ -23186,10 +27427,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../css-loader!./../../../../../../~/less-loader!./SelectionIcon.less */ 1779);
+	var content = __webpack_require__(/*! !./../../../../css-loader!./../../../../../../~/less-loader!./SelectionIcon.less */ 1804);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../../style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../../../../style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -23206,13 +27447,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1779 */
+/* 1804 */
 /*!*************************************************************************************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./~/less-loader!./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/SelectionIcon.less ***!
   \*************************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../../css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../../../../css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -23223,23 +27464,23 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1780 */
+/* 1805 */
 /*!*******************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons ^\.\/.*\.png$ ***!
   \*******************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./brain_selected.png": 1781,
-		"./brain_unselected.png": 1782,
-		"./female_selected.png": 1783,
-		"./female_unselected.png": 1784,
-		"./flower_parts_selected.png": 1785,
-		"./flower_parts_unselected.png": 1786,
-		"./male_selected.png": 1787,
-		"./male_unselected.png": 1788,
-		"./whole_plant_selected.png": 1789,
-		"./whole_plant_unselected.png": 1790
+		"./brain_selected.png": 1806,
+		"./brain_unselected.png": 1807,
+		"./female_selected.png": 1808,
+		"./female_unselected.png": 1809,
+		"./flower_parts_selected.png": 1810,
+		"./flower_parts_unselected.png": 1811,
+		"./male_selected.png": 1812,
+		"./male_unselected.png": 1813,
+		"./whole_plant_selected.png": 1814,
+		"./whole_plant_unselected.png": 1815
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -23252,11 +27493,11 @@ webpackJsonp_name_([4],[
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 1780;
+	webpackContext.id = 1805;
 
 
 /***/ },
-/* 1781 */
+/* 1806 */
 /*!************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/brain_selected.png ***!
   \************************************************************************************************************/
@@ -23265,7 +27506,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "365bbb464854abd57e4007c44a102814.png";
 
 /***/ },
-/* 1782 */
+/* 1807 */
 /*!**************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/brain_unselected.png ***!
   \**************************************************************************************************************/
@@ -23274,7 +27515,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "cf7a903eadbc0f0366bdf4635b76a63c.png";
 
 /***/ },
-/* 1783 */
+/* 1808 */
 /*!*************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/female_selected.png ***!
   \*************************************************************************************************************/
@@ -23283,7 +27524,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "d4025f6a7ac66f512f6b7a709d00eb5b.png";
 
 /***/ },
-/* 1784 */
+/* 1809 */
 /*!***************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/female_unselected.png ***!
   \***************************************************************************************************************/
@@ -23292,7 +27533,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "f5b29abe74fa9cd11f8ce073f70dc7aa.png";
 
 /***/ },
-/* 1785 */
+/* 1810 */
 /*!*******************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/flower_parts_selected.png ***!
   \*******************************************************************************************************************/
@@ -23301,7 +27542,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "5483e98329b7efb388c9f8010e8ccbf2.png";
 
 /***/ },
-/* 1786 */
+/* 1811 */
 /*!*********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/flower_parts_unselected.png ***!
   \*********************************************************************************************************************/
@@ -23310,7 +27551,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "2305fdc9eec238a6a113998ea6247514.png";
 
 /***/ },
-/* 1787 */
+/* 1812 */
 /*!***********************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/male_selected.png ***!
   \***********************************************************************************************************/
@@ -23319,7 +27560,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "da7cdb4dc6dc288c937794eb6dde23b2.png";
 
 /***/ },
-/* 1788 */
+/* 1813 */
 /*!*************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/male_unselected.png ***!
   \*************************************************************************************************************/
@@ -23328,7 +27569,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "68b1e400aedfdb1730f0151855f974dd.png";
 
 /***/ },
-/* 1789 */
+/* 1814 */
 /*!******************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/whole_plant_selected.png ***!
   \******************************************************************************************************************/
@@ -23337,7 +27578,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "b6e2375495142a1db76cdd6a50aab62c.png";
 
 /***/ },
-/* 1790 */
+/* 1815 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/whole_plant_unselected.png ***!
   \********************************************************************************************************************/
@@ -23346,7 +27587,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "7cff81555247db1e25004b5ea9544976.png";
 
 /***/ },
-/* 1791 */
+/* 1816 */
 /*!***************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/imagesAvailable.js ***!
   \***************************************************************************************************/
@@ -23419,7 +27660,7 @@ webpackJsonp_name_([4],[
 	};
 	
 	var _anatomogramFile = function(path){
-	  return __webpack_require__(/*! ../assets/svg */ 1792)("./"+path);
+	  return __webpack_require__(/*! ../assets/svg */ 1817)("./"+path);
 	}
 	
 	var getSvgsForSpecies = function(species){
@@ -23443,43 +27684,43 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1792 */
+/* 1817 */
 /*!************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg ^\.\/.*$ ***!
   \************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./anolis_carolinensis.svg": 1793,
-		"./arabidopsis_thaliana_whole_plant.svg": 1794,
-		"./brachypodium_distachyon_flower_parts.svg": 1795,
-		"./brachypodium_distachyon_whole_plant.svg": 1796,
-		"./chicken.svg": 1797,
-		"./cow.svg": 1798,
-		"./hordeum_vulgare_flower_parts.svg": 1799,
-		"./hordeum_vulgare_whole_plant.svg": 1800,
-		"./human_brain.svg": 1801,
-		"./human_female.svg": 1802,
-		"./human_male.svg": 1803,
-		"./macaca_mulatta.svg": 1804,
-		"./monodelphis_domestica.svg": 1805,
-		"./mouse_brain.svg": 1806,
-		"./mouse_female.svg": 1807,
-		"./mouse_male.svg": 1808,
-		"./oryza_sativa_flower_parts.svg": 1809,
-		"./oryza_sativa_whole_plant.svg": 1810,
-		"./papio_anubis.svg": 1811,
-		"./rat.svg": 1812,
-		"./solanum_lycopersicum_flower_parts.svg": 1813,
-		"./solanum_lycopersicum_whole_plant.svg": 1814,
-		"./sorghum_bicolor_flower_parts.svg": 1815,
-		"./sorghum_bicolor_whole_plant.svg": 1816,
-		"./tetraodon_nigroviridis.svg": 1817,
-		"./triticum_aestivum_flower_parts.svg": 1818,
-		"./triticum_aestivum_whole_plant.svg": 1819,
-		"./xenopus_tropicalis.svg": 1820,
-		"./zea_mays_flower_parts.svg": 1821,
-		"./zea_mays_whole_plant.svg": 1822
+		"./anolis_carolinensis.svg": 1818,
+		"./arabidopsis_thaliana_whole_plant.svg": 1819,
+		"./brachypodium_distachyon_flower_parts.svg": 1820,
+		"./brachypodium_distachyon_whole_plant.svg": 1821,
+		"./chicken.svg": 1822,
+		"./cow.svg": 1823,
+		"./hordeum_vulgare_flower_parts.svg": 1824,
+		"./hordeum_vulgare_whole_plant.svg": 1825,
+		"./human_brain.svg": 1826,
+		"./human_female.svg": 1827,
+		"./human_male.svg": 1828,
+		"./macaca_mulatta.svg": 1829,
+		"./monodelphis_domestica.svg": 1830,
+		"./mouse_brain.svg": 1831,
+		"./mouse_female.svg": 1832,
+		"./mouse_male.svg": 1833,
+		"./oryza_sativa_flower_parts.svg": 1834,
+		"./oryza_sativa_whole_plant.svg": 1835,
+		"./papio_anubis.svg": 1836,
+		"./rat.svg": 1837,
+		"./solanum_lycopersicum_flower_parts.svg": 1838,
+		"./solanum_lycopersicum_whole_plant.svg": 1839,
+		"./sorghum_bicolor_flower_parts.svg": 1840,
+		"./sorghum_bicolor_whole_plant.svg": 1841,
+		"./tetraodon_nigroviridis.svg": 1842,
+		"./triticum_aestivum_flower_parts.svg": 1843,
+		"./triticum_aestivum_whole_plant.svg": 1844,
+		"./xenopus_tropicalis.svg": 1845,
+		"./zea_mays_flower_parts.svg": 1846,
+		"./zea_mays_whole_plant.svg": 1847
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -23492,11 +27733,11 @@ webpackJsonp_name_([4],[
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 1792;
+	webpackContext.id = 1817;
 
 
 /***/ },
-/* 1793 */
+/* 1818 */
 /*!***************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/anolis_carolinensis.svg ***!
   \***************************************************************************************************************/
@@ -23505,7 +27746,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "d4f2faae30c82fadfc3053398cedfcc3.svg";
 
 /***/ },
-/* 1794 */
+/* 1819 */
 /*!****************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/arabidopsis_thaliana_whole_plant.svg ***!
   \****************************************************************************************************************************/
@@ -23514,7 +27755,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "604e65461f2a6d4fc231eb435d40ee58.svg";
 
 /***/ },
-/* 1795 */
+/* 1820 */
 /*!********************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/brachypodium_distachyon_flower_parts.svg ***!
   \********************************************************************************************************************************/
@@ -23523,16 +27764,16 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "75a898047075502bff21398804fc60e5.svg";
 
 /***/ },
-/* 1796 */
+/* 1821 */
 /*!*******************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/brachypodium_distachyon_whole_plant.svg ***!
   \*******************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "2d99119900207ae9a115f5a0374009d2.svg";
+	module.exports = __webpack_require__.p + "91e2680953f27b672ba45555bae71b8d.svg";
 
 /***/ },
-/* 1797 */
+/* 1822 */
 /*!***************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/chicken.svg ***!
   \***************************************************************************************************/
@@ -23541,7 +27782,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "66401d1726702771c68e715a21aa37ba.svg";
 
 /***/ },
-/* 1798 */
+/* 1823 */
 /*!***********************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/cow.svg ***!
   \***********************************************************************************************/
@@ -23550,7 +27791,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "5eed91d49e1c6b3ff63352dbcca7faaa.svg";
 
 /***/ },
-/* 1799 */
+/* 1824 */
 /*!************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/hordeum_vulgare_flower_parts.svg ***!
   \************************************************************************************************************************/
@@ -23559,7 +27800,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "f3a50848d6458a24def1599a7a7a33de.svg";
 
 /***/ },
-/* 1800 */
+/* 1825 */
 /*!***********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/hordeum_vulgare_whole_plant.svg ***!
   \***********************************************************************************************************************/
@@ -23568,7 +27809,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "2dd35ae6a33f46c318ad80c19916b29f.svg";
 
 /***/ },
-/* 1801 */
+/* 1826 */
 /*!*******************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/human_brain.svg ***!
   \*******************************************************************************************************/
@@ -23577,7 +27818,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "524de2a0d42f1577719519ba507a401a.svg";
 
 /***/ },
-/* 1802 */
+/* 1827 */
 /*!********************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/human_female.svg ***!
   \********************************************************************************************************/
@@ -23586,7 +27827,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "e08451bc8b2e7e0733e425b19f5d8c8c.svg";
 
 /***/ },
-/* 1803 */
+/* 1828 */
 /*!******************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/human_male.svg ***!
   \******************************************************************************************************/
@@ -23595,7 +27836,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "e9dedfa52d3356c3ba0f9afaecaf7b18.svg";
 
 /***/ },
-/* 1804 */
+/* 1829 */
 /*!**********************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/macaca_mulatta.svg ***!
   \**********************************************************************************************************/
@@ -23604,7 +27845,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "097f31a31e8ba421dd6da96d521d17b5.svg";
 
 /***/ },
-/* 1805 */
+/* 1830 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/monodelphis_domestica.svg ***!
   \*****************************************************************************************************************/
@@ -23613,7 +27854,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "07e71c8c46cb1b5eae0b12d587a86a43.svg";
 
 /***/ },
-/* 1806 */
+/* 1831 */
 /*!*******************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/mouse_brain.svg ***!
   \*******************************************************************************************************/
@@ -23622,7 +27863,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "aa4ef824eaed1e1abea77d07ff33a371.svg";
 
 /***/ },
-/* 1807 */
+/* 1832 */
 /*!********************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/mouse_female.svg ***!
   \********************************************************************************************************/
@@ -23631,7 +27872,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "d0a85005fa6535fcec634644187f8767.svg";
 
 /***/ },
-/* 1808 */
+/* 1833 */
 /*!******************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/mouse_male.svg ***!
   \******************************************************************************************************/
@@ -23640,7 +27881,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "48f870d0cfec9d6ce5b80ead4bf8942b.svg";
 
 /***/ },
-/* 1809 */
+/* 1834 */
 /*!*********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/oryza_sativa_flower_parts.svg ***!
   \*********************************************************************************************************************/
@@ -23649,7 +27890,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "b840c6a8890b3e0a8a5ad8129b797bbe.svg";
 
 /***/ },
-/* 1810 */
+/* 1835 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/oryza_sativa_whole_plant.svg ***!
   \********************************************************************************************************************/
@@ -23658,7 +27899,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "b6371e23df0992a331ee16a3878e56fa.svg";
 
 /***/ },
-/* 1811 */
+/* 1836 */
 /*!********************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/papio_anubis.svg ***!
   \********************************************************************************************************/
@@ -23667,7 +27908,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "27bec93fbcbe19d54c12371437d42df8.svg";
 
 /***/ },
-/* 1812 */
+/* 1837 */
 /*!***********************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/rat.svg ***!
   \***********************************************************************************************/
@@ -23676,7 +27917,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "b5a56326206cb4cf343b712fc84bc261.svg";
 
 /***/ },
-/* 1813 */
+/* 1838 */
 /*!*****************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/solanum_lycopersicum_flower_parts.svg ***!
   \*****************************************************************************************************************************/
@@ -23685,7 +27926,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "a049915c834b500015fa1774d10577e7.svg";
 
 /***/ },
-/* 1814 */
+/* 1839 */
 /*!****************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/solanum_lycopersicum_whole_plant.svg ***!
   \****************************************************************************************************************************/
@@ -23694,7 +27935,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "babbd4bcb4a6794a612c21fd0b744003.svg";
 
 /***/ },
-/* 1815 */
+/* 1840 */
 /*!************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/sorghum_bicolor_flower_parts.svg ***!
   \************************************************************************************************************************/
@@ -23703,7 +27944,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "106a6ac98486b17e3b83c9e7309400ae.svg";
 
 /***/ },
-/* 1816 */
+/* 1841 */
 /*!***********************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/sorghum_bicolor_whole_plant.svg ***!
   \***********************************************************************************************************************/
@@ -23712,7 +27953,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "488238c1c25f9065e3a2dc3f58d870cf.svg";
 
 /***/ },
-/* 1817 */
+/* 1842 */
 /*!******************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/tetraodon_nigroviridis.svg ***!
   \******************************************************************************************************************/
@@ -23721,7 +27962,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "bb6b3ef52e59607e1d294c23dcbde340.svg";
 
 /***/ },
-/* 1818 */
+/* 1843 */
 /*!**************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/triticum_aestivum_flower_parts.svg ***!
   \**************************************************************************************************************************/
@@ -23730,7 +27971,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "718094f8e158b3f3233b01e677846b1b.svg";
 
 /***/ },
-/* 1819 */
+/* 1844 */
 /*!*************************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/triticum_aestivum_whole_plant.svg ***!
   \*************************************************************************************************************************/
@@ -23739,7 +27980,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "ec05430fc533ca4bf94425b2d114d127.svg";
 
 /***/ },
-/* 1820 */
+/* 1845 */
 /*!**************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/xenopus_tropicalis.svg ***!
   \**************************************************************************************************************/
@@ -23748,7 +27989,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "54cc23258e21382adcde1829b3d418e0.svg";
 
 /***/ },
-/* 1821 */
+/* 1846 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/zea_mays_flower_parts.svg ***!
   \*****************************************************************************************************************/
@@ -23757,7 +27998,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "af2b2dfdafd2179e634d16725fe3caae.svg";
 
 /***/ },
-/* 1822 */
+/* 1847 */
 /*!****************************************************************************************************************!*\
   !*** ./faceted-search/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/zea_mays_whole_plant.svg ***!
   \****************************************************************************************************************/
@@ -23766,7 +28007,7 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "ce643da44d3e1921cf922746c99604f7.svg";
 
 /***/ },
-/* 1823 */
+/* 1848 */
 /*!**************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/index.js ***!
   \**************************************************/
@@ -23776,11 +28017,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	module.exports = __webpack_require__(/*! ./src/Feedback.jsx */ 1824);
+	module.exports = __webpack_require__(/*! ./src/Feedback.jsx */ 1849);
 
 
 /***/ },
-/* 1824 */
+/* 1849 */
 /*!**********************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/src/Feedback.jsx ***!
   \**********************************************************/
@@ -23790,19 +28031,19 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var LocalStorageMixin = __webpack_require__(/*! react-localstorage */ 1825);
-	var TimerMixin = __webpack_require__(/*! react-timer-mixin */ 1827);
-	var ReactCSSTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 1828);
+	var React = __webpack_require__(/*! react */ 1464);
+	var LocalStorageMixin = __webpack_require__(/*! react-localstorage */ 1850);
+	var TimerMixin = __webpack_require__(/*! react-timer-mixin */ 1852);
+	var ReactCSSTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 1853);
 	
-	var BootstrapButton = __webpack_require__(/*! react-bootstrap/lib/Button */ 1835);
-	var BootstrapFormGroup = __webpack_require__(/*! react-bootstrap/lib/FormGroup */ 1875);
-	var BootstrapFormControl = __webpack_require__(/*! react-bootstrap/lib/FormControl */ 1879);
+	var BootstrapButton = __webpack_require__(/*! react-bootstrap/lib/Button */ 1860);
+	var BootstrapFormGroup = __webpack_require__(/*! react-bootstrap/lib/FormGroup */ 1900);
+	var BootstrapFormControl = __webpack_require__(/*! react-bootstrap/lib/FormControl */ 1904);
 	
-	var EmojiSpritesFile = __webpack_require__(/*! ../assets/emojione.sprites.png */ 1883);
-	var Emoji = __webpack_require__(/*! react-emojione */ 1884);
+	var EmojiSpritesFile = __webpack_require__(/*! ../assets/emojione.sprites.png */ 1908);
+	var Emoji = __webpack_require__(/*! react-emojione */ 1909);
 	
-	__webpack_require__(/*! ./gxaFeedback.css */ 1893);
+	__webpack_require__(/*! ./gxaFeedback.css */ 1918);
 	
 	//*------------------------------------------------------------------*
 	
@@ -24102,297 +28343,297 @@ webpackJsonp_name_([4],[
 	module.exports = FeedbackPersistence(FeedbackSmileys);
 
 /***/ },
-/* 1825 */
+/* 1850 */
 /*!************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-localstorage/react-localstorage.js ***!
   \************************************************************************************/
-[2204, 1449, 1826],
-/* 1826 */
+[2229, 1464, 1851],
+/* 1851 */
 /*!*****************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-localstorage/lib/warning.js ***!
   \*****************************************************************************/
-521,
-/* 1827 */
+522,
+/* 1852 */
 /*!***************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-timer-mixin/TimerMixin.js ***!
   \***************************************************************************/
-522,
-/* 1828 */
+523,
+/* 1853 */
 /*!**************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-addons-css-transition-group/index.js ***!
   \**************************************************************************************/
-[2191, 1829],
-/* 1829 */
+[2216, 1854],
+/* 1854 */
 /*!***************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactCSSTransitionGroup.js ***!
   \***************************************************************/
-[2192, 1450, 1486, 1830, 1832],
-/* 1830 */
+[2217, 1465, 1501, 1855, 1857],
+/* 1855 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactTransitionGroup.js ***!
   \************************************************************/
-[2193, 1450, 1831, 1486, 1462],
-/* 1831 */
+[2218, 1465, 1856, 1501, 1477],
+/* 1856 */
 /*!*******************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactTransitionChildMapping.js ***!
   \*******************************************************************/
-[2194, 1563],
-/* 1832 */
+[2219, 1578],
+/* 1857 */
 /*!********************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactCSSTransitionGroupChild.js ***!
   \********************************************************************/
-[2195, 1450, 1451, 1833, 1834, 1603],
-/* 1833 */
+[2220, 1465, 1466, 1858, 1859, 1618],
+/* 1858 */
 /*!******************************************************!*\
   !*** ./faceted-search/~/react/~/fbjs/lib/CSSCore.js ***!
   \******************************************************/
-[2196, 1460],
-/* 1834 */
+[2221, 1475],
+/* 1859 */
 /*!*************************************************************!*\
   !*** ./faceted-search/~/react/lib/ReactTransitionEvents.js ***!
   \*************************************************************/
-[2197, 1456],
-/* 1835 */
+[2222, 1471],
+/* 1860 */
 /*!*************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/lib/Button.js ***!
   \*************************************************************************/
-[2106, 1836, 1851, 1852, 1862, 1863, 1449, 1864, 1866, 1871, 1873],
-/* 1836 */
+[2131, 1861, 1876, 1877, 1887, 1888, 1464, 1889, 1891, 1896, 1898],
+/* 1861 */
 /*!***********************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/inherits.js ***!
   \***********************************************************************************************/
-[2061, 1837, 1840],
-/* 1837 */
+[2086, 1862, 1865],
+/* 1862 */
 /*!****************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/create.js ***!
   \****************************************************************************************************/
-[2062, 1838],
-/* 1838 */
+[2087, 1863],
+/* 1863 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/create.js ***!
   \*****************************************************************************************************************/
-[2063, 1839],
-/* 1839 */
+[2088, 1864],
+/* 1864 */
 /*!**********************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.js ***!
   \**********************************************************************************************************/
-164,
-/* 1840 */
+165,
+/* 1865 */
 /*!**************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/set-prototype-of.js ***!
   \**************************************************************************************************************/
-[2064, 1841],
-/* 1841 */
+[2089, 1866],
+/* 1866 */
 /*!***************************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/set-prototype-of.js ***!
   \***************************************************************************************************************************/
-[2065, 1842, 1845],
-/* 1842 */
+[2090, 1867, 1870],
+/* 1867 */
 /*!************************************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.set-prototype-of.js ***!
   \************************************************************************************************************************************/
-[2066, 1843, 1848],
-/* 1843 */
+[2091, 1868, 1873],
+/* 1868 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.export.js ***!
   \*****************************************************************************************************************/
-[2067, 1844, 1845, 1846],
-/* 1844 */
+[2092, 1869, 1870, 1871],
+/* 1869 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.global.js ***!
   \*****************************************************************************************************************/
-169,
-/* 1845 */
+170,
+/* 1870 */
 /*!***************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.core.js ***!
   \***************************************************************************************************************/
-170,
-/* 1846 */
+171,
+/* 1871 */
 /*!**************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.ctx.js ***!
   \**************************************************************************************************************/
-[2068, 1847],
-/* 1847 */
+[2093, 1872],
+/* 1872 */
 /*!*********************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.a-function.js ***!
   \*********************************************************************************************************************/
-172,
-/* 1848 */
+173,
+/* 1873 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.set-proto.js ***!
   \********************************************************************************************************************/
-[2069, 1839, 1849, 1850, 1846],
-/* 1849 */
+[2094, 1864, 1874, 1875, 1871],
+/* 1874 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.is-object.js ***!
   \********************************************************************************************************************/
-174,
-/* 1850 */
+175,
+/* 1875 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.an-object.js ***!
   \********************************************************************************************************************/
-[2070, 1849],
-/* 1851 */
+[2095, 1874],
+/* 1876 */
 /*!*******************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/class-call-check.js ***!
   \*******************************************************************************************************/
-176,
-/* 1852 */
+177,
+/* 1877 */
 /*!**********************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/extends.js ***!
   \**********************************************************************************************/
-[2071, 1853],
-/* 1853 */
+[2096, 1878],
+/* 1878 */
 /*!****************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/assign.js ***!
   \****************************************************************************************************/
-[2072, 1854],
-/* 1854 */
+[2097, 1879],
+/* 1879 */
 /*!*****************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/assign.js ***!
   \*****************************************************************************************************************/
-[2073, 1855, 1845],
-/* 1855 */
+[2098, 1880, 1870],
+/* 1880 */
 /*!**************************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.assign.js ***!
   \**************************************************************************************************************************/
-[2074, 1843, 1856],
-/* 1856 */
+[2099, 1868, 1881],
+/* 1881 */
 /*!************************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.object-assign.js ***!
   \************************************************************************************************************************/
-[2075, 1839, 1857, 1859, 1861],
-/* 1857 */
+[2100, 1864, 1882, 1884, 1886],
+/* 1882 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.to-object.js ***!
   \********************************************************************************************************************/
-[2076, 1858],
-/* 1858 */
+[2101, 1883],
+/* 1883 */
 /*!******************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.defined.js ***!
   \******************************************************************************************************************/
-183,
-/* 1859 */
+184,
+/* 1884 */
 /*!******************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.iobject.js ***!
   \******************************************************************************************************************/
-[2077, 1860],
-/* 1860 */
+[2102, 1885],
+/* 1885 */
 /*!**************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.cof.js ***!
   \**************************************************************************************************************/
-185,
-/* 1861 */
+186,
+/* 1886 */
 /*!****************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.fails.js ***!
   \****************************************************************************************************************/
-186,
-/* 1862 */
+187,
+/* 1887 */
 /*!**************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/interop-require-default.js ***!
   \**************************************************************************************************************/
-192,
-/* 1863 */
+193,
+/* 1888 */
 /*!*********************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/classnames/index.js ***!
   \*********************************************************************************/
-194,
-/* 1864 */
+195,
+/* 1889 */
 /*!*************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/react-prop-types/lib/elementType.js ***!
   \*************************************************************************************************/
-[2102, 1449, 1865],
-/* 1865 */
+[2127, 1464, 1890],
+/* 1890 */
 /*!********************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/react-prop-types/lib/common.js ***!
   \********************************************************************************************/
-270,
-/* 1866 */
+271,
+/* 1891 */
 /*!****************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/lib/styleMaps.js ***!
   \****************************************************************************/
-[2104, 1853, 1837, 1867],
-/* 1867 */
+[2129, 1878, 1862, 1892],
+/* 1892 */
 /*!**************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/keys.js ***!
   \**************************************************************************************************/
-[2078, 1868],
-/* 1868 */
+[2103, 1893],
+/* 1893 */
 /*!***************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/keys.js ***!
   \***************************************************************************************************************/
-[2079, 1869, 1845],
-/* 1869 */
+[2104, 1894, 1870],
+/* 1894 */
 /*!************************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.keys.js ***!
   \************************************************************************************************************************/
-[2080, 1857, 1870],
-/* 1870 */
+[2105, 1882, 1895],
+/* 1895 */
 /*!*********************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.object-sap.js ***!
   \*********************************************************************************************************************/
-[2081, 1843, 1845, 1861],
-/* 1871 */
+[2106, 1868, 1870, 1886],
+/* 1896 */
 /*!***************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/lib/utils/bootstrapUtils.js ***!
   \***************************************************************************************/
-[2103, 1852, 1862, 1449, 1866, 1872],
-/* 1872 */
+[2128, 1877, 1887, 1464, 1891, 1897],
+/* 1897 */
 /*!**********************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/invariant/browser.js ***!
   \**********************************************************************************/
-275,
-/* 1873 */
+276,
+/* 1898 */
 /*!*****************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/lib/SafeAnchor.js ***!
   \*****************************************************************************/
-[2107, 1836, 1851, 1852, 1874, 1862, 1449, 1864],
-/* 1874 */
+[2132, 1861, 1876, 1877, 1899, 1887, 1464, 1889],
+/* 1899 */
 /*!****************************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/object-without-properties.js ***!
   \****************************************************************************************************************/
-187,
-/* 1875 */
+188,
+/* 1900 */
 /*!****************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/lib/FormGroup.js ***!
   \****************************************************************************/
-[2114, 1836, 1851, 1852, 1874, 1862, 1863, 1449, 1876, 1866, 1871, 1878],
-/* 1876 */
+[2139, 1861, 1876, 1877, 1899, 1887, 1888, 1464, 1901, 1891, 1896, 1903],
+/* 1901 */
 /*!************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/react-prop-types/lib/deprecated.js ***!
   \************************************************************************************************/
-[2115, 1877],
-/* 1877 */
+[2140, 1902],
+/* 1902 */
 /*!********************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/~/warning/browser.js ***!
   \********************************************************************************/
-277,
-/* 1878 */
+278,
+/* 1903 */
 /*!***********************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/lib/utils/ValidComponentChildren.js ***!
   \***********************************************************************************************/
-[2105, 1862, 1449],
-/* 1879 */
+[2130, 1887, 1464],
+/* 1904 */
 /*!******************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/lib/FormControl.js ***!
   \******************************************************************************/
-[2116, 1836, 1851, 1874, 1852, 1862, 1863, 1449, 1864, 1877, 1871, 1880, 1882],
-/* 1880 */
+[2141, 1861, 1876, 1899, 1877, 1887, 1888, 1464, 1889, 1902, 1896, 1905, 1907],
+/* 1905 */
 /*!**************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/lib/FormControlFeedback.js ***!
   \**************************************************************************************/
-[2117, 1836, 1851, 1852, 1874, 1862, 1863, 1449, 1871, 1881],
-/* 1881 */
+[2142, 1861, 1876, 1877, 1899, 1887, 1888, 1464, 1896, 1906],
+/* 1906 */
 /*!****************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/lib/Glyphicon.js ***!
   \****************************************************************************/
-[2118, 1852, 1862, 1863, 1449, 1876],
-/* 1882 */
+[2143, 1877, 1887, 1888, 1464, 1901],
+/* 1907 */
 /*!************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-bootstrap/lib/FormControlStatic.js ***!
   \************************************************************************************/
-[2119, 1836, 1851, 1874, 1852, 1862, 1863, 1449, 1864, 1871],
-/* 1883 */
+[2144, 1861, 1876, 1899, 1877, 1887, 1888, 1464, 1889, 1896],
+/* 1908 */
 /*!*********************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/assets/emojione.sprites.png ***!
   \*********************************************************************/
@@ -24401,52 +28642,52 @@ webpackJsonp_name_([4],[
 	module.exports = __webpack_require__.p + "72e306f1246f69de2c83c8d3c3141177.png";
 
 /***/ },
-/* 1884 */
+/* 1909 */
 /*!********************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-emojione/lib/react-emojione.js ***!
   \********************************************************************************/
-[2198, 1885, 1886, 1890],
-/* 1885 */
+[2223, 1910, 1911, 1915],
+/* 1910 */
 /*!***************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-emojione/lib/data/ascii-to-unicode.js ***!
   \***************************************************************************************/
-512,
-/* 1886 */
+513,
+/* 1911 */
 /*!********************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-emojione/lib/renderers/renderer-factory.js ***!
   \********************************************************************************************/
-[2199, 1887, 1892],
-/* 1887 */
+[2224, 1912, 1917],
+/* 1912 */
 /*!******************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-emojione/lib/renderers/emoji-renderer.js ***!
   \******************************************************************************************/
-[2200, 1449, 1888, 1890],
-/* 1888 */
+[2225, 1464, 1913, 1915],
+/* 1913 */
 /*!****************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-emojione/lib/styles/emojione-sprite.js ***!
   \****************************************************************************************/
-[2201, 1889],
-/* 1889 */
+[2226, 1914],
+/* 1914 */
 /*!**************************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-emojione/lib/styles/emojione-sprite-positions.js ***!
   \**************************************************************************************************/
-516,
-/* 1890 */
+517,
+/* 1915 */
 /*!***********************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-emojione/lib/utils/emoji-format-conversion.js ***!
   \***********************************************************************************************/
-[2202, 1891],
-/* 1891 */
+[2227, 1916],
+/* 1916 */
 /*!*********************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-emojione/lib/data/emoji-data.js ***!
   \*********************************************************************************/
-518,
-/* 1892 */
+519,
+/* 1917 */
 /*!********************************************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/~/react-emojione/lib/renderers/unicode-renderer.js ***!
   \********************************************************************************************/
-[2203, 1890],
-/* 1893 */
+[2228, 1915],
+/* 1918 */
 /*!*************************************************************!*\
   !*** ./faceted-search/~/atlas-feedback/src/gxaFeedback.css ***!
   \*************************************************************/
@@ -24455,10 +28696,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../css-loader!./gxaFeedback.css */ 1894);
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaFeedback.css */ 1919);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -24475,13 +28716,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1894 */
+/* 1919 */
 /*!*******************************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./faceted-search/~/atlas-feedback/src/gxaFeedback.css ***!
   \*******************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -24492,7 +28733,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1895 */
+/* 1920 */
 /*!**************************************************!*\
   !*** ./faceted-search/src/differentialRouter.js ***!
   \**************************************************/
@@ -24502,18 +28743,18 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 1605);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1620);
 	
-	var $ = __webpack_require__(/*! jquery */ 1616);
+	var $ = __webpack_require__(/*! jquery */ 1631);
 	
-	var url = __webpack_require__(/*! url */ 1896);
-	var querystring = __webpack_require__(/*! querystring */ 1901);
+	var url = __webpack_require__(/*! url */ 1921);
+	var querystring = __webpack_require__(/*! querystring */ 1926);
 	
 	//*------------------------------------------------------------------*
 	
-	var DifferentialFacetsTree = __webpack_require__(/*! ./DifferentialFacetsTree.jsx */ 1904);
-	var DifferentialResults = __webpack_require__(/*! ./DifferentialResults.jsx */ 1905);
+	var DifferentialFacetsTree = __webpack_require__(/*! ./DifferentialFacetsTree.jsx */ 1929);
+	var DifferentialResults = __webpack_require__(/*! ./DifferentialResults.jsx */ 1930);
 	
 	//*------------------------------------------------------------------*
 	
@@ -24808,7 +29049,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1896 */
+/* 1921 */
 /*!**************************************************!*\
   !*** (webpack)/~/node-libs-browser/~/url/url.js ***!
   \**************************************************/
@@ -24835,7 +29076,7 @@ webpackJsonp_name_([4],[
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 	
-	var punycode = __webpack_require__(/*! punycode */ 1897);
+	var punycode = __webpack_require__(/*! punycode */ 1922);
 	
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -24907,7 +29148,7 @@ webpackJsonp_name_([4],[
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(/*! querystring */ 1898);
+	    querystring = __webpack_require__(/*! querystring */ 1923);
 	
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -25524,7 +29765,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1897 */
+/* 1922 */
 /*!******************************************************************!*\
   !*** (webpack)/~/node-libs-browser/~/url/~/punycode/punycode.js ***!
   \******************************************************************/
@@ -26059,15 +30300,15 @@ webpackJsonp_name_([4],[
 	
 	}(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../buildin/module.js */ 493)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../buildin/module.js */ 494)(module), (function() { return this; }())))
 
 /***/ },
-/* 1898 */
+/* 1923 */
 /*!******************************************************************!*\
   !*** (webpack)/~/node-libs-browser/~/url/~/querystring/index.js ***!
   \******************************************************************/
-[1942, 1899, 1900],
-/* 1899 */
+[1967, 1924, 1925],
+/* 1924 */
 /*!*******************************************************************!*\
   !*** (webpack)/~/node-libs-browser/~/url/~/querystring/decode.js ***!
   \*******************************************************************/
@@ -26156,7 +30397,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1900 */
+/* 1925 */
 /*!*******************************************************************!*\
   !*** (webpack)/~/node-libs-browser/~/url/~/querystring/encode.js ***!
   \*******************************************************************/
@@ -26229,12 +30470,12 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1901 */
+/* 1926 */
 /*!****************************************************************!*\
   !*** (webpack)/~/node-libs-browser/~/querystring-es3/index.js ***!
   \****************************************************************/
-[1942, 1902, 1903],
-/* 1902 */
+[1967, 1927, 1928],
+/* 1927 */
 /*!*****************************************************************!*\
   !*** (webpack)/~/node-libs-browser/~/querystring-es3/decode.js ***!
   \*****************************************************************/
@@ -26327,7 +30568,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1903 */
+/* 1928 */
 /*!*****************************************************************!*\
   !*** (webpack)/~/node-libs-browser/~/querystring-es3/encode.js ***!
   \*****************************************************************/
@@ -26421,7 +30662,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1904 */
+/* 1929 */
 /*!*******************************************************!*\
   !*** ./faceted-search/src/DifferentialFacetsTree.jsx ***!
   \*******************************************************/
@@ -26431,11 +30672,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
+	var React = __webpack_require__(/*! react */ 1464);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./FacetsTree.css */ 1611);
+	__webpack_require__(/*! ./FacetsTree.css */ 1626);
 	
 	//*------------------------------------------------------------------*
 	
@@ -26601,7 +30842,7 @@ webpackJsonp_name_([4],[
 	module.exports = DifferentialFacetsTree;
 
 /***/ },
-/* 1905 */
+/* 1930 */
 /*!****************************************************!*\
   !*** ./faceted-search/src/DifferentialResults.jsx ***!
   \****************************************************/
@@ -26611,27 +30852,27 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var $ = __webpack_require__(/*! jquery */ 1616);
-	__webpack_require__(/*! jquery.browser */ 1617);
+	var $ = __webpack_require__(/*! jquery */ 1631);
+	__webpack_require__(/*! jquery.browser */ 1632);
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 1605);
-	
-	//*------------------------------------------------------------------*
-	
-	var DisplayLevelsButton = __webpack_require__(/*! display-levels-button */ 1906);
-	var Legend = __webpack_require__(/*! legend */ 1909).LegendDifferential;
-	var CellDifferential = __webpack_require__(/*! cell-differential */ 1924);
-	var DifferentialDownloadButton = __webpack_require__(/*! ./DifferentialDownloadButton.jsx */ 1932);
-	var FeedbackSmileys = __webpack_require__(/*! atlas-feedback */ 1823);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1620);
 	
 	//*------------------------------------------------------------------*
 	
-	var ContrastTooltips = __webpack_require__(/*! contrast-tooltips */ 1935);
+	var DisplayLevelsButton = __webpack_require__(/*! display-levels-button */ 1931);
+	var Legend = __webpack_require__(/*! legend */ 1934).LegendDifferential;
+	var CellDifferential = __webpack_require__(/*! cell-differential */ 1949);
+	var DifferentialDownloadButton = __webpack_require__(/*! ./DifferentialDownloadButton.jsx */ 1957);
+	var FeedbackSmileys = __webpack_require__(/*! atlas-feedback */ 1848);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./DifferentialResults.css */ 1940);
+	var ContrastTooltips = __webpack_require__(/*! contrast-tooltips */ 1960);
+	
+	//*------------------------------------------------------------------*
+	
+	__webpack_require__(/*! ./DifferentialResults.css */ 1965);
 	
 	//*------------------------------------------------------------------*
 	
@@ -26929,7 +31170,7 @@ webpackJsonp_name_([4],[
 	module.exports = DifferentialResults;
 
 /***/ },
-/* 1906 */
+/* 1931 */
 /*!*********************************************************!*\
   !*** ./faceted-search/~/display-levels-button/index.js ***!
   \*********************************************************/
@@ -26939,11 +31180,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	module.exports = __webpack_require__(/*! ./src/DisplayLevelsButton.jsx */ 1907);
+	module.exports = __webpack_require__(/*! ./src/DisplayLevelsButton.jsx */ 1932);
 
 
 /***/ },
-/* 1907 */
+/* 1932 */
 /*!****************************************************************************!*\
   !*** ./faceted-search/~/display-levels-button/src/DisplayLevelsButton.jsx ***!
   \****************************************************************************/
@@ -26953,11 +31194,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 1605);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1620);
 	
-	var $ = __webpack_require__(/*! jquery */ 1616);
-	__webpack_require__(/*! jquery-ui-bundle */ 1908);
+	var $ = __webpack_require__(/*! jquery */ 1631);
+	__webpack_require__(/*! jquery-ui-bundle */ 1933);
 	
 	//*------------------------------------------------------------------*
 	
@@ -27012,12 +31253,12 @@ webpackJsonp_name_([4],[
 	module.exports = DisplayLevelsButton;
 
 /***/ },
-/* 1908 */
+/* 1933 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/jquery-ui-bundle/jquery-ui.js ***!
   \********************************************************/
-[2185, 1616],
-/* 1909 */
+[2210, 1631],
+/* 1934 */
 /*!******************************************!*\
   !*** ./faceted-search/~/legend/index.js ***!
   \******************************************/
@@ -27027,11 +31268,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	exports.LegendDifferential = __webpack_require__(/*! ./src/LegendDifferential.jsx */ 1910);
-	exports.LegendBaseline = __webpack_require__(/*! ./src/LegendBaseline.jsx */ 1921);
+	exports.LegendDifferential = __webpack_require__(/*! ./src/LegendDifferential.jsx */ 1935);
+	exports.LegendBaseline = __webpack_require__(/*! ./src/LegendBaseline.jsx */ 1946);
 
 /***/ },
-/* 1910 */
+/* 1935 */
 /*!************************************************************!*\
   !*** ./faceted-search/~/legend/src/LegendDifferential.jsx ***!
   \************************************************************/
@@ -27041,17 +31282,17 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 1605);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1620);
 	
 	//*------------------------------------------------------------------*
 	
-	var LegendRow = __webpack_require__(/*! ./LegendRow.jsx */ 1911);
-	var HelpTooltips = __webpack_require__(/*! help-tooltips */ 1914);
+	var LegendRow = __webpack_require__(/*! ./LegendRow.jsx */ 1936);
+	var HelpTooltips = __webpack_require__(/*! help-tooltips */ 1939);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./gxaLegend.css */ 1919);
+	__webpack_require__(/*! ./gxaLegend.css */ 1944);
 	
 	//*------------------------------------------------------------------*
 	
@@ -27097,7 +31338,7 @@ webpackJsonp_name_([4],[
 	module.exports = LegendDifferential;
 
 /***/ },
-/* 1911 */
+/* 1936 */
 /*!***************************************************!*\
   !*** ./faceted-search/~/legend/src/LegendRow.jsx ***!
   \***************************************************/
@@ -27107,11 +31348,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
+	var React = __webpack_require__(/*! react */ 1464);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./gxaGradient.css */ 1912);
+	__webpack_require__(/*! ./gxaGradient.css */ 1937);
 	
 	//*------------------------------------------------------------------*
 	
@@ -27161,7 +31402,7 @@ webpackJsonp_name_([4],[
 	module.exports = LegendRow;
 
 /***/ },
-/* 1912 */
+/* 1937 */
 /*!*****************************************************!*\
   !*** ./faceted-search/~/legend/src/gxaGradient.css ***!
   \*****************************************************/
@@ -27170,10 +31411,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../css-loader!./gxaGradient.css */ 1913);
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaGradient.css */ 1938);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -27190,13 +31431,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1913 */
+/* 1938 */
 /*!***********************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./faceted-search/~/legend/src/gxaGradient.css ***!
   \***********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -27207,7 +31448,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1914 */
+/* 1939 */
 /*!**********************************************************!*\
   !*** ./faceted-search/~/legend/~/help-tooltips/index.js ***!
   \**********************************************************/
@@ -27217,11 +31458,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	module.exports = __webpack_require__(/*! ./src/helpTooltipsModule.js */ 1915);
+	module.exports = __webpack_require__(/*! ./src/helpTooltipsModule.js */ 1940);
 
 
 /***/ },
-/* 1915 */
+/* 1940 */
 /*!***************************************************************************!*\
   !*** ./faceted-search/~/legend/~/help-tooltips/src/helpTooltipsModule.js ***!
   \***************************************************************************/
@@ -27231,13 +31472,13 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var $ = __webpack_require__(/*! jquery */ 1616);
-	__webpack_require__(/*! jquery-ui-bundle */ 1908);
-	__webpack_require__(/*! jQuery-ajaxTransport-XDomainRequest */ 1916);
+	var $ = __webpack_require__(/*! jquery */ 1631);
+	__webpack_require__(/*! jquery-ui-bundle */ 1933);
+	__webpack_require__(/*! jQuery-ajaxTransport-XDomainRequest */ 1941);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./gxaHelpTooltip.css */ 1917);
+	__webpack_require__(/*! ./gxaHelpTooltip.css */ 1942);
 	
 	//*------------------------------------------------------------------*
 	
@@ -27302,7 +31543,7 @@ webpackJsonp_name_([4],[
 	};
 
 /***/ },
-/* 1916 */
+/* 1941 */
 /*!********************************************************************************************************************!*\
   !*** ./faceted-search/~/legend/~/help-tooltips/~/jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js ***!
   \********************************************************************************************************************/
@@ -27314,10 +31555,10 @@ webpackJsonp_name_([4],[
 	 * Copyright (c) 2015 Jason Moon (@JSONMOON)
 	 * Licensed MIT (/blob/master/LICENSE.txt)
 	 */
-	(function(a){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ 1616)], __WEBPACK_AMD_DEFINE_FACTORY__ = (a), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))}else if(typeof exports==='object'){module.exports=a(require('jquery'))}else{a(jQuery)}}(function($){if($.support.cors||!$.ajaxTransport||!window.XDomainRequest){return $}var n=/^(https?:)?\/\//i;var o=/^get|post$/i;var p=new RegExp('^(\/\/|'+location.protocol+')','i');$.ajaxTransport('* text html xml json',function(j,k,l){if(!j.crossDomain||!j.async||!o.test(j.type)||!n.test(j.url)||!p.test(j.url)){return}var m=null;return{send:function(f,g){var h='';var i=(k.dataType||'').toLowerCase();m=new XDomainRequest();if(/^\d+$/.test(k.timeout)){m.timeout=k.timeout}m.ontimeout=function(){g(500,'timeout')};m.onload=function(){var a='Content-Length: '+m.responseText.length+'\r\nContent-Type: '+m.contentType;var b={code:200,message:'success'};var c={text:m.responseText};try{if(i==='html'||/text\/html/i.test(m.contentType)){c.html=m.responseText}else if(i==='json'||(i!=='text'&&/\/json/i.test(m.contentType))){try{c.json=$.parseJSON(m.responseText)}catch(e){b.code=500;b.message='parseerror'}}else if(i==='xml'||(i!=='text'&&/\/xml/i.test(m.contentType))){var d=new ActiveXObject('Microsoft.XMLDOM');d.async=false;try{d.loadXML(m.responseText)}catch(e){d=undefined}if(!d||!d.documentElement||d.getElementsByTagName('parsererror').length){b.code=500;b.message='parseerror';throw'Invalid XML: '+m.responseText;}c.xml=d}}catch(parseMessage){throw parseMessage;}finally{g(b.code,b.message,c,a)}};m.onprogress=function(){};m.onerror=function(){g(500,'error',{text:m.responseText})};if(k.data){h=($.type(k.data)==='string')?k.data:$.param(k.data)}m.open(j.type,j.url);m.send(h)},abort:function(){if(m){m.abort()}}}});return $}));
+	(function(a){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ 1631)], __WEBPACK_AMD_DEFINE_FACTORY__ = (a), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))}else if(typeof exports==='object'){module.exports=a(require('jquery'))}else{a(jQuery)}}(function($){if($.support.cors||!$.ajaxTransport||!window.XDomainRequest){return $}var n=/^(https?:)?\/\//i;var o=/^get|post$/i;var p=new RegExp('^(\/\/|'+location.protocol+')','i');$.ajaxTransport('* text html xml json',function(j,k,l){if(!j.crossDomain||!j.async||!o.test(j.type)||!n.test(j.url)||!p.test(j.url)){return}var m=null;return{send:function(f,g){var h='';var i=(k.dataType||'').toLowerCase();m=new XDomainRequest();if(/^\d+$/.test(k.timeout)){m.timeout=k.timeout}m.ontimeout=function(){g(500,'timeout')};m.onload=function(){var a='Content-Length: '+m.responseText.length+'\r\nContent-Type: '+m.contentType;var b={code:200,message:'success'};var c={text:m.responseText};try{if(i==='html'||/text\/html/i.test(m.contentType)){c.html=m.responseText}else if(i==='json'||(i!=='text'&&/\/json/i.test(m.contentType))){try{c.json=$.parseJSON(m.responseText)}catch(e){b.code=500;b.message='parseerror'}}else if(i==='xml'||(i!=='text'&&/\/xml/i.test(m.contentType))){var d=new ActiveXObject('Microsoft.XMLDOM');d.async=false;try{d.loadXML(m.responseText)}catch(e){d=undefined}if(!d||!d.documentElement||d.getElementsByTagName('parsererror').length){b.code=500;b.message='parseerror';throw'Invalid XML: '+m.responseText;}c.xml=d}}catch(parseMessage){throw parseMessage;}finally{g(b.code,b.message,c,a)}};m.onprogress=function(){};m.onerror=function(){g(500,'error',{text:m.responseText})};if(k.data){h=($.type(k.data)==='string')?k.data:$.param(k.data)}m.open(j.type,j.url);m.send(h)},abort:function(){if(m){m.abort()}}}});return $}));
 
 /***/ },
-/* 1917 */
+/* 1942 */
 /*!************************************************************************!*\
   !*** ./faceted-search/~/legend/~/help-tooltips/src/gxaHelpTooltip.css ***!
   \************************************************************************/
@@ -27326,10 +31567,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../css-loader!./gxaHelpTooltip.css */ 1918);
+	var content = __webpack_require__(/*! !./../../../../css-loader!./gxaHelpTooltip.css */ 1943);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../../style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../../../../style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -27346,13 +31587,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1918 */
+/* 1943 */
 /*!******************************************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./faceted-search/~/legend/~/help-tooltips/src/gxaHelpTooltip.css ***!
   \******************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../../css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../../../../css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -27363,7 +31604,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1919 */
+/* 1944 */
 /*!***************************************************!*\
   !*** ./faceted-search/~/legend/src/gxaLegend.css ***!
   \***************************************************/
@@ -27372,10 +31613,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../css-loader!./gxaLegend.css */ 1920);
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaLegend.css */ 1945);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -27392,13 +31633,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1920 */
+/* 1945 */
 /*!*********************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./faceted-search/~/legend/src/gxaLegend.css ***!
   \*********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -27409,7 +31650,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1921 */
+/* 1946 */
 /*!********************************************************!*\
   !*** ./faceted-search/~/legend/src/LegendBaseline.jsx ***!
   \********************************************************/
@@ -27419,18 +31660,18 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 1605);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1620);
 	
 	//*------------------------------------------------------------------*
 	
-	var LegendRow = __webpack_require__(/*! ./LegendRow.jsx */ 1911);
-	var NumberFormat = __webpack_require__(/*! number-format */ 1922);
-	var HelpTooltips = __webpack_require__(/*! help-tooltips */ 1914);
+	var LegendRow = __webpack_require__(/*! ./LegendRow.jsx */ 1936);
+	var NumberFormat = __webpack_require__(/*! number-format */ 1947);
+	var HelpTooltips = __webpack_require__(/*! help-tooltips */ 1939);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./gxaLegend.css */ 1919);
+	__webpack_require__(/*! ./gxaLegend.css */ 1944);
 	
 	//*------------------------------------------------------------------*
 	
@@ -27474,12 +31715,12 @@ webpackJsonp_name_([4],[
 	module.exports = LegendBaseline;
 
 /***/ },
-/* 1922 */
+/* 1947 */
 /*!**********************************************************!*\
   !*** ./faceted-search/~/legend/~/number-format/index.js ***!
   \**********************************************************/
-[1943, 1923],
-/* 1923 */
+[1968, 1948],
+/* 1948 */
 /*!**********************************************************************!*\
   !*** ./faceted-search/~/legend/~/number-format/src/NumberFormat.jsx ***!
   \**********************************************************************/
@@ -27487,7 +31728,7 @@ webpackJsonp_name_([4],[
 
 	"use strict";
 	
-	var React = __webpack_require__(/*! react */ 1449); // React is called in the transpiled JS files in the return statements
+	var React = __webpack_require__(/*! react */ 1464); // React is called in the transpiled JS files in the return statements
 	
 	//*------------------------------------------------------------------*
 	
@@ -27531,7 +31772,7 @@ webpackJsonp_name_([4],[
 	exports.scientificNotation = formatScientificNotation;
 
 /***/ },
-/* 1924 */
+/* 1949 */
 /*!*****************************************************!*\
   !*** ./faceted-search/~/cell-differential/index.js ***!
   \*****************************************************/
@@ -27541,11 +31782,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	module.exports = __webpack_require__(/*! ./src/CellDifferential.jsx */ 1925);
+	module.exports = __webpack_require__(/*! ./src/CellDifferential.jsx */ 1950);
 
 
 /***/ },
-/* 1925 */
+/* 1950 */
 /*!*********************************************************************!*\
   !*** ./faceted-search/~/cell-differential/src/CellDifferential.jsx ***!
   \*********************************************************************/
@@ -27555,20 +31796,20 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 1605);
-	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 1768);
-	var $ = __webpack_require__(/*! jquery */ 1616);
-	__webpack_require__(/*! jquery-ui-bundle */ 1908);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1620);
+	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 1783);
+	var $ = __webpack_require__(/*! jquery */ 1631);
+	__webpack_require__(/*! jquery-ui-bundle */ 1933);
 	
 	//*------------------------------------------------------------------*
 	
-	var NumberFormat = __webpack_require__(/*! number-format */ 1926);
+	var NumberFormat = __webpack_require__(/*! number-format */ 1951);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./gxaShowHideCell.css */ 1928);
-	__webpack_require__(/*! ./gxaDifferentialCellTooltip.css */ 1930);
+	__webpack_require__(/*! ./gxaShowHideCell.css */ 1953);
+	__webpack_require__(/*! ./gxaDifferentialCellTooltip.css */ 1955);
 	
 	//*------------------------------------------------------------------*
 	
@@ -27650,17 +31891,17 @@ webpackJsonp_name_([4],[
 	module.exports = CellDifferential;
 
 /***/ },
-/* 1926 */
+/* 1951 */
 /*!*********************************************************************!*\
   !*** ./faceted-search/~/cell-differential/~/number-format/index.js ***!
   \*********************************************************************/
-[1943, 1927],
-/* 1927 */
+[1968, 1952],
+/* 1952 */
 /*!*********************************************************************************!*\
   !*** ./faceted-search/~/cell-differential/~/number-format/src/NumberFormat.jsx ***!
   \*********************************************************************************/
-1923,
-/* 1928 */
+1948,
+/* 1953 */
 /*!********************************************************************!*\
   !*** ./faceted-search/~/cell-differential/src/gxaShowHideCell.css ***!
   \********************************************************************/
@@ -27669,10 +31910,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../css-loader!./gxaShowHideCell.css */ 1929);
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaShowHideCell.css */ 1954);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -27689,13 +31930,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1929 */
+/* 1954 */
 /*!**************************************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./faceted-search/~/cell-differential/src/gxaShowHideCell.css ***!
   \**************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -27706,7 +31947,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1930 */
+/* 1955 */
 /*!*******************************************************************************!*\
   !*** ./faceted-search/~/cell-differential/src/gxaDifferentialCellTooltip.css ***!
   \*******************************************************************************/
@@ -27715,10 +31956,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../css-loader!./gxaDifferentialCellTooltip.css */ 1931);
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaDifferentialCellTooltip.css */ 1956);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -27735,13 +31976,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1931 */
+/* 1956 */
 /*!*************************************************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./faceted-search/~/cell-differential/src/gxaDifferentialCellTooltip.css ***!
   \*************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -27752,7 +31993,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1932 */
+/* 1957 */
 /*!***********************************************************!*\
   !*** ./faceted-search/src/DifferentialDownloadButton.jsx ***!
   \***********************************************************/
@@ -27762,15 +32003,15 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var $ = __webpack_require__(/*! jquery */ 1616);
-	__webpack_require__(/*! jquery-ui-bundle */ 1908);
+	var $ = __webpack_require__(/*! jquery */ 1631);
+	__webpack_require__(/*! jquery-ui-bundle */ 1933);
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 1605);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1620);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./DifferentialDownloadButton.css */ 1933);
+	__webpack_require__(/*! ./DifferentialDownloadButton.css */ 1958);
 	
 	//*------------------------------------------------------------------*
 	
@@ -27869,7 +32110,7 @@ webpackJsonp_name_([4],[
 	module.exports = DownloadDifferentialButton;
 
 /***/ },
-/* 1933 */
+/* 1958 */
 /*!***********************************************************!*\
   !*** ./faceted-search/src/DifferentialDownloadButton.css ***!
   \***********************************************************/
@@ -27878,10 +32119,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./DifferentialDownloadButton.css */ 1934);
+	var content = __webpack_require__(/*! !./../~/css-loader!./DifferentialDownloadButton.css */ 1959);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -27898,13 +32139,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1934 */
+/* 1959 */
 /*!*****************************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./faceted-search/src/DifferentialDownloadButton.css ***!
   \*****************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -27915,7 +32156,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1935 */
+/* 1960 */
 /*!*****************************************************!*\
   !*** ./faceted-search/~/contrast-tooltips/index.js ***!
   \*****************************************************/
@@ -27925,11 +32166,11 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	module.exports = __webpack_require__(/*! ./src/contrastTooltipModule.js */ 1936);
+	module.exports = __webpack_require__(/*! ./src/contrastTooltipModule.js */ 1961);
 
 
 /***/ },
-/* 1936 */
+/* 1961 */
 /*!*************************************************************************!*\
   !*** ./faceted-search/~/contrast-tooltips/src/contrastTooltipModule.js ***!
   \*************************************************************************/
@@ -27939,19 +32180,19 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
-	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 1768);
+	var React = __webpack_require__(/*! react */ 1464);
+	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 1783);
 	
-	var $ = __webpack_require__(/*! jquery */ 1616);
-	__webpack_require__(/*! jquery-ui-bundle */ 1908);
-	
-	//*------------------------------------------------------------------*
-	
-	var ContrastTooltip = __webpack_require__(/*! ./ContrastTooltip.jsx */ 1937);
+	var $ = __webpack_require__(/*! jquery */ 1631);
+	__webpack_require__(/*! jquery-ui-bundle */ 1933);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./gxaContrastTooltip.css */ 1938);
+	var ContrastTooltip = __webpack_require__(/*! ./ContrastTooltip.jsx */ 1962);
+	
+	//*------------------------------------------------------------------*
+	
+	__webpack_require__(/*! ./gxaContrastTooltip.css */ 1963);
 	
 	//*------------------------------------------------------------------*
 	
@@ -28013,7 +32254,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1937 */
+/* 1962 */
 /*!********************************************************************!*\
   !*** ./faceted-search/~/contrast-tooltips/src/ContrastTooltip.jsx ***!
   \********************************************************************/
@@ -28023,7 +32264,7 @@ webpackJsonp_name_([4],[
 	
 	//*------------------------------------------------------------------*
 	
-	var React = __webpack_require__(/*! react */ 1449);
+	var React = __webpack_require__(/*! react */ 1464);
 	
 	//*------------------------------------------------------------------*
 	
@@ -28141,7 +32382,7 @@ webpackJsonp_name_([4],[
 	module.exports = ContrastTooltip;
 
 /***/ },
-/* 1938 */
+/* 1963 */
 /*!***********************************************************************!*\
   !*** ./faceted-search/~/contrast-tooltips/src/gxaContrastTooltip.css ***!
   \***********************************************************************/
@@ -28150,10 +32391,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../css-loader!./gxaContrastTooltip.css */ 1939);
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaContrastTooltip.css */ 1964);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -28170,13 +32411,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1939 */
+/* 1964 */
 /*!*****************************************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./faceted-search/~/contrast-tooltips/src/gxaContrastTooltip.css ***!
   \*****************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -28187,7 +32428,7 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1940 */
+/* 1965 */
 /*!****************************************************!*\
   !*** ./faceted-search/src/DifferentialResults.css ***!
   \****************************************************/
@@ -28196,10 +32437,10 @@ webpackJsonp_name_([4],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./DifferentialResults.css */ 1941);
+	var content = __webpack_require__(/*! !./../~/css-loader!./DifferentialResults.css */ 1966);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 1614)(content, {});
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 1629)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -28216,13 +32457,13 @@ webpackJsonp_name_([4],[
 	}
 
 /***/ },
-/* 1941 */
+/* 1966 */
 /*!**********************************************************************************!*\
   !*** ./faceted-search/~/css-loader!./faceted-search/src/DifferentialResults.css ***!
   \**********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 1613)();
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 1628)();
 	// imports
 	
 	
@@ -28233,9 +32474,9 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1942 */
+/* 1967 */
 /*!*************************************!*\
-  !*** template of 1898 referencing  ***!
+  !*** template of 1923 referencing  ***!
   \*************************************/
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
@@ -28246,9 +32487,9 @@ webpackJsonp_name_([4],[
 
 
 /***/ },
-/* 1943 */
+/* 1968 */
 /*!*************************************!*\
-  !*** template of 1922 referencing  ***!
+  !*** template of 1947 referencing  ***!
   \*************************************/
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
