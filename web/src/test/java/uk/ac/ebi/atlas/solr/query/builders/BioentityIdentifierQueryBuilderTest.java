@@ -40,26 +40,8 @@ public class BioentityIdentifierQueryBuilderTest {
     }
 
     @Test
-    public void shouldBuildQueryStringAndSetQueryParameters(){
-        SolrQuery solrQuery = subject.forQueryString(QUERY_STRING, false)
-                .withPropertyNames(PROPERTY_NAME_1, PROPERTY_NAME_2)
-                .withSpecies(SPECIES)
-                .withBioentityTypes(BIOENTITY_TYPES)
-                .build();
-
-        assertThat(solrQuery.getQuery(), is(EXPECTED_QUERY_STRING));
-
-        assertThat(solrQuery.getFields(), is("bioentity_identifier"));
-
-        assertThat(solrQuery.get("group"), is("true"));
-        assertThat(solrQuery.get("group.field"), is("bioentity_identifier"));
-        assertThat(solrQuery.get("group.main"), is("true"));
-
-    }
-
-    @Test
     public void shouldApplyOrOperatorOnQueryStringContent(){
-        SolrQuery solrQuery = subject.forQueryString(QUERY_STRING, true)
+        SolrQuery solrQuery = subject.forQueryString(QUERY_STRING)
                 .withPropertyNames(PROPERTY_NAME_1, PROPERTY_NAME_2)
                 .withSpecies(SPECIES)
                 .withBioentityTypes(BIOENTITY_TYPES)

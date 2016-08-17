@@ -60,7 +60,7 @@ public class SolrQueryService {
         //eg: {!lucene q.op=OR df=property_value_lower}(property_value_lower:Q9NHV9) AND (bioentity_type:"mirna" OR bioentity_type:"ensgene")
         // fl=bioentity_identifier&group=true&group.field=bioentity_identifier&group.main=true
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
-                .forQueryString(queryTerm.value(), true)
+                .forQueryString(queryTerm.value())
                 .withSpecies(species).withBioentityTypes(GENE.getSolrAliases()).build();
 
         Set<String> geneIds = solrServer.query(solrQuery, false, BIOENTITY_IDENTIFIER_FIELD);
