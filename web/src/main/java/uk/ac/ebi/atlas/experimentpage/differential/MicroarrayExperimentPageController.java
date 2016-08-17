@@ -77,12 +77,12 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     public String showGeneProfilesData(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
                                        @PathVariable String experimentAccession,
                                        @RequestParam(required = false) String accessKey,
-                                       BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
+                                       BindingResult result, Model model, HttpServletResponse response) {
 //        experimentPageCallbacks.adjustReceivedObjects(preferences);
 
         super.populateModelWithHeatmapData(
                 (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                preferences, result, model, request
+                preferences, result, model
         );
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

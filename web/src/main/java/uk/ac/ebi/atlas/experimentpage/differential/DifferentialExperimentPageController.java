@@ -75,10 +75,10 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         model.addAttribute("allQueryFactors", experiment.getContrasts());
         model.addAllAttributes(experiment.getAttributes());
         model.addAllAttributes(experiment.getDifferentialAttributes());
+        model.addAllAttributes(new DownloadURLBuilder(experiment.getAccession()).dataDownloadUrls(request.getRequestURI()));
     }
 
-    public void populateModelWithHeatmapData(T experiment, K requestPreferences, BindingResult result, Model model,
-                                             HttpServletRequest request) {
+    public void populateModelWithHeatmapData(T experiment, K requestPreferences, BindingResult result, Model model) {
         DifferentialRequestContext requestContext = initRequestContext(experiment, requestPreferences);
         Set<Contrast> contrasts = experiment.getContrasts();
         model.addAttribute("queryFactorName", "Comparison");
@@ -102,7 +102,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
                     model.addAttribute("jsonProfiles", gson.toJson(differentialProfilesViewModelBuilder.build
                             (differentialProfiles, contrasts)));
                 }
-                model.addAllAttributes(new DownloadURLBuilder(experiment.getAccession()).dataDownloadUrls(request.getRequestURI()));
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery().asAnalyticsIndexQueryClause() + "'"));

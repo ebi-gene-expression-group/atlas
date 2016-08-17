@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -79,11 +78,11 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
     public String showGeneProfilesData(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
                                        @PathVariable String experimentAccession,
                                        @RequestParam(required = false) String accessKey,
-                                       BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
+                                       BindingResult result, Model model, HttpServletResponse response) {
 //        experimentPageCallbacks.adjustReceivedObjects(preferences);
 
         super.populateModelWithHeatmapData(
-                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, result, model, request
+                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, result, model
         );
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
