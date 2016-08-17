@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
 import org.junit.Test;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import java.util.Set;
 
@@ -41,7 +42,7 @@ public class BioentityIdentifierQueryBuilderTest {
 
     @Test
     public void shouldApplyOrOperatorOnQueryStringContent(){
-        SolrQuery solrQuery = subject.forQueryString(QUERY_STRING)
+        SolrQuery solrQuery = subject.forTerm(SemanticQueryTerm.create(QUERY_STRING))
                 .withPropertyNames(PROPERTY_NAME_1, PROPERTY_NAME_2)
                 .withSpecies(SPECIES)
                 .withBioentityTypes(BIOENTITY_TYPES)

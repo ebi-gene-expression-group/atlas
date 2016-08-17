@@ -72,13 +72,9 @@ public class SemanticQueryTest {
     public void turnsIntoRightBitOfSolrQuery() {
         SemanticQuery s1 = SemanticQuery.fromJson("[{\"value\":\"zinc finger\"},{\"value\":\"BRCA2B\"}]");
         assertThat(s1.asAnalyticsIndexQueryClause(), equalTo("\"zinc finger\" OR \"BRCA2B\""));
-        assertThat(s1.asGxaIndexQueryClause(),
-                equalTo("(property_value_search:zinc finger) OR (property_value_search:BRCA2B)"));
 
         SemanticQuery s2 = SemanticQuery.fromJson("[{\"value\":\"BRCA2\",\"category\":\"symbol\"}]");
         assertThat(s2.asAnalyticsIndexQueryClause(), equalTo("\"symbol:{BRCA2}\""));
-        assertThat(s2.asGxaIndexQueryClause(), equalTo("(property_name:\"symbol\" AND property_value_search:BRCA2)"));
-
 
     }
 }

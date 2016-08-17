@@ -113,16 +113,6 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return toJson();
     }
 
-    public String asGxaIndexQueryClause(){
-       return Joiner.on(OR_OPERATOR).join(Collections2.transform(terms(), new Function<SemanticQueryTerm,String>(){
-           @Nullable
-           @Override
-           public String apply(@Nullable SemanticQueryTerm semanticQueryTerm) {
-               return semanticQueryTerm.asGxaIndexQueryLiteral();
-           }
-       }));
-    }
-
     public String asAnalyticsIndexQueryClause(){
         return Joiner.on(OR_OPERATOR).join(Collections2.transform(terms(), new Function<SemanticQueryTerm,String>(){
             @Nullable

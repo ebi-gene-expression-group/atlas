@@ -3,27 +3,28 @@ package uk.ac.ebi.atlas.solr.query.builders;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 
 public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityIdentifierQueryBuilder>{
     private static final Logger LOGGER = LoggerFactory.getLogger(BioentityIdentifierQueryBuilder.class);
 
     private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
-    private static final String PROPERTY_SEARCH_FIELD = "property_value_search";
     private static final int MAX_GENE_IDS_TO_FETCH = 1000000;
 
     private String queryString;
 
-    public BioentityIdentifierQueryBuilder forQueryString(String queryString){
-        this.queryString = queryString.replace(":", "\\:").replace("[", "\\[").replace("]", "\\]");
+    public BioentityIdentifierQueryBuilder forTerm(SemanticQueryTerm term){
+        this.queryString = term.asGxaIndexQueryLiteral();
         return this;
     }
 
     public SolrQuery build() {
-        StringBuilder queryConditionBuilder = new StringBuilder(PROPERTY_SEARCH_FIELD).append(":");
-
         // use default "lucene" parser and set default operator to OR and default field to propertyName
-        queryConditionBuilder.insert(0, "{!lucene q.op=OR df=" + PROPERTY_SEARCH_FIELD + "}(").append(queryString).append(")");
+        StringBuilder queryConditionBuilder = new StringBuilder("{!lucene q.op=OR df=property_value_search}");
+
+        queryConditionBuilder.append(String.format("(%s)", queryString));
+
 
         queryStringBuilder.insert(0, queryConditionBuilder);
 
