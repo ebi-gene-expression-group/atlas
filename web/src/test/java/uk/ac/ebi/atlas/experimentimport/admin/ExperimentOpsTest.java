@@ -273,7 +273,9 @@ public class ExperimentOpsTest {
                 .when(experimentCRUD)
                 .serializeExpressionData(accession);
 
-        new ExperimentAdminController(experimentOps,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
+        String response =
+                new ExperimentAdminController(experimentOps,experimentMetadataCRUD)
+                        .doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCRUD).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
@@ -281,6 +283,22 @@ public class ExperimentOpsTest {
         verify(experimentCRUD).serializeExpressionData(accession);
 
         verifyNoMoreInteractions(experimentCRUD,experimentMetadataCRUD,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+
+        assertThat(response, containsString("Serializing failed"));
+        assertThat(response, containsString("error"));
+    }
+
+    @Test
+    public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled4() throws Exception {
+        Mockito.doThrow(new NullPointerException())
+                .when(experimentCRUD)
+                .serializeExpressionData(accession);
+
+        String response =
+                new ExperimentAdminController(experimentOps,experimentMetadataCRUD)
+                        .doOp(accession, "LOAD_PUBLIC");
+
+        assertThat(response, containsString("error"));
     }
 
 }

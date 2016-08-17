@@ -244,7 +244,7 @@ public class ExperimentOps {
                 result = Pair.of(OpResult.SUCCESS, attemptExecuteStatefulOp(accession, op));
                 updateOpRecordsWithNewOp(OpResult.SUCCESS, opRecords, newOpRecord);
             } catch (Exception e) {
-                String text = e.getMessage();
+                String text = e.getMessage()!=null? e.getMessage() : e.toString();
                 LOGGER.error(text,e);
                 result = Pair.of(OpResult.FAILURE, new JsonPrimitive(text));
                 updateOpRecordsWithNewOp(OpResult.FAILURE, opRecords, newOpRecord);
