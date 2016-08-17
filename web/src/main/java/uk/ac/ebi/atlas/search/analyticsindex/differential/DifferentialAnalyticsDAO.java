@@ -43,7 +43,7 @@ public abstract class DifferentialAnalyticsDAO {
     protected String buildSolrQuery(SemanticQuery geneQuery, String searchField, String species) {
         StringBuilder stringBuilder = new StringBuilder();
         if (geneQuery.isNotEmpty()) {
-            stringBuilder.append(String.format("%s:(%s)", searchField, geneQuery.asSolr1DNF()));
+            stringBuilder.append(String.format("%s:(%s)", searchField, geneQuery.asAnalyticsIndexQueryClause()));
         }
         if (geneQuery.isNotEmpty() && isNotBlank(species)) {
             stringBuilder.append(" AND ");
@@ -60,7 +60,7 @@ public abstract class DifferentialAnalyticsDAO {
 
         for (Pair<String, SemanticQuery> searchQuery : searchQueries) {
             if (searchQuery.getRight().isNotEmpty()) {
-                stringBuilder.append(String.format("%s:(%s)", searchQuery.getLeft(), searchQuery.getRight().asSolr1DNF()));
+                stringBuilder.append(String.format("%s:(%s)", searchQuery.getLeft(), searchQuery.getRight().asAnalyticsIndexQueryClause()));
                 stringBuilder.append(" AND ");
             }
         }

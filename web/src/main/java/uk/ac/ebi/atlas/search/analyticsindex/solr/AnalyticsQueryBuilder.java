@@ -95,7 +95,7 @@ public class AnalyticsQueryBuilder {
         }
 
         if (geneQuery.isNotEmpty()) {
-            stringBuilder.append(IDENTIFIER_SEARCH_FIELD).append(":(").append(geneQuery.asSolr1DNF()).append(")");
+            stringBuilder.append(IDENTIFIER_SEARCH_FIELD).append(":(").append(geneQuery.asAnalyticsIndexQueryClause()).append(")");
         }
 
         if (bioentityIdentifierTerms.size() > 0) {
@@ -109,7 +109,7 @@ public class AnalyticsQueryBuilder {
             if (stringBuilder.length() > 0) {
                 stringBuilder.append(" AND ");
             }
-            stringBuilder.append(CONDITIONS_SEARCH_FIELD).append(":(").append(conditionQuery.asSolr1DNF()).append(")");
+            stringBuilder.append(CONDITIONS_SEARCH_FIELD).append(":(").append(conditionQuery.asAnalyticsIndexQueryClause()).append(")");
         }
 
         if (speciesTerms.size() > 0) {

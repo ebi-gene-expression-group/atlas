@@ -11,7 +11,7 @@ public class SearchDescription {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (geneQuery.isNotEmpty()) {
-            String geneQueryString = geneQuery.asSolr1DNF();
+            String geneQueryString = geneQuery.asAnalyticsIndexQueryClause();
 
             if (geneQuery.size() > 1 && conditionQuery.isNotEmpty()) {
                 stringBuilder.append("(").append(geneQueryString).append(")");
@@ -25,7 +25,7 @@ public class SearchDescription {
         }
 
         if (conditionQuery.isNotEmpty()) {
-            String conditionQueryString = conditionQuery.asSolr1DNF();
+            String conditionQueryString = conditionQuery.asAnalyticsIndexQueryClause();
 
             if (conditionQuery.size() > 1 && geneQuery.isNotEmpty()) {
                 stringBuilder.append("(").append(conditionQueryString).append(")");

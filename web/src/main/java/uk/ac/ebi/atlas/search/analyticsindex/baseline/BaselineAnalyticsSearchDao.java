@@ -7,7 +7,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
@@ -22,8 +21,6 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Named
 public class BaselineAnalyticsSearchDao {
@@ -69,7 +66,7 @@ public class BaselineAnalyticsSearchDao {
 
         for (Pair<String, SemanticQuery> searchQuery : searchQueries) {
             if (searchQuery.getRight().isNotEmpty()) {
-                stringBuilder.append(String.format("%s:(%s)", searchQuery.getLeft(), searchQuery.getRight().asSolr1DNF()));
+                stringBuilder.append(String.format("%s:(%s)", searchQuery.getLeft(), searchQuery.getRight().asAnalyticsIndexQueryClause()));
                 stringBuilder.append(" AND ");
             }
         }

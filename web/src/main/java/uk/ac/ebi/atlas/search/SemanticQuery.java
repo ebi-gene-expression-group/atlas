@@ -2,13 +2,16 @@ package uk.ac.ebi.atlas.search;
 
 import autovalue.shaded.com.google.common.common.base.Throwables;
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.MalformedJsonException;
-import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.annotation.Nullable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -110,17 +113,24 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return toJson();
     }
 
-    public String asSolr1DNF() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (SemanticQueryTerm queryTerm : terms()) {
-            stringBuilder.append(queryTerm.toString()).append(OR_OPERATOR);
-        }
+    public String asGxaIndexQueryClause(){
+       return Joiner.on(OR_OPERATOR).join(Collections2.transform(terms(), new Function<SemanticQueryTerm,String>(){
+           @Nullable
+           @Override
+           public String apply(@Nullable SemanticQueryTerm semanticQueryTerm) {
+               return semanticQueryTerm.asGxaIndexQueryLiteral();
+           }
+       }));
+    }
 
-        if (stringBuilder.lastIndexOf(OR_OPERATOR) > 0) {
-            stringBuilder.delete(stringBuilder.lastIndexOf(OR_OPERATOR), stringBuilder.length());
-        }
-
-        return stringBuilder.toString();
+    public String asAnalyticsIndexQueryClause(){
+        return Joiner.on(OR_OPERATOR).join(Collections2.transform(terms(), new Function<SemanticQueryTerm,String>(){
+            @Nullable
+            @Override
+            public String apply(@Nullable SemanticQueryTerm semanticQueryTerm) {
+                return semanticQueryTerm.asAnalyticsIndexQueryLiteral();
+            }
+        }));
     }
 
     public String description() {

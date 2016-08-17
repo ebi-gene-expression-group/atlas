@@ -72,6 +72,6 @@ public class BaselineProfilesWriterService {
     }
 
     private String describe(SemanticQuery geneQuery, int coexpressedGenes) {
-        return geneQuery.asSolr1DNF() + " with " + coexpressedGenes + " similarly expressed genes";
+        return geneQuery.asAnalyticsIndexQueryClause() + " with " + coexpressedGenes + " similarly expressed genes";
     }
 }

@@ -4,7 +4,6 @@ import com.google.common.base.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
@@ -44,7 +43,7 @@ public class BaselineAnalyticsExpressionAvailableDao {
 
 
     String buildGeneIdentifierQuery(SemanticQuery geneQuery) {
-        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(%s)", geneQuery.asSolr1DNF());
+        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(%s)", geneQuery.asAnalyticsIndexQueryClause());
     }
 
 

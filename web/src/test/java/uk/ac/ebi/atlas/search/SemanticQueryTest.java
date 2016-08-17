@@ -2,9 +2,9 @@ package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
-import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.search.SemanticQueryTerm;
+import org.mockito.Matchers;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.is;
@@ -66,5 +66,19 @@ public class SemanticQueryTest {
         SemanticQuery subject = SemanticQuery.fromJson("[{\"value\":\"zinc finger\"},{\"value\":\"BRCA2B\"}]");
         assertThat(subject.isNotEmpty(), is(true));
         assertThat(subject.size(), is(2));
+    }
+
+    @Test
+    public void turnsIntoRightBitOfSolrQuery() {
+        SemanticQuery s1 = SemanticQuery.fromJson("[{\"value\":\"zinc finger\"},{\"value\":\"BRCA2B\"}]");
+        assertThat(s1.asAnalyticsIndexQueryClause(), equalTo("\"zinc finger\" OR \"BRCA2B\""));
+        assertThat(s1.asGxaIndexQueryClause(),
+                equalTo("(property_value_search:zinc finger) OR (property_value_search:BRCA2B)"));
+
+        SemanticQuery s2 = SemanticQuery.fromJson("[{\"value\":\"BRCA2\",\"category\":\"symbol\"}]");
+        assertThat(s2.asAnalyticsIndexQueryClause(), equalTo("\"symbol:{BRCA2}\""));
+        assertThat(s2.asGxaIndexQueryClause(), equalTo("(property_name:\"symbol\" AND property_value_search:BRCA2)"));
+
+
     }
 }

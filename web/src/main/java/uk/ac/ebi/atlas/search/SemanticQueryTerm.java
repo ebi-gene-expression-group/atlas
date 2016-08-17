@@ -20,6 +20,18 @@ public abstract class SemanticQueryTerm {
         return new AutoValue_SemanticQueryTerm(value, category);
     }
 
+    public String asGxaIndexQueryLiteral() {
+        return hasNoCategory()
+                ? String.format("(property_value_search:%s)", value())
+                : String.format("(property_name:\"%s\" AND property_value_search:%s)", category(), value());
+    }
+
+    public String asAnalyticsIndexQueryLiteral(){
+        return hasNoCategory()
+                ? String.format("\"%s\"", value())
+                : String.format("\"%s:{%s}\"", category(), value());
+    }
+
     public boolean hasNoCategory() {
         return isBlank(category());
     }
@@ -38,10 +50,6 @@ public abstract class SemanticQueryTerm {
 
     @Override
     public String toString() {
-        if (hasNoCategory()) {
-            return (String.format("\"%s\"", value()));
-        } else {
-            return (String.format("\"%s:{%s}\"", category(), value()));
-        }
+        return asAnalyticsIndexQueryLiteral();
     }
 }
