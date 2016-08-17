@@ -1,7 +1,9 @@
 package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 
+import com.google.common.base.Preconditions;
 import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
@@ -13,29 +15,28 @@ import java.util.concurrent.ExecutionException;
 public class ExpressionSerializerService {
 
     private final ExperimentTrader experimentTrader;
-    private final ExpressionSerializerFactory expressionSerializerFactory;
-    private final RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
+    private final RnaSeqBaselineExpressionKryoSerializer rnaSeqBaselineExpressionKryoSerializer;
     private final ExperimentChecker experimentChecker;
 
 
     @Inject
-    public ExpressionSerializerService(ExperimentTrader experimentTrader, ExpressionSerializerFactory expressionSerializerFactory,
-                                       RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache, ExperimentChecker experimentChecker) {
+    public ExpressionSerializerService(ExperimentTrader experimentTrader, RnaSeqBaselineExpressionKryoSerializer rnaSeqBaselineExpressionKryoSerializer,
+                                       ExperimentChecker experimentChecker) {
         this.experimentTrader = experimentTrader;
-        this.expressionSerializerFactory = expressionSerializerFactory;
-        this.rnaSeqBaselineExperimentsCache = rnaSeqBaselineExperimentsCache;
+        this.rnaSeqBaselineExpressionKryoSerializer = rnaSeqBaselineExpressionKryoSerializer;
         this.experimentChecker = experimentChecker;
     }
 
-    public void kryoSerializeExpressionData(String experimentAccession) {
-        try {
-            Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-            experimentChecker.checkAllFiles(experimentAccession, experiment.getType());
-            expressionSerializerFactory.getKryoSerializer(experiment.getType())
-                    .serializeExpressionData(experimentAccession, rnaSeqBaselineExperimentsCache.getExperiment(experimentAccession).getExperimentalFactors());
-        } catch (ExecutionException e) {
-            throw new IllegalStateException("Failed to load experiment from cache: " + experimentAccession, e);
+    public String kryoSerializeExpressionData(String experimentAccession) {
+        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+        Preconditions.checkState(experiment != null,
+                "Experiment not found in cache, refusing to serialize:" + experimentAccession);
+        experimentChecker.checkAllFiles(experimentAccession, experiment.getType());
+        if (experiment.getType().isRnaSeqBaseline()) {
+            return rnaSeqBaselineExpressionKryoSerializer.serializeExpressionData(experimentAccession,
+                    ((BaselineExperiment) experiment).getExperimentalFactors());
+        } else {
+            return "skipped";
         }
     }
-
 }

@@ -38,9 +38,6 @@ public class ExpressionSerializerServiceIT {
     @Inject
     public ExperimentTrader experimentTrader;
 
-    @Inject
-    public RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
-
     @Mock
     ExperimentChecker experimentChecker;
 
@@ -59,11 +56,8 @@ public class ExpressionSerializerServiceIT {
         Path tmp = Files.createTempDirectory("serialized_expression");
         serializedExpressionsFileTemplate = tmp.toString() + "/{0}.kryo";
 
-        ExpressionSerializerFactory expressionSerializerFactory = new ExpressionSerializerFactory(
-                new RnaSeqBaselineExpressionKryoSerializer(serializedExpressionsFileTemplate, tsvFileTemplate, new CsvReaderFactory()));
-
-        subject = new ExpressionSerializerService(experimentTrader, expressionSerializerFactory,
-                rnaSeqBaselineExperimentsCache,experimentChecker);
+        subject = new ExpressionSerializerService(experimentTrader, new RnaSeqBaselineExpressionKryoSerializer(serializedExpressionsFileTemplate, tsvFileTemplate, new CsvReaderFactory()),
+                experimentChecker);
     }
 
     @Test

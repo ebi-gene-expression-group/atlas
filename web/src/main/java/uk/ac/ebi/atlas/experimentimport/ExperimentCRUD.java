@@ -102,7 +102,7 @@ public class ExperimentCRUD {
         return configuration;
     }
 
-    public void serializeExpressionData(String experimentAccession) {
-        expressionSerializerService.kryoSerializeExpressionData(experimentAccession);
+    public String serializeExpressionData(String experimentAccession) {
+        return expressionSerializerService.kryoSerializeExpressionData(experimentAccession);
     }
 }

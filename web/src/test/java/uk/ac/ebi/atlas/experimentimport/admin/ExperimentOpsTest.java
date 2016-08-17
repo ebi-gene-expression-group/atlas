@@ -59,6 +59,7 @@ public class ExperimentOpsTest {
         experimentOps = new ExperimentOps(experimentCRUD, experimentMetadataCRUD, experimentOpLogWriter,
                 baselineCoexpressionProfileLoader, analyticsIndexerManager);
 
+        when(experimentCRUD.serializeExpressionData(Matchers.anyString())).thenReturn("skipped");
 
         Mockito.doAnswer(new Answer<ExperimentDTO>() {
             @Override

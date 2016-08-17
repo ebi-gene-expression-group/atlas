@@ -287,7 +287,7 @@ public class ExperimentOps {
                 resultOfTheOp = new JsonPrimitive("success, access key UUID: " + accessKeyUUID);
                 break;
             case SERIALIZE:
-                experimentCRUD.serializeExpressionData(accession);
+                resultOfTheOp = new JsonPrimitive(experimentCRUD.serializeExpressionData(accession));
                 break;
             case DELETE:
                 experimentCRUD.deleteExperiment(accession);

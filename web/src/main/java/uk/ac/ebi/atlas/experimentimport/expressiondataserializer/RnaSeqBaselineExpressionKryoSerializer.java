@@ -52,7 +52,7 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
     // This method will automatically block if the serialization is requested concurrently on the same experiment: it will wait
     // until the current serialization is finished. It can concurrently serialize different experiments, and each call needs its own
     // Kryo instance, as Kryo isn’t thread safe.
-    public void serializeExpressionData(final String experimentAccession, ExperimentalFactors experimentalFactors) {
+    public String serializeExpressionData(final String experimentAccession, ExperimentalFactors experimentalFactors) {
         Kryo kryo = new Kryo();
         ImmutableSetKryoSerializer.registerSerializers(kryo);
         OntologyTermKryoSerializer.registerSerializers(kryo);
@@ -108,6 +108,8 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
             Set<PosixFilePermission> perms = Files.getPosixFilePermissions(Paths.get(serializedExpressionsFileURL));
             perms.add(PosixFilePermission.GROUP_WRITE);
             Files.setPosixFilePermissions(Paths.get(serializedExpressionsFileURL), perms);
+            return String.format("Serialized %s genes with %s assay groups each", geneCount, assays
+                    .length);
         }
         catch (IOException exception) {
             LOGGER.error(exception.getMessage(), exception);
