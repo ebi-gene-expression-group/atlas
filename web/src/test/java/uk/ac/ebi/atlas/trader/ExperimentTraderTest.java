@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -75,6 +76,13 @@ public class ExperimentTraderTest {
                                         microarrayExperimentsCacheMock,
                                         proteomicsBaselineExperimentsCacheMock,
                 publicExperimentTypesCacheMock);
+    }
+
+    @Test
+    public void experimentOfAnyTypeWillGoIntoSomeCache(){
+        for(ExperimentType t: subject.experimentCachesPerType.keySet()){
+            assertThat(subject.experimentCachesPerType.get(t), notNullValue());
+        }
     }
 
     @Test

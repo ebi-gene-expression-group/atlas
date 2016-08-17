@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.trader;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.UncheckedExecutionException;
@@ -21,12 +22,9 @@ import java.util.concurrent.ExecutionException;
 public class ExperimentTrader {
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ExperimentTrader.class);
-    private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
-    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
-    private MicroarrayExperimentsCache microarrayExperimentsCache;
     private ExperimentDAO experimentDAO;
-    private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache;
     private PublicExperimentTypesCache publicExperimentTypesCache;
+    ImmutableMap<ExperimentType, ExperimentsCache<? extends Experiment>> experimentCachesPerType;
 
 
     @Inject
@@ -38,11 +36,18 @@ public class ExperimentTrader {
                             PublicExperimentTypesCache publicExperimentTypesCache) {
 
         this.experimentDAO = experimentDAO;
-        this.rnaSeqBaselineExperimentsCache = rnaSeqBaselineExperimentsCache;
-        this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
-        this.microarrayExperimentsCache = microarrayExperimentsCache;
-        this.proteomicsBaselineExperimentsCache = proteomicsBaselineExperimentsCache;
         this.publicExperimentTypesCache = publicExperimentTypesCache;
+        ImmutableMap.Builder b = ImmutableMap.<ExperimentType, ExperimentsCache<? extends Experiment>>builder()
+                .put(ExperimentType.RNASEQ_MRNA_BASELINE,rnaSeqBaselineExperimentsCache)
+                .put(ExperimentType.PROTEOMICS_BASELINE,proteomicsBaselineExperimentsCache)
+                .put(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, rnaSeqDiffExperimentsCache);
+
+        for(ExperimentType t: ExperimentType.values()){
+            if(t.isMicroarray()){
+                b.put(t, microarrayExperimentsCache);
+            }
+        }
+        experimentCachesPerType = b.build();
     }
 
 
@@ -69,57 +74,25 @@ public class ExperimentTrader {
     }
 
 
-    public void removeExperimentFromCache(String experimentAccession, ExperimentType type) {
-
-        switch (type) {
-            case RNASEQ_MRNA_BASELINE:
-                rnaSeqBaselineExperimentsCache.evictExperiment(experimentAccession);
-                break;
-            case RNASEQ_MRNA_DIFFERENTIAL:
-                rnaSeqDiffExperimentsCache.evictExperiment(experimentAccession);
-                break;
-            case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:
-            case MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL:
-            case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
-                microarrayExperimentsCache.evictExperiment(experimentAccession);
-                break;
-            case PROTEOMICS_BASELINE:
-                proteomicsBaselineExperimentsCache.evictExperiment(experimentAccession);
-                break;
-            default:
-                throw new IllegalStateException("invalid enum value: " + type);
+    public void removeExperimentFromCache(String experimentAccession) {
+        for(ExperimentsCache cache: experimentCachesPerType.values()){
+            cache.evictExperiment(experimentAccession);
         }
         publicExperimentTypesCache.evictExperiment(experimentAccession);
-
     }
 
 
     public void removeAllExperimentsFromCache() {
-        rnaSeqBaselineExperimentsCache.evictAll();
-        rnaSeqDiffExperimentsCache.evictAll();
-        microarrayExperimentsCache.evictAll();
-        proteomicsBaselineExperimentsCache.evictAll();
+        for(ExperimentsCache cache: experimentCachesPerType.values()){
+            cache.evictAll();
+        }
         publicExperimentTypesCache.evictAll();
     }
 
 
     public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
-
         try {
-            switch (experimentType) {
-                case RNASEQ_MRNA_BASELINE:
-                    return rnaSeqBaselineExperimentsCache.getExperiment(experimentAccession);
-                case RNASEQ_MRNA_DIFFERENTIAL:
-                    return rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
-                case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:
-                case MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL:
-                case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
-                    return microarrayExperimentsCache.getExperiment(experimentAccession);
-                case PROTEOMICS_BASELINE:
-                    return proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
-                default:
-                    throw new IllegalStateException("Invalid enum value: " + experimentType);
-            }
+            return experimentCachesPerType.get(experimentType).getExperiment(experimentAccession);
         } catch (ExecutionException | UncheckedExecutionException e) {
             throw new IllegalStateException("Failed to load experiment from cache: " + experimentAccession, e);
         }

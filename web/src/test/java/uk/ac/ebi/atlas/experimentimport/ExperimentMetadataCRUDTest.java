@@ -195,7 +195,7 @@ public class ExperimentMetadataCRUDTest {
     @Test
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
-        verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
+        verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION);
         verify(conditionsIndexMock).updateConditions(any(Experiment.class), Matchers.<SetMultimap<String,String>>any());
     }
 

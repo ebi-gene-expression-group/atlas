@@ -140,7 +140,7 @@ public class ExperimentMetadataCRUD {
             analyticsIndexerManager.deleteFromAnalyticsIndex(experimentAccession);
         }
 
-        experimentTrader.removeExperimentFromCache(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType());
+        experimentTrader.removeExperimentFromCache(experimentDTO.getExperimentAccession());
 
         experimentDAO.deleteExperiment(experimentAccession);
 
@@ -176,7 +176,7 @@ public class ExperimentMetadataCRUD {
         ExperimentType type = experimentDTO.getExperimentType();
 
         try {
-            experimentTrader.removeExperimentFromCache(accession, type);
+            experimentTrader.removeExperimentFromCache(accession);
 
             ExperimentDesign newDesign = condensedSdrfParser.parse(accession, type).getExperimentDesign();
             writeExperimentDesignFile(accession, type, newDesign);
