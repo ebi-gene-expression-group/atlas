@@ -134,15 +134,12 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
     }
 
     public String description() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (SemanticQueryTerm queryTerm : terms()) {
-            stringBuilder.append(queryTerm.description()).append(OR_OPERATOR);
-        }
-
-        if (stringBuilder.lastIndexOf(OR_OPERATOR) > 0) {
-            stringBuilder.delete(stringBuilder.lastIndexOf(OR_OPERATOR), stringBuilder.length());
-        }
-
-        return stringBuilder.toString();
+        return Joiner.on(OR_OPERATOR).join(Collections2.transform(terms(), new Function<SemanticQueryTerm, String>() {
+            @Nullable
+            @Override
+            public String apply(@Nullable SemanticQueryTerm semanticQueryTerm) {
+                return semanticQueryTerm.description();
+            }
+        }));
     }
 }
