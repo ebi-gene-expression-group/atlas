@@ -10,16 +10,12 @@
 
 <c:set var="thisPage" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
-<div class="grid_6 alpha" id="gxaDifferentialFacetsContainerDiv"></div>
-<div class="grid_18 omega" id="gxaDifferentialResultsContainerDiv">
-    <img src="/gxa/resources/images/loading.gif"/>
-</div>
+<div id="gxaDifferentialTab"></div>
 
 <script>
     <c:if test="${hasDifferentialResults}">
     facetedSearch.differential({
-        facetsContainer: "gxaDifferentialFacetsContainerDiv",
-        resultsContainer: "gxaDifferentialResultsContainerDiv",
+        target: "gxaDifferentialTab",
         identifier: "${identifier}",
         geneQuery: "${geneQuery}",
         conditionQuery: "${conditionQuery}",

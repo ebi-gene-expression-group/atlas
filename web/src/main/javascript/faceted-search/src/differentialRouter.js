@@ -12,15 +12,13 @@ var querystring = require('querystring');
 
 //*------------------------------------------------------------------*
 
-var DifferentialFacetsTree = require('./DifferentialFacetsTree.jsx');
-var DifferentialResults = require('./DifferentialResults.jsx');
+var DifferentialTab = require('./DifferentialTab.jsx');
 
 //*------------------------------------------------------------------*
 
 /**
  * @param {Object} options
- * @param {string} options.facetsContainer - id of the facets container, i.e. a <div> id
- * @param {string} options.resultsContainer - id of the results container, i.e. a <div> id
+ * @param {string} options.target - id of the container
  * @param {string} options.atlasHost
  * @param {string} options.identifier
  * @param {string} options.geneQuery
@@ -29,9 +27,7 @@ var DifferentialResults = require('./DifferentialResults.jsx');
  */
 module.exports = function (options) {
 
-    var facetsElement = document.getElementById(options.facetsContainer),
-        resultsElement = document.getElementById(options.resultsContainer),
-        host = options.atlasHost ? options.atlasHost : window.location.host;
+    var host = options.atlasHost ? options.atlasHost : window.location.host;
 
     var query = {select: {}};
 
@@ -287,21 +283,15 @@ module.exports = function (options) {
         }
 
         ReactDOM.render(
-            React.createElement(
-                DifferentialFacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked,
-                    disabledCheckedFacets: disabledCheckedFacets, disabledUncheckedFacets: disabledUncheckedFacets}
-            ),
-            facetsElement
-        );
-
-        ReactDOM.render(
-            React.createElement(
-                DifferentialResults,
-                {results: filteredResults.slice(0, 1000), maxDownLevel: resultsData.maxDownLevel,
-                    minDownLevel: resultsData.minDownLevel, minUpLevel: resultsData.minUpLevel,
-                    maxUpLevel: resultsData.maxUpLevel, host: host}
-            ),
-            resultsElement
-        );
+          React.createElement(
+            DifferentialTab, {
+              facets: {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked,
+                  disabledCheckedFacets: disabledCheckedFacets, disabledUncheckedFacets: disabledUncheckedFacets},
+              results: {results: filteredResults.slice(0, 1000), maxDownLevel: resultsData.maxDownLevel,
+                  minDownLevel: resultsData.minDownLevel, minUpLevel: resultsData.minUpLevel,
+                  maxUpLevel: resultsData.maxUpLevel, host: host}
+            }
+          ), document.getElementById(options.target || "gxaDifferentialTab")
+        )
     }
 };
