@@ -24,24 +24,9 @@ table.gxaDifferentialFacetedSearchResults tr td {
     border-top: 1px solid #ddd
 }
 
-table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species {
+table.gxaDifferentialFacetedSearchResults tr td.col_species .react-ebi-species-icon {
     font-size: 300%;
     margin-left: 4px;
-}
-
-table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.red:before {
-    /*animal*/
-    color:#d9534f;
-}
-
-table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.green:before {
-    /*plants*/
-    color:#5cb85c;
-}
-
-table.gxaDifferentialFacetedSearchResults tr td.col_species span.icon-species.blue:before {
-    /*other*/
-    color:#5bc0de;
 }
 
 td.gxaExperimentalVariable {
