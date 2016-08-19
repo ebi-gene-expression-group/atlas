@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.analyticsindex.baseline.QueryBuilder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,6 +24,8 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
     private static final int ROWS = 1000;
     private static final String SORT_FIELD = "&sort=abs(foldChange)desc";
 
+    private final QueryBuilder queryBuilder = new QueryBuilder();
+
     @Inject
     public DifferentialResultsDAO(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl, @Value("classpath:differential.facets.query.json") Resource differentialFacetsQueryJSON) {
         super(restTemplate, solrBaseUrl, differentialFacetsQueryJSON);  // settings of restTemplate in applicationContext.xml
@@ -33,11 +36,13 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
         searchQueriesBuilder.add(Pair.of(IDENTIFIER_SEARCH_FIELD, geneQuery));
         searchQueriesBuilder.add(Pair.of(CONDITION_SEARCH_FIELD, conditionQuery));
         searchQueriesBuilder.add(Pair.of(SPECIES_FIELD, SemanticQuery.create(species)));
-        return fetchDifferentialResultsAboveDefaultFoldChange(buildSolrQuery(searchQueriesBuilder.build()));
+        return fetchDifferentialResultsAboveDefaultFoldChange(queryBuilder.buildSolrQuery(searchQueriesBuilder.build
+                ()));
     }
 
     public String fetchDifferentialResultsAboveDefaultFoldChangeForIdentifier(String identifier) {
-        return fetchDifferentialResultsAboveDefaultFoldChange(buildSolrQuery(identifier, BIOENTITY_IDENTIFIER_FIELD));
+        return fetchDifferentialResultsAboveDefaultFoldChange(queryBuilder.buildSolrQuery(identifier,
+                BIOENTITY_IDENTIFIER_FIELD));
     }
 
     private String fetchDifferentialResultsAboveDefaultFoldChange(String q) {

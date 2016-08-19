@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.analyticsindex.baseline.QueryBuilder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,6 +24,8 @@ public class DifferentialFacetsDAO extends DifferentialAnalyticsDAO {
 
     private static final int ROWS = 0;
 
+    private final QueryBuilder queryBuilder = new QueryBuilder();
+
     @Inject
     public DifferentialFacetsDAO(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl, @Value("classpath:differential.facets.query.json") Resource differentialFacetsQueryJSON) {
         super(restTemplate, solrBaseUrl, differentialFacetsQueryJSON);  // settings of restTemplate in applicationContext.xml
@@ -33,12 +36,12 @@ public class DifferentialFacetsDAO extends DifferentialAnalyticsDAO {
         searchQueriesBuilder.add(Pair.of(IDENTIFIER_SEARCH_FIELD, geneQuery));
         searchQueriesBuilder.add(Pair.of(CONDITION_SEARCH_FIELD, conditionQuery));
         searchQueriesBuilder.add(Pair.of(SPECIES_FIELD, SemanticQuery.create(species)));
-        String identifierSearch = buildSolrQuery(searchQueriesBuilder.build());
+        String identifierSearch = queryBuilder.buildSolrQuery(searchQueriesBuilder.build());
         return fetchFacetsAboveFoldChange(identifierSearch, DEFAULT_P_VALUE);
     }
 
     public String fetchFacetsAboveDefaultFoldChangeForIdentifier(String identifier) {
-        String identifierSearch = buildSolrQuery(identifier, BIOENTITY_IDENTIFIER_FIELD);
+        String identifierSearch = queryBuilder.buildSolrQuery(identifier, BIOENTITY_IDENTIFIER_FIELD);
         return fetchFacetsAboveFoldChange(identifierSearch, DEFAULT_P_VALUE);
     }
 

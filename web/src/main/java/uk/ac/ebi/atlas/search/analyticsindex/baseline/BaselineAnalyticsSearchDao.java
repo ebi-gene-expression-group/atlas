@@ -45,6 +45,8 @@ public class BaselineAnalyticsSearchDao {
 
     private final String baselineHeatmapPivotQuery;
 
+    private final QueryBuilder queryBuilder = new QueryBuilder();
+
     @Inject
     public BaselineAnalyticsSearchDao(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl, String baselineHeatmapPivotQuery) {
         this.restTemplate = restTemplate;   // settings of restTemplate in applicationContext.xml
@@ -57,25 +59,8 @@ public class BaselineAnalyticsSearchDao {
         searchQueriesBuilder.add(Pair.of(IDENTIFIER_SEARCH_FIELD, geneQuery));
         searchQueriesBuilder.add(Pair.of(CONDITION_SEARCH_FIELD, conditionQuery));
         searchQueriesBuilder.add(Pair.of(SPECIES_FIELD, SemanticQuery.create(species)));
-        String response = fetchFacets(buildSolrQuery(searchQueriesBuilder.build()));
+        String response = fetchFacets(queryBuilder.buildSolrQuery(searchQueriesBuilder.build()));
         return JsonPath.read(response, FACET_TREE_PATH);
-    }
-
-    protected String buildSolrQuery(Iterable<Pair<String, SemanticQuery>> searchQueries) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (Pair<String, SemanticQuery> searchQuery : searchQueries) {
-            if (searchQuery.getRight().isNotEmpty()) {
-                stringBuilder.append(String.format("%s:(%s)", searchQuery.getLeft(), searchQuery.getRight().asAnalyticsIndexQueryClause()));
-                stringBuilder.append(" AND ");
-            }
-        }
-
-        if (stringBuilder.lastIndexOf(" AND ") > 0) {
-            stringBuilder.delete(stringBuilder.lastIndexOf(" AND "), stringBuilder.length());
-        }
-
-        return stringBuilder.toString();
     }
 
     public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, String defaultQueryFactorType) {
@@ -85,7 +70,7 @@ public class BaselineAnalyticsSearchDao {
         searchQueriesBuilder.add(Pair.of(SPECIES_FIELD, SemanticQuery.create(species)));
         searchQueriesBuilder.add(Pair.of(DEFAULT_QUERY_FACTOR_TYPE_FIELD, SemanticQuery.create(defaultQueryFactorType)));
 
-        String response = fetchFacets(buildSolrQuery(searchQueriesBuilder.build()));
+        String response = fetchFacets(queryBuilder.buildSolrQuery(searchQueriesBuilder.build()));
 
         return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType));
     }
