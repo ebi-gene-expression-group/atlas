@@ -238,6 +238,52 @@ var DifferentialTabLoader = React.createClass({
     )
   },
 
+  _responseContainsFacet: function(facet, item){
+    return (
+      this.state.results
+      .filter(function(el){
+          return el[facet]==item;
+      })
+      .length>0
+    );
+  },
+
+  _allFacetsUnticked: function(facet){
+    for(var facetName in this.state.querySelect[facet]){
+      if(this.state.querySelect[facet][facetName]){
+        return false;
+      }
+    }
+    return true;
+  },
+
+  _pruneFacetsTreeBasedOnResultsThatCameIn: function(){
+    var newFacetsTreeData = this.state.facetsTreeData;
+    var newQuerySelect = this.state.querySelect;
+
+    for(var facet in this.state.facetsTreeData){
+      newFacetsTreeData[facet] =
+        this.state.facetsTreeData[facet]
+        .filter(function(el){
+          return !((this._allFacetsUnticked(facet)||this.state.querySelect[facet][el.name])&& !this._responseContainsFacet(facet,el.name))
+        }.bind(this))
+    }
+    for(var facet in this.state.querySelect){
+      var newFacet = {};
+      for(var facetName in this.state.querySelect[facet]){
+        if(!(this.state.querySelect[facet][facetName]&& !this._responseContainsFacet(facet,facetName))){
+          newFacet[facetName]= this.state.querySelect[facet][facetName];
+        }
+      }
+      newQuerySelect[facet]=newFacet;
+    }
+
+    this.setState({
+      facetsTreeData: newFacetsTreeData,
+      querySelect: newQuerySelect
+    })
+  },
+
   _loadInitialData: function(){
     var differentialFacetsUrlObject = {protocol: window.location.protocol, host: this.props.host},
         differentialResultsUrlObject = {protocol: window.location.protocol, host: this.props.host};
@@ -296,6 +342,7 @@ var DifferentialTabLoader = React.createClass({
                         maxUpLevel: response.maxUpLevel
                       }
                     });
+                    this._pruneFacetsTreeBasedOnResultsThatCameIn();
                     //filterAndRenderResults();
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown) {
