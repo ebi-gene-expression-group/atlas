@@ -222,7 +222,7 @@ var DifferentialTabLoader = React.createClass({
         <div className="grid_6 alpha" id="gxaDifferentialFacetsContainerDiv">
           {Object.keys(this.state.facetsTreeData).length
             ? <Facets {...this._prepareFacetData()} />
-            : <div>{"Loading facets"}</div>
+            : <div/>
             }
         </div>
         <div className="grid_18 omega" id="gxaDifferentialResultsContainerDiv">
@@ -231,7 +231,10 @@ var DifferentialTabLoader = React.createClass({
                 results = {this._filteredResults()}
                 host = {this.props.host}
                 {...this.state.legend}/>
-            : <div> {"Loading results"}</div>
+            : <div ref="loadingImagePlaceholder">
+                <img src={((this.props.host.indexOf("http://") === 0 || this.props.host.indexOf("https://") === 0) ?"": this.props.host.indexOf("localhost")>-1? "http://": "https://")
+                +(this.props.host ||"www.ebi.ac.uk")+ "/gxa/resources/images/loading.gif"}/>
+            </div>
           }
         </div>
       </div>
