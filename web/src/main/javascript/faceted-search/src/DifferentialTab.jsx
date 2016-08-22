@@ -36,8 +36,8 @@ var DifferentialTabLoader = React.createClass({
   getInitialState: function(){
     return {
       facetsTreeData: {},
-      resultsData:{
-        results: [],
+      results: [],
+      legend: {
         maxDownLevel: 0,
         minDownLevel: 0,
         minUpLevel: 0,
@@ -77,7 +77,7 @@ var DifferentialTabLoader = React.createClass({
 
   _filteredResults: function(querySelect) {
     var query = querySelect || this.state.querySelect;
-    return this.state.resultsData.results.filter(function(result) {
+    return this.state.results.filter(function(result) {
         for (var facetName in query) {
             if (query.hasOwnProperty(facetName)) {
 
@@ -226,21 +226,17 @@ var DifferentialTabLoader = React.createClass({
             }
         </div>
         <div className="grid_18 omega" id="gxaDifferentialResultsContainerDiv">
-          {this.state.resultsData.results && this.state.resultsData.results.length
+          {this.state.results && this.state.results.length
             ? <Results
                 results = {this._filteredResults()}
                 host = {this.props.host}
-                minDownLevel={this.state.resultsData.minDownLevel}
-                minUpLevel={this.state.resultsData.minUpLevel}
-                maxDownLevel={this.state.resultsData.maxDownLevel}
-                maxUpLevel={this.state.resultsData.maxUpLevel}/>
+                {...this.state.legend}/>
             : <div> {"Loading results"}</div>
           }
         </div>
       </div>
     )
   },
-
 
   _loadInitialData: function(){
     var differentialFacetsUrlObject = {protocol: window.location.protocol, host: this.props.host},
@@ -291,7 +287,15 @@ var DifferentialTabLoader = React.createClass({
                 url: url.format(differentialResultsUrlObject),
                 dataType: "json",
                 success: function(response) {
-                    this.setState({resultsData:response});
+                    this.setState({
+                      results:response.results,
+                      legend:{
+                        minDownLevel: response.minDownLevel,
+                        minUpLevel: response.minUpLevel,
+                        maxDownLevel:response.maxDownLevel,
+                        maxUpLevel: response.maxUpLevel
+                      }
+                    });
                     //filterAndRenderResults();
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown) {
