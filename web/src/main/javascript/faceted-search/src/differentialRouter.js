@@ -13,6 +13,7 @@ var querystring = require('querystring');
 //*------------------------------------------------------------------*
 
 var DifferentialTab = require('./DifferentialTab.jsx');
+var pushQueryIntoBrowserHistory = require('./urlMaintainer.js').differential;
 
 //*------------------------------------------------------------------*
 
@@ -67,9 +68,9 @@ module.exports = function (options) {
                 }
             }
             if (Object.keys(query.select).length === 0) {
-                parseSelectedFacetsFromLocation();
+                query.select = parseSelectedFacetsFromLocation();
             }
-            pushQueryIntoBrowserHistory(true);
+            pushQueryIntoBrowserHistory(query.select,true);
 
             $.ajax({
                 url: url.format(differentialResultsUrlObject),
@@ -94,12 +95,12 @@ module.exports = function (options) {
     });
 
     /**
-     * Parse the `ds` search field in the URL and assign it to the `query` object
+     * Parse the `ds` search field in the URL
      */
     function parseSelectedFacetsFromLocation() {
         var currentURL = url.parse(window.location.toString());
         var selectString = querystring.parse(currentURL.query)["ds"];
-        query.select = selectString ? JSON.parse(selectString) : {};
+        return selectString ? JSON.parse(selectString) : {};
     }
 
 
@@ -109,7 +110,7 @@ module.exports = function (options) {
         } else {
             removeSelection(query.select, facet, facetItem);
         }
-        pushQueryIntoBrowserHistory(false);
+        pushQueryIntoBrowserHistory(query.select, false);
         filterAndRenderResults();
     }
 
@@ -124,32 +125,7 @@ module.exports = function (options) {
         select[facet][facetItem] = false;
     }
 
-    /**
-     * Stringify the `query` object, assign it to the `ds` search field in the URL and store it in the History
-     * @param {boolean} replace - use `replaceState` instead of `pushState`
-     */
-    function pushQueryIntoBrowserHistory(replace) {
-        var currentUrlObject = url.parse(window.location.toString());
-
-        var newUrlQueryParams = querystring.parse(currentUrlObject.query);
-        newUrlQueryParams.ds = JSON.stringify(query.select);
-
-        var newUrlObject = {
-            protocol: currentUrlObject.protocol,
-            host: currentUrlObject.host,
-            hash: currentUrlObject.hash,
-            pathname: currentUrlObject.pathname,
-            query: newUrlQueryParams
-        };
-
-        if (replace) {
-            history.replaceState(null, "", url.format(newUrlObject));
-        } else {
-            history.pushState(null, "", url.format(newUrlObject));
-        }
-    }
-
-    function filterResults(query) {
+    function filterResults(resultsData, query) {
         return resultsData.results.filter(function(result) {
             for (var facetName in query) {
                 if (query.hasOwnProperty(facetName)) {
@@ -187,7 +163,7 @@ module.exports = function (options) {
 
     function filterAndRenderResults() {
 
-        var filteredResults = filterResults (query.select);
+        var filteredResults = filterResults (resultsData, query.select);
 
         var disabledCheckedFacets = {};
         var disabledUncheckedFacets = {};
@@ -230,7 +206,7 @@ module.exports = function (options) {
                     _query[facet] = _item;
                 }
 
-                var queryResults = filterResults(_query);
+                var queryResults = filterResults(resultsData, _query);
                 if (queryResults.length === 0 || queryResults.length === filteredResults.length) {
                     facetNotExistsValue.push(facetItem.name);
                 }
