@@ -85,7 +85,7 @@ var Container = React.createClass({
           : null;
         return (
           <div ref="this">
-              { this.state.experimentData ?
+              { this._isReferenceExperiment() && this.state.experimentData ?
                   <ExperimentDescription experiment={this.state.experimentData} linksAtlasBaseURL={this.props.linksAtlasBaseURL}/>
                   : null
               }
@@ -211,13 +211,17 @@ var Container = React.createClass({
       return this.props.sourceURL.indexOf("/json/experiments/") >-1;
     },
 
+    _isReferenceExperiment: function(){
+      return !this.props.isMultiExperiment && !this._isExperimentPage();
+    },
+
     onAjaxSuccessful: function(data){
       var config = {
         geneQuery: data.config.geneQuery,
         atlasBaseURL: this.props.atlasBaseURL,
         isExperimentPage: this._isExperimentPage(),
         isMultiExperiment: this.props.isMultiExperiment,
-        isReferenceExperiment: !this.props.isMultiExperiment && this.props.sourceURL.indexOf("/json/experiments/") === -1,
+        isReferenceExperiment: this._isReferenceExperiment(),
         isDifferential: this.props.isDifferential
       };
       //See in heatmap-data.jsp which thirteen properties this config is populated with.
