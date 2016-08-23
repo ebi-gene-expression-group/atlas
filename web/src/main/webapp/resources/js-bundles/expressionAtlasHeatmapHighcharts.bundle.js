@@ -2069,7 +2069,7 @@ webpackJsonp_name_([3],[
 	        return React.createElement(
 	            'div',
 	            { ref: 'this' },
-	            this.state.experimentData ? React.createElement(ExperimentDescription, { experiment: this.state.experimentData, linksAtlasBaseURL: this.props.linksAtlasBaseURL }) : null,
+	            this._isReferenceExperiment() && this.state.experimentData ? React.createElement(ExperimentDescription, { experiment: this.state.experimentData, linksAtlasBaseURL: this.props.linksAtlasBaseURL }) : null,
 	            this.state.ajaxCompleted ? this.state.error ? React.createElement(
 	                'div',
 	                { ref: 'gxaError' },
@@ -2208,13 +2208,17 @@ webpackJsonp_name_([3],[
 	        return this.props.sourceURL.indexOf("/json/experiments/") > -1;
 	    },
 	
+	    _isReferenceExperiment: function () {
+	        return !this.props.isMultiExperiment && !this._isExperimentPage();
+	    },
+	
 	    onAjaxSuccessful: function (data) {
 	        var config = {
 	            geneQuery: data.config.geneQuery,
 	            atlasBaseURL: this.props.atlasBaseURL,
 	            isExperimentPage: this._isExperimentPage(),
 	            isMultiExperiment: this.props.isMultiExperiment,
-	            isReferenceExperiment: !this.props.isMultiExperiment && this.props.sourceURL.indexOf("/json/experiments/") === -1,
+	            isReferenceExperiment: this._isReferenceExperiment(),
 	            isDifferential: this.props.isDifferential
 	        };
 	        //See in heatmap-data.jsp which thirteen properties this config is populated with.
@@ -9504,16 +9508,19 @@ webpackJsonp_name_([3],[
 	    var displayAllOrganismPartsCallback = this._drawInitialLayout;
 	    var registerHoverEventsCallback = this._registerHoverEvents;
 	    Snap.load(svgFile, function (fragment) {
-	      var g = fragment.select("g");
-	      g.transform("S1.6,0,0");
-	      displayAllOrganismPartsCallback(g);
-	      registerHoverEventsCallback(g);
-	      svgCanvas.append(g);
+	      fragment.selectAll("svg > g").forEach(function (g) {
+	        g.transform("S1.6,0,0");
+	        displayAllOrganismPartsCallback(g);
+	        registerHoverEventsCallback(g);
+	        svgCanvas.append(g);
+	      });
 	      var img = fragment.select("#ccLogo");
-	      var heightTranslate = svgCanvas.node.clientHeight - 15;
-	      var widthTranslate = svgCanvas.node.clientWidth / 2 - 40;
-	      img.transform("t" + widthTranslate + "," + heightTranslate);
-	      svgCanvas.append(img);
+	      if (img) {
+	        var heightTranslate = svgCanvas.node.clientHeight - 15;
+	        var widthTranslate = svgCanvas.node.clientWidth / 2 - 40;
+	        img.transform("t" + widthTranslate + "," + heightTranslate);
+	        svgCanvas.append(img);
+	      }
 	    });
 	  },
 	
@@ -10107,7 +10114,7 @@ webpackJsonp_name_([3],[
   \****************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "c31f4eaa46e3b101c8145953ad586f3f.svg";
+	module.exports = __webpack_require__.p + "1702543e0653c14523d9d35d9436e0b0.svg";
 
 /***/ },
 /* 1450 */
@@ -10116,7 +10123,7 @@ webpackJsonp_name_([3],[
   \***************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "ca06a20d30c13dd1ae84d51c0a985a0b.svg";
+	module.exports = __webpack_require__.p + "977fb47bf8f060411413a489c6148582.svg";
 
 /***/ },
 /* 1451 */
