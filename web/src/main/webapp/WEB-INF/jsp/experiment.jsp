@@ -122,7 +122,11 @@
 
         var geneQueryStr = new URI(window.location).search(true)["geneQuery"];
         if (geneQueryStr) {
-            geneQueryTags = JSON.parse(geneQueryStr);
+            try {
+                geneQueryTags = JSON.parse(geneQueryStr);
+            } catch (SyntaxError){
+                geneQueryTags = [{value:geneQueryStr}];
+            }
             geneQueryTags.forEach(function(geneQueryTag) {
                 $geneQuery.jsonTagEditor('addTag', JSON.stringify(geneQueryTag));
             });
