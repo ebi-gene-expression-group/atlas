@@ -10,7 +10,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithMaPlotButtonsPa
 import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.assertThat;
 
-public class MaPlotButtonsIT extends SeleniumFixture {
+public class MaPlotButtonsSIT extends SeleniumFixture {
 
     private static final String E_MTAB_1066_ACCESSION = "E-MTAB-1066";
     protected HeatmapTableWithMaPlotButtonsPage subject;
