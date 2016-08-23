@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 
 import com.google.common.base.Preconditions;
+import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -9,6 +10,8 @@ import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.File;
+import java.text.MessageFormat;
 import java.util.concurrent.ExecutionException;
 
 @Named
@@ -18,6 +21,8 @@ public class ExpressionSerializerService {
     private final RnaSeqBaselineExpressionKryoSerializer rnaSeqBaselineExpressionKryoSerializer;
     private final ExperimentChecker experimentChecker;
 
+    @Value("#{configuration['experiment.kryo_expressions.path.template']}")
+    String serializedExpressionsFileTemplate;
 
     @Inject
     public ExpressionSerializerService(ExperimentTrader experimentTrader, RnaSeqBaselineExpressionKryoSerializer rnaSeqBaselineExpressionKryoSerializer,
@@ -37,6 +42,13 @@ public class ExpressionSerializerService {
                     ((BaselineExperiment) experiment).getExperimentalFactors());
         } else {
             return "skipped";
+        }
+    }
+
+    public void removeKryoFile(String experimentAccession){
+        File f = new File(MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession));
+        if(f.exists()){
+            f.delete();
         }
     }
 }
