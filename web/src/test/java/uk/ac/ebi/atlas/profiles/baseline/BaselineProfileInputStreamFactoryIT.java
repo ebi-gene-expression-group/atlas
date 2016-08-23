@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamer;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -38,7 +40,7 @@ public class BaselineProfileInputStreamFactoryIT {
 
     @Inject
     @Qualifier("baselineProfileInputStreamFactory")
-    private BaselineProfileInputStreamFactory subject;
+     BaselineProfileInputStreamFactory subject;
 
     @Test
     public void experimentWithoutSerializedFileIsReadFromTsvFile() {
@@ -54,5 +56,22 @@ public class BaselineProfileInputStreamFactoryIT {
         assertThat(inputStream, instanceOf(BaselineProfilesTsvInputStream.class));
 
         temporaryFile.renameTo(serializedFile);
+    }
+
+    @Test
+    public void testThreadSafe(){
+        //new ThreadSafeTester().testSinglethreaded("E-PROT-1",1);
+        new ThreadSafeTester().testMultithreaded("E-MTAB-513", 10,10);
+        //new ThreadSafeTester().testMultithreaded("E-PROT-1", 10,10);
+    }
+
+    class ThreadSafeTester extends ObjectInputStreamer {
+
+        @Override
+        protected ObjectInputStream<?> createStream(String experimentAccession) {
+            return subject.createBaselineProfileInputStream(experimentAccession, DEFAULT_QUERY_FACTOR, 0.1, new HashSet<Factor>());
+        }
+
+
     }
 }
