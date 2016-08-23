@@ -5,7 +5,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     entry: {
         helpTooltips: './index.js',
-        dependencies: ['jquery', 'jquery-ui-bundle', 'jQuery-ajaxTransport-XDomainRequest']
+        dependencies: ['jquery', 'jquery-ui-bundle']
     },
 
     output: {

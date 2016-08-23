@@ -8,8 +8,7 @@
   "private": true,
   "dependencies": {
     "jquery": "^2.2.1",
-    "jquery-ui-bundle": "^1.11.4",
-    "jQuery-ajaxTransport-XDomainRequest": "git+https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git"
+    "jquery-ui-bundle": "^1.11.4"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.8",

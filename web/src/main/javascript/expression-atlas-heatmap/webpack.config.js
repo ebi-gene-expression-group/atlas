@@ -7,7 +7,7 @@ module.exports = {
         expressionAtlasHeatmap: './index.js',
         heatmap: './src/experimentPageHeatmapAnatomogramRenderer.js',
         dependencies: ['react', 'react-dom', 'react-radio-group', 'react-bootstrap',
-                       'jquery', 'jquery-ui-bundle', 'jquery.browser', 'fancybox', 'jquery-hc-sticky', 'jquery-toolbar', 'jQuery-ajaxTransport-XDomainRequest', 'jquery-hc-sticky',
+                       'jquery', 'jquery-ui-bundle', 'jquery.browser', 'fancybox', 'jquery-hc-sticky', 'jquery-toolbar', 'jquery-hc-sticky',
                        'urijs', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js', 'atlas-modernizr',
                        'highcharts-more', 'react-highcharts',
                        'events', 'rc-slider']

@@ -4,7 +4,6 @@
 
 var $ = require('jquery');
 require('jquery-ui-bundle');
-require('jQuery-ajaxTransport-XDomainRequest');
 
 //*------------------------------------------------------------------*
 

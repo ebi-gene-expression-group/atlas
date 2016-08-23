@@ -5,7 +5,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     entry: {
         contrastTooltips: './index.js',
-        dependencies: ['react', 'react-dom', 'jquery', 'jquery-ui-bundle', 'jQuery-ajaxTransport-XDomainRequest']
+        dependencies: ['react', 'react-dom', 'jquery', 'jquery-ui-bundle']
     },
 
     output: {
