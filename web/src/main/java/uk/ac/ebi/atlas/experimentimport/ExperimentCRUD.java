@@ -92,6 +92,7 @@ public class ExperimentCRUD {
 
         experimentMetadataCRUD.deleteExperiment(experimentDTO);
 
+        expressionSerializerService.removeKryoFile(experimentAccession);
         return experimentDTO.getAccessKey();
     }
 

@@ -150,7 +150,6 @@ public class ExperimentCRUDIT {
         assertTrue(kryoFileIsPresent(experimentAccession));
 
         deleteExperimentDeletesDB(experimentAccession,experimentType);
-        new File(MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession)).delete();
         assertFalse(kryoFileIsPresent(experimentAccession));
     }
 
