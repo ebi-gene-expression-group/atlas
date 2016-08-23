@@ -18,7 +18,6 @@ import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFac
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

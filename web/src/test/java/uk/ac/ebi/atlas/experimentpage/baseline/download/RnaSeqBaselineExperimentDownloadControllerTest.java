@@ -38,7 +38,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineExperimentDownloadControllerTest {
+public class RnaSeqBaselineExperimentDownloadControllerTest {
 
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
 
@@ -72,15 +72,13 @@ public class BaselineExperimentDownloadControllerTest {
     @Mock
     private AssayGroups assayGroupsMock;
 
-    private BaselineExperimentDownloadController subject;
+    private BaselineExperimentDownloadService<BaselineRequestPreferences> subject;
 
     @Mock
     BaselineProfileInputStreamFactory inputStreamFactory;
 
     @Mock
     BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory;
-
-    BaselineProfilesWriterService baselineProfilesWriterService;
 
     @Mock
     CoexpressedGenesService coexpressedGenesService;
@@ -96,7 +94,7 @@ public class BaselineExperimentDownloadControllerTest {
     public void setUp() throws Exception {
         BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory = new
                 BaselineProfilesWriterServiceFactory(profilesWriterMock, solrQueryService,coexpressedGenesService);
-        subject = new BaselineExperimentDownloadController(inputStreamFactory, baselineProfilesWriterServiceFactory,experimentTraderMock);
+        subject = new BaselineExperimentDownloadService<>(inputStreamFactory, baselineProfilesWriterServiceFactory,experimentTraderMock);
 
     }
 
@@ -122,7 +120,7 @@ public class BaselineExperimentDownloadControllerTest {
                 any(BaselineRequestContext.class), anySet(), any(GeneQueryResponse.class))).thenReturn
                 (0L);
 
-        subject.downloadGeneProfiles(requestMock,EXPERIMENT_ACCESSION, "",preferencesMock, responseMock);
+        subject.download(EXPERIMENT_ACCESSION,requestMock, preferencesMock,responseMock,"");
 
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
