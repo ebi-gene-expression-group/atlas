@@ -27,11 +27,18 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.util.Collection;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeThat;
+import static org.junit.Assume.assumeTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -41,6 +48,9 @@ public class ExperimentCRUDIT {
 
     @Value("#{configuration['experiment.data.location']}")
     String experimentDataLocation;
+
+    @Value("#{configuration['experiment.kryo_expressions.path.template']}")
+    String serializedExpressionsFileTemplate;
 
     @Inject
     private ExperimentCRUD subject;
@@ -64,6 +74,7 @@ public class ExperimentCRUDIT {
     // Used to check the DB
     @Inject
     private JdbcTemplate jdbcTemplate;
+
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -127,6 +138,22 @@ public class ExperimentCRUDIT {
         verify(experimentCheckerSpy, times(2)).checkBaselineFiles("TEST-PROTEOMICS-BASELINE");
     }
 
+    @Test
+    public void weCanSerializeARnaSeqBaselineExperimentAndTidyUpTheFilesWhenDeleting()
+            throws Exception{
+        String experimentAccession = "TEST-RNASEQ-BASELINE";
+        ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
+        importNewExperimentInsertsDB(experimentAccession,experimentType);
+        new File(MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession)).delete();
+        assumeFalse(kryoFileIsPresent(experimentAccession));
+        subject.serializeExpressionData(experimentAccession);
+        assertTrue(kryoFileIsPresent(experimentAccession));
+
+        deleteExperimentDeletesDB(experimentAccession,experimentType);
+        new File(MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession)).delete();
+        assertFalse(kryoFileIsPresent(experimentAccession));
+    }
+
 
     public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType) throws IOException, SolrServerException {
         importNewExperimentInsertsDB(experimentAccession, experimentType);
@@ -171,6 +198,10 @@ public class ExperimentCRUDIT {
         subject.deleteExperiment(experimentAccession);
         assertThat(experimentCount(experimentAccession), is(0));
         assertThat(expressionsCount(experimentAccession, experimentType), is(0));
+    }
+
+    boolean kryoFileIsPresent(String experimentAccession){
+        return new File(MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession)).exists();
     }
 
     private int experimentCount(String accession) {
