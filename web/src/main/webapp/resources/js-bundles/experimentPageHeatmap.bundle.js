@@ -2682,7 +2682,7 @@ webpackJsonp_name_([1],[
   \*****************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "1702543e0653c14523d9d35d9436e0b0.svg";
+	module.exports = __webpack_require__.p + "a151f68f377b4df79657e07d835805cc.svg";
 
 /***/ },
 /* 742 */
@@ -2691,7 +2691,7 @@ webpackJsonp_name_([1],[
   \****************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "977fb47bf8f060411413a489c6148582.svg";
+	module.exports = __webpack_require__.p + "b3872347c05611f7ad065b5b8ed2c903.svg";
 
 /***/ },
 /* 743 */
