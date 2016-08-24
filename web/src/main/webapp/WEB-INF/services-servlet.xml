@@ -51,12 +51,8 @@
                 <entry key="fastQCReportUtil" value-ref="fastQCReportUtil"/>
                 <entry key="clusteringPdfViewHelper" value-ref="clusteringPdfViewHelper"/>
                 <entry key="rDataViewHelper" value-ref="RDataViewHelper"/>
-                <!-- heatmap-matrix-searchresults-diffanalytics.jsp -->
-                <entry key="colourGradient" value-ref="colourGradient"/>
                 <!-- request-preferences.jsp -->
                 <entry key="stringUtil" value-ref="stringUtil"/>
-                <!-- heatmap-matrix-searchresults-diffanalytics.jsp -->
-                <entry key="foldChangeRounder" value-ref="foldChangeRounder"/>
                 <!-- filterby-menu.jsp -->
                 <entry key="filterFactorMenuBuilder" value-ref="filterFactorMenuBuilder"/>
             </map>
