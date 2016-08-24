@@ -1,7 +1,10 @@
 "use strict";
 //*------------------------------------------------------------------*
 var React = require('react');
-var ReactDOMServer = require('react-dom/server')
+var ReactDOMServer = require('react-dom/server');
+var scientificNotation = function(value){
+  return <b>{require('number-format').scientificNotation(value)}</b>;
+};
 var escapedHtmlDecoder = require('he');
 
 //*------------------------------------------------------------------*
@@ -16,8 +19,9 @@ var Tooltip = React.createClass({
     yLabel: React.PropTypes.string.isRequired,
     value:  React.PropTypes.number.isRequired,
     unit:   React.PropTypes.string,
-    foldChange: React.PropTypes.string,
-    pValue: React.PropTypes.string
+    foldChange: React.PropTypes.number,
+    pValue: React.PropTypes.string,
+    tStat: React.PropTypes.string
   },  //TODO extend this prop checker.Props for this component are created dynamically so it's important. If differential, expect p-values and fold changes, etc.
 
   render: function(){
@@ -29,7 +33,8 @@ var Tooltip = React.createClass({
           ? [<div key={""}>
               {this._tinySquare()}{this._span("Fold change",this.props.foldChange)}
             </div>,
-             this._div("P-value", this.props.pValue)]
+             this._div("P-value", this.props.pValue,scientificNotation),
+             this._div("T-statistic", this.props.tStat)]
           : <div>
             {this._tinySquare()}
             {this._span("Expression level",this.props.value ? (this.props.value+" "+(this.props.unit||"") ):"Below cutoff")}
@@ -50,13 +55,15 @@ var Tooltip = React.createClass({
       }} />
     );
   },
-  _div: function(name, value){
+  _div: function(name, value, format){
     return (
-      <div key={name+" "+value}>
-        {name+": "}
-        {value.length >50? <br/> : null }
-        {this._bold(value)}
-      </div>
+      name &&value
+      ? <div key={name+" "+value}>
+          {name+": "}
+          {value.length >50? <br/> : null }
+          {(format || this._bold)(value)}
+        </div>
+      : null
     );
   },
   _span: function(name, value){

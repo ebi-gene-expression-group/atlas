@@ -52,7 +52,14 @@ var __dataPointFromExpression = function(infoCommonForTheRow, columnNumber, expr
     ? {x: rowNumber, y:columnNumber, value:expression.value ,info:infoCommonForTheRow}
     : (
         expression.hasOwnProperty("foldChange")
-      ? {x: rowNumber, y: columnNumber, value: +expression.foldChange,info:{pValue: expression.pValue, foldChange: expression.foldChange}}
+      ? {
+        x: rowNumber,
+        y: columnNumber,
+        value: +expression.foldChange,
+        info:{
+          pValue: expression.pValue,
+          foldChange: expression.foldChange,
+          tStat: expression.tStat}}
       : null
     )
   );

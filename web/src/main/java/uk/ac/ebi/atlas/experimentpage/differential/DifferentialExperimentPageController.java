@@ -35,7 +35,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         DifferentialRequestPreferences, P extends DifferentialProfile<?>> {
 
     private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
-    private final SpeciesKingdomTrader speciesKingdomTrader;
     private final GseaPlotsBuilder gseaPlotsBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
     private DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap;
@@ -50,12 +49,11 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
                                                            differentialRequestContextBuilder,
                                                    DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap,
                                                    DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
-                                                   SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil,
+                                                   TracksUtil tracksUtil,
                                                    GseaPlotsBuilder gseaPlotsBuilder, ApplicationProperties applicationProperties) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.profilesHeatMap = profilesHeatMap;
         this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
-        this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
         this.gseaPlotsBuilder = gseaPlotsBuilder;
         this.applicationProperties = applicationProperties;

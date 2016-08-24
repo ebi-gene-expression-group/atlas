@@ -20,7 +20,6 @@ public class DifferentialResultsReader {
 
     private final ExperimentTrader experimentTrader;
     private final ContrastTrader contrastTrader;
-    private final FoldChangeRounder foldChangeRounder;
 
     private static final String DOCS_PATH                  = "$.response.docs[*]";
     private static final String EXPERIMENT_TYPE_FIELD      = "experimentType";
@@ -33,10 +32,9 @@ public class DifferentialResultsReader {
     private final ColourGradient colourGradient;
 
     @Inject
-    public DifferentialResultsReader(ExperimentTrader experimentTrader, ContrastTrader contrastTrader, FoldChangeRounder foldChangeRounder, ColourGradient colourGradient) {
+    public DifferentialResultsReader(ExperimentTrader experimentTrader, ContrastTrader contrastTrader, ColourGradient colourGradient) {
         this.experimentTrader = experimentTrader;
         this.contrastTrader = contrastTrader;
-        this.foldChangeRounder = foldChangeRounder;
         this.colourGradient = colourGradient;
     }
 
@@ -84,13 +82,13 @@ public class DifferentialResultsReader {
                 double foldChange = (Double) document.get("foldChange");
                 String colour = foldChange > 0.0 ? colourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red") : colourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
                 document.put("colour", colour);
-                document.put("foldChange", foldChangeRounder.format(foldChange));
+                document.put("foldChange", FoldChangeRounder.round(foldChange));
             }
 
-            resultsWithLevels.put("maxDownLevel", foldChangeRounder.format(maxDownLevel));
-            resultsWithLevels.put("minDownLevel", foldChangeRounder.format(minDownLevel));
-            resultsWithLevels.put("minUpLevel", foldChangeRounder.format(minUpLevel));
-            resultsWithLevels.put("maxUpLevel", foldChangeRounder.format(maxUpLevel));
+            resultsWithLevels.put("maxDownLevel", FoldChangeRounder.round(maxDownLevel));
+            resultsWithLevels.put("minDownLevel", FoldChangeRounder.round(minDownLevel));
+            resultsWithLevels.put("minUpLevel", FoldChangeRounder.round(minUpLevel));
+            resultsWithLevels.put("maxUpLevel", FoldChangeRounder.round(maxUpLevel));
         }
 
         resultsWithLevels.put("results", filteredDocuments);

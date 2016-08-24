@@ -48,7 +48,7 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
                                               DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesKingdomTrader speciesKingdomTrader,
                                               TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder, ApplicationProperties applicationProperties) {
         super(requestContextBuilder, profilesHeatMap, differentialProfilesViewModelBuilder,
-              speciesKingdomTrader, tracksUtil, gseaPlotsBuilder,applicationProperties);
+                tracksUtil, gseaPlotsBuilder,applicationProperties);
 
     }
 

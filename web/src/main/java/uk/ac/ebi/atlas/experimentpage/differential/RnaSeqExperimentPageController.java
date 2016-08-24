@@ -52,7 +52,7 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
                                           GseaPlotsBuilder gseaPlotsBuilder,
                                           ApplicationProperties applicationProperties) {
         super(rnaSeqRequestContextBuilder, profilesHeatMap, differentialProfilesViewModelBuilder,
-                speciesKingdomTrader, tracksUtil, gseaPlotsBuilder,applicationProperties);
+                tracksUtil, gseaPlotsBuilder,applicationProperties);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})

@@ -23,8 +23,6 @@ public class DifferentialProfilesViewModelBuilder {
     private final PValueFormatter pValueFormatter;
     private final NumberFormat format2Dp = NumberFormat.getNumberInstance();
 
-    private final FoldChangeRounder foldChangeRounder = new FoldChangeRounder();
-
     @Inject
     public DifferentialProfilesViewModelBuilder(ColourGradient colourGradient, PValueFormatter pValueFormatter) {
         this.colourGradient = colourGradient;
@@ -49,7 +47,7 @@ public class DifferentialProfilesViewModelBuilder {
 
     private void addDoublePropertyIfNotNaN(JsonObject o,String name, double d){
         if(! Double.isNaN(d)){
-            o.addProperty(name,foldChangeRounder.round(d));
+            o.addProperty(name,FoldChangeRounder.round(d));
         }
     }
 
@@ -90,7 +88,7 @@ public class DifferentialProfilesViewModelBuilder {
                         expression.isOverExpressed()
                                 ? colourGradient.getGradientColour(expression.getFoldChange(), minUpLevel, maxUpLevel, "pink", "red")
                                 : colourGradient.getGradientColour(expression.getFoldChange(), minDownLevel, maxDownLevel, "lightGray", "blue"));
-                expr.addProperty("foldChange",foldChangeRounder.format(expression.getFoldChange()));
+                expr.addProperty("foldChange",FoldChangeRounder.round(expression.getFoldChange()));
                 expr.addProperty("pValue",pValueFormatter.formatPValueAsScientificNotation(expression.getPValue()) );
                 if(expression instanceof MicroarrayExpression){
                     expr.addProperty("tStat", format2Dp.format(((MicroarrayExpression) expression).getTstatistic()));
