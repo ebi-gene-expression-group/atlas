@@ -27,6 +27,7 @@ var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
  * @param {boolean}         options.isMultiExperiment
  * @param {boolean=}        options.isWidget
  */
+
 exports.render = function(options) {
 
     var protocol = window.location.protocol + "//",

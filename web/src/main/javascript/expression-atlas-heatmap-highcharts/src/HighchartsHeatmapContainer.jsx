@@ -46,6 +46,29 @@ var ExperimentDescription = React.createClass({
 
 });
 
+var HeatmapWithMargin = React.createClass({
+  propTypes: {
+    heatmapProps: React.PropTypes.object.isRequired,
+    marginLeft: React.PropTypes.string.isRequired
+  },
+
+  shouldComponentUpdate: function(){
+    /*If this rerenders after hovering on a row and the parent changing state,
+      the labels will be redrawn and the hover off event won't work.
+      If you need to update this component, compare previous and new props for equality here.
+    */
+    return false;
+  },
+
+  render: function(){
+    return (
+      <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: this.props.marginLeft, display:"block"}}>
+          <HighchartsHeatmap {...this.props.heatmapProps} />
+      </div>
+    );
+  }
+});
+
 var Container = React.createClass({
   render: function(){
     var anatomogram =
@@ -57,7 +80,8 @@ var Container = React.createClass({
         hoveredTissueColour: this.props.heatmapConfig.isExperimentPage? "red" :"purple",
         profileRows: this.props.profiles.rows,
         eventEmitter: this.props.anatomogramEventEmitter,
-        atlasBaseURL: this.props.atlasBaseURL
+        atlasBaseURL: this.props.atlasBaseURL,
+        idsToBeHighlighted: this.state.ontologyIdsForHeatmapContentUnderFocus
       })
       : null;
       return (
@@ -65,21 +89,50 @@ var Container = React.createClass({
             <div ref="anatomogramEnsembl" className="gxaAside" style={{display: anatomogram ? "block": "none"}}>
                 {anatomogram}
             </div>
-            <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: anatomogram ? "270px" : "0", display:"block"}}>
-                <HighchartsHeatmap
-                    profiles={this.props.profiles}
-                    heatmapConfig={this.props.heatmapConfig}
-                    anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-                    googleAnalyticsCallback={this.props.googleAnalyticsCallback}
-                    heatmapData={this.props.heatmapData}
-                    afterHeatmapRedrawn={this._attachListenersToLabels}/>
-            </div>
+            <HeatmapWithMargin
+              marginLeft={ anatomogram ? "270px" : "0"}
+              heatmapProps={{
+                profiles:this.props.profiles,
+                heatmapConfig:this.props.heatmapConfig,
+                anatomogramEventEmitter:this.props.anatomogramEventEmitter,
+                googleAnalyticsCallback:this.props.googleAnalyticsCallback,
+                heatmapData:this.props.heatmapData,
+                afterHeatmapRedrawn:this._attachListenersToLabels
+              }}/>
         </div>
       );
   },
 
+  getInitialState: function(){
+    return {
+      ontologyIdsForHeatmapContentUnderFocus: []
+    }
+  },
+
   componentDidMount: function() {
     this._attachListenersToLabels();
+  },
+
+  _ontologyIdsForTissuesExpressedInRow: function(rowTitle){
+    //TODO be more sane
+    var _expressedFactorsPerRow = function(profileRows){
+      return (
+        profileRows
+        .reduce(function(result,row){
+          result[row.name] =
+            row.expressions.filter(function(expression){
+              return expression.value;
+            })
+            .map(function(expression){
+              return expression.svgPathId
+            });
+          return result;
+        },{})
+      );
+    };
+    return (
+      _expressedFactorsPerRow(this.props.profiles.rows)[rowTitle]
+    )
   },
 
   _attachListenersToLabels: function() {
@@ -99,10 +152,12 @@ var Container = React.createClass({
       if (title) {
         v.hover(
           function onMouseEnterSendTitle() {
+            this.setState({ontologyIdsForHeatmapContentUnderFocus: this._ontologyIdsForTissuesExpressedInRow(title)});
             this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', title);
           }
             ,
             function onMouseLeaveSendNull() {
+            this.setState({ontologyIdsForHeatmapContentUnderFocus: []});
             this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', null);
           } , this, this);
       }
