@@ -47,6 +47,71 @@ var ExperimentDescription = React.createClass({
 });
 
 var Container = React.createClass({
+  render: function(){
+    var anatomogram =
+      (this.props.showAnatomogram && this.props.anatomogramData && Object.keys(this.props.anatomogramData).length)
+      ? Anatomogram.create({
+        pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
+        anatomogramData: this.props.anatomogramData,
+        expressedTissueColour: this.props.heatmapConfig.isExperimentPage? "gray":"red",
+        hoveredTissueColour: this.props.heatmapConfig.isExperimentPage? "red" :"purple",
+        profileRows: this.props.profiles.rows,
+        eventEmitter: this.props.anatomogramEventEmitter,
+        atlasBaseURL: this.props.atlasBaseURL
+      })
+      : null;
+      return (
+        <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
+            <div ref="anatomogramEnsembl" className="gxaAside" style={{display: anatomogram ? "block": "none"}}>
+                {anatomogram}
+            </div>
+            <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: anatomogram ? "270px" : "0", display:"block"}}>
+                <HighchartsHeatmap
+                    profiles={this.props.profiles}
+                    heatmapConfig={this.props.heatmapConfig}
+                    anatomogramEventEmitter={this.props.anatomogramEventEmitter}
+                    googleAnalyticsCallback={this.props.googleAnalyticsCallback}
+                    heatmapData={this.props.heatmapData}
+                    afterHeatmapRedrawn={this._attachListenersToLabels}/>
+            </div>
+        </div>
+      );
+  },
+
+  componentDidMount: function() {
+    this._attachListenersToLabels();
+  },
+
+  _attachListenersToLabels: function() {
+    /*
+    I am a hack and I attach event listeners to the labels.
+    There seems to be no way to do it in the HighchartsHeatmap component -
+    the labels that are selected when HighchartsHeatmap.componentDidUpdate is called are redrawn when both components appear on the screen
+    */
+    Snap.selectAll('.highcharts-yaxis-labels > *')
+    .forEach(function (v) {
+      //careful - if the label doesn't fit, the element will have two children: displayed and full title
+      //here we assume the longest text is the correct title of the experiment
+      var title =
+        v.selectAll('*').items
+        .map(function(c){return c.node.textContent})
+        .reduce(function(l,r){return l.length > r.length? l : r}, "");
+      if (title) {
+        v.hover(
+          function onMouseEnterSendTitle() {
+            this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', title);
+          }
+            ,
+            function onMouseLeaveSendNull() {
+            this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', null);
+          } , this, this);
+      }
+    }, this);
+  }
+
+})
+
+var ContainerLoader = React.createClass({
     propTypes: {
         pathToFolderWithBundledResources: React.PropTypes.string.isRequired,
         sourceURL: React.PropTypes.string.isRequired,
@@ -71,18 +136,7 @@ var Container = React.createClass({
             "&conditionQuery=" + this.state.heatmapConfig.conditionQuery +
             "&organism=" + this.state.heatmapConfig.species;
 
-        var anatomogram =
-          (this.props.showAnatomogram && this.state.anatomogramData && Object.keys(this.state.anatomogramData).length)
-          ? Anatomogram.create({
-            pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
-            anatomogramData: this.state.anatomogramData,
-            expressedTissueColour: this._isExperimentPage()? "gray":"red",
-            hoveredTissueColour: this._isExperimentPage()? "red" :"purple",
-            profileRows: this.state.profiles.rows,
-            eventEmitter: this.props.anatomogramEventEmitter,
-            atlasBaseURL: this.props.atlasBaseURL
-          })
-          : null;
+
         return (
           <div ref="this">
               { this._isReferenceExperiment() && this.state.experimentData ?
@@ -95,20 +149,7 @@ var Container = React.createClass({
                         {this.state.error}
                     </div>
                   :
-                    <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
-                        <div ref="anatomogramEnsembl" className="gxaAside" style={{display: anatomogram ? "block": "none"}}>
-                            {anatomogram}
-                        </div>
-                        <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: anatomogram ? "270px" : "0", display:"block"}}>
-                            <HighchartsHeatmap
-                                profiles={this.state.profiles}
-                                heatmapConfig={this.state.heatmapConfig}
-                                anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-                                googleAnalyticsCallback={this.state.googleAnalyticsCallback}
-                                heatmapData={this.state.heatmapData}
-                                afterHeatmapRedrawn={this._attachListenersToLabels}/>
-                        </div>
-                    </div>
+                    <Container {...this.props} {...this.state} />
                   :
                   <div ref="loadingImagePlaceholder">
                       <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
@@ -126,36 +167,7 @@ var Container = React.createClass({
         );
     },
 
-    _attachListenersToLabels: function() {
-      /*
-      I am a hack and I attach event listeners to the labels.
-      There seems to be no way to do it in the HighchartsHeatmap component -
-      the labels that are selected when HighchartsHeatmap.componentDidUpdate is called are redrawn when both components appear on the screen
-      */
-      Snap.selectAll('.highcharts-yaxis-labels > *')
-      .forEach(function (v) {
-        //careful - if the label doesn't fit, the element will have two children: displayed and full title
-        //here we assume the longest text is the correct title of the experiment
-        var title =
-          v.selectAll('*').items
-          .map(function(c){return c.node.textContent})
-          .reduce(function(l,r){return l.length > r.length? l : r}, "");
-        if (title) {
-          v.hover(
-            function onMouseEnterSendTitle() {
-              this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', title);
-            }
-              ,
-              function onMouseLeaveSendNull() {
-              this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', null);
-            } , this, this);
-        }
-      }, this);
-    },
-
     componentDidUpdate: function() {
-        this._attachListenersToLabels();
-
         if (this.props.anatomogramDataEventEmitter) {
             if (this.state.anatomogramData && Object.keys(this.state.anatomogramData).length !== 0) {
                 this.props.anatomogramDataEventEmitter.emit('existAnatomogramData', true);
@@ -268,4 +280,4 @@ var Container = React.createClass({
 
 //*------------------------------------------------------------------*
 
-module.exports = Container;
+module.exports = ContainerLoader;
