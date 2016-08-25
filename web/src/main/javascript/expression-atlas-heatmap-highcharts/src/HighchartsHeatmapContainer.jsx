@@ -81,6 +81,7 @@ var Container = React.createClass({
         profileRows: this.props.profiles.rows,
         eventEmitter: this.props.anatomogramEventEmitter,
         atlasBaseURL: this.props.atlasBaseURL,
+        idsExpressedInExperiment:this.state.ontologyIdsForTissuesExpressedInAllRows,
         idsToBeHighlighted: this.state.ontologyIdsForHeatmapContentUnderFocus
       })
       : null;
@@ -105,12 +106,43 @@ var Container = React.createClass({
 
   getInitialState: function(){
     return {
-      ontologyIdsForHeatmapContentUnderFocus: []
+      ontologyIdsForHeatmapContentUnderFocus: [],
+      ontologyIdsForTissuesExpressedInAllRows: this._ontologyIdsForTissuesExpressedInAllRows()
     }
   },
 
   componentDidMount: function() {
     this._attachListenersToLabels();
+  },
+
+  _ontologyIdsForTissuesExpressedInAllRows: function(){
+    //TODO be less copypastey
+    var _expressedFactors= function(expressedFactorsPerRow){
+      var o = expressedFactorsPerRow;
+      var vs = Object.keys(o).map(function(e){return o[e];});
+      return (
+        [].concat.apply([],vs)
+        .filter(function uniq(e, ix, self) {
+            return self.indexOf(e) === ix;
+        })
+      );
+    };
+    var _expressedFactorsPerRow = function(profileRows){
+      return (
+        profileRows
+        .reduce(function(result,row){
+          result[row.name] =
+            row.expressions.filter(function(expression){
+              return expression.value;
+            })
+            .map(function(expression){
+              return expression.svgPathId
+            });
+          return result;
+        },{})
+      );
+    };
+    return _expressedFactors(_expressedFactorsPerRow(this.props.profiles.rows));
   },
 
   _ontologyIdsForTissuesExpressedInRow: function(rowTitle){
