@@ -46,18 +46,29 @@ var ExperimentDescription = React.createClass({
 
 });
 
+//http://stackoverflow.com/questions/3115982/how-to-check-if-two-arrays-are-equal-with-javascript
+var arraysEqual = function (a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length != b.length) return false;
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+};
+
 var HeatmapWithMargin = React.createClass({
   propTypes: {
     heatmapProps: React.PropTypes.object.isRequired,
     marginLeft: React.PropTypes.string.isRequired
   },
 
-  shouldComponentUpdate: function(){
+  shouldComponentUpdate: function(nextProps){
     /*If this rerenders after hovering on a row and the parent changing state,
       the labels will be redrawn and the hover off event won't work.
       If you need to update this component, compare previous and new props for equality here.
     */
-    return false;
+    return !arraysEqual(nextProps.heatmapProps.ontologyIdsToHighlight,this.props.heatmapProps.ontologyIdsToHighlight) ;
   },
 
   render: function(){
