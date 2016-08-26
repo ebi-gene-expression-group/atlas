@@ -14,7 +14,6 @@ require('./HighchartsHeatmap.css');
 var Button = require('react-bootstrap/lib/Button');
 var DownloadProfilesButton = require('download-profiles-button');
 
-var EventEmitter = require('events');
 var FormattersFactory = require('./Formatters.jsx');
 var PropTypes = require('./PropTypes.js');
 var createColorAxis = require('./ColoursForHighcharts.js');
@@ -25,10 +24,11 @@ var HeatmapContainer = React.createClass({
     propTypes: {
         profiles: React.PropTypes.object.isRequired,
         heatmapConfig: React.PropTypes.object.isRequired,
-        anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
+
         googleAnalyticsCallback: React.PropTypes.func.isRequired,
         heatmapData: PropTypes.HeatmapData,
-        afterHeatmapRedrawn: React.PropTypes.func.isRequired
+        afterHeatmapRedrawn: React.PropTypes.func.isRequired,
+        ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
     },
 
     getInitialState: function() {
@@ -131,13 +131,13 @@ var HeatmapContainer = React.createClass({
 
                 <HeatmapCanvas
                     marginRight={marginRight}
-                    anatomogramEventEmitter={this.props.anatomogramEventEmitter}
+                    ontologyIdsToHighlight={this.props.ontologyIdsToHighlight}
                     data={this._data()}
                     labels={this._labels()}
                     colorAxis={this.props.heatmapConfig.isExperimentPage ? createColorAxis(this.props.heatmapData.dataSeries) : undefined}
                     afterHeatmapRedrawn={this.props.afterHeatmapRedrawn}
                     formatters={FormattersFactory(this.props.heatmapConfig)}
-                />
+                    selectColumnCallback={this.props.selectColumnCallback}/>
             </div>
         );
     }
@@ -147,7 +147,7 @@ var HeatmapContainer = React.createClass({
 var HeatmapCanvas = React.createClass({
     propTypes: {
         marginRight: React.PropTypes.number.isRequired,
-        anatomogramEventEmitter : React.PropTypes.instanceOf(EventEmitter).isRequired,
+        ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         data: React.PropTypes.shape({
             dataSeries: PropTypes.PointsInDataSeries,
             xAxisCategories: PropTypes.AxisCategories,
@@ -163,7 +163,8 @@ var HeatmapCanvas = React.createClass({
           xAxis: PropTypes.Formatter,
           yAxis: PropTypes.Formatter,
           tooltip: PropTypes.Formatter
-        }).isRequired
+        }).isRequired,
+        selectColumnCallback:React.PropTypes.func.isRequired
     },
 
     getInitialState: function () {
@@ -171,27 +172,18 @@ var HeatmapCanvas = React.createClass({
             dataSeriesToShow: this.props.labels.map(function(e){return true;})
         })
     },
-
-
-    _anatomogramTissueMouseEnter: function(svgPathId) {
-        Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseEnter', {svgPathId: svgPathId});
-    },
-
-    _anatomogramTissueMouseLeave: function(svgPathId) {
-        Highcharts.fireEvent(this.refs.chart.getChart(), 'handleGxaAnatomogramTissueMouseLeave', {svgPathId: svgPathId});
-    },
-
-    _registerListenerIfNecessary: function(name, fn) {
-      if (this.props.anatomogramEventEmitter &&
-          this.props.anatomogramEventEmitter._events &&
-          !this.props.anatomogramEventEmitter._events.hasOwnProperty(name)) {
-              this.props.anatomogramEventEmitter.addListener(name, fn);
-          }
-    },
-
-    componentDidMount: function () {
-        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
-        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
+    componentWillReceiveProps: function(nextProps){
+      var forEachXNotInYsEmit = function(xs, ys, eventName){
+        xs
+        .filter(function(id){
+          return ys.indexOf(id)>-1;
+        })
+        .forEach(function(id){
+          Highcharts.fireEvent(this.refs.chart.getChart(), eventName, {svgPathId: id});
+        }.bind(this));
+      };
+      forEachXNotInYsEmit(nextProps.ontologyIdsToHighlight, this.props.ontologyIdsToHighlight,'handleGxaAnatomogramTissueMouseEnter');
+      forEachXNotInYsEmit(this.props.ontologyIdsToHighlight, nextProps.ontologyIdsToHighlight,'handleGxaAnatomogramTissueMouseLeave');
     },
 
     _dataToShow: function () {
@@ -269,8 +261,6 @@ var HeatmapCanvas = React.createClass({
     },
 
     componentDidUpdate: function () {
-        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
-        this._registerListenerIfNecessary('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
         this.props.afterHeatmapRedrawn();
     },
 
@@ -345,13 +335,13 @@ var HeatmapCanvas = React.createClass({
                     point: {
                         events: {
                             mouseOver: function() {
-                                this.series.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', this.series.xAxis.categories[this.x].id);
+                                this.series.chart.userOptions.selectColumnCallback(this.series.xAxis.categories[this.x].id);
                             }
                         }
                     },
                     events: {
                         mouseOut: function () {
-                            this.chart.userOptions.anatomogramEventEmitter.emit('gxaHeatmapColumnHoverChange', null);
+                            this.chart.userOptions.selectColumnCallback("");
                         }
                     },
 
@@ -436,7 +426,7 @@ var HeatmapCanvas = React.createClass({
                 useHTML: true,
                 formatter: (function() { var f =this.props.formatters.tooltip; return function(){return f(this.series,this.point);};}.bind(this))()
             },
-            anatomogramEventEmitter: this.props.anatomogramEventEmitter,
+            selectColumnCallback: this.props.selectColumnCallback,
             series: data.dataSeries
         }
       );

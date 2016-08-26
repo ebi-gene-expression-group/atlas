@@ -79,10 +79,12 @@ var Container = React.createClass({
         expressedTissueColour: this.props.heatmapConfig.isExperimentPage? "gray":"red",
         hoveredTissueColour: this.props.heatmapConfig.isExperimentPage? "red" :"purple",
         profileRows: this.props.profiles.rows,
-        eventEmitter: this.props.anatomogramEventEmitter,
         atlasBaseURL: this.props.atlasBaseURL,
         idsExpressedInExperiment:this.state.ontologyIdsForTissuesExpressedInAllRows,
-        idsToBeHighlighted: this.state.ontologyIdsForHeatmapContentUnderFocus
+        idsToBeHighlighted: this.state.ontologyIdsForHeatmapContentUnderFocus,
+        whenMousedOverIdsChange: function(nextIds,previousIds){
+          this.setState({ontologyIdsForPathsCurrentlyHoveredInAnatomogram: nextIds});
+        }.bind(this)
       })
       : null;
       return (
@@ -95,10 +97,13 @@ var Container = React.createClass({
               heatmapProps={{
                 profiles:this.props.profiles,
                 heatmapConfig:this.props.heatmapConfig,
-                anatomogramEventEmitter:this.props.anatomogramEventEmitter,
                 googleAnalyticsCallback:this.props.googleAnalyticsCallback,
                 heatmapData:this.props.heatmapData,
-                afterHeatmapRedrawn:this._attachListenersToLabels
+                afterHeatmapRedrawn:this._attachListenersToLabels,
+                ontologyIdsToHighlight: this.state.ontologyIdsForPathsCurrentlyHoveredInAnatomogram,
+                selectColumnCallback: function(selectedId){
+                  this.setState({ontologyIdsForHeatmapContentUnderFocus: selectedId? [selectedId]:[]})
+                }.bind(this)
               }}/>
         </div>
       );
@@ -107,7 +112,8 @@ var Container = React.createClass({
   getInitialState: function(){
     return {
       ontologyIdsForHeatmapContentUnderFocus: [],
-      ontologyIdsForTissuesExpressedInAllRows: this._ontologyIdsForTissuesExpressedInAllRows()
+      ontologyIdsForTissuesExpressedInAllRows: this._ontologyIdsForTissuesExpressedInAllRows(),
+      ontologyIdsForPathsCurrentlyHoveredInAnatomogram: []
     }
   },
 
@@ -185,12 +191,10 @@ var Container = React.createClass({
         v.hover(
           function onMouseEnterSendTitle() {
             this.setState({ontologyIdsForHeatmapContentUnderFocus: this._ontologyIdsForTissuesExpressedInRow(title)});
-            this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', title);
           }
             ,
             function onMouseLeaveSendNull() {
             this.setState({ontologyIdsForHeatmapContentUnderFocus: []});
-            this.props.anatomogramEventEmitter.emit('gxaHeatmapRowHoverChange', null);
           } , this, this);
       }
     }, this);
@@ -211,7 +215,6 @@ var ContainerLoader = React.createClass({
         disableGoogleAnalytics: React.PropTypes.bool.isRequired,
         fail: React.PropTypes.func,
         googleAnalyticsCallback: React.PropTypes.func,
-        anatomogramEventEmitter: React.PropTypes.object.isRequired,
         anatomogramDataEventEmitter: React.PropTypes.object
     },
 
