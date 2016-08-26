@@ -46,7 +46,7 @@ public class DifferentialProfilesViewModelBuilder {
     }
 
     private void addDoublePropertyIfNotNaN(JsonObject o,String name, double d){
-        if(! Double.isNaN(d)){
+        if(! Double.isNaN(d)&&!Double.isInfinite(d)){
             o.addProperty(name,FoldChangeRounder.round(d));
         }
     }

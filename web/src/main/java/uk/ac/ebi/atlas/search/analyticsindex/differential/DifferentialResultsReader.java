@@ -85,15 +85,21 @@ public class DifferentialResultsReader {
                 document.put("foldChange", FoldChangeRounder.round(foldChange));
             }
 
-            resultsWithLevels.put("maxDownLevel", FoldChangeRounder.round(maxDownLevel));
-            resultsWithLevels.put("minDownLevel", FoldChangeRounder.round(minDownLevel));
-            resultsWithLevels.put("minUpLevel", FoldChangeRounder.round(minUpLevel));
-            resultsWithLevels.put("maxUpLevel", FoldChangeRounder.round(maxUpLevel));
+            addDoublePropertyIfValid(resultsWithLevels,"maxDownLevel",maxDownLevel);
+            addDoublePropertyIfValid(resultsWithLevels,"minDownLevel",minDownLevel);
+            addDoublePropertyIfValid(resultsWithLevels,"minUpLevel",minUpLevel);
+            addDoublePropertyIfValid(resultsWithLevels,"maxUpLevel",maxUpLevel);
         }
 
         resultsWithLevels.put("results", filteredDocuments);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(resultsWithLevels);
+    }
+
+    private void addDoublePropertyIfValid(Map<String, Object> resultsWithLevels, String name, double value){
+        if(!Double.isInfinite(value)&&!Double.isNaN(value)){
+            resultsWithLevels.put(name,FoldChangeRounder.round(value));
+        }
     }
 }
