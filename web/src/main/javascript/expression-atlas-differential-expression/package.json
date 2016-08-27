@@ -15,7 +15,6 @@
     "cell-differential": "file:../atlas_modules/cell-differential",
     "contrast-tooltips": "file:../atlas_modules/contrast-tooltips",
     "display-levels-button": "file:../atlas_modules/display-levels-button",
-    "download-profiles-button": "file:../atlas_modules/download-profiles-button",
     "jquery": "^2.2.1",
     "jquery-ui-bundle": "^1.11.4",
     "jquery.browser": "^0.1.0",
