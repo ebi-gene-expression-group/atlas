@@ -1,0 +1,36 @@
+/*Responsive*/
+@media (max-width: 768px) {
+    .hidden-xs {display: none!important;} /*remove column like filter for small devices*/
+}
+
+/* Facets-tree container */
+.gxaFacetsContainer ul, .gxaFacetsContainer li {
+    list-style-type: none;
+    padding: 2px 0;
+}
+
+.gxaFacetsContainer .gxaFacetItem {
+    padding-bottom: 8px;
+}
+
+.gxaFacetsContainer .gxaFacetItem h4:first-letter, .gxaFacetsContainer .gxaFacetItem ul li span:first-letter {
+    text-transform: capitalize;
+}
+
+.gxaFacetsContainer .gxaFacetItem h4 {
+    font-weight: bold;
+    font-size: 133%;
+    padding: 0;
+}
+
+.gxaFacetsContainer .gxaFacetItem .gxaDisabledFacet span {
+    color: gray;
+}
+
+.gxaFacetsContainer .gxaDisabledCheckbox {
+    color: lightgray;
+}
+
+.gxaSpeciesFacet li span {
+    font-style: italic;
+}
