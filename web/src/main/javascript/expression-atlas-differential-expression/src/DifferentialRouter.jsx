@@ -22,7 +22,7 @@ const PushQueryIntoBrowserHistory = require('./urlMaintainer.js').differentialPu
 
 const RequiredString = React.PropTypes.string.isRequired;
 
-const DifferentialTab = React.createClass({
+const DifferentialRouter = React.createClass({
     propTypes: {
         hostUrl: RequiredString,
         geneQuery: RequiredString,
@@ -286,4 +286,4 @@ const DifferentialTab = React.createClass({
 
 //*------------------------------------------------------------------*
 
-module.exports = DifferentialTab;
+module.exports = DifferentialRouter;

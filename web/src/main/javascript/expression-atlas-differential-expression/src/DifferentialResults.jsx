@@ -9,7 +9,6 @@ const ReactDOM = require('react-dom');
 const DisplayLevelsButton = require('display-levels-button');
 const Legend = require('legend').LegendDifferential;
 const CellDifferential = require('cell-differential');
-const DownloadProfilesButton = require('download-profiles-button');
 const DifferentialDownloadButton = require('./DifferentialDownloadButton.jsx');
 const ContrastTooltips = require('contrast-tooltips');
 const AtlasFeedback = require('atlas-feedback');
@@ -125,19 +124,13 @@ const DifferentialResults = React.createClass({
                         atlasBaseURL={this.props.hostUrl + '/gxa'} minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
                     />
                 </div>
+
                 <div style={{display: 'inline-block', paddingLeft: '10px', verticalAlign: 'top'}}>
                     <DifferentialDownloadButton ref="downloadProfilesButton"
                                                 hostUrl={this.props.hostUrl}
-                                                results={this.props.results} />
-                </div>
-
-                <DownloadProfilesButton ref="downloadProfilesButton"
-                                        {...this.props.downloadOptions}
-                                        onDownloadCallbackForAnalytics={
-                                            function() {
-                                                this.props.googleAnalyticsCallback('send', 'event', 'DifferentialExpression', 'downloadData')
-                                            }.bind(this)}/>
-
+                                                results={this.props.results}
+                    />
+                 </div>
 
                 <table className="table-striped gxaDifferentialFacetedSearchResults">
                     <thead>

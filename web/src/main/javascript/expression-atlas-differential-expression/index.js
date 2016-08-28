@@ -1,1 +1,1 @@
-module.exports = require('./src/differentialRouter.js');
+module.exports = require('./src/differentialRenderer.js');
