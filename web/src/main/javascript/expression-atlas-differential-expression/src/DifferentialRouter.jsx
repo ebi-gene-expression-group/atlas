@@ -179,22 +179,12 @@ const DifferentialRouter = React.createClass({
         let differentialFacetsUrlObject = Url.parse(this.props.hostUrl),
             differentialResultsUrlObject = Url.parse(this.props.hostUrl);
 
-        if (window.location.pathname.match(/\/genes\//)) {
-            differentialFacetsUrlObject.pathname = 'gxa/json/genes/' + this.props.identifier + '/differentialFacets';
-            differentialResultsUrlObject.pathname = 'gxa/json/genes/' + this.props.identifier + '/differentialResults';
-        } else if (window.location.pathname.match(/\/genesets\//)) {
-            let queryParams = {organism: this.props.species};
-            differentialFacetsUrlObject.pathname = 'gxa/json/genesets/' + this.props.identifier + '/differentialFacets';
-            differentialFacetsUrlObject.query = queryParams;
-            differentialResultsUrlObject.pathname = 'gxa/json/genesets/' + this.props.identifier + '/differentialResults';
-            differentialFacetsUrlObject.query = queryParams;
-        } else {
-            let queryParams = {geneQuery: this.props.geneQuery, conditionQuery: this.props.conditionQuery, organism: this.props.species};
-            differentialFacetsUrlObject.pathname = 'gxa/json/query/differentialFacets';
-            differentialFacetsUrlObject.query = queryParams;
-            differentialResultsUrlObject.pathname = 'gxa/json/query/differentialResults';
-            differentialResultsUrlObject.query = queryParams;
-        }
+        differentialFacetsUrlObject.pathname = 'gxa/json/query/differentialFacets';
+        differentialResultsUrlObject.pathname = 'gxa/json/query/differentialResults';
+
+        let queryParams = {geneQuery: this.props.geneQuery, conditionQuery: this.props.conditionQuery, organism: this.props.species};
+        differentialFacetsUrlObject.query = queryParams;
+        differentialResultsUrlObject.query = queryParams;
 
         let onAjaxFailure = (jqXHR, textStatus, errorThrown) => {
             console.log("ERROR");

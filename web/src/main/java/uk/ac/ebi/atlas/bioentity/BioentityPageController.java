@@ -93,8 +93,8 @@ public abstract class BioentityPageController {
 
         model.addAllAttributes(pageDescriptionAttributes(identifier));
         /*
-	    TODO write a geneQuery that uniquely identifies the resource - I think it will be category:symbol or so
-	    . For now the callback might match slightly too much which is a bug.
+        TODO write a geneQuery that uniquely identifies the resource - I think it will be category:symbol or so.
+        TODO For now the callback might match slightly too much which is a bug.
          */
         model.addAttribute("geneQuery", SemanticQuery.create(identifier).toUrlEncodedJson());
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());

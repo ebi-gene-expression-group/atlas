@@ -5,7 +5,6 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 
 public class QueryBuilder {
 
-
     public String buildSolrQuery(Iterable<Pair<String, SemanticQuery>> searchQueries) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -23,7 +22,4 @@ public class QueryBuilder {
         return stringBuilder.toString();
     }
 
-    public String buildSolrQuery(String searchTerm, String searchField) {
-        return searchTerm.isEmpty() ? "" : String.format("%s:(%s)", searchField, searchTerm);
-    }
 }

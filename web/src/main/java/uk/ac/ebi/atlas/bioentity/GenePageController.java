@@ -42,16 +42,4 @@ public class GenePageController extends BioentityPageController {
                 "pageKeywords", "gene," + identifier + "," + bioEntityPropertyService.getSpecies()
         );
     }
-
-    @RequestMapping(value ={"/json/genes/{identifier:.*}/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String fetchDifferentialJsonFacets(@PathVariable String identifier) {
-        return differentialAnalyticsSearchService.fetchDifferentialFacetsForIdentifier(identifier);
-    }
-
-    @RequestMapping(value ={"/json/genes/{identifier:.*}/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String fetchDifferentialJsonResults(@PathVariable String identifier) {
-        return differentialAnalyticsSearchService.fetchDifferentialResultsForIdentifier(identifier);
-    }
 }

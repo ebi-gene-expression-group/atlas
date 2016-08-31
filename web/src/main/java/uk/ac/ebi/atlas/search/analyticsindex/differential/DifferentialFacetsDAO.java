@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -37,11 +36,6 @@ public class DifferentialFacetsDAO extends DifferentialAnalyticsDAO {
         searchQueriesBuilder.add(Pair.of(CONDITION_SEARCH_FIELD, conditionQuery));
         searchQueriesBuilder.add(Pair.of(SPECIES_FIELD, SemanticQuery.create(species)));
         String identifierSearch = queryBuilder.buildSolrQuery(searchQueriesBuilder.build());
-        return fetchFacetsAboveFoldChange(identifierSearch, DEFAULT_P_VALUE);
-    }
-
-    public String fetchFacetsAboveDefaultFoldChangeForIdentifier(String identifier) {
-        String identifierSearch = queryBuilder.buildSolrQuery(identifier, BIOENTITY_IDENTIFIER_FIELD);
         return fetchFacetsAboveFoldChange(identifierSearch, DEFAULT_P_VALUE);
     }
 

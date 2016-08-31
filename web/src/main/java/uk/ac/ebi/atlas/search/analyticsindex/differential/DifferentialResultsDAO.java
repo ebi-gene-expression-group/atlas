@@ -40,11 +40,6 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
                 ()));
     }
 
-    public String fetchDifferentialResultsAboveDefaultFoldChangeForIdentifier(String identifier) {
-        return fetchDifferentialResultsAboveDefaultFoldChange(queryBuilder.buildSolrQuery(identifier,
-                BIOENTITY_IDENTIFIER_FIELD));
-    }
-
     private String fetchDifferentialResultsAboveDefaultFoldChange(String q) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 

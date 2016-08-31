@@ -56,17 +56,4 @@ public class GeneSetPageController extends BioentityPageController {
         );
     }
 
-    @RequestMapping(value = {"/json/genesets/{identifier:.*}/differentialFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String fetchDifferentialJsonFacets(@PathVariable String identifier,
-                                              @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
-        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(SemanticQuery.create(identifier), species);
-    }
-
-    @RequestMapping(value = {"/json/genesets/{identifier:.*}/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String fetchDifferentialJsonResults(@PathVariable String identifier,
-                                               @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
-        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(SemanticQuery.create(identifier), species);
-    }
 }

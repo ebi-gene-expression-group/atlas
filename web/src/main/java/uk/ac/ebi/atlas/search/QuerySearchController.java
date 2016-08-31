@@ -88,8 +88,8 @@ public class QuerySearchController {
         }
         // Resolves to multiple IDs or the query includes a condition -> General results page
         else {
-            ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(geneQuery,
-                    conditionQuery, species);
+            ImmutableSet<String> experimentTypes =
+                    analyticsSearchService.fetchExperimentTypes(geneQuery, conditionQuery, species);
 
             boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
             boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
