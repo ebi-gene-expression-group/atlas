@@ -21,10 +21,16 @@ exports.differentialPush = function pushQueryIntoBrowserHistory(querySelect, rep
     };
 
     if (replace) {
-        history.replaceState(null, "", Url.format(newUrlObject));
+        history.replaceState(null, '', Url.format(newUrlObject));
     } else {
-        history.pushState(null, "", Url.format(newUrlObject));
+        history.pushState(null, '', Url.format(newUrlObject));
     }
+};
+
+exports.parseDifferentialUrlParameter = function getQuerySelectFromLocation(location = window.location) {
+    let currentURL = Url.parse(location.toString());
+    let differentialSelectParam = QueryString.parse(currentURL.query).ds;
+    return differentialSelectParam ? JSON.parse(differentialSelectParam) : {};
 };
 
 

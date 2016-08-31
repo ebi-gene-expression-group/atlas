@@ -4,13 +4,12 @@ const $ = require('jquery');
 $.ajaxSetup({ traditional:true });
 
 const Url = require('url');
-const QueryString = require('querystring');
 
 //*------------------------------------------------------------------*
 
 const Results= require('./DifferentialResults.jsx');
 const Facets = require('./DifferentialFacetsTree.jsx');
-const PushQueryIntoBrowserHistory = require('./urlMaintainer.js').differentialPush;
+const UrlManager = require('./urlManager.js');
 
 //*------------------------------------------------------------------*
 
@@ -49,24 +48,18 @@ const DifferentialRouter = React.createClass({
         // TODO Consider using https://github.com/reactjs/react-router
         window.addEventListener(
             'popstate',
-            () => { this.setState({querySelect: this._getQuerySelectFromLocation()}); },
+            () => { this.setState({querySelect: UrlManager.parseDifferentialUrlParameter()}); },
             false);
     },
 
-    _getQuerySelectFromLocation() {
-        let currentURL = Url.parse(window.location.toString());
-        let differentialSelectParam = QueryString.parse(currentURL.query).ds;
-        return differentialSelectParam ? JSON.parse(differentialSelectParam) : {};
-    },
-
-    _addElementToObjectOfArrays(obj, arrayName, element) {
+    _addElementToObjectOfArrays (obj, arrayName, element) {
         if (!obj[arrayName]) {
             obj[arrayName] = [];
         }
         obj[arrayName].push(element);
     },
 
-    _removeElementFromObjectOfArrays(obj, arrayName, element) {
+    _removeElementFromObjectOfArrays (obj, arrayName, element) {
         delete obj[arrayName].splice(obj[arrayName].indexOf(element), 1);
         if (obj[arrayName].length === 0) {
             delete obj[arrayName];
@@ -83,7 +76,7 @@ const DifferentialRouter = React.createClass({
         }
 
         // TODO Consider using https://github.com/reactjs/react-router
-        PushQueryIntoBrowserHistory(newQuerySelect, false);
+        UrlManager.differentialPush(newQuerySelect, false);
         this.setState({
             querySelect: newQuerySelect
         });
@@ -107,7 +100,7 @@ const DifferentialRouter = React.createClass({
         }
     },
 
-    _equalsToOrIncludes(obj, value) {
+    _equalsToOrIncludes (obj, value) {
         if (!!obj) {
             if (obj.constructor === Array) {
                 return obj.includes(value);
@@ -219,13 +212,13 @@ const DifferentialRouter = React.createClass({
                     success: resultsResponse => {
 
                         // TODO Consider using https://github.com/reactjs/react-router
-                        let querySelect = this._getQuerySelectFromLocation();
+                        let querySelect = UrlManager.parseDifferentialUrlParameter();
                         if (!querySelect.kingdom) {
                             querySelect.kingdom = facetsResponse.kingdom.map(facetItem =>
                                 facetItem.name
                             );
                         }
-                        PushQueryIntoBrowserHistory(querySelect, true);
+                        UrlManager.differentialPush(querySelect, true);
 
                         let facetsTreeData = this._transformFacetsResponseToArray(facetsResponse);
 
@@ -249,7 +242,7 @@ const DifferentialRouter = React.createClass({
         });
     },
 
-    _transformFacetsResponseToArray(facetsResponse) {
+    _transformFacetsResponseToArray (facetsResponse) {
         return Object.keys(facetsResponse).map(facetName => {
             return {
                 facetName: facetName,
