@@ -6,7 +6,7 @@ module.exports = {
     entry: {
         "atlas-feedback": './index.js',
         feedbackRenderer: './html/feedbackRenderer.js',
-	dependencies: ['react', 'react-dom']
+        dependencies: ['react', 'react-dom']
     },
 
     output: {
@@ -29,15 +29,15 @@ module.exports = {
 
     module: {
         loaders: [
-            	{test: /\.jsx$/, loader: 'babel'},
-            	{test: /\.css$/, loader: 'style-loader!css-loader'},
-        	{test: /\.(jpe?g|png|gif|svg)$/i,
+            {test: /\.jsx?$/, loader: 'babel', query: {presets: ['es2015', 'react']}},
+            {test: /\.css$/, loader: 'style-loader!css-loader'},
+            {test: /\.(jpe?g|png|gif|svg)$/i,
                 loaders: [
-                          'file?hash=sha512&digest=hex&name=[hash].[ext]',
-                	  'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                    'file?hash=sha512&digest=hex&name=[hash].[ext]',
+                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
                 ]
             }
-	]
+        ]
     },
 
     devServer: {
