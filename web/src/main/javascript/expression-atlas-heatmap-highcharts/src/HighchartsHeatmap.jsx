@@ -24,11 +24,11 @@ var HeatmapContainer = React.createClass({
     propTypes: {
         profiles: React.PropTypes.object.isRequired,
         heatmapConfig: React.PropTypes.object.isRequired,
-
         googleAnalyticsCallback: React.PropTypes.func.isRequired,
         heatmapData: PropTypes.HeatmapData,
-        afterHeatmapRedrawn: React.PropTypes.func.isRequired,
-        ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+        onHeatmapRedrawn: React.PropTypes.func.isRequired,
+        ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+        onOntologyIdIsUnderFocus : React.PropTypes.func.isRequired
     },
 
     getInitialState: function() {
@@ -135,9 +135,9 @@ var HeatmapContainer = React.createClass({
                     data={this._data()}
                     labels={this._labels()}
                     colorAxis={this.props.heatmapConfig.isExperimentPage ? createColorAxis(this.props.heatmapData.dataSeries) : undefined}
-                    afterHeatmapRedrawn={this.props.afterHeatmapRedrawn}
+                    onHeatmapRedrawn={this.props.onHeatmapRedrawn}
                     formatters={FormattersFactory(this.props.heatmapConfig)}
-                    selectColumnCallback={this.props.selectColumnCallback}/>
+                    onUserSelectsColumn={this.props.onOntologyIdIsUnderFocus}/>
             </div>
         );
     }
@@ -158,13 +158,13 @@ var HeatmapCanvas = React.createClass({
             colour: React.PropTypes.string
         })).isRequired,
         colorAxis: React.PropTypes.object,
-        afterHeatmapRedrawn: React.PropTypes.func.isRequired,
+        onHeatmapRedrawn: React.PropTypes.func.isRequired,
         formatters : React.PropTypes.shape({
           xAxis: PropTypes.Formatter,
           yAxis: PropTypes.Formatter,
           tooltip: PropTypes.Formatter
         }).isRequired,
-        selectColumnCallback:React.PropTypes.func.isRequired
+        onUserSelectsColumn:React.PropTypes.func.isRequired
     },
 
     getInitialState: function () {
@@ -248,7 +248,7 @@ var HeatmapCanvas = React.createClass({
     },
 
     componentDidUpdate: function () {
-        this.props.afterHeatmapRedrawn();
+        this.props.onHeatmapRedrawn();
     },
 
     _makeLabelToggle: function(ix){
@@ -384,13 +384,13 @@ var HeatmapDrawing = React.createClass({
                   point: {
                       events: {
                           mouseOver: function() {
-                              this.series.chart.userOptions.selectColumnCallback(this.series.xAxis.categories[this.x].id);
+                              this.series.chart.userOptions.onUserSelectsColumn(this.series.xAxis.categories[this.x].id);
                           }
                       }
                   },
                   events: {
                       mouseOut: function () {
-                          this.chart.userOptions.selectColumnCallback("");
+                          this.chart.userOptions.onUserSelectsColumn("");
                       }
                   },
 
@@ -475,7 +475,7 @@ var HeatmapDrawing = React.createClass({
               useHTML: true,
               formatter: (function() { var f =this.props.formatters.tooltip; return function(){return f(this.series,this.point);};}.bind(this))()
           },
-          selectColumnCallback: this.props.selectColumnCallback,
+          onUserSelectsColumn: this.props.onUserSelectsColumn,
           series: data.dataSeries
       }
     );

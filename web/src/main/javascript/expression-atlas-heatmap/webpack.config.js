@@ -35,6 +35,7 @@ module.exports = {
         loaders: [
             {test: /\.jsx$/, loader: 'babel'},
             {test: /\.css$/, loader: 'style-loader!css-loader'},
+            {test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 loaders: [

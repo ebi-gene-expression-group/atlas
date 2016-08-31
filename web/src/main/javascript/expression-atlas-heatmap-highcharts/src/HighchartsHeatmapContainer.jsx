@@ -81,51 +81,41 @@ var HeatmapWithMargin = React.createClass({
 });
 
 var Container = React.createClass({
-  render: function(){
-    var anatomogram =
-      (this.props.showAnatomogram && this.props.anatomogramData && Object.keys(this.props.anatomogramData).length)
-      ? Anatomogram.create({
-        pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
-        anatomogramData: this.props.anatomogramData,
-        expressedTissueColour: this.props.heatmapConfig.isExperimentPage? "gray":"red",
-        hoveredTissueColour: this.props.heatmapConfig.isExperimentPage? "red" :"purple",
-        profileRows: this.props.profiles.rows,
-        atlasBaseURL: this.props.atlasBaseURL,
-        idsExpressedInExperiment:this.state.ontologyIdsForTissuesExpressedInAllRows,
-        idsToBeHighlighted: this.state.ontologyIdsForHeatmapContentUnderFocus,
-        whenMousedOverIdsChange: function(nextIds,previousIds){
-          this.setState({ontologyIdsForPathsCurrentlyHoveredInAnatomogram: nextIds});
-        }.bind(this)
-      })
-      : null;
-      return (
-        <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
-            <div ref="anatomogramEnsembl" className="gxaAside" style={{display: anatomogram ? "block": "none"}}>
-                {anatomogram}
-            </div>
-            <HeatmapWithMargin
-              marginLeft={ anatomogram ? "270px" : "0"}
-              heatmapProps={{
-                profiles:this.props.profiles,
-                heatmapConfig:this.props.heatmapConfig,
-                googleAnalyticsCallback:this.props.googleAnalyticsCallback,
-                heatmapData:this.props.heatmapData,
-                afterHeatmapRedrawn:this._attachListenersToLabels,
-                ontologyIdsToHighlight: this.state.ontologyIdsForPathsCurrentlyHoveredInAnatomogram,
-                selectColumnCallback: function(selectedId){
-                  this.setState({ontologyIdsForHeatmapContentUnderFocus: selectedId? [selectedId]:[]})
-                }.bind(this)
-              }}/>
-        </div>
-      );
-  },
 
-  getInitialState: function(){
+  getDefaultProps: function(){
     return {
-      ontologyIdsForHeatmapContentUnderFocus: [],
-      ontologyIdsForTissuesExpressedInAllRows: this._ontologyIdsForTissuesExpressedInAllRows(),
-      ontologyIdsForPathsCurrentlyHoveredInAnatomogram: []
-    }
+      referenceToAnatomogramContainer: "anatomogramContainer"
+    };
+  },
+  render: function(){
+    var heatmapProps = {
+      profiles:this.props.profiles,
+      heatmapConfig:this.props.heatmapConfig,
+      googleAnalyticsCallback:this.props.googleAnalyticsCallback,
+      heatmapData:this.props.heatmapData,
+      onHeatmapRedrawn:this._attachListenersToLabels,
+    };//overriden: ontologyIdsToHighlight, onOntologyIdIsUnderFocus
+    var anatomogramConfig = {
+      pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
+      anatomogramData: this.props.anatomogramData,
+      expressedTissueColour: this.props.heatmapConfig.isExperimentPage? "gray":"red",
+      hoveredTissueColour: this.props.heatmapConfig.isExperimentPage? "red" :"purple",
+      atlasBaseURL: this.props.atlasBaseURL,
+      idsExpressedInExperiment:this._ontologyIdsForTissuesExpressedInAllRows()
+    };
+    var Wrapped = Anatomogram.wrapComponent(anatomogramConfig, HighchartsHeatmap, heatmapProps);
+    return (
+      this._showAnatomogram()
+      ? <Wrapped ref={this.props.referenceToAnatomogramContainer}/>
+      :<HighchartsHeatmap {...heatmapProps} />
+    );
+  },
+  _showAnatomogram: function(){
+    return (
+      this.props.showAnatomogram
+      && this.props.anatomogramData
+      && Object.keys(this.props.anatomogramData).length
+    );
   },
 
   componentDidMount: function() {
@@ -185,6 +175,9 @@ var Container = React.createClass({
   },
 
   _attachListenersToLabels: function() {
+    if(!this._showAnatomogram()){
+      return;
+    }
     /*
     I am a hack and I attach event listeners to the labels.
     There seems to be no way to do it in the HighchartsHeatmap component -
@@ -201,11 +194,11 @@ var Container = React.createClass({
       if (title) {
         v.hover(
           function onMouseEnterSendTitle() {
-            this.setState({ontologyIdsForHeatmapContentUnderFocus: this._ontologyIdsForTissuesExpressedInRow(title)});
+            this.refs[this.props.referenceToAnatomogramContainer].setState({ontologyIdsForComponentContentUnderFocus: this._ontologyIdsForTissuesExpressedInRow(title)});
           }
             ,
             function onMouseLeaveSendNull() {
-            this.setState({ontologyIdsForHeatmapContentUnderFocus: []});
+            this.refs[this.props.referenceToAnatomogramContainer].setState({ontologyIdsForComponentContentUnderFocus: []});
           } , this, this);
       }
     }, this);
