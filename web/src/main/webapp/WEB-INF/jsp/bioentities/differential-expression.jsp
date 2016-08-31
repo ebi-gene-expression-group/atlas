@@ -14,7 +14,7 @@
 
 <script>
     <c:if test="${hasDifferentialResults}">
-    facetedSearch.differential({
+    expressionAtlasDifferentialExpression({
         target: "gxaDifferentialTab",
         identifier: "${identifier}",
         geneQuery: "${geneQuery}",
