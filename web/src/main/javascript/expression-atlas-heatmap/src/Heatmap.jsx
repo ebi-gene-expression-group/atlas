@@ -10,6 +10,7 @@ var Slider = require('rc-slider');
 require('rc-slider/assets/index.css');
 
 var DownloadProfilesButton =require('download-profiles-button');
+var shallowCompare = require('react-addons-shallow-compare');
 
 var $ = require('jquery');
 
@@ -227,6 +228,9 @@ var Heatmap = React.createClass({
         }
       }
       return false;
+    },
+    shouldComponentUpdate: function(nextProps,nextState){
+      return shallowCompare(this, nextProps, nextState);
     },
 
     componentWillUpdate: function(nextProps, nextState) {

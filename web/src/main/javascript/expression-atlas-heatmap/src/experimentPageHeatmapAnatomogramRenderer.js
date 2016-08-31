@@ -10,7 +10,6 @@ var ReactDOM = require('react-dom');
 var HeatmapAnatomogramContainer = require('./ExperimentPageHeatmapAnatomogramContainer.jsx');
 
 var ExperimentTypes = require('./experimentTypes.js');
-
 //*------------------------------------------------------------------*
 
 /**

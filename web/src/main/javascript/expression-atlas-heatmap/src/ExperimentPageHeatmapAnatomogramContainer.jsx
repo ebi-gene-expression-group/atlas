@@ -142,9 +142,30 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
       anatomogramEventEmitter.setMaxListeners(0);
       return {ensemblEventEmitter: ensemblEventEmitter, anatomogramEventEmitter:anatomogramEventEmitter };
     },
+    _ontologyIdsForTissuesExpressedInRow: function(rowTitle){
+      //TODO be more sane
+      var _expressedFactorsPerRow = function(profileRows){
+        return (
+          profileRows
+          .reduce(function(result,row){
+            result[row.name] =
+              row.expressions.filter(function(expression){
+                return expression.value;
+              })
+              .map(function(expression){
+                return expression.svgPathId
+              });
+            return result;
+          },{})
+        );
+      };
+      return (
+        _expressedFactorsPerRow(this.props.profiles.rows)[rowTitle]
+      )
+    },
 
     getInitialState: function () {
-      return {googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function (){}}
+      return {googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function (){},idsToBeHighlighted: []}
     },
 
     render: function () {
@@ -177,7 +198,8 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                           hoveredTissueColour: anatomogramHoveredTissueColour,
                           profileRows: this.props.profiles.rows,
                           eventEmitter: this.props.anatomogramEventEmitter,
-                          atlasBaseURL: this.props.atlasBaseURL
+                          atlasBaseURL: this.props.atlasBaseURL,
+                          idsToBeHighlighted: this.state.idsToBeHighlighted
                         })
                         : null}
                     { this.props.heatmapConfig.enableEnsemblLauncher ?
@@ -212,13 +234,23 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
     },
 
     componentDidMount: function() {
-        var $anatomogramEnsemblAside = $(ReactDOM.findDOMNode(this.refs.anatomogramEnsembl));
-        $anatomogramEnsemblAside.hcSticky({responsive: true});
+      var $anatomogramEnsemblAside = $(ReactDOM.findDOMNode(this.refs.anatomogramEnsembl));
+      $anatomogramEnsemblAside.hcSticky({responsive: true});
 
-        $(document).ready(function () {
-          this.setState({googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function (){}})
-        }.bind(this)
-        )
+      $(document).ready(function () {
+        this.setState({googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function (){}})
+      }.bind(this)
+      )
+      this.props.anatomogramEventEmitter
+      .addListener('gxaHeatmapColumnHoverChange',
+        function(columnId){
+          this.setState({idsToBeHighlighted:columnId?[columnId]:[]});
+        }.bind(this));
+      this.props.anatomogramEventEmitter
+      .addListener('gxaHeatmapRowHoverChange',
+        function(rowId){
+          this.setState({idsToBeHighlighted: rowId? this._ontologyIdsForTissuesExpressedInRow(rowId): []});
+      }.bind(this));
     }
 });
 
