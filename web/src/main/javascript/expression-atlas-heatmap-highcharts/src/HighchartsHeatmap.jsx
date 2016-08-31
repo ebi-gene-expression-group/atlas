@@ -17,6 +17,7 @@ var DownloadProfilesButton = require('download-profiles-button');
 var FormattersFactory = require('./Formatters.jsx');
 var PropTypes = require('./PropTypes.js');
 var createColorAxis = require('./ColoursForHighcharts.js');
+var hash = require('object-hash');
 
 //*------------------------------------------------------------------*
 
@@ -318,15 +319,7 @@ var HeatmapDrawing = React.createClass({
   },
 
   shouldComponentUpdate: function(nextProps){
-    //We only want to redraw the heatmap when its data changes.
-    var hash = function(o){
-      return JSON.stringify([].concat(
-        o.dataSeries.map(function(e){return e.data.length}),
-        o.xAxisCategories.map(function(e){return e.id}),
-        o.yAxisCategories.map(function(e){return e.id})
-      ).sort());
-    };
-    return hash(nextProps.dataForTheChart)!==hash(this.props.dataForTheChart);
+    return hash.MD5(nextProps.dataForTheChart)!==hash.MD5(this.props.dataForTheChart);
   },
 
   componentWillReceiveProps: function(nextProps){
