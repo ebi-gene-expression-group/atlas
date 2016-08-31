@@ -255,7 +255,7 @@ var ContainerLoader = React.createClass({
         }
     },
 
-    handleAjaxFailure: function (jqXHR, textStatus, errorThrown) {
+    _handleAjaxFailure: function (jqXHR, textStatus, errorThrown) {
       if (this.props.fail) {
         this.props.fail(jqXHR, textStatus, errorThrown);
       } else {
@@ -269,11 +269,11 @@ var ContainerLoader = React.createClass({
       }
     },
 
-    onAjaxDone: function (data, textStatus, jqXHR){
+    _onAjaxDone: function (data, textStatus, jqXHR){
       if(! this.isMounted()){
-        this.handleAjaxFailure(jqXHR, textStatus, "DOM element not mounted!");
+        this._handleAjaxFailure(jqXHR, textStatus, "DOM element not mounted!");
       } else if (data.hasOwnProperty('error')) {
-        this.handleAjaxFailure(jqXHR, textStatus, data.error);
+        this._handleAjaxFailure(jqXHR, textStatus, data.error);
       } else {
         this.onAjaxSuccessful(data);
       }
@@ -323,7 +323,7 @@ var ContainerLoader = React.createClass({
             method: "GET"
         };
 
-        $.ajax(httpRequest).done(this.onAjaxDone).fail(this.handleAjaxFailure);
+        $.ajax(httpRequest).done(this._onAjaxDone).fail(this._handleAjaxFailure);
 
         if (!this.props.disableGoogleAnalytics) {
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
