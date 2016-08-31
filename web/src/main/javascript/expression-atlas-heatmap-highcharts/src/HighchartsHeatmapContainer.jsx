@@ -107,7 +107,7 @@ var Container = React.createClass({
     return (
       this._showAnatomogram()
       ? <Wrapped ref={this.props.referenceToAnatomogramContainer}/>
-      :<HighchartsHeatmap {...heatmapProps} />
+      :<HighchartsHeatmap {...heatmapProps} ontologyIdsToHighlight={[]} onOntologyIdIsUnderFocus={function(){}}/>
     );
   },
   _showAnatomogram: function(){
