@@ -8,7 +8,8 @@ module.exports = {
         expressionAtlasHeatmap: './expression-atlas-heatmap',
         expressionAtlasHeatmapHighcharts:'./expression-atlas-heatmap-highcharts',
         experimentPageHeatmap: './expression-atlas-heatmap/src/experimentPageHeatmapAnatomogramRenderer.js',
-        facetedSearch: './faceted-search',
+        expressionAtlasBaselineExpression: './expression-atlas-baseline-expression',
+        expressionAtlasDifferentialExpression: './expression-atlas-differential-expression',
         dependencies: ['react', 'react-dom', 'react-radio-group','react-prop-types-check',
                        'react-bootstrap/lib/DropdownButton', 'react-bootstrap/lib/MenuItem', 'react-bootstrap/lib/FormGroup',
                        'react-bootstrap/lib/FormControl', 'react-bootstrap', 'react-bootstrap/lib/Button',
@@ -44,7 +45,7 @@ module.exports = {
 
     module: {
         loaders: [
-            {test: /\.jsx$/, loader: 'babel-loader'},
+            {test: /\.jsx?$/, loader: 'babel', query: {presets: ['es2015', 'react']}},
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
             {test: /\.json$/, loader: 'json'},
