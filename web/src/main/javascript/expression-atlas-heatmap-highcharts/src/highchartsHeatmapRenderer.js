@@ -15,7 +15,7 @@ var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
  * @param {Object}      options
  * @param {string}          options.proxyPrefix - Proxy URL with protocol: required by CTTV
  * @param {boolean=}        options.disableGoogleAnalytics - Disable Google Analytics: required by CTTV
- * @param {string=}         options.atlasHost - Atlas host with port (note: don’t include port)
+ * @param {string=}         options.atlasHost - Atlas host with protocol and port
  * @param {string}          options.sourceURL - Where to source the data from
  * *                        e.g. /json/experiments/E-PROT-1, /json/genes/ENSG00000005801, /json/genesets/GO:0000001 or a widget endpoint
  * @param {string}          options.params - Alternate way of sourcing data if you do not provide the sourceURL
@@ -31,7 +31,7 @@ var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
 exports.render = function(options) {
 
     var protocol = window.location.protocol + "//",
-        atlasHost = options.atlasHost === undefined ? "www.ebi.ac.uk" : options.atlasHost,
+        atlasHost = options.atlasHost === undefined ? "https://www.ebi.ac.uk" : options.atlasHost,
         atlasPath = "/gxa";
 
     var linksAtlasBaseURL =
