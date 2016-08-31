@@ -1,7 +1,0 @@
-.gxaNoTextButton {
-    border: 1px solid #ccc !important; /* overrides ebi-visual.css */
-}
-
-.gxaNoTextButton .ui-button-text {
-    padding: 2px;
-}
