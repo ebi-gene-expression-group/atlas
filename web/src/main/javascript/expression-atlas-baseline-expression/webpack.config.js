@@ -4,12 +4,13 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
-        facetedSearch: './index.js',
-        dependencies: ['react', 'react-dom', 'react-radio-group',
-                       'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jQuery-ajaxTransport-XDomainRequest', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
-                       'urijs', 'query-string', 'atlas-modernizr',
-                       'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
-                       'highcharts-more', 'react-highcharts']
+        baselineExpression: './index.js',
+        dependencies: ['react', 'react-dom', 'events', 'url', 'querystring', 'jquery', 'jquery.browser'
+                       // 'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
+                       // 'urijs', 'query-string', 'atlas-modernizr',
+                       // 'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
+                       // 'highcharts-more', 'react-highcharts'
+        ]
     },
 
     output: {
@@ -32,7 +33,7 @@ module.exports = {
 
     module: {
         loaders: [
-            {test: /\.jsx$/, loader: 'babel'},
+            {test: /\.jsx?$/, loader: 'babel', query: {presets: ['es2015', 'react']}},
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.(jpe?g|png|gif|svg)$/i,
                 loaders: [

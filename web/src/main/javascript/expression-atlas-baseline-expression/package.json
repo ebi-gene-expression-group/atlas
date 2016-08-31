@@ -1,0 +1,37 @@
+{
+  "name": "faceted-search-results",
+  "version": "1.0.0",
+  "description": "Baseline expression component",
+  "main": "index.js",
+  "scripts": {
+    "full-build": "rm -rf node_modules/ && npm install && webpack --devtool source-map",
+    "dev": "npm install && webpack-dev-server --watch --hot --inline --devtool source-map"
+  },
+  "author": "Wojciech Bażant<wbazant@ebi.ac.uk>, Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "atlas-feedback": "file:../atlas_modules/atlas-feedback",
+    "expression-atlas-heatmap-highcharts": "file:../expression-atlas-heatmap-highcharts",
+    "jquery": "^2.2.1",
+    "jquery.browser": "^0.1.0",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-ebi-species": "0.0.4",
+    "react-highcharts": "^8.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "clean-webpack-plugin": "^0.1.8",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
+    "image-webpack-loader": "^1.6.3",
+    "imports-loader": "^0.6.5",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  }
+}

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/atlas-content.css">
 
     <script src="../dist/vendor.bundle.js"></script>
-    <script src="../dist/facetedSearch.bundle.js"></script>
+    <script src="../dist/baselineExpression.bundle.js"></script>
 
     <style>
         .ui-button-text {
@@ -36,8 +36,6 @@
 <div id="wrapper" class="container_24">
     <div id="content" class="grid_24">
         <div id="atlas-content">
-            <div class="grid_5 alpha" id="facets">If you see this then something is wrong.</div>
-            <div class="grid_19 omega" id="results"></div>
         </div>
     </div>
 </div>
@@ -45,31 +43,21 @@
 </body>
 
 <script>
-    var facetsData = {
-        "Homo sapiens":
-                [{"name":"CELL_LINE","value":"Cell line"},
-                 {"name":"ORGANISM_PART","value":"Organism part"}],
-        "Rattus norvegicus":
-                [{"name":"ORGANISM_PART","value":"Organism part"}],
-        "Caenorhabditis elegans":
-                [{"name":"DEVELOPMENTAL_STAGE","value":"Developmental stage"}],
-        "Pan paniscus":
-                [{"name":"ORGANISM_PART","value":"Organism part"}],
-        "Pan troglodytes":
-                [{"name":"ORGANISM_PART","value":"Organism part"}],
-        "Mus musculus":
-                [{"name":"ORGANISM_PART","value":"Organism part"}],
-        "Gallus gallus":
-                [{"name":"ORGANISM_PART","value":"Organism part"}],
-        "Pongo pygmaeus":
-                [{"name":"ORGANISM_PART","value":"Organism part"}],
-        "Gorilla gorilla":
-                [{"name":"ORGANISM_PART","value":"Organism part"}],
-        "Monodelphis domestica":
-                [{"name":"ORGANISM_PART","value":"Organism part"}]};
 
-    var baselineResultsData = [];
-    facetedSearch.baseline({facetsContainer: "facets", resultsContainer: "results", facetsTreeData: facetsData, atlasHost: "localhost:8080", queryType: "gene", identifier: "zinc finger", selectedSpecies: ""});
+    var facetsData = {
+        "homo sapiens":
+                [{"name":"ORGANISM_PART","value":"Organism part"},
+                 {"name":"CELL_LINE","value":"Cell line"}],
+        "caenorhabditis elegans":
+                [{"name":"DEVELOPMENTAL_STAGE","value":"Developmental stage"}],
+        "mus musculus":
+                [{"name":"ORGANISM_PART","value":"Organism part"}],
+        "rattus norvegicus":
+                [{"name":"ORGANISM_PART","value":"Organism part"}]
+    };
+
+    baselineExpression({atlasHostUrl: 'http://localhost:8080', target: 'atlas-content', facetsTreeData: facetsData, geneQuery: '[{"value":"GO:0008150"}]', conditionQuery: '', species: ''})
+
 </script>
 
 </html>
