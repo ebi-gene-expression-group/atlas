@@ -14,8 +14,6 @@ if [ $# -ne 1 ] || [[ $1 -ne "ci" && $1 -ne "prod" ]] ; then
         exit;
 fi
 
-export http_proxy=http://www-proxy.ebi.ac.uk:3128
-export https_proxy=$http_proxy
 
 export NVM_DIR="/nfs/ma/home/ma-svc/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
