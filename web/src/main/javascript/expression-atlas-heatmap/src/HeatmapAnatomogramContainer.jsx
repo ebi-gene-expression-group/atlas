@@ -48,7 +48,122 @@ var ExperimentDescription = React.createClass({
     }
 
 });
+var AsynchronouslyLoadedHeatmapAnatomogramContainer = React.createClass({
+  getDefaultProps: function(){
+    return {
+      referenceToAnatomogramContainer: "anatomogramContainer"
+    }
+  },
 
+
+  _ontologyIdsForTissuesExpressedInAllRows: function(){
+    //TODO be less copypastey
+    var _expressedFactors= function(expressedFactorsPerRow){
+      var o = expressedFactorsPerRow;
+      var vs = Object.keys(o).map(function(e){return o[e];});
+      return (
+        [].concat.apply([],vs)
+        .filter(function uniq(e, ix, self) {
+            return self.indexOf(e) === ix;
+        })
+      );
+    };
+    var _expressedFactorsPerRow = function(profileRows){
+      return (
+        profileRows
+        .reduce(function(result,row){
+          result[row.name] =
+            row.expressions.filter(function(expression){
+              return expression.value;
+            })
+            .map(function(expression){
+              return expression.svgPathId
+            });
+          return result;
+        },{})
+      );
+    };
+    return _expressedFactors(_expressedFactorsPerRow(this.props.profiles.rows));
+  },
+  _ontologyIdsForTissuesExpressedInRow: function(rowTitle){
+    //TODO be more sane
+    var _expressedFactorsPerRow = function(profileRows){
+      return (
+        profileRows
+        .reduce(function(result,row){
+          result[row.name] =
+            row.expressions.filter(function(expression){
+              return expression.value;
+            })
+            .map(function(expression){
+              return expression.svgPathId
+            });
+          return result;
+        },{})
+      );
+    };
+    return (
+      _expressedFactorsPerRow(this.props.profiles.rows)[rowTitle]
+    )
+  },
+  render: function (){
+
+    var anatomogramExpressedTissueColour = this.props.type.isMultiExperiment ? "red" : "gray";
+    var anatomogramHoveredTissueColour = this.props.type.isMultiExperiment ? "indigo" : "red";
+    var anatomogramConfig = {
+      pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
+      anatomogramData: this.props.anatomogramData,
+      expressedTissueColour: anatomogramExpressedTissueColour,
+      hoveredTissueColour: anatomogramHoveredTissueColour,
+      idsExpressedInExperiment:this._ontologyIdsForTissuesExpressedInAllRows(),
+      eventEmitter: this.props.anatomogramEventEmitter,
+      atlasBaseURL: this.props.atlasBaseURL
+    }
+
+    var homoSapiensCellLine = this.props.heatmapConfig.species === "homo sapiens" && new URI(this.props.sourceURL).search(true).source === "CELL_LINE";
+    var Component, componentProps;
+    if(homoSapiensCellLine){
+      Component = ExperimentsList;
+      componentProps = {
+         profiles:this.props.profiles,
+         atlasBaseURL:this.props.atlasBaseURL,
+         linksAtlasBaseURL:this.props.linksAtlasBaseURL,
+         geneQuery:this.props.heatmapConfig.geneQuery
+      };
+    } else {
+      Component = Heatmap;
+      componentProps = {
+        type:this.props.type,
+                 heatmapConfig:this.props.heatmapConfig,
+                 columnHeaders:this.props.columnHeaders,
+                 profiles:this.props.profiles,
+                 geneSetProfiles:this.props.geneSetProfiles,
+                 anatomogramEventEmitter:this.props.anatomogramEventEmitter,
+                 atlasBaseURL:this.props.atlasBaseURL,
+                 linksAtlasBaseURL:this.props.linksAtlasBaseURL,
+                 googleAnalyticsCallback:this.props.googleAnalyticsCallback
+      };
+    }
+    var Wrapped = Anatomogram.wrapComponent(anatomogramConfig, Component, componentProps);
+    return (
+      this.props.anatomogramData
+          ? <Wrapped ref={this.props.referenceToAnatomogramContainer}/>
+          :<Component {...componentProps} />
+    )
+  },
+  componentDidMount: function(){
+    this.props.anatomogramEventEmitter
+    .addListener('gxaHeatmapColumnHoverChange',
+      function(columnId){
+        this.refs[this.props.referenceToAnatomogramContainer].setState({ontologyIdsForComponentContentUnderFocus:columnId?[columnId]:[]});
+      }.bind(this));
+    this.props.anatomogramEventEmitter
+    .addListener('gxaHeatmapRowHoverChange',
+      function(rowId){
+        this.refs[this.props.referenceToAnatomogramContainer].setState({ontologyIdsForComponentContentUnderFocus: rowId? this._ontologyIdsForTissuesExpressedInRow(rowId): []});
+    }.bind(this));
+  }
+});
 var HeatmapAnatomogramContainer = React.createClass({
     propTypes: {
         pathToFolderWithBundledResources: React.PropTypes.string.isRequired,
@@ -64,31 +179,16 @@ var HeatmapAnatomogramContainer = React.createClass({
         fail: React.PropTypes.func,
         googleAnalyticsCallback: React.PropTypes.func,
         anatomogramEventEmitter: React.PropTypes.object.isRequired,
-        facetsEventEmitter: React.PropTypes.object
+        facetsEventEmitter: React.PropTypes.object,
     },
 
     render: function () {
-
-        var anatomogramExpressedTissueColour = this.props.type.isMultiExperiment ? "red" : "gray";
-        var anatomogramHoveredTissueColour = this.props.type.isMultiExperiment ? "indigo" : "red";
 
         var geneURL =
             this.props.linksAtlasBaseURL + "/query" +
             "?geneQuery=" + this.state.heatmapConfig.geneQuery +
             "&organism=" + this.state.heatmapConfig.species;
 
-        var display;
-        var marginLeft;
-
-        if (this.state.anatomogramData) {
-            display = this.props.showAnatomogram ? "block" : "none";
-            marginLeft = this.props.showAnatomogram ? "270px" : "0";
-        } else {
-            display = "none";
-            marginLeft = "0";
-        }
-
-        var homoSapiensCellLine = this.state.heatmapConfig.species === "homo sapiens" && new URI(this.props.sourceURL).search(true).source === "CELL_LINE";
 
         return (
             <div ref="this">
@@ -98,46 +198,9 @@ var HeatmapAnatomogramContainer = React.createClass({
                     : null
                 }
 
-                { this.state.heatmapConfig ?
-                    <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
-
-                        <div ref="anatomogramEnsembl" className="gxaAside" style={{display: display}}>
-                            { this.state.anatomogramData ?
-                              Anatomogram.create({
-                                pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
-                                anatomogramData: this.state.anatomogramData,
-                                expressedTissueColour: anatomogramExpressedTissueColour,
-                                hoveredTissueColour: anatomogramHoveredTissueColour,
-                                profileRows: this.state.profiles.rows,
-                                eventEmitter: this.props.anatomogramEventEmitter,
-                                atlasBaseURL: this.props.atlasBaseURL
-                              })
-                                : null
-                            }
-                        </div>
-
-                        { !homoSapiensCellLine ?
-                            <div id="heatmap-react" className="gxaInnerHeatmap" style={{marginLeft: marginLeft}}>
-                                <Heatmap type={this.props.type}
-                                         heatmapConfig={this.state.heatmapConfig}
-                                         columnHeaders={this.state.columnHeaders}
-                                         profiles={this.state.profiles}
-                                         geneSetProfiles={this.state.geneSetProfiles}
-                                         anatomogramEventEmitter={this.props.anatomogramEventEmitter}
-                                         atlasBaseURL={this.props.atlasBaseURL}
-                                         linksAtlasBaseURL={this.props.linksAtlasBaseURL}
-                                         googleAnalyticsCallback={this.state.googleAnalyticsCallback}/>
-                            </div> :
-                            <div style={{marginLeft: marginLeft}}>
-                                <ExperimentsList profiles={this.state.profiles}
-                                                 atlasBaseURL={this.props.atlasBaseURL}
-                                                 linksAtlasBaseURL={this.props.linksAtlasBaseURL}
-                                                 geneQuery={this.state.heatmapConfig.geneQuery}/>
-                            </div>
-                        }
-
-                    </div>
-                    :
+                { this.state.heatmapConfig
+                  ?   <AsynchronouslyLoadedHeatmapAnatomogramContainer {...this.props} {...this.state} />
+                  :
                     <div ref="loadingImagePlaceholder">
                         <img src={this.props.atlasBaseURL + "/resources/images/loading.gif"}/>
                     </div>
@@ -183,18 +246,9 @@ var HeatmapAnatomogramContainer = React.createClass({
             anatomogramData: data.anatomogram,
             experimentData: data.experiment
         });
-
-        if (this.props.facetsEventEmitter) {
-            if (this.state.anatomogramData) {
-                this.props.facetsEventEmitter.emit('existAnatomogramData', true);
-            } else {
-                this.props.facetsEventEmitter.emit('existAnatomogramData', false);
-            }
-        }
     },
 
     componentDidMount: function() {
-
         var handleError = function(jqXHR, textStatus, errorThrown) {
             if (this.props.fail) {
                 this.props.fail(jqXHR, textStatus, errorThrown);

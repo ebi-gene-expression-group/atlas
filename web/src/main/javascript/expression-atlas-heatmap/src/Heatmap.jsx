@@ -240,6 +240,19 @@ var Heatmap = React.createClass({
           this.setState({userInteractedWithTheHeatmap: true});
         }
       }
+      if(nextProps.ontologyIdsToHighlight){
+        var forEachXNotInYsEmit = function(xs, ys, eventName){
+          xs
+          .filter(function(id){
+            return ys.indexOf(id)==-1;
+          })
+          .forEach(function(id){
+            eventEmitter.emit(eventName, id);
+          });
+        }
+        forEachXNotInYsEmit(nextProps.ontologyIdsToHighlight, this.props.ontologyIdsToHighlight, 'gxaAnatomogramTissueMouseEnter');
+        forEachXNotInYsEmit(this.props.ontologyIdsToHighlight,nextProps.ontologyIdsToHighlight, 'gxaAnatomogramTissueMouseLeave')
+      }
     },
 
     componentDidMount: function() {
