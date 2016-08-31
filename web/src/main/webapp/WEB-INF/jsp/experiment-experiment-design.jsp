@@ -26,7 +26,7 @@
         </div>
         <div class="grid_1 omega" style="text-align:right; padding-bottom: 10px">
             <a id="download-experiment-design-link" class="gxaNoTextButton" title="Download experiment design" href="experiments/${experimentAccession}/experiment-design.tsv${accessKeyQueryString}" target="_blank">
-            <img id="download-experiment-design" alt="Download experiment design" src="resources/images/download_blue_small.png"></a>
+            <img id="download-experiment-design" alt="Download experiment design" src="/gxa/resources/images/download_blue_small.png"></a>
         </div>
 
         <c:if test="${!type.baseline}">
