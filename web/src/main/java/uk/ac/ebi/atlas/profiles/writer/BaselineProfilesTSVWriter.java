@@ -7,8 +7,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
@@ -16,7 +14,6 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
@@ -26,28 +23,16 @@ import java.util.Date;
 import java.util.Set;
 import java.util.SortedSet;
 
-@Named("geneProfileWriter")
-@Scope("prototype")
 public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselineProfile, Factor, BaselineRequestContext> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesTSVWriter.class);
 
-    private Resource tsvFileMastheadTemplateResource;
-
     private String tsvFileMastheadTemplate;
 
     @Inject
-    public BaselineProfilesTSVWriter(CsvWriterFactory csvWriterFactory) {
+    public BaselineProfilesTSVWriter(CsvWriterFactory csvWriterFactory, Resource tsvFileMastheadTemplateResource) {
         super(csvWriterFactory);
-    }
 
-    @Value("classpath:/file-templates/download-headers-baseline.txt")
-    public void setTsvFileMastheadTemplateResource(Resource tsvFileMastheadTemplateResource) {
-        this.tsvFileMastheadTemplateResource = tsvFileMastheadTemplateResource;
-        initTsvFileMastheadTemplate();
-    }
-
-    void initTsvFileMastheadTemplate() {
         try (InputStream inputStream = tsvFileMastheadTemplateResource.getInputStream()) {
             tsvFileMastheadTemplate = IOUtils.toString(inputStream);
         } catch (IOException e) {

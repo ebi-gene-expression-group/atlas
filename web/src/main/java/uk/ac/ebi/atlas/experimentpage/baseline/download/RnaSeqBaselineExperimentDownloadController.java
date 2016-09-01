@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,23 +30,21 @@ public class RnaSeqBaselineExperimentDownloadController extends BaselineExperime
 
     @Inject
     public RnaSeqBaselineExperimentDownloadController(@Qualifier("baselineProfileInputStreamFactory")
-                                                BaselineProfileInputStreamFactory inputStreamFactory,
-                                                      BaselineProfilesWriterServiceFactory
-                                                        baselineProfilesWriterServiceFactory, ExperimentTrader experimentTrader) {
+                                                      BaselineProfileInputStreamFactory inputStreamFactory,
+                                                      BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory,
+                                                      ExperimentTrader experimentTrader) {
         this.baselineExperimentDownloadService = new BaselineExperimentDownloadService<>(inputStreamFactory,
                 baselineProfilesWriterServiceFactory,experimentTrader);
     }
 
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_RNASEQ_BASELINE)
-    public void downloadGeneProfiles(HttpServletRequest request, @PathVariable String experimentAccession
-                                     ,@RequestParam(value = "accessKey",required = false) String accessKey
-            , @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
-            , HttpServletResponse response) throws IOException {
-
-        baselineExperimentDownloadService.download(experimentAccession,request, preferences, response,
-                accessKey);
-
+    public void downloadGeneProfiles(HttpServletRequest request, @PathVariable String experimentAccession,
+                                     @RequestParam(value = "accessKey", required = false) String accessKey,
+                                     @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
+                                     HttpServletResponse response)
+    throws IOException {
+        baselineExperimentDownloadService.download(experimentAccession,request, preferences, response, accessKey);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = PARAMS_TYPE_RNASEQ_BASELINE)

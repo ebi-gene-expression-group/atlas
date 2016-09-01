@@ -29,15 +29,15 @@ public class BaselineExperimentDownloadService<T extends BaselineRequestPreferen
     private final ExperimentTrader experimentTrader;
 
     public BaselineExperimentDownloadService(BaselineProfileInputStreamFactory inputStreamFactory,
-                                             BaselineProfilesWriterServiceFactory
-                                                     baselineProfilesWriterServiceFactory,ExperimentTrader experimentTrader) {
+                                             BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory,
+                                             ExperimentTrader experimentTrader) {
         this.baselineProfilesWriterService = baselineProfilesWriterServiceFactory.create(inputStreamFactory);
-        this.experimentTrader =experimentTrader;
+        this.experimentTrader = experimentTrader;
     };
 
     public void download(String experimentAccession, HttpServletRequest request,
-                         T preferences, HttpServletResponse response, String accessKey) throws
-            IOException {
+                         T preferences, HttpServletResponse response, String accessKey)
+    throws IOException {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
@@ -49,7 +49,6 @@ public class BaselineExperimentDownloadService<T extends BaselineRequestPreferen
         response.setContentType("text/plain; charset=utf-8");
 
         try {
-
             long genesCount = baselineProfilesWriterService.write(response.getWriter(), preferences, experiment,
                     readCoexpressionsRequested(request));
 
@@ -58,7 +57,6 @@ public class BaselineExperimentDownloadService<T extends BaselineRequestPreferen
         } catch (GenesNotFoundException e) {
             LOGGER.info("<downloadGeneProfiles> no genes found");
         }
-
     }
 
     Map<String, Integer> readCoexpressionsRequested(HttpServletRequest request) {

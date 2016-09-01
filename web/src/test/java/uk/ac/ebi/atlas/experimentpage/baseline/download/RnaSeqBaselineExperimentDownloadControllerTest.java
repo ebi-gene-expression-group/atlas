@@ -9,7 +9,6 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.AssayGroups;
@@ -19,13 +18,14 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
@@ -44,6 +44,9 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
 
     @Mock
     private BaselineRequestContextBuilder requestContextBuilderMock;
+
+    @Mock
+    private BaselineProfilesTSVWriter baselineProfilesTsvWriterMock;
 
     @Mock
     private ProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriterMock;
@@ -68,33 +71,24 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
 
     @Mock
     private ExperimentalFactors experimentalFactorsMock;
-    
+
     @Mock
     private AssayGroups assayGroupsMock;
 
-    private BaselineExperimentDownloadService<BaselineRequestPreferences> subject;
-
     @Mock
-    BaselineProfileInputStreamFactory inputStreamFactory;
-
-    @Mock
-    BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory;
-
-    @Mock
-    CoexpressedGenesService coexpressedGenesService;
-
-    @Mock
-    SolrQueryService solrQueryService;
+    BaselineProfileInputStreamFactory inputStreamFactoryMock;
 
     @Mock
     ExperimentTrader experimentTraderMock;
 
+    @Inject
+    BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory;
+
+    private BaselineExperimentDownloadService<BaselineRequestPreferences> subject;
 
     @Before
     public void setUp() throws Exception {
-        BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory = new
-                BaselineProfilesWriterServiceFactory(profilesWriterMock, solrQueryService,coexpressedGenesService);
-        subject = new BaselineExperimentDownloadService<>(inputStreamFactory, baselineProfilesWriterServiceFactory,experimentTraderMock);
+        subject = new BaselineExperimentDownloadService<>(inputStreamFactoryMock, baselineProfilesWriterServiceFactory,experimentTraderMock);
 
     }
 

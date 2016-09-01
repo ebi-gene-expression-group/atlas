@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.writer;
 
 import com.google.common.collect.Lists;

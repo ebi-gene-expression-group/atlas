@@ -25,8 +25,7 @@ public class ProfilesWriter<P extends Profile, K, O extends ProfileStreamOptions
     private ProfileStreamPipelineBuilder<P, O, K> pipelineBuilder;
     private GeneProfilesTSVWriter<P, K, O> tsvWriter;
 
-    public ProfilesWriter(ProfileStreamFilters<P,K> profileStreamFilters, GeneProfilesTSVWriter<P, K, O>
-            tsvWriter) {
+    public ProfilesWriter(ProfileStreamFilters<P,K> profileStreamFilters, GeneProfilesTSVWriter<P, K, O> tsvWriter) {
         this.pipelineBuilder = new ProfileStreamPipelineBuilder<>(profileStreamFilters);
         this.tsvWriter = tsvWriter;
     }
