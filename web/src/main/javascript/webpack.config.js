@@ -45,7 +45,7 @@ module.exports = {
 
     module: {
         loaders: [
-            {test: /\.jsx?$/, loader: 'babel', query: {presets: ['es2015', 'react']}},
+            {test: /\.jsx?$/, loader: 'babel', query: {presets: ['es2015', 'react']}, exclude: /node-libs-browser/},
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
             {test: /\.json$/, loader: 'json'},
