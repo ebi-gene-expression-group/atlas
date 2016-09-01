@@ -54,7 +54,6 @@ const BaselineRouter = React.createClass({
             facetsTreeData: this._transformPropsFacetsObjectToArray(newQuerySelect),
             querySelect: newQuerySelect,
             anatomogramDataEventEmitter: anatomogramDataEventEmitter,
-            anatomogramsInManualMode: false,
             showAnatomograms: newShowAnatomograms
         }
     },
@@ -136,7 +135,6 @@ const BaselineRouter = React.createClass({
         let newShowAnatomograms = !this.state.showAnatomograms;
 
         this.setState({
-            anatomogramsInManualMode: true,
             showAnatomograms: newShowAnatomograms
         })
     },
