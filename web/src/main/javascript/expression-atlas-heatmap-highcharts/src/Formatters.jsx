@@ -12,7 +12,10 @@ var escapedHtmlDecoder = require('he');
 var Tooltip = React.createClass({
   propTypes: {
     config: React.PropTypes.shape({
-      isDifferential: React.PropTypes.bool.isRequired
+      isDifferential: React.PropTypes.bool.isRequired,
+      xAxisLegendName: React.PropTypes.string.isRequired,
+      yAxisLegendName: React.PropTypes.string.isRequired,
+      genomeBrowserTemplate:React.PropTypes.string.isRequired
     }).isRequired,
     colour: React.PropTypes.string.isRequired,
     xLabel: React.PropTypes.string.isRequired,
@@ -27,8 +30,8 @@ var Tooltip = React.createClass({
   render: function(){
     return (
       <div style={{whiteSpace: "pre"}}>
-        {this._div("Sample name",this.props.yLabel)}
-        {this._div("Experimental condition", this.props.xLabel)}
+        {this._div(this.props.config.yAxisLegendName,this.props.yLabel)}
+        {this._div(this.props.config.xAxisLegendName, this.props.xLabel)}
         { this.props.config.isDifferential
           ? [<div key={""}>
               {this._tinySquare()}{this._span("Fold change",this.props.foldChange)}
@@ -40,19 +43,28 @@ var Tooltip = React.createClass({
             {this._span("Expression level",this.props.value ? (this.props.value+" "+(this.props.unit||"") ):"Below cutoff")}
           </div>
         }
+        {!!this.props.config.genomeBrowserTemplate? this._info("Click on the cell to show expression in the Genome Browser") : null}
       </div>
     );
   },
   _tinySquare: function(){
     return (
-      <span style={{
-        border: "1px rgb(192, 192, 192) solid",
-        marginRight: "2px",
-        width: "6px",
-        height: "6px",
-        display:"inline-block",
-        backgroundColor:this.props.colour
-      }} />
+      <span key={"Tiny "+this.props.colour+" square"}
+        style={{
+          border: "1px rgb(192, 192, 192) solid",
+          marginRight: "2px",
+          width: "6px",
+          height: "6px",
+          display:"inline-block",
+          backgroundColor:this.props.colour
+        }} />
+    );
+  },
+  _info: function(text){
+    return (
+      <div>
+        <i>{text}</i>
+      </div>
     );
   },
   _div: function(name, value, format){

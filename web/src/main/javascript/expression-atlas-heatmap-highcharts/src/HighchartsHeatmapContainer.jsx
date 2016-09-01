@@ -17,6 +17,8 @@ require('./HighchartsHeatmapContainer.css');
 
 var Anatomogram = require('anatomogram');
 
+var genomeBrowserTemplate = require('./genomeBrowserLink.js');
+
 
 //*------------------------------------------------------------------*
 
@@ -55,7 +57,6 @@ var Container = React.createClass({
   },
   render: function(){
     var heatmapProps = {
-      profiles:this.props.profiles,
       heatmapConfig:this.props.heatmapConfig,
       googleAnalyticsCallback:this.props.googleAnalyticsCallback,
       heatmapData:this.props.heatmapData,
@@ -287,29 +288,43 @@ var ContainerLoader = React.createClass({
       return !this.props.isMultiExperiment && !this._isExperimentPage();
     },
 
+    _introductoryMessage: function(profiles) {
+        var shownRows = profiles.rows.length,
+            totalRows = profiles.searchResultTotal;
+
+        var what =
+            (this.props.isMultiExperiment ? 'experiment' : 'gene') +
+            (totalRows > 1 ? 's' : '');
+
+        return 'Showing ' + shownRows + ' ' +
+            (totalRows === shownRows ? what + ':' : 'of ' + totalRows + ' ' + what + ' found:');
+    },
+
     onAjaxSuccessful: function(data){
+      var capitalizeFirstLetter = function(str){
+        return !str? str: str.charAt(0).toUpperCase() + str.substr(1);
+      }
       var config = {
         geneQuery: data.config.geneQuery,
         atlasBaseURL: this.props.atlasBaseURL,
         isExperimentPage: this._isExperimentPage(),
         isMultiExperiment: this.props.isMultiExperiment,
         isReferenceExperiment: this._isReferenceExperiment(),
-        isDifferential: this.props.isDifferential
+        isDifferential: this.props.isDifferential,
+        introductoryMessage: this._introductoryMessage(data.profiles),
+        xAxisLegendName: capitalizeFirstLetter(data.config.columnType) || "Experimental condition",
+        yAxisLegendName: this._isExperimentPage() ? "Gene name": "Experiment",
       };
       //See in heatmap-data.jsp which thirteen properties this config is populated with.
-      for(var key in data.config){
-        if(data.config.hasOwnProperty(key)){
-          config[key]=data.config[key];
-        }
-      }
+      Object.assign(config, data.config);
+      Object.assign(config,{genomeBrowserTemplate: this._isExperimentPage()? genomeBrowserTemplate(config):""});
 
       this.setState({
           ajaxCompleted: true,
-          heatmapConfig: config,
+          heatmapConfig: Object.freeze(config),
           columnHeaders: data.columnHeaders,
           profiles: data.profiles,
           jsonCoexpressions : data.jsonCoexpressions,
-          geneSetProfiles: data.geneSetProfiles,
           anatomogramData: data.anatomogram,
           experimentData: data.experiment,
           heatmapData: HeatmapData.get(data.profiles.rows, data.columnHeaders, config)

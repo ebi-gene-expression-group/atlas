@@ -16,16 +16,22 @@ var EMPTY = {
     dataSeries: [[],[],[],[]]
 };
 
-var getXAxisCategories = function (columnHeaders, isDifferential) {
+var getXAxisCategories = function (columnHeaders, config) {
   return columnHeaders.map(
-    isDifferential
+    config.isDifferential
     ? function (columnHeader) {
         return {"label": columnHeader.displayName,
-                "id" : columnHeader.id};
+                "id" : columnHeader.id,
+                "info":{
+                  trackId:columnHeader.id
+                }};
       }
     : function (columnHeader) {
         return {"label": columnHeader.factorValue,
-                "id" : columnHeader.factorValueOntologyTermId};
+                "id" : columnHeader.factorValueOntologyTermId,
+                "info":{
+                  trackId:config.isExperimentPage? columnHeader.assayGroupId : ""
+                }};
       }
     );
 };
@@ -35,12 +41,18 @@ var getYAxisCategories = function (rows, config) {
     config.isDifferential
     ? function (profile) {
         return {"label": profile.name,
-                "id": profile.id };
+                "id": profile.id,
+                "info":{
+                  trackId:profile.id
+                }};
       }
     : function (profile) {
         return {"label": profile.name,
                 "id" : profile.id + "?geneQuery=" + config.geneQuery +
-                    "&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors) };
+                    (profile.serializedFilterFactors?"&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors):""),
+                "info":{
+                  trackId:config.isExperimentPage?profile.id :""
+                }};
       }
     );
 };
@@ -230,7 +242,7 @@ var getTheWholeDataObject = function(rows, columnHeaders, config){
   var expressions = extractExpressionValues(rows,config.isDifferential);
 
   return {
-    xAxisCategories: getXAxisCategories(columnHeaders, config.isDifferential),
+    xAxisCategories: getXAxisCategories(columnHeaders, config),
     yAxisCategories: getYAxisCategories(rows, config),
     orderings: Orderings.create(expressions,columnHeaders, rows, config),
     dataSeries: getDataSeries(rows, config)

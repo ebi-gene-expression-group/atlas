@@ -23,7 +23,6 @@ var hash = require('object-hash');
 
 var HeatmapContainer = React.createClass({
     propTypes: {
-        profiles: React.PropTypes.object.isRequired,
         heatmapConfig: React.PropTypes.object.isRequired,
         googleAnalyticsCallback: React.PropTypes.func.isRequired,
         heatmapData: PropTypes.HeatmapData,
@@ -36,18 +35,6 @@ var HeatmapContainer = React.createClass({
         return {
             ordering: "Default"
         };
-    },
-
-    _introductoryMessage: function() {
-        var shownRows = this.props.profiles.rows.length,
-            totalRows = this.props.profiles.searchResultTotal;
-
-        var what =
-            (this.props.heatmapConfig.isMultiExperiment ? 'experiment' : 'gene') +
-            (totalRows > 1 ? 's' : '');
-
-        return 'Showing ' + shownRows + ' ' +
-            (totalRows === shownRows ? what + ':' : 'of ' + totalRows + ' ' + what + ' found:');
     },
 
     _data: function() {
@@ -114,7 +101,7 @@ var HeatmapContainer = React.createClass({
             <div>
                 <HeatmapOptions
                     marginRight={marginRight}
-                    introductoryMessage={this._introductoryMessage()}
+                    introductoryMessage={this.props.heatmapConfig.introductoryMessage}
                     downloadOptions={{
                         downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
                         atlasBaseURL: this.props.heatmapConfig.atlasBaseURL,
@@ -138,7 +125,8 @@ var HeatmapContainer = React.createClass({
                     colorAxis={this.props.heatmapConfig.isExperimentPage ? createColorAxis(this.props.heatmapData.dataSeries) : undefined}
                     onHeatmapRedrawn={this.props.onHeatmapRedrawn}
                     formatters={FormattersFactory(this.props.heatmapConfig)}
-                    onUserSelectsColumn={this.props.onOntologyIdIsUnderFocus}/>
+                    genomeBrowserTemplate={this.props.heatmapConfig.genomeBrowserTemplate}
+                    onUserSelectsColumn={this.props.onOntologyIdIsUnderFocus} />
             </div>
         );
     }
@@ -165,6 +153,7 @@ var HeatmapCanvas = React.createClass({
           yAxis: PropTypes.Formatter,
           tooltip: PropTypes.Formatter
         }).isRequired,
+        genomeBrowserTemplate: React.PropTypes.string.isRequired,
         onUserSelectsColumn:React.PropTypes.func.isRequired
     },
 
@@ -374,10 +363,16 @@ var HeatmapDrawing = React.createClass({
                   turboThreshold: 0
               },
               series: {
+                  cursor: !!this.props.genomeBrowserTemplate ? "pointer" :undefined,
                   point: {
                       events: {
                           mouseOver: function() {
                               this.series.chart.userOptions.onUserSelectsColumn(this.series.xAxis.categories[this.x].id);
+                          },
+                          click: !this.props.genomeBrowserTemplate? function(){}: function(){
+                            var x = this.series.xAxis.categories[this.x].info.trackId;
+                            var y = this.series.yAxis.categories[this.y].info.trackId;
+                            window.open(this.series.chart.userOptions.genomeBrowserTemplate.replace(/__x__/g,x).replace(/__y__/g,y),"_blank");
                           }
                       }
                   },
@@ -469,6 +464,7 @@ var HeatmapDrawing = React.createClass({
               formatter: (function() { var f =this.props.formatters.tooltip; return function(){return f(this.series,this.point);};}.bind(this))()
           },
           onUserSelectsColumn: this.props.onUserSelectsColumn,
+          genomeBrowserTemplate: this.props.genomeBrowserTemplate,
           series: data.dataSeries
       }
     );
