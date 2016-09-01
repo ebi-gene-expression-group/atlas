@@ -36,20 +36,20 @@ public class ApplicationPropertiesTest {
     private static final String ANATOMOGRAM_PROPERTY_KEY = "organism.anatomogram.";
     private static final String FEEDBACK_EMAIL_PROPERTY_KEY = "feedback.email";
     private static final String FEEDBACK_EMAIL_VALUE = "abc@abc.com";
-    private static final String ARRAYEXPRESS_URL = "http://www.ebi.ac.uk/arrayexpress/";
+    private static final String ARRAYEXPRESS_URL = "https://www.ebi.ac.uk/arrayexpress/";
     private static final String EXPERIMENT_ARRAYEXPRESS_URL_TEMPLATE = "experiment.arrayexpress.url.template";
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
-    private static final String ARRAYEXPRESS_REST_URL = "http://www.ebi.ac.uk/arrayexpressrest/";
+    private static final String ARRAYEXPRESS_REST_URL = "https://www.ebi.ac.uk/arrayexpressrest/";
     private static final String EXPERIMENT_ARRAYEXPRESS_REST_URL_TEMPLATE = "experiment.arrayexpress.rest.url.template";
     private static final String LIST_SEPARATOR = ",";
     private static final String A_AFFY_35 = "A-AFFY-35";
     private static final String A_AFFY_35_NAME = "A-AFFY-35-NAME";
     private static final String EXPERIMENT_ARRAYEXPRESS_ARRAYS_URL_TEMPLATE = "experiment.arrayexpress.arrays.url.template";
-    private static final String ARRAYEXPRESS_ARRAYS_URL = "http://www.ebi.ac.uk/arrayexpress/arrays/";
+    private static final String ARRAYEXPRESS_ARRAYS_URL = "https://www.ebi.ac.uk/arrayexpress/arrays/";
     private static final String EXPERIMENT_PUBMED_URL_TEMPLATE = "experiment.pubmed.url.template";
-    private static final String PUBMED_URL = "http://europepmc.org/abstract/MED/";
+    private static final String PUBMED_URL = "https://europepmc.org/abstract/MED/";
     private static final String EXPERIMENT_ATLAS_URL_TEMPLATE = "experiment.atlas.url.template";
-    private static final String ATLAS_URL = "http://www-test.ebi.ac.uk/gxa/experiments/";
+    private static final String ATLAS_URL = "https://www-test.ebi.ac.uk/gxa/experiments/";
     private static final String PUB_MED_ID = "123456";
 
     private static final String EXPERIMENT_URL = "http://x.y/z";
