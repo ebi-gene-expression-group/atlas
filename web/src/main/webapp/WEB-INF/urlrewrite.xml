@@ -7,12 +7,6 @@
         <to type="permanent-redirect">/gxa/experiments/$1</to>
     </rule>
     <rule>
-        <note>Redirect all HTTPS to HTTP. In particular, this is for curators following https://www.ebi.ac.uk/gxa/* links from ArrayExpress</note>
-        <condition type="scheme" operator="equal">https</condition>
-        <from>^/(.*)</from>
-        <to type="permanent-redirect" last="true">http://%{server-name}%{context-path}/$1</to>
-    </rule>
-    <rule>
         <from>/das/s4(/)?$</from>
         <to>/resources/das/s4.xml</to>
     </rule>
