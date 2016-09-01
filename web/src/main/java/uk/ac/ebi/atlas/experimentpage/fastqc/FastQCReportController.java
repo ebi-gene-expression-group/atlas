@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -23,7 +26,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.MessageFormat;
-
 
 @Controller
 @Scope("singleton")
@@ -97,6 +99,8 @@ public class FastQCReportController {
 
         String path = fastQCReportUtil.buildFastQCIndexHtmlPath(experimentAccession, species);
         request.setAttribute("contentPath", FileSystems.getDefault().getPath(path));
+
+        model.addAllAttributes(new DownloadURLBuilder(experimentAccession).dataDownloadUrls(request.getRequestURI()));
 
         return "fast-qc-template";
     }

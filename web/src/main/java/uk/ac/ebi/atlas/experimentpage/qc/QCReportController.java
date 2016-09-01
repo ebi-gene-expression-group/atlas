@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -18,8 +19,6 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.text.MessageFormat;
-import java.util.Set;
-import java.util.SortedSet;
 
 @Controller
 @Scope("singleton")
@@ -90,6 +89,8 @@ public class QCReportController {
 
         String path = qcReportUtil.buildQCReportIndexHtmlPath(experimentAccession, arrayDesign);
         request.setAttribute("contentPath", FileSystems.getDefault().getPath(path));
+
+        model.addAllAttributes(new DownloadURLBuilder(experimentAccession).dataDownloadUrls(request.getRequestURI()));
 
         return "qc-template";
     }
