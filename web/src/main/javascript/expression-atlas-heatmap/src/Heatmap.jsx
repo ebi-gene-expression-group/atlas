@@ -913,34 +913,47 @@ var TopLeftCorner = React.createClass({
 
 
 var LevelsRadioGroup = function(__args__) {
-  var inputElements = [].concat.apply({},
-    [].slice.call(arguments).map(
+  var args = [].slice.call(arguments)
+  var inputElements = [].concat.apply([],
+    args.map(
       function(el, ix){
         return [
-          <input key={3*ix} type="radio" value={el}/>,
+          <RadioGroup.Radio key={3*ix} type="radio" value={el}/>,
           <span key={3*ix +1}>{"Display "+el}</span>,
           <br key={3*ix +2}/> ];
       }
-    )).slice(1,-1);
+    )).slice(0,-1);
   return (React.createClass({
+    displayName: "levelsRadioGroup for "+args,
+
+    getDefaultProps: function(){
+      return {
+        allValues: args
+      }
+    },
 
     getInitialState: function() {
-        return {value: this.props.selectedRadioButton};
+        return {value: this.props.allValues.indexOf(this.props.selectedRadioButton)>-1 ? this.props.selectedRadioButton :this.props.allValues[0] };
+    },
+    componentDidMount: function() {
+      if(this.props.allValues.indexOf(this.props.selectedRadioButton)==-1){
+        this.handleChange(this.state.value);
+      }
     },
 
     render: function() {
         return (
-            <RadioGroup name={"displayLevelsGroup_" + this.props.radioId} value={this.props.selectedRadioButton} onChange={this.handleChange}>
+            <RadioGroup.RadioGroup name={"displayLevelsGroup_" + this.props.radioId} selectedValue={this.state.value} onChange={this.handleChange}>
                 <div style={{"marginLeft": "10px", "marginTop": "8px"}}>
                     {inputElements}
                 </div>
-            </RadioGroup>
+            </RadioGroup.RadioGroup>
         );
     },
 
-    handleChange: function(event) {
-        this.props.toggleRadioButton(event.target.value);
-        this.setState({value: this.props.selectedRadioButton});
+    handleChange: function(selectedRadio) {
+        this.props.toggleRadioButton(selectedRadio);
+        this.setState({value: selectedRadio});
 
         // To resize the sticky column/header in case the row height or column width changes
         $(window).resize();
