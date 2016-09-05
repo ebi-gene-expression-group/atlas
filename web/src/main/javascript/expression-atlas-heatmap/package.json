@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "anatomogram": "file:../atlas_modules/anatomogram",
+    "anatomogram":"latest",
     "atlas-feedback": "file:../atlas_modules/atlas-feedback",
     "atlas-modernizr": "git+https://github.com/alfonsomunozpomer/atlas-modernizr.git",
     "cell-differential": "file:../atlas_modules/cell-differential",

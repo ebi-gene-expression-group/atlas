@@ -14,7 +14,8 @@ module.exports = {
                        'react-bootstrap/lib/DropdownButton', 'react-bootstrap/lib/MenuItem', 'react-bootstrap/lib/FormGroup',
                        'react-bootstrap/lib/FormControl', 'react-bootstrap', 'react-bootstrap/lib/Button',
                        'rc-slider',
-                       'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
+                       'anatomogram',
+			'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
                        'urijs', 'query-string', 'atlas-modernizr',
                        'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
                        'highcharts-more', 'react-highcharts', 'react-addons-css-transition-group', 'react-emojione',
@@ -49,10 +50,15 @@ module.exports = {
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
             {test: /\.json$/, loader: 'json'},
-            {test: /\.(jpe?g|png|gif|svg)$/i,
+            {test: /\.(jpe?g|png|gif)$/i,
                 loaders: [
                           'file?hash=sha512&digest=hex&name=[hash].[ext]',
                           'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                ]
+            },
+            {test: /\.(svg)$/i,
+                loaders: [
+                          'file?hash=sha512&digest=hex&name=[hash].[ext]'
                 ]
             }
         ]
