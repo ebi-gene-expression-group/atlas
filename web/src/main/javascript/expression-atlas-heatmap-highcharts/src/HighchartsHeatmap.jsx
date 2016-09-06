@@ -332,30 +332,48 @@ var HeatmapDrawing = React.createClass({
   render: function(){
     //TODO calculating this based on dataForTheChart would be more correct.
     var xAxisLongestHeaderLength =
-        Math.max.apply(null, this.props.data.xAxisCategories.map(function(category) {return category.label.length}));
-
+      Math.max.apply(null, this.props.data.xAxisCategories.map(function(category) {return category.label.length}));
     var marginTop =
-        this.props.data.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
-            this.props.data.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
-                Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5));   // labels at -90°
+      this.props.data.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
+          this.props.data.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
+              Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5));  // labels at -90°
 
-    var maxWidthFraction = 1-1/Math.pow(0.2*this._countColumnsToShow() +1,4);
-    //TODO the marginRight value of props used to be the same here and in top legend.
-    //Probably it's time to get rid of this prop.
-    var marginRight = this.props.marginRight*(1+10/Math.pow(1+this._countColumnsToShow(),2));
+    var dimensions= {
+      marginTop:marginTop,
+      marginRight: //leave space for tilted long headers
+      //TODO the marginRight value of props used to be the same here and in top legend.
+      //Probably it's time to get rid of this prop.
+        this.props.marginRight*(1+10/Math.pow(1+this._countColumnsToShow(),2)),
+      height:
+        Math.max(70, this._countRowsToShow() * 30 + marginTop)
+    }
 
+    var maxWidthFraction = 1-Math.exp(-(0.2+0.05*Math.pow(this._countColumnsToShow(),2)));
     return (
         <div style={{maxWidth:maxWidthFraction*100+"%"}}>
-            <ReactHighcharts config={this._highchartsOptions(marginTop, marginRight, this.props.dataForTheChart)} ref="chart"/>
+            <ReactHighcharts config={this._highchartsOptions(dimensions, this.props.dataForTheChart)} ref="chart"/>
         </div>
     );
   },
-
-  _countColumnsToShow: function(){
-    return this.props.data.xAxisCategories.length;
+  _count_sToShow: function(xOrY){
+    return (
+      [].concat.apply([], this.props.dataForTheChart.dataSeries.map((el)=>el.data))
+      .map((el)=>el[xOrY])
+      .sort((l,r)=>l-r)
+      .filter((el, ix, self)=>self.indexOf(el) == ix)
+      .length
+    );
   },
 
-  _highchartsOptions: function(marginTop, marginRight, data){
+  _countRowsToShow: function(){
+    return this._count_sToShow("y");
+  },
+
+  _countColumnsToShow: function(){
+    return this._count_sToShow("x");
+  },
+
+  _highchartsOptions: function(dimensions, data){
     return (
       {
           plotOptions: {
@@ -395,13 +413,10 @@ var HeatmapDrawing = React.createClass({
           credits: {
               enabled: false //remove Highcharts text in the bottom right corner
           },
-          chart: {
+          chart: Object.assign({
               type: 'heatmap',
-              marginTop: marginTop,
-              marginRight: marginRight, //leave space for tilted long headers
               spacingTop: 0,
               plotBorderWidth: 1,
-              height: Math.max(70, data.yAxisCategories.length * 30 + marginTop),
               zoomType: 'x',
               events: {
                   handleGxaAnatomogramTissueMouseEnter: function(e) {
@@ -422,7 +437,7 @@ var HeatmapDrawing = React.createClass({
                       }
                   }
               }
-          },
+          },dimensions),
           legend: {
               enabled: false
           },
