@@ -27,7 +27,7 @@ public class BioentityIdentifierQueryBuilderTest {
 
     private static final String EXPECTED_QUERY_STRING_WITH_OR_OPERATOR_APPLIED =
                     "{!lucene q.op=OR df=property_value_search}" +
-                    "(property_value_search:A QUERY STRING) " +
+                    "(property_value_search:\"A QUERY STRING\") " +
                     "AND (property_name:\"PROPERTY_NAME_2\" OR property_name:\"PROPERTY_NAME_1\") " +
                     "AND species:\"SPECIES\" " +
                     "AND (bioentity_type:\"BIOENTITY_TYPE_1\" OR bioentity_type:\"BIOENTITY_TYPE_2\")";

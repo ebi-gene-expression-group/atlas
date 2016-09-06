@@ -29,6 +29,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -81,13 +82,18 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
     @Mock
     ExperimentTrader experimentTraderMock;
 
-    @Inject
+    @Mock
     BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory;
+
+    @Mock
+    BaselineProfilesWriterService baselineProfilesWriterService;
 
     private BaselineExperimentDownloadService<BaselineRequestPreferences> subject;
 
     @Before
     public void setUp() throws Exception {
+        when(baselineProfilesWriterServiceFactory.create(inputStreamFactoryMock))
+                .thenReturn(baselineProfilesWriterService);
         subject = new BaselineExperimentDownloadService<>(inputStreamFactoryMock, baselineProfilesWriterServiceFactory,experimentTraderMock);
 
     }
@@ -119,8 +125,9 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
-        verify(profilesWriterMock).write(eq(printWriterMock), any(ObjectInputStream.class), any
-                (BaselineRequestContext.class), anySet(), any(GeneQueryResponse.class));
+        verify(baselineProfilesWriterService)
+                .write(eq(printWriterMock), any(BaselineRequestPreferences.class), any
+                (BaselineExperiment.class), anyMap());
     }
 
 
