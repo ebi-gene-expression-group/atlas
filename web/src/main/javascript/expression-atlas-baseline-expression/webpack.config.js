@@ -2,15 +2,15 @@ var webpack = require('webpack');
 var path = require('path');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 
-module.exports = {
+module.exports = Object.assign(require('../webpack.config.js'), {
     entry: {
-        baselineExpression: './index.js',
-        dependencies: ['react', 'react-dom', 'events', 'url', 'querystring', 'jquery', 'jquery.browser'
-                       // 'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
-                       // 'urijs', 'query-string', 'atlas-modernizr',
-                       // 'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
-                       // 'highcharts-more', 'react-highcharts'
-        ]
+      baselineExpression: './index.js',
+      dependencies: ['react', 'react-dom', 'events', 'url', 'querystring', 'jquery', 'jquery.browser'
+                     // 'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
+                     // 'urijs', 'query-string', 'atlas-modernizr',
+                     // 'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
+                     // 'highcharts-more', 'react-highcharts'
+      ]
     },
 
     output: {
@@ -20,31 +20,17 @@ module.exports = {
         filename: '[name].bundle.js',
         publicPath: '/dist/'
     },
-
     plugins: [
-        new CleanWebpackPlugin(['dist'], {verbose: true, dry: false}),
+        new CleanWebpackPlugin(['webapp/resources/js-bundles'], {
+          root: path.resolve(__dirname , '..'),
+            verbose: true,
+            dry: false
+        }),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'dependencies',
-            filename: 'vendor.bundle.js',
+            filename: 'vendorCommons.bundle.js',
             minChunks: Infinity     // Explicit definition-based split. Don’t put shared modules between main and demo entries in vendor.bundle.js
         })
-    ],
-
-    module: {
-        loaders: [
-            {test: /\.jsx?$/, loader: 'babel', query: {presets: ['es2015', 'react']}},
-            {test: /\.css$/, loader: 'style-loader!css-loader'},
-            {test: /\.(jpe?g|png|gif|svg)$/i,
-                loaders: [
-                    'file?hash=sha512&digest=hex&name=[hash].[ext]',
-                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                ]
-            }
-        ]
-    },
-
-    devServer: {
-        port: 9000
-    }
-};
+    ]
+});

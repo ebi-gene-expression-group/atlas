@@ -46,7 +46,8 @@ module.exports = {
 
     module: {
         loaders: [
-            {test: /\.jsx?$/, loader: 'babel', query: {presets: ['es2015', 'react']}, exclude: /node-libs-browser/},
+            {test: /expression-atlas\w+\/(((?!node_modules).)*)\.js$/, loader: 'babel', query: {presets: ['es2015']}, exclude: /node-libs-browser/},
+            {test: /\.jsx$/, loader: 'babel', query: {presets: ['es2015', 'react']}},
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
             {test: /\.json$/, loader: 'json'},
