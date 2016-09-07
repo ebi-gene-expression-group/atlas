@@ -5,7 +5,7 @@
 
     <title>Highcharts heatmap demo</title>
 
-    <script src="../dist/vendor.bundle.js"></script>
+    <script src="../dist/vendorCommons.bundle.js"></script>
     <script src="../dist/heatmapHighcharts.bundle.js"></script>
 </head>
 <body>
@@ -25,9 +25,10 @@
         isMultiExperiment: false,
         isProteomicsBaseline: false,
         isWidget: false,
-        sourceURL: "http://localhost:8080/gxa/json/experiments/E-PROT-1",
+        sourceURL: "http://localhost:8080/gxa/json/experiments/E-MTAB-3839?geneQuery=%5B%7B\"value\"%3A\"Sb01g006200\"%2C\"category\"%3A\"\"%7D%5D",
         target: "highchartsContainer",
-        showAnatomogram: false
+        showAnatomogram: true,
+        pathToFolderWithBundledResources: ".."
     });
 
 </script>

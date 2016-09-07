@@ -10,7 +10,7 @@
 </head>
 <body>
     <div>
-        <h2>Bundles loaded from <em>webpack-dev-server</em>, request done to <code>localhost:8080/gxa/json/experiments/E-GEOD-54705</code></h2>
+        <h2>Bundles loaded from <em>webpack-dev-server</em>, request done to <code>localhost:8080/gxa/json/experiments/E-MTAB-3028 for TUBA3</code></h2>
     </div>
 
     <div id="highchartsContainer"></div>
@@ -21,13 +21,14 @@
 //See the setup in heatmap-highcharts.jsp
     heatmapHighcharts.render({
         atlasHost: "localhost:8080",
-        isDifferential: true,
+        isDifferential: false,
         isMultiExperiment: false,
         isProteomicsBaseline: false,
         isWidget: false,
-        sourceURL: "http://localhost:8080/gxa/json/experiments/E-GEOD-54705",
+        sourceURL: "http://localhost:8080/gxa/json/experiments/E-MTAB-3028?accessKey=&serializedFilterFactors=&queryFactorType=STRAIN&rootContext=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=%5B%7B%22value%22%3A%22TUBA3%22%7D%5D&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5",
         target: "highchartsContainer",
-        showAnatomogram: false
+        showAnatomogram: true,
+        pathToFolderWithBundledResources: ".."
     });
 
 </script>
