@@ -6,8 +6,11 @@
   "author": "Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "mocha test"
+  },
   "dependencies": {
-    "anatomogram":"latest",
+    "anatomogram": "latest",
     "color": "^0.11.3",
     "download-profiles-button": "file:../atlas_modules/download-profiles-button",
     "he": "^1.1.0",
@@ -34,6 +37,8 @@
     "json-loader": "^0.5.4",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
+    "mocha": "^3.0.2",
+    "mocha-webpack": "^0.6.0",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"

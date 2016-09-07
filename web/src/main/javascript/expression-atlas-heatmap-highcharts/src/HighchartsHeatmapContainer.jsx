@@ -319,6 +319,7 @@ var ContainerLoader = React.createClass({
       Object.assign(config, data.config);
       Object.assign(config,{genomeBrowserTemplate: this._isExperimentPage()? genomeBrowserTemplate(config):""});
 
+
       this.setState({
           ajaxCompleted: true,
           heatmapConfig: Object.freeze(config),
@@ -327,7 +328,7 @@ var ContainerLoader = React.createClass({
           jsonCoexpressions : data.jsonCoexpressions,
           anatomogramData: data.anatomogram,
           experimentData: data.experiment,
-          heatmapData: HeatmapData.get(data.profiles.rows, data.columnHeaders, config)
+          heatmapData: HeatmapData.get(data, config)
       });
     },
 

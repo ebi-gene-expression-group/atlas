@@ -28,7 +28,7 @@ var getXAxisCategories = function (columnHeaders, config) {
       }
     : function (columnHeader) {
         return {"label": columnHeader.factorValue,
-                "id" : columnHeader.factorValueOntologyTermId,
+                "id" : columnHeader.factorValueOntologyTermId || "",
                 "info":{
                   trackId:config.isExperimentPage? columnHeader.assayGroupId : ""
                 }};
@@ -77,10 +77,19 @@ var __dataPointFromExpression = function(infoCommonForTheRow, columnNumber, expr
   );
 };
 
+var _commonPropertiesForRow = function(row, config){
+  return (
+    Object.assign({},
+      {unit: unitForThisRowOfData(row,config)},
+      {index: row.coexpressionOfGene? row.coexpressionOfGene.index+1: 0}
+    )
+  )
+}
+
 var _dataPointsFromRow = _.curry(function(config,row, columnNumber){
   return (
     row.expressions
-    .map(_.curry(__dataPointFromExpression,4)({unit: unitForThisRowOfData(row,config)}, columnNumber))
+    .map(_.curry(__dataPointFromExpression,4)(_commonPropertiesForRow(row,config), columnNumber))
     .filter(function(el) {
       return el;
     })
@@ -249,6 +258,21 @@ var getTheWholeDataObject = function(rows, columnHeaders, config){
   };
 };
 
+var get = function(data, config){
+  var allRows = [].concat.apply(data.profiles.rows, (data.jsonCoexpressions || []).map(function(coex) {
+    return (coex.jsonProfiles&&coex.jsonProfiles.rows? coex.jsonProfiles.rows:[]).map(function(row, ix) {
+      return Object.assign(row, {
+        coexpressionOfGene: {
+          id: coex.geneId,
+          name: coex.geneName,
+          index: ix
+        }
+      })
+    })
+  }));
+  return getTheWholeDataObject(allRows, data.columnHeaders, config);
+};
+
 //*------------------------------------------------------------------*
 exports.EMPTY = EMPTY;
-exports.get = getTheWholeDataObject;
+exports.get = get;

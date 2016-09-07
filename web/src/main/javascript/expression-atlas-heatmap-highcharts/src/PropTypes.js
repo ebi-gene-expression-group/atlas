@@ -39,57 +39,62 @@ var AxisCategoriesPropType = React.PropTypes.arrayOf(
   ).isRequired;
 
 
-var HeatmapDataPropType = React.PropTypes.objectOf(
-    function(heatmapData){
-    validateDataSeries(heatmapData.dataSeries);
-
-    var width = heatmapData.xAxisCategories.length;
-    var height = heatmapData.yAxisCategories.length;
-
-    for(var i = 0; i < heatmapData.dataSeries.length; i++){
-        for(var j = 0; j < heatmapData.dataSeries[i].data.length; j++){
-            var point = heatmapData.dataSeries[i].data[j];
-            var x = point.x;
-            var y = point.y;
-            if(x < 0 || y < 0 || x >= width || y >= height){
-                return new Error("Point with coordinates outside range:" + x+","+y);
-            }
-        }
-    }
-
-    var isPermutation = function(arr){
-        return (
-            [].concat(arr)
-            .sort(function(a,b){
-                return a-b;
-            })
-            .map(function(el,ix){
-                return el===ix;
-            })
-            .reduce(function(l,r){
-                return l&&r;
-            },true)
-        );
-    };
-
-    if(!heatmapData.orderings.hasOwnProperty("Default")){
-        return new Error("Default ordering missing!");
-    }
-
-    for(var orderingName in heatmapData.orderings){
-        if(heatmapData.orderings.hasOwnProperty(orderingName)){
-            var ordering = heatmapData.orderings[orderingName];
-
-            if(ordering.columns.length!== width || !isPermutation(ordering.columns)){
-                return new Error("Column ordering invalid in "+orderingName);
-            }
-            if(ordering.rows.length!==height || ! isPermutation(ordering.rows)){
-                return new Error("Row ordering invalid in "+orderingName);
-            }
-        }
-    }
+var HeatmapDataPropType = function(props, propName, componentName){
+  var heatmapData = props[propName];
+  var possiblyError = validateDataSeries(heatmapData.dataSeries);
+  if(possiblyError!== undefined){
+    return possiblyError;
   }
-);
+
+  var width = heatmapData.xAxisCategories.length;
+  var height = heatmapData.yAxisCategories.length;
+
+  for(var i = 0; i < heatmapData.dataSeries.length; i++){
+      for(var j = 0; j < heatmapData.dataSeries[i].data.length; j++){
+          var point = heatmapData.dataSeries[i].data[j];
+          var x = point.x;
+          var y = point.y;
+          if(x < 0 || y < 0 || x >= width || y >= height){
+              return new Error("Point with coordinates outside range:" + x+","+y);
+          }
+      }
+  }
+
+  var isPermutation = function(arr){
+      return (
+          [].concat(arr)
+          .sort(function(a,b){
+              return a-b;
+          })
+          .map(function(el,ix){
+              return el===ix;
+          })
+          .reduce(function(l,r){
+              return l&&r;
+          },true)
+      );
+  };
+
+  if(!heatmapData.orderings){
+    return; //TODO this shouldn't go in this data structure after all!
+  }
+  if(!heatmapData.orderings.hasOwnProperty("Default")){
+      return new Error("Default ordering missing!");
+  }
+
+  for(var orderingName in heatmapData.orderings){
+      if(heatmapData.orderings.hasOwnProperty(orderingName)){
+          var ordering = heatmapData.orderings[orderingName];
+
+          if(ordering.columns.length!== width || !isPermutation(ordering.columns)){
+              return new Error("Column ordering invalid in "+orderingName);
+          }
+          if(ordering.rows.length!==height || ! isPermutation(ordering.rows)){
+              return new Error("Row ordering invalid in "+orderingName);
+          }
+      }
+  }
+};
 
 var FormatterPropType = function(props,propName){
   var f = props[propName];
@@ -99,9 +104,11 @@ var FormatterPropType = function(props,propName){
     return new Error(propName+" formatter not correctly created. See the main method of TooltipFormatter.jsx .");
   }
 }
-
-exports.validateDataSeries = validateDataSeries;
-exports.PointsInDataSeries = PointsInDataSeriesPropType;
-exports.HeatmapData = HeatmapDataPropType;
-exports.AxisCategories = AxisCategoriesPropType;
-exports.Formatter = FormatterPropType;
+module.exports = {
+validateDataSeries : validateDataSeries,
+PointsInDataSeries : PointsInDataSeriesPropType,
+HeatmapData : HeatmapDataPropType,
+validateHeatmapData : function(data){return HeatmapDataPropType({heatmapData: data}, "heatmapData", "Test")},
+AxisCategories : AxisCategoriesPropType,
+Formatter : FormatterPropType,
+};

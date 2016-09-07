@@ -38,50 +38,15 @@ var HeatmapContainer = React.createClass({
     },
 
     _data: function() {
-        var permuteX = function(x){
-            return this.props.heatmapData.orderings[this.state.ordering].columns.indexOf(x);
-        }.bind(this);
-
-        var permuteY = function(y){
-            return this.props.heatmapData.orderings[this.state.ordering].rows.indexOf(y);
-        }.bind(this);
-
-        var permutePoint = function(point){
-            return {
-              x: permuteX(point.x),
-              y: permuteY(point.y),
-              value: point.value,
-              info: point.info
-            };
-        };
-
-        var permuteArray = function(arr, permute){
-            return (
-                arr
-                  .map(
-                      function(el, ix){
-                        return [el, permute(ix)];
-                      })
-                  .sort(
-                      function(l,r){
-                        return l[1]-r[1];
-                      })
-                  .map(
-                      function(el){
-                        return el[0];
-                      }
-                )
-            );
-        };
-
-        return {
-            dataSeries: this.props.heatmapData.dataSeries.map(
-                    function(series){
-                        return series.data.map(permutePoint);
-                    }),
-            xAxisCategories: permuteArray(this.props.heatmapData.xAxisCategories, permuteX),
-            yAxisCategories: permuteArray(this.props.heatmapData.yAxisCategories, permuteY)
-        };
+      var result = require('./Manipulators.js').order(this.props.heatmapData.orderings[this.state.ordering], this.props.heatmapData);
+      return {
+          dataSeries: result.dataSeries.map(
+                  function(series){
+                      return series.data;
+                  }),
+          xAxisCategories: result.xAxisCategories,
+          yAxisCategories: result.yAxisCategories
+      };
     },
 
     _labels: function(){

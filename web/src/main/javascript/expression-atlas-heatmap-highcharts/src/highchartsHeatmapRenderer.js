@@ -26,6 +26,7 @@ var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
  * @param {boolean}         options.isDifferential
  * @param {boolean}         options.isMultiExperiment
  * @param {boolean=}        options.isWidget
+ * @param {string}          options.pathToFolderWithBundledResources - use if you're serving the /svg's from an unusual location. Development only.
  */
 
 exports.render = function(options) {
@@ -56,7 +57,7 @@ exports.render = function(options) {
                 sourceURL: sourceURL,
                 atlasBaseURL: atlasBaseURL,
                 linksAtlasBaseURL: linksAtlasBaseURL,
-                pathToFolderWithBundledResources:linksAtlasBaseURL+"/resources/js-bundles",
+                pathToFolderWithBundledResources:options.pathToFolderWithBundledResources || linksAtlasBaseURL+"/resources/js-bundles",
                 showAnatomogram: options.showAnatomogram === undefined || options.showAnatomogram,
                 isDifferential: !!options.isDifferential,
                 isMultiExperiment: sourceURL.indexOf("/baselineAnalytics")>-1,
