@@ -1,3 +1,4 @@
+web/src/main/javascript/**/.tmp
 target
 **/target
 *.iml
