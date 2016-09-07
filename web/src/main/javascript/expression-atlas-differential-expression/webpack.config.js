@@ -16,11 +16,6 @@ module.exports = Object.assign(require('../webpack.config.js'), {
         publicPath: '/dist/'
     },
     plugins: [
-        new CleanWebpackPlugin(['webapp/resources/js-bundles'], {
-          root: path.resolve(__dirname , '..'),
-            verbose: true,
-            dry: false
-        }),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'dependencies',
