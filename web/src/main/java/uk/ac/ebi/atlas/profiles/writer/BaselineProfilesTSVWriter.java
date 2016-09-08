@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
@@ -29,7 +30,6 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
 
     private String tsvFileMastheadTemplate;
 
-    @Inject
     public BaselineProfilesTSVWriter(CsvWriterFactory csvWriterFactory, Resource tsvFileMastheadTemplateResource) {
         super(csvWriterFactory);
 

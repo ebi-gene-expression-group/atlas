@@ -4,6 +4,8 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -28,8 +30,13 @@ public class BaselineProfilesTSVWriterIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    @Inject
     private BaselineProfilesTSVWriter subject;
+
+    @Inject
+    CsvWriterFactory csvWriterFactory;
+
+    @Value("classpath:/file-templates/download-headers-baseline.txt")
+    Resource tsvFileMastheadTemplateResource;
 
     @Inject
     private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
@@ -44,6 +51,8 @@ public class BaselineProfilesTSVWriterIT {
         requestPreferences.setQueryFactorType("ORGANISM_PART");
         BaselineExperiment baselineExperiment = rnaSeqBaselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
         requestContext = BaselineRequestContext.createFor(baselineExperiment,requestPreferences);
+
+        subject = new BaselineProfilesTSVWriter(csvWriterFactory,tsvFileMastheadTemplateResource);
     }
 
     @Test
