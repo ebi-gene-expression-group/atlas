@@ -43,19 +43,7 @@ var HeatmapContainer = React.createClass({
     },
 
     _dataToShow: function () {
-      var result = require('./Manipulators.js').filterByDataSeries(this.state.dataSeriesToShow,this._heatmapData());
-      return Object.assign(result,
-        { dataSeries: result.dataSeries.map(function(e){
-            return {
-              name: e.info.name,
-              color: e.info.colour,
-              borderWidth: result.xAxisCategories.length > 200 ? 0 :1 ,
-              borderColor: "white",
-              data: e.data
-            }
-          })
-        }
-      );
+      return require('./Manipulators.js').filterByDataSeries(this.state.dataSeriesToShow,this._heatmapData());
     },
 
     _labels: function(){
@@ -132,10 +120,9 @@ var HeatmapContainer = React.createClass({
                           .reduce(function(l,r){return l.concat(r);}, [])
                           .length
                           ? <HeatmapDrawing
-                              dataForTheChart={data}
                               marginRight={marginRight}
                               ontologyIdsToHighlight={this.props.ontologyIdsToHighlight}
-                              heatmapData={this._heatmapData()}
+                              heatmapData={data}
                               colorAxis={this.props.heatmapConfig.isExperimentPage ? createColorAxis(this.props.heatmapData.dataSeries) : undefined}
                               onHeatmapRedrawn={this.props.onHeatmapRedrawn}
                               formatters={FormattersFactory(this.props.heatmapConfig)}
@@ -157,10 +144,6 @@ var HeatmapDrawing = React.createClass({
       marginRight: React.PropTypes.number.isRequired,
       ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
       heatmapData: PropTypes.HeatmapData,
-      labels: React.PropTypes.arrayOf(React.PropTypes.shape({
-          name: React.PropTypes.string,
-          colour: React.PropTypes.string
-      })).isRequired,
       colorAxis: React.PropTypes.object,
       onHeatmapRedrawn: React.PropTypes.func.isRequired,
       formatters : React.PropTypes.shape({
@@ -173,7 +156,7 @@ var HeatmapDrawing = React.createClass({
   },
 
   shouldComponentUpdate: function(nextProps){
-    return hash.MD5(nextProps.dataForTheChart)!==hash.MD5(this.props.dataForTheChart);
+    return hash.MD5(nextProps.heatmapData)!==hash.MD5(this.props.heatmapData);
   },
   componentDidUpdate: function () {
       this.props.onHeatmapRedrawn();
@@ -198,7 +181,6 @@ var HeatmapDrawing = React.createClass({
   },
 
   render: function(){
-    //TODO calculating this based on dataForTheChart would be more correct.
     var xAxisLongestHeaderLength =
       Math.max.apply(null, this.props.heatmapData.xAxisCategories.map(function(category) {return category.label.length}));
     var marginTop =
@@ -219,13 +201,13 @@ var HeatmapDrawing = React.createClass({
     var maxWidthFraction = 1-Math.exp(-(0.2+0.05*Math.pow(this._countColumnsToShow()+1,2)));
     return (
         <div style={{maxWidth:maxWidthFraction*100+"%"}}>
-            <ReactHighcharts config={this._highchartsOptions(dimensions, this.props.dataForTheChart)} ref="chart"/>
+            <ReactHighcharts config={this._highchartsOptions(dimensions, this.props.heatmapData)} ref="chart"/>
         </div>
     );
   },
   _count_sToShow: function(xOrY){
     return (
-      [].concat.apply([], this.props.dataForTheChart.dataSeries.map((el)=>el.data))
+      [].concat.apply([], this.props.heatmapData.dataSeries.map((el)=>el.data))
       .map((el)=>el[xOrY])
       .sort((l,r)=>l-r)
       .filter((el, ix, self)=>self.indexOf(el) == ix)
@@ -348,7 +330,15 @@ var HeatmapDrawing = React.createClass({
           },
           onUserSelectsColumn: this.props.onUserSelectsColumn,
           genomeBrowserTemplate: this.props.genomeBrowserTemplate,
-          series: data.dataSeries
+          series: data.dataSeries.map(function(e){
+              return {
+                name: e.info.name,
+                color: e.info.colour,
+                borderWidth: data.xAxisCategories.length > 200 ? 0 :1 ,
+                borderColor: "white",
+                data: e.data
+              }
+            })
       }
     );
   }
