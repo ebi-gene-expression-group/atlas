@@ -33,7 +33,8 @@ var HeatmapContainer = React.createClass({
 
     getInitialState: function() {
         return {
-            ordering: "Default"
+            ordering: "Default",
+            dataSeriesToShow: this.props.heatmapData.dataSeries.map(function(e){return true;})
         };
     },
 
@@ -41,76 +42,8 @@ var HeatmapContainer = React.createClass({
       return require('./Manipulators.js').order(this.props.heatmapData.orderings[this.state.ordering], this.props.heatmapData);
     },
 
-    _labels: function(){
-        return this.props.heatmapData.dataSeries.map((e)=>{return {colour: e.info.colour, name: e.info.name}});
-    },
-
-    render: function () {
-        var marginRight = 60;
-        return (
-            <div>
-                <HeatmapOptions
-                    marginRight={marginRight}
-                    introductoryMessage={this.props.heatmapConfig.introductoryMessage}
-                    downloadOptions={{
-                        downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
-                        atlasBaseURL: this.props.heatmapConfig.atlasBaseURL,
-                        disclaimer: this.props.heatmapConfig.disclaimer
-                    }}
-                    orderings={{
-                        available: Object.keys(this.props.heatmapData.orderings),
-                        current: this.state.ordering,
-                        onSelect: function(orderingChosen){
-                          this.setState({ordering: orderingChosen})
-                        }.bind(this)
-                    }}
-                    googleAnalyticsCallback={this.props.googleAnalyticsCallback}
-                    showUsageMessage={this.props.heatmapData.xAxisCategories.length > 100} />
-
-                <HeatmapCanvas
-                    marginRight={marginRight}
-                    ontologyIdsToHighlight={this.props.ontologyIdsToHighlight}
-                    heatmapData={this._heatmapData()}
-                    labels={this._labels()}
-                    colorAxis={this.props.heatmapConfig.isExperimentPage ? createColorAxis(this.props.heatmapData.dataSeries) : undefined}
-                    onHeatmapRedrawn={this.props.onHeatmapRedrawn}
-                    formatters={FormattersFactory(this.props.heatmapConfig)}
-                    genomeBrowserTemplate={this.props.heatmapConfig.genomeBrowserTemplate}
-                    onUserSelectsColumn={this.props.onOntologyIdIsUnderFocus} />
-            </div>
-        );
-    }
-
-});
-
-var HeatmapCanvas = React.createClass({
-    propTypes: {
-        marginRight: React.PropTypes.number.isRequired,
-        ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-        heatmapData: PropTypes.HeatmapData,
-        labels: React.PropTypes.arrayOf(React.PropTypes.shape({
-            name: React.PropTypes.string,
-            colour: React.PropTypes.string
-        })).isRequired,
-        colorAxis: React.PropTypes.object,
-        onHeatmapRedrawn: React.PropTypes.func.isRequired,
-        formatters : React.PropTypes.shape({
-          xAxis: PropTypes.Formatter,
-          yAxis: PropTypes.Formatter,
-          tooltip: PropTypes.Formatter
-        }).isRequired,
-        genomeBrowserTemplate: React.PropTypes.string.isRequired,
-        onUserSelectsColumn:React.PropTypes.func.isRequired
-    },
-
-    getInitialState: function () {
-        return ({
-            dataSeriesToShow: this.props.labels.map(function(e){return true;})
-        })
-    },
-
     _dataToShow: function () {
-      var result = require('./Manipulators.js').filterByDataSeries(this.state.dataSeriesToShow,this.props.heatmapData);
+      var result = require('./Manipulators.js').filterByDataSeries(this.state.dataSeriesToShow,this._heatmapData());
       return Object.assign(result,
         { dataSeries: result.dataSeries.map(function(e){
             return {
@@ -125,26 +58,14 @@ var HeatmapCanvas = React.createClass({
       );
     },
 
-    componentDidUpdate: function () {
-        this.props.onHeatmapRedrawn();
+    _labels: function(){
+        return this.props.heatmapData.dataSeries.map((e)=>{return {colour: e.info.colour, name: e.info.name}});
     },
 
-    _makeLabelToggle: function(ix){
-        return function(){
-            this.setState(function(previousState){
-                return {
-                    dataSeriesToShow: previousState.dataSeriesToShow.map(function(e,jx){
-                        return ix===jx ? !e : e;
-                    })
-                }
-            });
-        }.bind(this);
-    },
-
-    renderLegend: function(){
+    _renderLegend: function(){
         return (
         <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
-            { this.props.labels.map(
+            { this._labels().map(
                 function(e, ix){
                     return (
                         <HeatmapLegendBox key={e.name}
@@ -170,19 +91,62 @@ var HeatmapCanvas = React.createClass({
         );
     },
 
-    render: function () {
+    _makeLabelToggle: function(ix){
+        return function(){
+            this.setState(function(previousState){
+                return Object.assign(previousState, {
+                    dataSeriesToShow: previousState.dataSeriesToShow.map(function(e,jx){
+                        return ix===jx ? !e : e;
+                    })
+                });
+            });
+        }.bind(this);
+    },
 
+    render: function () {
+        var marginRight = 60;
         var data = this._dataToShow();
         return (
-              <div id="highcharts_container">
-                  {data.dataSeries
-                    .map(function(e){return e.data;})
-                    .reduce(function(l,r){return l.concat(r);}, [])
-                    .length
-                    ? <HeatmapDrawing dataForTheChart={data} {...this.props} />
-                    : <p> No data in the series currently selected. </p>}
-                  {this.renderLegend()}
-              </div>
+            <div>
+                <HeatmapOptions
+                    marginRight={marginRight}
+                    introductoryMessage={this.props.heatmapConfig.introductoryMessage}
+                    downloadOptions={{
+                        downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
+                        atlasBaseURL: this.props.heatmapConfig.atlasBaseURL,
+                        disclaimer: this.props.heatmapConfig.disclaimer
+                    }}
+                    orderings={{
+                        available: Object.keys(this.props.heatmapData.orderings),
+                        current: this.state.ordering,
+                        onSelect: function(orderingChosen){
+                          this.setState({ordering: orderingChosen})
+                        }.bind(this)
+                    }}
+                    googleAnalyticsCallback={this.props.googleAnalyticsCallback}
+                    showUsageMessage={this.props.heatmapData.xAxisCategories.length > 100} />
+
+                    <div id="highcharts_container">
+                        {data.dataSeries
+                          .map(function(e){return e.data;})
+                          .reduce(function(l,r){return l.concat(r);}, [])
+                          .length
+                          ? <HeatmapDrawing
+                              dataForTheChart={data}
+                              marginRight={marginRight}
+                              ontologyIdsToHighlight={this.props.ontologyIdsToHighlight}
+                              heatmapData={this._heatmapData()}
+                              colorAxis={this.props.heatmapConfig.isExperimentPage ? createColorAxis(this.props.heatmapData.dataSeries) : undefined}
+                              onHeatmapRedrawn={this.props.onHeatmapRedrawn}
+                              formatters={FormattersFactory(this.props.heatmapConfig)}
+                              genomeBrowserTemplate={this.props.heatmapConfig.genomeBrowserTemplate}
+                              onUserSelectsColumn={this.props.onOntologyIdIsUnderFocus} />
+                          : <p> No data in the series currently selected. </p>}
+                    </div>
+
+                    {this._renderLegend()}
+
+            </div>
         );
     }
 
@@ -190,13 +154,29 @@ var HeatmapCanvas = React.createClass({
 
 var HeatmapDrawing = React.createClass({
   propTypes: {
-    dataForTheChart: React.PropTypes.object.isRequired,
-    ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
-    //And also more props needed for the config
+      marginRight: React.PropTypes.number.isRequired,
+      ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+      heatmapData: PropTypes.HeatmapData,
+      labels: React.PropTypes.arrayOf(React.PropTypes.shape({
+          name: React.PropTypes.string,
+          colour: React.PropTypes.string
+      })).isRequired,
+      colorAxis: React.PropTypes.object,
+      onHeatmapRedrawn: React.PropTypes.func.isRequired,
+      formatters : React.PropTypes.shape({
+        xAxis: PropTypes.Formatter,
+        yAxis: PropTypes.Formatter,
+        tooltip: PropTypes.Formatter
+      }).isRequired,
+      genomeBrowserTemplate: React.PropTypes.string.isRequired,
+      onUserSelectsColumn:React.PropTypes.func.isRequired
   },
 
   shouldComponentUpdate: function(nextProps){
     return hash.MD5(nextProps.dataForTheChart)!==hash.MD5(this.props.dataForTheChart);
+  },
+  componentDidUpdate: function () {
+      this.props.onHeatmapRedrawn();
   },
 
   componentWillReceiveProps: function(nextProps){
