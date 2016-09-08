@@ -296,7 +296,7 @@ var HeatmapDrawing = React.createClass({
         Math.max(70, this._countRowsToShow() * 30 + marginTop)
     }
 
-    var maxWidthFraction = 1-Math.exp(-(0.2+0.05*Math.pow(this._countColumnsToShow(),2)));
+    var maxWidthFraction = 1-Math.exp(-(0.2+0.05*Math.pow(this._countColumnsToShow()+1,2)));
     return (
         <div style={{maxWidth:maxWidthFraction*100+"%"}}>
             <ReactHighcharts config={this._highchartsOptions(dimensions, this.props.dataForTheChart)} ref="chart"/>
