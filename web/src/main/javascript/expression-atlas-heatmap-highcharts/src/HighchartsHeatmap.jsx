@@ -35,45 +35,17 @@ var HeatmapContainer = React.createClass({
         };
     },
 
-    _heatmapData: function() {
-      return require('./Manipulators.js').order(this.props.heatmapData.orderings[this.state.ordering], this.props.heatmapData);
-    },
-
-    _dataToShow: function () {
-      return require('./Manipulators.js').filterByDataSeries(this.state.dataSeriesToShow,this._heatmapData());
+    _heatmapDataToPresent: function () {
+      return require('./Manipulators.js').manipulate(
+        {
+          ordering: this.props.heatmapData.orderings[this.state.ordering],
+          dataSeriesToKeep: this.state.dataSeriesToShow
+        },
+      this.props.heatmapData)
     },
 
     _labels: function(){
         return this.props.heatmapData.dataSeries.map((e)=>{return {colour: e.info.colour, name: e.info.name}});
-    },
-
-    _renderLegend: function(){
-        return (
-        <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
-            { this._labels().map(
-                function(e, ix){
-                    return (
-                        <HeatmapLegendBox key={e.name}
-                                          name={e.name}
-                                          colour={e.colour}
-                                          on={this.state.dataSeriesToShow[ix]}
-                                          onClickCallback={this._makeLabelToggle(ix)} />
-                    );
-                }.bind(this))
-            }
-
-            <div className="legend-item special">
-                <span className="icon icon-generic" data-icon="i" data-toggle="tooltip" data-placement="bottom"
-                    title="Baseline expression levels in RNA-seq experiments are in FPKM or TPM. Low: 0-10, Medium: 11-1000,  High: >1000. Proteomics expression levels are mapped to low, medium, high on per experiment basis.">
-                </span>
-            </div>
-            <HeatmapLegendBox key={"No data available"}
-                              name={"No data available"}
-                              colour={"white"}
-                              on={ true}
-                              onClickCallback={function(){}}/>
-             </div>
-        );
     },
 
     _makeLabelToggle: function(ix){
@@ -87,50 +59,81 @@ var HeatmapContainer = React.createClass({
             });
         }.bind(this);
     },
+    _colorAxis: function(){
+      return (
+        this.props.heatmapConfig.isExperimentPage
+        ? createColorAxis(this.props.heatmapData.dataSeries)
+        : undefined
+      )
+    },
 
     render: function () {
         var marginRight = 60;
-        var data = this._dataToShow();
+        var heatmapDataToPresent = this._heatmapDataToPresent();
         return (
-            <div>
-                <HeatmapOptions
+          <div>
+            <HeatmapOptions
+              marginRight={marginRight}
+              introductoryMessage={this.props.heatmapConfig.introductoryMessage}
+              downloadOptions={{
+                downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
+                atlasBaseURL: this.props.heatmapConfig.atlasBaseURL,
+                disclaimer: this.props.heatmapConfig.disclaimer
+              }}
+              orderings={{
+                available: Object.keys(this.props.heatmapData.orderings),
+                current: this.state.ordering,
+                onSelect: function(orderingChosen){
+                  this.setState({ordering: orderingChosen})
+                }.bind(this)
+              }}
+              googleAnalyticsCallback={this.props.googleAnalyticsCallback}
+              showUsageMessage={heatmapDataToPresent.xAxisCategories.length > 100} />
+
+            <div id="highcharts_container">
+              {heatmapDataToPresent.dataSeries
+                .map(function(e){return e.data;})
+                .reduce(function(l,r){return l.concat(r);}, [])
+                .length
+                ? <HeatmapCanvas
                     marginRight={marginRight}
-                    introductoryMessage={this.props.heatmapConfig.introductoryMessage}
-                    downloadOptions={{
-                        downloadProfilesURL: this.props.heatmapConfig.downloadProfilesURL,
-                        atlasBaseURL: this.props.heatmapConfig.atlasBaseURL,
-                        disclaimer: this.props.heatmapConfig.disclaimer
-                    }}
-                    orderings={{
-                        available: Object.keys(this.props.heatmapData.orderings),
-                        current: this.state.ordering,
-                        onSelect: function(orderingChosen){
-                          this.setState({ordering: orderingChosen})
-                        }.bind(this)
-                    }}
-                    googleAnalyticsCallback={this.props.googleAnalyticsCallback}
-                    showUsageMessage={this.props.heatmapData.xAxisCategories.length > 100} />
-
-                    <div id="highcharts_container">
-                        {data.dataSeries
-                          .map(function(e){return e.data;})
-                          .reduce(function(l,r){return l.concat(r);}, [])
-                          .length
-                          ? <HeatmapCanvas
-                              marginRight={marginRight}
-                              ontologyIdsToHighlight={this.props.ontologyIdsToHighlight}
-                              heatmapData={data}
-                              colorAxis={this.props.heatmapConfig.isExperimentPage ? createColorAxis(this.props.heatmapData.dataSeries) : undefined}
-                              onHeatmapRedrawn={this.props.onHeatmapRedrawn}
-                              formatters={FormattersFactory(this.props.heatmapConfig)}
-                              genomeBrowserTemplate={this.props.heatmapConfig.genomeBrowserTemplate}
-                              onUserSelectsColumn={this.props.onOntologyIdIsUnderFocus} />
-                          : <p> No data in the series currently selected. </p>}
-                    </div>
-
-                    {this._renderLegend()}
-
+                    ontologyIdsToHighlight={this.props.ontologyIdsToHighlight}
+                    heatmapData={heatmapDataToPresent}
+                    colorAxis={this._colorAxis()}
+                    onHeatmapRedrawn={this.props.onHeatmapRedrawn}
+                    formatters={FormattersFactory(this.props.heatmapConfig)}
+                    genomeBrowserTemplate={this.props.heatmapConfig.genomeBrowserTemplate}
+                    onUserSelectsColumn={this.props.onOntologyIdIsUnderFocus} />
+                : <p> No data in the series currently selected. </p>}
             </div>
+
+            <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
+              { heatmapDataToPresent.dataSeries
+                .map(
+                  function(e, ix){
+                    return (
+                        <HeatmapLegendBox key={e.info.name}
+                                          name={e.info.name}
+                                          colour={e.info.colour}
+                                          on={this.state.dataSeriesToShow[ix]}
+                                          onClickCallback={this._makeLabelToggle(ix)} />
+                    );
+                  }.bind(this))
+              }
+
+              <div className="legend-item special">
+                <span className="icon icon-generic"
+                  data-icon="i" data-toggle="tooltip" data-placement="bottom"
+                  title="Baseline expression levels in RNA-seq experiments are in FPKM or TPM. Low: 0-10, Medium: 11-1000,  High: >1000. Proteomics expression levels are mapped to low, medium, high on per experiment basis.">
+                </span>
+              </div>
+              <HeatmapLegendBox key={"No data available"}
+                                name={"No data available"}
+                                colour={"white"}
+                                on={ true}
+                                onClickCallback={function(){}}/>
+            </div>
+          </div>
         );
     }
 

@@ -135,11 +135,18 @@ var filterHeatmapDataByPointProperty = function(property, keep, data){
 var filterHeatmapDataByCoexpressionIndex = function(maxIndex, data){
   return filterHeatmapDataByPointProperty("index", (ix)=>(ix<=maxIndex), data);
 }
-/*
 
-
-*/
 
 exports.filterByIndex = filterHeatmapDataByCoexpressionIndex;
 exports.filterByDataSeries = filterHeatmapDataByDataSeries;
 exports.order = orderHeatmapData;
+
+exports.manipulate = function(args, data){
+  return (
+    filterHeatmapDataByDataSeries(args.dataSeriesToKeep,
+      orderHeatmapData(args.ordering,
+         data
+      )
+    )
+  );
+}
