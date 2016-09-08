@@ -24,12 +24,15 @@ var dataClassesFromSeries = function(dataSeries){
     dataSeries
     .map(function(series){
       return (
-        series.data.length === 0 && series.name === "Below cutoff"
+        series.data.length === 0 && series.info.name === "Below cutoff"
         ? {
           data: [{value: 0.0}],
-          colour: series.colour
+          colour: series.info.colour
         }
-        : series
+        : {
+          data: series.data,
+          colour: series.info.colour
+        }
       );
     })
     .filter(function(series){

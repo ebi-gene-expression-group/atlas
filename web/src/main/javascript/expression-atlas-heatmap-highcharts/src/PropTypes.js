@@ -20,8 +20,10 @@ var PointPropType = React.PropTypes.shape({
 var PointsInDataSeriesPropType = React.PropTypes.arrayOf(React.PropTypes.arrayOf(PointPropType));
 
 var DataSeriesProps = {
-  colour: React.PropTypes.string.isRequired,
-  name: React.PropTypes.string.isRequired,
+  info: React.PropTypes.shape({
+    colour: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string.isRequired
+  }),
   data: React.PropTypes.arrayOf(PointPropType).isRequired
 };
 

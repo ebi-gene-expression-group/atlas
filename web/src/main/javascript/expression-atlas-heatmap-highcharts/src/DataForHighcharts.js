@@ -208,8 +208,10 @@ var _bucketsIntoSeries = _.curry(function(names,colours,chain){
     }, _.range(names.length).map(
       function(i){
         return {
-          name: names[i],
-          colour: colours[i],
+          info: {
+            name: names[i],
+            colour: colours[i]
+          },
           data: []
         };
       })

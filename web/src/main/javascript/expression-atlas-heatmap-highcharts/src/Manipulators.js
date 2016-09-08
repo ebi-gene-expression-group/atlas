@@ -4,7 +4,7 @@
 /*
 All functions in this module accept and return a following format of data:
 {
-  dataSeries : [{name: String,colour: String, data: [Point]}]
+  dataSeries : [info: {...: String}, data: [Point]}]
   xAxisCategories: [X axis label]
   yAxisCategories: [Y axis label]
 }
@@ -53,8 +53,7 @@ var orderHeatmapData = function(ordering, data){
     dataSeries: data.dataSeries.map(
         function(series){
           return {
-            name: series.name,
-            colour: series.colour,
+            info: series.info,
             data: series.data.map(permutePoint)
           };
         }),

@@ -50,14 +50,7 @@ var HeatmapContainer = React.createClass({
     },
 
     _labels: function(){
-        return this.props.heatmapData.dataSeries.map(
-            function (e){
-                return {
-                    colour: e.colour,
-                    name: e.name
-                }
-            }
-        )
+        return this.props.heatmapData.dataSeries.map((e)=>{return {colour: e.info.colour, name: e.info.name}});
     },
 
     render: function () {
