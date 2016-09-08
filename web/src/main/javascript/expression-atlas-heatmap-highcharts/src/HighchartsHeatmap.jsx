@@ -37,16 +37,8 @@ var HeatmapContainer = React.createClass({
         };
     },
 
-    _data: function() {
-      var result = require('./Manipulators.js').order(this.props.heatmapData.orderings[this.state.ordering], this.props.heatmapData);
-      return {
-          dataSeries: result.dataSeries.map(
-                  function(series){
-                      return series.data;
-                  }),
-          xAxisCategories: result.xAxisCategories,
-          yAxisCategories: result.yAxisCategories
-      };
+    _heatmapData: function() {
+      return require('./Manipulators.js').order(this.props.heatmapData.orderings[this.state.ordering], this.props.heatmapData);
     },
 
     _labels: function(){
@@ -78,7 +70,7 @@ var HeatmapContainer = React.createClass({
                 <HeatmapCanvas
                     marginRight={marginRight}
                     ontologyIdsToHighlight={this.props.ontologyIdsToHighlight}
-                    data={this._data()}
+                    heatmapData={this._heatmapData()}
                     labels={this._labels()}
                     colorAxis={this.props.heatmapConfig.isExperimentPage ? createColorAxis(this.props.heatmapData.dataSeries) : undefined}
                     onHeatmapRedrawn={this.props.onHeatmapRedrawn}
@@ -95,11 +87,7 @@ var HeatmapCanvas = React.createClass({
     propTypes: {
         marginRight: React.PropTypes.number.isRequired,
         ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-        data: React.PropTypes.shape({
-            dataSeries: PropTypes.PointsInDataSeries,
-            xAxisCategories: PropTypes.AxisCategories,
-            yAxisCategories: PropTypes.AxisCategories
-        }),
+        heatmapData: PropTypes.HeatmapData,
         labels: React.PropTypes.arrayOf(React.PropTypes.shape({
             name: React.PropTypes.string,
             colour: React.PropTypes.string
@@ -124,7 +112,8 @@ var HeatmapCanvas = React.createClass({
     _dataToShow: function () {
         var all_s = function(propertyToPickFromEachPoint){
             return (
-                this.props.data.dataSeries
+                this.props.heatmapData.dataSeries
+                .map((e)=>e.data)
                 .filter(function(e, ix){
                     return (
                         this.state.dataSeriesToShow[ix]
@@ -148,7 +137,8 @@ var HeatmapCanvas = React.createClass({
         var allXs = all_s("x");
         var allYs = all_s("y");
 
-        var ds = this.props.data.dataSeries
+        var ds = this.props.heatmapData.dataSeries
+        .map((e)=>e.data)
         .map(function(e, ix){
             return (
                 this.state.dataSeriesToShow[ix] ? e : []
@@ -180,15 +170,15 @@ var HeatmapCanvas = React.createClass({
                       For large experiments this would make it show up as one big white block so don't do it.
                       Change the magic number 200 if you feel like it.
                       */
-                    borderWidth: this.props.data.xAxisCategories.length > 200 ? 0 :1 ,
+                    borderWidth: this.props.heatmapData.xAxisCategories.length > 200 ? 0 :1 ,
                     borderColor: "white",
                     data: ds[ix]
                   }
             }.bind(this)),
-            xAxisCategories: this.props.data.xAxisCategories.filter(function(e,ix){
+            xAxisCategories: this.props.heatmapData.xAxisCategories.filter(function(e,ix){
                 return allXs.indexOf(ix)>-1
             }),
-            yAxisCategories: this.props.data.yAxisCategories.filter(function(e,ix){
+            yAxisCategories: this.props.heatmapData.yAxisCategories.filter(function(e,ix){
                 return allYs.indexOf(ix)>-1
             })
 
@@ -290,10 +280,10 @@ var HeatmapDrawing = React.createClass({
   render: function(){
     //TODO calculating this based on dataForTheChart would be more correct.
     var xAxisLongestHeaderLength =
-      Math.max.apply(null, this.props.data.xAxisCategories.map(function(category) {return category.label.length}));
+      Math.max.apply(null, this.props.heatmapData.xAxisCategories.map(function(category) {return category.label.length}));
     var marginTop =
-      this.props.data.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
-          this.props.data.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
+      this.props.heatmapData.xAxisCategories.length < 10 ? 30 :   // labels aren’t tilted
+          this.props.heatmapData.xAxisCategories.length < 50 ? Math.min(150, Math.round(xAxisLongestHeaderLength * 3.75)) : // labels at -45°
               Math.min(250, Math.round(xAxisLongestHeaderLength * 5.5));  // labels at -90°
 
     var dimensions= {
