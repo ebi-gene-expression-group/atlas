@@ -110,79 +110,19 @@ var HeatmapCanvas = React.createClass({
     },
 
     _dataToShow: function () {
-        var all_s = function(propertyToPickFromEachPoint){
-            return (
-                this.props.heatmapData.dataSeries
-                .map((e)=>e.data)
-                .filter(function(e, ix){
-                    return (
-                        this.state.dataSeriesToShow[ix]
-                    );
-                }.bind(this))
-                .reduce(function(l,r){
-                    return l.concat(r);
-                },[])
-                .map(function(e){
-                    return e[propertyToPickFromEachPoint];
-                })
-                .filter(function(e,ix,self){
-                    return self.indexOf(e) ===ix ;
-                })
-                .sort(function(l,r){
-                    return l-r;
-                })
-            );
-        }.bind(this);
-
-        var allXs = all_s("x");
-        var allYs = all_s("y");
-
-        var ds = this.props.heatmapData.dataSeries
-        .map((e)=>e.data)
-        .map(function(e, ix){
-            return (
-                this.state.dataSeriesToShow[ix] ? e : []
-            );
-        }.bind(this))
-        .map(function(series){
-            return (
-                series
-                    .map(function(point){
-                        return {
-                            x: allXs.indexOf(point.x),
-                            y: allYs.indexOf(point.y),
-                            value: point.value,
-                            info: point.info
-                        };
-                    })
-                    .filter(function(point){
-                        return point.x>-1 && point.y>-1
-                    })
-                );
-        });
-
-        return {
-            dataSeries: this.props.labels.map(function(e, ix){
-                return {
-                    name: e.name,
-                    color: e.colour,
-                    /*For smaller experiments, separate the cells so that they look easier to distinguish
-                      For large experiments this would make it show up as one big white block so don't do it.
-                      Change the magic number 200 if you feel like it.
-                      */
-                    borderWidth: this.props.heatmapData.xAxisCategories.length > 200 ? 0 :1 ,
-                    borderColor: "white",
-                    data: ds[ix]
-                  }
-            }.bind(this)),
-            xAxisCategories: this.props.heatmapData.xAxisCategories.filter(function(e,ix){
-                return allXs.indexOf(ix)>-1
-            }),
-            yAxisCategories: this.props.heatmapData.yAxisCategories.filter(function(e,ix){
-                return allYs.indexOf(ix)>-1
-            })
-
-        };
+      var result = require('./Manipulators.js').filterByDataSeries(this.state.dataSeriesToShow,this.props.heatmapData);
+      return Object.assign(result,
+        { dataSeries: result.dataSeries.map(function(e){
+            return {
+              name: e.info.name,
+              color: e.info.colour,
+              borderWidth: result.xAxisCategories.length > 200 ? 0 :1 ,
+              borderColor: "white",
+              data: e.data
+            }
+          })
+        }
+      );
     },
 
     componentDidUpdate: function () {

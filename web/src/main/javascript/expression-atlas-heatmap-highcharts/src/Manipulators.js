@@ -62,11 +62,65 @@ var orderHeatmapData = function(ordering, data){
   };
 }
 
-var filterHeatmapDataByDataSeries = function(dataSeriesToBeKept, data){
+var filterHeatmapDataByDataSeries = function(booleanVectorOfDataSeriesToKeep, data){
+  var all_s = function(propertyToPickFromEachPoint){
+    return (
+      data.dataSeries
+      .map((e)=>
+        e.data)
+      .filter((e,ix)=>
+        booleanVectorOfDataSeriesToKeep[ix])
+      .reduce((l,r)=>
+        l.concat(r))
+      .map((e)=>
+        e[propertyToPickFromEachPoint])
+      .filter((e,ix,self)=>
+        self.indexOf(e) ===ix)
+      .sort((l,r) =>
+        l-r)
+    );
+  }.bind(this);
 
-  return (
-    data
-  );
+  var allXs = all_s("x");
+  var allYs = all_s("y");
+
+  var ds = data.dataSeries
+  .map((e)=>e.data)
+  .map(function(e, ix){
+      return (
+          booleanVectorOfDataSeriesToKeep[ix] ? e : []
+      );
+  })
+  .map(function(series){
+      return (
+          series
+              .map(function(point){
+                  return {
+                      x: allXs.indexOf(point.x),
+                      y: allYs.indexOf(point.y),
+                      value: point.value,
+                      info: point.info
+                  };
+              })
+              .filter(function(point){
+                  return point.x>-1 && point.y>-1
+              })
+          );
+  });
+  return {
+    dataSeries: data.dataSeries.map(function(e, ix){
+      return {
+        info: e.info,
+        data: ds[ix]
+      }
+    }),
+    xAxisCategories: data.xAxisCategories.filter(function(e,ix){
+        return allXs.indexOf(ix)>-1
+    }),
+    yAxisCategories: data.yAxisCategories.filter(function(e,ix){
+        return allYs.indexOf(ix)>-1
+    })
+  }
 }
 
 

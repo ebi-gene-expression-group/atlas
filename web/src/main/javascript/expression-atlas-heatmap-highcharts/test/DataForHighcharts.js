@@ -23,7 +23,7 @@ describe('Experiment page baseline one gene with coexpressions', function() {
   describe('Returned object for data with coexpressions', function() {
     it('should have the data series format', function() {
       var result = subject.get(data.actual, config)
-      assert.equal(require('../src/PropTypes.js').validateHeatmapData(result),undefined);
+      assert.ifError(require('../src/PropTypes.js').validateHeatmapData(result));
     });
     it('coexpressions should end up with the rest of the data', function() {
       var result = subject.get(data.actual, config)
@@ -62,7 +62,7 @@ describe('Gene page baseline one row', function() {
   describe('Returned object', function() {
     it('should have the data series format', function() {
       var result = subject.get(data.actual, config)
-      assert.equal(require('../src/PropTypes.js').validateHeatmapData(result),undefined);
+      assert.ifError(require('../src/PropTypes.js').validateHeatmapData(result));
     });
     it('should have one row', function() {
       var result = subject.get(data.actual, config)
