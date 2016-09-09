@@ -5,9 +5,10 @@ var assertPropTypes = require('./assert.js');
 
 describe('Manipulators', function() {
   var data = require('./data/genesetPageOneRow').expected;
+  var orderings = {"Default":{"columns":[0,1,2,3,4,5,6,7,8],"rows":[0]},"Alphabetical order":{"columns":[0,1,2,3,4,5,6,7,8],"rows":[0]},"Gene expression rank":{"columns":[7,5,8,6,4,3,0,1,2],"rows":[0]}};
   describe('order', function() {
     describe('by default ordering', function(){
-      var result = subject.order(data.orderings["Default"], data);
+      var result = subject.order(orderings["Default"], data);
       it('result should have the data series format', function() {
         assertPropTypes.validateHeatmapData(result);
       });
@@ -18,7 +19,7 @@ describe('Manipulators', function() {
       });
     });
     describe('by GE ordering', function(){
-      var result = subject.order(data.orderings["Gene expression rank"], data);
+      var result = subject.order(orderings["Gene expression rank"], data);
       it('result should have the data series format', function() {
         assertPropTypes.validateHeatmapData(result);
       });
@@ -68,4 +69,23 @@ describe('Manipulators', function() {
       })
     })
   });
+  describe('filterByIndex', function(){
+    describe('passing the code through non-experiment page data', function(){
+      var geneSetPageData = require('./data/genesetPageOneRow').expected;
+      var result = subject.filterByIndex(0,geneSetPageData);
+      it('result should have the data series format', function() {
+        assertPropTypes.validateHeatmapData(result);
+      });
+      it('leaves it as it is with default index value', function (){
+        assert.deepEqual(geneSetPageData, result);
+      });
+      it('leaves it as it is with random non-zero index value', function (){
+        assert.deepEqual(geneSetPageData, subject.filterByIndex(5,geneSetPageData));
+      });
+      it('filters all data out with a negative index value', function (){
+        var result = subject.filterByIndex(-1,geneSetPageData);
+        assert.deepEqual([], [].concat.apply([], result.dataSeries.map((series)=>series.data)));
+      });
+    });
+  })
 });

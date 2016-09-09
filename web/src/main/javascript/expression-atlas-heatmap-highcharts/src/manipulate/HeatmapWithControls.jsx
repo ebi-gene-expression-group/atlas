@@ -16,6 +16,7 @@ var Show = require('../show/main.jsx');
 //*------------------------------------------------------------------*
 
 module.exports = React.createClass({
+    displayName: "Heatmap with menus",
     propTypes: {
       loadResult: PropTypes.LoadResult,
       googleAnalyticsCallback: React.PropTypes.func.isRequired,
