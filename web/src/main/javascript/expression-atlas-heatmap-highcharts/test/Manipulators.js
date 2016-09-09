@@ -60,7 +60,7 @@ describe('Manipulators', function() {
         assert.notDeepEqual(data.dataSeries[anotherIndexNotFilteredOut].data, result.dataSeries[anotherIndexNotFilteredOut].data);
       })
       it('should put empty data into the index filtered out', function(){
-        assert.deepEqual(Object.assign(data.dataSeries[indexFilteredOut], {data:[]}),result.dataSeries[indexFilteredOut]);
+        assert.deepEqual(Object.assign(JSON.parse(JSON.stringify(data.dataSeries[indexFilteredOut])), {data:[]}),result.dataSeries[indexFilteredOut]);
       })
       it('will cause us to have less x axis labels here', function(){
         assert.notDeepEqual(data.xAxisCategories, result.xAxisCategories);
@@ -70,21 +70,47 @@ describe('Manipulators', function() {
     })
   });
   describe('filterByIndex', function(){
-    describe('passing the code through non-experiment page data', function(){
+    describe('passing non-experiment page data through the code', function(){
       var geneSetPageData = require('./data/genesetPageOneRow').expected;
-      var result = subject.filterByIndex(0,geneSetPageData);
       it('result should have the data series format', function() {
+        var result = subject.filterByIndex(0,geneSetPageData);
         assertPropTypes.validateHeatmapData(result);
       });
       it('leaves it as it is with default index value', function (){
+        var result = subject.filterByIndex(0,geneSetPageData);
         assert.deepEqual(geneSetPageData, result);
       });
       it('leaves it as it is with random non-zero index value', function (){
-        assert.deepEqual(geneSetPageData, subject.filterByIndex(5,geneSetPageData));
+        var result = subject.filterByIndex(5,geneSetPageData);
+        assert.deepEqual(geneSetPageData, result);
       });
       it('filters all data out with a negative index value', function (){
         var result = subject.filterByIndex(-1,geneSetPageData);
         assert.deepEqual([], [].concat.apply([], result.dataSeries.map((series)=>series.data)));
+      });
+    });
+    describe('data with coexpressions', function(){
+      var coexpressionsData = require('./data/experimentPageBaselineOneGeneWithCoexpressions').expected;
+      it('result should have the data series format', function() {
+        var result = subject.filterByIndex(0,coexpressionsData);
+        assertPropTypes.validateHeatmapData(result);
+      });
+      it('leaves one row in with default index value', function (){
+        var result = subject.filterByIndex(0,coexpressionsData);
+        assert.deepEqual(coexpressionsData.xAxisCategories, result.xAxisCategories);
+        assert.equal(1, result.yAxisCategories.length);
+      });
+      it('leaves it as it is with very high index value', function (){
+        var result = subject.filterByIndex(9000,coexpressionsData);
+        assert.deepEqual(coexpressionsData, result);
+      });
+      it('filters all data out with a negative index value', function (){
+        var result = subject.filterByIndex(-1,coexpressionsData);
+        assert.deepEqual([], [].concat.apply([], result.dataSeries.map((series)=>series.data)));
+      });
+      it('leaves as many rows as index says plus one', function (){
+        assert.equal(3, subject.filterByIndex(2,coexpressionsData).yAxisCategories.length);
+        assert.equal(2, subject.filterByIndex(1,coexpressionsData).yAxisCategories.length);
       });
     });
   })

@@ -27,7 +27,6 @@ describe('Experiment page baseline one gene with coexpressions', function() {
     });
     it('should be the same as the JSON dump of the result', function(){
       var result = subject(config, data.actual)
-      console.log(JSON.stringify(result.heatmapData))
       assert.deepEqual(data.expected,result.heatmapData);
     })
 

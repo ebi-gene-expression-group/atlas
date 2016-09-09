@@ -62,33 +62,33 @@ var orderHeatmapData = function(ordering, data){
   };
 }
 
-var filterHeatmapDataByDataSeries = function(booleanVectorOfDataSeriesToKeep, data){
-  var all_s = function(propertyToPickFromEachPoint){
-    return (
-      data.dataSeries
-      .map((e)=>
-        e.data)
-      .filter((e,ix)=>
-        booleanVectorOfDataSeriesToKeep[ix])
-      .reduce((l,r)=>
-        l.concat(r))
-      .map((e)=>
-        e[propertyToPickFromEachPoint])
-      .filter((e,ix,self)=>
-        self.indexOf(e) ===ix)
-      .sort((l,r) =>
-        l-r)
-    );
-  }.bind(this);
+var _axisElementsForFilteredDataSeries = function(axis, conditionPerSeries,conditionPerPoint,dataSeries){
+  return (
+    dataSeries
+    .filter(conditionPerSeries)
+    .map((e)=>
+      e.data)
+    .reduce((l,r)=>
+      l.concat(r))
+    .filter(conditionPerPoint)
+    .map((e)=>
+      e[axis])
+    .filter((e,ix,self)=>
+      self.indexOf(e) ===ix)
+    .sort((l,r) =>
+      l-r)
+  );
+}
 
-  var allXs = all_s("x");
-  var allYs = all_s("y");
+var _filterHeatmapData = function(keepSeries, keepPoint, data){
+  let allXs = _axisElementsForFilteredDataSeries("x",keepSeries,keepPoint,data.dataSeries);
+  let allYs = _axisElementsForFilteredDataSeries("y",keepSeries,keepPoint,data.dataSeries);
 
-  var ds = data.dataSeries
-  .map((e)=>e.data)
-  .map(function(e, ix){
+  let newDataSeries =
+  data.dataSeries
+  .map(function(series, ix){
       return (
-          booleanVectorOfDataSeriesToKeep[ix] ? e : []
+          keepSeries(series,ix) ? series.data.filter(keepPoint) : []
       );
   })
   .map(function(series){
@@ -111,7 +111,7 @@ var filterHeatmapDataByDataSeries = function(booleanVectorOfDataSeriesToKeep, da
     dataSeries: data.dataSeries.map(function(e, ix){
       return {
         info: e.info,
-        data: ds[ix]
+        data: newDataSeries[ix]
       }
     }),
     xAxisCategories: data.xAxisCategories.filter(function(e,ix){
@@ -123,17 +123,20 @@ var filterHeatmapDataByDataSeries = function(booleanVectorOfDataSeriesToKeep, da
   }
 }
 
-
-
-var filterHeatmapDataByPointProperty = function(property, keep, data){
-
-  return (
+var filterHeatmapDataByDataSeries = function(booleanVectorOfDataSeriesToKeep, data){
+  return _filterHeatmapData(
+    (series,ix)=>booleanVectorOfDataSeriesToKeep[ix],
+    (point)=>true,
     data
   );
 }
 
 var filterHeatmapDataByCoexpressionIndex = function(maxIndex, data){
-  return filterHeatmapDataByPointProperty("index", (ix)=>(ix<=maxIndex), data);
+  return _filterHeatmapData(
+    (series,ix)=>true,
+    (point)=>{return point.info.index<=maxIndex},
+    data
+  );
 }
 
 
