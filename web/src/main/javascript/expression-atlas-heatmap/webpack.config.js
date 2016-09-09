@@ -1,6 +1,5 @@
 var webpack = require('webpack');
 var path = require('path');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = Object.assign(require('../webpack.config.js'), {
     entry: {

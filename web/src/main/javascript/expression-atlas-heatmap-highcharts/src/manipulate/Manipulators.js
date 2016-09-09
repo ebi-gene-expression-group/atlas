@@ -146,9 +146,11 @@ exports.order = orderHeatmapData;
 
 exports.manipulate = function(args, data){
   return (
-    filterHeatmapDataByDataSeries(args.dataSeriesToKeep,
-      orderHeatmapData(args.ordering,
-         data
+    filterHeatmapDataByCoexpressionIndex(args.maxIndex,
+      filterHeatmapDataByDataSeries(args.dataSeriesToKeep,
+        orderHeatmapData(args.ordering,
+           data
+        )
       )
     )
   );

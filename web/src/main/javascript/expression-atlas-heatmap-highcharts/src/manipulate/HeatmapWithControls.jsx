@@ -28,7 +28,8 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             ordering: "Default",
-            dataSeriesToShow: this.props.loadResult.heatmapData.dataSeries.map(function(e){return true;})
+            dataSeriesToShow: this.props.loadResult.heatmapData.dataSeries.map(function(e){return true;}),
+            coexpressionsShown: 0
         };
     },
 
@@ -36,7 +37,8 @@ module.exports = React.createClass({
       return require('./Manipulators.js').manipulate(
         {
           ordering: this.props.loadResult.orderings[this.state.ordering],
-          dataSeriesToKeep: this.state.dataSeriesToShow
+          dataSeriesToKeep: this.state.dataSeriesToShow,
+          maxIndex:this.state.coexpressionsShown
         },
       this.props.loadResult.heatmapData)
     },
@@ -83,6 +85,18 @@ module.exports = React.createClass({
       );
     },
 
+    _coexpressionOption: function(){
+      return (
+        this.props.loadResult.heatmapConfig.coexpressions &&
+        {
+          geneName: this.props.loadResult.heatmapConfig.coexpressions.coexpressedGene,
+          numCoexpressionsVisible: this.state.coexpressionsShown,
+          numCoexpressionsAvailable: this.props.loadResult.heatmapConfig.coexpressions.numCoexpressionsAvailable,
+          showCoexpressionsCallback: (e)=>{this.setState({coexpressionsShown: e})}
+        }
+      );
+    },
+
     render: function(){
       return (
         Show(
@@ -91,6 +105,7 @@ module.exports = React.createClass({
           this.props.loadResult.colorAxis||undefined,
           FormattersFactory(this.props.loadResult.heatmapConfig),
           this._legend(),
+          this._coexpressionOption(),
           this.props
         )
       );

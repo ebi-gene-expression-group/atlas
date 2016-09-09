@@ -24,6 +24,29 @@ var geneURL = function(config){
   "&organism=" + config.species;
 }
 
+var _coexpressions = function(jsonCoexpressions){
+  /*
+  The backend code and the feature in the old heatmap were written to support coexpressions of multiple genes.
+  It doesn't seem necessary, so this assumes zero or one coexpressions.
+  */
+  return (
+    jsonCoexpressions[0]
+    ? {
+      coexpressedGene: jsonCoexpressions[0].geneName,
+      numCoexpressionsAvailable: jsonCoexpressions[0].jsonProfiles ? jsonCoexpressions[0].jsonProfiles.rows.length : 0
+    }
+    : ""
+  )
+}
+var coexpressions = function(setupConfig, data){
+  return (
+    setupConfig.isExperimentPage
+      && data.jsonCoexpressions
+      && Array.isArray(data.jsonCoexpressions)
+      ? _coexpressions(data.jsonCoexpressions) : ""
+  )
+}
+
 var getConfig=function(setupConfig,data){
   var config = {
     geneQuery: data.config.geneQuery,
@@ -35,6 +58,7 @@ var getConfig=function(setupConfig,data){
     introductoryMessage: _introductoryMessage(setupConfig.isMultiExperiment,data.profiles),
     xAxisLegendName: capitalizeFirstLetter(data.config.columnType) || "Experimental condition",
     yAxisLegendName: setupConfig.isExperimentPage ? "Gene name": "Experiment",
+    coexpressions : coexpressions(setupConfig,data)
   };
   //See in heatmap-data.jsp which thirteen properties this config is populated with.
   Object.assign(config, data.config);

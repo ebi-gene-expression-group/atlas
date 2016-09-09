@@ -11,6 +11,7 @@ var DownloadProfilesButton = require('download-profiles-button');
 
 var PropTypes = require('../PropTypes.js');
 var HeatmapCanvas = require('./HeatmapCanvas.jsx');
+var CoexpressionOption = require('./CoexpressionOption.jsx');
 
 //*------------------------------------------------------------------*
 
@@ -113,7 +114,8 @@ var HeatmapOptions = React.createClass({
     }
 });
 
-var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,legend, properties) {
+
+var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,legend,coexpressions, properties) {
     var marginRight = 60;
     var heatmapConfig = properties.loadResult.heatmapConfig;
     return (
@@ -164,6 +166,7 @@ var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,legend
                             on={ true}
                             onClickCallback={function(){}}/>
         </div>
+        {coexpressions? <CoexpressionOption {...coexpressions}/> : null }
       </div>
     );
 }
