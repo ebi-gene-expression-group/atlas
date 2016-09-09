@@ -27,7 +27,7 @@ var getXAxisCategories = function (columnHeaders, config) {
 
 var getYAxisCategories = function (rows, config) {
   return rows.map(
-    config.isDifferential
+    config.isExperimentPage
     ? function (profile) {
         return {"label": profile.name,
                 "id": profile.id,
@@ -40,7 +40,7 @@ var getYAxisCategories = function (rows, config) {
                 "id" : profile.id + "?geneQuery=" + config.geneQuery +
                     (profile.serializedFilterFactors?"&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors):""),
                 "info":{
-                  trackId:config.isExperimentPage?profile.id :""
+                  trackId:""
                 }};
       }
     );
