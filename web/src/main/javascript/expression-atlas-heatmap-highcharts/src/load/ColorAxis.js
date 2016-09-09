@@ -3,7 +3,7 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
-var validateDataSeries = require('./PropTypes.js').validateDataSeries;
+var validateDataSeries = require('../PropTypes.js').validateDataSeries;
 var Colour = require("color");
 
 //*------------------------------------------------------------------*
@@ -110,10 +110,14 @@ var dataClassesFromSeries = function(dataSeries){
   );
 };
 
-var getColorAxisFromDataSeries = function(dataSeries){
-  return {
-    dataClasses: dataClassesFromSeries(dataSeries)
-  };
+var getColorAxisFromDataSeries = function(config, dataSeries){
+  return (
+    config.isExperimentPage
+    ? {
+      dataClasses: dataClassesFromSeries(dataSeries)
+      }
+    : null
+  )
 }
 
 module.exports = getColorAxisFromDataSeries;

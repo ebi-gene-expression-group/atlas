@@ -1,5 +1,7 @@
-var subject = require('../src/Manipulators.js');
+var subject = require('../src/manipulate/Manipulators.js');
 var assert = require('assert');
+var assertPropTypes = require('./assert.js');
+
 
 describe('Manipulators', function() {
   var data = require('./data/genesetPageOneRow').expected;
@@ -7,7 +9,7 @@ describe('Manipulators', function() {
     describe('by default ordering', function(){
       var result = subject.order(data.orderings["Default"], data);
       it('result should have the data series format', function() {
-        assert.ifError(require('../src/PropTypes.js').validateHeatmapData(result));
+        assertPropTypes.validateHeatmapData(result);
       });
       it('result should not actually change', function() {
         assert.deepEqual(data.xAxisCategories,result.xAxisCategories);
@@ -18,7 +20,7 @@ describe('Manipulators', function() {
     describe('by GE ordering', function(){
       var result = subject.order(data.orderings["Gene expression rank"], data);
       it('result should have the data series format', function() {
-        assert.ifError(require('../src/PropTypes.js').validateHeatmapData(result));
+        assertPropTypes.validateHeatmapData(result);
       });
       it('the highest column should come first', function() {
         var highest = data.xAxisCategories[7];
@@ -30,7 +32,7 @@ describe('Manipulators', function() {
     describe('keeping all series in', function(){
       var result = subject.filterByDataSeries(data.dataSeries.map((_)=>true), data);
       it('result should have the data series format', function() {
-        assert.ifError(require('../src/PropTypes.js').validateHeatmapData(result));
+        assertPropTypes.validateHeatmapData(result);
       });
       it('result should not actually change', function() {
         assert.deepEqual(data.xAxisCategories,result.xAxisCategories);

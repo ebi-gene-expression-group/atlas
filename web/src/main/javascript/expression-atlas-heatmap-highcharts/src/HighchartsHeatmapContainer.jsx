@@ -8,17 +8,13 @@ var Snap = require('imports-loader?this=>window,fix=>module.exports=0!snapsvg/di
 
 var $ = require('jquery');
 
-var HeatmapData= require('./DataForHighcharts.js');
-
 //*------------------------------------------------------------------*
 
-var HighchartsHeatmap = require('./HighchartsHeatmap.jsx');
+var Load = require('./load/main.js');
+var HighchartsHeatmap = require('./manipulate/HeatmapWithControls.jsx');
 require('./HighchartsHeatmapContainer.css');
 
 var Anatomogram = require('anatomogram');
-
-var genomeBrowserTemplate = require('./genomeBrowserLink.js');
-
 
 //*------------------------------------------------------------------*
 
@@ -57,16 +53,15 @@ var Container = React.createClass({
   },
   render: function(){
     var heatmapProps = {
-      heatmapConfig:this.props.heatmapConfig,
+      loadResult: this.props.loadResult,
       googleAnalyticsCallback:this.props.googleAnalyticsCallback,
-      heatmapData:this.props.heatmapData,
       onHeatmapRedrawn:this._attachListenersToLabels,
     };//overriden: ontologyIdsToHighlight, onOntologyIdIsUnderFocus
     var anatomogramConfig = {
       pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
       anatomogramData: this.props.anatomogramData,
-      expressedTissueColour: this.props.heatmapConfig.isExperimentPage? "gray":"red",
-      hoveredTissueColour: this.props.heatmapConfig.isExperimentPage? "red" :"purple",
+      expressedTissueColour: this.props.loadResult.heatmapConfig.isExperimentPage? "gray":"red",
+      hoveredTissueColour: this.props.loadResult.heatmapConfig.isExperimentPage? "red" :"purple",
       atlasBaseURL: this.props.atlasBaseURL,
       idsExpressedInExperiment:this._ontologyIdsForTissuesExpressedInAllRows()
     };
@@ -191,12 +186,7 @@ var ContainerLoader = React.createClass({
 
     render: function () {
 
-        var geneURL =
-            this.props.linksAtlasBaseURL + "/query" +
-            "?geneQuery=" + this.state.heatmapConfig.geneQuery +
-            "&conditionQuery=" + this.state.heatmapConfig.conditionQuery +
-            "&organism=" + this.state.heatmapConfig.species;
-
+        var geneURL = this.props.linksAtlasBaseURL + (this.state.loadResult.heatmapConfig.geneURL|| "");
 
         return (
           <div ref="this">
@@ -242,17 +232,23 @@ var ContainerLoader = React.createClass({
         return {
             ajaxCompleted: false,
             error: false,
-            heatmapConfig: {},
             profiles: {
                 rows: [],
                 minExpressionLevel: 0,
                 maxExpressionLevel: 0
             },
-            jsonCoexpressions : [],
             geneSetProfiles: {},
             anatomogramData: {},
             googleAnalyticsCallback: function (){},
-            heatmapData: HeatmapData.EMPTY
+            loadResult: {
+              heatmapConfig: {},
+              orderings:{
+                "Default" : {
+                  columns: [],
+                  rows: []
+                }
+              }
+            }
         }
     },
 
@@ -288,47 +284,23 @@ var ContainerLoader = React.createClass({
       return !this.props.isMultiExperiment && !this._isExperimentPage();
     },
 
-    _introductoryMessage: function(profiles) {
-        var shownRows = profiles.rows.length,
-            totalRows = profiles.searchResultTotal;
-
-        var what =
-            (this.props.isMultiExperiment ? 'experiment' : 'gene') +
-            (totalRows > 1 ? 's' : '');
-
-        return 'Showing ' + shownRows + ' ' +
-            (totalRows === shownRows ? what + ':' : 'of ' + totalRows + ' ' + what + ' found:');
-    },
-
     onAjaxSuccessful: function(data){
-      var capitalizeFirstLetter = function(str){
-        return !str? str: str.charAt(0).toUpperCase() + str.substr(1);
-      }
-      var config = {
-        geneQuery: data.config.geneQuery,
-        atlasBaseURL: this.props.atlasBaseURL,
+
+      var setupConfig = {
         isExperimentPage: this._isExperimentPage(),
         isMultiExperiment: this.props.isMultiExperiment,
         isReferenceExperiment: this._isReferenceExperiment(),
         isDifferential: this.props.isDifferential,
-        introductoryMessage: this._introductoryMessage(data.profiles),
-        xAxisLegendName: capitalizeFirstLetter(data.config.columnType) || "Experimental condition",
-        yAxisLegendName: this._isExperimentPage() ? "Gene name": "Experiment",
-      };
-      //See in heatmap-data.jsp which thirteen properties this config is populated with.
-      Object.assign(config, data.config);
-      Object.assign(config,{genomeBrowserTemplate: this._isExperimentPage()? genomeBrowserTemplate(config):""});
-
+        atlasBaseURL: this.props.atlasBaseURL
+      }
 
       this.setState({
           ajaxCompleted: true,
-          heatmapConfig: Object.freeze(config),
           columnHeaders: data.columnHeaders,
           profiles: data.profiles,
-          jsonCoexpressions : data.jsonCoexpressions,
           anatomogramData: data.anatomogram,
           experimentData: data.experiment,
-          heatmapData: HeatmapData.get(data, config)
+          loadResult: Load(setupConfig, data)
       });
     },
 

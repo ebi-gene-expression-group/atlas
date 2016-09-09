@@ -4,17 +4,6 @@
 var _ = require('lodash');
 
 //*------------------------------------------------------------------*
-var Orderings = require('./OrderingsForHighcharts.js');
-
-//*------------------------------------------------------------------*
-
-var EMPTY = {
-    xAxisCategories: {},
-    columnOrderings: {},
-    yAxisCategories: {},
-    rowOrderings:{},
-    dataSeries: [[],[],[],[]]
-};
 
 var getXAxisCategories = function (columnHeaders, config) {
   return columnHeaders.map(
@@ -229,52 +218,13 @@ var _dataSplitByThresholds = function (thresholds, names, colours, profilesRows,
   );
 };
 
-var extractExpressionValues = function(rows, isDifferential){
-  var _valueFieldExtractor = function(valueField){
-    return (
-      function(expression){
-        return (
-          expression.hasOwnProperty(valueField)
-          ? {value : +expression[valueField]}
-          : {}
-        );
-      });
-  };
-  return rows.map(
-    function(row){
-      return row.expressions.map(
-        _valueFieldExtractor(isDifferential ? "foldChange": "value")
-      );
-    }
-  );
-};
-
-var getTheWholeDataObject = function(rows, columnHeaders, config){
-  var expressions = extractExpressionValues(rows,config.isDifferential);
-
+var getTheWholeDataObject = function(config,rows, columnHeaders){
   return {
     xAxisCategories: getXAxisCategories(columnHeaders, config),
     yAxisCategories: getYAxisCategories(rows, config),
-    orderings: Orderings.create(expressions,columnHeaders, rows, config),
     dataSeries: getDataSeries(rows, config)
   };
 };
 
-var get = function(data, config){
-  var allRows = [].concat.apply(data.profiles.rows, (data.jsonCoexpressions || []).map(function(coex) {
-    return (coex.jsonProfiles&&coex.jsonProfiles.rows? coex.jsonProfiles.rows:[]).map(function(row, ix) {
-      return Object.assign(row, {
-        coexpressionOfGene: {
-          id: coex.geneId,
-          name: coex.geneName,
-          index: ix
-        }
-      })
-    })
-  }));
-  return getTheWholeDataObject(allRows, data.columnHeaders, config);
-};
-
 //*------------------------------------------------------------------*
-exports.EMPTY = EMPTY;
-exports.get = get;
+module.exports = getTheWholeDataObject;

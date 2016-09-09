@@ -5,9 +5,6 @@ var _ = require('lodash');
 
 //*------------------------------------------------------------------*
 
-
-//*------------------------------------------------------------------*
-
 //apply rank first,use comparator to resolve ties
 var createOrdering = function(rank, comparator, arr){
   return (
@@ -210,6 +207,33 @@ var createOrderings = function (expressions, columnHeaders, rows, config){
   );
 };
 
+var extractExpressionValues = function(rows, isDifferential){
+  var _valueFieldExtractor = function(valueField){
+    return (
+      function(expression){
+        return (
+          expression.hasOwnProperty(valueField)
+          ? {value : +expression[valueField]}
+          : {}
+        );
+      });
+  };
+  return rows.map(
+    function(row){
+      return row.expressions.map(
+        _valueFieldExtractor(isDifferential ? "foldChange": "value")
+      );
+    }
+  );
+};
+
+var createOrderingsForData = function(config,rows,columnHeaders){
+  return createOrderings(
+    extractExpressionValues(rows,config.isDifferential),
+    columnHeaders, rows, config
+  );
+}
+
 //*------------------------------------------------------------------*
 
-exports.create = createOrderings;
+module.exports = createOrderingsForData;

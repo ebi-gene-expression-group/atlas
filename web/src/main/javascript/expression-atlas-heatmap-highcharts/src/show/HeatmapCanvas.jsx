@@ -9,11 +9,12 @@ require('highcharts-heatmap')(Highcharts);
 require('./HighchartsHeatmap.css');
 var hash = require('object-hash');
 
-var PropTypes = require('./PropTypes.js');
+var PropTypes = require('../PropTypes.js');
 
 //*------------------------------------------------------------------*
 
 module.exports = React.createClass({
+  displayName: "Heatmap canvas",
   propTypes: {
       marginRight: React.PropTypes.number.isRequired,
       ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,

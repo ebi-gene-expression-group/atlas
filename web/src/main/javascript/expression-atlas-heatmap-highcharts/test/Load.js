@@ -1,13 +1,13 @@
 var assert = require('assert');
+var assertPropTypes = require('./assert.js');
 
-var subject = require("../src/DataForHighcharts.js");
+var subject = require("../src/load/main.js");
 
 
 
 describe('Experiment page baseline one gene with coexpressions', function() {
   var data = require("./data/experimentPageBaselineOneGeneWithCoexpressions.js");
 
-  //The fact this needs to be included shows we could modularise our code better.
   var config = {
     "geneQuery": "%5B%7B%22value%22%3A%22%5B%7B%5C%22value%5C%22%3A%5C%22Sb01g006200%5C%22%2C%5C%22category%5C%22%3A%5C%22%5C%22%7D%5D%22%2C%22category%22%3A%22%22%7D%5D",
     "isExperimentPage": true,
@@ -22,8 +22,8 @@ describe('Experiment page baseline one gene with coexpressions', function() {
   };
   describe('Returned object for data with coexpressions', function() {
     it('should have the data series format', function() {
-      var result = subject.get(data.actual, config)
-      assert.ifError(require('../src/PropTypes.js').validateHeatmapData(result));
+      var result = subject(config, data.actual)
+      assertPropTypes.validateLoadResult(result);
     });
     it('coexpressions should end up with the rest of the data', function() {
       var result = subject.get(data.actual, config)

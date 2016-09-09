@@ -62,6 +62,12 @@ var HeatmapDataPropType = function(props, propName, componentName){
       }
   }
 
+
+};
+
+var OrderingsPropType = function(props, propName, componentName){
+  var orderings = props[propName];
+
   var isPermutation = function(arr){
       return (
           [].concat(arr)
@@ -77,26 +83,30 @@ var HeatmapDataPropType = function(props, propName, componentName){
       );
   };
 
-  if(!heatmapData.orderings){
-    return; //TODO this shouldn't go in this data structure after all!
-  }
-  if(!heatmapData.orderings.hasOwnProperty("Default")){
+  if(!orderings.hasOwnProperty("Default")){
       return new Error("Default ordering missing!");
   }
 
-  for(var orderingName in heatmapData.orderings){
-      if(heatmapData.orderings.hasOwnProperty(orderingName)){
-          var ordering = heatmapData.orderings[orderingName];
+  for(var orderingName in orderings){
+      if(orderings.hasOwnProperty(orderingName)){
+          var ordering = orderings[orderingName];
 
-          if(ordering.columns.length!== width || !isPermutation(ordering.columns)){
+          if(!isPermutation(ordering.columns)){
               return new Error("Column ordering invalid in "+orderingName);
           }
-          if(ordering.rows.length!==height || ! isPermutation(ordering.rows)){
+          if(!isPermutation(ordering.rows)){
               return new Error("Row ordering invalid in "+orderingName);
           }
       }
   }
 };
+
+var LoadResultPropType = React.PropTypes.shape({
+  heatmapConfig: React.PropTypes.object.isRequired,
+  colorAxis : React.PropTypes.object,
+  orderings: OrderingsPropType,
+  heatmapData : HeatmapDataPropType
+})
 
 var FormatterPropType = function(props,propName){
   var f = props[propName];
@@ -110,7 +120,7 @@ module.exports = {
 validateDataSeries : validateDataSeries,
 PointsInDataSeries : PointsInDataSeriesPropType,
 HeatmapData : HeatmapDataPropType,
-validateHeatmapData : function(data){return HeatmapDataPropType({heatmapData: data}, "heatmapData", "Test")},
+LoadResult: LoadResultPropType,
 AxisCategories : AxisCategoriesPropType,
 Formatter : FormatterPropType,
 };
