@@ -2933,6 +2933,7 @@ webpackJsonp_name_([3],{
 	
 	var RequiredString = React.PropTypes.string.isRequired;
 	var OptionalString = React.PropTypes.string;
+	var DoubleWithDefault = React.PropTypes.number;
 	var RequiredBool = React.PropTypes.bool.isRequired;
 	
 	var DifferentialResults = React.createClass({
@@ -2987,13 +2988,21 @@ webpackJsonp_name_([3],{
 	            colour: RequiredString,
 	            id: RequiredString
 	        })).isRequired,
-	        maxDownLevel: RequiredString,
-	        minDownLevel: RequiredString,
-	        minUpLevel: RequiredString,
-	        maxUpLevel: RequiredString,
+	        maxDownLevel: DoubleWithDefault,
+	        minDownLevel: DoubleWithDefault,
+	        minUpLevel: DoubleWithDefault,
+	        maxUpLevel: DoubleWithDefault,
 	        hostUrl: RequiredString
 	    },
 	
+	    getDefaultProps: function getDefaultProps() {
+	        return {
+	            maxDownLevel: Number.NEGATIVE_INFINITY,
+	            minDownLevel: 0,
+	            minUpLevel: 0,
+	            maxUpLevel: Number.POSITIVE_INFINITY
+	        };
+	    },
 	    getInitialState: function getInitialState() {
 	        return {
 	            displayLevels: false,
@@ -3070,6 +3079,11 @@ webpackJsonp_name_([3],{
 	                        React.createElement(
 	                            'th',
 	                            { style: { width: '5%' } },
+	                            'Gene'
+	                        ),
+	                        React.createElement(
+	                            'th',
+	                            { style: { width: '5%' } },
 	                            'Species'
 	                        ),
 	                        React.createElement(
@@ -3084,7 +3098,7 @@ webpackJsonp_name_([3],{
 	                        ),
 	                        React.createElement(
 	                            'th',
-	                            { style: { width: '40%' } },
+	                            { style: { width: '35%' } },
 	                            'Experiment name'
 	                        )
 	                    )
@@ -3131,6 +3145,11 @@ webpackJsonp_name_([3],{
 	                infinity: this.props.infinity,
 	                foldChange: this.props.foldChange,
 	                displayLevels: this.props.displayLevels }),
+	            React.createElement(
+	                'td',
+	                null,
+	                'Gene name'
+	            ),
 	            React.createElement(
 	                'td',
 	                { className: 'col_species' },
@@ -3319,10 +3338,10 @@ webpackJsonp_name_([3],{
 	
 	    propTypes: {
 	        atlasBaseURL: React.PropTypes.string.isRequired,
-	        minDownLevel: React.PropTypes.string.isRequired,
-	        maxDownLevel: React.PropTypes.string.isRequired,
-	        minUpLevel: React.PropTypes.string.isRequired,
-	        maxUpLevel: React.PropTypes.string.isRequired
+	        minDownLevel: React.PropTypes.number.isRequired,
+	        maxDownLevel: React.PropTypes.number.isRequired,
+	        minUpLevel: React.PropTypes.number.isRequired,
+	        maxUpLevel: React.PropTypes.number.isRequired
 	    },
 	
 	    render: function render() {
@@ -3381,8 +3400,8 @@ webpackJsonp_name_([3],{
 	    propTypes: {
 	        lowValueColour: React.PropTypes.string.isRequired,
 	        highValueColour: React.PropTypes.string.isRequired,
-	        lowExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired, // Baseline legend rows can be a React <span> element returned by NumberFormat
-	        highExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired
+	        lowExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.element]).isRequired, // Baseline legend rows can be a React <span> element returned by NumberFormat
+	        highExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.element]).isRequired
 	    },
 	
 	    render: function render() {

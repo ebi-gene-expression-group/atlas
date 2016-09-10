@@ -6684,10 +6684,10 @@ webpackJsonp_name_([1],[
 	
 	    propTypes: {
 	        atlasBaseURL: React.PropTypes.string.isRequired,
-	        minDownLevel: React.PropTypes.string.isRequired,
-	        maxDownLevel: React.PropTypes.string.isRequired,
-	        minUpLevel: React.PropTypes.string.isRequired,
-	        maxUpLevel: React.PropTypes.string.isRequired
+	        minDownLevel: React.PropTypes.number.isRequired,
+	        maxDownLevel: React.PropTypes.number.isRequired,
+	        minUpLevel: React.PropTypes.number.isRequired,
+	        maxUpLevel: React.PropTypes.number.isRequired
 	    },
 	
 	    render: function render() {
@@ -6745,8 +6745,8 @@ webpackJsonp_name_([1],[
 	    propTypes: {
 	        lowValueColour: React.PropTypes.string.isRequired,
 	        highValueColour: React.PropTypes.string.isRequired,
-	        lowExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired, // Baseline legend rows can be a React <span> element returned by NumberFormat
-	        highExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]).isRequired
+	        lowExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.element]).isRequired, // Baseline legend rows can be a React <span> element returned by NumberFormat
+	        highExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.element]).isRequired
 	    },
 	
 	    render: function render() {
