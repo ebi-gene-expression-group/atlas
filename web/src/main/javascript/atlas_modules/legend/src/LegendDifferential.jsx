@@ -20,10 +20,10 @@ var LegendDifferential = React.createClass({
 
     propTypes: {
         atlasBaseURL: React.PropTypes.string.isRequired,
-        minDownLevel: React.PropTypes.string.isRequired,
-        maxDownLevel: React.PropTypes.string.isRequired,
-        minUpLevel: React.PropTypes.string.isRequired,
-        maxUpLevel: React.PropTypes.string.isRequired
+        minDownLevel: React.PropTypes.number.isRequired,
+        maxDownLevel: React.PropTypes.number.isRequired,
+        minUpLevel: React.PropTypes.number.isRequired,
+        maxUpLevel: React.PropTypes.number.isRequired
     },
 
     render: function () {

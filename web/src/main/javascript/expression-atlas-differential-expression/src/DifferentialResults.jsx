@@ -23,6 +23,7 @@ require('./DifferentialResults.css');
 
 const RequiredString = React.PropTypes.string.isRequired;
 const OptionalString = React.PropTypes.string;
+const DoubleWithDefault = React.PropTypes.number;
 const RequiredBool = React.PropTypes.bool.isRequired;
 
 const DifferentialResults = React.createClass({
@@ -76,11 +77,20 @@ const DifferentialResults = React.createClass({
             colour: RequiredString,
             id: RequiredString
         })).isRequired,
-        maxDownLevel: RequiredString,
-        minDownLevel: RequiredString,
-        minUpLevel: RequiredString,
-        maxUpLevel: RequiredString,
+        maxDownLevel: DoubleWithDefault,
+        minDownLevel: DoubleWithDefault,
+        minUpLevel: DoubleWithDefault,
+        maxUpLevel: DoubleWithDefault,
         hostUrl: RequiredString
+    },
+
+    getDefaultProps () {
+      return {
+        maxDownLevel: Number.NEGATIVE_INFINITY,
+        minDownLevel: 0,
+        minUpLevel: 0,
+        maxUpLevel: Number.POSITIVE_INFINITY,
+      }
     },
 
     getInitialState () {
