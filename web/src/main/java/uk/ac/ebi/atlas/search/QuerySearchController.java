@@ -35,7 +35,7 @@ public class QuerySearchController {
     private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private SpeciesFactory speciesFactory;
-    private Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
+    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Inject
     public QuerySearchController(AnalyticsSearchService analyticsSearchService,
