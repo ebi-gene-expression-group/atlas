@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.solr.common.SolrException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -33,6 +35,7 @@ public class QuerySearchController {
     private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private SpeciesFactory speciesFactory;
+    private Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
 
     @Inject
     public QuerySearchController(AnalyticsSearchService analyticsSearchService,
@@ -121,7 +124,8 @@ public class QuerySearchController {
     public String fetchDifferentialJsonFacets(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
                                               @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                               @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
-        return differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(geneQuery, conditionQuery, species);
+        return gson.toJson(differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(geneQuery, conditionQuery,
+                species));
     }
 
     @RequestMapping(value = {"/json/query/differentialResults"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
@@ -129,7 +133,8 @@ public class QuerySearchController {
     public String fetchDifferentialJsonResults(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
                                                @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                                @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
-        return differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(geneQuery, conditionQuery, species);
+        return gson.toJson(differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(geneQuery, conditionQuery,
+                species));
     }
 
     @ExceptionHandler(value = {IllegalArgumentException.class})

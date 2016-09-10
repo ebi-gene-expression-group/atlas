@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.TreeMultimap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.jayway.jsonpath.*;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.FoldChangeRounder;
@@ -30,6 +32,7 @@ public class DifferentialResultsReader {
     private static final ParseContext parser = JsonPath.using(Configuration.defaultConfiguration().addOptions(Option.ALWAYS_RETURN_LIST));
 
     private final ColourGradient colourGradient;
+    private final Gson gson = new Gson();
 
     @Inject
     public DifferentialResultsReader(ExperimentTrader experimentTrader, ContrastTrader contrastTrader, ColourGradient colourGradient) {
@@ -39,19 +42,18 @@ public class DifferentialResultsReader {
     }
 
 
-    public String extractResultsAsJson(String solrResponseAsJson) {
-        Map<String, Object> resultsWithLevels = new HashMap<>(5);
+    public JsonObject extractResultsAsJson(String solrResponseAsJson) {
+        JsonObject resultsWithLevels = new JsonObject();
 
         double minUpLevel = Double.POSITIVE_INFINITY;
         double maxUpLevel = 0.0;
         double minDownLevel = Double.NEGATIVE_INFINITY;
         double maxDownLevel = 0.0;
 
-        List<Map<String, Object>> filteredDocuments = Lists.newArrayList();
+        List<JsonObject> filteredDocuments = Lists.newArrayList();
         TreeMultimap<String, String> experimentContrastMap = TreeMultimap.create();
-
         List<Map<String, Object>> documents = parser.parse(solrResponseAsJson).read(DOCS_PATH);
-
+        JsonArray results = new JsonArray();
         if(!documents.isEmpty()) {
             for (Map<String, Object> document : documents) {
                 String experimentAccession = (String) document.get(EXPERIMENT_ACCESSION_FIELD);
@@ -62,9 +64,7 @@ public class DifferentialResultsReader {
                     Object foldChangeSymbol = document.get(LOG2_FOLD_CHANGE_FIELD);
                     double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
 
-                    document.put("foldChange", foldChange);
-                    document.put("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
-                    document.put("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
+
 
                     if (foldChange > 0.0) {
                         minUpLevel = Math.min(minUpLevel, foldChange);
@@ -73,33 +73,39 @@ public class DifferentialResultsReader {
                         minDownLevel = Math.max(minDownLevel, foldChange);
                         maxDownLevel = Math.min(maxDownLevel, foldChange);
                     }
-
-                    filteredDocuments.add(document);
+                    JsonObject o = gson.toJsonTree(document).getAsJsonObject();
+                    o.addProperty("experimentAccession", experimentAccession);
+                    o.addProperty("experimentType", experimentType.toString());
+                    o.addProperty("contrastId", contrastId);
+                    o.addProperty("foldChange", foldChange);
+                    o.addProperty("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
+                    o.addProperty("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
+                    filteredDocuments.add(o);
                 }
             }
-
-            for (Map<String, Object> document : filteredDocuments) {
-                double foldChange = (Double) document.get("foldChange");
-                String colour = foldChange > 0.0 ? colourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red") : colourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
-                document.put("colour", colour);
-                document.put("foldChange", FoldChangeRounder.round(foldChange));
+            for (JsonObject document : filteredDocuments) {
+                double foldChange = document.get("foldChange").getAsDouble();
+                String colour = foldChange > 0.0
+                        ? colourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red")
+                        : colourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
+                document.addProperty("colour", colour);
+                document.addProperty("foldChange", FoldChangeRounder.round(foldChange));
+                results.add(document);
             }
-
-            addDoublePropertyIfValid(resultsWithLevels,"maxDownLevel",maxDownLevel);
-            addDoublePropertyIfValid(resultsWithLevels,"minDownLevel",minDownLevel);
-            addDoublePropertyIfValid(resultsWithLevels,"minUpLevel",minUpLevel);
-            addDoublePropertyIfValid(resultsWithLevels,"maxUpLevel",maxUpLevel);
         }
 
-        resultsWithLevels.put("results", filteredDocuments);
+        resultsWithLevels.add("results", results);
+        addDoublePropertyIfValid(resultsWithLevels,"maxDownLevel",maxDownLevel);
+        addDoublePropertyIfValid(resultsWithLevels,"minDownLevel",minDownLevel);
+        addDoublePropertyIfValid(resultsWithLevels,"minUpLevel",minUpLevel);
+        addDoublePropertyIfValid(resultsWithLevels,"maxUpLevel",maxUpLevel);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(resultsWithLevels);
+        return resultsWithLevels;
     }
 
-    private void addDoublePropertyIfValid(Map<String, Object> resultsWithLevels, String name, double value){
+    private void addDoublePropertyIfValid(JsonObject resultsWithLevels, String name, double value){
         if(!Double.isInfinite(value)&&!Double.isNaN(value)){
-            resultsWithLevels.put(name,FoldChangeRounder.round(value));
+            resultsWithLevels.addProperty(name,FoldChangeRounder.round(value));
         }
     }
 }

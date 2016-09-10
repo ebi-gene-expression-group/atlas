@@ -17,7 +17,7 @@ public class DifferentialFacetsReader {
 
     private static final String[] FACET_FIELDS = {"kingdom", "species", "experimentType", "factors", "numReplicates", "regulation"};
 
-    public String generateFacetsTreeJson(String solrResponseAsJson) {
+    public JsonObject generateFacetsTreeJson(String solrResponseAsJson) {
         JsonObject facets = new JsonObject();
 
         ReadContext jsonReadContext = JsonPath.parse(solrResponseAsJson);
@@ -37,8 +37,7 @@ public class DifferentialFacetsReader {
             facets.add(facetField, facet);
         }
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
-        return gson.toJson(facets);
+        return facets;
     }
 
     protected static class FacetFieldMapConverter {
