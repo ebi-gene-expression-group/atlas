@@ -8,7 +8,6 @@ import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Set;
@@ -22,7 +21,6 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K, O extends Prof
     private CSVWriter csvWriter;
     private Writer responseWriter;
 
-    @Inject
     public GeneProfilesTSVWriter(CsvWriterFactory csvWriterFactory) {
         this.csvWriterFactory = csvWriterFactory;
     }

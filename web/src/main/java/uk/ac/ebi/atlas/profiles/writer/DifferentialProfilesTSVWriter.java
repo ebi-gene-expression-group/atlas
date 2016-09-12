@@ -8,7 +8,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -16,7 +15,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
@@ -30,12 +28,10 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     private Resource tsvFileMastheadResource;
     private String tsvFileMastheadTemplate;
 
-    @Inject
     public DifferentialProfilesTSVWriter(CsvWriterFactory csvWriterFactory) {
         super(csvWriterFactory);
     }
 
-    @Value("classpath:/file-templates/download-headers-differential.txt")
     public void setTsvFileMastheadTemplateResource(Resource tsvFileMastheadResource) {
         this.tsvFileMastheadResource = tsvFileMastheadResource;
         initTsvFileMastheadTemplate();
