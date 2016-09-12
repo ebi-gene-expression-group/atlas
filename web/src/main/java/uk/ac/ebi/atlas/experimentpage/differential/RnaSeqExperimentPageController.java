@@ -47,7 +47,6 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
     public RnaSeqExperimentPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
                                           RnaSeqProfilesHeatMap profilesHeatMap,
                                           DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
-                                          SpeciesKingdomTrader speciesKingdomTrader,
                                           TracksUtil tracksUtil,
                                           GseaPlotsBuilder gseaPlotsBuilder,
                                           ApplicationProperties applicationProperties) {
