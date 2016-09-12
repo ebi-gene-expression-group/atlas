@@ -1,880 +1,5637 @@
-var expressionAtlasDifferentialExpression=webpackJsonp_name_([3],{0:/*!***********************************************************!*\
+var expressionAtlasDifferentialExpression =
+webpackJsonp_name_([3],{
+
+/***/ 0:
+/*!***********************************************************!*\
   !*** ./expression-atlas-differential-expression/index.js ***!
   \***********************************************************/
-function(e,t,r){"use strict";e.exports=r(/*! ./src/differentialRenderer.js */1966)},1958:/*!**************************************************!*\
-  !*** (webpack)/~/node-libs-browser/~/url/url.js ***!
-  \**************************************************/
-function(e,t,r){function s(){this.protocol=null,this.slashes=null,this.auth=null,this.host=null,this.port=null,this.hostname=null,this.hash=null,this.search=null,this.query=null,this.pathname=null,this.path=null,this.href=null}function n(e,t,r){if(e&&c(e)&&e instanceof s)return e;var n=new s;return n.parse(e,t,r),n}function o(e){return l(e)&&(e=n(e)),e instanceof s?e.format():s.prototype.format.call(e)}function i(e,t){return n(e,!1,!0).resolve(t)}function a(e,t){return e?n(e,!1,!0).resolveObject(t):t}function l(e){return"string"==typeof e}function c(e){return"object"==typeof e&&null!==e}function p(e){return null===e}function u(e){return null==e}var h=r(/*! punycode */1959);t.parse=n,t.resolve=i,t.resolveObject=a,t.format=o,t.Url=s;var d=/^([a-z0-9.+-]+:)/i,f=/:[0-9]*$/,m=["<",">",'"',"`"," ","\r","\n","\t"],g=["{","}","|","\\","^","`"].concat(m),y=["'"].concat(g),x=["%","/","?",";","#"].concat(y),v=["/","?","#"],b=255,w=/^[a-z0-9A-Z_-]{0,63}$/,T=/^([a-z0-9A-Z_-]{0,63})(.*)$/,C={javascript:!0,"javascript:":!0},E={javascript:!0,"javascript:":!0},k={http:!0,https:!0,ftp:!0,gopher:!0,file:!0,"http:":!0,"https:":!0,"ftp:":!0,"gopher:":!0,"file:":!0},R=r(/*! querystring */1960);s.prototype.parse=function(e,t,r){if(!l(e))throw new TypeError("Parameter 'url' must be a string, not "+typeof e);var s=e;s=s.trim();var n=d.exec(s);if(n){n=n[0];var o=n.toLowerCase();this.protocol=o,s=s.substr(n.length)}if(r||n||s.match(/^\/\/[^@\/]+@[^@\/]+/)){var i="//"===s.substr(0,2);!i||n&&E[n]||(s=s.substr(2),this.slashes=!0)}if(!E[n]&&(i||n&&!k[n])){for(var a=-1,c=0;c<v.length;c++){var p=s.indexOf(v[c]);p!==-1&&(a===-1||p<a)&&(a=p)}var u,f;f=a===-1?s.lastIndexOf("@"):s.lastIndexOf("@",a),f!==-1&&(u=s.slice(0,f),s=s.slice(f+1),this.auth=decodeURIComponent(u)),a=-1;for(var c=0;c<x.length;c++){var p=s.indexOf(x[c]);p!==-1&&(a===-1||p<a)&&(a=p)}a===-1&&(a=s.length),this.host=s.slice(0,a),s=s.slice(a),this.parseHost(),this.hostname=this.hostname||"";var m="["===this.hostname[0]&&"]"===this.hostname[this.hostname.length-1];if(!m)for(var g=this.hostname.split(/\./),c=0,S=g.length;c<S;c++){var N=g[c];if(N&&!N.match(w)){for(var P="",D=0,_=N.length;D<_;D++)P+=N.charCodeAt(D)>127?"x":N[D];if(!P.match(w)){var L=g.slice(0,c),O=g.slice(c+1),I=N.match(T);I&&(L.push(I[1]),O.unshift(I[2])),O.length&&(s="/"+O.join(".")+s),this.hostname=L.join(".");break}}}if(this.hostname.length>b?this.hostname="":this.hostname=this.hostname.toLowerCase(),!m){for(var q=this.hostname.split("."),F=[],c=0;c<q.length;++c){var A=q[c];F.push(A.match(/[^A-Za-z0-9_-]/)?"xn--"+h.encode(A):A)}this.hostname=F.join(".")}var j=this.port?":"+this.port:"",U=this.hostname||"";this.host=U+j,this.href+=this.host,m&&(this.hostname=this.hostname.substr(1,this.hostname.length-2),"/"!==s[0]&&(s="/"+s))}if(!C[o])for(var c=0,S=y.length;c<S;c++){var B=y[c],V=encodeURIComponent(B);V===B&&(V=escape(B)),s=s.split(B).join(V)}var M=s.indexOf("#");M!==-1&&(this.hash=s.substr(M),s=s.slice(0,M));var H=s.indexOf("?");if(H!==-1?(this.search=s.substr(H),this.query=s.substr(H+1),t&&(this.query=R.parse(this.query)),s=s.slice(0,H)):t&&(this.search="",this.query={}),s&&(this.pathname=s),k[o]&&this.hostname&&!this.pathname&&(this.pathname="/"),this.pathname||this.search){var j=this.pathname||"",A=this.search||"";this.path=j+A}return this.href=this.format(),this},s.prototype.format=function(){var e=this.auth||"";e&&(e=encodeURIComponent(e),e=e.replace(/%3A/i,":"),e+="@");var t=this.protocol||"",r=this.pathname||"",s=this.hash||"",n=!1,o="";this.host?n=e+this.host:this.hostname&&(n=e+(this.hostname.indexOf(":")===-1?this.hostname:"["+this.hostname+"]"),this.port&&(n+=":"+this.port)),this.query&&c(this.query)&&Object.keys(this.query).length&&(o=R.stringify(this.query));var i=this.search||o&&"?"+o||"";return t&&":"!==t.substr(-1)&&(t+=":"),this.slashes||(!t||k[t])&&n!==!1?(n="//"+(n||""),r&&"/"!==r.charAt(0)&&(r="/"+r)):n||(n=""),s&&"#"!==s.charAt(0)&&(s="#"+s),i&&"?"!==i.charAt(0)&&(i="?"+i),r=r.replace(/[?#]/g,function(e){return encodeURIComponent(e)}),i=i.replace("#","%23"),t+n+r+i+s},s.prototype.resolve=function(e){return this.resolveObject(n(e,!1,!0)).format()},s.prototype.resolveObject=function(e){if(l(e)){var t=new s;t.parse(e,!1,!0),e=t}var r=new s;if(Object.keys(this).forEach(function(e){r[e]=this[e]},this),r.hash=e.hash,""===e.href)return r.href=r.format(),r;if(e.slashes&&!e.protocol)return Object.keys(e).forEach(function(t){"protocol"!==t&&(r[t]=e[t])}),k[r.protocol]&&r.hostname&&!r.pathname&&(r.path=r.pathname="/"),r.href=r.format(),r;if(e.protocol&&e.protocol!==r.protocol){if(!k[e.protocol])return Object.keys(e).forEach(function(t){r[t]=e[t]}),r.href=r.format(),r;if(r.protocol=e.protocol,e.host||E[e.protocol])r.pathname=e.pathname;else{for(var n=(e.pathname||"").split("/");n.length&&!(e.host=n.shift()););e.host||(e.host=""),e.hostname||(e.hostname=""),""!==n[0]&&n.unshift(""),n.length<2&&n.unshift(""),r.pathname=n.join("/")}if(r.search=e.search,r.query=e.query,r.host=e.host||"",r.auth=e.auth,r.hostname=e.hostname||e.host,r.port=e.port,r.pathname||r.search){var o=r.pathname||"",i=r.search||"";r.path=o+i}return r.slashes=r.slashes||e.slashes,r.href=r.format(),r}var a=r.pathname&&"/"===r.pathname.charAt(0),c=e.host||e.pathname&&"/"===e.pathname.charAt(0),h=c||a||r.host&&e.pathname,d=h,f=r.pathname&&r.pathname.split("/")||[],n=e.pathname&&e.pathname.split("/")||[],m=r.protocol&&!k[r.protocol];if(m&&(r.hostname="",r.port=null,r.host&&(""===f[0]?f[0]=r.host:f.unshift(r.host)),r.host="",e.protocol&&(e.hostname=null,e.port=null,e.host&&(""===n[0]?n[0]=e.host:n.unshift(e.host)),e.host=null),h=h&&(""===n[0]||""===f[0])),c)r.host=e.host||""===e.host?e.host:r.host,r.hostname=e.hostname||""===e.hostname?e.hostname:r.hostname,r.search=e.search,r.query=e.query,f=n;else if(n.length)f||(f=[]),f.pop(),f=f.concat(n),r.search=e.search,r.query=e.query;else if(!u(e.search)){if(m){r.hostname=r.host=f.shift();var g=!!(r.host&&r.host.indexOf("@")>0)&&r.host.split("@");g&&(r.auth=g.shift(),r.host=r.hostname=g.shift())}return r.search=e.search,r.query=e.query,p(r.pathname)&&p(r.search)||(r.path=(r.pathname?r.pathname:"")+(r.search?r.search:"")),r.href=r.format(),r}if(!f.length)return r.pathname=null,r.search?r.path="/"+r.search:r.path=null,r.href=r.format(),r;for(var y=f.slice(-1)[0],x=(r.host||e.host)&&("."===y||".."===y)||""===y,v=0,b=f.length;b>=0;b--)y=f[b],"."==y?f.splice(b,1):".."===y?(f.splice(b,1),v++):v&&(f.splice(b,1),v--);if(!h&&!d)for(;v--;v)f.unshift("..");!h||""===f[0]||f[0]&&"/"===f[0].charAt(0)||f.unshift(""),x&&"/"!==f.join("/").substr(-1)&&f.push("");var w=""===f[0]||f[0]&&"/"===f[0].charAt(0);if(m){r.hostname=r.host=w?"":f.length?f.shift():"";var g=!!(r.host&&r.host.indexOf("@")>0)&&r.host.split("@");g&&(r.auth=g.shift(),r.host=r.hostname=g.shift())}return h=h||r.host&&f.length,h&&!w&&f.unshift(""),f.length?r.pathname=f.join("/"):(r.pathname=null,r.path=null),p(r.pathname)&&p(r.search)||(r.path=(r.pathname?r.pathname:"")+(r.search?r.search:"")),r.auth=e.auth||r.auth,r.slashes=r.slashes||e.slashes,r.href=r.format(),r},s.prototype.parseHost=function(){var e=this.host,t=f.exec(e);t&&(t=t[0],":"!==t&&(this.port=t.substr(1)),e=e.substr(0,e.length-t.length)),e&&(this.hostname=e)}},1959:/*!******************************************************************!*\
-  !*** (webpack)/~/node-libs-browser/~/url/~/punycode/punycode.js ***!
-  \******************************************************************/
-function(e,t,r){var s;(function(e,n){!function(o){function i(e){throw RangeError(L[e])}function a(e,t){for(var r=e.length,s=[];r--;)s[r]=t(e[r]);return s}function l(e,t){var r=e.split("@"),s="";r.length>1&&(s=r[0]+"@",e=r[1]),e=e.replace(_,".");var n=e.split("."),o=a(n,t).join(".");return s+o}function c(e){for(var t,r,s=[],n=0,o=e.length;n<o;)t=e.charCodeAt(n++),t>=55296&&t<=56319&&n<o?(r=e.charCodeAt(n++),56320==(64512&r)?s.push(((1023&t)<<10)+(1023&r)+65536):(s.push(t),n--)):s.push(t);return s}function p(e){return a(e,function(e){var t="";return e>65535&&(e-=65536,t+=q(e>>>10&1023|55296),e=56320|1023&e),t+=q(e)}).join("")}function u(e){return e-48<10?e-22:e-65<26?e-65:e-97<26?e-97:w}function h(e,t){return e+22+75*(e<26)-((0!=t)<<5)}function d(e,t,r){var s=0;for(e=r?I(e/k):e>>1,e+=I(e/t);e>O*C>>1;s+=w)e=I(e/O);return I(s+(O+1)*e/(e+E))}function f(e){var t,r,s,n,o,a,l,c,h,f,m=[],g=e.length,y=0,x=S,v=R;for(r=e.lastIndexOf(N),r<0&&(r=0),s=0;s<r;++s)e.charCodeAt(s)>=128&&i("not-basic"),m.push(e.charCodeAt(s));for(n=r>0?r+1:0;n<g;){for(o=y,a=1,l=w;n>=g&&i("invalid-input"),c=u(e.charCodeAt(n++)),(c>=w||c>I((b-y)/a))&&i("overflow"),y+=c*a,h=l<=v?T:l>=v+C?C:l-v,!(c<h);l+=w)f=w-h,a>I(b/f)&&i("overflow"),a*=f;t=m.length+1,v=d(y-o,t,0==o),I(y/t)>b-x&&i("overflow"),x+=I(y/t),y%=t,m.splice(y++,0,x)}return p(m)}function m(e){var t,r,s,n,o,a,l,p,u,f,m,g,y,x,v,E=[];for(e=c(e),g=e.length,t=S,r=0,o=R,a=0;a<g;++a)m=e[a],m<128&&E.push(q(m));for(s=n=E.length,n&&E.push(N);s<g;){for(l=b,a=0;a<g;++a)m=e[a],m>=t&&m<l&&(l=m);for(y=s+1,l-t>I((b-r)/y)&&i("overflow"),r+=(l-t)*y,t=l,a=0;a<g;++a)if(m=e[a],m<t&&++r>b&&i("overflow"),m==t){for(p=r,u=w;f=u<=o?T:u>=o+C?C:u-o,!(p<f);u+=w)v=p-f,x=w-f,E.push(q(h(f+v%x,0))),p=I(v/x);E.push(q(h(p,0))),o=d(r,y,s==n),r=0,++s}++r,++t}return E.join("")}function g(e){return l(e,function(e){return P.test(e)?f(e.slice(4).toLowerCase()):e})}function y(e){return l(e,function(e){return D.test(e)?"xn--"+m(e):e})}var x=("object"==typeof t&&t&&!t.nodeType&&t,"object"==typeof e&&e&&!e.nodeType&&e,"object"==typeof n&&n);x.global!==x&&x.window!==x&&x.self!==x||(o=x);var v,b=2147483647,w=36,T=1,C=26,E=38,k=700,R=72,S=128,N="-",P=/^xn--/,D=/[^\x20-\x7E]/,_=/[\x2E\u3002\uFF0E\uFF61]/g,L={overflow:"Overflow: input needs wider integers to process","not-basic":"Illegal input >= 0x80 (not a basic code point)","invalid-input":"Invalid input"},O=w-T,I=Math.floor,q=String.fromCharCode;v={version:"1.3.2",ucs2:{decode:c,encode:p},decode:f,encode:m,toASCII:y,toUnicode:g},s=function(){return v}.call(t,r,t,e),!(void 0!==s&&(e.exports=s))}(this)}).call(t,r(/*! ./../../../../../../buildin/module.js */634)(e),function(){return this}())},1960:/*!******************************************************************!*\
-  !*** (webpack)/~/node-libs-browser/~/url/~/querystring/index.js ***!
-  \******************************************************************/
-[2794,1961,1962],1961:/*!*******************************************************************!*\
-  !*** (webpack)/~/node-libs-browser/~/url/~/querystring/decode.js ***!
-  \*******************************************************************/
-function(e,t){"use strict";function r(e,t){return Object.prototype.hasOwnProperty.call(e,t)}e.exports=function(e,t,s,n){t=t||"&",s=s||"=";var o={};if("string"!=typeof e||0===e.length)return o;var i=/\+/g;e=e.split(t);var a=1e3;n&&"number"==typeof n.maxKeys&&(a=n.maxKeys);var l=e.length;a>0&&l>a&&(l=a);for(var c=0;c<l;++c){var p,u,h,d,f=e[c].replace(i,"%20"),m=f.indexOf(s);m>=0?(p=f.substr(0,m),u=f.substr(m+1)):(p=f,u=""),h=decodeURIComponent(p),d=decodeURIComponent(u),r(o,h)?Array.isArray(o[h])?o[h].push(d):o[h]=[o[h],d]:o[h]=d}return o}},1962:/*!*******************************************************************!*\
-  !*** (webpack)/~/node-libs-browser/~/url/~/querystring/encode.js ***!
-  \*******************************************************************/
-function(e,t){"use strict";var r=function(e){switch(typeof e){case"string":return e;case"boolean":return e?"true":"false";case"number":return isFinite(e)?e:"";default:return""}};e.exports=function(e,t,s,n){return t=t||"&",s=s||"=",null===e&&(e=void 0),"object"==typeof e?Object.keys(e).map(function(n){var o=encodeURIComponent(r(n))+s;return Array.isArray(e[n])?e[n].map(function(e){return o+encodeURIComponent(r(e))}).join(t):o+encodeURIComponent(r(e[n]))}).join(t):n?encodeURIComponent(r(n))+s+encodeURIComponent(r(e)):""}},1963:/*!****************************************************************!*\
-  !*** (webpack)/~/node-libs-browser/~/querystring-es3/index.js ***!
-  \****************************************************************/
-[2794,1964,1965],1964:/*!*****************************************************************!*\
-  !*** (webpack)/~/node-libs-browser/~/querystring-es3/decode.js ***!
-  \*****************************************************************/
-function(e,t){"use strict";function r(e,t){return Object.prototype.hasOwnProperty.call(e,t)}e.exports=function(e,t,n,o){t=t||"&",n=n||"=";var i={};if("string"!=typeof e||0===e.length)return i;var a=/\+/g;e=e.split(t);var l=1e3;o&&"number"==typeof o.maxKeys&&(l=o.maxKeys);var c=e.length;l>0&&c>l&&(c=l);for(var p=0;p<c;++p){var u,h,d,f,m=e[p].replace(a,"%20"),g=m.indexOf(n);g>=0?(u=m.substr(0,g),h=m.substr(g+1)):(u=m,h=""),d=decodeURIComponent(u),f=decodeURIComponent(h),r(i,d)?s(i[d])?i[d].push(f):i[d]=[i[d],f]:i[d]=f}return i};var s=Array.isArray||function(e){return"[object Array]"===Object.prototype.toString.call(e)}},1965:/*!*****************************************************************!*\
-  !*** (webpack)/~/node-libs-browser/~/querystring-es3/encode.js ***!
-  \*****************************************************************/
-function(e,t){"use strict";function r(e,t){if(e.map)return e.map(t);for(var r=[],s=0;s<e.length;s++)r.push(t(e[s],s));return r}var s=function(e){switch(typeof e){case"string":return e;case"boolean":return e?"true":"false";case"number":return isFinite(e)?e:"";default:return""}};e.exports=function(e,t,i,a){return t=t||"&",i=i||"=",null===e&&(e=void 0),"object"==typeof e?r(o(e),function(o){var a=encodeURIComponent(s(o))+i;return n(e[o])?r(e[o],function(e){return a+encodeURIComponent(s(e))}).join(t):a+encodeURIComponent(s(e[o]))}).join(t):a?encodeURIComponent(s(a))+i+encodeURIComponent(s(e)):""};var n=Array.isArray||function(e){return"[object Array]"===Object.prototype.toString.call(e)},o=Object.keys||function(e){var t=[];for(var r in e)Object.prototype.hasOwnProperty.call(e,r)&&t.push(r);return t}},1966:/*!******************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	module.exports = __webpack_require__(/*! ./src/differentialRenderer.js */ 1874);
+
+/***/ },
+
+/***/ 1874:
+/*!******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/src/differentialRenderer.js ***!
   \******************************************************************************/
-function(e,t,r){"use strict";var s=r(/*! react */1967),n=r(/*! react-dom */2123),o=r(/*! ./DifferentialRouter.jsx */2124);e.exports=function(e){var t=e.atlasHostUrl,r=void 0===t?window.location.protocol+"//"+window.location.host:t,i=e.geneQuery,a=e.conditionQuery,l=e.species,c=e.target,p=void 0===c?"gxaDifferentialTab":c;n.render(s.createElement(o,{hostUrl:r,geneQuery:i,conditionQuery:a,species:l}),document.getElementById(p))}},1967:/*!*******************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 2031);
+	
+	//*------------------------------------------------------------------*
+	
+	var DifferentialRouter = __webpack_require__(/*! ./DifferentialRouter.jsx */ 2032);
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = function (_ref) {
+	    var _ref$atlasHostUrl = _ref.atlasHostUrl;
+	    var hostUrl = _ref$atlasHostUrl === undefined ? window.location.protocol + "//" + window.location.host : _ref$atlasHostUrl;
+	    var geneQuery = _ref.geneQuery;
+	    var conditionQuery = _ref.conditionQuery;
+	    var species = _ref.species;
+	    var _ref$target = _ref.target;
+	    var target = _ref$target === undefined ? 'gxaDifferentialTab' : _ref$target;
+	
+	    ReactDOM.render(React.createElement(DifferentialRouter, { hostUrl: hostUrl, geneQuery: geneQuery, conditionQuery: conditionQuery, species: species }), document.getElementById(target));
+	};
+
+/***/ },
+
+/***/ 1875:
+/*!*******************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/react.js ***!
   \*******************************************************************/
-[2796,1968],1968:/*!***********************************************************************!*\
+[2704, 1876],
+
+/***/ 1876:
+/*!***********************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/React.js ***!
   \***********************************************************************/
-[2797,1969,2113,2117,2004,2122],1969:/*!**************************************************************************!*\
+[2705, 1877, 2021, 2025, 1912, 2030],
+
+/***/ 1877:
+/*!**************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOM.js ***!
   \**************************************************************************/
-[2798,1970,1971,2036,2010,1993,1983,2015,2019,2111,2056,2112,1990,1974],1970:/*!***********************************************************************************!*\
+[2706, 1878, 1879, 1944, 1918, 1901, 1891, 1923, 1927, 2019, 1964, 2020, 1898, 1882],
+
+/***/ 1878:
+/*!***********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactCurrentOwner.js ***!
   \***********************************************************************************/
-5,1971:/*!***************************************************************************************!*\
+5,
+
+/***/ 1879:
+/*!***************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOMTextComponent.js ***!
   \***************************************************************************************/
-[2799,1972,1987,1991,1993,2004,1986,1985,2035],1972:/*!***************************************************************************************!*\
+[2707, 1880, 1895, 1899, 1901, 1912, 1894, 1893, 1943],
+
+/***/ 1880:
+/*!***************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/DOMChildrenOperations.js ***!
   \***************************************************************************************/
-[2800,1973,1981,1983,1984,1985,1978],1973:/*!************************************************************************!*\
+[2708, 1881, 1889, 1891, 1892, 1893, 1886],
+
+/***/ 1881:
+/*!************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/Danger.js ***!
   \************************************************************************/
-[2801,1974,1975,1980,1979,1978],1974:/*!*********************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/ExecutionEnvironment.js ***!
-  \*********************************************************************************************/
-9,1975:/*!**********************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/createNodesFromMarkup.js ***!
-  \**********************************************************************************************/
-[2802,1974,1976,1979,1978],1976:/*!*********************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/createArrayFromMixed.js ***!
-  \*********************************************************************************************/
-[2803,1977],1977:/*!********************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/toArray.js ***!
-  \********************************************************************************/
-[2804,1978],1978:/*!**********************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/invariant.js ***!
-  \**********************************************************************************/
-13,1979:/*!**************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/getMarkupWrap.js ***!
+[2709, 1882, 1883, 1888, 1887, 1886],
+
+/***/ 1882:
+/*!*************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/ExecutionEnvironment.js ***!
+  \*************************************************************************************/
+9,
+
+/***/ 1883:
+/*!**************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/createNodesFromMarkup.js ***!
   \**************************************************************************************/
-[2805,1974,1978],1980:/*!**************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/emptyFunction.js ***!
-  \**************************************************************************************/
-15,1981:/*!********************************************************************************************!*\
+[2710, 1882, 1884, 1887, 1886],
+
+/***/ 1884:
+/*!*************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/createArrayFromMixed.js ***!
+  \*************************************************************************************/
+[2711, 1885],
+
+/***/ 1885:
+/*!************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/toArray.js ***!
+  \************************************************************************/
+[2712, 1886],
+
+/***/ 1886:
+/*!**************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/invariant.js ***!
+  \**************************************************************************/
+13,
+
+/***/ 1887:
+/*!******************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/getMarkupWrap.js ***!
+  \******************************************************************************/
+[2713, 1882, 1886],
+
+/***/ 1888:
+/*!******************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/emptyFunction.js ***!
+  \******************************************************************************/
+15,
+
+/***/ 1889:
+/*!********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactMultiChildUpdateTypes.js ***!
   \********************************************************************************************/
-[2806,1982],1982:/*!**********************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/keyMirror.js ***!
-  \**********************************************************************************/
-[2807,1978],1983:/*!***************************************************************************!*\
+[2714, 1890],
+
+/***/ 1890:
+/*!**************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/keyMirror.js ***!
+  \**************************************************************************/
+[2715, 1886],
+
+/***/ 1891:
+/*!***************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactPerf.js ***!
   \***************************************************************************/
-18,1984:/*!******************************************************************************!*\
+18,
+
+/***/ 1892:
+/*!******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/setInnerHTML.js ***!
   \******************************************************************************/
-[2808,1974],1985:/*!********************************************************************************!*\
+[2716, 1882],
+
+/***/ 1893:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/setTextContent.js ***!
   \********************************************************************************/
-[2809,1974,1986,1984],1986:/*!*********************************************************************************************!*\
+[2717, 1882, 1894, 1892],
+
+/***/ 1894:
+/*!*********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/escapeTextContentForBrowser.js ***!
   \*********************************************************************************************/
-21,1987:/*!***************************************************************************************!*\
+21,
+
+/***/ 1895:
+/*!***************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/DOMPropertyOperations.js ***!
   \***************************************************************************************/
-[2810,1988,1983,1989,1990],1988:/*!*****************************************************************************!*\
+[2718, 1896, 1891, 1897, 1898],
+
+/***/ 1896:
+/*!*****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/DOMProperty.js ***!
   \*****************************************************************************/
-[2811,1978],1989:/*!***********************************************************************************************!*\
+[2719, 1886],
+
+/***/ 1897:
+/*!***********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/quoteAttributeValueForBrowser.js ***!
   \***********************************************************************************************/
-[2812,1986],1990:/*!********************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/warning.js ***!
-  \********************************************************************************/
-[2813,1980],1991:/*!**************************************************************************************************!*\
+[2720, 1894],
+
+/***/ 1898:
+/*!************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/warning.js ***!
+  \************************************************************************/
+[2721, 1888],
+
+/***/ 1899:
+/*!**************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactComponentBrowserEnvironment.js ***!
   \**************************************************************************************************/
-[2814,1992,1993],1992:/*!**************************************************************************************!*\
+[2722, 1900, 1901],
+
+/***/ 1900:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOMIDOperations.js ***!
   \**************************************************************************************/
-[2815,1972,1987,1993,1983,1978],1993:/*!****************************************************************************!*\
+[2723, 1880, 1895, 1901, 1891, 1886],
+
+/***/ 1901:
+/*!****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactMount.js ***!
   \****************************************************************************/
-[2816,1988,1994,1970,2006,2007,2009,2010,2012,2013,1983,2015,2018,2019,2004,2023,2024,2027,1978,1984,2032,2035,1990],1994:/*!******************************************************************************************!*\
+[2724, 1896, 1902, 1878, 1914, 1915, 1917, 1918, 1920, 1921, 1891, 1923, 1926, 1927, 1912, 1931, 1932, 1935, 1886, 1892, 1940, 1943, 1898],
+
+/***/ 1902:
+/*!******************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactBrowserEventEmitter.js ***!
   \******************************************************************************************/
-[2817,1995,1996,1997,2002,1983,2003,2004,2005],1995:/*!********************************************************************************!*\
+[2725, 1903, 1904, 1905, 1910, 1891, 1911, 1912, 1913],
+
+/***/ 1903:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/EventConstants.js ***!
   \********************************************************************************/
-[2818,1982],1996:/*!********************************************************************************!*\
+[2726, 1890],
+
+/***/ 1904:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/EventPluginHub.js ***!
   \********************************************************************************/
-[2819,1997,1998,1999,2e3,2001,1978,1990],1997:/*!*************************************************************************************!*\
+[2727, 1905, 1906, 1907, 1908, 1909, 1886, 1898],
+
+/***/ 1905:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/EventPluginRegistry.js ***!
   \*************************************************************************************/
-[2820,1978],1998:/*!**********************************************************************************!*\
+[2728, 1886],
+
+/***/ 1906:
+/*!**********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/EventPluginUtils.js ***!
   \**********************************************************************************/
-[2821,1995,1999,1978,1990],1999:/*!*********************************************************************************!*\
+[2729, 1903, 1907, 1886, 1898],
+
+/***/ 1907:
+/*!*********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactErrorUtils.js ***!
   \*********************************************************************************/
-34,2e3:/*!********************************************************************************!*\
+34,
+
+/***/ 1908:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/accumulateInto.js ***!
   \********************************************************************************/
-[2822,1978],2001:/*!************************************************************************************!*\
+[2730, 1886],
+
+/***/ 1909:
+/*!************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/forEachAccumulated.js ***!
   \************************************************************************************/
-36,2002:/*!****************************************************************************************!*\
+36,
+
+/***/ 1910:
+/*!****************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactEventEmitterMixin.js ***!
   \****************************************************************************************/
-[2823,1996],2003:/*!*********************************************************************************!*\
+[2731, 1904],
+
+/***/ 1911:
+/*!*********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ViewportMetrics.js ***!
   \*********************************************************************************/
-38,2004:/*!*******************************************************************************!*\
+38,
+
+/***/ 1912:
+/*!*******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/Object.assign.js ***!
   \*******************************************************************************/
-39,2005:/*!**********************************************************************************!*\
+39,
+
+/***/ 1913:
+/*!**********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/isEventSupported.js ***!
   \**********************************************************************************/
-[2824,1974],2006:/*!**************************************************************************************!*\
+[2732, 1882],
+
+/***/ 1914:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOMFeatureFlags.js ***!
   \**************************************************************************************/
-41,2007:/*!******************************************************************************!*\
+41,
+
+/***/ 1915:
+/*!******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactElement.js ***!
   \******************************************************************************/
-[2825,1970,2004,2008],2008:/*!***********************************************************************************!*\
+[2733, 1878, 1912, 1916],
+
+/***/ 1916:
+/*!***********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/canDefineProperty.js ***!
   \***********************************************************************************/
-43,2009:/*!*********************************************************************************************!*\
+43,
+
+/***/ 1917:
+/*!*********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactEmptyComponentRegistry.js ***!
   \*********************************************************************************************/
-44,2010:/*!**************************************************************************************!*\
+44,
+
+/***/ 1918:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactInstanceHandles.js ***!
   \**************************************************************************************/
-[2826,2011,1978],2011:/*!********************************************************************************!*\
+[2734, 1919, 1886],
+
+/***/ 1919:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactRootIndex.js ***!
   \********************************************************************************/
-46,2012:/*!**********************************************************************************!*\
+46,
+
+/***/ 1920:
+/*!**********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactInstanceMap.js ***!
   \**********************************************************************************/
-47,2013:/*!*************************************************************************************!*\
+47,
+
+/***/ 1921:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactMarkupChecksum.js ***!
   \*************************************************************************************/
-[2827,2014],2014:/*!*************************************************************************!*\
+[2735, 1922],
+
+/***/ 1922:
+/*!*************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/adler32.js ***!
   \*************************************************************************/
-49,2015:/*!*********************************************************************************!*\
+49,
+
+/***/ 1923:
+/*!*********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactReconciler.js ***!
   \*********************************************************************************/
-[2828,2016],2016:/*!**************************************************************************!*\
+[2736, 1924],
+
+/***/ 1924:
+/*!**************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactRef.js ***!
   \**************************************************************************/
-[2829,2017],2017:/*!****************************************************************************!*\
+[2737, 1925],
+
+/***/ 1925:
+/*!****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactOwner.js ***!
   \****************************************************************************/
-[2830,1978],2018:/*!**********************************************************************************!*\
+[2738, 1886],
+
+/***/ 1926:
+/*!**********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactUpdateQueue.js ***!
   \**********************************************************************************/
-[2831,1970,2007,2012,2019,2004,1978,1990],2019:/*!******************************************************************************!*\
+[2739, 1878, 1915, 1920, 1927, 1912, 1886, 1898],
+
+/***/ 1927:
+/*!******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactUpdates.js ***!
   \******************************************************************************/
-[2832,2020,2021,1983,2015,2022,2004,1978],2020:/*!*******************************************************************************!*\
+[2740, 1928, 1929, 1891, 1923, 1930, 1912, 1886],
+
+/***/ 1928:
+/*!*******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/CallbackQueue.js ***!
   \*******************************************************************************/
-[2833,2021,2004,1978],2021:/*!*****************************************************************************!*\
+[2741, 1929, 1912, 1886],
+
+/***/ 1929:
+/*!*****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/PooledClass.js ***!
   \*****************************************************************************/
-[2834,1978],2022:/*!*****************************************************************************!*\
+[2742, 1886],
+
+/***/ 1930:
+/*!*****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/Transaction.js ***!
   \*****************************************************************************/
-[2835,1978],2023:/*!************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/emptyObject.js ***!
-  \************************************************************************************/
-58,2024:/*!*************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/containsNode.js ***!
-  \*************************************************************************************/
-[2836,2025],2025:/*!***********************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/isTextNode.js ***!
-  \***********************************************************************************/
-[2837,2026],2026:/*!*******************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/isNode.js ***!
-  \*******************************************************************************/
-61,2027:/*!*******************************************************************************************!*\
+[2743, 1886],
+
+/***/ 1931:
+/*!****************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/emptyObject.js ***!
+  \****************************************************************************/
+58,
+
+/***/ 1932:
+/*!*****************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/containsNode.js ***!
+  \*****************************************************************************/
+[2744, 1933],
+
+/***/ 1933:
+/*!***************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/isTextNode.js ***!
+  \***************************************************************************/
+[2745, 1934],
+
+/***/ 1934:
+/*!***********************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/isNode.js ***!
+  \***********************************************************************/
+61,
+
+/***/ 1935:
+/*!*******************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/instantiateReactComponent.js ***!
   \*******************************************************************************************/
-[2838,2028,2033,2034,2004,1978,1990],2028:/*!*****************************************************************************************!*\
+[2746, 1936, 1941, 1942, 1912, 1886, 1898],
+
+/***/ 1936:
+/*!*****************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactCompositeComponent.js ***!
   \*****************************************************************************************/
-[2839,2029,1970,2007,2012,1983,2030,2031,2015,2018,2004,2023,1978,2032,1990],2029:/*!*******************************************************************************************!*\
+[2747, 1937, 1878, 1915, 1920, 1891, 1938, 1939, 1923, 1926, 1912, 1931, 1886, 1940, 1898],
+
+/***/ 1937:
+/*!*******************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactComponentEnvironment.js ***!
   \*******************************************************************************************/
-[2840,1978],2030:/*!****************************************************************************************!*\
+[2748, 1886],
+
+/***/ 1938:
+/*!****************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactPropTypeLocations.js ***!
   \****************************************************************************************/
-[2841,1982],2031:/*!********************************************************************************************!*\
+[2749, 1890],
+
+/***/ 1939:
+/*!********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactPropTypeLocationNames.js ***!
   \********************************************************************************************/
-66,2032:/*!********************************************************************************************!*\
+66,
+
+/***/ 1940:
+/*!********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/shouldUpdateReactComponent.js ***!
   \********************************************************************************************/
-67,2033:/*!*************************************************************************************!*\
+67,
+
+/***/ 1941:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactEmptyComponent.js ***!
   \*************************************************************************************/
-[2842,2007,2009,2015,2004],2034:/*!**************************************************************************************!*\
+[2750, 1915, 1917, 1923, 1912],
+
+/***/ 1942:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactNativeComponent.js ***!
   \**************************************************************************************/
-[2843,2004,1978],2035:/*!************************************************************************************!*\
+[2751, 1912, 1886],
+
+/***/ 1943:
+/*!************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/validateDOMNesting.js ***!
   \************************************************************************************/
-[2844,2004,1980,1990],2036:/*!***************************************************************************************!*\
+[2752, 1912, 1888, 1898],
+
+/***/ 1944:
+/*!***************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDefaultInjection.js ***!
   \***************************************************************************************/
-[2845,2037,2045,2048,2049,2050,1974,2054,2055,1991,2057,2058,1971,2083,2086,2010,1993,2090,2095,2096,2097,2106,2107],2037:/*!****************************************************************************************!*\
+[2753, 1945, 1953, 1956, 1957, 1958, 1882, 1962, 1963, 1899, 1965, 1966, 1879, 1991, 1994, 1918, 1901, 1998, 2003, 2004, 2005, 2014, 2015],
+
+/***/ 1945:
+/*!****************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/BeforeInputEventPlugin.js ***!
   \****************************************************************************************/
-[2846,1995,2038,1974,2039,2041,2043,2044],2038:/*!**********************************************************************************!*\
+[2754, 1903, 1946, 1882, 1947, 1949, 1951, 1952],
+
+/***/ 1946:
+/*!**********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/EventPropagators.js ***!
   \**********************************************************************************/
-[2847,1995,1996,1990,2e3,2001],2039:/*!******************************************************************************************!*\
+[2755, 1903, 1904, 1898, 1908, 1909],
+
+/***/ 1947:
+/*!******************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/FallbackCompositionState.js ***!
   \******************************************************************************************/
-[2848,2021,2004,2040],2040:/*!****************************************************************************************!*\
+[2756, 1929, 1912, 1948],
+
+/***/ 1948:
+/*!****************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/getTextContentAccessor.js ***!
   \****************************************************************************************/
-[2849,1974],2041:/*!*******************************************************************************************!*\
+[2757, 1882],
+
+/***/ 1949:
+/*!*******************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SyntheticCompositionEvent.js ***!
   \*******************************************************************************************/
-[2850,2042],2042:/*!********************************************************************************!*\
+[2758, 1950],
+
+/***/ 1950:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SyntheticEvent.js ***!
   \********************************************************************************/
-[2851,2021,2004,1980,1990],2043:/*!*************************************************************************************!*\
+[2759, 1929, 1912, 1888, 1898],
+
+/***/ 1951:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SyntheticInputEvent.js ***!
   \*************************************************************************************/
-[2852,2042],2044:/*!******************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/keyOf.js ***!
-  \******************************************************************************/
-79,2045:/*!***********************************************************************************!*\
+[2760, 1950],
+
+/***/ 1952:
+/*!**********************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/keyOf.js ***!
+  \**********************************************************************/
+79,
+
+/***/ 1953:
+/*!***********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ChangeEventPlugin.js ***!
   \***********************************************************************************/
-[2853,1995,1996,2038,1974,2019,2042,2046,2005,2047,2044],2046:/*!********************************************************************************!*\
+[2761, 1903, 1904, 1946, 1882, 1927, 1950, 1954, 1913, 1955, 1952],
+
+/***/ 1954:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/getEventTarget.js ***!
   \********************************************************************************/
-81,2047:/*!************************************************************************************!*\
+81,
+
+/***/ 1955:
+/*!************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/isTextInputElement.js ***!
   \************************************************************************************/
-82,2048:/*!**************************************************************************************!*\
+82,
+
+/***/ 1956:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ClientReactRootIndex.js ***!
   \**************************************************************************************/
-83,2049:/*!*****************************************************************************************!*\
+83,
+
+/***/ 1957:
+/*!*****************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/DefaultEventPluginOrder.js ***!
   \*****************************************************************************************/
-[2854,2044],2050:/*!***************************************************************************************!*\
+[2762, 1952],
+
+/***/ 1958:
+/*!***************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/EnterLeaveEventPlugin.js ***!
   \***************************************************************************************/
-[2855,1995,2038,2051,1993,2044],2051:/*!*************************************************************************************!*\
+[2763, 1903, 1946, 1959, 1901, 1952],
+
+/***/ 1959:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SyntheticMouseEvent.js ***!
   \*************************************************************************************/
-[2856,2052,2003,2053],2052:/*!**********************************************************************************!*\
+[2764, 1960, 1911, 1961],
+
+/***/ 1960:
+/*!**********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SyntheticUIEvent.js ***!
   \**********************************************************************************/
-[2857,2042,2046],2053:/*!***************************************************************************************!*\
+[2765, 1950, 1954],
+
+/***/ 1961:
+/*!***************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/getEventModifierState.js ***!
   \***************************************************************************************/
-88,2054:/*!***************************************************************************************!*\
+88,
+
+/***/ 1962:
+/*!***************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/HTMLDOMPropertyConfig.js ***!
   \***************************************************************************************/
-[2858,1988,1974],2055:/*!********************************************************************************************!*\
+[2766, 1896, 1882],
+
+/***/ 1963:
+/*!********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactBrowserComponentMixin.js ***!
   \********************************************************************************************/
-[2859,2012,2056,1990],2056:/*!*****************************************************************************!*\
+[2767, 1920, 1964, 1898],
+
+/***/ 1964:
+/*!*****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/findDOMNode.js ***!
   \*****************************************************************************/
-[2860,1970,2012,1993,1978,1990],2057:/*!**********************************************************************************************!*\
+[2768, 1878, 1920, 1901, 1886, 1898],
+
+/***/ 1965:
+/*!**********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDefaultBatchingStrategy.js ***!
   \**********************************************************************************************/
-[2861,2019,2022,2004,1980],2058:/*!***********************************************************************************!*\
+[2769, 1927, 1930, 1912, 1888],
+
+/***/ 1966:
+/*!***********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOMComponent.js ***!
   \***********************************************************************************/
-[2862,2059,2061,1988,1987,1995,1994,1991,2069,2070,2074,2077,2078,1993,2079,1983,2018,2004,2008,1986,1978,2005,2044,1984,1985,2082,2035,1990],2059:/*!********************************************************************************!*\
+[2770, 1967, 1969, 1896, 1895, 1903, 1902, 1899, 1977, 1978, 1982, 1985, 1986, 1901, 1987, 1891, 1926, 1912, 1916, 1894, 1886, 1913, 1952, 1892, 1893, 1990, 1943, 1898],
+
+/***/ 1967:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/AutoFocusUtils.js ***!
   \********************************************************************************/
-[2863,1993,2056,2060],2060:/*!**********************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/focusNode.js ***!
-  \**********************************************************************************/
-95,2061:/*!***************************************************************************************!*\
+[2771, 1901, 1964, 1968],
+
+/***/ 1968:
+/*!**************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/focusNode.js ***!
+  \**************************************************************************/
+95,
+
+/***/ 1969:
+/*!***************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/CSSPropertyOperations.js ***!
   \***************************************************************************************/
-[2864,2062,1974,1983,2063,2065,2066,2068,1990],2062:/*!*****************************************************************************!*\
+[2772, 1970, 1882, 1891, 1971, 1973, 1974, 1976, 1898],
+
+/***/ 1970:
+/*!*****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/CSSProperty.js ***!
   \*****************************************************************************/
-97,2063:/*!******************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/camelizeStyleName.js ***!
-  \******************************************************************************************/
-[2865,2064],2064:/*!*********************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/camelize.js ***!
-  \*********************************************************************************/
-99,2065:/*!*************************************************************************************!*\
+97,
+
+/***/ 1971:
+/*!**********************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/camelizeStyleName.js ***!
+  \**********************************************************************************/
+[2773, 1972],
+
+/***/ 1972:
+/*!*************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/camelize.js ***!
+  \*************************************************************************/
+99,
+
+/***/ 1973:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/dangerousStyleValue.js ***!
   \*************************************************************************************/
-[2866,2062],2066:/*!*******************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/hyphenateStyleName.js ***!
-  \*******************************************************************************************/
-[2867,2067],2067:/*!**********************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/hyphenate.js ***!
+[2774, 1970],
+
+/***/ 1974:
+/*!***********************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/hyphenateStyleName.js ***!
+  \***********************************************************************************/
+[2775, 1975],
+
+/***/ 1975:
+/*!**************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/hyphenate.js ***!
+  \**************************************************************************/
+102,
+
+/***/ 1976:
+/*!**********************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/memoizeStringOnly.js ***!
   \**********************************************************************************/
-102,2068:/*!******************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/memoizeStringOnly.js ***!
-  \******************************************************************************************/
-103,2069:/*!********************************************************************************!*\
+103,
+
+/***/ 1977:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOMButton.js ***!
   \********************************************************************************/
-104,2070:/*!*******************************************************************************!*\
+104,
+
+/***/ 1978:
+/*!*******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOMInput.js ***!
   \*******************************************************************************/
-[2868,1992,2071,1993,2019,2004,1978],2071:/*!**********************************************************************************!*\
+[2776, 1900, 1979, 1901, 1927, 1912, 1886],
+
+/***/ 1979:
+/*!**********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/LinkedValueUtils.js ***!
   \**********************************************************************************/
-[2869,2072,2030,1978,1990],2072:/*!********************************************************************************!*\
+[2777, 1980, 1938, 1886, 1898],
+
+/***/ 1980:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactPropTypes.js ***!
   \********************************************************************************/
-[2870,2007,2031,1980,2073],2073:/*!*******************************************************************************!*\
+[2778, 1915, 1939, 1888, 1981],
+
+/***/ 1981:
+/*!*******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/getIteratorFn.js ***!
   \*******************************************************************************/
-108,2074:/*!********************************************************************************!*\
+108,
+
+/***/ 1982:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOMOption.js ***!
   \********************************************************************************/
-[2871,2075,2077,2004,1990],2075:/*!*******************************************************************************!*\
+[2779, 1983, 1985, 1912, 1898],
+
+/***/ 1983:
+/*!*******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactChildren.js ***!
   \*******************************************************************************/
-[2872,2021,2007,1980,2076],2076:/*!*************************************************************************************!*\
+[2780, 1929, 1915, 1888, 1984],
+
+/***/ 1984:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/traverseAllChildren.js ***!
   \*************************************************************************************/
-[2873,1970,2007,2010,2073,1978,1990],2077:/*!********************************************************************************!*\
+[2781, 1878, 1915, 1918, 1981, 1886, 1898],
+
+/***/ 1985:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOMSelect.js ***!
   \********************************************************************************/
-[2874,2071,1993,2019,2004,1990],2078:/*!**********************************************************************************!*\
+[2782, 1979, 1901, 1927, 1912, 1898],
+
+/***/ 1986:
+/*!**********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOMTextarea.js ***!
   \**********************************************************************************/
-[2875,2071,1992,2019,2004,1978,1990],2079:/*!*********************************************************************************!*\
+[2783, 1979, 1900, 1927, 1912, 1886, 1898],
+
+/***/ 1987:
+/*!*********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactMultiChild.js ***!
   \*********************************************************************************/
-[2876,2029,1981,1970,2015,2080,2081],2080:/*!**************************************************************************************!*\
+[2784, 1937, 1889, 1878, 1923, 1988, 1989],
+
+/***/ 1988:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactChildReconciler.js ***!
   \**************************************************************************************/
-[2877,2015,2027,2032,2076,1990],2081:/*!*********************************************************************************!*\
+[2785, 1923, 1935, 1940, 1984, 1898],
+
+/***/ 1989:
+/*!*********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/flattenChildren.js ***!
   \*********************************************************************************/
-[2878,2076,1990],2082:/*!*************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/shallowEqual.js ***!
-  \*************************************************************************************/
-117,2083:/*!************************************************************************************!*\
+[2786, 1984, 1898],
+
+/***/ 1990:
+/*!*****************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/shallowEqual.js ***!
+  \*****************************************************************************/
+117,
+
+/***/ 1991:
+/*!************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactEventListener.js ***!
   \************************************************************************************/
-[2879,2084,1974,2021,2010,1993,2019,2004,2046,2085],2084:/*!**************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/EventListener.js ***!
-  \**************************************************************************************/
-[2880,1980],2085:/*!***************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/getUnboundedScrollPosition.js ***!
-  \***************************************************************************************************/
-120,2086:/*!********************************************************************************!*\
+[2787, 1992, 1882, 1929, 1918, 1901, 1927, 1912, 1954, 1993],
+
+/***/ 1992:
+/*!******************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/EventListener.js ***!
+  \******************************************************************************/
+[2788, 1888],
+
+/***/ 1993:
+/*!*******************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/getUnboundedScrollPosition.js ***!
+  \*******************************************************************************************/
+120,
+
+/***/ 1994:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactInjection.js ***!
   \********************************************************************************/
-[2881,1988,1996,2029,2087,2033,1994,2034,1983,2011,2019],2087:/*!****************************************************************************!*\
+[2789, 1896, 1904, 1937, 1995, 1941, 1902, 1942, 1891, 1919, 1927],
+
+/***/ 1995:
+/*!****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactClass.js ***!
   \****************************************************************************/
-[2882,2088,2007,2030,2031,2089,2004,2023,1978,1982,2044,1990],2088:/*!********************************************************************************!*\
+[2790, 1996, 1915, 1938, 1939, 1997, 1912, 1931, 1886, 1890, 1952, 1898],
+
+/***/ 1996:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactComponent.js ***!
   \********************************************************************************/
-[2883,2089,2008,2023,1978,1990],2089:/*!**************************************************************************************!*\
+[2791, 1997, 1916, 1931, 1886, 1898],
+
+/***/ 1997:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactNoopUpdateQueue.js ***!
   \**************************************************************************************/
-[2884,1990],2090:/*!*******************************************************************************************!*\
+[2792, 1898],
+
+/***/ 1998:
+/*!*******************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactReconcileTransaction.js ***!
   \*******************************************************************************************/
-[2885,2020,2021,1994,2006,2091,2022,2004],2091:/*!*************************************************************************************!*\
+[2793, 1928, 1929, 1902, 1914, 1999, 1930, 1912],
+
+/***/ 1999:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactInputSelection.js ***!
   \*************************************************************************************/
-[2886,2092,2024,2060,2094],2092:/*!***********************************************************************************!*\
+[2794, 2000, 1932, 1968, 2002],
+
+/***/ 2000:
+/*!***********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOMSelection.js ***!
   \***********************************************************************************/
-[2887,1974,2093,2040],2093:/*!*******************************************************************************************!*\
+[2795, 1882, 2001, 1948],
+
+/***/ 2001:
+/*!*******************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/getNodeForCharacterOffset.js ***!
   \*******************************************************************************************/
-128,2094:/*!*****************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/getActiveElement.js ***!
-  \*****************************************************************************************/
-129,2095:/*!***********************************************************************************!*\
+128,
+
+/***/ 2002:
+/*!*********************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/getActiveElement.js ***!
+  \*********************************************************************************/
+129,
+
+/***/ 2003:
+/*!***********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SelectEventPlugin.js ***!
   \***********************************************************************************/
-[2888,1995,2038,1974,2091,2042,2094,2047,2044,2082],2096:/*!**************************************************************************************!*\
+[2796, 1903, 1946, 1882, 1999, 1950, 2002, 1955, 1952, 1990],
+
+/***/ 2004:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ServerReactRootIndex.js ***!
   \**************************************************************************************/
-131,2097:/*!***********************************************************************************!*\
+131,
+
+/***/ 2005:
+/*!***********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SimpleEventPlugin.js ***!
   \***********************************************************************************/
-[2889,1995,2084,2038,1993,2098,2042,2099,2100,2051,2103,2104,2052,2105,1980,2101,1978,2044],2098:/*!*****************************************************************************************!*\
+[2797, 1903, 1992, 1946, 1901, 2006, 1950, 2007, 2008, 1959, 2011, 2012, 1960, 2013, 1888, 2009, 1886, 1952],
+
+/***/ 2006:
+/*!*****************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SyntheticClipboardEvent.js ***!
   \*****************************************************************************************/
-[2890,2042],2099:/*!*************************************************************************************!*\
+[2798, 1950],
+
+/***/ 2007:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SyntheticFocusEvent.js ***!
   \*************************************************************************************/
-[2891,2052],2100:/*!****************************************************************************************!*\
+[2799, 1960],
+
+/***/ 2008:
+/*!****************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SyntheticKeyboardEvent.js ***!
   \****************************************************************************************/
-[2892,2052,2101,2102,2053],2101:/*!**********************************************************************************!*\
+[2800, 1960, 2009, 2010, 1961],
+
+/***/ 2009:
+/*!**********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/getEventCharCode.js ***!
   \**********************************************************************************/
-136,2102:/*!*****************************************************************************!*\
+136,
+
+/***/ 2010:
+/*!*****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/getEventKey.js ***!
   \*****************************************************************************/
-[2893,2101],2103:/*!************************************************************************************!*\
+[2801, 2009],
+
+/***/ 2011:
+/*!************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SyntheticDragEvent.js ***!
   \************************************************************************************/
-[2894,2051],2104:/*!*************************************************************************************!*\
+[2802, 1959],
+
+/***/ 2012:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SyntheticTouchEvent.js ***!
   \*************************************************************************************/
-[2895,2052,2053],2105:/*!*************************************************************************************!*\
+[2803, 1960, 1961],
+
+/***/ 2013:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SyntheticWheelEvent.js ***!
   \*************************************************************************************/
-[2896,2051],2106:/*!**************************************************************************************!*\
+[2804, 1959],
+
+/***/ 2014:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/SVGDOMPropertyConfig.js ***!
   \**************************************************************************************/
-[2897,1988],2107:/*!**********************************************************************************!*\
+[2805, 1896],
+
+/***/ 2015:
+/*!**********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDefaultPerf.js ***!
   \**********************************************************************************/
-[2898,1988,2108,1993,1983,2109],2108:/*!******************************************************************************************!*\
+[2806, 1896, 2016, 1901, 1891, 2017],
+
+/***/ 2016:
+/*!******************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDefaultPerfAnalysis.js ***!
   \******************************************************************************************/
-[2899,2004],2109:/*!***************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/performanceNow.js ***!
-  \***************************************************************************************/
-[2900,2110],2110:/*!************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/performance.js ***!
-  \************************************************************************************/
-[2901,1974],2111:/*!******************************************************************************!*\
+[2807, 1912],
+
+/***/ 2017:
+/*!*******************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/performanceNow.js ***!
+  \*******************************************************************************/
+[2808, 2018],
+
+/***/ 2018:
+/*!****************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/performance.js ***!
+  \****************************************************************************/
+[2809, 1882],
+
+/***/ 2019:
+/*!******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactVersion.js ***!
   \******************************************************************************/
-146,2112:/*!********************************************************************************************!*\
+146,
+
+/***/ 2020:
+/*!********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/renderSubtreeIntoContainer.js ***!
   \********************************************************************************************/
-[2902,1993],2113:/*!********************************************************************************!*\
+[2810, 1901],
+
+/***/ 2021:
+/*!********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOMServer.js ***!
   \********************************************************************************/
-[2903,2036,2114,2111],2114:/*!**************************************************************************************!*\
+[2811, 1944, 2022, 2019],
+
+/***/ 2022:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactServerRendering.js ***!
   \**************************************************************************************/
-[2904,2057,2007,2010,2013,2115,2116,2019,2023,2027,1978],2115:/*!*********************************************************************************************!*\
+[2812, 1965, 1915, 1918, 1921, 2023, 2024, 1927, 1931, 1935, 1886],
+
+/***/ 2023:
+/*!*********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactServerBatchingStrategy.js ***!
   \*********************************************************************************************/
-150,2116:/*!*************************************************************************************************!*\
+150,
+
+/***/ 2024:
+/*!*************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactServerRenderingTransaction.js ***!
   \*************************************************************************************************/
-[2905,2021,2020,2022,2004,1980],2117:/*!*********************************************************************************!*\
+[2813, 1929, 1928, 1930, 1912, 1888],
+
+/***/ 2025:
+/*!*********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactIsomorphic.js ***!
   \*********************************************************************************/
-[2906,2075,2088,2087,2118,2007,2119,2072,2111,2004,2121],2118:/*!***********************************************************************************!*\
+[2814, 1983, 1996, 1995, 2026, 1915, 2027, 1980, 2019, 1912, 2029],
+
+/***/ 2026:
+/*!***********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactDOMFactories.js ***!
   \***********************************************************************************/
-[2907,2007,2119,2120],2119:/*!***************************************************************************************!*\
+[2815, 1915, 2027, 2028],
+
+/***/ 2027:
+/*!***************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactElementValidator.js ***!
   \***************************************************************************************/
-[2908,2007,2030,2031,1970,2008,2073,1978,1990],2120:/*!**********************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/mapObject.js ***!
-  \**********************************************************************************/
-155,2121:/*!***************************************************************************!*\
+[2816, 1915, 1938, 1939, 1878, 1916, 1981, 1886, 1898],
+
+/***/ 2028:
+/*!**************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/mapObject.js ***!
+  \**************************************************************************/
+155,
+
+/***/ 2029:
+/*!***************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/onlyChild.js ***!
   \***************************************************************************/
-[2909,2007,1978],2122:/*!****************************************************************************!*\
+[2817, 1915, 1886],
+
+/***/ 2030:
+/*!****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/deprecated.js ***!
   \****************************************************************************/
-[2910,2004,1990],2123:/*!***********************************************************************!*\
+[2818, 1912, 1898],
+
+/***/ 2031:
+/*!***********************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react-dom/index.js ***!
   \***********************************************************************/
-[2911,1969],2124:/*!*****************************************************************************!*\
+[2819, 1877],
+
+/***/ 2032:
+/*!*****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/src/DifferentialRouter.jsx ***!
   \*****************************************************************************/
-function(e,t,r){"use strict";var s=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var s in r)Object.prototype.hasOwnProperty.call(r,s)&&(e[s]=r[s])}return e},n=r(/*! react */1967),o=r(/*! jquery */2125);o.ajaxSetup({traditional:!0});var i=r(/*! url */1958),a=r(/*! ./DifferentialResults.jsx */2126),l=r(/*! ./DifferentialFacetsTree.jsx */2244),c=r(/*! ./urlManager.js */2247),p=n.PropTypes.string.isRequired,u=n.createClass({displayName:"DifferentialRouter",propTypes:{hostUrl:p,geneQuery:p,conditionQuery:p,species:p},getInitialState:function(){return{facetsTreeData:[],results:[],legend:{maxDownLevel:0,minDownLevel:0,minUpLevel:0,maxUpLevel:0},querySelect:{}}},componentDidMount:function(){var e=this;this._loadInitialData(),window.addEventListener("popstate",function(){e.setState({querySelect:c.parseDifferentialUrlParameter()})},!1)},_addElementToObjectOfArrays:function(e,t,r){e[t]||(e[t]=[]),e[t].push(r)},_removeElementFromObjectOfArrays:function(e,t,r){delete e[t].splice(e[t].indexOf(r),1),0===e[t].length&&delete e[t]},_setChecked:function(e,t,r){var s=JSON.parse(JSON.stringify(this.state.querySelect));r?this._addElementToObjectOfArrays(s,e,t):this._removeElementFromObjectOfArrays(s,e,t),c.differentialPush(s,!1),this.setState({querySelect:s})},_filteredResults:function(){var e=this,t=arguments.length<=0||void 0===arguments[0]?this.state.querySelect:arguments[0];return this.state.results.filter(function(r){return e._resultMatchesQuery(r,t)})},_resultMatchesQuery:function(e,t){var r=this;return 0!==Object.keys(t).length&&Object.keys(t).every(function(s){return t[s].some(function(t){return r._equalsToOrIncludes(e[s],t)})})},_equalsToOrIncludes:function(e,t){return!!e&&(e.constructor===Array?e.includes(t):e===t)},_prepareFacetTreeData:function(e){var t=this;return this.state.facetsTreeData.map(function(r){return{facetName:r.facetName,facetItems:r.facetItems.map(function(s){var n=e.every(function(e){return t._equalsToOrIncludes(e[r.facetName],s.name)}),o=JSON.parse(JSON.stringify(t.state.querySelect));t._equalsToOrIncludes(o[r.facetName],s.name)?t._removeElementFromObjectOfArrays(o,r.facetName,s.name):t._addElementToObjectOfArrays(o,r.facetName,s.name);var i=t._filteredResults(o).map(function(e){return e.id}).sort(),a=e.map(function(e){return e.id}).sort(),l=JSON.stringify(i)===JSON.stringify(a),c=0===i.length;return{name:s.name,value:s.value,checked:t._equalsToOrIncludes(t.state.querySelect[r.facetName],s.name)||l&&n,disabled:c||l}})}})},render:function(){var e=this._filteredResults();return n.createElement("div",null,n.createElement("div",{className:"grid_6 alpha",id:"gxaDifferentialFacetsContainerDiv"},Object.keys(this.state.facetsTreeData).length?n.createElement(l,{facets:this._prepareFacetTreeData(e),setChecked:this._setChecked}):n.createElement("div",null)),n.createElement("div",{className:"grid_18 omega",id:"gxaDifferentialResultsContainerDiv"},this.state.results&&this.state.results.length?n.createElement(a,s({results:e,hostUrl:this.props.hostUrl},this.state.legend)):n.createElement("div",{ref:"loadingImagePlaceholder"},n.createElement("img",{src:this.props.hostUrl+"/gxa/resources/images/loading.gif"}))))},_loadInitialData:function(){var e=this,t=i.parse(this.props.hostUrl),r=i.parse(this.props.hostUrl);t.pathname="gxa/json/query/differentialFacets",r.pathname="gxa/json/query/differentialResults";var s={geneQuery:this.props.geneQuery,conditionQuery:this.props.conditionQuery,organism:this.props.species};t.query=s,r.query=s;var n=function(e,t,r){console.log("ERROR"),console.log("Status: "+t),console.log("Error thrown: "+r)};o.ajax({url:i.format(t),dataType:"json",success:function(t){o.ajax({url:i.format(r),dataType:"json",success:function(r){var s=c.parseDifferentialUrlParameter();s.kingdom||(s.kingdom=t.kingdom.map(function(e){return e.name})),c.differentialPush(s,!0);var n=e._transformFacetsResponseToArray(t);e.setState({facetsTreeData:e._pruneFacetsTreeBasedOnResultsThatCameIn(n,r.results),querySelect:s,results:r.results,legend:{minDownLevel:r.minDownLevel,minUpLevel:r.minUpLevel,maxDownLevel:r.maxDownLevel,maxUpLevel:r.maxUpLevel}})},error:n})},error:n})},_transformFacetsResponseToArray:function(e){return Object.keys(e).map(function(t){return{facetName:t,facetItems:e[t].map(function(e){return{name:e.name,value:e.value,disabled:!1,checked:!1}})}})},_pruneFacetsTreeBasedOnResultsThatCameIn:function(e,t){return e.map(function(e){return{facetName:e.facetName,facetItems:e.facetItems.filter(function(r){return t.some(function(t){return t[e.facetName].constructor===Array?t[e.facetName].indexOf(r.name)>-1:t[e.facetName]===r.name})})}}).filter(function(e){return e.facetItems.length>0})}});e.exports=u},2125:/*!**************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	
+	var $ = __webpack_require__(/*! jquery */ 2033);
+	$.ajaxSetup({ traditional: true });
+	
+	var Url = __webpack_require__(/*! url */ 2034);
+	
+	//*------------------------------------------------------------------*
+	
+	var Results = __webpack_require__(/*! ./DifferentialResults.jsx */ 2039);
+	var Facets = __webpack_require__(/*! ./DifferentialFacetsTree.jsx */ 2155);
+	var UrlManager = __webpack_require__(/*! ./urlManager.js */ 2158);
+	
+	//*------------------------------------------------------------------*
+	
+	/*
+	 TODO if Solr queries get fast enough that we can:
+	 - split the two requests, so that the facets load first, initial results load second
+	 - a request to the server is done for every interaction with the facets tree
+	*/
+	
+	var RequiredString = React.PropTypes.string.isRequired;
+	
+	var DifferentialRouter = React.createClass({
+	    displayName: 'DifferentialRouter',
+	
+	    propTypes: {
+	        hostUrl: RequiredString,
+	        geneQuery: RequiredString,
+	        conditionQuery: RequiredString,
+	        species: RequiredString
+	    },
+	
+	    getInitialState: function getInitialState() {
+	        return {
+	            facetsTreeData: [],
+	            results: [],
+	            legend: {
+	                maxDownLevel: 0,
+	                minDownLevel: 0,
+	                minUpLevel: 0,
+	                maxUpLevel: 0
+	            },
+	            querySelect: {}
+	        };
+	    },
+	    componentDidMount: function componentDidMount() {
+	        var _this = this;
+	
+	        this._loadInitialData();
+	        // TODO Consider using https://github.com/reactjs/react-router
+	        window.addEventListener('popstate', function () {
+	            _this.setState({ querySelect: UrlManager.parseDifferentialUrlParameter() });
+	        }, false);
+	    },
+	    _addElementToObjectOfArrays: function _addElementToObjectOfArrays(obj, arrayName, element) {
+	        if (!obj[arrayName]) {
+	            obj[arrayName] = [];
+	        }
+	        obj[arrayName].push(element);
+	    },
+	    _removeElementFromObjectOfArrays: function _removeElementFromObjectOfArrays(obj, arrayName, element) {
+	        delete obj[arrayName].splice(obj[arrayName].indexOf(element), 1);
+	        if (obj[arrayName].length === 0) {
+	            delete obj[arrayName];
+	        }
+	    },
+	    _setChecked: function _setChecked(facetName, facetItemName, checked) {
+	        // Update URL
+	        var newQuerySelect = JSON.parse(JSON.stringify(this.state.querySelect));
+	        if (checked) {
+	            this._addElementToObjectOfArrays(newQuerySelect, facetName, facetItemName);
+	        } else {
+	            this._removeElementFromObjectOfArrays(newQuerySelect, facetName, facetItemName);
+	        }
+	
+	        // TODO Consider using https://github.com/reactjs/react-router
+	        UrlManager.differentialPush(newQuerySelect, false);
+	        this.setState({
+	            querySelect: newQuerySelect
+	        });
+	    },
+	    _filteredResults: function _filteredResults() {
+	        var _this2 = this;
+	
+	        var query = arguments.length <= 0 || arguments[0] === undefined ? this.state.querySelect : arguments[0];
+	
+	        return this.state.results.filter(function (result) {
+	            return _this2._resultMatchesQuery(result, query);
+	        });
+	    },
+	    _resultMatchesQuery: function _resultMatchesQuery(result, query) {
+	        var _this3 = this;
+	
+	        if (Object.keys(query).length === 0) {
+	            return false;
+	        } else {
+	            return Object.keys(query).every(function (facetName) {
+	                return query[facetName].some(function (facetItem) {
+	                    return _this3._equalsToOrIncludes(result[facetName], facetItem);
+	                });
+	            });
+	        }
+	    },
+	    _equalsToOrIncludes: function _equalsToOrIncludes(obj, value) {
+	        if (!!obj) {
+	            if (obj.constructor === Array) {
+	                return obj.includes(value);
+	            } else {
+	                return obj === value;
+	            }
+	        } else {
+	            return false;
+	        }
+	    },
+	
+	
+	    // Syncs tree data with URL (querySelect) and does some other smart things such as check/uncheck or disable facets based on
+	    // the user results (e.g. check & disable a facet if it’s shared by all results as a side effect of other choice)
+	    _prepareFacetTreeData: function _prepareFacetTreeData(filteredResults) {
+	        var _this4 = this;
+	
+	        return this.state.facetsTreeData.map(function (facet) {
+	            return {
+	                facetName: facet.facetName,
+	                facetItems: facet.facetItems.map(function (facetItem) {
+	
+	                    var allFilteredResultsMatchThisFacetItem = filteredResults.every(function (result) {
+	                        return _this4._equalsToOrIncludes(result[facet.facetName], facetItem.name);
+	                    });
+	
+	                    var querySelectAfterSwitchingThisFacetItem = JSON.parse(JSON.stringify(_this4.state.querySelect));
+	                    if (_this4._equalsToOrIncludes(querySelectAfterSwitchingThisFacetItem[facet.facetName], facetItem.name)) {
+	                        _this4._removeElementFromObjectOfArrays(querySelectAfterSwitchingThisFacetItem, facet.facetName, facetItem.name);
+	                    } else {
+	                        _this4._addElementToObjectOfArrays(querySelectAfterSwitchingThisFacetItem, facet.facetName, facetItem.name);
+	                    }
+	                    var resultIdsAfterSwitchingThisFacetItem = _this4._filteredResults(querySelectAfterSwitchingThisFacetItem).map(function (result) {
+	                        return result.id;
+	                    }).sort();
+	                    var currentResultIds = filteredResults.map(function (result) {
+	                        return result.id;
+	                    }).sort();
+	
+	                    var sameResultsAfterSwitchingThisItem = JSON.stringify(resultIdsAfterSwitchingThisFacetItem) === JSON.stringify(currentResultIds);
+	                    var noResultsAfterSwitchingThisItem = resultIdsAfterSwitchingThisFacetItem.length === 0;
+	
+	                    return {
+	                        name: facetItem.name,
+	                        value: facetItem.value,
+	                        checked: _this4._equalsToOrIncludes(_this4.state.querySelect[facet.facetName], facetItem.name) || sameResultsAfterSwitchingThisItem && allFilteredResultsMatchThisFacetItem,
+	                        disabled: noResultsAfterSwitchingThisItem || sameResultsAfterSwitchingThisItem
+	                    };
+	                })
+	            };
+	        });
+	    },
+	    render: function render() {
+	        var filteredResults = this._filteredResults();
+	
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	                'div',
+	                { className: 'grid_6 alpha', id: 'gxaDifferentialFacetsContainerDiv' },
+	                Object.keys(this.state.facetsTreeData).length ? React.createElement(Facets, {
+	                    facets: this._prepareFacetTreeData(filteredResults),
+	                    setChecked: this._setChecked
+	                }) : React.createElement('div', null)
+	            ),
+	            React.createElement(
+	                'div',
+	                { className: 'grid_18 omega', id: 'gxaDifferentialResultsContainerDiv' },
+	                this.state.results && this.state.results.length ? React.createElement(Results, _extends({
+	                    results: filteredResults,
+	                    hostUrl: this.props.hostUrl
+	                }, this.state.legend)) : React.createElement(
+	                    'div',
+	                    { ref: 'loadingImagePlaceholder' },
+	                    React.createElement('img', { src: this.props.hostUrl + "/gxa/resources/images/loading.gif" })
+	                )
+	            )
+	        );
+	    },
+	    _loadInitialData: function _loadInitialData() {
+	        var _this5 = this;
+	
+	        var differentialFacetsUrlObject = Url.parse(this.props.hostUrl),
+	            differentialResultsUrlObject = Url.parse(this.props.hostUrl);
+	
+	        differentialFacetsUrlObject.pathname = 'gxa/json/query/differentialFacets';
+	        differentialResultsUrlObject.pathname = 'gxa/json/query/differentialResults';
+	
+	        var queryParams = { geneQuery: this.props.geneQuery, conditionQuery: this.props.conditionQuery, organism: this.props.species };
+	        differentialFacetsUrlObject.query = queryParams;
+	        differentialResultsUrlObject.query = queryParams;
+	
+	        var onAjaxFailure = function onAjaxFailure(jqXHR, textStatus, errorThrown) {
+	            console.log("ERROR");
+	            console.log("Status: " + textStatus);
+	            console.log("Error thrown: " + errorThrown);
+	        };
+	
+	        $.ajax({
+	            url: Url.format(differentialFacetsUrlObject),
+	            dataType: "json",
+	            success: function success(facetsResponse) {
+	                $.ajax({
+	                    url: Url.format(differentialResultsUrlObject),
+	                    dataType: "json",
+	                    success: function success(resultsResponse) {
+	
+	                        // TODO Consider using https://github.com/reactjs/react-router
+	                        var querySelect = UrlManager.parseDifferentialUrlParameter();
+	                        if (!querySelect.kingdom) {
+	                            querySelect.kingdom = facetsResponse.kingdom.map(function (facetItem) {
+	                                return facetItem.name;
+	                            });
+	                        }
+	                        UrlManager.differentialPush(querySelect, true);
+	
+	                        var facetsTreeData = _this5._transformFacetsResponseToArray(facetsResponse);
+	
+	                        _this5.setState({
+	                            facetsTreeData: _this5._pruneFacetsTreeBasedOnResultsThatCameIn(facetsTreeData, resultsResponse.results),
+	                            querySelect: querySelect,
+	                            results: resultsResponse.results,
+	                            legend: {
+	                                minDownLevel: resultsResponse.minDownLevel,
+	                                minUpLevel: resultsResponse.minUpLevel,
+	                                maxDownLevel: resultsResponse.maxDownLevel,
+	                                maxUpLevel: resultsResponse.maxUpLevel
+	                            }
+	                        });
+	                    },
+	                    error: onAjaxFailure
+	                });
+	            },
+	            error: onAjaxFailure
+	        });
+	    },
+	    _transformFacetsResponseToArray: function _transformFacetsResponseToArray(facetsResponse) {
+	        return Object.keys(facetsResponse).map(function (facetName) {
+	            return {
+	                facetName: facetName,
+	                facetItems: facetsResponse[facetName].map(function (facetItem) {
+	                    return {
+	                        name: facetItem.name,
+	                        value: facetItem.value,
+	                        disabled: false,
+	                        checked: false
+	                    };
+	                })
+	            };
+	        });
+	    },
+	    _pruneFacetsTreeBasedOnResultsThatCameIn: function _pruneFacetsTreeBasedOnResultsThatCameIn(facetsTreeData, results) {
+	        return facetsTreeData.map(function (facet) {
+	            return {
+	                facetName: facet.facetName,
+	                facetItems: facet.facetItems.filter(function (facetItem) {
+	                    return results.some(function (result) {
+	                        if (result[facet.facetName].constructor === Array) {
+	                            return result[facet.facetName].indexOf(facetItem.name) > -1;
+	                        } else {
+	                            return result[facet.facetName] === facetItem.name;
+	                        }
+	                    });
+	                })
+	            };
+	        }).filter(function (facet) {
+	            return facet.facetItems.length > 0;
+	        });
+	    }
+	});
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = DifferentialRouter;
+
+/***/ },
+
+/***/ 2033:
+/*!**************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/jquery/dist/jquery.js ***!
   \**************************************************************************/
-626,2126:/*!******************************************************************************!*\
+624,
+
+/***/ 2034:
+/*!***************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/url/url.js ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
+	var punycode = __webpack_require__(/*! punycode */ 2035);
+	
+	exports.parse = urlParse;
+	exports.resolve = urlResolve;
+	exports.resolveObject = urlResolveObject;
+	exports.format = urlFormat;
+	
+	exports.Url = Url;
+	
+	function Url() {
+	  this.protocol = null;
+	  this.slashes = null;
+	  this.auth = null;
+	  this.host = null;
+	  this.port = null;
+	  this.hostname = null;
+	  this.hash = null;
+	  this.search = null;
+	  this.query = null;
+	  this.pathname = null;
+	  this.path = null;
+	  this.href = null;
+	}
+	
+	// Reference: RFC 3986, RFC 1808, RFC 2396
+	
+	// define these here so at least they only have to be
+	// compiled once on the first module load.
+	var protocolPattern = /^([a-z0-9.+-]+:)/i,
+	    portPattern = /:[0-9]*$/,
+	
+	    // RFC 2396: characters reserved for delimiting URLs.
+	    // We actually just auto-escape these.
+	    delims = ['<', '>', '"', '`', ' ', '\r', '\n', '\t'],
+	
+	    // RFC 2396: characters not allowed for various reasons.
+	    unwise = ['{', '}', '|', '\\', '^', '`'].concat(delims),
+	
+	    // Allowed by RFCs, but cause of XSS attacks.  Always escape these.
+	    autoEscape = ['\''].concat(unwise),
+	    // Characters that are never ever allowed in a hostname.
+	    // Note that any invalid chars are also handled, but these
+	    // are the ones that are *expected* to be seen, so we fast-path
+	    // them.
+	    nonHostChars = ['%', '/', '?', ';', '#'].concat(autoEscape),
+	    hostEndingChars = ['/', '?', '#'],
+	    hostnameMaxLen = 255,
+	    hostnamePartPattern = /^[a-z0-9A-Z_-]{0,63}$/,
+	    hostnamePartStart = /^([a-z0-9A-Z_-]{0,63})(.*)$/,
+	    // protocols that can allow "unsafe" and "unwise" chars.
+	    unsafeProtocol = {
+	      'javascript': true,
+	      'javascript:': true
+	    },
+	    // protocols that never have a hostname.
+	    hostlessProtocol = {
+	      'javascript': true,
+	      'javascript:': true
+	    },
+	    // protocols that always contain a // bit.
+	    slashedProtocol = {
+	      'http': true,
+	      'https': true,
+	      'ftp': true,
+	      'gopher': true,
+	      'file': true,
+	      'http:': true,
+	      'https:': true,
+	      'ftp:': true,
+	      'gopher:': true,
+	      'file:': true
+	    },
+	    querystring = __webpack_require__(/*! querystring */ 2036);
+	
+	function urlParse(url, parseQueryString, slashesDenoteHost) {
+	  if (url && isObject(url) && url instanceof Url) return url;
+	
+	  var u = new Url;
+	  u.parse(url, parseQueryString, slashesDenoteHost);
+	  return u;
+	}
+	
+	Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
+	  if (!isString(url)) {
+	    throw new TypeError("Parameter 'url' must be a string, not " + typeof url);
+	  }
+	
+	  var rest = url;
+	
+	  // trim before proceeding.
+	  // This is to support parse stuff like "  http://foo.com  \n"
+	  rest = rest.trim();
+	
+	  var proto = protocolPattern.exec(rest);
+	  if (proto) {
+	    proto = proto[0];
+	    var lowerProto = proto.toLowerCase();
+	    this.protocol = lowerProto;
+	    rest = rest.substr(proto.length);
+	  }
+	
+	  // figure out if it's got a host
+	  // user@server is *always* interpreted as a hostname, and url
+	  // resolution will treat //foo/bar as host=foo,path=bar because that's
+	  // how the browser resolves relative URLs.
+	  if (slashesDenoteHost || proto || rest.match(/^\/\/[^@\/]+@[^@\/]+/)) {
+	    var slashes = rest.substr(0, 2) === '//';
+	    if (slashes && !(proto && hostlessProtocol[proto])) {
+	      rest = rest.substr(2);
+	      this.slashes = true;
+	    }
+	  }
+	
+	  if (!hostlessProtocol[proto] &&
+	      (slashes || (proto && !slashedProtocol[proto]))) {
+	
+	    // there's a hostname.
+	    // the first instance of /, ?, ;, or # ends the host.
+	    //
+	    // If there is an @ in the hostname, then non-host chars *are* allowed
+	    // to the left of the last @ sign, unless some host-ending character
+	    // comes *before* the @-sign.
+	    // URLs are obnoxious.
+	    //
+	    // ex:
+	    // http://a@b@c/ => user:a@b host:c
+	    // http://a@b?@c => user:a host:c path:/?@c
+	
+	    // v0.12 TODO(isaacs): This is not quite how Chrome does things.
+	    // Review our test case against browsers more comprehensively.
+	
+	    // find the first instance of any hostEndingChars
+	    var hostEnd = -1;
+	    for (var i = 0; i < hostEndingChars.length; i++) {
+	      var hec = rest.indexOf(hostEndingChars[i]);
+	      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
+	        hostEnd = hec;
+	    }
+	
+	    // at this point, either we have an explicit point where the
+	    // auth portion cannot go past, or the last @ char is the decider.
+	    var auth, atSign;
+	    if (hostEnd === -1) {
+	      // atSign can be anywhere.
+	      atSign = rest.lastIndexOf('@');
+	    } else {
+	      // atSign must be in auth portion.
+	      // http://a@b/c@d => host:b auth:a path:/c@d
+	      atSign = rest.lastIndexOf('@', hostEnd);
+	    }
+	
+	    // Now we have a portion which is definitely the auth.
+	    // Pull that off.
+	    if (atSign !== -1) {
+	      auth = rest.slice(0, atSign);
+	      rest = rest.slice(atSign + 1);
+	      this.auth = decodeURIComponent(auth);
+	    }
+	
+	    // the host is the remaining to the left of the first non-host char
+	    hostEnd = -1;
+	    for (var i = 0; i < nonHostChars.length; i++) {
+	      var hec = rest.indexOf(nonHostChars[i]);
+	      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
+	        hostEnd = hec;
+	    }
+	    // if we still have not hit it, then the entire thing is a host.
+	    if (hostEnd === -1)
+	      hostEnd = rest.length;
+	
+	    this.host = rest.slice(0, hostEnd);
+	    rest = rest.slice(hostEnd);
+	
+	    // pull out port.
+	    this.parseHost();
+	
+	    // we've indicated that there is a hostname,
+	    // so even if it's empty, it has to be present.
+	    this.hostname = this.hostname || '';
+	
+	    // if hostname begins with [ and ends with ]
+	    // assume that it's an IPv6 address.
+	    var ipv6Hostname = this.hostname[0] === '[' &&
+	        this.hostname[this.hostname.length - 1] === ']';
+	
+	    // validate a little.
+	    if (!ipv6Hostname) {
+	      var hostparts = this.hostname.split(/\./);
+	      for (var i = 0, l = hostparts.length; i < l; i++) {
+	        var part = hostparts[i];
+	        if (!part) continue;
+	        if (!part.match(hostnamePartPattern)) {
+	          var newpart = '';
+	          for (var j = 0, k = part.length; j < k; j++) {
+	            if (part.charCodeAt(j) > 127) {
+	              // we replace non-ASCII char with a temporary placeholder
+	              // we need this to make sure size of hostname is not
+	              // broken by replacing non-ASCII by nothing
+	              newpart += 'x';
+	            } else {
+	              newpart += part[j];
+	            }
+	          }
+	          // we test again with ASCII char only
+	          if (!newpart.match(hostnamePartPattern)) {
+	            var validParts = hostparts.slice(0, i);
+	            var notHost = hostparts.slice(i + 1);
+	            var bit = part.match(hostnamePartStart);
+	            if (bit) {
+	              validParts.push(bit[1]);
+	              notHost.unshift(bit[2]);
+	            }
+	            if (notHost.length) {
+	              rest = '/' + notHost.join('.') + rest;
+	            }
+	            this.hostname = validParts.join('.');
+	            break;
+	          }
+	        }
+	      }
+	    }
+	
+	    if (this.hostname.length > hostnameMaxLen) {
+	      this.hostname = '';
+	    } else {
+	      // hostnames are always lower case.
+	      this.hostname = this.hostname.toLowerCase();
+	    }
+	
+	    if (!ipv6Hostname) {
+	      // IDNA Support: Returns a puny coded representation of "domain".
+	      // It only converts the part of the domain name that
+	      // has non ASCII characters. I.e. it dosent matter if
+	      // you call it with a domain that already is in ASCII.
+	      var domainArray = this.hostname.split('.');
+	      var newOut = [];
+	      for (var i = 0; i < domainArray.length; ++i) {
+	        var s = domainArray[i];
+	        newOut.push(s.match(/[^A-Za-z0-9_-]/) ?
+	            'xn--' + punycode.encode(s) : s);
+	      }
+	      this.hostname = newOut.join('.');
+	    }
+	
+	    var p = this.port ? ':' + this.port : '';
+	    var h = this.hostname || '';
+	    this.host = h + p;
+	    this.href += this.host;
+	
+	    // strip [ and ] from the hostname
+	    // the host field still retains them, though
+	    if (ipv6Hostname) {
+	      this.hostname = this.hostname.substr(1, this.hostname.length - 2);
+	      if (rest[0] !== '/') {
+	        rest = '/' + rest;
+	      }
+	    }
+	  }
+	
+	  // now rest is set to the post-host stuff.
+	  // chop off any delim chars.
+	  if (!unsafeProtocol[lowerProto]) {
+	
+	    // First, make 100% sure that any "autoEscape" chars get
+	    // escaped, even if encodeURIComponent doesn't think they
+	    // need to be.
+	    for (var i = 0, l = autoEscape.length; i < l; i++) {
+	      var ae = autoEscape[i];
+	      var esc = encodeURIComponent(ae);
+	      if (esc === ae) {
+	        esc = escape(ae);
+	      }
+	      rest = rest.split(ae).join(esc);
+	    }
+	  }
+	
+	
+	  // chop off from the tail first.
+	  var hash = rest.indexOf('#');
+	  if (hash !== -1) {
+	    // got a fragment string.
+	    this.hash = rest.substr(hash);
+	    rest = rest.slice(0, hash);
+	  }
+	  var qm = rest.indexOf('?');
+	  if (qm !== -1) {
+	    this.search = rest.substr(qm);
+	    this.query = rest.substr(qm + 1);
+	    if (parseQueryString) {
+	      this.query = querystring.parse(this.query);
+	    }
+	    rest = rest.slice(0, qm);
+	  } else if (parseQueryString) {
+	    // no query string, but parseQueryString still requested
+	    this.search = '';
+	    this.query = {};
+	  }
+	  if (rest) this.pathname = rest;
+	  if (slashedProtocol[lowerProto] &&
+	      this.hostname && !this.pathname) {
+	    this.pathname = '/';
+	  }
+	
+	  //to support http.request
+	  if (this.pathname || this.search) {
+	    var p = this.pathname || '';
+	    var s = this.search || '';
+	    this.path = p + s;
+	  }
+	
+	  // finally, reconstruct the href based on what has been validated.
+	  this.href = this.format();
+	  return this;
+	};
+	
+	// format a parsed object into a url string
+	function urlFormat(obj) {
+	  // ensure it's an object, and not a string url.
+	  // If it's an obj, this is a no-op.
+	  // this way, you can call url_format() on strings
+	  // to clean up potentially wonky urls.
+	  if (isString(obj)) obj = urlParse(obj);
+	  if (!(obj instanceof Url)) return Url.prototype.format.call(obj);
+	  return obj.format();
+	}
+	
+	Url.prototype.format = function() {
+	  var auth = this.auth || '';
+	  if (auth) {
+	    auth = encodeURIComponent(auth);
+	    auth = auth.replace(/%3A/i, ':');
+	    auth += '@';
+	  }
+	
+	  var protocol = this.protocol || '',
+	      pathname = this.pathname || '',
+	      hash = this.hash || '',
+	      host = false,
+	      query = '';
+	
+	  if (this.host) {
+	    host = auth + this.host;
+	  } else if (this.hostname) {
+	    host = auth + (this.hostname.indexOf(':') === -1 ?
+	        this.hostname :
+	        '[' + this.hostname + ']');
+	    if (this.port) {
+	      host += ':' + this.port;
+	    }
+	  }
+	
+	  if (this.query &&
+	      isObject(this.query) &&
+	      Object.keys(this.query).length) {
+	    query = querystring.stringify(this.query);
+	  }
+	
+	  var search = this.search || (query && ('?' + query)) || '';
+	
+	  if (protocol && protocol.substr(-1) !== ':') protocol += ':';
+	
+	  // only the slashedProtocols get the //.  Not mailto:, xmpp:, etc.
+	  // unless they had them to begin with.
+	  if (this.slashes ||
+	      (!protocol || slashedProtocol[protocol]) && host !== false) {
+	    host = '//' + (host || '');
+	    if (pathname && pathname.charAt(0) !== '/') pathname = '/' + pathname;
+	  } else if (!host) {
+	    host = '';
+	  }
+	
+	  if (hash && hash.charAt(0) !== '#') hash = '#' + hash;
+	  if (search && search.charAt(0) !== '?') search = '?' + search;
+	
+	  pathname = pathname.replace(/[?#]/g, function(match) {
+	    return encodeURIComponent(match);
+	  });
+	  search = search.replace('#', '%23');
+	
+	  return protocol + host + pathname + search + hash;
+	};
+	
+	function urlResolve(source, relative) {
+	  return urlParse(source, false, true).resolve(relative);
+	}
+	
+	Url.prototype.resolve = function(relative) {
+	  return this.resolveObject(urlParse(relative, false, true)).format();
+	};
+	
+	function urlResolveObject(source, relative) {
+	  if (!source) return relative;
+	  return urlParse(source, false, true).resolveObject(relative);
+	}
+	
+	Url.prototype.resolveObject = function(relative) {
+	  if (isString(relative)) {
+	    var rel = new Url();
+	    rel.parse(relative, false, true);
+	    relative = rel;
+	  }
+	
+	  var result = new Url();
+	  Object.keys(this).forEach(function(k) {
+	    result[k] = this[k];
+	  }, this);
+	
+	  // hash is always overridden, no matter what.
+	  // even href="" will remove it.
+	  result.hash = relative.hash;
+	
+	  // if the relative url is empty, then there's nothing left to do here.
+	  if (relative.href === '') {
+	    result.href = result.format();
+	    return result;
+	  }
+	
+	  // hrefs like //foo/bar always cut to the protocol.
+	  if (relative.slashes && !relative.protocol) {
+	    // take everything except the protocol from relative
+	    Object.keys(relative).forEach(function(k) {
+	      if (k !== 'protocol')
+	        result[k] = relative[k];
+	    });
+	
+	    //urlParse appends trailing / to urls like http://www.example.com
+	    if (slashedProtocol[result.protocol] &&
+	        result.hostname && !result.pathname) {
+	      result.path = result.pathname = '/';
+	    }
+	
+	    result.href = result.format();
+	    return result;
+	  }
+	
+	  if (relative.protocol && relative.protocol !== result.protocol) {
+	    // if it's a known url protocol, then changing
+	    // the protocol does weird things
+	    // first, if it's not file:, then we MUST have a host,
+	    // and if there was a path
+	    // to begin with, then we MUST have a path.
+	    // if it is file:, then the host is dropped,
+	    // because that's known to be hostless.
+	    // anything else is assumed to be absolute.
+	    if (!slashedProtocol[relative.protocol]) {
+	      Object.keys(relative).forEach(function(k) {
+	        result[k] = relative[k];
+	      });
+	      result.href = result.format();
+	      return result;
+	    }
+	
+	    result.protocol = relative.protocol;
+	    if (!relative.host && !hostlessProtocol[relative.protocol]) {
+	      var relPath = (relative.pathname || '').split('/');
+	      while (relPath.length && !(relative.host = relPath.shift()));
+	      if (!relative.host) relative.host = '';
+	      if (!relative.hostname) relative.hostname = '';
+	      if (relPath[0] !== '') relPath.unshift('');
+	      if (relPath.length < 2) relPath.unshift('');
+	      result.pathname = relPath.join('/');
+	    } else {
+	      result.pathname = relative.pathname;
+	    }
+	    result.search = relative.search;
+	    result.query = relative.query;
+	    result.host = relative.host || '';
+	    result.auth = relative.auth;
+	    result.hostname = relative.hostname || relative.host;
+	    result.port = relative.port;
+	    // to support http.request
+	    if (result.pathname || result.search) {
+	      var p = result.pathname || '';
+	      var s = result.search || '';
+	      result.path = p + s;
+	    }
+	    result.slashes = result.slashes || relative.slashes;
+	    result.href = result.format();
+	    return result;
+	  }
+	
+	  var isSourceAbs = (result.pathname && result.pathname.charAt(0) === '/'),
+	      isRelAbs = (
+	          relative.host ||
+	          relative.pathname && relative.pathname.charAt(0) === '/'
+	      ),
+	      mustEndAbs = (isRelAbs || isSourceAbs ||
+	                    (result.host && relative.pathname)),
+	      removeAllDots = mustEndAbs,
+	      srcPath = result.pathname && result.pathname.split('/') || [],
+	      relPath = relative.pathname && relative.pathname.split('/') || [],
+	      psychotic = result.protocol && !slashedProtocol[result.protocol];
+	
+	  // if the url is a non-slashed url, then relative
+	  // links like ../.. should be able
+	  // to crawl up to the hostname, as well.  This is strange.
+	  // result.protocol has already been set by now.
+	  // Later on, put the first path part into the host field.
+	  if (psychotic) {
+	    result.hostname = '';
+	    result.port = null;
+	    if (result.host) {
+	      if (srcPath[0] === '') srcPath[0] = result.host;
+	      else srcPath.unshift(result.host);
+	    }
+	    result.host = '';
+	    if (relative.protocol) {
+	      relative.hostname = null;
+	      relative.port = null;
+	      if (relative.host) {
+	        if (relPath[0] === '') relPath[0] = relative.host;
+	        else relPath.unshift(relative.host);
+	      }
+	      relative.host = null;
+	    }
+	    mustEndAbs = mustEndAbs && (relPath[0] === '' || srcPath[0] === '');
+	  }
+	
+	  if (isRelAbs) {
+	    // it's absolute.
+	    result.host = (relative.host || relative.host === '') ?
+	                  relative.host : result.host;
+	    result.hostname = (relative.hostname || relative.hostname === '') ?
+	                      relative.hostname : result.hostname;
+	    result.search = relative.search;
+	    result.query = relative.query;
+	    srcPath = relPath;
+	    // fall through to the dot-handling below.
+	  } else if (relPath.length) {
+	    // it's relative
+	    // throw away the existing file, and take the new path instead.
+	    if (!srcPath) srcPath = [];
+	    srcPath.pop();
+	    srcPath = srcPath.concat(relPath);
+	    result.search = relative.search;
+	    result.query = relative.query;
+	  } else if (!isNullOrUndefined(relative.search)) {
+	    // just pull out the search.
+	    // like href='?foo'.
+	    // Put this after the other two cases because it simplifies the booleans
+	    if (psychotic) {
+	      result.hostname = result.host = srcPath.shift();
+	      //occationaly the auth can get stuck only in host
+	      //this especialy happens in cases like
+	      //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+	      var authInHost = result.host && result.host.indexOf('@') > 0 ?
+	                       result.host.split('@') : false;
+	      if (authInHost) {
+	        result.auth = authInHost.shift();
+	        result.host = result.hostname = authInHost.shift();
+	      }
+	    }
+	    result.search = relative.search;
+	    result.query = relative.query;
+	    //to support http.request
+	    if (!isNull(result.pathname) || !isNull(result.search)) {
+	      result.path = (result.pathname ? result.pathname : '') +
+	                    (result.search ? result.search : '');
+	    }
+	    result.href = result.format();
+	    return result;
+	  }
+	
+	  if (!srcPath.length) {
+	    // no path at all.  easy.
+	    // we've already handled the other stuff above.
+	    result.pathname = null;
+	    //to support http.request
+	    if (result.search) {
+	      result.path = '/' + result.search;
+	    } else {
+	      result.path = null;
+	    }
+	    result.href = result.format();
+	    return result;
+	  }
+	
+	  // if a url ENDs in . or .., then it must get a trailing slash.
+	  // however, if it ends in anything else non-slashy,
+	  // then it must NOT get a trailing slash.
+	  var last = srcPath.slice(-1)[0];
+	  var hasTrailingSlash = (
+	      (result.host || relative.host) && (last === '.' || last === '..') ||
+	      last === '');
+	
+	  // strip single dots, resolve double dots to parent dir
+	  // if the path tries to go above the root, `up` ends up > 0
+	  var up = 0;
+	  for (var i = srcPath.length; i >= 0; i--) {
+	    last = srcPath[i];
+	    if (last == '.') {
+	      srcPath.splice(i, 1);
+	    } else if (last === '..') {
+	      srcPath.splice(i, 1);
+	      up++;
+	    } else if (up) {
+	      srcPath.splice(i, 1);
+	      up--;
+	    }
+	  }
+	
+	  // if the path is allowed to go above the root, restore leading ..s
+	  if (!mustEndAbs && !removeAllDots) {
+	    for (; up--; up) {
+	      srcPath.unshift('..');
+	    }
+	  }
+	
+	  if (mustEndAbs && srcPath[0] !== '' &&
+	      (!srcPath[0] || srcPath[0].charAt(0) !== '/')) {
+	    srcPath.unshift('');
+	  }
+	
+	  if (hasTrailingSlash && (srcPath.join('/').substr(-1) !== '/')) {
+	    srcPath.push('');
+	  }
+	
+	  var isAbsolute = srcPath[0] === '' ||
+	      (srcPath[0] && srcPath[0].charAt(0) === '/');
+	
+	  // put the host back
+	  if (psychotic) {
+	    result.hostname = result.host = isAbsolute ? '' :
+	                                    srcPath.length ? srcPath.shift() : '';
+	    //occationaly the auth can get stuck only in host
+	    //this especialy happens in cases like
+	    //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+	    var authInHost = result.host && result.host.indexOf('@') > 0 ?
+	                     result.host.split('@') : false;
+	    if (authInHost) {
+	      result.auth = authInHost.shift();
+	      result.host = result.hostname = authInHost.shift();
+	    }
+	  }
+	
+	  mustEndAbs = mustEndAbs || (result.host && srcPath.length);
+	
+	  if (mustEndAbs && !isAbsolute) {
+	    srcPath.unshift('');
+	  }
+	
+	  if (!srcPath.length) {
+	    result.pathname = null;
+	    result.path = null;
+	  } else {
+	    result.pathname = srcPath.join('/');
+	  }
+	
+	  //to support request.http
+	  if (!isNull(result.pathname) || !isNull(result.search)) {
+	    result.path = (result.pathname ? result.pathname : '') +
+	                  (result.search ? result.search : '');
+	  }
+	  result.auth = relative.auth || result.auth;
+	  result.slashes = result.slashes || relative.slashes;
+	  result.href = result.format();
+	  return result;
+	};
+	
+	Url.prototype.parseHost = function() {
+	  var host = this.host;
+	  var port = portPattern.exec(host);
+	  if (port) {
+	    port = port[0];
+	    if (port !== ':') {
+	      this.port = port.substr(1);
+	    }
+	    host = host.substr(0, host.length - port.length);
+	  }
+	  if (host) this.hostname = host;
+	};
+	
+	function isString(arg) {
+	  return typeof arg === "string";
+	}
+	
+	function isObject(arg) {
+	  return typeof arg === 'object' && arg !== null;
+	}
+	
+	function isNull(arg) {
+	  return arg === null;
+	}
+	function isNullOrUndefined(arg) {
+	  return  arg == null;
+	}
+
+
+/***/ },
+
+/***/ 2035:
+/*!*******************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/url/~/punycode/punycode.js ***!
+  \*******************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
+	;(function(root) {
+	
+		/** Detect free variables */
+		var freeExports = typeof exports == 'object' && exports &&
+			!exports.nodeType && exports;
+		var freeModule = typeof module == 'object' && module &&
+			!module.nodeType && module;
+		var freeGlobal = typeof global == 'object' && global;
+		if (
+			freeGlobal.global === freeGlobal ||
+			freeGlobal.window === freeGlobal ||
+			freeGlobal.self === freeGlobal
+		) {
+			root = freeGlobal;
+		}
+	
+		/**
+		 * The `punycode` object.
+		 * @name punycode
+		 * @type Object
+		 */
+		var punycode,
+	
+		/** Highest positive signed 32-bit float value */
+		maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
+	
+		/** Bootstring parameters */
+		base = 36,
+		tMin = 1,
+		tMax = 26,
+		skew = 38,
+		damp = 700,
+		initialBias = 72,
+		initialN = 128, // 0x80
+		delimiter = '-', // '\x2D'
+	
+		/** Regular expressions */
+		regexPunycode = /^xn--/,
+		regexNonASCII = /[^\x20-\x7E]/, // unprintable ASCII chars + non-ASCII chars
+		regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g, // RFC 3490 separators
+	
+		/** Error messages */
+		errors = {
+			'overflow': 'Overflow: input needs wider integers to process',
+			'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
+			'invalid-input': 'Invalid input'
+		},
+	
+		/** Convenience shortcuts */
+		baseMinusTMin = base - tMin,
+		floor = Math.floor,
+		stringFromCharCode = String.fromCharCode,
+	
+		/** Temporary variable */
+		key;
+	
+		/*--------------------------------------------------------------------------*/
+	
+		/**
+		 * A generic error utility function.
+		 * @private
+		 * @param {String} type The error type.
+		 * @returns {Error} Throws a `RangeError` with the applicable error message.
+		 */
+		function error(type) {
+			throw RangeError(errors[type]);
+		}
+	
+		/**
+		 * A generic `Array#map` utility function.
+		 * @private
+		 * @param {Array} array The array to iterate over.
+		 * @param {Function} callback The function that gets called for every array
+		 * item.
+		 * @returns {Array} A new array of values returned by the callback function.
+		 */
+		function map(array, fn) {
+			var length = array.length;
+			var result = [];
+			while (length--) {
+				result[length] = fn(array[length]);
+			}
+			return result;
+		}
+	
+		/**
+		 * A simple `Array#map`-like wrapper to work with domain name strings or email
+		 * addresses.
+		 * @private
+		 * @param {String} domain The domain name or email address.
+		 * @param {Function} callback The function that gets called for every
+		 * character.
+		 * @returns {Array} A new string of characters returned by the callback
+		 * function.
+		 */
+		function mapDomain(string, fn) {
+			var parts = string.split('@');
+			var result = '';
+			if (parts.length > 1) {
+				// In email addresses, only the domain name should be punycoded. Leave
+				// the local part (i.e. everything up to `@`) intact.
+				result = parts[0] + '@';
+				string = parts[1];
+			}
+			// Avoid `split(regex)` for IE8 compatibility. See #17.
+			string = string.replace(regexSeparators, '\x2E');
+			var labels = string.split('.');
+			var encoded = map(labels, fn).join('.');
+			return result + encoded;
+		}
+	
+		/**
+		 * Creates an array containing the numeric code points of each Unicode
+		 * character in the string. While JavaScript uses UCS-2 internally,
+		 * this function will convert a pair of surrogate halves (each of which
+		 * UCS-2 exposes as separate characters) into a single code point,
+		 * matching UTF-16.
+		 * @see `punycode.ucs2.encode`
+		 * @see <https://mathiasbynens.be/notes/javascript-encoding>
+		 * @memberOf punycode.ucs2
+		 * @name decode
+		 * @param {String} string The Unicode input string (UCS-2).
+		 * @returns {Array} The new array of code points.
+		 */
+		function ucs2decode(string) {
+			var output = [],
+			    counter = 0,
+			    length = string.length,
+			    value,
+			    extra;
+			while (counter < length) {
+				value = string.charCodeAt(counter++);
+				if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+					// high surrogate, and there is a next character
+					extra = string.charCodeAt(counter++);
+					if ((extra & 0xFC00) == 0xDC00) { // low surrogate
+						output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+					} else {
+						// unmatched surrogate; only append this code unit, in case the next
+						// code unit is the high surrogate of a surrogate pair
+						output.push(value);
+						counter--;
+					}
+				} else {
+					output.push(value);
+				}
+			}
+			return output;
+		}
+	
+		/**
+		 * Creates a string based on an array of numeric code points.
+		 * @see `punycode.ucs2.decode`
+		 * @memberOf punycode.ucs2
+		 * @name encode
+		 * @param {Array} codePoints The array of numeric code points.
+		 * @returns {String} The new Unicode string (UCS-2).
+		 */
+		function ucs2encode(array) {
+			return map(array, function(value) {
+				var output = '';
+				if (value > 0xFFFF) {
+					value -= 0x10000;
+					output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
+					value = 0xDC00 | value & 0x3FF;
+				}
+				output += stringFromCharCode(value);
+				return output;
+			}).join('');
+		}
+	
+		/**
+		 * Converts a basic code point into a digit/integer.
+		 * @see `digitToBasic()`
+		 * @private
+		 * @param {Number} codePoint The basic numeric code point value.
+		 * @returns {Number} The numeric value of a basic code point (for use in
+		 * representing integers) in the range `0` to `base - 1`, or `base` if
+		 * the code point does not represent a value.
+		 */
+		function basicToDigit(codePoint) {
+			if (codePoint - 48 < 10) {
+				return codePoint - 22;
+			}
+			if (codePoint - 65 < 26) {
+				return codePoint - 65;
+			}
+			if (codePoint - 97 < 26) {
+				return codePoint - 97;
+			}
+			return base;
+		}
+	
+		/**
+		 * Converts a digit/integer into a basic code point.
+		 * @see `basicToDigit()`
+		 * @private
+		 * @param {Number} digit The numeric value of a basic code point.
+		 * @returns {Number} The basic code point whose value (when used for
+		 * representing integers) is `digit`, which needs to be in the range
+		 * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
+		 * used; else, the lowercase form is used. The behavior is undefined
+		 * if `flag` is non-zero and `digit` has no uppercase form.
+		 */
+		function digitToBasic(digit, flag) {
+			//  0..25 map to ASCII a..z or A..Z
+			// 26..35 map to ASCII 0..9
+			return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
+		}
+	
+		/**
+		 * Bias adaptation function as per section 3.4 of RFC 3492.
+		 * http://tools.ietf.org/html/rfc3492#section-3.4
+		 * @private
+		 */
+		function adapt(delta, numPoints, firstTime) {
+			var k = 0;
+			delta = firstTime ? floor(delta / damp) : delta >> 1;
+			delta += floor(delta / numPoints);
+			for (/* no initialization */; delta > baseMinusTMin * tMax >> 1; k += base) {
+				delta = floor(delta / baseMinusTMin);
+			}
+			return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
+		}
+	
+		/**
+		 * Converts a Punycode string of ASCII-only symbols to a string of Unicode
+		 * symbols.
+		 * @memberOf punycode
+		 * @param {String} input The Punycode string of ASCII-only symbols.
+		 * @returns {String} The resulting string of Unicode symbols.
+		 */
+		function decode(input) {
+			// Don't use UCS-2
+			var output = [],
+			    inputLength = input.length,
+			    out,
+			    i = 0,
+			    n = initialN,
+			    bias = initialBias,
+			    basic,
+			    j,
+			    index,
+			    oldi,
+			    w,
+			    k,
+			    digit,
+			    t,
+			    /** Cached calculation results */
+			    baseMinusT;
+	
+			// Handle the basic code points: let `basic` be the number of input code
+			// points before the last delimiter, or `0` if there is none, then copy
+			// the first basic code points to the output.
+	
+			basic = input.lastIndexOf(delimiter);
+			if (basic < 0) {
+				basic = 0;
+			}
+	
+			for (j = 0; j < basic; ++j) {
+				// if it's not a basic code point
+				if (input.charCodeAt(j) >= 0x80) {
+					error('not-basic');
+				}
+				output.push(input.charCodeAt(j));
+			}
+	
+			// Main decoding loop: start just after the last delimiter if any basic code
+			// points were copied; start at the beginning otherwise.
+	
+			for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */) {
+	
+				// `index` is the index of the next character to be consumed.
+				// Decode a generalized variable-length integer into `delta`,
+				// which gets added to `i`. The overflow checking is easier
+				// if we increase `i` as we go, then subtract off its starting
+				// value at the end to obtain `delta`.
+				for (oldi = i, w = 1, k = base; /* no condition */; k += base) {
+	
+					if (index >= inputLength) {
+						error('invalid-input');
+					}
+	
+					digit = basicToDigit(input.charCodeAt(index++));
+	
+					if (digit >= base || digit > floor((maxInt - i) / w)) {
+						error('overflow');
+					}
+	
+					i += digit * w;
+					t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+	
+					if (digit < t) {
+						break;
+					}
+	
+					baseMinusT = base - t;
+					if (w > floor(maxInt / baseMinusT)) {
+						error('overflow');
+					}
+	
+					w *= baseMinusT;
+	
+				}
+	
+				out = output.length + 1;
+				bias = adapt(i - oldi, out, oldi == 0);
+	
+				// `i` was supposed to wrap around from `out` to `0`,
+				// incrementing `n` each time, so we'll fix that now:
+				if (floor(i / out) > maxInt - n) {
+					error('overflow');
+				}
+	
+				n += floor(i / out);
+				i %= out;
+	
+				// Insert `n` at position `i` of the output
+				output.splice(i++, 0, n);
+	
+			}
+	
+			return ucs2encode(output);
+		}
+	
+		/**
+		 * Converts a string of Unicode symbols (e.g. a domain name label) to a
+		 * Punycode string of ASCII-only symbols.
+		 * @memberOf punycode
+		 * @param {String} input The string of Unicode symbols.
+		 * @returns {String} The resulting Punycode string of ASCII-only symbols.
+		 */
+		function encode(input) {
+			var n,
+			    delta,
+			    handledCPCount,
+			    basicLength,
+			    bias,
+			    j,
+			    m,
+			    q,
+			    k,
+			    t,
+			    currentValue,
+			    output = [],
+			    /** `inputLength` will hold the number of code points in `input`. */
+			    inputLength,
+			    /** Cached calculation results */
+			    handledCPCountPlusOne,
+			    baseMinusT,
+			    qMinusT;
+	
+			// Convert the input in UCS-2 to Unicode
+			input = ucs2decode(input);
+	
+			// Cache the length
+			inputLength = input.length;
+	
+			// Initialize the state
+			n = initialN;
+			delta = 0;
+			bias = initialBias;
+	
+			// Handle the basic code points
+			for (j = 0; j < inputLength; ++j) {
+				currentValue = input[j];
+				if (currentValue < 0x80) {
+					output.push(stringFromCharCode(currentValue));
+				}
+			}
+	
+			handledCPCount = basicLength = output.length;
+	
+			// `handledCPCount` is the number of code points that have been handled;
+			// `basicLength` is the number of basic code points.
+	
+			// Finish the basic string - if it is not empty - with a delimiter
+			if (basicLength) {
+				output.push(delimiter);
+			}
+	
+			// Main encoding loop:
+			while (handledCPCount < inputLength) {
+	
+				// All non-basic code points < n have been handled already. Find the next
+				// larger one:
+				for (m = maxInt, j = 0; j < inputLength; ++j) {
+					currentValue = input[j];
+					if (currentValue >= n && currentValue < m) {
+						m = currentValue;
+					}
+				}
+	
+				// Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
+				// but guard against overflow
+				handledCPCountPlusOne = handledCPCount + 1;
+				if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
+					error('overflow');
+				}
+	
+				delta += (m - n) * handledCPCountPlusOne;
+				n = m;
+	
+				for (j = 0; j < inputLength; ++j) {
+					currentValue = input[j];
+	
+					if (currentValue < n && ++delta > maxInt) {
+						error('overflow');
+					}
+	
+					if (currentValue == n) {
+						// Represent delta as a generalized variable-length integer
+						for (q = delta, k = base; /* no condition */; k += base) {
+							t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+							if (q < t) {
+								break;
+							}
+							qMinusT = q - t;
+							baseMinusT = base - t;
+							output.push(
+								stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
+							);
+							q = floor(qMinusT / baseMinusT);
+						}
+	
+						output.push(stringFromCharCode(digitToBasic(q, 0)));
+						bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
+						delta = 0;
+						++handledCPCount;
+					}
+				}
+	
+				++delta;
+				++n;
+	
+			}
+			return output.join('');
+		}
+	
+		/**
+		 * Converts a Punycode string representing a domain name or an email address
+		 * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
+		 * it doesn't matter if you call it on a string that has already been
+		 * converted to Unicode.
+		 * @memberOf punycode
+		 * @param {String} input The Punycoded domain name or email address to
+		 * convert to Unicode.
+		 * @returns {String} The Unicode representation of the given Punycode
+		 * string.
+		 */
+		function toUnicode(input) {
+			return mapDomain(input, function(string) {
+				return regexPunycode.test(string)
+					? decode(string.slice(4).toLowerCase())
+					: string;
+			});
+		}
+	
+		/**
+		 * Converts a Unicode string representing a domain name or an email address to
+		 * Punycode. Only the non-ASCII parts of the domain name will be converted,
+		 * i.e. it doesn't matter if you call it with a domain that's already in
+		 * ASCII.
+		 * @memberOf punycode
+		 * @param {String} input The domain name or email address to convert, as a
+		 * Unicode string.
+		 * @returns {String} The Punycode representation of the given domain name or
+		 * email address.
+		 */
+		function toASCII(input) {
+			return mapDomain(input, function(string) {
+				return regexNonASCII.test(string)
+					? 'xn--' + encode(string)
+					: string;
+			});
+		}
+	
+		/*--------------------------------------------------------------------------*/
+	
+		/** Define the public API */
+		punycode = {
+			/**
+			 * A string representing the current Punycode.js version number.
+			 * @memberOf punycode
+			 * @type String
+			 */
+			'version': '1.3.2',
+			/**
+			 * An object of methods to convert from JavaScript's internal character
+			 * representation (UCS-2) to Unicode code points, and back.
+			 * @see <https://mathiasbynens.be/notes/javascript-encoding>
+			 * @memberOf punycode
+			 * @type Object
+			 */
+			'ucs2': {
+				'decode': ucs2decode,
+				'encode': ucs2encode
+			},
+			'decode': decode,
+			'encode': encode,
+			'toASCII': toASCII,
+			'toUnicode': toUnicode
+		};
+	
+		/** Expose `punycode` */
+		// Some AMD build optimizers, like r.js, check for specific condition patterns
+		// like the following:
+		if (
+			true
+		) {
+			!(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+				return punycode;
+			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else if (freeExports && freeModule) {
+			if (module.exports == freeExports) { // in Node.js or RingoJS v0.8.0+
+				freeModule.exports = punycode;
+			} else { // in Narwhal or RingoJS v0.7.0-
+				for (key in punycode) {
+					punycode.hasOwnProperty(key) && (freeExports[key] = punycode[key]);
+				}
+			}
+		} else { // in Rhino or a web browser
+			root.punycode = punycode;
+		}
+	
+	}(this));
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../~/webpack/buildin/module.js */ 632)(module), (function() { return this; }())))
+
+/***/ },
+
+/***/ 2036:
+/*!*************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/querystring/index.js ***!
+  \*************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	exports.decode = exports.parse = __webpack_require__(/*! ./decode */ 2037);
+	exports.encode = exports.stringify = __webpack_require__(/*! ./encode */ 2038);
+
+
+/***/ },
+
+/***/ 2037:
+/*!**************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/querystring/decode.js ***!
+  \**************************************************************************/
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
+	'use strict';
+	
+	// If obj.hasOwnProperty has been overridden, then calling
+	// obj.hasOwnProperty(prop) will break.
+	// See: https://github.com/joyent/node/issues/1707
+	function hasOwnProperty(obj, prop) {
+	  return Object.prototype.hasOwnProperty.call(obj, prop);
+	}
+	
+	module.exports = function(qs, sep, eq, options) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  var obj = {};
+	
+	  if (typeof qs !== 'string' || qs.length === 0) {
+	    return obj;
+	  }
+	
+	  var regexp = /\+/g;
+	  qs = qs.split(sep);
+	
+	  var maxKeys = 1000;
+	  if (options && typeof options.maxKeys === 'number') {
+	    maxKeys = options.maxKeys;
+	  }
+	
+	  var len = qs.length;
+	  // maxKeys <= 0 means that we should not limit keys count
+	  if (maxKeys > 0 && len > maxKeys) {
+	    len = maxKeys;
+	  }
+	
+	  for (var i = 0; i < len; ++i) {
+	    var x = qs[i].replace(regexp, '%20'),
+	        idx = x.indexOf(eq),
+	        kstr, vstr, k, v;
+	
+	    if (idx >= 0) {
+	      kstr = x.substr(0, idx);
+	      vstr = x.substr(idx + 1);
+	    } else {
+	      kstr = x;
+	      vstr = '';
+	    }
+	
+	    k = decodeURIComponent(kstr);
+	    v = decodeURIComponent(vstr);
+	
+	    if (!hasOwnProperty(obj, k)) {
+	      obj[k] = v;
+	    } else if (Array.isArray(obj[k])) {
+	      obj[k].push(v);
+	    } else {
+	      obj[k] = [obj[k], v];
+	    }
+	  }
+	
+	  return obj;
+	};
+
+
+/***/ },
+
+/***/ 2038:
+/*!**************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/querystring/encode.js ***!
+  \**************************************************************************/
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
+	'use strict';
+	
+	var stringifyPrimitive = function(v) {
+	  switch (typeof v) {
+	    case 'string':
+	      return v;
+	
+	    case 'boolean':
+	      return v ? 'true' : 'false';
+	
+	    case 'number':
+	      return isFinite(v) ? v : '';
+	
+	    default:
+	      return '';
+	  }
+	};
+	
+	module.exports = function(obj, sep, eq, name) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  if (obj === null) {
+	    obj = undefined;
+	  }
+	
+	  if (typeof obj === 'object') {
+	    return Object.keys(obj).map(function(k) {
+	      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+	      if (Array.isArray(obj[k])) {
+	        return obj[k].map(function(v) {
+	          return ks + encodeURIComponent(stringifyPrimitive(v));
+	        }).join(sep);
+	      } else {
+	        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+	      }
+	    }).join(sep);
+	
+	  }
+	
+	  if (!name) return '';
+	  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+	         encodeURIComponent(stringifyPrimitive(obj));
+	};
+
+
+/***/ },
+
+/***/ 2039:
+/*!******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/src/DifferentialResults.jsx ***!
   \******************************************************************************/
-function(e,t,r){"use strict";var s=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var s in r)Object.prototype.hasOwnProperty.call(r,s)&&(e[s]=r[s])}return e},n=r(/*! jquery */2125);r(/*! jquery.browser */2127);var o=r(/*! react */1967),i=r(/*! react-dom */2123),a=r(/*! display-levels-button */2128),l=r(/*! legend */2131).LegendDifferential,c=r(/*! cell-differential */2147),p=r(/*! ./DifferentialDownloadButton.jsx */2156),u=r(/*! contrast-tooltips */2159),h=r(/*! atlas-feedback */2164),d=r(/*! react-ebi-species */2236).Icon;r(/*! ./DifferentialResults.css */2242);var f=o.PropTypes.string.isRequired,m=o.PropTypes.string,g=o.PropTypes.number,y=o.PropTypes.bool.isRequired,x=o.createClass({displayName:"DifferentialResults",propTypes:{results:o.PropTypes.arrayOf(o.PropTypes.shape({species:f,kingdom:f,experimentType:f,numReplicates:f,regulation:f,factors:o.PropTypes.arrayOf(m).isRequired,bioentityIdentifier:f,experimentAccession:f,experimentName:f,contrastId:f,comparison:f,foldChange:o.PropTypes.number.isRequired,colour:f,id:f})).isRequired,maxDownLevel:g,minDownLevel:g,minUpLevel:g,maxUpLevel:g,hostUrl:f},getDefaultProps:function(){return{maxDownLevel:Number.NEGATIVE_INFINITY,minDownLevel:0,minUpLevel:0,maxUpLevel:Number.POSITIVE_INFINITY}},getInitialState:function(){return{displayLevels:!1,googleAnalyticsCallback:"undefined"!=typeof ga?ga:function(){}}},_toggleDisplayLevels:function(){var e=!this.state.displayLevels;this.setState({displayLevels:e})},render:function(){var e=this,t=this.props.results.map(function(t){return o.createElement(v,s({key:t.id,displayLevels:e.state.displayLevels,atlasBaseUrl:e.props.hostUrl+"/gxa"},t))}),r=n.browser.msie?null:o.createElement("div",{style:{marginTop:"50px"}},o.createElement(h,{collectionCallback:function(t,r){e.state.googleAnalyticsCallback("send","event","DifferentialHeatmaps","feedback",r,t)}}));return o.createElement("div",null,o.createElement("div",{style:{display:"inline-block",verticalAlign:"middle"}},o.createElement(a,{hideText:"Hide log<sub>2</sub>-fold change",showText:"Display log<sub>2</sub>-fold change",onClickCallback:this._toggleDisplayLevels,displayLevels:this.state.displayLevels,fontSize:"14px",width:"200px"})),o.createElement("div",{style:{display:"inline-block",verticalAlign:"middle"}},o.createElement(l,{atlasBaseURL:this.props.hostUrl+"/gxa",minDownLevel:this.props.minDownLevel,maxDownLevel:this.props.maxDownLevel,minUpLevel:this.props.minUpLevel,maxUpLevel:this.props.maxUpLevel})),o.createElement("div",{style:{display:"inline-block",paddingLeft:"10px",verticalAlign:"top"}},o.createElement(p,{ref:"downloadProfilesButton",hostUrl:this.props.hostUrl,results:this.props.results})),o.createElement("table",{className:"table-striped gxaDifferentialFacetedSearchResults"},o.createElement("thead",null,o.createElement("tr",null,o.createElement("th",{style:{width:"10%"}},"Log",o.createElement("sub",null,"2"),"-fold change"),o.createElement("th",{style:{width:"5%"}},"Species"),o.createElement("th",{style:{width:"30%"}},"Comparison"),o.createElement("th",{style:{width:"15%"}},"Experimental variables"),o.createElement("th",{style:{width:"40%"}},"Experiment name"))),o.createElement("tbody",null,t)),r)}}),v=o.createClass({displayName:"DifferentialResultRow",propTypes:{bioentityIdentifier:f,foldChange:o.PropTypes.number.isRequired,colour:f,species:f,comparison:f,factors:o.PropTypes.arrayOf(m).isRequired,experimentName:f,contrastId:f,experimentAccession:f,displayLevels:y,atlasBaseUrl:f},_linkToComparisonPage:function(){return"experiments/"+this.props.experimentAccession+"?geneQuery="+this.props.bioentityIdentifier+"&queryFactorValues="+this.props.contrastId+"&specific=false"},render:function(){var e=this.props.factors?this.props.factors.toString().replace(/,/g,", "):"";return o.createElement("tr",null,o.createElement(c,{colour:this.props.colour,infinity:this.props.infinity,foldChange:this.props.foldChange,displayLevels:this.props.displayLevels}),o.createElement("td",{className:"col_species"},o.createElement(d,{species:this.props.species})),o.createElement("td",{ref:"comparison"},o.createElement("a",{href:this._linkToComparisonPage()},this.props.comparison)),o.createElement("td",{className:"gxaExperimentalVariable"},e),o.createElement("td",null,o.createElement("a",{href:"experiments/"+this.props.experimentAccession},this.props.experimentName)))},componentDidMount:function(){var e=this;u(this.props.atlasBaseUrl,"",i.findDOMNode(this.refs.comparison),this.props.experimentAccession,this.props.contrastId),n(document).ready(function(){e.setState({googleAnalyticsCallback:"undefined"!=typeof ga?ga:function(){}})})}});e.exports=x},2127:/*!******************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var $ = __webpack_require__(/*! jquery */ 2033);
+	__webpack_require__(/*! jquery.browser */ 2040);
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 2031);
+	
+	//*------------------------------------------------------------------*
+	
+	var DisplayLevelsButton = __webpack_require__(/*! display-levels-button */ 2041);
+	var Legend = __webpack_require__(/*! legend */ 2044).LegendDifferential;
+	var CellDifferential = __webpack_require__(/*! cell-differential */ 2060);
+	var DifferentialDownloadButton = __webpack_require__(/*! ./DifferentialDownloadButton.jsx */ 2067);
+	var ContrastTooltips = __webpack_require__(/*! contrast-tooltips */ 2070);
+	var AtlasFeedback = __webpack_require__(/*! atlas-feedback */ 2075);
+	var EbiSpeciesIcon = __webpack_require__(/*! react-ebi-species */ 2147).Icon;
+	
+	//*------------------------------------------------------------------*
+	
+	__webpack_require__(/*! ./DifferentialResults.css */ 2153);
+	
+	//*------------------------------------------------------------------*
+	
+	var RequiredString = React.PropTypes.string.isRequired;
+	var OptionalString = React.PropTypes.string;
+	var DoubleWithDefault = React.PropTypes.number;
+	var RequiredBool = React.PropTypes.bool.isRequired;
+	
+	var DifferentialResults = React.createClass({
+	    displayName: 'DifferentialResults',
+	
+	    /*
+	    results: [
+	     {
+	       "bioentityIdentifier":"ENSMUSG00000072476",
+	       "species":"mus musculus",
+	       "kingdom":"animals",
+	       "experimentAccession":"E-MTAB-698",
+	       "experimentType":"rnaseq_mrna_differential",
+	       "contrastId":"g1_g2",
+	       "numReplicates":"3",
+	       "foldChange":"2.4",
+	       "regulation":"DOWN"
+	       "colour": some_hex_value
+	     },
+	     {
+	       "bioentityIdentifier":"ENSMUSG00000071341",
+	       "species":"mus musculus",
+	       "kingdom":"animals",
+	       "experimentAccession":"E-MTAB-698",
+	       "experimentType":"rnaseq_mrna_differential",
+	       "contrastId":"g1_g2",
+	       "numReplicates":"3",
+	       "foldChange":"-∞",
+	       "regulation":"DOWN",
+	       "colour": some_hex_value
+	      }
+	    ],
+	    maxDownLevel: "-∞" ,
+	    minDownLevel: "0",
+	    minUpLevel: "0",
+	    maxUpLevel: "2.4"
+	    */
+	    propTypes: {
+	        results: React.PropTypes.arrayOf(React.PropTypes.shape({
+	            species: RequiredString,
+	            kingdom: RequiredString,
+	            experimentType: RequiredString,
+	            numReplicates: RequiredString, // faceting only works with strings https://issues.apache.org/jira/browse/SOLR-7496
+	            regulation: RequiredString,
+	            factors: React.PropTypes.arrayOf(OptionalString).isRequired,
+	            bioentityIdentifier: RequiredString,
+	            experimentAccession: RequiredString,
+	            experimentName: RequiredString,
+	            contrastId: RequiredString,
+	            comparison: RequiredString,
+	            foldChange: React.PropTypes.number.isRequired,
+	            colour: RequiredString,
+	            id: RequiredString
+	        })).isRequired,
+	        maxDownLevel: DoubleWithDefault,
+	        minDownLevel: DoubleWithDefault,
+	        minUpLevel: DoubleWithDefault,
+	        maxUpLevel: DoubleWithDefault,
+	        hostUrl: RequiredString
+	    },
+	
+	    getDefaultProps: function getDefaultProps() {
+	        return {
+	            maxDownLevel: Number.NEGATIVE_INFINITY,
+	            minDownLevel: 0,
+	            minUpLevel: 0,
+	            maxUpLevel: Number.POSITIVE_INFINITY
+	        };
+	    },
+	    getInitialState: function getInitialState() {
+	        return {
+	            displayLevels: false,
+	            googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function () {}
+	        };
+	    },
+	    _toggleDisplayLevels: function _toggleDisplayLevels() {
+	        var newDisplayLevels = !this.state.displayLevels;
+	        this.setState({ displayLevels: newDisplayLevels });
+	    },
+	    render: function render() {
+	        var _this = this;
+	
+	        var differentialResultRows = this.props.results.map(function (diffResult) {
+	            return React.createElement(DifferentialResultRow, _extends({
+	                key: diffResult.id,
+	                displayLevels: _this.state.displayLevels,
+	                atlasBaseUrl: _this.props.hostUrl + '/gxa'
+	            }, diffResult));
+	        });
+	
+	        var feedbackSmileys = $.browser.msie ? null : React.createElement(
+	            'div',
+	            { style: { marginTop: '50px' } },
+	            React.createElement(AtlasFeedback, {
+	                collectionCallback: function collectionCallback(score, comment) {
+	                    _this.state.googleAnalyticsCallback('send', 'event', 'DifferentialHeatmaps', 'feedback', comment, score);
+	                } })
+	        );
+	
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	                'div',
+	                { style: { display: 'inline-block', verticalAlign: 'middle' } },
+	                React.createElement(DisplayLevelsButton, { hideText: 'Hide log<sub>2</sub>-fold change', showText: 'Display log<sub>2</sub>-fold change', onClickCallback: this._toggleDisplayLevels, displayLevels: this.state.displayLevels, fontSize: '14px', width: '200px' })
+	            ),
+	            React.createElement(
+	                'div',
+	                { style: { display: 'inline-block', verticalAlign: 'middle' } },
+	                React.createElement(Legend, {
+	                    atlasBaseURL: this.props.hostUrl + '/gxa', minDownLevel: this.props.minDownLevel, maxDownLevel: this.props.maxDownLevel, minUpLevel: this.props.minUpLevel, maxUpLevel: this.props.maxUpLevel
+	                })
+	            ),
+	            React.createElement(
+	                'div',
+	                { style: { display: 'inline-block', paddingLeft: '10px', verticalAlign: 'top' } },
+	                React.createElement(DifferentialDownloadButton, { ref: 'downloadProfilesButton',
+	                    hostUrl: this.props.hostUrl,
+	                    results: this.props.results
+	                })
+	            ),
+	            React.createElement(
+	                'table',
+	                { className: 'table-striped gxaDifferentialFacetedSearchResults' },
+	                React.createElement(
+	                    'thead',
+	                    null,
+	                    React.createElement(
+	                        'tr',
+	                        null,
+	                        React.createElement(
+	                            'th',
+	                            { style: { width: '10%' } },
+	                            'Log',
+	                            React.createElement(
+	                                'sub',
+	                                null,
+	                                '2'
+	                            ),
+	                            '-fold change'
+	                        ),
+	                        React.createElement(
+	                            'th',
+	                            { style: { width: '5%' } },
+	                            'Species'
+	                        ),
+	                        React.createElement(
+	                            'th',
+	                            { style: { width: '30%' } },
+	                            'Comparison'
+	                        ),
+	                        React.createElement(
+	                            'th',
+	                            { style: { width: '15%' } },
+	                            'Experimental variables'
+	                        ),
+	                        React.createElement(
+	                            'th',
+	                            { style: { width: '40%' } },
+	                            'Experiment name'
+	                        )
+	                    )
+	                ),
+	                React.createElement(
+	                    'tbody',
+	                    null,
+	                    differentialResultRows
+	                )
+	            ),
+	            feedbackSmileys
+	        );
+	    }
+	});
+	
+	var DifferentialResultRow = React.createClass({
+	    displayName: 'DifferentialResultRow',
+	
+	    propTypes: {
+	        bioentityIdentifier: RequiredString,
+	        foldChange: React.PropTypes.number.isRequired,
+	        colour: RequiredString,
+	        species: RequiredString,
+	        comparison: RequiredString,
+	        factors: React.PropTypes.arrayOf(OptionalString).isRequired,
+	        experimentName: RequiredString,
+	        contrastId: RequiredString,
+	        experimentAccession: RequiredString,
+	        displayLevels: RequiredBool,
+	        atlasBaseUrl: RequiredString
+	    },
+	
+	    _linkToComparisonPage: function _linkToComparisonPage() {
+	        return 'experiments/' + this.props.experimentAccession + '?geneQuery=' + this.props.bioentityIdentifier + '&queryFactorValues=' + this.props.contrastId + '&specific=false';
+	    },
+	    render: function render() {
+	        var factors = this.props.factors ? this.props.factors.toString().replace(/,/g, ', ') : '';
+	
+	        return React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(CellDifferential, {
+	                colour: this.props.colour,
+	                infinity: this.props.infinity,
+	                foldChange: this.props.foldChange,
+	                displayLevels: this.props.displayLevels }),
+	            React.createElement(
+	                'td',
+	                { className: 'col_species' },
+	                React.createElement(EbiSpeciesIcon, { species: this.props.species })
+	            ),
+	            React.createElement(
+	                'td',
+	                { ref: 'comparison' },
+	                React.createElement(
+	                    'a',
+	                    { href: this._linkToComparisonPage() },
+	                    this.props.comparison
+	                )
+	            ),
+	            React.createElement(
+	                'td',
+	                { className: 'gxaExperimentalVariable' },
+	                factors
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                React.createElement(
+	                    'a',
+	                    { href: 'experiments/' + this.props.experimentAccession },
+	                    this.props.experimentName
+	                )
+	            )
+	        );
+	    },
+	    componentDidMount: function componentDidMount() {
+	        var _this2 = this;
+	
+	        ContrastTooltips(this.props.atlasBaseUrl, '', ReactDOM.findDOMNode(this.refs.comparison), this.props.experimentAccession, this.props.contrastId);
+	        $(document).ready(function () {
+	            _this2.setState({ googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function () {} });
+	        });
+	    }
+	});
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = DifferentialResults;
+
+/***/ },
+
+/***/ 2040:
+/*!******************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/jquery.browser/dist/jquery.browser.js ***!
   \******************************************************************************************/
-[3125,2125],2128:/*!***********************************************************************************!*\
+[3027, 2033],
+
+/***/ 2041:
+/*!***********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/display-levels-button/index.js ***!
   \***********************************************************************************/
-function(e,t,r){"use strict";e.exports=r(/*! ./src/DisplayLevelsButton.jsx */2129)},2129:/*!******************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = __webpack_require__(/*! ./src/DisplayLevelsButton.jsx */ 2042);
+
+
+/***/ },
+
+/***/ 2042:
+/*!******************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/display-levels-button/src/DisplayLevelsButton.jsx ***!
   \******************************************************************************************************/
-function(e,t,r){"use strict";var s=r(/*! react */1967),n=r(/*! react-dom */2123),o=r(/*! jquery */2125);r(/*! jquery-ui-bundle */2130);var i=s.createClass({displayName:"DisplayLevelsButton",propTypes:{hideText:s.PropTypes.string.isRequired,showText:s.PropTypes.string.isRequired,onClickCallback:s.PropTypes.func.isRequired,displayLevels:s.PropTypes.bool.isRequired,width:s.PropTypes.string,fontSize:s.PropTypes.string},_buttonText:function(){return this.props.displayLevels?this.props.hideText:this.props.showText},_updateButtonText:function(){o(n.findDOMNode(this)).button({label:this._buttonText()})},render:function(){var e={};return this.props.width&&(e.width=this.props.width),this.props.fontSize&&(e.fontSize=this.props.fontSize),s.createElement("button",{style:e,onClick:this.props.onClickCallback})},componentDidMount:function(){this._updateButtonText()},componentDidUpdate:function(){this._updateButtonText()}});e.exports=i},2130:/*!**********************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 2031);
+	
+	var $ = __webpack_require__(/*! jquery */ 2033);
+	__webpack_require__(/*! jquery-ui-bundle */ 2043);
+	
+	//*------------------------------------------------------------------*
+	
+	
+	//*------------------------------------------------------------------*
+	
+	var DisplayLevelsButton = React.createClass({
+	    displayName: 'DisplayLevelsButton',
+	
+	
+	    propTypes: {
+	        hideText: React.PropTypes.string.isRequired,
+	        showText: React.PropTypes.string.isRequired,
+	        onClickCallback: React.PropTypes.func.isRequired,
+	        displayLevels: React.PropTypes.bool.isRequired,
+	        width: React.PropTypes.string,
+	        fontSize: React.PropTypes.string
+	    },
+	
+	    _buttonText: function _buttonText() {
+	        return this.props.displayLevels ? this.props.hideText : this.props.showText;
+	    },
+	
+	    _updateButtonText: function _updateButtonText() {
+	        $(ReactDOM.findDOMNode(this)).button({ label: this._buttonText() });
+	    },
+	
+	    render: function render() {
+	        var style = {};
+	        if (this.props.width) {
+	            style.width = this.props.width;
+	        }
+	        if (this.props.fontSize) {
+	            style.fontSize = this.props.fontSize;
+	        }
+	
+	        return React.createElement('button', { style: style, onClick: this.props.onClickCallback });
+	    },
+	
+	    componentDidMount: function componentDidMount() {
+	        this._updateButtonText();
+	    },
+	
+	    componentDidUpdate: function componentDidUpdate() {
+	        this._updateButtonText();
+	    }
+	
+	});
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = DisplayLevelsButton;
+
+/***/ },
+
+/***/ 2043:
+/*!**********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/jquery-ui-bundle/jquery-ui.js ***!
   \**********************************************************************************/
-[3124,2125],2131:/*!********************************************************************!*\
+[3026, 2033],
+
+/***/ 2044:
+/*!********************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/legend/index.js ***!
   \********************************************************************/
-function(e,t,r){"use strict";t.LegendDifferential=r(/*! ./src/LegendDifferential.jsx */2132),t.LegendBaseline=r(/*! ./src/LegendBaseline.jsx */2144)},2132:/*!**************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	exports.LegendDifferential = __webpack_require__(/*! ./src/LegendDifferential.jsx */ 2045);
+	exports.LegendBaseline = __webpack_require__(/*! ./src/LegendBaseline.jsx */ 2057);
+
+/***/ },
+
+/***/ 2045:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/legend/src/LegendDifferential.jsx ***!
   \**************************************************************************************/
-function(e,t,r){"use strict";var s=r(/*! react */1967),n=r(/*! react-dom */2123),o=r(/*! ./LegendRow.jsx */2133),i=r(/*! help-tooltips */2138);r(/*! ./gxaLegend.css */2142);var a=s.createClass({displayName:"LegendDifferential",propTypes:{atlasBaseURL:s.PropTypes.string.isRequired,minDownLevel:s.PropTypes.number.isRequired,maxDownLevel:s.PropTypes.number.isRequired,minUpLevel:s.PropTypes.number.isRequired,maxUpLevel:s.PropTypes.number.isRequired},render:function(){return s.createElement("div",{className:"gxaLegend"},s.createElement("div",{style:{display:"inline-table"}},isNaN(this.props.minDownLevel)&&isNaN(this.props.maxDownLevel)?null:s.createElement(o,{lowExpressionLevel:this.props.minDownLevel,highExpressionLevel:this.props.maxDownLevel,lowValueColour:"#C0C0C0",highValueColour:"#0000FF"}),isNaN(this.props.minUpLevel)&&isNaN(this.props.maxUpLevel)?null:s.createElement(o,{lowExpressionLevel:this.props.minUpLevel,highExpressionLevel:this.props.maxUpLevel,lowValueColour:"#FFAFAF",highValueColour:"#FF0000"})),s.createElement("div",{ref:"legendHelp","data-help-loc":"#gradient-differential",className:"gxaLegendHelp"}))},componentDidMount:function(){i(this.props.atlasBaseURL,"experiment",n.findDOMNode(this.refs.legendHelp))}});e.exports=a},2133:/*!*****************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 2031);
+	
+	//*------------------------------------------------------------------*
+	
+	var LegendRow = __webpack_require__(/*! ./LegendRow.jsx */ 2046);
+	var HelpTooltips = __webpack_require__(/*! help-tooltips */ 2051);
+	
+	//*------------------------------------------------------------------*
+	
+	__webpack_require__(/*! ./gxaLegend.css */ 2055);
+	
+	//*------------------------------------------------------------------*
+	
+	var LegendDifferential = React.createClass({
+	    displayName: 'LegendDifferential',
+	
+	
+	    propTypes: {
+	        atlasBaseURL: React.PropTypes.string.isRequired,
+	        minDownLevel: React.PropTypes.number.isRequired,
+	        maxDownLevel: React.PropTypes.number.isRequired,
+	        minUpLevel: React.PropTypes.number.isRequired,
+	        maxUpLevel: React.PropTypes.number.isRequired
+	    },
+	
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            { className: 'gxaLegend' },
+	            React.createElement(
+	                'div',
+	                { style: { display: "inline-table" } },
+	                isNaN(this.props.minDownLevel) && isNaN(this.props.maxDownLevel) ? null : React.createElement(LegendRow, { lowExpressionLevel: this.props.minDownLevel,
+	                    highExpressionLevel: this.props.maxDownLevel,
+	                    lowValueColour: '#C0C0C0',
+	                    highValueColour: '#0000FF' }),
+	                isNaN(this.props.minUpLevel) && isNaN(this.props.maxUpLevel) ? null : React.createElement(LegendRow, { lowExpressionLevel: this.props.minUpLevel,
+	                    highExpressionLevel: this.props.maxUpLevel,
+	                    lowValueColour: '#FFAFAF',
+	                    highValueColour: '#FF0000' })
+	            ),
+	            React.createElement('div', { ref: 'legendHelp', 'data-help-loc': '#gradient-differential', className: 'gxaLegendHelp' })
+	        );
+	    },
+	
+	    componentDidMount: function componentDidMount() {
+	        HelpTooltips(this.props.atlasBaseURL, "experiment", ReactDOM.findDOMNode(this.refs.legendHelp));
+	    }
+	});
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = LegendDifferential;
+
+/***/ },
+
+/***/ 2046:
+/*!*****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/legend/src/LegendRow.jsx ***!
   \*****************************************************************************/
-function(e,t,r){"use strict";var s=r(/*! react */1967);r(/*! ./gxaGradient.css */2134);var n=s.createClass({displayName:"LegendRow",propTypes:{lowValueColour:s.PropTypes.string.isRequired,highValueColour:s.PropTypes.string.isRequired,lowExpressionLevel:s.PropTypes.oneOfType([s.PropTypes.number,s.PropTypes.element]).isRequired,highExpressionLevel:s.PropTypes.oneOfType([s.PropTypes.number,s.PropTypes.element]).isRequired},render:function(){var e="-webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});background-image: -ms-linear-gradient(left, ${lowValueColour}, ${highValueColour}); background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour})",t=e.replace(/\${lowValueColour}/g,this.props.lowValueColour).replace(/\${highValueColour}/g,this.props.highValueColour),r="progid:DXImageTransform.Microsoft.Gradient(GradientType =1,startColorstr=${lowValueColour},endColorstr=${highValueColour})",n=r.replace(/\${lowValueColour}/,this.props.lowValueColour).replace(/\${highValueColour}/,this.props.highValueColour);return s.createElement("div",{style:{display:"table-row"}},s.createElement("div",{className:"gxaGradientLevel gxaGradientLevelMin"},this.props.lowExpressionLevel),s.createElement("div",{style:{display:"table-cell"}},s.createElement("span",{className:"gxaGradientColour",style:{backgroundImage:t,filter:n}})),s.createElement("div",{className:"gxaGradientLevel gxaGradientLevelMax"},this.props.highExpressionLevel))}});e.exports=n},2134:/*!*******************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	
+	//*------------------------------------------------------------------*
+	
+	__webpack_require__(/*! ./gxaGradient.css */ 2047);
+	
+	//*------------------------------------------------------------------*
+	
+	var LegendRow = React.createClass({
+	    displayName: 'LegendRow',
+	
+	
+	    propTypes: {
+	        lowValueColour: React.PropTypes.string.isRequired,
+	        highValueColour: React.PropTypes.string.isRequired,
+	        lowExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.element]).isRequired, // Baseline legend rows can be a React <span> element returned by NumberFormat
+	        highExpressionLevel: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.element]).isRequired
+	    },
+	
+	    render: function render() {
+	        var BACKGROUND_IMAGE_TEMPLATE = "-webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});background-image: -ms-linear-gradient(left, ${lowValueColour}, ${highValueColour}); background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour})";
+	        var backgroundImage = BACKGROUND_IMAGE_TEMPLATE.replace(/\${lowValueColour}/g, this.props.lowValueColour).replace(/\${highValueColour}/g, this.props.highValueColour);
+	
+	        // for IE9
+	        var LT_IE10_FILTER_TEMPLATE = "progid:DXImageTransform.Microsoft.Gradient(GradientType =1,startColorstr=${lowValueColour},endColorstr=${highValueColour})";
+	        var lt_ie10_filter = LT_IE10_FILTER_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
+	
+	        return React.createElement(
+	            'div',
+	            { style: { display: "table-row" } },
+	            React.createElement(
+	                'div',
+	                { className: 'gxaGradientLevel gxaGradientLevelMin' },
+	                this.props.lowExpressionLevel
+	            ),
+	            React.createElement(
+	                'div',
+	                { style: { display: "table-cell" } },
+	                React.createElement('span', { className: 'gxaGradientColour', style: { backgroundImage: backgroundImage, filter: lt_ie10_filter } })
+	            ),
+	            React.createElement(
+	                'div',
+	                { className: 'gxaGradientLevel gxaGradientLevelMax' },
+	                this.props.highExpressionLevel
+	            )
+	        );
+	    }
+	});
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = LegendRow;
+
+/***/ },
+
+/***/ 2047:
+/*!*******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/legend/src/gxaGradient.css ***!
   \*******************************************************************************/
-function(e,t,r){var s=r(/*! !./../../css-loader!./gxaGradient.css */2135);"string"==typeof s&&(s=[[e.id,s,""]]);r(/*! ./../../style-loader/addStyles.js */2137)(s,{});s.locals&&(e.exports=s.locals)},2135:/*!***************************************************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaGradient.css */ 2048);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 2050)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./gxaGradient.css", function() {
+				var newContent = require("!!./../../css-loader/index.js!./gxaGradient.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2048:
+/*!***************************************************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/~/legend/src/gxaGradient.css ***!
   \***************************************************************************************************************************************/
-function(e,t,r){t=e.exports=r(/*! ./../../css-loader/lib/css-base.js */2136)(),t.push([e.id,".gxaGradientColour{overflow:auto;vertical-align:middle;width:200px;height:15px;margin:2px 6px;display:inline-block}.gxaGradientLevel{white-space:nowrap;font-size:10px;vertical-align:middle;display:table-cell}.gxaGradientLevelMin{text-align:right}.gxaGradientLevelMax{text-align:left}",""])},2136:/*!*******************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 2049)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".gxaGradientColour {\n    overflow: auto;\n    vertical-align: middle;\n    width: 200px;\n    height: 15px;\n    margin: 2px 6px 2px 6px;\n    display: inline-block;\n}\n\n.gxaGradientLevel {\n    white-space: nowrap;\n    font-size: 10px;\n    vertical-align: middle;\n    display: table-cell;\n}\n\n.gxaGradientLevelMin {\n    text-align: right;\n}\n\n.gxaGradientLevelMax {\n    text-align: left;\n}", ""]);
+	
+	// exports
+
+
+/***/ },
+
+/***/ 2049:
+/*!*******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/css-loader/lib/css-base.js ***!
   \*******************************************************************************/
-577,2137:/*!******************************************************************************!*\
+575,
+
+/***/ 2050:
+/*!******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/style-loader/addStyles.js ***!
   \******************************************************************************/
-578,2138:/*!************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/legend/~/help-tooltips/index.js ***!
-  \************************************************************************************/
-function(e,t,r){"use strict";e.exports=r(/*! ./src/helpTooltipsModule.js */2139)},2139:/*!*****************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/legend/~/help-tooltips/src/helpTooltipsModule.js ***!
-  \*****************************************************************************************************/
-function(e,t,r){"use strict";function s(){return i("<a/>",{"class":"help-icon",href:"#",title:"",text:"?"})}function n(e){return"help-tooltips."+e+"-page.html"}function o(e,t,r){var o=s(),a="object"==typeof r?r:""==r?"[data-help-loc]":"#"+r+" [data-help-loc]";i(a).append(o).click(function(e){e.preventDefault()}).tooltip({tooltipClass:"gxaHelpTooltip",content:function(r){var s=i(this).parent().attr("data-help-loc");i.get(e+"/resources/html/"+n(t),function(e,o,a){var l;return"error"===o?(l="Sorry but there was an error: "+a.status+" "+a.statusText,void r(l)):(l=i(e).filter(s).text(),l||(l="Missing help section for id = "+s+" in html file "+n(t)),void r(l))})}})}var i=r(/*! jquery */2125);r(/*! jquery-ui-bundle */2130),r(/*! ./gxaHelpTooltip.css */2140),e.exports=function(e,t,r){o(e,t,r)}},2140:/*!**************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/legend/~/help-tooltips/src/gxaHelpTooltip.css ***!
-  \**************************************************************************************************/
-function(e,t,r){var s=r(/*! !./../../../../css-loader!./gxaHelpTooltip.css */2141);"string"==typeof s&&(s=[[e.id,s,""]]);r(/*! ./../../../../style-loader/addStyles.js */2137)(s,{});s.locals&&(e.exports=s.locals)},2141:/*!**********************************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/~/legend/~/help-tooltips/src/gxaHelpTooltip.css ***!
-  \**********************************************************************************************************************************************************/
-function(e,t,r){t=e.exports=r(/*! ./../../../../css-loader/lib/css-base.js */2136)(),t.push([e.id,".gxaHelpTooltip{background:#fff;border-width:1px!important;border:solid #6495ed;padding:4px;color:#6495ed}.gxaHelpTooltip,a.help-icon{font:10px Verdana,Helvetica,Arial,sans-serif}a.help-icon{color:#ff8c00;vertical-align:top;font-weight:700}",""])},2142:/*!*****************************************************************************!*\
+576,
+
+/***/ 2051:
+/*!***************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/help-tooltips/index.js ***!
+  \***************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = __webpack_require__(/*! ./src/helpTooltipsModule.js */ 2052);
+
+
+/***/ },
+
+/***/ 2052:
+/*!********************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/help-tooltips/src/helpTooltipsModule.js ***!
+  \********************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var $ = __webpack_require__(/*! jquery */ 2033);
+	__webpack_require__(/*! jquery-ui-bundle */ 2043);
+	
+	//*------------------------------------------------------------------*
+	
+	__webpack_require__(/*! ./gxaHelpTooltip.css */ 2053);
+	
+	//*------------------------------------------------------------------*
+	
+	function buildHelpAnchor() {
+	    return $("<a/>", {
+	        class: "help-icon",
+	        href: "#",
+	        title: "",
+	        text: "?"
+	    });
+	}
+	
+	function getHelpFileName(pageName){
+	    return "help-tooltips." + pageName + "-page.html";
+	}
+	
+	function initTooltips(atlasBaseURL, pageName, parentElementId) {
+	
+	    var anchor = buildHelpAnchor();
+	
+	    var helpSelector = (typeof parentElementId === "object") ? parentElementId : (parentElementId == "") ? "[data-help-loc]" : "#" + parentElementId + " [data-help-loc]";
+	
+	    $(helpSelector)
+	        .append(anchor)
+	        .click(function (e) {
+	            e.preventDefault();
+	        })
+	        .tooltip(
+	        {
+	            tooltipClass: "gxaHelpTooltip",
+	            content: function (callback) {
+	                var tooltipHelpHtmlId = $(this).parent().attr("data-help-loc");
+	
+	                $.get(atlasBaseURL + "/resources/html/" + getHelpFileName(pageName),
+	                    function (response, status, xhr) {
+	                        var tooltipContent;
+	
+	                        if (status === "error") {
+	                            tooltipContent = "Sorry but there was an error: " + xhr.status + " " + xhr.statusText;
+	                            callback(tooltipContent);
+	                            return;
+	                        }
+	
+	                        tooltipContent = $(response).filter(tooltipHelpHtmlId).text();
+	                        if (!tooltipContent) {
+	                            tooltipContent = "Missing help section for id = " + tooltipHelpHtmlId + " in html file " + getHelpFileName(pageName);
+	                        }
+	
+	                        callback(tooltipContent);
+	                    }
+	                );
+	            }
+	        }
+	    );
+	
+	}
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = function (atlasBaseURL, pageName, parentElementId) {
+	    initTooltips(atlasBaseURL, pageName, parentElementId);
+	};
+
+/***/ },
+
+/***/ 2053:
+/*!*****************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/help-tooltips/src/gxaHelpTooltip.css ***!
+  \*****************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaHelpTooltip.css */ 2054);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 2050)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./gxaHelpTooltip.css", function() {
+				var newContent = require("!!./../../css-loader/index.js!./gxaHelpTooltip.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2054:
+/*!*************************************************************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/~/help-tooltips/src/gxaHelpTooltip.css ***!
+  \*************************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 2049)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".gxaHelpTooltip {\n    background: white;\n    border-width: 1px !important;\n    border: solid cornflowerblue;\n    padding: 4px;\n    color: cornflowerblue;\n    font: 10px Verdana, Helvetica, Arial, sans-serif;\n}\n\na.help-icon {\n    color: darkorange;\n    vertical-align: top;\n    font: 10px Verdana, Helvetica, Arial, sans-serif;\n    font-weight: bold;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+
+/***/ 2055:
+/*!*****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/legend/src/gxaLegend.css ***!
   \*****************************************************************************/
-function(e,t,r){var s=r(/*! !./../../css-loader!./gxaLegend.css */2143);"string"==typeof s&&(s=[[e.id,s,""]]);r(/*! ./../../style-loader/addStyles.js */2137)(s,{});s.locals&&(e.exports=s.locals)},2143:/*!*************************************************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaLegend.css */ 2056);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 2050)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./gxaLegend.css", function() {
+				var newContent = require("!!./../../css-loader/index.js!./gxaLegend.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2056:
+/*!*************************************************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/~/legend/src/gxaLegend.css ***!
   \*************************************************************************************************************************************/
-function(e,t,r){t=e.exports=r(/*! ./../../css-loader/lib/css-base.js */2136)(),t.push([e.id,".gxaLegendHelp{display:inline-block;vertical-align:top;padding-left:2px}.gxaLegend{display:inline-block;padding-left:20px}",""])},2144:/*!**********************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 2049)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".gxaLegendHelp {\n    display: inline-block;\n    vertical-align: top;\n    padding-left: 2px;\n}\n\n.gxaLegend {\n    display: inline-block;\n    padding-left: 20px;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+
+/***/ 2057:
+/*!**********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/legend/src/LegendBaseline.jsx ***!
   \**********************************************************************************/
-function(e,t,r){"use strict";var s=r(/*! react */1967),n=r(/*! react-dom */2123),o=r(/*! ./LegendRow.jsx */2133),i=r(/*! number-format */2145),a=r(/*! help-tooltips */2138);r(/*! ./gxaLegend.css */2142);var l=s.createClass({displayName:"LegendBaseline",propTypes:{atlasBaseURL:s.PropTypes.string.isRequired,minExpressionLevel:s.PropTypes.string.isRequired,maxExpressionLevel:s.PropTypes.string.isRequired,isMultiExperiment:s.PropTypes.bool.isRequired},render:function(){var e=this.props.isMultiExperiment?"#gradient-base-crossexp":"#gradient-base";return s.createElement("div",{className:"gxaHeatmapLegendGradient"},s.createElement("div",{style:{display:"inline-table"}},s.createElement(o,{lowExpressionLevel:i.baselineExpression(this.props.minExpressionLevel),highExpressionLevel:i.baselineExpression(this.props.maxExpressionLevel),lowValueColour:"#C0C0C0",highValueColour:"#0000FF"})),s.createElement("div",{ref:"legendHelp","data-help-loc":e,className:"gxaLegendHelp"}))},componentDidMount:function(){a(this.props.atlasBaseURL,"experiment",n.findDOMNode(this.refs.legendHelp))}});e.exports=l},2145:/*!************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/legend/~/number-format/index.js ***!
-  \************************************************************************************/
-[2795,2146],2146:/*!************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/legend/~/number-format/src/NumberFormat.jsx ***!
-  \************************************************************************************************/
-function(e,t,r){"use strict";function s(e){var t=+e;return t>=1e5||t<.1?n(t.toExponential(1).replace("+","")):""+t}function n(e){var t=e.split(/[Ee]/);if(1==t.length)return o.createElement("span",null,e);var r=t[0],s=t[1];return o.createElement("span",null,"1"!==r?r+" × ":"","10",o.createElement("span",{style:{verticalAlign:"super"}},s))}var o=r(/*! react */1967);t.baselineExpression=s,t.scientificNotation=n},2147:/*!*******************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 2031);
+	
+	//*------------------------------------------------------------------*
+	
+	var LegendRow = __webpack_require__(/*! ./LegendRow.jsx */ 2046);
+	var NumberFormat = __webpack_require__(/*! number-format */ 2058);
+	var HelpTooltips = __webpack_require__(/*! help-tooltips */ 2051);
+	
+	//*------------------------------------------------------------------*
+	
+	__webpack_require__(/*! ./gxaLegend.css */ 2055);
+	
+	//*------------------------------------------------------------------*
+	
+	var LegendBaseline = React.createClass({
+	    displayName: 'LegendBaseline',
+	
+	
+	    propTypes: {
+	        atlasBaseURL: React.PropTypes.string.isRequired,
+	        minExpressionLevel: React.PropTypes.string.isRequired,
+	        maxExpressionLevel: React.PropTypes.string.isRequired,
+	        isMultiExperiment: React.PropTypes.bool.isRequired
+	    },
+	
+	    render: function render() {
+	        var dataHelpLoc = this.props.isMultiExperiment ? "#gradient-base-crossexp" : "#gradient-base";
+	
+	        // The class gxaHeatmapLegendGradient is used for Selenium tests but isn’t styled
+	        return React.createElement(
+	            'div',
+	            { className: 'gxaHeatmapLegendGradient' },
+	            React.createElement(
+	                'div',
+	                { style: { display: "inline-table" } },
+	                React.createElement(LegendRow, { lowExpressionLevel: NumberFormat.baselineExpression(this.props.minExpressionLevel),
+	                    highExpressionLevel: NumberFormat.baselineExpression(this.props.maxExpressionLevel),
+	                    lowValueColour: '#C0C0C0',
+	                    highValueColour: '#0000FF' })
+	            ),
+	            React.createElement('div', { ref: 'legendHelp', 'data-help-loc': dataHelpLoc, className: 'gxaLegendHelp' })
+	        );
+	    },
+	
+	    componentDidMount: function componentDidMount() {
+	        HelpTooltips(this.props.atlasBaseURL, "experiment", ReactDOM.findDOMNode(this.refs.legendHelp));
+	    }
+	});
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = LegendBaseline;
+
+/***/ },
+
+/***/ 2058:
+/*!***************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/number-format/index.js ***!
+  \***************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = __webpack_require__(/*! ./src/NumberFormat.jsx */ 2059);
+
+
+/***/ },
+
+/***/ 2059:
+/*!***************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/number-format/src/NumberFormat.jsx ***!
+  \***************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(/*! react */ 1875); // React is called in the transpiled JS files in the return statements
+	
+	//*------------------------------------------------------------------*
+	
+	function formatBaselineExpression(expressionLevel) {
+	    var numberExpressionLevel = +expressionLevel;
+	    return numberExpressionLevel >= 100000 || numberExpressionLevel < 0.1 ? formatScientificNotation(numberExpressionLevel.toExponential(1).replace('+', '')) : '' + numberExpressionLevel;
+	}
+	
+	// expects number in the format #E# and displays exponent in superscript
+	function formatScientificNotation(scientificNotationString) {
+	
+	    var formatParts = scientificNotationString.split(/[Ee]/);
+	
+	    if (formatParts.length == 1) {
+	        return React.createElement(
+	            'span',
+	            null,
+	            scientificNotationString
+	        );
+	    }
+	
+	    var mantissa = formatParts[0];
+	    var exponent = formatParts[1];
+	
+	    return React.createElement(
+	        'span',
+	        null,
+	        mantissa !== "1" ? mantissa + ' × ' : '',
+	        '10',
+	        React.createElement(
+	            'span',
+	            { style: { 'verticalAlign': 'super' } },
+	            exponent
+	        )
+	    );
+	}
+	
+	//*------------------------------------------------------------------*
+	
+	exports.baselineExpression = formatBaselineExpression;
+	exports.scientificNotation = formatScientificNotation;
+
+/***/ },
+
+/***/ 2060:
+/*!*******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/cell-differential/index.js ***!
   \*******************************************************************************/
-function(e,t,r){"use strict";e.exports=r(/*! ./src/CellDifferential.jsx */2148)},2148:/*!***********************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = __webpack_require__(/*! ./src/CellDifferential.jsx */ 2061);
+
+
+/***/ },
+
+/***/ 2061:
+/*!***********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/cell-differential/src/CellDifferential.jsx ***!
   \***********************************************************************************************/
-function(e,t,r){"use strict";var s=r(/*! react */1967),n=r(/*! react-dom */2123),o=r(/*! react-dom/server */2149),i=r(/*! jquery */2125);r(/*! jquery-ui-bundle */2130);var a=r(/*! number-format */2150);r(/*! ./gxaShowHideCell.css */2152),r(/*! ./gxaDifferentialCellTooltip.css */2154);var l=s.createClass({displayName:"CellDifferential",propTypes:{fontSize:s.PropTypes.number,colour:s.PropTypes.string,foldChange:s.PropTypes.number,pValue:s.PropTypes.string,tStat:s.PropTypes.string,displayLevels:s.PropTypes.bool.isRequired},_hasValue:function(){return void 0!==this.props.foldChange},_getStyle:function(){var e={};return this.props.fontSize&&(e.fontSize=this.props.fontSize+"px"),e},render:function(){return this._hasValue()?s.createElement("td",{style:{backgroundColor:this.props.colour,verticalAlign:"middle"}},s.createElement("div",{style:this._getStyle(),className:this.props.displayLevels?"gxaShowCell":"gxaHideCell"},this.props.foldChange)):s.createElement("td",null)},componentDidMount:function(){this._hasValue()&&this._initTooltip(n.findDOMNode(this))},_initTooltip:function(e){function t(e,t,r){return"<table><thead>"+(void 0!==e?"<th>Adjusted <em>p</em>-value</th>":"")+(void 0!==t?"<th><em>t</em>-statistic</th>":"")+"<th class='gxaHeaderCell'>Log<sub>2</sub>-fold change</th></thead><tbody><tr>"+(void 0!==e?"<td>"+o.renderToStaticMarkup(a.scientificNotation(e))+"</td>":"")+(void 0!==t?"<td>"+t+"</td>":"")+"<td>"+r+"</td></tr></tbody></table>"}var r=this.props;i(e).attr("title","").tooltip({open:function(e,t){t.tooltip.css("background",r.colour)},tooltipClass:"gxaDifferentialCellTooltip",content:function(){return t(r.pValue,r.tStat,r.foldChange)}})}});e.exports=l},2149:/*!************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 2031);
+	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 2062);
+	var $ = __webpack_require__(/*! jquery */ 2033);
+	__webpack_require__(/*! jquery-ui-bundle */ 2043);
+	
+	//*------------------------------------------------------------------*
+	
+	var NumberFormat = __webpack_require__(/*! number-format */ 2058);
+	
+	//*------------------------------------------------------------------*
+	
+	__webpack_require__(/*! ./gxaShowHideCell.css */ 2063);
+	__webpack_require__(/*! ./gxaDifferentialCellTooltip.css */ 2065);
+	
+	//*------------------------------------------------------------------*
+	
+	var CellDifferential = React.createClass({
+	    displayName: 'CellDifferential',
+	
+	
+	    propTypes: {
+	        fontSize: React.PropTypes.number,
+	        colour: React.PropTypes.string,
+	        foldChange: React.PropTypes.number,
+	        pValue: React.PropTypes.string,
+	        tStat: React.PropTypes.string,
+	        displayLevels: React.PropTypes.bool.isRequired
+	    },
+	
+	    _hasValue: function _hasValue() {
+	        return this.props.foldChange !== undefined;
+	    },
+	
+	    _getStyle: function _getStyle() {
+	        var style = {};
+	        if (this.props.fontSize) {
+	            style.fontSize = this.props.fontSize + "px";
+	        }
+	
+	        return style;
+	    },
+	
+	    render: function render() {
+	        if (!this._hasValue()) {
+	            return React.createElement('td', null);
+	        }
+	
+	        return React.createElement(
+	            'td',
+	            { style: { backgroundColor: this.props.colour, verticalAlign: "middle" } },
+	            React.createElement(
+	                'div',
+	                { style: this._getStyle(), className: this.props.displayLevels ? "gxaShowCell" : "gxaHideCell" },
+	                this.props.foldChange
+	            )
+	        );
+	    },
+	
+	    componentDidMount: function componentDidMount() {
+	        if (this._hasValue()) {
+	            this._initTooltip(ReactDOM.findDOMNode(this));
+	        }
+	    },
+	
+	    _initTooltip: function _initTooltip(element) {
+	
+	        //TODO - build this from a React component, like we do for FactorTooltip
+	        function buildHeatmapCellTooltip(pValue, tStatistic, foldChange) {
+	
+	            return "<table>" + "<thead>" + (pValue !== undefined ? "<th>Adjusted <em>p</em>-value</th>" : "") + (tStatistic !== undefined ? "<th><em>t</em>-statistic</th>" : "") + "<th class='gxaHeaderCell'>Log<sub>2</sub>-fold change</th>" + "</thead>" + "<tbody>" + "<tr>" + (pValue !== undefined ? "<td>" + ReactDOMServer.renderToStaticMarkup(NumberFormat.scientificNotation(pValue)) + "</td>" : "") + (tStatistic !== undefined ? "<td>" + tStatistic + "</td>" : "") + "<td>" + foldChange + "</td>" + "</tr>" + "</tbody>" + "</table>";
+	        }
+	
+	        // Don’t use bind, tooltip uses this internally
+	        var thisProps = this.props;
+	
+	        $(element).attr("title", "").tooltip({
+	            open: function open(event, ui) {
+	                ui.tooltip.css("background", thisProps.colour);
+	            },
+	
+	            tooltipClass: "gxaDifferentialCellTooltip",
+	
+	            content: function content() {
+	                return buildHeatmapCellTooltip(thisProps.pValue, thisProps.tStat, thisProps.foldChange);
+	            }
+	        });
+	    }
+	});
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = CellDifferential;
+
+/***/ },
+
+/***/ 2062:
+/*!************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react-dom/server.js ***!
   \************************************************************************/
-function(e,t,r){"use strict";e.exports=r(/*! react/lib/ReactDOMServer */2113)},2150:/*!***********************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/cell-differential/~/number-format/index.js ***!
-  \***********************************************************************************************/
-[2795,2151],2151:/*!***********************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/cell-differential/~/number-format/src/NumberFormat.jsx ***!
-  \***********************************************************************************************************/
-2146,2152:/*!**********************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	module.exports = __webpack_require__(/*! react/lib/ReactDOMServer */ 2021);
+
+
+/***/ },
+
+/***/ 2063:
+/*!**********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/cell-differential/src/gxaShowHideCell.css ***!
   \**********************************************************************************************/
-function(e,t,r){var s=r(/*! !./../../css-loader!./gxaShowHideCell.css */2153);"string"==typeof s&&(s=[[e.id,s,""]]);r(/*! ./../../style-loader/addStyles.js */2137)(s,{});s.locals&&(e.exports=s.locals)},2153:/*!******************************************************************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaShowHideCell.css */ 2064);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 2050)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./gxaShowHideCell.css", function() {
+				var newContent = require("!!./../../css-loader/index.js!./gxaShowHideCell.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2064:
+/*!******************************************************************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/~/cell-differential/src/gxaShowHideCell.css ***!
   \******************************************************************************************************************************************************/
-function(e,t,r){t=e.exports=r(/*! ./../../css-loader/lib/css-base.js */2136)(),t.push([e.id,".gxaShowCell{background-color:#fff;white-space:nowrap;text-align:center;margin:4px;padding:2px}.gxaHideCell{display:none;visibility:hidden}",""])},2154:/*!*********************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 2049)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".gxaShowCell {\n    background-color: white;\n    white-space: nowrap;\n    text-align: center;\n    margin: 4px;\n    padding: 2px;\n}\n\n.gxaHideCell {\n    display: none;\n    visibility: hidden;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+
+/***/ 2065:
+/*!*********************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/cell-differential/src/gxaDifferentialCellTooltip.css ***!
   \*********************************************************************************************************/
-function(e,t,r){var s=r(/*! !./../../css-loader!./gxaDifferentialCellTooltip.css */2155);"string"==typeof s&&(s=[[e.id,s,""]]);r(/*! ./../../style-loader/addStyles.js */2137)(s,{});s.locals&&(e.exports=s.locals)},2155:/*!*****************************************************************************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaDifferentialCellTooltip.css */ 2066);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 2050)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./gxaDifferentialCellTooltip.css", function() {
+				var newContent = require("!!./../../css-loader/index.js!./gxaDifferentialCellTooltip.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2066:
+/*!*****************************************************************************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/~/cell-differential/src/gxaDifferentialCellTooltip.css ***!
   \*****************************************************************************************************************************************************************/
-function(e,t,r){t=e.exports=r(/*! ./../../css-loader/lib/css-base.js */2136)(),t.push([e.id,".gxaDifferentialCellTooltip{border:solid transparent;color:#2f4f4f;padding:2px;font:10px Verdana,Helvetica,Arial,sans-serif}.gxaDifferentialCellTooltip table{margin:0;background-color:#fff;border:1px solid #d3d3d3;border-collapse:collapse}.gxaDifferentialCellTooltip th{border-bottom:1px solid #d3d3d3;background-color:#fffaf0}.gxaDifferentialCellTooltip td,.gxaDifferentialCellTooltip th{text-align:center;white-space:nowrap;vertical-align:middle;padding:8px;width:25px}",""])},2156:/*!*************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 2049)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".gxaDifferentialCellTooltip {\n    border: solid transparent;\n    color: darkslategray;\n    padding: 2px;\n    font: 10px Verdana, Helvetica, Arial, sans-serif;\n}\n\n.gxaDifferentialCellTooltip table {\n    margin: 0; /* overrides ebi-visual.css:134 */\n    background-color: white;\n    border: 1px solid lightgrey;\n    border-collapse: collapse;\n}\n\n.gxaDifferentialCellTooltip th {\n    border-bottom: 1px solid lightgrey;\n    background-color: floralwhite;\n}\n\n.gxaDifferentialCellTooltip td, .gxaDifferentialCellTooltip th {\n    text-align: center;\n    white-space: nowrap;\n    vertical-align: middle;\n    padding: 8px;\n    width: 25px;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+
+/***/ 2067:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/src/DifferentialDownloadButton.jsx ***!
   \*************************************************************************************/
-function(e,t,r){"use strict";var s="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol?"symbol":typeof e},n=r(/*! jquery */2125);r(/*! jquery-ui-bundle */2130);var o=r(/*! react */1967),i=r(/*! react-dom */2123);r(/*! ./DifferentialDownloadButton.css */2157);var a=o.PropTypes.string.isRequired,l=o.PropTypes.string,c=o.PropTypes.number.isRequired,p=o.PropTypes.number,u=o.createClass({displayName:"DownloadDifferentialButton",propTypes:{hostUrl:a,results:o.PropTypes.arrayOf(o.PropTypes.shape({species:a,kingdom:a,experimentType:a,numReplicates:a,regulation:a,factors:o.PropTypes.arrayOf(l).isRequired,bioentityIdentifier:a,experimentAccession:a,experimentName:a,contrastId:a,comparison:a,foldChange:c,pValue:c,tStatistics:p,colour:a,id:a})).isRequired},_convertJsonToTsv:function(e){var t="object"!==("undefined"==typeof e?"undefined":s(e))?JSON.parse(e):e,r=["Gene","Organism","Experiment Accession","Comparison","log2foldchange","pValue"];t.some(function(e){return null!=e.tStatistics})&&r.push("tStatistics");var n=r.join("\t")+"\n";return n+=t.map(function(e){return[e.bioentityIdentifier,e.species,e.experimentAccession,e.comparison,e.foldChange,e.pValue,e.tStatistics].filter(function(e){return null!==e}).join("\t")+"\n"})},_downloadDifferentialProfiles:function(){n(i.findDOMNode(this.refs.downloadProfilesLink)).click()},render:function(){var e=this.props.hostUrl+"/gxa/resources/images/download_blue_small.png",t=this._convertJsonToTsv(this.props.results),r="data:text/tsv;charset=utf-8,"+encodeURI(t),s="differentialResults.tsv";return o.createElement("div",{style:{display:"inline-block",verticalAlign:"top",paddingLeft:"10px"}},o.createElement("a",{ref:"downloadProfilesLink",className:"gxaNoTextButton",href:r,download:s,target:"_blank",onClick:this._downloadDifferentialProfiles},o.createElement("img",{id:"download-profiles",alt:"Download query results",style:{width:"20px"},src:e})))},componentDidMount:function(){var e=n(i.findDOMNode(this.refs.downloadProfilesLink));e.tooltip(),e.button()}});e.exports=u},2157:/*!*************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
+	var $ = __webpack_require__(/*! jquery */ 2033);
+	__webpack_require__(/*! jquery-ui-bundle */ 2043);
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 2031);
+	
+	//*------------------------------------------------------------------*
+	
+	__webpack_require__(/*! ./DifferentialDownloadButton.css */ 2068);
+	
+	//*------------------------------------------------------------------*
+	
+	
+	var RequiredString = React.PropTypes.string.isRequired;
+	var OptionalString = React.PropTypes.string;
+	var RequiredNumber = React.PropTypes.number.isRequired;
+	var OptionalNumber = React.PropTypes.number;
+	
+	var DownloadDifferentialButton = React.createClass({
+	    displayName: 'DownloadDifferentialButton',
+	
+	
+	    propTypes: {
+	        hostUrl: RequiredString,
+	        results: React.PropTypes.arrayOf(React.PropTypes.shape({
+	            species: RequiredString,
+	            kingdom: RequiredString,
+	            experimentType: RequiredString,
+	            numReplicates: RequiredString, // faceting only works with strings https://issues.apache.org/jira/browse/SOLR-7496
+	            regulation: RequiredString,
+	            factors: React.PropTypes.arrayOf(OptionalString).isRequired,
+	            bioentityIdentifier: RequiredString,
+	            experimentAccession: RequiredString,
+	            experimentName: RequiredString,
+	            contrastId: RequiredString,
+	            comparison: RequiredString,
+	            foldChange: RequiredNumber,
+	            pValue: RequiredNumber,
+	            tStatistics: OptionalNumber,
+	            colour: RequiredString,
+	            id: RequiredString
+	        })).isRequired
+	    },
+	
+	    _convertJsonToTsv: function _convertJsonToTsv(results) {
+	        var arrayResults = (typeof results === 'undefined' ? 'undefined' : _typeof(results)) !== 'object' ? JSON.parse(results) : results;
+	
+	        var headers = ['Gene', 'Organism', 'Experiment Accession', 'Comparison', 'log2foldchange', 'pValue'];
+	        if (arrayResults.some(function (diffResults) {
+	            return diffResults.tStatistics != null;
+	        })) {
+	            headers.push('tStatistics');
+	        }
+	
+	        var tsv = headers.join('\t') + '\n';
+	        tsv += arrayResults.map(function (diffResults) {
+	            return [diffResults.bioentityIdentifier, diffResults.species, diffResults.experimentAccession, diffResults.comparison, diffResults.foldChange, diffResults.pValue, diffResults.tStatistics].filter(function (el) {
+	                return el !== null;
+	            }) // tStatistics might be missing
+	            .join('\t') + '\n';
+	        });
+	
+	        return tsv;
+	    },
+	    _downloadDifferentialProfiles: function _downloadDifferentialProfiles() {
+	        $(ReactDOM.findDOMNode(this.refs.downloadProfilesLink)).click();
+	    },
+	    render: function render() {
+	        var downloadImgSrcURL = this.props.hostUrl + '/gxa/resources/images/download_blue_small.png';
+	
+	        var tsvString = this._convertJsonToTsv(this.props.results);
+	        var uri = 'data:text/tsv;charset=utf-8,' + encodeURI(tsvString);
+	        var fileName = 'differentialResults.tsv';
+	
+	        return React.createElement(
+	            'div',
+	            { style: { display: 'inline-block', verticalAlign: 'top', paddingLeft: '10px' } },
+	            React.createElement(
+	                'a',
+	                { ref: 'downloadProfilesLink', className: 'gxaNoTextButton',
+	                    href: uri, download: fileName, target: '_blank',
+	                    onClick: this._downloadDifferentialProfiles },
+	                React.createElement('img', { id: 'download-profiles', alt: 'Download query results', style: { width: '20px' },
+	                    src: downloadImgSrcURL })
+	            )
+	        );
+	    },
+	    componentDidMount: function componentDidMount() {
+	        var $downloadProfilesLink = $(ReactDOM.findDOMNode(this.refs.downloadProfilesLink));
+	        $downloadProfilesLink.tooltip();
+	        $downloadProfilesLink.button();
+	    }
+	});
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = DownloadDifferentialButton;
+
+/***/ },
+
+/***/ 2068:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/src/DifferentialDownloadButton.css ***!
   \*************************************************************************************/
-function(e,t,r){var s=r(/*! !./../~/css-loader!./DifferentialDownloadButton.css */2158);"string"==typeof s&&(s=[[e.id,s,""]]);r(/*! ./../~/style-loader/addStyles.js */2137)(s,{});s.locals&&(e.exports=s.locals)},2158:/*!*********************************************************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../~/css-loader!./DifferentialDownloadButton.css */ 2069);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 2050)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./DifferentialDownloadButton.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./DifferentialDownloadButton.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2069:
+/*!*********************************************************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/src/DifferentialDownloadButton.css ***!
   \*********************************************************************************************************************************************/
-function(e,t,r){t=e.exports=r(/*! ./../~/css-loader/lib/css-base.js */2136)(),t.push([e.id,".gxaNoTextButton{border:1px solid #ccc!important}.gxaNoTextButton .ui-button-text{padding:2px}",""])},2159:/*!*******************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 2049)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".gxaNoTextButton {\n    border: 1px solid #ccc !important; /* overrides ebi-visual.css */\n}\n\n.gxaNoTextButton .ui-button-text {\n    padding: 2px;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+
+/***/ 2070:
+/*!*******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/contrast-tooltips/index.js ***!
   \*******************************************************************************/
-function(e,t,r){"use strict";e.exports=r(/*! ./src/contrastTooltipModule.js */2160)},2160:/*!***************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = __webpack_require__(/*! ./src/contrastTooltipModule.js */ 2071);
+
+
+/***/ },
+
+/***/ 2071:
+/*!***************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/contrast-tooltips/src/contrastTooltipModule.js ***!
   \***************************************************************************************************/
-function(e,t,r){"use strict";function s(e,t,r,s,l){i(r).attr("title","").tooltip({hide:!1,show:!1,tooltipClass:"gxaContrastTooltip",close:function(){i(".gxaContrastTooltip").remove()},content:function(r){i.ajax({url:e+"/rest/contrast-summary",data:{experimentAccession:s,contrastId:l,accessKey:t},type:"GET",success:function(e){var t=o.renderToString(n.createElement(a,{experimentDescription:e.experimentDescription,contrastDescription:e.contrastDescription,testReplicates:e.testReplicates,referenceReplicates:e.referenceReplicates,properties:e.properties}));r(t)}}).fail(function(e){console.log("ERROR:  "+e),r("ERROR: "+e)})}})}var n=r(/*! react */1967),o=r(/*! react-dom/server */2149),i=r(/*! jquery */2125);r(/*! jquery-ui-bundle */2130);var a=r(/*! ./ContrastTooltip.jsx */2161);r(/*! ./gxaContrastTooltip.css */2162),e.exports=function(e,t,r,n,o){s(e,t,r,n,o)}},2161:/*!**********************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 2062);
+	
+	var $ = __webpack_require__(/*! jquery */ 2033);
+	__webpack_require__(/*! jquery-ui-bundle */ 2043);
+	
+	//*------------------------------------------------------------------*
+	
+	var ContrastTooltip = __webpack_require__(/*! ./ContrastTooltip.jsx */ 2072);
+	
+	//*------------------------------------------------------------------*
+	
+	__webpack_require__(/*! ./gxaContrastTooltip.css */ 2073);
+	
+	//*------------------------------------------------------------------*
+	
+	function initTooltip(contextRoot, accessKey, element, experimentAccession, contrastId) {
+	
+	    $(element).attr("title", "").tooltip({
+	
+	        hide: false,
+	
+	        show: false,
+	
+	        tooltipClass: "gxaContrastTooltip",
+	
+	        close: function() {
+	            $(".gxaContrastTooltip").remove();
+	        },
+	
+	        content: function (callback) {
+	            $.ajax({
+	                url:contextRoot + "/rest/contrast-summary",
+	                data:{
+	                    experimentAccession: experimentAccession,
+	                    contrastId: contrastId,
+	                    accessKey: accessKey
+	                },
+	                type:"GET",
+	                success:function (data) {
+	                    var html =
+	                        ReactDOMServer.renderToString(
+	                            React.createElement(
+	                                ContrastTooltip,
+	                                {
+	                                    experimentDescription: data.experimentDescription,
+	                                    contrastDescription: data.contrastDescription,
+	                                    testReplicates: data.testReplicates,
+	                                    referenceReplicates: data.referenceReplicates,
+	                                    properties: data.properties
+	                                }
+	                            )
+	                        );
+	                    callback(html);
+	                }
+	            }).fail(function (data) {
+	                console.log("ERROR:  " + data);
+	                callback("ERROR: " + data);
+	            });
+	        }
+	
+	    });
+	
+	}
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = function (contextRoot, accessKey, element, experimentAccession, contrastId) {
+	    initTooltip(contextRoot, accessKey, element, experimentAccession, contrastId);
+	};
+	
+
+
+/***/ },
+
+/***/ 2072:
+/*!**********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/contrast-tooltips/src/ContrastTooltip.jsx ***!
   \**********************************************************************************************/
-function(e,t,r){"use strict";var s=r(/*! react */1967),n=s.createClass({displayName:"ContrastTooltip",propTypes:{experimentDescription:s.PropTypes.string.isRequired,contrastDescription:s.PropTypes.string.isRequired,testReplicates:s.PropTypes.number.isRequired,referenceReplicates:s.PropTypes.number.isRequired,properties:s.PropTypes.arrayOf(s.PropTypes.shape({contrastPropertyType:s.PropTypes.string,propertyName:s.PropTypes.string.isRequired,referenceValue:s.PropTypes.string.isRequired,testValue:s.PropTypes.string.isRequired}))},propertyRow:function(e){function t(e){return"FACTOR"===e.contrastPropertyType}if(!e.testValue&&!e.referenceValue)return null;var r={whiteSpace:"normal"};return t(e)?r.fontWeight="bold":r.color="gray",s.createElement("tr",{key:e.contrastPropertyType+"-"+e.propertyName},s.createElement("td",{style:r},e.propertyName),s.createElement("td",{style:r},e.testValue),s.createElement("td",{style:r},e.referenceValue))},render:function(){return s.createElement("div",null,s.createElement("div",{id:"contrastExperimentDescription",style:{fontWeight:"bold",color:"blue",textAlign:"center"}},this.props.experimentDescription),s.createElement("div",{id:"contrastDescription",style:{textAlign:"center"}},this.props.contrastDescription),s.createElement("table",{style:{padding:"0px",margin:"0px",width:"100%"}},s.createElement("thead",null,s.createElement("tr",null,s.createElement("th",null,"Property"),s.createElement("th",null,"Test value (N=",this.props.testReplicates,")"),s.createElement("th",null,"Reference value (N=",this.props.referenceReplicates,")"))),s.createElement("tbody",null,this.props.properties.map(this.propertyRow))))}});e.exports=n},2162:/*!*************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	
+	//*------------------------------------------------------------------*
+	
+	var ContrastTooltip = React.createClass({
+	    displayName: "ContrastTooltip",
+	
+	    propTypes: {
+	        experimentDescription: React.PropTypes.string.isRequired,
+	        contrastDescription: React.PropTypes.string.isRequired,
+	        testReplicates: React.PropTypes.number.isRequired,
+	        referenceReplicates: React.PropTypes.number.isRequired,
+	        properties: React.PropTypes.arrayOf(React.PropTypes.shape({
+	            contrastPropertyType: React.PropTypes.string,
+	            propertyName: React.PropTypes.string.isRequired,
+	            referenceValue: React.PropTypes.string.isRequired,
+	            testValue: React.PropTypes.string.isRequired
+	        }))
+	    },
+	
+	    propertyRow: function propertyRow(property) {
+	        if (!property.testValue && !property.referenceValue) {
+	            return null;
+	        }
+	
+	        function isFactor(property) {
+	            return property.contrastPropertyType === "FACTOR";
+	        }
+	
+	        var style = { whiteSpace: "normal" };
+	
+	        if (isFactor(property)) {
+	            style.fontWeight = "bold";
+	        } else {
+	            style.color = "gray";
+	        }
+	
+	        return React.createElement(
+	            "tr",
+	            { key: property.contrastPropertyType + "-" + property.propertyName },
+	            React.createElement(
+	                "td",
+	                { style: style },
+	                property.propertyName
+	            ),
+	            React.createElement(
+	                "td",
+	                { style: style },
+	                property.testValue
+	            ),
+	            React.createElement(
+	                "td",
+	                { style: style },
+	                property.referenceValue
+	            )
+	        );
+	    },
+	
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            null,
+	            React.createElement(
+	                "div",
+	                { id: "contrastExperimentDescription", style: { fontWeight: "bold", color: "blue", textAlign: "center" } },
+	                this.props.experimentDescription
+	            ),
+	            React.createElement(
+	                "div",
+	                { id: "contrastDescription", style: { textAlign: "center" } },
+	                this.props.contrastDescription
+	            ),
+	            React.createElement(
+	                "table",
+	                { style: { padding: "0px", margin: "0px", width: "100%" } },
+	                React.createElement(
+	                    "thead",
+	                    null,
+	                    React.createElement(
+	                        "tr",
+	                        null,
+	                        React.createElement(
+	                            "th",
+	                            null,
+	                            "Property"
+	                        ),
+	                        React.createElement(
+	                            "th",
+	                            null,
+	                            "Test value (N=",
+	                            this.props.testReplicates,
+	                            ")"
+	                        ),
+	                        React.createElement(
+	                            "th",
+	                            null,
+	                            "Reference value (N=",
+	                            this.props.referenceReplicates,
+	                            ")"
+	                        )
+	                    )
+	                ),
+	                React.createElement(
+	                    "tbody",
+	                    null,
+	                    this.props.properties.map(this.propertyRow)
+	                )
+	            )
+	        );
+	    }
+	
+	});
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = ContrastTooltip;
+
+/***/ },
+
+/***/ 2073:
+/*!*************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/contrast-tooltips/src/gxaContrastTooltip.css ***!
   \*************************************************************************************************/
-function(e,t,r){var s=r(/*! !./../../css-loader!./gxaContrastTooltip.css */2163);"string"==typeof s&&(s=[[e.id,s,""]]);r(/*! ./../../style-loader/addStyles.js */2137)(s,{});s.locals&&(e.exports=s.locals)},2163:/*!*********************************************************************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaContrastTooltip.css */ 2074);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 2050)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./gxaContrastTooltip.css", function() {
+				var newContent = require("!!./../../css-loader/index.js!./gxaContrastTooltip.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2074:
+/*!*********************************************************************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/~/contrast-tooltips/src/gxaContrastTooltip.css ***!
   \*********************************************************************************************************************************************************/
-function(e,t,r){t=e.exports=r(/*! ./../../css-loader/lib/css-base.js */2136)(),t.push([e.id,".gxaContrastTooltip{border:solid transparent;color:#2f4f4f;padding:2px;font:10px Verdana,Helvetica,Arial,sans-serif;max-width:500px}.gxaContrastTooltip table{margin:0;background-color:#fff;border:1px solid #d3d3d3;border-collapse:collapse}.gxaContrastTooltip th{border-bottom:1px solid #d3d3d3;background-color:#fffaf0}.gxaContrastTooltip td{border:1px solid #d3d3d3}.gxaContrastTooltip td,.gxaContrastTooltip th{vertical-align:middle;padding:8px}",""])},2164:/*!****************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 2049)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".gxaContrastTooltip {\n    border: solid transparent;\n    color: darkslategray;\n    padding: 2px;\n    font: 10px Verdana, Helvetica, Arial, sans-serif;\n    max-width: 500px;\n}\n\n.gxaContrastTooltip table {\n    margin: 0; /* overrides ebi-visual.css:134 */\n    background-color: white;\n    border: 1px solid lightgrey;\n    border-collapse: collapse;\n}\n\n.gxaContrastTooltip th {\n    border-bottom: 1px solid lightgrey;\n    background-color: floralwhite;\n}\n\n.gxaContrastTooltip td {\n    border: 1px solid lightgrey;\n}\n\n.gxaContrastTooltip td, .gxaContrastTooltip th {\n    vertical-align: middle;\n    padding: 8px;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+
+/***/ 2075:
+/*!****************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/atlas-feedback/index.js ***!
   \****************************************************************************/
-function(e,t,r){"use strict";e.exports=r(/*! ./src/Feedback.jsx */2165)},2165:/*!************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = __webpack_require__(/*! ./src/Feedback.jsx */ 2076);
+
+
+/***/ },
+
+/***/ 2076:
+/*!************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/atlas-feedback/src/Feedback.jsx ***!
   \************************************************************************************/
-function(e,t,r){"use strict";var s=r(/*! react */1967),n=r(/*! react-localstorage */2166),o=r(/*! react-timer-mixin */2168),i=r(/*! react-addons-css-transition-group */2169),a=r(/*! react-bootstrap/lib/Button */2176),l=r(/*! react-bootstrap/lib/FormGroup */2216),c=r(/*! react-bootstrap/lib/FormControl */2220),p=r(/*! ../assets/emojione.sprites.png */2224),u=r(/*! react-emojione */2225);r(/*! ./gxaFeedback.css */2234);var h=function(e){return s.createClass({displayName:"ExpressionAtlasFeedbackForm",mixins:[n],propTypes:{collectionCallback:s.PropTypes.func.isRequired},getInitialState:function(){return{created:(new Date).toISOString(),shownTimes:0,show:!0}},_shouldShow:function(){var e=Math.abs((new Date).getTime()-new Date(this.state.created).getTime()),t=Math.ceil(e/864e5);return this.state.show&&t>0&&this.state.shownTimes<50},_hide:function(){this.setState({show:!1})},_complete:function(e,t){this.setState({show:!1}),this.props.collectionCallback(e,(new Date).toISOString()+(t||""))},render:function(){var t=this._shouldShow()?s.createElement(e,{key:"box",onComplete:this._complete,onRequestHide:this._hide}):s.createElement("div",{key:"nullKey"});return s.createElement(i,{transitionName:"feedbackBoxTransitionWrapper",transitionEnterTimeout:500,transitionLeaveTimeout:1e3},t)},componentDidMount:function(){this._shouldShow()&&this.setState(function(e){return{shownTimes:e.shownTimes+1}})}})},d=(s.createClass({displayName:"FeedbackBox",propTypes:{onComplete:s.PropTypes.func.isRequired,onRequestHide:s.PropTypes.func.isRequired},mixins:[o],getInitialState:function(){return{askingWhyTheResultsWereNotUseful:!1,feedbackMessage:""}},componentDidUpdate:function(){this.state.askingWhyTheResultsWereNotUseful&&0===this.state.feedbackMessage.length&&this.setTimeout(function(){0===this.state.feedbackMessage.length&&this._submitNegativeAnswer()}.bind(this),5e3)},_updateStateWithFormAnswer:function(e){this.setState({feedbackMessage:e.target.value})},_submitNegativeAnswer:function(){this._submitAnswer(0,this.state.feedbackMessage)},_submitPositiveAnswer:function(){this._submitAnswer(10)},_submitAnswer:function(e,t){this.props.onComplete.apply(this,arguments)},render:function(){return s.createElement("div",{className:"gxaFeedbackQuestionBox"},s.createElement("div",{id:"feedbackBoxCross",className:"icon icon-functional","data-icon":"x",onClick:this.props.onRequestHide}),s.createElement("p",null,"Did you find these results useful?"),s.createElement("div",{className:"gxaFeedbackQuestionBoxAnswer"},this.state.askingWhyTheResultsWereNotUseful?s.createElement("form",null,s.createElement(l,{controlId:"optionalFeedback"},s.createElement(c,{componentClass:"textarea",type:"text",value:this.state.feedbackMessage,placeholder:"Why not? (optional)",onChange:this._updateStateWithFormAnswer}),s.createElement(c.Feedback,null),s.createElement(a,{style:{"float":"right"},onClick:this._submitNegativeAnswer},"Submit"))):s.createElement("div",null,s.createElement(a,{bsStyle:"default",onClick:this._submitPositiveAnswer},"Yes"),s.createElement(a,{onClick:function(){this.setState({askingWhyTheResultsWereNotUseful:!0})}.bind(this),bsStyle:"default"},"No"),s.createElement("a",{onClick:this.props.onRequestHide},"Do not show this again"))))}}),s.createClass({displayName:"Smiley",propTypes:{emoji:s.PropTypes.string.isRequired,value:s.PropTypes.number.isRequired,onClickCallback:s.PropTypes.func.isRequired,selected:s.PropTypes.bool.isRequired},_onClick:function(){this.props.onClickCallback(this.props.value)},_emojifyOptions:{convertShortnames:!0,convertUnicode:!1,convertAscii:!0,styles:{backgroundImage:"url("+(window.location.href.indexOf("gxa")>-1?"resources/js-bundles/":"")+p+")",width:"32px",height:"32px",margin:"4px"}},render:function(){return s.createElement("span",{style:{padding:"6px"}},s.createElement("span",{className:this.props.selected?"gxaSmiley gxaSmileyClicked":"gxaSmiley",onClick:this._onClick},u.emojify(this.props.emoji,this._emojifyOptions)))}})),f=s.createClass({displayName:"FeedbackSmileys",propTypes:{onComplete:s.PropTypes.func.isRequired,onRequestHide:s.PropTypes.func.isRequired},mixins:[o],getInitialState:function(){return{score:-1,feedbackMessage:""}},_interactionHappened:function(){return this.state.score!==this.getInitialState().score},_updateStateWithFormAnswer:function(e){this.setState({feedbackMessage:e.target.value})},_smileyClicked:function(e){this.setState({score:e})},_submit:function(){this.props.onComplete(this.state.score,this.state.feedbackMessage)},componentDidUpdate:function(){this._interactionHappened()&&0===this.state.feedbackMessage.length&&this.setTimeout(function(){0===this.state.feedbackMessage.length&&this._submit()}.bind(this),5e3)},render:function(){return s.createElement("div",{className:"gxaSmileyFeedbackBox"},s.createElement("p",null," Did you find these results useful?"),s.createElement("div",{className:"gxaSmileyRow"},[[":frowning:",0],[":slight_frown:",2],[":neutral_face:",5],[":slight_smile:",8],[":smiley:",10]].map(function(e){return s.createElement(d,{key:e[0]+(this.state.score===e[1]),emoji:e[0],value:e[1],onClickCallback:this._smileyClicked,selected:this.state.score===e[1]})}.bind(this))),s.createElement("form",{style:{display:this._interactionHappened()?"block":"none"}},s.createElement(l,{controlId:"optionalFeedback"},s.createElement(c,{componentClass:"textarea",type:"text",value:this.state.feedbackMessage,placeholder:"Feedback (optional)",onChange:this._updateStateWithFormAnswer}),s.createElement(c.Feedback,null),s.createElement("div",null,s.createElement(a,{onClick:this._submit},"Submit")))))}});e.exports=h(f)},2166:/*!**************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-localstorage/react-localstorage.js ***!
-  \**************************************************************************************************************/
-[3143,1967,2167],2167:/*!*******************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-localstorage/lib/warning.js ***!
-  \*******************************************************************************************************/
-661,2168:/*!*****************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-timer-mixin/TimerMixin.js ***!
-  \*****************************************************************************************************/
-662,2169:/*!****************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-addons-css-transition-group/index.js ***!
-  \****************************************************************************************************************/
-[3130,2170],2170:/*!*****************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	var LocalStorageMixin = __webpack_require__(/*! react-localstorage */ 2077);
+	var TimerMixin = __webpack_require__(/*! react-timer-mixin */ 2079);
+	var ReactCSSTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 2080);
+	
+	var BootstrapButton = __webpack_require__(/*! react-bootstrap/lib/Button */ 2087);
+	var BootstrapFormGroup = __webpack_require__(/*! react-bootstrap/lib/FormGroup */ 2127);
+	var BootstrapFormControl = __webpack_require__(/*! react-bootstrap/lib/FormControl */ 2131);
+	
+	var EmojiSpritesFile = __webpack_require__(/*! ../assets/emojione.sprites.png */ 2135);
+	var Emoji = __webpack_require__(/*! react-emojione */ 2136);
+	
+	__webpack_require__(/*! ./gxaFeedback.css */ 2145);
+	
+	//*------------------------------------------------------------------*
+	
+	var FeedbackPersistence = function createFeedbackComponent(FeedbackUIComponent) {
+	  return React.createClass({
+	    displayName: 'ExpressionAtlasFeedbackForm',
+	    mixins: [LocalStorageMixin],
+	
+	    propTypes: {
+	      collectionCallback: React.PropTypes.func.isRequired
+	    },
+	
+	    getInitialState: function getInitialState() {
+	      return {
+	        created: new Date().toISOString(),
+	        shownTimes: 0,
+	        show: true
+	      };
+	    },
+	
+	    _shouldShow: function _shouldShow() {
+	      var timeDiff = Math.abs(new Date().getTime() - new Date(this.state.created).getTime());
+	      var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+	
+	      return this.state.show && diffDays > 0 && this.state.shownTimes < 50;
+	    },
+	
+	    _hide: function _hide() {
+	      this.setState({ show: false });
+	    },
+	
+	    _complete: function _complete(userResponse, optionalUserComment) {
+	      this.setState({ show: false });
+	      this.props.collectionCallback(userResponse, new Date().toISOString() + (optionalUserComment || ""));
+	    },
+	
+	    render: function render() {
+	      var it = this._shouldShow() ? React.createElement(FeedbackUIComponent, { key: "box", onComplete: this._complete, onRequestHide: this._hide }) : React.createElement('div', { key: 'nullKey' });
+	      return React.createElement(
+	        ReactCSSTransitionGroup,
+	        { transitionName: 'feedbackBoxTransitionWrapper', transitionEnterTimeout: 500, transitionLeaveTimeout: 1000 },
+	        it
+	      );
+	    },
+	
+	    componentDidMount: function componentDidMount() {
+	      if (this._shouldShow()) {
+	        this.setState(function (previousState) {
+	          return { shownTimes: previousState.shownTimes + 1 };
+	        });
+	      }
+	    }
+	  });
+	};
+	
+	var FeedbackBox = React.createClass({
+	  displayName: 'FeedbackBox',
+	
+	  propTypes: {
+	    onComplete: React.PropTypes.func.isRequired,
+	    onRequestHide: React.PropTypes.func.isRequired
+	  },
+	
+	  mixins: [TimerMixin],
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      askingWhyTheResultsWereNotUseful: false,
+	      feedbackMessage: ""
+	    };
+	  },
+	
+	  componentDidUpdate: function componentDidUpdate() {
+	    if (this.state.askingWhyTheResultsWereNotUseful && this.state.feedbackMessage.length === 0) {
+	      this.setTimeout(function () {
+	        if (this.state.feedbackMessage.length === 0) {
+	          this._submitNegativeAnswer();
+	        }
+	      }.bind(this), 5000);
+	    }
+	  },
+	
+	  _updateStateWithFormAnswer: function _updateStateWithFormAnswer(e) {
+	    this.setState({ feedbackMessage: e.target.value });
+	  },
+	
+	  _submitNegativeAnswer: function _submitNegativeAnswer() {
+	    this._submitAnswer(0, this.state.feedbackMessage);
+	  },
+	
+	  _submitPositiveAnswer: function _submitPositiveAnswer() {
+	    this._submitAnswer(10);
+	  },
+	
+	  _submitAnswer: function _submitAnswer(score, optionalMessage) {
+	    this.props.onComplete.apply(this, arguments);
+	  },
+	
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'gxaFeedbackQuestionBox' },
+	      React.createElement('div', { id: 'feedbackBoxCross', className: 'icon icon-functional', 'data-icon': 'x', onClick: this.props.onRequestHide }),
+	      React.createElement(
+	        'p',
+	        null,
+	        'Did you find these results useful?'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'gxaFeedbackQuestionBoxAnswer' },
+	        this.state.askingWhyTheResultsWereNotUseful ? React.createElement(
+	          'form',
+	          null,
+	          React.createElement(
+	            BootstrapFormGroup,
+	            {
+	              controlId: 'optionalFeedback'
+	            },
+	            React.createElement(BootstrapFormControl, {
+	              componentClass: 'textarea',
+	              type: 'text',
+	              value: this.state.feedbackMessage,
+	              placeholder: 'Why not? (optional)',
+	              onChange: this._updateStateWithFormAnswer
+	            }),
+	            React.createElement(BootstrapFormControl.Feedback, null),
+	            React.createElement(
+	              BootstrapButton,
+	              { style: { float: "right" }, onClick: this._submitNegativeAnswer },
+	              'Submit'
+	            )
+	          )
+	        ) : React.createElement(
+	          'div',
+	          null,
+	          React.createElement(
+	            BootstrapButton,
+	            { bsStyle: 'default', onClick: this._submitPositiveAnswer },
+	            'Yes'
+	          ),
+	          React.createElement(
+	            BootstrapButton,
+	            { onClick: function () {
+	                this.setState({ askingWhyTheResultsWereNotUseful: true });
+	              }.bind(this), bsStyle: 'default' },
+	            'No'
+	          ),
+	          React.createElement(
+	            'a',
+	            { onClick: this.props.onRequestHide },
+	            'Do not show this again'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	var Smiley = React.createClass({
+	  displayName: 'Smiley',
+	
+	  propTypes: {
+	    emoji: React.PropTypes.string.isRequired,
+	    value: React.PropTypes.number.isRequired,
+	    onClickCallback: React.PropTypes.func.isRequired,
+	    selected: React.PropTypes.bool.isRequired
+	  },
+	
+	  _onClick: function _onClick() {
+	    this.props.onClickCallback(this.props.value);
+	  },
+	
+	  _emojifyOptions: {
+	    convertShortnames: true,
+	    convertUnicode: false,
+	    convertAscii: true,
+	    styles: {
+	      backgroundImage: 'url(' + (window.location.href.indexOf("gxa") > -1 ? "resources/js-bundles/" : "") + EmojiSpritesFile + ')',
+	      width: '32px',
+	      height: '32px',
+	      margin: '4px'
+	    }
+	  },
+	
+	  render: function render() {
+	    return React.createElement(
+	      'span',
+	      { style: { padding: "6px" } },
+	      React.createElement(
+	        'span',
+	        { className: this.props.selected ? "gxaSmiley gxaSmileyClicked" : "gxaSmiley", onClick: this._onClick },
+	        Emoji.emojify(this.props.emoji, this._emojifyOptions)
+	      )
+	    );
+	  }
+	});
+	
+	var FeedbackSmileys = React.createClass({
+	  displayName: 'FeedbackSmileys',
+	
+	  propTypes: {
+	    onComplete: React.PropTypes.func.isRequired,
+	    onRequestHide: React.PropTypes.func.isRequired
+	  },
+	
+	  mixins: [TimerMixin],
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      score: -1,
+	      feedbackMessage: ""
+	    };
+	  },
+	
+	  _interactionHappened: function _interactionHappened() {
+	    return this.state.score !== this.getInitialState().score;
+	  },
+	
+	  _updateStateWithFormAnswer: function _updateStateWithFormAnswer(e) {
+	    this.setState({ feedbackMessage: e.target.value });
+	  },
+	
+	  _smileyClicked: function _smileyClicked(newScore) {
+	    this.setState({ score: newScore });
+	  },
+	
+	  _submit: function _submit() {
+	    this.props.onComplete(this.state.score, this.state.feedbackMessage);
+	  },
+	
+	  componentDidUpdate: function componentDidUpdate() {
+	    if (this._interactionHappened() && this.state.feedbackMessage.length === 0) {
+	      this.setTimeout(function () {
+	        if (this.state.feedbackMessage.length === 0) {
+	          this._submit();
+	        }
+	      }.bind(this), 5000);
+	    }
+	  },
+	
+	  render: function render() {
+	    /* identifiers from http://emoji.codes/ */
+	    return React.createElement(
+	      'div',
+	      { className: 'gxaSmileyFeedbackBox' },
+	      React.createElement(
+	        'p',
+	        null,
+	        ' Did you find these results useful?'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'gxaSmileyRow' },
+	        [[":frowning:", 0], [":slight_frown:", 2], [":neutral_face:", 5], [":slight_smile:", 8], [":smiley:", 10]].map(function (ar) {
+	          return React.createElement(Smiley, {
+	            key: ar[0] + (this.state.score === ar[1]),
+	            emoji: ar[0],
+	            value: ar[1],
+	            onClickCallback: this._smileyClicked,
+	            selected: this.state.score === ar[1]
+	          });
+	        }.bind(this))
+	      ),
+	      React.createElement(
+	        'form',
+	        { style: { display: this._interactionHappened() ? "block" : "none" } },
+	        React.createElement(
+	          BootstrapFormGroup,
+	          {
+	            controlId: 'optionalFeedback'
+	          },
+	          React.createElement(BootstrapFormControl, {
+	            componentClass: 'textarea',
+	            type: 'text',
+	            value: this.state.feedbackMessage,
+	            placeholder: 'Feedback (optional)',
+	            onChange: this._updateStateWithFormAnswer
+	          }),
+	          React.createElement(BootstrapFormControl.Feedback, null),
+	          React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	              BootstrapButton,
+	              { onClick: this._submit },
+	              'Submit'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = FeedbackPersistence(FeedbackSmileys);
+
+/***/ },
+
+/***/ 2077:
+/*!*********************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-localstorage/react-localstorage.js ***!
+  \*********************************************************************************************/
+[3044, 1875, 2078],
+
+/***/ 2078:
+/*!**************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-localstorage/lib/warning.js ***!
+  \**************************************************************************************/
+659,
+
+/***/ 2079:
+/*!************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-timer-mixin/TimerMixin.js ***!
+  \************************************************************************************/
+660,
+
+/***/ 2080:
+/*!***********************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-addons-css-transition-group/index.js ***!
+  \***********************************************************************************************/
+[3031, 2081],
+
+/***/ 2081:
+/*!*****************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactCSSTransitionGroup.js ***!
   \*****************************************************************************************/
-[3131,1968,2004,2171,2173],2171:/*!**************************************************************************************!*\
+[3032, 1876, 1912, 2082, 2084],
+
+/***/ 2082:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactTransitionGroup.js ***!
   \**************************************************************************************/
-[3132,1968,2172,2004,1980],2172:/*!*********************************************************************************************!*\
+[3033, 1876, 2083, 1912, 1888],
+
+/***/ 2083:
+/*!*********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactTransitionChildMapping.js ***!
   \*********************************************************************************************/
-[3133,2081],2173:/*!**********************************************************************************************!*\
+[3034, 1989],
+
+/***/ 2084:
+/*!**********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactCSSTransitionGroupChild.js ***!
   \**********************************************************************************************/
-[3134,1968,1969,2174,2175,2121],2174:/*!********************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/react/~/fbjs/lib/CSSCore.js ***!
-  \********************************************************************************/
-[3135,1978],2175:/*!***************************************************************************************!*\
+[3035, 1876, 1877, 2085, 2086, 2029],
+
+/***/ 2085:
+/*!************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/fbjs/lib/CSSCore.js ***!
+  \************************************************************************/
+[3036, 1886],
+
+/***/ 2086:
+/*!***************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react/lib/ReactTransitionEvents.js ***!
   \***************************************************************************************/
-[3136,1974],2176:/*!***************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/lib/Button.js ***!
-  \***************************************************************************************************/
-[2958,2177,2192,2193,2203,2204,1967,2205,2207,2212,2214],2177:/*!*************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/inherits.js ***!
-  \*************************************************************************************************************************/
-[2913,2178,2181],2178:/*!******************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/create.js ***!
-  \******************************************************************************************************************************/
-[2914,2179],2179:/*!*******************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/create.js ***!
-  \*******************************************************************************************************************************************/
-[2915,2180],2180:/*!************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.js ***!
-  \************************************************************************************************************************************/
-165,2181:/*!****************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/set-prototype-of.js ***!
-  \****************************************************************************************************************************************/
-[2916,2182],2182:/*!*****************************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/set-prototype-of.js ***!
-  \*****************************************************************************************************************************************************/
-[2917,2183,2186],2183:/*!**************************************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.set-prototype-of.js ***!
-  \**************************************************************************************************************************************************************/
-[2918,2184,2189],2184:/*!*******************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.export.js ***!
-  \*******************************************************************************************************************************************/
-[2919,2185,2186,2187],2185:/*!*******************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.global.js ***!
-  \*******************************************************************************************************************************************/
-170,2186:/*!*****************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.core.js ***!
-  \*****************************************************************************************************************************************/
-171,2187:/*!****************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.ctx.js ***!
-  \****************************************************************************************************************************************/
-[2920,2188],2188:/*!***********************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.a-function.js ***!
-  \***********************************************************************************************************************************************/
-173,2189:/*!**********************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.set-proto.js ***!
-  \**********************************************************************************************************************************************/
-[2921,2180,2190,2191,2187],2190:/*!**********************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.is-object.js ***!
-  \**********************************************************************************************************************************************/
-175,2191:/*!**********************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.an-object.js ***!
-  \**********************************************************************************************************************************************/
-[2922,2190],2192:/*!*********************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/class-call-check.js ***!
-  \*********************************************************************************************************************************/
-177,2193:/*!************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/extends.js ***!
-  \************************************************************************************************************************/
-[2923,2194],2194:/*!******************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/assign.js ***!
-  \******************************************************************************************************************************/
-[2924,2195],2195:/*!*******************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/assign.js ***!
-  \*******************************************************************************************************************************************/
-[2925,2196,2186],2196:/*!****************************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.assign.js ***!
-  \****************************************************************************************************************************************************/
-[2926,2184,2197],2197:/*!**************************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.object-assign.js ***!
-  \**************************************************************************************************************************************************/
-[2927,2180,2198,2200,2202],2198:/*!**********************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.to-object.js ***!
-  \**********************************************************************************************************************************************/
-[2928,2199],2199:/*!********************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.defined.js ***!
-  \********************************************************************************************************************************************/
-184,2200:/*!********************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.iobject.js ***!
-  \********************************************************************************************************************************************/
-[2929,2201],2201:/*!****************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.cof.js ***!
-  \****************************************************************************************************************************************/
-186,2202:/*!******************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.fails.js ***!
-  \******************************************************************************************************************************************/
-187,2203:/*!****************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/interop-require-default.js ***!
-  \****************************************************************************************************************************************/
-193,2204:/*!***********************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/classnames/index.js ***!
+[3037, 1882],
+
+/***/ 2087:
+/*!**********************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-bootstrap/lib/Button.js ***!
+  \**********************************************************************************/
+[2866, 2088, 2103, 2104, 2114, 2115, 1875, 2116, 2118, 2123, 2125],
+
+/***/ 2088:
+/*!**************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/babel-runtime/helpers/inherits.js ***!
+  \**************************************************************************************/
+[2821, 2089, 2092],
+
+/***/ 2089:
+/*!*******************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/babel-runtime/core-js/object/create.js ***!
+  \*******************************************************************************************/
+[2822, 2090],
+
+/***/ 2090:
+/*!****************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/fn/object/create.js ***!
+  \****************************************************************************************/
+[2823, 2091],
+
+/***/ 2091:
+/*!*********************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.js ***!
+  \*********************************************************************************/
+165,
+
+/***/ 2092:
+/*!*****************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/babel-runtime/core-js/object/set-prototype-of.js ***!
+  \*****************************************************************************************************/
+[2824, 2093],
+
+/***/ 2093:
+/*!**************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/fn/object/set-prototype-of.js ***!
+  \**************************************************************************************************/
+[2825, 2094, 2097],
+
+/***/ 2094:
+/*!***********************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/es6.object.set-prototype-of.js ***!
   \***********************************************************************************************************/
-195,2205:/*!***************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/react-prop-types/lib/elementType.js ***!
-  \***************************************************************************************************************************/
-[2954,1967,2206],2206:/*!**********************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/react-prop-types/lib/common.js ***!
-  \**********************************************************************************************************************/
-271,2207:/*!******************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/lib/styleMaps.js ***!
-  \******************************************************************************************************/
-[2956,2194,2178,2208],2208:/*!****************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/keys.js ***!
-  \****************************************************************************************************************************/
-[2930,2209],2209:/*!*****************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/keys.js ***!
-  \*****************************************************************************************************************************************/
-[2931,2210,2186],2210:/*!**************************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.keys.js ***!
-  \**************************************************************************************************************************************************/
-[2932,2198,2211],2211:/*!***********************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/$.object-sap.js ***!
-  \***********************************************************************************************************************************************/
-[2933,2184,2186,2202],2212:/*!*****************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/lib/utils/bootstrapUtils.js ***!
-  \*****************************************************************************************************************/
-[2955,2193,2203,1967,2207,2213],2213:/*!************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/invariant/browser.js ***!
-  \************************************************************************************************************/
-276,2214:/*!*******************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/lib/SafeAnchor.js ***!
+[2826, 2095, 2100],
+
+/***/ 2095:
+/*!****************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.export.js ***!
+  \****************************************************************************************/
+[2827, 2096, 2097, 2098],
+
+/***/ 2096:
+/*!****************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.global.js ***!
+  \****************************************************************************************/
+170,
+
+/***/ 2097:
+/*!**************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.core.js ***!
+  \**************************************************************************************/
+171,
+
+/***/ 2098:
+/*!*************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.ctx.js ***!
+  \*************************************************************************************/
+[2828, 2099],
+
+/***/ 2099:
+/*!********************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.a-function.js ***!
+  \********************************************************************************************/
+173,
+
+/***/ 2100:
+/*!*******************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.set-proto.js ***!
+  \*******************************************************************************************/
+[2829, 2091, 2101, 2102, 2098],
+
+/***/ 2101:
+/*!*******************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.is-object.js ***!
+  \*******************************************************************************************/
+175,
+
+/***/ 2102:
+/*!*******************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.an-object.js ***!
+  \*******************************************************************************************/
+[2830, 2101],
+
+/***/ 2103:
+/*!**********************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/babel-runtime/helpers/class-call-check.js ***!
+  \**********************************************************************************************/
+177,
+
+/***/ 2104:
+/*!*************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/babel-runtime/helpers/extends.js ***!
+  \*************************************************************************************/
+[2831, 2105],
+
+/***/ 2105:
+/*!*******************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/babel-runtime/core-js/object/assign.js ***!
+  \*******************************************************************************************/
+[2832, 2106],
+
+/***/ 2106:
+/*!****************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/fn/object/assign.js ***!
+  \****************************************************************************************/
+[2833, 2107, 2097],
+
+/***/ 2107:
+/*!*************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/es6.object.assign.js ***!
+  \*************************************************************************************************/
+[2834, 2095, 2108],
+
+/***/ 2108:
+/*!***********************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.object-assign.js ***!
+  \***********************************************************************************************/
+[2835, 2091, 2109, 2111, 2113],
+
+/***/ 2109:
+/*!*******************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.to-object.js ***!
+  \*******************************************************************************************/
+[2836, 2110],
+
+/***/ 2110:
+/*!*****************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.defined.js ***!
+  \*****************************************************************************************/
+184,
+
+/***/ 2111:
+/*!*****************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.iobject.js ***!
+  \*****************************************************************************************/
+[2837, 2112],
+
+/***/ 2112:
+/*!*************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.cof.js ***!
+  \*************************************************************************************/
+186,
+
+/***/ 2113:
+/*!***************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.fails.js ***!
+  \***************************************************************************************/
+187,
+
+/***/ 2114:
+/*!*****************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/babel-runtime/helpers/interop-require-default.js ***!
+  \*****************************************************************************************************/
+193,
+
+/***/ 2115:
+/*!************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/classnames/index.js ***!
+  \************************************************************************/
+195,
+
+/***/ 2116:
+/*!****************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-prop-types/lib/elementType.js ***!
+  \****************************************************************************************/
+[2862, 1875, 2117],
+
+/***/ 2117:
+/*!***********************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-prop-types/lib/common.js ***!
+  \***********************************************************************************/
+271,
+
+/***/ 2118:
+/*!*************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-bootstrap/lib/styleMaps.js ***!
+  \*************************************************************************************/
+[2864, 2105, 2089, 2119],
+
+/***/ 2119:
+/*!*****************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/babel-runtime/core-js/object/keys.js ***!
+  \*****************************************************************************************/
+[2838, 2120],
+
+/***/ 2120:
+/*!**************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/fn/object/keys.js ***!
+  \**************************************************************************************/
+[2839, 2121, 2097],
+
+/***/ 2121:
+/*!***********************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/es6.object.keys.js ***!
+  \***********************************************************************************************/
+[2840, 2109, 2122],
+
+/***/ 2122:
+/*!********************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/core-js/library/modules/$.object-sap.js ***!
+  \********************************************************************************************/
+[2841, 2095, 2097, 2113],
+
+/***/ 2123:
+/*!************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-bootstrap/lib/utils/bootstrapUtils.js ***!
+  \************************************************************************************************/
+[2863, 2104, 2114, 1875, 2118, 2124],
+
+/***/ 2124:
+/*!*************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/invariant/browser.js ***!
+  \*************************************************************************/
+276,
+
+/***/ 2125:
+/*!**************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-bootstrap/lib/SafeAnchor.js ***!
+  \**************************************************************************************/
+[2867, 2088, 2103, 2104, 2126, 2114, 1875, 2116],
+
+/***/ 2126:
+/*!*******************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/babel-runtime/helpers/object-without-properties.js ***!
   \*******************************************************************************************************/
-[2959,2177,2192,2193,2215,2203,1967,2205],2215:/*!******************************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/object-without-properties.js ***!
-  \******************************************************************************************************************************************/
-188,2216:/*!******************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/lib/FormGroup.js ***!
-  \******************************************************************************************************/
-[2966,2177,2192,2193,2215,2203,2204,1967,2217,2207,2212,2219],2217:/*!**************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/react-prop-types/lib/deprecated.js ***!
-  \**************************************************************************************************************************/
-[2967,2218],2218:/*!**********************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/~/warning/browser.js ***!
-  \**********************************************************************************************************/
-278,2219:/*!*************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/lib/utils/ValidComponentChildren.js ***!
-  \*************************************************************************************************************************/
-[2957,2203,1967],2220:/*!********************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/lib/FormControl.js ***!
+188,
+
+/***/ 2127:
+/*!*************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-bootstrap/lib/FormGroup.js ***!
+  \*************************************************************************************/
+[2874, 2088, 2103, 2104, 2126, 2114, 2115, 1875, 2128, 2118, 2123, 2130],
+
+/***/ 2128:
+/*!***************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-prop-types/lib/deprecated.js ***!
+  \***************************************************************************************/
+[2875, 2129],
+
+/***/ 2129:
+/*!***********************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/warning/browser.js ***!
+  \***********************************************************************/
+278,
+
+/***/ 2130:
+/*!********************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-bootstrap/lib/utils/ValidComponentChildren.js ***!
   \********************************************************************************************************/
-[2968,2177,2192,2215,2193,2203,2204,1967,2205,2218,2212,2221,2223],2221:/*!****************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/lib/FormControlFeedback.js ***!
-  \****************************************************************************************************************/
-[2969,2177,2192,2193,2215,2203,2204,1967,2212,2222],2222:/*!******************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/lib/Glyphicon.js ***!
-  \******************************************************************************************************/
-[2970,2193,2203,2204,1967,2217],2223:/*!**************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-bootstrap/lib/FormControlStatic.js ***!
-  \**************************************************************************************************************/
-[2971,2177,2192,2215,2193,2203,2204,1967,2205,2212],2224:/*!***********************************************************************************************!*\
+[2865, 2114, 1875],
+
+/***/ 2131:
+/*!***************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-bootstrap/lib/FormControl.js ***!
+  \***************************************************************************************/
+[2876, 2088, 2103, 2126, 2104, 2114, 2115, 1875, 2116, 2129, 2123, 2132, 2134],
+
+/***/ 2132:
+/*!***********************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-bootstrap/lib/FormControlFeedback.js ***!
+  \***********************************************************************************************/
+[2877, 2088, 2103, 2104, 2126, 2114, 2115, 1875, 2123, 2133],
+
+/***/ 2133:
+/*!*************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-bootstrap/lib/Glyphicon.js ***!
+  \*************************************************************************************/
+[2878, 2104, 2114, 2115, 1875, 2128],
+
+/***/ 2134:
+/*!*********************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-bootstrap/lib/FormControlStatic.js ***!
+  \*********************************************************************************************/
+[2879, 2088, 2103, 2126, 2104, 2114, 2115, 1875, 2116, 2123],
+
+/***/ 2135:
+/*!***********************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/atlas-feedback/assets/emojione.sprites.png ***!
   \***********************************************************************************************/
-function(e,t,r){e.exports=r.p+"72e306f1246f69de2c83c8d3c3141177.png"},2225:/*!**********************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-emojione/lib/react-emojione.js ***!
-  \**********************************************************************************************************/
-[3137,2226,2227,2231],2226:/*!*****************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-emojione/lib/data/ascii-to-unicode.js ***!
-  \*****************************************************************************************************************/
-652,2227:/*!**********************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-emojione/lib/renderers/renderer-factory.js ***!
-  \**********************************************************************************************************************/
-[3138,2228,2233],2228:/*!********************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-emojione/lib/renderers/emoji-renderer.js ***!
-  \********************************************************************************************************************/
-[3139,1967,2229,2231],2229:/*!******************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-emojione/lib/styles/emojione-sprite.js ***!
-  \******************************************************************************************************************/
-[3140,2230],2230:/*!****************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-emojione/lib/styles/emojione-sprite-positions.js ***!
-  \****************************************************************************************************************************/
-656,2231:/*!*************************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-emojione/lib/utils/emoji-format-conversion.js ***!
-  \*************************************************************************************************************************/
-[3141,2232],2232:/*!***********************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-emojione/lib/data/emoji-data.js ***!
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "72e306f1246f69de2c83c8d3c3141177.png";
+
+/***/ },
+
+/***/ 2136:
+/*!*****************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-emojione/lib/react-emojione.js ***!
+  \*****************************************************************************************/
+[3038, 2137, 2138, 2142],
+
+/***/ 2137:
+/*!************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-emojione/lib/data/ascii-to-unicode.js ***!
+  \************************************************************************************************/
+650,
+
+/***/ 2138:
+/*!*****************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-emojione/lib/renderers/renderer-factory.js ***!
+  \*****************************************************************************************************/
+[3039, 2139, 2144],
+
+/***/ 2139:
+/*!***************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-emojione/lib/renderers/emoji-renderer.js ***!
+  \***************************************************************************************************/
+[3040, 1875, 2140, 2142],
+
+/***/ 2140:
+/*!*************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-emojione/lib/styles/emojione-sprite.js ***!
+  \*************************************************************************************************/
+[3041, 2141],
+
+/***/ 2141:
+/*!***********************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-emojione/lib/styles/emojione-sprite-positions.js ***!
   \***********************************************************************************************************/
-658,2233:/*!**********************************************************************************************************************!*\
-  !*** ./expression-atlas-differential-expression/~/atlas-feedback/~/react-emojione/lib/renderers/unicode-renderer.js ***!
-  \**********************************************************************************************************************/
-[3142,2231],2234:/*!***************************************************************************************!*\
+654,
+
+/***/ 2142:
+/*!********************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-emojione/lib/utils/emoji-format-conversion.js ***!
+  \********************************************************************************************************/
+[3042, 2143],
+
+/***/ 2143:
+/*!******************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-emojione/lib/data/emoji-data.js ***!
+  \******************************************************************************************/
+656,
+
+/***/ 2144:
+/*!*****************************************************************************************************!*\
+  !*** ./expression-atlas-differential-expression/~/react-emojione/lib/renderers/unicode-renderer.js ***!
+  \*****************************************************************************************************/
+[3043, 2142],
+
+/***/ 2145:
+/*!***************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/atlas-feedback/src/gxaFeedback.css ***!
   \***************************************************************************************/
-function(e,t,r){var s=r(/*! !./../../css-loader!./gxaFeedback.css */2235);"string"==typeof s&&(s=[[e.id,s,""]]);r(/*! ./../../style-loader/addStyles.js */2137)(s,{});s.locals&&(e.exports=s.locals)},2235:/*!***********************************************************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../css-loader!./gxaFeedback.css */ 2146);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 2050)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./gxaFeedback.css", function() {
+				var newContent = require("!!./../../css-loader/index.js!./gxaFeedback.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2146:
+/*!***********************************************************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/~/atlas-feedback/src/gxaFeedback.css ***!
   \***********************************************************************************************************************************************/
-function(e,t,r){t=e.exports=r(/*! ./../../css-loader/lib/css-base.js */2136)(),t.push([e.id,"div.gxaFeedbackQuestionBox{margin:30px;width:300px;background-color:#b3e0ff;border:3px solid #008ae6;opacity:.6;filter:alpha(opacity=60)}#feedbackBoxCross{margin:3px;margin-top:5px;float:right;cursor:pointer}#feedbackBoxCross:before{color:#bf2222}div.gxaFeedbackQuestionBox p{margin:2%;font-weight:700;text-align:center}div.gxaFeedbackQuestionBox a{float:right;margin-top:6px;cursor:pointer}div.gxaFeedbackQuestionBoxAnswer{position:relative;text-align:center;margin:0 auto;margin-bottom:10px;width:90%}div.gxaFeedbackQuestionBox button{width:auto}.feedbackBoxTransitionWrapper-leave{opacity:1}.feedbackBoxTransitionWrapper-leave.feedbackBoxTransitionWrapper-leave-active{opacity:.01;transition:opacity .3s ease-in}.gxaSmiley{opacity:.6}.gxaSmiley,.gxaSmiley:hover{text-decoration:none;cursor:pointer}.gxaSmiley:hover{opacity:.9}.gxaSmileyClicked{opacity:1}.gxaSmileyFeedbackBox{text-align:center;clear:both;width:300px;opacity:.8;filter:alpha(opacity=80)}.gxaSmileyRow{text-align:center!important}.gxaSmileyFeedbackBox p{padding-left:18px;padding-top:5px;font-weight:700;font-size:14px}.gxaSmileyFeedbackBox form{padding:6px;width:87%}.gxaSmileyFeedbackBox button{width:100px;margin-left:91px}.form-control{display:block;width:100%;height:34px;padding:6px 12px;font-size:14px;line-height:1.42857143;color:#555;background-color:#fff;background-image:none;border:1px solid #ccc;border-radius:4px;box-shadow:inset 0 1px 1px rgba(0,0,0,.075);-webkit-transition:border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}.form-control:focus{border-color:#66afe9;outline:0;box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)}.form-control::-moz-placeholder{color:#999;opacity:1}.form-control:-ms-input-placeholder{color:#999}.form-control::-webkit-input-placeholder{color:#999}",""])},2236:/*!*******************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 2049)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "div.gxaFeedbackQuestionBox {\n  margin: 30px;\n  width: 300px;\n  background-color: #b3e0ff;\n  border: 3px solid #008ae6;\n  opacity: 0.6;\n  filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n\n#feedbackBoxCross {\n  margin: 3px;\n  margin-top: 5px;\n  float: right;\n  cursor:pointer;\n}\n\n#feedbackBoxCross:before {\n  color: #BF2222;\n}\n\ndiv.gxaFeedbackQuestionBox p {\n  margin: 2%;\n font-weight: bold;\n text-align: center;\n}\n\ndiv.gxaFeedbackQuestionBox a {\n  float: right;\n  margin-top: 6px;\n  cursor:pointer;\n}\n\ndiv.gxaFeedbackQuestionBoxAnswer {\n  position:relative;\ntext-align: center;\n  margin: 0 auto;\n  margin-bottom: 10px;\n  width: 90%;\n}\n\ndiv.gxaFeedbackQuestionBox button {\n width: auto;\n}\n\n.feedbackBoxTransitionWrapper-leave {\n  opacity: 1;\n}\n\n.feedbackBoxTransitionWrapper-leave.feedbackBoxTransitionWrapper-leave-active {\n  opacity: 0.01;\n  transition: opacity 300ms ease-in;\n}\n\n.gxaSmiley {\n  opacity: 0.6;\n  text-decoration:none;\n  cursor:pointer;\n}\n\n.gxaSmiley:hover {\n  opacity: 0.9;\n  text-decoration:none;\n  cursor:pointer;\n}\n\n.gxaSmileyClicked {\n  opacity: 1;\n}\n\n.gxaSmileyFeedbackBox {\n  text-align: center;\n  clear: both;\n  width: 300px;\n  opacity: 0.8;\n  filter: alpha(opacity=80); /* For IE8 and earlier */\n}\n\n.gxaSmileyRow {\n  text-align: center!important;\n}\n\n.gxaSmileyFeedbackBox p {\n  padding-left: 18px;\n  padding-top: 5px;\n  font-weight: bold;\n  font-size: 14px;\n}\n\n.gxaSmileyFeedbackBox form {\n  padding: 6px;\n  width: 87%;\n}\n\n.gxaSmileyFeedbackBox button {\n  width: 100px;\n  margin-left: 91px;\n}\n\n.form-control {\n  display: block;\n  width: 100%;\n  height: 34px;\n  padding: 6px 12px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n}\n.form-control:focus {\n  border-color: #66afe9;\n  outline: 0;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);\n          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);\n}\n.form-control::-moz-placeholder {\n  color: #999;\n  opacity: 1;\n}\n.form-control:-ms-input-placeholder {\n  color: #999;\n}\n.form-control::-webkit-input-placeholder {\n  color: #999;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+
+/***/ 2147:
+/*!*******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react-ebi-species/index.js ***!
   \*******************************************************************************/
-function(e,t,r){"use strict";t.Icon=r(/*! ./src/SpeciesIcon.jsx */2237),t.render=r(/*! ./src/renderer.js */2241)},2237:/*!******************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	exports.Icon = __webpack_require__(/*! ./src/SpeciesIcon.jsx */ 2148);
+	exports.render = __webpack_require__(/*! ./src/renderer.js */ 2152);
+
+
+/***/ },
+
+/***/ 2148:
+/*!******************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react-ebi-species/src/SpeciesIcon.jsx ***!
   \******************************************************************************************/
-function(e,t,r){"use strict";var s=r(/*! react */1967);r(/*! style!css!./ebi-visual-species.css */2238);var n=r(/*! ./mapping.js */2240),o=s.createClass({displayName:"Icon",propTypes:{species:s.PropTypes.string.isRequired,colourOverride:s.PropTypes.string,colourPerGroup:s.PropTypes.objectOf(s.PropTypes.string).isRequired},getDefaultProps:function(){return{species:"oryctolagus cuniculus",colourPerGroup:{mammals:"red",plants:"green",other:"blue"}}},_lookUpIcon:function(){for(var e in n)if(n.hasOwnProperty(e))for(var t in n[e])if(n[e].hasOwnProperty(t)&&n[e][t].indexOf(this.props.species.toLowerCase())>-1)return[e,t];return["",""]},render:function(){var e=this._lookUpIcon();return s.createElement("span",{className:"react-ebi-species-icon","data-icon":e[1],style:{color:this.props.colourOverride||this.props.colourPerGroup[e[0]]},title:this.props.species})}});e.exports=o},2238:/*!*******************************************************************************************************************************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	__webpack_require__(/*! style!css!./ebi-visual-species.css */ 2149);
+	var mapping = __webpack_require__(/*! ./mapping.js */ 2151);
+	
+	//*------------------------------------------------------------------*
+	
+	var Icon = React.createClass({
+	  displayName: "Icon",
+	
+	
+	  propTypes: {
+	    species: React.PropTypes.string.isRequired,
+	    colourOverride: React.PropTypes.string,
+	    colourPerGroup: React.PropTypes.objectOf(React.PropTypes.string).isRequired
+	  },
+	
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      species: "oryctolagus cuniculus", //rabbit is objectively the best species
+	      colourPerGroup: {
+	        mammals: "red",
+	        plants: "green",
+	        other: "blue"
+	      }
+	    };
+	  },
+	
+	  _lookUpIcon: function _lookUpIcon() {
+	    for (var group in mapping) {
+	      if (mapping.hasOwnProperty(group)) {
+	        for (var iconSymbol in mapping[group]) {
+	          if (mapping[group].hasOwnProperty(iconSymbol)) {
+	            if (mapping[group][iconSymbol].indexOf(this.props.species.toLowerCase()) > -1) {
+	              return [group, iconSymbol];
+	            }
+	          }
+	        }
+	      }
+	    }
+	    return ["", ""];
+	  },
+	
+	  render: function render() {
+	    var groupAndIcon = this._lookUpIcon();
+	    return React.createElement("span", {
+	      className: "react-ebi-species-icon",
+	      "data-icon": groupAndIcon[1],
+	      style: { "color": this.props.colourOverride || this.props.colourPerGroup[groupAndIcon[0]] },
+	      title: this.props.species });
+	  }
+	
+	});
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = Icon;
+
+/***/ },
+
+/***/ 2149:
+/*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/style-loader!./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/~/react-ebi-species/src/ebi-visual-species.css ***!
   \*******************************************************************************************************************************************************************************************************************/
-function(e,t,r){var s=r(/*! !./../../css-loader!./ebi-visual-species.css */2239);"string"==typeof s&&(s=[[e.id,s,""]]);r(/*! ./../../style-loader/addStyles.js */2137)(s,{});s.locals&&(e.exports=s.locals)},2239:/*!*********************************************************************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../css-loader!./ebi-visual-species.css */ 2150);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 2050)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./ebi-visual-species.css", function() {
+				var newContent = require("!!./../../css-loader/index.js!./ebi-visual-species.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2150:
+/*!*********************************************************************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/~/react-ebi-species/src/ebi-visual-species.css ***!
   \*********************************************************************************************************************************************************/
-function(e,t,r){t=e.exports=r(/*! ./../../css-loader/lib/css-base.js */2136)(),t.push([e.id,"@font-face{font-family:EBI-Species;src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');src:url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),local('\\263A'),url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');font-weight:400;font-style:normal}.react-ebi-species-icon:before{font-family:EBI-Species;font-size:100%;color:inherit;content:attr(data-icon);margin:0 .3em 0 0}.react-ebi-species-icon{text-decoration:none;font-style:normal}",""])},2240:/*!*************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 2049)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "/* Taken from: https://www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css */\n\n@font-face {\n    font-family: 'EBI-Species';\n    src: url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');\n    src: url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'), local('\\263A'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');\n    font-weight: normal;\n    font-style: normal\n}\n\n.react-ebi-species-icon:before {\n    font-family: 'EBI-Species';\n    font-size: 100%;\n    color: inherit;\n    content: attr(data-icon);\n    margin: 0 0.3em 0 0\n}\n\n.react-ebi-species-icon {\n    text-decoration: none;\n    font-style: normal\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+
+/***/ 2151:
+/*!*************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react-ebi-species/src/mapping.js ***!
   \*************************************************************************************/
-function(e,t){e.exports={mammals:{C:"bos taurus",d:["canis lupus","canis lupus familiaris"],h:"equus caballus",H:"homo sapiens",k:"gallus gallus",G:"gorilla gorilla",r:"macaca mulatta",9:"monodelphis domestica",M:"mus musculus",i:["pan paniscus","pan troglodytes"],R:"rattus norvegicus",t:"oryctolagus cuniculus",x:"ovis aries",8:"papio anubis"},plants:{B:"arabidopsis thaliana",5:["hordeum vulgare","hordeum vulgare subsp. vulgare"],6:["oryza sativa","oryza sativa japonica group"],c:"zea mays",P:["brachypodium distachyon","glycine max","solanum lycopersicum","sorghum bicolor","vitis vinifera","triticum aestivum"]},other:{7:"anolis carolinensis",Z:"danio rerio",F:"drosophila melanogaster",W:["caenorhabditis elegans","schistosoma mansoni"],"":"saccharomyces cerevisiae",E:"tetraodon nigroviridis",f:["xenopus (silurana) tropicalis","xenopus tropicalis"]}}},2241:/*!**************************************************************************************!*\
+/***/ function(module, exports) {
+
+	module.exports = {
+		"mammals": {
+			"C": "bos taurus",
+			"d": ["canis lupus", "canis lupus familiaris"],
+			"h":	"equus caballus",
+			"H": "homo sapiens",
+			"k": "gallus gallus",
+			"G": "gorilla gorilla",
+			"r": "macaca mulatta",
+			"9": "monodelphis domestica",
+			"M": "mus musculus",
+			"i": ["pan paniscus", "pan troglodytes"],
+			"R": "rattus norvegicus",
+			"t": "oryctolagus cuniculus",
+			"x": "ovis aries",
+			"8": "papio anubis"
+		},
+		"plants": {
+			"B": "arabidopsis thaliana",
+			"5": ["hordeum vulgare", "hordeum vulgare subsp. vulgare"],
+			"6": ["oryza sativa", "oryza sativa japonica group"],
+			"c": "zea mays",
+			"P":["brachypodium distachyon","glycine max","solanum lycopersicum","sorghum bicolor","vitis vinifera","triticum aestivum"]
+		},
+		"other": {
+			"7": "anolis carolinensis",
+			"Z": "danio rerio",
+			"F": "drosophila melanogaster",
+			"W": ["caenorhabditis elegans","schistosoma mansoni"],
+			"": "saccharomyces cerevisiae",
+			"E": "tetraodon nigroviridis",
+			"f": ["xenopus (silurana) tropicalis", "xenopus tropicalis"],
+		}
+	}
+
+
+/***/ },
+
+/***/ 2152:
+/*!**************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/react-ebi-species/src/renderer.js ***!
   \**************************************************************************************/
-function(e,t,r){"use strict";var s=r(/*! react */1967),n=r(/*! react-dom */2123),o=r(/*! ./SpeciesIcon.jsx */2237);e.exports=function(e,t,r,i){n.render(s.createElement(o,{species:t,colourOverride:r,colourPerKingdom:i}),e)}},2242:/*!******************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	//*------------------------------------------------------------------*
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 2031);
+	
+	//*------------------------------------------------------------------*
+	
+	var Icon = __webpack_require__(/*! ./SpeciesIcon.jsx */ 2148);
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = function(mountNode,species,colourOverride, colourPerKingdom) {
+	    ReactDOM.render(
+	        React.createElement(Icon,{
+	          species: species,
+	          colourOverride: colourOverride,
+	          colourPerKingdom: colourPerKingdom
+	        }), mountNode
+	    );
+	};
+
+
+/***/ },
+
+/***/ 2153:
+/*!******************************************************************************!*\
   !*** ./expression-atlas-differential-expression/src/DifferentialResults.css ***!
   \******************************************************************************/
-function(e,t,r){var s=r(/*! !./../~/css-loader!./DifferentialResults.css */2243);"string"==typeof s&&(s=[[e.id,s,""]]);r(/*! ./../~/style-loader/addStyles.js */2137)(s,{});s.locals&&(e.exports=s.locals)},2243:/*!**************************************************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../~/css-loader!./DifferentialResults.css */ 2154);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 2050)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./DifferentialResults.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./DifferentialResults.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2154:
+/*!**************************************************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/src/DifferentialResults.css ***!
   \**************************************************************************************************************************************/
-function(e,t,r){t=e.exports=r(/*! ./../~/css-loader/lib/css-base.js */2136)(),t.push([e.id,"table.table-striped tr:nth-child(even){background-color:#f9f9f9}table.table-striped tr:nth-child(odd){background:#fff}table.gxaDifferentialFacetedSearchResults th,table.gxaDifferentialFacetedSearchResults th span{font-weight:700}table.gxaDifferentialFacetedSearchResults th{font-size:90%;border:0 solid #ddd;border-bottom-width:2px;vertical-align:bottom}table.gxaDifferentialFacetedSearchResults tr td{padding:8px;line-height:1.42857143;vertical-align:top;border-top:1px solid #ddd}table.gxaDifferentialFacetedSearchResults tr td.col_species .react-ebi-species-icon{font-size:300%;margin-left:4px}td.gxaExperimentalVariable{text-align:center}",""])},2244:/*!*********************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 2049)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "table.table-striped tr:nth-child(even) {\n    background-color: #f9f9f9;\n}\n\ntable.table-striped tr:nth-child(odd) {\n    background: #FFF;\n}\n\ntable.gxaDifferentialFacetedSearchResults th, table.gxaDifferentialFacetedSearchResults th span {\n    font-weight: bold;\n}\n\ntable.gxaDifferentialFacetedSearchResults th {\n    font-size: 90%;\n    border: 0 solid #ddd;\n    border-bottom-width: 2px;\n    vertical-align: bottom;\n}\n\ntable.gxaDifferentialFacetedSearchResults tr td {\n    padding: 8px;\n    line-height: 1.42857143;\n    vertical-align: top;\n    border-top: 1px solid #ddd\n}\n\ntable.gxaDifferentialFacetedSearchResults tr td.col_species .react-ebi-species-icon {\n    font-size: 300%;\n    margin-left: 4px;\n}\n\ntd.gxaExperimentalVariable {\n    text-align: center;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+
+/***/ 2155:
+/*!*********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/src/DifferentialFacetsTree.jsx ***!
   \*********************************************************************************/
-function(e,t,r){"use strict";var s=r(/*! react */1967);r(/*! ./DifferentialFacetsTree.css */2245);var n=s.PropTypes.string.isRequired,o=s.PropTypes.bool.isRequired,i=s.createClass({displayName:"DifferentialFacetsTree",propTypes:{facets:s.PropTypes.arrayOf(s.PropTypes.shape({facetName:n,facetItems:s.PropTypes.arrayOf(s.PropTypes.shape({name:n,value:n,checked:o,disabled:o}).isRequired).isRequired}).isRequired).isRequired,setChecked:s.PropTypes.func.isRequired},_setChecked:function(e,t,r){this.props.setChecked(e,t,r)},render:function(){var e=this,t=this.props.facets.map(function(t){return s.createElement(a,{key:t.facetName,facetName:t.facetName,facetItems:t.facetItems,setChecked:e._setChecked})});return s.createElement("div",{className:"hidden-xs gxaFacetsContainer"},s.createElement("h3",null,"Filter your results"),t)}}),a=s.createClass({displayName:"Facet",propTypes:{facetName:s.PropTypes.string.isRequired,facetItems:s.PropTypes.arrayOf(s.PropTypes.shape({name:n,value:n,checked:o,disabled:o}).isRequired).isRequired,setChecked:s.PropTypes.func.isRequired},_setChecked:function(e,t){this.props.setChecked(this.props.facetName,e,t)},_prettifyFacetName:function(e){switch(e){case"kingdom":return"Kingdom";case"species":return"Species";case"experimentType":return"Experiment type";case"factors":return"Experimental variables";case"numReplicates":return"Number of replicates";case"regulation":return"Regulation";default:return e}},render:function(){var e=this,t=this.props.facetItems.map(function(t){return s.createElement(l,{key:t.name,name:t.name,value:t.value,checked:t.checked,disabled:t.disabled,setChecked:e._setChecked})}),r="species"===this.props.facetName?"gxaSpeciesFacet":"";return s.createElement("div",{className:"gxaFacetItem"},s.createElement("h4",null,this._prettifyFacetName(this.props.facetName)),s.createElement("ul",{className:r},t))}}),l=s.createClass({displayName:"FacetItem",propTypes:{name:n,value:n,checked:o,disabled:o,setChecked:s.PropTypes.func.isRequired},_setChecked:function(){this.props.setChecked(this.props.name,!this.props.checked)},render:function(){var e=this.props.disabled?"gxaDisabledFacet":"";return s.createElement("li",{className:e},s.createElement("input",{type:"checkbox",checked:this.props.checked,onChange:this._setChecked,disabled:this.props.disabled}),this.props.value)}});e.exports=i},2245:/*!*********************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(/*! react */ 1875);
+	
+	//*------------------------------------------------------------------*
+	
+	__webpack_require__(/*! ./DifferentialFacetsTree.css */ 2156);
+	
+	//*------------------------------------------------------------------*
+	
+	var RequiredString = React.PropTypes.string.isRequired;
+	var RequiredBool = React.PropTypes.bool.isRequired;
+	
+	var DifferentialFacetsTree = React.createClass({
+	    displayName: 'DifferentialFacetsTree',
+	
+	    propTypes: {
+	        /*
+	        [
+	            { "facetName" : "species",
+	              "facetItems" : [ {"name": "homo sapiens", "value": "Homo sapiens", checked: false, disabled: false},
+	                               {"name": "arabidopsis thaliana", "value": "arabidopsis thaliana", checked: true, disabled: false} ]
+	            },
+	            { "facetName" : "experimentType",
+	              "facetItems" : [ {"name": "rnaseq_mrna_differential", "value": "RNA-seq mRNA", checked: false, disabled: true},
+	                                {"name": "microarray_1colour_mrna_differential", "value": "1 colour mRNA", checked: false, disabled: false} ]
+	            },
+	            { "facetName" : "factors",
+	              "facetItems" : [ {"name": "genotype", "value": "genotype", checked: true, disabled: true} ]
+	            },
+	            { "facetName" : "numReplicates",
+	              "facetItems" : [ {"name": "3", "value": "3", checked: true, disabled: true} ]
+	            },
+	            { "facetName" : "regulation".
+	              "facetItems" : [ {"name": "UP", "value": "Up", checked: true, disabled: false},
+	                            {"name": "DOWN", "value": "Down", checked: false, disabled: false} ]
+	            }
+	        ]
+	        */
+	        facets: React.PropTypes.arrayOf(React.PropTypes.shape({
+	            facetName: RequiredString,
+	            facetItems: React.PropTypes.arrayOf(React.PropTypes.shape({
+	                name: RequiredString,
+	                value: RequiredString,
+	                checked: RequiredBool,
+	                disabled: RequiredBool
+	            }).isRequired).isRequired
+	        }).isRequired).isRequired,
+	        setChecked: React.PropTypes.func.isRequired
+	    },
+	
+	    _setChecked: function _setChecked(facetName, facetItemName, checked) {
+	        this.props.setChecked(facetName, facetItemName, checked);
+	    },
+	    render: function render() {
+	        var _this = this;
+	
+	        var facets = this.props.facets.map(function (facet) {
+	            return React.createElement(Facet, {
+	                key: facet.facetName,
+	                facetName: facet.facetName,
+	                facetItems: facet.facetItems,
+	                setChecked: _this._setChecked
+	            });
+	        });
+	
+	        return React.createElement(
+	            'div',
+	            { className: 'hidden-xs gxaFacetsContainer' },
+	            React.createElement(
+	                'h3',
+	                null,
+	                'Filter your results'
+	            ),
+	            facets
+	        );
+	    }
+	});
+	
+	var Facet = React.createClass({
+	    displayName: 'Facet',
+	
+	    propTypes: {
+	        facetName: React.PropTypes.string.isRequired,
+	        facetItems: React.PropTypes.arrayOf(React.PropTypes.shape({
+	            name: RequiredString,
+	            value: RequiredString,
+	            checked: RequiredBool,
+	            disabled: RequiredBool
+	        }).isRequired).isRequired,
+	        setChecked: React.PropTypes.func.isRequired
+	    },
+	
+	    _setChecked: function _setChecked(facetItemName, checked) {
+	        this.props.setChecked(this.props.facetName, facetItemName, checked);
+	    },
+	    _prettifyFacetName: function _prettifyFacetName(facetName) {
+	        switch (facetName) {
+	            case 'kingdom':
+	                return 'Kingdom';
+	            case 'species':
+	                return 'Species';
+	            case 'experimentType':
+	                return 'Experiment type';
+	            case 'factors':
+	                return 'Experimental variables';
+	            case 'numReplicates':
+	                return 'Number of replicates';
+	            case 'regulation':
+	                return 'Regulation';
+	            default:
+	                return facetName;
+	        }
+	    },
+	    render: function render() {
+	        var _this2 = this;
+	
+	        var facetItems = this.props.facetItems.map(function (facetItem) {
+	            return React.createElement(FacetItem, {
+	                key: facetItem.name,
+	                name: facetItem.name,
+	                value: facetItem.value,
+	                checked: facetItem.checked,
+	                disabled: facetItem.disabled,
+	                setChecked: _this2._setChecked
+	            });
+	        });
+	
+	        var className = this.props.facetName === 'species' ? 'gxaSpeciesFacet' : '';
+	
+	        return React.createElement(
+	            'div',
+	            { className: 'gxaFacetItem' },
+	            React.createElement(
+	                'h4',
+	                null,
+	                this._prettifyFacetName(this.props.facetName)
+	            ),
+	            React.createElement(
+	                'ul',
+	                { className: className },
+	                facetItems
+	            )
+	        );
+	    }
+	});
+	
+	var FacetItem = React.createClass({
+	    displayName: 'FacetItem',
+	
+	    propTypes: {
+	        name: RequiredString,
+	        value: RequiredString,
+	        checked: RequiredBool,
+	        disabled: RequiredBool,
+	        setChecked: React.PropTypes.func.isRequired
+	    },
+	
+	    _setChecked: function _setChecked() {
+	        this.props.setChecked(this.props.name, !this.props.checked);
+	    },
+	    render: function render() {
+	        var className = this.props.disabled ? 'gxaDisabledFacet' : '';
+	        return React.createElement(
+	            'li',
+	            { className: className },
+	            React.createElement('input', { type: 'checkbox', checked: this.props.checked, onChange: this._setChecked, disabled: this.props.disabled }),
+	            this.props.value
+	        );
+	    }
+	});
+	
+	//*------------------------------------------------------------------*
+	
+	module.exports = DifferentialFacetsTree;
+
+/***/ },
+
+/***/ 2156:
+/*!*********************************************************************************!*\
   !*** ./expression-atlas-differential-expression/src/DifferentialFacetsTree.css ***!
   \*********************************************************************************/
-function(e,t,r){var s=r(/*! !./../~/css-loader!./DifferentialFacetsTree.css */2246);"string"==typeof s&&(s=[[e.id,s,""]]);r(/*! ./../~/style-loader/addStyles.js */2137)(s,{});s.locals&&(e.exports=s.locals)},2246:/*!*****************************************************************************************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../~/css-loader!./DifferentialFacetsTree.css */ 2157);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 2050)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./DifferentialFacetsTree.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./DifferentialFacetsTree.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2157:
+/*!*****************************************************************************************************************************************!*\
   !*** ./expression-atlas-differential-expression/~/css-loader!./expression-atlas-differential-expression/src/DifferentialFacetsTree.css ***!
   \*****************************************************************************************************************************************/
-function(e,t,r){t=e.exports=r(/*! ./../~/css-loader/lib/css-base.js */2136)(),t.push([e.id,"@media (max-width:768px){.hidden-xs{display:none!important}}.gxaFacetsContainer li,.gxaFacetsContainer ul{list-style-type:none;padding:2px 0}.gxaFacetsContainer .gxaFacetItem{padding-bottom:8px}.gxaFacetsContainer .gxaFacetItem h4:first-letter,.gxaFacetsContainer .gxaFacetItem ul li span:first-letter{text-transform:capitalize}.gxaFacetsContainer .gxaFacetItem h4{font-weight:700;font-size:133%;padding:0}.gxaFacetsContainer .gxaFacetItem .gxaDisabledFacet span{color:gray}.gxaFacetsContainer .gxaDisabledCheckbox{color:#d3d3d3}.gxaSpeciesFacet li span{font-style:italic}",""])},2247:/*!********************************************************************!*\
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 2049)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "/*Responsive*/\n@media (max-width: 768px) {\n    .hidden-xs {display: none!important;} /*remove column like filter for small devices*/\n}\n\n/* Facets-tree container */\n.gxaFacetsContainer ul, .gxaFacetsContainer li {\n    list-style-type: none;\n    padding: 2px 0;\n}\n\n.gxaFacetsContainer .gxaFacetItem {\n    padding-bottom: 8px;\n}\n\n.gxaFacetsContainer .gxaFacetItem h4:first-letter, .gxaFacetsContainer .gxaFacetItem ul li span:first-letter {\n    text-transform: capitalize;\n}\n\n.gxaFacetsContainer .gxaFacetItem h4 {\n    font-weight: bold;\n    font-size: 133%;\n    padding: 0;\n}\n\n.gxaFacetsContainer .gxaFacetItem .gxaDisabledFacet span {\n    color: gray;\n}\n\n.gxaFacetsContainer .gxaDisabledCheckbox {\n    color: lightgray;\n}\n\n.gxaSpeciesFacet li span {\n    font-style: italic;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+
+/***/ 2158:
+/*!********************************************************************!*\
   !*** ./expression-atlas-differential-expression/src/urlManager.js ***!
   \********************************************************************/
-function(e,t,r){"use strict";var s=r(/*! url */1958),n=r(/*! querystring */1963);t.differentialPush=function(e,t){var r=s.parse(window.location.toString()),o=n.parse(r.query);o.ds=JSON.stringify(e);var i={protocol:r.protocol,host:r.host,hash:r.hash,pathname:r.pathname,query:o};t?history.replaceState(null,"",s.format(i)):history.pushState(null,"",s.format(i))},t.parseDifferentialUrlParameter=function(){var e=arguments.length<=0||void 0===arguments[0]?window.location:arguments[0],t=s.parse(e.toString()),r=n.parse(t.query).ds;return r?JSON.parse(r):{}}},2794:/*!*************************************!*\
-  !*** template of 1960 referencing  ***!
-  \*************************************/
-function(e,t,r,s,n){"use strict";t.decode=t.parse=r(s),t.encode=t.stringify=r(n)},2795:/*!*************************************!*\
-  !*** template of 2145 referencing  ***!
-  \*************************************/
-function(e,t,r,s){"use strict";e.exports=r(s)}});
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Url = __webpack_require__(/*! url */ 2034);
+	var QueryString = __webpack_require__(/*! querystring */ 2036);
+	
+	/**
+	 * Stringify the `query` object, assign it to the `ds` search field in the URL and store it in the History
+	 * @param {object} querySelect
+	 * @param {boolean} replace - use `replaceState` instead of `pushState`
+	 */
+	exports.differentialPush = function pushQueryIntoBrowserHistory(querySelect, replace) {
+	    var currentUrlObject = Url.parse(window.location.toString());
+	
+	    var newUrlQueryParams = QueryString.parse(currentUrlObject.query);
+	    newUrlQueryParams.ds = JSON.stringify(querySelect);
+	
+	    var newUrlObject = {
+	        protocol: currentUrlObject.protocol,
+	        host: currentUrlObject.host,
+	        hash: currentUrlObject.hash,
+	        pathname: currentUrlObject.pathname,
+	        query: newUrlQueryParams
+	    };
+	
+	    if (replace) {
+	        history.replaceState(null, '', Url.format(newUrlObject));
+	    } else {
+	        history.pushState(null, '', Url.format(newUrlObject));
+	    }
+	};
+	
+	exports.parseDifferentialUrlParameter = function getQuerySelectFromLocation() {
+	    var location = arguments.length <= 0 || arguments[0] === undefined ? window.location : arguments[0];
+	
+	    var currentURL = Url.parse(location.toString());
+	    var differentialSelectParam = QueryString.parse(currentURL.query).ds;
+	    return differentialSelectParam ? JSON.parse(differentialSelectParam) : {};
+	};
+
+/***/ }
+
+});
+//# sourceMappingURL=expressionAtlasDifferentialExpression.bundle.js.map

@@ -14,8 +14,6 @@ var ExperimentTypes = require('./experimentTypes.js');
 
 /**
  * @param {Object}  options
- * @param {string}  options.proxyPrefix - optionally set as "http(s?)://" or to proxy URL
- * @param {string}  options.selfHosted - Set this as true if you want to host our content yourself, but have outwards links pointing to our original site
  * @param {string}  options.atlasHost
  * @param {string}  options.sourceURL
  * @param {boolean} options.isMultiExperiment
@@ -29,12 +27,11 @@ exports.render = function(options) {
 
   var atlasBaseURL =
       (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://") === 0
-        ? ""
-        : options.proxyPrefix || "https://")
+        ? "" : "https://")
       + atlasHost
       + atlasPath;
 
-  var linksAtlasBaseURL = options.selfHosted? (options.proxyPrefix || "https://")+ "www.ebi.ac.uk/gxa": atlasBaseURL;
+  var linksAtlasBaseURL = atlasBaseURL;
     var type =
         options.isMultiExperiment ? ExperimentTypes.MULTIEXPERIMENT :
             options.isDifferential ? ExperimentTypes.DIFFERENTIAL :
