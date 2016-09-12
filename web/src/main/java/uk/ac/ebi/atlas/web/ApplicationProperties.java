@@ -140,7 +140,7 @@ public class ApplicationProperties {
     public String buildAtlasHostURL(HttpServletRequest request){
         String serverPort = request.getServerPort() == 80 ? "" : ":".concat(Integer.toString(request.getServerPort()));
         String atlasHost = request.getServerName().concat(serverPort);
-        return request.getScheme()+"://" + atlasHost;
+        return (atlasHost.contains("ebi.ac.uk")? "https": request.getScheme())+"://" + atlasHost;
     }
 
 }
