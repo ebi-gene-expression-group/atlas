@@ -79,7 +79,7 @@ public class MicroarrayProfilesTSVWriterTest {
 
         subject = new MicroarrayProfilesTSVWriter(new CsvWriterFactory());
         subject.setRequestContext(microarrayRequestContextMock);
-        subject.setTsvFileMastheadTemplateResource(resourceMock);
+        subject.setTsvFileMastheadTemplate(resourceMock);
 
         Contrast contrast1 = mock(Contrast.class);
         when(contrast1.getDisplayName()).thenReturn("cond1");

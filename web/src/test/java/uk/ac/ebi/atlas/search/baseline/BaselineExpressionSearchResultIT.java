@@ -25,7 +25,7 @@ import static org.hamcrest.collection.IsEmptyCollection.empty;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
 public class BaselineExpressionSearchResultIT {
 
     public static final String E_MTAB_513 = "E-MTAB-513";

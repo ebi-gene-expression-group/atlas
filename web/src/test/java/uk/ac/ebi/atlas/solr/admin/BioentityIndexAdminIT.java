@@ -12,7 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 //this will shutdown spring context, otherwise things like singletons remain initialized between different test classes :(
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})//Embedded.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})//Embedded.xml"})
 public class BioentityIndexAdminIT { /*implements Observer {
 
     @Inject

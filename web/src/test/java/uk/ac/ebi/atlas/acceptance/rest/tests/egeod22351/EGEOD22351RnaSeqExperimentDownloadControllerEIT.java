@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.acceptance.rest.tests.egeod22351;
 
-
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
