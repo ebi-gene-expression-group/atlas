@@ -634,6 +634,7 @@
                         <directory>src/main/resources</directory>
                         <includes>
                             <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
                         </includes>
                     </resource>
                 </resources>
@@ -660,6 +661,7 @@
                         <directory>src/main/resources</directory>
                         <includes>
                             <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
                         </includes>
                     </resource>
                 </resources>
@@ -682,6 +684,7 @@
                         <directory>src/main/resources</directory>
                         <includes>
                             <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
                         </includes>
                     </resource>
                 </resources>
@@ -705,6 +708,7 @@
                         <directory>src/main/resources</directory>
                         <includes>
                             <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
                         </includes>
                     </resource>
                 </resources>
@@ -728,6 +732,7 @@
                         <directory>src/main/resources</directory>
                         <includes>
                             <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
                         </includes>
                     </resource>
                 </resources>
@@ -751,6 +756,7 @@
                         <directory>src/main/resources</directory>
                         <includes>
                             <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
                         </includes>
                     </resource>
                 </resources>
