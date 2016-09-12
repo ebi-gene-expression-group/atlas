@@ -73,7 +73,7 @@ const DifferentialResults = React.createClass({
             experimentName: RequiredString,
             contrastId: RequiredString,
             comparison: RequiredString,
-            foldChange: RequiredString,    // a string, a formatted value, to be able to work with Infinity values and rounding
+            foldChange: React.PropTypes.number.isRequired,
             colour: RequiredString,
             id: RequiredString
         })).isRequired,
@@ -166,7 +166,7 @@ const DifferentialResults = React.createClass({
 const DifferentialResultRow = React.createClass({
     propTypes: {
         bioentityIdentifier: RequiredString,
-        foldChange: RequiredString,
+        foldChange: React.PropTypes.number.isRequired,
         colour: RequiredString,
         species: RequiredString,
         comparison: RequiredString,

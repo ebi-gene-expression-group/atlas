@@ -32,7 +32,7 @@ const DownloadDifferentialButton = React.createClass({
             experimentName: RequiredString,
             contrastId: RequiredString,
             comparison: RequiredString,
-            foldChange: RequiredString,    // a string, a formatted value, to be able to work with Infinity values and rounding
+            foldChange: RequiredNumber,
             pValue: RequiredNumber,
             tStatistics: OptionalNumber,
             colour: RequiredString,
