@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -45,11 +46,11 @@ public class BaselineAnalyticsSearchService {
         return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, queryFactorType);
     }
 
-    public String findFacetsForTreeSearch(SemanticQuery geneQuery, Species species) {
+    public JsonObject findFacetsForTreeSearch(SemanticQuery geneQuery, Species species) {
         return findFacetsForTreeSearch(geneQuery, SemanticQuery.create(), species);
     }
 
-    public String findFacetsForTreeSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species) {
+    public JsonObject findFacetsForTreeSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species) {
         List<Map<String, Object>> results = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery,
                 conditionQuery, species.mappedName);
         return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(results);

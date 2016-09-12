@@ -4,6 +4,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
@@ -44,7 +45,7 @@ public class BaselineAnalyticsFacetsReader {
     }
 
 
-    public static String generateFacetsTreeJson(List<Map<String, Object>> results) {
+    public static JsonObject generateFacetsTreeJson(List<Map<String, Object>> results) {
 
         TreeMultimap<String, FacetTreeItem> facetTreeMultimap = TreeMultimap.create(new HomoSapiensFirstComparator(), new OrganismPartFirstComparator());
 
@@ -65,9 +66,7 @@ public class BaselineAnalyticsFacetsReader {
             }
         }
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
-
-        return gson.toJson(facetTreeMultimap.asMap());
+        return new Gson().toJsonTree(facetTreeMultimap.asMap()).getAsJsonObject();
     }
 
     private static class HomoSapiensFirstComparator implements Comparator<String> {

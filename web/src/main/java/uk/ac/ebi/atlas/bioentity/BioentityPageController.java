@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.collect.Maps;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,6 +36,8 @@ public abstract class BioentityPageController {
     protected BioentityPropertyServiceInitializer bioentityPropertyServiceInitializer;
     protected BioEntityPropertyService bioEntityPropertyService;
     protected DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
+    private Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
+
 
     protected SpeciesFactory speciesFactory;
 
@@ -88,7 +92,8 @@ public abstract class BioentityPageController {
         model.addAttribute("hasDifferentialResults", hasDifferentialResults);
 
         if (hasBaselineResults) {
-            model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(identifier), species));
+            model.addAttribute("jsonFacets", gson.toJson(baselineAnalyticsSearchService.findFacetsForTreeSearch
+                    (SemanticQuery.create(identifier), species)));
         }
 
         model.addAllAttributes(pageDescriptionAttributes(identifier));

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.widget;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +20,7 @@ import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
-import static uk.ac.ebi.atlas.utils.RegexMatcher.matches;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -30,10 +31,6 @@ public class AnalyticsSearchServiceIT extends RestAssuredFixture {
     private static final String DIFFERENTIAL_GENE = "AT2G06310";
     private static final String NON_EXISTENT_GENE = "FOOBAR";
 
-    private static final String EMPTY_JSON_OBJECT = "{}";
-
-    private static final String NON_EMPTY_JSON_OBJECT_REGEX = "(?s)\\{.+\\}";
-
     @Inject
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
@@ -42,17 +39,18 @@ public class AnalyticsSearchServiceIT extends RestAssuredFixture {
 
     @Test
     public void geneExpressedInBaselineAndDifferentialExperimentsReturnsTrue() {
-        assertThat(
-                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(BASELINE_GENE),
-                        SemanticQuery.create(), SpeciesFactory.NULL),
-                matches(NON_EMPTY_JSON_OBJECT_REGEX));
+        JsonObject result = baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(BASELINE_GENE),
+                SemanticQuery.create(), SpeciesFactory.NULL);
+        assertThat(result.entrySet(), not(Matchers.empty()));
+        assertTrue("This Ensembl gene has a homo sapiens result", result.has("homo sapiens"));
+
     }
 
     @Test
     public void geneExpressedInDifferentialExperimentsOnlyReturnsFalse() {
         assertThat(
                 baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(DIFFERENTIAL_GENE), SemanticQuery.create(), SpeciesFactory.NULL),
-                is(EMPTY_JSON_OBJECT));
+                is(new JsonObject()));
         assertThat(
                 differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(SemanticQuery.create
                         (DIFFERENTIAL_GENE)).entrySet(), not(Matchers.<Map.Entry<String,JsonElement>>empty()));
@@ -62,7 +60,7 @@ public class AnalyticsSearchServiceIT extends RestAssuredFixture {
     public void nonExistentGeneReturnsFalse() {
         assertThat(
                 baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(NON_EXISTENT_GENE), SemanticQuery.create(), SpeciesFactory.NULL),
-                is(EMPTY_JSON_OBJECT));
+                is(new JsonObject()));
         assertThat(
                 differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(SemanticQuery.create
                         (NON_EXISTENT_GENE)).get("results").getAsJsonArray().size(),

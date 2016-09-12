@@ -1,6 +1,9 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.Test;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
@@ -19,7 +22,7 @@ public class BaselineAnalyticsFacetsReaderTest {
 
     private BaselineAnalyticsFacetsReader subject = new BaselineAnalyticsFacetsReader();
 
-    private final static String RESPONSE_2_JSON_FACETS =
+    private final static JsonObject RESPONSE_2_JSON_FACETS = new Gson().fromJson(
             "{\n" +
             "  \"Homo sapiens\": [\n" +
             "    {\n" +
@@ -41,7 +44,7 @@ public class BaselineAnalyticsFacetsReaderTest {
             "      \"value\": \"Cell line\"\n" +
             "    }\n" +
             "  ]\n" +
-            "}";
+            "}", JsonObject.class);
 
     @Test
     public void extractAverageExpressionLevel() throws IOException{
@@ -70,7 +73,7 @@ public class BaselineAnalyticsFacetsReaderTest {
 
     @Test
     public void extractTreeFacets() throws IOException {
-        String facetsTreeJson = subject.generateFacetsTreeJson(loadJsonWithFacets());
+        JsonObject facetsTreeJson = subject.generateFacetsTreeJson(loadJsonWithFacets());
 
         assertThat(facetsTreeJson, is(RESPONSE_2_JSON_FACETS));
     }

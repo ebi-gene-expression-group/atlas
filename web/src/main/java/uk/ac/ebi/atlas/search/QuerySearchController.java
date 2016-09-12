@@ -102,7 +102,8 @@ public class QuerySearchController {
             }
 
             if (hasBaselineResults) {
-                model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(geneQuery, conditionQuery, species));
+                model.addAttribute("jsonFacets", gson.toJson(baselineAnalyticsSearchService.findFacetsForTreeSearch
+                        (geneQuery, conditionQuery, species)));
             }
 
             model.addAttribute("hasDifferentialResults", hasDifferentialResults);
