@@ -37,8 +37,7 @@ public class MicroarrayProfilesWriter extends ProfilesWriter<MicroarrayProfile, 
     }
 
     public long write(PrintWriter outputWriter, MicroarrayRequestContext requestContext, String arrayDesign) throws GenesNotFoundException {
-        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
-                (requestContext,"");
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext,"");
         MicroarrayProfilesTsvInputStream inputStream = inputStreamFactory.create(requestContext, arrayDesign);
         Set<Contrast> contrasts = Sets.newHashSet(inputStream.getOrderedContrastsPresentInStream());
         return super.write(outputWriter, inputStream, requestContext, contrasts,geneQueryResponse);
