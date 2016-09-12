@@ -15,7 +15,8 @@ var ExperimentTypes = require('./experimentTypes.js');
 
 /**
  * @param {Object}      options
- * @param {string}          options.proxyPrefix - Proxy URL with protocol: required by CTTV
+ * @param {string}          options.proxyPrefix - optionally set as "http(s?)://" or to proxy URL
+ * @param {string}          options.selfHosted - Set this as true if you want to host our content yourself, but have outwards links pointing to our original site
  * @param {boolean=}        options.disableGoogleAnalytics - Disable Google Analytics: required by CTTV
  * @param {string=}         options.atlasHost - Atlas host with port (note: don’t include port)
  * @param {string}          options.params
@@ -27,15 +28,17 @@ var ExperimentTypes = require('./experimentTypes.js');
  */
 exports.render = function(options) {
 
-    var protocol = window.location.protocol + "//",
-        atlasHost = options.atlasHost === undefined ? "www.ebi.ac.uk" : options.atlasHost,
-        atlasPath = "/gxa";
+  var atlasHost = options.atlasHost === undefined ? "https://www.ebi.ac.uk" : options.atlasHost,
+      atlasPath = "/gxa";
 
-    var linksAtlasBaseURL =
-        (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://") === 0) ? atlasHost + atlasPath :
-        protocol + atlasHost + atlasPath;
+  var atlasBaseURL =
+      (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://") === 0
+        ? ""
+        : options.proxyPrefix || "https://")
+      + atlasHost
+      + atlasPath;
 
-    var atlasBaseURL = options.proxyPrefix ? options.proxyPrefix + "/" + atlasHost + atlasPath : linksAtlasBaseURL;
+  var linksAtlasBaseURL = options.selfHosted? (options.proxyPrefix || "https://")+ "www.ebi.ac.uk/gxa": atlasBaseURL;
 
     var endpointPath = options.isMultiExperiment ? "/widgets/heatmap/baselineAnalytics" : "/widgets/heatmap/referenceExperiment";
 

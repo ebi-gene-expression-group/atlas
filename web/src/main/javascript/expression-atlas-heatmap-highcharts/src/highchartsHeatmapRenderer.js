@@ -13,8 +13,9 @@ var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
 
 /**
  * @param {Object}      options
- * @param {string}          options.proxyPrefix - Proxy URL with protocol: required by CTTV
- * @param {boolean=}        options.disableGoogleAnalytics - Disable Google Analytics: required by CTTV
+ * @param {string}          options.proxyPrefix - optionally set as "http(s?)://" or to proxy URL
+ * @param {string}          options.selfHosted - Set this as true if you want to host our content yourself, but have outwards links pointing to our original site
+ * @param {boolean=}        options.disableGoogleAnalytics - Disable Google Analytics
  * @param {string=}         options.atlasHost - Atlas host with protocol and port
  * @param {string}          options.sourceURL - Where to source the data from
  * *                        e.g. /json/experiments/E-PROT-1, /json/genes/ENSG00000005801, /json/genesets/GO:0000001 or a widget endpoint
@@ -31,15 +32,17 @@ var HighchartsHeatmapContainer = require('./HighchartsHeatmapContainer.jsx');
 
 exports.render = function(options) {
 
-    var protocol = window.location.protocol + "//",
-        atlasHost = options.atlasHost === undefined ? "https://www.ebi.ac.uk" : options.atlasHost,
+    var atlasHost = options.atlasHost === undefined ? "https://www.ebi.ac.uk" : options.atlasHost,
         atlasPath = "/gxa";
 
-    var linksAtlasBaseURL =
-        (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://") === 0) ? atlasHost + atlasPath :
-        protocol + atlasHost + atlasPath;
+    var atlasBaseURL =
+        (atlasHost.indexOf("http://") === 0 || atlasHost.indexOf("https://") === 0
+          ? ""
+          : options.proxyPrefix || "https://")
+        + atlasHost
+        + atlasPath;
 
-    var atlasBaseURL = options.proxyPrefix ? options.proxyPrefix + "/" + atlasHost + atlasPath : linksAtlasBaseURL;
+    var linksAtlasBaseURL = options.selfHosted? (options.proxyPrefix || "https://")+ "www.ebi.ac.uk/gxa": atlasBaseURL;
 
     //If using this renderer for a standalone widget, see uk.ac.ebi.atlas.widget.HeatmapWidgetController.java for the source URL/params required
     var sourceURL = options.sourceURL ||
