@@ -1,70 +1,97 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
+import com.google.common.base.Predicate;
 import org.apache.solr.client.solrj.beans.Field;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.profiles.baseline.IsBaselineExpressionAboveCutoffAndForFilterFactors;
+import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-
 public class AnalyticsDocument {
 
-    @Field("bioentityIdentifier")
-    String bioentityIdentifier;
+    public static final double RNA_SEQ_BASELINE_EXPRESSION_CUTOFF = 0.5;
+    public static final double PROTEOMICS_BASELINE_EXPRESSION_CUTOFF = 0.0;
+    public static final double DIFFERENTIAL_FOLD_CHANGE_CUTOFF = 1.0;
+    public static final double DIFFERENTIAL_P_VALUE_CUTOFF = 0.1;
+
+    private final Predicate<BaselineExpression> rnaSeqBaselineExpressionAboveDefaultCutoff =
+            new IsBaselineExpressionAboveCutoffAndForFilterFactors()
+                    .setCutoff(RNA_SEQ_BASELINE_EXPRESSION_CUTOFF);
+
+    private final Predicate<BaselineExpression> proteomicsBaselineExpressionAboveDefaultCutoff =
+            new IsBaselineExpressionAboveCutoffAndForFilterFactors()
+                    .setCutoff(PROTEOMICS_BASELINE_EXPRESSION_CUTOFF);
+
+    private final Predicate<DifferentialExpression> differentialExpressionAboveDefaultCutoff =
+            new IsDifferentialExpressionAboveCutOff()
+                    .setFoldChangeCutOff(DIFFERENTIAL_FOLD_CHANGE_CUTOFF)
+                    .setPValueCutoff(DIFFERENTIAL_P_VALUE_CUTOFF);
 
     @Field
-    String species;
+    private String bioentityIdentifier;
 
     @Field
-    String kingdom;
+    private String species;
 
     @Field
-    String experimentAccession;
-
-    //TODO: add baseline boolean
-
-    ExperimentType experimentType;
-
-    @Field("experimentType")
-    String experimentTypeAsString;
+    private String kingdom;
 
     @Field
-    String defaultQueryFactorType;
+    private String experimentAccession;
 
     @Field
-    String identifierSearch;
+    private ExperimentType experimentType;
 
     @Field
-    String conditionsSearch;
+    private String defaultQueryFactorType;
 
     @Field
-    String assayGroupId;
+    private String identifierSearch;
 
     @Field
-    Double expressionLevel;
+    private String conditionsSearch;
 
     @Field
-    String contrastId;
+    private String assayGroupId;
 
     @Field
-    Set<String> factors;
+    private Double expressionLevel;
 
     @Field
-    Integer numReplicates;
+    private String contrastId;
 
     @Field
-    Double foldChange;
+    private Set<String> factors;
 
     @Field
-    Double pValue;
+    private Integer numReplicates;
 
     @Field
-    Double tStatistics;
+    private Double foldChange;
 
     @Field
-    Regulation regulation;
+    private Double pValue;
+
+    @Field
+    private Double tStatistics;
+
+    @Field
+    private Regulation regulation;
+
+    public boolean isAboveExpressionThreshold() {
+        return (experimentType.isRnaSeqBaseline() &&
+                    rnaSeqBaselineExpressionAboveDefaultCutoff.apply(new BaselineExpression(expressionLevel)) ||
+                experimentType.isProteomicsBaseline() &&
+                    proteomicsBaselineExpressionAboveDefaultCutoff.apply(new BaselineExpression(expressionLevel)) ||
+                experimentType.isDifferential() &&
+                    differentialExpressionAboveDefaultCutoff.apply(new DifferentialExpression(pValue, foldChange)));
+    }
 
     public String getBioentityIdentifier() {
         return bioentityIdentifier;
@@ -165,7 +192,6 @@ public class AnalyticsDocument {
                 checkNotNull(build.regulation, "missing regulation for differential experiment");
             }
 
-            build.experimentTypeAsString = build.experimentType.getDescription();
             return build;
         }
 
