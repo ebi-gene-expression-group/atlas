@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Stopwatch;
@@ -6,7 +5,6 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
@@ -21,7 +19,6 @@ import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 @Named
-@Scope("prototype")
 public class BaselineExpressionDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExpressionDao.class);

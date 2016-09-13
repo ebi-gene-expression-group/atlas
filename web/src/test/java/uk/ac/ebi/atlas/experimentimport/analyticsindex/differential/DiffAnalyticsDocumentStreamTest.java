@@ -1,9 +1,13 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalytics;
@@ -15,37 +19,37 @@ import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DiffAnalyticsDocumentStreamTest {
 
-    public static final String CONTRAST1 = "g1_g2";
-    public static final String CONTRAST2 = "g1_g3";
-    public static final String CONTRAST3 = "g1_g4";
+    private static final String CONTRAST1 = "g1_g2";
+    private static final String CONTRAST2 = "g1_g3";
+    private static final String CONTRAST3 = "g1_g4";
     private static final String GENEID1 = "GENEID_1";
     private static final String GENE_MICROARRAY = "ENSG00000000003";
-    public static final String DESIGN_ELEMENT = "209108_at";
-    public static final String PLANTS_KINGDOM = "plants";
-    public static final String PLANTS_ENSEMBLDB = "plants";
+    private static final String DESIGN_ELEMENT = "209108_at";
+    private static final String PLANTS_KINGDOM = "plants";
+    private static final String PLANTS_ENSEMBLDB = "plants";
     private static final String SPECIES3 = "species3";
-    public static final String CONDITION_SEARCH_1 = "condition1";
-    public static final String CONDITION_SEARCH_2 = "condition2";
-    public static final String CONDITION_SEARCH_3 = "condition3";
-    Species species =  new Species(SPECIES3,SPECIES3, PLANTS_KINGDOM,PLANTS_ENSEMBLDB);
-    DifferentialExperiment rnaSeqExperiment = new DifferentialExperiment("E-GEOD-38400", new Date(), new HashSet<Contrast>(),
+    private static final String CONDITION_SEARCH_1 = "condition1";
+    private static final String CONDITION_SEARCH_2 = "condition2";
+    private static final String CONDITION_SEARCH_3 = "condition3";
+    private Species species =  new Species(SPECIES3,SPECIES3, PLANTS_KINGDOM,PLANTS_ENSEMBLDB);
+    private DifferentialExperiment rnaSeqExperiment = new DifferentialExperiment("E-GEOD-38400", new Date(), new HashSet<Contrast>(),
             "description", false, true,species, Sets
             .newHashSet("PubMedId"), mock(ExperimentDesign.class));
 
-    DiffAnalyticsDocumentStream subject;
+    private DiffAnalyticsDocumentStream subject;
 
     @Test
     public void test() {

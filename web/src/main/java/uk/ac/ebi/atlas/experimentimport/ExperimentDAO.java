@@ -1,10 +1,8 @@
-
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
-import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -23,7 +21,6 @@ import java.util.UUID;
 import static com.google.common.base.Preconditions.checkState;
 
 @Named
-@Scope("prototype")
 public class ExperimentDAO {
 
     private static final String DELETE_EXPERIMENT = "DELETE FROM experiment WHERE accession = ?";

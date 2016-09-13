@@ -1,12 +1,10 @@
-
 package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.model.Expression;
 
 public class DifferentialExpression implements Expression {
-
-    private static final double SMALL_PVALUE_ALLOWED = 1E-125;
+    private static final double SMALLEST_P_VALUE_ALLOWED = 1E-125;
     public static final double WEAKEST_LEVEL = 0;
 
     private double pValue;
@@ -15,13 +13,16 @@ public class DifferentialExpression implements Expression {
 
     private Contrast contrast;
 
-    /**
-     *  If pValue is smaller than minim allowed value, treat it as 0D. This checks this condition when reading
-     *  from the tsv file */
+    // If pValue is smaller than minim allowed value, treat it as 0D. This checks this condition when reading
+    //  from the tsv file
+
+    public DifferentialExpression(double pValue, double foldChange) {
+        this.pValue = (pValue < SMALLEST_P_VALUE_ALLOWED) ? 0D : pValue;
+        this.foldChange = foldChange;
+    }
 
     public DifferentialExpression(double pValue, double foldChange, Contrast contrast) {
-        this.pValue = (pValue <  SMALL_PVALUE_ALLOWED) ? 0D : pValue;
-        this.foldChange = foldChange;
+        this(pValue, foldChange);
         this.contrast = contrast;
     }
 

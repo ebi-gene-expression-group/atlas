@@ -12,10 +12,9 @@ import static org.hamcrest.Matchers.is;
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialExpressionTest {
 
-    public static final double PVALUE = 0.0005;
+    public static final double P_VALUE = 0.0005;
     public static final double FOLD_CHANGE = 42.0;
-
-    public static final double SMALLPVALUE = 1.17501162847487E-242;
+    public static final double SMALL_P_VALUE = 1.17501162847487E-242;
 
     @Mock
     Contrast contrastMock;
@@ -24,7 +23,7 @@ public class DifferentialExpressionTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new DifferentialExpression(PVALUE, FOLD_CHANGE, contrastMock);
+        subject = new DifferentialExpression(P_VALUE, FOLD_CHANGE, contrastMock);
     }
 
     @Test
@@ -39,7 +38,7 @@ public class DifferentialExpressionTest {
 
     @Test
     public void testGetPValue() {
-        assertThat(subject.getPValue(), is(PVALUE));
+        assertThat(subject.getPValue(), is(P_VALUE));
     }
 
     @Test
@@ -49,7 +48,7 @@ public class DifferentialExpressionTest {
 
     @Test
     public void testEquals() {
-        assertThat(subject.equals(new DifferentialExpression(PVALUE, FOLD_CHANGE, contrastMock)), is(true));
+        assertThat(subject.equals(new DifferentialExpression(P_VALUE, FOLD_CHANGE, contrastMock)), is(true));
     }
 
     @Test
@@ -87,7 +86,7 @@ public class DifferentialExpressionTest {
     @Test
     public void testSmallPValue() {
         //when
-        DifferentialExpression expression = new DifferentialExpression(SMALLPVALUE, -1.0, null);
+        DifferentialExpression expression = new DifferentialExpression(SMALL_P_VALUE, -1.0, null);
 
         //then
         assertThat(expression.getPValue(), is(0D));

@@ -1,6 +1,4 @@
-
 package uk.ac.ebi.atlas.profiles.differential;
-
 
 import com.google.common.base.Predicate;
 import org.springframework.context.annotation.Scope;
@@ -30,13 +28,13 @@ public class IsDifferentialExpressionAboveCutOff implements Predicate<Differenti
     }
 
     private boolean isOverExpressed(DifferentialExpression differentialExpression) {
-        return differentialExpression.getPValue() <= pValueCutOff && differentialExpression.isOverExpressed()
-                && differentialExpression.getAbsoluteFoldChange() >= foldChangeCutOff;
+        return differentialExpression.getPValue() < pValueCutOff && differentialExpression.isOverExpressed()
+                && differentialExpression.getAbsoluteFoldChange() > foldChangeCutOff;
     }
 
     private boolean isUnderExpressed(DifferentialExpression differentialExpression){
-        return differentialExpression.getPValue() <= pValueCutOff && differentialExpression.isUnderExpressed()
-                && differentialExpression.getAbsoluteFoldChange() >= foldChangeCutOff;
+        return differentialExpression.getPValue() < pValueCutOff && differentialExpression.isUnderExpressed()
+                && differentialExpression.getAbsoluteFoldChange() > foldChangeCutOff;
     }
 
 

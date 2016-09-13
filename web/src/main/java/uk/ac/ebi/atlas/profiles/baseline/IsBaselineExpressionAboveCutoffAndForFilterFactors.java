@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.base.Predicate;
@@ -16,7 +15,6 @@ import java.util.Set;
 public class IsBaselineExpressionAboveCutoffAndForFilterFactors implements Predicate<BaselineExpression> {
 
     private double cutoff;
-
     private Set<Factor> filterFactors = new HashSet<>();
 
     public IsBaselineExpressionAboveCutoffAndForFilterFactors() {
@@ -40,6 +38,5 @@ public class IsBaselineExpressionAboveCutoffAndForFilterFactors implements Predi
     protected boolean checkFilterFactors(BaselineExpression expression) {
         return (CollectionUtils.isEmpty(filterFactors) || expression.containsAll(filterFactors));
     }
-
 
 }
