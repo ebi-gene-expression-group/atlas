@@ -6,6 +6,7 @@ var React = require('react');
 var ReactHighcharts = require('react-highcharts');
 var Highcharts = ReactHighcharts.Highcharts;
 require('highcharts-heatmap')(Highcharts);
+require('highcharts-custom-events')(Highcharts);
 require('./HighchartsHeatmap.css');
 var hash = require('object-hash');
 
@@ -13,8 +14,7 @@ var PropTypes = require('../PropTypes.js');
 
 //*------------------------------------------------------------------*
 
-module.exports = React.createClass({
-  displayName: "Heatmap canvas",
+var HeatmapCanvas = React.createClass({
   propTypes: {
       marginRight: React.PropTypes.number.isRequired,
       ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
@@ -27,7 +27,9 @@ module.exports = React.createClass({
         tooltip: PropTypes.Formatter
       }).isRequired,
       genomeBrowserTemplate: React.PropTypes.string.isRequired,
-      onUserSelectsColumn:React.PropTypes.func.isRequired
+      onUserSelectsRow:React.PropTypes.func.isRequired,
+      onUserSelectsColumn:React.PropTypes.func.isRequired,
+      onUserSelectsPoint:React.PropTypes.func.isRequired
   },
 
   shouldComponentUpdate: function(nextProps){
@@ -76,7 +78,9 @@ module.exports = React.createClass({
     var maxWidthFraction = 1-Math.exp(-(0.2+0.05*Math.pow(this._countColumnsToShow()+1,2)));
     return (
         <div style={{maxWidth:maxWidthFraction*100+"%"}}>
-            <ReactHighcharts config={this._highchartsOptions(dimensions, this.props.heatmapData)} ref="chart"/>
+        <ReactHighcharts
+          config={this._highchartsOptions(dimensions, this.props.heatmapData)}
+          ref="chart"/>
         </div>
     );
   },
@@ -110,18 +114,16 @@ module.exports = React.createClass({
                   point: {
                       events: {
                           mouseOver: function() {
-                              this.series.chart.userOptions.onUserSelectsColumn(this.series.xAxis.categories[this.x].id);
+                              this.series.chart.userOptions.onUserSelectsPoint(this.series.xAxis.categories[this.x].id,this.series.yAxis.categories[this.y].id);
+                          },
+                          mouseOut: function () {
+                            this.series.chart.userOptions.onUserSelectsPoint("","");
                           },
                           click: !this.props.genomeBrowserTemplate? function(){}: function(){
                             var x = this.series.xAxis.categories[this.x].info.trackId;
                             var y = this.series.yAxis.categories[this.y].info.trackId;
                             window.open(this.series.chart.userOptions.genomeBrowserTemplate.replace(/__x__/g,x).replace(/__y__/g,y),"_blank");
                           }
-                      }
-                  },
-                  events: {
-                      mouseOut: function () {
-                          this.chart.userOptions.onUserSelectsColumn("");
                       }
                   },
 
@@ -177,9 +179,15 @@ module.exports = React.createClass({
                       fontSize: '9px',
                       textOverflow: 'ellipsis'
                   },
+                  events: {
+                    mouseover: (function() { var f =this.props.onUserSelectsColumn; return function(){return f(this.value);};}.bind(this))()
+                    ,
+                    mouseout:(function() { var f =this.props.onUserSelectsColumn; return function(){return f("");};}.bind(this))()
+                  },
                   autoRotation: [-45, -90],
                   formatter: (function() { var f =this.props.formatters.xAxis; return function(){return f(this.value);};}.bind(this))()
               },
+
               opposite: 'true',
               categories: data.xAxisCategories
           },
@@ -191,8 +199,22 @@ module.exports = React.createClass({
                       fontSize: '10px',
                       color: '#148ff3'
                   },
+                  events: {
+                    mouseover:(function() {
+                       var f =this.props.onUserSelectsRow;
+                       return function(){
+                         return f( //We assume the longest text is the callback we want
+                           [].concat.apply([],this.element.children)
+                           .map((c)=>c.textContent)
+                           .reduce((l,r)=>(l.length>r.length?l:r), "")
+                         )
+                       };
+                     }.bind(this))(),
+                    mouseout: (function() { var f =this.props.onUserSelectsRow; return function(){return f("");};}.bind(this))()
+                  },
                   formatter: (function() { var f =this.props.formatters.yAxis; return function(){return f(this.value);};}.bind(this))()
               },
+
               categories: data.yAxisCategories,
               title: null,
               gridLineWidth: 0,
@@ -203,7 +225,14 @@ module.exports = React.createClass({
               useHTML: true,
               formatter: (function() { var f =this.props.formatters.tooltip; return function(){return f(this.series,this.point);};}.bind(this))()
           },
+          /*
+          TODO we can't access these in custom events like mouseover on row/column
+          because the "this" is not the Highcharts this but the "DOM API" this.
+          */
+          onUserSelectsRow: this.props.onUserSelectsRow,
           onUserSelectsColumn: this.props.onUserSelectsColumn,
+          onUserSelectsPoint: this.props.onUserSelectsPoint,
+
           genomeBrowserTemplate: this.props.genomeBrowserTemplate,
           series: data.dataSeries.map(function(e){
               return {
@@ -218,3 +247,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = HeatmapCanvas;

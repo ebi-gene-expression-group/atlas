@@ -142,8 +142,7 @@ var Container = React.createClass({
     }
     /*
     I am a hack and I attach event listeners to the labels.
-    There seems to be no way to do it in the HighchartsHeatmap component -
-    the labels that are selected when HighchartsHeatmap.componentDidUpdate is called are redrawn when both components appear on the screen
+    We are now using highcharts with the custom events package. TODO unhack me
     */
     Snap.selectAll('.highcharts-yaxis-labels > *')
     .forEach(function (v) {

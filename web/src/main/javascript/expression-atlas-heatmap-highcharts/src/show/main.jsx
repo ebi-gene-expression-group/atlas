@@ -13,6 +13,8 @@ var PropTypes = require('../PropTypes.js');
 var HeatmapCanvas = require('./HeatmapCanvas.jsx');
 var CoexpressionOption = require('./CoexpressionOption.jsx');
 
+var TooltipStateManager = require('../util/TooltipStateManager.jsx');
+
 //*------------------------------------------------------------------*
 
 var HeatmapLegendBox = React.createClass({
@@ -118,8 +120,35 @@ var HeatmapOptions = React.createClass({
     }
 });
 
+var HeatmapCanvasWithTooltips = React.createClass({
+  render: function(){
+    return (
+      <TooltipStateManager
+        managedComponent={HeatmapCanvas}
+        managedComponentProps={this.props.heatmapProps}
+        onUserSelectsColumn={this.props.onUserSelectsColumn}
+        onUserSelectsRow={this.props.onUserSelectsRow}
+        tooltips={this.props.tooltips} />
+    )
+  }
+});
+var __heatmapCanvas = function(tooltips, heatmapProps){
+  return (
+    !tooltips
+    ? <HeatmapCanvas {...heatmapProps} />
+    : <HeatmapCanvasWithTooltips
+        heatmapProps={heatmapProps}
+        onUserSelectsRow={heatmapProps.onUserSelectsRow}
+        onUserSelectsColumn={heatmapProps.onUserSelectsColumn}
+        tooltips={tooltips}
+      />
+  );
+};
+var heatmapCanvas = function(heatmapConfig, tooltips,heatmapProps){
+  return __heatmapCanvas(heatmapConfig.isExperimentPage && tooltips, heatmapProps);
+}
 
-var show = function (heatmapDataToPresent, orderings, colorAxis, formatters, legend, coexpressions, properties) {
+var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,tooltips, legend,coexpressions, properties) {
     var marginRight = 60;
     var heatmapConfig = properties.loadResult.heatmapConfig;
     return (
@@ -141,15 +170,18 @@ var show = function (heatmapDataToPresent, orderings, colorAxis, formatters, leg
             .map(function(e){return e.data;})
             .reduce(function(l,r){return l.concat(r);}, [])
             .length
-            ? <HeatmapCanvas
-                marginRight={marginRight}
-                ontologyIdsToHighlight={properties.ontologyIdsToHighlight}
-                heatmapData={heatmapDataToPresent}
-                colorAxis={colorAxis}
-                onHeatmapRedrawn={properties.onHeatmapRedrawn}
-                formatters={formatters}
-                genomeBrowserTemplate={heatmapConfig.genomeBrowserTemplate}
-                onUserSelectsColumn={properties.onOntologyIdIsUnderFocus} />
+            ? heatmapCanvas(heatmapConfig, tooltips, {
+              marginRight:marginRight,
+              ontologyIdsToHighlight:properties.ontologyIdsToHighlight,
+              heatmapData:heatmapDataToPresent,
+              colorAxis:colorAxis,
+              onHeatmapRedrawn:properties.onHeatmapRedrawn,
+              formatters:formatters,
+              genomeBrowserTemplate:heatmapConfig.genomeBrowserTemplate,
+              onUserSelectsRow: ()=>{},//TODO on hovering on row you can now highlight an anatomogram tissue
+              onUserSelectsColumn:properties.onOntologyIdIsUnderFocus, //TODO you can now use this callback to highlight row without the HighchartsHeatmapContainer.jsx hack
+              onUserSelectsPoint: properties.onOntologyIdIsUnderFocus
+            })
             : <p> No data in the series currently selected. </p>}
         </div>
 

@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = Object.assign(require('../webpack.config.js'), {
     entry: {
         heatmapHighcharts: './index.js',
-        dependencies: ['react', 'react-dom', 'jquery', 'react-highcharts', 'highcharts-heatmap']
+        dependencies: ['react', 'react-dom', 'jquery', 'react-highcharts', 'highcharts-heatmap','highcharts-custom-events']
     },
 
     output: {

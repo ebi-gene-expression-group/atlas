@@ -37,6 +37,7 @@
     "display-levels-button": "file:./atlas_modules/display-levels-button",
     "fancybox": "^3.0.0",
     "he": "^1.1.0",
+    "highcharts-custom-events": "^1.4.2",
     "highcharts-heatmap": "^0.1.2",
     "highcharts-more": "^0.1.2",
     "jquery": "^2.2.1",

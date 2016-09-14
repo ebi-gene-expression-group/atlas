@@ -10,6 +10,7 @@ var Button = require('react-bootstrap/lib/Button');
 var DownloadProfilesButton = require('download-profiles-button');
 
 var FormattersFactory = require('./Formatters.jsx');
+var TooltipsFactory = require('./Tooltips.jsx');
 var PropTypes = require('../PropTypes.js');
 var Show = require('../show/main.jsx');
 
@@ -44,7 +45,13 @@ module.exports = React.createClass({
     },
 
     _labels: function(){
-        return this.props.loadResult.heatmapData.dataSeries.map((e)=>{return {colour: e.info.colour, name: e.info.name}});
+        return (
+          this.props.loadResult.heatmapData.dataSeries
+          .map((e)=>{return {
+            colour: e.info.colour,
+            name: e.info.name
+          }})
+        );
     },
 
     _makeLabelToggle: function(ix){
@@ -105,6 +112,7 @@ module.exports = React.createClass({
           this._orderings(),
           this.props.loadResult.colorAxis||undefined,
           FormattersFactory(this.props.loadResult.heatmapConfig),
+          TooltipsFactory(this.props.loadResult),//TODO pass in what you need
           this._legend(),
           this._coexpressionOption(),
           this.props
