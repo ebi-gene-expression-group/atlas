@@ -18,7 +18,7 @@ module.exports = {
 			'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
                        'urijs', 'query-string', 'atlas-modernizr',
                        'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
-                       'highcharts-more', 'react-highcharts', 'react-addons-css-transition-group', 'react-emojione',
+                       'highcharts-more','react-highcharts', 'react-addons-css-transition-group', 'react-emojione',
                        'react-localstorage', 'react-timer-mixin', 'lodash', 'highcharts-heatmap', 'rc-slider/assets/index.css', 'fancybox/dist/css/jquery.fancybox.css',
                        'jquery-toolbar/jquery.toolbar.css']
     },
