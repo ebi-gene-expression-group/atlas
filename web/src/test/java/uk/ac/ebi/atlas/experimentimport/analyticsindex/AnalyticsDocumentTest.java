@@ -70,7 +70,7 @@ public class AnalyticsDocumentTest {
                 .assayGroupId("g1")
                 .expressionLevel(0.500001)
                 .build();
-        assertThat(documentAboveCutoff.isAboveExpressionThreshold(), is(true));
+        assertThat(documentAboveCutoff.validate(), is(true));
 
         AnalyticsDocument documentBelowCutoff = AnalyticsDocument.builder()
                 .bioentityIdentifier("foo")
@@ -84,7 +84,7 @@ public class AnalyticsDocumentTest {
                 .assayGroupId("g1")
                 .expressionLevel(0.5)
                 .build();
-        assertThat(documentBelowCutoff.isAboveExpressionThreshold(), is(false));
+        assertThat(documentBelowCutoff.validate(), is(false));
     }
 
     @Test
@@ -101,7 +101,7 @@ public class AnalyticsDocumentTest {
                 .assayGroupId("g1")
                 .expressionLevel(0.000001)
                 .build();
-        assertThat(documentAboveCutoff.isAboveExpressionThreshold(), is(true));
+        assertThat(documentAboveCutoff.validate(), is(true));
 
         AnalyticsDocument documentBelowCutoff = AnalyticsDocument.builder()
                 .bioentityIdentifier("foo")
@@ -115,7 +115,7 @@ public class AnalyticsDocumentTest {
                 .assayGroupId("g1")
                 .expressionLevel(0)
                 .build();
-        assertThat(documentBelowCutoff.isAboveExpressionThreshold(), is(false));
+        assertThat(documentBelowCutoff.validate(), is(false));
     }
 
     @Test
@@ -135,7 +135,7 @@ public class AnalyticsDocumentTest {
                 .pValue(0.099999)
                 .tStatistics(-0.184)
                 .build();
-        assertThat(documentAboveThreshold.isAboveExpressionThreshold(), is(true));
+        assertThat(documentAboveThreshold.validate(), is(true));
 
         AnalyticsDocument documentAbovePValueCutoff = AnalyticsDocument.builder()
                 .bioentityIdentifier("foo")
@@ -152,7 +152,7 @@ public class AnalyticsDocumentTest {
                 .pValue(0.1)
                 .tStatistics(-0.184)
                 .build();
-        assertThat(documentAbovePValueCutoff.isAboveExpressionThreshold(), is(false));
+        assertThat(documentAbovePValueCutoff.validate(), is(false));
 
         AnalyticsDocument documentBelowLogFoldChangeCutoff = AnalyticsDocument.builder()
                 .bioentityIdentifier("foo")
@@ -169,6 +169,6 @@ public class AnalyticsDocumentTest {
                 .pValue(0.0001)
                 .tStatistics(-0.184)
                 .build();
-        assertThat(documentBelowLogFoldChangeCutoff.isAboveExpressionThreshold(), is(false));
+        assertThat(documentBelowLogFoldChangeCutoff.validate(), is(false));
     }
 }

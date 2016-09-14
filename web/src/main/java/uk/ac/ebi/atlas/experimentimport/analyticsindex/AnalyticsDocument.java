@@ -84,7 +84,11 @@ public class AnalyticsDocument {
     @Field
     private Regulation regulation;
 
-    public boolean isAboveExpressionThreshold() {
+    public boolean validate() {
+        return isAboveExpressionThreshold();
+    }
+
+    private boolean isAboveExpressionThreshold() {
         return (experimentType.isRnaSeqBaseline() &&
                     rnaSeqBaselineExpressionAboveDefaultCutoff.apply(new BaselineExpression(expressionLevel)) ||
                 experimentType.isProteomicsBaseline() &&
