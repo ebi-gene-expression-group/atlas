@@ -39,7 +39,7 @@ public class AnalyticsIndexDAO {
                 thisBatchSize = 0;
                 while (iterator.hasNext() && thisBatchSize < batchSize) {
                     AnalyticsDocument document = iterator.next();
-                    if (document.isAboveExpressionThreshold()) {
+                    if (document.validate()) {
                         builder.add(document);
                         thisBatchSize++;
                     }
@@ -47,7 +47,7 @@ public class AnalyticsIndexDAO {
 
                 ImmutableList<AnalyticsDocument> documentList = builder.build();
                 if (!documentList.isEmpty()) {
-                    solrClient.addBeans(builder.build(), COMMIT_TIME_IN_MILLISECONDS);
+                    solrClient.addBeans(documentList, COMMIT_TIME_IN_MILLISECONDS);
                     count += thisBatchSize;
                 }
             }
