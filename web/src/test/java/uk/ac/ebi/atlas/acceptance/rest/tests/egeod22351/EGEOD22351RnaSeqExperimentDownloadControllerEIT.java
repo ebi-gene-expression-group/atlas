@@ -8,7 +8,12 @@ import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 
 public class EGEOD22351RnaSeqExperimentDownloadControllerEIT {
 
@@ -52,15 +57,9 @@ public class EGEOD22351RnaSeqExperimentDownloadControllerEIT {
 
     @Test
     public void verifyLines() {
-
         List<String> firstLine = subject.getRowValues(4);
         assertThat(firstLine.get(0), startsWith("ENSMUSG"));
         assertThat(firstLine, hasSize(4));
-
-        List<String> secondLine = subject.getRowValues(5);
-        assertThat(secondLine.get(0), startsWith("ENSMUSG"));
-        assertThat(secondLine, hasSize(4));
-
     }
 
     @Test
