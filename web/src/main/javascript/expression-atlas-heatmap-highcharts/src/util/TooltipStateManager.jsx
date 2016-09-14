@@ -22,50 +22,35 @@ var TooltipStateManager = React.createClass({
     managedComponent: React.PropTypes.any.isRequired,
     managedComponentProps: React.PropTypes.object.isRequired
   },
-  getInitialState: function(){
-    return (
-      {
-        hoveredRow:"",
-        hoveredColumn:"",
-        hoveredPoint:""
-      }
-    )
-  },
 
   _onUserSelectsRow:function(rowLabel){
-    this.setState({hoveredRow:rowLabel||""});
+    this.refs["tooltip"].setState(
+      rowLabel
+      ? {placeholder: this.props.tooltips.row(rowLabel),
+        extraClass:"gxaTooltip"}
+      : {extraClass:"gxaDisabled"}
+    );
     this.props.onUserSelectsRow && this.props.onUserSelectsRow(rowLabel);
   },
   _onUserSelectsColumn:function(columnLabel){
-    this.setState({hoveredColumn:columnLabel||""});
+    this.refs["tooltip"].setState(
+      columnLabel
+      ? {placeholder: this.props.tooltips.column(columnLabel),
+        extraClass:"gxaTooltip"}
+      : {extraClass:"gxaDisabled"}
+    );
     this.props.onUserSelectsColumn && this.props.onUserSelectsColumn(columnLabel);
   },
   _onUserSelectsPoint:function(hoveredPoint){
-    this.setState({hoveredPoint:hoveredPoint||""});
+    this.refs["tooltip"].setState(
+      hoveredPoint
+      ? {placeholder: this.props.tooltips.point(hoveredPoint),
+        extraClass:"gxaTooltip"}
+      : {extraClass:"gxaDisabled"}
+    );
     this.props.onUserSelectsPoint && this.props.onUserSelectsPoint(hoveredPoint);
   },
 
-  _tooltipContent: function(){
-    return (
-      this.state.hoveredRow
-      ? this.props.tooltips.row(this.state.hoveredRow)
-      : this.state.hoveredColumn
-        ? this.props.tooltips.column(this.state.hoveredColumn)
-        : this.state.hoveredPoint
-          ? this.props.tooltips.point(this.state.hoveredPoint)
-          : <div />
-    );
-  },
-  _showTooltip: function(){
-    return this.state.hoveredRow || this.state.hoveredColumn /*||this.state.hoveredPoint*/;
-  },
-
-  componentDidUpdate: function(){
-    this.refs["tooltip"].setState({
-      placeholder: this._tooltipContent(),
-      extraClass: this._showTooltip()? "gxaTooltip":"gxaDisabled"
-    })
-  },
 
   render: function () {
     var ManagedComponent = this.props.managedComponent;
@@ -87,7 +72,7 @@ var TooltipStateManager = React.createClass({
           id='gxaTooltip'
           type="light"
           class={"gxaDisabled"}>
-          {this._tooltipContent()}
+          <div/>
         </ReactTooltip>
       </div>
     )
