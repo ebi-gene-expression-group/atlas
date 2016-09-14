@@ -190,6 +190,7 @@
                         <excludes>
                             <!--suppress MavenModelInspection -->
                             <exclude>${failsafe.excludes}</exclude>
+                            <exclude>**/*SIT.java</exclude>
                         </excludes>
                     </configuration>
                     <executions>
