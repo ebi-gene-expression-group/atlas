@@ -9,44 +9,33 @@
     min-height: 210px;
 }
 
-#barcharts_legend_list_items {
+#legend {
     color: #606060;
     margin-left: 180px;
     border: 0 solid olive;
 }
 
-#barcharts_legend_list_items .legend-text {
+#legend .legend-item {
     display: inline-block;
+    margin-left: 8px;
     padding: 4px;
     vertical-align: middle;
+    cursor: default;
 }
 
-#barcharts_legend_list_items .legend-item {
+#legend .legend-item.clickable {
     cursor: pointer;
-    display: inline-block;
-    padding: 4px;
-    vertical-align: middle;
 }
 
-#barcharts_legend_list_items .legend-item:hover {
-    color: black;
-}
-
-#barcharts_legend_list_items .legend-item.legend-item-off {
+#legend .legend-item.legend-item-off {
     color: #ccc;
 }
 
-#barcharts_legend_list_items .legend-item.legend-item-off div {
+#legend .legend-item.legend-item-off div {
     background-color: #f7f7f7;
 }
 
-#barcharts_legend_list_items .legend-item.special {
-    cursor: default;
-    margin-left: 8px;
-    color: black;
-}
-
-#barcharts_legend_list_items .legend-item .legend-rectangle {
+#legend .legend-item .legend-rectangle {
     width: 12px;
     height: 12px;
     border: 1px rgba(0, 0, 0, 0.2) solid;
@@ -55,12 +44,12 @@
     vertical-align: middle;
 }
 
-#barcharts_legend_list_items .legend-item .icon-generic:before {
+#legend .legend-item .icon-generic:before {
     font-size: 180%;
     color: #7e7e7e;
 }
 
-#barcharts_legend_list_items .legend-item:hover .icon-generic:before {
+#legend .legend-item:hover .icon-generic:before {
     color: #353535;
 }
 

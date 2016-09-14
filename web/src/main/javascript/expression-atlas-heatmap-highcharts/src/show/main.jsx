@@ -20,12 +20,16 @@ var HeatmapLegendBox = React.createClass({
         name: React.PropTypes.string.isRequired,
         colour: React.PropTypes.string.isRequired,
         on: React.PropTypes.bool.isRequired,
-        onClickCallback: React.PropTypes.func.isRequired
+        onClickCallback: React.PropTypes.func.isRequired,
+        clickable: React.PropTypes.bool.isRequired
     },
 
     render: function () {
         return (
-            <div className={"legend-item "+(this.props.on? "special" : "legend-item-off")} onClick={this.props.onClickCallback}>
+            <div className={"legend-item " +
+                            (this.props.clickable ? "clickable " : "") +
+                            (this.props.clickable && !this.props.on ? "legend-item-off" : "")}
+                 onClick={this.props.onClickCallback}>
                 <div style={{background: this.props.colour}} className="legend-rectangle"></div>
                 <span style={{verticalAlign: "middle"}}>{this.props.name}</span>
             </div>
@@ -115,7 +119,7 @@ var HeatmapOptions = React.createClass({
 });
 
 
-var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,legend,coexpressions, properties) {
+var show = function (heatmapDataToPresent, orderings, colorAxis, formatters, legend, coexpressions, properties) {
     var marginRight = 60;
     var heatmapConfig = properties.loadResult.heatmapConfig;
     return (
@@ -149,12 +153,10 @@ var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,legend
             : <p> No data in the series currently selected. </p>}
         </div>
 
-        <div id ="barcharts_legend_list_items" ref="barcharts_legend_items">
-          { legend
-            .map((legendItemProps) => <HeatmapLegendBox {...legendItemProps} />)
-          }
+        <div id ="legend">
+          {legend.map((legendItemProps) => <HeatmapLegendBox {...legendItemProps} />)}
 
-          <div className="legend-item special">
+          <div className="legend-item">
             <span className="icon icon-generic"
               data-icon="i" data-toggle="tooltip" data-placement="bottom"
               title="Baseline expression levels in RNA-seq experiments are in FPKM or TPM. Low: 0-10, Medium: 11-1000,  High: >1000. Proteomics expression levels are mapped to low, medium, high on per experiment basis.">
@@ -163,12 +165,13 @@ var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,legend
           <HeatmapLegendBox key={"No data available"}
                             name={"No data available"}
                             colour={"white"}
-                            on={ true}
-                            onClickCallback={function(){}}/>
+                            on={false}
+                            onClickCallback={function(){}}
+                            clickable={false}/>
         </div>
         {coexpressions? <CoexpressionOption {...coexpressions}/> : null }
       </div>
     );
-}
+};
 
 module.exports = show;

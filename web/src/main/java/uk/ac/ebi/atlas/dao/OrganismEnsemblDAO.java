@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.dao;
 
-
 import com.google.common.collect.ImmutableMap;
-import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.inject.Inject;
@@ -11,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 @Named
-@Scope("singleton")
 public class OrganismEnsemblDAO {
 
     private static final String SELECT_ENSEMBLDB =

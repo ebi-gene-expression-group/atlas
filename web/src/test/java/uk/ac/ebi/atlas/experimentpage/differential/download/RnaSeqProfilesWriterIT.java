@@ -30,24 +30,29 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import javax.inject.Inject;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
 public class RnaSeqProfilesWriterIT {
 
-    public static final int GENE_NAME_INDEX = 1;
+    private static final int GENE_NAME_INDEX = 1;
 
     private RnaSeqProfilesWriter subject;
 
@@ -90,7 +95,7 @@ public class RnaSeqProfilesWriterIT {
 
         RnaSeqProfilesTSVWriter geneProfileTsvWriter = new RnaSeqProfilesTSVWriter(csvWriterFactoryMock);
         geneProfileTsvWriter.setRequestContext(requestContext);
-        geneProfileTsvWriter.setTsvFileMastheadTemplateResource(tsvFileMastheadTemplateResource);
+        geneProfileTsvWriter.setTsvFileMastheadTemplate(tsvFileMastheadTemplateResource);
 
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 

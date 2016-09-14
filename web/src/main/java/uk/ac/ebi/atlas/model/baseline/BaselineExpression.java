@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -6,7 +5,6 @@ import com.esotericsoftware.kryo.KryoSerializable;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.atlas.model.Expression;
 
@@ -25,6 +23,11 @@ public class BaselineExpression implements Expression, KryoSerializable {
     // No-arg constructor required by Kryo. Can be private because Kryo uses reflection.
     private BaselineExpression() {}
 
+    public BaselineExpression(double level) {
+        this.level = level;
+        this.known = true;
+    }
+
     public BaselineExpression(double level, FactorGroup factorGroup) {
         this(level, factorGroup, new double[]{});
     }
@@ -34,10 +37,9 @@ public class BaselineExpression implements Expression, KryoSerializable {
     }
 
     private BaselineExpression(double level, FactorGroup factorGroup, double[] quartiles) {
-        this.level = level;
+        this(level);
         this.factorGroup = factorGroup;
         this.levelString = removeTrailingZero(level);
-        this.known = true;
         this.quartiles = quartiles;
     }
 

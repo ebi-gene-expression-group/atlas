@@ -74,11 +74,12 @@ module.exports = React.createClass({
         this.props.loadResult.heatmapData.dataSeries
           .map(function(e, ix){
             return {
-              key:e.info.name,
-              name:e.info.name,
-              colour:e.info.colour,
-              on:this.state.dataSeriesToShow[ix],
-              onClickCallback:this._makeLabelToggle(ix)
+              key: e.info.name,
+              name: e.info.name,
+              colour: e.info.colour,
+              on: this.state.dataSeriesToShow[ix],
+              onClickCallback: this._makeLabelToggle(ix),
+              clickable: true
             };
           }.bind(this)
         )

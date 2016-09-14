@@ -10,7 +10,6 @@ import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDAO;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
@@ -83,9 +82,10 @@ public class BaselineAnalyticsIndexerService {
 
         try (ObjectInputStream<BaselineAnalytics> closeableInputStream = inputStream) {
             return analyticsIndexDAO.addDocuments(
-                    new BaselineAnalyticsDocumentStream(experiment, new IterableObjectInputStream<>(closeableInputStream),
-                            conditionSearchTermsByAssayGroupId,bioentityIdToIdentifierSearch)
-                    , batchSize);
+                    new BaselineAnalyticsDocumentStream(
+                            experiment, new IterableObjectInputStream<>(closeableInputStream),
+                            conditionSearchTermsByAssayGroupId, bioentityIdToIdentifierSearch),
+                    batchSize);
 
         } catch (IOException e) {
             throw new AnalyticsIndexerServiceException(e);

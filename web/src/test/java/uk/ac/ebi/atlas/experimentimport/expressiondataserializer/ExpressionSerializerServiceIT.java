@@ -30,7 +30,7 @@ import static org.mockito.Mockito.verify;
 @Named
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
 public class ExpressionSerializerServiceIT {
 
     private static final String accession = "E-MTAB-513";

@@ -21,7 +21,7 @@ import static uk.ac.ebi.atlas.utils.RegexMatcher.matches;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
 public class MicroarrayProfilesTSVWriterIT {
 
     private static final String MICROARRAY_EXPERIMENT_ACCESSION = "E-GEOD-13316";

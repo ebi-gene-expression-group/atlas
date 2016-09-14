@@ -4,7 +4,6 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
@@ -13,11 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Set;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 10/10/15.
- */
 @Named
-@Scope("singleton")
 public class IdentifierSearchTermsTrader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IdentifierSearchTermsTrader.class);
