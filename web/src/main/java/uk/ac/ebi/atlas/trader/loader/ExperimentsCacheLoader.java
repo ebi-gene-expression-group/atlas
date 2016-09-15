@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader.loader;
 
 import com.google.common.cache.CacheLoader;
@@ -12,6 +11,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -54,7 +54,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
     }
 
     @Override
-    public T load(String experimentAccession) throws IOException {
+    public T load(@Nonnull String experimentAccession) throws IOException {
 
         LOGGER.info("loading experiment with accession: {}", experimentAccession);
 
@@ -78,7 +78,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
     protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription,
                               boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException;
 
-    private final String fetchExperimentNameFromArrayExpress(String experimentAccession, ExperimentDTO experimentDTO) {
+    private String fetchExperimentNameFromArrayExpress(String experimentAccession, ExperimentDTO experimentDTO) {
         try {
             return arrayExpressClient.fetchExperimentName(experimentAccession);
         } catch (Exception e) {
@@ -86,7 +86,5 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
             return experimentDTO.getTitle();
         }
     }
-
-
 
 }

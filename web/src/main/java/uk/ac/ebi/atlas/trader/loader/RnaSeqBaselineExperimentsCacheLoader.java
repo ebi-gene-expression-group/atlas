@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader.loader;
 
 import uk.ac.ebi.atlas.model.ExperimentType;

@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader.loader;
 
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
@@ -9,14 +8,12 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfigu
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
-import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 @Named
 public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<MicroarrayExperiment> {

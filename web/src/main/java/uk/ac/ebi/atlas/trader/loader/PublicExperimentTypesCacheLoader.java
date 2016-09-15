@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader.loader;
 
 import com.google.common.cache.CacheLoader;
@@ -6,6 +5,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -20,7 +20,7 @@ public class PublicExperimentTypesCacheLoader extends CacheLoader<String, Experi
     }
 
     @Override
-    public ExperimentType load(String experimentAccession) {
+    public ExperimentType load(@Nonnull String experimentAccession) {
         ExperimentDTO experimentDTO = experimentDAO.findPublicExperiment(experimentAccession);
 
         return experimentDTO.getExperimentType();

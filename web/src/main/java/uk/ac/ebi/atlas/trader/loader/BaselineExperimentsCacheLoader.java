@@ -9,7 +9,6 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
-import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import java.io.IOException;
 import java.util.ArrayList;
