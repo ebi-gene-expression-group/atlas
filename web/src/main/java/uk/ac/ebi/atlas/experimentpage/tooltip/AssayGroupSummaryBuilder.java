@@ -15,8 +15,6 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
-@Named
-@Scope("request")
 public class AssayGroupSummaryBuilder {
 
     private ExperimentDesign experimentDesign;

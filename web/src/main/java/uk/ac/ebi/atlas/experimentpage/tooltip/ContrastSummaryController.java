@@ -19,12 +19,9 @@ public class ContrastSummaryController {
 
     private ExperimentTrader experimentTrader;
 
-    private ContrastSummaryBuilder contrastSummaryBuilder;
-
     @Inject
-    public ContrastSummaryController(ExperimentTrader experimentTrader, ContrastSummaryBuilder contrastSummaryBuilder) {
+    public ContrastSummaryController(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
-        this.contrastSummaryBuilder = contrastSummaryBuilder;
     }
 
     @RequestMapping(value = "/rest/contrast-summary", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
@@ -43,7 +40,8 @@ public class ContrastSummaryController {
 
         ExperimentDesign experimentDesign = differentialExperiment.getExperimentDesign();
 
-        ContrastSummary contrastSummary = contrastSummaryBuilder.withExperimentDesign(experimentDesign)
+        ContrastSummary contrastSummary = new ContrastSummaryBuilder()
+                .withExperimentDesign(experimentDesign)
                 .forContrast(contrast)
                 .withExperimentDescription(differentialExperiment.getDescription())
                 .build();

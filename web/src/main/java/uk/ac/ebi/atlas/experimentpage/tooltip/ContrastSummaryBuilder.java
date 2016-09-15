@@ -11,8 +11,6 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 import javax.inject.Named;
 import java.util.*;
 
-@Named
-@Scope("request")
 public class ContrastSummaryBuilder {
 
     protected static final String ARRAY_DESIGN = "array design";

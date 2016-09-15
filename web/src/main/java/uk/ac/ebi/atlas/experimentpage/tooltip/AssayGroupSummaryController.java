@@ -19,12 +19,10 @@ public class AssayGroupSummaryController {
 
     private ExperimentTrader experimentTrader;
 
-    private AssayGroupSummaryBuilder assayGroupSummaryBuilder;
 
     @Inject
-    public AssayGroupSummaryController(ExperimentTrader experimentTrader, AssayGroupSummaryBuilder assayGroupSummaryBuilder) {
+    public AssayGroupSummaryController(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
-        this.assayGroupSummaryBuilder = assayGroupSummaryBuilder;
     }
 
     @RequestMapping(value = "/rest/assayGroup-summary", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
@@ -39,7 +37,8 @@ public class AssayGroupSummaryController {
 
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
 
-        AssayGroupSummary assayGroupSummary = assayGroupSummaryBuilder.withExperimentDesign(experimentDesign).forAssayGroup(assayGroup).build();
+        AssayGroupSummary assayGroupSummary = new AssayGroupSummaryBuilder().withExperimentDesign(experimentDesign).forAssayGroup(assayGroup)
+                .build();
 
         return new Gson().toJson(assayGroupSummary);
     }
