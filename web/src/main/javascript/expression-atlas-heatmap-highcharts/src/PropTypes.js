@@ -36,7 +36,11 @@ var validateDataSeries = function(dataSeries){
 var AxisCategoriesPropType = React.PropTypes.arrayOf(
     React.PropTypes.shape({
       id: React.PropTypes.string, // ontology ID can be missing for x axis
-      label: React.PropTypes.string.isRequired
+      label: React.PropTypes.string.isRequired,
+      info: React.PropTypes.shape({
+        trackId:React.PropTypes.string,
+        tooltip: React.PropTypes.object
+      }).isRequired
     })
   ).isRequired;
 

@@ -10,7 +10,7 @@ var Button = require('react-bootstrap/lib/Button');
 var DownloadProfilesButton = require('download-profiles-button');
 
 var FormattersFactory = require('./Formatters.jsx');
-var TooltipsFactory = require('./Tooltips.jsx');
+var TooltipsFactory = require('./tooltips/main.jsx');
 var PropTypes = require('../PropTypes.js');
 var Show = require('../show/main.jsx');
 
@@ -112,7 +112,7 @@ module.exports = React.createClass({
           this._orderings(),
           this.props.loadResult.colorAxis||undefined,
           FormattersFactory(this.props.loadResult.heatmapConfig),
-          TooltipsFactory(this.props.loadResult),//TODO pass in what you need
+          TooltipsFactory(this.props.loadResult.heatmapConfig, this.props.loadResult.heatmapData.xAxisCategories),
           this._legend(),
           this._coexpressionOption(),
           this.props

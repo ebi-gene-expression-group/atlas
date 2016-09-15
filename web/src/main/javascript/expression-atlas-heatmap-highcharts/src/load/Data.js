@@ -7,22 +7,33 @@ var _ = require('lodash');
 
 var getXAxisCategories = function (columnHeaders, config) {
   return columnHeaders.map(
-    config.isDifferential
-    ? function (columnHeader) {
-        return {"label": columnHeader.displayName,
-                "id" : columnHeader.id,
-                "info":{
-                  trackId:columnHeader.id
-                }};
-      }
+    config.isExperimentPage
+    ? config.isDifferential
+      ? function (columnHeader) {
+          return {"label": columnHeader.displayName,
+                  "id" : columnHeader.id,
+                  "info":{
+                    trackId:columnHeader.id,
+                    tooltip:columnHeader.contrastSummary
+                  }};
+        }
+      : function (columnHeader) {
+          return {"label": columnHeader.factorValue,
+                  "id" : columnHeader.factorValueOntologyTermId || "",
+                  "info":{
+                    trackId:columnHeader.assayGroupId,
+                    tooltip:columnHeader.assayGroupSummary
+                  }};
+        }
     : function (columnHeader) {
         return {"label": columnHeader.factorValue,
                 "id" : columnHeader.factorValueOntologyTermId || "",
                 "info":{
-                  trackId:config.isExperimentPage? columnHeader.assayGroupId : ""
+                  trackId:"",
+                  tooltip:{}
                 }};
       }
-    );
+      );
 };
 
 var getYAxisCategories = function (rows, config) {
