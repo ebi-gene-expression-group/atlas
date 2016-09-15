@@ -30,12 +30,14 @@ import java.util.Map;
 
 @Controller
 @Scope("request")
-public class MicroarrayExperimentPageController extends DifferentialExperimentPageController<MicroarrayExperiment, MicroarrayRequestPreferences, MicroarrayProfile> {
+public class MicroarrayExperimentPageController extends DifferentialExperimentPageController{
 
     private ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
 
     private ExperimentTrader experimentTrader;
 
+    private DifferentialExperimentPageService<MicroarrayExperiment, MicroarrayRequestPreferences, MicroarrayProfile>
+            differentialExperimentPageService;
     @Inject
     @Required
     public void setExperimentTrader(ExperimentTrader experimentTrader) {
@@ -45,9 +47,11 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     @Inject
     public MicroarrayExperimentPageController(MicroarrayRequestContextBuilder requestContextBuilder,
                                               MicroarrayProfilesHeatMap profilesHeatMap,
-                                              DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesKingdomTrader speciesKingdomTrader,
+                                              DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                               TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder, ApplicationProperties applicationProperties) {
-        super(requestContextBuilder, profilesHeatMap, differentialProfilesViewModelBuilder,
+        differentialExperimentPageService =
+                new DifferentialExperimentPageService<>(requestContextBuilder, profilesHeatMap,
+                differentialProfilesViewModelBuilder,
                 tracksUtil, gseaPlotsBuilder,applicationProperties);
 
     }
@@ -65,7 +69,7 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
         }
 
 
-        super.prepareRequestPreferencesAndHeaderData(
+        differentialExperimentPageService.prepareRequestPreferencesAndHeaderData(
                 (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                 preferences, model,request
         );
@@ -80,7 +84,7 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
                                        BindingResult result, Model model, HttpServletResponse response) {
 //        experimentPageCallbacks.adjustReceivedObjects(preferences);
 
-        super.populateModelWithHeatmapData(
+        differentialExperimentPageService.populateModelWithHeatmapData(
                 (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                 preferences, result, model
         );

@@ -18,7 +18,6 @@ import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -31,12 +30,14 @@ import java.util.Map;
 
 @Controller
 @Scope("request")
-public class RnaSeqExperimentPageController extends DifferentialExperimentPageController<DifferentialExperiment, DifferentialRequestPreferences, RnaSeqProfile> {
+public class RnaSeqExperimentPageController extends DifferentialExperimentPageController {
 
     private ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
 
     private ExperimentTrader experimentTrader;
 
+    private DifferentialExperimentPageService<DifferentialExperiment, DifferentialRequestPreferences, RnaSeqProfile>
+        differentialExperimentPageService;
     @Inject
     @Required
     public void setExperimentTrader(ExperimentTrader experimentTrader) {
@@ -50,7 +51,8 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
                                           TracksUtil tracksUtil,
                                           GseaPlotsBuilder gseaPlotsBuilder,
                                           ApplicationProperties applicationProperties) {
-        super(rnaSeqRequestContextBuilder, profilesHeatMap, differentialProfilesViewModelBuilder,
+        differentialExperimentPageService = new DifferentialExperimentPageService<>(rnaSeqRequestContextBuilder, profilesHeatMap,
+                differentialProfilesViewModelBuilder,
                 tracksUtil, gseaPlotsBuilder,applicationProperties);
     }
 
@@ -66,7 +68,7 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
         }
 
 
-        super.prepareRequestPreferencesAndHeaderData(
+        differentialExperimentPageService.prepareRequestPreferencesAndHeaderData(
                 (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, model,request
         );
 
@@ -80,7 +82,7 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
                                        BindingResult result, Model model, HttpServletResponse response) {
 //        experimentPageCallbacks.adjustReceivedObjects(preferences);
 
-        super.populateModelWithHeatmapData(
+        differentialExperimentPageService.populateModelWithHeatmapData(
                 (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, result, model
         );
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
