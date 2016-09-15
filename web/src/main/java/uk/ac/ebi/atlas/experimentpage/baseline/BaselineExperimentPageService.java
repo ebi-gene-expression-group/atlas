@@ -3,24 +3,23 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 import com.google.common.base.Optional;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.experimentpage.differential.ExperimentPageService;
-import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
+import uk.ac.ebi.atlas.experimentpage.tooltip.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
-import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
-import uk.ac.ebi.atlas.web.*;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -97,7 +96,8 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
         BaselineProfilesHeatMapWrangler heatMapResults = baselineProfilesHeatMapWranglerFactory.create(preferences,experiment);
 
-        model.addAttribute("jsonColumnHeaders", constructColumnHeaders(filteredAssayGroupFactors));
+        model.addAttribute("jsonColumnHeaders",
+                gson.toJson(constructColumnHeaders(filteredAssayGroupFactors,experiment)));
 
         model.addAttribute("jsonProfiles", viewModelAsJson(heatMapResults.getJsonProfiles()));
 
@@ -137,8 +137,24 @@ public class BaselineExperimentPageService extends ExperimentPageService {
                 : "";
     }
     
-    private String constructColumnHeaders(List<AssayGroupFactor> filteredAssayGroupFactors){
-        return gson.toJson(AssayGroupFactorViewModel.createList(filteredAssayGroupFactors));
+    private JsonArray constructColumnHeaders(List<AssayGroupFactor> filteredAssayGroupFactors, BaselineExperiment experiment){
+        JsonArray result = new JsonArray();
+
+        for(AssayGroupFactor assayGroupFactor: filteredAssayGroupFactors){
+            JsonObject o = new JsonObject();
+            o.addProperty("assayGroupId", assayGroupFactor.getAssayGroupId());
+            o.addProperty("factorValue", assayGroupFactor.getValue());
+            o.addProperty("factorValueOntologyTermId", assayGroupFactor.getValueOntologyTermId());
+            o.add("assayGroupSummary",
+                    new AssayGroupSummaryBuilder()
+                    .forAssayGroup(experiment.getAssayGroups().getAssayGroup(assayGroupFactor.getAssayGroupId()))
+                    .withExperimentDesign(experiment.getExperimentDesign())
+                    .build().toJson());
+            result.add(o);
+        }
+
+
+        return result;
     }
 
     private void addFactorMenu(Model model, BaselineExperiment experiment, BaselineRequestContext requestContext) {

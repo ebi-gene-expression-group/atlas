@@ -1,6 +1,9 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Iterator;
@@ -54,5 +57,17 @@ public class AssayGroup implements Iterable<String>{
         if (obj == null || getClass() != obj.getClass()) {return false;}
         final AssayGroup other = (AssayGroup) obj;
         return Objects.equals(this.id, other.id) && Objects.equals(this.assayAccessions, other.assayAccessions);
+    }
+
+    public JsonObject toJson(){
+        JsonObject o = new JsonObject();
+        o.addProperty("id", id);
+        JsonArray a = new JsonArray();
+        for(String assayAccession: assayAccessions){
+            a.add(new JsonPrimitive(assayAccession));
+        }
+        o.add("assayAccessions", a);
+        o.addProperty("replicates", replicates);
+        return o;
     }
 }

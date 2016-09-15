@@ -1,8 +1,5 @@
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.gson.JsonObject;
-import uk.ac.ebi.atlas.experimentpage.tooltip.AssayGroupSummary;
-import uk.ac.ebi.atlas.experimentpage.tooltip.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.model.*;
 
 import java.util.*;
@@ -49,18 +46,5 @@ public class BaselineExperiment extends Experiment {
     @Override
     protected Set<String> getAnalysedRowsAccessions() {
         return getExperimentRunAccessions();
-    }
-
-    @Override
-    public Map<String, ?> headerSummary() {
-        Map<String, AssayGroupSummary> result = new HashMap<>();
-        for(AssayGroup assayGroup: assayGroups){
-            result.put(assayGroup.getId(),
-                    new AssayGroupSummaryBuilder()
-                            .forAssayGroup(assayGroup)
-                            .withExperimentDesign(experimentDesign)
-                            .build());
-        }
-        return result;
     }
 }

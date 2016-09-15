@@ -98,8 +98,6 @@ public abstract class Experiment implements Serializable {
 
     protected abstract Set<String> getAnalysedRowsAccessions();
 
-    public abstract Map<String, ?> headerSummary();
-
     public Map<String, ?> getAttributes(){
         Map<String, Object> result = new HashMap<>();
         result.put("type", type);

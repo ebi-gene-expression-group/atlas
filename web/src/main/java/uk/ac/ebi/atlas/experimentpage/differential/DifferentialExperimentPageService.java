@@ -1,21 +1,14 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonNull;
-import org.apache.solr.common.SolrException;
-import org.springframework.http.HttpStatus;
+import com.google.gson.*;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
+import uk.ac.ebi.atlas.experimentpage.tooltip.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
@@ -91,7 +84,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
                 if (!differentialProfiles.isEmpty()) {
                     model.addAttribute("gseaPlots", gson.toJson(gseaPlotsBuilder.createJsonByContrastId(experiment
                             .getAccession(), contrasts)));
-                    model.addAttribute("jsonColumnHeaders", gson.toJson(contrasts));
+                    model.addAttribute("jsonColumnHeaders", gson.toJson(constructColumnHeaders(contrasts,experiment)));
                     model.addAttribute("jsonProfiles", gson.toJson(differentialProfilesViewModelBuilder.build
                             (differentialProfiles, contrasts)));
                 }
@@ -101,6 +94,20 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
             }
 
         }
+    }
+
+    private JsonArray constructColumnHeaders(Iterable<Contrast> contrasts, DifferentialExperiment
+            differentialExperiment){
+        JsonArray result = new JsonArray();
+        for(Contrast contrast: contrasts){
+            JsonObject o = contrast.toJson();
+            o.add("contrastSummary", new ContrastSummaryBuilder()
+                    .forContrast(contrast)
+                    .withExperimentDesign(differentialExperiment.getExperimentDesign())
+                    .withExperimentDescription(differentialExperiment.getDescription())
+                    .build().toJson());
+        }
+        return result;
     }
 
     private void initRequestPreferences(K requestPreferences, T experiment) {

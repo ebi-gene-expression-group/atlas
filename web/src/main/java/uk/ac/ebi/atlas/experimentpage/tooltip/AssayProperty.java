@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.tooltip;
 
 import com.google.common.base.Objects;
+import com.google.gson.JsonObject;
 
 public class AssayProperty implements Comparable<AssayProperty> {
     protected String propertyName;
@@ -64,5 +65,13 @@ public class AssayProperty implements Comparable<AssayProperty> {
                 .add("testValue", testValue)
                 .add("contrastPropertyType", contrastPropertyType)
                 .toString();
+    }
+
+    public JsonObject toJson(){
+        JsonObject o = new JsonObject();
+        o.addProperty("propertyName", propertyName);
+        o.addProperty("testValue", testValue);
+        o.addProperty("contrastPropertyType", contrastPropertyType.name());
+        return o;
     }
 }

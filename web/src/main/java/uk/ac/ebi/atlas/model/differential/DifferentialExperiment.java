@@ -73,21 +73,6 @@ public class DifferentialExperiment extends Experiment {
     }
 
     @Override
-    public Map<String, ?> headerSummary() {
-        Map<String, ContrastSummary> result = new HashMap<>();
-        for(Contrast contrast : contrastsById.values() ){
-            result.put(contrast.getId(),
-                    new ContrastSummaryBuilder()
-                            .forContrast(contrast)
-                            .withExperimentDesign(experimentDesign)
-                            .withExperimentDescription(description)
-                            .build());
-        }
-
-        return result;
-    }
-
-    @Override
     public Map<String, ?> getAttributes(){
         Map<String, Object> result = new HashMap<>();
         result.putAll(super.getAttributes());

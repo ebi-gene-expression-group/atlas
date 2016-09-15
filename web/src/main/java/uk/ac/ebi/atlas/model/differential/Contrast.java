@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
+import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.AssayGroup;
 
 import java.util.Set;
@@ -78,5 +79,15 @@ public class Contrast implements Comparable<Contrast> {
             return 1;
         }
         return this.getDisplayName().compareTo(o.getDisplayName());
+    }
+
+    public JsonObject toJson(){
+        JsonObject o = new JsonObject();
+        o.addProperty("id", id);
+        o.addProperty("arrayDesignAccession", arrayDesignAccession);
+        o.add("referenceAssayGroup", referenceAssayGroup.toJson());
+        o.add("testAssayGroup", testAssayGroup.toJson());
+        o.addProperty("displayName",displayName);
+        return o;
     }
 }

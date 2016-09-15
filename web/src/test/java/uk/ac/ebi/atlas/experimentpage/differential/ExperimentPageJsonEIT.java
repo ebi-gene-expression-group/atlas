@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
@@ -13,25 +14,38 @@ public class ExperimentPageJsonEIT {
        return new EndPoint("/gxa/json/experiments/"+experimentAccession).getJsonResponse();
     }
 
-    void assertAboutPayload(JsonObject payload){
-        assertTrue(payload.has("experiment"));
-        assertTrue(payload.get("experiment").getAsJsonObject().has("headerSummary"));
+    void assertAboutBaselinePayload(JsonObject payload){
+        assertTrue(payload.has("columnHeaders"));
+        for(JsonElement e: payload.get("columnHeaders").getAsJsonArray()){
+            JsonObject columnHeader = e.getAsJsonObject();
+            assertTrue(columnHeader.has("factorValue"));
+            assertTrue(columnHeader.has("assayGroupSummary"));
+        }
+    }
+
+    void assertAboutDifferentialPayload(JsonObject payload){
+        assertTrue(payload.has("columnHeaders"));
+        for(JsonElement e: payload.get("columnHeaders").getAsJsonArray()){
+            JsonObject columnHeader = e.getAsJsonObject();
+            assertTrue(columnHeader.has("displayName"));
+            assertTrue(columnHeader.has("contrastSummary"));
+        }
     }
 
     @Test
     public void testBaselineRnaSeq(){
-        assertAboutPayload(getExperimentHeaderSummary("E-MTAB-513"));
+        assertAboutBaselinePayload(getExperimentHeaderSummary("E-MTAB-513"));
     }
     @Test
     public void testBaselineProteomics(){
-        assertAboutPayload(getExperimentHeaderSummary("E-PROT-1"));
+        assertAboutBaselinePayload(getExperimentHeaderSummary("E-PROT-1"));
     }
     @Test
     public void testDifferentialRnaSeq(){
-        assertAboutPayload(getExperimentHeaderSummary("E-GEOD-54705"));
+        assertAboutDifferentialPayload(getExperimentHeaderSummary("E-GEOD-54705"));
     }
     @Test
     public void testDifferentialMicroarray(){
-        assertAboutPayload(getExperimentHeaderSummary("E-GEOD-57907"));
+        assertAboutDifferentialPayload(getExperimentHeaderSummary("E-GEOD-57907"));
     }
 }

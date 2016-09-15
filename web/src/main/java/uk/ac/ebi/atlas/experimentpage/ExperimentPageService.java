@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.differential;
+package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -27,7 +27,6 @@ public class ExperimentPageService {
         experimentDescription.addProperty("URL", "/experiments/"+experiment.getAccession()+additionalQueryOptionsString);
         experimentDescription.addProperty("description", experiment.getDescription());
         experimentDescription.addProperty("species", experiment.getSpecies().originalName);
-        experimentDescription.addProperty("headerSummary", gson.toJson(experiment.headerSummary()));
         return experimentDescription;
     }
 }
