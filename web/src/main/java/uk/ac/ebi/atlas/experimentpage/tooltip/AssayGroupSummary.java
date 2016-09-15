@@ -19,4 +19,6 @@ public class AssayGroupSummary implements Iterable<AssayProperty> {
         return properties.iterator();
     }
 
+
+
 }

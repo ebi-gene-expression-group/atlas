@@ -1,16 +1,11 @@
 package uk.ac.ebi.atlas.model.baseline;
 
-import uk.ac.ebi.atlas.model.AssayGroups;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
+import com.google.gson.JsonObject;
+import uk.ac.ebi.atlas.experimentpage.tooltip.AssayGroupSummary;
+import uk.ac.ebi.atlas.experimentpage.tooltip.AssayGroupSummaryBuilder;
+import uk.ac.ebi.atlas.model.*;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 public class BaselineExperiment extends Experiment {
 
@@ -54,5 +49,18 @@ public class BaselineExperiment extends Experiment {
     @Override
     protected Set<String> getAnalysedRowsAccessions() {
         return getExperimentRunAccessions();
+    }
+
+    @Override
+    public Map<String, ?> headerSummary() {
+        Map<String, AssayGroupSummary> result = new HashMap<>();
+        for(AssayGroup assayGroup: assayGroups){
+            result.put(assayGroup.getId(),
+                    new AssayGroupSummaryBuilder()
+                            .forAssayGroup(assayGroup)
+                            .withExperimentDesign(experimentDesign)
+                            .build());
+        }
+        return result;
     }
 }

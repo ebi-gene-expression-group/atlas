@@ -5,6 +5,8 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
+import uk.ac.ebi.atlas.experimentpage.tooltip.ContrastSummary;
+import uk.ac.ebi.atlas.experimentpage.tooltip.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -68,6 +70,21 @@ public class DifferentialExperiment extends Experiment {
     @Override
     protected Set<String> getAnalysedRowsAccessions() {
         return getAssayAccessions();
+    }
+
+    @Override
+    public Map<String, ?> headerSummary() {
+        Map<String, ContrastSummary> result = new HashMap<>();
+        for(Contrast contrast : contrastsById.values() ){
+            result.put(contrast.getId(),
+                    new ContrastSummaryBuilder()
+                            .forContrast(contrast)
+                            .withExperimentDesign(experimentDesign)
+                            .withExperimentDescription(description)
+                            .build());
+        }
+
+        return result;
     }
 
     @Override

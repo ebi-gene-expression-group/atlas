@@ -6,6 +6,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
@@ -18,11 +19,11 @@ public abstract class Experiment implements Serializable {
 
     private static final Gson gson = new Gson();
     private ExperimentType type;
-    private ExperimentDesign experimentDesign;
+    protected ExperimentDesign experimentDesign;
     private Species species;
     private List<String> pubMedIds;
     private String accession;
-    private String description;
+    protected String description;
     private String displayName;
     private String disclaimer;
     private boolean hasExtraInfoFile;
@@ -96,6 +97,8 @@ public abstract class Experiment implements Serializable {
     }
 
     protected abstract Set<String> getAnalysedRowsAccessions();
+
+    public abstract Map<String, ?> headerSummary();
 
     public Map<String, ?> getAttributes(){
         Map<String, Object> result = new HashMap<>();

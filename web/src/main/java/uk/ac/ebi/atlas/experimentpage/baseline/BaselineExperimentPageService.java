@@ -10,6 +10,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
+import uk.ac.ebi.atlas.experimentpage.differential.ExperimentPageService;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-public class BaselineExperimentPageService {
+public class BaselineExperimentPageService extends ExperimentPageService {
 
     private final TracksUtil tracksUtil;
     private final BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory;
@@ -123,22 +124,8 @@ public class BaselineExperimentPageService {
         //note this should only happen for single experiment - see HeatmapWidgetController.populateModelWithMultiExperimentResults
         model.addAttribute(
             "jsonExperiment",
-            gson.toJson(prepareExperimentDescription(experiment, preferences.getGeneQuery(), preferences.getSerializedFilterFactors()))
+            gson.toJson(prepareExperimentDescription(experiment, preferences))
         );
-    }
-
-    //used when external parties include our widget
-    private JsonElement prepareExperimentDescription(Experiment experiment, SemanticQuery geneQuery, String serializedFilterFactors)
-                        throws UnsupportedEncodingException {
-        String additionalQueryOptionsString =
-                "?geneQuery="+geneQuery.toUrlEncodedJson()+
-                        "&serializedFilterFactors="+serializedFilterFactors;
-
-        JsonObject experimentDescription = new JsonObject();
-        experimentDescription.addProperty("URL", "/experiments/"+experiment.getAccession()+additionalQueryOptionsString);
-        experimentDescription.addProperty("description", experiment.getDescription());
-        experimentDescription.addProperty("species", experiment.getSpecies().originalName);
-        return experimentDescription;
     }
 
     // heatmap-data.jsp will understand "" as empty
@@ -158,7 +145,6 @@ public class BaselineExperimentPageService {
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
-        //ToDo: this stuff should be refactored, menu should be a separate REST service
         SortedSet<String> menuFactorNames = experimentalFactors.getMenuFilterFactorNames();
         if (!menuFactorNames.isEmpty()) {
             Set<Factor> menuFactors = experimentalFactors.getAllFactors();
@@ -170,10 +156,8 @@ public class BaselineExperimentPageService {
 
             model.addAttribute("filterFactorMenu", filterFactorMenu);
             model.addAttribute("menuFactorNames", menuFactorNames);
-
         }
 
-        //ToDo: looks bad, a custom EL function or jsp tag function to resolve names would be much better
         Map<String, String> selectedFilterFactorNamesAndValues = new HashMap<>();
         for (Factor selectedFilterFactor : requestContext.getSelectedFilterFactors()) {
             selectedFilterFactorNamesAndValues.put(experimentalFactors.getFactorDisplayName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());

@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 public class DifferentialExperimentPageService<T extends DifferentialExperiment, K extends
-        DifferentialRequestPreferences, P extends DifferentialProfile<?>> {
+        DifferentialRequestPreferences, P extends DifferentialProfile<?>> extends ExperimentPageService {
 
     private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
     private final GseaPlotsBuilder gseaPlotsBuilder;
@@ -82,6 +82,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
 
         model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
         model.addAttribute("experimentDescription", gson.toJson(JsonNull.INSTANCE));
+        model.addAttribute("jsonExperiment", gson.toJson(prepareExperimentDescription(experiment, requestPreferences)));
         if (!result.hasErrors()) {
 
             try {
