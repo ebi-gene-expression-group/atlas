@@ -106,6 +106,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
                     .withExperimentDesign(differentialExperiment.getExperimentDesign())
                     .withExperimentDescription(differentialExperiment.getDescription())
                     .build().toJson());
+            result.add(o);
         }
         return result;
     }
