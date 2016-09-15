@@ -19,7 +19,7 @@ import java.util.SortedSet;
 
 import static org.apache.commons.lang3.StringUtils.removeEnd;
 
-public class ExperimentDesignFileWriter implements Closeable {
+public class ExperimentDesignFileWriter {
 
     private static final String ONTOLOGY_TERM_DELIMITER = " ";
 
@@ -40,6 +40,7 @@ public class ExperimentDesignFileWriter implements Closeable {
         String[] columnHeaders = buildColumnHeaders(experimentType, experimentDesign);
         tsvWriter.writeNext(columnHeaders);
         tsvWriter.writeAll(asTableOntologyTermsData(experimentDesign));
+        tsvWriter.close();
     }
 
     String[] buildColumnHeaders(ExperimentType experimentType, ExperimentDesign experimentDesign) {
@@ -130,10 +131,5 @@ public class ExperimentDesignFileWriter implements Closeable {
         }
 
         return removeEnd(sb.toString(), ONTOLOGY_TERM_DELIMITER);
-    }
-
-    @Override
-    public void close() throws IOException {
-        tsvWriter.close();
     }
 }

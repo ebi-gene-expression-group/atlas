@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.experimentdesign;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.writers.FileTsvWriterBuilder;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
@@ -10,16 +11,16 @@ import javax.inject.Named;
 import java.io.IOException;
 
 @Named
-public class ExperimentDesignFileWriterFactory {
+public class ExperimentDesignFileService {
 
     private final String targetFilePathTemplate;
 
     @Inject
-    public ExperimentDesignFileWriterFactory(@Value("#{configuration['experiment.experiment-design.path.template']}") String targetFilePathTemplate) {
+    public ExperimentDesignFileService(@Value("#{configuration['experiment.experiment-design.path.template']}") String targetFilePathTemplate) {
         this.targetFilePathTemplate = targetFilePathTemplate;
     }
 
-    public ExperimentDesignFileWriter create(String experimentAccession, ExperimentType experimentType) throws IOException {
+    ExperimentDesignFileWriter create(String experimentAccession, ExperimentType experimentType) throws IOException {
         return new ExperimentDesignFileWriter(
                 new FileTsvWriterBuilder()
                         .forTsvFilePathTemplate(targetFilePathTemplate)
@@ -27,5 +28,10 @@ public class ExperimentDesignFileWriterFactory {
                         .withAppend(false)
                         .build(),
                 experimentType);
+    }
+
+    public void write(String experimentAccession, ExperimentType experimentType, ExperimentDesign experimentDesign)
+    throws IOException {
+        create(experimentAccession,experimentType).write(experimentDesign);
     }
 }

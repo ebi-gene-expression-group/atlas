@@ -19,7 +19,7 @@ import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterFactory;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileService;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.*;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
@@ -72,7 +72,7 @@ public class ExperimentMetadataCRUDTest {
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
 
     @Mock
-    private ExperimentDesignFileWriterFactory experimentDesignFileWriterFactoryMock;
+    private ExperimentDesignFileService experimentDesignFileServiceMock;
 
     @Mock
     private ExperimentDAO experimentDAOMock;
@@ -127,9 +127,6 @@ public class ExperimentMetadataCRUDTest {
         when(microarrayExperimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
         when(experimentConfigurationMock.getExperimentType()).thenReturn(experimentType);
 
-        given(experimentDesignFileWriterFactoryMock.create(EXPERIMENT_ACCESSION, experimentType))
-                .willReturn(experimentDesignFileWriterMock);
-
         given(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).willReturn(conditionsIndexMock);
         given(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).willReturn(conditionsIndexMock);
         doNothing().when(conditionsIndexMock).removeConditions(anyString());
@@ -161,7 +158,7 @@ public class ExperimentMetadataCRUDTest {
 
         subject = new ExperimentMetadataCRUD(experimentDAOMock, experimentTraderMock, experimentDTOBuilderMock, condensedSdrfParserMock, efoParentsLookupServiceMock);
         subject.setConditionsIndexTrader(conditionsIndexTraderMock);
-        subject.setExperimentDesignFileWriterFactory(experimentDesignFileWriterFactoryMock);
+        subject.setExperimentDesignFileService(experimentDesignFileServiceMock);
         subject.setAnalyticsIndexerManager(analyticsIndexerManagerMock);
     }
 
@@ -169,13 +166,12 @@ public class ExperimentMetadataCRUDTest {
     public void generateExperimentDesignShouldUseTheExperimentDesignWriter() throws Exception {
 
         subject.writeExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, experimentDesignMock);
-        verify(experimentDesignFileWriterFactoryMock).create(EXPERIMENT_ACCESSION,experimentType);
-        verify(experimentDesignFileWriterMock).write(experimentDesignMock);
+        verify(experimentDesignFileServiceMock).write(EXPERIMENT_ACCESSION,experimentType,experimentDesignMock);
     }
 
     @Test(expected = IOException.class)
     public void shouldThrowIllegalStateExceptionWhenWritingExperimentDesignFails() throws Exception {
-        willThrow(new IOException()).given(experimentDesignFileWriterMock).write(experimentDesignMock);
+        willThrow(new IOException()).given(experimentDesignFileServiceMock).write(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE,experimentDesignMock);
         subject.writeExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, experimentDesignMock);
     }
 

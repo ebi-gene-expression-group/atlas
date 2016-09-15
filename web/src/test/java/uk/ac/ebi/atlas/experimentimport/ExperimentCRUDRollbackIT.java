@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterFactory;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileService;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
@@ -46,7 +46,7 @@ public class ExperimentCRUDRollbackIT {
     @Inject
     ExperimentDAO experimentDAO;
     @Inject
-    ExperimentDesignFileWriterFactory experimentDesignFileWriterFactory;
+    ExperimentDesignFileService experimentDesignFileService;
     @Inject
     ExperimentTrader experimentTrader;
     @Inject
@@ -72,7 +72,7 @@ public class ExperimentCRUDRollbackIT {
         ExperimentMetadataCRUD experimentMetadataCRUDmock =
                 new ExperimentMetadataCRUD(experimentDAO, experimentTrader, experimentDTOBuilder, condensedSdrfParser, efoParentsLookupService);
         experimentMetadataCRUDmock.setConditionsIndexTrader(conditionsIndexTrader);
-        experimentMetadataCRUDmock.setExperimentDesignFileWriterFactory(experimentDesignFileWriterFactory);
+        experimentMetadataCRUDmock.setExperimentDesignFileService(experimentDesignFileService);
         subject.setExperimentMetadataCRUD(experimentMetadataCRUDmock);
     }
 

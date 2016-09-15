@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterFactory;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileService;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -35,7 +35,7 @@ public class ExperimentMetadataCRUD {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentMetadataCRUD.class);
 
     private ExperimentDAO experimentDAO;
-    private ExperimentDesignFileWriterFactory experimentDesignFileWriterFactory;
+    private ExperimentDesignFileService experimentDesignFileService;
     private ExperimentTrader experimentTrader;
     private ExperimentDTOBuilder experimentDTOBuilder;
     private final CondensedSdrfParser condensedSdrfParser;
@@ -70,8 +70,8 @@ public class ExperimentMetadataCRUD {
     }
 
     @Inject
-    public void setExperimentDesignFileWriterFactory(ExperimentDesignFileWriterFactory experimentDesignFileWriterFactory) {
-        this.experimentDesignFileWriterFactory = experimentDesignFileWriterFactory;
+    public void setExperimentDesignFileService(ExperimentDesignFileService experimentDesignFileService) {
+        this.experimentDesignFileService = experimentDesignFileService;
     }
 
     public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate, Optional<String> accessKey) throws IOException {
@@ -124,10 +124,7 @@ public class ExperimentMetadataCRUD {
     }
 
     void writeExperimentDesignFile(String accession, ExperimentType experimentType, ExperimentDesign experimentDesign) throws IOException {
-        try (ExperimentDesignFileWriter experimentDesignFileWriter =
-                     experimentDesignFileWriterFactory.create(accession,experimentType)) {
-            experimentDesignFileWriter.write(experimentDesign);
-        }
+        experimentDesignFileService.write(accession,experimentType,experimentDesign);
     }
 
     public void deleteExperiment(ExperimentDTO experimentDTO) {
