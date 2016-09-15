@@ -2,6 +2,7 @@
 package uk.ac.ebi.atlas.experimentpage.tooltip;
 
 import com.google.common.base.Objects;
+import com.google.gson.JsonObject;
 
 public class ContrastProperty extends AssayProperty {
 
@@ -44,5 +45,11 @@ public class ContrastProperty extends AssayProperty {
                 .add("referenceValue", referenceValue)
                 .add("testValue", testValue)
                 .toString();
+    }
+    @Override
+    public JsonObject toJson() {
+        JsonObject o = super.toJson();
+        o.addProperty("referenceValue", referenceValue);
+        return o;
     }
 }

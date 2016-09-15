@@ -21,7 +21,7 @@ public class ContrastSummaryBuilder {
 
     private String experimentDescription;
 
-    private Set<AssayProperty> properties = new HashSet<>();
+    private Set<ContrastProperty> properties = new HashSet<>();
 
 
     public ContrastSummaryBuilder forContrast(Contrast contrast) {

@@ -51,12 +51,12 @@ public class ContrastSummaryBuilderTest {
 
         ContrastSummary contrastSummary = subject.build();
 
-        Iterator<AssayProperty> contrastSummaryIterator = contrastSummary.iterator();
+        Iterator<ContrastProperty> contrastSummaryIterator = contrastSummary.iterator();
 
-        ContrastProperty contrastProperty1 = (ContrastProperty) contrastSummaryIterator.next();
-        ContrastProperty contrastProperty2 = (ContrastProperty) contrastSummaryIterator.next();
-        ContrastProperty contrastProperty3 = (ContrastProperty) contrastSummaryIterator.next();
-        ContrastProperty contrastProperty4 = (ContrastProperty) contrastSummaryIterator.next();
+        ContrastProperty contrastProperty1 = contrastSummaryIterator.next();
+        ContrastProperty contrastProperty2 = contrastSummaryIterator.next();
+        ContrastProperty contrastProperty3 = contrastSummaryIterator.next();
+        ContrastProperty contrastProperty4 = contrastSummaryIterator.next();
         assertThat(contrastSummaryIterator.hasNext(), is(false));
 
         assertThat(contrastProperty1, is(new ContrastProperty(FACTOR_HEADER, FACTOR_VALUE3, FACTOR_VALUE,ContrastPropertyType.FACTOR)));

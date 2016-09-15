@@ -8,15 +8,16 @@ import java.util.Iterator;
 import java.util.SortedSet;
 
 @SuppressWarnings("UnusedDeclaration")  //fields serialized by Gson
-public class ContrastSummary implements Iterable<AssayProperty> {
+public class ContrastSummary implements Iterable<ContrastProperty> {
 
-    private final SortedSet<AssayProperty> properties;
+    private final SortedSet<ContrastProperty> properties;
     private final String experimentDescription;
     private final String contrastDescription;
     private final int testReplicates;
     private final int referenceReplicates;
 
-    public ContrastSummary(String experimentDescription, String contrastDescription, int testReplicates, int referenceReplicates, SortedSet<AssayProperty> properties) {
+    public ContrastSummary(String experimentDescription, String contrastDescription, int testReplicates, int
+            referenceReplicates, SortedSet<ContrastProperty> properties) {
         this.testReplicates = testReplicates;
         this.referenceReplicates = referenceReplicates;
         this.properties = properties;
@@ -25,7 +26,7 @@ public class ContrastSummary implements Iterable<AssayProperty> {
     }
 
     @Override
-    public Iterator<AssayProperty> iterator() {
+    public Iterator<ContrastProperty> iterator() {
         return properties.iterator();
     }
 
