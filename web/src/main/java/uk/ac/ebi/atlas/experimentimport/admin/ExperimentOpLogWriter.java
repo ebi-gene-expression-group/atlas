@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
+import com.google.common.base.Throwables;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,7 @@ import uk.ac.ebi.atlas.commons.writers.TsvWriter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,5 +63,11 @@ public class ExperimentOpLogWriter {
                     loggedOp.getRight().getRight().toString()});
         }
         tsvWriter.writeAll(lines);
+
+        try {
+            tsvWriter.close();
+        } catch (IOException e) {
+            Throwables.propagate(e);
+        }
     }
 }
