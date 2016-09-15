@@ -2,14 +2,12 @@ package uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf;
 
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@Scope("singleton")
 public class IdfParser {
 
     private static final String INVESTIGATION_TITLE_ID = "Investigation Title";

@@ -1,52 +1,48 @@
 package uk.ac.ebi.atlas.utils;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+
+import javax.inject.Inject;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
 public class ArrayExpressClientTestEIT {
 
+    private final static String E_MTAB_513 = "E-MTAB-513";
+    private final static String E_MTAB_513_NAME = "RNA-Seq of human individual tissues and mixture of 16 tissues (Illumina Body Map)";
+    private final static String E_MTAB_1929 = "E-MTAB-1929";
+    private final static String[] E_MTAB_1929_NAME =
+            {"Transcription profiling by high throughput sequencing of Insm1+/− and Insm1−/− endocrine progenitor cell populations at embryonic day 15.5",
+                    "Transcriptional regulation of endocrine cell differentiation by Insm1"};
+    private final static String TEST_RNASEQ_BASELINE = "TEST-RNASEQ-BASELINE";
+
+    @Inject
     private ArrayExpressClient subject;
 
-    private final static String EXPERIMENT_ACC = "E-MTAB-513";
-
-    @Before
-    public void initSubject() {
-        RestTemplate restTemplate = new RestTemplate();
-
-        //ToDo: better use injection
-        ApplicationProperties applicationProperties = mock(ApplicationProperties.class);
-        when(applicationProperties.getArrayExpressRestURL(anyString())).thenAnswer(arrayExpressUrl());
-
-        subject = new ArrayExpressClient(restTemplate, applicationProperties);
-
+    @Test
+    public void fetchExperimentName() {
+        String result = subject.fetchExperimentName(E_MTAB_513);
+        assertThat(result, is(E_MTAB_513_NAME));
     }
-
-    private static Answer<String> arrayExpressUrl() {
-        return new Answer<String>() {
-            public static final String AE2_URL = "http://www.ebi.ac.uk/arrayexpress/xml/v2/experiments?accession=";
-
-            @Override
-            public String answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return AE2_URL + invocationOnMock.getArguments()[0];
-            }
-        };
-    }
-
 
     @Test
-    public void testFetchExperimentName() {
-        String result = subject.fetchExperimentName(EXPERIMENT_ACC);
-        assertThat(result, is("RNA-Seq of human individual tissues and mixture of 16 tissues (Illumina Body Map)"));
+    public void multipleExperimentNames() {
+        String experimentName = subject.fetchExperimentName(E_MTAB_1929);
+        assertThat(experimentName, is(E_MTAB_1929_NAME[0]));
+    }
+
+    @Test
+    public void noExperimentNameUsesIdfAsFallback() {
+        String experimentName = subject.fetchExperimentName(TEST_RNASEQ_BASELINE);
+        assertThat(experimentName, is(E_MTAB_513_NAME));
     }
 
 }

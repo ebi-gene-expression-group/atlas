@@ -21,7 +21,6 @@ import java.text.MessageFormat;
 import java.util.*;
 
 @Named("applicationProperties")
-@Scope("singleton")
 public class ApplicationProperties {
 
     private static final String TSV_FILE_EXTENSION = ".tsv";
@@ -65,11 +64,6 @@ public class ApplicationProperties {
         String arrayDesign = arrayDesignTrader.getArrayDesignAccession(arrayAccession);  //getKey from arrayDesignMap
         String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.arrays.url.template");
         return MessageFormat.format(arrayExpressUrlTemplate, arrayDesign);
-    }
-
-    public String getArrayExpressRestURL(String experimentAccession) {
-        String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.rest.url.template");
-        return MessageFormat.format(arrayExpressUrlTemplate, experimentAccession);
     }
 
     //This is invoked from jsp el

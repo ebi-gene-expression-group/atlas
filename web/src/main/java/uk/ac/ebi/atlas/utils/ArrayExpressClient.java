@@ -1,58 +1,68 @@
-
 package uk.ac.ebi.atlas.utils;
 
-import com.google.common.base.Preconditions;
-import nu.xom.Builder;
-import nu.xom.Document;
-import nu.xom.Nodes;
-import nu.xom.ParsingException;
+import com.google.common.base.Throwables;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
+import org.xml.sax.InputSource;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.IdfParser;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.StringReader;
+import java.text.MessageFormat;
 
 @Named
 @Scope("prototype")
 public class ArrayExpressClient {
 
-    private static final String EXPERIMENT_NAME_XPATH = "//experiment/name/text()";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ArrayExpressClient.class);
 
+    private static final String EXPERIMENT_NAME_XPATH = "//experiment/name";
+
+    private String arrayExpressUrlTemplate;
     private RestTemplate restTemplate;
-    private ApplicationProperties applicationProperties;
+    private IdfParser idfParser;
 
     @Inject
-    public ArrayExpressClient(RestTemplate restTemplate, ApplicationProperties applicationProperties) {
+    public ArrayExpressClient(RestTemplate restTemplate,
+                              @Value("#{configuration['experiment.arrayexpress.rest.url.template']}") String arrayExpressUrlTemplate,
+                              IdfParser idfParser) {
         this.restTemplate = restTemplate;
-        this.applicationProperties = applicationProperties;
+        this.arrayExpressUrlTemplate = arrayExpressUrlTemplate;
+        this.idfParser = idfParser;
     }
 
     public String fetchExperimentName(String experimentAccession) {
-
         try {
-            String experimentXML = restTemplate.getForObject(applicationProperties.getArrayExpressRestURL(experimentAccession), String.class);
+            String experimentXML = restTemplate.getForObject(MessageFormat.format(arrayExpressUrlTemplate, experimentAccession), String.class);
             return parseExperimentName(experimentXML);
-        } catch (IllegalStateException e) {
-            throw new IllegalStateException("Unable to fetch experiment name from ArrayExpress for " + experimentAccession, e);
-        } catch (ParsingException | IOException e) {
-            throw new IllegalStateException("Cannot access ArrayExpress", e);
+        } catch (Exception e) {
+            LOGGER.error("There was an error parsing the experiment name from ArrayExpress, falling back to IDF file: " + e);
+            String experimentName = idfParser.parse(experimentAccession).getLeft();
+
+            if (experimentName.isEmpty()) {
+                Throwables.propagate(e);    // Give cache loaders a chance to set the name from the DTO
+            }
+
+            return experimentName;
         }
     }
 
-    private String parseExperimentName(String experimentXML) throws ParsingException, IOException {
-        Builder parser = new Builder();
-        Document doc = parser.build(new StringReader(experimentXML));
-        return parseValue(doc);
+    private String parseExperimentName(String experimentXML) throws XPathExpressionException {
+        XPath xpath = XPathFactory.newInstance().newXPath();
+        InputSource inputSource = new InputSource(new StringReader(experimentXML));
+        String experimentName = xpath.evaluate(EXPERIMENT_NAME_XPATH, inputSource);
+
+        if (experimentName.isEmpty()) {
+            throw new RuntimeException("Experiment name not present or empty");
+        }
+
+        return experimentName;
     }
-
-    private String parseValue(Document doc) throws IllegalStateException {
-        Nodes nodes = doc.query(EXPERIMENT_NAME_XPATH);
-        Preconditions.checkState(nodes.size() == 1, "Experiment name cannot be fetched from ArrayExpress");
-
-        return nodes.get(0).getValue();
-    }
-
 }

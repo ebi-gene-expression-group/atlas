@@ -132,11 +132,6 @@ public class ApplicationPropertiesTest {
     }
 
     @Test
-    public void testGetArrayExpressRestURL() throws Exception {
-        assertThat(subject.getArrayExpressRestURL(EXPERIMENT_ACCESSION), is(ARRAYEXPRESS_REST_URL + EXPERIMENT_ACCESSION));
-    }
-
-    @Test
     public void testGetArrayExpressArrayURL() throws Exception {
         assertThat(subject.getArrayExpressArrayURL(A_AFFY_35_NAME), is(ARRAYEXPRESS_ARRAYS_URL + A_AFFY_35));
     }
