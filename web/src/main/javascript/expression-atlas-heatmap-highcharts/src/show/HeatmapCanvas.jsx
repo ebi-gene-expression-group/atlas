@@ -7,7 +7,6 @@ var ReactHighcharts = require('react-highcharts');
 var Highcharts = ReactHighcharts.Highcharts;
 require('highcharts-heatmap')(Highcharts);
 require('../lib/highcharts-custom-events.js')(Highcharts);
-require('./HighchartsHeatmap.css');
 var hash = require('object-hash');
 
 var PropTypes = require('../PropTypes.js');

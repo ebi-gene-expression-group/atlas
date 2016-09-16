@@ -17,6 +17,7 @@ var TooltipStateManager = require('../util/TooltipStateManager.jsx');
 
 //*------------------------------------------------------------------*
 
+require('./SeriesLegend.less');
 var HeatmapLegendBox = React.createClass({
     propTypes: {
         name: React.PropTypes.string.isRequired,
