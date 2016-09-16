@@ -20,6 +20,11 @@ module.exports = Object.assign(require('../webpack.config.js'), {
             name: 'dependencies',
             filename: 'vendorCommons.bundle.js',
             minChunks: Infinity     // Explicit definition-based split. Don’t put shared modules between main and demo entries in vendor.bundle.js
+        }),
+        new webpack.DefinePlugin({
+            "process.env": {
+                NODE_ENV: process.env.NODE_ENV === 'production' ? JSON.stringify("production") : JSON.stringify("development")
+            }
         })
     ],
     module: {

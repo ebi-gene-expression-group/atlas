@@ -1,26 +1,23 @@
 const AnatomogramFactory = require('anatomogram');
-const React = require('react');
 const ReactDOM = require('react-dom');
 const EventEmitter = require('events');
 
 let eventEmitter = new EventEmitter();
 
-exports.render = function({species = 'mus musculus', pathIDs = [], expressedTissueColour = '#FF0000', hoveredTissueColour = '#800080', mountNode}) {
+exports.eventEmitter = eventEmitter;
+
+exports.render = function({species = 'mus musculus', highlightIDs = [], expressedTissueColour = 'red', hoveredTissueColour = 'purple', mountNode}) {
+
+    let anatomogramConfig = {
+        pathToFolderWithBundledResources: '..',
+        anatomogramData: { species: species },
+        expressedTissueColour: expressedTissueColour,
+        hoveredTissueColour: hoveredTissueColour,
+        eventEmitter: eventEmitter,
+        idsToBeHighlighted: highlightIDs
+    };
+
     ReactDOM.render(
-        React.createElement(
-            AnatomogramFactory.create({
-                pathToFolderWithBundledResources: '',
-                anatomogramData: {
-                    species: species,
-                    allSvgPathIds: pathIDs
-                },
-                expressedTissueColour: expressedTissueColour,
-                hoveredTissueColour: hoveredTissueColour,
-                eventEmitter: eventEmitter
-            }), {}
-        ),
-        document.getElementById(mountNode)
+        AnatomogramFactory.create(anatomogramConfig), document.getElementById(mountNode)
     );
 };
-
-exports.eventEmitter = eventEmitter;
