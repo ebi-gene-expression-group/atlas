@@ -5,6 +5,10 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -25,6 +29,7 @@ import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -36,6 +41,7 @@ public class GeneNameTooltipController {
     private static final String WORD_SPAN_OPEN = "<span class='gxaPropertyValueMarkup'>";
     private static final String WORD_SPAN_CLOSE = "</span>";
     private static final int NUMBER_OF_TERMS_TO_SHOW = 5;
+    private static final Gson gson = new Gson();
 
     private BioEntityPropertyDao bioEntityPropertyDao;
 
@@ -76,6 +82,41 @@ public class GeneNameTooltipController {
 
         return MessageFormat.format(htmlTemplate, geneName, synonyms, identifier, goTerms, interproTerms);
 
+    }
+    @RequestMapping(value = "/json/genename-tooltip", method = RequestMethod.GET, produces = "application/json;" +
+            "charset=UTF-8")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String getTooltipContentJson( @RequestParam(value = "identifier") String identifier) {
+
+        return gson.toJson(getTooltipContentJsonObject(identifier));
+    }
+
+    public JsonObject getTooltipContentJsonObject(String identifier){
+        Multimap<String, String> multimap = bioEntityPropertyDao.fetchTooltipProperties(identifier);
+
+        JsonObject result = new JsonObject();
+        result.add("synonyms", formatJson(multimap.get("synonym"),NUMBER_OF_TERMS_TO_SHOW));
+        result.add("goterms", formatJson(multimap.get("goterm"),NUMBER_OF_TERMS_TO_SHOW));
+        result.add("interproterms", formatJson(multimap.get("interproterm"),NUMBER_OF_TERMS_TO_SHOW));
+        return result;
+    }
+
+    JsonArray formatJson(Collection<String> values, int restrictListLengthTo){
+        JsonArray result = new JsonArray();
+        int i = 0;
+        loop:
+        for(String value: values){
+            result.add(new JsonPrimitive(value));
+            i++;
+            if(i==restrictListLengthTo)
+                break loop;
+        }
+        if(values.size()> restrictListLengthTo){
+            result.add(new JsonPrimitive("(...and " + (values.size()-restrictListLengthTo) + " more)"));
+        }
+
+        return result;
     }
 
     String format(Collection<String> values, boolean returnEmptyValuesAsNA, int restrictListLengthTo) {

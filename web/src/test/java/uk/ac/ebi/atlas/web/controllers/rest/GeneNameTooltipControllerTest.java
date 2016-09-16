@@ -2,6 +2,7 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 import com.google.common.collect.*;
+import com.google.gson.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,6 +76,22 @@ public class GeneNameTooltipControllerTest {
         assertThat(tooltipContent, containsString(SYNONYM_1));
         assertThat(tooltipContent, containsString(SYNONYM_2));
 
+    }
+    @Test
+    public void testGetTooltipContentJson() throws Exception {
+
+        SortedSetMultimap<String, String> hashMultimap = TreeMultimap.create();
+        hashMultimap.put(GOTERM, GOTERM);
+        hashMultimap.put(INTERPROTERM, INTERPROTERM);
+        hashMultimap.put(SYNONYM, SYNONYM_1);
+        hashMultimap.put(SYNONYM, SYNONYM_2);
+
+        when(propertyDaoMock.fetchTooltipProperties(IDENTIFIER)).thenReturn(hashMultimap);
+
+        JsonObject tooltipContent = subject.getTooltipContentJsonObject(IDENTIFIER);
+        assertThat(tooltipContent.get("goterms").getAsJsonArray().get(0).getAsString(), is(GOTERM));
+        assertThat(tooltipContent.get("interproterms").getAsJsonArray().get(0).getAsString(), is(INTERPROTERM));
+        assertThat(tooltipContent.get("synonyms").getAsJsonArray().size(), is(2));
     }
 
     @Test
