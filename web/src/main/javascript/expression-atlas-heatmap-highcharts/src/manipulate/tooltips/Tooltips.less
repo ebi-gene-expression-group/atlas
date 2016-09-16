@@ -1,3 +1,36 @@
+.gxaGeneTooltip {
+  border: solid transparent;
+  color: darkslategray;
+  padding: 2px;
+  font: 10px Verdana, Helvetica, Arial, sans-serif;
+  background: floralwhite;
+  max-width: 250px;
+
+  .propertyName {
+    color: brown;
+    font-weight: bold;
+    display: inline-block;
+    text-align: left;
+    margin-right: 5px;
+  }
+  .propertyValue {
+    display: inline-block;
+    text-align: center;
+    background-color: rgb(223, 213, 213);
+    &:first-child {
+      margin-left:5px;
+    }
+  }
+
+  .propertyValue + .propertyValue {
+    margin-left: 5px
+  }
+
+  text-align: justify;
+}
+
+
+
 /* Uncopypaste this and use Less if you need to. */
 .gxaContrastTooltip {
     border: solid transparent;

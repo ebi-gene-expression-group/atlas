@@ -112,7 +112,7 @@ module.exports = React.createClass({
           this._orderings(),
           this.props.loadResult.colorAxis||undefined,
           FormattersFactory(this.props.loadResult.heatmapConfig),
-          TooltipsFactory(this.props.loadResult.heatmapConfig, this.props.loadResult.heatmapData.xAxisCategories),
+          TooltipsFactory(this.props.loadResult.heatmapConfig, this.props.loadResult.heatmapData.xAxisCategories,this.props.loadResult.heatmapData.yAxisCategories),
           this._legend(),
           this._coexpressionOption(),
           this.props

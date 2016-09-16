@@ -6,7 +6,8 @@ and return content as it should appear in tooltip.
 //*------------------------------------------------------------------*
 var React = require('react');
 
-require('./Tooltips.css');
+var GeneTooltip = require('./GeneTooltip.jsx');
+require('./Tooltips.less');
 
 //*------------------------------------------------------------------*
 
@@ -36,11 +37,42 @@ var createColumnLabelTooltipRenderer = function(heatmapConfig, xAxisCategories){
     );
   }
 }
+var createRowLabelTooltipRenderer = function(heatmapConfig, yAxisCategories){
+  //We have the labels, but we need the indentifiers to do lookups
+  var identifierPerLabel = {};
+  for(var i =0; i<yAxisCategories.length ; i++){
+    identifierPerLabel[yAxisCategories[i].label]=yAxisCategories[i].id;
+  }
+  Object.freeze(identifierPerLabel);
+
+  var resultCache={};
+  return function(rowLabel){
+    if(!identifierPerLabel.hasOwnProperty(rowLabel)){
+      return null;
+    }
+    var bioentityIdentifier = identifierPerLabel[rowLabel];
+    return (
+      resultCache.hasOwnProperty(bioentityIdentifier)
+      ? <GeneTooltip
+        key={bioentityIdentifier}
+        atlasBaseURL={heatmapConfig.atlasBaseURL}
+        label={rowLabel}
+        id={bioentityIdentifier}
+        data={resultCache[bioentityIdentifier]}/>
+      : <GeneTooltip
+        key={bioentityIdentifier}
+        atlasBaseURL={heatmapConfig.atlasBaseURL}
+        label={rowLabel}
+        id={bioentityIdentifier}
+        onAjaxSuccessfulCacheResult={(result)=>{resultCache[bioentityIdentifier]=result}}/>
+    )
+  }
+}
 
 //TODO consider what the interface of this function should be.
-module.exports = function(heatmapConfig, xAxisCategories){
+module.exports = function(heatmapConfig, xAxisCategories, yAxisCategories){
   return {
-    row: (rowLabel)=>(<div>{"Row:" + rowLabel}</div>),
+    row: createRowLabelTooltipRenderer(heatmapConfig, yAxisCategories),
     column: createColumnLabelTooltipRenderer(heatmapConfig, xAxisCategories),
     point: ()=>{}
   }
