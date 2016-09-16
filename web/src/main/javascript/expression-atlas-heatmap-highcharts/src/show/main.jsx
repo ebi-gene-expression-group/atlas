@@ -166,7 +166,7 @@ var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,toolti
           googleAnalyticsCallback={properties.googleAnalyticsCallback}
           showUsageMessage={heatmapDataToPresent.xAxisCategories.length > 100} />
 
-        <div id="highcharts_container">
+        <div>
           {heatmapDataToPresent.dataSeries
             .map(function(e){return e.data;})
             .reduce(function(l,r){return l.concat(r);}, [])

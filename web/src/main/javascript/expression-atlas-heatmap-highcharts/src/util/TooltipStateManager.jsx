@@ -27,7 +27,7 @@ var TooltipStateManager = React.createClass({
     this.refs["tooltip"].setState(
       rowLabel
       ? {placeholder: this.props.tooltips.row(rowLabel),
-        extraClass:"gxaTooltip"}
+        extraClass:"gxaGlobalTooltipContent"}
       : {extraClass:"gxaDisabled"}
     );
     this.props.onUserSelectsRow && this.props.onUserSelectsRow(rowLabel);
@@ -36,7 +36,7 @@ var TooltipStateManager = React.createClass({
     this.refs["tooltip"].setState(
       columnLabel
       ? {placeholder: this.props.tooltips.column(columnLabel),
-        extraClass:"gxaTooltip"}
+        extraClass:"gxaGlobalTooltipContent"}
       : {extraClass:"gxaDisabled"}
     );
     this.props.onUserSelectsColumn && this.props.onUserSelectsColumn(columnLabel);
@@ -45,7 +45,7 @@ var TooltipStateManager = React.createClass({
     this.refs["tooltip"].setState(
       hoveredPoint
       ? {placeholder: this.props.tooltips.point(hoveredPoint),
-        extraClass:"gxaTooltip"}
+        extraClass:"gxaGlobalTooltipContent"}
       : {extraClass:"gxaDisabled"}
     );
     this.props.onUserSelectsPoint && this.props.onUserSelectsPoint(hoveredPoint);
@@ -55,8 +55,8 @@ var TooltipStateManager = React.createClass({
   render: function () {
     var ManagedComponent = this.props.managedComponent;
     return (
-      <div id="managedComponentWithTooltip">
-        <div data-tip data-for='gxaTooltip'>
+      <div>
+        <div data-tip data-for='gxaGlobalTooltipOverManagedComponent'>
           <ManagedComponent
             {... Object.assign({},
               this.props.managedComponentProps,
@@ -69,7 +69,7 @@ var TooltipStateManager = React.createClass({
         </div>
         <ReactTooltip
           ref="tooltip"
-          id='gxaTooltip'
+          id='gxaGlobalTooltipOverManagedComponent'
           type="light"
           class={"gxaDisabled"}>
           <div/>
