@@ -15,7 +15,7 @@ module.exports = {
                        'react-bootstrap/lib/FormControl', 'react-bootstrap', 'react-bootstrap/lib/Button',
                        'rc-slider',
                        'anatomogram',
-			'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
+                       'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
                        'urijs', 'query-string', 'atlas-modernizr',
                        'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
                        'highcharts-more','react-highcharts', 'react-addons-css-transition-group', 'react-emojione',
@@ -32,7 +32,7 @@ module.exports = {
 
     plugins: [
         new CleanWebpackPlugin(['webapp/resources/js-bundles'], {
-	        root: path.resolve(__dirname , '..'),
+            root: path.resolve(__dirname , '..'),
             verbose: true,
             dry: false
         }),
@@ -41,6 +41,11 @@ module.exports = {
             name: 'dependencies',
             filename: 'vendorCommons.bundle.js',
             minChunks: Infinity     // Explicit definition-based split. Don’t put shared modules between main and demo entries in vendor.bundle.js
+        }),
+        new webpack.DefinePlugin({
+            "process.env": {
+                NODE_ENV: process.env.NODE_ENV === 'production' ? JSON.stringify("production") : JSON.stringify("development")
+            }
         })
     ],
 
@@ -64,6 +69,7 @@ module.exports = {
             }
         ]
     },
+    
     devServer: {
       port: 9000
     }
