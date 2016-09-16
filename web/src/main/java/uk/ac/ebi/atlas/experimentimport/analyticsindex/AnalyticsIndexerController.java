@@ -6,8 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StopWatch;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -35,7 +38,7 @@ public class AnalyticsIndexerController {
     @ResponseBody
     public String analyticsIndexBuild(@RequestParam(value = "type", required = false, defaultValue = "") String experimentType,
                                       @RequestParam(value = "threads", required = false, defaultValue =  AnalyticsIndexerManager.DEFAULT_THREADS_8) int numThreads,
-                                      @RequestParam(value = "batchSize", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_SOLR_BATCH_SIZE_1024) int batchSize,
+                                      @RequestParam(value = "batchSize", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_SOLR_BATCH_SIZE_8192) int batchSize,
                                       @RequestParam(value = "timeout", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_TIMEOUT_IN_HOURS_24) int timeout) {
 
         try {

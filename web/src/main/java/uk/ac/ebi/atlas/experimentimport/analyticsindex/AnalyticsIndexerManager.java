@@ -5,7 +5,6 @@ import com.google.common.collect.TreeMultimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsTrader;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -23,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
-@Scope("singleton")
 public class AnalyticsIndexerManager extends Observable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsIndexerManager.class);
@@ -41,7 +39,7 @@ public class AnalyticsIndexerManager extends Observable {
     private final ExperimentSorter experimentSorter;
 
     protected static final String DEFAULT_THREADS_8 = "8";
-    protected static final String DEFAULT_SOLR_BATCH_SIZE_1024 = "1024";
+    protected static final String DEFAULT_SOLR_BATCH_SIZE_8192 = "8192";
     protected static final String DEFAULT_TIMEOUT_IN_HOURS_24 = "24";
 
     protected static final int LONGER_THAN_BIGGEST_EXPERIMENT_INDEX_TIME = 60;   // in minutes
@@ -62,7 +60,7 @@ public class AnalyticsIndexerManager extends Observable {
 
     public int addToAnalyticsIndex(String experimentAccession) {
         ImmutableMap<String, String> bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap(experimentAccession);
-        return addToAnalyticsIndex(experimentAccession, bioentityIdToIdentifierSearch, Integer.parseInt(DEFAULT_SOLR_BATCH_SIZE_1024));
+        return addToAnalyticsIndex(experimentAccession, bioentityIdToIdentifierSearch, Integer.parseInt(DEFAULT_SOLR_BATCH_SIZE_8192));
     }
 
 
