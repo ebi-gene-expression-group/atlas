@@ -1,9 +1,34 @@
-.gxaGeneTooltip {
+.gxaTooltip {
   border: solid transparent;
   color: darkslategray;
   padding: 2px;
   font: 10px Verdana, Helvetica, Arial, sans-serif;
-  background: floralwhite;
+  background-color: floralwhite;
+
+  table {
+      margin: 0; /* overrides ebi-visual.css:134 */
+      background-color: white;
+      border: 1px solid lightgrey;
+      border-collapse: collapse;
+  }
+
+  th {
+      border-bottom: 1px solid lightgrey;
+      background-color: floralwhite;
+  }
+
+  td {
+      border: 1px solid lightgrey;
+  }
+
+  td, .gxaTooltip th {
+      vertical-align: middle;
+      padding: 8px;
+  }
+}
+
+.gxaGeneTooltip {
+  .gxaTooltip;
   max-width: 250px;
 
   .propertyName {
@@ -29,65 +54,12 @@
   text-align: justify;
 }
 
-
-
-/* Uncopypaste this and use Less if you need to. */
 .gxaContrastTooltip {
-    border: solid transparent;
-    color: darkslategray;
-    padding: 2px;
-    font: 10px Verdana, Helvetica, Arial, sans-serif;
+    .gxaTooltip;
     max-width: 500px;
 }
 
-.gxaContrastTooltip table {
-    margin: 0; /* overrides ebi-visual.css:134 */
-    background-color: white;
-    border: 1px solid lightgrey;
-    border-collapse: collapse;
-}
-
-.gxaContrastTooltip th {
-    border-bottom: 1px solid lightgrey;
-    background-color: floralwhite;
-}
-
-.gxaContrastTooltip td {
-    border: 1px solid lightgrey;
-}
-
-.gxaContrastTooltip td, .gxaContrastTooltip th {
-    vertical-align: middle;
-    padding: 8px;
-}
-
 .gxaFactorTooltip {
-    border: solid transparent;
-    color: darkslategray;
-    padding: 2px;
-    font: 10px Verdana, Helvetica, Arial, sans-serif;
-    background-color: floralwhite;
+    .gxaTooltip;
     max-width: 600px;
-}
-
-.gxaFactorTooltip table {
-    margin: 0; /* overrides ebi-visual.css:134 */
-    background-color: white;
-    border: 1px solid lightgrey;
-    border-collapse: collapse;
-}
-
-.gxaFactorTooltip th {
-    border-bottom: 1px solid lightgrey;
-    background-color: floralwhite;
-}
-
-.gxaFactorTooltip td {
-    border: 1px solid lightgrey;
-    white-space: nowrap;
-}
-
-.gxaFactorTooltip td, .gxaFactorTooltip th {
-    vertical-align: middle;
-    padding: 8px;
 }
