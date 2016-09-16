@@ -127,27 +127,67 @@ var HeatmapCanvasWithTooltips = React.createClass({
       <TooltipStateManager
         managedComponent={HeatmapCanvas}
         managedComponentProps={this.props.heatmapProps}
-        onUserSelectsColumn={this.props.onUserSelectsColumn}
-        onUserSelectsRow={this.props.onUserSelectsRow}
+        onUserSelectsColumn={this.props.anatomogramCallbacks.onUserSelectsColumn}
+        onUserSelectsRow={this.props.anatomogramCallbacks.onUserSelectsRow}
+        onUserSelectsPoint={this.props.anatomogramCallbacks.onUserSelectsPoint}
         tooltips={this.props.tooltips} />
     )
   }
 });
-var __heatmapCanvas = function(tooltips, heatmapProps){
+var __heatmapCanvas = function(tooltips,anatomogramCallbacks, heatmapProps){
   return (
     !tooltips
-    ? <HeatmapCanvas {...heatmapProps} />
+    ? <HeatmapCanvas {...heatmapProps} {...anatomogramCallbacks}/>
     : <HeatmapCanvasWithTooltips
         heatmapProps={heatmapProps}
-        onUserSelectsRow={heatmapProps.onUserSelectsRow}
-        onUserSelectsColumn={heatmapProps.onUserSelectsColumn}
         tooltips={tooltips}
+        anatomogramCallbacks={anatomogramCallbacks}
       />
   );
 };
-var heatmapCanvas = function(heatmapConfig, tooltips,heatmapProps){
-  return __heatmapCanvas(heatmapConfig.isExperimentPage && tooltips, heatmapProps);
+var heatmapCanvas = function(heatmapConfig, tooltips,anatomogramCallbacks, heatmapProps){
+  return __heatmapCanvas(heatmapConfig.isExperimentPage && tooltips,anatomogramCallbacks, heatmapProps);
 }
+
+var anatomogramCallbacks = function(heatmapDataToPresent, highlightOntologyIds){
+  return {
+    onUserSelectsRow : function(rowLabel){
+      var y =
+      heatmapDataToPresent
+      .yAxisCategories
+      .findIndex((e)=>(e.label == rowLabel));
+
+      var xs =
+      [].concat.apply([],
+         heatmapDataToPresent
+         .dataSeries
+         .map((series)=>series.data))
+      .filter((value)=> (value.y ==y))
+      .map((value)=>value.x);
+
+      highlightOntologyIds(
+        heatmapDataToPresent
+        .xAxisCategories
+        .filter((e,ix)=>(xs.indexOf(ix)>-1))
+        .map((e)=>e.id)
+      )
+    },
+    onUserSelectsColumn : function(columnLabel){
+      highlightOntologyIds(
+        heatmapDataToPresent
+        .xAxisCategories
+        .filter((e)=>(e.label == columnLabel))
+        .map((e)=>e.id)
+        .concat([""])
+        [0]
+      )
+    },
+    onUserSelectsPoint : function(columnId, rowId){
+      //Column ids are, in fact, factorValueOntologyTermId's
+      highlightOntologyIds(columnId||"");
+    }
+  }
+};
 
 var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,tooltips, legend,coexpressions, properties) {
     var marginRight = 60;
@@ -171,18 +211,20 @@ var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,toolti
             .map(function(e){return e.data;})
             .reduce(function(l,r){return l.concat(r);}, [])
             .length
-            ? heatmapCanvas(heatmapConfig, tooltips, {
-              marginRight:marginRight,
-              ontologyIdsToHighlight:properties.ontologyIdsToHighlight,
-              heatmapData:heatmapDataToPresent,
-              colorAxis:colorAxis,
-              onHeatmapRedrawn:properties.onHeatmapRedrawn,
-              formatters:formatters,
-              genomeBrowserTemplate:heatmapConfig.genomeBrowserTemplate,
-              onUserSelectsRow: ()=>{},//TODO on hovering on row you can now highlight an anatomogram tissue
-              onUserSelectsColumn:properties.onOntologyIdIsUnderFocus, //TODO you can now use this callback to highlight row without the HighchartsHeatmapContainer.jsx hack
-              onUserSelectsPoint: properties.onOntologyIdIsUnderFocus
-            })
+            ? heatmapCanvas(
+                heatmapConfig,
+                tooltips,
+                anatomogramCallbacks(heatmapDataToPresent, properties.onOntologyIdIsUnderFocus),
+                {
+                marginRight:marginRight,
+                ontologyIdsToHighlight:properties.ontologyIdsToHighlight,
+                heatmapData:heatmapDataToPresent,
+                colorAxis:colorAxis,
+                onHeatmapRedrawn:properties.onHeatmapRedrawn,
+                formatters:formatters,
+                genomeBrowserTemplate:heatmapConfig.genomeBrowserTemplate,
+                }
+              )
             : <p> No data in the series currently selected. </p>}
         </div>
 

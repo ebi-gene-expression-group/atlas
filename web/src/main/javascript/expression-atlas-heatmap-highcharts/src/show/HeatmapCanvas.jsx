@@ -19,7 +19,6 @@ var HeatmapCanvas = React.createClass({
       ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
       heatmapData: PropTypes.HeatmapData,
       colorAxis: React.PropTypes.object,
-      onHeatmapRedrawn: React.PropTypes.func.isRequired,
       formatters : React.PropTypes.shape({
         xAxis: PropTypes.Formatter,
         yAxis: PropTypes.Formatter,
@@ -33,9 +32,6 @@ var HeatmapCanvas = React.createClass({
 
   shouldComponentUpdate: function(nextProps){
     return hash.MD5(nextProps.heatmapData)!==hash.MD5(this.props.heatmapData);
-  },
-  componentDidUpdate: function () {
-      this.props.onHeatmapRedrawn();
   },
 
   componentWillReceiveProps: function(nextProps){
@@ -112,12 +108,16 @@ var HeatmapCanvas = React.createClass({
                   cursor: !!this.props.genomeBrowserTemplate ? "pointer" :undefined,
                   point: {
                       events: {
-                          mouseOver: function() {
-                              this.series.chart.userOptions.onUserSelectsPoint(this.series.xAxis.categories[this.x].id,this.series.yAxis.categories[this.y].id);
-                          },
-                          mouseOut: function () {
-                            this.series.chart.userOptions.onUserSelectsPoint("","");
-                          },
+                          mouseOver: (function() {
+                             var f =this.props.onUserSelectsPoint;
+                              return function(){
+                                return f(this.series.xAxis.categories[this.x].id,this.series.yAxis.categories[this.y].id);
+                              };
+                            }.bind(this))(),
+                          mouseOut: (function() {
+                             var f =this.props.onUserSelectsColumn;
+                              return function(){return f("","");};
+                            }.bind(this))(),
                           click: !this.props.genomeBrowserTemplate? function(){}: function(){
                             var x = this.series.xAxis.categories[this.x].info.trackId;
                             var y = this.series.yAxis.categories[this.y].info.trackId;
@@ -224,13 +224,6 @@ var HeatmapCanvas = React.createClass({
               useHTML: true,
               formatter: (function() { var f =this.props.formatters.tooltip; return function(){return f(this.series,this.point);};}.bind(this))()
           },
-          /*
-          TODO we can't access these in custom events like mouseover on row/column
-          because the "this" is not the Highcharts this but the "DOM API" this.
-          */
-          onUserSelectsRow: this.props.onUserSelectsRow,
-          onUserSelectsColumn: this.props.onUserSelectsColumn,
-          onUserSelectsPoint: this.props.onUserSelectsPoint,
 
           genomeBrowserTemplate: this.props.genomeBrowserTemplate,
           series: data.dataSeries.map(function(e){

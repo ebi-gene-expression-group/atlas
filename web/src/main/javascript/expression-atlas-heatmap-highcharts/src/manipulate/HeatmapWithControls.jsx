@@ -21,7 +21,6 @@ module.exports = React.createClass({
     propTypes: {
       loadResult: PropTypes.LoadResult,
       googleAnalyticsCallback: React.PropTypes.func.isRequired,
-      onHeatmapRedrawn: React.PropTypes.func.isRequired,
       ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
       onOntologyIdIsUnderFocus : React.PropTypes.func.isRequired
     },

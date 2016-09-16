@@ -7,13 +7,11 @@ var ReactTooltip = require('react-tooltip');
 require('./TooltipStateManager.less');
 //*------------------------------------------------------------------*
 
-//We let Highcharts manage the point formatter for now since we're not disappointed.
 var TooltipStateManager = React.createClass({
   propTypes:{
-    //This callback might come from above and e.g. be for highlighting tissues on anatomogram.
-    onUserSelectsRow:React.PropTypes.func,
-    onUserSelectsColumn:React.PropTypes.func,
-    onUserSelectsPoint: React.PropTypes.func,
+    onUserSelectsRow:React.PropTypes.func.isRequired,
+    onUserSelectsColumn:React.PropTypes.func.isRequired,
+    onUserSelectsPoint: React.PropTypes.func.isRequired,
     tooltips: React.PropTypes.shape({
       row: React.PropTypes.func,
       column: React.PropTypes.func,
@@ -30,7 +28,7 @@ var TooltipStateManager = React.createClass({
         extraClass:"gxaGlobalTooltipContent"}
       : {extraClass:"gxaDisabled"}
     );
-    this.props.onUserSelectsRow && this.props.onUserSelectsRow(rowLabel);
+    this.props.onUserSelectsRow(rowLabel);
   },
   _onUserSelectsColumn:function(columnLabel){
     this.refs["tooltip"].setState(
@@ -39,16 +37,19 @@ var TooltipStateManager = React.createClass({
         extraClass:"gxaGlobalTooltipContent"}
       : {extraClass:"gxaDisabled"}
     );
-    this.props.onUserSelectsColumn && this.props.onUserSelectsColumn(columnLabel);
+    this.props.onUserSelectsColumn(columnLabel);
   },
-  _onUserSelectsPoint:function(hoveredPoint){
+  _onUserSelectsPoint:function(__args__){
+    /*
+    //We let Highcharts manage the point formatter for now since we're not disappointed.
     this.refs["tooltip"].setState(
       hoveredPoint
       ? {placeholder: this.props.tooltips.point(hoveredPoint),
         extraClass:"gxaGlobalTooltipContent"}
       : {extraClass:"gxaDisabled"}
     );
-    this.props.onUserSelectsPoint && this.props.onUserSelectsPoint(hoveredPoint);
+    */
+    this.props.onUserSelectsPoint.apply({},arguments);
   },
 
 

@@ -20,12 +20,13 @@
 <script>
 //See the setup in heatmap-highcharts.jsp
     heatmapHighcharts.render({
+        proxyPrefix:"http://",
         atlasHost: "localhost:8080",
         isDifferential: false,
         isMultiExperiment: false,
         isProteomicsBaseline: false,
         isWidget: false,
-        sourceURL: "http://localhost:8080/gxa/json/experiments/E-MTAB-3839?geneQuery=%5B%7B\"value\"%3A\"Sb01g006200\"%2C\"category\"%3A\"\"%7D%5D",
+        sourceURL: "http://localhost:8080/gxa/json/experiments/E-PROT-1",
         target: "highchartsContainer",
         showAnatomogram: true,
         pathToFolderWithBundledResources: ".."

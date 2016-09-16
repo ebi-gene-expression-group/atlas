@@ -54,8 +54,7 @@ var Container = React.createClass({
   render: function(){
     var heatmapProps = {
       loadResult: this.props.loadResult,
-      googleAnalyticsCallback:this.props.googleAnalyticsCallback,
-      onHeatmapRedrawn:this._attachListenersToLabels,
+      googleAnalyticsCallback:this.props.googleAnalyticsCallback
     };//overriden: ontologyIdsToHighlight, onOntologyIdIsUnderFocus
     var anatomogramConfig = {
       pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
@@ -78,10 +77,6 @@ var Container = React.createClass({
       && this.props.anatomogramData
       && Object.keys(this.props.anatomogramData).length
     );
-  },
-
-  componentDidMount: function() {
-    this._attachListenersToLabels();
   },
 
   _ontologyIdsForTissuesExpressedInAllRows: function(){
@@ -134,35 +129,6 @@ var Container = React.createClass({
     return (
       _expressedFactorsPerRow(this.props.profiles.rows)[rowTitle]
     )
-  },
-
-  _attachListenersToLabels: function() {
-    if(!this._showAnatomogram()){
-      return;
-    }
-    /*
-    I am a hack and I attach event listeners to the labels.
-    We are now using highcharts with the custom events package. TODO unhack me
-    */
-    Snap.selectAll('.highcharts-yaxis-labels > *')
-    .forEach(function (v) {
-      //careful - if the label doesn't fit, the element will have two children: displayed and full title
-      //here we assume the longest text is the correct title of the experiment
-      var title =
-        v.selectAll('*').items
-        .map(function(c){return c.node.textContent})
-        .reduce(function(l,r){return l.length > r.length? l : r}, "");
-      if (title) {
-        v.hover(
-          function onMouseEnterSendTitle() {
-            this.refs[this.props.referenceToAnatomogramContainer].setState({ontologyIdsForComponentContentUnderFocus: this._ontologyIdsForTissuesExpressedInRow(title)});
-          }
-            ,
-            function onMouseLeaveSendNull() {
-            this.refs[this.props.referenceToAnatomogramContainer].setState({ontologyIdsForComponentContentUnderFocus: []});
-          } , this, this);
-      }
-    }, this);
   }
 
 })
