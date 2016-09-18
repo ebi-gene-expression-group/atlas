@@ -5,11 +5,11 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     // define the bundles we want
     entry: {
-        expressionAtlasHeatmap: './expression-atlas-heatmap',
-        expressionAtlasHeatmapHighcharts:'./expression-atlas-heatmap-highcharts',
-        experimentPageHeatmap: './expression-atlas-heatmap/src/experimentPageHeatmapAnatomogramRenderer.js',
-        expressionAtlasBaselineExpression: './expression-atlas-baseline-expression',
-        expressionAtlasDifferentialExpression: './expression-atlas-differential-expression',
+        expressionAtlasHeatmap: ['babel-polyfill', './expression-atlas-heatmap'],
+        expressionAtlasHeatmapHighcharts: ['babel-polyfill', './expression-atlas-heatmap-highcharts'],
+        experimentPageHeatmap: ['babel-polyfill', './expression-atlas-heatmap/src/experimentPageHeatmapAnatomogramRenderer.js'],
+        expressionAtlasBaselineExpression: ['babel-polyfill', './expression-atlas-baseline-expression'],
+        expressionAtlasDifferentialExpression: ['babel-polyfill', './expression-atlas-differential-expression'],
         dependencies: ['react', 'react-dom', 'react-radio-group','react-prop-types-check',
                        'react-bootstrap/lib/DropdownButton', 'react-bootstrap/lib/MenuItem', 'react-bootstrap/lib/FormGroup',
                        'react-bootstrap/lib/FormControl', 'react-bootstrap', 'react-bootstrap/lib/Button',
