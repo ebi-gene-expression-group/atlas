@@ -228,7 +228,7 @@ var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,toolti
             : <p> No data in the series currently selected. </p>}
         </div>
 
-        <div id ="legend">
+        <div className ="gxaHeatmapLegend">
           {legend.map((legendItemProps) => <HeatmapLegendBox {...legendItemProps} />)}
 
           <div className="legend-item">
@@ -244,7 +244,9 @@ var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,toolti
                             onClickCallback={function(){}}
                             clickable={false}/>
         </div>
-        {coexpressions? <CoexpressionOption {...coexpressions}/> : null }
+        {coexpressions?
+          <CoexpressionOption {...coexpressions}/>
+        : null }
       </div>
     );
 };
