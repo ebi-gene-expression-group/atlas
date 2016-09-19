@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
+import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
@@ -57,6 +58,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private final BaselineExperimentPageService baselineExperimentPageService;
     private final SpeciesFactory speciesFactory;
+    private final FactorGroupingService factorGroupingService;
 
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -67,13 +69,14 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                     BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
                                     @Qualifier ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory
                                                 baselineProfileInputStreamFactory,
-                                    SpeciesFactory speciesFactory) {
+                                    SpeciesFactory speciesFactory,FactorGroupingService factorGroupingService) {
         this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
         this.speciesLookupService = speciesLookupService;
         this.baselineExperimentProfilesViewModelBuilder = baselineExperimentProfilesViewModelBuilder;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileInputStreamFactory);
         this.speciesFactory = speciesFactory;
+        this.factorGroupingService = factorGroupingService;
     }
 
     @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE")
@@ -158,6 +161,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         }
 
         model.addAttribute("jsonColumnHeaders", gson.toJson(AssayGroupFactorViewModel.createList(convert(orderedFactors))));
+        model.addAttribute("jsonColumnGroupings", gson.toJson(factorGroupingService.group(convert(orderedFactors))));
         model.addAttribute("jsonProfiles", gson.toJson(baselineExperimentProfilesViewModelBuilder.buildJson(baselineProfiles, orderedFactors)));
     }
 }

@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
@@ -32,17 +33,19 @@ public class BaselineExperimentPageService extends ExperimentPageService {
     private final BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory;
     private final ApplicationProperties applicationProperties;
     private final AnatomogramFactory anatomogramFactory;
+    private final FactorGroupingService factorGroupingService;
     private Gson gson = new GsonBuilder()
             .create();
 
     public BaselineExperimentPageService(BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory,
                                          ApplicationProperties applicationProperties,
-                                         TracksUtil tracksUtil) {
+                                         TracksUtil tracksUtil,FactorGroupingService factorGroupingService) {
 
         this.applicationProperties = applicationProperties;
         this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
         this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
         this.tracksUtil = tracksUtil;
+        this.factorGroupingService = factorGroupingService;
     }
 
     //TODO I got misplaced when refactoring, I belong in a controller, not here
@@ -98,6 +101,8 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
         model.addAttribute("jsonColumnHeaders",
                 gson.toJson(constructColumnHeaders(filteredAssayGroupFactors,experiment)));
+
+        model.addAttribute("jsonColumnGroupings", gson.toJson(factorGroupingService.group(filteredAssayGroupFactors)));
 
         model.addAttribute("jsonProfiles", viewModelAsJson(heatMapResults.getJsonProfiles()));
 

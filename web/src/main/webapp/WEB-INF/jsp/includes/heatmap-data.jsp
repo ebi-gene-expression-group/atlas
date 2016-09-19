@@ -66,6 +66,7 @@
                 "disclaimer": "${disclaimer}"
             },
             "columnHeaders": ${not empty jsonColumnHeaders ? jsonColumnHeaders : "null"},
+            "columnGroupings": ${not empty jsonColumnGroupings ? jsonColumnGroupings : "[]"},
             "profiles": ${not empty jsonProfiles ? jsonProfiles : "null"},
             "geneSetProfiles": ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : "null"},
             "jsonCoexpressions" :${not empty jsonCoexpressions ? jsonCoexpressions : "[]"},

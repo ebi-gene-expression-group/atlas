@@ -6,7 +6,6 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 
 import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -25,6 +24,23 @@ public class ExperimentPageJsonEIT {
             assertTrue(columnHeader.has("factorValue"));
             assertTrue(columnHeader.has("assayGroupSummary"));
         }
+
+        assertTrue(payload.has("columnGroupings"));
+        for(JsonElement e: payload.get("columnGroupings").getAsJsonArray()){
+            JsonObject columnHeader = e.getAsJsonObject();
+            assertTrue(columnHeader.has("name"));
+            assertTrue(columnHeader.has("groups"));
+            for(JsonElement ee: columnHeader.get("groups").getAsJsonArray()){
+                JsonObject group = ee.getAsJsonObject();
+                assertTrue(group.has("name"));
+                assertTrue(group.has("id"));
+                assertTrue(group.has("values"));
+                for(JsonElement v : group.get("values").getAsJsonArray()){
+                    assertTrue("values are ontology ids :"+v.getAsString() , v.getAsString().matches("\\w+_\\d+"));
+                }
+            }
+        }
+
     }
 
     void assertAboutDifferentialColumnHeaders(JsonObject payload){
