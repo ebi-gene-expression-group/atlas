@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.search;
 
-import autovalue.shaded.com.google.common.common.base.Throwables;
+import com.google.common.base.Throwables;
 import com.google.gson.stream.MalformedJsonException;
 
 import java.beans.PropertyEditorSupport;

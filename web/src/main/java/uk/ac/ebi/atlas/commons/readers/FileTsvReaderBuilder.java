@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.commons.readers;
 
-import autovalue.shaded.com.google.common.common.base.Throwables;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderDummy;
 import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;

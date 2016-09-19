@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.search;
 
-import autovalue.shaded.com.google.common.common.base.Throwables;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
+import com.google.common.base.Throwables;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;

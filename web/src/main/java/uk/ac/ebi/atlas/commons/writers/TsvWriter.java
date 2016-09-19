@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.commons.writers;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import autovalue.shaded.com.google.common.common.base.Throwables;
+import com.google.common.base.Throwables;
 
 import java.io.IOException;
 import java.io.Writer;
