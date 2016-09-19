@@ -139,6 +139,16 @@ var filterHeatmapDataByCoexpressionIndex = function(maxIndex, data){
   );
 }
 
+exports.group = groupValuesByProvidedColumnGrouping;
+var groupValuesByProvidedColumnGrouping = function(grouping, data){
+  //new position is the lowest position
+  //provide "other" grouping
+  //put "aggregated points" into an info object if there was more than one
+  //there should be a grouping that doesn't do anything
+  return data;
+}
+
+
 
 exports.filterByIndex = filterHeatmapDataByCoexpressionIndex;
 exports.filterByDataSeries = filterHeatmapDataByDataSeries;

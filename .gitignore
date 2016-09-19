@@ -20,6 +20,8 @@ web/src/test/resources/serialized_expression
 npm-debug.log
 web/src/main/**/node_modules
 web/src/main/javascript/**/dist
+web/src/main/javascript/expression-atlas-heatmap-highcharts/test/data
+
 tmp/**
 **/rebel.xml
 **/*op-log.tsv
