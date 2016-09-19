@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Heatmap demo</title>
+    <title>Highcharts demo</title>
 
     <link rel="stylesheet" href="/gxa/resources/css/customized-bootstrap-3.3.5.css">
 
@@ -11,17 +11,17 @@
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/expressionAtlasHeatmapHighcharts.bundle.js"></script>
 </head>
 <body>
-    <div>
-        <h2>Bundles loaded locally, request done to <code>https://localhost:8443/gxa</code></h2>
-    </div>
+<div>
+    <h2>Bundles loaded locally, request done to <code>https://wwwdev.ebi.ac.uk/gxa</code></h2>
+</div>
 
-    <div id="heatmapContainer"></div>
+<div id="heatmapContainer"></div>
 </body>
 
 <script language="JavaScript" type="text/javascript">
     expressionAtlasHeatmapHighcharts.render({
-        atlasHost: "https://localhost:8443",
-        params: "geneQuery=WBGene00000662&species=caenorhabditis%20elegans",
+        atlasHost: 'https://wwwdev.ebi.ac.uk',
+        params: "geneQuery=R-HSA-73887",
         isMultiExperiment: true,
         target: "heatmapContainer"
     });
