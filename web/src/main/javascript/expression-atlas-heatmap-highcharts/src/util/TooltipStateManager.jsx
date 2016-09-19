@@ -25,6 +25,7 @@ var TooltipStateManager = React.createClass({
     this.refs["tooltip"].setState(
       rowLabel
       ? {placeholder: this.props.tooltips.row(rowLabel),
+        place:"right",
         extraClass:"gxaGlobalTooltipContent"}
       : {extraClass:"gxaDisabled"}
     );
@@ -34,6 +35,7 @@ var TooltipStateManager = React.createClass({
     this.refs["tooltip"].setState(
       columnLabel
       ? {placeholder: this.props.tooltips.column(columnLabel),
+        place:"bottom",
         extraClass:"gxaGlobalTooltipContent"}
       : {extraClass:"gxaDisabled"}
     );
