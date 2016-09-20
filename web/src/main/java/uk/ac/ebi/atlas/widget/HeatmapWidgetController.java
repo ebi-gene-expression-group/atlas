@@ -49,8 +49,6 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @Scope("request")
 public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
-    public static final String ORIGINAL_GENEQUERY = "geneQuery";
-
     private AnatomogramFactory anatomogramFactory;
     private SpeciesLookupService speciesLookupService;
 
@@ -101,8 +99,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     @RequestMapping(value = "/widgets/heatmap/baselineAnalytics")
     public String analyticsJson(@RequestParam(value = "geneQuery") SemanticQuery geneQuery,
                                 @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
-                                @RequestParam(value = "species", required = false, defaultValue = "") String
-                                            speciesString,
+                                @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
                                 @RequestParam(value = "propertyType", required = false) String propertyType,
                                 @RequestParam(value = "source", required = false) String defaultQueryFactorType,
                                 Model model, HttpServletRequest request, HttpServletResponse response) {

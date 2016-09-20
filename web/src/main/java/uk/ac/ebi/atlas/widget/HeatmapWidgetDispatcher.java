@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.widget;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,9 +16,14 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.substringAfter;
+
 @Controller
 @Scope("request")
 public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
+
+    private static final String ORIGINAL_GENEQUERY = "geneQuery";
 
     private SpeciesLookupService speciesLookupService;
     private ApplicationProperties applicationProperties;
@@ -35,13 +39,13 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
 
     @RequestMapping(value = {"/widgets/heatmap/referenceExperiment"})
     public String dispatchWidget(HttpServletRequest request,
-                                 @RequestParam(value = "geneQuery", required = true) String geneQueryString,
+                                 @RequestParam(value = "geneQuery") String geneQueryString,
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
                                  @RequestParam(value = "species", required = false) String species,
                                  @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences) {
 
         try {
-            if (StringUtils.isBlank(species)) {
+            if (isBlank(species)) {
                 species = speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQueryString);
             }
         } catch (ResourceNotFoundException e) {
@@ -50,7 +54,7 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
 
         String experimentAccession = applicationProperties.getBaselineReferenceExperimentAccession(species);
 
-        if (StringUtils.isEmpty(experimentAccession)) {
+        if (isBlank(experimentAccession)) {
             throw new ResourceNotFoundException("No baseline experiment for species " + species);
         }
 
@@ -59,15 +63,10 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
         request.setAttribute("experiment", experiment);
 
         //TODO: hacky, fix this, see RnaSeqBaselineExperimentPageController
-        request.setAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY, geneQueryString);
+        request.setAttribute(ORIGINAL_GENEQUERY, geneQueryString);
 
         // forward to /widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE in BaselineExperimentPageService
-        // eg: forward:/widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE&serializedFilterFactors=ORGANISM:Monodelphis domestica
-        // existing request parameters to this method (ie: geneQuery, propertyType, rootContext) are also passed along by the forward,
-        // plus type and serializedFilterFactors
-        // the model attributes are also preserved by a forward TODO wrong I think this means
-        // BaselineRequestPreferences
-        // preferences only I think so why do we populate model still
+        // the model attributes are also preserved by a forward
         return "forward:" + getRequestURL(request) + buildQueryString(experiment);
     }
 
@@ -75,13 +74,11 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
         String contextPath = request.getContextPath();
         String requestURI = request.getRequestURI();
 
-        return StringUtils.substringAfter(requestURI, contextPath);
+        return substringAfter(requestURI, contextPath);
     }
 
     private String buildQueryString(Experiment experiment) {
-        String mappedSpecies = experiment.getSpecies().mappedName;
-        String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
-        return "?type=" + experiment.getType().getParent() + organismParameters;
+        return "?type=" + experiment.getType().getParent();
     }
 
 }
