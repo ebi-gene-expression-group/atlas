@@ -25,11 +25,13 @@ public class BaselineProfilesHeatMapWranglerFactory {
         this.coexpressedGenesService = coexpressedGenesService;
     }
 
-    public BaselineProfilesHeatMapWrangler create(BaselineRequestPreferences preferences, BaselineExperiment
-            experiment) {
-        return new BaselineProfilesHeatMapWrangler(baselineProfilesHeatMap,baselineProfilesViewModelBuilder,
+    public BaselineProfilesHeatMapWrangler create(BaselineRequestPreferences preferences, BaselineExperiment experiment) {
+        return new BaselineProfilesHeatMapWrangler(
+                baselineProfilesHeatMap,
+                baselineProfilesViewModelBuilder,
                 solrQueryService,
                 coexpressedGenesService,
-                preferences, experiment);
+                preferences,
+                experiment);
     }
 }

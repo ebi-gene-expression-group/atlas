@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.Set;
 
-
 public abstract class ExperimentPageRequestPreferences extends SearchRequest {
 
     public static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;

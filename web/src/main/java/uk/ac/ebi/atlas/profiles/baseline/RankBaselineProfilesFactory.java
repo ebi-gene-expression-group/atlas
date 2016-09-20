@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfileComparator;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
@@ -9,10 +8,8 @@ import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Comparator;
 
 @Named
-@Scope("singleton")
 public class RankBaselineProfilesFactory implements RankProfilesFactory<BaselineProfile, BaselineProfilesList, BaselineProfileStreamOptions> {
 
     private BaselineProfilesListBuilder geneProfilesListBuilder;

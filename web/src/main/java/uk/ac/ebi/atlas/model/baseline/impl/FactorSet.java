@@ -1,16 +1,19 @@
-
 package uk.ac.ebi.atlas.model.baseline.impl;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 
-import java.util.*;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class FactorSet implements FactorGroup {
 

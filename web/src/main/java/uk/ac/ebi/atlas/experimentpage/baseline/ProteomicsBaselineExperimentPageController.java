@@ -70,8 +70,6 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
                                          @PathVariable String experimentAccession,
                                          @RequestParam(required = false) String accessKey,
                                          BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
-//        experimentPageCallbacks.adjustReceivedObjects(preferences);
-
         try {
             baselineExperimentPageService.populateModelWithHeatmapData(
                     (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
