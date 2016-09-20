@@ -17,15 +17,17 @@ import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 
 public class BaselineExperimentPageService extends ExperimentPageService {
 
@@ -56,20 +58,12 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
     public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
                                                        HttpServletRequest request, boolean isWidget) {
-        if (isWidget) {
-            // possibly we could always do this - investigate if it matters for not-a-widget
-            //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
-            // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
-            // instead of the current tab separated syntax for geneQuery
-            preferences.setGeneQuery(SemanticQuery.fromJson((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY)));
-        }
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
         BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
 
         if(!isWidget) {
             addFactorMenu(model, experiment, requestContext);
         }
-
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
