@@ -139,17 +139,141 @@ var filterHeatmapDataByCoexpressionIndex = function(maxIndex, data){
   );
 }
 
-exports.group = groupValuesByProvidedColumnGrouping;
 var groupValuesByProvidedColumnGrouping = function(grouping, data){
-  //new position is the lowest position
-  //provide "other" grouping
-  //put "aggregated points" into an info object if there was more than one
-  //there should be a grouping that doesn't do anything
-  return data;
+  var indexesPerGroup =
+    [].concat.apply([],
+      data
+      .xAxisCategories
+      .map(function(e,ix){
+        var groups =
+          [].concat.apply([],
+            e.info.groupings
+            .filter((g)=>g.name ==grouping)
+            .map((g)=>g.values.map((value)=>value.label))
+            .concat([[]])
+            [0]
+          )
+          .map((group=>[group,ix]));
+        return (
+          groups.length ? groups : [[e.label,ix]]
+        )
+      })
+    );
+
+  var _hasSmallerNonunique = function(xs,ys){
+    //xs, ys sorted
+    var _xs = xs.filter((x)=>ys.indexOf(x)==-1);
+    var _ys = ys.filter((y)=>xs.indexOf(y)==-1);
+    return (
+      !_xs.length || !_ys.length
+      ? -_xs.length*xs.length + _ys.length*ys.length
+      :_xs[0]-_ys[0]
+    )
+  };
+  var groupsAndTheirIndices =
+    indexesPerGroup
+    .map((e)=>e[0])
+    .filter((e,ix,self)=>self.indexOf(e)==ix)
+    .map(function(group){
+      return [
+        group,
+        indexesPerGroup
+        .filter((e)=>e[0]==group)
+        .map((e)=>e[1])
+        .sort((l,r)=>l-r)
+      ]
+    })
+    .sort(function(l,r){
+      return _hasSmallerNonunique(l[1],r[1]);
+    });
+  var dataSeriesPointsPerNewXAndY=
+    [].concat.apply([],
+      [].concat.apply([],
+        data.dataSeries
+        .map((dataSeries,dataSeriesIndex)=>dataSeries.data.map(function(point){
+          return (
+            groupsAndTheirIndices
+            .map((e,ix)=>[e,ix])
+            .filter((e)=>e[0][1].indexOf(point.x)>-1)
+            .map(function(e){
+              return {
+                point: point,
+                newX: e[1],
+                dataSeriesIndex: dataSeriesIndex
+              }
+            })
+          );
+        }))
+      )
+    )
+    .reduce(function(acc,e){
+      var key = e.newX+" "+e.point.y;
+      (acc[key]= acc[key]||[]).push(e)
+      return acc;
+    }, {});
+
+  var newDataSeries=
+    Object.keys(dataSeriesPointsPerNewXAndY)
+    .map((k)=>dataSeriesPointsPerNewXAndY[k])
+    .filter((e)=>e.length) //should not happen?
+    .map(function(points){
+      points.sort(function(l,r){
+        return l.point.value - r.point.value;
+      });
+      return [
+        points[0].dataSeriesIndex,
+        Object.assign({},
+          points[0].point,
+          {
+            x:points[0].newX,
+            info:
+              Object.assign({},
+                points[0].point.info,
+                points.length >1
+                ? {aggregated: points.map((e)=>e.point)}
+                : {}
+              )
+          }
+        )
+      ]
+    })
+    .reduce(function(dataSeriesAcc,x){
+      dataSeriesAcc[x[0]].data.push(x[1]);
+      return dataSeriesAcc;
+    },data.dataSeries.map((ds)=>{return {info:ds.info,data:[]}}))
+
+  return {
+    xAxisCategories :
+      groupsAndTheirIndices
+      .map(function(groupAndIndices){
+        var xAxisCategoriesForThisGroup =
+          data.xAxisCategories
+          .filter((e,ix)=>groupAndIndices[1].indexOf(ix)>-1);
+        return (
+          xAxisCategoriesForThisGroup.length==1
+          ? xAxisCategoriesForThisGroup[0]
+          : {
+              label: groupAndIndices[0],
+              id: xAxisCategoriesForThisGroup.map((e)=>e.id),
+              info: {
+                trackId:
+                  xAxisCategoriesForThisGroup
+                  .map((e)=>e.info.trackId)
+                  .filter((e,ix,self)=>self.indexOf(e)==ix),
+                tooltip: {},
+                groupings: []
+                //if needed - add the values you need here
+              }
+            }
+        );
+      }),
+    yAxisCategories: data.yAxisCategories,
+    dataSeries:newDataSeries
+  };
 }
 
 
-
+exports.group = groupValuesByProvidedColumnGrouping;
 exports.filterByIndex = filterHeatmapDataByCoexpressionIndex;
 exports.filterByDataSeries = filterHeatmapDataByDataSeries;
 exports.order = orderHeatmapData;

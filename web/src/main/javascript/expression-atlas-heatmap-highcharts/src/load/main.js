@@ -26,12 +26,12 @@ var _allRows = function(data){
       }))
     );
 }
-var get = function(setupConfig,data){
-  var config = Config(setupConfig, data);
-  var rows = _allRows(data);
-  var columnHeaders = data.columnHeaders;
+var get = function(setupConfig,payload){
+  var config = Config(setupConfig, payload);
+  var rows = _allRows(payload);
+  var columnHeaders = payload.columnHeaders;
 
-  var data = Data(config,rows,columnHeaders);
+  var data = Data(config,rows,columnHeaders, payload.columnGroupings);
 
   return {
     heatmapConfig: config,

@@ -4,7 +4,7 @@ var assertPropTypes = require('./assert.js');
 
 
 describe('Manipulators', function() {
-  var data = require('./data/genesetPageOneRow').expected;
+  var data = require('json!./data/genesetPageOneRow').expected;
   var orderings = {"Default":{"columns":[0,1,2,3,4,5,6,7,8],"rows":[0]},"Alphabetical order":{"columns":[0,1,2,3,4,5,6,7,8],"rows":[0]},"Gene expression rank":{"columns":[7,5,8,6,4,3,0,1,2],"rows":[0]}};
   describe('order', function() {
     describe('by default ordering', function(){
@@ -71,7 +71,7 @@ describe('Manipulators', function() {
   });
   describe('filterByIndex', function(){
     describe('passing non-experiment page data through the code', function(){
-      var geneSetPageData = require('./data/genesetPageOneRow').expected;
+      var geneSetPageData = require('json!./data/genesetPageOneRow').expected;
       it('result should have the data series format', function() {
         var result = subject.filterByIndex(0,geneSetPageData);
         assertPropTypes.validateHeatmapData(result);
@@ -90,7 +90,7 @@ describe('Manipulators', function() {
       });
     });
     describe('data with coexpressions', function(){
-      var coexpressionsData = require('./data/experimentPageBaselineOneGeneWithCoexpressions').expected;
+      var coexpressionsData = require('json!./data/experimentPageBaselineOneGeneWithCoexpressions').expected;
       it('result should have the data series format', function() {
         var result = subject.filterByIndex(0,coexpressionsData);
         assertPropTypes.validateHeatmapData(result);
@@ -113,5 +113,63 @@ describe('Manipulators', function() {
         assert.equal(2, subject.filterByIndex(1,coexpressionsData).yAxisCategories.length);
       });
     });
+  })
+  describe('Grouping', function(){
+    var data = require('json!./data/experimentPageProteomicsBaseline.json').expected;
+    describe('Unknown/ default grouping', function(){
+      var grouping = "Default";
+      var result = subject.group(grouping,data);
+      it('result should have the data series format', function() {
+        assertPropTypes.validateHeatmapData(result);
+      });
+
+      it('x axes and data series should have been processed', function() {
+        assert.notEqual(data.xAxisCategories,result.xAxisCategories);
+        assert.notEqual(data.dataSeries,result.dataSeries);
+      });
+      it('result should not actually change', function() {
+        assert.deepEqual(data.xAxisCategories,result.xAxisCategories);
+        assert.deepEqual(data.dataSeries,result.dataSeries);
+      });
+      it('y axis categories should not have been touched', function(){
+        assert.equal(data.yAxisCategories,result.yAxisCategories);
+      })
+    })
+    describe('Anatomical systems grouping', function(){
+      var grouping = "Anatomical Systems";
+      var result = subject.group(grouping,data);
+      it('result should have the data series format', function() {
+        assertPropTypes.validateHeatmapData(result);
+      });
+      it('y axis categories should not have been touched', function(){
+        assert.equal(data.yAxisCategories,result.yAxisCategories);
+      })
+      it('result should actually change', function() {
+        assert.notDeepEqual(data.xAxisCategories,result.xAxisCategories);
+        assert.notDeepEqual(data.dataSeries,result.dataSeries);
+      });
+      it('We did not lose any values', function(){
+        var pointsBefore =
+          [].concat.apply([],
+            result.dataSeries
+            .map((series)=>series.data)
+          )
+          .map((point)=>point.value)
+          .sort((l,r)=>l-r);
+
+        var pointsAfter =
+          [].concat.apply([],
+            [].concat.apply([],
+              result.dataSeries
+              .map((series)=>series.data)
+            )
+            .map((point)=>point.info.aggregated? point.info.aggregated.map((agggregatedPoint)=>agggregatedPoint.value) : [point.value])
+          )
+          .sort((l,r)=>l-r);
+        assert.deepEqual(pointsBefore,pointsAfter);
+      })
+    })
+
+
   })
 });

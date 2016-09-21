@@ -5,7 +5,30 @@ var _ = require('lodash');
 
 //*------------------------------------------------------------------*
 
-var getXAxisCategories = function (columnHeaders, config) {
+var _columnGroupings = function(columnGroupings, id){
+  return (
+    columnGroupings.map(function(grouping){
+      return {
+        name: grouping.name,
+        values:
+          grouping
+          .groups
+          .filter(function(group){
+            return group.values.indexOf(id)>-1
+          })
+          .map(function(group){
+            return {
+              label: group.name,
+              id: group.id
+            }
+          })
+        }
+      }
+    )
+  )
+}
+
+var getXAxisCategories = function (columnHeaders,columnGroupings, config) {
   return columnHeaders.map(
     config.isExperimentPage
     ? config.isDifferential
@@ -14,7 +37,8 @@ var getXAxisCategories = function (columnHeaders, config) {
                   "id" : columnHeader.id,
                   "info":{
                     trackId:columnHeader.id,
-                    tooltip:columnHeader.contrastSummary
+                    tooltip:columnHeader.contrastSummary,
+                    groupings:[]
                   }};
         }
       : function (columnHeader) {
@@ -22,7 +46,8 @@ var getXAxisCategories = function (columnHeaders, config) {
                   "id" : columnHeader.factorValueOntologyTermId || "",
                   "info":{
                     trackId:columnHeader.assayGroupId,
-                    tooltip:columnHeader.assayGroupSummary
+                    tooltip:columnHeader.assayGroupSummary,
+                    groupings: _columnGroupings(columnGroupings, columnHeader.factorValueOntologyTermId || "")
                   }};
         }
     : function (columnHeader) {
@@ -30,7 +55,8 @@ var getXAxisCategories = function (columnHeaders, config) {
                 "id" : columnHeader.factorValueOntologyTermId || "",
                 "info":{
                   trackId:"",
-                  tooltip:{}
+                  tooltip:{},
+                  groupings: _columnGroupings(columnGroupings, columnHeader.factorValueOntologyTermId || "")
                 }};
       }
       );
@@ -232,9 +258,9 @@ var _dataSplitByThresholds = function (thresholds, names, colours, profilesRows,
   );
 };
 
-var getTheWholeDataObject = function(config,rows, columnHeaders){
+var getTheWholeDataObject = function(config,rows, columnHeaders, columnGroupings){
   return {
-    xAxisCategories: getXAxisCategories(columnHeaders, config),
+    xAxisCategories: getXAxisCategories(columnHeaders,columnGroupings || [], config),
     yAxisCategories: getYAxisCategories(rows, config),
     dataSeries: getDataSeries(rows, config)
   };
