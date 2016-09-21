@@ -78,9 +78,8 @@ public class FactorGroupingService {
         if(organismPartFactors.size()>0){
             anatomicalSystems.addProperty("name", "Anatomical Systems");
             anatomicalSystems.add("groups",groupIntoAnatomicalSystems(organismPartFactors));
+            result.add(anatomicalSystems);
         }
-
-        result.add(anatomicalSystems);
 
         return result;
     }

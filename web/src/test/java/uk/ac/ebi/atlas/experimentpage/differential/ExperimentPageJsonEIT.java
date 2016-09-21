@@ -56,7 +56,9 @@ public class ExperimentPageJsonEIT {
     @Test
     public void testBaselineRnaSeq(){
         assertAboutBaselineColumnHeaders(getExperimentHeaderSummary("E-MTAB-513"));
+        assertAboutBaselineColumnHeaders(getExperimentHeaderSummary("E-MTAB-3028"));
     }
+
     @Test
     public void testBaselineProteomics(){
         assertAboutBaselineColumnHeaders(getExperimentHeaderSummary("E-PROT-1"));
