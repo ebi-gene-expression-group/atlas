@@ -258,15 +258,26 @@ var groupValuesByProvidedColumnGrouping = function(grouping, data){
       return dataSeriesAcc;
     },data.dataSeries.map((ds)=>{return {info:ds.info,data:[]}}))
 
+  var _isUniqueGroup = function(groupAndIndices, groupIndex, allGroupsAndTheirIndices){
+    return (
+      !
+      [].concat.apply([],
+        allGroupsAndTheirIndices
+        .filter((e,ix)=>ix!=groupIndex)
+        .map((e)=>e[1])
+      )
+      .some((i)=>groupAndIndices[1].indexOf(i)>-1)
+    )
+  }
   return {
     xAxisCategories :
       groupsAndTheirIndices
-      .map(function(groupAndIndices){
+      .map(function(groupAndIndices, groupIndex, self){
         var xAxisCategoriesForThisGroup =
           data.xAxisCategories
           .filter((e,ix)=>groupAndIndices[1].indexOf(ix)>-1);
         return (
-          xAxisCategoriesForThisGroup.length==1
+          xAxisCategoriesForThisGroup.length==1 && _isUniqueGroup(groupAndIndices, groupIndex, self)
           ? xAxisCategoriesForThisGroup[0]
           : {
               label: groupAndIndices[0],
