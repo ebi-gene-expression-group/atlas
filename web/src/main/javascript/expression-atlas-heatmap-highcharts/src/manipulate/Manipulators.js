@@ -238,13 +238,16 @@ var groupValuesByProvidedColumnGrouping = function(grouping, data){
                         }, e.point.info)
                     })),
                   xAxisLegendName:
-                  data.xAxisCategories[points[0].point.x].info.groupings
-                  .filter((g)=>g.name==grouping)
-                  .map((g)=>g.memberName)
-                  .concat([""])
-                  [0]
+                    data.xAxisCategories[points[0].point.x].info.groupings
+                    .filter((g)=>g.name==grouping)
+                    .map((g)=>g.memberName)
+                    .concat([""])
+                    [0],
+                  xId: points.map((e)=>data.xAxisCategories[e.point.x].id)
                   }
-                : {}
+                : { xLabel: data.xAxisCategories[points[0].point.x].label,
+                    xId: data.xAxisCategories[points[0].point.x].id
+                  }
               )
           }
         )

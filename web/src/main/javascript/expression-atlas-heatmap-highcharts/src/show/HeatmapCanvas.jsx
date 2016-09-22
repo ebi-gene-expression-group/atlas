@@ -111,7 +111,7 @@ var HeatmapCanvas = React.createClass({
                           mouseOver: (function() {
                              var f =this.props.onUserSelectsPoint;
                               return function(){
-                                return f(this.series.xAxis.categories[this.x].id,this.series.yAxis.categories[this.y].id);
+                                return f(this.options.info.xId ||this.series.xAxis.categories[this.x].id,this.series.yAxis.categories[this.y].id);
                               };
                             }.bind(this))(),
                           mouseOut: (function() {

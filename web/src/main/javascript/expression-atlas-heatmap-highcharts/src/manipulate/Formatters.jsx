@@ -142,7 +142,7 @@ var makeFormatter = function(config){
     tooltip: function Formatter (series, point) {
       var o = {
         colour: point.color,
-        xLabel: series.xAxis.categories[point.x].label,
+        xLabel: point.options.info.xLabel || series.xAxis.categories[point.x].label,
         yLabel: series.yAxis.categories[point.y].label,
         value:  point.value,
       }

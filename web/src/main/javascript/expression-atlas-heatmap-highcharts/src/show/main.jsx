@@ -131,20 +131,26 @@ var anatomogramCallbacks = function(heatmapDataToPresent, highlightOntologyIds){
       heatmapDataToPresent
       .yAxisCategories
       .findIndex((e)=>(e.label == rowLabel));
-
-      var xs =
-      [].concat.apply([],
-         heatmapDataToPresent
-         .dataSeries
-         .map((series)=>series.data))
-      .filter((value)=> (value.y ==y))
-      .map((value)=>value.x);
-
       highlightOntologyIds(
-        heatmapDataToPresent
-        .xAxisCategories
-        .filter((e,ix)=>(xs.indexOf(ix)>-1))
-        .map((e)=>e.id)
+        [].concat.apply([],
+          [].concat.apply([],
+             heatmapDataToPresent
+             .dataSeries
+             .map((series)=>series.data)
+          )
+          .filter((point)=> (point.y ==y))
+          .map(function(point){
+            return (
+              point.info.xId ||
+                heatmapDataToPresent
+                .xAxisCategories
+                [point.x]
+                .id
+            )
+          })
+          .map((e)=>(Array.isArray(e)? e : [e]))
+        )
+        .filter((e,ix,self)=>self.indexOf(e)==ix)
       )
     },
     onUserSelectsColumn : function(columnLabel){
