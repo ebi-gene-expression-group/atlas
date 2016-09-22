@@ -126,13 +126,14 @@ module.exports = React.createClass({
     },
 
     render: function(){
+      var heatmapDataToPresent = this._heatmapDataToPresent();
       return (
         Show(
-          this._heatmapDataToPresent(),
+          heatmapDataToPresent,
           this._orderings(),
           this.props.loadResult.colorAxis||undefined,
           FormattersFactory(this.props.loadResult.heatmapConfig),
-          TooltipsFactory(this.props.loadResult.heatmapConfig, this.props.loadResult.heatmapData.xAxisCategories,this.props.loadResult.heatmapData.yAxisCategories),
+          TooltipsFactory(this.props.loadResult.heatmapConfig, heatmapDataToPresent.xAxisCategories,heatmapDataToPresent.yAxisCategories),
           this._legend(),
           this._coexpressionOption(),
           this._groupings(),

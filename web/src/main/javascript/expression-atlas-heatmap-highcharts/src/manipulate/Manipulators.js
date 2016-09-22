@@ -273,7 +273,13 @@ var groupValuesByProvidedColumnGrouping = function(grouping, data){
                   xAxisCategoriesForThisGroup
                   .map((e)=>e.info.trackId)
                   .filter((e,ix,self)=>self.indexOf(e)==ix),
-                tooltip: {},
+                tooltip:
+                  {properties:
+                    [].concat.apply([],
+                      xAxisCategoriesForThisGroup.map(function(columnHeader){
+                        return columnHeader.info.tooltip.properties||[]
+                      }))
+                  },
                 groupings: [],
                 //if needed - add the values you need here
               }
