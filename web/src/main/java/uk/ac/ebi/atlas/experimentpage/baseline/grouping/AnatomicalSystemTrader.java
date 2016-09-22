@@ -18,7 +18,8 @@ public class AnatomicalSystemTrader {
         //TODO
 
         return ImmutableList.of(
-                AnatomicalSystem.create("id1", "system with everything in it"),
-                AnatomicalSystem.create("id2", (ontologyTerm.hashCode() % 4)+"- other system"));
+                AnatomicalSystem.create("bigSystem", "system with everything in it"),
+                AnatomicalSystem.create("system_"+(ontologyTerm.hashCode() % 4), (ontologyTerm.hashCode() % 4)+"- " +
+                        "other system"));
     }
 }
