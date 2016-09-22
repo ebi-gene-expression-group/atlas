@@ -104,10 +104,13 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
 
         Optional<JsonObject> geneSets = heatMapResults.getJsonProfilesAsGeneSets();
-        model.addAttribute("jsonGeneSetProfiles",
+        model.addAttribute("jsonGeneSetProfiles", "null");
+                /* We decided to disable the feature because it has a performance cost and isn't
+                very useful..
+                TODO remove (or make more useful)
                 geneSets.isPresent()
                 ? viewModelAsJson(geneSets.get())
-                : "null");
+                : "null");*/
 
         model.addAttribute("anatomogram", gson.toJson(anatomogramFactory.get(requestContext.getQueryFactorType(),
                 experiment.getSpecies(),
