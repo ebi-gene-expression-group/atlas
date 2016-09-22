@@ -56,6 +56,7 @@ var getConfig=function(setupConfig,data){
     isReferenceExperiment: setupConfig.isReferenceExperiment,
     isDifferential: setupConfig.isDifferential,
     introductoryMessage: _introductoryMessage(setupConfig.isMultiExperiment,data.profiles),
+    description: setupConfig.isExperimentPage && data.experiment && data.experiment.description ? data.experiment.description : "",
     xAxisLegendName: capitalizeFirstLetter(data.config.columnType) || "Experimental condition",
     yAxisLegendName: setupConfig.isExperimentPage ? "Gene name": "Experiment",
     coexpressions : coexpressions(setupConfig,data)

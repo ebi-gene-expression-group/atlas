@@ -130,11 +130,15 @@ var unitForThisRowOfData = function(row,config){
     return (
       config.isDifferential
       ? "Log2Fold change" //this is what we use for point.value, but we don't actually use this unit for display. See Formatters.jsx.
-      : (config.isMultiExperiment
+      : config.isMultiExperiment
         ? row.experimentType === "RNASEQ_MRNA_BASELINE"
           ? row.name.indexOf("FANTOM") > -1 ? "TPM": "FPKM"
           : ""
-        : "") //TODO determine the units on the experiment page as well
+        : config.experimentAccession.indexOf("PROT")>-1
+          ? ""
+          : config.description.toUpperCase().indexOf("FANTOM") > -1
+            ? "TPM"
+            : "FPKM"
     );
 };
 

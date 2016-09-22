@@ -45,7 +45,14 @@ var Tooltip = React.createClass({
             { this.props.aggregated
               ? [this._tinySquare(),this._span("Expression level (max)",this.props.value ? (this.props.value+" "+(this.props.unit||"") ):"Below cutoff"),
                 <div key={""}>{"Aggregated: "}</div>]
-                .concat(this.props.aggregated.map((aggregatedPoint)=>this._div(aggregatedPoint.info.xLabel, aggregatedPoint.value)))
+                .concat(
+                  this.props.aggregated
+                  .map((aggregatedPoint)=>(
+                    this._div(
+                      aggregatedPoint.info.xLabel,
+                      aggregatedPoint.value ? (aggregatedPoint.value+" "+(this.props.unit||"") ):"Below cutoff")
+                  ))
+                )
               : [
                 this._tinySquare(),
                 this._span("Expression level",this.props.value ? (this.props.value+" "+(this.props.unit||"") ):"Below cutoff")
