@@ -29,6 +29,7 @@ public class ExperimentPageJsonEIT {
         for(JsonElement e: payload.get("columnGroupings").getAsJsonArray()){
             JsonObject columnHeader = e.getAsJsonObject();
             assertTrue(columnHeader.has("name"));
+            assertTrue(columnHeader.has("memberName"));
             assertTrue(columnHeader.has("groups"));
             for(JsonElement ee: columnHeader.get("groups").getAsJsonArray()){
                 JsonObject group = ee.getAsJsonObject();

@@ -130,6 +130,7 @@ var propsForSelectionDropdown = {
 module.exports = {
 validateDataSeries : validateDataSeries,
 PointsInDataSeries : PointsInDataSeriesPropType,
+Point: PointPropType,
 HeatmapData : HeatmapDataPropType,
 LoadResult: LoadResultPropType,
 AxisCategories : AxisCategoriesPropType,

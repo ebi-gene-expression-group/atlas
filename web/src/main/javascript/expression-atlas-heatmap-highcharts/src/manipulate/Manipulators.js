@@ -218,7 +218,7 @@ var groupValuesByProvidedColumnGrouping = function(grouping, data){
     .filter((e)=>e.length) //should not happen?
     .map(function(points){
       points.sort(function(l,r){
-        return l.point.value - r.point.value;
+        return -l.point.value + r.point.value;
       });
       return [
         points[0].dataSeriesIndex,
@@ -230,7 +230,20 @@ var groupValuesByProvidedColumnGrouping = function(grouping, data){
               Object.assign({},
                 points[0].point.info,
                 points.length >1
-                ? {aggregated: points.map((e)=>e.point)}
+                ? {
+                  aggregated: points.map((e)=>Object.assign(
+                    {},e.point, {
+                      info: Object.assign({
+                        xLabel: data.xAxisCategories[e.point.x].label
+                        }, e.point.info)
+                    })),
+                  xAxisLegendName:
+                  data.xAxisCategories[points[0].point.x].info.groupings
+                  .filter((g)=>g.name==grouping)
+                  .map((g)=>g.memberName)
+                  .concat([""])
+                  [0]
+                  }
                 : {}
               )
           }
@@ -261,7 +274,7 @@ var groupValuesByProvidedColumnGrouping = function(grouping, data){
                   .map((e)=>e.info.trackId)
                   .filter((e,ix,self)=>self.indexOf(e)==ix),
                 tooltip: {},
-                groupings: []
+                groupings: [],
                 //if needed - add the values you need here
               }
             }

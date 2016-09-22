@@ -2,6 +2,7 @@
 //*------------------------------------------------------------------*
 var React = require('react');
 var ReactDOMServer = require('react-dom/server');
+var PropTypes = require('../PropTypes.js');
 var scientificNotation = function(value){
   return <b>{require('number-format').scientificNotation(value)}</b>;
 };
@@ -24,14 +25,16 @@ var Tooltip = React.createClass({
     unit:   React.PropTypes.string,
     foldChange: React.PropTypes.number,
     pValue: React.PropTypes.string,
-    tStat: React.PropTypes.string
+    tStat: React.PropTypes.string,
+    aggregated: React.PropTypes.arrayOf(PropTypes.Point),
+    xAxisLegendName: React.PropTypes.string
   },  //TODO extend this prop checker.Props for this component are created dynamically so it's important. If differential, expect p-values and fold changes, etc.
 
   render: function(){
     return (
       <div style={{whiteSpace: "pre"}}>
         {this._div(this.props.config.yAxisLegendName,this.props.yLabel)}
-        {this._div(this.props.config.xAxisLegendName, this.props.xLabel)}
+        {this._div(this.props.xAxisLegendName || this.props.config.xAxisLegendName, this.props.xLabel)}
         { this.props.config.isDifferential
           ? [<div key={""}>
               {this._tinySquare()}{this._span("Fold change",this.props.foldChange)}
@@ -39,8 +42,15 @@ var Tooltip = React.createClass({
              this._div("P-value", this.props.pValue,scientificNotation),
              this._div("T-statistic", this.props.tStat)]
           : <div>
-            {this._tinySquare()}
-            {this._span("Expression level",this.props.value ? (this.props.value+" "+(this.props.unit||"") ):"Below cutoff")}
+            { this.props.aggregated
+              ? [this._tinySquare(),this._span("Expression level (max)",this.props.value ? (this.props.value+" "+(this.props.unit||"") ):"Below cutoff"),
+                <div key={""}>{"Aggregated: "}</div>]
+                .concat(this.props.aggregated.map((aggregatedPoint)=>this._div(aggregatedPoint.info.xLabel, aggregatedPoint.value)))
+              : [
+                this._tinySquare(),
+                this._span("Expression level",this.props.value ? (this.props.value+" "+(this.props.unit||"") ):"Below cutoff")
+                ]
+            }
           </div>
         }
         {!!this.props.config.genomeBrowserTemplate? this._info("Click on the cell to show expression in the Genome Browser") : null}

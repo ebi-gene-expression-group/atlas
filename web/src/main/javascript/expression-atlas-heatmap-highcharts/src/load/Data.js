@@ -10,6 +10,7 @@ var _columnGroupings = function(columnGroupings, id){
     columnGroupings.map(function(grouping){
       return {
         name: grouping.name,
+        memberName: grouping.memberName,
         values:
           grouping
           .groups
