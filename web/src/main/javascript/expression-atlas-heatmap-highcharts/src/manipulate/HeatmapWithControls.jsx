@@ -28,6 +28,7 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             ordering: "Default",
+            grouping: "Default",
             dataSeriesToShow: this.props.loadResult.heatmapData.dataSeries.map(function(e){return true;}),
             coexpressionsShown: 0
         };
@@ -37,6 +38,7 @@ module.exports = React.createClass({
       return require('./Manipulators.js').manipulate(
         {
           ordering: this.props.loadResult.orderings[this.state.ordering],
+          grouping: this.state.grouping,
           dataSeriesToKeep: this.state.dataSeriesToShow,
           maxIndex:this.state.coexpressionsShown
         },
@@ -92,6 +94,25 @@ module.exports = React.createClass({
       );
     },
 
+    _groupings: function(){
+      return {
+        available:
+          [].concat.apply(["Default"],
+            this.props.loadResult.heatmapData.xAxisCategories.map(function(columnHeader){
+              return (
+                (columnHeader.info.groupings ||[])
+                .map((grouping)=>grouping.name)
+              )
+            })
+          )
+          .filter((e,ix,self)=>self.indexOf(e)==ix),
+        current: this.state.grouping,
+        onSelect: function(groupingChosen){
+          this.setState({grouping: groupingChosen})
+        }.bind(this)
+      }
+    },
+
     _coexpressionOption: function(){
       return (
         this.props.loadResult.heatmapConfig.coexpressions &&
@@ -114,6 +135,7 @@ module.exports = React.createClass({
           TooltipsFactory(this.props.loadResult.heatmapConfig, this.props.loadResult.heatmapData.xAxisCategories,this.props.loadResult.heatmapData.yAxisCategories),
           this._legend(),
           this._coexpressionOption(),
+          this._groupings(),
           this.props
         )
       );

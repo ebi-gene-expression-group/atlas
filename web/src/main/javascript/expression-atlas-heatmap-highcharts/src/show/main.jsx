@@ -13,6 +13,9 @@ var PropTypes = require('../PropTypes.js');
 var HeatmapCanvas = require('./HeatmapCanvas.jsx');
 var CoexpressionOption = require('./CoexpressionOption.jsx');
 
+var OrderingDropdown = require('./SelectionDropdownFactory.jsx')("Sort by: ");
+var GroupingDropdown = require('./SelectionDropdownFactory.jsx')("Group by: ");
+
 var TooltipStateManager = require('../util/TooltipStateManager.jsx');
 
 //*------------------------------------------------------------------*
@@ -40,49 +43,14 @@ var HeatmapLegendBox = React.createClass({
     }
 });
 
-var propsForOrderingDropdown = {
-    available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    current: React.PropTypes.string.isRequired,
-    onSelect: React.PropTypes.func.isRequired
-};
-
-var OrderingDropdown = React.createClass({
-    propTypes: propsForOrderingDropdown,
-
-    getInitialState: function () {
-        return {selected: this.props.current}
-    },
-
-    handleChange: function (e) {
-        this.state.selected = e.target.value;
-        this.props.onSelect(this.state.selected);
-        this.forceUpdate();
-    },
-
-    render: function () {
-
-        var createOption = function (option, key) {
-            return <option key={key} value={option}>{option}</option>;
-        };
-
-        return (
-            <div style={{float: "left", marginRight: "10px", marginTop: "1px"}}>
-                <span>Sort by: </span>
-                <select onChange={this.handleChange} value={this.state.selected}>
-                    {this.props.available.map(createOption)}
-                </select>
-            </div>
-        );
-    }
-});
-
 var HeatmapOptions = React.createClass({
     propTypes: {
         marginRight: React.PropTypes.number.isRequired,
         downloadOptions: React.PropTypes.object.isRequired,
         googleAnalyticsCallback: React.PropTypes.func.isRequired,
         showUsageMessage: React.PropTypes.bool.isRequired,
-        orderings: React.PropTypes.shape(propsForOrderingDropdown)
+        orderings: React.PropTypes.shape(PropTypes.SelectionDropdown),
+        groupings: React.PropTypes.shape(PropTypes.SelectionDropdown)
     },
 
     render: function () {
@@ -92,23 +60,30 @@ var HeatmapOptions = React.createClass({
                   {this.props.introductoryMessage}
                 </div>
                 <div style={{display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight}}>
-
-                    { this.props.orderings.available.length > 1
-                        ?
-                          <OrderingDropdown
-                            available={this.props.orderings.available}
-                            current={this.props.orderings.current}
-                            onSelect={this.props.orderings.onSelect}/>
-                        :
-                          null
-                      }
-                    <DownloadProfilesButton ref="downloadProfilesButton"
-                      {...this.props.downloadOptions}
-                      onDownloadCallbackForAnalytics={
-                          function() {
-                              this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')
-                          }.bind(this)}/>
-
+                  { this.props.groupings.available.length > 1
+                      ?
+                        <GroupingDropdown
+                          available={this.props.groupings.available}
+                          current={this.props.groupings.current}
+                          onSelect={this.props.groupings.onSelect}/>
+                      :
+                        null
+                  }
+                  { this.props.orderings.available.length > 1
+                      ?
+                        <OrderingDropdown
+                          available={this.props.orderings.available}
+                          current={this.props.orderings.current}
+                          onSelect={this.props.orderings.onSelect}/>
+                      :
+                        null
+                  }
+                  <DownloadProfilesButton ref="downloadProfilesButton"
+                    {...this.props.downloadOptions}
+                    onDownloadCallbackForAnalytics={
+                        function() {
+                            this.props.googleAnalyticsCallback('send', 'event', 'HeatmapHighcharts', 'downloadData')
+                        }.bind(this)}/>
                 </div>
                     {this.props.showUsageMessage
                       ?
@@ -189,7 +164,7 @@ var anatomogramCallbacks = function(heatmapDataToPresent, highlightOntologyIds){
   }
 };
 
-var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,tooltips, legend,coexpressions, properties) {
+var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,tooltips, legend,coexpressions,groupings, properties) {
     var marginRight = 60;
     var heatmapConfig = properties.loadResult.heatmapConfig;
     return (
@@ -203,6 +178,7 @@ var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,toolti
             disclaimer: heatmapConfig.disclaimer
           }}
           orderings={orderings}
+          groupings={groupings}
           googleAnalyticsCallback={properties.googleAnalyticsCallback}
           showUsageMessage={heatmapDataToPresent.xAxisCategories.length > 100} />
 

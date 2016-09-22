@@ -120,6 +120,13 @@ var FormatterPropType = function(props,propName){
     return new Error(propName+" formatter not correctly created. See the main method of TooltipFormatter.jsx .");
   }
 }
+
+var propsForSelectionDropdown = {
+    available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    current: React.PropTypes.string.isRequired,
+    onSelect: React.PropTypes.func.isRequired
+};
+
 module.exports = {
 validateDataSeries : validateDataSeries,
 PointsInDataSeries : PointsInDataSeriesPropType,
@@ -127,4 +134,5 @@ HeatmapData : HeatmapDataPropType,
 LoadResult: LoadResultPropType,
 AxisCategories : AxisCategoriesPropType,
 Formatter : FormatterPropType,
+SelectionDropdown: propsForSelectionDropdown
 };
