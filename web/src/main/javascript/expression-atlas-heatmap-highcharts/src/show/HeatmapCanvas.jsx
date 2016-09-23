@@ -27,7 +27,8 @@ var HeatmapCanvas = React.createClass({
       genomeBrowserTemplate: React.PropTypes.string.isRequired,
       onUserSelectsRow:React.PropTypes.func.isRequired,
       onUserSelectsColumn:React.PropTypes.func.isRequired,
-      onUserSelectsPoint:React.PropTypes.func.isRequired
+      onUserSelectsPoint:React.PropTypes.func.isRequired,
+      onZoom: React.PropTypes.func.isRequired
   },
 
   shouldComponentUpdate: function(nextProps){
@@ -188,7 +189,11 @@ var HeatmapCanvas = React.createClass({
               },
 
               opposite: 'true',
-              categories: data.xAxisCategories
+              categories: data.xAxisCategories,
+
+              events: {
+                  setExtremes: function(event) { this.props.onZoom(event.min !== undefined && event.max !== undefined) }.bind(this)
+              }
           },
           yAxis: { //experiments or bioentities
               useHTML: true,

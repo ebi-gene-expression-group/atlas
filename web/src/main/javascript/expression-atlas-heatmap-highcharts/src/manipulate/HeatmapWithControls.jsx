@@ -22,7 +22,7 @@ module.exports = React.createClass({
       loadResult: PropTypes.LoadResult,
       googleAnalyticsCallback: React.PropTypes.func.isRequired,
       ontologyIdsToHighlight: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-      onOntologyIdIsUnderFocus : React.PropTypes.func.isRequired
+      onOntologyIdIsUnderFocus: React.PropTypes.func.isRequired
     },
 
     getInitialState: function() {
@@ -30,8 +30,15 @@ module.exports = React.createClass({
             ordering: "Default",
             grouping: "Default",
             dataSeriesToShow: this.props.loadResult.heatmapData.dataSeries.map(function(e){return true;}),
-            coexpressionsShown: 0
+            coexpressionsShown: 0,
+            zoom: false
         };
+    },
+
+    _onUserZoom: function(zoomedIn) {
+        this.setState({
+            zoom: zoomedIn
+        })
     },
 
     _heatmapDataToPresent: function () {
@@ -71,6 +78,7 @@ module.exports = React.createClass({
       return {
         available: Object.keys(this.props.loadResult.orderings),
         current: this.state.ordering,
+        disabled: this.state.zoom,
         onSelect: function(orderingChosen){
           this.setState({ordering: orderingChosen})
         }.bind(this)
@@ -131,6 +139,7 @@ module.exports = React.createClass({
         Show(
           heatmapDataToPresent,
           this._orderings(),
+          this._onUserZoom,
           this.props.loadResult.colorAxis||undefined,
           FormattersFactory(this.props.loadResult.heatmapConfig),
           TooltipsFactory(this.props.loadResult.heatmapConfig, heatmapDataToPresent.xAxisCategories,heatmapDataToPresent.yAxisCategories),

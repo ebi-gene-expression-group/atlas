@@ -12,10 +12,10 @@ module.exports = function(displayName){
       propTypes: PropTypes.SelectionDropdown,
 
       getInitialState: function () {
-          return {selected: this.props.current}
+          return {selected: this.props.current, disabled: false}
       },
 
-      handleChange: function (e) {
+      _handleChange: function (e) {
           this.state.selected = e.target.value;
           this.props.onSelect(this.state.selected);
           this.forceUpdate();
@@ -30,7 +30,7 @@ module.exports = function(displayName){
           return (
               <div style={{float: "left", marginRight: "10px", marginTop: "1px"}}>
                   <span>{displayName}</span>
-                  <select onChange={this.handleChange} value={this.state.selected}>
+                  <select onChange={this._handleChange} value={this.state.selected} disabled={this.props.disabled}>
                       {this.props.available.map(createOption)}
                   </select>
               </div>

@@ -74,7 +74,8 @@ var HeatmapOptions = React.createClass({
                         <OrderingDropdown
                           available={this.props.orderings.available}
                           current={this.props.orderings.current}
-                          onSelect={this.props.orderings.onSelect}/>
+                          onSelect={this.props.orderings.onSelect}
+                          disabled={this.props.orderings.disabled}/>
                       :
                         null
                   }
@@ -105,24 +106,28 @@ var HeatmapCanvasWithTooltips = React.createClass({
         onUserSelectsColumn={this.props.anatomogramCallbacks.onUserSelectsColumn}
         onUserSelectsRow={this.props.anatomogramCallbacks.onUserSelectsRow}
         onUserSelectsPoint={this.props.anatomogramCallbacks.onUserSelectsPoint}
+        onZoom={this.props.onZoom}
         tooltips={this.props.tooltips} />
     )
   }
 });
-var __heatmapCanvas = function(tooltips,anatomogramCallbacks, heatmapProps){
+
+var __heatmapCanvas = function(tooltips, anatomogramCallbacks, zoomCallback, heatmapProps){
   return (
     !tooltips
-    ? <HeatmapCanvas {...heatmapProps} {...anatomogramCallbacks}/>
+    ? <HeatmapCanvas {...heatmapProps} {...anatomogramCallbacks} onZoom={zoomCallback}/>
     : <HeatmapCanvasWithTooltips
         heatmapProps={heatmapProps}
         tooltips={tooltips}
         anatomogramCallbacks={anatomogramCallbacks}
+        onZoom={zoomCallback}
       />
   );
 };
-var heatmapCanvas = function(heatmapConfig, tooltips,anatomogramCallbacks, heatmapProps){
-  return __heatmapCanvas(heatmapConfig.isExperimentPage && tooltips,anatomogramCallbacks, heatmapProps);
-}
+
+var heatmapCanvas = function(heatmapConfig, tooltips, anatomogramCallbacks, zoomCallback, heatmapProps){
+  return __heatmapCanvas(heatmapConfig.isExperimentPage && tooltips, anatomogramCallbacks, zoomCallback, heatmapProps);
+};
 
 var anatomogramCallbacks = function(heatmapDataToPresent, highlightOntologyIds){
   return {
@@ -170,9 +175,10 @@ var anatomogramCallbacks = function(heatmapDataToPresent, highlightOntologyIds){
   }
 };
 
-var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,tooltips, legend,coexpressions,groupings, properties) {
+var show = function (heatmapDataToPresent, orderings, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, groupings, properties) {
     var marginRight = 60;
     var heatmapConfig = properties.loadResult.heatmapConfig;
+
     return (
       <div>
         <HeatmapOptions
@@ -197,14 +203,15 @@ var show = function (heatmapDataToPresent, orderings,colorAxis,formatters,toolti
                 heatmapConfig,
                 tooltips,
                 anatomogramCallbacks(heatmapDataToPresent, properties.onOntologyIdIsUnderFocus),
+                zoomCallback,
                 {
-                marginRight:marginRight,
-                ontologyIdsToHighlight:properties.ontologyIdsToHighlight,
-                heatmapData:heatmapDataToPresent,
-                colorAxis:colorAxis,
-                onHeatmapRedrawn:properties.onHeatmapRedrawn,
-                formatters:formatters,
-                genomeBrowserTemplate:heatmapConfig.genomeBrowserTemplate,
+                    marginRight:marginRight,
+                    ontologyIdsToHighlight:properties.ontologyIdsToHighlight,
+                    heatmapData:heatmapDataToPresent,
+                    colorAxis:colorAxis,
+                    onHeatmapRedrawn:properties.onHeatmapRedrawn,
+                    formatters:formatters,
+                    genomeBrowserTemplate:heatmapConfig.genomeBrowserTemplate,
                 }
               )
             : <p> No data in the series currently selected. </p>}

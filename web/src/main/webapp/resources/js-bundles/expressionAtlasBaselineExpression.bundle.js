@@ -10442,7 +10442,6 @@ webpackJsonp_name_([2],[
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var React = __webpack_require__(/*! react */ 1571);
-	
 	var $ = __webpack_require__(/*! jquery */ 1736);
 	
 	//*------------------------------------------------------------------*
@@ -10450,7 +10449,6 @@ webpackJsonp_name_([2],[
 	var Load = __webpack_require__(/*! ./load/main.js */ 1742);
 	var HighchartsHeatmap = __webpack_require__(/*! ./manipulate/HeatmapWithControls.jsx */ 1763);
 	__webpack_require__(/*! ./HighchartsHeatmapContainer.css */ 2101);
-	
 	var Anatomogram = __webpack_require__(/*! anatomogram */ 2103);
 	
 	//*------------------------------------------------------------------*
@@ -28041,7 +28039,8 @@ webpackJsonp_name_([2],[
 	var propsForSelectionDropdown = {
 	  available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
 	  current: React.PropTypes.string.isRequired,
-	  onSelect: React.PropTypes.func.isRequired
+	  onSelect: React.PropTypes.func.isRequired,
+	  disabled: React.PropTypes.bool
 	};
 	
 	module.exports = {
@@ -32244,8 +32243,15 @@ webpackJsonp_name_([2],[
 	      dataSeriesToShow: this.props.loadResult.heatmapData.dataSeries.map(function (e) {
 	        return true;
 	      }),
-	      coexpressionsShown: 0
+	      coexpressionsShown: 0,
+	      zoom: false
 	    };
+	  },
+	
+	  _onUserZoom: function _onUserZoom(zoomedIn) {
+	    this.setState({
+	      zoom: zoomedIn
+	    });
 	  },
 	
 	  _heatmapDataToPresent: function _heatmapDataToPresent() {
@@ -32282,6 +32288,7 @@ webpackJsonp_name_([2],[
 	    return {
 	      available: Object.keys(this.props.loadResult.orderings),
 	      current: this.state.ordering,
+	      disabled: this.state.zoom,
 	      onSelect: function (orderingChosen) {
 	        this.setState({ ordering: orderingChosen });
 	      }.bind(this)
@@ -32333,7 +32340,7 @@ webpackJsonp_name_([2],[
 	
 	  render: function render() {
 	    var heatmapDataToPresent = this._heatmapDataToPresent();
-	    return Show(heatmapDataToPresent, this._orderings(), this.props.loadResult.colorAxis || undefined, FormattersFactory(this.props.loadResult.heatmapConfig), TooltipsFactory(this.props.loadResult.heatmapConfig, heatmapDataToPresent.xAxisCategories, heatmapDataToPresent.yAxisCategories), this._legend(), this._coexpressionOption(), this._groupings(), this.props);
+	    return Show(heatmapDataToPresent, this._orderings(), this._onUserZoom, this.props.loadResult.colorAxis || undefined, FormattersFactory(this.props.loadResult.heatmapConfig), TooltipsFactory(this.props.loadResult.heatmapConfig, heatmapDataToPresent.xAxisCategories, heatmapDataToPresent.yAxisCategories), this._legend(), this._coexpressionOption(), this._groupings(), this.props);
 	  }
 	});
 
@@ -35632,7 +35639,8 @@ webpackJsonp_name_([2],[
 	        this.props.orderings.available.length > 1 ? React.createElement(OrderingDropdown, {
 	          available: this.props.orderings.available,
 	          current: this.props.orderings.current,
-	          onSelect: this.props.orderings.onSelect }) : null,
+	          onSelect: this.props.orderings.onSelect,
+	          disabled: this.props.orderings.disabled }) : null,
 	        React.createElement(DownloadProfilesButton, _extends({ ref: 'downloadProfilesButton'
 	        }, this.props.downloadOptions, {
 	          onDownloadCallbackForAnalytics: function () {
@@ -35658,18 +35666,22 @@ webpackJsonp_name_([2],[
 	      onUserSelectsColumn: this.props.anatomogramCallbacks.onUserSelectsColumn,
 	      onUserSelectsRow: this.props.anatomogramCallbacks.onUserSelectsRow,
 	      onUserSelectsPoint: this.props.anatomogramCallbacks.onUserSelectsPoint,
+	      onZoom: this.props.onZoom,
 	      tooltips: this.props.tooltips });
 	  }
 	});
-	var __heatmapCanvas = function __heatmapCanvas(tooltips, anatomogramCallbacks, heatmapProps) {
-	  return !tooltips ? React.createElement(HeatmapCanvas, _extends({}, heatmapProps, anatomogramCallbacks)) : React.createElement(HeatmapCanvasWithTooltips, {
+	
+	var __heatmapCanvas = function __heatmapCanvas(tooltips, anatomogramCallbacks, zoomCallback, heatmapProps) {
+	  return !tooltips ? React.createElement(HeatmapCanvas, _extends({}, heatmapProps, anatomogramCallbacks, { onZoom: zoomCallback })) : React.createElement(HeatmapCanvasWithTooltips, {
 	    heatmapProps: heatmapProps,
 	    tooltips: tooltips,
-	    anatomogramCallbacks: anatomogramCallbacks
+	    anatomogramCallbacks: anatomogramCallbacks,
+	    onZoom: zoomCallback
 	  });
 	};
-	var heatmapCanvas = function heatmapCanvas(heatmapConfig, tooltips, anatomogramCallbacks, heatmapProps) {
-	  return __heatmapCanvas(heatmapConfig.isExperimentPage && tooltips, anatomogramCallbacks, heatmapProps);
+	
+	var heatmapCanvas = function heatmapCanvas(heatmapConfig, tooltips, anatomogramCallbacks, zoomCallback, heatmapProps) {
+	  return __heatmapCanvas(heatmapConfig.isExperimentPage && tooltips, anatomogramCallbacks, zoomCallback, heatmapProps);
 	};
 	
 	var anatomogramCallbacks = function anatomogramCallbacks(heatmapDataToPresent, highlightOntologyIds) {
@@ -35704,9 +35716,10 @@ webpackJsonp_name_([2],[
 	  };
 	};
 	
-	var show = function show(heatmapDataToPresent, orderings, colorAxis, formatters, tooltips, legend, coexpressions, groupings, properties) {
+	var show = function show(heatmapDataToPresent, orderings, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, groupings, properties) {
 	  var marginRight = 60;
 	  var heatmapConfig = properties.loadResult.heatmapConfig;
+	
 	  return React.createElement(
 	    'div',
 	    null,
@@ -35729,7 +35742,7 @@ webpackJsonp_name_([2],[
 	        return e.data;
 	      }).reduce(function (l, r) {
 	        return l.concat(r);
-	      }, []).length ? heatmapCanvas(heatmapConfig, tooltips, anatomogramCallbacks(heatmapDataToPresent, properties.onOntologyIdIsUnderFocus), {
+	      }, []).length ? heatmapCanvas(heatmapConfig, tooltips, anatomogramCallbacks(heatmapDataToPresent, properties.onOntologyIdIsUnderFocus), zoomCallback, {
 	        marginRight: marginRight,
 	        ontologyIdsToHighlight: properties.ontologyIdsToHighlight,
 	        heatmapData: heatmapDataToPresent,
@@ -35807,7 +35820,8 @@ webpackJsonp_name_([2],[
 	        genomeBrowserTemplate: React.PropTypes.string.isRequired,
 	        onUserSelectsRow: React.PropTypes.func.isRequired,
 	        onUserSelectsColumn: React.PropTypes.func.isRequired,
-	        onUserSelectsPoint: React.PropTypes.func.isRequired
+	        onUserSelectsPoint: React.PropTypes.func.isRequired,
+	        onZoom: React.PropTypes.func.isRequired
 	    },
 	
 	    shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
@@ -35979,7 +35993,13 @@ webpackJsonp_name_([2],[
 	                },
 	
 	                opposite: 'true',
-	                categories: data.xAxisCategories
+	                categories: data.xAxisCategories,
+	
+	                events: {
+	                    setExtremes: function (event) {
+	                        this.props.onZoom(event.min !== undefined && event.max !== undefined);
+	                    }.bind(this)
+	                }
 	            },
 	            yAxis: { //experiments or bioentities
 	                useHTML: true,
@@ -40287,10 +40307,10 @@ webpackJsonp_name_([2],[
 	        propTypes: PropTypes.SelectionDropdown,
 	
 	        getInitialState: function getInitialState() {
-	            return { selected: this.props.current };
+	            return { selected: this.props.current, disabled: false };
 	        },
 	
-	        handleChange: function handleChange(e) {
+	        _handleChange: function _handleChange(e) {
 	            this.state.selected = e.target.value;
 	            this.props.onSelect(this.state.selected);
 	            this.forceUpdate();
@@ -40316,7 +40336,7 @@ webpackJsonp_name_([2],[
 	                ),
 	                React.createElement(
 	                    'select',
-	                    { onChange: this.handleChange, value: this.state.selected },
+	                    { onChange: this._handleChange, value: this.state.selected, disabled: this.props.disabled },
 	                    this.props.available.map(createOption)
 	                )
 	            );
@@ -40347,6 +40367,7 @@ webpackJsonp_name_([2],[
 	    onUserSelectsRow: React.PropTypes.func.isRequired,
 	    onUserSelectsColumn: React.PropTypes.func.isRequired,
 	    onUserSelectsPoint: React.PropTypes.func.isRequired,
+	    onZoom: React.PropTypes.func.isRequired,
 	    tooltips: React.PropTypes.shape({
 	      row: React.PropTypes.func,
 	      column: React.PropTypes.func,
@@ -40392,6 +40413,7 @@ webpackJsonp_name_([2],[
 	        React.createElement(ManagedComponent, Object.assign({}, this.props.managedComponentProps, { onUserSelectsRow: this._onUserSelectsRow,
 	          onUserSelectsColumn: this._onUserSelectsColumn,
 	          onUserSelectsPoint: this._onUserSelectsPoint,
+	          onZoom: this.props.onZoom,
 	          "data-tip": true
 	        }))
 	      ),

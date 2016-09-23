@@ -3,7 +3,6 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
-
 var $ = require('jquery');
 
 //*------------------------------------------------------------------*
@@ -11,7 +10,6 @@ var $ = require('jquery');
 var Load = require('./load/main.js');
 var HighchartsHeatmap = require('./manipulate/HeatmapWithControls.jsx');
 require('./HighchartsHeatmapContainer.css');
-
 var Anatomogram = require('anatomogram');
 
 //*------------------------------------------------------------------*
@@ -52,21 +50,21 @@ var Container = React.createClass({
   render: function(){
     var heatmapProps = {
       loadResult: this.props.loadResult,
-      googleAnalyticsCallback:this.props.googleAnalyticsCallback
+      googleAnalyticsCallback: this.props.googleAnalyticsCallback
     };//overriden: ontologyIdsToHighlight, onOntologyIdIsUnderFocus
     var anatomogramConfig = {
-      pathToFolderWithBundledResources:this.props.pathToFolderWithBundledResources,
+      pathToFolderWithBundledResources: this.props.pathToFolderWithBundledResources,
       anatomogramData: this.props.anatomogramData,
-      expressedTissueColour: this.props.loadResult.heatmapConfig.isExperimentPage? "gray":"red",
-      hoveredTissueColour: this.props.loadResult.heatmapConfig.isExperimentPage? "red" :"purple",
+      expressedTissueColour: this.props.loadResult.heatmapConfig.isExperimentPage? "gray" : "red",
+      hoveredTissueColour: this.props.loadResult.heatmapConfig.isExperimentPage? "red" : "purple",
       atlasBaseURL: this.props.atlasBaseURL,
-      idsExpressedInExperiment:this._ontologyIdsForTissuesExpressedInAllRows()
+      idsExpressedInExperiment: this._ontologyIdsForTissuesExpressedInAllRows()
     };
     var Wrapped = Anatomogram.wrapComponent(anatomogramConfig, HighchartsHeatmap, heatmapProps);
     return (
       this._showAnatomogram()
       ? <Wrapped ref={this.props.referenceToAnatomogramContainer}/>
-      :<HighchartsHeatmap {...heatmapProps} ontologyIdsToHighlight={[]} onOntologyIdIsUnderFocus={function(){}}/>
+      : <HighchartsHeatmap {...heatmapProps} ontologyIdsToHighlight={[]} onOntologyIdIsUnderFocus={function(){}}/>
     );
   },
   _showAnatomogram: function(){
@@ -129,7 +127,7 @@ var Container = React.createClass({
     )
   }
 
-})
+});
 
 var ContainerLoader = React.createClass({
     propTypes: {
@@ -255,7 +253,7 @@ var ContainerLoader = React.createClass({
         isReferenceExperiment: this._isReferenceExperiment(),
         isDifferential: this.props.isDifferential,
         atlasBaseURL: this.props.atlasBaseURL
-      }
+      };
 
       this.setState({
           ajaxCompleted: true,
