@@ -6,22 +6,33 @@ var React = require('react');   // React is called in the transpiled JS files in
 
 function formatBaselineExpression(expressionLevel) {
     var numberExpressionLevel = +expressionLevel;
-    return (numberExpressionLevel >= 100000 || numberExpressionLevel < 0.1) ? formatScientificNotation(numberExpressionLevel.toExponential(1).replace('+','')) : '' + numberExpressionLevel;
+    return (
+      numberExpressionLevel >= 100000 || numberExpressionLevel < 0.1
+      ? formatScientificNotation(expressionLevel, 1)
+       : '' + numberExpressionLevel
+    );
 }
 
 // expects number in the format #E# and displays exponent in superscript
-function formatScientificNotation(scientificNotationString) {
+function formatScientificNotation(value,accuracy) {
+    var scientificNotationString= (+value).toExponential(accuracy||4);
 
     var formatParts = scientificNotationString.split(/[Ee]/);
 
     if (formatParts.length == 1) {
         return (
-            <span>{scientificNotationString}</span>
+            <span>{value}</span>
         );
     }
 
-    var mantissa = formatParts[0];
-    var exponent = formatParts[1];
+    var mantissa = formatParts[0].replace(/([^\.])0+$/,"$1");
+    var exponent = formatParts[1].replace("+","");
+
+    if (+exponent==0) {
+        return (
+            <span>{mantissa}</span>
+        );
+    }
 
     return (
         <span>
