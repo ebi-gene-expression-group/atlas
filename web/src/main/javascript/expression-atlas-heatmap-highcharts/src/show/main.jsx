@@ -65,7 +65,8 @@ var HeatmapOptions = React.createClass({
                         <GroupingDropdown
                           available={this.props.groupings.available}
                           current={this.props.groupings.current}
-                          onSelect={this.props.groupings.onSelect}/>
+                          onSelect={this.props.groupings.onSelect}
+                          disabled={this.props.groupings.disabled}/>
                       :
                         null
                   }

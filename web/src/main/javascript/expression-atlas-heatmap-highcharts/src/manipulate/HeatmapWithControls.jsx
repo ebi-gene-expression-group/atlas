@@ -115,6 +115,7 @@ module.exports = React.createClass({
           )
           .filter((e,ix,self)=>self.indexOf(e)==ix),
         current: this.state.grouping,
+        disabled: this.state.zoom,
         onSelect: function(groupingChosen){
           this.setState({grouping: groupingChosen})
         }.bind(this)

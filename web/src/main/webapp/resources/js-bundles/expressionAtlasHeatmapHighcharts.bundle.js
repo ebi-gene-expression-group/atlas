@@ -34586,6 +34586,7 @@ webpackJsonp_name_([5],[
 	        return self.indexOf(e) == ix;
 	      }),
 	      current: this.state.grouping,
+	      disabled: this.state.zoom,
 	      onSelect: function (groupingChosen) {
 	        this.setState({ grouping: groupingChosen });
 	      }.bind(this)
@@ -37921,7 +37922,8 @@ webpackJsonp_name_([5],[
 	        this.props.groupings.available.length > 1 ? React.createElement(GroupingDropdown, {
 	          available: this.props.groupings.available,
 	          current: this.props.groupings.current,
-	          onSelect: this.props.groupings.onSelect }) : null,
+	          onSelect: this.props.groupings.onSelect,
+	          disabled: this.props.groupings.disabled }) : null,
 	        this.props.orderings.available.length > 1 ? React.createElement(OrderingDropdown, {
 	          available: this.props.orderings.available,
 	          current: this.props.orderings.current,
