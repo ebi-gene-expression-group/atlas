@@ -70,18 +70,18 @@ var CellDifferential = React.createClass({
 
             return "<table>" +
                        "<thead>" +
-                           (pValue !== undefined ?
+                           (pValue ?
                                "<th>Adjusted <em>p</em>-value</th>" : "") +
-                           (tStatistic !== undefined ?
+                           (tStatistic?
                                "<th><em>t</em>-statistic</th>" : "") +
                            "<th class='gxaHeaderCell'>Log<sub>2</sub>-fold change</th>" +
                        "</thead>" +
                        "<tbody>" +
                            "<tr>" +
-                               (pValue !== undefined ?
+                               (pValue?
                                    "<td>" + ReactDOMServer.renderToStaticMarkup(NumberFormat.scientificNotation(pValue)) + "</td>" : "") +
-                               (tStatistic !== undefined ?
-                                   "<td>" + tStatistic + "</td>" : "") +
+                               (tStatistic ?
+                                   "<td>" + (Math.floor(tStatistic * 1e4) / 1e4) + "</td>" : "") +
                                "<td>" + foldChange + "</td>" +
                            "</tr>" +
                        "</tbody>" +

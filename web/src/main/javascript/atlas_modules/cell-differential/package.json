@@ -1,6 +1,6 @@
 {
   "name": "cell-differential",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Cells for differential expression experiments",
   "main": "index.js",
   "author": "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
