@@ -347,7 +347,7 @@ var Heatmap = React.createClass({
         if(previousState.coexpressionsDisplayed.hasOwnProperty(geneId)){
           previousState.coexpressionsDisplayed[geneId] = amount;
         }
-        return {coexpressionsDisplayed: previousState.coexpressionsDisplayed};
+        return {coexpressionsDisplayed: JSON.parse(JSON.stringify(previousState.coexpressionsDisplayed))};
       });
     },
 
