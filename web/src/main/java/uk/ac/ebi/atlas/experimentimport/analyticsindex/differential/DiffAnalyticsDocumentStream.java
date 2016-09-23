@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
@@ -80,7 +81,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
                             " " + bioentityIdToIdentifierSearch.get(geneId));
 
             String contrastId = analytics.getContrastId();
-            String conditionSearch = getConditionSearchTerms(contrastId);
+            String conditionSearch = getConditionSearchTerms(contrastId, factors);
 
             return AnalyticsDocument.builder()
                     .experimentAccession(experimentAccession)
@@ -105,7 +106,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
             return numReplicates;
         }
 
-        private String getConditionSearchTerms(String contrastId) {
+        private String getConditionSearchTerms(String contrastId, Set<String> factors) {
             Set<String> searchTerms = conditionSearchTermsByContrastId.get(contrastId);
 
             if (searchTerms.isEmpty() && !assaysSeen.contains(contrastId)) {
@@ -113,7 +114,8 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
                 LOGGER.warn("No condition search terms found for {}", contrastId);
             }
 
-            return Joiner.on(" ").join(searchTerms);
+            ImmutableList.Builder<String> conditionSearchTermsBuilder = new ImmutableList.Builder<>();
+            return Joiner.on(" ").join(conditionSearchTermsBuilder.addAll(searchTerms).addAll(factors).build());
         }
 
         @Override

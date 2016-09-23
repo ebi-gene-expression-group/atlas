@@ -6,8 +6,10 @@ import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalytics;
@@ -28,6 +30,7 @@ import java.util.Map;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DiffAnalyticsDocumentStreamTest {
@@ -40,16 +43,29 @@ public class DiffAnalyticsDocumentStreamTest {
     private static final String DESIGN_ELEMENT = "209108_at";
     private static final String PLANTS_KINGDOM = "plants";
     private static final String PLANTS_ENSEMBLDB = "plants";
-    private static final String SPECIES3 = "species3";
     private static final String CONDITION_SEARCH_1 = "condition1";
     private static final String CONDITION_SEARCH_2 = "condition2";
     private static final String CONDITION_SEARCH_3 = "condition3";
-    private Species species =  new Species(SPECIES3,SPECIES3, PLANTS_KINGDOM,PLANTS_ENSEMBLDB);
-    private DifferentialExperiment rnaSeqExperiment = new DifferentialExperiment("E-GEOD-38400", new Date(), new HashSet<Contrast>(),
-            "description", false, true,species, Sets
-            .newHashSet("PubMedId"), mock(ExperimentDesign.class));
+    private static final String FACTOR1 = "factor1";
+    private static final String FACTOR2 = "factor2";
+    private static final String SPECIES3 = "species3";
+    private static final Species SPECIES = new Species(SPECIES3, SPECIES3, PLANTS_KINGDOM, PLANTS_ENSEMBLDB);
+
+    @Mock
+    ExperimentDesign experimentDesignMock;
+
+    private DifferentialExperiment rnaSeqExperiment;
 
     private DiffAnalyticsDocumentStream subject;
+
+    @Before
+    public void setUp() {
+        when(experimentDesignMock.getFactorHeaders()).thenReturn(ImmutableSortedSet.of(FACTOR1, FACTOR2));
+        rnaSeqExperiment = new DifferentialExperiment(
+                "E-GEOD-38400", new Date(), new HashSet<Contrast>(),
+                "description", false, true, SPECIES, Sets.newHashSet("PubMedId"),
+                experimentDesignMock);
+    }
 
     @Test
     public void test() {
@@ -76,7 +92,7 @@ public class DiffAnalyticsDocumentStreamTest {
         assertThat(analyticsDocument1.getExperimentType(), is(experimentType));
         assertThat(analyticsDocument1.getContrastId(), is(CONTRAST3));
         assertThat(analyticsDocument1.getSpecies(), is(SPECIES3));
-        assertThat(analyticsDocument1.getConditionsSearch(), is(CONDITION_SEARCH_3));
+        assertThat(analyticsDocument1.getConditionsSearch(), is(CONDITION_SEARCH_3 + " " + FACTOR1 + " " + FACTOR2));
         assertThat(analyticsDocument1.getFoldChange(), is(foldChange));
         assertThat(analyticsDocument1.getPValue(), is(pValue));
     }
@@ -115,7 +131,7 @@ public class DiffAnalyticsDocumentStreamTest {
         MicroarrayExperiment microarrayExperiment = new MicroarrayExperiment(ExperimentType
                 .MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL,"E-MEXP-3628", new Date(), new
                 HashSet<Contrast>(),
-                "description", false, true, species,
+                "description", false, true, SPECIES,
                 ImmutableSortedSet.<String>of(),
                 ImmutableSortedSet.<String>of(),mock(ExperimentDesign.class), Sets
                 .newHashSet("PubMedId"));
