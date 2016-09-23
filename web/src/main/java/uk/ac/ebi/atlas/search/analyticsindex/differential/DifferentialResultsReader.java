@@ -1,9 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.TreeMultimap;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jayway.jsonpath.*;
@@ -15,7 +13,8 @@ import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @Named
 public class DifferentialResultsReader {
@@ -24,6 +23,7 @@ public class DifferentialResultsReader {
     private final ContrastTrader contrastTrader;
 
     private static final String DOCS_PATH                  = "$.response.docs[*]";
+    private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentityIdentifier";
     private static final String EXPERIMENT_TYPE_FIELD      = "experimentType";
     private static final String EXPERIMENT_ACCESSION_FIELD = "experimentAccession";
     private static final String CONTRAST_ID_FIELD          = "contrastId";
@@ -41,7 +41,6 @@ public class DifferentialResultsReader {
         this.colourGradient = colourGradient;
     }
 
-
     public JsonObject extractResultsAsJson(String solrResponseAsJson) {
         JsonObject resultsWithLevels = new JsonObject();
 
@@ -51,37 +50,34 @@ public class DifferentialResultsReader {
         double maxDownLevel = 0.0;
 
         List<JsonObject> filteredDocuments = Lists.newArrayList();
-        TreeMultimap<String, String> experimentContrastMap = TreeMultimap.create();
         List<Map<String, Object>> documents = parser.parse(solrResponseAsJson).read(DOCS_PATH);
         JsonArray results = new JsonArray();
         if(!documents.isEmpty()) {
             for (Map<String, Object> document : documents) {
                 String experimentAccession = (String) document.get(EXPERIMENT_ACCESSION_FIELD);
                 String contrastId = (String) document.get(CONTRAST_ID_FIELD);
-                if (experimentContrastMap.put(experimentAccession, contrastId)) {
-                    ExperimentType experimentType = ExperimentType.get((String) document.get(EXPERIMENT_TYPE_FIELD));
+                ExperimentType experimentType = ExperimentType.get((String) document.get(EXPERIMENT_TYPE_FIELD));
 
-                    Object foldChangeSymbol = document.get(LOG2_FOLD_CHANGE_FIELD);
-                    double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
+                Object foldChangeSymbol = document.get(LOG2_FOLD_CHANGE_FIELD);
+                double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
 
-
-
-                    if (foldChange > 0.0) {
-                        minUpLevel = Math.min(minUpLevel, foldChange);
-                        maxUpLevel = Math.max(maxUpLevel, foldChange);
-                    } else {
-                        minDownLevel = Math.max(minDownLevel, foldChange);
-                        maxDownLevel = Math.min(maxDownLevel, foldChange);
-                    }
-                    JsonObject o = gson.toJsonTree(document).getAsJsonObject();
-                    o.addProperty("experimentAccession", experimentAccession);
-                    o.addProperty("experimentType", experimentType.toString());
-                    o.addProperty("contrastId", contrastId);
-                    o.addProperty("foldChange", foldChange);
-                    o.addProperty("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
-                    o.addProperty("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
-                    filteredDocuments.add(o);
+                if (foldChange > 0.0) {
+                    minUpLevel = Math.min(minUpLevel, foldChange);
+                    maxUpLevel = Math.max(maxUpLevel, foldChange);
+                } else {
+                    minDownLevel = Math.max(minDownLevel, foldChange);
+                    maxDownLevel = Math.min(maxDownLevel, foldChange);
                 }
+
+                JsonObject o = gson.toJsonTree(document).getAsJsonObject();
+                o.addProperty("bioentityIdentifier", (String) document.get(BIOENTITY_IDENTIFIER_FIELD));
+                o.addProperty("experimentAccession", experimentAccession);
+                o.addProperty("experimentType", experimentType.toString());
+                o.addProperty("contrastId", contrastId);
+                o.addProperty("foldChange", foldChange);
+                o.addProperty("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
+                o.addProperty("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
+                filteredDocuments.add(o);
             }
             for (JsonObject document : filteredDocuments) {
                 double foldChange = document.get("foldChange").getAsDouble();
@@ -108,4 +104,5 @@ public class DifferentialResultsReader {
             resultsWithLevels.addProperty(name,FoldChangeRounder.round(value));
         }
     }
+
 }

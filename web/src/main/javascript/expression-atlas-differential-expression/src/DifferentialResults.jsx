@@ -147,9 +147,10 @@ const DifferentialResults = React.createClass({
                         <tr>
                             <th style={{width: '10%'}}>Log<sub>2</sub>-fold change</th>
                             <th style={{width: '5%'}}>Species</th>
+                            <th style={{width: '5%'}}>Gene ID</th>
                             <th style={{width: '30%'}}>Comparison</th>
                             <th style={{width: '15%'}}>Experimental variables</th>
-                            <th style={{width: '40%'}}>Experiment name</th>
+                            <th style={{width: '35%'}}>Experiment name</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -199,6 +200,9 @@ const DifferentialResultRow = React.createClass({
                     displayLevels={this.props.displayLevels}/>
                 <td className="col_species">
                     <EbiSpeciesIcon species={this.props.species}/>
+                </td>
+                <td>
+                    <a href={'/gxa/genes/' + this.props.bioentityIdentifier}>{this.props.bioentityIdentifier}</a>
                 </td>
                 <td ref="comparison">
                     <a href={this._linkToComparisonPage()}>
