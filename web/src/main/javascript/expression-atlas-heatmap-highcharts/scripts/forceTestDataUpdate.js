@@ -28,6 +28,16 @@ dataFiles = [
       "atlasBaseUrl": "test-invalid"
     }
   },
+  { name: "experimentPageBaselineNonSpecific.json",
+    url: "http://localhost:8080/gxa/json/experiments/E-MTAB-3871?specific=false",
+    config:{
+      "isExperimentPage": true,
+      "isMultiExperiment": false,
+      "isReferenceExperiment": false,
+      "isDifferential": false,
+      "atlasBaseUrl": "test-invalid"
+    }
+  },
   {
     name: "genesetPageOneRow.json",
     url:"http://localhost:8080/gxa/widgets/heatmap/baselineAnalytics?geneQuery=%5B%7B%22value%22%3A%22zinc+finger%22%7D%5D&conditionQuery=%5B%5D&species=bos%20taurus&source=ORGANISM_PART",
