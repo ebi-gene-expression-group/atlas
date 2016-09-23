@@ -14892,11 +14892,12 @@ webpackJsonp_name_([4],[
 	
 	function formatBaselineExpression(expressionLevel) {
 	    var numberExpressionLevel = +expressionLevel;
-	    return numberExpressionLevel >= 100000 || numberExpressionLevel < 0.1 ? formatScientificNotation(numberExpressionLevel.toExponential(1).replace('+', '')) : '' + numberExpressionLevel;
+	    return numberExpressionLevel >= 100000 || numberExpressionLevel < 0.1 ? formatScientificNotation(expressionLevel, 1) : '' + numberExpressionLevel;
 	}
 	
 	// expects number in the format #E# and displays exponent in superscript
-	function formatScientificNotation(scientificNotationString) {
+	function formatScientificNotation(value, accuracy) {
+	    var scientificNotationString = (+value).toExponential(accuracy || 4);
 	
 	    var formatParts = scientificNotationString.split(/[Ee]/);
 	
@@ -14904,12 +14905,20 @@ webpackJsonp_name_([4],[
 	        return React.createElement(
 	            'span',
 	            null,
-	            scientificNotationString
+	            value
 	        );
 	    }
 	
-	    var mantissa = formatParts[0];
-	    var exponent = formatParts[1];
+	    var mantissa = formatParts[0].replace(/([^\.])0+$/, "$1");
+	    var exponent = formatParts[1].replace("+", "");
+	
+	    if (+exponent == 0) {
+	        return React.createElement(
+	            'span',
+	            null,
+	            mantissa
+	        );
+	    }
 	
 	    return React.createElement(
 	        'span',
@@ -15024,7 +15033,7 @@ webpackJsonp_name_([4],[
 	        //TODO - build this from a React component, like we do for FactorTooltip
 	        function buildHeatmapCellTooltip(pValue, tStatistic, foldChange) {
 	
-	            return "<table>" + "<thead>" + (pValue !== undefined ? "<th>Adjusted <em>p</em>-value</th>" : "") + (tStatistic !== undefined ? "<th><em>t</em>-statistic</th>" : "") + "<th class='gxaHeaderCell'>Log<sub>2</sub>-fold change</th>" + "</thead>" + "<tbody>" + "<tr>" + (pValue !== undefined ? "<td>" + ReactDOMServer.renderToStaticMarkup(NumberFormat.scientificNotation(pValue)) + "</td>" : "") + (tStatistic !== undefined ? "<td>" + tStatistic + "</td>" : "") + "<td>" + foldChange + "</td>" + "</tr>" + "</tbody>" + "</table>";
+	            return "<table>" + "<thead>" + (pValue ? "<th>Adjusted <em>p</em>-value</th>" : "") + (tStatistic ? "<th><em>t</em>-statistic</th>" : "") + "<th class='gxaHeaderCell'>Log<sub>2</sub>-fold change</th>" + "</thead>" + "<tbody>" + "<tr>" + (pValue ? "<td>" + ReactDOMServer.renderToStaticMarkup(NumberFormat.scientificNotation(pValue)) + "</td>" : "") + (tStatistic ? "<td>" + Math.floor(tStatistic * 1e4) / 1e4 + "</td>" : "") + "<td>" + foldChange + "</td>" + "</tr>" + "</tbody>" + "</table>";
 	        }
 	
 	        // Don’t use bind, tooltip uses this internally
