@@ -168,6 +168,8 @@ const DifferentialResultRow = React.createClass({
     propTypes: {
         bioentityIdentifier: RequiredString,
         foldChange: React.PropTypes.number.isRequired,
+        pValue: React.PropTypes.number.isRequired,
+        tStatistics: React.PropTypes.number.isRequired,
         colour: RequiredString,
         species: RequiredString,
         comparison: RequiredString,
@@ -197,6 +199,8 @@ const DifferentialResultRow = React.createClass({
                     colour={this.props.colour}
                     infinity={this.props.infinity}
                     foldChange={this.props.foldChange}
+                    pValue={this.props.pValue}
+                    tStat={this.props.tStatistics}
                     displayLevels={this.props.displayLevels}/>
                 <td className="col_species">
                     <EbiSpeciesIcon species={this.props.species}/>
