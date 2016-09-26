@@ -4,6 +4,18 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
+    <definition name="foundation-base" template="/WEB-INF/jsp/layouts/foundation-base.jsp">
+        <put-attribute name="title" value="Expression Atlas"/>
+        <put-attribute name="top-menu" value="/WEB-INF/jsp/tiles/top-menu.jsp"/>
+        <put-attribute name="header" value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="body"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/tiles/footer.jsp"/>
+    </definition>
+
+    <definition name="foundation-home" extends="foundation-base">
+        <put-attribute name="body" value="/WEB-INF/jsp/tiles/body-home.jsp"/>
+    </definition>
+
     <definition name="base.definition" template="/WEB-INF/jsp/layout.jsp">
         <put-attribute name="title" value="Expression Atlas"/>
         <put-attribute name="top-menu" value="/WEB-INF/jsp/layout/top-menu.jsp"/>

@@ -29,4 +29,10 @@ public class HomeController {
         model.addAttribute("organismPath", ""); // Required by Spring form tag
         return "home";
     }
+
+    @RequestMapping(value = "/fhome")
+    public String getFoundationHomePage() {
+        return "foundation-home";
+    }
+
 }

@@ -1,7 +1,5 @@
-
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Controller
-@Scope("singleton")
-public class    StaticPageController {
+public class StaticPageController {
 
     private final ServletContextResourceLoader servletContextResourceLoader;
 
