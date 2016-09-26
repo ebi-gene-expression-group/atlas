@@ -39,32 +39,31 @@ var createColumnLabelTooltipRenderer = function(heatmapConfig, xAxisCategories){
 }
 var createRowLabelTooltipRenderer = function(heatmapConfig, yAxisCategories){
   //We have the labels, but we need the indentifiers to do lookups
-  var identifierPerLabel = {};
+  var rowHeaderPerLabel = {};
   for(var i =0; i<yAxisCategories.length ; i++){
-    identifierPerLabel[yAxisCategories[i].label]=yAxisCategories[i].id;
+    rowHeaderPerLabel[yAxisCategories[i].label]=yAxisCategories[i];
   }
-  Object.freeze(identifierPerLabel);
+  Object.freeze(rowHeaderPerLabel);
 
   var resultCache={};
   return function(rowLabel){
-    if(!identifierPerLabel.hasOwnProperty(rowLabel)){
+    if(!rowHeaderPerLabel.hasOwnProperty(rowLabel)){
       return null;
     }
-    var bioentityIdentifier = identifierPerLabel[rowLabel];
+    var bioentityIdentifier = rowHeaderPerLabel[rowLabel].id;
     return (
-      resultCache.hasOwnProperty(bioentityIdentifier)
-      ? <GeneTooltip
+      <GeneTooltip
         key={bioentityIdentifier}
         atlasBaseURL={heatmapConfig.atlasBaseURL}
         label={rowLabel}
         id={bioentityIdentifier}
-        data={resultCache[bioentityIdentifier]}/>
-      : <GeneTooltip
-        key={bioentityIdentifier}
-        atlasBaseURL={heatmapConfig.atlasBaseURL}
-        label={rowLabel}
-        id={bioentityIdentifier}
-        onAjaxSuccessfulCacheResult={(result)=>{resultCache[bioentityIdentifier]=result}}/>
+        designElement={rowHeaderPerLabel[rowLabel].info.designElement||""}
+        {...
+          resultCache.hasOwnProperty(bioentityIdentifier)
+          ? {data: resultCache[bioentityIdentifier]}
+          : {onAjaxSuccessfulCacheResult: (result)=>{resultCache[bioentityIdentifier]=result}}
+        }
+        />
     )
   }
 }

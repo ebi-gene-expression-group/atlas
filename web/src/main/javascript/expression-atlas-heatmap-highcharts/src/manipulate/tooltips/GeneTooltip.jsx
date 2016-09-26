@@ -11,6 +11,7 @@ var GeneTooltip = React.createClass({
     atlasBaseURL: React.PropTypes.string.isRequired,
     label: React.PropTypes.string.isRequired,
     id: React.PropTypes.string.isRequired,
+    designElement:React.PropTypes.string,
     data: React.PropTypes.shape({
       synonyms: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
       goterms: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
@@ -96,6 +97,9 @@ var GeneTooltip = React.createClass({
             , this.state.data.synonyms)
           )
         )}
+        {(this.props.designElement)
+          ? this._row("Design element:", this._propertyValueList([this.props.designElement]))
+          : null}
         {(this.state.data.goterms.length)
           ? this._row("Gene ontology terms:", this._propertyValueList(this.state.data.goterms))
           : null}
