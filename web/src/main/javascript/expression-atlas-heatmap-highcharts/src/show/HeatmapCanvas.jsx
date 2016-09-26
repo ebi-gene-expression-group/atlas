@@ -211,7 +211,10 @@ var HeatmapCanvas = React.createClass({
                        var f =this.props.onUserSelectsRow;
                        return function(){
                          return f( //We assume the longest text is the callback we want
-                           [].concat.apply([],this.element.children)
+                           [].concat.apply([],
+                             [].concat.apply([],this.element.children)
+                             .filter(c=>!c.style||c.style.fill!="black") //skip design elements
+                           )
                            .map((c)=>c.textContent)
                            .reduce((l,r)=>(l.length>r.length?l:r), "")
                          )

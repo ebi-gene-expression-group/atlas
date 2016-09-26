@@ -118,13 +118,21 @@ var YAxisLabel = React.createClass({
       isMultiExperiment: React.PropTypes.bool.isRequired
     }).isRequired,
     labelText: React.PropTypes.string.isRequired,
-    resourceId: React.PropTypes.string.isRequired
+    resourceId: React.PropTypes.string.isRequired,
+    extra: React.PropTypes.string
   },
   render: function(){
-    return (
+    var geneNameWithLink =
       <a href={this.props.config.atlasBaseURL+(this.props.config.isMultiExperiment? "/experiments/":"/genes/")+this.props.resourceId}>
         {this.props.labelText}
-      </a>
+      </a>;
+    return (
+      this.props.extra
+      ? <span>
+        {geneNameWithLink}
+        <i style={{color:"black"}}>{"\t"+this.props.extra}</i>
+       </span>
+      :geneNameWithLink
     );
   }
 });
@@ -143,7 +151,8 @@ var makeFormatter = function(config){
         <YAxisLabel
           config={config}
           labelText={value.label}
-          resourceId={value.id}/>
+          resourceId={value.id}
+          extra={value.info.designElement||""}/>
       );
     },
     tooltip: function Formatter (series, point) {

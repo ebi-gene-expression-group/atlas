@@ -70,7 +70,8 @@ var getYAxisCategories = function (rows, config) {
         return {"label": profile.name,
                 "id": profile.id,
                 "info":{
-                  trackId:profile.id
+                  trackId:profile.id,
+                  designElement:profile.designElement||""
                 }};
       }
     : function (profile) {
@@ -78,7 +79,8 @@ var getYAxisCategories = function (rows, config) {
                 "id" : profile.id + "?geneQuery=" + config.geneQuery +
                     (profile.serializedFilterFactors?"&serializedFilterFactors=" + encodeURIComponent(profile.serializedFilterFactors):""),
                 "info":{
-                  trackId:""
+                  trackId:"",
+                  designElement:""
                 }};
       }
     );
