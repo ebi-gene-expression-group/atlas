@@ -39,7 +39,7 @@
     <c:when test="${empty jsonProfiles}">
         {
             "error" : "No expression found for <spring:eval
-            expression="T(org.apache.commons.lang3.StringEscapeUtils).escapeEcmaScript(geneQuery.toJson())"/> "
+            expression="T(uk.ac.ebi.atlas.search.SearchDescription).getSimple(geneQuery)"/> "
         }
     </c:when>
     <c:otherwise>

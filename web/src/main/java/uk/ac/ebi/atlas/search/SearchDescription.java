@@ -50,6 +50,10 @@ public class SearchDescription {
     }
 
     public static String getSimple(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        if (geneQuery.isEmpty() && conditionQuery.isEmpty()) {
+            return "default query";
+        }
+
         StringBuilder stringBuilder = new StringBuilder();
 
         if (geneQuery.isNotEmpty()) {
