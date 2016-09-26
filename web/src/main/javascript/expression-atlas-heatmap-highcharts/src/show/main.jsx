@@ -107,27 +107,25 @@ var HeatmapCanvasWithTooltips = React.createClass({
         onUserSelectsColumn={this.props.anatomogramCallbacks.onUserSelectsColumn}
         onUserSelectsRow={this.props.anatomogramCallbacks.onUserSelectsRow}
         onUserSelectsPoint={this.props.anatomogramCallbacks.onUserSelectsPoint}
-        onZoom={this.props.onZoom}
         tooltips={this.props.tooltips} />
     )
   }
 });
 
-var __heatmapCanvas = function(tooltips, anatomogramCallbacks, zoomCallback, heatmapProps){
+var __heatmapCanvas = function(tooltips, anatomogramCallbacks, heatmapProps){
   return (
     !tooltips
-    ? <HeatmapCanvas {...heatmapProps} {...anatomogramCallbacks} onZoom={zoomCallback}/>
+    ? <HeatmapCanvas {...heatmapProps} {...anatomogramCallbacks}/>
     : <HeatmapCanvasWithTooltips
         heatmapProps={heatmapProps}
         tooltips={tooltips}
         anatomogramCallbacks={anatomogramCallbacks}
-        onZoom={zoomCallback}
       />
   );
 };
 
-var heatmapCanvas = function(heatmapConfig, tooltips, anatomogramCallbacks, zoomCallback, heatmapProps){
-  return __heatmapCanvas(heatmapConfig.isExperimentPage && tooltips, anatomogramCallbacks, zoomCallback, heatmapProps);
+var heatmapCanvas = function(heatmapConfig, tooltips, anatomogramCallbacks, heatmapProps){
+  return __heatmapCanvas(heatmapConfig.isExperimentPage && tooltips, anatomogramCallbacks, heatmapProps);
 };
 
 var anatomogramCallbacks = function(heatmapDataToPresent, highlightOntologyIds){
@@ -204,7 +202,6 @@ var show = function (heatmapDataToPresent, orderings, zoomCallback, colorAxis, f
                 heatmapConfig,
                 tooltips,
                 anatomogramCallbacks(heatmapDataToPresent, properties.onOntologyIdIsUnderFocus),
-                zoomCallback,
                 {
                     marginRight:marginRight,
                     ontologyIdsToHighlight:properties.ontologyIdsToHighlight,
@@ -213,6 +210,7 @@ var show = function (heatmapDataToPresent, orderings, zoomCallback, colorAxis, f
                     onHeatmapRedrawn:properties.onHeatmapRedrawn,
                     formatters:formatters,
                     genomeBrowserTemplate:heatmapConfig.genomeBrowserTemplate,
+                    onZoom:zoomCallback
                 }
               )
             : <p> No data in the series currently selected. </p>}

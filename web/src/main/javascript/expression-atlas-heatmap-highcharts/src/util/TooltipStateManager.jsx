@@ -12,7 +12,6 @@ var TooltipStateManager = React.createClass({
     onUserSelectsRow: React.PropTypes.func.isRequired,
     onUserSelectsColumn: React.PropTypes.func.isRequired,
     onUserSelectsPoint: React.PropTypes.func.isRequired,
-    onZoom: React.PropTypes.func.isRequired,
     tooltips: React.PropTypes.shape({
       row: React.PropTypes.func,
       column: React.PropTypes.func,
@@ -67,7 +66,6 @@ var TooltipStateManager = React.createClass({
               {onUserSelectsRow : this._onUserSelectsRow,
               onUserSelectsColumn: this._onUserSelectsColumn,
               onUserSelectsPoint: this._onUserSelectsPoint,
-              onZoom: this.props.onZoom,
               "data-tip": true,
             })}
             />
