@@ -15,6 +15,7 @@
     "display-levels-button": "file:../atlas_modules/display-levels-button",
     "download-profiles-button": "file:../atlas_modules/download-profiles-button",
     "he": "^1.1.0",
+    "highcharts-custom-events": "^2.0.1",
     "highcharts-heatmap": "^0.1.2",
     "jquery": "^2.2.1",
     "lodash": "^4.13.1",
