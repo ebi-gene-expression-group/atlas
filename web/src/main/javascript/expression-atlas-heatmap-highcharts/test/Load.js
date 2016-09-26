@@ -84,8 +84,7 @@ describe('Proteomics experiment page', function() {
     });
     it('should have no coexpressions', function() {
       var result = subject(config, data.actual)
-
-      assert.ok([].concat.apply([],result.heatmapData.dataSeries.map((series)=>series.data)).length == 1*result.heatmapData.xAxisCategories.length);
+      assert.equal([].concat.apply([],result.heatmapData.dataSeries.map((series)=>series.data)).length, 1*result.heatmapData.yAxisCategories.length);
     });
     it('should be the same as the JSON dump of the result', function(){
       var result = subject(config, data.actual)
@@ -95,6 +94,40 @@ describe('Proteomics experiment page', function() {
     it('should have more than five column rows', function(){
       var result = subject(config, data.actual)
       assert.ok(result.heatmapData.yAxisCategories.length >5);
+    })
+  });
+});
+
+describe('Differential experiment page', function() {
+  var dataShort = require("json!./data/experimentPageDifferentialSpecificShort.json");
+  var data = require("json!./data/experimentPageDifferentialSpecific.json");
+
+  var config = {
+    "isExperimentPage": true,
+    "isMultiExperiment": false,
+    "isReferenceExperiment": false,
+    "isDifferential": true,
+    "atlasBaseUrl": "test-invalid"
+  };
+  describe('Returned object', function() {
+    var resultShort = subject(config, dataShort.actual);
+    var result = subject(config, data.actual);
+
+    it('should have the data series format', function() {
+      assertPropTypes.validateLoadResult(resultShort);
+      assertPropTypes.validateLoadResult(result);
+    });
+    it('should be the same as the JSON dump of the result', function(){
+      assert.deepEqual(dataShort.expected,resultShort.heatmapData);
+      assert.deepEqual(data.expected,result.heatmapData);
+    })
+    it('should have different result sizes', function(){
+      assert.ok(resultShort.heatmapData.yAxisCategories.length <10);
+      assert.ok(result.heatmapData.yAxisCategories.length >10);
+    })
+    it('should have the same columns', function(){
+      assert.deepEqual(result.heatmapData.xAxisCategories.length, resultShort.heatmapData.xAxisCategories.length)
+      assert.deepEqual(result.heatmapData.xAxisCategories, resultShort.heatmapData.xAxisCategories)
     })
   });
 });

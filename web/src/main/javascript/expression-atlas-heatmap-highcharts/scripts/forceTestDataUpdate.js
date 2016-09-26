@@ -48,6 +48,28 @@ dataFiles = [
       "isDifferential": false,
       "atlasBaseUrl": "test-invalid"
     }
+  },
+  {
+    name: "experimentPageDifferentialSpecificShort.json",
+    url:"http://localhost:8080/gxa/json/experiments/E-GEOD-54705?heatmapMatrixSize=5",
+    config:{
+      "isExperimentPage": true,
+      "isMultiExperiment": false,
+      "isReferenceExperiment": false,
+      "isDifferential": true,
+      "atlasBaseUrl": "test-invalid"
+    }
+  },
+  {
+    name: "experimentPageDifferentialSpecific.json",
+    url:"http://localhost:8080/gxa/json/experiments/E-GEOD-54705",
+    config:{
+      "isExperimentPage": true,
+      "isMultiExperiment": false,
+      "isReferenceExperiment": false,
+      "isDifferential": true,
+      "atlasBaseUrl": "test-invalid"
+    }
   }
 ]
 

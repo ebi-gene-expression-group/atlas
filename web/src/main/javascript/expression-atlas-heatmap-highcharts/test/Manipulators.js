@@ -153,7 +153,7 @@ describe('Manipulators', function() {
       it('We did not lose any values', function(){
         var pointsBefore =
           [].concat.apply([],
-            result.dataSeries
+            data.dataSeries
             .map((series)=>series.data)
           )
           .map((point)=>point.value)
@@ -172,7 +172,121 @@ describe('Manipulators', function() {
         //assert.deepEqual(pointsBefore,pointsAfter);
       })
     })
-
-
   })
+
+  describe("Insert empty columns", function(){
+    describe("Inserting no columns", function(){
+      var result = subject.insertEmptyColumns([],data);
+      it("Preserves deep equality", function(){
+        assert.deepStrictEqual(data, result);
+      })
+      it("Touches data series and x axis", function(){
+        assert.notEqual(data.xAxisCategories, result.xAxisCategories);
+        assert.notEqual(data.dataSeries, result.dataSeries);
+      })
+      it("Does not touch y axis", function(){
+        assert.equal(data.yAxisCategories, result.yAxisCategories);
+      })
+    })
+    describe("Inserting the same columns", function(){
+      var result = subject.insertEmptyColumns(data.xAxisCategories,data);
+      it("Preserves deep equality", function(){
+        assert.deepStrictEqual(data, result);
+      })
+      it("Touches data series and x axis", function(){
+        assert.notEqual(data.xAxisCategories, result.xAxisCategories);
+        assert.notEqual(data.dataSeries, result.dataSeries);
+      })
+      it("Does not touch y axis", function(){
+        assert.equal(data.yAxisCategories, result.yAxisCategories);
+      })
+    })
+    describe("Inserting a new column at the beginning", function(){
+      var result = subject.insertEmptyColumns([{label:"NewColumn"}],data);
+      it("Does not touch y axis", function(){
+        assert.equal(data.yAxisCategories, result.yAxisCategories);
+      })
+      it("Touches data series and x axis", function(){
+        assert.notEqual(data.xAxisCategories, result.xAxisCategories);
+        assert.notEqual(data.dataSeries, result.dataSeries);
+      })
+      it("New X axis is one item longer", function(){
+        assert.equal(data.xAxisCategories.length +1, result.xAxisCategories.length);
+      })
+      it("Makes the new label contain the new column at the first place", function(){
+        assert.equal(0, result.xAxisCategories.findIndex((e)=>e.label=="NewColumn"));
+      })
+      it("We did not lose any values", function(){
+        var pointsBefore =
+          [].concat.apply([],
+            data.dataSeries
+            .map((series)=>series.data)
+          )
+          .map((point)=>point.value)
+          .sort((l,r)=>l-r);
+          var pointsAfter =
+            [].concat.apply([],
+              result.dataSeries
+              .map((series)=>series.data)
+            )
+            .map((point)=>point.value)
+            .sort((l,r)=>l-r);
+        assert.deepEqual(pointsBefore, pointsAfter);
+      })
+      it("No point has x value zero", function(){
+        result.dataSeries.map(function(series){
+          series.data.forEach(function(point){
+            assert.ok(point.x>0, JSON.stringify(point))
+          })
+        })
+      })
+    })
+    describe("Inserting a new column at the place of index 2", function(){
+      var newColumns = JSON.parse(JSON.stringify(data.xAxisCategories));
+      newColumns.splice(2,0,{label:"NewColumn"});
+
+      var result = subject.insertEmptyColumns(
+        newColumns,data);
+      it("Does not touch y axis", function(){
+        assert.equal(data.yAxisCategories, result.yAxisCategories);
+      })
+      it("Touches data series and x axis", function(){
+        assert.notEqual(data.xAxisCategories, result.xAxisCategories);
+        assert.notEqual(data.dataSeries, result.dataSeries);
+      })
+      it("New X axis is one item longer", function(){
+        assert.equal(data.xAxisCategories.length +1, newColumns.length);
+        //assert.equal(data.xAxisCategories.length +1, result.xAxisCategories.length);
+      })
+      it("Makes the new label contain the new column at place 2", function(){
+        assert.equal(2, result.xAxisCategories.findIndex((e)=>e.label=="NewColumn"));
+      })
+      it("We did not lose any values", function(){
+        var pointsBefore =
+          [].concat.apply([],
+            data.dataSeries
+            .map((series)=>series.data)
+          )
+          .map((point)=>point.value)
+          .sort((l,r)=>l-r);
+          var pointsAfter =
+            [].concat.apply([],
+              result.dataSeries
+              .map((series)=>series.data)
+            )
+            .map((point)=>point.value)
+            .sort((l,r)=>l-r);
+        assert.deepEqual(pointsBefore, pointsAfter);
+      })
+      it("No point has x value 2", function(){
+        result.dataSeries.map(function(series){
+          series.data.forEach(function(point){
+            assert.ok(point.x!=2, JSON.stringify(point))
+          })
+        })
+      })
+    })
+  })
+
+
 });

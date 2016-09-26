@@ -305,7 +305,83 @@ var groupValuesByProvidedColumnGrouping = function(grouping, data){
   };
 }
 
+var _calculateInserts = function(fullColumns,originalColumns){
+  var result = [];
+  var fullColumnsCursor=0;
+  var originalColumnsCursor=0;
+  while(fullColumnsCursor<fullColumns.length && originalColumnsCursor < originalColumns.length){
+    if(fullColumns.length > fullColumnsCursor
+      && originalColumns.length > originalColumnsCursor
+      && fullColumns[fullColumnsCursor] == originalColumns[originalColumnsCursor]){
+      result.push("");
+      fullColumnsCursor++;
+      originalColumnsCursor++;
+    } else if(fullColumns.length > fullColumnsCursor){
+      result.push(fullColumns[fullColumnsCursor]);
+      fullColumnsCursor++;
+    } else if(originalColumns[originalColumnsCursor].length > originalColumnsCursor){
+      result.push("");
+      originalColumnsCursor++;
+    }
+  }
+  return result;
+};
 
+var _indicesForInserts = function(inserts){
+  var i=-1;
+  return (
+    inserts
+    .map(function(e,ix){
+      !e && i++;
+      return i;
+    })
+  )
+};
+
+var insertEmptyColumns = function(newColumns,data){
+  var fullColumns =
+    newColumns.concat(
+     data.xAxisCategories
+     .filter(function(originalColumn){
+       return (
+         newColumns
+         .findIndex((e)=>e.label==originalColumn.label)
+         ==-1
+       )
+     })
+    );
+  var insertIndices =
+    _indicesForInserts(
+      _calculateInserts(
+        fullColumns
+        .map((e)=>e.label),
+        data.xAxisCategories
+        .map((e)=>e.label)
+      )
+    );
+  return {
+    dataSeries: data.dataSeries.map(function(e, ix){
+      return {
+        info: e.info,
+        data:
+          e.data
+          .map(function(point){
+            return Object.assign(
+              {},
+              point,
+              {x:
+                insertIndices.indexOf(point.x)
+              }
+            )
+          })
+      }
+    }),
+    xAxisCategories: fullColumns,
+    yAxisCategories: data.yAxisCategories
+  };
+}
+
+exports.insertEmptyColumns = insertEmptyColumns;
 exports.group = groupValuesByProvidedColumnGrouping;
 exports.filterByIndex = filterHeatmapDataByCoexpressionIndex;
 exports.filterByDataSeries = filterHeatmapDataByDataSeries;

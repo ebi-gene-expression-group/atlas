@@ -99,7 +99,7 @@ var __dataPointFromExpression = function(infoCommonForTheRow, columnNumber, expr
           {
           pValue: expression.pValue,
           foldChange: expression.foldChange,
-          tStat: expression.tStat}
+          tStat: expression.tStat||""}
           ,infoCommonForTheRow)
         }
       : null
