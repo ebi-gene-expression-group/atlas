@@ -47,6 +47,7 @@ module.exports = React.createClass({
           ordering: this.props.loadResult.orderings[this.state.ordering],
           grouping: this.state.grouping,
           dataSeriesToKeep: this.state.dataSeriesToShow,
+          allowEmptyColumns: this.props.loadResult.heatmapConfig.isExperimentPage,
           maxIndex:this.state.coexpressionsShown
         },
       this.props.loadResult.heatmapData)

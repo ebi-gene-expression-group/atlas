@@ -390,10 +390,12 @@ exports.order = orderHeatmapData;
 exports.manipulate = function(args, data){
   return (
     groupValuesByProvidedColumnGrouping(args.grouping,
-      filterHeatmapDataByCoexpressionIndex(args.maxIndex,
-        filterHeatmapDataByDataSeries(args.dataSeriesToKeep,
-          orderHeatmapData(args.ordering,
-             data
+      insertEmptyColumns(args.allowEmptyColumns?orderHeatmapData(args.ordering,data).xAxisCategories:[],
+        filterHeatmapDataByCoexpressionIndex(args.maxIndex,
+          filterHeatmapDataByDataSeries(args.dataSeriesToKeep,
+            orderHeatmapData(args.ordering,
+               data
+            )
           )
         )
       )

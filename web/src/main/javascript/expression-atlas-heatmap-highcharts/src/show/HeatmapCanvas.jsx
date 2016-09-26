@@ -95,7 +95,8 @@ var HeatmapCanvas = React.createClass({
   },
 
   _countColumnsToShow: function(){
-    return this._count_sToShow("x");
+    //we have turned the min and max on to show empty columns in heatmap
+    return this.props.heatmapData.xAxisCategories.length;
   },
 
   _highchartsOptions: function(dimensions, data){
@@ -190,6 +191,8 @@ var HeatmapCanvas = React.createClass({
 
               opposite: 'true',
               categories: data.xAxisCategories,
+              min:0,
+              max: data.xAxisCategories.length-1,
 
               events: {
                   setExtremes: function(event) { this.props.onZoom(event.min !== undefined && event.max !== undefined) }.bind(this)
