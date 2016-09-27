@@ -8,7 +8,7 @@ The Expression Atlas provides information on gene expression patterns under diff
 
 ### Atlas Widget
 
-Our data can be included as a widget to be included in your website.
+Our data can be included as a widget as part of your website.
 [Demo](http://www.ebi.ac.uk/gxa/resources/test/widget/highcharts/production/mouse_multiexperiment.html)
 
 ##### What you need
@@ -33,7 +33,7 @@ src="http://www.ebi.ac.uk/gxa/resources/js-bundles/expressionAtlasHeatmapHighcha
 
 You could also build us from source - we use webpack/npm.
 
-Tell us about any problems by raising an issue here.
+Tell us about any problems by raising an issue in this repository.
 
 ##### Invoking the widget
 
