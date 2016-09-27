@@ -1,0 +1,69 @@
+#local-masthead {
+    background-image:linear-gradient(to right, rgba(45, 39, 68, 0.9),rgba(45, 193, 173, 0.65),rgba(0, 158, 122, 0.9) ), url("/gxa/resources/images/foundation/backgrounds/blurry.png");
+}
+
+/* Copied from .hexagon in ebi-global.css */
+.atlas-logo {
+    display: inline-block;
+    background: url("/gxa/resources/images/foundation/logos/logo_atlas_transparent.png") no-repeat;
+    background-size: 60px;
+    text-align: center;
+    height: 70px;
+    width: 80px;
+    vertical-align: middle;
+    margin-left: -80px;
+}
+
+#search-example-dropdown a {
+    color: #222;
+}
+
+
+/*Dynamic magnifying glass search follows... it doesn’t seem very responsive (absolute positioning)*/
+/*.local-site-search {position: absolute; top: 113px;  right: 10px; }!*let the text field appear with no size problem*!*/
+/*.local-site-search .button {float:right;}*/
+/*.local-site-search .button, .local-offcanvas-menu .button {background-color: transparent;}*/
+/*.local-site-search .button:hover, .local-offcanvas-menu .button:hover {background-color: transparent;}*/
+/*.local-site-search .icon-functional:before, .local-offcanvas-menu .icon-functional:before {font-size: 40px; margin:0;}*/
+
+/*.search-box {*/
+    /*-webkit-transition-duration: 0.2s;*/
+    /*transition-duration: 0.2s;*/
+    /*-webkit-transition-timing-function: ease;*/
+    /*transition-timing-function: ease;*/
+    /*-webkit-transition-property: width,margin-right;*/
+    /*transition-property: width,margin-right;*/
+
+    /*width: 0;*/
+    /*display: block;*/
+    /*float: right;*/
+    /*padding: 0;*/
+    /*background-color: rgba(255, 255, 255, 0);*/
+    /*box-shadow: none;*/
+    /*outline: 0;*/
+    /*border-bottom: 1px solid rgba(255, 255, 255, 0.4);*/
+    /*border-top:none;*/
+    /*border-left:none;*/
+    /*border-right:none;*/
+    /*font-size: 1rem;*/
+    /*color: rgba(255, 255, 255, 0.5);*/
+/*}*/
+
+/*.local-site-search:hover .tool-search .search-box, .search-box:focus {*/
+    /*width: 70%;*/
+    /*margin-right: 0;*/
+    /*color:white;*/
+/*}*/
+
+/*.local-site-search [type='text']:focus {*/
+    /*border-bottom: 1px solid white;*/
+    /*border-top: none;*/
+    /*border-left: none;*/
+    /*border-right: none;*/
+    /*color: white;*/
+    /*background-color: transparent;*/
+    /*outline: none;*/
+    /*box-shadow: none;*/
+    /*transition: box-shadow 0.5s, border-color 0.25s ease-in-out;*/
+/*}*/
+

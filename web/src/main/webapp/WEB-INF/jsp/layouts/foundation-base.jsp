@@ -50,15 +50,12 @@
     <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.1/fonts.css" type="text/css" media="all">
 
     <!-- Use this CSS file for any custom styling -->
-    <!--
-      <link rel="stylesheet" href="css/custom.css" type="text/css" media="all">
-    -->
+    <!-- <link rel="stylesheet" href="css/custom.css" type="text/css" media="all"> -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/atlas.css" type="text/css" media="all">
 
     <!-- If you have a custom header image or colour -->
-    <!--
-    <meta name="ebi:localmasthead-color" content="#000">
-    <meta name="ebi:localmasthead-image" content="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/images/backgrounds/embl-ebi-background.jpg">
-    -->
+    <!-- <meta name="ebi:localmasthead-color" content="#000"> -->
+    <!-- <meta name="ebi:localmasthead-image" content="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/images/backgrounds/embl-ebi-background.jpg"> -->
 
     <!-- you can replace this with theme-[projectname].css. See http://www.ebi.ac.uk/web/style/colour for details of how to do this -->
     <!-- also inform ES so we can host your colour palette file -->
