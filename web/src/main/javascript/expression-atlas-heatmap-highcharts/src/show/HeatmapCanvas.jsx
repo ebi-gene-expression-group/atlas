@@ -21,7 +21,9 @@ var HeatmapCanvas = React.createClass({
       colorAxis: React.PropTypes.object,
       formatters : React.PropTypes.shape({
         xAxis: PropTypes.Formatter,
+        xAxisStyle: React.PropTypes.object.isRequired,
         yAxis: PropTypes.Formatter,
+        yAxisStyle: React.PropTypes.object.isRequired,
         tooltip: PropTypes.Formatter
       }).isRequired,
       genomeBrowserTemplate: React.PropTypes.string.isRequired,
@@ -177,10 +179,7 @@ var HeatmapCanvas = React.createClass({
               tickColor: 'rgb(192, 192, 192)',
               lineColor: 'rgb(192, 192, 192)',
               labels: {
-                  style: {
-                      fontSize: '9px',
-                      textOverflow: 'ellipsis'
-                  },
+                  style: this.props.formatters.xAxisStyle,
                   events: {
                     mouseover: (function() { var f =this.props.onUserSelectsColumn; return function(){return f(this.value);};}.bind(this))()
                     ,
@@ -205,10 +204,7 @@ var HeatmapCanvas = React.createClass({
               useHTML: true,
               reversed: true,
               labels: {
-                  style: {
-                      fontSize: '10px',
-                      color: '#148ff3'
-                  },
+                  style: this.props.formatters.yAxisStyle,
                   events: {
                     mouseover:(function() {
                        var f =this.props.onUserSelectsRow;

@@ -146,6 +146,11 @@ var makeFormatter = function(config){
     xAxis: function Formatter(value){
       return value.label;
     },
+    xAxisStyle: {
+        fontSize: '9px',
+        cursor: config.isExperimentPage && config.isDifferential? 'pointer':'default',
+        textOverflow: config.isExperimentPage? 'none' : 'ellipsis'
+    },
     yAxis: function Formatter(value){
       return reactToHtml(
         <YAxisLabel
@@ -154,6 +159,10 @@ var makeFormatter = function(config){
           resourceId={value.id}
           extra={value.info.designElement||""}/>
       );
+    },
+    yAxisStyle: {
+        fontSize: '10px',
+        color: '#148ff3'
     },
     tooltip: function Formatter (series, point) {
       var o = {
