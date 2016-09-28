@@ -91,7 +91,8 @@ var TooltipStateManager = React.createClass({
                       this.refs["tooltip"].setState({extraClass:"gxaDisabled"})
                     }
                     this.setState((previousState)=>({clicksOutsideColumns: previousState.clicksOutsideColumns+1}))
-                  }
+                  },
+                  className: "gxaFadeBackgroundForOpenTooltip"
                 }
               : {}
             }>
