@@ -28,6 +28,7 @@ var HeatmapCanvas = React.createClass({
       onUserSelectsRow:React.PropTypes.func.isRequired,
       onUserSelectsColumn:React.PropTypes.func.isRequired,
       onUserSelectsPoint:React.PropTypes.func.isRequired,
+      onUserClicksColumn:React.PropTypes.func.isRequired,
       onZoom: React.PropTypes.func.isRequired
   },
 
@@ -184,6 +185,8 @@ var HeatmapCanvas = React.createClass({
                     mouseover: (function() { var f =this.props.onUserSelectsColumn; return function(){return f(this.value);};}.bind(this))()
                     ,
                     mouseout:(function() { var f =this.props.onUserSelectsColumn; return function(){return f("");};}.bind(this))()
+                    ,
+                    click: (function() { var f =this.props.onUserClicksColumn; return function(){ return f(this.value);};}.bind(this))()
                   },
                   autoRotation: [-45, -90],
                   formatter: (function() { var f =this.props.formatters.xAxis; return function(){return f(this.value);};}.bind(this))()
