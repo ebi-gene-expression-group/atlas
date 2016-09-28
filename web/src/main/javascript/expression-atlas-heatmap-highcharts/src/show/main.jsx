@@ -104,15 +104,17 @@ var HeatmapCanvasWithTooltips = React.createClass({
       <TooltipStateManager
         managedComponent={HeatmapCanvas}
         managedComponentProps={this.props.heatmapProps}
+        tooltips={this.props.tooltips}
         onUserSelectsColumn={this.props.anatomogramCallbacks.onUserSelectsColumn}
         onUserSelectsRow={this.props.anatomogramCallbacks.onUserSelectsRow}
         onUserSelectsPoint={this.props.anatomogramCallbacks.onUserSelectsPoint}
-        tooltips={this.props.tooltips} />
+        enableFreeze={this.props.enableFreeze}
+         />
     )
   }
 });
 
-var __heatmapCanvas = function(tooltips, anatomogramCallbacks, heatmapProps){
+var __heatmapCanvas = function(tooltips, anatomogramCallbacks, heatmapProps, interactiveColumnTooltips){
   return (
     !tooltips
     ? <HeatmapCanvas {...heatmapProps} {...anatomogramCallbacks}/>
@@ -120,12 +122,13 @@ var __heatmapCanvas = function(tooltips, anatomogramCallbacks, heatmapProps){
         heatmapProps={heatmapProps}
         tooltips={tooltips}
         anatomogramCallbacks={anatomogramCallbacks}
+        enableFreeze={interactiveColumnTooltips}
       />
   );
 };
 
 var heatmapCanvas = function(heatmapConfig, tooltips, anatomogramCallbacks, heatmapProps){
-  return __heatmapCanvas(heatmapConfig.isExperimentPage && tooltips, anatomogramCallbacks, heatmapProps);
+  return __heatmapCanvas(heatmapConfig.isExperimentPage && tooltips, anatomogramCallbacks, heatmapProps, heatmapConfig.isExperimentPage && heatmapConfig.isDifferential);
 };
 
 var anatomogramCallbacks = function(heatmapDataToPresent, highlightOntologyIds){

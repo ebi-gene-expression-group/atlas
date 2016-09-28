@@ -26,7 +26,8 @@ var TooltipStateManager = React.createClass({
       point: React.PropTypes.func
     }).isRequired,
     managedComponent: React.PropTypes.any.isRequired,
-    managedComponentProps: React.PropTypes.object.isRequired
+    managedComponentProps: React.PropTypes.object.isRequired,
+    enableFreeze: React.PropTypes.bool.isRequired
   },
 
   getInitialState: function(){
@@ -72,7 +73,7 @@ var TooltipStateManager = React.createClass({
   },
 
   _onUserClicksColumn: function(columnLabel){
-    this.setState((previousState)=>({tooltipFrozen: !previousState.tooltipFrozen, clicksOutsideColumns:0}));
+    this.props.enableFreeze && this.setState((previousState)=>({tooltipFrozen: !previousState.tooltipFrozen, clicksOutsideColumns:0}));
     this._onUserSelectsColumn(columnLabel);
   },
 
