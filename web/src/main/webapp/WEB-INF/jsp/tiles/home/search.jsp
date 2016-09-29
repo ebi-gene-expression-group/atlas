@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <div class="row">
     <div class="small-12 columns">
         <ul class="tabs" data-tabs id="search-tabs">

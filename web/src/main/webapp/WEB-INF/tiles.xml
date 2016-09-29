@@ -10,6 +10,8 @@
         <put-attribute name="header"/>
         <put-attribute name="body"/>
         <put-attribute name="footer" value="/WEB-INF/jsp/tiles/footer.jsp"/>
+        <put-attribute name="news" value="/WEB-INF/jsp/tiles/twitter-timeline.jsp"/>
+        <put-attribute name="mega-footer" value="/WEB-INF/jsp/tiles/mega-footer.jsp"/>
     </definition>
 
     <definition name="foundation-home" extends="foundation-base">
@@ -18,8 +20,10 @@
             <definition template="/WEB-INF/jsp/layouts/foundation-home-body.jsp">
                 <put-attribute name="home-hero" value="/WEB-INF/jsp/tiles/home/hero.jsp"/>
                 <put-attribute name="home-search" value="/WEB-INF/jsp/tiles/home/search.jsp"/>
-                <put-attribute name="first-row-first-box" value="/WEB-INF/jsp/tiles/home/browse-by.jsp"/>
-                <put-attribute name="first-row-second-box" value="/WEB-INF/jsp/tiles/home/experiment-list-latest.jsp"/>
+                <put-attribute name="first-box" value="/WEB-INF/jsp/tiles/home/browse-by.jsp"/>
+                <put-attribute name="second-box" value="/WEB-INF/jsp/tiles/home/experiment-list-latest.jsp"/>
+                <put-attribute name="third-box" value="/WEB-INF/jsp/tiles/home/tools.jsp"/>
+                <put-attribute name="fourth-box" value="/WEB-INF/jsp/tiles/home/publications.jsp"/>
             </definition>
         </put-attribute>
     </definition>

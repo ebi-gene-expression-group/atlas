@@ -13,7 +13,7 @@
         The Expression Atlas provides information on gene expression patterns under
         different biological conditions. Gene expression data is re-analysed in-house
         to detect genes showing interesting baseline and differential expression
-        patterns. <a href="about.html">Read more about Expression Atlas.</a>
+        patterns. <a href="about.html">Read more about Expression Atlas…</a>
     </p>
 </section>
 

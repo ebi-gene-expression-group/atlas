@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!-- Optional local footer (insert citation / project-specific copyright / etc here -->
 <!--
       <div id="local-footer">

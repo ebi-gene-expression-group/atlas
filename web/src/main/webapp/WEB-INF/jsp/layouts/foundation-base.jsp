@@ -1,4 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+
 <html lang="en">
 
 <head>
@@ -58,7 +60,7 @@
 
     <!-- you can replace this with theme-[projectname].css. See http://www.ebi.ac.uk/web/style/colour for details of how to do this -->
     <!-- also inform ES so we can host your colour palette file -->
-    <!-- <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/theme-embl-petrol.css" type="text/css" media="all"> -->
+    <%--<link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/theme-embl-petrol.css" type="text/css" media="all">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
 
     <!-- for production the above can be replaced with -->
@@ -85,7 +87,6 @@
 </div>
 
 <div data-sticky-container>
-    <%--<div id="local-masthead" data-sticky data-sticky-on="large" data-top-anchor="content">--%>
     <div id="local-masthead" data-sticky data-sticky-on="large" data-top-anchor="235">
         <header>
 
@@ -94,16 +95,24 @@
             <tiles:insertAttribute name="header" />
 
         </header>
+
     </div>
 </div>
 
-
-<div id="content" role="main">
-    <tiles:insertAttribute name="body" />
+<div id="content" role="main" class="row">
+    <tiles:insertAttribute name="body"/>
 </div>
 
-<footer id="footer">
-    <tiles:insertAttribute name="footer" />
+<div class="text-center jumbo-news-container padding-top-xlarge padding-bottom-xlarge">
+    <tiles:insertAttribute name="news"/>
+</div>
+
+<div class="mega-footer padding-top-xlarge padding-bottom-xlarge">
+    <tiles:insertAttribute name="mega-footer"/>
+</div>
+
+<footer>
+    <tiles:insertAttribute name="footer"/>
 </footer>
 <!--! end of #wrapper -->
 
@@ -145,4 +154,5 @@
 
 
 
-</body></html>
+</body>
+</html>
