@@ -7,13 +7,21 @@
     <definition name="foundation-base" template="/WEB-INF/jsp/layouts/foundation-base.jsp">
         <put-attribute name="title" value="Expression Atlas"/>
         <put-attribute name="top-menu" value="/WEB-INF/jsp/tiles/top-menu.jsp"/>
-        <put-attribute name="header" value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="header"/>
         <put-attribute name="body"/>
         <put-attribute name="footer" value="/WEB-INF/jsp/tiles/footer.jsp"/>
     </definition>
 
     <definition name="foundation-home" extends="foundation-base">
-        <put-attribute name="body" value="/WEB-INF/jsp/tiles/body-home.jsp"/>
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="body">
+            <definition template="/WEB-INF/jsp/layouts/foundation-home-body.jsp">
+                <put-attribute name="home-hero" value="/WEB-INF/jsp/tiles/home/hero.jsp"/>
+                <put-attribute name="home-search" value="/WEB-INF/jsp/tiles/home/search.jsp"/>
+                <put-attribute name="first-row-first-box" value="/WEB-INF/jsp/tiles/home/browse-by.jsp"/>
+                <put-attribute name="first-row-second-box" value="/WEB-INF/jsp/tiles/home/experiment-list-latest.jsp"/>
+            </definition>
+        </put-attribute>
     </definition>
 
     <definition name="base.definition" template="/WEB-INF/jsp/layout.jsp">

@@ -7,12 +7,13 @@
                 <div class="atlas-logo"></div>Expression Atlas
                 <%--<img src="${pageContext.request.contextPath}/resources/images/logos/logo_atlas_transparent.png" alt="Expression Atlas logo" >--%>
             </h1>
-            <h4 class="hide-for-small-only">Gene expression across species and biological conditions</h4>
+            <h4 class="show-for-large">Gene expression across species and biological conditions</h4>
         </div>
         <!-- /local-title -->
 
         <!-- local-search -->
-        <div class="columns small-4">
+        <div class="hide-for-small-only columns small-4">
+            <!-- Dynamic magnifyign glass search -->
             <%--<div class="local-site-search">--%>
                 <%--<form class="tool-search" id="local-search" name="local-search" action="/search.atlas" method="GET">--%>
                     <%--<input type="text" maxlength="255" value="" class="search-box">--%>
@@ -21,7 +22,7 @@
                 <%--</form>--%>
             <%--</div>--%>
 
-
+            <!-- EBI Framework standard search -->
             <!-- if you do not have a local-search, delete the following form -->
             <form id="local-search" name="local-search" action="[search-action]" method="post">
                 <h4>Search this project</h4>
@@ -32,7 +33,7 @@
                             <input type="submit" name="submit" value="1" class="button icon icon-functional">
                         </div>
                     </div>
-                    <small class="">
+                    <small class="show-for-large">
                         <!-- If your search is more complex than just a keyword search, you can link to an Advanced Search -->
                         <span class="adv"><a href="../search" id="adv-search" title="Advanced">Advanced</a></span>
                         |
@@ -73,7 +74,7 @@
         </ul>
 
         <!-- SP adding class hide-for-small-only as the right hand side takes a lot of space for small + remove text for medium-->
-        <ul class="hide-for-small-only dropdown menu float-right" data-dropdown-menu data-description="functional">
+        <ul class="show-for-large dropdown menu float-right" data-dropdown-menu data-description="functional">
             <li class="functional has-submenu is-down-arrow"><a href="#" class="hide-for-small-only"><i class="icon icon-generic" data-icon="d"></i> Share this</a>
                 <ul class="menu js">
                     <li >

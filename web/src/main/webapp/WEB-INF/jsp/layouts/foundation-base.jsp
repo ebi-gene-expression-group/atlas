@@ -1,5 +1,4 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-
 <html lang="en">
 
 <head>
@@ -59,7 +58,8 @@
 
     <!-- you can replace this with theme-[projectname].css. See http://www.ebi.ac.uk/web/style/colour for details of how to do this -->
     <!-- also inform ES so we can host your colour palette file -->
-    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/theme-embl-petrol.css" type="text/css" media="all">
+    <!-- <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/theme-embl-petrol.css" type="text/css" media="all"> -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
 
     <!-- for production the above can be replaced with -->
     <!--
@@ -84,8 +84,9 @@
     </ul>
 </div>
 
-<div data-sticky-container="" class="sticky-container" style="height: 219.133px;">
-    <div id="local-masthead" data-sticky="gqvaqq-sticky" data-sticky-on="large" data-top-anchor="180" data-btm-anchor="300000" class="sticky" data-resize="local-masthead" style="max-width: 1425px;">
+<div data-sticky-container>
+    <%--<div id="local-masthead" data-sticky data-sticky-on="large" data-top-anchor="content">--%>
+    <div id="local-masthead" data-sticky data-sticky-on="large" data-top-anchor="235">
         <header>
 
             <tiles:insertAttribute name="top-menu" />
@@ -93,16 +94,15 @@
             <tiles:insertAttribute name="header" />
 
         </header>
-
     </div>
 </div>
 
 
-<div id="content" role="main" class="row">
+<div id="content" role="main">
     <tiles:insertAttribute name="body" />
 </div>
 
-<footer>
+<footer id="footer">
     <tiles:insertAttribute name="footer" />
 </footer>
 <!--! end of #wrapper -->
