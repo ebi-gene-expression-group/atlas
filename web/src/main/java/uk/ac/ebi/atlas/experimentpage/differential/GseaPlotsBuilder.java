@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -12,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Collection;
-import java.util.Set;
 
 @Named
 public class GseaPlotsBuilder {
@@ -24,7 +21,8 @@ public class GseaPlotsBuilder {
         this.gseaPathTemplate = gseaPathTemplate;
     }
 
-    public JsonElement createJsonByContrastId(String experimentAccession, Collection<Contrast> contrasts) {
+    @Deprecated //use ContrastImageFactory
+    public JsonObject createJsonByContrastId(String experimentAccession, Collection<Contrast> contrasts) {
         JsonObject result = new JsonObject();
         for (Contrast contrast : contrasts) {
             JsonObject valuesForThisContrast = new JsonObject();
