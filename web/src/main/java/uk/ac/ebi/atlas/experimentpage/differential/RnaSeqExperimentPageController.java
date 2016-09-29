@@ -61,12 +61,7 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
                                    @RequestParam Map<String, String> allParameters,
                                    @RequestParam(required = false) String accessKey,
                                    @PathVariable String experimentAccession, Model model, HttpServletRequest request) {
-        try {
-            model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
-        } catch (UnsupportedEncodingException e) {
-            return "error-page";
-        }
-
+        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
 
         differentialExperimentPageService.prepareRequestPreferencesAndHeaderData(
                 (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, model,request

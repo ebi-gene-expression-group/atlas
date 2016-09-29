@@ -52,15 +52,11 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
                                      @RequestParam(required = false) String accessKey,
                                      Model model, HttpServletRequest request) {
 
-        try {
-            model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
+        model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
 
-            baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(
-                    (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,model, request,false
-            );
-        } catch (UnsupportedEncodingException e) {
-        return "error-page";
-        }
+        baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(
+                (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,model, request,false
+        );
 
         return "experiment";
     }

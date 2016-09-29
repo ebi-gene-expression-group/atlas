@@ -12,8 +12,7 @@ import java.util.Map;
 public class ExperimentPageCallbacks {
 
     public  <Preferences extends ExperimentPageRequestPreferences> String
-    create(Preferences preferences, Map<String, String> allParameters, String originalRequestURI)
-    throws UnsupportedEncodingException {
+    create(Preferences preferences, Map<String, String> allParameters, String originalRequestURI) {
         allParameters.put("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         StringBuilder sourceURLBuilder = new StringBuilder(originalRequestURI.replace("/experiments", "/json/experiments").replaceFirst("\\??$","?"));
         for(Map.Entry<String, String> e: allParameters.entrySet()){
