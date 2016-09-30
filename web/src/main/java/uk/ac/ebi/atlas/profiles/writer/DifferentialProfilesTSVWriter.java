@@ -22,6 +22,8 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static org.apache.commons.lang3.StringUtils.wrap;
+
 public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfile<K>, K extends DifferentialExpression> extends GeneProfilesTSVWriter<T, Contrast, DifferentialProfileStreamOptions> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialProfilesTSVWriter.class);
@@ -62,7 +64,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     @Override
     protected String getTsvFileMasthead(DifferentialProfileStreamOptions options, boolean isGeneSet) {
         DifferentialRequestContext requestContext = getRequestContext();
-        String geneQuery = requestContext.getQueryDescription();
+        String geneQuery = requestContext.getGeneQuery().isEmpty() ? requestContext.getQueryDescription() : wrap(requestContext.getQueryDescription(), "'");
         String specific = requestContext.isSpecific() ? " specifically" : "";
         String regulation = " " + requestContext.getRegulation().getLabel();
         String selectedContrasts = formatSelectedContrasts(requestContext);

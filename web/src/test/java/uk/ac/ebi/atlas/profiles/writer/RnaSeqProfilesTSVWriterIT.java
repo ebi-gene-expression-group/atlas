@@ -79,7 +79,7 @@ public class RnaSeqProfilesTSVWriterIT {
     public void secondHeaderLineShouldDescribeQuery(){
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
-        assertThat(headerRows[1], is("# Query: Genes matching: '', specifically up/down differentially expressed in " +
+        assertThat(headerRows[1], is("# Query: Genes matching: default query, specifically up/down differentially expressed in " +
                 "any contrast given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment "+RNA_SEQ_EXPERIMENT_ACCESSION));
     }
 
