@@ -1,11 +1,13 @@
 
-package uk.ac.ebi.atlas.web.controllers.rest;
+package uk.ac.ebi.atlas.resource;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.resource.ContrastImageFactory;
+import uk.ac.ebi.atlas.resource.ExternalImageController;
 import uk.ac.ebi.atlas.utils.ImageIOUtils;
 
 import javax.servlet.ServletOutputStream;
@@ -21,9 +23,6 @@ public class ExternalImageControllerTest {
 
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
     public static final String EXTRA_INFO_PATH_TEMPLATE = "magetab/{0}/{0}-extra-info.png";
-    public static final String RNA_SEQ_PATH_TEMPLATE = "magetab/{0}/{0}-{1}-mvaPlot.png";
-    public static final String MICROARRAY_PATH_TEMPLATE = "magetab/{0}/{0}_{1}-{2}-mvaPlot.png";
-    public static final String GSEA_PLOT_TEMPLATE = "magetab/{0}/{0}.{1}.{2}.gsea_class_non_dir_both.png";
 
     @Mock
     private ImageIOUtils imageIOUtilsMock;
@@ -42,12 +41,12 @@ public class ExternalImageControllerTest {
     @Mock
     private InputStream imageInputStreamMock;
 
+    @Mock
+    ContrastImageFactory contrastImageFactory;
+
     @Before
     public void setUp() throws Exception {
-        subject = new ExternalImageController(imageIOUtilsMock,
-                EXTRA_INFO_PATH_TEMPLATE,
-                RNA_SEQ_PATH_TEMPLATE,
-                MICROARRAY_PATH_TEMPLATE, GSEA_PLOT_TEMPLATE);
+        subject = new ExternalImageController(imageIOUtilsMock,EXTRA_INFO_PATH_TEMPLATE,contrastImageFactory);
 
         when(imageIOUtilsMock.read(imageInputStreamMock)).thenReturn(bufferedImageMock);
         when(responseMock.getOutputStream()).thenReturn(outputStreamMock);

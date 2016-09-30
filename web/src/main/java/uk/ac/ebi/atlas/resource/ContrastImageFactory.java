@@ -29,41 +29,28 @@ public class ContrastImageFactory {
     String microarrayPathTemplate;
 
 
-    private ContrastImage getContrastImage(ResourceType resourceType,String experimentAccession, Optional<String>
+    ContrastImage getContrastImage(ResourceType resourceType,String experimentAccession, Optional<String>
             arrayDesign,
             String contrastId ){
-        String geneSetType = "";
-        String fileName = "";
         String pathTemplate = "";
         switch (resourceType) {
             case PLOT_GSEA_INTERPRO:
-                geneSetType= "interpro";
+                pathTemplate = gseaPathTemplate.replace("{2}", "interpro");
                 break;
             case PLOT_GSEA_GO:
-                geneSetType= "go";
+                pathTemplate = gseaPathTemplate.replace("{2}", "go");
                 break;
             case PLOT_GSEA_REACTOME:
-                geneSetType= "reactome";
+                pathTemplate = gseaPathTemplate.replace("{2}", "reactome");
                 break;
             case PLOT_MA:
-                geneSetType= "ma";
-                break;
-        }
-        switch (resourceType) {
-            case PLOT_GSEA_INTERPRO:
-            case PLOT_GSEA_GO:
-            case PLOT_GSEA_REACTOME:
-                fileName= "gsea_"+geneSetType+".png";
-                pathTemplate = gseaPathTemplate.replace("{2}", geneSetType);
-                break;
-            case PLOT_MA:
-                fileName= "ma-plot.png";
                 pathTemplate = arrayDesign.isPresent()? microarrayPathTemplate : rnaSeqPathTemplate;
                 break;
         }
 
-        String uriTemplate = arrayDesign.isPresent() ? "/external-resources/{0}/{1}/{2}/"+fileName :
-                "/external-resources/{0}/{1}/"+fileName;
+        String uriTemplate = (arrayDesign.isPresent()
+                ? "/external-resources/{0}/{1}/{2}/"
+                :"/external-resources/{0}/{1}/")+resourceType.fileName;
 
 
         return arrayDesign.isPresent()
@@ -73,7 +60,7 @@ public class ContrastImageFactory {
                 experimentAccession, contrastId);
     }
 
-    private ContrastImage getContrastImage(ResourceType resourceType,String experimentAccession,
+    ContrastImage getContrastImage(ResourceType resourceType,String experimentAccession,
                                            String contrastId ){
         return getContrastImage(resourceType, experimentAccession, Optional.<String>absent(), contrastId);
     }
