@@ -1,19 +1,14 @@
 package uk.ac.ebi.atlas.resource;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jayway.restassured.response.Response;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
-import uk.ac.ebi.atlas.acceptance.utils.URLBuilder;
-import uk.ac.ebi.atlas.experimentpage.differential.GseaPlotsBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -30,9 +25,6 @@ public class ContrastImageFactoryEIT {
 
     @Inject
     ContrastImageFactory subject;
-
-    @Inject
-    GseaPlotsBuilder oldImpl;
 
     @Inject
     ExperimentTrader experimentTrader;
