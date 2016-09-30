@@ -21,6 +21,7 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 import java.util.Set;
 
 public class DifferentialExperimentPageService<T extends DifferentialExperiment, K extends
@@ -101,6 +102,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
     private JsonArray constructColumnHeaders(Iterable<Contrast> contrasts, DifferentialExperiment
             differentialExperiment){
         JsonArray result = new JsonArray();
+        Map<String, JsonArray> contrastImages = atlasResourceHub.contrastImages(differentialExperiment);
         for(Contrast contrast: contrasts){
             JsonObject o = contrast.toJson();
             o.add("contrastSummary", new ContrastSummaryBuilder()
@@ -108,6 +110,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
                     .withExperimentDesign(differentialExperiment.getExperimentDesign())
                     .withExperimentDescription(differentialExperiment.getDescription())
                     .build().toJson());
+            o.add("resources", contrastImages.get(contrast.getId()));
             result.add(o);
         }
         return result;
