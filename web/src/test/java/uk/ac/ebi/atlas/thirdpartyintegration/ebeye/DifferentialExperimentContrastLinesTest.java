@@ -73,7 +73,7 @@ public class DifferentialExperimentContrastLinesTest {
 
         Set<Contrast> contrasts = Collections.singleton(contrast1);
         DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts,
-                "description", false, true, new Species("species","species name", "kingdom", "ensemblDb"), Collections
+                "description", true, new Species("species","species name", "kingdom", "ensemblDb"), Collections
                 .EMPTY_SET, experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
@@ -112,7 +112,7 @@ public class DifferentialExperimentContrastLinesTest {
         //Adding the contrasts
         Set<Contrast> contrasts = Collections.singleton(contrast1);
         DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts,
-                "description", false, true, new Species("species","species name", "kingdom", "ensemblDb"), Collections.EMPTY_SET, experimentDesign);
+                "description", true, new Species("species","species name", "kingdom", "ensemblDb"), Collections.EMPTY_SET, experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 
@@ -149,7 +149,7 @@ public class DifferentialExperimentContrastLinesTest {
         //Adding the contrasts
         Set<Contrast> contrasts = Collections.singleton(contrast1);
         DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts,
-                "description", false, true, new Species("species","species name", "kingdom", "ensemblDb"), Collections.EMPTY_SET, experimentDesign);
+                "description", true, new Species("species","species name", "kingdom", "ensemblDb"), Collections.EMPTY_SET, experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 

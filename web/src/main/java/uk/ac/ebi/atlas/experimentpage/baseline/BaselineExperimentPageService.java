@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.base.Optional;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
@@ -17,6 +15,7 @@ import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -36,13 +35,12 @@ public class BaselineExperimentPageService extends ExperimentPageService {
     private final ApplicationProperties applicationProperties;
     private final AnatomogramFactory anatomogramFactory;
     private final FactorGroupingService factorGroupingService;
-    private Gson gson = new GsonBuilder()
-            .create();
 
     public BaselineExperimentPageService(BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory,
                                          ApplicationProperties applicationProperties,
+                                         AtlasResourceHub atlasResourceHub,
                                          TracksUtil tracksUtil,FactorGroupingService factorGroupingService) {
-
+        super(atlasResourceHub);
         this.applicationProperties = applicationProperties;
         this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
         this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
@@ -70,6 +68,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         model.addAttribute("allQueryFactors", requestContext.getOrderedAssayGroupFactors());
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
         model.addAllAttributes(experiment.getAttributes());
+        model.addAllAttributes(headerAttributes(experiment, preferences));
     }
 
     public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,
@@ -123,11 +122,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
         }
 
-        //note this should only happen for single experiment - see HeatmapWidgetController.populateModelWithMultiExperimentResults
-        model.addAttribute(
-            "jsonExperiment",
-            gson.toJson(prepareExperimentDescription(experiment, preferences))
-        );
+        model.addAllAttributes(payloadAttributes(experiment, preferences));
     }
 
     // heatmap-data.jsp will understand "" as empty

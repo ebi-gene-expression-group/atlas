@@ -42,7 +42,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
     @Override
     public BaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
-                                   boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException {
+                                   ExperimentDesign experimentDesign) throws IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
@@ -69,7 +69,6 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)
                 .withDisclaimer(factorsConfig.disclaimer())
-                .withExtraInfo(hasExtraInfoFile)
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
                 .withPubMedIds(experimentDTO.getPubmedIds())
                 .withAssayGroups(assayGroups)

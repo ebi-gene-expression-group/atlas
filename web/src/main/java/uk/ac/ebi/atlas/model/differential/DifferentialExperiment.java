@@ -5,8 +5,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
-import uk.ac.ebi.atlas.experimentpage.tooltip.ContrastSummary;
-import uk.ac.ebi.atlas.experimentpage.tooltip.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -23,16 +21,16 @@ public class DifferentialExperiment extends Experiment {
     private LinkedHashMap<String, Contrast> contrastsById = Maps.newLinkedHashMap();
 
     public DifferentialExperiment(String accession, Date lastUpdate, Set<Contrast> contrasts, String description,
-                                  boolean hasExtraInfoFile, boolean hasRData, Species species, Collection<String>
+                                  boolean hasRData, Species species, Collection<String>
                                           pubMedIds,
                                   ExperimentDesign experimentDesign) {
-        this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasExtraInfoFile, hasRData, species, pubMedIds, experimentDesign);
+        this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasRData, species, pubMedIds, experimentDesign);
     }
 
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate, Set<Contrast>
-            contrasts, String description, boolean hasExtraInfoFile, boolean hasRData, Species species, Collection<String>
-            pubMedIds, ExperimentDesign experimentDesign) {
-        super(experimentType, accession, lastUpdate,null, description, "", hasExtraInfoFile, hasRData, species,
+            contrasts, String description, boolean hasRData, Species species, Collection<String>
+                                             pubMedIds, ExperimentDesign experimentDesign) {
+        super(experimentType, accession, lastUpdate,null, description, "", hasRData, species,
                  pubMedIds, experimentDesign,Collections.<String>emptyList(), Collections.<String>emptyList(),Collections.<String>emptyList(), Collections.<String>emptyList());
         for (Contrast contrast : contrasts) {
             contrastsById.put(contrast.getId(), contrast);

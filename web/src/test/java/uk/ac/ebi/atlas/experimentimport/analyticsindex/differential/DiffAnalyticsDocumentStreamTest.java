@@ -63,7 +63,7 @@ public class DiffAnalyticsDocumentStreamTest {
         when(experimentDesignMock.getFactorHeaders()).thenReturn(ImmutableSortedSet.of(FACTOR1, FACTOR2));
         rnaSeqExperiment = new DifferentialExperiment(
                 "E-GEOD-38400", new Date(), new HashSet<Contrast>(),
-                "description", false, true, SPECIES, Sets.newHashSet("PubMedId"),
+                "description", true, SPECIES, Sets.newHashSet("PubMedId"),
                 experimentDesignMock);
     }
 
@@ -131,7 +131,7 @@ public class DiffAnalyticsDocumentStreamTest {
         MicroarrayExperiment microarrayExperiment = new MicroarrayExperiment(ExperimentType
                 .MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL,"E-MEXP-3628", new Date(), new
                 HashSet<Contrast>(),
-                "description", false, true, SPECIES,
+                "description", true, SPECIES,
                 ImmutableSortedSet.<String>of(),
                 ImmutableSortedSet.<String>of(),mock(ExperimentDesign.class), Sets
                 .newHashSet("PubMedId"));

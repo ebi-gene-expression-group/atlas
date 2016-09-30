@@ -7,10 +7,9 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.model.resource.ContrastImage;
-import uk.ac.ebi.atlas.model.resource.MicroarrayContrastImage;
+import uk.ac.ebi.atlas.model.resource.ExternalImage;
 import uk.ac.ebi.atlas.model.resource.ResourceType;
-import uk.ac.ebi.atlas.model.resource.RnaSeqContrastImage;
+import uk.ac.ebi.atlas.model.resource.ContrastImage;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,10 +21,12 @@ import java.util.Map;
 public class AtlasResourceHub {
 
     private ContrastImageFactory contrastImageFactory;
+    private ExtraInfoFactory extraInfoFactory;
 
     @Inject
-    public AtlasResourceHub(ContrastImageFactory contrastImageFactory){
+    public AtlasResourceHub(ContrastImageFactory contrastImageFactory, ExtraInfoFactory extraInfoFactory){
         this.contrastImageFactory = contrastImageFactory;
+        this.extraInfoFactory = extraInfoFactory;
     }
 
 
@@ -56,24 +57,26 @@ public class AtlasResourceHub {
                             ? Optional.of(contrast.getArrayDesignAccession())
                             : Optional.<String>absent();
             JsonArray resultsForThisContrast = new JsonArray();
-            for( ResourceType resourceType :
-                    arrayDesign.isPresent()
-                            ? MicroarrayContrastImage.RESOURCE_TYPES
-                            : RnaSeqContrastImage.RESOURCE_TYPES){
-                ContrastImage contrastImage =
+            for( ResourceType resourceType
+                            : ContrastImage.RESOURCE_TYPES){
+                ExternalImage externalImage =
                         contrastImageFactory.getContrastImage(
                                 resourceType,
                                 differentialExperiment.getAccession(),
                                 arrayDesign,
                                 contrast.getId());
-                if(contrastImage.exists()) {
-                    resultsForThisContrast.add(contrastImage.toJson());
+                if(externalImage.exists()) {
+                    resultsForThisContrast.add(externalImage.toJson());
                 }
             }
 
             result.put(contrast.getId(), resultsForThisContrast);
         }
         return result;
+    }
+
+    public boolean hasExtraInfo(Experiment experiment){
+        return extraInfoFactory.getExtraInfo(experiment.getAccession()).exists();
     }
 
 }

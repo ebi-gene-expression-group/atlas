@@ -3,10 +3,9 @@ package uk.ac.ebi.atlas.resource;
 
 import com.google.common.base.Optional;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.model.resource.ContrastImage;
-import uk.ac.ebi.atlas.model.resource.MicroarrayContrastImage;
+import uk.ac.ebi.atlas.model.resource.ExternalImage;
 import uk.ac.ebi.atlas.model.resource.ResourceType;
-import uk.ac.ebi.atlas.model.resource.RnaSeqContrastImage;
+import uk.ac.ebi.atlas.model.resource.ContrastImage;
 
 import javax.inject.Named;
 
@@ -23,9 +22,9 @@ public class ContrastImageFactory {
     String microarrayPathTemplate;
 
 
-    ContrastImage getContrastImage(ResourceType resourceType,String experimentAccession, Optional<String>
+    ExternalImage getContrastImage(ResourceType resourceType, String experimentAccession, Optional<String>
             arrayDesign,
-            String contrastId ){
+                                   String contrastId ){
         String pathTemplate = "";
         switch (resourceType) {
             case PLOT_GSEA_INTERPRO:
@@ -48,14 +47,14 @@ public class ContrastImageFactory {
 
 
         return arrayDesign.isPresent()
-        ?   new MicroarrayContrastImage(resourceType,pathTemplate,uriTemplate,
+        ?   new ContrastImage(resourceType,pathTemplate,uriTemplate,
                 experimentAccession,arrayDesign.get(), contrastId)
-                :new RnaSeqContrastImage(resourceType,pathTemplate,uriTemplate,
+                :new ContrastImage(resourceType,pathTemplate,uriTemplate,
                 experimentAccession, contrastId);
     }
 
-    ContrastImage getContrastImage(ResourceType resourceType,String experimentAccession,
-                                           String contrastId ){
+    ExternalImage getContrastImage(ResourceType resourceType, String experimentAccession,
+                                   String contrastId ){
         return getContrastImage(resourceType, experimentAccession, Optional.<String>absent(), contrastId);
     }
 }

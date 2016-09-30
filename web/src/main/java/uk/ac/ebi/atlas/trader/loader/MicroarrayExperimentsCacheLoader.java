@@ -33,7 +33,7 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
     @Override
     protected MicroarrayExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
-                                        boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException {
+                                        ExperimentDesign experimentDesign) throws IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
@@ -45,7 +45,7 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
         boolean hasRData = microarrayExperimentConfiguration.hasRData();
 
         return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession, experimentDTO.getLastUpdate(),
-                                        contrasts, experimentDescription, hasExtraInfoFile, hasRData,
+                                        contrasts, experimentDescription, hasRData,
                 speciesFactory.create(experimentDTO),arrayDesignAccessions,
                 arrayDesignTrader.getArrayDesignNames(arrayDesignAccessions), experimentDesign, experimentDTO.getPubmedIds());
 

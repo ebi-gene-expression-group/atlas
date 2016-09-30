@@ -22,8 +22,6 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentsCacheLoader.class);
 
-    private String extraInfoPathTemplate;
-
     private ArrayExpressClient arrayExpressClient;
 
     private ExperimentDesignParser experimentDesignParser;
@@ -31,11 +29,6 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
     private ExperimentDAO experimentDAO;
 
     protected ExperimentsCacheLoader() {
-    }
-
-    @Value("#{configuration['experiment.extra-info-image.path.template']}")
-    public void setExtraInfoPathTemplate(String extraInfoPathTemplate) {
-        this.extraInfoPathTemplate = extraInfoPathTemplate;
     }
 
     @Inject
@@ -58,25 +51,18 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
         LOGGER.info("loading experiment with accession: {}", experimentAccession);
 
-        boolean hasExtraInfoFile = extraInfoFileExists(experimentAccession);
-
         ExperimentDesign experimentDesign = experimentDesignParser.parse(experimentAccession);
 
         ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
 
         String experimentDescription = fetchExperimentNameFromArrayExpress(experimentAccession, experimentDTO);
 
-        return load(experimentDTO, experimentDescription, hasExtraInfoFile, experimentDesign);
+        return load(experimentDTO, experimentDescription, experimentDesign);
 
-    }
-
-    private boolean extraInfoFileExists(String experimentAccession) {
-        String extraInfoFileLocation = MessageFormat.format(extraInfoPathTemplate, experimentAccession);
-        return Files.exists(Paths.get(extraInfoFileLocation));
     }
 
     protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription,
-                              boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException;
+                              ExperimentDesign experimentDesign) throws IOException;
 
     private String fetchExperimentNameFromArrayExpress(String experimentAccession, ExperimentDTO experimentDTO) {
         try {

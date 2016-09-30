@@ -1,25 +1,28 @@
 package uk.ac.ebi.atlas.model.resource;
 
-import com.google.common.base.Throwables;
+import com.google.common.collect.ImmutableList;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.MessageFormat;
+import java.util.Collection;
 
-public abstract class ContrastImage extends ExternalResource<InputStream> {
+public class ContrastImage extends ExternalImage {
 
+    public static Collection<ResourceType> RESOURCE_TYPES = ImmutableList.of(
+            ResourceType.PLOT_GSEA_GO,
+            ResourceType.PLOT_GSEA_INTERPRO,
+            ResourceType.PLOT_GSEA_REACTOME,
+            ResourceType.PLOT_MA);
 
-    ContrastImage(ResourceType type, Path path, String uri) {
-        super(type,path, uri);
+    public ContrastImage(ResourceType type, String fileSystemTemplate, String externalLinkTemplate, String
+            experimentAccession, String contrast){
+        super(type,Paths.get(MessageFormat.format(fileSystemTemplate, experimentAccession,contrast)),
+                MessageFormat.format(externalLinkTemplate, experimentAccession, contrast));
     }
 
-    @Override
-    public InputStream get() {
-        try {
-            return Files.newInputStream(path);
-        } catch (IOException e) {
-            throw Throwables.propagate(e);
-        }
+    public ContrastImage(ResourceType type, String fileSystemTemplate,String externalLinkTemplate, String
+            experimentAccession, String arrayDesign,  String contrast){
+        super(type, Paths.get(MessageFormat.format(fileSystemTemplate,experimentAccession,arrayDesign,contrast)),
+                MessageFormat.format(externalLinkTemplate, experimentAccession,arrayDesign, contrast));
     }
 }

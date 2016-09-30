@@ -30,18 +30,18 @@ public class ExternalImageController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExternalImageController.class);
 
-    private String extraInfoPathTemplate;
-
     private ContrastImageFactory contrastImageFactory;
+
+    private ExtraInfoFactory extraInfoFactory;
 
     private ImageIOUtils imageIOUtils;
 
     @Inject
     public ExternalImageController(ImageIOUtils imageIOUtils,
-                                   @Value("#{configuration['experiment.extra-info-image.path.template']}") String extraInfoPathTemplate,
+                                   ExtraInfoFactory extraInfoFactory,
                                    ContrastImageFactory contrastImageFactory) {
         this.imageIOUtils = imageIOUtils;
-        this.extraInfoPathTemplate = extraInfoPathTemplate;
+        this.extraInfoFactory = extraInfoFactory;
         this.contrastImageFactory = contrastImageFactory;
     }
 
@@ -49,16 +49,15 @@ public class ExternalImageController {
     @RequestMapping(value = "/external-resources/{experimentAccession}/extra-info.png")
     public void streamExtraInfoImage(HttpServletResponse response, @PathVariable String experimentAccession) throws IOException{
 
-        String imagePath = MessageFormat.format(extraInfoPathTemplate, experimentAccession);
 
-        InputStream imageInputStream = Files.newInputStream(Paths.get(imagePath));
+        InputStream imageInputStream = extraInfoFactory.getExtraInfo(experimentAccession).get();
 
         streamExternalImage(response, imageInputStream);
 
     }
 
     @ResponseBody
-    @RequestMapping(value = "/external-resources/{experimentAccession}/{arrayDesignAccession}/{fileName}")
+    @RequestMapping(value = "/external-resources/{experimentAccession}/{contrastName}/{fileName}")
     public void streamRnaSeqImage(HttpServletResponse response, @PathVariable String experimentAccession, @PathVariable String
                                               contrastName, @PathVariable String fileName) throws IOException{
 

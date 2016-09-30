@@ -16,12 +16,12 @@ public class MicroarrayExperiment extends DifferentialExperiment {
     private SortedSet<String> arrayDesignNames;
 
     public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate, Set<Contrast> contrasts,
-                                String description, boolean hasExtraInfoFile, boolean hasRData,
+                                String description, boolean hasRData,
                                 Species species, SortedSet<String>
                                         arrayDesignAccessions,
                                 SortedSet<String> arrayDesignNames, ExperimentDesign experimentDesign, Set<String> pubMedIds) {
 
-        super(type, accession, lastUpdate, contrasts, description, hasExtraInfoFile, hasRData, species,pubMedIds, experimentDesign);
+        super(type, accession, lastUpdate, contrasts, description, hasRData, species,pubMedIds, experimentDesign);
         this.arrayDesignAccessions = arrayDesignAccessions;
         this.arrayDesignNames = arrayDesignNames;
     }

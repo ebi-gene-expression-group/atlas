@@ -34,9 +34,6 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
     private TracksUtil tracksUtil;
     private final ApplicationProperties applicationProperties;
 
-    private Gson gson = new GsonBuilder()
-            .create();
-
     @SuppressWarnings("unchecked")
     protected DifferentialExperimentPageService(DifferentialRequestContextBuilder
                                                            differentialRequestContextBuilder,
@@ -44,7 +41,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
                                                 DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                                 TracksUtil tracksUtil,
                                                 AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
-
+        super(atlasResourceHub);
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.profilesHeatMap = profilesHeatMap;
         this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
@@ -55,22 +52,23 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
 
 
     // called from sub classes
-    public void prepareRequestPreferencesAndHeaderData(T experiment, K requestPreferences, Model model,HttpServletRequest request) {
+    public void prepareRequestPreferencesAndHeaderData(T experiment, K preferences, Model model,HttpServletRequest request) {
 
-        initRequestPreferences(requestPreferences, experiment);
+        initRequestPreferences(preferences, experiment);
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
         model.addAttribute("queryFactorName", "Comparison");
         model.addAttribute("allQueryFactors", experiment.getContrasts());
         model.addAllAttributes(experiment.getAttributes());
         model.addAllAttributes(experiment.getDifferentialAttributes());
         model.addAllAttributes(new DownloadURLBuilder(experiment.getAccession()).dataDownloadUrls(request.getRequestURI()));
+        model.addAllAttributes(headerAttributes(experiment, preferences));
     }
 
-    public void populateModelWithHeatmapData(T experiment, K requestPreferences, BindingResult result, Model model) {
-        DifferentialRequestContext requestContext = initRequestContext(experiment, requestPreferences);
+    public void populateModelWithHeatmapData(T experiment, K preferences, BindingResult result, Model model) {
+        DifferentialRequestContext requestContext = initRequestContext(experiment, preferences);
         Set<Contrast> contrasts = experiment.getContrasts();
         model.addAttribute("queryFactorName", "Comparison");
-        model.addAttribute("geneQuery", requestPreferences.getGeneQuery());
+        model.addAttribute("geneQuery", preferences.getGeneQuery());
         model.addAllAttributes(experiment.getAttributes());
         model.addAllAttributes(experiment.getDifferentialAttributes());
 
@@ -78,7 +76,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
 
         model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
         model.addAttribute("experimentDescription", gson.toJson(JsonNull.INSTANCE));
-        model.addAttribute("jsonExperiment", gson.toJson(prepareExperimentDescription(experiment, requestPreferences)));
+        model.addAllAttributes(payloadAttributes(experiment, preferences));
         if (!result.hasErrors()) {
 
             try {
@@ -93,7 +91,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
                 }
 
             } catch (GenesNotFoundException e) {
-                result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery().asAnalyticsIndexQueryClause() + "'"));
+                result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery().asAnalyticsIndexQueryClause() + "'"));
             }
 
         }

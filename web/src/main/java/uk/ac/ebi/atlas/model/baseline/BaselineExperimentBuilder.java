@@ -26,7 +26,6 @@ public class BaselineExperimentBuilder {
     private List<String> dataProviderURL;
     private List<String> dataProviderDescription;
     private String displayName;
-    private boolean hasExtraInfoFile;
     private boolean hasRData;
     private String experimentAccession;
     private Set<String> pubMedIds;
@@ -65,11 +64,6 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withDataProviderDescription(List<String> dataProviderDescription) {
         this.dataProviderDescription = dataProviderDescription;
-        return this;
-    }
-
-    public BaselineExperimentBuilder withExtraInfo(boolean hasExtraInfoFile) {
-        this.hasExtraInfoFile = hasExtraInfoFile;
         return this;
     }
 
@@ -125,7 +119,7 @@ public class BaselineExperimentBuilder {
         validate();
 
         return new BaselineExperiment(experimentType, experimentAccession, lastUpdate, experimentalFactors, description,
-                displayName, disclaimer, species, hasExtraInfoFile, hasRData,
+                displayName, disclaimer, species, hasRData,
                 pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription, alternativeViews,
                 alternativeViewDescriptions);
     }

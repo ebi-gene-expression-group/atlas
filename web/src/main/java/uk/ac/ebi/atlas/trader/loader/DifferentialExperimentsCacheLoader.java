@@ -28,7 +28,7 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
 
     @Override
     protected DifferentialExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
-                                          boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException {
+                                          ExperimentDesign experimentDesign) throws IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
@@ -38,7 +38,7 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
         boolean hasRData = experimentConfiguration.hasRData();
 
         return new DifferentialExperiment(experimentAccession, experimentDTO.getLastUpdate(), contrasts,
-                experimentDescription, hasExtraInfoFile, hasRData, speciesFactory.create(experimentDTO),
+                experimentDescription, hasRData, speciesFactory.create(experimentDTO),
                 experimentDTO.getPubmedIds(), experimentDesign);
 
     }

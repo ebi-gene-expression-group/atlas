@@ -21,9 +21,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ExternalImageControllerTest {
 
-    public static final String EXPERIMENT_ACCESSION = "experimentAccession";
-    public static final String EXTRA_INFO_PATH_TEMPLATE = "magetab/{0}/{0}-extra-info.png";
-
     @Mock
     private ImageIOUtils imageIOUtilsMock;
 
@@ -41,12 +38,15 @@ public class ExternalImageControllerTest {
     @Mock
     private InputStream imageInputStreamMock;
 
+
+    @Mock
+    ExtraInfoFactory extraInfoFactory;
     @Mock
     ContrastImageFactory contrastImageFactory;
 
     @Before
     public void setUp() throws Exception {
-        subject = new ExternalImageController(imageIOUtilsMock,EXTRA_INFO_PATH_TEMPLATE,contrastImageFactory);
+        subject = new ExternalImageController(imageIOUtilsMock,extraInfoFactory,contrastImageFactory);
 
         when(imageIOUtilsMock.read(imageInputStreamMock)).thenReturn(bufferedImageMock);
         when(responseMock.getOutputStream()).thenReturn(outputStreamMock);

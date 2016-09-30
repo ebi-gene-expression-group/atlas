@@ -67,7 +67,6 @@ public class BaselineAnalyticsDocumentStreamTest {
                 .withAccession("EXP1")
                 .withDescription("")
                 .withDisplayName("")
-                .withExtraInfo(false)
                 .withPubMedIds(new HashSet<String>())
                 .withExperimentDesign(mock(ExperimentDesign.class))
                 .withExperimentalFactors(experimentalFactors)

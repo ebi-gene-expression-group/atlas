@@ -11,11 +11,11 @@ public class BaselineExperiment extends Experiment {
 
     BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description, String displayName, String disclaimer, Species species,
-                       boolean hasExtraInfoFile, boolean hasRData, Collection<String> pubMedIds, ExperimentDesign experimentDesign,
+                       boolean hasRData, Collection<String> pubMedIds, ExperimentDesign experimentDesign,
                        AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription,
                        List<String> alternativeViews, List<String> alternativeViewDescriptions) {
 
-        super(experimentType, accession, lastUpdate, displayName, description, disclaimer, hasExtraInfoFile, hasRData, species,
+        super(experimentType, accession, lastUpdate, displayName, description, disclaimer, hasRData, species,
               pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
               alternativeViews, alternativeViewDescriptions);
 

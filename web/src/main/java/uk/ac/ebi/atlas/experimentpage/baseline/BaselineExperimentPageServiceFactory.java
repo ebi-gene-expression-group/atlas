@@ -9,6 +9,7 @@ import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
@@ -27,13 +28,14 @@ public class BaselineExperimentPageServiceFactory {
     private final SolrQueryService solrQueryService;
     private final RankBaselineProfilesFactory rankProfilesFactory;
     private final FactorGroupingService factorGroupingService;
+    private final AtlasResourceHub atlasResourceHub;
 
     @Inject
     public BaselineExperimentPageServiceFactory(TracksUtil tracksUtil, ApplicationProperties applicationProperties,
                                                 BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                                 JdbcTemplate jdbcTemplate,
                                                 SolrQueryService solrQueryService, RankBaselineProfilesFactory rankProfilesFactory,
-                                                FactorGroupingService factorGroupingService) {
+                                                FactorGroupingService factorGroupingService, AtlasResourceHub atlasResourceHub) {
         this.tracksUtil = tracksUtil;
         this.applicationProperties = applicationProperties;
         this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
@@ -41,13 +43,13 @@ public class BaselineExperimentPageServiceFactory {
         this.solrQueryService = solrQueryService;
         this.rankProfilesFactory = rankProfilesFactory;
         this.factorGroupingService = factorGroupingService;
-
+        this.atlasResourceHub = atlasResourceHub;
     }
 
     public BaselineExperimentPageService create(BaselineProfileInputStreamFactory inputStreamFactory){
         return new BaselineExperimentPageService(new BaselineProfilesHeatMapWranglerFactory(rankProfilesFactory,
                 inputStreamFactory,baselineProfilesViewModelBuilder, solrQueryService, coexpressedGenesService),
-                applicationProperties,
+                applicationProperties,atlasResourceHub,
                 tracksUtil,factorGroupingService
         );
     }

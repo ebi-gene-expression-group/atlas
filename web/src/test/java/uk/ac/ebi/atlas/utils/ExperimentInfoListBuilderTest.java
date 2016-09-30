@@ -108,13 +108,13 @@ public class ExperimentInfoListBuilderTest {
         differentialExperimentMock = Mockito.spy(
                 new DifferentialExperiment(DIFFERENTIAL_ACCESSION,
                 lastUpdateStub, contrasts,
-                "description", false, false, new Species(SPECIES,SPECIES, "kingdom", "ensemblDb"),
+                "description", false, new Species(SPECIES,SPECIES, "kingdom", "ensemblDb"),
                 new HashSet<String>(),experimentDesignMock));
 
         microarrayExperimentMock = Mockito.spy(new MicroarrayExperiment(ExperimentType
                 .MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, MICROARRAY_ACCESSION,
                 lastUpdateStub ,contrasts,
-                "description", false, false, new Species(SPECIES,SPECIES, "kingdom", "ensemblDb"), Sets.newTreeSet(Sets.newHashSet(ARRAY)),
+                "description", false, new Species(SPECIES,SPECIES, "kingdom", "ensemblDb"), Sets.newTreeSet(Sets.newHashSet(ARRAY)),
                 Sets.newTreeSet(Sets.newHashSet("ARRAY_NAME")), experimentDesignMock, new HashSet<String>()));
 
 

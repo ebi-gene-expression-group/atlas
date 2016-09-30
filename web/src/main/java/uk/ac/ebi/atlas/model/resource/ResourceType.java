@@ -3,10 +3,11 @@ package uk.ac.ebi.atlas.model.resource;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 public enum ResourceType {
+    PLOT_MA("ma-plot.png"), //also accessed as ma-plot by old heatmap
     PLOT_GSEA_INTERPRO("gsea_interpro.png"),
     PLOT_GSEA_GO("gsea_go.png"),
     PLOT_GSEA_REACTOME("gsea_reactome.png"),
-    PLOT_MA("ma-plot.png");
+    EXTRA_INFO("extra-info.png");
 
     ResourceType(String fileName){
         this.fileName = fileName;
@@ -17,7 +18,7 @@ public enum ResourceType {
 
     public static ResourceType forFileName(String fileName){
         for(ResourceType type : values()){
-            if(type.fileName.equals(fileName)){
+            if(type.fileName.contains(fileName)){
                 return type;
             }
         }

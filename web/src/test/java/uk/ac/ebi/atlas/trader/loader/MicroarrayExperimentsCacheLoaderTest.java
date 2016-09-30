@@ -86,7 +86,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
     @Test
     public void testLoad() throws Exception {
         MicroarrayExperiment microarrayExperiment = subject.load(experimentDTOMock, "description",
-                false, experimentDesignMock);
+                experimentDesignMock);
         assertThat(microarrayExperiment.getAccession(), is(ACCESSION));
         assertThat(microarrayExperiment.getArrayDesignAccessions(), hasItem(ARRAYDESIGN_ID));
         assertThat(microarrayExperiment.getSpecies(), is(SPECIES));

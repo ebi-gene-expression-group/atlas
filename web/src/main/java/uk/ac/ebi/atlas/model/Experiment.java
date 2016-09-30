@@ -26,7 +26,6 @@ public abstract class Experiment implements Serializable {
     protected String description;
     private String displayName;
     private String disclaimer;
-    private boolean hasExtraInfoFile;
     private boolean hasRData;
     private Date lastUpdate;
     private List<String> dataProviderURL;
@@ -35,7 +34,7 @@ public abstract class Experiment implements Serializable {
     private List<String> alternativeViewDescriptions;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      String disclaimer, boolean hasExtraInfoFile, boolean hasRData, Species species,
+                      String disclaimer, boolean hasRData, Species species,
                       Collection<String> pubMedIds, ExperimentDesign experimentDesign, List<String> dataProviderURL,
                       List<String> dataProviderDescription, List<String> alternativeViews, List<String> alternativeViewDescriptions) {
         this.type = type;
@@ -45,7 +44,6 @@ public abstract class Experiment implements Serializable {
         this.displayName = displayName;
         this.description = description;
         this.disclaimer = disclaimer;
-        this.hasExtraInfoFile = hasExtraInfoFile;
         this.hasRData = hasRData;
         this.species = species;
         this.pubMedIds = ImmutableList.copyOf(Sets.newTreeSet(pubMedIds));
@@ -104,7 +102,6 @@ public abstract class Experiment implements Serializable {
         result.put("experimentHasRData", hasRData);
         result.putAll(species.getAttributes());
         result.put("experimentDescription", description);
-        result.put("hasExtraInfo", hasExtraInfoFile);
         result.put("pubMedIds", pubMedIds);
         result.put("experimentAccession", accession);
         result.put("disclaimer", disclaimer);

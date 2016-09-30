@@ -51,7 +51,6 @@ public class BaselineExperimentBuilderTest {
                 .withAccession(EXPERIMENT_ACCESSION)
                 .withDescription(DESCRIPTION)
                 .withDisplayName(DISPLAY_NAME)
-                .withExtraInfo(false)
                 .withPubMedIds(Sets.newHashSet(PUBMEDID))
                 .withExperimentDesign(experimentDesignMock)
                 .withExperimentalFactors(experimentalFactors)

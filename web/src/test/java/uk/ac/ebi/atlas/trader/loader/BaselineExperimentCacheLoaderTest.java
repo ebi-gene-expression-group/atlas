@@ -101,19 +101,19 @@ public class BaselineExperimentCacheLoaderTest {
     @Test(expected=IllegalStateException.class)
     public void assayGroupsShouldBeNonEmpty() throws Exception{
         when(configuration.getAssayGroups()).thenReturn(Mockito.mock(AssayGroups.class));
-        BaselineExperiment e = subject.load(dto, "description from array express", false, experimentDesign);
+        BaselineExperiment e = subject.load(dto, "description from array express", experimentDesign);
     }
 
     @Test
     public void useAllCollaborators() throws Exception {
-        BaselineExperiment e = subject.load(dto, "description from array express", false, experimentDesign);
+        BaselineExperiment e = subject.load(dto, "description from array express", experimentDesign);
         verifyCollaborators();
         noMoreInteractionsWithCollaborators();
     }
 
     @Test
     public void noAlternativeViewsForTypicalExperiment() throws Exception {
-        BaselineExperiment e = subject.load(dto, "description from array express", false, experimentDesign);
+        BaselineExperiment e = subject.load(dto, "description from array express", experimentDesign);
 
         assertThat(e.alternativeViews(), hasSize(0));
         verifyCollaborators();
@@ -131,7 +131,7 @@ public class BaselineExperimentCacheLoaderTest {
         String s = "default query factor of other experiment";
         when(alternativeViewBaselineConfiguration.getDefaultQueryFactorType()).thenReturn(s);
 
-        BaselineExperiment e = subject.load(dto, "description from array express", false, experimentDesign);
+        BaselineExperiment e = subject.load(dto, "description from array express", experimentDesign);
 
         assertThat(e.alternativeViews(), hasSize(1));
         assertThat(e.alternativeViews().get(0).getLeft(), is(alternativeViewAccession));

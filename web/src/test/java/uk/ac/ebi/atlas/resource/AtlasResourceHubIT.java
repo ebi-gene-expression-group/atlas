@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.resource.ResourceType;
@@ -48,6 +49,38 @@ public class AtlasResourceHubIT {
 
             assertAboutResult(subject.contrastImages(differentialExperiment));
         }
+    }
+
+    @Test
+    public void weSometimesHaveExtraInfoAndSometimesWeDoNot(){
+        int countPositives = 0;
+        int countNegatives = 0;
+        for(String accession: experimentTrader.getAllBaselineExperimentAccessions()){
+            Experiment experiment = experimentTrader.getPublicExperiment(accession);
+            if(subject.hasExtraInfo(experiment)){
+                countPositives++;
+            } else {
+                countNegatives++;
+            }
+        }
+        for(String accession: experimentTrader.getRnaSeqDifferentialExperimentAccessions()){
+            Experiment experiment = experimentTrader.getPublicExperiment(accession);
+            if(subject.hasExtraInfo(experiment)){
+                countPositives++;
+            } else {
+                countNegatives++;
+            }
+        }
+        for(String accession: experimentTrader.getMicroarrayExperimentAccessions()){
+            Experiment experiment = experimentTrader.getPublicExperiment(accession);
+            if(subject.hasExtraInfo(experiment)){
+                countPositives++;
+            } else {
+                countNegatives++;
+            }
+        }
+        assertTrue(countPositives >0);
+        assertTrue(countNegatives >0);
     }
 
      void assertAboutResult(Map<String, JsonArray> result){
