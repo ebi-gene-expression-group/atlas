@@ -91,7 +91,7 @@ public class AtlasResourceHubIT {
                 assertTrue(el.getAsJsonObject().has("type"));
                 assertTrue(el.getAsJsonObject().has("uri"));
                 try{
-                    ResourceType.valueOf(el.getAsJsonObject().get("type").getAsString());
+                    ResourceType.forFileName(el.getAsJsonObject().get("type").getAsString());
                 }catch(Exception exc){
                     fail(exc.getMessage());
                 }

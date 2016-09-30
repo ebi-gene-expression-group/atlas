@@ -15,7 +15,7 @@ public class ExtraInfoFactory {
     String extraInfoPathTemplate;
 
     ExternalImage getExtraInfo(String experimentAccession){
-        String uriTemplate ="/external-resources/{0}/"+ ResourceType.EXTRA_INFO.fileName;
+        String uriTemplate ="/external-resources/{0}/"+ ResourceType.EXTRA_INFO.fileName();
 
         return new ExtraInfoImage(extraInfoPathTemplate, uriTemplate, experimentAccession);
     }

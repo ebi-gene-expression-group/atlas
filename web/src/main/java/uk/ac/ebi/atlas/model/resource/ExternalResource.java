@@ -17,7 +17,7 @@ public abstract class ExternalResource<T> extends AtlasResource<T> {
 
     public JsonObject toJson(){
         JsonObject result = new JsonObject();
-        result.addProperty("type", type.name());
+        result.addProperty("type", type.resourceName);
         result.addProperty("uri", uri);
         return result;
     }
