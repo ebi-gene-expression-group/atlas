@@ -1,20 +1,19 @@
 package uk.ac.ebi.atlas.resource;
 
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.base.Optional;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.resource.ContrastImage;
+import uk.ac.ebi.atlas.model.resource.MicroarrayContrastImage;
 import uk.ac.ebi.atlas.model.resource.ResourceType;
 import uk.ac.ebi.atlas.model.resource.RnaSeqContrastImage;
 
 import javax.inject.Named;
-import java.text.MessageFormat;
 import java.util.Collection;
 
 @Named
@@ -26,8 +25,13 @@ public class ContrastImageFactory {
     @Value("#{configuration['experiment.rnaseq.ma-plot.path.template']}")
     String rnaSeqPathTemplate;
 
+    @Value("#{configuration['experiment.microarray.ma-plot.path.template']}")
+    String microarrayPathTemplate;
 
-    private ContrastImage getContrastImage(ResourceType resourceType,String experimentAccession, String contrastId ){
+
+    private ContrastImage getContrastImage(ResourceType resourceType,String experimentAccession, Optional<String>
+            arrayDesign,
+            String contrastId ){
         String geneSetType = "";
         String fileName = "";
         String pathTemplate = "";
@@ -54,13 +58,24 @@ public class ContrastImageFactory {
                 break;
             case PLOT_MA:
                 fileName= "ma-plot.png";
-                pathTemplate = rnaSeqPathTemplate;
+                pathTemplate = arrayDesign.isPresent()? microarrayPathTemplate : rnaSeqPathTemplate;
                 break;
         }
 
-        return new RnaSeqContrastImage(resourceType,pathTemplate,
-                "/external-resources/{0}/{1}/"+fileName,
+        String uriTemplate = arrayDesign.isPresent() ? "/external-resources/{0}/{1}/{2}/"+fileName :
+                "/external-resources/{0}/{1}/"+fileName;
+
+
+        return arrayDesign.isPresent()
+        ?   new MicroarrayContrastImage(resourceType,pathTemplate,uriTemplate,
+                experimentAccession,arrayDesign.get(), contrastId)
+                :new RnaSeqContrastImage(resourceType,pathTemplate,uriTemplate,
                 experimentAccession, contrastId);
+    }
+
+    private ContrastImage getContrastImage(ResourceType resourceType,String experimentAccession,
+                                           String contrastId ){
+        return getContrastImage(resourceType, experimentAccession, Optional.<String>absent(), contrastId);
     }
 
     public JsonObject createJsonByContrastIdForTheOldHeatmap(
@@ -82,26 +97,30 @@ public class ContrastImageFactory {
 
     public JsonObject resourcesPerContrast(DifferentialExperiment differentialExperiment){
         JsonObject result = new JsonObject();
-        for(String contrastId : differentialExperiment.getContrastIds()){
+        for(Contrast contrast : differentialExperiment.getContrasts()){
+            Optional<String> arrayDesign =
+                    differentialExperiment instanceof MicroarrayExperiment
+                            ? Optional.of(contrast.getArrayDesignAccession())
+                            : Optional.<String>absent();
             JsonArray resultsForThisContrast = new JsonArray();
             for( ResourceType resourceType :
-                    ImmutableList.of(
-                            ResourceType.PLOT_GSEA_GO,
-                            ResourceType.PLOT_GSEA_INTERPRO,
-                            ResourceType.PLOT_GSEA_REACTOME,
-                            ResourceType.PLOT_MA)){
+                    arrayDesign.isPresent()
+                            ? MicroarrayContrastImage.RESOURCE_TYPES
+                            : RnaSeqContrastImage.RESOURCE_TYPES){
                 ContrastImage contrastImage =
-                        getContrastImage(resourceType, differentialExperiment.getAccession(), contrastId);
+                        getContrastImage(
+                                resourceType,
+                                differentialExperiment.getAccession(),
+                                arrayDesign,
+                                contrast.getId());
                 if(contrastImage.exists()) {
                     resultsForThisContrast.add(contrastImage.toJson());
-                } else {
-                    int x = 0;
                 }
             }
 
-            result.add(contrastId, resultsForThisContrast);
+            result.add(contrast.getId(), resultsForThisContrast);
         }
-
         return result;
     }
+
 }
