@@ -2,7 +2,7 @@
 
 var geneQueryTagEditorModule = (function($) {
 
-    function initAutocomplete(element, species, onChange) {
+    function initAutocomplete(element, species, onChange, placeholderText) {
         $(element)
         // TODO paste items
         // .on('paste', function(e) {
@@ -65,7 +65,7 @@ var geneQueryTagEditorModule = (function($) {
                 }
             },
             onChange: onChange,
-            placeholder: 'Enter gene query...',
+            placeholder: placeholderText || 'Enter gene query...',
             maxLength: 100,
             maxTagLength: 20
         });

@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="small-12 columns">
                             <label>Gene, tissue or biological condition</label>
-                            <input type="text" placeholder="Enter your search" />
+                            <input id="main-search-input" type="text" placeholder="Enter your search"/>
                         </div>
                     </div>
 
@@ -32,7 +32,7 @@
                 </form>
             </div>
 
-            <div class="tabs-panel" id="search-gene-set-enrichment2" style="background-color: #e6e6e6;">
+            <div class="tabs-panel" id="search-gene-set-enrichment" style="background-color: #e6e6e6;">
                 <p>
                     A simple RESTful API to analyse (Fisher-exact) enrichment of
                     user-provided set of Ensembl gene identifiers against

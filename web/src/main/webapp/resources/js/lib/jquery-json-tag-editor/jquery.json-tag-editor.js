@@ -166,7 +166,7 @@
                 .on('focus.json-tag-editor', function() { ed.click(); }); // Simulate tabindex
 
             // Add dummy item for min-height on empty editor
-            ed.append('<li style="width:1px">&nbsp;</li>');
+            ed.append('<li style="width:0px">&nbsp;</li>');
 
             // Markup for new tag
             var newTag =
