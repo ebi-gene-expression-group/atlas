@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.resource;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,10 +22,10 @@ import static org.junit.Assert.fail;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
-public class ContrastImageFactoryIT {
+public class AtlasResourceHubIT {
 
     @Inject
-    ContrastImageFactory subject;
+    AtlasResourceHub subject;
 
 
     @Inject
@@ -37,8 +37,7 @@ public class ContrastImageFactoryIT {
         for(String accession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()){
             DifferentialExperiment differentialExperiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(accession);
 
-            JsonObject result = subject.resourcesPerContrast(differentialExperiment);
-            assertAboutResult(result);
+            assertAboutResult(subject.contrastImages(differentialExperiment));
         }
     }
 
@@ -47,13 +46,12 @@ public class ContrastImageFactoryIT {
         for(String accession : experimentTrader.getMicroarrayExperimentAccessions()){
             MicroarrayExperiment differentialExperiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(accession);
 
-            JsonObject result = subject.resourcesPerContrast(differentialExperiment);
-            assertAboutResult(result);
+            assertAboutResult(subject.contrastImages(differentialExperiment));
         }
     }
 
-     void assertAboutResult(JsonObject result){
-        for(Map.Entry<String,JsonElement> e : result.entrySet()){
+     void assertAboutResult(Map<String, JsonArray> result){
+        for(Map.Entry<String,JsonArray> e : result.entrySet()){
             assertTrue("Contrast: "+e.getKey(), e.getKey().matches("g\\d+_g\\d+"));
 
             for(JsonElement el : e.getValue().getAsJsonArray()){

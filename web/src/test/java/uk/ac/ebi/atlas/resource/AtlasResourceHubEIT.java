@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.resource;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.jayway.restassured.response.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,10 +22,10 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
-public class ContrastImageFactoryEIT {
+public class AtlasResourceHubEIT {
 
     @Inject
-    ContrastImageFactory subject;
+    AtlasResourceHub subject;
 
     @Inject
     ExperimentTrader experimentTrader;
@@ -36,10 +36,7 @@ public class ContrastImageFactoryEIT {
         for(String accession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()){
             DifferentialExperiment differentialExperiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(accession);
 
-
-            JsonObject result = subject.resourcesPerContrast(differentialExperiment);
-
-            assertAboutResult(result);
+            assertAboutResult(subject.contrastImages(differentialExperiment));
         }
 
     }
@@ -49,18 +46,14 @@ public class ContrastImageFactoryEIT {
         for(String accession : experimentTrader.getMicroarrayExperimentAccessions()){
             MicroarrayExperiment differentialExperiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(accession);
 
-
-            JsonObject result = subject.resourcesPerContrast(differentialExperiment);
-
-            assertAboutResult(result);
-
+            assertAboutResult(subject.contrastImages(differentialExperiment));
         }
 
     }
 
-    void assertAboutResult(JsonObject result){
-        for(Map.Entry<String, JsonElement> entryPerContrast: result.entrySet()){
-            for(JsonElement e: entryPerContrast.getValue().getAsJsonArray()){
+    void assertAboutResult(Map<String,JsonArray> result){
+        for(Map.Entry<String, JsonArray> entryPerContrast: result.entrySet()){
+            for(JsonElement e: entryPerContrast.getValue()){
                 testResourceExists(e.getAsJsonObject().get("uri").getAsString());
             }
         }

@@ -15,7 +15,7 @@ import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
-import uk.ac.ebi.atlas.resource.ContrastImageFactory;
+import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -47,11 +47,11 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     public MicroarrayExperimentPageController(MicroarrayRequestContextBuilder requestContextBuilder,
                                               MicroarrayProfilesHeatMap profilesHeatMap,
                                               DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
-                                              TracksUtil tracksUtil, ContrastImageFactory contrastImageFactory, ApplicationProperties applicationProperties) {
+                                              TracksUtil tracksUtil, AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
         differentialExperimentPageService =
                 new DifferentialExperimentPageService<>(requestContextBuilder, profilesHeatMap,
                 differentialProfilesViewModelBuilder,
-                tracksUtil, contrastImageFactory,applicationProperties);
+                tracksUtil, atlasResourceHub,applicationProperties);
 
     }
 
