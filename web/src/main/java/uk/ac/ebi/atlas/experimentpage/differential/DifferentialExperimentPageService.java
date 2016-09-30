@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.resource.ContrastImageFactory;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
@@ -26,7 +27,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
         DifferentialRequestPreferences, P extends DifferentialProfile<?>> extends ExperimentPageService {
 
     private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
-    private final GseaPlotsBuilder gseaPlotsBuilder;
+    private final ContrastImageFactory contrastImageFactory;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
     private DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap;
     private TracksUtil tracksUtil;
@@ -41,12 +42,13 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
                                                 DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap,
                                                 DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                                 TracksUtil tracksUtil,
-                                                GseaPlotsBuilder gseaPlotsBuilder, ApplicationProperties applicationProperties) {
+                                                ContrastImageFactory contrastImageFactory, ApplicationProperties applicationProperties) {
+
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.profilesHeatMap = profilesHeatMap;
         this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
         this.tracksUtil = tracksUtil;
-        this.gseaPlotsBuilder = gseaPlotsBuilder;
+        this.contrastImageFactory = contrastImageFactory;
         this.applicationProperties = applicationProperties;
     }
 
@@ -82,7 +84,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
 
                 DifferentialProfilesList differentialProfiles = profilesHeatMap.fetch(requestContext);
                 if (!differentialProfiles.isEmpty()) {
-                    model.addAttribute("gseaPlots", gson.toJson(gseaPlotsBuilder.createJsonByContrastId(experiment
+                    model.addAttribute("gseaPlots", gson.toJson(contrastImageFactory.createJsonByContrastIdForTheOldHeatmap(experiment
                             .getAccession(), contrasts)));
                     model.addAttribute("jsonColumnHeaders", gson.toJson(constructColumnHeaders(contrasts,experiment)));
                     model.addAttribute("jsonProfiles", gson.toJson(differentialProfilesViewModelBuilder.build

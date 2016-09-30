@@ -63,7 +63,7 @@ public class ContrastImageFactory {
                 experimentAccession, contrastId);
     }
 
-    public JsonElement createJsonByContrastIdForTheOldHeatmap(
+    public JsonObject createJsonByContrastIdForTheOldHeatmap(
             String experimentAccession, Collection<Contrast> contrasts) {
         JsonObject result = new JsonObject();
         for (Contrast contrast : contrasts) {

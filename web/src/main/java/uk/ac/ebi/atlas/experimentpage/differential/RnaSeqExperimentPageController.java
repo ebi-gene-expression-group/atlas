@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.resource.ContrastImageFactory;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -25,7 +26,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 @Controller
@@ -49,11 +49,11 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
                                           RnaSeqProfilesHeatMap profilesHeatMap,
                                           DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                           TracksUtil tracksUtil,
-                                          GseaPlotsBuilder gseaPlotsBuilder,
+                                          ContrastImageFactory contrastImageFactory,
                                           ApplicationProperties applicationProperties) {
         differentialExperimentPageService = new DifferentialExperimentPageService<>(rnaSeqRequestContextBuilder, profilesHeatMap,
                 differentialProfilesViewModelBuilder,
-                tracksUtil, gseaPlotsBuilder,applicationProperties);
+                tracksUtil, contrastImageFactory,applicationProperties);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})

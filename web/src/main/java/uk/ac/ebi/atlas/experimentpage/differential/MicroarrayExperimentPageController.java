@@ -15,9 +15,9 @@ import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.resource.ContrastImageFactory;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
@@ -25,7 +25,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 @Controller
@@ -48,11 +47,11 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     public MicroarrayExperimentPageController(MicroarrayRequestContextBuilder requestContextBuilder,
                                               MicroarrayProfilesHeatMap profilesHeatMap,
                                               DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
-                                              TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder, ApplicationProperties applicationProperties) {
+                                              TracksUtil tracksUtil, ContrastImageFactory contrastImageFactory, ApplicationProperties applicationProperties) {
         differentialExperimentPageService =
                 new DifferentialExperimentPageService<>(requestContextBuilder, profilesHeatMap,
                 differentialProfilesViewModelBuilder,
-                tracksUtil, gseaPlotsBuilder,applicationProperties);
+                tracksUtil, contrastImageFactory,applicationProperties);
 
     }
 

@@ -39,6 +39,20 @@ public class ContrastImageFactoryIT {
 
 
     @Test
+    public void regressionTest(){
+        for(String accession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()) {
+            DifferentialExperiment differentialExperiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(accession);
+
+            JsonObject oldImplResult = oldImpl.createJsonByContrastId(differentialExperiment.getAccession(), differentialExperiment.getContrasts());
+
+            JsonObject result = subject.createJsonByContrastIdForTheOldHeatmap(differentialExperiment.getAccession(),
+                    differentialExperiment.getContrasts());
+
+            assertEquals(oldImplResult, result);
+        }
+    }
+
+    @Test
     public void ABTest(){
         for(String accession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()){
             DifferentialExperiment differentialExperiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(accession);
