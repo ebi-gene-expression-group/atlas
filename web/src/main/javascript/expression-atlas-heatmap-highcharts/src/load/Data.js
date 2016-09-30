@@ -38,7 +38,18 @@ var getXAxisCategories = function (columnHeaders,columnGroupings, config) {
                   "id" : columnHeader.id,
                   "info":{
                     trackId:columnHeader.id,
-                    tooltip:columnHeader.contrastSummary,
+                    tooltip:
+                      Object.assign(
+                        {resources:
+                           columnHeader.resources.map(function(resource){
+                             return {
+                               type: resource.type,
+                               uri : config.atlasBaseURL+ resource.uri,
+                               icon: config.pathToFolderWithBundledResources+require('../../assets/'+resource.type+"-icon.png")
+                             }
+                           })
+                        },
+                         columnHeader.contrastSummary),
                     groupings:[]
                   }};
         }
@@ -47,7 +58,7 @@ var getXAxisCategories = function (columnHeaders,columnGroupings, config) {
                   "id" : columnHeader.factorValueOntologyTermId || "",
                   "info":{
                     trackId:columnHeader.assayGroupId,
-                    tooltip:columnHeader.assayGroupSummary,
+                    tooltip: columnHeader.assayGroupSummary,
                     groupings: _columnGroupings(columnGroupings, columnHeader.factorValueOntologyTermId || "")
                   }};
         }

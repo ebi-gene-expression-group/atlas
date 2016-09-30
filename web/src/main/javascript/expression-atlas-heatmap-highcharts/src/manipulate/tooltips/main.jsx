@@ -32,7 +32,8 @@ var createColumnLabelTooltipRenderer = function(heatmapConfig, xAxisCategories){
   return function(columnLabel){
     return (
       tooltipDataPerHeader.hasOwnProperty(columnLabel)
-      ? <Tooltip {...tooltipDataPerHeader[columnLabel]}/>
+      ? <Tooltip
+          {...tooltipDataPerHeader[columnLabel]}/>
       : null
     );
   }

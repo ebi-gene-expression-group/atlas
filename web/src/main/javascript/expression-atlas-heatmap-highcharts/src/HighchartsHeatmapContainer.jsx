@@ -252,7 +252,8 @@ var ContainerLoader = React.createClass({
         isMultiExperiment: this.props.isMultiExperiment,
         isReferenceExperiment: this._isReferenceExperiment(),
         isDifferential: this.props.isDifferential,
-        atlasBaseURL: this.props.atlasBaseURL
+        atlasBaseURL: this.props.atlasBaseURL,
+        pathToFolderWithBundledResources: this.props.pathToFolderWithBundledResources
       };
 
       this.setState({

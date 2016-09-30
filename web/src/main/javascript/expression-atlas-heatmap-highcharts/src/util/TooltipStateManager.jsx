@@ -49,7 +49,7 @@ var TooltipStateManager = React.createClass({
     this.props.onUserSelectsRow(rowLabel);
   },
   _onUserSelectsColumn:function(columnLabel){
-    if(this.state.tooltipFrozen) return ;
+    if(this.state.tooltipFrozen) return;
     this.refs["tooltip"].setState(
       columnLabel
       ? {placeholder: this.props.tooltips.column(columnLabel),

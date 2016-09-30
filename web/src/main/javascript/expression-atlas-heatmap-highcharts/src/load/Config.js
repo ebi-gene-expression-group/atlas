@@ -51,6 +51,7 @@ var getConfig=function(setupConfig,data){
   var config = {
     geneQuery: data.config.geneQuery,
     atlasBaseURL: setupConfig.atlasBaseURL,
+    pathToFolderWithBundledResources: setupConfig.pathToFolderWithBundledResources,
     isExperimentPage: setupConfig.isExperimentPage,
     isMultiExperiment: setupConfig.isMultiExperiment,
     isReferenceExperiment: setupConfig.isReferenceExperiment,
