@@ -143,28 +143,28 @@
 
             <ul>
                 <li class="padding-bottom-large">
-                    <a href="#">organism part</a> <span  data-tooltip aria-haspopup="true" class="differential tiny button-rd " title="Differential experiments">D</span> <a  href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd " title="Baseline experiment icon" >B</span> <a  href="#" class="baseline">3</a>
+                    <a href="#">organism part</a> <span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> <a href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiments">B</span> <a href="#" class="baseline">3</a>
                 </li>
                 <li class="padding-bottom-large">
-                    <a href="#">RNA</a> <span data-tooltip aria-haspopup="true" class="differential tiny button-rd " title="Differential experiments">D</span> <a  href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd " title="Baseline experiment icon" >B</span> <a  href="#" class="baseline">3</a>
+                    <a href="#">RNA</a> <span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> <a href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiment">B</span> <a href="#" class="baseline">3</a>
                 </li>
                 <li class="padding-bottom-large">
-                    <a href="#">cell line</a> <span data-tooltip aria-haspopup="true" class="differential tiny button-rd " title="Differential experiments">D</span> <a  href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd " title="Baseline experiment icon" >B</span> <a  href="#" class="baseline">3</a>
+                    <a href="#">cell line</a> <span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> <a href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiment">B</span> <a href="#" class="baseline">3</a>
                 </li>
                 <li class="padding-bottom-large">
-                    <a href="#">cellular component</a> <span  data-tooltip aria-haspopup="true" class="differential tiny button-rd " title="Differential experiments">D</span> <a  href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd " title="Baseline experiment icon" >B</span> <a  href="#" class="baseline">3</a>
+                    <a href="#">cellular component</a> <span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> <a href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiment">B</span> <a href="#" class="baseline">3</a>
                 </li>
                 <li class="padding-bottom-large">
-                    <a href="#">cell type</a> <span  data-tooltip aria-haspopup="true" class="differential tiny button-rd " title="Differential experiments">D</span> <a  href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd " title="Baseline experiment icon" >B</span> <a  href="#" class="baseline">3</a>
+                    <a href="#">cell type</a> <span  data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> <a href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiment">B</span> <a href="#" class="baseline">3</a>
                 </li>
                 <li class="padding-bottom-large">
-                    <a href="#">developmental stage</a> <span  data-tooltip aria-haspopup="true" class="differential tiny button-rd " title="Differential experiments">D</span> <a  href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd " title="Baseline experiment icon" >B</span> <a  href="#" class="baseline">3</a>
+                    <a href="#">developmental stage</a> <span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> <a href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiment">B</span> <a href="#" class="baseline">3</a>
                 </li>
                 <li class="padding-bottom-large">
-                    <a href="#">ecotype</a> <span  data-tooltip aria-haspopup="true" class="differential tiny button-rd " title="Differential experiments">D</span> <a  href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd " title="Baseline experiment icon" >B</span> <a  href="#" class="baseline">3</a>
+                    <a href="#">ecotype</a> <span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> <a href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiment">B</span> <a href="#" class="baseline">3</a>
                 </li>
                 <li>
-                    <a href="#">time</a> <span  data-tooltip aria-haspopup="true" class="differential tiny button-rd " title="Differential experiments">D</span> <a  href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd " title="Baseline experiment icon" >B</span> <a  href="#" class="baseline">3</a>
+                    <a href="#">time</a> <span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> <a href="#" class="differential">42 </a><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiment">B</span> <a href="#" class="baseline">3</a>
                 </li>
             </ul>
         </div>
@@ -182,7 +182,7 @@
                     <li><a href="#">tumors</a></li>
                     <li><a href="#">haematological</a></li>
                     <li><a href="#">surgical maxillo facial</a></li>
-                    <li><a href="#">immunologicale</a></li>
+                    <li><a href="#">immunological</a></li>
                     <li><a href="#">cardiac</a></li>
                     <li><a href="#">inborn errors metabolism</a></li>
                     <li><a href="#">skin</a></li>
