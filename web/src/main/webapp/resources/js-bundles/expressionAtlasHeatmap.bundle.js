@@ -15238,7 +15238,7 @@ webpackJsonp_name_([4],[
 	        var LT_IE10_FILTER_TEMPLATE = "progid:DXImageTransform.Microsoft.Gradient(GradientType =1,startColorstr=${lowValueColour},endColorstr=${highValueColour})";
 	        var lt_ie10_filter = LT_IE10_FILTER_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
 	
-	        return React.createElement(
+	        return this.props.lowExpressionLevel || this.props.highExpressionLevel ? React.createElement(
 	            'div',
 	            { style: { display: "table-row" } },
 	            React.createElement(
@@ -15256,7 +15256,7 @@ webpackJsonp_name_([4],[
 	                { className: 'gxaGradientLevel gxaGradientLevelMax' },
 	                this.props.highExpressionLevel
 	            )
-	        );
+	        ) : null;
 	    }
 	});
 	
@@ -15686,8 +15686,8 @@ webpackJsonp_name_([4],[
 	        fontSize: React.PropTypes.number,
 	        colour: React.PropTypes.string,
 	        foldChange: React.PropTypes.number,
-	        pValue: React.PropTypes.string,
-	        tStat: React.PropTypes.string,
+	        pValue: React.PropTypes.number,
+	        tStat: React.PropTypes.number,
 	        displayLevels: React.PropTypes.bool.isRequired
 	    },
 	
