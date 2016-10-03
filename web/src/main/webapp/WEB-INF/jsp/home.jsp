@@ -134,15 +134,27 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        // API defined by the onChange callback in JSON Tag Editor/jQuery Tag Editor
-        function disableButtonsOnChange (field, editor, tags) {
-            $buttons.button('option', 'disabled', tags.length == 0);
+        var $buttons = $('#submit-button, #reset-button'), $searchFields = $('#geneQuery, #conditionQuery');
+        var geneSearchBoxes = {
+            geneSearchEmpty: true,
+            conditionSearchEmpty: true,
+            setGeneSearchEmpty: function(newValue){
+                this.geneSearchEmpty = newValue;
+                $buttons.button('option', 'disabled', this.geneSearchEmpty && this.conditionSearchEmpty);
+            },
+            setConditionSearchEmpty: function(newValue){
+                this.conditionSearchEmpty = newValue;
+                $buttons.button('option', 'disabled', this.geneSearchEmpty && this.conditionSearchEmpty);
+            }
         }
 
-        var $buttons = $('#submit-button, #reset-button'), $searchFields = $('#geneQuery, #conditionQuery');
-
-        geneQueryTagEditorModule.init('#geneQuery', '', disableButtonsOnChange);
-        conditionAutocompleteModule.init('${arrayexpressUrl}', disableButtonsOnChange);
+        // onChangeUpdateState: API defined by the onChange callback in JSON Tag Editor/jQuery Tag Editor
+        geneQueryTagEditorModule.init('#geneQuery', '', function onChangeUpdateState(field, editor, tags){
+            geneSearchBoxes.setGeneSearchEmpty(tags.length == 0);
+        });
+        conditionAutocompleteModule.init('${arrayexpressUrl}', function onChangeUpdateState(field, editor, tags){
+            geneSearchBoxes.setConditionSearchEmpty(tags.length == 0);
+        });
 
         searchFormModule.searchBoxEnterEventHandler('#submit-button');
         searchFormModule.disableCarriageReturn('#conditionQuery');
