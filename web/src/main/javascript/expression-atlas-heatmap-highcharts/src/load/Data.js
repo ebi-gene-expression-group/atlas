@@ -45,7 +45,7 @@ var getXAxisCategories = function (columnHeaders,columnGroupings, config) {
                              return {
                                type: resource.type,
                                uri : config.atlasBaseURL+ resource.uri,
-                               icon: config.pathToFolderWithBundledResources+require('../../assets/'+resource.type+"-icon.png")
+                               icon: config.pathToFolderWithBundledResources+"/"+require('../../assets/'+resource.type+"-icon.png")
                              }
                            })
                         },

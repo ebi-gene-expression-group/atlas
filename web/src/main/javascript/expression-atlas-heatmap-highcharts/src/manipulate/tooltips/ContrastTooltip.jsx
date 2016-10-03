@@ -100,6 +100,7 @@ var ContrastTooltip = React.createClass({
                 href={resource.uri}
                 key={resource.type}
                 title={descriptions[resource.type]}
+                style={{textDecoration: "none"}}
                 target={"_blank"}>
                 <img src={resource.icon} />
                 </a>
