@@ -168,8 +168,8 @@ const DifferentialResultRow = React.createClass({
     propTypes: {
         bioentityIdentifier: RequiredString,
         foldChange: React.PropTypes.number.isRequired,
-        pValue: React.PropTypes.number.isRequired,
-        tStatistics: React.PropTypes.number.isRequired,
+        pValue: React.PropTypes.number,
+        tStatistics: React.PropTypes.number,
         colour: RequiredString,
         species: RequiredString,
         comparison: RequiredString,

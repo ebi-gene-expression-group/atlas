@@ -25,8 +25,8 @@ var CellDifferential = React.createClass({
         fontSize: React.PropTypes.number,
         colour: React.PropTypes.string,
         foldChange: React.PropTypes.number,
-        pValue: React.PropTypes.string,
-        tStat: React.PropTypes.string,
+        pValue: React.PropTypes.number,
+        tStat: React.PropTypes.number,
         displayLevels: React.PropTypes.bool.isRequired
     },
 
