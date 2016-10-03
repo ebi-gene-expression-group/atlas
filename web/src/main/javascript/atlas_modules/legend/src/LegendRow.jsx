@@ -28,13 +28,15 @@ var LegendRow = React.createClass({
         var lt_ie10_filter = LT_IE10_FILTER_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
 
         return (
-            <div style={{display: "table-row"}}>
+          this.props.lowExpressionLevel || this.props.highExpressionLevel
+          ? <div style={{display: "table-row"}}>
                 <div className="gxaGradientLevel gxaGradientLevelMin">{this.props.lowExpressionLevel}</div>
                 <div style={{display: "table-cell"}}>
                     <span className="gxaGradientColour" style={{backgroundImage: backgroundImage, filter: lt_ie10_filter}} />
                 </div>
                 <div className="gxaGradientLevel gxaGradientLevelMax">{this.props.highExpressionLevel}</div>
             </div>
+          : null  
         );
     }
 });
