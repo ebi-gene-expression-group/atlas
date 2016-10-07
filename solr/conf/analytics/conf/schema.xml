@@ -91,13 +91,13 @@
         -->
         <field name="id" type="uuid" indexed="true" stored="true" required="true" />
         <field name="bioentityIdentifier" type="string" indexed="true" stored="true" required="true"/>
-        <field name="identifierSearch" type="text_en" indexed="true" stored="false"/>
+        <field name="identifierSearch" type="text_analytics_search" indexed="true" stored="false"/>
         <field name="species" type="text_lower" indexed="true" stored="true" required="true"/>
         <field name="kingdom" type="text_lower" indexed="true" stored="true" required="true" />
         <field name="experimentAccession" type="string" indexed="true" stored="true" required="true"/>
         <field name="experimentType" type="text_lower" indexed="true" stored="true" required="true"/>
         <field name="defaultQueryFactorType" type="text_lower" indexed="true" stored="true"/>
-        <field name="conditionsSearch" type="text_en" indexed="true" stored="false"/>
+        <field name="conditionsSearch" type="text_analytics_search" indexed="true" stored="false"/>
         <field name="assayGroupId" type="string" indexed="true" stored="true"/>
         <field name="expressionLevel" type="tdouble4" indexed="true" stored="true"/>
         <field name="contrastId" type="string" indexed="true" stored="true"/>
@@ -293,6 +293,18 @@
                 <filter class="solr.PorterStemFilterFactory"/>
             </analyzer>
         </fieldtype>
+
+        <!-- Case insensitive, tokenize for analytics syntax e.g. propertyName:{propertyValue} -->
+        <fieldType name="text_analytics_search" class="solr.TextField" positionIncrementGap="100">
+            <analyzer>
+                <tokenizer class="solr.PatternTokenizerFactory" pattern="[ {}:,]"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.PatternTokenizerFactory" pattern="[ {}:,]"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+        </fieldType>
 
         <!-- text copied from gxa schema.xml -->
 
