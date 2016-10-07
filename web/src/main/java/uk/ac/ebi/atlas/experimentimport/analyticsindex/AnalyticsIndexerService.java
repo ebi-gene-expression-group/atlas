@@ -18,7 +18,6 @@ import javax.inject.Named;
 import java.util.Map;
 
 @Named
-@Scope("singleton")
 public class AnalyticsIndexerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsIndexerService.class);
 
@@ -62,5 +61,11 @@ public class AnalyticsIndexerService {
         LOGGER.info("Deleting all documents");
         analyticsIndexDAO.deleteAllDocuments();
         LOGGER.info("Done deleting all documents");
+    }
+
+    public synchronized void optimize() {
+        LOGGER.info("Optimizing index");
+        analyticsIndexDAO.optimize();
+        LOGGER.info("Index optimized successfully");
     }
 }

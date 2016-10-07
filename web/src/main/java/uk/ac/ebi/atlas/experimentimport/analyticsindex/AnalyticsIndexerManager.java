@@ -42,7 +42,7 @@ public class AnalyticsIndexerManager extends Observable {
     protected static final String DEFAULT_SOLR_BATCH_SIZE_8192 = "8192";
     protected static final String DEFAULT_TIMEOUT_IN_HOURS_24 = "24";
 
-    protected static final int LONGER_THAN_BIGGEST_EXPERIMENT_INDEX_TIME = 60;   // in minutes
+    private static final int LONGER_THAN_BIGGEST_EXPERIMENT_INDEX_TIME = 60;   // in minutes
 
     @Inject
     public AnalyticsIndexerManager(AnalyticsIndexerService analyticsIndexerService,
@@ -84,6 +84,11 @@ public class AnalyticsIndexerManager extends Observable {
         setChangedAndNotifyObservers("Extracted "+bioentityIdToIdentifierSearch.size()+" bioentityIds from experiments");
 
         indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), bioentityIdToIdentifierSearch, threads, batchSize, timeout);
+
+        setChangedAndNotifyObservers("Optimizing index...");
+        analyticsIndexerService.optimize();
+        setChangedAndNotifyObservers("Index optimized");
+        setChangedAndNotifyObservers("All done!");
 
         deleteObserver(analyticsIndexerMonitor);
     }
@@ -149,7 +154,7 @@ public class AnalyticsIndexerManager extends Observable {
         setChangedAndNotifyObservers(null);
     }
 
-    void setChangedAndNotifyObservers(Object arg){
+    private void setChangedAndNotifyObservers(Object arg){
         setChanged();
         notifyObservers(arg);
     }

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
+import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -52,10 +53,8 @@ public class AnalyticsIndexDAO {
                 }
             }
             solrClient.commit(false, false);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
-            rollBack();
-            throw new AnalyticsIndexerException(e);
+        } catch (IOException | SolrServerException e) {
+            rollBackAndPropagateException(e);
         }
 
         return count;
@@ -66,19 +65,11 @@ public class AnalyticsIndexDAO {
             solrClient.deleteByQuery("experimentAccession:" + accession);
             solrClient.commit();
         } catch (IOException | SolrServerException e) {
-            LOGGER.error(e.getMessage(), e);
-            rollBack();
-            throw new AnalyticsIndexerException(e);
+            rollBackAndPropagateException(e);
         }
     }
 
-    private void rollBack() {
-        try {
-            solrClient.rollback();
-        } catch (IOException | SolrServerException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
-    }
+
 
     public void deleteAllDocuments() {
         try {
@@ -86,15 +77,25 @@ public class AnalyticsIndexDAO {
             solrClient.commit();
             solrClient.optimize();
         } catch (IOException | SolrServerException e) {
-            LOGGER.error(e.getMessage(), e);
-            rollBack();
-            throw new AnalyticsIndexerException(e);
+            rollBackAndPropagateException(e);
         }
     }
 
-    private class AnalyticsIndexerException extends RuntimeException {
-        public AnalyticsIndexerException(Exception e) {
-            super(e);
+    public void optimize() {
+        try {
+            solrClient.optimize();
+        } catch (IOException | SolrServerException e) {
+            rollBackAndPropagateException(e);
+        }
+    }
+
+    private void rollBackAndPropagateException(Exception exception) {
+        try {
+            LOGGER.error(exception.getMessage(), exception);
+            solrClient.rollback();
+            Throwables.propagate(exception);
+        } catch (IOException | SolrServerException e) {
+            LOGGER.error(e.getMessage());
         }
     }
 }
