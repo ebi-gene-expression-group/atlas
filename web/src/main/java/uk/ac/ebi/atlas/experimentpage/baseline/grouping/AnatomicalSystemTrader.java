@@ -1,25 +1,52 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.grouping;
 
-import com.google.common.collect.ImmutableList;
-import uk.ac.ebi.atlas.model.OntologyTerm;
+import au.com.bytecode.opencsv.CSVReader;
+import com.atlassian.util.concurrent.LazyReference;
+import com.google.common.base.Throwables;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 @Named
 public class AnatomicalSystemTrader {
 
-    //TODO
-    Map<OntologyTerm, AnatomicalSystem> m = new HashMap<>();
 
-    public Collection<AnatomicalSystem> getAnatomicalSystemsIncluding(OntologyTerm ontologyTerm){
-        //TODO
+    private final String anatomicalSystemsPath;
+    private LazyReference<Multimap<String, AnatomicalSystem>> anatomicalSystemsMap =
+            new  LazyReference<Multimap<String, AnatomicalSystem>>() {
+        @Override
+        protected Multimap<String, AnatomicalSystem> create() throws Exception {
+            try (CSVReader csvReader = new CSVReader(new InputStreamReader(Files.newInputStream(FileSystems.getDefault().getPath(anatomicalSystemsPath))), '\t')) {
+                csvReader.readNext();
 
-        return ImmutableList.of(
-                AnatomicalSystem.create("bigSystem", "system with everything in it"),
-                AnatomicalSystem.create("system_"+(ontologyTerm.hashCode() % 4), (ontologyTerm.hashCode() % 4)+"- " +
-                        "other system"));
+                ImmutableMultimap.Builder<String, AnatomicalSystem> b = ImmutableMultimap.builder();
+                for (String[] row : csvReader.readAll()) {
+                    if (!row[0].startsWith("#")) {
+                        b.put(row[2], AnatomicalSystem.create(row[0], row[1]));
+                    }
+                }
+                return b.build();
+
+            } catch (IOException e) {
+                throw Throwables.propagate(e);
+            }
+        }
+    };
+
+    @Inject
+    public AnatomicalSystemTrader(@Value("#{configuration['anatomical.systems.file']}") String anatomicalSystemsPath) {
+        this.anatomicalSystemsPath = anatomicalSystemsPath;
+    }
+
+    public Collection<AnatomicalSystem> getAnatomicalSystemsIncluding(String ontologyTermId){
+        return anatomicalSystemsMap.get().get(ontologyTermId);
     }
 }

@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
 import java.util.List;
 
 public class TsvReaderImpl implements TsvReader {
