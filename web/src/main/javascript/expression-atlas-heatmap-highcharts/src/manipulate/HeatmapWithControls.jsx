@@ -29,6 +29,7 @@ module.exports = React.createClass({
         return {
             ordering: "Default",
             grouping: "Default",
+            group: "",
             dataSeriesToShow: this.props.loadResult.heatmapData.dataSeries.map(function(e){return true;}),
             coexpressionsShown: 0,
             zoom: false
@@ -46,8 +47,9 @@ module.exports = React.createClass({
         {
           ordering: this.props.loadResult.orderings[this.state.ordering],
           grouping: this.state.grouping,
+          group: this.state.group,
           dataSeriesToKeep: this.state.dataSeriesToShow,
-          allowEmptyColumns: this.props.loadResult.heatmapConfig.isExperimentPage,
+          allowEmptyColumns: this.props.loadResult.heatmapConfig.isExperimentPage && this.state.grouping === this.getInitialState().grouping,
           maxIndex:this.state.coexpressionsShown
         },
       this.props.loadResult.heatmapData)
@@ -61,18 +63,6 @@ module.exports = React.createClass({
             name: e.info.name
           }})
         );
-    },
-
-    _makeLabelToggle: function(ix){
-        return function(){
-            this.setState(function(previousState){
-                return Object.assign(previousState, {
-                    dataSeriesToShow: previousState.dataSeriesToShow.map(function(e,jx){
-                        return ix===jx ? !e : e;
-                    })
-                });
-            });
-        }.bind(this);
     },
 
     _orderings: function(){
@@ -103,20 +93,73 @@ module.exports = React.createClass({
                   .map((e)=>e.info.name)
                   .indexOf(selectedDataSeries)
                 const isAll =
-                  selectedDataSeries === "All"
+                  !selectedDataSeries || selectedDataSeries === "All"
                 this.setState((previousState) => {
                     return Object.assign(previousState, {
                         dataSeriesToShow:
                           previousState.dataSeriesToShow
                           .map(function(e, jx){
-                            return isAll || (ix===jx );
+                            return isAll || (ix===jx);
                           })
                     });
                 });
               }
             }
           }
-        ].concat([/* TODO anatomical systems */])
+        ].concat(this._groupingFilters())
+      )
+    },
+
+    _groupingFilters: function(){
+      const groupingNames =
+        [].concat.apply([],
+          this.props.loadResult.heatmapData.xAxisCategories
+          .map(function(columnHeader){
+            return (
+              (columnHeader.info.groupings ||[])
+              .map((grouping)=>grouping.name)
+            )
+          })
+        )
+        .filter((e,ix,self)=>self.indexOf(e)===ix)
+
+      return (
+        groupingNames
+        .map((name)=> {
+          return {
+            name: name,
+            value: {
+              current:
+                this.state.grouping === name
+                ? this.state.group
+                : "All",
+              available:
+                ["All"].concat(
+                  [].concat.apply([],
+                    this.props.loadResult.heatmapData.xAxisCategories
+                    .map(function(columnHeader){
+                      return (
+                        (columnHeader.info.groupings ||[])
+                        .filter((grouping)=>grouping.name)
+                        .map((grouping)=>grouping.values.map((g)=>g.label))
+                        .concat([[]])
+                        [0]
+                      )
+                    })
+                  )
+                  .filter((e,ix,self)=>self.indexOf(e)===ix)
+                  .sort()
+                ),
+              onSelect: (group) => {
+                this.setState({
+                  grouping: name,
+                  group: group
+                })
+              }
+            }
+          }
+        })
+
       )
     },
 
@@ -128,9 +171,7 @@ module.exports = React.createClass({
               key: e.info.name,
               name: e.info.name,
               colour: e.info.colour,
-              on: this.state.dataSeriesToShow[ix],
-              onClickCallback: this._makeLabelToggle(ix),
-              clickable: true
+              on: this.state.dataSeriesToShow[ix]
             };
           }.bind(this)
         )

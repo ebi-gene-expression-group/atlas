@@ -15,7 +15,6 @@ var CoexpressionOption = require('./CoexpressionOption.jsx');
 
 var dropdownFactory = require('./SelectionDropdownFactory.jsx');
 var OrderingDropdown = dropdownFactory("Sort by: ");
-var GroupingDropdown = dropdownFactory("Group by: ");
 
 var TooltipStateManager = require('../util/TooltipStateManager.jsx');
 
@@ -26,17 +25,13 @@ var HeatmapLegendBox = React.createClass({
     propTypes: {
         name: React.PropTypes.string.isRequired,
         colour: React.PropTypes.string.isRequired,
-        on: React.PropTypes.bool.isRequired,
-        onClickCallback: React.PropTypes.func.isRequired,
-        clickable: React.PropTypes.bool.isRequired
+        on: React.PropTypes.bool.isRequired
     },
 
     render: function () {
         return (
             <div className={"legend-item " +
-                            (this.props.clickable ? "clickable " : "") +
-                            (this.props.clickable && !this.props.on ? "legend-item-off" : "")}
-                 onClick={this.props.onClickCallback}>
+                            (this.props.on ? "": " legend-item-off")}>
                 <div style={{background: this.props.colour}} className="legend-rectangle"></div>
                 <span style={{verticalAlign: "middle"}}>{this.props.name}</span>
             </div>
@@ -51,41 +46,55 @@ var HeatmapOptions = React.createClass({
         googleAnalyticsCallback: React.PropTypes.func.isRequired,
         showUsageMessage: React.PropTypes.bool.isRequired,
         orderings: React.PropTypes.shape(PropTypes.SelectionDropdown),
-        groupings: React.PropTypes.shape(PropTypes.SelectionDropdown),
         filters:  React.PropTypes.arrayOf(React.PropTypes.shape({
           name: React.PropTypes.string.isRequired,
           value: React.PropTypes.shape(PropTypes.SelectionDropdown)
         }))
     },
-    
+
+    getInitialState: function(){
+      return {
+        selectedFilter: "Select filter..."
+      }
+    },
+
+    componentWillUpdate: function(nextProps, nextState){
+      if(this.state.selectedFilter !== nextState.selectedFilter){
+        this._propsOfCurrentFilter().onSelect("");
+      }
+    },
+
+    _propsOfCurrentFilter: function(){
+      return (
+        this.props.filters
+        .filter((e)=>e.name===this.state.selectedFilter)
+        .map((e)=>e.value)
+        .concat([{
+          available: [],
+          current: "",
+          onSelect: ()=>{},
+          disabled: true
+        }])
+        [0]
+      )
+    },
+
     filters: function(){
       const multipleFilters = () => {
         let FilterChoiceDropdown = dropdownFactory("Filter by: ");
         let FilteringDropdown = dropdownFactory("");
-        let filterProps =
-          this.props.filters
-          .filter((e)=>e.name===this.state.selectedFilter.name)
-          .concat([{
-            name: "",
-            value: {
-              available: [],
-              onSelect: ()=>{},
-              disabled: true
-            }
-          }])
-          [0]
-          .value;
+        let filterProps= this._propsOfCurrentFilter();
+
         return (
           <div>
             <FilterChoiceDropdown
-              available={["Select filter..."].concat(this.props.filters.map((e)=>e.name))}
-              current={this.state.selectedFilter.name}
-              onSelect={(e)=> this.setState({selectedFilter: {name: e, value: e==="Select filter..."? "": "All"}})}
+              available={[this.getInitialState().selectedFilter].concat(this.props.filters.map((e)=>e.name))}
+              current={this.state.selectedFilter}
+              onSelect={(e)=> this.setState({selectedFilter: e})}
               disabled={false}/>
             <FilteringDropdown
               {...filterProps}
-              current={this.state.selectedFilter.value}
-              disabled={filterProps.disabled || this.state.selectedFilter.name==="Select filter..."}/>
+              disabled={filterProps.disabled || this.state.selectedFilter===this.getInitialState().selectedFilter}/>
           </div>
         )
       };
@@ -110,16 +119,6 @@ var HeatmapOptions = React.createClass({
                   {this.props.introductoryMessage}
                 </div>
                 <div style={{display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight}}>
-                  { this.props.groupings.available.length > 1
-                      ?
-                        <GroupingDropdown
-                          available={this.props.groupings.available}
-                          current={this.props.groupings.current}
-                          onSelect={this.props.groupings.onSelect}
-                          disabled={this.props.groupings.disabled}/>
-                      :
-                        null
-                  }
                   {this.filters()}
                   { this.props.orderings.available.length > 1
                       ?
@@ -283,9 +282,7 @@ var show = function (heatmapDataToPresent, orderings,filters, zoomCallback, colo
           <HeatmapLegendBox key={"No data available"}
                             name={"No data available"}
                             colour={"white"}
-                            on={false}
-                            onClickCallback={function(){}}
-                            clickable={false}/>
+                            on={true}/>
         </div>
         {coexpressions?
           <CoexpressionOption {...coexpressions}/>

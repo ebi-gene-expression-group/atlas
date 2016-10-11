@@ -131,6 +131,34 @@ var filterHeatmapDataByDataSeries = function(booleanVectorOfDataSeriesToKeep, da
   );
 }
 
+var filterHeatmapDataByGroupingOfRows = function(grouping,group, data){
+  if (!grouping || !group || grouping === "Default"){
+    return data;
+  }
+  const rowsToKeep =
+    [].concat.apply([],
+      data
+      .xAxisCategories
+      .map(function(e,ix){
+        return (
+          [].concat.apply([],
+            e.info.groupings
+            .filter((g)=>g.name ==grouping)
+            .map((g)=>g.values.map((value)=>value.label))
+          )
+          .indexOf(group) >-1
+          ? [ix]
+          : []
+        )
+      })
+    )
+  return _filterHeatmapData(
+    (series,ix)=>true,
+    (point)=>rowsToKeep.indexOf(point.x)>-1,
+    data
+  );
+}
+
 var filterHeatmapDataByCoexpressionIndex = function(maxIndex, data){
   return _filterHeatmapData(
     (series,ix)=>true,
@@ -389,8 +417,11 @@ exports.order = orderHeatmapData;
 
 exports.manipulate = function(args, data){
   return (
-    groupValuesByProvidedColumnGrouping(args.grouping,
-      insertEmptyColumns(args.allowEmptyColumns?orderHeatmapData(args.ordering,data).xAxisCategories:[],
+    insertEmptyColumns(
+      args.allowEmptyColumns
+      ? orderHeatmapData(args.ordering,data).xAxisCategories
+      :[],
+      filterHeatmapDataByGroupingOfRows(args.grouping, args.group,
         filterHeatmapDataByCoexpressionIndex(args.maxIndex,
           filterHeatmapDataByDataSeries(args.dataSeriesToKeep,
             orderHeatmapData(args.ordering,
