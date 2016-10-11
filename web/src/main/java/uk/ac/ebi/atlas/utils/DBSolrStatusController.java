@@ -17,6 +17,25 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import javax.inject.Inject;
 import java.io.IOException;
 
+/*
+On 4 Oct 2016, at 12:04, Andrea Cristofori via RT <www-prod@ebi.ac.uk> wrote:
+
+Hi Wojtek,
+
+I added the check which now checks, on each VM, that the page on
+/gxa/json/dbsolr/status
+
+contains the text:
+{"DB":"UP","Solr":"UP"}
+
+if it's not found it should remove your node from the pool. IF you want to test
+it you could try to change it in one of the PG VMs which should stop receiving
+requests.
+
+Andrea
+ */
+
+
 @Controller
 @Scope("request")
 public final class DBSolrStatusController {

@@ -5,9 +5,7 @@ import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import org.springframework.beans.factory.annotation.Value;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,7 +15,6 @@ import java.util.Collection;
 
 @Named
 public class AnatomicalSystemTrader {
-
 
     private final String anatomicalSystemsPath;
     private LazyReference<Multimap<String, AnatomicalSystem>> anatomicalSystemsMap =
@@ -41,9 +38,8 @@ public class AnatomicalSystemTrader {
         }
     };
 
-    @Inject
-    public AnatomicalSystemTrader(@Value("#{configuration['anatomical.systems.file']}") String anatomicalSystemsPath) {
-        this.anatomicalSystemsPath = anatomicalSystemsPath;
+    public AnatomicalSystemTrader() {
+        this.anatomicalSystemsPath = getClass().getClassLoader().getResource("anatomical_systems.txt").getPath();
     }
 
     public Collection<AnatomicalSystem> getAnatomicalSystemsIncluding(String ontologyTermId){
