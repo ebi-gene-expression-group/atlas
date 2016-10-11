@@ -13,8 +13,9 @@ var PropTypes = require('../PropTypes.js');
 var HeatmapCanvas = require('./HeatmapCanvas.jsx');
 var CoexpressionOption = require('./CoexpressionOption.jsx');
 
-var OrderingDropdown = require('./SelectionDropdownFactory.jsx')("Sort by: ");
-var GroupingDropdown = require('./SelectionDropdownFactory.jsx')("Group by: ");
+var dropdownFactory = require('./SelectionDropdownFactory.jsx');
+var OrderingDropdown = dropdownFactory("Sort by: ");
+var GroupingDropdown = dropdownFactory("Group by: ");
 
 var TooltipStateManager = require('../util/TooltipStateManager.jsx');
 
@@ -50,7 +51,56 @@ var HeatmapOptions = React.createClass({
         googleAnalyticsCallback: React.PropTypes.func.isRequired,
         showUsageMessage: React.PropTypes.bool.isRequired,
         orderings: React.PropTypes.shape(PropTypes.SelectionDropdown),
-        groupings: React.PropTypes.shape(PropTypes.SelectionDropdown)
+        groupings: React.PropTypes.shape(PropTypes.SelectionDropdown),
+        filters:  React.PropTypes.arrayOf(React.PropTypes.shape({
+          name: React.PropTypes.string.isRequired,
+          value: React.PropTypes.shape(PropTypes.SelectionDropdown)
+        }))
+    },
+    
+    filters: function(){
+      const multipleFilters = () => {
+        let FilterChoiceDropdown = dropdownFactory("Filter by: ");
+        let FilteringDropdown = dropdownFactory("");
+        let filterProps =
+          this.props.filters
+          .filter((e)=>e.name===this.state.selectedFilter.name)
+          .concat([{
+            name: "",
+            value: {
+              available: [],
+              onSelect: ()=>{},
+              disabled: true
+            }
+          }])
+          [0]
+          .value;
+        return (
+          <div>
+            <FilterChoiceDropdown
+              available={["Select filter..."].concat(this.props.filters.map((e)=>e.name))}
+              current={this.state.selectedFilter.name}
+              onSelect={(e)=> this.setState({selectedFilter: {name: e, value: e==="Select filter..."? "": "All"}})}
+              disabled={false}/>
+            <FilteringDropdown
+              {...filterProps}
+              current={this.state.selectedFilter.value}
+              disabled={filterProps.disabled || this.state.selectedFilter.name==="Select filter..."}/>
+          </div>
+        )
+      };
+      const singleFilter = () => {
+        let FilteringDropdown = dropdownFactory("Filter by "+this.props.filters[0].name.toLowerCase()+": ");
+        return (
+          <FilteringDropdown
+          {...this.props.filters[0].value} />
+        )
+      };
+      return (
+        this.props.filters.length ===1
+        ? singleFilter()
+        : multipleFilters()
+      );
     },
 
     render: function () {
@@ -70,6 +120,7 @@ var HeatmapOptions = React.createClass({
                       :
                         null
                   }
+                  {this.filters()}
                   { this.props.orderings.available.length > 1
                       ?
                         <OrderingDropdown
@@ -177,7 +228,7 @@ var anatomogramCallbacks = function(heatmapDataToPresent, highlightOntologyIds){
   }
 };
 
-var show = function (heatmapDataToPresent, orderings, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, groupings, properties) {
+var show = function (heatmapDataToPresent, orderings,filters, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, groupings, properties) {
     var marginRight = 60;
     var heatmapConfig = properties.loadResult.heatmapConfig;
 
@@ -193,6 +244,7 @@ var show = function (heatmapDataToPresent, orderings, zoomCallback, colorAxis, f
           }}
           orderings={orderings}
           groupings={groupings}
+          filters={filters}
           googleAnalyticsCallback={properties.googleAnalyticsCallback}
           showUsageMessage={heatmapDataToPresent.xAxisCategories.length > 100} />
 

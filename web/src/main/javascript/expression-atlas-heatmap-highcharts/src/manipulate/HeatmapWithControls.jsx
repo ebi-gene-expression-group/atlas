@@ -86,6 +86,40 @@ module.exports = React.createClass({
       }
     },
 
+    _filters: function(){
+      return (
+        [
+          { name: "Expression Value",
+            value: {
+              available:
+                ["All"].concat(this.props.loadResult.heatmapData.dataSeries.map((e)=>e.info.name)),
+              current:
+                this.state.dataSeriesToShow.reduce((l,r)=> l&&r, true)
+                ? "All"
+                : this.props.loadResult.heatmapData.dataSeries[this.state.dataSeriesToShow.indexOf(true)].info.name,
+              onSelect: (selectedDataSeries) => {
+                const ix =
+                  this.props.loadResult.heatmapData.dataSeries
+                  .map((e)=>e.info.name)
+                  .indexOf(selectedDataSeries)
+                const isAll =
+                  selectedDataSeries === "All"
+                this.setState((previousState) => {
+                    return Object.assign(previousState, {
+                        dataSeriesToShow:
+                          previousState.dataSeriesToShow
+                          .map(function(e, jx){
+                            return isAll || (ix===jx );
+                          })
+                    });
+                });
+              }
+            }
+          }
+        ].concat([/* TODO anatomical systems */])
+      )
+    },
+
     _legend: function(){ //See properties required for HeatmapLegendBox
       return (
         this.props.loadResult.heatmapData.dataSeries
@@ -141,6 +175,7 @@ module.exports = React.createClass({
         Show(
           heatmapDataToPresent,
           this._orderings(),
+          this._filters(),
           this._onUserZoom,
           this.props.loadResult.colorAxis||undefined,
           FormattersFactory(this.props.loadResult.heatmapConfig),

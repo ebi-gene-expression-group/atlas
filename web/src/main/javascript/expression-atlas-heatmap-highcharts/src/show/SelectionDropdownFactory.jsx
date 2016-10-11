@@ -9,6 +9,7 @@ var PropTypes = require('../PropTypes.js');
 
 module.exports = function(displayName){
   return React.createClass({
+      displayName: displayName,
       propTypes: PropTypes.SelectionDropdown,
 
       getInitialState: function () {
