@@ -153,7 +153,7 @@ module.exports = React.createClass({
               onSelect: (group) => {
                 this.setState({
                   grouping: name,
-                  group: group
+                  group: group === "All" ? "" : group
                 })
               }
             }

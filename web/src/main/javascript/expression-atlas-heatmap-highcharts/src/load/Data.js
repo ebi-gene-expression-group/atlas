@@ -8,21 +8,26 @@ var _ = require('lodash');
 var _columnGroupings = function(columnGroupings, id){
   return (
     columnGroupings.map(function(grouping){
+      const values =
+        grouping
+        .groups
+        .filter(function(group){
+          return group.values.indexOf(id)>-1
+        })
+        .map(function(group){
+          return {
+            label: group.name,
+            id: group.id
+          }
+        })
       return {
         name: grouping.name,
         memberName: grouping.memberName,
         values:
-          grouping
-          .groups
-          .filter(function(group){
-            return group.values.indexOf(id)>-1
-          })
-          .map(function(group){
-            return {
-              label: group.name,
-              id: group.id
-            }
-          })
+          values.length ? values : [{
+            label: "Unmapped",
+            id: ""
+          }]
         }
       }
     )
