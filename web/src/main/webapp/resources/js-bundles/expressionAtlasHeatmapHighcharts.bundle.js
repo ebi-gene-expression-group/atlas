@@ -32426,6 +32426,7 @@ webpackJsonp_name_([5],[
 	  available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
 	  current: React.PropTypes.string.isRequired,
 	  onSelect: React.PropTypes.func.isRequired,
+	  onDismissDropdown: React.PropTypes.func,
 	  disabled: React.PropTypes.bool
 	};
 	
@@ -34649,17 +34650,21 @@ webpackJsonp_name_([5],[
 	
 	var _columnGroupings = function _columnGroupings(columnGroupings, id) {
 	  return columnGroupings.map(function (grouping) {
+	    var values = grouping.groups.filter(function (group) {
+	      return group.values.indexOf(id) > -1;
+	    }).map(function (group) {
+	      return {
+	        label: group.name,
+	        id: group.id
+	      };
+	    });
 	    return {
 	      name: grouping.name,
 	      memberName: grouping.memberName,
-	      values: grouping.groups.filter(function (group) {
-	        return group.values.indexOf(id) > -1;
-	      }).map(function (group) {
-	        return {
-	          label: group.name,
-	          id: group.id
-	        };
-	      })
+	      values: values.length ? values : [{
+	        label: "Unmapped",
+	        id: ""
+	      }]
 	    };
 	  });
 	};
@@ -34934,6 +34939,7 @@ webpackJsonp_name_([5],[
 	    return {
 	      ordering: "Default",
 	      grouping: "Default",
+	      group: "",
 	      dataSeriesToShow: this.props.loadResult.heatmapData.dataSeries.map(function (e) {
 	        return true;
 	      }),
@@ -34952,8 +34958,9 @@ webpackJsonp_name_([5],[
 	    return __webpack_require__(/*! ./Manipulators.js */ 3088).manipulate({
 	      ordering: this.props.loadResult.orderings[this.state.ordering],
 	      grouping: this.state.grouping,
+	      group: this.state.group,
 	      dataSeriesToKeep: this.state.dataSeriesToShow,
-	      allowEmptyColumns: this.props.loadResult.heatmapConfig.isExperimentPage,
+	      allowEmptyColumns: this.props.loadResult.heatmapConfig.isExperimentPage && (this.state.grouping === this.getInitialState().grouping || !this.state.group),
 	      maxIndex: this.state.coexpressionsShown
 	    }, this.props.loadResult.heatmapData);
 	  },
@@ -34967,18 +34974,6 @@ webpackJsonp_name_([5],[
 	    });
 	  },
 	
-	  _makeLabelToggle: function _makeLabelToggle(ix) {
-	    return function () {
-	      this.setState(function (previousState) {
-	        return Object.assign(previousState, {
-	          dataSeriesToShow: previousState.dataSeriesToShow.map(function (e, jx) {
-	            return ix === jx ? !e : e;
-	          })
-	        });
-	      });
-	    }.bind(this);
-	  },
-	
 	  _orderings: function _orderings() {
 	    return {
 	      available: Object.keys(this.props.loadResult.orderings),
@@ -34990,6 +34985,98 @@ webpackJsonp_name_([5],[
 	    };
 	  },
 	
+	  _filters: function _filters() {
+	    var _this = this;
+	
+	    return [{
+	      name: "Select filter...",
+	      value: {
+	        available: [],
+	        current: "",
+	        onSelect: function onSelect() {
+	          _this.setState({
+	            grouping: _this.getInitialState().grouping,
+	            group: _this.getInitialState().group
+	          });
+	        },
+	        disabled: true,
+	        onDismissDropdown: function onDismissDropdown() {}
+	      }
+	    }, { name: "Expression Value" + (this.props.loadResult.heatmapConfig.isExperimentPage ? "- relative" : ""),
+	      value: {
+	        available: ["All"].concat(this.props.loadResult.heatmapData.dataSeries.map(function (e) {
+	          return e.info.name;
+	        })),
+	        current: this.state.dataSeriesToShow.reduce(function (l, r) {
+	          return l && r;
+	        }, true) ? "All" : this.props.loadResult.heatmapData.dataSeries[this.state.dataSeriesToShow.indexOf(true)].info.name,
+	        onSelect: function onSelect(selectedDataSeries) {
+	          var ix = _this.props.loadResult.heatmapData.dataSeries.map(function (e) {
+	            return e.info.name;
+	          }).indexOf(selectedDataSeries);
+	          var isAll = !selectedDataSeries || selectedDataSeries === "All";
+	          _this.setState(function (previousState) {
+	            return Object.assign(previousState, {
+	              grouping: _this.getInitialState().grouping,
+	              group: _this.getInitialState().group,
+	              dataSeriesToShow: previousState.dataSeriesToShow.map(function (e, jx) {
+	                return isAll || ix === jx;
+	              })
+	            });
+	          });
+	        },
+	        onDismissDropdown: function onDismissDropdown() {
+	          _this.setState(function (previousState) {
+	            return {
+	              dataSeriesToShow: previousState.dataSeriesToShow.map(function (e) {
+	                return true;
+	              })
+	            };
+	          });
+	        }
+	      }
+	    }].concat(this._groupingFilters());
+	  },
+	
+	  _groupingFilters: function _groupingFilters() {
+	    var _this2 = this;
+	
+	    var groupingNames = [].concat.apply([], this.props.loadResult.heatmapData.xAxisCategories.map(function (columnHeader) {
+	      return (columnHeader.info.groupings || []).map(function (grouping) {
+	        return grouping.name;
+	      });
+	    })).filter(function (e, ix, self) {
+	      return self.indexOf(e) === ix;
+	    });
+	
+	    return groupingNames.map(function (name) {
+	      return {
+	        name: name,
+	        value: {
+	          current: _this2.state.grouping === name ? _this2.state.group : "All",
+	          available: ["All"].concat([].concat.apply([], _this2.props.loadResult.heatmapData.xAxisCategories.map(function (columnHeader) {
+	            return (columnHeader.info.groupings || []).filter(function (grouping) {
+	              return grouping.name;
+	            }).map(function (grouping) {
+	              return grouping.values.map(function (g) {
+	                return g.label;
+	              });
+	            }).concat([[]])[0];
+	          })).filter(function (e, ix, self) {
+	            return self.indexOf(e) === ix;
+	          }).sort()),
+	          onSelect: function onSelect(group) {
+	            _this2.setState({
+	              grouping: name,
+	              group: group === "All" ? "" : group
+	            });
+	          },
+	          onDismissDropdown: function onDismissDropdown() {}
+	        }
+	      };
+	    });
+	  },
+	
 	  _legend: function _legend() {
 	    //See properties required for HeatmapLegendBox
 	    return this.props.loadResult.heatmapData.dataSeries.map(function (e, ix) {
@@ -34997,46 +35084,27 @@ webpackJsonp_name_([5],[
 	        key: e.info.name,
 	        name: e.info.name,
 	        colour: e.info.colour,
-	        on: this.state.dataSeriesToShow[ix],
-	        onClickCallback: this._makeLabelToggle(ix),
-	        clickable: true
+	        on: this.state.dataSeriesToShow[ix]
 	      };
 	    }.bind(this));
 	  },
 	
-	  _groupings: function _groupings() {
-	    return {
-	      available: [].concat.apply(["Default"], this.props.loadResult.heatmapData.xAxisCategories.map(function (columnHeader) {
-	        return (columnHeader.info.groupings || []).map(function (grouping) {
-	          return grouping.name;
-	        });
-	      })).filter(function (e, ix, self) {
-	        return self.indexOf(e) == ix;
-	      }),
-	      current: this.state.grouping,
-	      disabled: this.state.zoom,
-	      onSelect: function (groupingChosen) {
-	        this.setState({ grouping: groupingChosen });
-	      }.bind(this)
-	    };
-	  },
-	
 	  _coexpressionOption: function _coexpressionOption() {
-	    var _this = this;
+	    var _this3 = this;
 	
 	    return this.props.loadResult.heatmapConfig.coexpressions && {
 	      geneName: this.props.loadResult.heatmapConfig.coexpressions.coexpressedGene,
 	      numCoexpressionsVisible: this.state.coexpressionsShown,
 	      numCoexpressionsAvailable: this.props.loadResult.heatmapConfig.coexpressions.numCoexpressionsAvailable,
 	      showCoexpressionsCallback: function showCoexpressionsCallback(e) {
-	        _this.setState({ coexpressionsShown: e });
+	        _this3.setState({ coexpressionsShown: e });
 	      }
 	    };
 	  },
 	
 	  render: function render() {
 	    var heatmapDataToPresent = this._heatmapDataToPresent();
-	    return Show(heatmapDataToPresent, this._orderings(), this._onUserZoom, this.props.loadResult.colorAxis || undefined, FormattersFactory(this.props.loadResult.heatmapConfig), TooltipsFactory(this.props.loadResult.heatmapConfig, heatmapDataToPresent.xAxisCategories, heatmapDataToPresent.yAxisCategories), this._legend(), this._coexpressionOption(), this._groupings(), this.props);
+	    return Show(heatmapDataToPresent, this._orderings(), this._filters(), this._onUserZoom, this.props.loadResult.colorAxis || undefined, FormattersFactory(this.props.loadResult.heatmapConfig), TooltipsFactory(this.props.loadResult.heatmapConfig, heatmapDataToPresent.xAxisCategories, heatmapDataToPresent.yAxisCategories), this._legend(), this._coexpressionOption(), this.props);
 	  }
 	});
 
@@ -36010,13 +36078,10 @@ webpackJsonp_name_([5],[
 	    foldChange: React.PropTypes.number,
 	    pValue: React.PropTypes.string,
 	    tStat: React.PropTypes.string,
-	    aggregated: React.PropTypes.arrayOf(PropTypes.Point),
 	    xAxisLegendName: React.PropTypes.string
 	  }, //TODO extend this prop checker.Props for this component are created dynamically so it's important. If differential, expect p-values and fold changes, etc.
 	
 	  render: function render() {
-	    var _this = this;
-	
 	    return React.createElement(
 	      'div',
 	      { style: { whiteSpace: "pre" } },
@@ -36030,13 +36095,7 @@ webpackJsonp_name_([5],[
 	      ), this._div("P-value", this.props.pValue, scientificNotation), this._div("T-statistic", this.props.tStat)] : React.createElement(
 	        'div',
 	        null,
-	        this.props.aggregated ? [this._tinySquare(), this._span("Expression level (max)", this.props.value ? this.props.value + " " + (this.props.unit || "") : "Below cutoff"), React.createElement(
-	          'div',
-	          { key: "" },
-	          "Aggregated: "
-	        )].concat(this.props.aggregated.map(function (aggregatedPoint) {
-	          return _this._div(aggregatedPoint.info.xLabel, aggregatedPoint.value ? aggregatedPoint.value + " " + (_this.props.unit || "") : "Below cutoff");
-	        })) : [this._tinySquare(), this._span("Expression level", this.props.value ? this.props.value + " " + (this.props.unit || "") : "Below cutoff")]
+	        [this._tinySquare(), this._span("Expression level", this.props.value ? this.props.value + " " + (this.props.unit || "") : "Below cutoff")]
 	      ),
 	      !!this.props.config.genomeBrowserTemplate ? this._info("Click on the cell to show expression in the Genome Browser") : null
 	    );
@@ -37185,8 +37244,8 @@ webpackJsonp_name_([5],[
 	var HeatmapCanvas = __webpack_require__(/*! ./HeatmapCanvas.jsx */ 2915);
 	var CoexpressionOption = __webpack_require__(/*! ./CoexpressionOption.jsx */ 2921);
 	
-	var OrderingDropdown = __webpack_require__(/*! ./SelectionDropdownFactory.jsx */ 3071)("Sort by: ");
-	var GroupingDropdown = __webpack_require__(/*! ./SelectionDropdownFactory.jsx */ 3071)("Group by: ");
+	var dropdownFactory = __webpack_require__(/*! ./SelectionDropdownFactory.jsx */ 3071);
+	var OrderingDropdown = dropdownFactory("Sort by: ");
 	
 	var TooltipStateManager = __webpack_require__(/*! ../util/TooltipStateManager.jsx */ 3072);
 	
@@ -37199,16 +37258,13 @@ webpackJsonp_name_([5],[
 	  propTypes: {
 	    name: React.PropTypes.string.isRequired,
 	    colour: React.PropTypes.string.isRequired,
-	    on: React.PropTypes.bool.isRequired,
-	    onClickCallback: React.PropTypes.func.isRequired,
-	    clickable: React.PropTypes.bool.isRequired
+	    on: React.PropTypes.bool.isRequired
 	  },
 	
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: "legend-item " + (this.props.clickable ? "clickable " : "") + (this.props.clickable && !this.props.on ? "legend-item-off" : ""),
-	        onClick: this.props.onClickCallback },
+	      { className: "legend-item " + (this.props.on ? "" : " legend-item-off") },
 	      React.createElement('div', { style: { background: this.props.colour }, className: 'legend-rectangle' }),
 	      React.createElement(
 	        'span',
@@ -37228,7 +37284,78 @@ webpackJsonp_name_([5],[
 	    googleAnalyticsCallback: React.PropTypes.func.isRequired,
 	    showUsageMessage: React.PropTypes.bool.isRequired,
 	    orderings: React.PropTypes.shape(PropTypes.SelectionDropdown),
-	    groupings: React.PropTypes.shape(PropTypes.SelectionDropdown)
+	    filters: React.PropTypes.arrayOf(React.PropTypes.shape({
+	      name: React.PropTypes.string.isRequired,
+	      value: React.PropTypes.shape(PropTypes.SelectionDropdown)
+	    }))
+	  },
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      selectedFilter: this.props.filters[0].name
+	    };
+	  },
+	
+	  componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
+	    var _this = this;
+	
+	    if (this.state.selectedFilter !== nextState.selectedFilter) {
+	      this.props.filters.filter(function (e) {
+	        return e.name === nextState.selectedFilter;
+	      }).forEach(function (e) {
+	        return e.value.onSelect("");
+	      });
+	
+	      this.props.filters.filter(function (e) {
+	        return e.name === _this.state.selectedFilter;
+	      }).forEach(function (e) {
+	        return e.value.onDismissDropdown && e.value.onDismissDropdown();
+	      });
+	    }
+	  },
+	
+	  _propsOfCurrentFilter: function _propsOfCurrentFilter() {
+	    var _this2 = this;
+	
+	    return this.props.filters.filter(function (e) {
+	      return e.name === _this2.state.selectedFilter;
+	    }).map(function (e) {
+	      return e.value;
+	    })[0];
+	  },
+	
+	  filters: function filters() {
+	    var _this3 = this;
+	
+	    var multipleFilters = function multipleFilters() {
+	      var FilterChoiceDropdown = dropdownFactory("Filter by: ");
+	      var FilteringDropdown = dropdownFactory("");
+	      var filterProps = _this3.props.filters.filter(function (e) {
+	        return e.name === _this3.state.selectedFilter;
+	      }).map(function (e) {
+	        return e.value;
+	      })[0];
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(FilterChoiceDropdown, {
+	          available: _this3.props.filters.map(function (e) {
+	            return e.name;
+	          }),
+	          current: _this3.state.selectedFilter,
+	          onSelect: function onSelect(e) {
+	            return _this3.setState({ selectedFilter: e });
+	          },
+	          disabled: false }),
+	        React.createElement(FilteringDropdown, filterProps)
+	      );
+	    };
+	    var singleFilter = function singleFilter() {
+	      var f = _this3.props.filters[_this3.props.filters.length - 1]; //skip the first, dummy, filter
+	      var FilteringDropdown = dropdownFactory("Filter by " + f.name.toLowerCase() + ": ");
+	      return React.createElement(FilteringDropdown, f.value);
+	    };
+	    return this.props.filters.length < 3 ? singleFilter() : multipleFilters();
 	  },
 	
 	  render: function render() {
@@ -37243,11 +37370,7 @@ webpackJsonp_name_([5],[
 	      React.createElement(
 	        'div',
 	        { style: { display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight } },
-	        this.props.groupings.available.length > 1 ? React.createElement(GroupingDropdown, {
-	          available: this.props.groupings.available,
-	          current: this.props.groupings.current,
-	          onSelect: this.props.groupings.onSelect,
-	          disabled: this.props.groupings.disabled }) : null,
+	        this.filters(),
 	        this.props.orderings.available.length > 1 ? React.createElement(OrderingDropdown, {
 	          available: this.props.orderings.available,
 	          current: this.props.orderings.current,
@@ -37329,7 +37452,7 @@ webpackJsonp_name_([5],[
 	  };
 	};
 	
-	var show = function show(heatmapDataToPresent, orderings, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, groupings, properties) {
+	var show = function show(heatmapDataToPresent, orderings, filters, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, properties) {
 	  var marginRight = 60;
 	  var heatmapConfig = properties.loadResult.heatmapConfig;
 	
@@ -37345,7 +37468,7 @@ webpackJsonp_name_([5],[
 	        disclaimer: heatmapConfig.disclaimer
 	      },
 	      orderings: orderings,
-	      groupings: groupings,
+	      filters: filters,
 	      googleAnalyticsCallback: properties.googleAnalyticsCallback,
 	      showUsageMessage: heatmapDataToPresent.xAxisCategories.length > 100 }),
 	    React.createElement(
@@ -37386,9 +37509,7 @@ webpackJsonp_name_([5],[
 	      React.createElement(HeatmapLegendBox, { key: "No data available",
 	        name: "No data available",
 	        colour: "white",
-	        on: false,
-	        onClickCallback: function onClickCallback() {},
-	        clickable: false })
+	        on: true })
 	    ),
 	    coexpressions ? React.createElement(CoexpressionOption, coexpressions) : null
 	  );
@@ -39898,6 +40019,7 @@ webpackJsonp_name_([5],[
 	
 	module.exports = function (displayName) {
 	    return React.createClass({
+	        displayName: displayName,
 	        propTypes: PropTypes.SelectionDropdown,
 	
 	        getInitialState: function getInitialState() {
@@ -41419,7 +41541,7 @@ webpackJsonp_name_([5],[
 	
 	
 	// module
-	exports.push([module.id, ".gxaHeatmapLegend {\n  color: #606060;\n  margin-left: 180px;\n  border: 0 solid olive;\n}\n.gxaHeatmapLegend .legend-item {\n  display: inline-block;\n  margin-left: 8px;\n  padding: 4px;\n  vertical-align: middle;\n  cursor: default;\n}\n.gxaHeatmapLegend .legend-item.clickable {\n  cursor: pointer;\n}\n.gxaHeatmapLegend .legend-item.legend-item-off {\n  color: #ccc;\n}\n.gxaHeatmapLegend .legend-item.legend-item-off div {\n  background-color: #f7f7f7;\n}\n.gxaHeatmapLegend .legend-item .legend-rectangle {\n  width: 12px;\n  height: 12px;\n  border: 1px rgba(0, 0, 0, 0.2) solid;\n  display: inline-block;\n  margin-right: 4px;\n  vertical-align: middle;\n}\n.gxaHeatmapLegend .legend-item .icon-generic:before {\n  font-size: 180%;\n  color: #7e7e7e;\n}\n.gxaHeatmapLegend .legend-item:hover .icon-generic:before {\n  color: #353535;\n}\n@font-face {\n  font-family: 'EBI-Generic';\n  src: url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');\n  src: url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'), local('\\263A'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');\n  font-weight: normal;\n  font-style: normal;\n}\n.icon-generic:before {\n  font-family: 'EBI-Generic';\n  font-size: 100%;\n  color: #BBB;\n  content: attr(data-icon);\n  margin: 0 0 0 0;\n}\n", ""]);
+	exports.push([module.id, ".gxaHeatmapLegend {\n  color: #606060;\n  margin-left: 180px;\n  border: 0 solid olive;\n}\n.gxaHeatmapLegend .legend-item {\n  display: inline-block;\n  margin-left: 8px;\n  padding: 4px;\n  vertical-align: middle;\n  cursor: default;\n}\n.gxaHeatmapLegend .legend-item.legend-item-off {\n  color: #ccc;\n}\n.gxaHeatmapLegend .legend-item.legend-item-off div {\n  background-color: #f7f7f7;\n}\n.gxaHeatmapLegend .legend-item .legend-rectangle {\n  width: 12px;\n  height: 12px;\n  border: 1px rgba(0, 0, 0, 0.2) solid;\n  display: inline-block;\n  margin-right: 4px;\n  vertical-align: middle;\n}\n.gxaHeatmapLegend .legend-item .icon-generic:before {\n  font-size: 180%;\n  color: #7e7e7e;\n}\n.gxaHeatmapLegend .legend-item:hover .icon-generic:before {\n  color: #353535;\n}\n@font-face {\n  font-family: 'EBI-Generic';\n  src: url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');\n  src: url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'), local('\\263A'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');\n  font-weight: normal;\n  font-style: normal;\n}\n.icon-generic:before {\n  font-family: 'EBI-Generic';\n  font-size: 100%;\n  color: #BBB;\n  content: attr(data-icon);\n  margin: 0 0 0 0;\n}\n", ""]);
 	
 	// exports
 
@@ -41541,147 +41663,32 @@ webpackJsonp_name_([5],[
 	  }, data);
 	};
 	
+	var filterHeatmapDataByGroupingOfRows = function filterHeatmapDataByGroupingOfRows(grouping, group, data) {
+	  if (!grouping || !group || grouping === "Default") {
+	    return data;
+	  }
+	  var rowsToKeep = [].concat.apply([], data.xAxisCategories.map(function (e, ix) {
+	    return [].concat.apply([], e.info.groupings.filter(function (g) {
+	      return g.name == grouping;
+	    }).map(function (g) {
+	      return g.values.map(function (value) {
+	        return value.label;
+	      });
+	    })).indexOf(group) > -1 ? [ix] : [];
+	  }));
+	  return _filterHeatmapData(function (series, ix) {
+	    return true;
+	  }, function (point) {
+	    return rowsToKeep.indexOf(point.x) > -1;
+	  }, data);
+	};
+	
 	var filterHeatmapDataByCoexpressionIndex = function filterHeatmapDataByCoexpressionIndex(maxIndex, data) {
 	  return _filterHeatmapData(function (series, ix) {
 	    return true;
 	  }, function (point) {
 	    return point.info.index <= maxIndex;
 	  }, data);
-	};
-	
-	var groupValuesByProvidedColumnGrouping = function groupValuesByProvidedColumnGrouping(grouping, data) {
-	  var indexesPerGroup = [].concat.apply([], data.xAxisCategories.map(function (e, ix) {
-	    var groups = [].concat.apply([], e.info.groupings.filter(function (g) {
-	      return g.name == grouping;
-	    }).map(function (g) {
-	      return g.values.map(function (value) {
-	        return value.label;
-	      });
-	    }).concat([[]])[0]).map(function (group) {
-	      return [group, ix];
-	    });
-	    return groups.length ? groups : [[e.label, ix]];
-	  }));
-	
-	  var _hasSmallerNonunique = function _hasSmallerNonunique(xs, ys) {
-	    //xs, ys sorted
-	    var _xs = xs.filter(function (x) {
-	      return ys.indexOf(x) == -1;
-	    });
-	    var _ys = ys.filter(function (y) {
-	      return xs.indexOf(y) == -1;
-	    });
-	    return !_xs.length || !_ys.length ? -_xs.length * xs.length + _ys.length * ys.length : _xs[0] - _ys[0];
-	  };
-	  var groupsAndTheirIndices = indexesPerGroup.map(function (e) {
-	    return e[0];
-	  }).filter(function (e, ix, self) {
-	    return self.indexOf(e) == ix;
-	  }).map(function (group) {
-	    return [group, indexesPerGroup.filter(function (e) {
-	      return e[0] == group;
-	    }).map(function (e) {
-	      return e[1];
-	    }).sort(function (l, r) {
-	      return l - r;
-	    })];
-	  }).sort(function (l, r) {
-	    return _hasSmallerNonunique(l[1], r[1]);
-	  });
-	  var dataSeriesPointsPerNewXAndY = [].concat.apply([], [].concat.apply([], data.dataSeries.map(function (dataSeries, dataSeriesIndex) {
-	    return dataSeries.data.map(function (point) {
-	      return groupsAndTheirIndices.map(function (e, ix) {
-	        return [e, ix];
-	      }).filter(function (e) {
-	        return e[0][1].indexOf(point.x) > -1;
-	      }).map(function (e) {
-	        return {
-	          point: point,
-	          newX: e[1],
-	          dataSeriesIndex: dataSeriesIndex
-	        };
-	      });
-	    });
-	  }))).reduce(function (acc, e) {
-	    var key = e.newX + " " + e.point.y;
-	    (acc[key] = acc[key] || []).push(e);
-	    return acc;
-	  }, {});
-	
-	  var newDataSeries = Object.keys(dataSeriesPointsPerNewXAndY).map(function (k) {
-	    return dataSeriesPointsPerNewXAndY[k];
-	  }).filter(function (e) {
-	    return e.length;
-	  }) //should not happen?
-	  .map(function (points) {
-	    points.sort(function (l, r) {
-	      return -l.point.value + r.point.value;
-	    });
-	    return [points[0].dataSeriesIndex, Object.assign({}, points[0].point, {
-	      x: points[0].newX,
-	      info: Object.assign({}, points[0].point.info, points.length > 1 ? {
-	        aggregated: points.map(function (e) {
-	          return Object.assign({}, e.point, {
-	            info: Object.assign({
-	              xLabel: data.xAxisCategories[e.point.x].label
-	            }, e.point.info)
-	          });
-	        }),
-	        xAxisLegendName: data.xAxisCategories[points[0].point.x].info.groupings.filter(function (g) {
-	          return g.name == grouping;
-	        }).map(function (g) {
-	          return g.memberName;
-	        }).concat([""])[0],
-	        xId: points.map(function (e) {
-	          return data.xAxisCategories[e.point.x].id;
-	        })
-	      } : { xLabel: data.xAxisCategories[points[0].point.x].label,
-	        xId: data.xAxisCategories[points[0].point.x].id
-	      })
-	    })];
-	  }).reduce(function (dataSeriesAcc, x) {
-	    dataSeriesAcc[x[0]].data.push(x[1]);
-	    return dataSeriesAcc;
-	  }, data.dataSeries.map(function (ds) {
-	    return { info: ds.info, data: [] };
-	  }));
-	
-	  var _isUniqueGroup = function _isUniqueGroup(groupAndIndices, groupIndex, allGroupsAndTheirIndices) {
-	    return ![].concat.apply([], allGroupsAndTheirIndices.filter(function (e, ix) {
-	      return ix != groupIndex;
-	    }).map(function (e) {
-	      return e[1];
-	    })).some(function (i) {
-	      return groupAndIndices[1].indexOf(i) > -1;
-	    });
-	  };
-	  return {
-	    xAxisCategories: groupsAndTheirIndices.map(function (groupAndIndices, groupIndex, self) {
-	      var xAxisCategoriesForThisGroup = data.xAxisCategories.filter(function (e, ix) {
-	        return groupAndIndices[1].indexOf(ix) > -1;
-	      });
-	      return xAxisCategoriesForThisGroup.length == 1 && _isUniqueGroup(groupAndIndices, groupIndex, self) ? xAxisCategoriesForThisGroup[0] : {
-	        label: groupAndIndices[0],
-	        id: xAxisCategoriesForThisGroup.map(function (e) {
-	          return e.id;
-	        }),
-	        info: {
-	          trackId: xAxisCategoriesForThisGroup.map(function (e) {
-	            return e.info.trackId;
-	          }).filter(function (e, ix, self) {
-	            return self.indexOf(e) == ix;
-	          }),
-	          tooltip: { properties: [].concat.apply([], xAxisCategoriesForThisGroup.map(function (columnHeader) {
-	              return columnHeader.info.tooltip.properties || [];
-	            }))
-	          },
-	          groupings: []
-	        }
-	      };
-	    }),
-	    yAxisCategories: data.yAxisCategories,
-	    dataSeries: newDataSeries
-	  };
 	};
 	
 	var _calculateInserts = function _calculateInserts(fullColumns, originalColumns) {
@@ -41739,13 +41746,12 @@ webpackJsonp_name_([5],[
 	};
 	
 	exports.insertEmptyColumns = insertEmptyColumns;
-	exports.group = groupValuesByProvidedColumnGrouping;
 	exports.filterByIndex = filterHeatmapDataByCoexpressionIndex;
 	exports.filterByDataSeries = filterHeatmapDataByDataSeries;
 	exports.order = orderHeatmapData;
 	
 	exports.manipulate = function (args, data) {
-	  return groupValuesByProvidedColumnGrouping(args.grouping, insertEmptyColumns(args.allowEmptyColumns ? orderHeatmapData(args.ordering, data).xAxisCategories : [], filterHeatmapDataByCoexpressionIndex(args.maxIndex, filterHeatmapDataByDataSeries(args.dataSeriesToKeep, orderHeatmapData(args.ordering, data)))));
+	  return insertEmptyColumns(args.allowEmptyColumns ? orderHeatmapData(args.ordering, data).xAxisCategories : [], filterHeatmapDataByGroupingOfRows(args.grouping, args.group, filterHeatmapDataByCoexpressionIndex(args.maxIndex, filterHeatmapDataByDataSeries(args.dataSeriesToKeep, orderHeatmapData(args.ordering, data)))));
 	};
 
 /***/ },

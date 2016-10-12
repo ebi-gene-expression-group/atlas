@@ -11129,7 +11129,7 @@ webpackJsonp_name_([2],[
 	  var undefined;
 	
 	  /** Used as the semantic version number. */
-	  var VERSION = '4.16.2';
+	  var VERSION = '4.16.4';
 	
 	  /** Used as the size to enable large array optimizations. */
 	  var LARGE_ARRAY_SIZE = 200;
@@ -11212,6 +11212,7 @@ webpackJsonp_name_([2],[
 	      numberTag = '[object Number]',
 	      objectTag = '[object Object]',
 	      promiseTag = '[object Promise]',
+	      proxyTag = '[object Proxy]',
 	      regexpTag = '[object RegExp]',
 	      setTag = '[object Set]',
 	      stringTag = '[object String]',
@@ -12586,13 +12587,20 @@ webpackJsonp_name_([2],[
 	        Symbol = context.Symbol,
 	        Uint8Array = context.Uint8Array,
 	        allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined,
-	        defineProperty = Object.defineProperty,
 	        getPrototype = overArg(Object.getPrototypeOf, Object),
 	        iteratorSymbol = Symbol ? Symbol.iterator : undefined,
 	        objectCreate = Object.create,
 	        propertyIsEnumerable = objectProto.propertyIsEnumerable,
 	        splice = arrayProto.splice,
 	        spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
+	
+	    var defineProperty = (function() {
+	      try {
+	        var func = getNative(Object, 'defineProperty');
+	        func({}, '', {});
+	        return func;
+	      } catch (e) {}
+	    }());
 	
 	    /** Mocked built-ins. */
 	    var ctxClearTimeout = context.clearTimeout !== root.clearTimeout && context.clearTimeout,
@@ -12620,8 +12628,7 @@ webpackJsonp_name_([2],[
 	        Promise = getNative(context, 'Promise'),
 	        Set = getNative(context, 'Set'),
 	        WeakMap = getNative(context, 'WeakMap'),
-	        nativeCreate = getNative(Object, 'create'),
-	        nativeDefineProperty = getNative(Object, 'defineProperty');
+	        nativeCreate = getNative(Object, 'create');
 	
 	    /** Used to store function metadata. */
 	    var metaMap = WeakMap && new WeakMap;
@@ -12789,7 +12796,7 @@ webpackJsonp_name_([2],[
 	        if (objectCreate) {
 	          return objectCreate(proto);
 	        }
-	        object.prototype = prototype;
+	        object.prototype = proto;
 	        var result = new object;
 	        object.prototype = undefined;
 	        return result;
@@ -13497,18 +13504,26 @@ webpackJsonp_name_([2],[
 	     * @returns {Array} Returns the array of property names.
 	     */
 	    function arrayLikeKeys(value, inherited) {
-	      // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-	      // Safari 9 makes `arguments.length` enumerable in strict mode.
-	      var result = (isArray(value) || isArguments(value))
-	        ? baseTimes(value.length, String)
-	        : [];
-	
-	      var length = result.length,
-	          skipIndexes = !!length;
+	      var isArr = isArray(value),
+	          isArg = !isArr && isArguments(value),
+	          isBuff = !isArr && !isArg && isBuffer(value),
+	          isType = !isArr && !isArg && !isBuff && isTypedArray(value),
+	          skipIndexes = isArr || isArg || isBuff || isType,
+	          result = skipIndexes ? baseTimes(value.length, String) : [],
+	          length = result.length;
 	
 	      for (var key in value) {
 	        if ((inherited || hasOwnProperty.call(value, key)) &&
-	            !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+	            !(skipIndexes && (
+	               // Safari 9 has enumerable `arguments.length` in strict mode.
+	               key == 'length' ||
+	               // Node.js 0.10 has enumerable non-index properties on buffers.
+	               (isBuff && (key == 'offset' || key == 'parent')) ||
+	               // PhantomJS 2 has enumerable non-index properties on typed arrays.
+	               (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
+	               // Skip index properties.
+	               isIndex(key, length)
+	            ))) {
 	          result.push(key);
 	        }
 	      }
@@ -13536,7 +13551,7 @@ webpackJsonp_name_([2],[
 	     * @returns {Array} Returns the random elements.
 	     */
 	    function arraySampleSize(array, n) {
-	      return shuffleSelf(copyArray(array), n);
+	      return shuffleSelf(copyArray(array), baseClamp(n, 0, array.length));
 	    }
 	
 	    /**
@@ -13579,7 +13594,7 @@ webpackJsonp_name_([2],[
 	     */
 	    function assignMergeValue(object, key, value) {
 	      if ((value !== undefined && !eq(object[key], value)) ||
-	          (typeof key == 'number' && value === undefined && !(key in object))) {
+	          (value === undefined && !(key in object))) {
 	        baseAssignValue(object, key, value);
 	      }
 	    }
@@ -13772,9 +13787,7 @@ webpackJsonp_name_([2],[
 	      }
 	      stack.set(value, result);
 	
-	      if (!isArr) {
-	        var props = isFull ? getAllKeys(value) : keys(value);
-	      }
+	      var props = isArr ? undefined : (isFull ? getAllKeys : keys)(value);
 	      arrayEach(props || value, function(subValue, key) {
 	        if (props) {
 	          key = subValue;
@@ -14309,6 +14322,17 @@ webpackJsonp_name_([2],[
 	    }
 	
 	    /**
+	     * The base implementation of `_.isArguments`.
+	     *
+	     * @private
+	     * @param {*} value The value to check.
+	     * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+	     */
+	    function baseIsArguments(value) {
+	      return isObjectLike(value) && objectToString.call(value) == argsTag;
+	    }
+	
+	    /**
 	     * The base implementation of `_.isArrayBuffer` without Node.js optimizations.
 	     *
 	     * @private
@@ -14388,6 +14412,13 @@ webpackJsonp_name_([2],[
 	          othIsObj = othTag == objectTag,
 	          isSameTag = objTag == othTag;
 	
+	      if (isSameTag && isBuffer(object)) {
+	        if (!isBuffer(other)) {
+	          return false;
+	        }
+	        objIsArr = true;
+	        objIsObj = false;
+	      }
 	      if (isSameTag && !objIsObj) {
 	        stack || (stack = new Stack);
 	        return (objIsArr || isTypedArray(object))
@@ -14677,14 +14708,7 @@ webpackJsonp_name_([2],[
 	      if (object === source) {
 	        return;
 	      }
-	      if (!(isArray(source) || isTypedArray(source))) {
-	        var props = baseKeysIn(source);
-	      }
-	      arrayEach(props || source, function(srcValue, key) {
-	        if (props) {
-	          key = srcValue;
-	          srcValue = source[key];
-	        }
+	      baseFor(source, function(srcValue, key) {
 	        if (isObject(srcValue)) {
 	          stack || (stack = new Stack);
 	          baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
@@ -14699,7 +14723,7 @@ webpackJsonp_name_([2],[
 	          }
 	          assignMergeValue(object, key, newValue);
 	        }
-	      });
+	      }, keysIn);
 	    }
 	
 	    /**
@@ -14733,29 +14757,37 @@ webpackJsonp_name_([2],[
 	      var isCommon = newValue === undefined;
 	
 	      if (isCommon) {
+	        var isArr = isArray(srcValue),
+	            isBuff = !isArr && isBuffer(srcValue),
+	            isTyped = !isArr && !isBuff && isTypedArray(srcValue);
+	
 	        newValue = srcValue;
-	        if (isArray(srcValue) || isTypedArray(srcValue)) {
+	        if (isArr || isBuff || isTyped) {
 	          if (isArray(objValue)) {
 	            newValue = objValue;
 	          }
 	          else if (isArrayLikeObject(objValue)) {
 	            newValue = copyArray(objValue);
 	          }
-	          else {
+	          else if (isBuff) {
 	            isCommon = false;
-	            newValue = baseClone(srcValue, true);
+	            newValue = cloneBuffer(srcValue, true);
+	          }
+	          else if (isTyped) {
+	            isCommon = false;
+	            newValue = cloneTypedArray(srcValue, true);
+	          }
+	          else {
+	            newValue = [];
 	          }
 	        }
 	        else if (isPlainObject(srcValue) || isArguments(srcValue)) {
+	          newValue = objValue;
 	          if (isArguments(objValue)) {
 	            newValue = toPlainObject(objValue);
 	          }
 	          else if (!isObject(objValue) || (srcIndex && isFunction(objValue))) {
-	            isCommon = false;
-	            newValue = baseClone(srcValue, true);
-	          }
-	          else {
-	            newValue = objValue;
+	            newValue = initCloneObject(srcValue);
 	          }
 	        }
 	        else {
@@ -15037,7 +15069,8 @@ webpackJsonp_name_([2],[
 	     * @returns {Array} Returns the random elements.
 	     */
 	    function baseSampleSize(collection, n) {
-	      return shuffleSelf(values(collection), n);
+	      var array = values(collection);
+	      return shuffleSelf(array, baseClamp(n, 0, array.length));
 	    }
 	
 	    /**
@@ -15101,8 +15134,8 @@ webpackJsonp_name_([2],[
 	     * @param {Function} string The `toString` result.
 	     * @returns {Function} Returns `func`.
 	     */
-	    var baseSetToString = !nativeDefineProperty ? identity : function(func, string) {
-	      return nativeDefineProperty(func, 'toString', {
+	    var baseSetToString = !defineProperty ? identity : function(func, string) {
+	      return defineProperty(func, 'toString', {
 	        'configurable': true,
 	        'enumerable': false,
 	        'value': constant(string),
@@ -15313,6 +15346,10 @@ webpackJsonp_name_([2],[
 	      // Exit early for strings to avoid a performance hit in some environments.
 	      if (typeof value == 'string') {
 	        return value;
+	      }
+	      if (isArray(value)) {
+	        // Recursively convert values (susceptible to call stack limits).
+	        return arrayMap(value, baseToString) + '';
 	      }
 	      if (isSymbol(value)) {
 	        return symbolToString ? symbolToString.call(value) : '';
@@ -17709,7 +17746,7 @@ webpackJsonp_name_([2],[
 	          length = array.length,
 	          lastIndex = length - 1;
 	
-	      size = size === undefined ? length : baseClamp(size, 0, length);
+	      size = size === undefined ? length : size;
 	      while (++index < size) {
 	        var rand = baseRandom(index, lastIndex),
 	            value = array[rand];
@@ -22282,11 +22319,10 @@ webpackJsonp_name_([2],[
 	     * _.isArguments([1, 2, 3]);
 	     * // => false
 	     */
-	    function isArguments(value) {
-	      // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-	      return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
-	        (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
-	    }
+	    var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsArguments : function(value) {
+	      return isObjectLike(value) && hasOwnProperty.call(value, 'callee') &&
+	        !propertyIsEnumerable.call(value, 'callee');
+	    };
 	
 	    /**
 	     * Checks if `value` is classified as an `Array` object.
@@ -22506,8 +22542,8 @@ webpackJsonp_name_([2],[
 	     */
 	    function isEmpty(value) {
 	      if (isArrayLike(value) &&
-	          (isArray(value) || typeof value == 'string' ||
-	            typeof value.splice == 'function' || isBuffer(value) || isArguments(value))) {
+	          (isArray(value) || typeof value == 'string' || typeof value.splice == 'function' ||
+	            isBuffer(value) || isTypedArray(value) || isArguments(value))) {
 	        return !value.length;
 	      }
 	      var tag = getTag(value);
@@ -22515,7 +22551,7 @@ webpackJsonp_name_([2],[
 	        return !value.size;
 	      }
 	      if (isPrototype(value)) {
-	        return !nativeKeys(value).length;
+	        return !baseKeys(value).length;
 	      }
 	      for (var key in value) {
 	        if (hasOwnProperty.call(value, key)) {
@@ -22670,9 +22706,9 @@ webpackJsonp_name_([2],[
 	     */
 	    function isFunction(value) {
 	      // The use of `Object#toString` avoids issues with the `typeof` operator
-	      // in Safari 8-9 which returns 'object' for typed array and other constructors.
+	      // in Safari 9 which returns 'object' for typed array and other constructors.
 	      var tag = isObject(value) ? objectToString.call(value) : '';
-	      return tag == funcTag || tag == genTag;
+	      return tag == funcTag || tag == genTag || tag == proxyTag;
 	    }
 	
 	    /**
@@ -23560,8 +23596,8 @@ webpackJsonp_name_([2],[
 	     * @memberOf _
 	     * @since 4.0.0
 	     * @category Lang
-	     * @param {*} value The value to process.
-	     * @returns {string} Returns the string.
+	     * @param {*} value The value to convert.
+	     * @returns {string} Returns the converted string.
 	     * @example
 	     *
 	     * _.toString(null);
@@ -24745,22 +24781,23 @@ webpackJsonp_name_([2],[
 	     * // => { '1': ['a', 'c'], '2': ['b'] }
 	     */
 	    function transform(object, iteratee, accumulator) {
-	      var isArr = isArray(object) || isTypedArray(object);
-	      iteratee = getIteratee(iteratee, 4);
+	      var isArr = isArray(object),
+	          isArrLike = isArr || isBuffer(object) || isTypedArray(object);
 	
+	      iteratee = getIteratee(iteratee, 4);
 	      if (accumulator == null) {
-	        if (isArr || isObject(object)) {
-	          var Ctor = object.constructor;
-	          if (isArr) {
-	            accumulator = isArray(object) ? new Ctor : [];
-	          } else {
-	            accumulator = isFunction(Ctor) ? baseCreate(getPrototype(object)) : {};
-	          }
-	        } else {
+	        var Ctor = object && object.constructor;
+	        if (isArrLike) {
+	          accumulator = isArr ? new Ctor : [];
+	        }
+	        else if (isObject(object)) {
+	          accumulator = isFunction(Ctor) ? baseCreate(getPrototype(object)) : {};
+	        }
+	        else {
 	          accumulator = {};
 	        }
 	      }
-	      (isArr ? arrayEach : baseForOwn)(object, function(value, index, object) {
+	      (isArrLike ? arrayEach : baseForOwn)(object, function(value, index, object) {
 	        return iteratee(accumulator, value, index, object);
 	      });
 	      return accumulator;
@@ -28293,6 +28330,7 @@ webpackJsonp_name_([2],[
 	  available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
 	  current: React.PropTypes.string.isRequired,
 	  onSelect: React.PropTypes.func.isRequired,
+	  onDismissDropdown: React.PropTypes.func,
 	  disabled: React.PropTypes.bool
 	};
 	
@@ -32540,17 +32578,21 @@ webpackJsonp_name_([2],[
 	
 	var _columnGroupings = function _columnGroupings(columnGroupings, id) {
 	  return columnGroupings.map(function (grouping) {
+	    var values = grouping.groups.filter(function (group) {
+	      return group.values.indexOf(id) > -1;
+	    }).map(function (group) {
+	      return {
+	        label: group.name,
+	        id: group.id
+	      };
+	    });
 	    return {
 	      name: grouping.name,
 	      memberName: grouping.memberName,
-	      values: grouping.groups.filter(function (group) {
-	        return group.values.indexOf(id) > -1;
-	      }).map(function (group) {
-	        return {
-	          label: group.name,
-	          id: group.id
-	        };
-	      })
+	      values: values.length ? values : [{
+	        label: "Unmapped",
+	        id: ""
+	      }]
 	    };
 	  });
 	};
@@ -32825,6 +32867,7 @@ webpackJsonp_name_([2],[
 	    return {
 	      ordering: "Default",
 	      grouping: "Default",
+	      group: "",
 	      dataSeriesToShow: this.props.loadResult.heatmapData.dataSeries.map(function (e) {
 	        return true;
 	      }),
@@ -32843,8 +32886,9 @@ webpackJsonp_name_([2],[
 	    return __webpack_require__(/*! ./Manipulators.js */ 2150).manipulate({
 	      ordering: this.props.loadResult.orderings[this.state.ordering],
 	      grouping: this.state.grouping,
+	      group: this.state.group,
 	      dataSeriesToKeep: this.state.dataSeriesToShow,
-	      allowEmptyColumns: this.props.loadResult.heatmapConfig.isExperimentPage,
+	      allowEmptyColumns: this.props.loadResult.heatmapConfig.isExperimentPage && (this.state.grouping === this.getInitialState().grouping || !this.state.group),
 	      maxIndex: this.state.coexpressionsShown
 	    }, this.props.loadResult.heatmapData);
 	  },
@@ -32858,18 +32902,6 @@ webpackJsonp_name_([2],[
 	    });
 	  },
 	
-	  _makeLabelToggle: function _makeLabelToggle(ix) {
-	    return function () {
-	      this.setState(function (previousState) {
-	        return Object.assign(previousState, {
-	          dataSeriesToShow: previousState.dataSeriesToShow.map(function (e, jx) {
-	            return ix === jx ? !e : e;
-	          })
-	        });
-	      });
-	    }.bind(this);
-	  },
-	
 	  _orderings: function _orderings() {
 	    return {
 	      available: Object.keys(this.props.loadResult.orderings),
@@ -32881,6 +32913,98 @@ webpackJsonp_name_([2],[
 	    };
 	  },
 	
+	  _filters: function _filters() {
+	    var _this = this;
+	
+	    return [{
+	      name: "Select filter...",
+	      value: {
+	        available: [],
+	        current: "",
+	        onSelect: function onSelect() {
+	          _this.setState({
+	            grouping: _this.getInitialState().grouping,
+	            group: _this.getInitialState().group
+	          });
+	        },
+	        disabled: true,
+	        onDismissDropdown: function onDismissDropdown() {}
+	      }
+	    }, { name: "Expression Value" + (this.props.loadResult.heatmapConfig.isExperimentPage ? "- relative" : ""),
+	      value: {
+	        available: ["All"].concat(this.props.loadResult.heatmapData.dataSeries.map(function (e) {
+	          return e.info.name;
+	        })),
+	        current: this.state.dataSeriesToShow.reduce(function (l, r) {
+	          return l && r;
+	        }, true) ? "All" : this.props.loadResult.heatmapData.dataSeries[this.state.dataSeriesToShow.indexOf(true)].info.name,
+	        onSelect: function onSelect(selectedDataSeries) {
+	          var ix = _this.props.loadResult.heatmapData.dataSeries.map(function (e) {
+	            return e.info.name;
+	          }).indexOf(selectedDataSeries);
+	          var isAll = !selectedDataSeries || selectedDataSeries === "All";
+	          _this.setState(function (previousState) {
+	            return Object.assign(previousState, {
+	              grouping: _this.getInitialState().grouping,
+	              group: _this.getInitialState().group,
+	              dataSeriesToShow: previousState.dataSeriesToShow.map(function (e, jx) {
+	                return isAll || ix === jx;
+	              })
+	            });
+	          });
+	        },
+	        onDismissDropdown: function onDismissDropdown() {
+	          _this.setState(function (previousState) {
+	            return {
+	              dataSeriesToShow: previousState.dataSeriesToShow.map(function (e) {
+	                return true;
+	              })
+	            };
+	          });
+	        }
+	      }
+	    }].concat(this._groupingFilters());
+	  },
+	
+	  _groupingFilters: function _groupingFilters() {
+	    var _this2 = this;
+	
+	    var groupingNames = [].concat.apply([], this.props.loadResult.heatmapData.xAxisCategories.map(function (columnHeader) {
+	      return (columnHeader.info.groupings || []).map(function (grouping) {
+	        return grouping.name;
+	      });
+	    })).filter(function (e, ix, self) {
+	      return self.indexOf(e) === ix;
+	    });
+	
+	    return groupingNames.map(function (name) {
+	      return {
+	        name: name,
+	        value: {
+	          current: _this2.state.grouping === name ? _this2.state.group : "All",
+	          available: ["All"].concat([].concat.apply([], _this2.props.loadResult.heatmapData.xAxisCategories.map(function (columnHeader) {
+	            return (columnHeader.info.groupings || []).filter(function (grouping) {
+	              return grouping.name;
+	            }).map(function (grouping) {
+	              return grouping.values.map(function (g) {
+	                return g.label;
+	              });
+	            }).concat([[]])[0];
+	          })).filter(function (e, ix, self) {
+	            return self.indexOf(e) === ix;
+	          }).sort()),
+	          onSelect: function onSelect(group) {
+	            _this2.setState({
+	              grouping: name,
+	              group: group === "All" ? "" : group
+	            });
+	          },
+	          onDismissDropdown: function onDismissDropdown() {}
+	        }
+	      };
+	    });
+	  },
+	
 	  _legend: function _legend() {
 	    //See properties required for HeatmapLegendBox
 	    return this.props.loadResult.heatmapData.dataSeries.map(function (e, ix) {
@@ -32888,46 +33012,27 @@ webpackJsonp_name_([2],[
 	        key: e.info.name,
 	        name: e.info.name,
 	        colour: e.info.colour,
-	        on: this.state.dataSeriesToShow[ix],
-	        onClickCallback: this._makeLabelToggle(ix),
-	        clickable: true
+	        on: this.state.dataSeriesToShow[ix]
 	      };
 	    }.bind(this));
 	  },
 	
-	  _groupings: function _groupings() {
-	    return {
-	      available: [].concat.apply(["Default"], this.props.loadResult.heatmapData.xAxisCategories.map(function (columnHeader) {
-	        return (columnHeader.info.groupings || []).map(function (grouping) {
-	          return grouping.name;
-	        });
-	      })).filter(function (e, ix, self) {
-	        return self.indexOf(e) == ix;
-	      }),
-	      current: this.state.grouping,
-	      disabled: this.state.zoom,
-	      onSelect: function (groupingChosen) {
-	        this.setState({ grouping: groupingChosen });
-	      }.bind(this)
-	    };
-	  },
-	
 	  _coexpressionOption: function _coexpressionOption() {
-	    var _this = this;
+	    var _this3 = this;
 	
 	    return this.props.loadResult.heatmapConfig.coexpressions && {
 	      geneName: this.props.loadResult.heatmapConfig.coexpressions.coexpressedGene,
 	      numCoexpressionsVisible: this.state.coexpressionsShown,
 	      numCoexpressionsAvailable: this.props.loadResult.heatmapConfig.coexpressions.numCoexpressionsAvailable,
 	      showCoexpressionsCallback: function showCoexpressionsCallback(e) {
-	        _this.setState({ coexpressionsShown: e });
+	        _this3.setState({ coexpressionsShown: e });
 	      }
 	    };
 	  },
 	
 	  render: function render() {
 	    var heatmapDataToPresent = this._heatmapDataToPresent();
-	    return Show(heatmapDataToPresent, this._orderings(), this._onUserZoom, this.props.loadResult.colorAxis || undefined, FormattersFactory(this.props.loadResult.heatmapConfig), TooltipsFactory(this.props.loadResult.heatmapConfig, heatmapDataToPresent.xAxisCategories, heatmapDataToPresent.yAxisCategories), this._legend(), this._coexpressionOption(), this._groupings(), this.props);
+	    return Show(heatmapDataToPresent, this._orderings(), this._filters(), this._onUserZoom, this.props.loadResult.colorAxis || undefined, FormattersFactory(this.props.loadResult.heatmapConfig), TooltipsFactory(this.props.loadResult.heatmapConfig, heatmapDataToPresent.xAxisCategories, heatmapDataToPresent.yAxisCategories), this._legend(), this._coexpressionOption(), this.props);
 	  }
 	});
 
@@ -34427,6 +34532,7 @@ webpackJsonp_name_([2],[
 	
 	exports.default = function (node, event, handler, capture) {
 	  (0, _on2.default)(node, event, handler, capture);
+	
 	  return {
 	    remove: function remove() {
 	      (0, _off2.default)(node, event, handler, capture);
@@ -35441,13 +35547,28 @@ webpackJsonp_name_([2],[
 	var RootCloseWrapper = function (_React$Component) {
 	  _inherits(RootCloseWrapper, _React$Component);
 	
-	  function RootCloseWrapper(props) {
+	  function RootCloseWrapper(props, context) {
 	    _classCallCheck(this, RootCloseWrapper);
 	
-	    var _this = _possibleConstructorReturn(this, (RootCloseWrapper.__proto__ || Object.getPrototypeOf(RootCloseWrapper)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (RootCloseWrapper.__proto__ || Object.getPrototypeOf(RootCloseWrapper)).call(this, props, context));
 	
-	    _this.handleDocumentMouse = _this.handleDocumentMouse.bind(_this);
-	    _this.handleDocumentKeyUp = _this.handleDocumentKeyUp.bind(_this);
+	    _this.handleMouseCapture = function (e) {
+	      _this.preventMouseRootClose = isModifiedEvent(e) || !isLeftClickEvent(e) || (0, _contains2.default)(_reactDom2.default.findDOMNode(_this), e.target);
+	    };
+	
+	    _this.handleMouse = function () {
+	      if (!_this.preventMouseRootClose && _this.props.onRootClose) {
+	        _this.props.onRootClose();
+	      }
+	    };
+	
+	    _this.handleKeyUp = function (e) {
+	      if (e.keyCode === 27 && _this.props.onRootClose) {
+	        _this.props.onRootClose();
+	      }
+	    };
+	
+	    _this.preventMouseRootClose = false;
 	    return _this;
 	  }
 	
@@ -35455,64 +35576,54 @@ webpackJsonp_name_([2],[
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      if (!this.props.disabled) {
-	        this.bindRootCloseHandlers();
+	        this.addEventListeners();
 	      }
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate(prevProps) {
 	      if (!this.props.disabled && prevProps.disabled) {
-	        this.bindRootCloseHandlers();
+	        this.addEventListeners();
 	      } else if (this.props.disabled && !prevProps.disabled) {
-	        this.unbindRootCloseHandlers();
+	        this.removeEventListeners();
 	      }
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      if (!this.props.disabled) {
-	        this.unbindRootCloseHandlers();
+	        this.removeEventListeners();
 	      }
 	    }
 	  }, {
-	    key: 'bindRootCloseHandlers',
-	    value: function bindRootCloseHandlers() {
+	    key: 'addEventListeners',
+	    value: function addEventListeners() {
+	      var event = this.props.event;
+	
 	      var doc = (0, _ownerDocument2.default)(this);
 	
 	      // Use capture for this listener so it fires before React's listener, to
 	      // avoid false positives in the contains() check below if the target DOM
 	      // element is removed in the React mouse callback.
-	      this._onDocumentMouseListener = (0, _addEventListener2.default)(doc, this.props.event, this.handleDocumentMouse, true);
+	      this.documentMouseCaptureListener = (0, _addEventListener2.default)(doc, event, this.handleMouseCapture, true);
 	
-	      this._onDocumentKeyupListener = (0, _addEventListener2.default)(doc, 'keyup', this.handleDocumentKeyUp);
+	      this.documentMouseListener = (0, _addEventListener2.default)(doc, event, this.handleMouse);
+	
+	      this.documentKeyupListener = (0, _addEventListener2.default)(doc, 'keyup', this.handleKeyUp);
 	    }
 	  }, {
-	    key: 'unbindRootCloseHandlers',
-	    value: function unbindRootCloseHandlers() {
-	      if (this._onDocumentMouseListener) {
-	        this._onDocumentMouseListener.remove();
+	    key: 'removeEventListeners',
+	    value: function removeEventListeners() {
+	      if (this.documentMouseCaptureListener) {
+	        this.documentMouseCaptureListener.remove();
 	      }
 	
-	      if (this._onDocumentKeyupListener) {
-	        this._onDocumentKeyupListener.remove();
-	      }
-	    }
-	  }, {
-	    key: 'handleDocumentMouse',
-	    value: function handleDocumentMouse(e) {
-	      if (this.props.disabled || isModifiedEvent(e) || !isLeftClickEvent(e) || (0, _contains2.default)(_reactDom2.default.findDOMNode(this), e.target)) {
-	        return;
+	      if (this.documentMouseListener) {
+	        this.documentMouseListener.remove();
 	      }
 	
-	      if (this.props.onRootClose) {
-	        this.props.onRootClose();
-	      }
-	    }
-	  }, {
-	    key: 'handleDocumentKeyUp',
-	    value: function handleDocumentKeyUp(e) {
-	      if (e.keyCode === 27 && this.props.onRootClose) {
-	        this.props.onRootClose();
+	      if (this.documentKeyupListener) {
+	        this.documentKeyupListener.remove();
 	      }
 	    }
 	  }, {
@@ -35737,13 +35848,10 @@ webpackJsonp_name_([2],[
 	    foldChange: React.PropTypes.number,
 	    pValue: React.PropTypes.string,
 	    tStat: React.PropTypes.string,
-	    aggregated: React.PropTypes.arrayOf(PropTypes.Point),
 	    xAxisLegendName: React.PropTypes.string
 	  }, //TODO extend this prop checker.Props for this component are created dynamically so it's important. If differential, expect p-values and fold changes, etc.
 	
 	  render: function render() {
-	    var _this = this;
-	
 	    return React.createElement(
 	      'div',
 	      { style: { whiteSpace: "pre" } },
@@ -35757,13 +35865,7 @@ webpackJsonp_name_([2],[
 	      ), this._div("P-value", this.props.pValue, scientificNotation), this._div("T-statistic", this.props.tStat)] : React.createElement(
 	        'div',
 	        null,
-	        this.props.aggregated ? [this._tinySquare(), this._span("Expression level (max)", this.props.value ? this.props.value + " " + (this.props.unit || "") : "Below cutoff"), React.createElement(
-	          'div',
-	          { key: "" },
-	          "Aggregated: "
-	        )].concat(this.props.aggregated.map(function (aggregatedPoint) {
-	          return _this._div(aggregatedPoint.info.xLabel, aggregatedPoint.value ? aggregatedPoint.value + " " + (_this.props.unit || "") : "Below cutoff");
-	        })) : [this._tinySquare(), this._span("Expression level", this.props.value ? this.props.value + " " + (this.props.unit || "") : "Below cutoff")]
+	        [this._tinySquare(), this._span("Expression level", this.props.value ? this.props.value + " " + (this.props.unit || "") : "Below cutoff")]
 	      ),
 	      !!this.props.config.genomeBrowserTemplate ? this._info("Click on the cell to show expression in the Genome Browser") : null
 	    );
@@ -36902,8 +37004,8 @@ webpackJsonp_name_([2],[
 	var HeatmapCanvas = __webpack_require__(/*! ./HeatmapCanvas.jsx */ 1958);
 	var CoexpressionOption = __webpack_require__(/*! ./CoexpressionOption.jsx */ 1982);
 	
-	var OrderingDropdown = __webpack_require__(/*! ./SelectionDropdownFactory.jsx */ 2133)("Sort by: ");
-	var GroupingDropdown = __webpack_require__(/*! ./SelectionDropdownFactory.jsx */ 2133)("Group by: ");
+	var dropdownFactory = __webpack_require__(/*! ./SelectionDropdownFactory.jsx */ 2133);
+	var OrderingDropdown = dropdownFactory("Sort by: ");
 	
 	var TooltipStateManager = __webpack_require__(/*! ../util/TooltipStateManager.jsx */ 2134);
 	
@@ -36916,16 +37018,13 @@ webpackJsonp_name_([2],[
 	  propTypes: {
 	    name: React.PropTypes.string.isRequired,
 	    colour: React.PropTypes.string.isRequired,
-	    on: React.PropTypes.bool.isRequired,
-	    onClickCallback: React.PropTypes.func.isRequired,
-	    clickable: React.PropTypes.bool.isRequired
+	    on: React.PropTypes.bool.isRequired
 	  },
 	
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: "legend-item " + (this.props.clickable ? "clickable " : "") + (this.props.clickable && !this.props.on ? "legend-item-off" : ""),
-	        onClick: this.props.onClickCallback },
+	      { className: "legend-item " + (this.props.on ? "" : " legend-item-off") },
 	      React.createElement('div', { style: { background: this.props.colour }, className: 'legend-rectangle' }),
 	      React.createElement(
 	        'span',
@@ -36945,7 +37044,78 @@ webpackJsonp_name_([2],[
 	    googleAnalyticsCallback: React.PropTypes.func.isRequired,
 	    showUsageMessage: React.PropTypes.bool.isRequired,
 	    orderings: React.PropTypes.shape(PropTypes.SelectionDropdown),
-	    groupings: React.PropTypes.shape(PropTypes.SelectionDropdown)
+	    filters: React.PropTypes.arrayOf(React.PropTypes.shape({
+	      name: React.PropTypes.string.isRequired,
+	      value: React.PropTypes.shape(PropTypes.SelectionDropdown)
+	    }))
+	  },
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      selectedFilter: this.props.filters[0].name
+	    };
+	  },
+	
+	  componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
+	    var _this = this;
+	
+	    if (this.state.selectedFilter !== nextState.selectedFilter) {
+	      this.props.filters.filter(function (e) {
+	        return e.name === nextState.selectedFilter;
+	      }).forEach(function (e) {
+	        return e.value.onSelect("");
+	      });
+	
+	      this.props.filters.filter(function (e) {
+	        return e.name === _this.state.selectedFilter;
+	      }).forEach(function (e) {
+	        return e.value.onDismissDropdown && e.value.onDismissDropdown();
+	      });
+	    }
+	  },
+	
+	  _propsOfCurrentFilter: function _propsOfCurrentFilter() {
+	    var _this2 = this;
+	
+	    return this.props.filters.filter(function (e) {
+	      return e.name === _this2.state.selectedFilter;
+	    }).map(function (e) {
+	      return e.value;
+	    })[0];
+	  },
+	
+	  filters: function filters() {
+	    var _this3 = this;
+	
+	    var multipleFilters = function multipleFilters() {
+	      var FilterChoiceDropdown = dropdownFactory("Filter by: ");
+	      var FilteringDropdown = dropdownFactory("");
+	      var filterProps = _this3.props.filters.filter(function (e) {
+	        return e.name === _this3.state.selectedFilter;
+	      }).map(function (e) {
+	        return e.value;
+	      })[0];
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(FilterChoiceDropdown, {
+	          available: _this3.props.filters.map(function (e) {
+	            return e.name;
+	          }),
+	          current: _this3.state.selectedFilter,
+	          onSelect: function onSelect(e) {
+	            return _this3.setState({ selectedFilter: e });
+	          },
+	          disabled: false }),
+	        React.createElement(FilteringDropdown, filterProps)
+	      );
+	    };
+	    var singleFilter = function singleFilter() {
+	      var f = _this3.props.filters[_this3.props.filters.length - 1]; //skip the first, dummy, filter
+	      var FilteringDropdown = dropdownFactory("Filter by " + f.name.toLowerCase() + ": ");
+	      return React.createElement(FilteringDropdown, f.value);
+	    };
+	    return this.props.filters.length < 3 ? singleFilter() : multipleFilters();
 	  },
 	
 	  render: function render() {
@@ -36960,11 +37130,7 @@ webpackJsonp_name_([2],[
 	      React.createElement(
 	        'div',
 	        { style: { display: "inline-block", verticalAlign: "top", float: "right", marginRight: this.props.marginRight } },
-	        this.props.groupings.available.length > 1 ? React.createElement(GroupingDropdown, {
-	          available: this.props.groupings.available,
-	          current: this.props.groupings.current,
-	          onSelect: this.props.groupings.onSelect,
-	          disabled: this.props.groupings.disabled }) : null,
+	        this.filters(),
 	        this.props.orderings.available.length > 1 ? React.createElement(OrderingDropdown, {
 	          available: this.props.orderings.available,
 	          current: this.props.orderings.current,
@@ -37046,7 +37212,7 @@ webpackJsonp_name_([2],[
 	  };
 	};
 	
-	var show = function show(heatmapDataToPresent, orderings, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, groupings, properties) {
+	var show = function show(heatmapDataToPresent, orderings, filters, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, properties) {
 	  var marginRight = 60;
 	  var heatmapConfig = properties.loadResult.heatmapConfig;
 	
@@ -37062,7 +37228,7 @@ webpackJsonp_name_([2],[
 	        disclaimer: heatmapConfig.disclaimer
 	      },
 	      orderings: orderings,
-	      groupings: groupings,
+	      filters: filters,
 	      googleAnalyticsCallback: properties.googleAnalyticsCallback,
 	      showUsageMessage: heatmapDataToPresent.xAxisCategories.length > 100 }),
 	    React.createElement(
@@ -37103,9 +37269,7 @@ webpackJsonp_name_([2],[
 	      React.createElement(HeatmapLegendBox, { key: "No data available",
 	        name: "No data available",
 	        colour: "white",
-	        on: false,
-	        onClickCallback: function onClickCallback() {},
-	        clickable: false })
+	        on: true })
 	    ),
 	    coexpressions ? React.createElement(CoexpressionOption, coexpressions) : null
 	  );
@@ -42513,6 +42677,7 @@ webpackJsonp_name_([2],[
 	
 	module.exports = function (displayName) {
 	    return React.createClass({
+	        displayName: displayName,
 	        propTypes: PropTypes.SelectionDropdown,
 	
 	        getInitialState: function getInitialState() {
@@ -44034,7 +44199,7 @@ webpackJsonp_name_([2],[
 	
 	
 	// module
-	exports.push([module.id, ".gxaHeatmapLegend {\n  color: #606060;\n  margin-left: 180px;\n  border: 0 solid olive;\n}\n.gxaHeatmapLegend .legend-item {\n  display: inline-block;\n  margin-left: 8px;\n  padding: 4px;\n  vertical-align: middle;\n  cursor: default;\n}\n.gxaHeatmapLegend .legend-item.clickable {\n  cursor: pointer;\n}\n.gxaHeatmapLegend .legend-item.legend-item-off {\n  color: #ccc;\n}\n.gxaHeatmapLegend .legend-item.legend-item-off div {\n  background-color: #f7f7f7;\n}\n.gxaHeatmapLegend .legend-item .legend-rectangle {\n  width: 12px;\n  height: 12px;\n  border: 1px rgba(0, 0, 0, 0.2) solid;\n  display: inline-block;\n  margin-right: 4px;\n  vertical-align: middle;\n}\n.gxaHeatmapLegend .legend-item .icon-generic:before {\n  font-size: 180%;\n  color: #7e7e7e;\n}\n.gxaHeatmapLegend .legend-item:hover .icon-generic:before {\n  color: #353535;\n}\n@font-face {\n  font-family: 'EBI-Generic';\n  src: url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');\n  src: url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'), local('\\263A'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');\n  font-weight: normal;\n  font-style: normal;\n}\n.icon-generic:before {\n  font-family: 'EBI-Generic';\n  font-size: 100%;\n  color: #BBB;\n  content: attr(data-icon);\n  margin: 0 0 0 0;\n}\n", ""]);
+	exports.push([module.id, ".gxaHeatmapLegend {\n  color: #606060;\n  margin-left: 180px;\n  border: 0 solid olive;\n}\n.gxaHeatmapLegend .legend-item {\n  display: inline-block;\n  margin-left: 8px;\n  padding: 4px;\n  vertical-align: middle;\n  cursor: default;\n}\n.gxaHeatmapLegend .legend-item.legend-item-off {\n  color: #ccc;\n}\n.gxaHeatmapLegend .legend-item.legend-item-off div {\n  background-color: #f7f7f7;\n}\n.gxaHeatmapLegend .legend-item .legend-rectangle {\n  width: 12px;\n  height: 12px;\n  border: 1px rgba(0, 0, 0, 0.2) solid;\n  display: inline-block;\n  margin-right: 4px;\n  vertical-align: middle;\n}\n.gxaHeatmapLegend .legend-item .icon-generic:before {\n  font-size: 180%;\n  color: #7e7e7e;\n}\n.gxaHeatmapLegend .legend-item:hover .icon-generic:before {\n  color: #353535;\n}\n@font-face {\n  font-family: 'EBI-Generic';\n  src: url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');\n  src: url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'), local('\\263A'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'), url('https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');\n  font-weight: normal;\n  font-style: normal;\n}\n.icon-generic:before {\n  font-family: 'EBI-Generic';\n  font-size: 100%;\n  color: #BBB;\n  content: attr(data-icon);\n  margin: 0 0 0 0;\n}\n", ""]);
 	
 	// exports
 
@@ -44156,147 +44321,32 @@ webpackJsonp_name_([2],[
 	  }, data);
 	};
 	
+	var filterHeatmapDataByGroupingOfRows = function filterHeatmapDataByGroupingOfRows(grouping, group, data) {
+	  if (!grouping || !group || grouping === "Default") {
+	    return data;
+	  }
+	  var rowsToKeep = [].concat.apply([], data.xAxisCategories.map(function (e, ix) {
+	    return [].concat.apply([], e.info.groupings.filter(function (g) {
+	      return g.name == grouping;
+	    }).map(function (g) {
+	      return g.values.map(function (value) {
+	        return value.label;
+	      });
+	    })).indexOf(group) > -1 ? [ix] : [];
+	  }));
+	  return _filterHeatmapData(function (series, ix) {
+	    return true;
+	  }, function (point) {
+	    return rowsToKeep.indexOf(point.x) > -1;
+	  }, data);
+	};
+	
 	var filterHeatmapDataByCoexpressionIndex = function filterHeatmapDataByCoexpressionIndex(maxIndex, data) {
 	  return _filterHeatmapData(function (series, ix) {
 	    return true;
 	  }, function (point) {
 	    return point.info.index <= maxIndex;
 	  }, data);
-	};
-	
-	var groupValuesByProvidedColumnGrouping = function groupValuesByProvidedColumnGrouping(grouping, data) {
-	  var indexesPerGroup = [].concat.apply([], data.xAxisCategories.map(function (e, ix) {
-	    var groups = [].concat.apply([], e.info.groupings.filter(function (g) {
-	      return g.name == grouping;
-	    }).map(function (g) {
-	      return g.values.map(function (value) {
-	        return value.label;
-	      });
-	    }).concat([[]])[0]).map(function (group) {
-	      return [group, ix];
-	    });
-	    return groups.length ? groups : [[e.label, ix]];
-	  }));
-	
-	  var _hasSmallerNonunique = function _hasSmallerNonunique(xs, ys) {
-	    //xs, ys sorted
-	    var _xs = xs.filter(function (x) {
-	      return ys.indexOf(x) == -1;
-	    });
-	    var _ys = ys.filter(function (y) {
-	      return xs.indexOf(y) == -1;
-	    });
-	    return !_xs.length || !_ys.length ? -_xs.length * xs.length + _ys.length * ys.length : _xs[0] - _ys[0];
-	  };
-	  var groupsAndTheirIndices = indexesPerGroup.map(function (e) {
-	    return e[0];
-	  }).filter(function (e, ix, self) {
-	    return self.indexOf(e) == ix;
-	  }).map(function (group) {
-	    return [group, indexesPerGroup.filter(function (e) {
-	      return e[0] == group;
-	    }).map(function (e) {
-	      return e[1];
-	    }).sort(function (l, r) {
-	      return l - r;
-	    })];
-	  }).sort(function (l, r) {
-	    return _hasSmallerNonunique(l[1], r[1]);
-	  });
-	  var dataSeriesPointsPerNewXAndY = [].concat.apply([], [].concat.apply([], data.dataSeries.map(function (dataSeries, dataSeriesIndex) {
-	    return dataSeries.data.map(function (point) {
-	      return groupsAndTheirIndices.map(function (e, ix) {
-	        return [e, ix];
-	      }).filter(function (e) {
-	        return e[0][1].indexOf(point.x) > -1;
-	      }).map(function (e) {
-	        return {
-	          point: point,
-	          newX: e[1],
-	          dataSeriesIndex: dataSeriesIndex
-	        };
-	      });
-	    });
-	  }))).reduce(function (acc, e) {
-	    var key = e.newX + " " + e.point.y;
-	    (acc[key] = acc[key] || []).push(e);
-	    return acc;
-	  }, {});
-	
-	  var newDataSeries = Object.keys(dataSeriesPointsPerNewXAndY).map(function (k) {
-	    return dataSeriesPointsPerNewXAndY[k];
-	  }).filter(function (e) {
-	    return e.length;
-	  }) //should not happen?
-	  .map(function (points) {
-	    points.sort(function (l, r) {
-	      return -l.point.value + r.point.value;
-	    });
-	    return [points[0].dataSeriesIndex, Object.assign({}, points[0].point, {
-	      x: points[0].newX,
-	      info: Object.assign({}, points[0].point.info, points.length > 1 ? {
-	        aggregated: points.map(function (e) {
-	          return Object.assign({}, e.point, {
-	            info: Object.assign({
-	              xLabel: data.xAxisCategories[e.point.x].label
-	            }, e.point.info)
-	          });
-	        }),
-	        xAxisLegendName: data.xAxisCategories[points[0].point.x].info.groupings.filter(function (g) {
-	          return g.name == grouping;
-	        }).map(function (g) {
-	          return g.memberName;
-	        }).concat([""])[0],
-	        xId: points.map(function (e) {
-	          return data.xAxisCategories[e.point.x].id;
-	        })
-	      } : { xLabel: data.xAxisCategories[points[0].point.x].label,
-	        xId: data.xAxisCategories[points[0].point.x].id
-	      })
-	    })];
-	  }).reduce(function (dataSeriesAcc, x) {
-	    dataSeriesAcc[x[0]].data.push(x[1]);
-	    return dataSeriesAcc;
-	  }, data.dataSeries.map(function (ds) {
-	    return { info: ds.info, data: [] };
-	  }));
-	
-	  var _isUniqueGroup = function _isUniqueGroup(groupAndIndices, groupIndex, allGroupsAndTheirIndices) {
-	    return ![].concat.apply([], allGroupsAndTheirIndices.filter(function (e, ix) {
-	      return ix != groupIndex;
-	    }).map(function (e) {
-	      return e[1];
-	    })).some(function (i) {
-	      return groupAndIndices[1].indexOf(i) > -1;
-	    });
-	  };
-	  return {
-	    xAxisCategories: groupsAndTheirIndices.map(function (groupAndIndices, groupIndex, self) {
-	      var xAxisCategoriesForThisGroup = data.xAxisCategories.filter(function (e, ix) {
-	        return groupAndIndices[1].indexOf(ix) > -1;
-	      });
-	      return xAxisCategoriesForThisGroup.length == 1 && _isUniqueGroup(groupAndIndices, groupIndex, self) ? xAxisCategoriesForThisGroup[0] : {
-	        label: groupAndIndices[0],
-	        id: xAxisCategoriesForThisGroup.map(function (e) {
-	          return e.id;
-	        }),
-	        info: {
-	          trackId: xAxisCategoriesForThisGroup.map(function (e) {
-	            return e.info.trackId;
-	          }).filter(function (e, ix, self) {
-	            return self.indexOf(e) == ix;
-	          }),
-	          tooltip: { properties: [].concat.apply([], xAxisCategoriesForThisGroup.map(function (columnHeader) {
-	              return columnHeader.info.tooltip.properties || [];
-	            }))
-	          },
-	          groupings: []
-	        }
-	      };
-	    }),
-	    yAxisCategories: data.yAxisCategories,
-	    dataSeries: newDataSeries
-	  };
 	};
 	
 	var _calculateInserts = function _calculateInserts(fullColumns, originalColumns) {
@@ -44354,13 +44404,12 @@ webpackJsonp_name_([2],[
 	};
 	
 	exports.insertEmptyColumns = insertEmptyColumns;
-	exports.group = groupValuesByProvidedColumnGrouping;
 	exports.filterByIndex = filterHeatmapDataByCoexpressionIndex;
 	exports.filterByDataSeries = filterHeatmapDataByDataSeries;
 	exports.order = orderHeatmapData;
 	
 	exports.manipulate = function (args, data) {
-	  return groupValuesByProvidedColumnGrouping(args.grouping, insertEmptyColumns(args.allowEmptyColumns ? orderHeatmapData(args.ordering, data).xAxisCategories : [], filterHeatmapDataByCoexpressionIndex(args.maxIndex, filterHeatmapDataByDataSeries(args.dataSeriesToKeep, orderHeatmapData(args.ordering, data)))));
+	  return insertEmptyColumns(args.allowEmptyColumns ? orderHeatmapData(args.ordering, data).xAxisCategories : [], filterHeatmapDataByGroupingOfRows(args.grouping, args.group, filterHeatmapDataByCoexpressionIndex(args.maxIndex, filterHeatmapDataByDataSeries(args.dataSeriesToKeep, orderHeatmapData(args.ordering, data)))));
 	};
 
 /***/ },
