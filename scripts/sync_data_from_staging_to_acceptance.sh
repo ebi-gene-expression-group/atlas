@@ -6,30 +6,20 @@ echo "============================================================"
 echo "Stopping Tomcat on ves-hx-77..."
 sudo -u tc_fg02 ssh ves-hx-77 '/nfs/public/rw/webadmin/tomcat/bases/fg/tc-fg-gxa_test/bin/controller stop'
 
-# sudo -u fg_atlas ssh ves-hx-77 './atlas_scripts/sync_solr.sh'
 echo "============================================================"
 echo `date`
 echo "============================================================"
-echo "Stopping Solr on ves-hx-77..."
-sudo -u fg_atlas ssh ves-hx-77 '/nfs/public/rw/fg/atlas/solr_production.sh stop'
-
-echo "============================================================"
-echo `date`
-echo "============================================================"
-echo "Syncing Solr indexes from ves-hx-69 to ves-hx-77..."
+echo "Replicating Solr indexes from ves-hx-69 to ves-hx-77..."
 sudo -u fg_atlas ssh ves-hx-77 'rsync -irltpz --delete ves-hx-69:/srv/gxa/solr/* /srv/gxa/solr'
 
 echo "============================================================"
 echo `date`
 echo "============================================================"
-echo "Starting Solr on ves-hx-77..."
-sudo -u fg_atlas ssh ves-hx-77 '/nfs/public/rw/fg/atlas/solr_production.sh start' &
-
-echo "============================================================"
-echo `date`
-echo "============================================================"
 echo "Syncing experiment designs from ves-hx-76 to ves-hx-77..."
-sudo -u tc_fg02 ssh ves-hx-77 'rsync -irtpz --safe-links --delete ves-hx-76:/srv/gxa/data/expdesign/* /srv/gxa/data/expdesign'
+curl http://ves-hx-77:8983/solr/analytics/replication?command=fetchindex
+curl http://ves-hx-77:8983/solr/baselineConditions/replication?command=fetchindex
+curl http://ves-hx-77:8983/solr/differentialConditions/replication?command=fetchindex
+curl http://ves-hx-77:8983/solr/gxa/replication?command=fetchindex
 
 echo "============================================================"
 echo `date`
