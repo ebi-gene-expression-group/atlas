@@ -209,26 +209,6 @@ module.exports = React.createClass({
       );
     },
 
-    _groupings: function(){
-      return {
-        available:
-          [].concat.apply(["Default"],
-            this.props.loadResult.heatmapData.xAxisCategories.map(function(columnHeader){
-              return (
-                (columnHeader.info.groupings ||[])
-                .map((grouping)=>grouping.name)
-              )
-            })
-          )
-          .filter((e,ix,self)=>self.indexOf(e)==ix),
-        current: this.state.grouping,
-        disabled: this.state.zoom,
-        onSelect: function(groupingChosen){
-          this.setState({grouping: groupingChosen})
-        }.bind(this)
-      }
-    },
-
     _coexpressionOption: function(){
       return (
         this.props.loadResult.heatmapConfig.coexpressions &&
@@ -254,7 +234,6 @@ module.exports = React.createClass({
           TooltipsFactory(this.props.loadResult.heatmapConfig, heatmapDataToPresent.xAxisCategories,heatmapDataToPresent.yAxisCategories),
           this._legend(),
           this._coexpressionOption(),
-          this._groupings(),
           this.props
         )
       );

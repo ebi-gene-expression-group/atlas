@@ -229,7 +229,7 @@ var anatomogramCallbacks = function(heatmapDataToPresent, highlightOntologyIds){
   }
 };
 
-var show = function (heatmapDataToPresent, orderings,filters, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, groupings, properties) {
+var show = function (heatmapDataToPresent, orderings,filters, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, properties) {
     var marginRight = 60;
     var heatmapConfig = properties.loadResult.heatmapConfig;
 
@@ -244,7 +244,6 @@ var show = function (heatmapDataToPresent, orderings,filters, zoomCallback, colo
             disclaimer: heatmapConfig.disclaimer
           }}
           orderings={orderings}
-          groupings={groupings}
           filters={filters}
           googleAnalyticsCallback={properties.googleAnalyticsCallback}
           showUsageMessage={heatmapDataToPresent.xAxisCategories.length > 100} />

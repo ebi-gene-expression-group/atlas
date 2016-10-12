@@ -26,7 +26,6 @@ var Tooltip = React.createClass({
     foldChange: React.PropTypes.number,
     pValue: React.PropTypes.string,
     tStat: React.PropTypes.string,
-    aggregated: React.PropTypes.arrayOf(PropTypes.Point),
     xAxisLegendName: React.PropTypes.string
   },  //TODO extend this prop checker.Props for this component are created dynamically so it's important. If differential, expect p-values and fold changes, etc.
 
@@ -42,21 +41,10 @@ var Tooltip = React.createClass({
              this._div("P-value", this.props.pValue,scientificNotation),
              this._div("T-statistic", this.props.tStat)]
           : <div>
-            { this.props.aggregated
-              ? [this._tinySquare(),this._span("Expression level (max)",this.props.value ? (this.props.value+" "+(this.props.unit||"") ):"Below cutoff"),
-                <div key={""}>{"Aggregated: "}</div>]
-                .concat(
-                  this.props.aggregated
-                  .map((aggregatedPoint)=>(
-                    this._div(
-                      aggregatedPoint.info.xLabel,
-                      aggregatedPoint.value ? (aggregatedPoint.value+" "+(this.props.unit||"") ):"Below cutoff")
-                  ))
-                )
-              : [
-                this._tinySquare(),
-                this._span("Expression level",this.props.value ? (this.props.value+" "+(this.props.unit||"") ):"Below cutoff")
-                ]
+            { [
+              this._tinySquare(),
+              this._span("Expression level",this.props.value ? (this.props.value+" "+(this.props.unit||"") ):"Below cutoff")
+              ]
             }
           </div>
         }
