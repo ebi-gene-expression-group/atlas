@@ -54,13 +54,19 @@ var HeatmapOptions = React.createClass({
 
     getInitialState: function(){
       return {
-        selectedFilter: "Select filter..."
+        selectedFilter: this.props.filters[0].name
       }
     },
 
     componentWillUpdate: function(nextProps, nextState){
       if(this.state.selectedFilter !== nextState.selectedFilter){
-        this._propsOfCurrentFilter().onSelect("");
+        this.props.filters
+        .filter((e)=>e.name===nextState.selectedFilter)
+        .forEach((e)=>e.value.onSelect(""));
+
+        this.props.filters
+        .filter((e)=>e.name===this.state.selectedFilter)
+        .forEach((e)=>e.value.onDismissDropdown && e.value.onDismissDropdown());
       }
     },
 
@@ -69,12 +75,6 @@ var HeatmapOptions = React.createClass({
         this.props.filters
         .filter((e)=>e.name===this.state.selectedFilter)
         .map((e)=>e.value)
-        .concat([{
-          available: [],
-          current: "",
-          onSelect: ()=>{},
-          disabled: true
-        }])
         [0]
       )
     },
@@ -83,30 +83,32 @@ var HeatmapOptions = React.createClass({
       const multipleFilters = () => {
         let FilterChoiceDropdown = dropdownFactory("Filter by: ");
         let FilteringDropdown = dropdownFactory("");
-        let filterProps= this._propsOfCurrentFilter();
-
+        let filterProps=
+          this.props.filters
+          .filter((e)=>e.name===this.state.selectedFilter)
+          .map((e)=>e.value)
+          [0];
         return (
           <div>
             <FilterChoiceDropdown
-              available={[this.getInitialState().selectedFilter].concat(this.props.filters.map((e)=>e.name))}
+              available={this.props.filters.map((e)=>e.name)}
               current={this.state.selectedFilter}
               onSelect={(e)=> this.setState({selectedFilter: e})}
               disabled={false}/>
-            <FilteringDropdown
-              {...filterProps}
-              disabled={filterProps.disabled || this.state.selectedFilter===this.getInitialState().selectedFilter}/>
+            <FilteringDropdown {...filterProps}/>
           </div>
         )
       };
       const singleFilter = () => {
-        let FilteringDropdown = dropdownFactory("Filter by "+this.props.filters[0].name.toLowerCase()+": ");
+        let f = this.props.filters[this.props.filters.length -1] //skip the first, dummy, filter
+        let FilteringDropdown = dropdownFactory("Filter by "+f.name.toLowerCase()+": ");
         return (
           <FilteringDropdown
-          {...this.props.filters[0].value} />
+          {...f.value} />
         )
       };
       return (
-        this.props.filters.length ===1
+        this.props.filters.length <3
         ? singleFilter()
         : multipleFilters()
       );

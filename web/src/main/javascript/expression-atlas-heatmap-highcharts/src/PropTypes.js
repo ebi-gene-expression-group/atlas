@@ -125,6 +125,7 @@ var propsForSelectionDropdown = {
     available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     current: React.PropTypes.string.isRequired,
     onSelect: React.PropTypes.func.isRequired,
+    onDismissDropdown: React.PropTypes.func,
     disabled: React.PropTypes.bool
 };
 

@@ -49,7 +49,10 @@ module.exports = React.createClass({
           grouping: this.state.grouping,
           group: this.state.group,
           dataSeriesToKeep: this.state.dataSeriesToShow,
-          allowEmptyColumns: this.props.loadResult.heatmapConfig.isExperimentPage && this.state.grouping === this.getInitialState().grouping,
+          allowEmptyColumns:
+            this.props.loadResult.heatmapConfig.isExperimentPage
+            && (  this.state.grouping === this.getInitialState().grouping
+               || !this.state.group),
           maxIndex:this.state.coexpressionsShown
         },
       this.props.loadResult.heatmapData)
@@ -79,7 +82,22 @@ module.exports = React.createClass({
     _filters: function(){
       return (
         [
-          { name: "Expression Value",
+          {
+            name: "Select filter...",
+            value: {
+              available: [],
+              current: "",
+              onSelect: ()=>{
+                this.setState({
+                  grouping: this.getInitialState().grouping,
+                  group: this.getInitialState().group
+                })
+              },
+              disabled: true,
+              onDismissDropdown: ()=>{}
+            }
+          },
+          { name: "Expression Value"+(this.props.loadResult.heatmapConfig.isExperimentPage ? "- relative":""),
             value: {
               available:
                 ["All"].concat(this.props.loadResult.heatmapData.dataSeries.map((e)=>e.info.name)),
@@ -95,14 +113,26 @@ module.exports = React.createClass({
                 const isAll =
                   !selectedDataSeries || selectedDataSeries === "All"
                 this.setState((previousState) => {
-                    return Object.assign(previousState, {
+                    return Object.assign(previousState,
+                      {
+                        grouping: this.getInitialState().grouping,
+                        group: this.getInitialState().group,
                         dataSeriesToShow:
                           previousState.dataSeriesToShow
                           .map(function(e, jx){
                             return isAll || (ix===jx);
                           })
-                    });
+                      }
+                    );
                 });
+              },
+              onDismissDropdown: () => {
+                this.setState((previousState)=>({
+                        dataSeriesToShow:
+                          previousState.dataSeriesToShow
+                          .map((e)=>true)
+                      })
+                    );
               }
             }
           }
@@ -155,7 +185,8 @@ module.exports = React.createClass({
                   grouping: name,
                   group: group === "All" ? "" : group
                 })
-              }
+              },
+              onDismissDropdown: ()=>{}
             }
           }
         })
