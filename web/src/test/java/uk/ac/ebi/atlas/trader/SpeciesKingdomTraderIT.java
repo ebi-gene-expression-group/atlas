@@ -1,7 +1,9 @@
 package uk.ac.ebi.atlas.trader;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -17,7 +19,14 @@ import static org.junit.Assert.assertThat;
 public class SpeciesKingdomTraderIT {
 
     @Inject
-    private SpeciesKingdomTrader subject;
+    JdbcTemplate jdbcTemplate;
+
+    SpeciesKingdomTrader subject;
+
+    @Before
+    public void setUp(){
+        this.subject = new SpeciesKingdomTrader(jdbcTemplate);
+    }
 
     @Test
     public void caenorhabditisElegansKingomIsAnimals() throws Exception {

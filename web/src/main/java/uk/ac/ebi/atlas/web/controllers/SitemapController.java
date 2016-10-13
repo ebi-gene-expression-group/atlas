@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.web.controllers;
 import com.google.common.collect.ImmutableList;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +32,9 @@ public class SitemapController {
     private final SpeciesFactory speciesFactory;
 
     @Inject
-    public SitemapController(AnalyticsSearchService solr, OrganismEnsemblDAO organismEnsemblDAO, SpeciesFactory speciesFactory){
+    public SitemapController(AnalyticsSearchService solr, JdbcTemplate jdbcTemplate, SpeciesFactory speciesFactory){
         this.solr = solr;
-        this.organismEnsemblDAO = organismEnsemblDAO;
+        this.organismEnsemblDAO = new OrganismEnsemblDAO(jdbcTemplate);
         this.speciesFactory = speciesFactory;
     }
 

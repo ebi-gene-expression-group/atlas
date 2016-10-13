@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.dao.OrganismEnsemblDAO;
 import uk.ac.ebi.atlas.dao.OrganismKingdomDAO;
 import uk.ac.ebi.atlas.model.SpeciesUtils;
@@ -11,9 +12,6 @@ import uk.ac.ebi.atlas.model.SpeciesUtils;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-
-@Named
-@Scope("singleton")
 public class SpeciesKingdomTrader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeciesKingdomTrader.class);
@@ -21,8 +19,12 @@ public class SpeciesKingdomTrader {
     private ImmutableMap<String, String> speciesKingdomMap;
     private ImmutableMap<String, String> speciesEnsemblMap;
 
-    @Inject
-    public SpeciesKingdomTrader(OrganismKingdomDAO organismKingdomDAO, OrganismEnsemblDAO organismEnsemblDAO) {
+
+    public SpeciesKingdomTrader(JdbcTemplate jdbcTemplate) {
+        this(new OrganismKingdomDAO(jdbcTemplate), new OrganismEnsemblDAO(jdbcTemplate));
+    }
+
+    SpeciesKingdomTrader(OrganismKingdomDAO organismKingdomDAO, OrganismEnsemblDAO organismEnsemblDAO) {
         this.speciesKingdomMap = organismKingdomDAO.getOrganismKingdomMap();
         this.speciesEnsemblMap = organismEnsemblDAO.getOrganismEnsemblMap();
     }

@@ -8,7 +8,6 @@ import javax.inject.Named;
 import java.util.List;
 import java.util.Map;
 
-@Named
 public class OrganismEnsemblDAO {
 
     private static final String SELECT_ENSEMBLDB =
@@ -17,7 +16,6 @@ public class OrganismEnsemblDAO {
 
     private JdbcTemplate jdbcTemplate;
 
-    @Inject
     public OrganismEnsemblDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

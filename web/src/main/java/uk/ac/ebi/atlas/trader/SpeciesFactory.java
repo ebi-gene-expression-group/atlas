@@ -3,6 +3,9 @@ package uk.ac.ebi.atlas.trader;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
+import uk.ac.ebi.atlas.dao.OrganismEnsemblDAO;
+import uk.ac.ebi.atlas.dao.OrganismKingdomDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.SpeciesUtils;
@@ -21,7 +24,11 @@ public class SpeciesFactory {
     public final static Species NULL = new AnySpecies();
 
     @Inject
-    public SpeciesFactory(SpeciesKingdomTrader speciesKingdomTrader){
+    public SpeciesFactory(JdbcTemplate jdbcTemplate){
+        this(new SpeciesKingdomTrader(jdbcTemplate));
+    }
+
+    SpeciesFactory(SpeciesKingdomTrader speciesKingdomTrader){
         this.speciesKingdomTrader=speciesKingdomTrader;
     }
 

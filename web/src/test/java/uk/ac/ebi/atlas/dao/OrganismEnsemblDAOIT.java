@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.dao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -18,12 +19,11 @@ import static org.junit.Assert.assertThat;
 public class OrganismEnsemblDAOIT {
 
     @Inject
-    private OrganismKingdomDAO subject;
-
+    JdbcTemplate jdbcTemplate;
 
     @Test
     public void getOrganismEnsemblNamesMap() throws Exception {
-        Map<String, String> organismEnsemblNames = subject.getOrganismKingdomMap();
+        Map<String, String> organismEnsemblNames = new OrganismKingdomDAO(jdbcTemplate).getOrganismKingdomMap();
 
         assertThat(organismEnsemblNames.size(), is(49));
 

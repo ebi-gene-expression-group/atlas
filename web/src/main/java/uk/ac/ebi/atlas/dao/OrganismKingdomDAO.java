@@ -9,7 +9,6 @@ import javax.inject.Named;
 import java.util.List;
 import java.util.Map;
 
-@Named
 public class OrganismKingdomDAO {
 
     private static final String SELECT_KINGDOM = "SELECT ORGANISM_KINGDOM.KINGDOM, BIOENTITY_ORGANISM.NAME FROM ORGANISM_KINGDOM" +
@@ -17,7 +16,6 @@ public class OrganismKingdomDAO {
 
     private JdbcTemplate jdbcTemplate;
 
-    @Inject
     public OrganismKingdomDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
