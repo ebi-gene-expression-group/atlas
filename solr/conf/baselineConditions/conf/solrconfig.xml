@@ -1,27 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  ~
-  ~
-  ~ For further details of the Gene Expression Atlas project, including source code,
-  ~ downloads and documentation, please see:
-  ~
-  ~ http://gxa.github.com/gxa
-  -->
-
-<!-- 
      For more details about configurations options that may appear in
      this file, see http://wiki.apache.org/solr/SolrConfigXml. 
 -->
@@ -1138,39 +1116,33 @@ current implementation relies on the updateLog feature being enabled. -->
         </lst>
     </requestHandler>
 
-    <!-- Solr Replication
-
-       The SolrReplicationHandler supports replicating indexes from a
-       "master" used for indexing and "slaves" used for queries.
-
-       http://wiki.apache.org/solr/SolrReplication 
-
-       It is also necessary for SolrCloud to function (in Cloud mode, the
-       replication handler is used to bulk transfer segments when nodes 
-       are added or need to recover).
-
-       https://wiki.apache.org/solr/SolrCloud/
-    -->
+    <str name="confFiles">solrconfig_slave.xml:solrconfig.xml,schema.xml,stopwords.txt,synonyms.txt</str>
     <requestHandler name="/replication" class="solr.ReplicationHandler">
-        <!--
-           To enable simple master/slave replication, uncomment one of the
-           sections below, depending on whether this solr instance should be
-           the "master" or a "slave".  If this instance is a "slave" you will
-           also need to fill in the masterUrl to point to a real machine.
-        -->
-        <!--
-           <lst name="master">
-             <str name="replicateAfter">commit</str>
-             <str name="replicateAfter">startup</str>
-             <str name="confFiles">schema.xml,stopwords.txt</str>
-           </lst>
-        -->
-        <!--
-           <lst name="slave">
-             <str name="masterUrl">http://your-master-hostname:8983/solr</str>
-             <str name="pollInterval">00:00:60</str>
-           </lst>
-        -->
+        <lst name="master">
+            <str name="replicateAfter">optimize</str>
+            <str name="backupAfter">optimize</str>
+            <str name="confFiles">schema.xml,stopwords.txt,synonyms.txt</str>
+            <str name="commitReserveDuration">00:00:10</str>
+        </lst>
+        <int name="maxNumberOfBackups">2</int>
+    </requestHandler>
+
+    <!-- Replication handler -->
+    <!-- Uncomment master or slave block as needed -->
+    <str name="confFiles">solrconfig_slave.xml:solrconfig.xml,schema.xml,stopwords.txt,synonyms.txt</str>
+    <requestHandler name="/replication" class="solr.ReplicationHandler">
+        <lst name="master">
+            <str name="replicateAfter">optimize</str>
+            <str name="backupAfter">optimize</str>
+            <str name="confFiles">schema.xml,stopwords.txt,synonyms.txt</str>
+            <str name="commitReserveDuration">00:00:10</str>
+        </lst>
+        <int name="maxNumberOfBackups">2</int>
+
+        <!--<lst name="slave">-->
+            <!--<str name="masterUrl">http://ves-hx-69:8983/solr/baselineConditions/replication</str>-->
+            <!--<str name="pollInterval">00:01:00</str>-->
+        <!--</lst>-->
     </requestHandler>
 
     <!-- Search Components
