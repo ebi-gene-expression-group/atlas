@@ -59,45 +59,35 @@ public class BioEntityPropertyLinkBuilder {
     }
 
     private String fetchLinkText(String propertyType, String propertyValue) {
-        String displayName = propertyValue;
         switch (propertyType) {
             case "ortholog":
-                displayName = fetchSymbolAndSpeciesForOrtholog(displayName);
-                break;
+                return fetchSymbolAndSpeciesForOrtholog(propertyValue);
             case "reactome":
-                displayName = reactomeClient.fetchPathwayNameFailSafe(propertyValue);
-                break;
+                return reactomeClient.fetchPathwayNameFailSafe(propertyValue);
             case "go":
-                displayName = goPoTermTrader.getTerm(propertyValue).name();
-                break;
+                return goPoTermTrader.getTerm(propertyValue).name();
             case "interpro":
-                displayName = interProTermTrader.getTermName(propertyValue);
-                break;
+                return interProTermTrader.getTermName(propertyValue);
             case "po":
-                displayName = goPoTermTrader.getTerm(propertyValue).name();
-                break;
-
+                return goPoTermTrader.getTerm(propertyValue).name();
+            default:
+                return propertyValue;
         }
-        return displayName;
     }
 
     private String fetchSymbolAndSpeciesForOrtholog(String identifier) {
-        try {
-            Optional<String> species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
-            if(!species.isPresent()){
-                return identifier;
-            }
-            String speciesToken = " (" + StringUtils.capitalize(species.get()) + ")";
-
-            Set<String> propertyValuesForGeneId = bioEntityPropertyDao.fetchPropertyValuesForGeneId(identifier, "symbol");
-            if (!propertyValuesForGeneId.isEmpty()) {
-                String symbol = propertyValuesForGeneId.iterator().next();
-                return symbol + speciesToken;
-            }
-            return identifier + speciesToken;
-        } catch (Exception e) {
+        Optional<String> species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
+        if (!species.isPresent()) {
             return identifier;
         }
+        String speciesToken = " (" + StringUtils.capitalize(species.get()) + ")";
+
+        Set<String> propertyValuesForGeneId = bioEntityPropertyDao.fetchPropertyValuesForGeneId(identifier, "symbol");
+        if (!propertyValuesForGeneId.isEmpty()) {
+            String symbol = propertyValuesForGeneId.iterator().next();
+            return symbol + speciesToken;
+        }
+        return identifier + speciesToken;
     }
 
     private String getEncodedString(String value) {

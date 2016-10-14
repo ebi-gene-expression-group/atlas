@@ -34,7 +34,6 @@ public class BioEntityPropertyService {
 
     private String species;
 
-    private SortedSet<String> entityNames;
     private String entityName;
 
     private String identifier;
@@ -51,7 +50,6 @@ public class BioEntityPropertyService {
     public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, Multimap<Integer, OntologyTerm> goTerms, Multimap<Integer, OntologyTerm> poTerms, SortedSet<String> entityNames, String identifier) {
         this.species = species;
         this.propertyValuesByType = propertyValuesByType;
-        this.entityNames = entityNames;
         this.identifier = identifier;
         this.depthToGoTerms = goTerms;
         this.depthToPoTerms = poTerms;
@@ -199,10 +197,6 @@ public class BioEntityPropertyService {
     public String getBioEntityDescription() {
         String description = getFirstValueOfProperty(PROPERTY_TYPE_DESCRIPTION);
         return StringUtils.substringBefore(description, "[");
-    }
-
-    public SortedSet<String> getEntityNames() {
-        return entityNames;
     }
 
     public String getEntityName() {

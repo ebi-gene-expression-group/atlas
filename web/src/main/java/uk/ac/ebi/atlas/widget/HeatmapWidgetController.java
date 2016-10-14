@@ -105,6 +105,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                 @RequestParam(value = "source", required = false) String defaultQueryFactorType,
                                 Model model, HttpServletRequest request, HttpServletResponse response) {
 
+        //TODO: I don't think we should be doing this
         if(isBlank(speciesString)){
             Optional<String> maybeSpecies = speciesLookupService
                     .fetchFirstSpeciesByField(propertyType, geneQuery);
