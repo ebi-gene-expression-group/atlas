@@ -7,10 +7,9 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.solr.SolrUtil;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.solr.SolrUtil;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,12 +35,12 @@ public class SpeciesLookupService {
 
     // used for looking up species for a gene/protein/transcript/mirna/etc. id
     // they will only have a single species
-    public String fetchSpeciesForBioentityId(String identifier) {
+    public Optional<String> fetchSpeciesForBioentityId(String identifier) {
         // eg: bioentity_identifier:ENSMUSG00000021789
         return fetchFirstSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, identifier);
     }
 
-    public String fetchFirstSpeciesByField(String fieldName, String multiTermQuery) {
+    public Optional<String> fetchFirstSpeciesByField(String fieldName, String multiTermQuery) {
         if (StringUtils.isBlank(fieldName)) {
             fieldName = PROPERTY_LOWER_FIELD;
         }
@@ -50,13 +49,13 @@ public class SpeciesLookupService {
         for (String queryToken : queryTokens) {
             Optional<String> species = fetchFirstSpecies(fieldName, encloseInQuotes(queryToken));
             if (species.isPresent()) {
-                return species.get();
+                return species;
             }
         }
-        throw new ResourceNotFoundException("Species can't be determined for " + fieldName + ":" + multiTermQuery);
+        return Optional.absent();
     }
 
-    public String fetchFirstSpeciesByField(String fieldName, SemanticQuery geneQuery) {
+    public Optional<String> fetchFirstSpeciesByField(String fieldName, SemanticQuery geneQuery) {
         if (StringUtils.isBlank(fieldName)) {
             fieldName = PROPERTY_LOWER_FIELD;
         }
@@ -64,10 +63,10 @@ public class SpeciesLookupService {
         for (SemanticQueryTerm queryTerm : geneQuery) {
             Optional<String> species = fetchFirstSpecies(fieldName, encloseInQuotes(queryTerm.value()));
             if (species.isPresent()) {
-                return species.get();
+                return species;
             }
         }
-        throw new ResourceNotFoundException("Species can't be determined for " + fieldName + ":" + geneQuery.toJson());
+        return Optional.absent();
     }
 
     // surround in quotes, so queries with special chars work, eg: "GO:0003674"
@@ -93,7 +92,7 @@ public class SpeciesLookupService {
     // Used for looking up species for gene sets (GO, PO, InterPro, Reactome and Plant Reactome)
     // Reactome and Plant Reactome are always single species, but GO, PO and InterPro gene sets can be multi-species
     // If results are empty, then term does not exist in Solr
-    public Result fetchSpeciesForGeneSet(String term) {
+    public Optional<String> fetchSpeciesForGeneSet(String term) {
         // eg: property_value_lower:"IPR027417"
         String queryText = PROPERTY_LOWER_FIELD + ":" + encloseInQuotes(term) +
                 " AND property_name:(pathwayid OR go OR po OR interpro)";  // Needed to exclude Entrez numerical ids, identical to Plant Reactome ids (pathwayid)
@@ -112,31 +111,6 @@ public class SpeciesLookupService {
         QueryResponse solrResponse = solrServer.query(query);
         ImmutableSet<String> species = SolrUtil.extractFirstFacetValues(solrResponse);
 
-        return new Result(species);
+        return species.size() == 1 ? Optional.of(species.iterator().next()) : Optional.<String>absent();
     }
-
-    public static class Result {
-        public final ImmutableSet<String> species;
-
-        public Result(ImmutableSet<String> species) {
-            this.species = species;
-        }
-
-        public boolean isMultiSpecies() {
-            return species.size() > 1;
-        }
-
-        public boolean isSingleSpecies() {
-            return species.size() == 1;
-        }
-
-        public String firstSpecies() {
-            return species.iterator().next();
-        }
-
-        public boolean isEmpty() {
-            return species.isEmpty();
-        }
-    }
-
 }

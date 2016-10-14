@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.widget;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
@@ -104,8 +105,17 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                 @RequestParam(value = "source", required = false) String defaultQueryFactorType,
                                 Model model, HttpServletRequest request, HttpServletResponse response) {
 
-        Species species = speciesFactory.create(isBlank(speciesString) ? speciesLookupService
-                .fetchFirstSpeciesByField(propertyType, geneQuery) : speciesString);
+        if(isBlank(speciesString)){
+            Optional<String> maybeSpecies = speciesLookupService
+                    .fetchFirstSpeciesByField(propertyType, geneQuery);
+            if(maybeSpecies.isPresent()){
+                speciesString = maybeSpecies.get();
+            } else {
+                throw new ResourceNotFoundException("Species can't be determined for " + propertyType + ":" + geneQuery.toJson());
+            }
+        }
+
+        Species species= speciesFactory.create(speciesString);
 
         BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery,
                 conditionQuery, species, defaultQueryFactorType);

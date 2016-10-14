@@ -83,9 +83,11 @@ public class BioEntityPropertyLinkBuilder {
 
     private String fetchSymbolAndSpeciesForOrtholog(String identifier) {
         try {
-            String species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
-
-            String speciesToken = " (" + StringUtils.capitalize(species) + ")";
+            Optional<String> species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
+            if(!species.isPresent()){
+                return identifier;
+            }
+            String speciesToken = " (" + StringUtils.capitalize(species.get()) + ")";
 
             Set<String> propertyValuesForGeneId = bioEntityPropertyDao.fetchPropertyValuesForGeneId(identifier, "symbol");
             if (!propertyValuesForGeneId.isEmpty()) {

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.widget;
 
+import com.google.common.base.Optional;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,12 +45,14 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
                                  @RequestParam(value = "species", required = false) String species,
                                  @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences) {
 
-        try {
-            if (isBlank(species)) {
-                species = speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQueryString);
+        if (isBlank(species)) {
+            Optional<String> maybeSpecies = speciesLookupService.fetchFirstSpeciesByField(propertyType,
+                    geneQueryString);
+            if(maybeSpecies.isPresent()){
+                species = maybeSpecies.get();
+            } else {
+                throw new ResourceNotFoundException( "No genes found matching query: " + geneQueryString);
             }
-        } catch (ResourceNotFoundException e) {
-            throw new ResourceNotFoundException( "No genes found matching query: " + geneQueryString);
         }
 
         String experimentAccession = applicationProperties.getBaselineReferenceExperimentAccession(species);

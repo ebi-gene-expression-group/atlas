@@ -1,19 +1,19 @@
 package uk.ac.ebi.atlas.bioentity;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
-import uk.ac.ebi.atlas.solr.query.SpeciesLookupService.Result;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -45,7 +45,10 @@ public class BioentityPropertyServiceInitializer {
     }
 
     public void initForGenePage(BioEntityPropertyService bioentityPropertyService, String identifier, String[] genePropertyNames) {
-        String species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
+        Optional<String> species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
+        if(!species.isPresent()){
+            throw new ResourceNotFoundException("Species can't be determined for gene:" + identifier);
+        }
 
         SortedSetMultimap<String, String> propertyValuesByType = bioentityPropertyDao.fetchGenePageProperties(identifier, genePropertyNames);
         SortedSet<String> entityNames = propertyValuesByType.get("symbol");
@@ -56,12 +59,11 @@ public class BioentityPropertyServiceInitializer {
         ImmutableSetMultimap<Integer, OntologyTerm> goTerms = mapGoPoTermsByDepth(propertyValuesByType.get("go"));
         ImmutableSetMultimap<Integer, OntologyTerm> poTerms = mapGoPoTermsByDepth(propertyValuesByType.get("po"));
 
-        bioentityPropertyService.init(species, propertyValuesByType, goTerms, poTerms, entityNames, identifier);
+        bioentityPropertyService.init(species.get(), propertyValuesByType, goTerms, poTerms, entityNames, identifier);
     }
 
     public void initForGeneSetPage(BioEntityPropertyService bioentityPropertyService, String identifier) {
-        Result speciesResult = speciesLookupService.fetchSpeciesForGeneSet(identifier);
-        String species = speciesResult.isSingleSpecies() ? speciesResult.firstSpecies() : "";
+        String species = speciesLookupService.fetchSpeciesForGeneSet(identifier).or("");
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
 
