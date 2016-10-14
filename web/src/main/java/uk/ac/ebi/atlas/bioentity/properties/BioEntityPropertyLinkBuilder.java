@@ -37,7 +37,7 @@ public class BioEntityPropertyLinkBuilder {
         this.interProTermTrader = interProTermTrader;
     }
 
-    Optional<PropertyLink> createLink(String identifier, String propertyType, String propertyValue, String species) {
+    Optional<PropertyLink> createLink(String identifier, String propertyType, String propertyValue, String species, int relevance) {
         final String linkSpecies = SpeciesUtils.convertSpacesToUnderscore(species);
 
         String linkText = fetchLinkText(propertyType, propertyValue);
@@ -53,9 +53,9 @@ public class BioEntityPropertyLinkBuilder {
             String linkValue = getEncodedString(propertyValue);
             link = MessageFormat.format(link, linkValue, linkSpecies, identifier);
 
-            return Optional.of(new PropertyLink(linkText, link));
+            return Optional.of(new PropertyLink(linkText, link, relevance));
         }
-        return Optional.of(new PropertyLink(linkText));
+        return Optional.of(new PropertyLink(linkText,relevance));
     }
 
     private String fetchLinkText(String propertyType, String propertyValue) {

@@ -81,7 +81,7 @@ public class BioEntityPropertyService {
 
         List<PropertyLink> propertyLinks = Lists.newArrayList();
         for (String propertyValue : propertyValuesByType.get(propertyType)) {
-            Optional<PropertyLink> link = linkBuilder.createLink(identifier, propertyType, propertyValue, species);
+            Optional<PropertyLink> link = linkBuilder.createLink(identifier, propertyType, propertyValue, species, 0);
             if (link.isPresent()) {
                 propertyLinks.add(link.get());
             }
@@ -89,6 +89,8 @@ public class BioEntityPropertyService {
         return propertyLinks;
     }
 
+    //TODO have the frontend decide what's relevant
+    @Deprecated
     public List<PropertyLink> fetchRelevantGoPoLinks(String ontology, int includeAtLeast) {
         switch (ontology) {
             case "go":
@@ -111,13 +113,15 @@ public class BioEntityPropertyService {
         }
     }
 
+    @Deprecated
     private List<PropertyLink> fetchRelevantGoLinks(int includeAtLeast) {
         List<PropertyLink> propertyLinks = Lists.newArrayList();
 
         if (!depthToGoTerms.isEmpty()) {
-            for (int i = Collections.max(depthToGoTerms.keySet()) ; i >= 1 && propertyLinks.size() < includeAtLeast; i--) {
-                for (OntologyTerm goPoTerm : depthToGoTerms.get(i)) {
-                    Optional<PropertyLink> link = linkBuilder.createLink(identifier, "go", goPoTerm.accession(), species);
+            for (int depth = Collections.max(depthToGoTerms.keySet()) ; depth >= 1 && propertyLinks.size() < includeAtLeast; depth--) {
+                for (OntologyTerm goPoTerm : depthToGoTerms.get(depth)) {
+                    Optional<PropertyLink> link = linkBuilder.createLink(identifier, "go", goPoTerm.accession(),
+                            species, depth);
                     if (link.isPresent()) {
                         propertyLinks.add(link.get());
                     }
@@ -132,9 +136,10 @@ public class BioEntityPropertyService {
         List<PropertyLink> propertyLinks = Lists.newArrayList();
 
         if (!depthToGoTerms.isEmpty()) {
-            for (int i = Collections.max(depthToGoTerms.keySet()) ; i >= 1 ; i--) {
-                for (OntologyTerm goPoTerm : depthToGoTerms.get(i)) {
-                    Optional<PropertyLink> link = linkBuilder.createLink(identifier, "go", goPoTerm.accession(), species);
+            for (int depth = Collections.max(depthToGoTerms.keySet()) ; depth >= 1 ; depth--) {
+                for (OntologyTerm goPoTerm : depthToGoTerms.get(depth)) {
+                    Optional<PropertyLink> link = linkBuilder.createLink(identifier, "go", goPoTerm.accession(),
+                            species, depth);
                     if (link.isPresent()) {
                         propertyLinks.add(link.get());
                     }
@@ -145,13 +150,14 @@ public class BioEntityPropertyService {
         return propertyLinks;
     }
 
+    @Deprecated
     // We don’t have depth information so far for PO. Once we do, remove this comment and apply the same logic as in GO
     private List<PropertyLink> fetchRelevantPoLinks(int maxLinkCount) {
         List<PropertyLink> propertyLinks = Lists.newArrayList();
 
         if (!depthToPoTerms.isEmpty()) {
             for (OntologyTerm goPoTerm : depthToPoTerms.values()) {
-                Optional<PropertyLink> link = linkBuilder.createLink(identifier, "po", goPoTerm.accession(), species);
+                Optional<PropertyLink> link = linkBuilder.createLink(identifier, "po", goPoTerm.accession(), species, 0);
                 if (link.isPresent()) {
                     propertyLinks.add(link.get());
                 }
@@ -170,7 +176,7 @@ public class BioEntityPropertyService {
             if (!depthToPoTerms.isEmpty()) {
             for (int i = Collections.max(depthToPoTerms.keySet()) ; i >= 1 ; i--) {
                 for (OntologyTerm goPoTerm : depthToPoTerms.get(i)) {
-                    Optional<PropertyLink> link = linkBuilder.createLink(identifier, "po", goPoTerm.accession(), species);
+                    Optional<PropertyLink> link = linkBuilder.createLink(identifier, "po", goPoTerm.accession(), species, 0);
                     if (link.isPresent()) {
                         propertyLinks.add(link.get());
                     }
