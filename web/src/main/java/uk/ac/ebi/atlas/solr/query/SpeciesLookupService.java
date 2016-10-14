@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.solr.query;
 
+import autovalue.shaded.com.google.common.common.base.Function;
+import autovalue.shaded.com.google.common.common.collect.Collections2;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
@@ -11,13 +13,14 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.solr.SolrUtil;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Named
-//can be singleton because HttpSolrClient is documented to be thread safe, please be careful not to add any other non thread safe state!
 public class SpeciesLookupService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeciesLookupService.class);
@@ -37,31 +40,31 @@ public class SpeciesLookupService {
     // they will only have a single species
     public Optional<String> fetchSpeciesForBioentityId(String identifier) {
         // eg: bioentity_identifier:ENSMUSG00000021789
-        return fetchFirstSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, identifier);
+        return fetchFirstSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, Collections.singleton(identifier));
     }
 
     public Optional<String> fetchFirstSpeciesByField(String fieldName, String multiTermQuery) {
-        if (StringUtils.isBlank(fieldName)) {
-            fieldName = PROPERTY_LOWER_FIELD;
-        }
-
-        List<String> queryTokens = BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(multiTermQuery);
-        for (String queryToken : queryTokens) {
-            Optional<String> species = fetchFirstSpecies(fieldName, encloseInQuotes(queryToken));
-            if (species.isPresent()) {
-                return species;
-            }
-        }
-        return Optional.absent();
+        return fetchFirstSpeciesByField(fieldName,
+                BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(multiTermQuery));
     }
 
     public Optional<String> fetchFirstSpeciesByField(String fieldName, SemanticQuery geneQuery) {
+        return fetchFirstSpeciesByField(fieldName, Collections2.transform(geneQuery.terms(), new Function<SemanticQueryTerm, String>() {
+            @Nullable
+            @Override
+            public String apply(@Nullable SemanticQueryTerm semanticQueryTerm) {
+                return semanticQueryTerm.value();
+            }
+        }));
+    }
+
+    private Optional<String> fetchFirstSpeciesByField(String fieldName, Collection<String> tokens) {
         if (StringUtils.isBlank(fieldName)) {
             fieldName = PROPERTY_LOWER_FIELD;
         }
 
-        for (SemanticQueryTerm queryTerm : geneQuery) {
-            Optional<String> species = fetchFirstSpecies(fieldName, encloseInQuotes(queryTerm.value()));
+        for (String token : tokens) {
+            Optional<String> species = fetchFirstSpecies(fieldName, token);
             if (species.isPresent()) {
                 return species;
             }
@@ -78,7 +81,7 @@ public class SpeciesLookupService {
     Optional<String> fetchFirstSpecies(String fieldName, String queryToken) {
         LOGGER.debug("fetch first species for {}:{}", fieldName, queryToken);
 
-        SolrQuery query = new SolrQuery(fieldName + ":" + queryToken);
+        SolrQuery query = new SolrQuery(fieldName + ":" + encloseInQuotes(queryToken));
 
         //fields to be returned, ie: fl=species
         query.setFields(SPECIES_FIELD);
