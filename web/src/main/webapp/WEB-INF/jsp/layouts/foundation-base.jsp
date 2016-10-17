@@ -157,8 +157,20 @@
 </script>
 -->
 
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+
 <script>
     geneQueryTagEditorModule.init('#main-search-input', '', function(){}, 'Enter your search');
+    $('#home-search-atlas-clear-button').on('click' , function () {
+        // Remove all tags
+        var $atlasSearchInput = $('#main-search-input'),
+            atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
+        atlasSearchTags.forEach(function (searchTag) {
+            $atlasSearchInput.jsonTagEditor('removeTag', searchTag.value);
+        })
+    });
+
     geneQueryTagEditorModule.init('#local-searchbox', '', function(){}, 'Enter your search');
 </script>
 

@@ -26,7 +26,7 @@
 
                     <div class="row margin-top-large">
                         <div class="small-12 columns">
-                            <a href="#" class="button">Search</a> <a href="#" class="secondary hollow button">Clear</a>
+                            <a href="#" class="button">Search</a> <a id="home-search-atlas-clear-button" class="secondary hollow button">Clear</a>
                         </div>
                     </div>
                 </form>

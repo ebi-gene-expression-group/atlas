@@ -15,7 +15,7 @@
 
         <!-- local-search -->
         <div class="hide-for-small-only columns small-4">
-            <!-- Dynamic magnifyign glass search -->
+            <!-- Dynamic magnifying glass search -->
             <%--<div class="local-site-search">--%>
                 <%--<form class="tool-search" id="local-search" name="local-search" action="/search.atlas" method="GET">--%>
                     <%--<input type="text" maxlength="255" value="" class="search-box">--%>
@@ -67,12 +67,13 @@
     <!-- local-nav -->
     <nav>
         <ul class="dropdown menu float-left" data-description="navigational">
-            <li><a href="#first">Home</a></li>
-            <li><a href="#second">Release notes</a></li>
-            <li><a href="#third">Browse experiments</a></li>
-            <li><a href="#fourth">Download</a></li>
-            <li><a href="#fifth">Help</a></li>
-            <li><a href="#sixth">About</a></li>
+            <li><a href="/gxa/home">Home</a></li>
+            <li><a href="/gxa/release-notes.html">Release notes</a></li>
+            <li><a href="/gxa/FAQ.html">Browse experiments</a></li>
+            <li><a href="/gxa/download.html">Download</a></li>
+            <li><a href="/gxa/help/index.html">Help</a></li>
+            <li><a href="/gxa/licence.html">Licence</a></li>
+            <li><a href="/gxa/about.html">About</a></li>
         </ul>
 
         <!-- SP adding class hide-for-small-only as the right hand side takes a lot of space for small + remove text for medium-->

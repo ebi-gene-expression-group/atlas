@@ -30,8 +30,3 @@
         </div>
     </div>
 </section>
-
-
-<%--<section>--%>
-    <%--<tiles:insertAttribute name="contents"/>--%>
-<%--</section>--%>
