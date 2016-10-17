@@ -56,20 +56,13 @@ public class BioentityPropertyServiceInitializer {
             entityNames.add(identifier);
         }
 
-        ImmutableSetMultimap<Integer, OntologyTerm> goTerms = mapGoPoTermsByDepth(propertyValuesByType.get("go"));
-        ImmutableSetMultimap<Integer, OntologyTerm> poTerms = mapGoPoTermsByDepth(propertyValuesByType.get("po"));
-
-        bioentityPropertyService.init(species.get(), propertyValuesByType, goTerms, poTerms, entityNames, identifier);
+        bioentityPropertyService.init(species.get(), propertyValuesByType, entityNames, identifier);
     }
 
     public void initForGeneSetPage(BioEntityPropertyService bioentityPropertyService, String identifier) {
         String species = speciesLookupService.fetchSpeciesForGeneSet(identifier).or("");
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
-
-        ImmutableSetMultimap.Builder<Integer, OntologyTerm> builder = new ImmutableSetMultimap.Builder<>();
-        ImmutableSetMultimap<Integer, OntologyTerm> goTermsByDepth = builder.build();
-        ImmutableSetMultimap<Integer, OntologyTerm> poTermsByDepth = builder.build();
 
         identifier = identifier.toUpperCase();
 
@@ -80,12 +73,10 @@ public class BioentityPropertyServiceInitializer {
             String termName = goPoTermTrader.getTerm(identifier).name();
             propertyValuesByType.put("go", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
-            goTermsByDepth = mapGoPoTermsByDepth(propertyValuesByType.get("go"));
         } else if (GeneSetUtil.matchesPlantOntologyAccession(identifier)) {
             String termName = goPoTermTrader.getTerm(identifier).name();
             propertyValuesByType.put("po", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
-            poTermsByDepth = mapGoPoTermsByDepth(propertyValuesByType.get("po"));
         } else if (GeneSetUtil.matchesInterProAccession(identifier)) {
             String term = interProTermTrader.getTermName(identifier);
             propertyValuesByType.put("interpro", identifier);
@@ -97,23 +88,6 @@ public class BioentityPropertyServiceInitializer {
         SortedSet<String> names = Sets.newTreeSet();
         names.add(identifier);
 
-        bioentityPropertyService.init(species, propertyValuesByType, goTermsByDepth, poTermsByDepth, names, identifier);
+        bioentityPropertyService.init(species, propertyValuesByType, names, identifier);
     }
-
-
-    @Deprecated
-    private ImmutableSetMultimap<Integer, OntologyTerm> mapGoPoTermsByDepth(Set<String> accessions) {
-        ImmutableSetMultimap.Builder<Integer, OntologyTerm> builder = new ImmutableSetMultimap.Builder<>();
-
-        for (String accession : accessions) {
-            try {
-                builder.put(goPoTermTrader.getTerm(accession).depth(), goPoTermTrader.getTerm(accession));
-            } catch (NullPointerException e) {
-                // Ignore terms which aren’t found in goIDToTerm.tsv
-            }
-        }
-
-        return builder.build();
-    }
-
 }

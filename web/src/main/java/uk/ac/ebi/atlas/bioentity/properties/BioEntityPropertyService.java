@@ -28,9 +28,6 @@ public class BioEntityPropertyService {
 
     private SortedSetMultimap<String, String> propertyValuesByType;
 
-    private Multimap<Integer, OntologyTerm> depthToGoTerms;
-    private Multimap<Integer, OntologyTerm> depthToPoTerms;
-
     private String species;
 
     private String entityName;
@@ -49,12 +46,10 @@ public class BioEntityPropertyService {
         this.goPoTermTrader = goPoTermTrader;
     }
 
-    public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, Multimap<Integer, OntologyTerm> goTerms, Multimap<Integer, OntologyTerm> poTerms, SortedSet<String> entityNames, String identifier) {
+    public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, SortedSet<String> entityNames, String identifier) {
         this.species = species;
         this.propertyValuesByType = propertyValuesByType;
         this.identifier = identifier;
-        this.depthToGoTerms = goTerms;
-        this.depthToPoTerms = poTerms;
 
         // this is to add mirbase sequence for ENSEMBL mirnas
         if (propertyValuesByType.containsKey("mirbase_id") && !propertyValuesByType.containsKey("mirbase_sequence")) {
@@ -103,104 +98,6 @@ public class BioEntityPropertyService {
         } else {
             return 0;
         }
-    }
-
-    //TODO have the frontend decide what's relevant
-    @Deprecated
-    public List<PropertyLink> fetchRelevantGoPoLinks(String ontology, int includeAtLeast) {
-        switch (ontology) {
-            case "go":
-                return fetchRelevantGoLinks(includeAtLeast);
-            case "po":
-                return fetchRelevantPoLinks(includeAtLeast);
-            default:
-                return new ImmutableList.Builder<PropertyLink>().build();
-        }
-    }
-
-    public List<PropertyLink> fetchGoPoLinksOrderedByDepth(String ontology) {
-        switch (ontology) {
-            case "go":
-                return fetchGoLinksOrderedByDepth();
-            case "po":
-                return fetchPoLinksOrderedByDepth();
-            default:
-                return new ImmutableList.Builder<PropertyLink>().build();
-        }
-    }
-
-    @Deprecated
-    private List<PropertyLink> fetchRelevantGoLinks(int includeAtLeast) {
-        List<PropertyLink> propertyLinks = Lists.newArrayList();
-
-        if (!depthToGoTerms.isEmpty()) {
-            for (int depth = Collections.max(depthToGoTerms.keySet()) ; depth >= 1 && propertyLinks.size() < includeAtLeast; depth--) {
-                for (OntologyTerm goPoTerm : depthToGoTerms.get(depth)) {
-                    Optional<PropertyLink> link = linkBuilder.createLink(identifier, "go", goPoTerm.accession(),
-                            species, depth);
-                    if (link.isPresent()) {
-                        propertyLinks.add(link.get());
-                    }
-                }
-            }
-        }
-
-        return propertyLinks;
-    }
-
-    private List<PropertyLink> fetchGoLinksOrderedByDepth() {
-        List<PropertyLink> propertyLinks = Lists.newArrayList();
-
-        if (!depthToGoTerms.isEmpty()) {
-            for (int depth = Collections.max(depthToGoTerms.keySet()) ; depth >= 1 ; depth--) {
-                for (OntologyTerm goPoTerm : depthToGoTerms.get(depth)) {
-                    Optional<PropertyLink> link = linkBuilder.createLink(identifier, "go", goPoTerm.accession(),
-                            species, depth);
-                    if (link.isPresent()) {
-                        propertyLinks.add(link.get());
-                    }
-                }
-            }
-        }
-
-        return propertyLinks;
-    }
-
-    @Deprecated
-    // We don’t have depth information so far for PO. Once we do, remove this comment and apply the same logic as in GO
-    private List<PropertyLink> fetchRelevantPoLinks(int maxLinkCount) {
-        List<PropertyLink> propertyLinks = Lists.newArrayList();
-
-        if (!depthToPoTerms.isEmpty()) {
-            for (OntologyTerm goPoTerm : depthToPoTerms.values()) {
-                Optional<PropertyLink> link = linkBuilder.createLink(identifier, "po", goPoTerm.accession(), species, 0);
-                if (link.isPresent()) {
-                    propertyLinks.add(link.get());
-                }
-                if (propertyLinks.size() >= maxLinkCount) {
-                    break;
-                }
-            }
-        }
-
-        return propertyLinks;
-    }
-
-    private List<PropertyLink> fetchPoLinksOrderedByDepth() {
-        List<PropertyLink> propertyLinks = Lists.newArrayList();
-
-            if (!depthToPoTerms.isEmpty()) {
-            for (int i = Collections.max(depthToPoTerms.keySet()) ; i >= 1 ; i--) {
-                for (OntologyTerm goPoTerm : depthToPoTerms.get(i)) {
-                    Optional<PropertyLink> link = linkBuilder.createLink(identifier, "po", goPoTerm.accession(), species, 0);
-                    if (link.isPresent()) {
-                        propertyLinks.add(link.get());
-                    }
-                }
-            }
-        }
-
-        return propertyLinks;
     }
 
     private void addMirBaseSequence() {
