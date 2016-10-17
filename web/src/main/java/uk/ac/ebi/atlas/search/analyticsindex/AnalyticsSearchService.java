@@ -23,6 +23,10 @@ public class AnalyticsSearchService {
         return fetchExperimentTypes(SemanticQuery.create(bioentityIdentifier), SemanticQuery.create(), SpeciesFactory.NULL);
     }
 
+    public ImmutableSet<String> fetchExperimentTypesInAnyField(SemanticQuery query) {
+        return analyticsIndexSearchDAO.fetchExperimentTypesInAnyField(query);
+    }
+
     public ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, Species species) {
         return fetchExperimentTypes(geneQuery, SemanticQuery.create(), species);
     }
@@ -39,9 +43,12 @@ public class AnalyticsSearchService {
         return analyticsIndexSearchDAO.searchBioentityIdentifiers(geneQuery, conditionQuery, species.mappedName, -1);
     }
 
-
     public Collection<String> getBioentityIdentifiersForSpecies(Species species){
         return analyticsIndexSearchDAO.getBioentityIdentifiersForSpecies(species.mappedName);
+    }
+
+    public boolean tissueExpressionAvailableFor(SemanticQuery geneQuery) {
+        return !analyticsIndexSearchDAO.searchBioentityIdentifiersForTissuesInBaselineExperiments(geneQuery).isEmpty();
     }
 
 }

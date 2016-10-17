@@ -26,6 +26,22 @@ public class AnalyticsIndexSearchDAO {
         this.analyticsClient = analyticsClient;
     }
 
+    ImmutableSet<String> fetchExperimentTypesInAnyField(SemanticQuery query) {
+        SolrQuery solrQuery =
+                new AnalyticsQueryBuilder()
+                        .queryIdentifierSearch(query)
+                        .queryConditionsSearch(query)
+                        .facetBy(AnalyticsQueryBuilder.Field.EXPERIMENT_TYPE)
+                        .filterAboveDefaultCutoff()
+                        .setRows(0)
+                        .useOr()
+                        .build();
+
+        QueryResponse queryResponse = analyticsClient.query(solrQuery);
+        return SolrUtil.extractFirstFacetValues(queryResponse);
+    }
+
+
     ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         SolrQuery solrQuery =
                 new AnalyticsQueryBuilder()
@@ -36,6 +52,7 @@ public class AnalyticsIndexSearchDAO {
                         .filterAboveDefaultCutoff()
                         .setRows(0)
                         .build();
+
         QueryResponse queryResponse = analyticsClient.query(solrQuery);
         return SolrUtil.extractFirstFacetValues(queryResponse);
     }
@@ -50,6 +67,21 @@ public class AnalyticsIndexSearchDAO {
                         .facetBy(AnalyticsQueryBuilder.Field.BIOENTITY_IDENTIFIER)
                         .setFacetLimit(facetLimit)
                         .build();
+
+        QueryResponse queryResponse = analyticsClient.query(solrQuery);
+        return SolrUtil.extractFirstFacetValues(queryResponse);
+    }
+
+    ImmutableSet<String> searchBioentityIdentifiersForTissuesInBaselineExperiments(SemanticQuery geneQuery) {
+        SolrQuery solrQuery =
+                new AnalyticsQueryBuilder()
+                        .queryIdentifierSearch(geneQuery)
+                        .setRows(0)
+                        .facetBy(AnalyticsQueryBuilder.Field.BIOENTITY_IDENTIFIER)
+                        .filterBaselineAboveDefaultCutoff()
+                        .setFacetLimit(1)
+                        .build();
+
         QueryResponse queryResponse = analyticsClient.query(solrQuery);
         return SolrUtil.extractFirstFacetValues(queryResponse);
     }
