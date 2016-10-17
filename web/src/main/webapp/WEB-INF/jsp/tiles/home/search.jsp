@@ -10,23 +10,33 @@
         <div class="tabs-content" data-tabs-content="search-tabs">
             <div class="tabs-panel is-active " id="search-atlas" style="background-color: #e6e6e6;">
                 <!-- Grid Example -->
-                <form>
+                <form method="get" action="search" id="home-search-atlas-form">
                     <div class="row">
                         <div class="small-12 columns">
                             <label>Gene, tissue or biological condition</label>
-                            <input id="main-search-input" type="text" placeholder="Enter your search"/>
+                            <input id="home-search-atlas-input" type="text" placeholder="Enter your search" name="query"/>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="small-12 columns small">
-                            Examples: <a href='/gxa/query?geneQuery=[{"value":"REG1B"}]'>REG1B</a>, <a href='/gxa/query?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>, <a href='/gxa/query?conditionQuery=[{"value":"lung"}]'>lung</a>, <a href='/gxa/query?conditionQuery=[{"value":"leaf"}]'>leaf</a>, <a href='/gxa/query?conditionQuery=[{"value":"valproic acid"}]'>valproic acid</a>, <a href='/gxa/query?conditionQuery=[{"value":"cancer"}]'>cancer</a></label>
+                            Examples: <a href='${pageContext.request.contextPath}/query?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
+                            <a href='${pageContext.request.contextPath}/query?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
+                            <a href='${pageContext.request.contextPath}/query?conditionQuery=[{"value":"lung"}]'>lung</a>,
+                            <a href='${pageContext.request.contextPath}/query?conditionQuery=[{"value":"leaf"}]'>leaf</a>,
+                            <a href='${pageContext.request.contextPath}/query?conditionQuery=[{"value":"valproic acid"}]'>valproic acid</a>,
+                            <a href='${pageContext.request.contextPath}/query?conditionQuery=[{"value":"cancer"}]'>cancer</a></label>
                         </div>
                     </div>
 
                     <div class="row margin-top-large">
                         <div class="small-12 columns">
-                            <a href="#" class="button">Search</a> <a id="home-search-atlas-clear-button" class="secondary hollow button">Clear</a>
+                            <input id="home-search-atlas-search-button" class="button" type="submit" value="Search"/>
+
+                            <label for="file-upload" class="button">Upload file</label>
+                            <input type="file" id="file-upload" class="show-for-sr">
+
+                            <input id="home-search-atlas-clear-button" class="secondary hollow button" type="button" value="Clear"/>
                         </div>
                     </div>
                 </form>

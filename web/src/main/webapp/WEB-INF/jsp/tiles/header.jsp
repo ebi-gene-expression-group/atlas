@@ -67,13 +67,13 @@
     <!-- local-nav -->
     <nav>
         <ul class="dropdown menu float-left" data-description="navigational">
-            <li><a href="/gxa/home">Home</a></li>
-            <li><a href="/gxa/release-notes.html">Release notes</a></li>
-            <li><a href="/gxa/FAQ.html">Browse experiments</a></li>
-            <li><a href="/gxa/download.html">Download</a></li>
-            <li><a href="/gxa/help/index.html">Help</a></li>
-            <li><a href="/gxa/licence.html">Licence</a></li>
-            <li><a href="/gxa/about.html">About</a></li>
+            <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+            <li><a href="${pageContext.request.contextPath}/release-notes.html">Release notes</a></li>
+            <li><a href="${pageContext.request.contextPath}/FAQ.html">Browse experiments</a></li>
+            <li><a href="${pageContext.request.contextPath}/download.html">Download</a></li>
+            <li><a href="${pageContext.request.contextPath}/help/index.html">Help</a></li>
+            <li><a href="${pageContext.request.contextPath}/licence.html">Licence</a></li>
+            <li><a href="${pageContext.request.contextPath}/about.html">About</a></li>
         </ul>
 
         <!-- SP adding class hide-for-small-only as the right hand side takes a lot of space for small + remove text for medium-->

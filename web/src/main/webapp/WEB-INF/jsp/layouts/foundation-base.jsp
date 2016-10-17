@@ -161,14 +161,21 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
 
 <script>
-    geneQueryTagEditorModule.init('#main-search-input', '', function(){}, 'Enter your search');
+    geneQueryTagEditorModule.init('#home-search-atlas-input', '', function(){}, 'Enter your search');
     $('#home-search-atlas-clear-button').on('click' , function () {
         // Remove all tags
-        var $atlasSearchInput = $('#main-search-input'),
+        var $atlasSearchInput = $('#home-search-atlas-input'),
             atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
         atlasSearchTags.forEach(function (searchTag) {
             $atlasSearchInput.jsonTagEditor('removeTag', searchTag.value);
         })
+    });
+
+    $('#home-search-atlas-form').submit(function(event) {
+        var $atlasSearchInput = $('#home-search-atlas-input'),
+            atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
+        console.log(JSON.stringify(atlasSearchTags));
+        $atlasSearchInput.val(JSON.stringify(atlasSearchTags));
     });
 
     geneQueryTagEditorModule.init('#local-searchbox', '', function(){}, 'Enter your search');
