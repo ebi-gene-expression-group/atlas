@@ -56,7 +56,7 @@ public class AnalyticsSearchServiceIT extends RestAssuredFixture {
                 baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(DIFFERENTIAL_GENE), SemanticQuery.create(), SpeciesFactory.NULL),
                 is(new JsonObject()));
         assertThat(
-                differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(SemanticQuery.create
+                differentialAnalyticsSearchService.fetchDifferentialFacetsForQuery(SemanticQuery.create
                         (DIFFERENTIAL_GENE)).entrySet(), not(Matchers.<Map.Entry<String,JsonElement>>empty()));
     }
 
@@ -66,14 +66,14 @@ public class AnalyticsSearchServiceIT extends RestAssuredFixture {
                 baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(NON_EXISTENT_GENE), SemanticQuery.create(), SpeciesFactory.NULL),
                 is(new JsonObject()));
         assertThat(
-                differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(SemanticQuery.create
+                differentialAnalyticsSearchService.fetchDifferentialResultsForQuery(SemanticQuery.create
                         (NON_EXISTENT_GENE)).get("results").getAsJsonArray().size(),
                 is(0));
     }
 
     @Test
     public void differentialAnalyticsSearchServiceHasTheRightReturnFormat(){
-        JsonObject result = differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(SemanticQuery.create("GO:0008150"));
+        JsonObject result = differentialAnalyticsSearchService.fetchDifferentialResultsForQuery(SemanticQuery.create("GO:0008150"));
         testDifferentialResultsAreInRightFormat(result);
     }
 
