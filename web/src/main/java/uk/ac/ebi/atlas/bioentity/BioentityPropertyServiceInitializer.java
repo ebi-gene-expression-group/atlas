@@ -42,10 +42,6 @@ public class BioentityPropertyServiceInitializer {
     }
 
     public void initForGenePage(BioEntityPropertyService bioentityPropertyService, String identifier, String[] genePropertyNames) {
-        Optional<String> species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
-        if(!species.isPresent()){
-            throw new ResourceNotFoundException("Species can't be determined for gene:" + identifier);
-        }
 
         SortedSetMultimap<String, String> propertyValuesByType = bioentityPropertyDao.fetchGenePageProperties(identifier, genePropertyNames);
         SortedSet<String> entityNames = propertyValuesByType.get("symbol");
