@@ -1,0 +1,26 @@
+.gxaBioentityInformationCard {
+    margin-top: 20px;
+}
+
+.gxaBioentityInformationCard table {
+    margin: 0;
+    width: auto;
+    border: none;
+}
+
+.gxaBioentityInformationCard td {
+    border: none;
+}
+
+
+td.gxaBioentityInformationCardPropertyType {
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    padding-right: 2em;
+    border:none;
+}
+
+.gxaBioentityInformationCardPropertyValue {
+    border: none;
+}

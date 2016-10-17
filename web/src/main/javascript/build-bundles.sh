@@ -19,8 +19,8 @@ export NVM_DIR="/nfs/ma/home/ma-svc/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 all_packages=(anatomogram atlas-feedback cell-differential contrast-tooltips display-levels-button download-profiles-button heatmap-baseline-cell-variance help-tooltips legend number-format \
-              expression-atlas-heatmap expression-atlas-heatmap-highcharts expression-atlas-baseline-expression expression-atlas-differential-expression)
-bundled_packages=(expression-atlas-heatmap expression-atlas-heatmap-highcharts expression-atlas-baseline-expression expression-atlas-differential-expression)
+              expression-atlas-heatmap expression-atlas-heatmap-highcharts expression-atlas-baseline-expression expression-atlas-differential-expression expression-atlas-bioentity-information)
+bundled_packages=(expression-atlas-heatmap expression-atlas-heatmap-highcharts expression-atlas-baseline-expression expression-atlas-differential-expression expression-atlas-bioentity-information)
 
 for dir in ${bundled_packages[*]}
 do

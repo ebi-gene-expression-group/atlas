@@ -18,9 +18,8 @@ fi
 export NVM_DIR="/nfs/ma/home/ma-svc/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-all_packages=(anatomogram)
-
-bundled_packages=(expression-atlas-heatmap-highcharts)
+all_packages=(expression-atlas-bioentity-information)
+bundled_packages=(expression-atlas-bioentity-information)
 
 for dir in ${bundled_packages[*]}
 do
