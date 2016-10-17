@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import java.util.Map;
 import java.util.SortedSet;
@@ -32,7 +31,6 @@ public class GenePageController extends BioentityPageController {
 
         Species species = speciesFactory.create(matchesReactomeID(identifier)? speciesLookupService.fetchSpeciesForBioentityId(identifier).or(""): "");
         model.addAttribute("species", species.originalName);
-        bioentityPropertyServiceInitializer.initForGenePage(bioEntityPropertyService, identifier, propertyNames);
 
         SortedSetMultimap<String, String> propertyValuesByType = bioentityPropertyDao.fetchGenePageProperties
                 (identifier, propertyNames);
@@ -43,7 +41,7 @@ public class GenePageController extends BioentityPageController {
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
-        return super.showBioentityPage(identifier, species,entityNames.first(), model, experimentTypes);
+        return super.showBioentityPage(identifier, species,entityNames.first(), model, experimentTypes,propertyValuesByType);
     }
 
     @Override

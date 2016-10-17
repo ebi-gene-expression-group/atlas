@@ -19,7 +19,6 @@ import javax.inject.Named;
 import java.util.*;
 
 @Named("bioEntityPropertyService")
-@Scope("request")
 public class BioEntityPropertyService {
 
     private static final String BIOENTITY_PROPERTY_NAME = "symbol";
@@ -33,9 +32,6 @@ public class BioEntityPropertyService {
     private final BioEntityCardProperties bioEntityCardProperties;
     private final Gson gson = new Gson();
 
-    private SortedSetMultimap<String, String> propertyValuesByType;
-
-
     @Inject
     public BioEntityPropertyService(BioEntityPropertyDao bioEntityPropertyDao, UniProtClient uniProtClient,
                                     BioEntityPropertyLinkBuilder linkBuilder, ArrayDesignDAO arrayDesignDAO,
@@ -48,23 +44,19 @@ public class BioEntityPropertyService {
         this.bioEntityCardProperties = bioEntityCardProperties;
     }
 
-    public void init(SortedSetMultimap<String, String> propertyValuesByType) {
-        this.propertyValuesByType = propertyValuesByType;
-
+    public Map<String, Object> modelAttributes(String identifier, Species species,String [] propertyNames,
+                                               String entityName,SortedSetMultimap<String, String> propertyValuesByType){
         // this is to add mirbase sequence for ENSEMBL mirnas
         if (propertyValuesByType.containsKey("mirbase_id") && !propertyValuesByType.containsKey("mirbase_sequence")) {
-            addMirBaseSequence();
+            addMirBaseSequence(propertyValuesByType);
         }
-    }
 
-    public Map<String, Object> modelAttributes(String identifier, Species species,String [] propertyNames,
-                                               String entityName){
         Map<String, Object> result = new HashMap<>();
         result.put("entityName",entityName);
-        result.put("bioEntityDescription",getBioEntityDescription());
+        result.put("bioEntityDescription",getBioEntityDescription(propertyValuesByType));
         result.put("propertyNames", buildPropertyNamesByTypeMap(propertyNames));
 
-        result.put("bioentityProperties", gson.toJson(bioentityProperties(identifier, species, propertyNames)));
+        result.put("bioentityProperties", gson.toJson(bioentityProperties(identifier, species, propertyNames,propertyValuesByType)));
         return result;
     }
 
@@ -83,11 +75,11 @@ public class BioEntityPropertyService {
     }
 
 
-    JsonArray bioentityProperties(String identifier, Species species,String [] propertyNames){
+    JsonArray bioentityProperties(String identifier, Species species,String [] propertyNames,SortedSetMultimap<String, String> propertyValuesByType){
         Map<String, String> propertyNamesByType = buildPropertyNamesByTypeMap(propertyNames);
         Map<String,List<PropertyLink>> propertyLinksByType = new HashMap<>();
         for(String propertyName: propertyNamesByType.keySet()){
-            propertyLinksByType.put(propertyName, fetchPropertyLinks(identifier, species,propertyName));
+            propertyLinksByType.put(propertyName, fetchPropertyLinks(identifier, species,propertyName,propertyValuesByType));
         }
 
         JsonArray result = new JsonArray();
@@ -112,11 +104,11 @@ public class BioEntityPropertyService {
 
 
 
-    public List<PropertyLink> fetchPropertyLinks(String identifier, Species species, String propertyType) {
+    public List<PropertyLink> fetchPropertyLinks(String identifier, Species species, String propertyType, SortedSetMultimap<String, String> propertyValuesByType) {
         if ("reactome".equals(propertyType) && !propertyValuesByType.containsKey(propertyType)) {
-            addReactomePropertyValues();
+            addReactomePropertyValues(propertyValuesByType);
         } else if ("design_element".equals(propertyType) && !propertyValuesByType.containsKey(propertyType)) {
-            addDesignElements(identifier);
+            addDesignElements(identifier,propertyValuesByType);
         }
 
         List<PropertyLink> propertyLinks = Lists.newArrayList();
@@ -143,31 +135,30 @@ public class BioEntityPropertyService {
         }
     }
 
-    private void addMirBaseSequence() {
+    private void addMirBaseSequence(SortedSetMultimap<String, String> propertyValuesByType) {
         String mirbase_id = propertyValuesByType.get("mirbase_id").first();
         Set<String> mirbase_sequence = bioEntityPropertyDao.fetchPropertyValuesForGeneId(mirbase_id, "mirbase_sequence");
         propertyValuesByType.putAll("mirbase_sequence", mirbase_sequence);
     }
 
-    private void addDesignElements(String identifier) {
+    private void addDesignElements(String identifier, SortedSetMultimap<String, String> propertyValuesByType) {
         List<String> designElements = arrayDesignDAO.getDesignElements(identifier);
         if (!designElements.isEmpty()) {
             propertyValuesByType.putAll("design_element", designElements);
         }
     }
 
-    //TODO geneset used this
-    public String getBioEntityDescription() {
-        String description = getFirstValueOfProperty(PROPERTY_TYPE_DESCRIPTION);
+    public String getBioEntityDescription(SortedSetMultimap<String, String> propertyValuesByType) {
+        String description = getFirstValueOfProperty(PROPERTY_TYPE_DESCRIPTION, propertyValuesByType);
         return StringUtils.substringBefore(description, "[");
     }
 
-    private String getFirstValueOfProperty(String propertyType) {
+    private String getFirstValueOfProperty(String propertyType,SortedSetMultimap<String, String> propertyValuesByType) {
         Collection<String> properties = propertyValuesByType.get(propertyType);
         return CollectionUtils.isNotEmpty(properties) ? properties.iterator().next() : "";
     }
 
-    private void addReactomePropertyValues() {
+    private void addReactomePropertyValues(SortedSetMultimap<String, String> propertyValuesByType) {
         Collection<String> uniprotIds = propertyValuesByType.get("uniprot");
         if (CollectionUtils.isNotEmpty(uniprotIds)) {
             for (String uniprotId : uniprotIds) {

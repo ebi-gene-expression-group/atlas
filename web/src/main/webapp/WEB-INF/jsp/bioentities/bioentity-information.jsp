@@ -1,5 +1,4 @@
 <%--@elvariable id="propertyNames" type="java.util.Map"--%>
-<%--@elvariable id="bioEntityPropertyService" type="uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService"--%>
 <%--@elvariable id="relevantGoPoLinks" type="java.util.List"--%>
 <%--@elvariable id="allGoPoLinks" type="java.util.List"--%>
 

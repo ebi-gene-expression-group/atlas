@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.solr.query;
 
-import autovalue.shaded.com.google.common.common.base.Function;
-import autovalue.shaded.com.google.common.common.collect.Collections2;
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -18,7 +18,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Named
 public class SpeciesLookupService {
