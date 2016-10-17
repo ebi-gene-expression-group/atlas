@@ -8,16 +8,13 @@ import org.apache.solr.common.SolrException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 
 @Named
-@Scope("singleton")
 public class AnalyticsClient {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsClient.class);
 
     private SolrClient analyticsSolrClient;
