@@ -31,23 +31,22 @@ public class GeneSetPageController extends BioentityPageController {
                                   Model model) {
         bioentityPropertyServiceInitializer.initForGeneSetPage(bioEntityPropertyService, identifier);
 
-        Species species = speciesFactory.create(matchesReactomeID(identifier)?
-                bioEntityPropertyService.getSpecies(): speciesString);
+        Species species = speciesFactory.create(matchesReactomeID(identifier)? speciesLookupService.fetchSpeciesForGeneSet(identifier).or(""): speciesString);
 
         model.addAttribute("species", species.originalName);
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(SemanticQuery.create
                 (identifier), species);
 
-        return super.showBioentityPage(identifier, species, model, experimentTypes);
+        return super.showBioentityPage(identifier, species,identifier, model, experimentTypes);
     }
 
     @Override
-    protected Map<String, Object> pageDescriptionAttributes(String identifier){
-        String species = matchesReactomeID(identifier) ? bioEntityPropertyService.getSpecies() : "";
-        String s = "Expression summary for " + bioEntityPropertyService.getBioEntityDescription() +
-                (StringUtils.isNotBlank(species) ?
-                        " - " + StringUtils.capitalize(species) :
+    protected Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String description){
+        String speciesString = matchesReactomeID(identifier) ? species.originalName : "";
+        String s = "Expression summary for " + description +
+                (StringUtils.isNotBlank(speciesString) ?
+                        " - " + StringUtils.capitalize(speciesString) :
                         "");
         return ImmutableMap.<String, Object>of(
                 "mainTitle", s,

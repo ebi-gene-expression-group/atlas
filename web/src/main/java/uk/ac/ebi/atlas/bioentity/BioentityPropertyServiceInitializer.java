@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
@@ -10,14 +9,12 @@ import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
-import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Set;
 import java.util.SortedSet;
 
 @Named
@@ -56,11 +53,10 @@ public class BioentityPropertyServiceInitializer {
             entityNames.add(identifier);
         }
 
-        bioentityPropertyService.init(species.get(), propertyValuesByType, entityNames, identifier);
+        bioentityPropertyService.init(propertyValuesByType);
     }
 
     public void initForGeneSetPage(BioEntityPropertyService bioentityPropertyService, String identifier) {
-        String species = speciesLookupService.fetchSpeciesForGeneSet(identifier).or("");
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
 
@@ -85,9 +81,6 @@ public class BioentityPropertyServiceInitializer {
             propertyValuesByType.put("plant_reactome", identifier);
         }
 
-        SortedSet<String> names = Sets.newTreeSet();
-        names.add(identifier);
-
-        bioentityPropertyService.init(species, propertyValuesByType, names, identifier);
+        bioentityPropertyService.init(propertyValuesByType);
     }
 }

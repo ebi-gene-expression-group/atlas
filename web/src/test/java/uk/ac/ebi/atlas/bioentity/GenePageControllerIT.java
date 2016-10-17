@@ -13,8 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
 
 import javax.inject.Inject;
-
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -27,9 +28,6 @@ public class GenePageControllerIT {
 
     @Inject
     GenePageController subject;
-
-
-
 
     @Test
     public void bioentityProperties() throws Exception {
