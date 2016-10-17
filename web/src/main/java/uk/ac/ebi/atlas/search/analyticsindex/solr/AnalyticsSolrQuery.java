@@ -9,7 +9,7 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import javax.annotation.Nullable;
 
-public class AdvancedSolrQuery {
+public class AnalyticsSolrQuery {
     public enum Operator {
         AND(" AND "),
         OR(" OR ");
@@ -83,13 +83,13 @@ public class AdvancedSolrQuery {
         return root.toString();
     }
 
-    public AdvancedSolrQuery(String searchField, SemanticQuery searchValue) {
+    public AnalyticsSolrQuery(String searchField, SemanticQuery searchValue) {
         root = new Leaf(searchField, searchValue);
     }
 
-    public AdvancedSolrQuery(Operator operator, AdvancedSolrQuery... queries) {
+    public AnalyticsSolrQuery(Operator operator, AnalyticsSolrQuery... queries) {
         ImmutableList.Builder<TreeNode> childrenBuilder = new ImmutableList.Builder<>();
-        for (AdvancedSolrQuery query : queries) {
+        for (AnalyticsSolrQuery query : queries) {
             childrenBuilder.add(query.root);
         }
 
