@@ -1,13 +1,11 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.utils.UniProtClient;
@@ -26,6 +24,7 @@ public class BioEntityPropertyService {
     private UniProtClient uniProtClient;
     private ArrayDesignDAO arrayDesignDAO;
     private final BioEntityPropertyLinkBuilder linkBuilder;
+    private final GoPoTermTrader goPoTermTrader;
 
     private SortedSetMultimap<String, String> propertyValuesByType;
 
@@ -40,11 +39,14 @@ public class BioEntityPropertyService {
 
 
     @Inject
-    public BioEntityPropertyService(BioEntityPropertyDao bioEntityPropertyDao, UniProtClient uniProtClient, BioEntityPropertyLinkBuilder linkBuilder, ArrayDesignDAO arrayDesignDAO) {
+    public BioEntityPropertyService(BioEntityPropertyDao bioEntityPropertyDao, UniProtClient uniProtClient,
+                                    BioEntityPropertyLinkBuilder linkBuilder, ArrayDesignDAO arrayDesignDAO,
+                                    GoPoTermTrader goPoTermTrader) {
         this.bioEntityPropertyDao = bioEntityPropertyDao;
         this.uniProtClient = uniProtClient;
         this.arrayDesignDAO = arrayDesignDAO;
         this.linkBuilder = linkBuilder;
+        this.goPoTermTrader = goPoTermTrader;
     }
 
     public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, Multimap<Integer, OntologyTerm> goTerms, Multimap<Integer, OntologyTerm> poTerms, SortedSet<String> entityNames, String identifier) {
@@ -81,12 +83,26 @@ public class BioEntityPropertyService {
 
         List<PropertyLink> propertyLinks = Lists.newArrayList();
         for (String propertyValue : propertyValuesByType.get(propertyType)) {
-            Optional<PropertyLink> link = linkBuilder.createLink(identifier, propertyType, propertyValue, species, 0);
+            Optional<PropertyLink> link = linkBuilder.createLink(identifier, propertyType, propertyValue, species,
+                    assessRelevance(propertyType, propertyValue));
             if (link.isPresent()) {
                 propertyLinks.add(link.get());
             }
         }
         return propertyLinks;
+    }
+
+    private int assessRelevance(String propertyType, String propertyValue){
+        if(propertyType.equals("go") || propertyType.equals("po")){
+            OntologyTerm o = goPoTermTrader.getTerm(propertyValue);
+            if(o!=null){
+                return o.depth();
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
     }
 
     //TODO have the frontend decide what's relevant

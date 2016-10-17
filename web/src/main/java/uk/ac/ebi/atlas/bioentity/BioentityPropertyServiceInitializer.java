@@ -101,6 +101,7 @@ public class BioentityPropertyServiceInitializer {
     }
 
 
+    @Deprecated
     private ImmutableSetMultimap<Integer, OntologyTerm> mapGoPoTermsByDepth(Set<String> accessions) {
         ImmutableSetMultimap.Builder<Integer, OntologyTerm> builder = new ImmutableSetMultimap.Builder<>();
 
