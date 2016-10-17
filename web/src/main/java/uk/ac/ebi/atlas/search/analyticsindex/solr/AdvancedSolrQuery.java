@@ -5,6 +5,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import javax.annotation.Nullable;
 
@@ -34,7 +35,18 @@ public class AdvancedSolrQuery {
 
         @Override
         public String toString() {
-            return String.format("%s:(%s)", searchField, searchValue.asAnalyticsIndexQueryClause());
+
+            Function<SemanticQueryTerm, String> semanticQueryTermToSolr = new Function<SemanticQueryTerm, String>() {
+                @Nullable
+                @Override
+                public String apply(@Nullable SemanticQueryTerm semanticQueryTerm) {
+                    return semanticQueryTerm.hasNoCategory()
+                            ? String.format("\"%s\"", semanticQueryTerm.value())
+                            : String.format("\"%s:{%s}\"", semanticQueryTerm.category(), semanticQueryTerm.value());
+                }
+            };
+
+            return String.format("%s:(%s)", searchField, Joiner.on(Operator.OR.opString).join(FluentIterable.from(searchValue.terms()).transform(semanticQueryTermToSolr)));
         }
     }
 
