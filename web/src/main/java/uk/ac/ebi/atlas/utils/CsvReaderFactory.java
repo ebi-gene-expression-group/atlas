@@ -4,7 +4,6 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Throwables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
 import java.io.Reader;
@@ -20,7 +19,6 @@ import java.util.zip.GZIPInputStream;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
-@Scope("singleton")
 public class CsvReaderFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderFactory.class);

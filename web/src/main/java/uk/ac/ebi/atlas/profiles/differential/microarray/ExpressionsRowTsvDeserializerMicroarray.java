@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.differential.microarray;
 
 import com.google.common.collect.Iterables;

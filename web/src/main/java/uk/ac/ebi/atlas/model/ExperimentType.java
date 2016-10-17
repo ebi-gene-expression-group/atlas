@@ -1,6 +1,4 @@
-
 package uk.ac.ebi.atlas.model;
-
 
 import java.util.EnumSet;
 import java.util.HashMap;

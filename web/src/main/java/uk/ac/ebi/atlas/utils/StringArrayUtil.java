@@ -1,11 +1,9 @@
 package uk.ac.ebi.atlas.utils;
 
-import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.strip;
 import static uk.ac.ebi.atlas.utils.StringUtil.quoteIfMoreThanOneWord;

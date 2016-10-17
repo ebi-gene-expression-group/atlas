@@ -1,6 +1,4 @@
-
 package uk.ac.ebi.atlas.model.differential.microarray;
-
 
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -8,7 +6,11 @@ import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 
 public class MicroarrayExperiment extends DifferentialExperiment {
 

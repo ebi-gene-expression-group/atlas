@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 
 import org.springframework.context.annotation.Scope;

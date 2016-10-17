@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
@@ -35,4 +34,5 @@ public class BaselineExpressionsKryoInputStream extends KryoInputStream<Baseline
     @Override
     public void addGeneInfoValueToBuilder(String[] values) {
     }
+
 }

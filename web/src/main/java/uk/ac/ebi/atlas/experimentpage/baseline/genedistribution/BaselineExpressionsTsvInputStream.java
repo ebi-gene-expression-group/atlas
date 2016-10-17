@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import au.com.bytecode.opencsv.CSVReader;

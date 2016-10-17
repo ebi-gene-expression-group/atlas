@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.differential;
 
 import org.apache.commons.lang.StringUtils;

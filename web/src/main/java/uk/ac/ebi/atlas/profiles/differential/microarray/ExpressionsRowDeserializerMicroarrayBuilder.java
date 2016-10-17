@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.differential.microarray;
 
 import org.springframework.context.annotation.Scope;
@@ -16,7 +15,6 @@ import java.util.List;
 @Named
 @Scope("prototype")
 public class ExpressionsRowDeserializerMicroarrayBuilder extends ExpressionsRowDeserializerDifferentialBuilder<MicroarrayExpression, MicroarrayExperiment> {
-
 
     @Inject
     public ExpressionsRowDeserializerMicroarrayBuilder(MicroarrayExperimentsCache experimentsCache) {

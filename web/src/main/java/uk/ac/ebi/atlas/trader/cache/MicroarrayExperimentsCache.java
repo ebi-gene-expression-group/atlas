@@ -1,9 +1,7 @@
-
 package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
 import javax.inject.Inject;
@@ -11,7 +9,6 @@ import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
 @Named
-@Scope("singleton")
 public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayExperiment> {
 
     private LoadingCache<String, MicroarrayExperiment> experiments;

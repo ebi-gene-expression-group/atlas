@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles;
 
 import au.com.bytecode.opencsv.CSVReader;

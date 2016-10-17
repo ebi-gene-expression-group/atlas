@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader;
 
 import org.apache.commons.configuration.ConfigurationException;

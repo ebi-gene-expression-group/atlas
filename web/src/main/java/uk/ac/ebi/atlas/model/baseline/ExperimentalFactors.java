@@ -1,10 +1,26 @@
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.collect.*;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -21,21 +37,13 @@ import static com.google.common.base.Preconditions.checkState;
 public class ExperimentalFactors implements Serializable {
 
     private String defaultQueryFactorType;
-
     private Set<Factor> defaultFilterFactors;
-
     private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
-
     private LinkedHashMultimap<String, Factor> xmlFactorsByType = LinkedHashMultimap.create();
-
     private BiMap<String, String> factorDisplayNamesByType = HashBiMap.create();
-
     private SetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
-
     private Set<String> menuFilterFactorTypes;
-
     private List<FactorGroup> orderedFactorGroups;
-
     private Map<String, FactorGroup> orderedFactorGroupsByAssayGroupId;
 
     ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType,
@@ -240,4 +248,5 @@ public class ExperimentalFactors implements Serializable {
         return "ExperimentalFactors: orderedFactorGroups = " + orderedFactorGroups
                 + ", factorsByType = " + factorsByType;
     }
+
 }

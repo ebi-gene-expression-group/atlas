@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.collect.Maps;
@@ -10,7 +9,13 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -31,7 +36,7 @@ public class DifferentialExperiment extends Experiment {
             contrasts, String description, boolean hasRData, Species species, Collection<String>
                                              pubMedIds, ExperimentDesign experimentDesign) {
         super(experimentType, accession, lastUpdate,null, description, "", hasRData, species,
-                 pubMedIds, experimentDesign,Collections.<String>emptyList(), Collections.<String>emptyList(),Collections.<String>emptyList(), Collections.<String>emptyList());
+                 pubMedIds, experimentDesign, Collections.<String>emptyList(), Collections.<String>emptyList(),Collections.<String>emptyList(), Collections.<String>emptyList());
         for (Contrast contrast : contrasts) {
             contrastsById.put(contrast.getId(), contrast);
         }

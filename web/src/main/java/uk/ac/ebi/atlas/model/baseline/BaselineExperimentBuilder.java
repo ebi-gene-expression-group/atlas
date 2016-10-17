@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.baseline;
 
 import org.apache.commons.collections.CollectionUtils;

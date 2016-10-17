@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.commons.streams;
 
 import java.io.Closeable;
@@ -12,8 +11,6 @@ import java.io.Closeable;
  * http://stackoverflow.com/a/10811303/149412
  */
 public interface ObjectInputStream<T> extends Closeable {
-
     // returns null when stream is empty
     T readNext();
-
 }

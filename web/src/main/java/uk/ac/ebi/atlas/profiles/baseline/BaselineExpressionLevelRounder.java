@@ -1,11 +1,6 @@
-
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import org.apache.commons.math.util.MathUtils;
-import org.springframework.context.annotation.Scope;
-
-import javax.inject.Named;
-import java.text.NumberFormat;
 
 public class BaselineExpressionLevelRounder {
 

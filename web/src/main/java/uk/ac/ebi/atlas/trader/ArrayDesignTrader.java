@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.trader;
 
 import com.google.common.collect.Sets;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 
 import javax.inject.Inject;
@@ -9,12 +8,7 @@ import javax.inject.Named;
 import java.util.Map;
 import java.util.SortedSet;
 
-/**
- * Created with IntelliJ IDEA.
- * User: barrera
- */
 @Named
-@Scope("singleton")
 public class ArrayDesignTrader {
 
     private Map<String, String> arrayDesignMap;

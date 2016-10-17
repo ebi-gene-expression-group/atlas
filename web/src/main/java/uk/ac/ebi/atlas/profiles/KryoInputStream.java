@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -64,4 +63,5 @@ public abstract class KryoInputStream<T, K extends Expression> implements Expres
     protected String[] removeGeneIDAndNameColumns(String[] columns) {
         return (String[]) ArrayUtils.subarray(columns, 2, columns.length);
     }
+
 }

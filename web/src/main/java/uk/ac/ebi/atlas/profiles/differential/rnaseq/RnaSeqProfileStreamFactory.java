@@ -18,8 +18,8 @@ import java.text.MessageFormat;
 
 @Named
 @Scope("prototype")
-public class RnaSeqProfileStreamFactory implements ProfileStreamFactory<DifferentialProfileStreamOptions,
-        RnaSeqProfile, Contrast> {
+public class RnaSeqProfileStreamFactory
+implements ProfileStreamFactory<DifferentialProfileStreamOptions, RnaSeqProfile, Contrast> {
 
     @Value("#{configuration['diff.experiment.data.path.template']}")
     private String experimentDataFileUrlTemplate;

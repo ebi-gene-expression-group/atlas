@@ -1,6 +1,4 @@
-
 package uk.ac.ebi.atlas.profiles.differential.microarray;
-
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang.ArrayUtils;
@@ -10,7 +8,6 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.TsvInputStream;
 
 import java.util.List;
-
 
 public class MicroarrayProfilesTsvInputStream extends TsvInputStream<MicroarrayProfile, MicroarrayExpression> {
 

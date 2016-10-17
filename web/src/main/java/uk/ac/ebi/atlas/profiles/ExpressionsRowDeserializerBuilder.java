@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles;
 
 import uk.ac.ebi.atlas.model.Expression;

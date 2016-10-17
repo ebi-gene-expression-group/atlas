@@ -8,9 +8,6 @@ import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 
 import java.io.Closeable;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 05/05/15.
- */
 public class BaselineExpressionsKryoReader implements Closeable {
     private Kryo kryo;
     private UnsafeInput input;

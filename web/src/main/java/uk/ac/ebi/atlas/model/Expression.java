@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model;
 
 public interface Expression {

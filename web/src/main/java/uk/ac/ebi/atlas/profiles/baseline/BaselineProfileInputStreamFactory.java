@@ -20,8 +20,8 @@ import java.util.Set;
 
 @Named("baselineProfileInputStreamFactory")
 @Scope("prototype")
-public class BaselineProfileInputStreamFactory implements ProfileStreamFactory<BaselineProfileStreamOptions,
-        BaselineProfile, Factor> {
+public class BaselineProfileInputStreamFactory
+implements ProfileStreamFactory<BaselineProfileStreamOptions, BaselineProfile, Factor> {
 
     @Value("#{configuration['experiment.magetab.path.template']}")
     protected String baselineExperimentDataFileUrlTemplate;
@@ -77,4 +77,5 @@ public class BaselineProfileInputStreamFactory implements ProfileStreamFactory<B
 
         return createBaselineProfileInputStream(experimentAccession, queryFactorType, cutOff, filterFactors);
     }
+
 }

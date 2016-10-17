@@ -1,9 +1,7 @@
-
 package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import javax.inject.Inject;
@@ -11,7 +9,6 @@ import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
 @Named
-@Scope("singleton")
 public class RnaSeqDiffExperimentsCache implements ExperimentsCache<DifferentialExperiment> {
 
     private LoadingCache<String, DifferentialExperiment> experiments;

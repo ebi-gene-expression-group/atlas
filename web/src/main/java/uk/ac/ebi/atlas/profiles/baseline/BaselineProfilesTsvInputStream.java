@@ -1,6 +1,4 @@
-
 package uk.ac.ebi.atlas.profiles.baseline;
-
 
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;

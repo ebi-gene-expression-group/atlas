@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.CacheBuilder;

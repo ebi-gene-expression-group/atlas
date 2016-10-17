@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.base.Objects;
@@ -7,13 +6,11 @@ import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-
 
 public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     private static final double MIN_LEVEL = 0D;

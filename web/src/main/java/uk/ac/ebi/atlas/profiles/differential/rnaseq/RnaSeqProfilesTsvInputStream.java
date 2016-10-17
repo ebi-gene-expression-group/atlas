@@ -1,6 +1,4 @@
-
 package uk.ac.ebi.atlas.profiles.differential.rnaseq;
-
 
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
@@ -11,9 +9,9 @@ public class RnaSeqProfilesTsvInputStream extends TsvInputStream<RnaSeqProfile, 
 
     private RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder;
 
-    public RnaSeqProfilesTsvInputStream(CSVReader csvReader, String experimentAccession
-            , ExpressionsRowDeserializerRnaSeqBuilder expressionsRowDeserializerRnaSeqBuilder
-            , RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder) {
+    public RnaSeqProfilesTsvInputStream(CSVReader csvReader, String experimentAccession,
+                                        ExpressionsRowDeserializerRnaSeqBuilder expressionsRowDeserializerRnaSeqBuilder,
+                                        RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder) {
 
         super(csvReader, experimentAccession, expressionsRowDeserializerRnaSeqBuilder);
         this.rnaSeqProfileReusableBuilder = rnaSeqProfileReusableBuilder;
@@ -34,6 +32,5 @@ public class RnaSeqProfilesTsvInputStream extends TsvInputStream<RnaSeqProfile, 
     public void addGeneInfoValueToBuilder(String[] values) {
         rnaSeqProfileReusableBuilder.beginNewInstance(values[0], values[1]);
     }
-
 
 }
