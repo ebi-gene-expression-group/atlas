@@ -23,22 +23,31 @@ public class DifferentialAnalyticsSearchService {
         this.differentialResultsReader = differentialResultsReader;
     }
 
-    public JsonObject fetchDifferentialFacetsForSearch(SemanticQuery geneQuery) {
-        return fetchDifferentialFacetsForSearch(geneQuery, SemanticQuery.create(), "");
-    }
-
-    public JsonObject fetchDifferentialFacetsForSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, String
-            species) {
-        String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForSearch(geneQuery, conditionQuery, species);
+    public JsonObject fetchDifferentialFacetsForSearch(SemanticQuery query) {
+        String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForSearch(query);
         return differentialFacetsReader.generateFacetsTreeJson(jsonResponse);
     }
 
-    public JsonObject fetchDifferentialResultsForSearch(SemanticQuery geneQuery) {
-        return fetchDifferentialResultsForSearch(geneQuery, SemanticQuery.create(), "");
+    public JsonObject fetchDifferentialResultsForSearch(SemanticQuery query) {
+        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForSearch(query);
+        return differentialResultsReader.extractResultsAsJson(differentialResults);
     }
 
-    public JsonObject fetchDifferentialResultsForSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForSearch(geneQuery, conditionQuery, species);
+    public JsonObject fetchDifferentialFacetsForQuery(SemanticQuery geneQuery) {
+        return fetchDifferentialFacetsForQuery(geneQuery, SemanticQuery.create(), "");
+    }
+
+    public JsonObject fetchDifferentialFacetsForQuery(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForQuery(geneQuery, conditionQuery, species);
+        return differentialFacetsReader.generateFacetsTreeJson(jsonResponse);
+    }
+
+    public JsonObject fetchDifferentialResultsForQuery(SemanticQuery geneQuery) {
+        return fetchDifferentialResultsForQuery(geneQuery, SemanticQuery.create(), "");
+    }
+
+    public JsonObject fetchDifferentialResultsForQuery(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForQuery(geneQuery, conditionQuery, species);
         return differentialResultsReader.extractResultsAsJson(differentialResults);
     }
 

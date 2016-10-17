@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.ImmutableList;
-import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.search.analyticsindex.baseline.QueryBuilder;
+import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,20 +21,29 @@ public class DifferentialFacetsDAO extends DifferentialAnalyticsDAO {
 
     private static final int ROWS = 0;
 
-    private final QueryBuilder queryBuilder = new QueryBuilder();
-
     @Inject
     public DifferentialFacetsDAO(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl, @Value("classpath:differential.facets.query.json") Resource differentialFacetsQueryJSON) {
         super(restTemplate, solrBaseUrl, differentialFacetsQueryJSON);  // settings of restTemplate in applicationContext.xml
     }
 
-    public String fetchFacetsAboveDefaultFoldChangeForSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        ImmutableList.Builder<Pair<String, SemanticQuery>> searchQueriesBuilder = ImmutableList.builder();
-        searchQueriesBuilder.add(Pair.of(IDENTIFIER_SEARCH_FIELD, geneQuery));
-        searchQueriesBuilder.add(Pair.of(CONDITION_SEARCH_FIELD, conditionQuery));
-        searchQueriesBuilder.add(Pair.of(SPECIES_FIELD, SemanticQuery.create(species)));
-        String identifierSearch = queryBuilder.buildSolrQuery(searchQueriesBuilder.build());
-        return fetchFacetsAboveFoldChange(identifierSearch, DEFAULT_P_VALUE);
+    public String fetchFacetsAboveDefaultFoldChangeForSearch(SemanticQuery query) {
+        AnalyticsQueryBuilder analyticsQueryBuilder =
+                new AnalyticsQueryBuilder()
+                        .queryIdentifierSearch(query)
+                        .queryConditionsSearch(query)
+                        .useOr();
+
+        return fetchFacetsAboveFoldChange(analyticsQueryBuilder.build().getQuery(), DEFAULT_P_VALUE);
+    }
+
+    public String fetchFacetsAboveDefaultFoldChangeForQuery(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        AnalyticsQueryBuilder analyticsQueryBuilder =
+                new AnalyticsQueryBuilder()
+                        .queryIdentifierSearch(geneQuery)
+                        .queryConditionsSearch(conditionQuery)
+                        .ofSpecies(species);
+
+        return fetchFacetsAboveFoldChange(analyticsQueryBuilder.build().getQuery(), DEFAULT_P_VALUE);
     }
 
     private String fetchFacetsAboveFoldChange(String q, double pValue) {

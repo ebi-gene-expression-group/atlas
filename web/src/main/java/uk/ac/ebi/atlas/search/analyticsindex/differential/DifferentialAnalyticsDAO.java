@@ -17,17 +17,12 @@ import static uk.ac.ebi.atlas.utils.ResourceUtils.readPlainTextResource;
 public abstract class DifferentialAnalyticsDAO {
 
     protected final RestTemplate restTemplate;
-
     protected final String solrBaseUrl;
     protected final String differentialGeneFacetsQuery;
 
     private static final String FQ_TEMPLATE = "&fq=pValue:[* TO {0}]";
     private static final String QUERY_TEMPLATE = "query?q={0}&rows={1,number,#}&omitHeader=true";
     protected static final String DIFFERENTIAL_ONLY = "experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential)";
-    protected static final String IDENTIFIER_SEARCH_FIELD = "identifierSearch";
-    protected static final String BIOENTITY_IDENTIFIER_FIELD = "bioentityIdentifier";
-    protected static final String CONDITION_SEARCH_FIELD = "conditionsSearch";
-    protected static final String SPECIES_FIELD = "species";
 
     protected static final double DEFAULT_P_VALUE = 0.05;
 
@@ -49,7 +44,7 @@ public abstract class DifferentialAnalyticsDAO {
         }
     }
 
-    protected static String encodeQuery(String s) {
+    private static String encodeQuery(String s) {
         // doesn't encode =
         try {
             return UriUtils.encodeQuery(s, "UTF-8");

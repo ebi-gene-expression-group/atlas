@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
@@ -25,6 +26,11 @@ public class BaselineAnalyticsSearchDaoIT {
     private static final String SPECIES_HOMO_SAPIENS = "species:\"homo sapiens\"";
     @Inject
     BaselineAnalyticsSearchDao subject;
+
+    @Test
+    public void buildQueryParameters() {
+        assertThat(subject.buildQueryParameters("identifierSearch:ENSG00000126549"), is("query?q=identifierSearch:ENSG00000126549&rows=0&omitHeader=true&fq=experimentType:(rnaseq_mrna_baseline%20OR%20proteomics_baseline)"));
+    }
 
     @Test
     public void buildQueryUrl() {
