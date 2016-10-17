@@ -23,7 +23,6 @@ import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static uk.ac.ebi.atlas.bioentity.GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession;
 import static uk.ac.ebi.atlas.bioentity.GeneSetUtil.matchesReactomeID;
 
@@ -125,7 +124,7 @@ public class QuerySearchController {
     public String fetchDifferentialJsonFacets(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
                                               @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                               @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
-        return gson.toJson(differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(geneQuery, conditionQuery,
+        return gson.toJson(differentialAnalyticsSearchService.fetchDifferentialFacetsForQuery(geneQuery, conditionQuery,
                 species));
     }
 
@@ -134,7 +133,7 @@ public class QuerySearchController {
     public String fetchDifferentialJsonResults(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
                                                @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                                @RequestParam(value = "organism", required = false, defaultValue = "") String species) {
-        return gson.toJson(differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(geneQuery, conditionQuery,
+        return gson.toJson(differentialAnalyticsSearchService.fetchDifferentialResultsForQuery(geneQuery, conditionQuery,
                 species));
     }
 
