@@ -1,58 +1,92 @@
 package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 
-import static org.apache.commons.lang3.StringUtils.wrap;
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQuery.Operator.AND;
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQuery.Operator.OR;
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder.Field.CONDITIONS_SEARCH;
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder.Field.FACTOR_TYPE;
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder.Field.IDENTIFIER_SEARCH;
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder.Field.SPECIES;
 
 @Named
 @Scope("prototype")
 public class AnalyticsQueryBuilder {
-    // values in Solr below cutoff are excluded after index build
-    private static final String BASELINE_ABOVE_CUTOFF = "(experimentType:(rnaseq_mrna_baseline OR proteomics_baseline))";
-    private static final String DIFFERENTIAL_ABOVE_CUTOFF =
-            "(experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential) " +
-            "AND pValue:[* TO 0.05])";
-
     public enum Field {
         EXPERIMENT_TYPE("experimentType"),
         BIOENTITY_IDENTIFIER("bioentityIdentifier"),
         SPECIES("species"),
         IDENTIFIER_SEARCH("identifierSearch"),
-        CONDITIONS_SEARCH("conditionsSearch");
-        final String name;
+        CONDITIONS_SEARCH("conditionsSearch"),
+        FACTOR_TYPE("defaultQueryFactorType");
+        private final String name;
 
         Field(String name){
             this.name = name;
         }
 
+        @Override
+        public String toString() {
+            return this.name;
+        }
     }
 
-    private SemanticQuery geneQuery = SemanticQuery.create();
-    private SemanticQuery conditionQuery = SemanticQuery.create();
-    private ArrayList<String> speciesTerms = new ArrayList<>();
-    private int facetLimit = -1;
+    // Values below cutoff are excluded in index build, keeping comments just for reference
+    // public static final double DEFAULT_BASELINE_CUT_OFF = 0.5;
+    // public static final double DEFAULT_PROTEOMICS_CUT_OFF = 0;
 
-    private SolrQuery solrQuery = new SolrQuery();
+    private static final String BASELINE_ABOVE_CUTOFF = "(experimentType:(rnaseq_mrna_baseline OR proteomics_baseline))";
+    private static final String DIFFERENTIAL_ABOVE_CUTOFF =
+            "(experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential) " +
+            "AND pValue:[* TO 0.05])";
+    private static final String DEFAULT_QUERY = "*:*";
 
+    private ImmutableList.Builder<AnalyticsSolrQuery> queryClausesBuilder = ImmutableList.builder();
+    private AnalyticsSolrQuery.Operator defaultOp = AND;
+
+    private SolrQuery solrQuery = new SolrQuery().setFacetLimit(-1);
+
+    private void addQueryClause(Field searchField, SemanticQuery searchValue) {
+        if (searchValue.isNotEmpty()) {
+            queryClausesBuilder.add(new AnalyticsSolrQuery(searchField.toString(), searchValue));
+        }
+    }
+
+    public AnalyticsQueryBuilder queryIdentifierSearch(SemanticQuery geneQuery) {
+        addQueryClause(IDENTIFIER_SEARCH, geneQuery);
+        return this;
+    }
+
+    public AnalyticsQueryBuilder queryConditionsSearch(SemanticQuery conditionQuery) {
+        addQueryClause(CONDITIONS_SEARCH, conditionQuery);
+        return this;
+    }
+
+    public AnalyticsQueryBuilder withFactorType(String factorType) {
+        addQueryClause(FACTOR_TYPE, SemanticQuery.create(factorType));
+        return this;
+    }
+
+    public AnalyticsQueryBuilder ofSpecies(String species) {
+        addQueryClause(SPECIES, SemanticQuery.create(species));
+        return this;
+    }
 
     public AnalyticsQueryBuilder facetBy(Field f){
         solrQuery.setFacet(true);
         solrQuery.setFacetMinCount(1);
-        solrQuery.addFacetField(f.name);
+        solrQuery.addFacetField(f.toString());
         return this;
     }
-    
+
     public AnalyticsQueryBuilder setFacetLimit(int facetLimit){
-        this.facetLimit = facetLimit;
+        solrQuery.setFacetLimit(facetLimit);
         return this;
     }
 
@@ -62,50 +96,30 @@ public class AnalyticsQueryBuilder {
         return this;
     }
 
-    public AnalyticsQueryBuilder queryIdentifierSearch(SemanticQuery geneQuery) {
-        this.geneQuery = SemanticQuery.create(geneQuery.terms());
-        return this;
-    }
-
-    public AnalyticsQueryBuilder queryConditionsSearch(SemanticQuery conditionQuery) {
-        this.conditionQuery = SemanticQuery.create(conditionQuery.terms());
-        return this;
-    }
-
-
-    public AnalyticsQueryBuilder ofSpecies(String species) {
-        if (!Strings.isNullOrEmpty(species)) {
-            speciesTerms.add(wrap(species, '"'));
-        }
-        return this;
-    }
-
     public AnalyticsQueryBuilder filterAboveDefaultCutoff() {
         solrQuery.addFilterQuery(BASELINE_ABOVE_CUTOFF + " OR " + DIFFERENTIAL_ABOVE_CUTOFF);
         return this;
     }
 
-    private String queryTerm(Field field, String clause){
-        return String.format("%s:(%s)", field.name, clause);
+    public AnalyticsQueryBuilder filterBaselineAboveDefaultCutoff() {
+        solrQuery.addFilterQuery(BASELINE_ABOVE_CUTOFF);
+        return this;
+    }
+
+    public AnalyticsQueryBuilder useOr() {
+        defaultOp = OR;
+        return this;
     }
 
     public SolrQuery build() {
-        if (geneQuery.isNotEmpty() || conditionQuery.isNotEmpty() || speciesTerms.size() > 0) {
-            Collection<String> queryTerms = new HashSet<>();
-            if (geneQuery.isNotEmpty()) {
-                queryTerms.add(queryTerm(Field.IDENTIFIER_SEARCH, geneQuery.asAnalyticsIndexQueryClause()));
-            }
-            if (conditionQuery.isNotEmpty()) {
-                queryTerms.add(queryTerm(Field.CONDITIONS_SEARCH, conditionQuery.asAnalyticsIndexQueryClause()));
-            }
-            if (speciesTerms.size() > 0) {
-                queryTerms.add(queryTerm(Field.SPECIES,  Joiner.on(" OR ").join(speciesTerms)));
-            }
-            solrQuery.setQuery(Joiner.on(" AND ").join(queryTerms));
+        List<AnalyticsSolrQuery> queryClauses = queryClausesBuilder.build();
+
+        if (queryClauses.isEmpty()) {
+            solrQuery.setQuery(DEFAULT_QUERY);
         } else {
-            solrQuery.setQuery(queryTerm(Field.BIOENTITY_IDENTIFIER, "*"));
+            solrQuery.setQuery(new AnalyticsSolrQuery(defaultOp, queryClauses.toArray(new AnalyticsSolrQuery[0])).toString());
         }
-        solrQuery.setFacetLimit(facetLimit);
+
         return solrQuery;
     }
 }
