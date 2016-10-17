@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
-import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.trader.cache.OrganismsCache;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 
@@ -19,21 +19,21 @@ import javax.inject.Inject;
 @Scope("request")
 public final class ExpressionDataController {
 
-    private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
+    private AnalyticsSearchService analyticsSearchService;
     private OrganismsCache organismsCache;
 
     @Inject
-    public ExpressionDataController(BaselineAnalyticsSearchService baselineAnalyticsSearchService,
+    public ExpressionDataController(AnalyticsSearchService analyticsSearchService,
                                     OrganismsCache organismsCache) {
-        this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
+        this.analyticsSearchService = analyticsSearchService;
         this.organismsCache = organismsCache;
     }
 
     @RequestMapping(value = "/json/expressionData", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public ModelAndView existGeneIdentifier(@RequestParam(value = "geneId", required = true) String geneId ) {
+    public ModelAndView existGeneIdentifier(@RequestParam(value = "geneId") String geneId ) {
         ModelAndView mav = new ModelAndView(new MappingJacksonJsonView());
-        boolean results = baselineAnalyticsSearchService.tissueExpressionAvailableFor(SemanticQuery.create(geneId));
+        boolean results = analyticsSearchService.tissueExpressionAvailableFor(SemanticQuery.create(geneId));
         mav.addObject(geneId, results);
         return mav;
     }
