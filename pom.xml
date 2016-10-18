@@ -26,11 +26,6 @@
         <arrayexpress.ac.url>/gxa/arrayexpress</arrayexpress.ac.url>
         <europepmc.base.url>/gxa/europepmc</europepmc.base.url>
 
-        <!-- set the next two properties to non empty value only if you want
-        to run the selenium tests against a different host/port than localhost:9090 -->
-        <integration.test.host>lime</integration.test.host>
-        <integration.test.portnumber>14092</integration.test.portnumber>
-
         <!-- mailtrap.io user: atlas-developers@ebi.ac.uk -->
         <!-- mailtrap.io password: atlas-ebi-14 -->
         <mail.smtp.host>mailtrap.io</mail.smtp.host>
@@ -79,109 +74,103 @@
             </testResource>
         </testResources>
 
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.12.2</version>
-                    <configuration>
-                        <excludes>
-                            <exclude>${test.acceptance.pattern}</exclude>
-                        </excludes>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>2.12</version>
-                    <configuration>
-                        <systemProperties>
-                            <property>
-                                <name>selenium.test.host</name>
-                                <value>${integration.test.host}</value>
-                            </property>
-                            <property>
-                                <name>selenium.test.portnumber</name>
-                                <value>${integration.test.portnumber}</value>
-                            </property>
-                        </systemProperties>
-                        <includes>
-                            <include>${test.acceptance.pattern}</include>
-                            <include>${test.integration.pattern}</include>
-                        </includes>
-                        <excludes>
-                            <exclude>${failsafe.excludes}</exclude>
-                            <exclude>**/*SIT.java</exclude>
-                        </excludes>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.tomcat.maven</groupId>
-                    <artifactId>tomcat7-maven-plugin</artifactId>
-                    <version>2.1</version>
-                    <configuration>
-                        <path>/gxa</path>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>tomcat-deploy</id>
-                            <goals>
-                                <goal>deploy</goal>
-                            </goals>
-                            <phase>pre-integration-test</phase>
-                            <configuration>
-                                <url>http://lime:14092/manager/html</url>
-                                <username>tomcat</username>
-                                <password>tomcat</password>
-                                <path>/gxa</path>
-                                <update>true</update>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <version>2.4</version>
-                    <configuration>
-                        <escapeString>\</escapeString>
-                        <webResources>
-                            <resource>
-                                <directory>src/main/webapp/resources/js</directory>
-                                <targetPath>resources/js</targetPath>
-                                <filtering>true</filtering>
-                            </resource>
-                        </webResources>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.zeroturnaround</groupId>
-                    <artifactId>jrebel-maven-plugin</artifactId>
-                    <version>1.1.5</version>
-                    <executions>
-                        <execution>
-                            <id>generate-rebel-xml</id>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>generate</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>selenium-maven-plugin</artifactId>
-                    <version>2.3</version>
-                </plugin>
-
-            </plugins>
-        </pluginManagement>
-
         <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <systemProperties>
+                        <property>
+                            <name>selenium.test.host</name>
+                            <value>lime</value>
+                        </property>
+                        <property>
+                            <name>selenium.test.portnumber</name>
+                            <value>14092</value>
+                        </property>
+                    </systemProperties>
+                    <excludes>
+                        <exclude>${failsafe.excludes}</exclude>
+                        <exclude>**/*SIT.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <path>/gxa</path>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>tomcat-deploy</id>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <url>http://lime:14092/manager/html</url>
+                            <username>tomcat</username>
+                            <password>tomcat</password>
+                            <path>/gxa</path>
+                            <update>true</update>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <escapeString>\</escapeString>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp/resources/js</directory>
+                            <targetPath>resources/js</targetPath>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.zeroturnaround</groupId>
+                <artifactId>jrebel-maven-plugin</artifactId>
+                <version>1.1.5</version>
+                <executions>
+                    <execution>
+                        <id>generate-rebel-xml</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>selenium-maven-plugin</artifactId>
+                <version>2.3</version>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
