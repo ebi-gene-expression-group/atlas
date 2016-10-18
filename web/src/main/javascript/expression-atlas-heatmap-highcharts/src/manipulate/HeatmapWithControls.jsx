@@ -7,7 +7,6 @@ var React = require('react');
 //*------------------------------------------------------------------*
 
 var Button = require('react-bootstrap/lib/Button');
-var DownloadProfilesButton = require('download-profiles-button');
 
 var FormattersFactory = require('./Formatters.jsx');
 var TooltipsFactory = require('./tooltips/main.jsx');
