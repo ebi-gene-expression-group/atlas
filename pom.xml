@@ -43,31 +43,6 @@
         <log.level.root>warn</log.level.root>
         <log.level.atlas>info</log.level.atlas>
         <log.prudent>true</log.prudent>
-
-        <!-- Code Coverage with SONAR -->
-        <sonar.jdbc.url>jdbc:h2:tcp://lime:9092/sonar</sonar.jdbc.url>
-        <sonar.jdbc.driver>org.h2.Driver</sonar.jdbc.driver>
-        <sonar.jdbc.username>sonar</sonar.jdbc.username>
-        <sonar.jdbc.password>sonar</sonar.jdbc.password>
-        <sonar.host.url>http://lime:9000</sonar.host.url>
-
-        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <!-- Tells Sonar to reuse existing reports, NEEDED when testing with TestNG! -->
-
-        <sonar.surefire.reportsPath>surefire-reports</sonar.surefire.reportsPath>
-        <!-- Tells Sonar where the unit tests execution reports are [ sonar does not like TestNG :( ]-->
-        <sonar.surefire.itReportPath>failsafe-reports</sonar.surefire.itReportPath>
-        <!-- Tells Sonar where the integration tests execution reports are [ sonar does not like TestNG :( ]-->
-
-        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <!-- Tells Sonar that the code coverage tool by unit tests is JaCoCo -->
-        <sonar.java.source>1.7</sonar.java.source>
-
-        <sonar.jacoco.reportPath>${project.build.directory}/jacoco.exec</sonar.jacoco.reportPath>
-        <!-- Tells Sonar where the code coverage report is -->
-        <sonar.jacoco.itReportPath>${project.build.directory}/jacoco-it.exec</sonar.jacoco.itReportPath>
-        <!-- Tells Sonar where the code coverage report is -->
-        <!-- /Code Coverage with SONAR -->
     </properties>
 
     <scm>
@@ -109,73 +84,19 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.6.2.201302030002</version>
-                    <executions>
-                        <execution>
-                            <id>prepare-agent</id>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                            <configuration>
-                                <includes>
-                                    <include>uk.ac.ebi.atlas.*</include>
-                                </includes>
-                                <propertyName>jacoco.agent.argLine</propertyName>
-                                <!-- used for surefire/failsafe-plugin combination -->
-                                <destFile/>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>report</id>
-                            <phase>prepare-package</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                            <configuration>
-                                <includes>
-                                    <include>uk.ac.ebi.atlas.*</include>
-                                </includes>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.12.2</version>
-                    <executions>
-                        <execution>
-                            <id>default-test</id>
-                            <phase>pre-integration-test</phase>
-                            <goals>
-                                <goal>test</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                     <configuration>
-                        <!--suppress MavenModelInspection -->
-                        <argLine>${jacoco.agent.argLine},destfile=${sonar.jacoco.reportPath}</argLine>
                         <excludes>
                             <exclude>${test.acceptance.pattern}</exclude>
                         </excludes>
                     </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.apache.maven.surefire</groupId>
-                            <artifactId>surefire-junit47</artifactId>
-                            <version>2.12.2</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>2.12</version>
                     <configuration>
-                        <!--suppress MavenModelInspection -->
-                        <argLine>${jacoco.agent.argLine},destfile=${sonar.jacoco.itReportPath}</argLine>
                         <systemProperties>
                             <property>
                                 <name>selenium.test.host</name>
@@ -191,21 +112,9 @@
                             <include>${test.integration.pattern}</include>
                         </includes>
                         <excludes>
-                            <!--suppress MavenModelInspection -->
-                            <exclude>${failsafe.excludes}</exclude>
                             <exclude>**/*SIT.java</exclude>
                         </excludes>
                     </configuration>
-                    <executions>
-                        <execution>
-                            <id>default</id>
-                            <phase>integration-test</phase>
-                            <goals>
-                                <goal>integration-test</goal>
-                                <goal>verify</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
 
                 <plugin>
