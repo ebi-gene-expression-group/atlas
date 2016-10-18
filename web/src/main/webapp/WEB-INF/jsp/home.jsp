@@ -27,7 +27,7 @@
             <table class="gxaFormGrid">
                 <tr>
                     <td class="gxaTableColumn35">
-                        <label>Gene query</label>
+                        <label>Gene / Gene property</label>
                         <span data-help-loc="#geneSearch"></span>
                     </td>
                     <td class="gxaTableColumn20">
