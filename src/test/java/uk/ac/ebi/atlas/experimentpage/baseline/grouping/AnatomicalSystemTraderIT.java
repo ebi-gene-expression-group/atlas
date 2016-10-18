@@ -11,10 +11,13 @@ import javax.inject.Inject;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+public class AnatomicalSystemTraderIT {
 
-public class AnatomicalSystemTraderTest {
-
-    AnatomicalSystemTrader subject = new AnatomicalSystemTrader();
+    @Inject
+    AnatomicalSystemTrader subject;
 
     @Test
     public void testGetAnatomicalSystems() {
