@@ -63,7 +63,7 @@ exports.render = function(options) {
                 pathToFolderWithBundledResources:options.pathToFolderWithBundledResources || linksAtlasBaseURL+"/resources/js-bundles",
                 showAnatomogram: options.showAnatomogram === undefined || options.showAnatomogram,
                 isDifferential: !!options.isDifferential,
-                isMultiExperiment: sourceURL.indexOf("/baselineAnalytics")>-1,
+                isMultiExperiment: !!options.isMultiExperiment,
                 isWidget: options.isWidget === undefined || options.isWidget,
                 disableGoogleAnalytics: !!options.disableGoogleAnalytics,
                 fail: options.fail,
