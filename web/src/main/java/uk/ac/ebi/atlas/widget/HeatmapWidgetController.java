@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
@@ -78,7 +79,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         this.factorGroupingService = factorGroupingService;
     }
 
-    @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE")
+    @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public String fetchReferenceExperimentProfilesJson(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                                        Model model, HttpServletRequest request, HttpServletResponse response) {
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute("experiment");
@@ -92,18 +93,16 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
             e.printStackTrace();
         }
 
-        // set here instead of in JSP, because the JSP may be included elsewhere
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }
 
-    @RequestMapping(value = "/widgets/heatmap/baselineAnalytics")
+    @RequestMapping(value = "/widgets/heatmap/baselineAnalytics", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public String analyticsJson(@RequestParam(value = "geneQuery") SemanticQuery geneQuery,
                                 @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                 @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
                                 @RequestParam(value = "propertyType", required = false) String propertyType,
                                 @RequestParam(value = "source", required = false) String defaultQueryFactorType,
-                                Model model, HttpServletRequest request, HttpServletResponse response) {
+                                Model model, HttpServletRequest request) {
 
         //TODO: I don't think we should be doing this
         if(isBlank(speciesString)){
@@ -112,32 +111,45 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
             if(maybeSpecies.isPresent()){
                 speciesString = maybeSpecies.get();
             } else {
-                throw new ResourceNotFoundException("Species can't be determined for " + propertyType + ":" + geneQuery.toJson());
+                throw new ResourceNotFoundException(
+                        "Species can't be determined for " + propertyType + ":" + geneQuery.toJson());
             }
         }
 
         Species species= speciesFactory.create(speciesString);
 
-        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery,
-                conditionQuery, species, defaultQueryFactorType);
+        BaselineExperimentSearchResult searchResult =
+                baselineAnalyticsSearchService.findExpressions(
+                        geneQuery, conditionQuery, species, defaultQueryFactorType);
 
-        populateModelWithMultiExperimentResults(request.getContextPath(), geneQuery, conditionQuery,species,
-                searchResult, model);
+        populateModelWithMultiExperimentResults(
+                request.getContextPath(), geneQuery, conditionQuery,species, searchResult, model);
 
-        // set here instead of in JSP, because the JSP may be included elsewhere
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }
 
-    private void populateModelWithMultiExperimentResults(String contextRoot, SemanticQuery geneQuery, SemanticQuery
-            conditionQuery, Species species,
-                                                         BaselineExperimentSearchResult searchResult, Model model) {
+    @RequestMapping(value = "/json/search/baselineResults", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    public String analyticsJson(@RequestParam(value = "query") SemanticQuery query,
+                                @RequestParam(value = "species") String speciesString,
+                                @RequestParam(value = "source") String defaultQueryFactorType,
+                                Model model, HttpServletRequest request) {
+
+        Species species = speciesFactory.create(speciesString);
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(query, species, defaultQueryFactorType);
+        populateModelWithMultiExperimentResults(request.getContextPath(), query, species, searchResult, model);
+
+        return "heatmap-data";
+    }
+
+    private void populateModelWithMultiExperimentResults(
+            String contextRoot, SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species,
+            BaselineExperimentSearchResult searchResult, Model model) {
         List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
 
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
-            model.addAttribute("anatomogram", anatomogramFactory.get("ORGANISM_PART", species, convert
-                    (orderedFactors),
-                    contextRoot));
+            model.addAttribute(
+                    "anatomogram",
+                    anatomogramFactory.get("ORGANISM_PART", species, convert(orderedFactors), contextRoot));
         } else {
             model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
         }
@@ -152,6 +164,28 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         model.addAttribute("conditionQuery", conditionQuery);
     }
 
+    private void populateModelWithMultiExperimentResults(
+            String contextRoot, SemanticQuery query, Species species,
+            BaselineExperimentSearchResult searchResult, Model model) {
+        List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
+
+        if (searchResult.containsFactorOfType("ORGANISM_PART")) {
+            model.addAttribute(
+                    "anatomogram",
+                    anatomogramFactory.get("ORGANISM_PART", species, convert(orderedFactors), contextRoot));
+        } else {
+            model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
+        }
+
+        BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
+        addJsonForHeatMap(experimentProfiles, orderedFactors, model);
+
+        model.addAttribute("species", species.mappedName);
+        model.addAttribute("isWidget", true);
+        model.addAttribute("experiment", gson.toJson(JsonNull.INSTANCE));
+        model.addAttribute("query", query);
+    }
+
     private List<AssayGroupFactor> convert(List<Factor> orderedFactors) {
         ImmutableSortedSet.Builder<AssayGroupFactor> builder = ImmutableSortedSet.naturalOrder();
 
@@ -162,8 +196,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         return new ArrayList<>(builder.build());
     }
 
-    private void addJsonForHeatMap(BaselineExperimentProfilesList baselineProfiles, List<Factor> orderedFactors, Model
-            model) {
+    private void addJsonForHeatMap(BaselineExperimentProfilesList baselineProfiles, List<Factor> orderedFactors, Model model) {
         if (baselineProfiles.isEmpty()) {
             return;
         }

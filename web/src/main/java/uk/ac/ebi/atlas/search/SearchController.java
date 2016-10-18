@@ -86,8 +86,7 @@ public class SearchController {
     @RequestMapping(value = {"/json/search/baselineFacets"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String fetchBaselineJsonFacets(@RequestParam(value = "query", defaultValue = "") SemanticQuery query) {
-//        return gson.toJson(baselineAnalyticsSearchService.findFacetsForTreeSearch(query));
-        return "";
+        return gson.toJson(baselineAnalyticsSearchService.findFacets(query));
     }
 
     @ExceptionHandler(value = {IllegalArgumentException.class})

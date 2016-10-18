@@ -41,6 +41,13 @@ public class BaselineAnalyticsSearchDao extends BaselineAnalyticsDao {
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
+    public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery) {
+        AnalyticsQueryBuilder analyticsQueryBuilder = new AnalyticsQueryBuilder().queryIdentifierSearch(geneQuery);
+
+        String response = fetchResults(analyticsQueryBuilder.build().getQuery());
+        return JsonPath.read(response, FACET_TREE_PATH);
+    }
+
     public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, String defaultQueryFactorType) {
         AnalyticsQueryBuilder analyticsQueryBuilder =
                 new AnalyticsQueryBuilder()

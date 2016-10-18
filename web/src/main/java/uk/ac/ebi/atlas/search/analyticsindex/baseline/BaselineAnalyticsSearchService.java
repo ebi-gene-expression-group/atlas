@@ -60,9 +60,12 @@ public class BaselineAnalyticsSearchService {
         return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, queryFactorType);
     }
 
-//    public JsonObject findFacetsForTreeSearch(SemanticQuery geneQuery) {
-//        return findFacetsForTreeSearch(geneQuery, SemanticQuery.create());
-//    }
+    public JsonObject findFacets(SemanticQuery geneQuery) {
+        List<Map<String, Object>> results =
+                baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery);
+
+        return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(results);
+    }
 
     public JsonObject findFacetsForTreeSearch(SemanticQuery geneQuery, Species species) {
         return findFacetsForTreeSearch(geneQuery, SemanticQuery.create(), species);
