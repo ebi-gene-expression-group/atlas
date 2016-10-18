@@ -17,6 +17,7 @@ const UrlManager = require('./urlManager.js');
  TODO if Solr queries get fast enough that we can:
  - split the two requests, so that the facets load first, initial results load second
  - a request to the server is done for every interaction with the facets tree
+ - add counts to each facet and disable check boxes if count is 0
 */
 
 const RequiredString = React.PropTypes.string.isRequired;
@@ -24,6 +25,7 @@ const RequiredString = React.PropTypes.string.isRequired;
 const DifferentialRouter = React.createClass({
     propTypes: {
         hostUrl: RequiredString,
+        query: RequiredString,
         geneQuery: RequiredString,
         conditionQuery : RequiredString,
         species: RequiredString
@@ -179,8 +181,12 @@ const DifferentialRouter = React.createClass({
         let differentialFacetsUrlObject = Url.parse(this.props.hostUrl),
             differentialResultsUrlObject = Url.parse(this.props.hostUrl);
 
-        differentialFacetsUrlObject.pathname = 'gxa/json/query/differentialFacets';
-        differentialResultsUrlObject.pathname = 'gxa/json/query/differentialResults';
+        differentialFacetsUrlObject.pathname = this.props.query ?
+            'gxa/json/search/differentialFacets' :
+            'gxa/json/query/differentialFacets';
+        differentialResultsUrlObject.pathname = this.props.query ?
+            'gxa/json/search/differentialResults' :
+            'gxa/json/query/differentialResults';
 
         let queryParams = {geneQuery: this.props.geneQuery, conditionQuery: this.props.conditionQuery, organism: this.props.species};
         differentialFacetsUrlObject.query = queryParams;

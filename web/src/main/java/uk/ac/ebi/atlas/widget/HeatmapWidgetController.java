@@ -81,7 +81,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public String fetchReferenceExperimentProfilesJson(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
-                                                       Model model, HttpServletRequest request, HttpServletResponse response) {
+                                                       Model model, HttpServletRequest request) {
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute("experiment");
 
         baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(experiment, preferences, model, request,true);
@@ -104,10 +104,8 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                 @RequestParam(value = "source", required = false) String defaultQueryFactorType,
                                 Model model, HttpServletRequest request) {
 
-        //TODO: I don't think we should be doing this
         if(isBlank(speciesString)){
-            Optional<String> maybeSpecies = speciesLookupService
-                    .fetchFirstSpeciesByField(propertyType, geneQuery);
+            Optional<String> maybeSpecies = speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery);
             if(maybeSpecies.isPresent()){
                 speciesString = maybeSpecies.get();
             } else {
@@ -116,7 +114,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
             }
         }
 
-        Species species= speciesFactory.create(speciesString);
+        Species species = speciesFactory.create(speciesString);
 
         BaselineExperimentSearchResult searchResult =
                 baselineAnalyticsSearchService.findExpressions(
@@ -141,9 +139,9 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         return "heatmap-data";
     }
 
-    private void populateModelWithMultiExperimentResults(
-            String contextRoot, SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species,
-            BaselineExperimentSearchResult searchResult, Model model) {
+    private void populateModelWithMultiExperimentResults(String contextRoot, SemanticQuery geneQuery,
+                                                         SemanticQuery conditionQuery, Species species,
+                                                         BaselineExperimentSearchResult searchResult, Model model) {
         List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
 
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
@@ -164,9 +162,8 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         model.addAttribute("conditionQuery", conditionQuery);
     }
 
-    private void populateModelWithMultiExperimentResults(
-            String contextRoot, SemanticQuery query, Species species,
-            BaselineExperimentSearchResult searchResult, Model model) {
+    private void populateModelWithMultiExperimentResults(String contextRoot, SemanticQuery query, Species species,
+                                                         BaselineExperimentSearchResult searchResult, Model model) {
         List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
 
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {

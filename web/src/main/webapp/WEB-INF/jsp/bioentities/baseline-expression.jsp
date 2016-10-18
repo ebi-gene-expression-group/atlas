@@ -3,6 +3,8 @@
 <%--@elvariable id="identifier" type="java.lang.String"--%>
 <%--@elvariable id="geneQuery" type="java.lang.String"--%>
 <%--@elvariable id="conditionQuery" type="java.lang.String"--%>
+<%--@elvariable id="conditionQuery" type="java.lang.String"--%>
+<%--@elvariable id="query" type="java.lang.String"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -16,6 +18,7 @@
         expressionAtlasBaselineExpression({
             target: 'gxaBaselineTab',
             facetsTreeData: baselineFacetsData,
+            query: "${query}",
             geneQuery: "${geneQuery}",
             conditionQuery: "${conditionQuery}",
             species: "${species}"

@@ -24,6 +24,7 @@ const BaselineRouter = React.createClass({
          }
          */
         facetsTreeData: RequiredObject,
+        query: RequiredString,
         geneQuery: RequiredString,
         conditionQuery: RequiredString,
         species: RequiredString
@@ -87,6 +88,7 @@ const BaselineRouter = React.createClass({
                 <div className="grid_20 omega" id="gxaBaselineResultsContainerDiv">
                     <BaselineHeatmaps
                         hostUrl = {this.props.hostUrl}
+                        query = {this.props.query}
                         geneQuery = {this.props.geneQuery}
                         conditionQuery = {this.props.conditionQuery}
                         heatmaps = {this._querySelectToHeatmaps()}

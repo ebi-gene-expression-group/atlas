@@ -7,9 +7,9 @@ const BaselineRouter = require('./BaselineRouter.jsx');
 
 //*------------------------------------------------------------------*
 
-module.exports = function ({atlasHostUrl : hostUrl = window.location.protocol + "//" + window.location.host, target = 'gxaBaselineTab', facetsTreeData, geneQuery, conditionQuery, species}) {
+module.exports = function ({atlasHostUrl : hostUrl = window.location.protocol + "//" + window.location.host, target = 'gxaBaselineTab', facetsTreeData, query, geneQuery, conditionQuery, species}) {
     ReactDOM.render(
-        React.createElement(BaselineRouter, {hostUrl: hostUrl, facetsTreeData: facetsTreeData, geneQuery: geneQuery, conditionQuery: conditionQuery, species: species}),
+        React.createElement(BaselineRouter, {hostUrl, facetsTreeData, query, geneQuery, conditionQuery, species}),
         document.getElementById(target)
     );
 };

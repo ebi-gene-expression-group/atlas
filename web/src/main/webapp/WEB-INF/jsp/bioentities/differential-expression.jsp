@@ -3,6 +3,7 @@
 <%--@elvariable id="geneQuery" type="java.lang.String"--%>
 <%--@elvariable id="conditionQuery" type="java.lang.String"--%>
 <%--@elvariable id="species" type="java.lang.String"--%>
+<%--@elvariable id="query" type="java.lang.String"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -17,6 +18,7 @@
     expressionAtlasDifferentialExpression({
         target: "gxaDifferentialTab",
         identifier: "${identifier}",
+        query: "${query}",
         geneQuery: "${geneQuery}",
         conditionQuery: "${conditionQuery}",
         species: "${species}"

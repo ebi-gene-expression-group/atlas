@@ -4,8 +4,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import uk.ac.ebi.atlas.dao.OrganismEnsemblDAO;
-import uk.ac.ebi.atlas.dao.OrganismKingdomDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.SpeciesUtils;
@@ -42,8 +40,9 @@ public class SpeciesFactory {
     }
 
     public Species create(String inputName){
-        return StringUtils.isNotEmpty(inputName) ? create( inputName, SpeciesUtils.convertToEnsemblSpecies(inputName)
-        ) : NULL;
+        return StringUtils.isNotEmpty(inputName) ?
+                create( inputName, SpeciesUtils.convertToEnsemblSpecies(inputName)) :
+                NULL;
     }
 
     private Species create(String inputName, String canonicalName){

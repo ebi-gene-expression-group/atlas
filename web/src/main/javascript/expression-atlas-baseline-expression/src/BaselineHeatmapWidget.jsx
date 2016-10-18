@@ -15,6 +15,7 @@ const RequiredBool = React.PropTypes.bool.isRequired;
 const BaselineHeatmapWidget = React.createClass({
     propTypes: {
         hostUrl: RequiredString,
+        query: RequiredString,
         geneQuery: RequiredString,
         conditionQuery: RequiredString,
         species: RequiredString,
@@ -28,15 +29,27 @@ const BaselineHeatmapWidget = React.createClass({
     },
 
     _renderHeatmap () {
-        HighchartsHeatmap.render({
-          atlasHost: this.props.hostUrl,
-          params: 'geneQuery=' + this.props.geneQuery + '&conditionQuery=' + this.props.conditionQuery + '&species=' + this.props.species + '&source=' + this.props.factor.name,
-          isMultiExperiment: true,
-          target: ReactDOM.findDOMNode(this.refs.widgetBody),
-          isWidget: false,
-          showAnatomogram: this.props.showAnatomogram,
-          anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
-      });
+        if (this.props.query) {
+            HighchartsHeatmap.render({
+                atlasHost: this.props.hostUrl,
+                sourceURL: `/gxa/json/search/baselineResults?query=${this.props.query}&species=${this.props.species}&source=${this.props.factor.name}`,
+                isMultiExperiment: true,
+                target: ReactDOM.findDOMNode(this.refs.widgetBody),
+                isWidget: false,
+                showAnatomogram: this.props.showAnatomogram,
+                anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
+            });
+        } else {
+            HighchartsHeatmap.render({
+                atlasHost: this.props.hostUrl,
+                params: `geneQuery=${this.props.geneQuery}&conditionQuery=${this.props.conditionQuery}&species=${this.props.species}&source=${this.props.factor.name}`,
+                isMultiExperiment: true,
+                target: ReactDOM.findDOMNode(this.refs.widgetBody),
+                isWidget: false,
+                showAnatomogram: this.props.showAnatomogram,
+                anatomogramDataEventEmitter: this.props.anatomogramDataEventEmitter
+            });
+        }
     },
 
     componentDidMount () {

@@ -20,6 +20,7 @@ const RequiredEventEmitter = React.PropTypes.instanceOf(EventEmitter).isRequired
 const BaselineHeatmaps = React.createClass({
     propTypes: {
         hostUrl: RequiredString,
+        query: RequiredString,
         geneQuery: RequiredString,
         conditionQuery: OptionalString,
         /*
@@ -67,6 +68,7 @@ const BaselineHeatmaps = React.createClass({
                         species = {heatmap.species}
                         factor = {heatmap.factor}
                         hostUrl = {this.props.hostUrl}
+                        query = {this.props.query}
                         geneQuery = {this.props.geneQuery}
                         conditionQuery = {this.props.conditionQuery}
                         anatomogramDataEventEmitter = {this.props.anatomogramDataEventEmitter}
