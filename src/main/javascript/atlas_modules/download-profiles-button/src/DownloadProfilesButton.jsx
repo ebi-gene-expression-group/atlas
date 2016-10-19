@@ -57,7 +57,7 @@ var DownloadProfilesButton = React.createClass({
     render: function() {
 
         return (
-            <a ref="downloadProfilesLink" onClick={this._afterDownloadButtonClicked}>
+            <a onClick={this._afterDownloadButtonClicked}>
                 <Button bsSize="xsmall">
                     <Glyphicon style={{verticalAlign: 'middle', paddingBottom: '2px'}} glyph="download-alt"/>
                     <span style={{verticalAlign: 'middle', paddingTop: '2px'}}> Download all results</span>

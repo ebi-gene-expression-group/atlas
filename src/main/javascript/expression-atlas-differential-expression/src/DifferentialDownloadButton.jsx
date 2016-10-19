@@ -66,7 +66,7 @@ const DownloadDifferentialButton = React.createClass({
     },
 
     _downloadDifferentialProfiles () {
-        $(ReactDOM.findDOMNode(this.refs.downloadProfilesLink)).click();
+        $(ReactDOM.findDOMNode(this._downloadProfilesLinkRef)).click();
     },
 
     render () {
@@ -78,7 +78,7 @@ const DownloadDifferentialButton = React.createClass({
 
         return (
             <div style={{display: 'inline-block', verticalAlign: 'top', paddingLeft: '10px'}}>
-                <a ref="downloadProfilesLink" className="gxaNoTextButton"
+                <a ref={function(c) {this._downloadProfilesLinkRef = c;}} className="gxaNoTextButton"
                    href={uri} download={fileName} target="_blank"
                    onClick={this._downloadDifferentialProfiles}>
                     <img id="download-profiles" alt="Download query results" style={{width: '20px'}}
@@ -89,7 +89,7 @@ const DownloadDifferentialButton = React.createClass({
     },
 
     componentDidMount () {
-        let $downloadProfilesLink = $(ReactDOM.findDOMNode(this.refs.downloadProfilesLink));
+        let $downloadProfilesLink = $(ReactDOM.findDOMNode(this._downloadProfilesLinkRef));
         $downloadProfilesLink.tooltip();
         $downloadProfilesLink.button();
     }
