@@ -21,26 +21,10 @@ public class ArrayDesignDAOIT {
     @Inject
     private ArrayDesignDAO subject;
 
-    private static final String ARRAY_DESIGN = "A-AFFY-8";
-
-
-    @Test
-    public void testIsArrayDesignPresent() throws Exception {
-        assertThat(subject.isArrayDesignPresent(ARRAY_DESIGN), is(true));
-
-    }
-
     @Test
     public void testGetDesignElements() throws Exception {
         List<String> designElements = subject.getDesignElements("ENSG00000109929");
         assertThat(designElements, hasItem("211423_s_at"));
-
-    }
-
-    @Test
-    public void testGetArrayDesignAccessions() throws Exception {
-        List<String> arrayDesignAccessions = subject.getArrayDesignAccessions();
-        assertThat(arrayDesignAccessions, hasItem("A-AFFY-44"));
     }
 
     @Test

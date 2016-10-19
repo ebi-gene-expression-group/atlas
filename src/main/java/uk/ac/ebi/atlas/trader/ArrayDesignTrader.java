@@ -26,10 +26,6 @@ public class ArrayDesignTrader {
         return arrayDesignMap.get(arrayDesignAccession);
     }
 
-    public Map<String, String> getArrayDesignMap() {
-        return arrayDesignMap;
-    }
-
     public String getArrayDesignAccession(String value) {
         for(Map.Entry<String, String> entry : arrayDesignMap.entrySet()) {
             if(value.equals(entry.getValue())) {
