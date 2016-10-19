@@ -2,11 +2,7 @@
 <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
-<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
