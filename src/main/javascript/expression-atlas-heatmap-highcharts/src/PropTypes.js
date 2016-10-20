@@ -1,127 +1,117 @@
-"use strict";
-
-//*------------------------------------------------------------------*
-
-var React = require('react');
-var validate = require('react-prop-types-check');
-
-//*------------------------------------------------------------------*
-
-//*------------------------------------------------------------------*
+const React = require(`react`);
+const validate = require(`react-prop-types-check`);
 
 
-var PointPropType = React.PropTypes.shape({
+const PointPropType = React.PropTypes.shape({
   x: React.PropTypes.number.isRequired,
   y: React.PropTypes.number.isRequired,
   value: React.PropTypes.number.isRequired,
   info: React.PropTypes.object.isRequired
 });
 
-var PointsInDataSeriesPropType = React.PropTypes.arrayOf(React.PropTypes.arrayOf(PointPropType));
 
-var DataSeriesProps = {
-  info: React.PropTypes.shape({
-    colour: React.PropTypes.string.isRequired,
-    name: React.PropTypes.string.isRequired
-  }),
-  data: React.PropTypes.arrayOf(PointPropType).isRequired
+const PointsInDataSeriesPropType = React.PropTypes.arrayOf(
+    React.PropTypes.arrayOf(PointPropType)
+);
+
+
+const DataSeriesProps = {
+    info: React.PropTypes.shape({
+        colour: React.PropTypes.string.isRequired,
+        name: React.PropTypes.string.isRequired
+    }),
+    data: React.PropTypes.arrayOf(PointPropType).isRequired
 };
 
-var validateDataSeries = function(dataSeries){
-  dataSeries.forEach(function(series){
+
+const ValidateDataSeries = (dataSeries) => {
+  dataSeries.forEach(series => {
     validate(series, DataSeriesProps);
   });
 };
 
-var AxisCategoriesPropType = React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      id: React.PropTypes.string, // ontology ID can be missing for x axis
-      label: React.PropTypes.string.isRequired,
-      info: React.PropTypes.shape({
-        trackId:React.PropTypes.string,
-        tooltip: React.PropTypes.object
-      }).isRequired
-    })
-  ).isRequired;
+
+const AxisCategoriesPropType =
+    React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+            id: React.PropTypes.string, // ontology ID can be missing for x axis
+            label: React.PropTypes.string.isRequired,
+            info: React.PropTypes.shape({
+                trackId:React.PropTypes.string,
+                tooltip: React.PropTypes.object
+            }).isRequired
+        })
+    ).isRequired;
 
 
-var HeatmapDataPropType = function(props, propName, componentName){
-  var heatmapData = props[propName];
-  var possiblyError = validateDataSeries(heatmapData.dataSeries);
-  if(possiblyError!== undefined){
-    return possiblyError;
+const OrderingsPropType = (props, propName) => {
+  const orderings = props[propName];
+
+  const isPermutation = (arr) =>
+      [].concat(arr)
+      .sort((a, b) => a - b)
+      .map((el, ix) => el === ix)
+      .reduce((l, r) => l && r);
+
+  if (!orderings.hasOwnProperty(`Default`)) {
+      return new Error(`Default ordering missing`);
   }
 
-  var width = heatmapData.xAxisCategories.length;
-  var height = heatmapData.yAxisCategories.length;
+  Object.keys(orderings).forEach(orderingName => {
+      const ordering = orderings[orderingName];
 
-  for(var i = 0; i < heatmapData.dataSeries.length; i++){
-      for(var j = 0; j < heatmapData.dataSeries[i].data.length; j++){
-          var point = heatmapData.dataSeries[i].data[j];
-          var x = point.x;
-          var y = point.y;
-          if(x < 0 || y < 0 || x >= width || y >= height){
-              return new Error("Point with coordinates outside range:" + x+","+y);
-          }
+      if (!isPermutation(ordering.columns)) {
+          return new Error(`Column ordering invalid in ${orderingName}`);
       }
-  }
-
-
+      if (!isPermutation(ordering.rows)) {
+          return new Error(`Row ordering invalid in ${orderingName}`);
+      }
+  });
 };
 
-var OrderingsPropType = function(props, propName, componentName){
-  var orderings = props[propName];
 
-  var isPermutation = function(arr){
-      return (
-          [].concat(arr)
-          .sort(function(a,b){
-              return a-b;
-          })
-          .map(function(el,ix){
-              return el===ix;
-          })
-          .reduce(function(l,r){
-              return l&&r;
-          },true)
-      );
-  };
+const HeatmapDataPropType = (props, propName) => {
+    const heatmapData = props[propName];
+    const possiblyError = ValidateDataSeries(heatmapData.dataSeries);
+    if (possiblyError !== undefined) {
+        return possiblyError;
+    }
 
-  if(!orderings.hasOwnProperty("Default")){
-      return new Error("Default ordering missing!");
-  }
+    const width = heatmapData.xAxisCategories.length;
+    const height = heatmapData.yAxisCategories.length;
 
-  for(var orderingName in orderings){
-      if(orderings.hasOwnProperty(orderingName)){
-          var ordering = orderings[orderingName];
-
-          if(!isPermutation(ordering.columns)){
-              return new Error("Column ordering invalid in "+orderingName);
-          }
-          if(!isPermutation(ordering.rows)){
-              return new Error("Row ordering invalid in "+orderingName);
-          }
-      }
-  }
+    for (let i = 0; i < heatmapData.dataSeries.length; i++) {
+        for (let j = 0; j < heatmapData.dataSeries[i].data.length; j++) {
+            const point = heatmapData.dataSeries[i].data[j];
+            const x = point.x;
+            const y = point.y;
+            if (x < 0 || y < 0 || x >= width || y >= height) {
+                return new Error(`Point with coordinates outside range: ${x}, ${y}`);
+            }
+        }
+    }
 };
 
-var LoadResultPropType = React.PropTypes.shape({
+
+const LoadResultPropType = React.PropTypes.shape({
   heatmapConfig: React.PropTypes.object.isRequired,
   colorAxis : React.PropTypes.object,
   orderings: OrderingsPropType,
   heatmapData : HeatmapDataPropType
-})
+});
 
-var FormatterPropType = function(props,propName){
-  var f = props[propName];
-  if(typeof f === 'undefined'){
-    return new Error(propName+" formatter missing");
-  } else if (typeof f !== 'function' || f.name !== 'Formatter'){
-    return new Error(propName+" formatter not correctly created. See the main method of TooltipFormatter.jsx .");
+
+const FormatterPropType = (props, propName) => {
+  const f = props[propName];
+  if (f === undefined) {
+      return new Error(`${propName} formatter missing`);
+  } else if (typeof f !== `function` || f.name !== `Formatter`) {
+      return new Error(`${propName} formatter not correctly created. See the main method of TooltipFormatter.jsx.`);
   }
-}
+};
 
-var propsForSelectionDropdown = {
+
+const PropsForSelectionDropdown = {
     available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     current: React.PropTypes.string.isRequired,
     onSelect: React.PropTypes.func.isRequired,
@@ -129,13 +119,14 @@ var propsForSelectionDropdown = {
     disabled: React.PropTypes.bool
 };
 
+
 module.exports = {
-validateDataSeries : validateDataSeries,
-PointsInDataSeries : PointsInDataSeriesPropType,
-Point: PointPropType,
-HeatmapData : HeatmapDataPropType,
-LoadResult: LoadResultPropType,
-AxisCategories : AxisCategoriesPropType,
-Formatter : FormatterPropType,
-SelectionDropdown: propsForSelectionDropdown
+    validateDataSeries : ValidateDataSeries,
+    PointsInDataSeries : PointsInDataSeriesPropType,
+    Point: PointPropType,
+    HeatmapData : HeatmapDataPropType,
+    LoadResult: LoadResultPropType,
+    AxisCategories : AxisCategoriesPropType,
+    Formatter : FormatterPropType,
+    SelectionDropdown: PropsForSelectionDropdown
 };
