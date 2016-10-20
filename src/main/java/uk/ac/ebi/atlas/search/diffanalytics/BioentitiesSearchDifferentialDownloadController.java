@@ -39,7 +39,6 @@ public class BioentitiesSearchDifferentialDownloadController {
     }
 
 
-    @RequestMapping(value = "/query.tsv")
     public void downloadGeneQueryDifferentialExpressions(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
                                                          @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                                          @RequestParam(value = "organism", required = false, defaultValue = "") String species,
@@ -50,7 +49,6 @@ public class BioentitiesSearchDifferentialDownloadController {
     }
 
 
-    @RequestMapping(value = {"/genes/{identifier:.*}.tsv", "/genesets/{identifier:.*}.tsv"})
     public void downloadGeneDifferentialExpressions(@PathVariable String identifier, HttpServletResponse response) throws IOException {
 
         SemanticQuery geneQuery = SemanticQuery.create(identifier);

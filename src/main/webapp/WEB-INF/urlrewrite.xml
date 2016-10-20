@@ -7,6 +7,16 @@
         <to type="permanent-redirect">/gxa/experiments/$1</to>
     </rule>
     <rule>
+        <note>Redirect old google searches for gene files to the gene page</note>
+        <from>/genes/(.*).tsv$</from>
+        <to type="permanent-redirect">/gxa/genes/$1</to>
+    </rule>
+    <rule>
+        <note>Redirect old google searches for query result files to home page</note>
+        <from>/query.tsv$</from>
+        <to type="permanent-redirect">/gxa</to>
+    </rule>
+    <rule>
         <from>/das/s4(/)?$</from>
         <to>/resources/das/s4.xml</to>
     </rule>
