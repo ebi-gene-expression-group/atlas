@@ -1,9 +1,9 @@
 {
   "name": "expression-atlas-download-profiles-button",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Download profiles button for Expression Atlas",
   "main": "index.js",
-  "author": "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
+  "author": "Wojciech Bażant<wbazant@ebi.ac.uk>, Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
   "license": "MIT",
   "private": true,
   "dependencies": {

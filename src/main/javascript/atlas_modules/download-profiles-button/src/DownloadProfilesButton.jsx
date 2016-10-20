@@ -57,9 +57,11 @@ const DownloadProfilesButton = React.createClass({
                             {this._disclaimer().title}
                         </Modal.Title>
                     </Modal.Header>
+
                     <Modal.Body>
                         {this._disclaimer().content}
                     </Modal.Body>
+
                     <Modal.Footer>
                         <Button onClick={this._closeModal}>Close</Button>
                         <Button bsStyle="primary" onClick={this._commenceDownloadAndCloseModal}>
