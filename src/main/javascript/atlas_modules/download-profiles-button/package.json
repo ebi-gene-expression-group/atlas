@@ -1,5 +1,5 @@
 {
-  "name": "download-profiles-button",
+  "name": "expression-atlas-download-profiles-button",
   "version": "1.0.0",
   "description": "Download profiles button for Expression Atlas",
   "main": "index.js",

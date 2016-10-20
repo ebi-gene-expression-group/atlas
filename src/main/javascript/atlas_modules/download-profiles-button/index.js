@@ -1,5 +1,1 @@
-"use strict";
-
-//*------------------------------------------------------------------*
-
-module.exports = require('./src/DownloadProfilesButton.jsx');
+module.exports = require(`./src/DownloadProfilesButton.jsx`);

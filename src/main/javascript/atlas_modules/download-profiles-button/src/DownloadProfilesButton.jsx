@@ -1,77 +1,70 @@
-"use strict";
+const React = require(`react`);
+const Modal = require(`react-bootstrap/lib/Modal`);
+const Button = require(`react-bootstrap/lib/Button`);
+const Glyphicon = require(`react-bootstrap/lib/Glyphicon`);
+const Tooltip = require(`react-bootstrap/lib/Tooltip`);
+const Disclaimers = require(`./Disclaimers.jsx`);
 
-//*------------------------------------------------------------------*
-
-var React = require('react');
-
-var Modal = require('react-bootstrap/lib/Modal');
-var Button = require('react-bootstrap/lib/Button');
-var Glyphicon = require('react-bootstrap/lib/Glyphicon');
-var Tooltip = require('react-bootstrap/lib/Tooltip');
-var OverlayTrigger = require('react-bootstrap/lib/OverlayTrigger');
-
-var Disclaimers = require('./Disclaimers.jsx');
-
-//*------------------------------------------------------------------*
-
-
-
-//*------------------------------------------------------------------*
-var DownloadProfilesButton = React.createClass({
+const DownloadProfilesButton = React.createClass({
     propTypes: {
         atlasBaseURL: React.PropTypes.string.isRequired,
         downloadProfilesURL: React.PropTypes.string.isRequired,
         disclaimer: React.PropTypes.string.isRequired,
         onDownloadCallbackForAnalytics: React.PropTypes.func.isRequired
     },
-    getInitialState: function() {
+
+    getInitialState() {
         return { showModal: false };
     },
 
-    _closeModal: function() {
+    _closeModal() {
         this.setState({ showModal: false });
     },
 
-    _disclaimer: function() {
-      return this.props.disclaimer && Disclaimers[this.props.disclaimer] || null;
+    _disclaimer() {
+      return this.props.disclaimer && Disclaimers[this.props.disclaimer] || {title: null, content: null};
     },
 
-    _afterDownloadButtonClicked: function() {
-        if(!this._disclaimer()) {
+    _afterDownloadButtonClicked() {
+        if(!this._disclaimer().title && !this._disclaimer().content) {
             this._commenceDownload();
         } else {
             this.setState({ showModal: true });
         }
     },
 
-    _commenceDownload: function() {
+    _commenceDownload() {
         this.props.onDownloadCallbackForAnalytics();
-        window.location.href=this.props.atlasBaseURL + this.props.downloadProfilesURL;
+        window.location.href = this.props.atlasBaseURL + this.props.downloadProfilesURL;
     },
 
-    _commenceDownloadAndCloseModal: function() {
+    _commenceDownloadAndCloseModal() {
         this._commenceDownload();
         this._closeModal();
     },
 
-    render: function() {
-
+    render() {
         return (
             <a onClick={this._afterDownloadButtonClicked}>
-                <Button bsSize="xsmall">
-                    <Glyphicon style={{verticalAlign: 'middle', paddingBottom: '2px'}} glyph="download-alt"/>
-                    <span style={{verticalAlign: 'middle', paddingTop: '2px'}}> Download all results</span>
+                <Button bsSize="small">
+                    <Glyphicon style={{verticalAlign: 'middle'}} glyph="download-alt"/>
+                    <span style={{verticalAlign: 'middle'}}> Download all results</span>
                 </Button>
 
-                <Modal show={this.state.showModal} onHide={this._closeModal} bsSize="large">
+                <Modal show={this.state.showModal} onHide={this._closeModal}>
                     <Modal.Header closeButton>
+                        <Modal.Title>
+                            {this._disclaimer().title}
+                        </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body style={{maxHeight: '360px'}}>
-                      {this._disclaimer()}
+                    <Modal.Body>
+                        {this._disclaimer().content}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this._closeModal}>Close</Button>
-                        <Button bsStyle="primary" onClick={this._commenceDownloadAndCloseModal}>Continue downloading</Button>
+                        <Button bsStyle="primary" onClick={this._commenceDownloadAndCloseModal}>
+                            Continue downloading
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </a>
