@@ -443,7 +443,17 @@ button.close {
     border: 0;
 }
 
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity .15s linear;
+    -o-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+}
+.fade.in {
+    opacity: 1;
+}
 
+/* Modal window */
 .modal-open {
     overflow: hidden;
 }
@@ -485,11 +495,11 @@ button.close {
 }
 .modal-content {
     position: relative;
-    height: auto;
     background-color: #fff;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
     border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, .2);
     border-radius: 6px;
     outline: 0;
     -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
@@ -513,7 +523,6 @@ button.close {
     opacity: .5;
 }
 .modal-header {
-    min-height: 16px;
     padding: 15px;
     border-bottom: 1px solid #e5e5e5;
 }
@@ -527,7 +536,6 @@ button.close {
 .modal-body {
     position: relative;
     padding: 15px;
-    overflow-y: auto;
 }
 .modal-footer {
     padding: 15px;
@@ -569,6 +577,7 @@ button.close {
         width: 900px;
     }
 }
+/* Modal window -- End*/
 
 .tooltip {
     position: absolute;
