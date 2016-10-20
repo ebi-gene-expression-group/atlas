@@ -31,10 +31,6 @@ public class ExperimentDAO {
 
     private static final String SELECT_EXPERIMENT_BY_ACCESSION = "SELECT * FROM EXPERIMENT LEFT OUTER JOIN  EXPERIMENT_ORGANISM on EXPERIMENT_ORGANISM.EXPERIMENT=EXPERIMENT.ACCESSION WHERE accession = ?";
 
-    private static final String SELECT_EXPERIMENTS_BY_ACCESSION = "SELECT * FROM EXPERIMENT LEFT OUTER JOIN  EXPERIMENT_ORGANISM on EXPERIMENT_ORGANISM.EXPERIMENT=EXPERIMENT.ACCESSION WHERE accession IN(:accessions)";
-
-    private static final String SELECT_PUBLIC_EXPERIMENTS_BY_ACCESSION = "SELECT * FROM experiment LEFT OUTER JOIN  EXPERIMENT_ORGANISM on EXPERIMENT_ORGANISM.EXPERIMENT=EXPERIMENT.ACCESSION WHERE accession IN(:accessions) and private = 'F'";
-
     private static final String SELECT_PUBLIC_EXPERIMENT_BY_ACCESSION = "SELECT * FROM experiment LEFT OUTER JOIN  EXPERIMENT_ORGANISM on EXPERIMENT_ORGANISM.EXPERIMENT=EXPERIMENT.ACCESSION WHERE accession = ? and private = 'F'";
 
     private static final String SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE = "SELECT accession " +
@@ -160,21 +156,6 @@ public class ExperimentDAO {
 
         return experimentCount == 1;
 
-    }
-
-    public List<ExperimentDTO> findExperiments(Set<String> experimentAccessions, boolean includePrivates) {
-        try {
-
-            String findExperimentsQuery = includePrivates ? SELECT_EXPERIMENTS_BY_ACCESSION : SELECT_PUBLIC_EXPERIMENTS_BY_ACCESSION;
-
-            MapSqlParameterSource parameters = new MapSqlParameterSource();
-            parameters.addValue("accessions", experimentAccessions);
-
-            return namedParameterJdbcTemplate.query(findExperimentsQuery, parameters, new ExperimentDTOResultSetExtractor());
-
-        } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException("No experiments found for experiment accession: " + experimentAccessions);
-        }
     }
 
     private ExperimentDTO getSingleExperiment(List<ExperimentDTO> experimentDTOs, String accession) {

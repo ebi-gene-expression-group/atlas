@@ -113,7 +113,7 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return toJson();
     }
 
-    // Use AdvancedSolrQuery
+    // Use AnalyticsSolrQuery
     @Deprecated
     public String asAnalyticsIndexQueryClause(){
         return Joiner.on(OR_OPERATOR).join(Collections2.transform(terms(), new Function<SemanticQueryTerm,String>(){

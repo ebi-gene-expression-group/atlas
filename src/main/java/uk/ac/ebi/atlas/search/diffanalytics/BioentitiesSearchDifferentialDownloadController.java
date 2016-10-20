@@ -29,8 +29,6 @@ public class BioentitiesSearchDifferentialDownloadController {
     private DiffAnalyticsTSVWriter tsvWriter;
     private SpeciesFactory speciesFactory;
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMdd-HHmmss");
-
 
     @Inject
     public BioentitiesSearchDifferentialDownloadController(DiffAnalyticsSearchService diffAnalyticsSearchService,
