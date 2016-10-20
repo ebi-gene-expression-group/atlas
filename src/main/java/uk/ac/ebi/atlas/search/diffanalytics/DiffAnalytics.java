@@ -36,20 +36,12 @@ public class DiffAnalytics {
         return expression.getContrast().getDisplayName();
     }
 
-    public String getContrastId() {
-        return expression.getContrast().getId();
-    }
-
     public AssayGroup getContrastTestAssayGroup() {
         return expression.getContrast().getTestAssayGroup();
     }
 
     public String getExperimentAccession() {
         return experimentAccession;
-    }
-
-    public String getExperimentPageUrl() {
-        return experimentAccession + "?geneQuery=" + bioentityId + "&queryFactorValues=" + getContrastId() + "&_specific=on";
     }
 
     public DifferentialExpression getExpression() {

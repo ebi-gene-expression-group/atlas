@@ -41,28 +41,28 @@ const DownloadDifferentialButton = React.createClass({
     },
 
     _convertJsonToTsv (results) {
-        let arrayResults = typeof results !== 'object' ? JSON.parse(results) : results;
-
-        let headers = ['Gene', 'Organism', 'Experiment Accession', 'Comparison', 'log2foldchange', 'pValue'];
-        if (arrayResults.some(diffResults => diffResults.tStatistics != null)) {
-            headers.push('tStatistics');
-        }
-
-        let tsv = headers.join('\t') + '\n';
-        tsv += arrayResults.map(diffResults =>
-            [
-                diffResults.bioentityIdentifier,
-                diffResults.species,
-                diffResults.experimentAccession,
-                diffResults.comparison,
-                diffResults.foldChange,
-                diffResults.pValue,
-                diffResults.tStatistics
-            ]
-                .filter(el => el !== null)    // tStatistics might be missing
-                .join('\t') + '\n');
-
-        return tsv;
+      const arrayResults = typeof results !== 'object' ? JSON.parse(results) : results;
+      return (
+       [
+         ['Gene', 'Organism', 'Experiment Accession', 'Comparison', 'log2foldchange', 'pValue']
+         .concat(arrayResults.some(diffResults => diffResults.tStatistics != null) ? ['tStatistics'] :[])
+         .join('\t')
+       ].concat(
+         arrayResults.map(diffResults =>
+           [
+             diffResults.bioentityIdentifier,
+             diffResults.species,
+             diffResults.experimentAccession,
+             diffResults.comparison,
+             diffResults.foldChange,
+             diffResults.pValue,
+             diffResults.tStatistics
+           ]
+           .filter(el => el !== null)    // tStatistics might be missing
+           .join('\t')
+         )
+       ).join('\n')
+     )
     },
 
     _downloadDifferentialProfiles () {

@@ -2,26 +2,18 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableSet;
-import org.apache.commons.lang.mutable.MutableInt;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowCallbackHandler;
 import uk.ac.ebi.atlas.search.DatabaseQuery;
 import uk.ac.ebi.atlas.search.OracleObjectFactory;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
-import uk.ac.ebi.atlas.utils.Visitor;
-import uk.ac.ebi.atlas.utils.VisitorException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -87,77 +79,6 @@ public class DiffAnalyticsDao {
         return ImmutableSet.copyOf(indexedContrasts);
     }
 
-    public void visitEachExpression(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, final Visitor<DiffAnalytics> visitor, String specie)  {
-        ImmutableSet<IndexedAssayGroup> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
-
-        log("visitEachExpression", uniqueIndexedContrasts, geneIds);
-
-        Stopwatch stopwatch = Stopwatch.createStarted();
-
-        String species = "";
-        if(StringUtils.isNotBlank(specie)) {
-            species = specie;
-        }
-
-        DatabaseQuery<Object> indexedContrastQuery = buildSelect(uniqueIndexedContrasts, geneIds, species);
-
-        final MutableInt count = new MutableInt(0);
-
-        JdbcTemplate template = new JdbcTemplate(jdbcTemplate.getDataSource());
-
-        template.setFetchSize(5000);
-
-        try {
-            template.query(indexedContrastQuery.getQuery(), new RowCallbackHandler() {
-
-                @Override
-                public void processRow(ResultSet resultSet) throws SQLException {
-                    count.increment();
-
-                    DiffAnalytics dbe = dbeRowMapper.mapRow(resultSet, count.intValue());
-
-                    try {
-                        visitor.visit(dbe);
-                    } catch (VisitorException e) {
-                        // throw SQLException so result set is closed
-                        throw new SQLException(e);
-                    }
-                }
-
-            }, indexedContrastQuery.getParameters().toArray());
-        } catch (DataAccessException e) {
-
-            if (e.getCause() != null && e.getCause().getCause() != null && e.getCause().getCause() instanceof VisitorException) {
-                throw (VisitorException)(e.getCause().getCause());
-            } else {
-                throw e;
-            }
-        }
-
-        stopwatch.stop();
-        LOGGER.debug("visitEachExpression processed {} expressions in {} seconds", count.intValue(), stopwatch.elapsed(TimeUnit.SECONDS));
-    }
-
-
-    public int  fetchResultCount(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, String specie) {
-        ImmutableSet<IndexedAssayGroup> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
-
-        log("fetchResultCount", uniqueIndexedContrasts, geneIds);
-
-        Stopwatch stopwatch = Stopwatch.createStarted();
-
-        DatabaseQuery databaseQuery = buildCount(uniqueIndexedContrasts, geneIds, specie);
-
-        int count = jdbcTemplate.queryForObject(databaseQuery.getQuery(), Integer.class, databaseQuery.getParameters().toArray());
-
-        LOGGER.debug(String.format("fetchResultCount returned %s in %.2f seconds", count, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
-        return count;
-    }
-
-    private DatabaseQuery<Object> buildCount(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, String species) {
-        DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds, species);
-        return builder.buildCount();
-    }
 
     private DatabaseQuery<Object> buildSelect(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, String species) {
         DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds, species);
