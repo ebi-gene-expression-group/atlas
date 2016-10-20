@@ -11,8 +11,8 @@ import javax.annotation.Nullable;
 
 public class AnalyticsSolrQuery {
     public enum Operator {
-        AND(" AND "),
-        OR(" OR ");
+        AND(" and "),
+        OR(" or ");
 
         private final String opString;
 

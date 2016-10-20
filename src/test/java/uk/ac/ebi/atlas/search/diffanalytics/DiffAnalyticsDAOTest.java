@@ -70,27 +70,4 @@ public class DiffAnalyticsDAOTest {
         assertTrue(v.toUpperCase().contains("PRIVATE = 'F'"));
     }
 
-    @Test
-    public void weCanGetCount(){
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Mockito.when(jdbcTemplate.queryForObject(captor.capture(), eq(Integer.class),  any())).thenReturn(1337);
-
-
-        IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
-
-        Collection<IndexedAssayGroup> contrasts = Lists.newArrayList(indexedContrast1);
-        Collection<String> geneIds = new HashSet<>();
-
-        String species = "";
-
-        int expressions = subject.fetchResultCount(contrasts, geneIds, species);
-
-        String v = captor.getValue();
-
-
-        assertTrue(Pattern.matches("SELECT COUNT.*FROM.*", v.toUpperCase()));
-        assertTrue(v.toUpperCase().contains("PRIVATE = 'F'"));
-        assertEquals(1337, expressions);
-    }
-
 }
