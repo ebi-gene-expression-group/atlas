@@ -60,7 +60,7 @@ exports.render = function(options) {
                 sourceURL: sourceURL,
                 atlasBaseURL: atlasBaseURL,
                 linksAtlasBaseURL: linksAtlasBaseURL,
-                pathToFolderWithBundledResources:options.pathToFolderWithBundledResources || linksAtlasBaseURL+"/resources/js-bundles",
+                pathToFolderWithBundledResources: options.pathToFolderWithBundledResources || linksAtlasBaseURL + "/resources/js-bundles/",
                 showAnatomogram: options.showAnatomogram === undefined || options.showAnatomogram,
                 isDifferential: !!options.isDifferential,
                 isMultiExperiment: !!options.isMultiExperiment,
