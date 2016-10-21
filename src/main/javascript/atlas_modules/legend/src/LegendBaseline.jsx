@@ -8,8 +8,8 @@ var ReactDOM = require('react-dom');
 //*------------------------------------------------------------------*
 
 var LegendRow = require('./LegendRow.jsx');
-var NumberFormat = require('number-format');
-var HelpTooltips = require('help-tooltips');
+var NumberFormat = require('expression-atlas-number-format');
+var HelpTooltips = require('expression-atlas-help-tooltips');
 
 //*------------------------------------------------------------------*
 

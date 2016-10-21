@@ -18,19 +18,21 @@ fi
 export NVM_DIR="/nfs/ma/home/ma-svc/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-all_packages=(anatomogram atlas-feedback cell-differential contrast-tooltips display-levels-button download-profiles-button heatmap-baseline-cell-variance help-tooltips legend number-format \
-              expression-atlas-heatmap expression-atlas-heatmap-highcharts expression-atlas-baseline-expression expression-atlas-differential-expression expression-atlas-bioentity-information)
-bundled_packages=(expression-atlas-heatmap expression-atlas-heatmap-highcharts expression-atlas-baseline-expression expression-atlas-differential-expression expression-atlas-bioentity-information)
+atlas_modules=`ls atlas_modules`
+atlas_bundles=`ls atlas_bundles`
 
-for dir in ${bundled_packages[*]}
+all_packages=("${atlas_modules[@]}" "${atlas_bundles[@]}")
+
+for dir in atlas_bundles/*
 do
+    pushd .
     cd $dir
-    for module in ${all_packages[*]}
+        for module in ${all_packages[*]}
     do
-        rm -rf node_modules/$module
+        rm -rf node_modules/expression-atlas-$module
     done
     npm install
-    cd ..
+    popd
 done
 
 npm install

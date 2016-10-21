@@ -1,5 +1,5 @@
 {
-  "name": "cell-differential",
+  "name": "expression-atlas-cell-differential",
   "version": "1.1.0",
   "description": "Cells for differential expression experiments",
   "main": "index.js",
@@ -9,7 +9,7 @@
   "dependencies": {
     "jquery": "^2.2.1",
     "jquery-ui-bundle": "^1.11.4",
-    "number-format": "file:../number-format",
+    "expression-atlas-number-format": "file:../number-format",
     "react": "^0.14.7",
     "react-dom": "^0.14.7"
   },

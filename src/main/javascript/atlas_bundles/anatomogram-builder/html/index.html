@@ -1,0 +1,36 @@
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../dist/vendorCommons.bundle.js"></script>
+    <script type="text/javascript" src="../dist/anatomogramBuilder.bundle.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous">
+    </script>
+</head>
+<body>
+<div id="main"></div>
+</body>
+
+<script>
+    var anatomogramConfig = {
+        pathToFolderWithBundledResources: '/img_blah',
+        mountNode: 'main',
+        hoveredTissueColour: 'blue'
+    };
+
+    anatomogramBuilder.render(anatomogramConfig);
+    anatomogramBuilder.eventEmitter.on('gxaAnatomogramTissueMouseEnter', function(pathID) {console.log('Entering ' + pathID)});
+    anatomogramBuilder.eventEmitter.on('gxaAnatomogramTissueMouseLeave', function(pathID) {console.log('Leaving ' + pathID)});
+
+//    debugger;
+//    anatomogramBuilder.render($.extend(anatomogramConfig, {highlightIDs: ['UBERON_0002107']}));
+//    debugger;
+//    anatomogramBuilder.render($.extend(anatomogramConfig, {highlightIDs: ['UBERON_0001242']}));
+//    debugger;
+//    anatomogramBuilder.render($.extend(anatomogramConfig, {highlightIDs: ['UBERON_0002107', 'UBERON_0001242']}));
+//    debugger;
+//    anatomogramBuilder.render($.extend(anatomogramConfig, {highlightIDs: []}));
+
+</script>

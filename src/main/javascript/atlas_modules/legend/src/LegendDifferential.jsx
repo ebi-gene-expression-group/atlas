@@ -8,7 +8,7 @@ var ReactDOM = require('react-dom');
 //*------------------------------------------------------------------*
 
 var LegendRow = require('./LegendRow.jsx');
-var HelpTooltips = require('help-tooltips');
+var HelpTooltips = require('expression-atlas-help-tooltips');
 
 //*------------------------------------------------------------------*
 

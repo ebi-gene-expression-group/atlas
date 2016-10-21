@@ -1,5 +1,5 @@
 {
-  "name": "heatmap-baseline-cell-variance",
+  "name": "expression-atlas-heatmap-baseline-cell-variance",
   "version": "1.0.0",
   "description": "Expression Atlas heatmap cells for baseline experiments showing a variance boxplot",
   "main": "index.js",

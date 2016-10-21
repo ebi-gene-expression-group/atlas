@@ -1,5 +1,5 @@
 {
-  "name": "simple-react-component-demo",
+  "name": "expression-atlas-simple-react-component-demo",
   "version": "1.0.0",
   "description": "A very simple React component to use with Webpack and expose-loader",
   "main": "index.js",

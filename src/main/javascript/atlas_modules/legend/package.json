@@ -1,5 +1,5 @@
 {
-  "name": "legend",
+  "name": "expression-atlas-legend",
   "version": "1.0.0",
   "description": "Legend for differential expression experiments",
   "main": "index.js",
@@ -7,10 +7,10 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "help-tooltips": "file:../help-tooltips",
+    "expression-atlas-help-tooltips": "file:../help-tooltips",
+    "expression-atlas-number-format": "file:../number-format",
     "jquery": "^2.2.1",
     "jquery-ui-bundle": "^1.11.4",
-    "number-format": "file:../number-format",
     "react": "^0.14.7",
     "react-dom": "^0.14.7"
   },

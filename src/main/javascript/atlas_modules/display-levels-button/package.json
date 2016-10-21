@@ -1,5 +1,5 @@
 {
-  "name": "display-levels-button",
+  "name": "expression-atlas-display-levels-button",
   "version": "1.0.0",
   "description": "Display Levels button for Expression Atlas",
   "main": "index.js",

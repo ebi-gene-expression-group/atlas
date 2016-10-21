@@ -1,5 +1,5 @@
 {
-  "name": "contrast-tooltips",
+  "name": "expression-atlas-contrast-tooltips",
   "version": "1.0.0",
   "description": "Contrast tooltips for differential experiments in Expression Atlas",
   "main": "index.js",

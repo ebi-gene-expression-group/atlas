@@ -1,5 +1,5 @@
 {
-  "name": "number-format",
+  "name": "expression-atlas-number-format",
   "version": "1.0.0",
   "description": "Legend for differential expression experiments",
   "main": "index.js",

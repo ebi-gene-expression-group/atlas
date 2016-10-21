@@ -10,7 +10,7 @@ require('jquery-ui-bundle');
 
 //*------------------------------------------------------------------*
 
-var NumberFormat = require('number-format');
+var NumberFormat = require('expression-atlas-number-format');
 
 //*------------------------------------------------------------------*
 
