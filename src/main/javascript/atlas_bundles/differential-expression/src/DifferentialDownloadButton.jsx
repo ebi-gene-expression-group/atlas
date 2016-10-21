@@ -78,7 +78,7 @@ const DownloadDifferentialButton = React.createClass({
 
         return (
             <div style={{display: 'inline-block', verticalAlign: 'top', paddingLeft: '10px'}}>
-                <a ref={function(c) {this._downloadProfilesLinkRef = c;}} className="gxaNoTextButton"
+                <a ref={c => {this._downloadProfilesLinkRef = c;}} className="gxaNoTextButton"
                    href={uri} download={fileName} target="_blank"
                    onClick={this._downloadDifferentialProfiles}>
                     <img id="download-profiles" alt="Download query results" style={{width: '20px'}}
