@@ -234,10 +234,6 @@ public class ExperimentalFactors implements Serializable {
         }
     }
 
-    public SortedSet<Factor> getAllFactorsOrderedByXML() {
-        return ImmutableSortedSet.copyOf(xmlFactorsByType.values());
-    }
-
     // ordered the same as the assay group ids in the expression levels .tsv
     public ImmutableList<FactorGroup> getFactorGroupsInOrder() {
         return ImmutableList.copyOf(orderedFactorGroups);
