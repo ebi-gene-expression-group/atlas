@@ -2,12 +2,15 @@ package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
+import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.List;
 
 public class AnalyticsSolrQuery {
     public enum Operator {
@@ -26,9 +29,9 @@ public class AnalyticsSolrQuery {
 
     private class Leaf extends TreeNode {
         private String searchField;
-        private SemanticQuery searchValue;
+        private String searchValue;
 
-        private Leaf(String searchField, SemanticQuery searchValue) {
+        private Leaf(String searchField, String searchValue) {
             this.searchField = searchField;
             this.searchValue = searchValue;
         }
@@ -36,17 +39,8 @@ public class AnalyticsSolrQuery {
         @Override
         public String toString() {
 
-            Function<SemanticQueryTerm, String> semanticQueryTermToSolr = new Function<SemanticQueryTerm, String>() {
-                @Nullable
-                @Override
-                public String apply(@Nullable SemanticQueryTerm semanticQueryTerm) {
-                    return semanticQueryTerm.hasNoCategory()
-                            ? String.format("\"%s\"", semanticQueryTerm.value())
-                            : String.format("\"%s:{%s}\"", semanticQueryTerm.category(), semanticQueryTerm.value());
-                }
-            };
 
-            return String.format("%s:(%s)", searchField, Joiner.on(Operator.OR.opString).join(FluentIterable.from(searchValue.terms()).transform(semanticQueryTermToSolr)));
+            return String.format("%s:(%s)", searchField, searchValue);
         }
     }
 
@@ -77,17 +71,40 @@ public class AnalyticsSolrQuery {
         }
     }
 
-    private TreeNode root;
+    private final TreeNode root;
 
     public String toString() {
         return root.toString();
     }
 
-    public AnalyticsSolrQuery(String searchField, SemanticQuery searchValue) {
-        root = new Leaf(searchField, searchValue);
+    private static final Function<SemanticQueryTerm, String> semanticQueryTermToSolr = new Function<SemanticQueryTerm, String>() {
+        @Nullable
+        @Override
+        public String apply(@Nullable SemanticQueryTerm semanticQueryTerm) {
+            return semanticQueryTerm.hasNoCategory()
+                    ? String.format("\"%s\"", semanticQueryTerm.value())
+                    : String.format("\"%s:{%s}\"", semanticQueryTerm.category(), semanticQueryTerm.value());
+        }
+    };
+
+    //convenience method
+    AnalyticsSolrQuery(String searchField, SemanticQuery searchValue) {
+        this(searchField, searchValue.terms());
     }
 
-    public AnalyticsSolrQuery(Operator operator, AnalyticsSolrQuery... queries) {
+    AnalyticsSolrQuery(String searchField, Collection<SemanticQueryTerm> allowedValuesForField) {
+        this(searchField,
+                FluentIterable.from(allowedValuesForField)
+                .transform(semanticQueryTermToSolr)
+                .toArray(String.class));
+    }
+
+    AnalyticsSolrQuery(String searchField, String... searchValue){
+        //We want this search field to match at least one of these values
+        root = new Leaf(searchField, Joiner.on(Operator.OR.opString).join(searchValue));
+    }
+
+    AnalyticsSolrQuery(Operator operator, AnalyticsSolrQuery... queries) {
         ImmutableList.Builder<TreeNode> childrenBuilder = new ImmutableList.Builder<>();
         for (AnalyticsSolrQuery query : queries) {
             childrenBuilder.add(query.root);

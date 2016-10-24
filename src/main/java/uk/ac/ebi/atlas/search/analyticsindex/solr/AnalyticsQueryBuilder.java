@@ -56,6 +56,11 @@ public class AnalyticsQueryBuilder {
             queryClausesBuilder.add(new AnalyticsSolrQuery(searchField.toString(), searchValue));
         }
     }
+    private void addQueryClause(Field searchField, String searchValue) {
+        if (! searchValue.isEmpty()) {
+            queryClausesBuilder.add(new AnalyticsSolrQuery(searchField.toString(), searchValue));
+        }
+    }
 
     public AnalyticsQueryBuilder queryIdentifierOrConditionsSearch(SemanticQuery query){
         queryClausesBuilder.add(new AnalyticsSolrQuery(
@@ -77,12 +82,12 @@ public class AnalyticsQueryBuilder {
     }
 
     public AnalyticsQueryBuilder withFactorType(String factorType) {
-        addQueryClause(FACTOR_TYPE, SemanticQuery.create(factorType));
+        addQueryClause(FACTOR_TYPE, factorType);
         return this;
     }
 
     public AnalyticsQueryBuilder ofSpecies(String species) {
-        addQueryClause(SPECIES, SemanticQuery.create(species));
+        addQueryClause(SPECIES, species);
         return this;
     }
 
