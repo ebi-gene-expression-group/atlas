@@ -9,7 +9,7 @@
   "author": "Wojciech Bażant <wbazant@ebi.ac.uk>, Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
   "license": "Apache-2.0",
   "dependencies": {
-    "anatomogram": "https://github.com/gxa/anatomogram.git"
+    "anatomogram": "latest"
   },
   "devDependencies": {
     "babel-core": "^6.14.0",

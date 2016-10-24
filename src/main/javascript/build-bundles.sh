@@ -21,18 +21,23 @@ export NVM_DIR="/nfs/ma/home/ma-svc/.nvm"
 atlas_modules=`ls atlas_modules`
 atlas_bundles=`ls atlas_bundles`
 
-all_packages=("${atlas_modules[@]}" "${atlas_bundles[@]}" "anatomogram")
+all_packages=("${atlas_modules[@]}" "${atlas_bundles[@]}")
 
 for dir in atlas_bundles/*
 do
     pushd . > /dev/null
     cd $dir
         for module in ${all_packages[*]}
-    do
-        rm -rf node_modules/expression-atlas-$module
-    done
+        do
+            rm -rf node_modules/expression-atlas-$module
+        done
     npm install
     popd > /dev/null
+done
+
+for module in ${all_packages[*]}
+do
+    rm -rf node_modules/expression-atlas-$module
 done
 
 npm install

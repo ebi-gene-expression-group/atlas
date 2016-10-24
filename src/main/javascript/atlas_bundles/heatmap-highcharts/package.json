@@ -10,7 +10,7 @@
     "test": "mocha test"
   },
   "dependencies": {
-    "anatomogram": "https://github.com/gxa/anatomogram.git",
+    "anatomogram": "latest",
     "color": "^0.11.3",
     "expression-atlas-display-levels-button": "file:../../atlas_modules/display-levels-button",
     "expression-atlas-download-profiles-button": "file:../../atlas_modules/download-profiles-button",

@@ -19,7 +19,7 @@ const SelectionDropdownFactory = (displayName) =>
           const createOption = (option, key) => <option key={key} value={option}>{option}</option>;
 
           return (
-              <div style={{float: `left`, marginRight: `10px`, marginTop: `1px`}}>
+              <div>
                   <span>{displayName}</span>
                   <select onChange={this._handleChange} value={this.state.selected} disabled={this.props.disabled}>
                       {this.props.available.map(createOption)}
