@@ -33,7 +33,7 @@ var TooltipStateManager = React.createClass({
   getInitialState: function(){
     return {
       tooltipFrozen: false,
-      clicksOutsideColumns: 0
+      clickCount: 0
     }
   },
 
@@ -72,8 +72,18 @@ var TooltipStateManager = React.createClass({
     this.props.onUserSelectsPoint.apply({},arguments);
   },
 
+  _dismissTooltip: function(){
+    if(this.state.clickCount>0){
+      this.setState({tooltipFrozen:false, clickCount:0})
+      this.refs["tooltip"].setState({extraClass:"gxaDisabled"})
+    }
+    this.setState((previousState)=>({clickCount: previousState.clickCount+1}))
+  },
+
   _onUserClicksColumn: function(columnLabel){
-    this.props.enableFreeze && this.setState((previousState)=>({tooltipFrozen: !previousState.tooltipFrozen, clicksOutsideColumns:0}));
+    if(this.props.enableFreeze){
+      this.setState((previousState)=>({tooltipFrozen: !previousState.tooltipFrozen, clickCount: 0}))
+    }
     this._onUserSelectsColumn(columnLabel);
   },
 
@@ -85,13 +95,7 @@ var TooltipStateManager = React.createClass({
           data-tip
           data-for='gxaGlobalTooltipOverManagedComponent'
           {...this.state.tooltipFrozen
-              ? { onClick: () => {
-                    if(this.state.clicksOutsideColumns>0){
-                      this.setState({tooltipFrozen:false})
-                      this.refs["tooltip"].setState({extraClass:"gxaDisabled"})
-                    }
-                    this.setState((previousState)=>({clicksOutsideColumns: previousState.clicksOutsideColumns+1}))
-                  },
+              ? {
                   className: "gxaFadeBackgroundForOpenTooltip"
                 }
               : {}
@@ -112,6 +116,7 @@ var TooltipStateManager = React.createClass({
           id='gxaGlobalTooltipOverManagedComponent'
           type="light"
           frozen={!!this.state.tooltipFrozen}
+          onClickOutside={this.props.enableFreeze? this._dismissTooltip : undefined}
           class={"gxaDisabled"}>
           <div/>
         </ReactTooltip>
