@@ -29,9 +29,7 @@ public class DifferentialFacetsDAO extends DifferentialAnalyticsDAO {
     public String fetchFacetsAboveDefaultFoldChangeForSearch(SemanticQuery query) {
         AnalyticsQueryBuilder analyticsQueryBuilder =
                 new AnalyticsQueryBuilder()
-                        .queryIdentifierSearch(query)
-                        .queryConditionsSearch(query)
-                        .useOr();
+                        .queryIdentifierOrConditionsSearch(query);
 
         return fetchFacetsAboveFoldChange(analyticsQueryBuilder.build().getQuery(), DEFAULT_P_VALUE);
     }

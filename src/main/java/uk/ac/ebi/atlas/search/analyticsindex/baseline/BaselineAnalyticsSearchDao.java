@@ -20,14 +20,21 @@ import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder.F
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder.Field.SPECIES;
 
 @Named
-public class BaselineAnalyticsSearchDao extends BaselineAnalyticsDao {
+public class BaselineAnalyticsSearchDao {
 
     static final String EXPERIMENTS_PATH = "$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline' || @.val=='proteomics_baseline')].species.buckets[?(@.val=='%s')].defaultQueryFactorType.buckets[?(@.val=='%s')].experimentAccession.buckets[*]";
     static final String FACET_TREE_PATH = "$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline' || @.val=='proteomics_baseline')].species.buckets[*]";
 
+    private final BaselineAnalyticsDao baselineAnalyticsDao;
+
     @Inject
     public BaselineAnalyticsSearchDao(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl, @Value("classpath:baseline.heatmap.pivot.query.json") Resource baselineFacetsQueryJSON) {
-        super(restTemplate, solrBaseUrl, baselineFacetsQueryJSON);
+        this(new BaselineAnalyticsDao(restTemplate, solrBaseUrl, baselineFacetsQueryJSON));
+    }
+
+
+    BaselineAnalyticsSearchDao(BaselineAnalyticsDao baselineAnalyticsDao) {
+        this.baselineAnalyticsDao = baselineAnalyticsDao;
     }
 
     public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
@@ -37,14 +44,14 @@ public class BaselineAnalyticsSearchDao extends BaselineAnalyticsDao {
                         .queryConditionsSearch(conditionQuery)
                         .ofSpecies(species);
 
-        String response = fetchResults(analyticsQueryBuilder.build().getQuery());
+        String response = baselineAnalyticsDao.fetchResults(analyticsQueryBuilder.build().getQuery());
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
     public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery) {
         AnalyticsQueryBuilder analyticsQueryBuilder = new AnalyticsQueryBuilder().queryIdentifierSearch(geneQuery);
 
-        String response = fetchResults(analyticsQueryBuilder.build().getQuery());
+        String response = baselineAnalyticsDao.fetchResults(analyticsQueryBuilder.build().getQuery());
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
@@ -56,23 +63,17 @@ public class BaselineAnalyticsSearchDao extends BaselineAnalyticsDao {
                         .ofSpecies(species)
                         .withFactorType(defaultQueryFactorType);
 
-        String response = fetchResults(analyticsQueryBuilder.build().getQuery());
+        String response = baselineAnalyticsDao.fetchResults(analyticsQueryBuilder.build().getQuery());
         return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType));
     }
 
     public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery query, String species, String defaultQueryFactorType) {
-        AnalyticsSolrQuery solrQuery = new AnalyticsSolrQuery(
-                AnalyticsSolrQuery.Operator.AND,
-                new AnalyticsSolrQuery(
-                        AnalyticsSolrQuery.Operator.OR,
-                        new AnalyticsSolrQuery(IDENTIFIER_SEARCH.toString(), query),
-                        new AnalyticsSolrQuery(CONDITIONS_SEARCH.toString(), query)
-                ),
-                new AnalyticsSolrQuery(SPECIES.toString(), SemanticQuery.create(species)),
-                new AnalyticsSolrQuery(FACTOR_TYPE.toString(), SemanticQuery.create(defaultQueryFactorType))
-        );
+        AnalyticsQueryBuilder analyticsQueryBuilder =new AnalyticsQueryBuilder()
+                .queryIdentifierOrConditionsSearch(query)
+                .ofSpecies(species)
+                .withFactorType(defaultQueryFactorType);
 
-        String response = fetchResults(solrQuery.toString());
+        String response = baselineAnalyticsDao.fetchResults(analyticsQueryBuilder.build().getQuery());
         return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType));
     }
 

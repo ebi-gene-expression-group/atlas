@@ -30,9 +30,7 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
     public String fetchDifferentialResultsAboveDefaultFoldChangeForSearch(SemanticQuery query) {
         AnalyticsQueryBuilder analyticsQueryBuilder =
                 new AnalyticsQueryBuilder()
-                        .queryIdentifierSearch(query)
-                        .queryConditionsSearch(query)
-                        .useOr();
+                        .queryIdentifierOrConditionsSearch(query);
 
         return fetchDifferentialResultsAboveDefaultFoldChange(analyticsQueryBuilder.build().getQuery());
     }

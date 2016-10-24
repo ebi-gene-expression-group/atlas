@@ -62,14 +62,17 @@ public class AnalyticsQueryBuilderTest {
 
     @Test
     public void fullQueryWithOr() {
-        subject = new AnalyticsQueryBuilder().queryIdentifierSearch(IDENTIFIER_QUERY).queryConditionsSearch(CONDITIONS_QUERY).ofSpecies(HOMO_SAPIENS).useOr();
+        subject = new AnalyticsQueryBuilder().queryIdentifierOrConditionsSearch(IDENTIFIER_QUERY).ofSpecies(HOMO_SAPIENS);
         assertThat(
                 subject.build().getQuery(),
                 is(
                         new AnalyticsSolrQuery(
-                                OR,
-                                new AnalyticsSolrQuery(IDENTIFIER_SEARCH.toString(), IDENTIFIER_QUERY),
-                                new AnalyticsSolrQuery(CONDITIONS_SEARCH.toString(), CONDITIONS_QUERY),
+                                AND,
+                                new AnalyticsSolrQuery(
+                                        OR,
+                                        new AnalyticsSolrQuery(IDENTIFIER_SEARCH.toString(), IDENTIFIER_QUERY),
+                                        new AnalyticsSolrQuery(CONDITIONS_SEARCH.toString(), IDENTIFIER_QUERY)
+                                ),
                                 new AnalyticsSolrQuery(SPECIES.toString(), SemanticQuery.create(HOMO_SAPIENS))
                         ).toString()
                 )

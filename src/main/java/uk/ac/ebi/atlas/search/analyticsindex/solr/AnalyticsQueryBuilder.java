@@ -48,7 +48,6 @@ public class AnalyticsQueryBuilder {
     private static final String DEFAULT_QUERY = "*:*";
 
     private ImmutableList.Builder<AnalyticsSolrQuery> queryClausesBuilder = ImmutableList.builder();
-    private AnalyticsSolrQuery.Operator defaultOp = AND;
 
     private SolrQuery solrQuery = new SolrQuery().setFacetLimit(-1);
 
@@ -56,6 +55,15 @@ public class AnalyticsQueryBuilder {
         if (searchValue.isNotEmpty()) {
             queryClausesBuilder.add(new AnalyticsSolrQuery(searchField.toString(), searchValue));
         }
+    }
+
+    public AnalyticsQueryBuilder queryIdentifierOrConditionsSearch(SemanticQuery query){
+        queryClausesBuilder.add(new AnalyticsSolrQuery(
+                AnalyticsSolrQuery.Operator.OR,
+                new AnalyticsSolrQuery(IDENTIFIER_SEARCH.toString(), query),
+                new AnalyticsSolrQuery(CONDITIONS_SEARCH.toString(), query)
+        ));
+        return this;
     }
 
     public AnalyticsQueryBuilder queryIdentifierSearch(SemanticQuery geneQuery) {
@@ -106,18 +114,13 @@ public class AnalyticsQueryBuilder {
         return this;
     }
 
-    public AnalyticsQueryBuilder useOr() {
-        defaultOp = OR;
-        return this;
-    }
-
     public SolrQuery build() {
         List<AnalyticsSolrQuery> queryClauses = queryClausesBuilder.build();
 
         if (queryClauses.isEmpty()) {
             solrQuery.setQuery(DEFAULT_QUERY);
         } else {
-            solrQuery.setQuery(new AnalyticsSolrQuery(defaultOp, queryClauses.toArray(new AnalyticsSolrQuery[0])).toString());
+            solrQuery.setQuery(new AnalyticsSolrQuery(AND, queryClauses.toArray(new AnalyticsSolrQuery[0])).toString());
         }
 
         return solrQuery;

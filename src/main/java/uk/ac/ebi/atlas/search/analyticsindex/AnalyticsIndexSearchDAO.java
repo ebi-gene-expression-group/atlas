@@ -29,12 +29,10 @@ public class AnalyticsIndexSearchDAO {
     ImmutableSet<String> fetchExperimentTypesInAnyField(SemanticQuery query) {
         SolrQuery solrQuery =
                 new AnalyticsQueryBuilder()
-                        .queryIdentifierSearch(query)
-                        .queryConditionsSearch(query)
+                        .queryIdentifierOrConditionsSearch(query)
                         .facetBy(AnalyticsQueryBuilder.Field.EXPERIMENT_TYPE)
                         .filterAboveDefaultCutoff()
                         .setRows(0)
-                        .useOr()
                         .build();
 
         QueryResponse queryResponse = analyticsClient.query(solrQuery);

@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import static uk.ac.ebi.atlas.utils.ResourceUtils.readPlainTextResource;
 
-public abstract class BaselineAnalyticsDao {
+public class BaselineAnalyticsDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineAnalyticsDao.class);
 
@@ -28,12 +28,17 @@ public abstract class BaselineAnalyticsDao {
     private final String baselineFacetsQuery;
 
     public BaselineAnalyticsDao(RestTemplate restTemplate, String solrBaseUrl, Resource baselineFacetsQueryJSON) {
-        this.restTemplate = restTemplate;   // settings of restTemplate in applicationContext.xml
-        this.solrBaseUrl = solrBaseUrl;
-        this.baselineFacetsQuery = "&json.facet=" + encodeQueryParam(readPlainTextResource(baselineFacetsQueryJSON).replaceAll("\\s+",""));
+        this(restTemplate,solrBaseUrl, "&json.facet=" + encodeQueryParam(readPlainTextResource
+                (baselineFacetsQueryJSON).replaceAll("\\s+","")));
     }
 
-    String fetchResults(String q) {
+    BaselineAnalyticsDao(RestTemplate restTemplate, String solrBaseUrl, String baselineFacetsQuery) {
+        this.restTemplate = restTemplate;   // settings of restTemplate in applicationContext.xml
+        this.solrBaseUrl = solrBaseUrl;
+        this.baselineFacetsQuery = baselineFacetsQuery;
+    }
+
+    public String fetchResults(String q) {
         Stopwatch stopwatch = Stopwatch.createStarted();
         String result = fetchResponseAsString(buildQueryUrl(q));
         stopwatch.stop();
