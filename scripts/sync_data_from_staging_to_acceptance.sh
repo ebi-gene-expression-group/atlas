@@ -10,16 +10,16 @@ echo "============================================================"
 echo `date`
 echo "============================================================"
 echo "Replicating Solr indexes from ves-hx-69 to ves-hx-77..."
-sudo -u fg_atlas ssh ves-hx-77 'rsync -irltpz --delete ves-hx-69:/srv/gxa/solr/* /srv/gxa/solr'
+curl http://ves-hx-77:8983/solr/analytics/replication?command=fetchindex
+curl http://ves-hx-77:8983/solr/baselineConditions/replication?command=fetchindex
+curl http://ves-hx-77:8983/solr/differentialConditions/replication?command=fetchindex
+curl http://ves-hx-77:8983/solr/gxa/replication?command=fetchindex
 
 echo "============================================================"
 echo `date`
 echo "============================================================"
 echo "Syncing experiment designs from ves-hx-76 to ves-hx-77..."
-curl http://ves-hx-77:8983/solr/analytics/replication?command=fetchindex
-curl http://ves-hx-77:8983/solr/baselineConditions/replication?command=fetchindex
-curl http://ves-hx-77:8983/solr/differentialConditions/replication?command=fetchindex
-curl http://ves-hx-77:8983/solr/gxa/replication?command=fetchindex
+sudo -u tc_fg02 ssh ves-hx-77 'rsync -irtpz --safe-links --delete ves-hx-76:/srv/gxa/data/expdesign/* /srv/gxa/data/expdesign'
 
 echo "============================================================"
 echo `date`
