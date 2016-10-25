@@ -64,7 +64,7 @@ public class BaselineAnalyticsSearchDao {
                         .withFactorType(defaultQueryFactorType);
 
         String response = baselineAnalyticsDao.fetchResults(analyticsQueryBuilder.build().getQuery());
-        return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType));
+        return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species.toLowerCase(), defaultQueryFactorType.toLowerCase()));
     }
 
     public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery query, String species, String defaultQueryFactorType) {
@@ -74,7 +74,7 @@ public class BaselineAnalyticsSearchDao {
                 .withFactorType(defaultQueryFactorType);
 
         String response = baselineAnalyticsDao.fetchResults(analyticsQueryBuilder.build().getQuery());
-        return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType));
+        return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species.toLowerCase(), defaultQueryFactorType.toLowerCase()));
     }
 
 }
