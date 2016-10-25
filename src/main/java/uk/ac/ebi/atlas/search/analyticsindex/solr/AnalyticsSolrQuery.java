@@ -2,15 +2,15 @@ package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
-import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 public class AnalyticsSolrQuery {
     public enum Operator {
@@ -77,13 +77,22 @@ public class AnalyticsSolrQuery {
         return root.toString();
     }
 
+
+    private static final Function<String, String> wrapFields = new Function<String, String>() {
+        @Nullable
+        @Override
+        public String apply(@Nullable String token) {
+            return StringUtils.wrap(token, "\"");
+        }
+    };
+
     private static final Function<SemanticQueryTerm, String> semanticQueryTermToSolr = new Function<SemanticQueryTerm, String>() {
         @Nullable
         @Override
         public String apply(@Nullable SemanticQueryTerm semanticQueryTerm) {
             return semanticQueryTerm.hasNoCategory()
-                    ? String.format("\"%s\"", semanticQueryTerm.value())
-                    : String.format("\"%s:{%s}\"", semanticQueryTerm.category(), semanticQueryTerm.value());
+                    ? semanticQueryTerm.value()
+                    : String.format("%s:{%s}", semanticQueryTerm.category(), semanticQueryTerm.value());
         }
     };
 
@@ -101,7 +110,7 @@ public class AnalyticsSolrQuery {
 
     AnalyticsSolrQuery(String searchField, String... searchValue){
         //We want this search field to match at least one of these values
-        root = new Leaf(searchField, Joiner.on(Operator.OR.opString).join(searchValue));
+        root = new Leaf(searchField, Joiner.on(Operator.OR.opString).join(FluentIterable.from(Arrays.asList(searchValue)).transform(wrapFields)));
     }
 
     AnalyticsSolrQuery(Operator operator, AnalyticsSolrQuery... queries) {

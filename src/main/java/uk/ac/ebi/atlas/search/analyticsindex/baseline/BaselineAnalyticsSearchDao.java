@@ -22,7 +22,7 @@ import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder.F
 @Named
 public class BaselineAnalyticsSearchDao {
 
-    static final String EXPERIMENTS_PATH = "$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline' || @.val=='proteomics_baseline')].species.buckets[?(@.val=='%s')].defaultQueryFactorType.buckets[?(@.val=='%s')].experimentAccession.buckets[*]";
+    static final String EXPERIMENTS_PATH = "$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline' || @.val=='proteomics_baseline')]..experimentAccession.buckets[*]";
     static final String FACET_TREE_PATH = "$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline' || @.val=='proteomics_baseline')].species.buckets[*]";
 
     private final BaselineAnalyticsDao baselineAnalyticsDao;
