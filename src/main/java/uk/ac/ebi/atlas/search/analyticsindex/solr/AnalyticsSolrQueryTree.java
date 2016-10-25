@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class AnalyticsSolrQuery {
+public class AnalyticsSolrQueryTree {
     public enum Operator {
         AND(" AND "),
         OR(" OR ");
@@ -97,25 +97,25 @@ public class AnalyticsSolrQuery {
     };
 
     //convenience method
-    AnalyticsSolrQuery(String searchField, SemanticQuery searchValue) {
+    AnalyticsSolrQueryTree(String searchField, SemanticQuery searchValue) {
         this(searchField, searchValue.terms());
     }
 
-    AnalyticsSolrQuery(String searchField, Collection<SemanticQueryTerm> allowedValuesForField) {
+    AnalyticsSolrQueryTree(String searchField, Collection<SemanticQueryTerm> allowedValuesForField) {
         this(searchField,
                 FluentIterable.from(allowedValuesForField)
                 .transform(semanticQueryTermToSolr)
                 .toArray(String.class));
     }
 
-    AnalyticsSolrQuery(String searchField, String... searchValue){
+    AnalyticsSolrQueryTree(String searchField, String... searchValue){
         //We want this search field to match at least one of these values
         root = new Leaf(searchField, Joiner.on(Operator.OR.opString).join(FluentIterable.from(Arrays.asList(searchValue)).transform(wrapFields)));
     }
 
-    AnalyticsSolrQuery(Operator operator, AnalyticsSolrQuery... queries) {
+    AnalyticsSolrQueryTree(Operator operator, AnalyticsSolrQueryTree... queries) {
         ImmutableList.Builder<TreeNode> childrenBuilder = new ImmutableList.Builder<>();
-        for (AnalyticsSolrQuery query : queries) {
+        for (AnalyticsSolrQueryTree query : queries) {
             childrenBuilder.add(query.root);
         }
 

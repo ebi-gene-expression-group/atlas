@@ -6,16 +6,16 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQuery.Operator.AND;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQuery.Operator.OR;
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.AND;
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.OR;
 
-public class AnalyticsSolrQueryTest {
+public class AnalyticsSolrQueryTreeTest {
 
-    private AnalyticsSolrQuery subject;
+    private AnalyticsSolrQueryTree subject;
 
     @Test
     public void simpleQuery() {
-        subject = new AnalyticsSolrQuery(
+        subject = new AnalyticsSolrQueryTree(
                 "identifierSearch",
                 SemanticQuery.create(SemanticQueryTerm.create("GO:0008150", "go")));
 
@@ -24,7 +24,7 @@ public class AnalyticsSolrQueryTest {
 
     @Test
     public void notSoSimpleQuery() {
-        subject = new AnalyticsSolrQuery(
+        subject = new AnalyticsSolrQueryTree(
                 "identifierSearch",
                 SemanticQuery.create(
                         SemanticQueryTerm.create("GO:0008150", "go"),
@@ -36,16 +36,16 @@ public class AnalyticsSolrQueryTest {
 
     @Test
     public void complexQuery() {
-        subject = new AnalyticsSolrQuery(
+        subject = new AnalyticsSolrQueryTree(
                 OR,
-                new AnalyticsSolrQuery(
+                new AnalyticsSolrQueryTree(
                         "identifierSearch",
                         SemanticQuery.create(
                                 SemanticQueryTerm.create("GO:0008150", "go"),
                                 SemanticQueryTerm.create("PIM1", "synonym"),
                                 SemanticQueryTerm.create("zinc finger"))
                 ),
-                new AnalyticsSolrQuery(
+                new AnalyticsSolrQueryTree(
                         "conditionsSearch",
                         SemanticQuery.create(
                                 SemanticQueryTerm.create("liver", "efo"),
@@ -62,30 +62,30 @@ public class AnalyticsSolrQueryTest {
 
     @Test
     public void moreComplexQuery() {
-        subject = new AnalyticsSolrQuery(
+        subject = new AnalyticsSolrQueryTree(
                 OR,
-                new AnalyticsSolrQuery(
+                new AnalyticsSolrQueryTree(
                         "identifierSearch",
                         SemanticQuery.create(
                                 SemanticQueryTerm.create("GO:0008150", "go"),
                                 SemanticQueryTerm.create("PIM1", "synonym"),
                                 SemanticQueryTerm.create("zinc finger"))
                 ),
-                new AnalyticsSolrQuery(
+                new AnalyticsSolrQueryTree(
                         "conditionsSearch",
                         SemanticQuery.create(
                                 SemanticQueryTerm.create("liver", "efo"),
                                 SemanticQueryTerm.create("cancer"))
                 ),
-                new AnalyticsSolrQuery(
+                new AnalyticsSolrQueryTree(
                         AND,
-                        new AnalyticsSolrQuery(
+                        new AnalyticsSolrQueryTree(
                                 "species",
                                 SemanticQuery.create("homo sapiens")),
-                        new AnalyticsSolrQuery(
+                        new AnalyticsSolrQueryTree(
                                 "defaultQueryFactorType",
                                 SemanticQuery.create("CELL_LINE")),
-                        new AnalyticsSolrQuery(
+                        new AnalyticsSolrQueryTree(
                                 "experimentType",
                                 SemanticQuery.create("rnaseq_mrna_baseline"))
                 )

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
 import com.google.common.base.Stopwatch;
+import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder;
+import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,28 +22,35 @@ public class DifferentialResultsDAO extends DifferentialAnalyticsDAO {
 
     private static final int ROWS = 1000;
     private static final String SORT_FIELD = "&sort=abs(foldChange)desc";
+    private final AnalyticsQueryFactory analyticsQueryFactory;
 
     @Inject
-    public DifferentialResultsDAO(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl, @Value("classpath:differential.facets.query.json") Resource differentialFacetsQueryJSON) {
+    public DifferentialResultsDAO(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl,
+                                  AnalyticsQueryFactory analyticsQueryFactory,@Value("classpath:differential.facets.query.json") Resource differentialFacetsQueryJSON) {
         super(restTemplate, solrBaseUrl, differentialFacetsQueryJSON);  // settings of restTemplate in applicationContext.xml
+        this.analyticsQueryFactory = analyticsQueryFactory;
     }
 
     public String fetchDifferentialResultsAboveDefaultFoldChangeForSearch(SemanticQuery query) {
-        AnalyticsQueryBuilder analyticsQueryBuilder =
-                new AnalyticsQueryBuilder()
-                        .queryIdentifierOrConditionsSearch(query);
+        SolrQuery solrQuery =
+                analyticsQueryFactory.builder()
+                        .differentialOnly()
+                        .queryIdentifierOrConditionsSearch(query)
+                .build();
 
-        return fetchDifferentialResultsAboveDefaultFoldChange(analyticsQueryBuilder.build().getQuery());
+        return fetchDifferentialResultsAboveDefaultFoldChange(solrQuery.getQuery());
     }
 
     public String fetchDifferentialResultsAboveDefaultFoldChangeForQuery(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        AnalyticsQueryBuilder analyticsQueryBuilder =
-                new AnalyticsQueryBuilder()
+        SolrQuery solrQuery =
+                analyticsQueryFactory.builder()
+                        .differentialOnly()
                         .queryIdentifierSearch(geneQuery)
                         .queryConditionsSearch(conditionQuery)
-                        .ofSpecies(species);
+                        .ofSpecies(species)
+                .build();
 
-        return fetchDifferentialResultsAboveDefaultFoldChange(analyticsQueryBuilder.build().getQuery());
+        return fetchDifferentialResultsAboveDefaultFoldChange(solrQuery.getQuery());
     }
 
     private String fetchDifferentialResultsAboveDefaultFoldChange(String q) {

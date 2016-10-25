@@ -1,23 +1,18 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.jayway.jsonpath.JsonPath;
+import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQuery;
-import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder;
+import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 import java.util.Map;
-
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder.Field.CONDITIONS_SEARCH;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder.Field.FACTOR_TYPE;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder.Field.IDENTIFIER_SEARCH;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder.Field.SPECIES;
 
 @Named
 public class BaselineAnalyticsSearchDao {
@@ -26,55 +21,58 @@ public class BaselineAnalyticsSearchDao {
     static final String FACET_TREE_PATH = "$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline' || @.val=='proteomics_baseline')].species.buckets[*]";
 
     private final BaselineAnalyticsDao baselineAnalyticsDao;
+    private final AnalyticsQueryFactory analyticsQueryFactory;
 
     @Inject
-    public BaselineAnalyticsSearchDao(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl, @Value("classpath:baseline.heatmap.pivot.query.json") Resource baselineFacetsQueryJSON) {
-        this(new BaselineAnalyticsDao(restTemplate, solrBaseUrl, baselineFacetsQueryJSON));
-    }
-
-
-    BaselineAnalyticsSearchDao(BaselineAnalyticsDao baselineAnalyticsDao) {
-        this.baselineAnalyticsDao = baselineAnalyticsDao;
+    public BaselineAnalyticsSearchDao(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String
+            solrBaseUrl, AnalyticsQueryFactory analyticsQueryFactory,@Value("classpath:baseline.heatmap.pivot.query.json") Resource baselineFacetsQueryJSON) {
+        this.baselineAnalyticsDao = new BaselineAnalyticsDao(restTemplate, solrBaseUrl, baselineFacetsQueryJSON);
+        this.analyticsQueryFactory = analyticsQueryFactory;
     }
 
     public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        AnalyticsQueryBuilder analyticsQueryBuilder =
-                new AnalyticsQueryBuilder()
+        SolrQuery solrQuery =
+                analyticsQueryFactory.builder()
+                        .baselineOnly()
                         .queryIdentifierSearch(geneQuery)
                         .queryConditionsSearch(conditionQuery)
-                        .ofSpecies(species);
+                        .ofSpecies(species)
+                .build();
 
-        String response = baselineAnalyticsDao.fetchResults(analyticsQueryBuilder.build().getQuery());
+        String response = baselineAnalyticsDao.fetchResults(solrQuery.getQuery());
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
     public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery) {
-        AnalyticsQueryBuilder analyticsQueryBuilder = new AnalyticsQueryBuilder().queryIdentifierSearch(geneQuery);
+        SolrQuery solrQuery = analyticsQueryFactory.builder().queryIdentifierSearch(geneQuery).build();
 
-        String response = baselineAnalyticsDao.fetchResults(analyticsQueryBuilder.build().getQuery());
+        String response = baselineAnalyticsDao.fetchResults(solrQuery.getQuery());
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
     public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, String defaultQueryFactorType) {
-        AnalyticsQueryBuilder analyticsQueryBuilder =
-                new AnalyticsQueryBuilder()
+        SolrQuery solrQuery =
+                analyticsQueryFactory.builder()
+                        .baselineOnly()
                         .queryIdentifierSearch(geneQuery)
                         .queryConditionsSearch(conditionQuery)
                         .ofSpecies(species)
-                        .withFactorType(defaultQueryFactorType);
+                        .withFactorType(defaultQueryFactorType)
+                .build();
 
-        String response = baselineAnalyticsDao.fetchResults(analyticsQueryBuilder.build().getQuery());
-        return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species.toLowerCase(), defaultQueryFactorType.toLowerCase()));
+        String response = baselineAnalyticsDao.fetchResults(solrQuery.getQuery());
+        return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType));
     }
 
     public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery query, String species, String defaultQueryFactorType) {
-        AnalyticsQueryBuilder analyticsQueryBuilder =new AnalyticsQueryBuilder()
+        SolrQuery solrQuery =analyticsQueryFactory.builder()
+                .baselineOnly()
                 .queryIdentifierOrConditionsSearch(query)
                 .ofSpecies(species)
-                .withFactorType(defaultQueryFactorType);
+                .withFactorType(defaultQueryFactorType).build();
 
-        String response = baselineAnalyticsDao.fetchResults(analyticsQueryBuilder.build().getQuery());
-        return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species.toLowerCase(), defaultQueryFactorType.toLowerCase()));
+        String response = baselineAnalyticsDao.fetchResults(solrQuery.getQuery());
+        return JsonPath.read(response, String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType));
     }
 
 }

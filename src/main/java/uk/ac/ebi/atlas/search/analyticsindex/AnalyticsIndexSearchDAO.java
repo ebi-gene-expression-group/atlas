@@ -7,7 +7,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsClient;
-import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryBuilder;
+import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory;
 import uk.ac.ebi.atlas.solr.SolrUtil;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 
@@ -20,19 +20,21 @@ import java.util.List;
 public class AnalyticsIndexSearchDAO {
 
     private AnalyticsClient analyticsClient;
+    private final AnalyticsQueryFactory analyticsQueryFactory;
 
     @Inject
-    public AnalyticsIndexSearchDAO(AnalyticsClient analyticsClient) {
+    public AnalyticsIndexSearchDAO(AnalyticsClient analyticsClient,AnalyticsQueryFactory analyticsQueryFactory) {
         this.analyticsClient = analyticsClient;
+        this.analyticsQueryFactory = analyticsQueryFactory;
     }
 
     ImmutableSet<String> fetchExperimentTypesInAnyField(SemanticQuery query) {
         SolrQuery solrQuery =
-                new AnalyticsQueryBuilder()
+                analyticsQueryFactory.builder()
                         .queryIdentifierOrConditionsSearch(query)
-                        .facetBy(AnalyticsQueryBuilder.Field.EXPERIMENT_TYPE)
                         .filterAboveDefaultCutoff()
                         .setRows(0)
+                        .facetBy(AnalyticsQueryFactory.Field.EXPERIMENT_TYPE)
                         .build();
 
         QueryResponse queryResponse = analyticsClient.query(solrQuery);
@@ -42,13 +44,13 @@ public class AnalyticsIndexSearchDAO {
 
     ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         SolrQuery solrQuery =
-                new AnalyticsQueryBuilder()
+                analyticsQueryFactory.builder()
                         .queryIdentifierSearch(geneQuery)
                         .queryConditionsSearch(conditionQuery)
                         .ofSpecies(species)
-                        .facetBy(AnalyticsQueryBuilder.Field.EXPERIMENT_TYPE)
                         .filterAboveDefaultCutoff()
                         .setRows(0)
+                        .facetBy(AnalyticsQueryFactory.Field.EXPERIMENT_TYPE)
                         .build();
 
         QueryResponse queryResponse = analyticsClient.query(solrQuery);
@@ -57,12 +59,12 @@ public class AnalyticsIndexSearchDAO {
 
     ImmutableSet<String> searchBioentityIdentifiers(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, int facetLimit) {
         SolrQuery solrQuery =
-                new AnalyticsQueryBuilder()
+                analyticsQueryFactory.builder()
                         .queryIdentifierSearch(geneQuery)
                         .queryConditionsSearch(conditionQuery)
                         .ofSpecies(species)
                         .setRows(0)
-                        .facetBy(AnalyticsQueryBuilder.Field.BIOENTITY_IDENTIFIER)
+                        .facetBy(AnalyticsQueryFactory.Field.BIOENTITY_IDENTIFIER)
                         .setFacetLimit(facetLimit)
                         .build();
 
@@ -72,10 +74,10 @@ public class AnalyticsIndexSearchDAO {
 
     ImmutableSet<String> searchBioentityIdentifiersForTissuesInBaselineExperiments(SemanticQuery geneQuery) {
         SolrQuery solrQuery =
-                new AnalyticsQueryBuilder()
+                analyticsQueryFactory.builder()
                         .queryIdentifierSearch(geneQuery)
                         .setRows(0)
-                        .facetBy(AnalyticsQueryBuilder.Field.BIOENTITY_IDENTIFIER)
+                        .facetBy(AnalyticsQueryFactory.Field.BIOENTITY_IDENTIFIER)
                         .filterBaselineAboveDefaultCutoff()
                         .setFacetLimit(1)
                         .build();
@@ -86,11 +88,11 @@ public class AnalyticsIndexSearchDAO {
 
     Collection<String> getBioentityIdentifiersForSpecies(String species) {
         List<FacetField> facetFields = analyticsClient.query(
-                new AnalyticsQueryBuilder()
+                analyticsQueryFactory.builder()
                         .ofSpecies(species)
                         .filterAboveDefaultCutoff()
-                        .facetBy(AnalyticsQueryBuilder.Field.BIOENTITY_IDENTIFIER)
                         .setRows(0)
+                        .facetBy(AnalyticsQueryFactory.Field.BIOENTITY_IDENTIFIER)
                         .setFacetLimit(45000)   // Something less than 50k because of sitemap limitations, plus some wiggle room for extra data
                         .build()).getFacetFields();
 
