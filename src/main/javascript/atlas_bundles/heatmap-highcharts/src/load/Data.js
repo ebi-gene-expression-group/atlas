@@ -34,7 +34,7 @@ var _columnGroupings = function(columnGroupings, id){
   )
 }
 
-var getXAxisCategories = function (columnHeaders,columnGroupings, config) {
+var getXAxisCategories = function (columnHeaders, columnGroupings, config) {
   return columnHeaders.map(
     config.isExperimentPage
     ? config.isDifferential
@@ -281,9 +281,9 @@ var _dataSplitByThresholds = function (thresholds, names, colours, profilesRows,
   );
 };
 
-var getTheWholeDataObject = function(config,rows, columnHeaders, columnGroupings){
+var getTheWholeDataObject = function(config, rows, columnHeaders, columnGroupings){
   return {
-    xAxisCategories: getXAxisCategories(columnHeaders,columnGroupings || [], config),
+    xAxisCategories: getXAxisCategories(columnHeaders, columnGroupings || [], config),
     yAxisCategories: getYAxisCategories(rows, config),
     dataSeries: getDataSeries(rows, config)
   };

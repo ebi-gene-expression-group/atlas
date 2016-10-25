@@ -4,9 +4,7 @@ const Button = require(`react-bootstrap/lib/Button`);
 const DownloadProfilesButton = require(`expression-atlas-download-profiles-button`);
 const HeatmapCanvas = require(`./HeatmapCanvas.jsx`);
 const CoexpressionOption = require(`./CoexpressionOption.jsx`);
-const SettingsModal = require(`../manipulate/SettingsModal.jsx`);
-const DropdownFactory = require(`./SelectionDropdownFactory.jsx`);
-const OrderingDropdown = DropdownFactory(`Sort by: `);
+const SettingsModal = require(`./settings/SettingsModal.jsx`);
 const TooltipStateManager = require(`../util/TooltipStateManager.jsx`);
 
 require('./SeriesLegend.less');
@@ -34,11 +32,10 @@ const HeatmapOptions = React.createClass({
         downloadOptions: React.PropTypes.object.isRequired,
         googleAnalyticsCallback: React.PropTypes.func.isRequired,
         showUsageMessage: React.PropTypes.bool.isRequired,
-        orderings: React.PropTypes.shape(PropTypes.SelectionDropdown),
-        filters:  React.PropTypes.arrayOf(React.PropTypes.shape({
-          name: React.PropTypes.string.isRequired,
-          value: React.PropTypes.shape(PropTypes.SelectionDropdown)
-        }))
+        orderings: React.PropTypes.shape(PropTypes.Orderings),
+        filters: PropTypes.Filter,
+        filtersSelection: React.PropTypes.arrayOf(PropTypes.FilterSelection),
+        disableSettings: React.PropTypes.bool.isRequired
     },
 
     getInitialState() {
@@ -57,74 +54,6 @@ const HeatmapOptions = React.createClass({
       }
     },
 
-    _propsOfCurrentFilter() {
-        return (
-            this.props.filters
-                .filter(e => e.name === this.state.selectedFilter)
-                .map(e => e.value)
-                [0]
-        )
-    },
-
-    filters() {
-        const multipleFilters = () => {
-            const FilterChoiceDropdown = DropdownFactory(`Filter by: `);
-            const FilteringDropdown = DropdownFactory(``);
-            const filterProps =
-                this.props.filters
-                    .filter(e => e.name === this.state.selectedFilter)
-                    .map(e => e.value)
-                    [0];
-
-            return (
-                <div>
-                    <div style={{display:`inline-block`}}>
-                        <FilterChoiceDropdown
-                            available={this.props.filters.map(e => e.name)}
-                            current={this.state.selectedFilter}
-                            onSelect={e => this.setState({selectedFilter: e})}
-                            disabled={false}/>
-                    </div>
-                    <div style={{display:`inline-block`, paddingLeft: `5px§ `}}>
-                        <FilteringDropdown {...filterProps}/>
-                    </div>
-                </div>
-            )
-        };
-
-        const singleFilter = () => {
-            const filterProperties = this.props.filters[this.props.filters.length - 1]; //skip the first, dummy, filter
-            const FilteringDropdown = DropdownFactory(`Filter by  ${filterProperties.name.toLowerCase()}: `);
-            return (
-                <FilteringDropdown {...filterProperties.value} />
-            )
-        };
-
-        return (
-            this.props.filters.length < 3 ?
-                singleFilter() :
-                multipleFilters()
-        );
-    },
-
-    _settingsSheet() {
-        return(
-            <div>
-                    {this.filters()}
-                    {this.props.orderings.available.length > 1 ?
-                        <OrderingDropdown
-                            available={this.props.orderings.available}
-                            current={this.props.orderings.current}
-                            onSelect={this.props.orderings.onSelect}
-                            disabled={this.props.orderings.disabled}
-                        /> :
-                        null
-                    }
-                <p>Some explanation down below here</p>
-            </div>
-        );
-    },
-
     render() {
         return (
             <div className="gxaHeatmapCountAndLegend" style={{paddingBottom: `15px`, position: `sticky`}}>
@@ -134,7 +63,12 @@ const HeatmapOptions = React.createClass({
 
                 <div style={{display: `inline-block`, verticalAlign: `top`, float: `right`, marginRight: this.props.marginRight}}>
                     <div style={{display: `inline-block`}}>
-                        <SettingsModal content={this._settingsSheet()}/>
+                        <SettingsModal
+                            filters={this.props.filters}
+                            disabled={this.props.disableSettings}
+                            filtersSelection={this.props.filtersSelection}
+                            orderings={this.props.orderings}
+                        />
                     </div>
 
                     <div style={{display: `inline-block`, paddingLeft: `10px`}}>
@@ -228,24 +162,25 @@ const anatomogramCallbacks = (heatmapDataToPresent, highlightOntologyIds) =>
         }
     });
 
-const show = (heatmapDataToPresent, orderings,filters, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, properties) => {
+const show = (heatmapDataToPresent, orderings, filters, filtersSelection, zoom, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, properties) => {
     const marginRight = 60;
     const heatmapConfig = properties.loadResult.heatmapConfig;
 
     return (
         <div>
-            <HeatmapOptions
-                marginRight={marginRight}
-                introductoryMessage={heatmapConfig.introductoryMessage}
-                downloadOptions={{
-                    downloadProfilesURL: heatmapConfig.downloadProfilesURL,
-                    atlasBaseURL: heatmapConfig.atlasBaseURL,
-                    disclaimer: heatmapConfig.disclaimer
-                }}
-                orderings={orderings}
-                filters={filters}
-                googleAnalyticsCallback={properties.googleAnalyticsCallback}
-                showUsageMessage={heatmapDataToPresent.xAxisCategories.length > 100}
+            <HeatmapOptions marginRight={marginRight}
+                            introductoryMessage={heatmapConfig.introductoryMessage}
+                            downloadOptions={{
+                                downloadProfilesURL: heatmapConfig.downloadProfilesURL,
+                                atlasBaseURL: heatmapConfig.atlasBaseURL,
+                                disclaimer: heatmapConfig.disclaimer
+                            }}
+                            orderings={orderings}
+                            filters={filters}
+                            filtersSelection={filtersSelection}
+                            disableSettings={zoom}
+                            googleAnalyticsCallback={properties.googleAnalyticsCallback}
+                            showUsageMessage={heatmapDataToPresent.xAxisCategories.length > 100}
             />
 
             <div>

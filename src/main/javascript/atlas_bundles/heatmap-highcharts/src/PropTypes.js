@@ -3,10 +3,10 @@ const validate = require(`react-prop-types-check`);
 
 
 const PointPropType = React.PropTypes.shape({
-  x: React.PropTypes.number.isRequired,
-  y: React.PropTypes.number.isRequired,
-  value: React.PropTypes.number.isRequired,
-  info: React.PropTypes.object.isRequired
+    x: React.PropTypes.number.isRequired,
+    y: React.PropTypes.number.isRequired,
+    value: React.PropTypes.number.isRequired,
+    info: React.PropTypes.object.isRequired
 });
 
 
@@ -24,10 +24,10 @@ const DataSeriesProps = {
 };
 
 
-const ValidateDataSeries = (dataSeries) => {
-  dataSeries.forEach(series => {
-    validate(series, DataSeriesProps);
-  });
+const ValidateDataSeries = dataSeries => {
+    dataSeries.forEach(series => {
+        validate(series, DataSeriesProps);
+    });
 };
 
 
@@ -94,31 +94,38 @@ const HeatmapDataPropType = (props, propName) => {
 
 
 const LoadResultPropType = React.PropTypes.shape({
-  heatmapConfig: React.PropTypes.object.isRequired,
-  colorAxis : React.PropTypes.object,
-  orderings: OrderingsPropType,
-  heatmapData : HeatmapDataPropType
+    heatmapConfig: React.PropTypes.object.isRequired,
+    colorAxis : React.PropTypes.object,
+    orderings: OrderingsPropType,
+    heatmapData : HeatmapDataPropType
 });
 
 
 const FormatterPropType = (props, propName) => {
-  const f = props[propName];
-  if (f === undefined) {
-      return new Error(`${propName} formatter missing`);
-  } else if (typeof f !== `function` || f.name !== `Formatter`) {
-      return new Error(`${propName} formatter not correctly created. See the main method of TooltipFormatter.jsx.`);
-  }
+    const f = props[propName];
+    if (f === undefined) {
+        return new Error(`${propName} formatter missing`);
+    } else if (typeof f !== `function` || f.name !== `Formatter`) {
+        return new Error(`${propName} formatter not correctly created. See the main method of TooltipFormatter.jsx.`);
+    }
 };
 
 
-const PropsForSelectionDropdown = {
+const OrderingsPropTypes = React.PropTypes.shape({
     available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    current: React.PropTypes.string.isRequired,
-    onSelect: React.PropTypes.func.isRequired,
-    onDismissDropdown: React.PropTypes.func,
-    disabled: React.PropTypes.bool
-};
+    selected: React.PropTypes.string.isRequired,
+}).isRequired;
 
+const FilterPropTypes = React.PropTypes.arrayOf(React.PropTypes.shape({
+        name: React.PropTypes.string.isRequired,
+        values: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+    })
+).isRequired;
+
+const FilterSelectionPropTypes = React.PropTypes.shape({
+    name: React.PropTypes.string.isRequired,
+    selected: React.PropTypes.arrayOf(React.PropTypes.bool).isRequired
+}).isRequired;
 
 module.exports = {
     validateDataSeries : ValidateDataSeries,
@@ -128,5 +135,7 @@ module.exports = {
     LoadResult: LoadResultPropType,
     AxisCategories : AxisCategoriesPropType,
     Formatter : FormatterPropType,
-    SelectionDropdown: PropsForSelectionDropdown
+    Orderings: OrderingsPropTypes,
+    Filter: FilterPropTypes,
+    FilterSelection: FilterSelectionPropTypes
 };
