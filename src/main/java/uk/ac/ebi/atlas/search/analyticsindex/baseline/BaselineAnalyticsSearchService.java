@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResultProducer;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,11 +26,10 @@ public class BaselineAnalyticsSearchService {
 
     @Inject
     public BaselineAnalyticsSearchService(BaselineAnalyticsSearchDao baselineAnalyticsSearchDao,
-                                          BaselineAnalyticsFacetsReader baselineAnalyticsFacetsReader,
-                                          BaselineExperimentSearchResultProducer baselineExperimentSearchResultProducer) {
+                                          ExperimentTrader experimentTrader) {
         this.baselineAnalyticsSearchDao = baselineAnalyticsSearchDao;
-        this.baselineAnalyticsFacetsReader = baselineAnalyticsFacetsReader;
-        this.baselineExperimentSearchResultProducer = baselineExperimentSearchResultProducer;
+        this.baselineAnalyticsFacetsReader = new BaselineAnalyticsFacetsReader();
+        this.baselineExperimentSearchResultProducer = new BaselineExperimentSearchResultProducer(experimentTrader);
     }
 
     public BaselineExperimentSearchResult findExpressions(SemanticQuery geneQuery, SemanticQuery conditionQuery,

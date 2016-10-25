@@ -13,7 +13,6 @@ import uk.ac.manchester.cs.bhig.util.Tree;
 import javax.inject.Named;
 import java.util.*;
 
-@Named
 public class BaselineAnalyticsFacetsReader {
 
     public ImmutableList<BaselineExperimentExpression> extractAverageExpressionLevel(List<Map<String, Object>> results) {
