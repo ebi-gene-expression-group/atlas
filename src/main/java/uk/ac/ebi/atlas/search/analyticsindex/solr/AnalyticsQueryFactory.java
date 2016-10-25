@@ -1,14 +1,17 @@
 package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
+import autovalue.shaded.com.google.common.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
+import org.springframework.web.util.UriUtils;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.AND;
@@ -16,6 +19,7 @@ import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.F
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.FACTOR_TYPE;
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.IDENTIFIER_SEARCH;
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.SPECIES;
+import static uk.ac.ebi.atlas.utils.ResourceUtils.readPlainTextResource;
 
 @Named
 @Scope("prototype")
@@ -43,8 +47,10 @@ public class AnalyticsQueryFactory {
         }
 
         public Builder baselineOnly(){
-            //TODO this compiles now use it
-            baselineFacetsQueryJSON.exists();
+            solrQuery.setRows(0);
+            solrQuery.set("omitHeader", true);
+            solrQuery.set("json.facet", readPlainTextResource(baselineFacetsQueryJSON).replaceAll("\\s+",""));
+            solrQuery.addFilterQuery("experimentType:(rnaseq_mrna_baseline OR proteomics_baseline)");
             return this;
         }
         public Builder differentialOnly(){
