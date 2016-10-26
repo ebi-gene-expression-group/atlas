@@ -51,6 +51,7 @@ public final class HeatmapWidgetDownloadController {
         this.speciesFactory = speciesFactory;
     }
 
+    //TODO I wonder if this isn't dead code?
     @RequestMapping(value = {"/widgets/heatmap/bioentity.tsv", "/widgets/heatmap/multiExperiment.tsv"}, method = RequestMethod.GET)
          public void heatmapWidgetData (@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
                                         @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,

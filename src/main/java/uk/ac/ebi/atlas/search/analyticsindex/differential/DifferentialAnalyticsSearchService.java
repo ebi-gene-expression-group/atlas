@@ -9,27 +9,26 @@ import javax.inject.Named;
 @Named
 public class DifferentialAnalyticsSearchService {
 
-    private final DifferentialFacetsDAO differentialFacetsDAO;
     private final DifferentialFacetsReader differentialFacetsReader;
-    private final DifferentialResultsDAO differentialResultsDAO;
     private final DifferentialResultsReader differentialResultsReader;
+    private final DifferentialAnalyticsSearchDao differentialAnalyticsSearchDao;
 
     @Inject
-    public DifferentialAnalyticsSearchService(DifferentialFacetsDAO differentialFacetsDAO, DifferentialFacetsReader differentialFacetsReader,
-                                              DifferentialResultsDAO differentialResultsDAO, DifferentialResultsReader differentialResultsReader) {
-        this.differentialFacetsDAO = differentialFacetsDAO;
+    public DifferentialAnalyticsSearchService(DifferentialAnalyticsSearchDao differentialAnalyticsSearchDao,
+                                              DifferentialFacetsReader differentialFacetsReader,
+                                              DifferentialResultsReader differentialResultsReader) {
+        this.differentialAnalyticsSearchDao = differentialAnalyticsSearchDao;
         this.differentialFacetsReader = differentialFacetsReader;
-        this.differentialResultsDAO = differentialResultsDAO;
         this.differentialResultsReader = differentialResultsReader;
     }
 
     public JsonObject fetchDifferentialFacetsForSearch(SemanticQuery query) {
-        String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForSearch(query);
+        String jsonResponse = differentialAnalyticsSearchDao.fetchFacetsAboveDefaultFoldChangeForSearch(query);
         return differentialFacetsReader.generateFacetsTreeJson(jsonResponse);
     }
 
     public JsonObject fetchDifferentialResultsForSearch(SemanticQuery query) {
-        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForSearch(query);
+        String differentialResults = differentialAnalyticsSearchDao.fetchDifferentialResultsAboveDefaultFoldChangeForSearch(query);
         return differentialResultsReader.extractResultsAsJson(differentialResults);
     }
 
@@ -38,7 +37,7 @@ public class DifferentialAnalyticsSearchService {
     }
 
     public JsonObject fetchDifferentialFacetsForQuery(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        String jsonResponse = differentialFacetsDAO.fetchFacetsAboveDefaultFoldChangeForQuery(geneQuery, conditionQuery, species);
+        String jsonResponse = differentialAnalyticsSearchDao.fetchFacetsAboveDefaultFoldChangeForQuery(geneQuery, conditionQuery, species);
         return differentialFacetsReader.generateFacetsTreeJson(jsonResponse);
     }
 
@@ -47,7 +46,7 @@ public class DifferentialAnalyticsSearchService {
     }
 
     public JsonObject fetchDifferentialResultsForQuery(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        String differentialResults = differentialResultsDAO.fetchDifferentialResultsAboveDefaultFoldChangeForQuery(geneQuery, conditionQuery, species);
+        String differentialResults = differentialAnalyticsSearchDao.fetchDifferentialResultsAboveDefaultFoldChangeForQuery(geneQuery, conditionQuery, species);
         return differentialResultsReader.extractResultsAsJson(differentialResults);
     }
 

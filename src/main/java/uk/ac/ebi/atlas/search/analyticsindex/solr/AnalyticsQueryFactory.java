@@ -1,24 +1,18 @@
 package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
-import autovalue.shaded.com.google.common.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
-import org.springframework.web.util.UriUtils;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.*;
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.AND;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.CONDITIONS_SEARCH;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.FACTOR_TYPE;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.IDENTIFIER_SEARCH;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.SPECIES;
 import static uk.ac.ebi.atlas.utils.ResourceUtils.readPlainTextResource;
 
 @Named
@@ -43,20 +37,38 @@ public class AnalyticsQueryFactory {
     public class Builder {
 
         private Builder(){
-            //
+            solrQuery.set("omitHeader", true);
         }
 
-        public Builder baselineOnly(){
+        /*
+        Interesting lack of symmetry - baselineResults are retrieved with a different code path! :)
+         */
+
+        public Builder baselineFacets(){
             solrQuery.setRows(0);
-            solrQuery.set("omitHeader", true);
             solrQuery.set("json.facet", readPlainTextResource(baselineFacetsQueryJSON).replaceAll("\\s+",""));
             solrQuery.addFilterQuery("experimentType:(rnaseq_mrna_baseline OR proteomics_baseline)");
             return this;
         }
-        public Builder differentialOnly(){
-            //TODO this compiles now use it
-            differentialFacetsQueryJSON.exists();
+
+        private Builder differential(){
+            solrQuery.addFilterQuery("pValue:[* TO 0.05]");
+            solrQuery.addFilterQuery("experimentType:(rnaseq_mrna_differential OR " +
+                    "microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential)");
             return this;
+        }
+
+        //TODO use the other one instead of this one
+        public Builder differentialResults(){
+            solrQuery.setRows(1000);
+            solrQuery.set("sort", "abs(foldChange)desc");
+            return differential();
+        }
+
+        public Builder differentialFacets(){
+            solrQuery.setRows(0);
+            solrQuery.set("json.facet", readPlainTextResource(differentialFacetsQueryJSON).replaceAll("\\s+",""));
+            return differential();
         }
 
         public Builder facetBy(Field f) {

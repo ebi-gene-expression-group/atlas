@@ -30,7 +30,7 @@ public class BaselineAnalyticsSearchDao {
     public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         SolrQuery solrQuery =
                 analyticsQueryFactory.builder()
-                        .baselineOnly()
+                        .baselineFacets()
                         .queryIdentifierSearch(geneQuery)
                         .queryConditionsSearch(conditionQuery)
                         .ofSpecies(species)
@@ -50,7 +50,7 @@ public class BaselineAnalyticsSearchDao {
     public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, String defaultQueryFactorType) {
         SolrQuery solrQuery =
                 analyticsQueryFactory.builder()
-                        .baselineOnly()
+                        .baselineFacets()
                         .queryIdentifierSearch(geneQuery)
                         .queryConditionsSearch(conditionQuery)
                         .ofSpecies(species)
@@ -62,7 +62,7 @@ public class BaselineAnalyticsSearchDao {
 
     public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery query, String species, String defaultQueryFactorType) {
         SolrQuery solrQuery =analyticsQueryFactory.builder()
-                .baselineOnly()
+                .baselineFacets()
                 .queryIdentifierOrConditionsSearch(query)
                 .ofSpecies(species)
                 .withFactorType(defaultQueryFactorType).build();
