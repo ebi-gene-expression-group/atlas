@@ -42,10 +42,10 @@ public class AnalyticsQueryClient {
 
     @Inject
     public AnalyticsQueryClient(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl,
-                                @Value("classpath:baseline.heatmap.pivot.query.json") Resource  baselineFacetsQueryJSON,
-                                @Value("classpath:differential.facets.query.json") Resource differentialFacetsQueryJSON,
-                                @Value("classpath:experimentType.query.json") Resource experimentTypesQueryJson,
-                                @Value("classpath:bioentityIdentifier.query.json") Resource bioentityIdentifiersQueryJson){
+                                @Value("classpath:/solr/baseline.heatmap.pivot.query.json") Resource  baselineFacetsQueryJSON,
+                                @Value("classpath:/solr/differential.facets.query.json") Resource differentialFacetsQueryJSON,
+                                @Value("classpath:/solr/experimentType.query.json") Resource experimentTypesQueryJson,
+                                @Value("classpath:/solr/bioentityIdentifier.query.json") Resource bioentityIdentifiersQueryJson){
         this.restTemplate = restTemplate;
         this.solrBaseUrl = solrBaseUrl;
         this.baselineFacetsQueryJSON = baselineFacetsQueryJSON;
