@@ -38,7 +38,9 @@ const FilterGroup = React.createClass({
         this.props.onChange(this.props.name, checked);
     },
 
-    _toggleElements(filterValueName) {
+    _toggleElements(event, filterValueName) {
+        event.preventDefault();
+
         const newVisibleElements = this.state.visibleElements.map(visibleElement => visibleElement.name === filterValueName ?
             ({ name: visibleElement.name, showElements: !visibleElement.showElements }) :
             visibleElement
@@ -57,8 +59,8 @@ const FilterGroup = React.createClass({
                 <h3>{this.props.name}</h3>
                     {this.props.values.map(filterValue =>
                         (
-                            <div>
-                                <label key={filterValue.name}>
+                            <div key={filterValue.name}>
+                                <label>
                                     <input type="checkbox" value={filterValue.name} onChange={this.handleChange}
                                            disabled={this.props.disabled}
                                            checked={this.state.checked.includes(filterValue.name)}/>
@@ -67,12 +69,12 @@ const FilterGroup = React.createClass({
                                     paddingLeft: `5px`,
                                     display: !this._showElements(filterValue.name) ? `inline-block` : `none`
                                    }}
-                                   onClick={() => { this._toggleElements(filterValue.name) }} href="#">{filterValue.name} <Glyphicon style={{fontSize: `x-small`, paddingLeft: `5px`}} glyph="menu-down"/></a>
+                                   onClick={(event) => { this._toggleElements(event, filterValue.name) }} href="#">{filterValue.name} <Glyphicon style={{fontSize: `x-small`, paddingLeft: `5px`}} glyph="menu-down"/></a>
                                 <a style={{
                                     paddingLeft: `5px`,
                                     display: this._showElements(filterValue.name) ? `inline-block` : `none`
                                    }}
-                                   onClick={() => { this._toggleElements(filterValue.name) }} href="#">{filterValue.name} <Glyphicon style={{fontSize: `x-small`, paddingLeft: `5px`}} glyph="menu-up"/></a>
+                                   onClick={(event) => { this._toggleElements(event, filterValue.name) }} href="#">{filterValue.name} <Glyphicon style={{fontSize: `x-small`, paddingLeft: `5px`}} glyph="menu-up"/></a>
                                 <div style={{
                                     paddingLeft: `10px`,
                                     fontSize: `small`,
