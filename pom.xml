@@ -773,10 +773,12 @@
                 <log.prudent>false</log.prudent>
             </properties>
         </profile>
+
         <profile>
             <!--build used for staging and production -->
             <id>production</id>
             <!-- oracleContext.xml is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
+            <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
             <properties>
                 <arrayexpress.ac.url>/arrayexpress</arrayexpress.ac.url>
                 <europepmc.base.url>/europepmc</europepmc.base.url>
@@ -786,6 +788,7 @@
                 <mail.smtp.auth>false</mail.smtp.auth>
             </properties>
         </profile>
+
         <profile>
             <id>integration.test</id>
             <build>
@@ -831,11 +834,13 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <solr.host>lime</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
             </properties>
         </profile>
+
         <profile>
             <id>dev.local.vm</id>
             <build>
@@ -854,11 +859,13 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@localhost:1521:orcl</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <solr.host>localhost</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
             </properties>
         </profile>
+
         <profile>
             <!-- for debugging failing database tests -->
             <id>dev.using.atlas.it</id>
@@ -883,6 +890,7 @@
                 <log.prudent>false</log.prudent>
             </properties>
         </profile>
+
         <profile>
             <!-- For debugging database performance -->
             <id>dev.using.atlas.acceptance</id>
@@ -907,6 +915,7 @@
                 <log.prudent>false</log.prudent>
             </properties>
         </profile>
+
         <profile>
             <!-- Access Oracle via localhost ssh tunnel -->
             <id>dev.via.tunnel</id>
