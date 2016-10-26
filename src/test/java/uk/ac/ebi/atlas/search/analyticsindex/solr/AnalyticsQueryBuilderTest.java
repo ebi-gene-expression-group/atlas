@@ -2,20 +2,25 @@ package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Value;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.Resource;
+import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
+import java.net.URI;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.when;
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryClient.Field.*;
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.AND;
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.OR;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.CONDITIONS_SEARCH;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.IDENTIFIER_SEARCH;
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.SPECIES;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AnalyticsQueryBuilderTest {
 
     private final String HOMO_SAPIENS = "homo sapiens";
@@ -26,45 +31,59 @@ public class AnalyticsQueryBuilderTest {
     @Mock
     Resource  resource;
 
-    private AnalyticsQueryFactory analyticsQueryFactory;
+    @Mock
+    RestTemplate restTemplate;
 
-    private AnalyticsQueryFactory.Builder subject;
+
+    private AnalyticsQueryClient analyticsQueryClient;
+
+    private AnalyticsQueryClient.Builder subject;
 
 
     @Before
     public void setUp(){
-        analyticsQueryFactory = new AnalyticsQueryFactory(resource,resource,resource,resource);
+        when(restTemplate.getForObject(Matchers.any(URI.class), Matchers.eq(String.class))).thenReturn("{response:{numFound:17}}");
+        analyticsQueryClient = new AnalyticsQueryClient(restTemplate,"", resource,resource,resource,resource);
+        subject = analyticsQueryClient.queryBuilder();
     }
 
     @Test
     public void defaultQuery() {
-        subject = analyticsQueryFactory.builder();
-        assertThat(subject.build().getQuery(), is("*:*"));
+
+        subject.fetch();
+        assertThat(subject.solrQuery.getQuery(), is("*:*"));
     }
 
     @Test
     public void queryIdentifierSearchOnly() {
-        subject = analyticsQueryFactory.builder().queryIdentifierSearch(IDENTIFIER_QUERY);
-        assertThat(subject.build().getQuery(), is(new AnalyticsSolrQueryTree(IDENTIFIER_SEARCH.toString(), IDENTIFIER_QUERY).toString()));
+
+        subject.queryIdentifierSearch(IDENTIFIER_QUERY).fetch();
+        assertThat(subject.solrQuery.getQuery(), is(new AnalyticsSolrQueryTree(IDENTIFIER_SEARCH.toString(),
+                IDENTIFIER_QUERY).toString()));
     }
 
     @Test
     public void queryConditionsSearchOnly() {
-        subject = analyticsQueryFactory.builder().queryConditionsSearch(CONDITIONS_QUERY);
-        assertThat(subject.build().getQuery(), is(new AnalyticsSolrQueryTree(CONDITIONS_SEARCH.toString(), CONDITIONS_QUERY).toString()));
+        subject.queryConditionsSearch(CONDITIONS_QUERY).fetch();
+
+        assertThat(subject.solrQuery.getQuery(), is(new AnalyticsSolrQueryTree(CONDITIONS_SEARCH.toString(),
+                CONDITIONS_QUERY).toString()));
     }
 
     @Test
     public void querySpeciesOnly() {
-        subject = analyticsQueryFactory.builder().ofSpecies(HOMO_SAPIENS);
-        assertThat(subject.build().getQuery(), is(new AnalyticsSolrQueryTree(SPECIES.toString(), SemanticQuery.create(HOMO_SAPIENS)).toString()));
+        subject.ofSpecies(HOMO_SAPIENS).fetch();
+
+        assertThat(subject.solrQuery.getQuery(), is(new AnalyticsSolrQueryTree(SPECIES.toString(), SemanticQuery.create
+                (HOMO_SAPIENS)).toString()));
     }
 
     @Test
     public void fullQuery() {
-        subject = analyticsQueryFactory.builder().queryIdentifierSearch(IDENTIFIER_QUERY).queryConditionsSearch(CONDITIONS_QUERY).ofSpecies(HOMO_SAPIENS);
+        subject.queryIdentifierSearch(IDENTIFIER_QUERY).queryConditionsSearch(CONDITIONS_QUERY).ofSpecies
+                (HOMO_SAPIENS).fetch();
         assertThat(
-                subject.build().getQuery(),
+                subject.solrQuery.getQuery(),
                 is(
                         new AnalyticsSolrQueryTree(
                                 AND,
@@ -78,9 +97,9 @@ public class AnalyticsQueryBuilderTest {
 
     @Test
     public void fullQueryWithOr() {
-        subject = analyticsQueryFactory.builder().queryIdentifierOrConditionsSearch(IDENTIFIER_QUERY).ofSpecies(HOMO_SAPIENS);
+        subject.queryIdentifierOrConditionsSearch(IDENTIFIER_QUERY).ofSpecies(HOMO_SAPIENS).fetch();
         assertThat(
-                subject.build().getQuery(),
+                subject.solrQuery.getQuery(),
                 is(
                         new AnalyticsSolrQueryTree(
                                 AND,
@@ -97,14 +116,16 @@ public class AnalyticsQueryBuilderTest {
 
     @Test
     public void omitEmptyClause() {
-        subject = analyticsQueryFactory.builder().queryIdentifierSearch(IDENTIFIER_QUERY).queryConditionsSearch(SemanticQuery.create());
-        assertThat(subject.build().getQuery(), is(new AnalyticsSolrQueryTree(IDENTIFIER_SEARCH.toString(), IDENTIFIER_QUERY).toString()));
+        subject.queryIdentifierSearch(IDENTIFIER_QUERY).queryConditionsSearch(SemanticQuery.create()).fetch();
+        assertThat(subject.solrQuery.getQuery(), is(new AnalyticsSolrQueryTree(IDENTIFIER_SEARCH.toString(),
+                IDENTIFIER_QUERY).toString()));
     }
 
     @Test
     public void omitBlankSpecies() {
-        subject = analyticsQueryFactory.builder().queryIdentifierSearch(IDENTIFIER_QUERY).ofSpecies("");
-        assertThat(subject.build().getQuery(), is(new AnalyticsSolrQueryTree(IDENTIFIER_SEARCH.toString(), IDENTIFIER_QUERY).toString()));
+        subject.queryIdentifierSearch(IDENTIFIER_QUERY).ofSpecies("").fetch();
+        assertThat(subject.solrQuery.getQuery(), is(new AnalyticsSolrQueryTree(IDENTIFIER_SEARCH.toString(),
+                IDENTIFIER_QUERY).toString()));
     }
 
 }

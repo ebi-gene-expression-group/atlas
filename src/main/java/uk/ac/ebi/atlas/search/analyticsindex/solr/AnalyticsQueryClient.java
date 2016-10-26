@@ -1,47 +1,101 @@
 package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
+import com.google.common.base.Stopwatch;
+import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
+import com.jayway.jsonpath.JsonPath;
+import org.apache.commons.lang.Validate;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.*;
+import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryClient.Field.*;
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.AND;
 import static uk.ac.ebi.atlas.utils.ResourceUtils.readPlainTextResource;
 
 @Named
 @Scope("prototype")
-public class AnalyticsQueryFactory {
+public class AnalyticsQueryClient {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsQueryClient.class);
+    private final RestTemplate restTemplate;
+    private final String solrBaseUrl;
     private final Resource baselineFacetsQueryJSON;
     private final Resource differentialFacetsQueryJSON;
     private final Resource experimentTypesQueryJson;
     private final Resource bioentityIdentifiersQueryJson;
 
     @Inject
-    public AnalyticsQueryFactory( @Value("classpath:baseline.heatmap.pivot.query.json") Resource  baselineFacetsQueryJSON,
-                                  @Value("classpath:differential.facets.query.json") Resource differentialFacetsQueryJSON,
-                                  @Value("classpath:experimentType.query.json") Resource experimentTypesQueryJson,
-                                  @Value("classpath:bioentityIdentifier.query.json") Resource bioentityIdentifiersQueryJson){
+    public AnalyticsQueryClient(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl,
+                                @Value("classpath:baseline.heatmap.pivot.query.json") Resource  baselineFacetsQueryJSON,
+                                @Value("classpath:differential.facets.query.json") Resource differentialFacetsQueryJSON,
+                                @Value("classpath:experimentType.query.json") Resource experimentTypesQueryJson,
+                                @Value("classpath:bioentityIdentifier.query.json") Resource bioentityIdentifiersQueryJson){
+        this.restTemplate = restTemplate;
+        this.solrBaseUrl = solrBaseUrl;
         this.baselineFacetsQueryJSON = baselineFacetsQueryJSON;
         this.differentialFacetsQueryJSON = differentialFacetsQueryJSON;
         this.experimentTypesQueryJson = experimentTypesQueryJson;
         this.bioentityIdentifiersQueryJson = bioentityIdentifiersQueryJson;
     }
 
-    public Builder builder(){
+    public String fetchResults(SolrQuery... qs ) {
+        String result = "{}";
+
+        loop:
+        for(SolrQuery q: qs){
+            Stopwatch stopwatch = Stopwatch.createStarted();
+            LOGGER.debug("fetchResults q={} took {} seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
+            result = fetchResponseAsString(MessageFormat.format("{0}query?{1}", solrBaseUrl, q.toString()));
+            stopwatch.stop();
+            if(responseNonEmpty(result)){
+                break loop;
+            }
+        }
+        return result;
+    }
+
+    private boolean responseNonEmpty(String jsonFromSolr){
+        Integer numFound =  JsonPath.read(jsonFromSolr, "$.response.numFound");
+        return numFound!= null && numFound>0;
+    }
+
+
+    String fetchResponseAsString(String url) {
+        try {
+            return restTemplate.getForObject(new URI(url), String.class);
+        } catch (RestClientException | URISyntaxException e) {
+            throw Throwables.propagate(e);
+        }
+    }
+
+    public Builder queryBuilder(){
         return new Builder();
     }
 
 
     public class Builder {
+
+        private static final String DEFAULT_QUERY = "*:*";
+
+        private ImmutableList.Builder<AnalyticsSolrQueryTree> queryClausesBuilder = ImmutableList.builder();
+
+        final SolrQuery solrQuery = new SolrQuery();
 
         private Builder(){
             /*
@@ -96,20 +150,6 @@ public class AnalyticsQueryFactory {
             return this;
         }
 
-        // Values below cutoff are excluded in index build, keeping comments just for reference
-        // public static final double DEFAULT_BASELINE_CUT_OFF = 0.5;
-        // public static final double DEFAULT_PROTEOMICS_CUT_OFF = 0;
-
-        private static final String BASELINE_ABOVE_CUTOFF = "(experimentType:(rnaseq_mrna_baseline OR proteomics_baseline))";
-        private static final String DIFFERENTIAL_ABOVE_CUTOFF =
-                "(experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential) " +
-                        "AND pValue:[* TO 0.05])";
-        private static final String DEFAULT_QUERY = "*:*";
-
-        private ImmutableList.Builder<AnalyticsSolrQueryTree> queryClausesBuilder = ImmutableList.builder();
-
-        private SolrQuery solrQuery = new SolrQuery();
-
         private void addQueryClause(Field searchField, SemanticQuery searchValue) {
             if (searchValue.isNotEmpty()) {
                 queryClausesBuilder.add(new AnalyticsSolrQueryTree(searchField.toString(), searchValue));
@@ -157,6 +197,7 @@ public class AnalyticsQueryFactory {
             return this;
         }
 
+        @Deprecated
         public SolrQuery build() {
             List<AnalyticsSolrQueryTree> queryClauses = queryClausesBuilder.build();
 
@@ -169,7 +210,31 @@ public class AnalyticsQueryFactory {
             return solrQuery;
         }
 
+        public String fetch(){
+            List<AnalyticsSolrQueryTree> queryClauses = queryClausesBuilder.build();
+
+            if (queryClauses.isEmpty()) {
+                solrQuery.setQuery(DEFAULT_QUERY);
+            } else {
+                solrQuery.setQuery(new AnalyticsSolrQueryTree(AND, queryClauses.toArray(new AnalyticsSolrQueryTree[0])).toString());
+            }
+
+            /*
+            TODO here for the "split the identifier search field into multiple fields" story
+            if the query involves identifier search:
+                split the query clauses into how they should be
+                build an array of solrQueries using solrQuery.getCopy()
+                send off!
+            else:
+                just one sweet query
+             */
+
+
+
+            return fetchResults(solrQuery);
+        }
     }
+
     enum Field {
         EXPERIMENT_TYPE("experimentType"),
         BIOENTITY_IDENTIFIER("bioentityIdentifier"),
