@@ -11344,18 +11344,14 @@ webpackJsonp_name_([2],[
 	
 	var OrderingsPropTypes = React.PropTypes.shape({
 	    available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-	    selected: React.PropTypes.string.isRequired
+	    selected: React.PropTypes.string.isRequired,
+	    onSelect: React.PropTypes.func.isRequired
 	}).isRequired;
 	
 	var FilterPropTypes = React.PropTypes.arrayOf(React.PropTypes.shape({
 	    name: React.PropTypes.string.isRequired,
 	    values: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
 	})).isRequired;
-	
-	var FilterSelectionPropTypes = React.PropTypes.shape({
-	    name: React.PropTypes.string.isRequired,
-	    selected: React.PropTypes.arrayOf(React.PropTypes.bool).isRequired
-	}).isRequired;
 	
 	module.exports = {
 	    validateDataSeries: ValidateDataSeries,
@@ -11366,8 +11362,7 @@ webpackJsonp_name_([2],[
 	    AxisCategories: AxisCategoriesPropType,
 	    Formatter: FormatterPropType,
 	    Orderings: OrderingsPropTypes,
-	    Filter: FilterPropTypes,
-	    FilterSelection: FilterSelectionPropTypes
+	    Filter: FilterPropTypes
 	};
 
 /***/ },
@@ -15889,16 +15884,7 @@ webpackJsonp_name_([2],[
 	    getInitialState: function getInitialState() {
 	        return {
 	            ordering: 'Default',
-	            grouping: 'Default',
-	            group: '',
-	            filtersSelection: this._filters().map(function (filter) {
-	                return {
-	                    name: filter.name,
-	                    selected: filter.values.map(function () {
-	                        return true;
-	                    })
-	                };
-	            }),
+	            filtersSelection: this._filters(),
 	            coexpressionsShown: 0,
 	            zoom: false
 	        };
@@ -15907,11 +15893,14 @@ webpackJsonp_name_([2],[
 	        this.setState({ zoom: zoomedIn });
 	    },
 	    _heatmapDataToPresent: function _heatmapDataToPresent() {
+	        var _this = this;
+	
 	        return __webpack_require__(/*! ./Manipulators.js */ 2173).manipulate({
 	            ordering: this.props.loadResult.orderings[this.state.ordering],
-	            grouping: this.state.grouping,
-	            group: this.state.group,
-	            dataSeriesToKeep: this.state.filtersSelection[0].selected,
+	            dataSeriesToKeep: this._expressionLevelFilter().values.map(function (levelFilterValue) {
+	                return _this.state.filtersSelection[0].values.includes(levelFilterValue);
+	            }),
+	            groupsToShow: this.state.filtersSelection.slice(1),
 	            allowEmptyColumns: this.props.loadResult.heatmapConfig.isExperimentPage && (this.state.grouping === this.getInitialState().grouping || !this.state.group),
 	            maxIndex: this.state.coexpressionsShown
 	        }, this.props.loadResult.heatmapData);
@@ -15925,13 +15914,13 @@ webpackJsonp_name_([2],[
 	        });
 	    },
 	    _orderings: function _orderings() {
-	        var _this = this;
+	        var _this2 = this;
 	
 	        return {
 	            available: Object.keys(this.props.loadResult.orderings),
 	            selected: this.state.ordering,
 	            onSelect: function onSelect(orderingChosen) {
-	                _this.setState({ ordering: orderingChosen });
+	                _this2.setState({ ordering: orderingChosen });
 	            }
 	        };
 	    },
@@ -15960,15 +15949,17 @@ webpackJsonp_name_([2],[
 	    //                          name: "Anatomical Systems",
 	    //                          memberName: "Anatomical system"
 	    //                          values: [
-	    //                                    label: "Unmapped",
-	    //                                    id: ""
+	    //                                    {
+	    //                                      label: "Unmapped",
+	    //                                      id: ""
+	    //                                    }
 	    //                                  ]
 	    //                        }
 	    //                      ]
 	    //         }
 	    // }
 	    _groupingFilters: function _groupingFilters() {
-	        var _this2 = this;
+	        var _this3 = this;
 	
 	        var groupingNames = _.uniq(_.flatten(this.props.loadResult.heatmapData.xAxisCategories.map(function (columnHeader) {
 	            return columnHeader.info.groupings.map(function (grouping) {
@@ -15979,28 +15970,29 @@ webpackJsonp_name_([2],[
 	        return groupingNames.map(function (name) {
 	            return {
 	                name: name,
-	                values: _.uniq(_.flatten(_this2.props.loadResult.heatmapData.xAxisCategories.map(function (columnHeader) {
+	                values: _.uniq(_.flatten(_this3.props.loadResult.heatmapData.xAxisCategories.map(function (columnHeader) {
 	                    return columnHeader.info.groupings.filter(function (grouping) {
 	                        return grouping.name === name;
 	                    }).map(function (grouping) {
 	                        return grouping.values.map(function (g) {
-	                            return _.capitalize(g.label);
+	                            return g.label;
 	                        });
 	                    }).concat([[]])[0];
 	                })))
 	            };
 	        });
 	    },
+	    _onFilterChange: function _onFilterChange(newFiltersSelection) {
+	        this.setState({ filtersSelection: newFiltersSelection });
+	    },
 	    _legend: function _legend() {
-	        var _this3 = this;
-	
 	        //See properties required for HeatmapLegendBox
 	        return this.props.loadResult.heatmapData.dataSeries.map(function (e, ix) {
 	            return {
 	                key: e.info.name,
 	                name: e.info.name,
 	                colour: e.info.colour,
-	                on: _this3.state.filtersSelection[0].selected[ix]
+	                on: true //this.state.filtersSelection[0].values[ix]
 	            };
 	        });
 	    },
@@ -16018,7 +16010,7 @@ webpackJsonp_name_([2],[
 	    },
 	    render: function render() {
 	        var heatmapDataToPresent = this._heatmapDataToPresent();
-	        return Show(heatmapDataToPresent, this._orderings(), this._filters(), this.state.filtersSelection, this.state.zoom, this._onUserZoom, this.props.loadResult.colorAxis || undefined, FormattersFactory(this.props.loadResult.heatmapConfig), TooltipsFactory(this.props.loadResult.heatmapConfig, heatmapDataToPresent.xAxisCategories, heatmapDataToPresent.yAxisCategories), this._legend(), this._coexpressionOption(), this.props);
+	        return Show(heatmapDataToPresent, this._orderings(), this._filters(), this.state.filtersSelection, this._onFilterChange, this.state.zoom, this._onUserZoom, this.props.loadResult.colorAxis || undefined, FormattersFactory(this.props.loadResult.heatmapConfig), TooltipsFactory(this.props.loadResult.heatmapConfig, heatmapDataToPresent.xAxisCategories, heatmapDataToPresent.yAxisCategories), this._legend(), this._coexpressionOption(), this.props);
 	    }
 	});
 
@@ -16958,7 +16950,7 @@ webpackJsonp_name_([2],[
 	    }),
 	    onAjaxSuccessfulCacheResult: React.PropTypes.func
 	  },
-	  getInitialState: function getInitialState() {
+	  getInitialState: function getInitialState(props) {
 	    return {
 	      loaded: !!this.props.data,
 	      error: false,
@@ -17452,32 +17444,16 @@ webpackJsonp_name_([2],[
 	        showUsageMessage: React.PropTypes.bool.isRequired,
 	        orderings: React.PropTypes.shape(PropTypes.Orderings),
 	        filters: PropTypes.Filter,
-	        filtersSelection: React.PropTypes.arrayOf(PropTypes.FilterSelection),
+	        filtersSelection: PropTypes.Filter,
+	        onFilterChange: React.PropTypes.func.isRequired,
 	        disableSettings: React.PropTypes.bool.isRequired
 	    },
 	
 	    getInitialState: function getInitialState() {
 	        return { selectedFilter: this.props.filters[0].name };
 	    },
-	    componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
-	        var _this = this;
-	
-	        if (this.state.selectedFilter !== nextState.selectedFilter) {
-	            this.props.filters.filter(function (e) {
-	                return e.name === nextState.selectedFilter;
-	            }).forEach(function (e) {
-	                return e.value.onSelect("");
-	            });
-	
-	            this.props.filters.filter(function (e) {
-	                return e.name === _this.state.selectedFilter;
-	            }).forEach(function (e) {
-	                return e.value.onDismissDropdown && e.value.onDismissDropdown();
-	            });
-	        }
-	    },
 	    render: function render() {
-	        var _this2 = this;
+	        var _this = this;
 	
 	        return React.createElement(
 	            "div",
@@ -17497,6 +17473,7 @@ webpackJsonp_name_([2],[
 	                        filters: this.props.filters,
 	                        disabled: this.props.disableSettings,
 	                        filtersSelection: this.props.filtersSelection,
+	                        onFilterChange: this.props.onFilterChange,
 	                        orderings: this.props.orderings
 	                    })
 	                ),
@@ -17505,7 +17482,7 @@ webpackJsonp_name_([2],[
 	                    { style: { display: "inline-block", paddingLeft: "10px" } },
 	                    React.createElement(DownloadProfilesButton, _extends({}, this.props.downloadOptions, {
 	                        onDownloadCallbackForAnalytics: function onDownloadCallbackForAnalytics() {
-	                            _this2.props.googleAnalyticsCallback("send", "event", "HeatmapHighcharts", "downloadData");
+	                            _this.props.googleAnalyticsCallback("send", "event", "HeatmapHighcharts", "downloadData");
 	                        }
 	                    }))
 	                )
@@ -17580,7 +17557,7 @@ webpackJsonp_name_([2],[
 	    };
 	};
 	
-	var show = function show(heatmapDataToPresent, orderings, filters, filtersSelection, zoom, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, properties) {
+	var show = function show(heatmapDataToPresent, orderings, filters, filtersSelection, onFilterChange, zoom, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, properties) {
 	    var marginRight = 60;
 	    var heatmapConfig = properties.loadResult.heatmapConfig;
 	
@@ -17597,6 +17574,7 @@ webpackJsonp_name_([2],[
 	            orderings: orderings,
 	            filters: filters,
 	            filtersSelection: filtersSelection,
+	            onFilterChange: onFilterChange,
 	            disableSettings: zoom,
 	            googleAnalyticsCallback: properties.googleAnalyticsCallback,
 	            showUsageMessage: heatmapDataToPresent.xAxisCategories.length > 100
@@ -22687,18 +22665,28 @@ webpackJsonp_name_([2],[
 	    propTypes: {
 	        filters: PropTypes.Filter,
 	        disabled: React.PropTypes.bool.isRequired,
-	        filtersSelection: React.PropTypes.arrayOf(PropTypes.FilterSelection),
+	        filtersSelection: PropTypes.Filter,
+	        onFilterChange: React.PropTypes.func.isRequired,
 	        orderings: PropTypes.Orderings
 	    },
 	
 	    getInitialState: function getInitialState() {
-	        return { showModal: false };
+	        return {
+	            filtersSelection: JSON.parse(JSON.stringify(this.props.filtersSelection)),
+	            orderingsSelection: this.props.orderings.selected,
+	            showModal: false
+	        };
 	    },
 	    _close: function _close() {
-	        this.setState({ showModal: false });
+	        this.setState({
+	            showModal: false,
+	            orderingsSelection: this.props.orderings.selected,
+	            filtersSelection: this.props.filtersSelection
+	        });
 	    },
 	    _apply: function _apply() {
-	        // Render heatmap with new options
+	        this.props.orderings.onSelect(this.state.orderingsSelection);
+	        this.props.onFilterChange(this.state.filtersSelection);
 	        this.setState({ showModal: false });
 	    },
 	    _open: function _open() {
@@ -22710,14 +22698,28 @@ webpackJsonp_name_([2],[
 	        return React.createElement(FilterGroup, {
 	            key: filter.name,
 	            name: filter.name,
-	            values: filter.values.map(function (filterValue, i) {
+	            values: filter.values.map(function (filterValue) {
 	                return {
 	                    name: filterValue,
-	                    selected: _this.props.filtersSelection.filter(function (filterSelection) {
+	                    selected: _this.props.filtersSelection.find(function (filterSelection) {
 	                        return filterSelection.name === filter.name;
-	                    })[0].selected[i]
+	                    }).values.includes(filterValue)
 	                };
-	            }) });
+	            }),
+	            onChange: this._onFilterChange,
+	            elements: ["one", "two", "three"]
+	        });
+	    },
+	    _onOrderingsSelect: function _onOrderingsSelect(event) {
+	        this.setState({ orderingsSelection: event.target.value });
+	    },
+	    _onFilterChange: function _onFilterChange(name, values) {
+	        // TODO Hacky: newFiltersSelection *MUST* preserver the order because HeatmapWithControls does [0] and slices
+	        var newFiltersSelection = this.state.filtersSelection.map(function (filterSelection) {
+	            return filterSelection.name === name ? { name: name, values: values } : filterSelection;
+	        });
+	
+	        this.setState({ filtersSelection: newFiltersSelection });
 	    },
 	    render: function render() {
 	        return React.createElement(
@@ -22757,7 +22759,10 @@ webpackJsonp_name_([2],[
 	                React.createElement(
 	                    Modal.Body,
 	                    null,
-	                    React.createElement(Orderings, { orderings: this.props.orderings }),
+	                    React.createElement(Orderings, {
+	                        orderings: this.props.orderings,
+	                        onSelect: this._onOrderingsSelect
+	                    }),
 	                    this.props.filters.map(this._createFilter)
 	                ),
 	                React.createElement(
@@ -22791,6 +22796,7 @@ webpackJsonp_name_([2],[
 	"use strict";
 	
 	var React = __webpack_require__(/*! react */ 1610);
+	var Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 1939);
 	var PropTypes = __webpack_require__(/*! ../../PropTypes.js */ 1787);
 	
 	var FilterGroup = React.createClass({
@@ -22801,7 +22807,9 @@ webpackJsonp_name_([2],[
 	        values: React.PropTypes.arrayOf(React.PropTypes.shape({
 	            name: React.PropTypes.string.isRequired,
 	            selected: React.PropTypes.bool.isRequired
-	        })).isRequired
+	        })).isRequired,
+	        elements: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+	        onChange: React.PropTypes.func.isRequired
 	    },
 	
 	    getInitialState: function getInitialState() {
@@ -22810,6 +22818,12 @@ webpackJsonp_name_([2],[
 	                return filterValue.selected;
 	            }).map(function (filterValue) {
 	                return filterValue.name;
+	            }),
+	            visibleElements: this.props.values.map(function (filterValue) {
+	                return {
+	                    name: filterValue.name,
+	                    showElements: false
+	                };
 	            })
 	        };
 	    },
@@ -22822,6 +22836,20 @@ webpackJsonp_name_([2],[
 	            checked.push(val);
 	        }
 	        this.setState({ checked: checked });
+	
+	        this.props.onChange(this.props.name, checked);
+	    },
+	    _toggleElements: function _toggleElements(filterValueName) {
+	        var newVisibleElements = this.state.visibleElements.map(function (visibleElement) {
+	            return visibleElement.name === filterValueName ? { name: visibleElement.name, showElements: !visibleElement.showElements } : visibleElement;
+	        });
+	
+	        this.setState({ visibleElements: newVisibleElements });
+	    },
+	    _showElements: function _showElements(filterValueName) {
+	        return this.state.visibleElements.find(function (visibleElement) {
+	            return visibleElement.name === filterValueName;
+	        }).showElements;
 	    },
 	    render: function render() {
 	        var _this = this;
@@ -22836,14 +22864,57 @@ webpackJsonp_name_([2],[
 	            ),
 	            this.props.values.map(function (filterValue) {
 	                return React.createElement(
-	                    "label",
-	                    { key: filterValue.name },
-	                    React.createElement("input", { type: "checkbox", value: filterValue.name, onChange: _this.handleChange,
-	                        disabled: _this.props.disabled,
-	                        checked: _this.state.checked.includes(filterValue.name) }),
-	                    "\xA0",
-	                    filterValue.name,
-	                    React.createElement("br", null)
+	                    "div",
+	                    null,
+	                    React.createElement(
+	                        "label",
+	                        { key: filterValue.name },
+	                        React.createElement("input", { type: "checkbox", value: filterValue.name, onChange: _this.handleChange,
+	                            disabled: _this.props.disabled,
+	                            checked: _this.state.checked.includes(filterValue.name) })
+	                    ),
+	                    React.createElement(
+	                        "a",
+	                        { style: {
+	                                paddingLeft: "5px",
+	                                display: !_this._showElements(filterValue.name) ? "inline-block" : "none"
+	                            },
+	                            onClick: function onClick() {
+	                                _this._toggleElements(filterValue.name);
+	                            }, href: "#" },
+	                        filterValue.name,
+	                        " ",
+	                        React.createElement(Glyphicon, { style: { fontSize: "x-small", paddingLeft: "5px" }, glyph: "menu-down" })
+	                    ),
+	                    React.createElement(
+	                        "a",
+	                        { style: {
+	                                paddingLeft: "5px",
+	                                display: _this._showElements(filterValue.name) ? "inline-block" : "none"
+	                            },
+	                            onClick: function onClick() {
+	                                _this._toggleElements(filterValue.name);
+	                            }, href: "#" },
+	                        filterValue.name,
+	                        " ",
+	                        React.createElement(Glyphicon, { style: { fontSize: "x-small", paddingLeft: "5px" }, glyph: "menu-up" })
+	                    ),
+	                    React.createElement(
+	                        "div",
+	                        { style: {
+	                                paddingLeft: "10px",
+	                                fontSize: "small",
+	                                display: _this._showElements(filterValue.name) ? "block" : "none"
+	                            } },
+	                        _this.props.elements.map(function (element) {
+	                            return React.createElement(
+	                                "span",
+	                                { key: element },
+	                                element,
+	                                React.createElement("br", null)
+	                            );
+	                        })
+	                    )
 	                );
 	            })
 	        );
@@ -22868,14 +22939,15 @@ webpackJsonp_name_([2],[
 	    displayName: "Orderings",
 	
 	    propTypes: {
-	        orderings: PropTypes.Orderings
+	        orderings: PropTypes.Orderings,
+	        onSelect: React.PropTypes.func.isRequired
 	    },
 	
 	    getInitialState: function getInitialState() {
 	        return { value: this.props.orderings.selected };
 	    },
 	    handleChange: function handleChange(event) {
-	        this.setState({ value: event.target.value });
+	        this.props.onSelect(event);
 	    },
 	    render: function render() {
 	        var _this = this;
@@ -24397,6 +24469,7 @@ webpackJsonp_name_([2],[
 /***/ function(module, exports) {
 
 	"use strict";
+	
 	//*------------------------------------------------------------------*
 	
 	/*
@@ -24482,6 +24555,7 @@ webpackJsonp_name_([2],[
 	      return point.x > -1 && point.y > -1;
 	    });
 	  });
+	
 	  return {
 	    dataSeries: data.dataSeries.map(function (e, ix) {
 	      return {
@@ -24490,10 +24564,10 @@ webpackJsonp_name_([2],[
 	      };
 	    }),
 	    xAxisCategories: data.xAxisCategories.filter(function (e, ix) {
-	      return allXs.indexOf(ix) > -1;
+	      return allXs.includes(ix);
 	    }),
 	    yAxisCategories: data.yAxisCategories.filter(function (e, ix) {
-	      return allYs.indexOf(ix) > -1;
+	      return allYs.includes(ix);
 	    })
 	  };
 	};
@@ -24506,23 +24580,32 @@ webpackJsonp_name_([2],[
 	  }, data);
 	};
 	
-	var filterHeatmapDataByGroupingOfRows = function filterHeatmapDataByGroupingOfRows(grouping, group, data) {
-	  if (!grouping || !group || grouping === "Default") {
-	    return data;
-	  }
-	  var rowsToKeep = [].concat.apply([], data.xAxisCategories.map(function (e, ix) {
-	    return [].concat.apply([], e.info.groupings.filter(function (g) {
-	      return g.name == grouping;
-	    }).map(function (g) {
-	      return g.values.map(function (value) {
-	        return value.label;
-	      });
-	    })).indexOf(group) > -1 ? [ix] : [];
-	  }));
+	// Checks if columnHeader.info.name matches groupingFilter.name and a
+	// columnHeader.info.groupings[i].values[j].label is in groupingFilter.values
+	var _columnHeaderLabelMatchesGroup = function _columnHeaderLabelMatchesGroup(columnHeader, groupingFilter) {
+	  return columnHeader.info.groupings.some(function (grouping) {
+	    return grouping.name === groupingFilter.name && grouping.values.map(function (groupingValue) {
+	      return groupingValue.label;
+	    }).some(function (groupingValueLabel) {
+	      return groupingFilter.values.includes(groupingValueLabel);
+	    });
+	  });
+	};
+	
+	var filterHeatmapDataByGroupingOfRows = function filterHeatmapDataByGroupingOfRows(groupsToShow, data) {
+	  var rowsToKeep = data.xAxisCategories.reduce(function (acc, e, ix) {
+	    if (groupsToShow.some(function (groupToShow) {
+	      return _columnHeaderLabelMatchesGroup(e, groupToShow);
+	    })) {
+	      acc.push(ix);
+	    }
+	    return acc;
+	  }, []);
+	
 	  return _filterHeatmapData(function (series, ix) {
 	    return true;
 	  }, function (point) {
-	    return rowsToKeep.indexOf(point.x) > -1;
+	    return rowsToKeep.includes(point.x);
 	  }, data);
 	};
 	
@@ -24556,7 +24639,7 @@ webpackJsonp_name_([2],[
 	
 	var _indicesForInserts = function _indicesForInserts(inserts) {
 	  var i = -1;
-	  return inserts.map(function (e, ix) {
+	  return inserts.map(function (e) {
 	    !e && i++;
 	    return i;
 	  });
@@ -24574,7 +24657,7 @@ webpackJsonp_name_([2],[
 	    return e.label;
 	  })));
 	  return {
-	    dataSeries: data.dataSeries.map(function (e, ix) {
+	    dataSeries: data.dataSeries.map(function (e) {
 	      return {
 	        info: e.info,
 	        data: e.data.map(function (point) {
@@ -24594,7 +24677,7 @@ webpackJsonp_name_([2],[
 	exports.order = orderHeatmapData;
 	
 	exports.manipulate = function (args, data) {
-	  return insertEmptyColumns(args.allowEmptyColumns ? orderHeatmapData(args.ordering, data).xAxisCategories : [], filterHeatmapDataByGroupingOfRows(args.grouping, args.group, filterHeatmapDataByCoexpressionIndex(args.maxIndex, filterHeatmapDataByDataSeries(args.dataSeriesToKeep, orderHeatmapData(args.ordering, data)))));
+	  return insertEmptyColumns(args.allowEmptyColumns ? orderHeatmapData(args.ordering, data).xAxisCategories : [], filterHeatmapDataByGroupingOfRows(args.groupsToShow, filterHeatmapDataByCoexpressionIndex(args.maxIndex, filterHeatmapDataByDataSeries(args.dataSeriesToKeep, orderHeatmapData(args.ordering, data)))));
 	};
 
 /***/ },

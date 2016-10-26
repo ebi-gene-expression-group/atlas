@@ -11,20 +11,30 @@ const SettingsModal = React.createClass({
     propTypes: {
         filters: PropTypes.Filter,
         disabled: React.PropTypes.bool.isRequired,
-        filtersSelection: React.PropTypes.arrayOf(PropTypes.FilterSelection),
+        filtersSelection: PropTypes.Filter,
+        onFilterChange: React.PropTypes.func.isRequired,
         orderings: PropTypes.Orderings
     },
 
     getInitialState() {
-        return { showModal: false };
+        return {
+            filtersSelection: JSON.parse(JSON.stringify(this.props.filtersSelection)),
+            orderingsSelection: this.props.orderings.selected,
+            showModal: false
+        };
     },
 
     _close() {
-        this.setState({ showModal: false });
+        this.setState({
+            showModal: false,
+            orderingsSelection: this.props.orderings.selected,
+            filtersSelection: this.props.filtersSelection
+        });
     },
 
     _apply() {
-        // Render heatmap with new options
+        this.props.orderings.onSelect(this.state.orderingsSelection);
+        this.props.onFilterChange(this.state.filtersSelection);
         this.setState({ showModal: false });
     },
 
@@ -37,13 +47,31 @@ const SettingsModal = React.createClass({
             <FilterGroup
                 key={filter.name}
                 name={filter.name}
-                values={filter.values.map((filterValue, i) =>
+                values={filter.values.map(filterValue =>
                     ({
                          name: filterValue,
-                         selected: this.props.filtersSelection.filter(filterSelection => filterSelection.name === filter.name)[0].selected[i]
+                         selected: this.props.filtersSelection.find(filterSelection => filterSelection.name === filter.name).values.includes(filterValue)
                     })
-                )}/>
+                )}
+                onChange={this._onFilterChange}
+                elements={[`one`, `two`, `three`]}
+            />
         )
+    },
+
+    _onOrderingsSelect(event) {
+        this.setState({ orderingsSelection: event.target.value })
+    },
+
+    _onFilterChange(name, values) {
+        // TODO Hacky: newFiltersSelection *MUST* preserve the order because HeatmapWithControls.jsx does [0] and slices at specific values
+        const newFiltersSelection = this.state.filtersSelection.map(filterSelection =>
+            filterSelection.name === name ?
+                ({ name, values }) :
+                filterSelection
+        );
+
+        this.setState({ filtersSelection: newFiltersSelection });
     },
 
     render() {
@@ -66,7 +94,10 @@ const SettingsModal = React.createClass({
                         <Modal.Title>Heatmap settings</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Orderings orderings={this.props.orderings} />
+                        <Orderings
+                            orderings={this.props.orderings}
+                            onSelect={this._onOrderingsSelect}
+                        />
                         {this.props.filters.map(this._createFilter)}
                     </Modal.Body>
                     <Modal.Footer>

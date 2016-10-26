@@ -114,7 +114,9 @@ const FormatterPropType = (props, propName) => {
 const OrderingsPropTypes = React.PropTypes.shape({
     available: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     selected: React.PropTypes.string.isRequired,
+    onSelect: React.PropTypes.func.isRequired
 }).isRequired;
+
 
 const FilterPropTypes = React.PropTypes.arrayOf(React.PropTypes.shape({
         name: React.PropTypes.string.isRequired,
@@ -122,10 +124,6 @@ const FilterPropTypes = React.PropTypes.arrayOf(React.PropTypes.shape({
     })
 ).isRequired;
 
-const FilterSelectionPropTypes = React.PropTypes.shape({
-    name: React.PropTypes.string.isRequired,
-    selected: React.PropTypes.arrayOf(React.PropTypes.bool).isRequired
-}).isRequired;
 
 module.exports = {
     validateDataSeries : ValidateDataSeries,
@@ -136,6 +134,5 @@ module.exports = {
     AxisCategories : AxisCategoriesPropType,
     Formatter : FormatterPropType,
     Orderings: OrderingsPropTypes,
-    Filter: FilterPropTypes,
-    FilterSelection: FilterSelectionPropTypes
+    Filter: FilterPropTypes
 };

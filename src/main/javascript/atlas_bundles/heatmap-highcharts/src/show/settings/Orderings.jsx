@@ -3,7 +3,8 @@ const PropTypes = require( `../../PropTypes.js`);
 
 const Orderings = React.createClass({
     propTypes: {
-        orderings: PropTypes.Orderings
+        orderings: PropTypes.Orderings,
+        onSelect: React.PropTypes.func.isRequired
     },
 
     getInitialState() {
@@ -11,7 +12,7 @@ const Orderings = React.createClass({
     },
 
     handleChange(event) {
-        this.setState({ value: event.target.value });
+        this.props.onSelect(event);
     },
 
     render() {

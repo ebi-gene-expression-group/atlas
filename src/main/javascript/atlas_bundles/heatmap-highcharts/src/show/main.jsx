@@ -34,24 +34,13 @@ const HeatmapOptions = React.createClass({
         showUsageMessage: React.PropTypes.bool.isRequired,
         orderings: React.PropTypes.shape(PropTypes.Orderings),
         filters: PropTypes.Filter,
-        filtersSelection: React.PropTypes.arrayOf(PropTypes.FilterSelection),
+        filtersSelection: PropTypes.Filter,
+        onFilterChange: React.PropTypes.func.isRequired,
         disableSettings: React.PropTypes.bool.isRequired
     },
 
     getInitialState() {
         return { selectedFilter: this.props.filters[0].name }
-    },
-
-    componentWillUpdate(nextProps, nextState) {
-        if (this.state.selectedFilter !== nextState.selectedFilter) {
-            this.props.filters
-                .filter(e => e.name === nextState.selectedFilter)
-                .forEach(e => e.value.onSelect(``));
-
-        this.props.filters
-            .filter(e => e.name === this.state.selectedFilter)
-            .forEach(e => e.value.onDismissDropdown && e.value.onDismissDropdown());
-      }
     },
 
     render() {
@@ -67,6 +56,7 @@ const HeatmapOptions = React.createClass({
                             filters={this.props.filters}
                             disabled={this.props.disableSettings}
                             filtersSelection={this.props.filtersSelection}
+                            onFilterChange={this.props.onFilterChange}
                             orderings={this.props.orderings}
                         />
                     </div>
@@ -162,7 +152,7 @@ const anatomogramCallbacks = (heatmapDataToPresent, highlightOntologyIds) =>
         }
     });
 
-const show = (heatmapDataToPresent, orderings, filters, filtersSelection, zoom, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, properties) => {
+const show = (heatmapDataToPresent, orderings, filters, filtersSelection, onFilterChange, zoom, zoomCallback, colorAxis, formatters, tooltips, legend, coexpressions, properties) => {
     const marginRight = 60;
     const heatmapConfig = properties.loadResult.heatmapConfig;
 
@@ -178,6 +168,7 @@ const show = (heatmapDataToPresent, orderings, filters, filtersSelection, zoom, 
                             orderings={orderings}
                             filters={filters}
                             filtersSelection={filtersSelection}
+                            onFilterChange={onFilterChange}
                             disableSettings={zoom}
                             googleAnalyticsCallback={properties.googleAnalyticsCallback}
                             showUsageMessage={heatmapDataToPresent.xAxisCategories.length > 100}

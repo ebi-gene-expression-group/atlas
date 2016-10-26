@@ -19,14 +19,7 @@ module.exports = React.createClass({
     getInitialState() {
         return {
             ordering: `Default`,
-            grouping: `Default`,
-            group: ``,
-            filtersSelection: this._filters().map(filter =>
-                ({
-                    name: filter.name,
-                    selected: filter.values.map(() => true)
-                })
-            ),
+            filtersSelection: this._filters(),
             coexpressionsShown: 0,
             zoom: false
         };
@@ -40,9 +33,8 @@ module.exports = React.createClass({
         return require(`./Manipulators.js`).manipulate(
             {
                 ordering: this.props.loadResult.orderings[this.state.ordering],
-                grouping: this.state.grouping,
-                group: this.state.group,
-                dataSeriesToKeep: this.state.filtersSelection[0].selected,
+                dataSeriesToKeep: this._expressionLevelFilter().values.map(levelFilterValue => this.state.filtersSelection[0].values.includes(levelFilterValue)),
+                groupsToShow: this.state.filtersSelection.slice(1),
                 allowEmptyColumns:
                     this.props.loadResult.heatmapConfig.isExperimentPage &&
                     (  this.state.grouping === this.getInitialState().grouping || !this.state.group),
@@ -80,25 +72,6 @@ module.exports = React.createClass({
             {
                 name: `Expression Value${this.props.loadResult.heatmapConfig.isExperimentPage ? ` – relative` : ``}`,
                 values: this.props.loadResult.heatmapData.dataSeries.map(e => e.info.name),
-                    // onSelect: selectedDataSeries => {
-                    //     const ix =
-                    //         this.props.loadResult.heatmapData.dataSeries
-                    //             .map(e => e.info.name)
-                    //             .indexOf(selectedDataSeries);
-                    //
-                    //     const isAll = !selectedDataSeries || selectedDataSeries === "All";
-                    //
-                    //     this.setState(previousState =>
-                    //         Object.assign(previousState,
-                    //             {
-                    //                 grouping: this.getInitialState().grouping,
-                    //                 group: this.getInitialState().group,
-                    //                 dataSeriesToShow:
-                    //                     previousState.dataSeriesToShow.map((e, jx) => isAll || (ix === jx))
-                    //             }
-                    //         )
-                    //     );
-                    // }
             }
         )
     },
@@ -115,8 +88,10 @@ module.exports = React.createClass({
     //                          name: "Anatomical Systems",
     //                          memberName: "Anatomical system"
     //                          values: [
-    //                                    label: "Unmapped",
-    //                                    id: ""
+    //                                    {
+    //                                      label: "Unmapped",
+    //                                      id: ""
+    //                                    }
     //                                  ]
     //                        }
     //                      ]
@@ -134,8 +109,8 @@ module.exports = React.createClass({
             );
 
         return (
-            groupingNames.map(name => {
-                return {
+            groupingNames.map(name =>
+                ({
                     name: name,
                     values:
                         _.uniq(
@@ -144,14 +119,18 @@ module.exports = React.createClass({
                                     .map(columnHeader =>
                                         columnHeader.info.groupings
                                             .filter(grouping => grouping.name === name)
-                                            .map(grouping => grouping.values.map(g => _.capitalize(g.label)))
+                                            .map(grouping => grouping.values.map(g => g.label))
                                             .concat([[]])
                                             [0])
                             )
                         )
-                }
-            })
+                })
+            )
         )
+    },
+
+    _onFilterChange(newFiltersSelection) {
+        this.setState({ filtersSelection: newFiltersSelection });
     },
 
     _legend() { //See properties required for HeatmapLegendBox
@@ -162,7 +141,7 @@ module.exports = React.createClass({
                         key: e.info.name,
                         name: e.info.name,
                         colour: e.info.colour,
-                        on: this.state.filtersSelection[0].selected[ix]
+                        on: true //this.state.filtersSelection[0].values[ix]
                     })
                 )
         );
@@ -188,6 +167,7 @@ module.exports = React.createClass({
                 this._orderings(),
                 this._filters(),
                 this.state.filtersSelection,
+                this._onFilterChange,
                 this.state.zoom,
                 this._onUserZoom,
                 this.props.loadResult.colorAxis||undefined,
