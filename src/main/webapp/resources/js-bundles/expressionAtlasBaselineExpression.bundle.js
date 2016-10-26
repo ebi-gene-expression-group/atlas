@@ -15900,7 +15900,7 @@ webpackJsonp_name_([2],[
 	            dataSeriesToKeep: this._expressionLevelFilter().values.map(function (levelFilterValue) {
 	                return _this.state.filtersSelection[0].values.includes(levelFilterValue);
 	            }),
-	            groupsToShow: this.state.filtersSelection.slice(1),
+	            groupsToShow: this.state.filtersSelection.length > 1 ? this.state.filtersSelection.slice(1) : null,
 	            allowEmptyColumns: this.props.loadResult.heatmapConfig.isExperimentPage && (this.state.grouping === this.getInitialState().grouping || !this.state.group),
 	            maxIndex: this.state.coexpressionsShown
 	        }, this.props.loadResult.heatmapData);
@@ -22714,7 +22714,7 @@ webpackJsonp_name_([2],[
 	        this.setState({ orderingsSelection: event.target.value });
 	    },
 	    _onFilterChange: function _onFilterChange(name, values) {
-	        // TODO Hacky: newFiltersSelection *MUST* preserver the order because HeatmapWithControls does [0] and slices
+	        // TODO Hacky: newFiltersSelection *MUST* preserve the order because HeatmapWithControls.jsx does [0] and slices at specific values
 	        var newFiltersSelection = this.state.filtersSelection.map(function (filterSelection) {
 	            return filterSelection.name === name ? { name: name, values: values } : filterSelection;
 	        });
@@ -22839,7 +22839,9 @@ webpackJsonp_name_([2],[
 	
 	        this.props.onChange(this.props.name, checked);
 	    },
-	    _toggleElements: function _toggleElements(filterValueName) {
+	    _toggleElements: function _toggleElements(event, filterValueName) {
+	        event.preventDefault();
+	
 	        var newVisibleElements = this.state.visibleElements.map(function (visibleElement) {
 	            return visibleElement.name === filterValueName ? { name: visibleElement.name, showElements: !visibleElement.showElements } : visibleElement;
 	        });
@@ -22865,10 +22867,10 @@ webpackJsonp_name_([2],[
 	            this.props.values.map(function (filterValue) {
 	                return React.createElement(
 	                    "div",
-	                    null,
+	                    { key: filterValue.name },
 	                    React.createElement(
 	                        "label",
-	                        { key: filterValue.name },
+	                        null,
 	                        React.createElement("input", { type: "checkbox", value: filterValue.name, onChange: _this.handleChange,
 	                            disabled: _this.props.disabled,
 	                            checked: _this.state.checked.includes(filterValue.name) })
@@ -22879,8 +22881,8 @@ webpackJsonp_name_([2],[
 	                                paddingLeft: "5px",
 	                                display: !_this._showElements(filterValue.name) ? "inline-block" : "none"
 	                            },
-	                            onClick: function onClick() {
-	                                _this._toggleElements(filterValue.name);
+	                            onClick: function onClick(event) {
+	                                _this._toggleElements(event, filterValue.name);
 	                            }, href: "#" },
 	                        filterValue.name,
 	                        " ",
@@ -22892,8 +22894,8 @@ webpackJsonp_name_([2],[
 	                                paddingLeft: "5px",
 	                                display: _this._showElements(filterValue.name) ? "inline-block" : "none"
 	                            },
-	                            onClick: function onClick() {
-	                                _this._toggleElements(filterValue.name);
+	                            onClick: function onClick(event) {
+	                                _this._toggleElements(event, filterValue.name);
 	                            }, href: "#" },
 	                        filterValue.name,
 	                        " ",
@@ -24594,7 +24596,7 @@ webpackJsonp_name_([2],[
 	
 	var filterHeatmapDataByGroupingOfRows = function filterHeatmapDataByGroupingOfRows(groupsToShow, data) {
 	  var rowsToKeep = data.xAxisCategories.reduce(function (acc, e, ix) {
-	    if (groupsToShow.some(function (groupToShow) {
+	    if (!groupsToShow || groupsToShow.some(function (groupToShow) {
 	      return _columnHeaderLabelMatchesGroup(e, groupToShow);
 	    })) {
 	      acc.push(ix);
