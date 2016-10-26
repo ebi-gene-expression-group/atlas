@@ -1,4 +1,5 @@
 "use strict";
+
 //*------------------------------------------------------------------*
 
 /*
@@ -60,9 +61,9 @@ var orderHeatmapData = function(ordering, data){
     xAxisCategories: permuteArray(data.xAxisCategories, permuteX),
     yAxisCategories: permuteArray(data.yAxisCategories, permuteY)
   };
-}
+};
 
-var _axisElementsForFilteredDataSeries = function(axis, conditionPerSeries,conditionPerPoint,dataSeries){
+var _axisElementsForFilteredDataSeries = function(axis, conditionPerSeries, conditionPerPoint, dataSeries){
   return (
     dataSeries
     .filter(conditionPerSeries)
@@ -78,86 +79,74 @@ var _axisElementsForFilteredDataSeries = function(axis, conditionPerSeries,condi
     .sort((l,r) =>
       l-r)
   );
-}
+};
 
-var _filterHeatmapData = function(keepSeries, keepPoint, data){
-  let allXs = _axisElementsForFilteredDataSeries("x",keepSeries,keepPoint,data.dataSeries);
-  let allYs = _axisElementsForFilteredDataSeries("y",keepSeries,keepPoint,data.dataSeries);
+const _filterHeatmapData = (keepSeries, keepPoint, data) => {
+    const allXs = _axisElementsForFilteredDataSeries(`x`, keepSeries, keepPoint, data.dataSeries);
+    const allYs = _axisElementsForFilteredDataSeries(`y`, keepSeries, keepPoint, data.dataSeries);
 
-  let newDataSeries =
-  data.dataSeries
-  .map(function(series, ix){
-      return (
-          keepSeries(series,ix) ? series.data.filter(keepPoint) : []
-      );
-  })
-  .map(function(series){
-      return (
-          series
-              .map(function(point){
-                  return {
-                      x: allXs.indexOf(point.x),
-                      y: allYs.indexOf(point.y),
-                      value: point.value,
-                      info: point.info
-                  };
-              })
-              .filter(function(point){
-                  return point.x>-1 && point.y>-1
-              })
-          );
-  });
-  return {
-    dataSeries: data.dataSeries.map(function(e, ix){
-      return {
-        info: e.info,
-        data: newDataSeries[ix]
-      }
-    }),
-    xAxisCategories: data.xAxisCategories.filter(function(e,ix){
-        return allXs.indexOf(ix)>-1
-    }),
-    yAxisCategories: data.yAxisCategories.filter(function(e,ix){
-        return allYs.indexOf(ix)>-1
-    })
-  }
-}
-
-var filterHeatmapDataByDataSeries = function(booleanVectorOfDataSeriesToKeep, data){
-  return _filterHeatmapData(
-    (series,ix)=>booleanVectorOfDataSeriesToKeep[ix],
-    (point)=>true,
-    data
-  );
-}
-
-var filterHeatmapDataByGroupingOfRows = function(grouping,group, data){
-  if (!grouping || !group || grouping === "Default"){
-    return data;
-  }
-  const rowsToKeep =
-    [].concat.apply([],
-      data
-      .xAxisCategories
-      .map(function(e,ix){
-        return (
-          [].concat.apply([],
-            e.info.groupings
-            .filter((g)=>g.name ==grouping)
-            .map((g)=>g.values.map((value)=>value.label))
-          )
-          .indexOf(group) >-1
-          ? [ix]
-          : []
+    const newDataSeries =
+        data.dataSeries
+        .map((series, ix) =>
+            keepSeries(series,ix) ? series.data.filter(keepPoint) : []
         )
-      })
-    )
-  return _filterHeatmapData(
-    (series,ix)=>true,
-    (point)=>rowsToKeep.indexOf(point.x)>-1,
-    data
-  );
-}
+        .map(series =>
+            series
+            .map(point =>
+                ({
+                    x: allXs.indexOf(point.x),
+                    y: allYs.indexOf(point.y),
+                    value: point.value,
+                    info: point.info
+                })
+            )
+            .filter(point => point.x > -1 && point.y > -1)
+        );
+
+    return {
+        dataSeries: data.dataSeries.map((e, ix) =>
+            ({
+                info: e.info,
+                data: newDataSeries[ix]
+            })
+        ),
+        xAxisCategories: data.xAxisCategories.filter((e, ix) => allXs.includes(ix)),
+        yAxisCategories: data.yAxisCategories.filter((e, ix) => allYs.includes(ix))
+    }
+};
+
+const filterHeatmapDataByDataSeries = (booleanVectorOfDataSeriesToKeep, data) =>
+    _filterHeatmapData (
+        (series, ix) => booleanVectorOfDataSeriesToKeep[ix],
+        point => true,
+        data
+    );
+
+// Checks if columnHeader.info.name matches groupingFilter.name and a
+// columnHeader.info.groupings[i].values[j].label is in groupingFilter.values
+const _columnHeaderLabelMatchesGroup = (columnHeader, groupingFilter) =>
+    columnHeader.info.groupings.some(grouping =>
+        grouping.name === groupingFilter.name &&
+        grouping.values
+            .map(groupingValue => groupingValue.label)
+            .some(groupingValueLabel => groupingFilter.values.includes(groupingValueLabel))
+    );
+
+const filterHeatmapDataByGroupingOfRows = (groupsToShow, data) => {
+    const rowsToKeep =
+        data.xAxisCategories.reduce((acc, e, ix) => {
+            if (groupsToShow.some(groupToShow => _columnHeaderLabelMatchesGroup(e, groupToShow))) {
+                acc.push(ix);
+            }
+            return acc;
+        }, []);
+
+    return _filterHeatmapData(
+        (series,ix) => true,
+        point => rowsToKeep.includes(point.x),
+        data
+    );
+};
 
 var filterHeatmapDataByCoexpressionIndex = function(maxIndex, data){
   return _filterHeatmapData(
@@ -165,7 +154,7 @@ var filterHeatmapDataByCoexpressionIndex = function(maxIndex, data){
     (point)=>{return point.info.index<=maxIndex},
     data
   );
-}
+};
 
 var _calculateInserts = function(fullColumns,originalColumns){
   var result = [];
@@ -193,7 +182,7 @@ var _indicesForInserts = function(inserts){
   var i=-1;
   return (
     inserts
-    .map(function(e,ix){
+    .map(function(e){
       !e && i++;
       return i;
     })
@@ -222,7 +211,7 @@ var insertEmptyColumns = function(newColumns,data){
       )
     );
   return {
-    dataSeries: data.dataSeries.map(function(e, ix){
+    dataSeries: data.dataSeries.map(function(e){
       return {
         info: e.info,
         data:
@@ -241,7 +230,7 @@ var insertEmptyColumns = function(newColumns,data){
     xAxisCategories: fullColumns,
     yAxisCategories: data.yAxisCategories
   };
-}
+};
 
 exports.insertEmptyColumns = insertEmptyColumns;
 exports.filterByIndex = filterHeatmapDataByCoexpressionIndex;
@@ -252,17 +241,9 @@ exports.manipulate = function(args, data){
   return (
     insertEmptyColumns(
       args.allowEmptyColumns
-      ? orderHeatmapData(args.ordering,data).xAxisCategories
+      ? orderHeatmapData(args.ordering, data).xAxisCategories
       :[],
-      filterHeatmapDataByGroupingOfRows(args.grouping, args.group,
-        filterHeatmapDataByCoexpressionIndex(args.maxIndex,
-          filterHeatmapDataByDataSeries(args.dataSeriesToKeep,
-            orderHeatmapData(args.ordering,
-               data
-            )
-          )
-        )
-      )
+      filterHeatmapDataByGroupingOfRows(args.groupsToShow, filterHeatmapDataByCoexpressionIndex(args.maxIndex, filterHeatmapDataByDataSeries(args.dataSeriesToKeep, orderHeatmapData(args.ordering, data))))
     )
   );
-}
+};
