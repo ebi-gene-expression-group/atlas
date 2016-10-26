@@ -34,7 +34,7 @@ module.exports = React.createClass({
             {
                 ordering: this.props.loadResult.orderings[this.state.ordering],
                 dataSeriesToKeep: this._expressionLevelFilter().values.map(levelFilterValue => this.state.filtersSelection[0].values.includes(levelFilterValue)),
-                groupsToShow: this.state.filtersSelection.slice(1),
+                groupsToShow: this.state.filtersSelection.length > 1 ? this.state.filtersSelection.slice(1) : null,
                 allowEmptyColumns:
                     this.props.loadResult.heatmapConfig.isExperimentPage &&
                     (  this.state.grouping === this.getInitialState().grouping || !this.state.group),

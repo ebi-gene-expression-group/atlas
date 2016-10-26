@@ -135,7 +135,7 @@ const _columnHeaderLabelMatchesGroup = (columnHeader, groupingFilter) =>
 const filterHeatmapDataByGroupingOfRows = (groupsToShow, data) => {
     const rowsToKeep =
         data.xAxisCategories.reduce((acc, e, ix) => {
-            if (groupsToShow.some(groupToShow => _columnHeaderLabelMatchesGroup(e, groupToShow))) {
+            if (!groupsToShow || groupsToShow.some(groupToShow => _columnHeaderLabelMatchesGroup(e, groupToShow))) {
                 acc.push(ix);
             }
             return acc;
