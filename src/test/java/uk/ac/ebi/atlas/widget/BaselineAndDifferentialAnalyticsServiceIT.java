@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
-public class AnalyticsSearchServiceIT extends RestAssuredFixture {
+public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixture {
 
     private static final String BASELINE_GENE = "ENSG00000000003";
     private static final String DIFFERENTIAL_GENE = "AT2G06310";

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex;
 
 import com.google.common.collect.ImmutableSet;
+import com.jayway.jsonpath.JsonPath;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
@@ -8,47 +9,75 @@ import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 @Named
 public class AnalyticsSearchService {
 
-    private AnalyticsIndexSearchDAO analyticsIndexSearchDAO;
+    private final MiscellaneousAnalyticsSearchDao miscellaneousAnalyticsSearchDao;
 
     @Inject
-    public AnalyticsSearchService(AnalyticsIndexSearchDAO analyticsIndexSearchDAO) {
-        this.analyticsIndexSearchDAO= analyticsIndexSearchDAO;
+    public AnalyticsSearchService(MiscellaneousAnalyticsSearchDao miscellaneousAnalyticsSearchDao) {
+            this.miscellaneousAnalyticsSearchDao = miscellaneousAnalyticsSearchDao;
     }
 
     public ImmutableSet<String> fetchExperimentTypes(String bioentityIdentifier) {
-        return fetchExperimentTypes(SemanticQuery.create(bioentityIdentifier), SemanticQuery.create(), SpeciesFactory.NULL);
+        return fetchExperimentTypes(SemanticQuery.create(bioentityIdentifier), SemanticQuery
+                .create(), SpeciesFactory.NULL);
+    }
+
+    private ImmutableSet<String> readBuckets(String response){
+        List<Map<String,Object>> res = JsonPath.read(response, "$..buckets[*]");
+        ImmutableSet.Builder<String> b = ImmutableSet.builder();
+        for(Map<String,Object> m: res) {
+            b.add(m.get("val").toString());
+        }
+        return b.build();
     }
 
     public ImmutableSet<String> fetchExperimentTypesInAnyField(SemanticQuery query) {
-        return analyticsIndexSearchDAO.fetchExperimentTypesInAnyField(query);
+
+        String response = miscellaneousAnalyticsSearchDao.fetchExperimentTypesInAnyField(query);
+
+        return readBuckets(response);
     }
 
     public ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, Species species) {
         return fetchExperimentTypes(geneQuery, SemanticQuery.create(), species);
+
     }
 
     public ImmutableSet<String> fetchExperimentTypes(SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species) {
-        return analyticsIndexSearchDAO.fetchExperimentTypes(geneQuery, conditionQuery, species.mappedName);
+
+        String response = miscellaneousAnalyticsSearchDao.fetchExperimentTypes(geneQuery, conditionQuery, species.mappedName);
+
+        return readBuckets(response);
     }
 
     public ImmutableSet<String> searchMoreThanOneBioentityIdentifier(SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species) {
-        return analyticsIndexSearchDAO.searchBioentityIdentifiers(geneQuery, conditionQuery, species.mappedName, 2);
+
+        String response = miscellaneousAnalyticsSearchDao.searchBioentityIdentifiers(geneQuery, conditionQuery, species.mappedName, 2);
+
+        return readBuckets(response);
     }
 
     public ImmutableSet<String> searchBioentityIdentifiers(SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species) {
-        return analyticsIndexSearchDAO.searchBioentityIdentifiers(geneQuery, conditionQuery, species.mappedName, -1);
+
+        String response = miscellaneousAnalyticsSearchDao.searchBioentityIdentifiers(geneQuery, conditionQuery, species.mappedName, -1);
+        return readBuckets(response);
     }
 
     public Collection<String> getBioentityIdentifiersForSpecies(Species species){
-        return analyticsIndexSearchDAO.getBioentityIdentifiersForSpecies(species.mappedName);
+
+        String response = miscellaneousAnalyticsSearchDao.getBioentityIdentifiersForSpecies(species.mappedName);
+        return readBuckets(response);
     }
 
     public boolean tissueExpressionAvailableFor(SemanticQuery geneQuery) {
-        return !analyticsIndexSearchDAO.searchBioentityIdentifiersForTissuesInBaselineExperiments(geneQuery).isEmpty();
+        String response = miscellaneousAnalyticsSearchDao.searchBioentityIdentifiersForTissuesInBaselineExperiments(geneQuery);
+
+        return ! readBuckets(response).isEmpty();
     }
 
 }

@@ -27,7 +27,7 @@ public class AnalyticsIndexerService {
     private final MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService;
 
     @Inject
-    public AnalyticsIndexerService(AnalyticsIndexDAO analyticsIndexDAO, BaselineAnalyticsIndexerService baselineAnalyticsIndexerService, RnaSeqDiffAnalyticsIndexerService diffAnalyticsIndexerService, MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService, ExperimentTrader experimentTrader) {
+    public AnalyticsIndexerService(AnalyticsIndexDAO analyticsIndexDAO, BaselineAnalyticsIndexerService baselineAnalyticsIndexerService, RnaSeqDiffAnalyticsIndexerService diffAnalyticsIndexerService, MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService) {
         this.analyticsIndexDAO = analyticsIndexDAO;
         this.baselineAnalyticsIndexerService = baselineAnalyticsIndexerService;
         this.diffAnalyticsIndexerService = diffAnalyticsIndexerService;

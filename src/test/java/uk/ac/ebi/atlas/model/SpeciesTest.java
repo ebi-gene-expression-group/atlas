@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 public class SpeciesTest {
 
     public static final Species HUMAN = new Species("Homo sapiens", "homo sapiens", "ensembldb","animals");
+    public static final Species RICE = new Species("Oryza sativa", "oryza sativa", "plants","plants");
 
     @Test
     public void toStringWorks(){

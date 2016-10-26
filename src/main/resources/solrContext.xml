@@ -8,6 +8,7 @@
         <constructor-arg value="http://${solr.host}:8983/solr/gxa"/>
     </bean>
 
+
     <bean id="analyticsSolrClient" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
         <constructor-arg value="http://${solr.host}:8983/solr/analytics"/>
     </bean>

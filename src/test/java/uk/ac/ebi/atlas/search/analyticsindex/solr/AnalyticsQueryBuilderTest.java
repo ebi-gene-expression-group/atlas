@@ -24,10 +24,7 @@ public class AnalyticsQueryBuilderTest {
 
 
     @Mock
-    Resource  baselineFacetsQueryJSON;
-
-    @Mock
-    Resource differentialFacetsQueryJSON;
+    Resource  resource;
 
     private AnalyticsQueryFactory analyticsQueryFactory;
 
@@ -36,7 +33,7 @@ public class AnalyticsQueryBuilderTest {
 
     @Before
     public void setUp(){
-        analyticsQueryFactory = new AnalyticsQueryFactory(baselineFacetsQueryJSON,differentialFacetsQueryJSON);
+        analyticsQueryFactory = new AnalyticsQueryFactory(resource,resource,resource,resource);
     }
 
     @Test

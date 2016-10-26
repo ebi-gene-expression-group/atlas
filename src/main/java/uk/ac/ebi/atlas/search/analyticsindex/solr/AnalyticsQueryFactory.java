@@ -9,6 +9,7 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.MessageFormat;
 import java.util.List;
 
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryFactory.Field.*;
@@ -19,14 +20,20 @@ import static uk.ac.ebi.atlas.utils.ResourceUtils.readPlainTextResource;
 @Scope("prototype")
 public class AnalyticsQueryFactory {
 
-    private Resource baselineFacetsQueryJSON;
-    private Resource differentialFacetsQueryJSON;
+    private final Resource baselineFacetsQueryJSON;
+    private final Resource differentialFacetsQueryJSON;
+    private final Resource experimentTypesQueryJson;
+    private final Resource bioentityIdentifiersQueryJson;
 
     @Inject
     public AnalyticsQueryFactory( @Value("classpath:baseline.heatmap.pivot.query.json") Resource  baselineFacetsQueryJSON,
-                                  @Value("classpath:differential.facets.query.json") Resource differentialFacetsQueryJSON){
+                                  @Value("classpath:differential.facets.query.json") Resource differentialFacetsQueryJSON,
+                                  @Value("classpath:experimentType.query.json") Resource experimentTypesQueryJson,
+                                  @Value("classpath:bioentityIdentifier.query.json") Resource bioentityIdentifiersQueryJson){
         this.baselineFacetsQueryJSON = baselineFacetsQueryJSON;
         this.differentialFacetsQueryJSON = differentialFacetsQueryJSON;
+        this.experimentTypesQueryJson = experimentTypesQueryJson;
+        this.bioentityIdentifiersQueryJson = bioentityIdentifiersQueryJson;
     }
 
     public Builder builder(){
@@ -37,6 +44,11 @@ public class AnalyticsQueryFactory {
     public class Builder {
 
         private Builder(){
+            /*
+             we put some more data than matches the 0.05 pValue limit to give ourselves some wiggle
+             room but we don't actually want them
+             */
+            solrQuery.addFilterQuery("-pValue:[0.05 TO *]");
             solrQuery.set("omitHeader", true);
         }
 
@@ -44,21 +56,23 @@ public class AnalyticsQueryFactory {
         Interesting lack of symmetry - baselineResults are retrieved with a different code path! :)
          */
 
-        public Builder baselineFacets(){
+        private void setFacets(Resource r){
             solrQuery.setRows(0);
-            solrQuery.set("json.facet", readPlainTextResource(baselineFacetsQueryJSON).replaceAll("\\s+",""));
+            solrQuery.set("json.facet", readPlainTextResource(r).replaceAll("\\s+",""));
+        }
+
+        public Builder baselineFacets(){
+            setFacets(baselineFacetsQueryJSON);
             solrQuery.addFilterQuery("experimentType:(rnaseq_mrna_baseline OR proteomics_baseline)");
             return this;
         }
 
         private Builder differential(){
-            solrQuery.addFilterQuery("pValue:[* TO 0.05]");
             solrQuery.addFilterQuery("experimentType:(rnaseq_mrna_differential OR " +
                     "microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential)");
             return this;
         }
 
-        //TODO use the other one instead of this one
         public Builder differentialResults(){
             solrQuery.setRows(1000);
             solrQuery.set("sort", "abs(foldChange)desc");
@@ -66,15 +80,19 @@ public class AnalyticsQueryFactory {
         }
 
         public Builder differentialFacets(){
-            solrQuery.setRows(0);
-            solrQuery.set("json.facet", readPlainTextResource(differentialFacetsQueryJSON).replaceAll("\\s+",""));
+            setFacets(differentialFacetsQueryJSON);
             return differential();
         }
 
-        public Builder facetBy(Field f) {
-            solrQuery.setFacet(true);
-            solrQuery.setFacetMinCount(1);
-            solrQuery.addFacetField(f.toString());
+        public Builder experimentTypeFacets(){
+            setFacets(experimentTypesQueryJson);
+            return this;
+        }
+
+        public Builder bioentityIdentifierFacets(int facetLimit){
+            solrQuery.setRows(0);
+            solrQuery.set("json.facet", readPlainTextResource(bioentityIdentifiersQueryJson).replace("\"limit\": -1",
+                    MessageFormat.format("\"limit\": {0}", new Integer(facetLimit).toString())).replaceAll("\\s+",""));
             return this;
         }
 
@@ -90,7 +108,7 @@ public class AnalyticsQueryFactory {
 
         private ImmutableList.Builder<AnalyticsSolrQueryTree> queryClausesBuilder = ImmutableList.builder();
 
-        private SolrQuery solrQuery = new SolrQuery().setFacetLimit(-1);
+        private SolrQuery solrQuery = new SolrQuery();
 
         private void addQueryClause(Field searchField, SemanticQuery searchValue) {
             if (searchValue.isNotEmpty()) {
@@ -133,24 +151,9 @@ public class AnalyticsQueryFactory {
             return this;
         }
 
-        public Builder setFacetLimit(int facetLimit) {
-            solrQuery.setFacetLimit(facetLimit);
-            return this;
-        }
-
 
         public Builder setRows(int rows) {
             solrQuery.setRows(rows);
-            return this;
-        }
-
-        public Builder filterAboveDefaultCutoff() {
-            solrQuery.addFilterQuery(BASELINE_ABOVE_CUTOFF + " OR " + DIFFERENTIAL_ABOVE_CUTOFF);
-            return this;
-        }
-
-        public Builder filterBaselineAboveDefaultCutoff() {
-            solrQuery.addFilterQuery(BASELINE_ABOVE_CUTOFF);
             return this;
         }
 
@@ -167,7 +170,7 @@ public class AnalyticsQueryFactory {
         }
 
     }
-    public enum Field {
+    enum Field {
         EXPERIMENT_TYPE("experimentType"),
         BIOENTITY_IDENTIFIER("bioentityIdentifier"),
         SPECIES("species"),
