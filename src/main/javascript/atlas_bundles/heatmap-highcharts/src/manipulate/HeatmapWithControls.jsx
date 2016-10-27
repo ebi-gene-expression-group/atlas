@@ -131,7 +131,7 @@ module.exports = React.createClass({
                         key: e.info.name,
                         name: e.info.name,
                         colour: e.info.colour,
-                        on: this.state.filtersSelection[0].values[ix]
+                        on: this.state.filtersSelection[0].values.includes(e.info.name)
                     })
                 )
         );
