@@ -69,7 +69,7 @@ const FiltersModal = React.createClass({
         return (
             <div>
                 <Button bsSize="small" onClick={this._open} disabled={this.props.disabled} title={this.props.disabled ? `Reset zoom to enable filters` : ``}>
-                    <Glyphicon style={{verticalAlign: `middle`}} glyph="equalizer"/>
+                    <Glyphicon glyph="equalizer"/>
                     <span style={{verticalAlign: `middle`}}> Filters</span>
                 </Button>
 

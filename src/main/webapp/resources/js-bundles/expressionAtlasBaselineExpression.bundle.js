@@ -17699,12 +17699,8 @@ webpackJsonp_name_([2],[
 	            React.createElement(
 	                Button,
 	                { bsSize: "small" },
-	                React.createElement(Glyphicon, { style: { verticalAlign: 'middle' }, glyph: "download-alt" }),
-	                React.createElement(
-	                    "span",
-	                    { style: { verticalAlign: 'middle' } },
-	                    " Download all results"
-	                )
+	                React.createElement(Glyphicon, { glyph: "download-alt" }),
+	                " Download all results"
 	            ),
 	            React.createElement(
 	                Modal,
@@ -21941,7 +21937,7 @@ webpackJsonp_name_([2],[
 	            React.createElement(
 	                Button,
 	                { bsSize: "small", onClick: this._open, disabled: this.props.disabled, title: this.props.disabled ? "Reset zoom to enable filters" : "" },
-	                React.createElement(Glyphicon, { style: { verticalAlign: "middle" }, glyph: "equalizer" }),
+	                React.createElement(Glyphicon, { glyph: "equalizer" }),
 	                React.createElement(
 	                    "span",
 	                    { style: { verticalAlign: "middle" } },

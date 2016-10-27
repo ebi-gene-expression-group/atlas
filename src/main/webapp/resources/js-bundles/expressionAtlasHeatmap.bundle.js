@@ -12232,12 +12232,8 @@ webpackJsonp_name_([5],[
 	            React.createElement(
 	                Button,
 	                { bsSize: "small" },
-	                React.createElement(Glyphicon, { style: { verticalAlign: 'middle' }, glyph: "download-alt" }),
-	                React.createElement(
-	                    "span",
-	                    { style: { verticalAlign: 'middle' } },
-	                    " Download all results"
-	                )
+	                React.createElement(Glyphicon, { glyph: "download-alt" }),
+	                " Download all results"
 	            ),
 	            React.createElement(
 	                Modal,

@@ -47,8 +47,7 @@ const DownloadProfilesButton = React.createClass({
         return (
             <a onClick={this._afterDownloadButtonClicked}>
                 <Button bsSize="small">
-                    <Glyphicon style={{verticalAlign: 'middle'}} glyph="download-alt"/>
-                    <span style={{verticalAlign: 'middle'}}> Download all results</span>
+                    <Glyphicon glyph="download-alt"/> Download all results
                 </Button>
 
                 <Modal show={this.state.showModal} onHide={this._closeModal}>
