@@ -4,7 +4,7 @@ const FormattersFactory = require(`./Formatters.jsx`);
 const TooltipsFactory = require(`./tooltips/main.jsx`);
 const PropTypes = require(`../PropTypes.js`);
 const Show = require(`../show/main.jsx`);
-var _ = require('lodash');
+const _ = require(`lodash`);
 
 module.exports = React.createClass({
     displayName: `Heatmap with settings`,
@@ -76,57 +76,47 @@ module.exports = React.createClass({
         )
     },
 
-    // Column header ->
-    // {
-    //   label: "accessory axillary lymph node",
-    //   id: "",
-    //   info: {
-    //           trackId: "",
-    //           tooltip: Object,
-    //           groupings: [
-    //                        {
-    //                          name: "Anatomical Systems",
-    //                          memberName: "Anatomical system"
-    //                          values: [
-    //                                    {
-    //                                      label: "Unmapped",
-    //                                      id: ""
-    //                                    }
-    //                                  ]
-    //                        }
-    //                      ]
-    //         }
-    // }
     _groupingFilters() {
-        const groupingNames =
-            _.uniq(
-                _.flatten(
-                    this.props.loadResult.heatmapData.xAxisCategories
-                        .map(columnHeader =>
-                            columnHeader.info.groupings.map(grouping => grouping.name)
-                        )
-                )
-            );
+        const groupingTriplets = _.flattenDeep(this.props.loadResult.heatmapData.xAxisCategories.reduce((acc, columnHeader) => {
+                const groupingTriplets = columnHeader.info.groupings.map(grouping =>
+                    grouping.values.map(groupingValue =>
+                        ({
+                            name: grouping.name,
+                            valueLabel: groupingValue.label,
+                            columnLabel: columnHeader.label
+                        })
+                    )
+                );
+                acc.push(groupingTriplets);
 
-        return (
-            groupingNames.map(name =>
-                ({
-                    name: name,
-                    values:
-                        _.uniq(
-                            _.flatten(
-                                this.props.loadResult.heatmapData.xAxisCategories
-                                    .map(columnHeader =>
-                                        columnHeader.info.groupings
-                                            .filter(grouping => grouping.name === name)
-                                            .map(grouping => grouping.values.map(g => g.label))
-                                            .concat([[]])
-                                            [0])
-                            )
+                return acc;
+            }
+        ,[]));
+
+        const groupingNames = _.uniq(groupingTriplets.map(groupingTriplet => groupingTriplet.name));
+
+        return groupingNames.map(groupingName => {
+
+                const valueLabels = _.uniq(groupingTriplets
+                    .filter(groupingTriplet => groupingTriplet.name === groupingName)
+                    .map(groupingTriplet => groupingTriplet.valueLabel));
+
+                return ({
+                    name: groupingName,
+                    values: valueLabels,
+                    elements: valueLabels.map(valueLabel =>
+                        _.sortedUniq(
+                            groupingTriplets
+                                .filter(groupingTriplet =>
+                                    groupingTriplet.name === groupingName && groupingTriplet.valueLabel === valueLabel
+                                )
+                                .map(groupingTriplet => groupingTriplet.columnLabel)
+                                .sort()
                         )
+                    )
                 })
-            )
-        )
+            }
+        );
     },
 
     _onFilterChange(newFiltersSelection) {
@@ -141,7 +131,7 @@ module.exports = React.createClass({
                         key: e.info.name,
                         name: e.info.name,
                         colour: e.info.colour,
-                        on: true //this.state.filtersSelection[0].values[ix]
+                        on: this.state.filtersSelection[0].values[ix]
                     })
                 )
         );
