@@ -25012,12 +25012,381 @@ webpackJsonp_name_([2],[
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/Anatomogram.jsx ***!
   \*******************************************************************************************************************/
-[3783, 1610, 2233, 2235],
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var React = __webpack_require__(/*! react */ 1610);
+	var AnatomogramImage = __webpack_require__(/*! ./AnatomogramImage.jsx */ 2233);
+	var SelectionIcon = __webpack_require__(/*! ./SelectionIcon.jsx */ 2235);
+	
+	var Anatomogram = React.createClass({
+	    displayName: "Anatomogram",
+	
+	    propTypes: {
+	        pathToFolderWithBundledResources: React.PropTypes.string.isRequired,
+	        expressedTissueColour: React.PropTypes.string.isRequired,
+	        hoveredTissueColour: React.PropTypes.string.isRequired,
+	        availableAnatomograms: React.PropTypes.arrayOf(React.PropTypes.shape({
+	            type: React.PropTypes.string.isRequired,
+	            path: React.PropTypes.string.isRequired,
+	            ids: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+	        })).isRequired,
+	        height: React.PropTypes.number.isRequired,
+	        whenMousedOverIdsChange: React.PropTypes.func,
+	        allSvgPathIds: React.PropTypes.arrayOf(React.PropTypes.string),
+	        idsToBeHighlighted: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+	    },
+	
+	    getInitialState: function getInitialState() {
+	        return { selectedType: this.props.availableAnatomograms[0].type };
+	    },
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            { className: "gxaAnatomogram", style: { display: "table", paddingTop: "4px" } },
+	            React.createElement(
+	                "div",
+	                { style: { display: "table-row" } },
+	                React.createElement(
+	                    "div",
+	                    { style: { display: "table-cell", verticalAlign: "top" } },
+	                    this._anatomogramSelectImageButtons()
+	                ),
+	                React.createElement(AnatomogramImage, _extends({
+	                    key: this.state.selectedType,
+	                    file: this._selectedAnatomogram().path,
+	                    allSvgPathIds: this.props.allSvgPathIds || this._selectedAnatomogram().ids
+	                }, this.props))
+	            )
+	        );
+	    },
+	    _anatomogramSelectImageButtons: function _anatomogramSelectImageButtons() {
+	        var _this = this;
+	
+	        return this.props.availableAnatomograms.length < 2 ? [] : this.props.availableAnatomograms.map(function (availableAnatomogram) {
+	            return React.createElement(SelectionIcon, {
+	                key: availableAnatomogram.type + "_toggle",
+	                pathToFolderWithBundledResources: _this.props.pathToFolderWithBundledResources,
+	                anatomogramType: availableAnatomogram.type,
+	                selected: _this.state.selectedType === availableAnatomogram.type,
+	                onClick: function onClick() {
+	                    _this._afterUserSelectedAnatomogram(availableAnatomogram.type);
+	                } });
+	        });
+	    },
+	    _afterUserSelectedAnatomogram: function _afterUserSelectedAnatomogram(newSelectedType) {
+	        if (newSelectedType !== this.state.selectedType) {
+	            this.setState({ selectedType: newSelectedType });
+	        }
+	    },
+	    _selectedAnatomogram: function _selectedAnatomogram() {
+	        var _this2 = this;
+	
+	        return this.props.availableAnatomograms.filter(function (e) {
+	            return e.type === _this2.state.selectedType;
+	        }).concat({
+	            type: "_",
+	            path: "__invalid__.svg",
+	            ids: []
+	        })[0];
+	    }
+	});
+	
+	module.exports = Anatomogram;
+
+/***/ },
 /* 2233 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/AnatomogramImage.jsx ***!
   \************************************************************************************************************************/
-[3784, 1610, 1766, 2234],
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	var React = __webpack_require__(/*! react */ 1610);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 1766);
+	var Snap = __webpack_require__(/*! imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js */ 2234);
+	
+	//http://stackoverflow.com/questions/3115982/how-to-check-if-two-arrays-are-equal-with-javascript
+	var ArraysEqual = function ArraysEqual(a, b) {
+	    if (a === b) return true;
+	    if (a == null || b == null) return false;
+	    if (a.length != b.length) return false;
+	    for (var i = 0; i < a.length; ++i) {
+	        if (a[i] !== b[i]) return false;
+	    }
+	    return true;
+	};
+	
+	var AnatomogramImageParts = React.createClass({
+	    displayName: "AnatomogramImageParts",
+	
+	    propTypes: {
+	        idsExpressedInExperiment: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+	        idsHeatmapWantsHighlighted: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+	        idsMousedOver: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+	        idsNotHighlighted: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+	        expressedTissueColour: React.PropTypes.string.isRequired,
+	        hoveredTissueColour: React.PropTypes.string.isRequired,
+	        whenMousedOverIdsChange: React.PropTypes.func
+	    },
+	
+	    getDefaultProps: function getDefaultProps() {
+	        return { whenMousedOverIdsChange: function whenMousedOverIdsChange(nextIds, oldIds) {} };
+	    },
+	    getInitialState: function getInitialState() {
+	        return {
+	            toDraw: [].concat(this._idsThatShouldBeStronglyHighlighted(this.props).map(this._highlightStrongly), this.props.idsExpressedInExperiment.map(this._highlightSlightly), this.props.idsNotHighlighted.map(this._highlightAsBackground)) };
+	    },
+	    render: function render() {
+	        return React.createElement("span", null);
+	    },
+	    _highlightStrongly: function _highlightStrongly(svgPathId) {
+	        return { id: svgPathId, colour: this.props.hoveredTissueColour, opacity: 0.7 };
+	    },
+	    _highlightSlightly: function _highlightSlightly(svgPathId) {
+	        return { id: svgPathId, colour: this.props.expressedTissueColour, opacity: 0.5 };
+	    },
+	    _highlightAsBackground: function _highlightAsBackground(svgPathId) {
+	        return { id: svgPathId, colour: "gray", opacity: 0.5 };
+	    },
+	    componentWillUnmount: function componentWillUnmount() {
+	        this.props.whenMousedOverIdsChange([], this.props.idsMousedOver);
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        var _this = this;
+	
+	        if (!ArraysEqual(nextProps.idsMousedOver, this.props.idsMousedOver)) {
+	            this.props.whenMousedOverIdsChange(nextProps.idsMousedOver, this.props.idsMousedOver);
+	        }
+	        var oldStrong = this._idsThatShouldBeStronglyHighlighted(this.props);
+	        var newStrong = this._idsThatShouldBeStronglyHighlighted(nextProps);
+	        var oldWeak = this.props.idsExpressedInExperiment;
+	        var newWeak = nextProps.idsExpressedInExperiment;
+	
+	        var toDraw = [].concat(
+	        //ids that heatmap wants highlighted are the most highlighted
+	        newStrong.filter(function (id) {
+	            return !oldStrong.includes(id);
+	        }).map(this._highlightStrongly),
+	        //ids that are expressed in the experiment are highlighted with a weaker colour, often the same as background
+	        newWeak.filter(function (id) {
+	            return !newStrong.includes(id);
+	        }).filter(function (id) {
+	            return !oldWeak.includes(id);
+	        }).map(this._highlightSlightly), nextProps.idsNotHighlighted.filter(function (id) {
+	            return !_this.props.idsNotHighlighted.includes(id);
+	        }).map(this._highlightAsBackground));
+	
+	        this.setState({ toDraw: toDraw });
+	    },
+	    _idsThatShouldBeStronglyHighlighted: function _idsThatShouldBeStronglyHighlighted(properties) {
+	        return properties.idsHeatmapWantsHighlighted.concat(properties.idsMousedOver);
+	    }
+	});
+	
+	var AnatomogramImage = React.createClass({
+	    displayName: "AnatomogramImage",
+	
+	    propTypes: {
+	        file: function file(props, propName, componentName) {
+	            if (propName === "file") {
+	                if (typeof props[propName] !== "string") {
+	                    return new Error("Expected string to specify file, got: " + props[propName]);
+	                }
+	                if (!props[propName]) {
+	                    return new Error("Path to file empty!");
+	                }
+	            }
+	            return "";
+	        },
+	        height: React.PropTypes.number.isRequired,
+	        allSvgPathIds: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+	        idsExpressedInExperiment: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+	        idsToBeHighlighted: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+	        expressedTissueColour: React.PropTypes.string.isRequired,
+	        hoveredTissueColour: React.PropTypes.string.isRequired,
+	        whenMousedOverIdsChange: React.PropTypes.func
+	    },
+	
+	    getInitialState: function getInitialState() {
+	        return { mousedOverSvgIds: [] };
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        if (nextProps.file !== this.props.file) {
+	            this._loadAnatomogram(nextProps.file);
+	        }
+	    },
+	    componentDidMount: function componentDidMount() {
+	        this._loadAnatomogram(this.props.file);
+	        this._draw();
+	    },
+	    componentDidUpdate: function componentDidUpdate() {
+	        this._draw();
+	    },
+	    _draw: function _draw() {
+	        var svg = Snap(ReactDOM.findDOMNode(this._anatomogram)).select("#LAYER_EFO");
+	        if (svg !== null) {
+	            this._drawOnSvg(svg, this._imageParts.state.toDraw);
+	            this._imageParts.setState({ toDraw: [] });
+	        }
+	    },
+	    _drawInitialLayout: function _drawInitialLayout(svg) {
+	        if (this._imageParts) {
+	            this._drawOnSvg(svg, this._imageParts.getInitialState().toDraw);
+	            this._imageParts.setState({ toDraw: [] });
+	        }
+	    },
+	    _drawOnSvg: function _drawOnSvg(svg, instructions) {
+	        var _this2 = this;
+	
+	        instructions.forEach(function (instruction) {
+	            _this2._highlightOrganismParts(svg, instruction.id, instruction.colour, instruction.opacity);
+	        });
+	    },
+	    render: function render() {
+	        var _this3 = this;
+	
+	        var idsExpressedInExperiment = [],
+	            idsHoveredOver = [],
+	            idsHeatmapWantsHighlighted = [],
+	            idsNotHighlighted = [];
+	
+	        this.props.allSvgPathIds.forEach(function (id) {
+	            if (_this3.state.mousedOverSvgIds.includes(id)) {
+	                idsHoveredOver.push(id);
+	            } else if (_this3.props.idsToBeHighlighted.includes(id)) {
+	                idsHeatmapWantsHighlighted.push(id);
+	            } else if (_this3.props.idsExpressedInExperiment.includes(id)) {
+	                idsExpressedInExperiment.push(id);
+	            } else {
+	                idsNotHighlighted.push(id);
+	            }
+	        });
+	
+	        return React.createElement(
+	            "span",
+	            null,
+	            React.createElement("svg", { ref: function ref(c) {
+	                    return _this3._anatomogram = c;
+	                }, style: { display: "table-cell", width: "230px", height: this.props.height + "px" } }),
+	            React.createElement(AnatomogramImageParts, {
+	                ref: function ref(c) {
+	                    return _this3._imageParts = c;
+	                }, key: this.props.file,
+	                idsExpressedInExperiment: idsExpressedInExperiment,
+	                idsHeatmapWantsHighlighted: idsHeatmapWantsHighlighted,
+	                idsMousedOver: idsHoveredOver,
+	                idsNotHighlighted: idsNotHighlighted,
+	                expressedTissueColour: this.props.expressedTissueColour,
+	                hoveredTissueColour: this.props.hoveredTissueColour,
+	                whenMousedOverIdsChange: this.props.whenMousedOverIdsChange
+	            })
+	        );
+	    },
+	    _highlightPath: function _highlightPath(svgPathId) {
+	        this.setState({ hoveredPathId: svgPathId });
+	    },
+	    _loadAnatomogram: function _loadAnatomogram(svgFile) {
+	        var _this4 = this;
+	
+	        var svgCanvas = Snap(ReactDOM.findDOMNode(this._anatomogram)),
+	            allElements = svgCanvas.selectAll("*");
+	
+	        if (allElements) {
+	            allElements.remove();
+	        }
+	
+	        var displayAllOrganismPartsCallback = this._drawInitialLayout;
+	        var registerHoverEventsCallback = this._registerHoverEvents;
+	
+	        Snap.load(svgFile, function (fragment) {
+	            displayAllOrganismPartsCallback(fragment.select("#LAYER_EFO"));
+	            registerHoverEventsCallback(fragment.select("#LAYER_EFO"));
+	            fragment.selectAll("svg > g").forEach(function (g) {
+	                g.transform("S1.6,0,0");
+	                svgCanvas.append(g);
+	            });
+	            debugger;
+	            var img = fragment.select("#ccLogo");
+	            if (img) {
+	                // svgCanvas.node.clientHeight and svgCanvas.node.clientWidth is more “correct” but are 0 in Firefox
+	                var heightTranslate = Number.parseInt(_this4._anatomogram.style.height) - 15;
+	                var widthTranslate = Number.parseInt(_this4._anatomogram.style.width) / 2 - 40;
+	                img.transform("t" + widthTranslate + "," + heightTranslate);
+	                svgCanvas.append(img);
+	            }
+	        });
+	    },
+	    _registerHoverEvents: function _registerHoverEvents(svg) {
+	        var _this5 = this;
+	
+	        if (svg) {
+	            (function () {
+	                // Sometimes svg is null... why?
+	                var MaxOverlappingTissues = 5;
+	                var mouseoverCallback = function mouseoverCallback(svgPathId) {
+	                    _this5.setState(function (previousState) {
+	                        return { mousedOverSvgIds: [].concat(_toConsumableArray(previousState.mousedOverSvgIds), [svgPathId]).slice(-MaxOverlappingTissues) };
+	                    });
+	                };
+	
+	                var mouseoutCallback = function mouseoutCallback(svgPathId) {
+	                    _this5.setState(function (previousState) {
+	                        return { mousedOverSvgIds: previousState.mousedOverSvgIds.map(function (el) {
+	                                return el === svgPathId ? "" : el;
+	                            }) };
+	                    });
+	                };
+	
+	                var attachCallbacks = function attachCallbacks(svgElement, svgPathId) {
+	                    if (svgElement) {
+	                        svgElement.mouseover(function () {
+	                            mouseoverCallback(svgPathId);
+	                        });
+	                        svgElement.mouseout(function () {
+	                            mouseoutCallback(svgPathId);
+	                        });
+	                    }
+	                };
+	
+	                _this5.props.allSvgPathIds.forEach(function (svgPathId) {
+	                    var svgElement = svg.select("#" + svgPathId);
+	                    attachCallbacks(svgElement, svgPathId);
+	                    if (svgElement && svgElement.type === "use") {
+	                        attachCallbacks(svg.select(svgElement.node.getAttribute("xlink:href")), svgPathId);
+	                    }
+	                });
+	            })();
+	        }
+	    },
+	    _highlightOrganismParts: function _highlightOrganismParts(svg, svgPathId, colour, opacity) {
+	        var el = svg.select("#" + svgPathId);
+	        if (el && el.type === "use") {
+	            this._recursivelyChangeProperties(svg.select(el.node.getAttribute("xlink:href")), colour, opacity);
+	        }
+	        this._recursivelyChangeProperties(el, colour, opacity);
+	    },
+	    _recursivelyChangeProperties: function _recursivelyChangeProperties(svgElement, colour, opacity) {
+	        var _this6 = this;
+	
+	        if (svgElement) {
+	            svgElement.selectAll("*").forEach(function (innerElement) {
+	                _this6._recursivelyChangeProperties(innerElement);
+	            });
+	            svgElement.attr({ "fill": colour, "fill-opacity": opacity });
+	        }
+	    }
+	});
+	
+	module.exports = AnatomogramImage;
+
+/***/ },
 /* 2234 */
 /*!**************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/imports-loader?this=>window,fix=>module.exports=0!./atlas_bundles/baseline-expression/~/snapsvg/dist/snap.svg.js ***!
@@ -25027,12 +25396,81 @@ webpackJsonp_name_([2],[
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/SelectionIcon.jsx ***!
   \*********************************************************************************************************************/
-[3785, 1610, 2236, 2286],
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(/*! react */ 1610);
+	var ResolvePathToIcon = __webpack_require__(/*! ./imagesAvailable.js */ 2236).ResolvePathToIcon;
+	__webpack_require__(/*! ./SelectionIcon.less */ 2286);
+	
+	var SelectionIcon = React.createClass({
+	    displayName: "SelectionIcon",
+	
+	    propTypes: {
+	        pathToFolderWithBundledResources: React.PropTypes.string.isRequired,
+	        anatomogramType: React.PropTypes.oneOf(["brain", "female", "male", "whole_plant", "flower_parts"]).isRequired,
+	        selected: React.PropTypes.bool.isRequired,
+	        onClick: React.PropTypes.func.isRequired
+	    },
+	
+	    render: function render() {
+	        return React.createElement("img", { className: "selection-icon", onClick: this.props.onClick,
+	            src: ResolvePathToIcon(this.props.pathToFolderWithBundledResources, this.props.anatomogramType, this.props.selected) });
+	    },
+	    shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
+	        return this.props.selected !== nextProps.selected;
+	    }
+	});
+	
+	module.exports = SelectionIcon;
+
+/***/ },
 /* 2236 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/imagesAvailable.js ***!
   \**********************************************************************************************************************/
-[3786, 2237, 2242, 2243, 2244, 2255],
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var Url = __webpack_require__(/*! url */ 2237);
+	var Path = __webpack_require__(/*! path */ 580);
+	var SvgsForSpecies = __webpack_require__(/*! ../resources/json/svgsForSpecies.json */ 2242);
+	var IdsForSvgs = __webpack_require__(/*! ../resources/json/idsForSvgs.json */ 2243);
+	
+	var ResolvePathToIcon = function ResolvePathToIcon(pathToFolderWithBundledResources, type, selected) {
+	    return Url.resolve(pathToFolderWithBundledResources, Path.basename(__webpack_require__(/*! ../resources/icons */ 2244)("./" + type + "_" + (selected ? "" : "un") + "selected.png")));
+	};
+	
+	var ResolvePathToSvg = function ResolvePathToSvg(pathToFolderWithBundledResources, svg) {
+	    return Url.resolve(pathToFolderWithBundledResources, Path.basename(__webpack_require__(/*! ../resources/svg */ 2255)("./" + svg)));
+	};
+	
+	var GetSvgsForSpecies = function GetSvgsForSpecies(pathToFolderWithBundledResources, species) {
+	    var svgEntry = SvgsForSpecies[species];
+	    if (typeof svgEntry === "object") {
+	        return Object.keys(svgEntry).map(function (anatomogramType) {
+	            return {
+	                type: anatomogramType,
+	                path: ResolvePathToSvg(pathToFolderWithBundledResources, svgEntry[anatomogramType]),
+	                ids: IdsForSvgs[svgEntry[anatomogramType]]
+	            };
+	        });
+	    } else if (typeof svgEntry === "string") {
+	        return [{
+	            type: "svg",
+	            path: ResolvePathToSvg(pathToFolderWithBundledResources, svgEntry),
+	            ids: IdsForSvgs[svgEntry]
+	        }];
+	    } else {
+	        return [];
+	    }
+	};
+	
+	module.exports = { GetSvgsForSpecies: GetSvgsForSpecies, ResolvePathToIcon: ResolvePathToIcon };
+
+/***/ },
 /* 2237 */
 /*!********************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/url/url.js ***!
@@ -25059,19 +25497,19 @@ webpackJsonp_name_([2],[
   \*******************************************************************/
 579,
 /* 2242 */
-/*!*******************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/json/svgsForSpecies.json ***!
-  \*******************************************************************************************************************************/
+/*!**********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/json/svgsForSpecies.json ***!
+  \**********************************************************************************************************************************/
 582,
 /* 2243 */
-/*!***************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/json/idsForSvgs.json ***!
-  \***************************************************************************************************************************/
+/*!******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/json/idsForSvgs.json ***!
+  \******************************************************************************************************************************/
 583,
 /* 2244 */
-/*!**********************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons ^\.\/.*selected\.png$ ***!
-  \**********************************************************************************************************************************/
+/*!*************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons ^\.\/.*selected\.png$ ***!
+  \*************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
@@ -25102,59 +25540,59 @@ webpackJsonp_name_([2],[
 
 /***/ },
 /* 2245 */
-/*!*******************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/brain_selected.png ***!
-  \*******************************************************************************************************************************/
+/*!**********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/brain_selected.png ***!
+  \**********************************************************************************************************************************/
 585,
 /* 2246 */
-/*!*********************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/brain_unselected.png ***!
-  \*********************************************************************************************************************************/
+/*!************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/brain_unselected.png ***!
+  \************************************************************************************************************************************/
 586,
 /* 2247 */
-/*!********************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/female_selected.png ***!
-  \********************************************************************************************************************************/
+/*!***********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/female_selected.png ***!
+  \***********************************************************************************************************************************/
 587,
 /* 2248 */
-/*!**********************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/female_unselected.png ***!
-  \**********************************************************************************************************************************/
+/*!*************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/female_unselected.png ***!
+  \*************************************************************************************************************************************/
 588,
 /* 2249 */
-/*!**************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/flower_parts_selected.png ***!
-  \**************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/flower_parts_selected.png ***!
+  \*****************************************************************************************************************************************/
 589,
 /* 2250 */
-/*!****************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/flower_parts_unselected.png ***!
-  \****************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/flower_parts_unselected.png ***!
+  \*******************************************************************************************************************************************/
 590,
 /* 2251 */
-/*!******************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/male_selected.png ***!
-  \******************************************************************************************************************************/
+/*!*********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/male_selected.png ***!
+  \*********************************************************************************************************************************/
 591,
 /* 2252 */
-/*!********************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/male_unselected.png ***!
-  \********************************************************************************************************************************/
+/*!***********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/male_unselected.png ***!
+  \***********************************************************************************************************************************/
 592,
 /* 2253 */
-/*!*************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/whole_plant_selected.png ***!
-  \*************************************************************************************************************************************/
+/*!****************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/whole_plant_selected.png ***!
+  \****************************************************************************************************************************************/
 593,
 /* 2254 */
-/*!***************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/icons/whole_plant_unselected.png ***!
-  \***************************************************************************************************************************************/
+/*!******************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/whole_plant_unselected.png ***!
+  \******************************************************************************************************************************************/
 594,
 /* 2255 */
-/*!*******************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg ^\.\/.*$ ***!
-  \*******************************************************************************************************************/
+/*!**********************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg ^\.\/.*$ ***!
+  \**********************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
@@ -25205,155 +25643,275 @@ webpackJsonp_name_([2],[
 
 /***/ },
 /* 2256 */
-/*!**********************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/anolis_carolinensis.svg ***!
-  \**********************************************************************************************************************************/
-596,
-/* 2257 */
-/*!***********************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/arabidopsis_thaliana_whole_plant.svg ***!
-  \***********************************************************************************************************************************************/
-597,
-/* 2258 */
-/*!***************************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/brachypodium_distachyon_flower_parts.svg ***!
-  \***************************************************************************************************************************************************/
-598,
-/* 2259 */
-/*!**************************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/brachypodium_distachyon_whole_plant.svg ***!
-  \**************************************************************************************************************************************************/
-599,
-/* 2260 */
-/*!**********************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/chicken.svg ***!
-  \**********************************************************************************************************************/
-600,
-/* 2261 */
-/*!******************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/cow.svg ***!
-  \******************************************************************************************************************/
-601,
-/* 2262 */
-/*!*******************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/hordeum_vulgare_flower_parts.svg ***!
-  \*******************************************************************************************************************************************/
-602,
-/* 2263 */
-/*!******************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/hordeum_vulgare_whole_plant.svg ***!
-  \******************************************************************************************************************************************/
-603,
-/* 2264 */
-/*!**************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/human_brain.svg ***!
-  \**************************************************************************************************************************/
-604,
-/* 2265 */
-/*!***************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/human_female.svg ***!
-  \***************************************************************************************************************************/
-605,
-/* 2266 */
-/*!*************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/human_male.svg ***!
-  \*************************************************************************************************************************/
-606,
-/* 2267 */
-/*!*****************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/macaca_mulatta.svg ***!
-  \*****************************************************************************************************************************/
-607,
-/* 2268 */
-/*!************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/monodelphis_domestica.svg ***!
-  \************************************************************************************************************************************/
-608,
-/* 2269 */
-/*!**************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/mouse_brain.svg ***!
-  \**************************************************************************************************************************/
-609,
-/* 2270 */
-/*!***************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/mouse_female.svg ***!
-  \***************************************************************************************************************************/
-610,
-/* 2271 */
-/*!*************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/mouse_male.svg ***!
-  \*************************************************************************************************************************/
-611,
-/* 2272 */
-/*!****************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/oryza_sativa_flower_parts.svg ***!
-  \****************************************************************************************************************************************/
-612,
-/* 2273 */
-/*!***************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/oryza_sativa_whole_plant.svg ***!
-  \***************************************************************************************************************************************/
-613,
-/* 2274 */
-/*!***************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/papio_anubis.svg ***!
-  \***************************************************************************************************************************/
-614,
-/* 2275 */
-/*!******************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/rat.svg ***!
-  \******************************************************************************************************************/
-615,
-/* 2276 */
-/*!************************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/solanum_lycopersicum_flower_parts.svg ***!
-  \************************************************************************************************************************************************/
-616,
-/* 2277 */
-/*!***********************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/solanum_lycopersicum_whole_plant.svg ***!
-  \***********************************************************************************************************************************************/
-617,
-/* 2278 */
-/*!*******************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/sorghum_bicolor_flower_parts.svg ***!
-  \*******************************************************************************************************************************************/
-618,
-/* 2279 */
-/*!******************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/sorghum_bicolor_whole_plant.svg ***!
-  \******************************************************************************************************************************************/
-619,
-/* 2280 */
 /*!*************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/tetraodon_nigroviridis.svg ***!
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/anolis_carolinensis.svg ***!
   \*************************************************************************************************************************************/
-620,
-/* 2281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "15e3c69b67d92ca008087978d6b8448e.svg";
+
+/***/ },
+/* 2257 */
+/*!**************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/arabidopsis_thaliana_whole_plant.svg ***!
+  \**************************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "98c06a5c7a59b3bab435902524ffe7d8.svg";
+
+/***/ },
+/* 2258 */
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/brachypodium_distachyon_flower_parts.svg ***!
+  \******************************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "cb470d533c62706f829d5f4f38aa425e.svg";
+
+/***/ },
+/* 2259 */
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/brachypodium_distachyon_whole_plant.svg ***!
+  \*****************************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "d5b215ab4996837e72a8dc54b05edfb7.svg";
+
+/***/ },
+/* 2260 */
+/*!*************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/chicken.svg ***!
+  \*************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "2a49f7c1bbfd4ce9943dd967b6565d97.svg";
+
+/***/ },
+/* 2261 */
+/*!*********************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/cow.svg ***!
+  \*********************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "6a792bb3d4f6b7ab4c4e13b2511b17f2.svg";
+
+/***/ },
+/* 2262 */
+/*!**********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/hordeum_vulgare_flower_parts.svg ***!
+  \**********************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "173fddfa0293be721333dd0488441bad.svg";
+
+/***/ },
+/* 2263 */
 /*!*********************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/triticum_aestivum_flower_parts.svg ***!
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/hordeum_vulgare_whole_plant.svg ***!
   \*********************************************************************************************************************************************/
-621,
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "a5a63a356c3d5b0ebd4c72044eafa587.svg";
+
+/***/ },
+/* 2264 */
+/*!*****************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/human_brain.svg ***!
+  \*****************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "2f7b6815ac1a6130d916c3c8e57e1da9.svg";
+
+/***/ },
+/* 2265 */
+/*!******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/human_female.svg ***!
+  \******************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "56d7122dda83eb2486edc8b12a06c517.svg";
+
+/***/ },
+/* 2266 */
+/*!****************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/human_male.svg ***!
+  \****************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "357d9aca676f1f168604818a5ee6ef38.svg";
+
+/***/ },
+/* 2267 */
+/*!********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/macaca_mulatta.svg ***!
+  \********************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "66214fa72aa58ed3471cf5db8dcfb73c.svg";
+
+/***/ },
+/* 2268 */
+/*!***************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/monodelphis_domestica.svg ***!
+  \***************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "6e931c35578a6f5cd2631a8035edc6c4.svg";
+
+/***/ },
+/* 2269 */
+/*!*****************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/mouse_brain.svg ***!
+  \*****************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "ca7eed0e443dfbb1778393a05ff98533.svg";
+
+/***/ },
+/* 2270 */
+/*!******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/mouse_female.svg ***!
+  \******************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "b798241c027f3433267b5fd2c7e162f4.svg";
+
+/***/ },
+/* 2271 */
+/*!****************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/mouse_male.svg ***!
+  \****************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "7227aa2d41f33d2dda795451b732f606.svg";
+
+/***/ },
+/* 2272 */
+/*!*******************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/oryza_sativa_flower_parts.svg ***!
+  \*******************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "731e1923bcc41297de5b17335c6a088b.svg";
+
+/***/ },
+/* 2273 */
+/*!******************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/oryza_sativa_whole_plant.svg ***!
+  \******************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "6fd77ccb71c445a69ecda1d7f2acf3be.svg";
+
+/***/ },
+/* 2274 */
+/*!******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/papio_anubis.svg ***!
+  \******************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "d0808ee85e6f2aa9923a2c02c855d3aa.svg";
+
+/***/ },
+/* 2275 */
+/*!*********************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/rat.svg ***!
+  \*********************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "e8a6d2add179be4126a5236f96b2af5b.svg";
+
+/***/ },
+/* 2276 */
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/solanum_lycopersicum_flower_parts.svg ***!
+  \***************************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "65e77feca458643bf95b5c5e13148726.svg";
+
+/***/ },
+/* 2277 */
+/*!**************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/solanum_lycopersicum_whole_plant.svg ***!
+  \**************************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "2406acaef2f238d3504430eb7bcb9d95.svg";
+
+/***/ },
+/* 2278 */
+/*!**********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/sorghum_bicolor_flower_parts.svg ***!
+  \**********************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "35cac077905e5c012fb5502a2acf0407.svg";
+
+/***/ },
+/* 2279 */
+/*!*********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/sorghum_bicolor_whole_plant.svg ***!
+  \*********************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "6d7f6fa1372c8c9c27c2b2d6d0ecdb87.svg";
+
+/***/ },
+/* 2280 */
+/*!****************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/tetraodon_nigroviridis.svg ***!
+  \****************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "99203386ec5edc719c3a8f3c790aedec.svg";
+
+/***/ },
+/* 2281 */
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/triticum_aestivum_flower_parts.svg ***!
+  \************************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "ccb6040d000ff031a35680692a0c6521.svg";
+
+/***/ },
 /* 2282 */
-/*!********************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/triticum_aestivum_whole_plant.svg ***!
-  \********************************************************************************************************************************************/
-622,
+/*!***********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/triticum_aestivum_whole_plant.svg ***!
+  \***********************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "30d9d46ebd8ed96acef4182f0e5dea5d.svg";
+
+/***/ },
 /* 2283 */
-/*!*********************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/xenopus_tropicalis.svg ***!
-  \*********************************************************************************************************************************/
-623,
-/* 2284 */
 /*!************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/zea_mays_flower_parts.svg ***!
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/xenopus_tropicalis.svg ***!
   \************************************************************************************************************************************/
-624,
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "01aa50632e4ce254ff1abf10f815b2fa.svg";
+
+/***/ },
+/* 2284 */
+/*!***************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/zea_mays_flower_parts.svg ***!
+  \***************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "514455ffe1d2fc47050b3448b6c47304.svg";
+
+/***/ },
 /* 2285 */
-/*!***********************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/assets/svg/zea_mays_whole_plant.svg ***!
-  \***********************************************************************************************************************************/
-625,
+/*!**************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/zea_mays_whole_plant.svg ***!
+  \**************************************************************************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "8d6532733a5ffa657ae1df67a81fda1a.svg";
+
+/***/ },
 /* 2286 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/SelectionIcon.less ***!
