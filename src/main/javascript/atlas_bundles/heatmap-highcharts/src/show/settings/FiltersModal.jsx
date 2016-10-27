@@ -5,21 +5,18 @@ const Glyphicon = require(`react-bootstrap/lib/Glyphicon`);
 
 const PropTypes = require( `../../PropTypes.js`);
 const FilterGroup = require(`./FilterGroup.jsx`);
-const Orderings = require(`./Orderings.jsx`);
 
-const SettingsModal = React.createClass({
+const FiltersModal = React.createClass({
     propTypes: {
         filters: PropTypes.Filter,
         disabled: React.PropTypes.bool.isRequired,
         filtersSelection: PropTypes.Filter,
-        onFilterChange: React.PropTypes.func.isRequired,
-        orderings: PropTypes.Orderings
+        onFilterChange: React.PropTypes.func.isRequired
     },
 
     getInitialState() {
         return {
             filtersSelection: JSON.parse(JSON.stringify(this.props.filtersSelection)),
-            orderingsSelection: this.props.orderings.selected,
             showModal: false
         };
     },
@@ -27,13 +24,11 @@ const SettingsModal = React.createClass({
     _close() {
         this.setState({
             showModal: false,
-            orderingsSelection: this.props.orderings.selected,
             filtersSelection: this.props.filtersSelection
         });
     },
 
     _apply() {
-        this.props.orderings.onSelect(this.state.orderingsSelection);
         this.props.onFilterChange(this.state.filtersSelection);
         this.setState({ showModal: false });
     },
@@ -47,20 +42,16 @@ const SettingsModal = React.createClass({
             <FilterGroup
                 key={filter.name}
                 name={filter.name}
-                values={filter.values.map(filterValue =>
+                values={filter.values.map((filterValue, i) =>
                     ({
-                         name: filterValue,
-                         selected: this.props.filtersSelection.find(filterSelection => filterSelection.name === filter.name).values.includes(filterValue)
+                        name: filterValue,
+                        elements: filter.elements ? filter.elements[i] : null,
+                        selected: this.props.filtersSelection.find(filterSelection => filterSelection.name === filter.name).values.includes(filterValue)
                     })
                 )}
                 onChange={this._onFilterChange}
-                elements={[`one`, `two`, `three`]}
             />
         )
-    },
-
-    _onOrderingsSelect(event) {
-        this.setState({ orderingsSelection: event.target.value })
     },
 
     _onFilterChange(name, values) {
@@ -77,27 +68,16 @@ const SettingsModal = React.createClass({
     render() {
         return (
             <div>
-                {this.props.disabled ?
-                    <Button bsSize="small" onClick={this._open} disabled>
-                        <Glyphicon style={{verticalAlign: `middle`}} glyph="cog"/>
-                        <span style={{verticalAlign: `middle`}}> Heatmap settings</span>
-                    </Button> :
-
-                    <Button bsSize="small" onClick={this._open}>
-                        <Glyphicon style={{verticalAlign: `middle`}} glyph="cog"/>
-                        <span style={{verticalAlign: `middle`}}> Heatmap settings</span>
-                    </Button>
-                }
+                <Button bsSize="small" onClick={this._open} disabled={this.props.disabled} title={this.props.disabled ? `Reset zoom to enable filters` : ``}>
+                    <Glyphicon style={{verticalAlign: `middle`}} glyph="equalizer"/>
+                    <span style={{verticalAlign: `middle`}}> Filters</span>
+                </Button>
 
                 <Modal show={this.state.showModal} onHide={this._close}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Heatmap settings</Modal.Title>
+                        <Modal.Title>Filters</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Orderings
-                            orderings={this.props.orderings}
-                            onSelect={this._onOrderingsSelect}
-                        />
                         {this.props.filters.map(this._createFilter)}
                     </Modal.Body>
                     <Modal.Footer>
@@ -110,4 +90,4 @@ const SettingsModal = React.createClass({
     }
 });
 
-module.exports = SettingsModal;
+module.exports = FiltersModal;
