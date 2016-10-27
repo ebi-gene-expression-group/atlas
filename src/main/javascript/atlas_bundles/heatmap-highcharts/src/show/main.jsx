@@ -3,9 +3,10 @@ const PropTypes = require(`../PropTypes.js`);
 const Button = require(`react-bootstrap/lib/Button`);
 const DownloadProfilesButton = require(`expression-atlas-download-profiles-button`);
 const HeatmapCanvas = require(`./HeatmapCanvas.jsx`);
-const CoexpressionOption = require(`./CoexpressionOption.jsx`);
-const SettingsModal = require(`./settings/SettingsModal.jsx`);
+const OrderingsDropdown = require(`./OrderingsDropdown.jsx`);
+const FiltersModal = require(`./settings/FiltersModal.jsx`);
 const TooltipStateManager = require(`../util/TooltipStateManager.jsx`);
+const CoexpressionOption = require(`./CoexpressionOption.jsx`);
 
 require('./SeriesLegend.less');
 
@@ -45,14 +46,21 @@ const HeatmapOptions = React.createClass({
 
     render() {
         return (
-            <div className="gxaHeatmapCountAndLegend" style={{paddingBottom: `15px`, position: `sticky`}}>
+            <div className="gxaHeatmapCountAndLegend" style={{paddingBottom: `15px`, position: `sticky`, zIndex: `1`}}>
                 <div style={{display: `inline-block`, verticalAlign: `top`}}>
                     {this.props.introductoryMessage}
                 </div>
 
                 <div style={{display: `inline-block`, verticalAlign: `top`, float: `right`, marginRight: this.props.marginRight}}>
                     <div style={{display: `inline-block`}}>
-                        <SettingsModal
+                        <OrderingsDropdown
+                            orderings={this.props.orderings}
+                            disabled={this.props.disableSettings}
+                        />
+                    </div>
+
+                    <div style={{display: `inline-block`, paddingLeft: `10px`}}>
+                        <FiltersModal
                             filters={this.props.filters}
                             disabled={this.props.disableSettings}
                             filtersSelection={this.props.filtersSelection}
