@@ -1,6 +1,5 @@
 const React = require( `react`);
 const Dropdown = require(`react-bootstrap/lib/Dropdown`);
-const DropdownButton = require(`react-bootstrap/lib/DropdownButton`);
 const MenuItem = require(`react-bootstrap/lib/MenuItem`);
 const Glyphicon = require(`react-bootstrap/lib/Glyphicon`);
 const PropTypes = require( `../PropTypes.js`);
@@ -31,11 +30,11 @@ const OrderingsDropdown = React.createClass({
     render() {
         return (
             <span>
-                <Dropdown bsSize="small" id="orderings-dropdown" onSelect={this.handleChange} title={this.props.disabled ? `Reset zoom to enable sorting options` : ``}>
-                    <Dropdown.Toggle disabled={this.props.disabled}>
+                <Dropdown id="orderings-dropdown" onSelect={this.handleChange} title={this.props.disabled ? `Reset zoom to enable sorting options` : ``}>
+                    <Dropdown.Toggle bsSize="small" disabled={this.props.disabled}>
                         <Glyphicon glyph={this._orderingIcon(this.props.orderings.selected)} /> {this.props.orderings.selected}
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu bsSize="small">
                         {this.props.orderings.available.map(orderingName =>
                             (
                                 <MenuItem style={{textDecoration: `none`}} key={orderingName}>{orderingName}</MenuItem>
