@@ -16,10 +16,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
 
+@Named
 public class BaselineExperimentSearchResultProducer {
 
     private final ExperimentTrader experimentTrader;
 
+    @Inject
     public BaselineExperimentSearchResultProducer(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
     }
