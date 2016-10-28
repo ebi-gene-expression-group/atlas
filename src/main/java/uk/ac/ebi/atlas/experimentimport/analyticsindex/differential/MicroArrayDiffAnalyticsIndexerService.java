@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.Map;
 
 @Named
+@Deprecated
 public class MicroArrayDiffAnalyticsIndexerService {
 
     private final EFOLookupService efoParentsLookupService;

@@ -70,8 +70,7 @@ public class ConditionPropertiesBuilderTest {
 
         given(efoLookupService.getLabels(anySetOf(String.class))).willReturn(ImmutableSet.<String>of());
 
-        subject = new DifferentialConditionsBuilder();
-        subject.setEfoLookupService(efoLookupService);
+        subject = new DifferentialConditionsBuilder(efoLookupService);
     }
 
     @Test

@@ -85,12 +85,10 @@ public class ExperimentCRUDIT {
 
         when(efoLookupServiceMock.getLabels(anySetOf(String.class))).thenReturn(ImmutableSet.<String>of());
 
-        BaselineConditionsBuilder baselineConditionsBuilder = new BaselineConditionsBuilder();
-        baselineConditionsBuilder.setEfoLookupService(efoLookupServiceMock);
+        BaselineConditionsBuilder baselineConditionsBuilder = new BaselineConditionsBuilder(efoLookupServiceMock);
         BaselineConditionsIndex baselineConditionIndex = new BaselineConditionsIndex(solrClientMock, baselineConditionsBuilder);
 
-        DifferentialConditionsBuilder differentialConditionsBuilder = new DifferentialConditionsBuilder();
-        differentialConditionsBuilder.setEfoLookupService(efoLookupServiceMock);
+        DifferentialConditionsBuilder differentialConditionsBuilder = new DifferentialConditionsBuilder(efoLookupServiceMock);
         DifferentialConditionsIndex differentialConditionIndex = new DifferentialConditionsIndex(solrClientMock, differentialConditionsBuilder);
 
         ConditionsIndexTrader conditionsIndexTrader = new ConditionsIndexTrader(baselineConditionIndex, differentialConditionIndex);

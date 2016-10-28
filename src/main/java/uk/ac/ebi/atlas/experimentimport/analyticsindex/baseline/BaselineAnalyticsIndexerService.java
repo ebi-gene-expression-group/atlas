@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDAO;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
+import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPoint;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
@@ -21,7 +22,8 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
-@Named
+@Named //rename BaselineExperimentDataPointStreamFactory
+@Deprecated
 public class BaselineAnalyticsIndexerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineAnalyticsIndexerService.class);

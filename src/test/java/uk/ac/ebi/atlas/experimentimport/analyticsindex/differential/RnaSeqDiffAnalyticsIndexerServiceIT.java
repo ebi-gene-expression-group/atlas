@@ -61,7 +61,8 @@ public class RnaSeqDiffAnalyticsIndexerServiceIT {
         MockitoAnnotations.initMocks(this);
         RnaSeqDiffAnalyticsDocumentStreamIndexer rnaSeqDiffAnalyticsDocumentStreamIndexer = new RnaSeqDiffAnalyticsDocumentStreamIndexer(rnaSeqDifferentialAnalyticsInputStreamFactory, analyticsIndexDAOMock);
         given(analyticsIndexDAOMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), anyInt())).willAnswer(storeDocuments());
-        subject = new RnaSeqDiffAnalyticsIndexerService(efoParentsLookupService, conditionsBuilder, rnaSeqDiffAnalyticsDocumentStreamIndexer);
+        subject = new RnaSeqDiffAnalyticsIndexerService(efoParentsLookupService, conditionsBuilder,
+                rnaSeqDifferentialAnalyticsInputStreamFactory, rnaSeqDiffAnalyticsDocumentStreamIndexer);
     }
 
     Answer<Integer> storeDocuments() {

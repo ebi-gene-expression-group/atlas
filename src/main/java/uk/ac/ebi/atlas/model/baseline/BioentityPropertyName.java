@@ -1,46 +1,43 @@
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
-import org.apache.commons.lang.Validate;
+
+import java.text.MessageFormat;
 
 public enum BioentityPropertyName {
     UNKNOWN,
-    GENE_BIOTYPE("gene_biotype", true, true, true, false, false),
-    HGNC_SYMBOL("hgnc_symbol", true, true),
-    RGD_SYMBOL("rgd_symbol", true, true),
-    FLYBASENAME_GENE("flybasename_gene", false, true),
-    SYMBOL("symbol", true, true, true, false, true),
-    MIRBASE_NAME("mirbase_name", true, true),
-    SYNONYM("synonym", true, true, true, false, false),
-    DESCRIPTION("description", false, true, true, false, false),
-    MGI_ID("mgi_id", true, true, true, false, false),
-    MGI_DESCRIPTION("mgi_description", false, true, true, false, false),
-    GOTERM("goterm", false, true, false, false, true),
-    GO("go", true, true, true, true, false),
-    POTERM("poterm", false, true, false, false, true),
-    PO("po", true, true, true, false, false),
-    INTERPROTERM("interproterm", false, true),
-    INTERPRO("interpro", true, true, true, true, false),
-    PATHWAYNAME("pathwayname", false, true),
-    PATHWAYID("pathwayid", true, true),
-    UNIPROT("uniprot", true, true, true, false, false),
-    DESIGN_ELEMENT("design_element", true, true, true, false, false),
-    ORTHOLOG("ortholog", false, false, true, false, false),
-    MIRBASE_ACCESSION("mirbase_accession", false, false, true, false, false),
-    ENSGENE("ensgene", false, false, true, false, false),
-    ENTREZGENE("entrezgene", false, false, true, false, false),
-    ENSFAMILY_DESCRIPTION("ensfamily_description", false, false, true, false, false),
-    MIRBASE_ID("mirbase_id", false, false, true, false, false),
-    MIRBASE_SEQUENCE("mirbase_sequence", false, false, true, false, false);
+    IDENTIFIER_SEARCH("identifierSearch", false),
+    GENE_BIOTYPE("gene_biotype", true),
+    HGNC_SYMBOL("hgnc_symbol", true),
+    RGD_SYMBOL("rgd_symbol", true),
+    FLYBASENAME_GENE("flybasename_gene", false),
+    SYMBOL("symbol", true),
+    MIRBASE_NAME("mirbase_name", true),
+    SYNONYM("synonym", true),
+    DESCRIPTION("description", false),
+    MGI_ID("mgi_id", true),
+    MGI_DESCRIPTION("mgi_description", false),
+    GOTERM("goterm", false),
+    GO("go", true),
+    POTERM("poterm", false),
+    PO("po", true),
+    INTERPROTERM("interproterm", false),
+    INTERPRO("interpro", true),
+    PATHWAYNAME("pathwayname", false),
+    PATHWAYID("pathwayid", true),
+    UNIPROT("uniprot", true),
+    DESIGN_ELEMENT("design_element", true),
+    ORTHOLOG("ortholog", false),
+    MIRBASE_ACCESSION("mirbase_accession", false),
+    ENSGENE("ensgene", false),
+    ENTREZGENE("entrezgene", false),
+    ENSFAMILY_DESCRIPTION("ensfamily_description", false),
+    MIRBASE_ID("mirbase_id", false),
+    MIRBASE_SEQUENCE("mirbase_sequence", false);
 
-    private String name;
-    private boolean isId;
-    private boolean forAnalyticsIndex;
-
-    //TODO remove these because I'm being silly
-    private boolean forGenePage;
-    private boolean forGeneSetPage;
-    private boolean forExperimentRowTooltip;
+    public final String name;
+    public final boolean isId;
 
     static private ImmutableMap<String, BioentityPropertyName> propertiesByName;
 
@@ -52,40 +49,29 @@ public enum BioentityPropertyName {
         propertiesByName = b.build();
     }
 
-    public static boolean isIdentifierSearchKeyword(String propertyName) {
-        BioentityPropertyName n = propertiesByName.get(propertyName.toLowerCase());
-        return n != null && n.forAnalyticsIndex && n.isId;
+    public String asAnalyticsIndexKeyword(){
+        return MessageFormat.format("keyword_{0}",name);
     }
 
-    public static boolean includeInIdentifierSearchAsText(String propertyName) {
-        BioentityPropertyName n = propertiesByName.get(propertyName.toLowerCase());
-        return n != null && !n.isId && n.forAnalyticsIndex;
+    public static BioentityPropertyName getByAnalyticsIndexKeyword(String keywordName){
+        return getByName(keywordName.replace("keyword_", ""));
     }
 
+    public static BioentityPropertyName getByName(String propertyName){
+        if (Strings.isNullOrEmpty(propertyName)){
+            return UNKNOWN;
+        }
+        BioentityPropertyName n = propertiesByName.get(propertyName.toLowerCase());
+        return n == null ? UNKNOWN : n;
+    }
 
     BioentityPropertyName() {
-        this("", false, false);
+        this("", false);
     }
 
-    BioentityPropertyName(String name, boolean isId, boolean forAnalyticsIndex) {
-        this(name, isId, forAnalyticsIndex, false, false, false);
-    }
-
-    BioentityPropertyName(String name, boolean isId, boolean forAnalyticsIndex, boolean forGenePage, boolean
-            forGeneSetPage, boolean forExperimentRowToolTip) {
-        /*an id has to be for the analytics index
-         because use a notion of being an "id" to:
-            - store it in a keyword field there
-            - suggest it for searches
-            - retrieve it quickly
-        */
-        Validate.isTrue(!(isId && !forAnalyticsIndex));
+    BioentityPropertyName(String name, boolean isId) {
         this.name = name;
         this.isId = isId;
-        this.forAnalyticsIndex = forAnalyticsIndex;
-        this.forGenePage = forGenePage;
-        this.forGeneSetPage = forGeneSetPage;
-        this.forExperimentRowTooltip = forExperimentRowToolTip;
     }
 
 

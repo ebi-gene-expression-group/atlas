@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.*;
 
@@ -63,10 +64,24 @@ public class BaselineExperimentTest {
         when(assayGroupsMock.getAssayAccessions()).thenReturn(Sets.newHashSet(RUN_ACCESSION1, RUN_ACCESSION2));
         when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newHashSet("g1", "g2"));
 
-        subject = new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
-                experimentalFactorsMock,
-                                         "description", "displayName", "", new Species("species","species", "kingdom",
-                "ensembl"), true, Sets.newHashSet(PUBMEDID), experimentDesignMock, assayGroupsMock, Collections.<String>emptyList(), Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>());
+        subject = mockExperiment(experimentalFactorsMock, experimentDesignMock, assayGroupsMock);
+
+    }
+
+
+    public static BaselineExperiment mockExperiment(ExperimentalFactors experimentalFactors, ExperimentDesign
+            experimentDesign, AssayGroups assayGroups){
+            return new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
+                    experimentalFactors,
+                    "description", "displayName", "", new Species("species","species", "kingdom",
+                    "ensembl"), true, Sets.newHashSet(PUBMEDID), experimentDesign, assayGroups, Collections.<String>emptyList(),
+                    Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>());
+
+    }
+
+    public static BaselineExperiment mockExperiment(){
+        return mockExperiment(Mockito.mock(ExperimentalFactors.class), Mockito.mock(ExperimentDesign.class),
+                Mockito.mock(AssayGroups.class));
     }
 
 

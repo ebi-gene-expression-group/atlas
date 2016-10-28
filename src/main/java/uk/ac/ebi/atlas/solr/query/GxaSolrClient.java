@@ -14,6 +14,7 @@ import org.apache.solr.common.SolrException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -80,6 +81,7 @@ public class GxaSolrClient {
         return results;
     }
 
+    @Deprecated
     public SortedSetMultimap<String, String> queryForProperties(SolrQuery solrQuery){
 
         QueryResponse queryResponse = query(solrQuery);
@@ -87,6 +89,21 @@ public class GxaSolrClient {
         SortedSetMultimap<String, String> results = TreeMultimap.create();
         for (SolrDocument document : queryResponse.getResults()) {
             String key = document.getFieldValue(PROPERTY_NAME_FIELD).toString();
+            String value = document.getFieldValue(PROPERTY_VALUE_FIELD).toString();
+            results.put(key, value);
+        }
+
+        return results;
+
+    }
+
+    public SortedSetMultimap<BioentityPropertyName, String> queryForProperties2(SolrQuery solrQuery){
+
+        QueryResponse queryResponse = query(solrQuery);
+
+        SortedSetMultimap<BioentityPropertyName, String> results = TreeMultimap.create();
+        for (SolrDocument document : queryResponse.getResults()) {
+            BioentityPropertyName key = BioentityPropertyName.getByName(document.getFieldValue(PROPERTY_NAME_FIELD).toString());
             String value = document.getFieldValue(PROPERTY_VALUE_FIELD).toString();
             results.put(key, value);
         }

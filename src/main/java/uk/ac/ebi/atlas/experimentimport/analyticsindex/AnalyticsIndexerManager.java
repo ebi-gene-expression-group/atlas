@@ -2,18 +2,22 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.TreeMultimap;
+import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsTrader;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
 import uk.ac.ebi.atlas.utils.ExperimentSorter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -35,6 +39,7 @@ public class AnalyticsIndexerManager extends Observable {
     private AnalyticsIndexerService analyticsIndexerService;
     private final AnalyticsIndexerMonitor analyticsIndexerMonitor;
     private final ExperimentTrader experimentTrader;
+    private final BioentityIdentifiersReader bioentityIdentifiersReader;
     private final IdentifierSearchTermsTrader identifierSearchTermsTrader;
     private final ExperimentSorter experimentSorter;
 
@@ -48,19 +53,21 @@ public class AnalyticsIndexerManager extends Observable {
     public AnalyticsIndexerManager(AnalyticsIndexerService analyticsIndexerService,
                                    AnalyticsIndexerMonitor analyticsIndexerMonitor,
                                    ExperimentTrader experimentTrader,
+                                   BioentityIdentifiersReader bioentityIdentifiersReader,
                                    IdentifierSearchTermsTrader identifierSearchTermsTrader,
                                    ExperimentSorter experimentSorter) {
         this.analyticsIndexerService = analyticsIndexerService;
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
         this.experimentTrader = experimentTrader;
+        this.bioentityIdentifiersReader = bioentityIdentifiersReader;
         this.identifierSearchTermsTrader = identifierSearchTermsTrader;
         this.experimentSorter = experimentSorter;
     }
 
 
     public int addToAnalyticsIndex(String experimentAccession) {
-        ImmutableMap<String, String> bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap(experimentAccession);
-        return addToAnalyticsIndex(experimentAccession, bioentityIdToIdentifierSearch, Integer.parseInt(DEFAULT_SOLR_BATCH_SIZE_8192));
+        return addToAnalyticsIndex2(experimentAccession, identifierSearchTermsTrader.getMap2
+                (bioentityIdentifiersReader.getBioentityIdsFromExperiment(experimentAccession)));
     }
 
 
@@ -107,14 +114,28 @@ public class AnalyticsIndexerManager extends Observable {
 
         deleteObserver(analyticsIndexerMonitor);
     }
+    //
 
+    private int addToAnalyticsIndex2(String experimentAccession,
+                                     ImmutableMap<String, Map<BioentityPropertyName, Collection<String>>> bioentityIdToIdentifierSearch) {
+        checkNotNull(experimentAccession);
+        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+        analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
 
+        //TODO make it return a message
+        UpdateResponse response= analyticsIndexerService.index2(experiment, bioentityIdToIdentifierSearch);
+
+        return 1337;
+    }
+
+    @Deprecated
     private int addToAnalyticsIndex(String experimentAccession, ImmutableMap<String, String> bioentityIdToIdentifierSearch, int batchSize) {
         checkNotNull(experimentAccession);
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
         analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
         return analyticsIndexerService.index(experiment, bioentityIdToIdentifierSearch, batchSize);
     }
+
 
 
     private void indexPublicExperimentsConcurrently(Collection<String> experimentAccessions, ImmutableMap<String, String> bioentityIdToIdentifierSearch, int threads, int batchSize, int timeout) {

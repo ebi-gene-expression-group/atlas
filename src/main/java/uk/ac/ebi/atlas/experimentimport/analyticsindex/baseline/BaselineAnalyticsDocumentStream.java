@@ -21,6 +21,7 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+@Deprecated
 public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineAnalyticsDocumentStream.class);

@@ -19,6 +19,10 @@ public abstract class ConditionsBuilder {
 
     private EFOLookupService efoLookupService;
 
+    public ConditionsBuilder(EFOLookupService efoLookupService){
+        this.efoLookupService = efoLookupService;
+    }
+
     @Inject
     public void setEfoLookupService(EFOLookupService efoLookupService) {
         this.efoLookupService = efoLookupService;
