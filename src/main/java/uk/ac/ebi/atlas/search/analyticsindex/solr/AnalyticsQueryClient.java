@@ -4,7 +4,6 @@ import com.google.common.base.Stopwatch;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.jayway.jsonpath.JsonPath;
-import org.apache.commons.lang.Validate;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +14,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -70,7 +70,7 @@ public class AnalyticsQueryClient {
         return result;
     }
 
-    private boolean responseNonEmpty(String jsonFromSolr){
+    boolean responseNonEmpty(String jsonFromSolr){
         Integer numFound =  JsonPath.read(jsonFromSolr, "$.response.numFound");
         return numFound!= null && numFound>0;
     }
@@ -150,12 +150,6 @@ public class AnalyticsQueryClient {
             return this;
         }
 
-        private void addQueryClause(Field searchField, SemanticQuery searchValue) {
-            if (searchValue.isNotEmpty()) {
-                queryClausesBuilder.add(new AnalyticsSolrQueryTree(searchField.toString(), searchValue));
-            }
-        }
-
         private void addQueryClause(Field searchField, String searchValue) {
             if (!searchValue.isEmpty()) {
                 queryClausesBuilder.add(new AnalyticsSolrQueryTree(searchField.toString(), searchValue));
@@ -163,21 +157,32 @@ public class AnalyticsQueryClient {
         }
 
         public Builder queryIdentifierOrConditionsSearch(SemanticQuery query) {
+
             queryClausesBuilder.add(new AnalyticsSolrQueryTree(
                     AnalyticsSolrQueryTree.Operator.OR,
-                    new AnalyticsSolrQueryTree(IDENTIFIER_SEARCH.toString(), query),
-                    new AnalyticsSolrQueryTree(CONDITIONS_SEARCH.toString(), query)
+                    AnalyticsSolrQueryTree.createForIdentifierSearch(query),
+                    conditionsSearchQuery(query)
             ));
             return this;
         }
 
         public Builder queryIdentifierSearch(SemanticQuery geneQuery) {
-            addQueryClause(IDENTIFIER_SEARCH, geneQuery);
+            queryClausesBuilder.add(AnalyticsSolrQueryTree.createForIdentifierSearch(geneQuery));
             return this;
         }
 
+        private AnalyticsSolrQueryTree conditionsSearchQuery(SemanticQuery conditionQuery){
+            ImmutableList.Builder<String> b = ImmutableList.builder();
+            for(SemanticQueryTerm term: conditionQuery.terms()){
+                if(term.hasValue()){
+                    b.add(term.value());
+                }
+            }
+            return new AnalyticsSolrQueryTree(CONDITIONS_SEARCH.toString(), b.build().toArray(new String[0]));
+        }
+
         public Builder queryConditionsSearch(SemanticQuery conditionQuery) {
-            addQueryClause(CONDITIONS_SEARCH, conditionQuery);
+            queryClausesBuilder.add(conditionsSearchQuery(conditionQuery));
             return this;
         }
 
@@ -234,7 +239,8 @@ public class AnalyticsQueryClient {
         if (queryClauses.isEmpty()) {
             return ImmutableList.of(Builder.DEFAULT_QUERY);
         } else {
-            return ImmutableList.of(new AnalyticsSolrQueryTree(AND, queryClauses.toArray(new AnalyticsSolrQueryTree[0])).toString());
+            return new AnalyticsSolrQueryTree(AND, queryClauses.toArray(new
+                    AnalyticsSolrQueryTree[0])).toQueryPlan();
         }
 
     }

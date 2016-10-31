@@ -1,24 +1,17 @@
 package uk.ac.ebi.atlas.model.analyticsindex;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.TreeMultimap;
-import org.apache.solr.common.SolrInputDocument;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static uk.ac.ebi.atlas.model.baseline.BioentityPropertyName.*;
 
-import java.util.*;
-
 public abstract class ExperimentDataPoint {
 
-    public final String bioentityIdentifier;
-
-    public static ImmutableList<BioentityPropertyName> bioentityPropertyNames = ImmutableList.of(
+    public static final ImmutableList<BioentityPropertyName> bioentityPropertyNames = ImmutableList.of(
         GENE_BIOTYPE,
         HGNC_SYMBOL,
         RGD_SYMBOL,
@@ -40,6 +33,9 @@ public abstract class ExperimentDataPoint {
         UNIPROT,
         DESIGN_ELEMENT
     );
+
+    public final String bioentityIdentifier;
+
     protected Map<String, Object> propertyMap = new HashMap<>();
 
     public ExperimentDataPoint(String bioentityIdentifier, Experiment experiment, String conditionSearch){

@@ -26,6 +26,7 @@ public abstract class SemanticQueryTerm {
                 : String.format("property_name:\"%s\" AND property_value_search:\"%s\"", category(), value().replace(":", "\\:").replace("[", "\\[").replace("]", "\\]"));
     }
 
+    @Deprecated
     public String asAnalyticsIndexQueryLiteral(){
         return hasNoCategory()
                 ? String.format("\"%s\"", value())
