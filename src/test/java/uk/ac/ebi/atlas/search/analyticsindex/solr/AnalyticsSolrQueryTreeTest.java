@@ -19,7 +19,7 @@ public class AnalyticsSolrQueryTreeTest {
                 "identifierSearch",
                 SemanticQuery.create(SemanticQueryTerm.create("GO:0008150", "go")));
 
-        assertThat(subject.toString(), is("identifierSearch:(\"go:{GO:0008150}\")"));
+        assertThat(subject.toQueryPlan().get(0), is("identifierSearch:(\"go:{GO:0008150}\")"));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class AnalyticsSolrQueryTreeTest {
                         SemanticQueryTerm.create("PIM1", "synonym"),
                         SemanticQueryTerm.create("zinc finger")));
 
-        assertThat(subject.toString(), is("identifierSearch:(\"go:{GO:0008150}\" OR \"synonym:{PIM1}\" OR \"zinc finger\")"));
+        assertThat(subject.toQueryPlan().get(0), is("identifierSearch:(\"go:{GO:0008150}\" OR \"synonym:{PIM1}\" OR \"zinc finger\")"));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class AnalyticsSolrQueryTreeTest {
                 )
         );
 
-        assertThat(subject.toString(), is(
+        assertThat(subject.toQueryPlan().get(0), is(
                 "identifierSearch:(\"go:{GO:0008150}\" OR \"synonym:{PIM1}\" OR \"zinc finger\")" +
                 " OR " +
                 "conditionsSearch:(\"efo:{liver}\" OR \"cancer\")"
@@ -91,7 +91,7 @@ public class AnalyticsSolrQueryTreeTest {
                 )
         );
 
-        assertThat(subject.toString(), is(
+        assertThat(subject.toQueryPlan().get(0), is(
                 "identifierSearch:(\"go:{GO:0008150}\" OR \"synonym:{PIM1}\" OR \"zinc finger\")" +
                 " OR " +
                 "conditionsSearch:(\"efo:{liver}\" OR \"cancer\")" +

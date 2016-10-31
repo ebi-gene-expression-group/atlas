@@ -202,19 +202,6 @@ public class AnalyticsQueryClient {
             return this;
         }
 
-        @Deprecated
-        public SolrQuery build() {
-            List<AnalyticsSolrQueryTree> queryClauses = queryClausesBuilder.build();
-
-            if (queryClauses.isEmpty()) {
-                solrQuery.setQuery(DEFAULT_QUERY);
-            } else {
-                solrQuery.setQuery(new AnalyticsSolrQueryTree(AND, queryClauses.toArray(new AnalyticsSolrQueryTree[0])).toString());
-            }
-
-            return solrQuery;
-        }
-
         public String fetch(){
 
             List<String> qsForQueryClauses = qsForQueryClauses(queryClausesBuilder.build());
