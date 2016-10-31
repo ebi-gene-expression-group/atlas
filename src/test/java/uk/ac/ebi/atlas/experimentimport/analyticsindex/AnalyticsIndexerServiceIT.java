@@ -10,10 +10,6 @@ import org.mockito.Mock;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline.BaselineAnalyticsIndexerService;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.MicroArrayDiffAnalyticsIndexerService;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.RnaSeqDiffAnalyticsIndexerService;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.BioentityPropertiesDao;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -21,7 +17,6 @@ import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
 
 import javax.inject.Inject;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,10 +32,6 @@ public class AnalyticsIndexerServiceIT {
 
     @Mock
     SolrClient solrClient;
-    @Mock AnalyticsIndexDAO analyticsIndexDAO;
-    @Mock BaselineAnalyticsIndexerService baselineAnalyticsIndexerService;
-    @Mock RnaSeqDiffAnalyticsIndexerService diffAnalyticsIndexerService;
-    @Mock MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService;
 
     @Inject
     ExperimentTrader experimentTrader;
@@ -58,8 +49,8 @@ public class AnalyticsIndexerServiceIT {
     
     @Before
     public void setUp(){
-        subject = new AnalyticsIndexerService(solrClient,experimentDataPointStreamFactory, analyticsIndexDAO,
-                baselineAnalyticsIndexerService, diffAnalyticsIndexerService, microArrayDiffAnalyticsIndexerService);
+        subject = new AnalyticsIndexerService(solrClient,experimentDataPointStreamFactory
+        );
     }
 
     @Test

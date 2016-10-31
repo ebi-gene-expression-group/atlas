@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analyticsindex.support;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -16,7 +16,6 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 

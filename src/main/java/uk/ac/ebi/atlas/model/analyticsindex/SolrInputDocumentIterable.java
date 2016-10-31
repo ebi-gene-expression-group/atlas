@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analyticsindex;
+package uk.ac.ebi.atlas.model.analyticsindex;
 
 
 import com.google.common.base.Joiner;

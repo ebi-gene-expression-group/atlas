@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
-import com.google.common.collect.UnmodifiableIterator;
+import com.google.common.base.Throwables;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.UpdateResponse;
@@ -8,16 +8,9 @@ import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline.BaselineAnalyticsIndexerService;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.RnaSeqDiffAnalyticsIndexerService;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.MicroArrayDiffAnalyticsIndexerService;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.analyticsindex.SolrInputDocumentIterable;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,98 +23,91 @@ public class AnalyticsIndexerService {
 
     private final SolrClient solrClient;
     private final ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
-    private final AnalyticsIndexDAO analyticsIndexDAO;
-    private final BaselineAnalyticsIndexerService baselineAnalyticsIndexerService;
-    private final RnaSeqDiffAnalyticsIndexerService diffAnalyticsIndexerService;
-    private final MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService;
 
     @Inject
     public AnalyticsIndexerService(@Qualifier("analyticsSolrClient") SolrClient solrClient,
-                                   ExperimentDataPointStreamFactory experimentDataPointStreamFactory,
-
-            AnalyticsIndexDAO analyticsIndexDAO, BaselineAnalyticsIndexerService baselineAnalyticsIndexerService, RnaSeqDiffAnalyticsIndexerService diffAnalyticsIndexerService, MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService) {
+                                   ExperimentDataPointStreamFactory experimentDataPointStreamFactory) {
         this.solrClient = solrClient;
         this.experimentDataPointStreamFactory = experimentDataPointStreamFactory;
-        this.analyticsIndexDAO = analyticsIndexDAO;
-        this.baselineAnalyticsIndexerService = baselineAnalyticsIndexerService;
-        this.diffAnalyticsIndexerService = diffAnalyticsIndexerService;
-        this.microArrayDiffAnalyticsIndexerService = microArrayDiffAnalyticsIndexerService;
     }
 
 
-    Iterable<SolrInputDocument> solrInputDocuments(Experiment experiment, Map<String,Map<BioentityPropertyName,
-            Set<String>>> bioentityIdToIdentifierSearch) {
-return new SolrInputDocumentIterable(experimentDataPointStreamFactory.stream(experiment).iterator(),
-        bioentityIdToIdentifierSearch);
+    Iterable<SolrInputDocument> solrInputDocuments(Experiment experiment,
+                                                   Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch) {
+        return new SolrInputDocumentIterable(experimentDataPointStreamFactory.stream(experiment).iterator(), bioentityIdToIdentifierSearch);
 
     }
 
-    public int index2(Experiment experiment, Map<String,
-            Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch) {
+    public int index(Experiment experiment, Map<String,
+            Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch, int batchSize) {
 
-        final int BATCH_SIZE = 8000;
-        List<SolrInputDocument> toLoad = new ArrayList<>(BATCH_SIZE);
+        List<SolrInputDocument> toLoad = new ArrayList<>(batchSize);
         int addedIntoThisBatch = 0;
-        int addedInTotal= 0;
+        int addedInTotal = 0;
         try {
             Iterator<SolrInputDocument> it = solrInputDocuments(experiment, bioentityIdToIdentifierSearch).iterator();
-            while(it.hasNext()){
-                while(addedIntoThisBatch<BATCH_SIZE && it.hasNext()){
+            while (it.hasNext()) {
+                while (addedIntoThisBatch < batchSize && it.hasNext()) {
                     toLoad.add(it.next());
                     addedIntoThisBatch++;
                 }
                 UpdateResponse r = solrClient.add(toLoad);
-                LOGGER.info("Sent {} documents for {}, status: {}, qTime:{} ",
-                        addedIntoThisBatch,
-                        experiment.getAccession(), r.getStatus(), r.getQTime());
-                addedInTotal+=addedIntoThisBatch;
-                addedIntoThisBatch=0;
-                toLoad = new ArrayList<>(BATCH_SIZE);
+                LOGGER.info("Sent {} documents for {}, qTime:{} ",
+                        addedIntoThisBatch,experiment.getAccession(), r.getQTime());
+                addedInTotal += addedIntoThisBatch;
+                addedIntoThisBatch = 0;
+                toLoad = new ArrayList<>(batchSize);
             }
-
-        } catch (SolrServerException e) {
-            LOGGER.error(e.getMessage());
-
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
+        } catch (IOException| SolrServerException e) {
+            LOGGER.error(e.getMessage(), e);
         }
-        LOGGER.info("Finished: "+experiment.getAccession());
+        LOGGER.info("Finished: " + experiment.getAccession());
         return addedInTotal;
 
     }
 
-    public int index(Experiment experiment, Map<String, String> bioentityIdToIdentifierSearch, int batchSize) {
-       ExperimentType experimentType = experiment.getType();
 
-        if (experimentType.isBaseline()) {
-            return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);
-        } else if (experimentType == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
-            return diffAnalyticsIndexerService.index((DifferentialExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);
-        } else if (experimentType == ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL ||
-                   experimentType == ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL ||
-                   experimentType == ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL) {
-            return microArrayDiffAnalyticsIndexerService.index((MicroarrayExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);
-        }
-
-        throw new UnsupportedOperationException("No analytics loader for experiment type " + experimentType);
-    }
-
-    // synchronized necessary because analyticsIndexDao#delete does an explicit commit
+    // synchronized necessary because we do an explicit commit here
     public synchronized void deleteExperimentFromIndex(String accession) {
         LOGGER.info("Deleting documents for {}", accession);
-        analyticsIndexDAO.deleteDocumentsForExperiment(accession);
+        try {
+            solrClient.deleteByQuery("experimentAccession:" + accession);
+            solrClient.commit();
+        } catch (IOException | SolrServerException e) {
+            rollBackAndPropagateException(e);
+        }
         LOGGER.info("Done deleting documents for {}", accession);
     }
 
     public synchronized void deleteAll() {
         LOGGER.info("Deleting all documents");
-        analyticsIndexDAO.deleteAllDocuments();
+        try {
+            solrClient.deleteByQuery("*:*");
+            solrClient.commit();
+            solrClient.optimize();
+        } catch (IOException | SolrServerException e) {
+            rollBackAndPropagateException(e);
+        }
         LOGGER.info("Done deleting all documents");
     }
 
     public synchronized void optimize() {
         LOGGER.info("Optimizing index");
-        analyticsIndexDAO.optimize();
+        try {
+            solrClient.optimize();
+        } catch (IOException | SolrServerException e) {
+            rollBackAndPropagateException(e);
+        }
         LOGGER.info("Index optimized successfully");
+    }
+
+    private void rollBackAndPropagateException(Exception exception) {
+        try {
+            LOGGER.error(exception.getMessage(), exception);
+            solrClient.rollback();
+            Throwables.propagate(exception);
+        } catch (IOException | SolrServerException e) {
+            LOGGER.error(e.getMessage());
+        }
     }
 }

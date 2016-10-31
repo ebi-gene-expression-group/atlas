@@ -46,9 +46,9 @@ public class AnalyticsIndexerController {
                 if (ExperimentType.get(experimentType) == null) {
                     throw new IllegalArgumentException("Unknown experiment type " + experimentType);
                 }
-                analyticsIndexerManager.indexPublicExperiments(ExperimentType.get(experimentType));
+                analyticsIndexerManager.indexPublicExperiments(ExperimentType.get(experimentType),numThreads, batchSize, timeout);
             } else {
-                analyticsIndexerManager.indexAllPublicExperiments(numThreads, timeout);
+                analyticsIndexerManager.indexAllPublicExperiments(numThreads, batchSize, timeout);
             }
         } catch (InterruptedException e) {
             return Arrays.deepToString(e.getStackTrace());

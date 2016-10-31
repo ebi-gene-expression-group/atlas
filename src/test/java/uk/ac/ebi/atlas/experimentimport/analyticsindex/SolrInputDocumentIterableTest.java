@@ -8,12 +8,12 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPoint;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
+import uk.ac.ebi.atlas.model.analyticsindex.SolrInputDocumentIterable;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperimentTest;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 import static org.hamcrest.Matchers.*;
 import static uk.ac.ebi.atlas.model.baseline.BioentityPropertyName.*;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -35,7 +35,7 @@ public class SolrInputDocumentIterableTest {
                     ));
 
 
-    ExperimentDataPoint experimentDataPoint = new BaselineExperimentDataPoint(
+    ExperimentDataPoint baselineExperimentDataPoint = new BaselineExperimentDataPoint(
             BaselineExperimentTest.mockExperiment(),
             new BaselineAnalytics(bioentityIdentifier, "column_name", 13.37),
             "condition search");
@@ -46,7 +46,7 @@ public class SolrInputDocumentIterableTest {
     public void testBaselineRecord(){
 
         Iterator<SolrInputDocument> subject =
-                new SolrInputDocumentIterable(ImmutableList.of(experimentDataPoint).iterator(), bioentityPropertyNames).iterator();
+                new SolrInputDocumentIterable(ImmutableList.of(baselineExperimentDataPoint).iterator(), bioentityPropertyNames).iterator();
 
         assertEquals(true, subject.hasNext());
         SolrInputDocument result = subject.next();
@@ -69,9 +69,6 @@ public class SolrInputDocumentIterableTest {
 
         //we do not index everything
         assertThat(result.keySet(), not(hasItem(ORTHOLOG.asAnalyticsIndexKeyword())));
-
-
-
 
     }
 

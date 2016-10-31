@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline;
+package uk.ac.ebi.atlas.model.analyticsindex;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.SetMultimap;
@@ -6,17 +6,10 @@ import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
-import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPoint;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
-
-import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class BaselineExperimentDataPointStream implements Iterable<BaselineExperimentDataPoint> {
 
