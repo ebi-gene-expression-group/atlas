@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import org.apache.solr.common.SolrInputDocument;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
@@ -12,22 +13,24 @@ import java.util.*;
 public class SolrInputDocumentIterable implements Iterable<SolrInputDocument> {
 
     private final Iterator<? extends ExperimentDataPoint> experimentDataPointIterator;
-    private final Map<String,Map<BioentityPropertyName, Collection<String>>> propertiesPerBioentityIdentifier;
+    private final Map<String,Map<BioentityPropertyName, Set<String>>> propertiesPerBioentityIdentifier;
     public SolrInputDocumentIterable(Iterator<? extends ExperimentDataPoint> experimentDataPointIterator, Map<String,
-            Map<BioentityPropertyName, Collection<String>>> propertiesPerBioentityIdentifier){
+            Map<BioentityPropertyName, Set<String>>> propertiesPerBioentityIdentifier){
         this.experimentDataPointIterator = experimentDataPointIterator;
         this.propertiesPerBioentityIdentifier = propertiesPerBioentityIdentifier;
     }
 
     private SolrInputDocument createNext(ExperimentDataPoint experimentDataPoint){
 
-        Map<BioentityPropertyName, Collection<String>> m = propertiesPerBioentityIdentifier.get(experimentDataPoint.bioentityIdentifier);
+        Map<BioentityPropertyName, Set<String>> m = propertiesPerBioentityIdentifier.get(experimentDataPoint
+                .bioentityIdentifier);
 
-        return create(experimentDataPoint,m!=null? m : ImmutableMap.<BioentityPropertyName, Collection<String>>of());
+        return create(experimentDataPoint,m!=null? m : ImmutableMap.<BioentityPropertyName, Set<String>>of());
     }
 
 
-    static SolrInputDocument create(ExperimentDataPoint experimentDataPoint,Map<BioentityPropertyName, Collection<String>> bioentityProperties){
+    static SolrInputDocument create(ExperimentDataPoint experimentDataPoint,Map<BioentityPropertyName, Set<String>>
+            bioentityProperties){
 
         SolrInputDocument solrInputDocument = new SolrInputDocument();
 

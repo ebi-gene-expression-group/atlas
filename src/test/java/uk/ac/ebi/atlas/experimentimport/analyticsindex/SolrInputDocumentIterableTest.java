@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
@@ -15,6 +16,7 @@ import static uk.ac.ebi.atlas.model.baseline.BioentityPropertyName.*;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -22,14 +24,14 @@ public class SolrInputDocumentIterableTest {
 
     String bioentityIdentifier = "TEST_BIOENTITY_IDENTIFIER";
 
-    Map<String, Map<BioentityPropertyName, Collection<String>>> bioentityPropertyNames =
+    Map<String, Map<BioentityPropertyName, Set<String>>> bioentityPropertyNames =
              ImmutableMap.of(
                     bioentityIdentifier,
-                     (Map<BioentityPropertyName, Collection<String>>)
-                             ImmutableMap.of(GO, (Collection<String>) ImmutableList.of("go_id"),
-                                     GOTERM,  ImmutableList.of("go term with word pancake"),
+                     (Map<BioentityPropertyName, Set<String>>)
+                             ImmutableMap.of(GO,(Set<String>) ImmutableSet.of("go_id"),
+                                     GOTERM,ImmutableSet.of("go term with word pancake"),
                                      ORTHOLOG,
-                                     ImmutableList.of("something_we_dont_put_in_there_because_that_would_be_confusing")
+                                     ImmutableSet.of("something_we_dont_put_in_there_because_that_would_be_confusing")
                     ));
 
 

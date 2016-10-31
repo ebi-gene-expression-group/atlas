@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
+import com.google.common.collect.UnmodifiableIterator;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.UpdateResponse;
@@ -12,6 +13,7 @@ import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.RnaSeqDiffAn
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.MicroArrayDiffAnalyticsIndexerService;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -20,8 +22,7 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
 @Named
 public class AnalyticsIndexerService {
@@ -49,51 +50,44 @@ public class AnalyticsIndexerService {
 
 
     Iterable<SolrInputDocument> solrInputDocuments(Experiment experiment, Map<String,Map<BioentityPropertyName,
-            Collection<String>>> bioentityIdToIdentifierSearch) {
+            Set<String>>> bioentityIdToIdentifierSearch) {
 return new SolrInputDocumentIterable(experimentDataPointStreamFactory.stream(experiment).iterator(),
         bioentityIdToIdentifierSearch);
 
     }
 
-    public UpdateResponse index2(Experiment experiment, Map<String,
-            Map<BioentityPropertyName, Collection<String>>> bioentityIdToIdentifierSearch) {
+    public int index2(Experiment experiment, Map<String,
+            Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch) {
 
+        final int BATCH_SIZE = 8000;
+        List<SolrInputDocument> toLoad = new ArrayList<>(BATCH_SIZE);
+        int addedIntoThisBatch = 0;
+        int addedInTotal= 0;
         try {
-            return solrClient.add(solrInputDocuments(experiment, bioentityIdToIdentifierSearch).iterator());
+            Iterator<SolrInputDocument> it = solrInputDocuments(experiment, bioentityIdToIdentifierSearch).iterator();
+            while(it.hasNext()){
+                while(addedIntoThisBatch<BATCH_SIZE && it.hasNext()){
+                    toLoad.add(it.next());
+                    addedIntoThisBatch++;
+                }
+                UpdateResponse r = solrClient.add(toLoad);
+                LOGGER.info("Sent {} documents for {}, status: {}, qTime:{} ",
+                        addedIntoThisBatch,
+                        experiment.getAccession(), r.getStatus(), r.getQTime());
+                addedInTotal+=addedIntoThisBatch;
+                addedIntoThisBatch=0;
+                toLoad = new ArrayList<>(BATCH_SIZE);
+            }
+
         } catch (SolrServerException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
-        ExperimentType experimentType = experiment.getType();
+        LOGGER.info("Finished: "+experiment.getAccession());
+        return addedInTotal;
 
-        /*
-        based on experiment create a stream of DataPoints
-
-        index(Iterable<ExperimentDataPoint>, Map<BioentityIdentifier, Properties>) = {
-        for (datapoint: ds){
-            Properties = map.get(datapoint.id)
-            index(datapoint, properties)
-        }
-        }
-
-        (microarrayDataPoint, Properties) -> SolrDocument
-        (rnaSeqDiffDataPoint, Properties) -> SolrDocument
-        (baselineDataPoint, Properties) -> SolrDocument
-
-         */
-        /*
-        if (experimentType.isBaseline()) {
-            return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);
-        } else if (experimentType == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
-            return diffAnalyticsIndexerService.index((DifferentialExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);
-        } else if (experimentType == ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL ||
-                experimentType == ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL ||
-                experimentType == ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL) {
-            return microArrayDiffAnalyticsIndexerService.index((MicroarrayExperiment) experiment, bioentityIdToIdentifierSearch, batchSize);
-        }
-*/
-        throw new UnsupportedOperationException("No analytics loader for experiment type " + experimentType);
     }
 
     public int index(Experiment experiment, Map<String, String> bioentityIdToIdentifierSearch, int batchSize) {

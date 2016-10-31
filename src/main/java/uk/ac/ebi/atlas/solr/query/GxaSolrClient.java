@@ -19,8 +19,7 @@ import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.*;
 
 @Named
 @Scope("singleton")
@@ -97,18 +96,22 @@ public class GxaSolrClient {
 
     }
 
-    public SortedSetMultimap<BioentityPropertyName, String> queryForProperties2(SolrQuery solrQuery){
+    public Map<BioentityPropertyName, Set<String>> queryForProperties2(SolrQuery solrQuery){
 
+        Map<BioentityPropertyName, Set<String>> result = new HashMap<>();
         QueryResponse queryResponse = query(solrQuery);
 
-        SortedSetMultimap<BioentityPropertyName, String> results = TreeMultimap.create();
         for (SolrDocument document : queryResponse.getResults()) {
             BioentityPropertyName key = BioentityPropertyName.getByName(document.getFieldValue(PROPERTY_NAME_FIELD).toString());
             String value = document.getFieldValue(PROPERTY_VALUE_FIELD).toString();
-            results.put(key, value);
+
+            if(!result.containsKey(key)){
+                result.put(key, new HashSet<String>());
+            }
+            result.get(key).add(value);
         }
 
-        return results;
+        return result;
 
     }
 

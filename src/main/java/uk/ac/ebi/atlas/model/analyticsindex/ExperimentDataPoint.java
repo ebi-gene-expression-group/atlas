@@ -50,7 +50,7 @@ public abstract class ExperimentDataPoint {
         propertyMap.put("experimentAccession", experiment.getAccession());
         propertyMap.put("experimentType", experiment.getType().name().toUpperCase());
 
-        propertyMap.put("conditionSearch", conditionSearch);
+        propertyMap.put("conditionsSearch", conditionSearch);
 
     }
     public Map<String, Object> getProperties(){

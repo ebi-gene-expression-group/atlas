@@ -6,7 +6,7 @@ import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsTrader;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.BioentityPropertiesDao;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
@@ -19,6 +19,7 @@ import javax.inject.Named;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -40,7 +41,7 @@ public class AnalyticsIndexerManager extends Observable {
     private final AnalyticsIndexerMonitor analyticsIndexerMonitor;
     private final ExperimentTrader experimentTrader;
     private final BioentityIdentifiersReader bioentityIdentifiersReader;
-    private final IdentifierSearchTermsTrader identifierSearchTermsTrader;
+    private final BioentityPropertiesDao bioentityPropertiesDao;
     private final ExperimentSorter experimentSorter;
 
     protected static final String DEFAULT_THREADS_8 = "8";
@@ -54,19 +55,19 @@ public class AnalyticsIndexerManager extends Observable {
                                    AnalyticsIndexerMonitor analyticsIndexerMonitor,
                                    ExperimentTrader experimentTrader,
                                    BioentityIdentifiersReader bioentityIdentifiersReader,
-                                   IdentifierSearchTermsTrader identifierSearchTermsTrader,
+                                   BioentityPropertiesDao bioentityPropertiesDao,
                                    ExperimentSorter experimentSorter) {
         this.analyticsIndexerService = analyticsIndexerService;
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
         this.experimentTrader = experimentTrader;
         this.bioentityIdentifiersReader = bioentityIdentifiersReader;
-        this.identifierSearchTermsTrader = identifierSearchTermsTrader;
+        this.bioentityPropertiesDao = bioentityPropertiesDao;
         this.experimentSorter = experimentSorter;
     }
 
 
     public int addToAnalyticsIndex(String experimentAccession) {
-        return addToAnalyticsIndex2(experimentAccession, identifierSearchTermsTrader.getMap2
+        return addToAnalyticsIndex2(experimentAccession, bioentityPropertiesDao.getMap
                 (bioentityIdentifiersReader.getBioentityIdsFromExperiment(experimentAccession)));
     }
 
@@ -76,7 +77,7 @@ public class AnalyticsIndexerManager extends Observable {
     }
 
 
-    public void indexAllPublicExperiments(int threads, int batchSize, int timeout) throws InterruptedException {
+    public void indexAllPublicExperiments(int threads, int timeout) throws InterruptedException {
         addObserver(analyticsIndexerMonitor);
 
         setChangedAndNotifyObservers("Deleting all documents from analytics index...");
@@ -87,10 +88,11 @@ public class AnalyticsIndexerManager extends Observable {
         TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortAllExperimentsPerSize();
         setChangedAndNotifyObservers(descendingFileSizeToExperimentAccessions);
 
-        ImmutableMap<String, String> bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap();
+        ImmutableMap<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch =
+        bioentityPropertiesDao.getMap(bioentityIdentifiersReader.getBioentityIdsFromExperiments(ExperimentType.values()));
         setChangedAndNotifyObservers("Extracted "+bioentityIdToIdentifierSearch.size()+" bioentityIds from experiments");
 
-        indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), bioentityIdToIdentifierSearch, threads, batchSize, timeout);
+        indexPublicExperimentsSingleThreaded(descendingFileSizeToExperimentAccessions.values(), bioentityIdToIdentifierSearch);
 
         setChangedAndNotifyObservers("Optimizing index...");
         analyticsIndexerService.optimize();
@@ -101,51 +103,55 @@ public class AnalyticsIndexerManager extends Observable {
     }
 
 
-    public void indexPublicExperiments(ExperimentType experimentType, int threads, int batchSize, int timeout) throws InterruptedException {
+    public void indexPublicExperiments(ExperimentType experimentType) throws InterruptedException {
         addObserver(analyticsIndexerMonitor);
 
         TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortExperimentsPerSize(experimentType);
         setChangedAndNotifyObservers(descendingFileSizeToExperimentAccessions);
 
-        ImmutableMap<String, String> bioentityIdToIdentifierSearch = identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap(experimentType);
+        ImmutableMap<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch =
+                bioentityPropertiesDao.getMap(bioentityIdentifiersReader.getBioentityIdsFromExperiments(experimentType));
         setChangedAndNotifyObservers("Extracted "+bioentityIdToIdentifierSearch.size()+" bioentityIds from experiments");
 
-        indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), bioentityIdToIdentifierSearch, threads, batchSize, timeout);
+        indexPublicExperimentsSingleThreaded(descendingFileSizeToExperimentAccessions.values(), bioentityIdToIdentifierSearch);
 
         deleteObserver(analyticsIndexerMonitor);
     }
     //
 
     private int addToAnalyticsIndex2(String experimentAccession,
-                                     ImmutableMap<String, Map<BioentityPropertyName, Collection<String>>> bioentityIdToIdentifierSearch) {
+                                     ImmutableMap<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch) {
         checkNotNull(experimentAccession);
+        LOGGER.info("Adding {} to the index", experimentAccession);
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
         analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
 
         //TODO make it return a message
-        UpdateResponse response= analyticsIndexerService.index2(experiment, bioentityIdToIdentifierSearch);
-
-        return 1337;
+        return analyticsIndexerService.index2(experiment, bioentityIdToIdentifierSearch);
     }
 
-    @Deprecated
-    private int addToAnalyticsIndex(String experimentAccession, ImmutableMap<String, String> bioentityIdToIdentifierSearch, int batchSize) {
-        checkNotNull(experimentAccession);
-        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-        analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
-        return analyticsIndexerService.index(experiment, bioentityIdToIdentifierSearch, batchSize);
+    private void indexPublicExperimentsSingleThreaded(Collection<String> experimentAccessions, ImmutableMap<String,
+            Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch){
+        for (String experimentAccession : experimentAccessions) {
+
+            try {
+                addToAnalyticsIndex2(experimentAccession, bioentityIdToIdentifierSearch);
+                AnalyticsIndexerManager.this.setChangedAndNotifyObservers(experimentAccession);
+            } catch (Exception exception) {
+                AnalyticsIndexerManager.this.setChangedAndNotifyObservers(
+                        String.format("Failed to index %s - Cause: %s", experimentAccession, exception.getMessage()));
+            }
+        }
     }
 
+    private void indexPublicExperimentsConcurrently(Collection<String> experimentAccessions, ImmutableMap<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch, int threads, int timeout) {
 
-
-    private void indexPublicExperimentsConcurrently(Collection<String> experimentAccessions, ImmutableMap<String, String> bioentityIdToIdentifierSearch, int threads, int batchSize, int timeout) {
-
-        LOGGER.debug("Starting ExecutorService with {} threads, {} Solr document batch size and {} hour(s) timeout", threads, batchSize, timeout);
+        LOGGER.debug("Starting ExecutorService with {} threads, {} timeout", threads, timeout);
 
         ExecutorService threadPool = Executors.newFixedThreadPool(threads);
 
         for (String experimentAccession : experimentAccessions) {
-            threadPool.execute(new ReindexTask(experimentAccession, bioentityIdToIdentifierSearch, batchSize));
+            threadPool.execute(new ReindexTask(experimentAccession, bioentityIdToIdentifierSearch));
         }
 
         // From http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html
@@ -182,18 +188,17 @@ public class AnalyticsIndexerManager extends Observable {
 
     private class ReindexTask implements Runnable {
         private final String experimentAccession;
-        private final ImmutableMap<String, String> bioentityIdToIdentifierSearch;
-        private final int solrBatchSize;
+        private final ImmutableMap<String, Map<BioentityPropertyName, Set<String>>>
+                bioentityIdToIdentifierSearch;
 
-        public ReindexTask(String experimentAccession, ImmutableMap<String, String> bioentityIdToIdentifierSearch, int solrBatchSize) {
+        public ReindexTask(String experimentAccession, ImmutableMap<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch) {
             this.experimentAccession = experimentAccession;
             this.bioentityIdToIdentifierSearch = bioentityIdToIdentifierSearch;
-            this.solrBatchSize = solrBatchSize;
         }
 
         public void run() {
             try {
-                addToAnalyticsIndex(experimentAccession, bioentityIdToIdentifierSearch, solrBatchSize);
+                addToAnalyticsIndex2(experimentAccession, bioentityIdToIdentifierSearch);
                 AnalyticsIndexerManager.this.setChangedAndNotifyObservers(experimentAccession);
             } catch (Exception exception) {
                 AnalyticsIndexerManager.this.setChangedAndNotifyObservers(

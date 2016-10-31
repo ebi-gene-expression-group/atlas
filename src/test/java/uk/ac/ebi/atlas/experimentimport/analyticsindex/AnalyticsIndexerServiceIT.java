@@ -7,23 +7,23 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline.BaselineAnalyticsIndexerService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.MicroArrayDiffAnalyticsIndexerService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.RnaSeqDiffAnalyticsIndexerService;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsTrader;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.BioentityPropertiesDao;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
 
 import javax.inject.Inject;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.*;
@@ -46,10 +46,13 @@ public class AnalyticsIndexerServiceIT {
     ExperimentTrader experimentTrader;
 
     @Inject
-    IdentifierSearchTermsTrader identifierSearchTermsTrader;
+    BioentityPropertiesDao bioentityPropertiesDao;
 
     @Inject
     ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
+
+    @Inject
+    BioentityIdentifiersReader bioentityIdentifiersReader;
 
     AnalyticsIndexerService subject;
     
@@ -70,8 +73,9 @@ public class AnalyticsIndexerServiceIT {
     public void testExperiment(String accession){
         Experiment experiment = experimentTrader.getPublicExperiment(accession);
 
-        ImmutableMap<String, Map<BioentityPropertyName, Collection<String>>> ms =
-                identifierSearchTermsTrader.getBioentityIdToIdentifierSearchMap2(experiment.getAccession());
+        ImmutableMap<String, Map<BioentityPropertyName, Set<String>>> ms =
+                bioentityPropertiesDao.getMap(bioentityIdentifiersReader.getBioentityIdsFromExperiment
+                        (accession));
 
         Iterable<SolrInputDocument> result = subject.solrInputDocuments(experiment, ms);
 
