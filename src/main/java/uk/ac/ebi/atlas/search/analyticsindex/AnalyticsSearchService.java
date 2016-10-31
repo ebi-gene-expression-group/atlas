@@ -27,7 +27,7 @@ public class AnalyticsSearchService {
                 .create(), SpeciesFactory.NULL);
     }
 
-    private ImmutableSet<String> readBuckets(String response){
+    public static ImmutableSet<String> readBuckets(String response){
         List<Map<String,Object>> res = JsonPath.read(response, "$..buckets[*]");
         ImmutableSet.Builder<String> b = ImmutableSet.builder();
         for(Map<String,Object> m: res) {

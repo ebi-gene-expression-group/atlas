@@ -191,6 +191,11 @@ public class AnalyticsQueryClient {
             return this;
         }
 
+        public Builder inExperiment(String accession) {
+            addQueryClause(EXPERIMENT_ACCESSION, accession);
+            return this;
+        }
+
 
         public Builder setRows(int rows) {
             solrQuery.setRows(rows);
@@ -211,12 +216,14 @@ public class AnalyticsQueryClient {
         }
 
         public String fetch(){
-            List<AnalyticsSolrQueryTree> queryClauses = queryClausesBuilder.build();
 
-            if (queryClauses.isEmpty()) {
-                solrQuery.setQuery(DEFAULT_QUERY);
-            } else {
-                solrQuery.setQuery(new AnalyticsSolrQueryTree(AND, queryClauses.toArray(new AnalyticsSolrQueryTree[0])).toString());
+            List<String> qsForQueryClauses = qsForQueryClauses(queryClausesBuilder.build());
+            SolrQuery[] solrQueries = new SolrQuery[qsForQueryClauses.size()];
+
+            for(int i = 0; i< qsForQueryClauses.size(); i++){
+                SolrQuery c = solrQuery.getCopy();
+                c.setQuery(qsForQueryClauses.get(i));
+                solrQueries[i] = c;
             }
 
             /*
@@ -231,12 +238,23 @@ public class AnalyticsQueryClient {
 
 
 
-            return fetchResults(solrQuery);
+            return fetchResults(solrQueries);
         }
+    }
+
+    static List<String> qsForQueryClauses(List<AnalyticsSolrQueryTree> queryClauses){
+
+        if (queryClauses.isEmpty()) {
+            return ImmutableList.of(Builder.DEFAULT_QUERY);
+        } else {
+            return ImmutableList.of(new AnalyticsSolrQueryTree(AND, queryClauses.toArray(new AnalyticsSolrQueryTree[0])).toString());
+        }
+
     }
 
     enum Field {
         EXPERIMENT_TYPE("experimentType"),
+        EXPERIMENT_ACCESSION("experimentAccession"),
         BIOENTITY_IDENTIFIER("bioentityIdentifier"),
         SPECIES("species"),
         IDENTIFIER_SEARCH("identifierSearch"),
