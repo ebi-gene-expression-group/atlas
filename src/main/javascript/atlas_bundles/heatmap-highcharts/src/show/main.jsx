@@ -206,20 +206,23 @@ const show = (heatmapDataToPresent, orderings, filters, filtersSelection, onFilt
                 }
             </div>
 
-            <div className ="gxaHeatmapLegend">
-                {legend.map(legendItemProps => <HeatmapLegendBox {...legendItemProps} />)}
+            {legend
+              ? <div className ="gxaHeatmapLegend">
+                  {legend.map(legendItemProps => <HeatmapLegendBox {...legendItemProps} />)}
 
-                <div className="legend-item">
-                    <span className="icon icon-generic" data-icon="i" data-toggle="tooltip" data-placement="bottom"
-                          title="Baseline expression levels in RNA-seq experiments are in FPKM or TPM. Low: 0-10, Medium: 11-1000,  High: >1000. Proteomics expression levels are mapped to low, medium, high on per experiment basis.">
-                    </span>
-                </div>
-                <HeatmapLegendBox key={`No data available`}
-                                  name={`No data available`}
-                                  colour={`white`}
-                                  on={true}
-                />
-            </div>
+                  <div className="legend-item">
+                      <span className="icon icon-generic" data-icon="i" data-toggle="tooltip" data-placement="bottom"
+                            title="Baseline expression levels in RNA-seq experiments are in FPKM or TPM. Low: 0-10, Medium: 11-1000,  High: >1000. Proteomics expression levels are mapped to low, medium, high on per experiment basis.">
+                      </span>
+                  </div>
+                  <HeatmapLegendBox key={`No data available`}
+                                    name={`No data available`}
+                                    colour={`white`}
+                                    on={true}
+                  />
+              </div>
+              : null
+            }
 
             {coexpressions ? <CoexpressionOption {...coexpressions}/> : null }
         </div>

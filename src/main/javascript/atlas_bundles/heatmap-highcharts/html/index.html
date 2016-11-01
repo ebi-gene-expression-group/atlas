@@ -9,12 +9,12 @@
     <script src="../dist/heatmapHighcharts.bundle.js"></script>
     <!-- Latest compiled and minified CSS -->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.css">-->
-    <link rel="stylesheet" href="https://localhost:8443/gxa/resources/css/customized-bootstrap-3.3.5.css">
+    <link rel="stylesheet" href="http://localhost:8080/gxa/resources/css/customized-bootstrap-3.3.5.css">
 </head>
 
 <body>
     <div>
-        <h2>Bundles loaded from <em>webpack-dev-server</em>, request done to <code>http://www.ebi.ac.uk/gxa</code></h2>
+        <h2>Bundles loaded from <em>webpack-dev-server</em></h2>
     </div>
 
     <div id="highchartsContainer"></div>
@@ -23,11 +23,11 @@
 
 <script>
     heatmapHighcharts.render({
-        atlasHost: 'https://localhost:8443',
+        atlasHost: 'http://localhost:8080',
         params: 'geneQuery=zinc finger&species=mus%20musculus',
         isMultiExperiment: true,
         target: 'highchartsContainer',
-        pathToFolderWithBundledResources: 'https://localhost:8443/gxa/resources/js-bundles/'
+        pathToFolderWithBundledResources: 'http://localhost:8080/gxa/resources/js-bundles/'
       });
 
 </script>

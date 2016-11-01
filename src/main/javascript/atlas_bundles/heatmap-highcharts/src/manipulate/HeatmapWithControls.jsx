@@ -124,17 +124,19 @@ module.exports = React.createClass({
     },
 
     _legend() { //See properties required for HeatmapLegendBox
-        return (
-            this.props.loadResult.heatmapData.dataSeries
-                .map((e, ix) =>
-                    ({
-                        key: e.info.name,
-                        name: e.info.name,
-                        colour: e.info.colour,
-                        on: this.state.filtersSelection[0].values.includes(e.info.name)
-                    })
-                )
-        );
+      return (
+        this.props.loadResult.heatmapConfig.isExperimentPage
+        ? null
+        : this.props.loadResult.heatmapData.dataSeries
+            .map((e, ix) =>
+              ({
+                key: e.info.name,
+                name: e.info.name,
+                colour: e.info.colour,
+                on: this.state.filtersSelection[0].values.includes(e.info.name)
+              })
+            )
+      );
     },
 
     _coexpressionOption() {
