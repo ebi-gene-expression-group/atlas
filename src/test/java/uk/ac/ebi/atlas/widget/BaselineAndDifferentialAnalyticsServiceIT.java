@@ -31,7 +31,7 @@ import static org.junit.Assert.assertTrue;
 public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixture {
 
     private static final String BASELINE_GENE = "ENSG00000000003";
-    private static final String DIFFERENTIAL_GENE = "AT2G06310";
+    private static final String DIFFERENTIAL_GENE = "ENSSSCG00000000024";
     private static final String NON_EXISTENT_GENE = "FOOBAR";
 
     @Inject

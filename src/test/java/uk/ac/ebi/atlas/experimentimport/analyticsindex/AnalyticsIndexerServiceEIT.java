@@ -25,14 +25,18 @@ import java.text.MessageFormat;
 import java.util.*;
 
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
-
+/*
+excluded from ITs because it takes about two minutes
+TODO make it run fast by stubbing out the EFO tree getting built
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
-public class AnalyticsIndexerServiceIT {
+public class AnalyticsIndexerServiceEIT {
 
 
     @Mock
@@ -107,6 +111,7 @@ public class AnalyticsIndexerServiceIT {
 
          weGenerateDocumentsWithTheSameIdentifiersAsCurrentIndexContent(accession,results);
         weGenerateDocumentsWhoseContentWeCanThenRetrieve(accession,results);
+         theSpeciesFieldIsTheEnsemblName(accession, results);
     }
 
      void weGenerateDocumentsWithTheSameIdentifiersAsCurrentIndexContent(String accession, Collection<SolrInputDocument> results){
@@ -146,6 +151,19 @@ public class AnalyticsIndexerServiceIT {
         for(Map.Entry<String, String> e: keywordFieldsPresent.entrySet()){
             indexReturnsDataFor(accession, SemanticQuery.create(SemanticQueryTerm.create(e.getValue())));
         }
+
+    }
+
+    void theSpeciesFieldIsTheEnsemblName(String accession,Collection<SolrInputDocument> results){
+        Set<String> species = new HashSet<>();
+        for(SolrInputDocument solrInputDocument: results){
+            species.add(solrInputDocument.getField("species").getValue().toString());
+        }
+
+        assertThat(species.size(), is(1));
+
+        assertThat(species.iterator().next(), is(experimentTrader.getPublicExperiment(accession).getSpecies()
+                .mappedName));
 
     }
 

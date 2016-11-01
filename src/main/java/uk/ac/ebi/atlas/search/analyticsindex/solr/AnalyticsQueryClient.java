@@ -167,7 +167,9 @@ public class AnalyticsQueryClient {
         }
 
         public Builder queryIdentifierSearch(SemanticQuery geneQuery) {
-            queryClausesBuilder.add(AnalyticsSolrQueryTree.createForIdentifierSearch(geneQuery));
+            if(geneQuery.isNotEmpty()){
+                queryClausesBuilder.add(AnalyticsSolrQueryTree.createForIdentifierSearch(geneQuery));
+            }
             return this;
         }
 
@@ -182,7 +184,9 @@ public class AnalyticsQueryClient {
         }
 
         public Builder queryConditionsSearch(SemanticQuery conditionQuery) {
-            queryClausesBuilder.add(conditionsSearchQuery(conditionQuery));
+            if(conditionQuery.isNotEmpty()){
+                queryClausesBuilder.add(conditionsSearchQuery(conditionQuery));
+            }
             return this;
         }
 
@@ -253,7 +257,7 @@ public class AnalyticsQueryClient {
         IDENTIFIER_SEARCH("identifierSearch"),
         CONDITIONS_SEARCH("conditionsSearch"),
         FACTOR_TYPE("defaultQueryFactorType");
-        private final String name;
+        final String name;
 
         Field(String name){
             this.name = name;

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex;
 
 import com.google.common.collect.ImmutableSet;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -10,15 +9,13 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.SpeciesTest;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import javax.inject.Inject;
-
 import java.util.Collection;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

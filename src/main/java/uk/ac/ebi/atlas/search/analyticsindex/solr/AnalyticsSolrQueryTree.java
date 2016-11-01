@@ -12,12 +12,12 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.OR;
 
 public class AnalyticsSolrQueryTree {
     public static final String UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE = "__identifierSearch";
-    public static final String IDENTIFIER_SEARCH_KEYWORD_VALUE = "identifierSearch";
 
     public enum Operator {
         AND(" AND "),
@@ -68,7 +68,7 @@ public class AnalyticsSolrQueryTree {
         @Override
         public String toString() {
             return  String.format("%s:(%s)", searchField,
-                    searchValue.contains(":")? StringUtils.wrap(searchValue, "\"") : searchValue);
+                    searchValue.contains(":") || searchValue.trim().contains(" ")? StringUtils.wrap(searchValue, "\"") : searchValue);
         }
 
         @Override
@@ -197,21 +197,27 @@ public class AnalyticsSolrQueryTree {
         root = new Parent(operator, childrenBuilder.build());
     }
 
-    static String decideOnKeywordField(SemanticQueryTerm term){
-        if(term.category().isEmpty()){
+    private static String decideOnKeywordField(SemanticQueryTerm term){
+        if(term.hasNoCategory()){
+            if(ensemblIdRegexFromTheInternet.matcher(term.value()).matches()){
+                return "bioentityIdentifier";
+            }
             //a multiword string cannot be a keyword
             if(term.value().trim().contains(" ")){
-                return IDENTIFIER_SEARCH_KEYWORD_VALUE;
+                return AnalyticsQueryClient.Field.IDENTIFIER_SEARCH.name;
             } else {
                 return UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE;
             }
         } else {
             return "keyword_" + term.category();
         }
-
-
     }
 
+    private static final Pattern ensemblIdRegexFromTheInternet = Pattern.compile
+            ("ENS[A-Z]+[0-9]{11}|[A-Z]{3}[0-9]{3}[A-Za-z](-[A-Za-z])?|CG[0-9]+|[A-Z0-9]+\\.[0-9]+|YM[A-Z][0-9]{3}[a-z][0-9]");
+
+
+    //package
     static AnalyticsSolrQueryTree createForIdentifierSearch(SemanticQuery geneQuery) {
         Multimap<String, String> m = HashMultimap.create();
         for (SemanticQueryTerm term : geneQuery.terms()) {
@@ -267,7 +273,7 @@ public class AnalyticsSolrQueryTree {
                 @Override
                 public TreeNode apply(final Leaf leaf) {
                     if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)){
-                        return new Leaf(IDENTIFIER_SEARCH_KEYWORD_VALUE, leaf.searchValue);
+                        return new Leaf(AnalyticsQueryClient.Field.IDENTIFIER_SEARCH.name, leaf.searchValue);
                     } else {
                         return leaf;
                     }
