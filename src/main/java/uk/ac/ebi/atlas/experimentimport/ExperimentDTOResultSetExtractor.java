@@ -28,12 +28,6 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
                 experiment = createExperimentDTO(resultSet, experimentAccession);
                 experimentByAccession.put(experimentAccession, experiment);
             }
-
-            String species = resultSet.getString("organism");
-            if (!StringUtils.isBlank(species)) {
-                experiment.setSpecies(species);
-            }
-
         }
 
         return Lists.newArrayList(experimentByAccession.values());
@@ -42,7 +36,8 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
     }
 
     private ExperimentDTO createExperimentDTO(ResultSet resultSet, String experimentAccession) throws SQLException {
-        ExperimentDTO experiment;ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("type"));
+        ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("type"));
+        String species = resultSet.getString("organism");
         Date lastUpdate = resultSet.getTimestamp("last_update");
         boolean isPrivate = "T".equals(resultSet.getString("private"));
         String accessKeyUUID = resultSet.getString("access_key");
@@ -51,13 +46,13 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
         String pubMedIdsString = resultSet.getString("pubmed_Ids");
         Set<String> pubMedIds = StringUtils.isBlank(pubMedIdsString)? new HashSet<String>() : Sets.newHashSet(Splitter.on(", ").split(pubMedIdsString));
 
-        experiment = new ExperimentDTO(experimentAccession
+        return new ExperimentDTO(experimentAccession
                 , experimentType
+                , species
                 , pubMedIds
                 , title
                 , lastUpdate
                 , isPrivate
                 , accessKeyUUID);
-        return experiment;
     }
 }

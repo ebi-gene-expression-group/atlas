@@ -6,7 +6,6 @@ import com.google.gson.*;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,11 +30,6 @@ public class ExperimentDTO {
     public ExperimentDTO(String experimentAccession, ExperimentType experimentType, String species, Set<String> pubmedIds,
                          String title, boolean isPrivate) {
         this(experimentAccession, experimentType, species, pubmedIds, title, null, isPrivate, UUID.randomUUID().toString());
-    }
-
-    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Set<String> pubmedIds,
-                         String title, Date lastUpdate, boolean aPrivate, String accessKey) {
-        this(experimentAccession, experimentType, "", pubmedIds, title, lastUpdate, aPrivate, accessKey);
     }
 
     public ExperimentDTO(String experimentAccession, ExperimentType experimentType, String species, Set<String> pubmedIds,
