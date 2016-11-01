@@ -35,9 +35,6 @@ public class ExperimentMetadataCRUDFactory {
     PublicExperimentTypesCache publicExperimentTypesCache;
 
     @Inject
-    ExperimentDTOBuilder experimentDTOBuilder;
-
-    @Inject
     CondensedSdrfParser condensedSdrfParser;
 
     @Inject
@@ -57,7 +54,7 @@ public class ExperimentMetadataCRUDFactory {
         ExperimentTrader experimentTrader = new ExperimentTrader(experimentDao, rnaSeqBaselineExperimentsCache,
                 rnaSeqDiffExperimentsCache, microarrayExperimentsCache, proteomicsBaselineExperimentsCache, publicExperimentTypesCache);
 
-        ExperimentMetadataCRUD experimentMetadataCRUD = new ExperimentMetadataCRUD(experimentDao, experimentTrader, experimentDTOBuilder, condensedSdrfParser, efoParentsLookupService);
+        ExperimentMetadataCRUD experimentMetadataCRUD = new ExperimentMetadataCRUD(experimentDao, experimentTrader, condensedSdrfParser, efoParentsLookupService);
         experimentMetadataCRUD.setConditionsIndexTrader(conditionsIndexTrader);
         experimentMetadataCRUD.setExperimentDesignFileService(experimentDesignFileService);
 

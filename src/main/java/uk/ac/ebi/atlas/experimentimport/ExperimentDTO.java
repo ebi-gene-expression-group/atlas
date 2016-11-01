@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Objects;
 import com.google.gson.*;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Date;
@@ -28,11 +29,6 @@ public class ExperimentDTO {
     private String title;
 
     public ExperimentDTO(String experimentAccession, ExperimentType experimentType, String species, Set<String> pubmedIds,
-                         String title, boolean isPrivate) {
-        this(experimentAccession, experimentType, species, pubmedIds, title, null, isPrivate, UUID.randomUUID().toString());
-    }
-
-    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, String species, Set<String> pubmedIds,
                          String title, Date lastUpdate, boolean isPrivate, String accessKey) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
@@ -43,6 +39,25 @@ public class ExperimentDTO {
         this.isPrivate = isPrivate;
         this.accessKey = accessKey;
     }
+
+    static ExperimentDTO createNew(String experimentAccession, ExperimentType experimentType, String species,
+                                    Set<String> pubmedIds,
+                                String title, boolean isPrivate){
+        return new ExperimentDTO(experimentAccession, experimentType, species, pubmedIds, title, null, isPrivate, UUID.randomUUID().toString());
+    }
+
+    static ExperimentDTO createNew(CondensedSdrfParserOutput condensedSdrfParserOutput, String species, boolean isPrivate){
+        return ExperimentDTO.createNew(
+                condensedSdrfParserOutput.getExperimentAccession(),
+                condensedSdrfParserOutput.getExperimentType(),
+                species,
+                condensedSdrfParserOutput.getPubmedIds(),
+                condensedSdrfParserOutput.getTitle(),
+                isPrivate
+        );
+    }
+
+
 
 
     public String getExperimentAccession() {

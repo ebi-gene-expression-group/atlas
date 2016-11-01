@@ -90,9 +90,6 @@ public class ExperimentMetadataCRUDTest {
     private ConditionsIndex conditionsIndexMock;
 
     @Mock
-    private ExperimentDTOBuilder experimentDTOBuilderMock;
-
-    @Mock
     private ExperimentDesign experimentDesignMock;
 
     @Mock
@@ -132,14 +129,6 @@ public class ExperimentMetadataCRUDTest {
         doNothing().when(conditionsIndexMock).removeConditions(anyString());
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
 
-        given(experimentDTOBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDTOBuilderMock);
-        given(experimentDTOBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE)).willReturn(experimentDTOBuilderMock);
-        given(experimentDTOBuilderMock.withPrivate(false)).willReturn(experimentDTOBuilderMock);
-        given(experimentDTOBuilderMock.withSpecies(anyString())).willReturn(experimentDTOBuilderMock);
-        given(experimentDTOBuilderMock.withPubMedIds(anySetOf(String.class))).willReturn(experimentDTOBuilderMock);
-        given(experimentDTOBuilderMock.withTitle(anyString())).willReturn(experimentDTOBuilderMock);
-        given(experimentDTOBuilderMock.build()).willReturn(experimentDTOMock);
-
         when(experimentDAOMock.findExperiment(anyString(), anyBoolean())).thenReturn(experimentDTOMock);
 
         given(experimentDTOMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
@@ -156,7 +145,7 @@ public class ExperimentMetadataCRUDTest {
         when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(allOntologyTermIdsByAssayAccession);
         when(efoParentsLookupServiceMock.getAllParents(anySetOf(String.class))).thenReturn(EXPANDED_EFO_TERMS);
 
-        subject = new ExperimentMetadataCRUD(experimentDAOMock, experimentTraderMock, experimentDTOBuilderMock, condensedSdrfParserMock, efoParentsLookupServiceMock);
+        subject = new ExperimentMetadataCRUD(experimentDAOMock, experimentTraderMock, condensedSdrfParserMock, efoParentsLookupServiceMock);
         subject.setConditionsIndexTrader(conditionsIndexTraderMock);
         subject.setExperimentDesignFileService(experimentDesignFileServiceMock);
         subject.setAnalyticsIndexerManager(analyticsIndexerManagerMock);
@@ -190,7 +179,7 @@ public class ExperimentMetadataCRUDTest {
 
     @Test
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
-        subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
+        subject.updateExperimentDesign(ExperimentDTO.createNew(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION);
         verify(conditionsIndexMock).updateConditions(any(Experiment.class), Matchers.<SetMultimap<String,String>>any());
     }
@@ -209,13 +198,13 @@ public class ExperimentMetadataCRUDTest {
 
     @Test
     public void updateExperimentExpandsOntologyTerms() throws Exception {
-        subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
+        subject.updateExperimentDesign(ExperimentDTO.createNew(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(efoParentsLookupServiceMock).expandOntologyTerms(allOntologyTermIdsByAssayAccession);
     }
 
     @Test
     public void deleteExperimentShouldRemoveExperimentFromAnalyticsIndex() throws Exception {
-        subject.deleteExperiment(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
+        subject.deleteExperiment(ExperimentDTO.createNew(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(analyticsIndexerManagerMock).deleteFromAnalyticsIndex(experimentAccessionCaptor.capture());
 
         assertThat(experimentAccessionCaptor.getValue(), is(EXPERIMENT_ACCESSION));

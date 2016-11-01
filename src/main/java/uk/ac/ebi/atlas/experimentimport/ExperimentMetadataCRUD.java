@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileService;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.CondensedSdrfParserOutput;
@@ -22,7 +21,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -37,7 +35,6 @@ public class ExperimentMetadataCRUD {
     private ExperimentDAO experimentDAO;
     private ExperimentDesignFileService experimentDesignFileService;
     private ExperimentTrader experimentTrader;
-    private ExperimentDTOBuilder experimentDTOBuilder;
     private final CondensedSdrfParser condensedSdrfParser;
     private ConditionsIndexTrader conditionsIndexTrader;
     private EFOLookupService efoParentsLookupService;
@@ -47,12 +44,10 @@ public class ExperimentMetadataCRUD {
     @Inject
     public ExperimentMetadataCRUD(ExperimentDAO experimentDAO,
                                   ExperimentTrader experimentTrader,
-                                  ExperimentDTOBuilder experimentDTOBuilder,
                                   CondensedSdrfParser condensedSdrfParser,
                                   EFOLookupService efoParentsLookupService) {
         this.experimentDAO = experimentDAO;
         this.experimentTrader = experimentTrader;
-        this.experimentDTOBuilder = experimentDTOBuilder;
         this.condensedSdrfParser = condensedSdrfParser;
         this.efoParentsLookupService = efoParentsLookupService;
     }
@@ -84,11 +79,12 @@ public class ExperimentMetadataCRUD {
         ExperimentDesign experimentDesign = condensedSdrfParserOutput.getExperimentDesign();
         writeExperimentDesignFile(accession, experimentType, experimentDesign);
 
-        Set<String> assayAccessions = experimentConfiguration.getAssayAccessions();
-        String species = experimentDesign.getSpeciesForAssays(assayAccessions);
 
-        ExperimentDTO experimentDTO = buildExperimentDTO(condensedSdrfParserOutput, species, isPrivate);
-        UUID uuid = experimentDAO.addExperiment(experimentDTO, accessKey);
+        UUID uuid = experimentDAO.addExperiment
+                (ExperimentDTO.createNew(
+                        condensedSdrfParserOutput,
+                        experimentDesign.getSpeciesForAssays(experimentConfiguration.getAssayAccessions()), isPrivate)
+                        , accessKey);
 
         //experiment can be indexed only after it's been added to the DB, since fetching experiment
         //from cache gets this experiment from the DB first
@@ -110,17 +106,6 @@ public class ExperimentMetadataCRUD {
         Experiment experiment = experimentTrader.getPublicExperiment(accession);
         ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
         conditionsIndexTrader.getIndex(experiment.getType()).updateConditions(experiment, efoParentsLookupService.expandOntologyTerms(termIdsByAssayAccession));
-    }
-
-    private ExperimentDTO buildExperimentDTO(CondensedSdrfParserOutput condensedSdrfParserOutput, String species, boolean isPrivate) {
-        return experimentDTOBuilder
-                .forExperimentAccession(condensedSdrfParserOutput.getExperimentAccession())
-                .withExperimentType(condensedSdrfParserOutput.getExperimentType())
-                .withPrivate(isPrivate)
-                .withSpecies(species)
-                .withTitle(condensedSdrfParserOutput.getTitle())
-                .withPubMedIds(condensedSdrfParserOutput.getPubmedIds())
-                .build();
     }
 
     void writeExperimentDesignFile(String accession, ExperimentType experimentType, ExperimentDesign experimentDesign) throws IOException {

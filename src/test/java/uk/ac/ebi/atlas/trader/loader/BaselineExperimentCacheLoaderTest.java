@@ -18,6 +18,7 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import java.util.Collections;
+import java.util.Date;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -43,7 +44,7 @@ public class BaselineExperimentCacheLoaderTest {
     ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
 
     ExperimentDTO dto = new ExperimentDTO(experimentAccession, experimentType, "homo_sapiens", Collections
-            .<String>emptySet(), "mock experiment", false);
+            .<String>emptySet(), "mock experiment",new Date(), false, "accessKeyUUID");
     @Mock
     ExperimentalFactorsFactory experimentalFactorsFactory;
     @Mock

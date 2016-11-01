@@ -50,8 +50,6 @@ public class ExperimentCRUDRollbackIT {
     @Inject
     ExperimentTrader experimentTrader;
     @Inject
-    ExperimentDTOBuilder experimentDTOBuilder;
-    @Inject
     CondensedSdrfParser condensedSdrfParser;
     @Inject
     ExperimentMetadataCRUD experimentMetadataCRUD;
@@ -70,7 +68,7 @@ public class ExperimentCRUDRollbackIT {
 
         when(conditionsIndexTrader.getIndex(any(ExperimentType.class))).thenThrow(new IllegalStateException("die!"));
         ExperimentMetadataCRUD experimentMetadataCRUDmock =
-                new ExperimentMetadataCRUD(experimentDAO, experimentTrader, experimentDTOBuilder, condensedSdrfParser, efoParentsLookupService);
+                new ExperimentMetadataCRUD(experimentDAO, experimentTrader, condensedSdrfParser, efoParentsLookupService);
         experimentMetadataCRUDmock.setConditionsIndexTrader(conditionsIndexTrader);
         experimentMetadataCRUDmock.setExperimentDesignFileService(experimentDesignFileService);
         subject.setExperimentMetadataCRUD(experimentMetadataCRUDmock);
