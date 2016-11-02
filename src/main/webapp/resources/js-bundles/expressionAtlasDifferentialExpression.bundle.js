@@ -9422,6 +9422,24 @@ webpackJsonp_name_([4],{
 	var DoubleWithDefault = React.PropTypes.number;
 	var RequiredBool = React.PropTypes.bool.isRequired;
 	
+	var ResultType = {
+	    species: RequiredString,
+	    kingdom: RequiredString,
+	    experimentType: RequiredString,
+	    numReplicates: RequiredString, // faceting only works with strings https://issues.apache.org/jira/browse/SOLR-7496
+	    regulation: RequiredString,
+	    factors: React.PropTypes.arrayOf(OptionalString).isRequired,
+	    bioentityIdentifier: RequiredString,
+	    bioentityName: RequiredString,
+	    experimentAccession: RequiredString,
+	    experimentName: RequiredString,
+	    contrastId: RequiredString,
+	    comparison: RequiredString,
+	    foldChange: React.PropTypes.number.isRequired,
+	    colour: RequiredString,
+	    id: RequiredString
+	};
+	
 	var DifferentialResults = React.createClass({
 	    displayName: 'DifferentialResults',
 	
@@ -9458,22 +9476,7 @@ webpackJsonp_name_([4],{
 	    maxUpLevel: "2.4"
 	    */
 	    propTypes: {
-	        results: React.PropTypes.arrayOf(React.PropTypes.shape({
-	            species: RequiredString,
-	            kingdom: RequiredString,
-	            experimentType: RequiredString,
-	            numReplicates: RequiredString, // faceting only works with strings https://issues.apache.org/jira/browse/SOLR-7496
-	            regulation: RequiredString,
-	            factors: React.PropTypes.arrayOf(OptionalString).isRequired,
-	            bioentityIdentifier: RequiredString,
-	            experimentAccession: RequiredString,
-	            experimentName: RequiredString,
-	            contrastId: RequiredString,
-	            comparison: RequiredString,
-	            foldChange: React.PropTypes.number.isRequired,
-	            colour: RequiredString,
-	            id: RequiredString
-	        })).isRequired,
+	        results: React.PropTypes.arrayOf(React.PropTypes.shape(ResultType)).isRequired,
 	        maxDownLevel: DoubleWithDefault,
 	        minDownLevel: DoubleWithDefault,
 	        minUpLevel: DoubleWithDefault,
@@ -9570,7 +9573,7 @@ webpackJsonp_name_([4],{
 	                        React.createElement(
 	                            'th',
 	                            { style: { width: '5%' } },
-	                            'Gene ID'
+	                            'Gene name'
 	                        ),
 	                        React.createElement(
 	                            'th',
@@ -9603,21 +9606,7 @@ webpackJsonp_name_([4],{
 	var DifferentialResultRow = React.createClass({
 	    displayName: 'DifferentialResultRow',
 	
-	    propTypes: {
-	        bioentityIdentifier: RequiredString,
-	        foldChange: React.PropTypes.number.isRequired,
-	        pValue: React.PropTypes.number,
-	        tStatistics: React.PropTypes.number,
-	        colour: RequiredString,
-	        species: RequiredString,
-	        comparison: RequiredString,
-	        factors: React.PropTypes.arrayOf(OptionalString).isRequired,
-	        experimentName: RequiredString,
-	        contrastId: RequiredString,
-	        experimentAccession: RequiredString,
-	        displayLevels: RequiredBool,
-	        atlasBaseUrl: RequiredString
-	    },
+	    propTypes: ResultType,
 	
 	    _linkToComparisonPage: function _linkToComparisonPage() {
 	        return 'experiments/' + this.props.experimentAccession + '?geneQuery=' + this.props.bioentityIdentifier + '&queryFactorValues=' + this.props.contrastId + '&specific=false';
@@ -9646,7 +9635,7 @@ webpackJsonp_name_([4],{
 	                React.createElement(
 	                    'a',
 	                    { href: '/gxa/genes/' + this.props.bioentityIdentifier },
-	                    this.props.bioentityIdentifier
+	                    this.props.bioentityName || this.props.bioentityIdentifier
 	                )
 	            ),
 	            React.createElement(

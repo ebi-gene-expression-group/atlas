@@ -28489,6 +28489,15 @@ webpackJsonp_name_([2],[
 			var rgb = this.values.rgb;
 			return rgb.concat([this.values.alpha]);
 		},
+		rgbaArrayNormalized: function () {
+			var rgb = this.values.rgb;
+			var glRgba = [];
+			for (var i = 0; i < 3; i++) {
+				glRgba[i] = rgb[i] / 255;
+			}
+			glRgba.push(this.values.alpha);
+			return glRgba;
+		},
 		hslaArray: function () {
 			var hsl = this.values.hsl;
 			return hsl.concat([this.values.alpha]);
@@ -32848,7 +32857,7 @@ webpackJsonp_name_([2],[
 	        var _this3 = this;
 	
 	        //See properties required for HeatmapLegendBox
-	        return this.props.loadResult.heatmapData.dataSeries.map(function (e, ix) {
+	        return this.props.loadResult.heatmapConfig.isExperimentPage ? null : this.props.loadResult.heatmapData.dataSeries.map(function (e, ix) {
 	            return {
 	                key: e.info.name,
 	                name: e.info.name,
@@ -34471,7 +34480,7 @@ webpackJsonp_name_([2],[
 	                " No data in the series currently selected. "
 	            )
 	        ),
-	        React.createElement(
+	        legend ? React.createElement(
 	            "div",
 	            { className: "gxaHeatmapLegend" },
 	            legend.map(function (legendItemProps) {
@@ -34488,7 +34497,7 @@ webpackJsonp_name_([2],[
 	                colour: "white",
 	                on: true
 	            })
-	        ),
+	        ) : null,
 	        coexpressions ? React.createElement(CoexpressionOption, coexpressions) : null
 	    );
 	};

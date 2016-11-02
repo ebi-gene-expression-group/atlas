@@ -18487,7 +18487,7 @@ webpackJsonp_name_([6],[
 	        var _this3 = this;
 	
 	        //See properties required for HeatmapLegendBox
-	        return this.props.loadResult.heatmapData.dataSeries.map(function (e, ix) {
+	        return this.props.loadResult.heatmapConfig.isExperimentPage ? null : this.props.loadResult.heatmapData.dataSeries.map(function (e, ix) {
 	            return {
 	                key: e.info.name,
 	                name: e.info.name,
@@ -20120,7 +20120,7 @@ webpackJsonp_name_([6],[
 	                " No data in the series currently selected. "
 	            )
 	        ),
-	        React.createElement(
+	        legend ? React.createElement(
 	            "div",
 	            { className: "gxaHeatmapLegend" },
 	            legend.map(function (legendItemProps) {
@@ -20137,7 +20137,7 @@ webpackJsonp_name_([6],[
 	                colour: "white",
 	                on: true
 	            })
-	        ),
+	        ) : null,
 	        coexpressions ? React.createElement(CoexpressionOption, coexpressions) : null
 	    );
 	};

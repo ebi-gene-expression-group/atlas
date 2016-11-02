@@ -96546,7 +96546,6 @@ var dependencies =
 	                g.transform("S1.6,0,0");
 	                svgCanvas.append(g);
 	            });
-	            debugger;
 	            var img = fragment.select("#ccLogo");
 	            if (img) {
 	                // svgCanvas.node.clientHeight and svgCanvas.node.clientWidth is more “correct” but are 0 in Firefox
