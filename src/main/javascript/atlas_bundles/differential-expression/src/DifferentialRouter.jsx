@@ -121,9 +121,6 @@ const DifferentialRouter = React.createClass({
         return this.state.facetsTreeData.map(facet => ({
             facetName: facet.facetName,
             facetItems: facet.facetItems.map(facetItem => {
-
-                let allFilteredResultsMatchThisFacetItem = filteredResults.every(result => this._equalsToOrIncludes(result[facet.facetName], facetItem.name));
-
                 let querySelectAfterSwitchingThisFacetItem = JSON.parse(JSON.stringify(this.state.querySelect));
                 if (this._equalsToOrIncludes(querySelectAfterSwitchingThisFacetItem[facet.facetName], facetItem.name)) {
                     this._removeElementFromObjectOfArrays(querySelectAfterSwitchingThisFacetItem, facet.facetName, facetItem.name);
@@ -135,12 +132,11 @@ const DifferentialRouter = React.createClass({
 
                 let sameResultsAfterSwitchingThisItem = JSON.stringify(resultIdsAfterSwitchingThisFacetItem) === JSON.stringify(currentResultIds);
                 let noResultsAfterSwitchingThisItem = resultIdsAfterSwitchingThisFacetItem.length === 0;
-
                 return {
                     name: facetItem.name,
                     value: facetItem.value,
                     checked: this._equalsToOrIncludes(this.state.querySelect[facet.facetName], facetItem.name) ||
-                             sameResultsAfterSwitchingThisItem && allFilteredResultsMatchThisFacetItem,
+                             sameResultsAfterSwitchingThisItem,
                     disabled: noResultsAfterSwitchingThisItem || sameResultsAfterSwitchingThisItem
                 }
             })
