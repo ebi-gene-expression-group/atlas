@@ -26,6 +26,24 @@ const OptionalString = React.PropTypes.string;
 const DoubleWithDefault = React.PropTypes.number;
 const RequiredBool = React.PropTypes.bool.isRequired;
 
+const ResultType = {
+    species: RequiredString,
+    kingdom: RequiredString,
+    experimentType: RequiredString,
+    numReplicates: RequiredString,    // faceting only works with strings https://issues.apache.org/jira/browse/SOLR-7496
+    regulation: RequiredString,
+    factors: React.PropTypes.arrayOf(OptionalString).isRequired,
+    bioentityIdentifier: RequiredString,
+    bioentityName: RequiredString,
+    experimentAccession: RequiredString,
+    experimentName: RequiredString,
+    contrastId: RequiredString,
+    comparison: RequiredString,
+    foldChange: React.PropTypes.number.isRequired,
+    colour: RequiredString,
+    id: RequiredString
+}
+
 const DifferentialResults = React.createClass({
     /*
     results: [
@@ -61,22 +79,7 @@ const DifferentialResults = React.createClass({
     maxUpLevel: "2.4"
     */
     propTypes: {
-        results: React.PropTypes.arrayOf(React.PropTypes.shape({
-            species: RequiredString,
-            kingdom: RequiredString,
-            experimentType: RequiredString,
-            numReplicates: RequiredString,    // faceting only works with strings https://issues.apache.org/jira/browse/SOLR-7496
-            regulation: RequiredString,
-            factors: React.PropTypes.arrayOf(OptionalString).isRequired,
-            bioentityIdentifier: RequiredString,
-            experimentAccession: RequiredString,
-            experimentName: RequiredString,
-            contrastId: RequiredString,
-            comparison: RequiredString,
-            foldChange: React.PropTypes.number.isRequired,
-            colour: RequiredString,
-            id: RequiredString
-        })).isRequired,
+        results: React.PropTypes.arrayOf(React.PropTypes.shape(ResultType)).isRequired,
         maxDownLevel: DoubleWithDefault,
         minDownLevel: DoubleWithDefault,
         minUpLevel: DoubleWithDefault,
@@ -147,7 +150,7 @@ const DifferentialResults = React.createClass({
                         <tr>
                             <th style={{width: '10%'}}>Log<sub>2</sub>-fold change</th>
                             <th style={{width: '5%'}}>Species</th>
-                            <th style={{width: '5%'}}>Gene ID</th>
+                            <th style={{width: '5%'}}>Gene name</th>
                             <th style={{width: '30%'}}>Comparison</th>
                             <th style={{width: '15%'}}>Experimental variables</th>
                             <th style={{width: '35%'}}>Experiment name</th>
@@ -165,21 +168,7 @@ const DifferentialResults = React.createClass({
 
 
 const DifferentialResultRow = React.createClass({
-    propTypes: {
-        bioentityIdentifier: RequiredString,
-        foldChange: React.PropTypes.number.isRequired,
-        pValue: React.PropTypes.number,
-        tStatistics: React.PropTypes.number,
-        colour: RequiredString,
-        species: RequiredString,
-        comparison: RequiredString,
-        factors: React.PropTypes.arrayOf(OptionalString).isRequired,
-        experimentName: RequiredString,
-        contrastId: RequiredString,
-        experimentAccession: RequiredString,
-        displayLevels: RequiredBool,
-        atlasBaseUrl: RequiredString
-    },
+    propTypes: ResultType,
 
     _linkToComparisonPage () {
       return (
@@ -206,7 +195,7 @@ const DifferentialResultRow = React.createClass({
                     <EbiSpeciesIcon species={this.props.species}/>
                 </td>
                 <td>
-                    <a href={'/gxa/genes/' + this.props.bioentityIdentifier}>{this.props.bioentityIdentifier}</a>
+                    <a href={'/gxa/genes/' + this.props.bioentityIdentifier}>{this.props.bioentityName || this.props.bioentityIdentifier}</a>
                 </td>
                 <td ref="comparison">
                     <a href={this._linkToComparisonPage()}>
