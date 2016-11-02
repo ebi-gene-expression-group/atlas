@@ -11,14 +11,12 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import static com.jayway.restassured.RestAssured.get;
 import static org.hamcrest.Matchers.containsString;
 
+import static uk.ac.ebi.atlas.widget.BaselineAndDifferentialAnalyticsServiceIT.*;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
 public class ExpressionDataControllerEIT extends RestAssuredFixture {
-
-    private static final String BASELINE_GENE = "ENSG00000000003";
-    private static final String DIFFERENTIAL_GENE = "AT2G06310";
-    private static final String NON_EXISTENT_GENE = "FOOBAR";
 
     @Test
     public void geneExpressedInBaselineAndDifferentialExperimentsReturnsTrue() {

@@ -30,9 +30,9 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
 public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixture {
 
-    private static final String BASELINE_GENE = "ENSG00000000003";
-    private static final String DIFFERENTIAL_GENE = "ENSSSCG00000000024";
-    private static final String NON_EXISTENT_GENE = "FOOBAR";
+    public static final String BASELINE_GENE = "ENSG00000000003";
+    public static final String DIFFERENTIAL_GENE = "ENSSSCG00000000024";
+    public static final String NON_EXISTENT_GENE = "FOOBAR";
 
     @Inject
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
