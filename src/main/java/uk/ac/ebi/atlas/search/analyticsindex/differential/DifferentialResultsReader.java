@@ -23,11 +23,6 @@ public class DifferentialResultsReader {
     private final ContrastTrader contrastTrader;
 
     private static final String DOCS_PATH                  = "$.response.docs[*]";
-    private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentityIdentifier";
-    private static final String EXPERIMENT_TYPE_FIELD      = "experimentType";
-    private static final String EXPERIMENT_ACCESSION_FIELD = "experimentAccession";
-    private static final String CONTRAST_ID_FIELD          = "contrastId";
-    private static final String LOG2_FOLD_CHANGE_FIELD     = "foldChange";
 
     private static final ParseContext parser = JsonPath.using(Configuration.defaultConfiguration().addOptions(Option.ALWAYS_RETURN_LIST));
 
@@ -52,42 +47,40 @@ public class DifferentialResultsReader {
         List<JsonObject> filteredDocuments = Lists.newArrayList();
         List<Map<String, Object>> documents = parser.parse(solrResponseAsJson).read(DOCS_PATH);
         JsonArray results = new JsonArray();
-        if(!documents.isEmpty()) {
-            for (Map<String, Object> document : documents) {
-                String experimentAccession = (String) document.get(EXPERIMENT_ACCESSION_FIELD);
-                String contrastId = (String) document.get(CONTRAST_ID_FIELD);
-                ExperimentType experimentType = ExperimentType.get((String) document.get(EXPERIMENT_TYPE_FIELD));
+        for (Map<String, Object> document : documents) {
+            String experimentAccession = (String) document.get("experimentAccession");
+            String contrastId = (String) document.get("contrastId");
+            ExperimentType experimentType = ExperimentType.get((String) document.get("experimentType"));
 
-                Object foldChangeSymbol = document.get(LOG2_FOLD_CHANGE_FIELD);
-                double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
+            Object foldChangeSymbol = document.get("foldChange");
+            double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
 
-                if (foldChange > 0.0) {
-                    minUpLevel = Math.min(minUpLevel, foldChange);
-                    maxUpLevel = Math.max(maxUpLevel, foldChange);
-                } else {
-                    minDownLevel = Math.max(minDownLevel, foldChange);
-                    maxDownLevel = Math.min(maxDownLevel, foldChange);
-                }
-
-                JsonObject o = gson.toJsonTree(document).getAsJsonObject();
-                o.addProperty("bioentityIdentifier", (String) document.get(BIOENTITY_IDENTIFIER_FIELD));
-                o.addProperty("experimentAccession", experimentAccession);
-                o.addProperty("experimentType", experimentType.toString());
-                o.addProperty("contrastId", contrastId);
-                o.addProperty("foldChange", foldChange);
-                o.addProperty("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
-                o.addProperty("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
-                filteredDocuments.add(o);
+            if (foldChange > 0.0) {
+                minUpLevel = Math.min(minUpLevel, foldChange);
+                maxUpLevel = Math.max(maxUpLevel, foldChange);
+            } else {
+                minDownLevel = Math.max(minDownLevel, foldChange);
+                maxDownLevel = Math.min(maxDownLevel, foldChange);
             }
-            for (JsonObject document : filteredDocuments) {
-                double foldChange = document.get("foldChange").getAsDouble();
-                String colour = foldChange > 0.0
-                        ? colourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red")
-                        : colourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
-                document.addProperty("colour", colour);
-                document.addProperty("foldChange", FoldChangeRounder.round(foldChange));
-                results.add(document);
-            }
+
+            JsonObject o = gson.toJsonTree(document).getAsJsonObject();
+            o.addProperty("bioentityIdentifier", (String) document.get("bioentityIdentifier"));
+            o.addProperty("experimentAccession", experimentAccession);
+            o.addProperty("experimentType", experimentType.toString());
+            o.addProperty("contrastId", contrastId);
+            o.addProperty("foldChange", foldChange);
+            o.addProperty("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
+            o.addProperty("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
+            filteredDocuments.add(o);
+        }
+        for (JsonObject document : filteredDocuments) {
+            double foldChange = document.get("foldChange").getAsDouble();
+            String colour = foldChange > 0.0
+                    ? colourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red")
+                    : colourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
+            document.addProperty("colour", colour);
+            document.addProperty("foldChange", FoldChangeRounder.round(foldChange));
+            results.add(document);
         }
 
         resultsWithLevels.add("results", results);
